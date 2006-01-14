@@ -1,0 +1,163 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DF228977-8A10-49B5-A896-1B07A179E450}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataMiningCommon</RootNamespace>
+    <AssemblyName>DataMiningCommon</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaServerBase.dll</HintPath>
+    </Reference>
+    <Reference Include="iceboxcs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b555a647d8de49c2">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\icecs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AtomSetting\AtomSettingBoxInfo.cs" />
+    <Compile Include="AtomSetting\AtomSettingFunctionsI.cs" />
+    <Compile Include="Attributes\AbstractAttributeBoxInfo.cs" />
+    <Compile Include="Attributes\AbstractAttributeConstants.cs" />
+    <Compile Include="Attributes\AbstractDynamicAttributeBoxInfo.cs" />
+    <Compile Include="Attributes\Attribute\AttributeBoxInfo.cs" />
+    <Compile Include="Attributes\Attribute\AttributeFunctionsI.cs" />
+    <Compile Include="Attributes\DynamicAttributeAlgorithm.cs" />
+    <Compile Include="Attributes\EachValueOneCategoryAttribute\EachValueOneCategoryAlgorithm.cs" />
+    <Compile Include="Attributes\EachValueOneCategoryAttribute\EachValueOneCategoryAttributeBoxInfo.cs" />
+    <Compile Include="Attributes\EachValueOneCategoryAttribute\EachValueOneCategoryattributeFunctionsI.cs" />
+    <Compile Include="Attributes\EquidistantIntervalsAttribute\EquidistantAlgorithm.cs" />
+    <Compile Include="Attributes\EquidistantIntervalsAttribute\EquidistantIntervalsAttributeBoxInfo.cs" />
+    <Compile Include="Attributes\EquidistantIntervalsAttribute\EquidistantIntervalsAttributeFunctionsI.cs" />
+    <Compile Include="Attributes\EquifrequencyIntervalsAttribute\EquifrequencyAlgorithm.cs" />
+    <Compile Include="Attributes\EquifrequencyIntervalsAttribute\EquifrequencyIntervalGenerator.cs" />
+    <Compile Include="Attributes\EquifrequencyIntervalsAttribute\EquifrequencyIntervalsAttributeBoxInfo.cs" />
+    <Compile Include="Attributes\EquifrequencyIntervalsAttribute\EquifrequencyIntervalsAttributeFunctionsI.cs" />
+    <Compile Include="BooleanPartialCedentSetting\BooleanPartialCedentSettingBoxInfo.cs" />
+    <Compile Include="BooleanPartialCedentSetting\BooleanPartialCedentSettingFunctionsI.cs" />
+    <Compile Include="CategorialPartialCedentSetting\CategorialPartialCedentSettingBoxInfo.cs" />
+    <Compile Include="CategorialPartialCedentSetting\CategorialPartialCedentSettingFunctionsI.cs" />
+    <Compile Include="Column\ColumnBoxInfo.cs" />
+    <Compile Include="Column\ColumnFunctionsI.cs" />
+    <Compile Include="Database\DatabaseBoxInfo.cs" />
+    <Compile Include="Database\DatabaseFunctionsI.cs" />
+    <Compile Include="DataMatrix\DataMatrixBoxInfo.cs" />
+    <Compile Include="DataMatrix\DataMatrixFunctionsI.cs" />
+    <Compile Include="DataMiningCommon.cs" />
+    <Compile Include="DerivedColumn\DerivedColumnBoxInfo.cs" />
+    <Compile Include="DerivedColumn\DerivedColumnFunctionsI.cs" />
+    <Compile Include="EquivalenceClass\EquivalenceClassBoxInfo.cs" />
+    <Compile Include="EquivalenceClass\EquivalenceClassFunctionsI.cs" />
+    <Compile Include="LiteralSetting\LiteralSettingBoxInfo.cs" />
+    <Compile Include="LiteralSetting\LiteralSettingFunctionsI.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AtomSetting\BoxConfig.xml" />
+    <Content Include="AtomSetting\boxIcon.ico" />
+    <Content Include="AtomSetting\Localization.cs-CZ.xml" />
+    <Content Include="AtomSetting\Localization.en-US.xml" />
+    <Content Include="Attributes\Attribute\BoxConfig.xml" />
+    <Content Include="Attributes\Attribute\boxIcon.ico" />
+    <Content Include="Attributes\Attribute\Localization.cs-CZ.xml" />
+    <Content Include="Attributes\Attribute\Localization.en-US.xml" />
+    <Content Include="Attributes\EachValueOneCategoryAttribute\BoxConfig.xml" />
+    <Content Include="Attributes\EachValueOneCategoryAttribute\boxIcon.ico" />
+    <Content Include="Attributes\EachValueOneCategoryAttribute\Localization.cs-CZ.xml" />
+    <Content Include="Attributes\EachValueOneCategoryAttribute\Localization.en-US.xml" />
+    <Content Include="Attributes\EquidistantIntervalsAttribute\BoxConfig.xml" />
+    <Content Include="Attributes\EquidistantIntervalsAttribute\boxIcon.ico" />
+    <Content Include="Attributes\EquidistantIntervalsAttribute\Localization.cs-CZ.xml" />
+    <Content Include="Attributes\EquidistantIntervalsAttribute\Localization.en-US.xml" />
+    <Content Include="Attributes\EquifrequencyIntervalsAttribute\BoxConfig.xml" />
+    <Content Include="Attributes\EquifrequencyIntervalsAttribute\boxIcon.ico" />
+    <Content Include="Attributes\EquifrequencyIntervalsAttribute\Localization.cs-CZ.xml" />
+    <Content Include="Attributes\EquifrequencyIntervalsAttribute\Localization.en-US.xml" />
+    <Content Include="BooleanPartialCedentSetting\BoxConfig.xml" />
+    <Content Include="BooleanPartialCedentSetting\boxIcon.ico" />
+    <Content Include="BooleanPartialCedentSetting\Localization.cs-CZ.xml" />
+    <Content Include="BooleanPartialCedentSetting\Localization.en-US.xml" />
+    <Content Include="CategorialPartialCedentSetting\BoxConfig.xml" />
+    <Content Include="CategorialPartialCedentSetting\boxIcon.ico" />
+    <Content Include="CategorialPartialCedentSetting\Localization.cs-CZ.xml" />
+    <Content Include="CategorialPartialCedentSetting\Localization.en-US.xml" />
+    <Content Include="Column\BoxConfig.xml" />
+    <Content Include="Column\boxIcon.ico" />
+    <Content Include="Column\Localization.cs-CZ.xml" />
+    <Content Include="Column\Localization.en-US.xml" />
+    <Content Include="Database\BoxConfig.xml" />
+    <Content Include="Database\boxIcon.ico" />
+    <Content Include="Database\Localization.cs-CZ.xml" />
+    <Content Include="Database\Localization.en-US.xml" />
+    <Content Include="DataMatrix\BoxConfig.xml" />
+    <Content Include="DataMatrix\boxIcon.ico" />
+    <Content Include="DataMatrix\Localization.cs-CZ.xml" />
+    <Content Include="DataMatrix\Localization.en-US.xml" />
+    <Content Include="DerivedColumn\BoxConfig.xml" />
+    <Content Include="DerivedColumn\boxIcon.ico" />
+    <Content Include="DerivedColumn\Localization.cs-CZ.xml" />
+    <Content Include="DerivedColumn\Localization.en-US.xml" />
+    <Content Include="EquivalenceClass\BoxConfig.xml" />
+    <Content Include="EquivalenceClass\boxIcon.ico" />
+    <Content Include="EquivalenceClass\Localization.cs-CZ.xml" />
+    <Content Include="EquivalenceClass\Localization.en-US.xml" />
+    <Content Include="LiteralSetting\BoxConfig.xml" />
+    <Content Include="LiteralSetting\boxIcon.ico" />
+    <Content Include="LiteralSetting\Localization.cs-CZ.xml" />
+    <Content Include="LiteralSetting\Localization.en-US.xml" />
+    <Content Include="MultiColumn\BoxConfig.xml" />
+    <Content Include="MultiColumn\boxIcon.ico" />
+    <Content Include="MultiColumn\Localization.cs-CZ.xml" />
+    <Content Include="MultiColumn\Localization.en-US.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Tomas Kuchar (Ru-Board) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://ferda.is-a-geek.net" targetNamespace="http://ferda.is-a-geek.net" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Box">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Identifier" type="xs:string"/>
+				<xs:element ref="IconPath"/>
+				<xs:element ref="DesignPath"/>
+				<xs:element name="Categories">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Actions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Action" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="Name"/>
+										<xs:element ref="IconPath"/>
+										<xs:element name="NeededConnectedSocketsOptions" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="NeededConnectedSocketsOption" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Sockets" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Socket" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="Name"/>
+										<xs:element ref="DesignPath" minOccurs="0"/>
+										<xs:element name="SocketTypes">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="BoxType" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element ref="FunctionIceId"/>
+																<xs:element name="NeededSockets" minOccurs="0">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element ref="NeededSocket" maxOccurs="unbounded"/>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="SettingProperties" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="string" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="MoreThanOne">
+											<xs:simpleType>
+												<xs:restriction base="xs:boolean"/>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Properties" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Property" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="Name"/>
+										<xs:element name="TypeClassIceId">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="CategoryName" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="SelectOptions" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="SelectOption" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Visible">
+											<xs:simpleType>
+												<xs:restriction base="xs:boolean"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="ReadOnly">
+											<xs:simpleType>
+												<xs:restriction base="xs:boolean"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Default" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="NumericalRestrictions" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Restriction" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Integral" type="xs:long" minOccurs="0"/>
+																<xs:element name="Floating" type="xs:double" minOccurs="0"/>
+																<xs:element name="Min" type="xs:boolean"/>
+																<xs:element name="Including" type="xs:boolean"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Regexp" type="xs:string" minOccurs="0"/>
+										<xs:element name="SettingModuleIdentifier" type="xs:string" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ModulesAskingForCreationSeq" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ModulesAskingForCreation" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DesignPath">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FunctionIceId">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="IconPath">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ModulesAskingForCreation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Name"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Name">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="NeededConnectedSockets">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="string" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NeededConnectedSocketsOption">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NeededConnectedSockets"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NeededSocket">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SocketName"/>
+				<xs:element ref="FunctionIceId"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NewBoxModuleIdentifier">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SelectOption">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Name"/>
+				<xs:element name="DisableProperties" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SocketName">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="string">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Boxes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Box" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

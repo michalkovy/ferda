@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.Database</Identifier>
+  <Label>Database</Label>
+  <Hint>Defines data source and its parameters</Hint>
+  <Categories>
+    <Category>
+      <Name>Datasource</Name>
+      <Label>Datasource</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>TestConnectionString</Name>
+      <Label>Test connection string</Label>
+      <Hint>This will test connection to database with entered connection string.</Hint>
+    </Action>
+    <Action>
+      <Name>ReloadInfo</Name>
+      <Label>Reload info</Label>
+      <Hint>This will reload structure and statisticts information abou database, datamatrix and columns.</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>ConnectionString</Name>
+      <Label>ODBC connection string</Label>
+      <Hint>Connection string for ODBC data source that defines database for analyzing.</Hint>
+    </Socket>
+    <Socket>
+      <Name>DatabaseName</Name>
+      <Label>Database`s name</Label>
+      <Hint>The name of the database.</Hint>
+    </Socket>
+    <Socket>
+      <Name>DataSource</Name>
+      <Label>Data souce</Label>
+      <Hint>The server name or file name of the data source.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Driver</Name>
+      <Label>Driver</Label>
+      <Hint>The name of the ODBC driver specified for the current connection.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ServerVersion</Name>
+      <Label>Version of server</Label>
+      <Hint>The version of the server to which the client is connected.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>DataMatrix</Name>
+      <Label>Data matrix @Name</Label>
+      <Hint>Creates box corresponding to the table @Name</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>AllDataMatrixes</Name>
+      <Label>All data matrixes in DB</Label>
+      <Hint>Creates boxes for all data matrixes in this databse.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+  <Phrases>
+    <Phrase>
+      <PhraseIdentifier>ActionTestConnectionString</PhraseIdentifier>
+      <PhraseText>Test of the connection string</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>ActionTestConnectionStringSucceed</PhraseIdentifier>
+      <PhraseText>Connecting to database with specified connection string succeeded.</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>ActionTestConnectionStringFailed</PhraseIdentifier>
+      <PhraseText>Connecting to database with specified connection string failed!</PhraseText>
+    </Phrase>
+  </Phrases>
+</BoxLocalization>

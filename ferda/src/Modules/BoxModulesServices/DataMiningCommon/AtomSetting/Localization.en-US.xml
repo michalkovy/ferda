@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.AtomSetting</Identifier>
+  <Label>Atom setting</Label>
+  <Hint>Basic boolean attribute setting</Hint>
+  <Categories>
+    <Category>
+      <Name>BooleanAttribute</Name>
+      <Label>BooleanAttribute</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>Attribute</Name>
+      <Label>Attribute</Label>
+      <Hint>Defines attribute.</Hint>
+    </Socket>
+    <Socket>
+      <Name>CoefficientType</Name>
+      <Label>Coefficient type</Label>
+      <Hint>Selection of the coefficient type.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Subset</Name>
+          <Label>Subset</Label>
+          <ShortLabel>Ss</ShortLabel>
+        </SelectOption>
+        <SelectOption>
+          <Name>OneParticularCategory</Name>
+          <Label>One particular category</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Interval</Name>
+          <Label>Interval</Label>
+          <ShortLabel>In</ShortLabel>
+        </SelectOption>
+        <SelectOption>
+          <Name>CyclicalInterval</Name>
+          <Label>Cyclical interval</Label>
+          <ShortLabel>CIn</ShortLabel>
+        </SelectOption>
+        <SelectOption>
+          <Name>Cut</Name>
+          <Label>Cut</Label>
+          <ShortLabel>C</ShortLabel>
+        </SelectOption>
+        <SelectOption>
+          <Name>LeftCut</Name>
+          <Label>Left cut</Label>
+          <ShortLabel>LC</ShortLabel>
+        </SelectOption>
+        <SelectOption>
+          <Name>RightCut</Name>
+          <Label>Right cut</Label>
+          <ShortLabel>RC</ShortLabel>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Category</Name>
+      <Label>Category</Label>
+      <Hint>Selection of one category if the coefficient type is "One category".</Hint>
+    </Socket>
+    <Socket>
+      <Name>MinLen</Name>
+      <Label>Minimal length</Label>
+      <Hint>Minimal length of atom.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MaxLen</Name>
+      <Label>Maximal length</Label>
+      <Hint>Maximal length of atom.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>LiteralSetting</Name>
+      <Label>Literal setting</Label>
+      <Hint>Creates a new literal setting box.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

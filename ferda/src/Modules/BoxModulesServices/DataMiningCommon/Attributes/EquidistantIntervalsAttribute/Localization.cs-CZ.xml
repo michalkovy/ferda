@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.Attributes.EquidistantIntervalsAttribute</Identifier>
+  <Label>Ekvidistantní intervaly</Label>
+  <Hint>Intervaly stejné délky; parametry jsou počáteční hodnota a délka intervalu</Hint>
+  <Categories>
+    <Category>
+      <Name>Attribute</Name>
+      <Label>Atributy</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>ColumnOrDerivedColumn</Name>
+      <Label>Sloupec</Label>
+      <Hint>Určí sloupec nebo odvozený sloupec.</Hint>
+    </Socket>
+    <Socket>
+      <Name>NameInLiterals</Name>
+      <Label>Jméno v literálech</Label>
+      <Hint>Alternativní krátký název.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Categories</Name>
+      <Label>Kategorie</Label>
+      <Hint>Množina kategorií. Kategorie je hodnota atributu. Je určena množinou hodnot sloupce.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Lenght</Name>
+      <Label>Délky</Label>
+      <Hint>Délky intervalů</Hint>
+    </Socket>
+    <Socket>
+      <Name>ClosedFrom</Name>
+      <Label>Uzavřené</Label>
+      <Hint>Z jaké strany budou uzavřeny intevaly.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Left</Name>
+          <Label>Zleva</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Right</Name>
+          <Label>Zprava</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>CountOfCategories</Name>
+      <Label>Počet kategorií</Label>
+      <Hint>Počet kategorií.</Hint>
+    </Socket>
+    <Socket>
+      <Name>XCategory</Name>
+      <Label>X-Kategorie</Label>
+      <Hint>Kategorie pro chybějící údaje.</Hint>
+    </Socket>
+    <Socket>
+      <Name>IncludeNullCategory</Name>
+      <Label>Null kategorie</Label>
+      <Hint>Kategorie obsahující null hodnoty.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Domain</Name>
+      <Label>Doména</Label>
+      <Hint>Rozhodne zda bude kategorizována celá doména sloupce nebo jen nějaká subdoména.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>WholeDomain</Name>
+          <Label>Celá aktuální doména</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>SubDomainValueBounds</Name>
+          <Label>Uživatelsky definovaná doména</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>SubDomainNumberOfValuesBounds</Name>
+          <Label>Vyjma prvních a posledních hodnot domény</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>From</Name>
+      <Label>Od hodnoty</Label>
+      <Hint>První interval začne touto hodnotou. Poslední interval bude končit maximální hodnotou ve sloupci.</Hint>
+    </Socket>
+    <Socket>
+      <Name>To</Name>
+      <Label>Do hodnoty</Label>
+      <Hint>Poslední interval skončí touto hodnotou.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Categories</Name>
+      <Label>Kategorie</Label>
+    </PropertyCategory>
+    <PropertyCategory>
+      <Name>Intervals</Name>
+      <Label>Intervaly</Label>
+    </PropertyCategory>
+    <PropertyCategory>
+      <Name>Domain</Name>
+      <Label>Obor hodnot</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>AtomSetting</Name>
+      <Label>Zadání koeficientu</Label>
+      <Hint>Vytvoří novou krabičku zadání koeficientu.</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EquivalenceClass</Name>
+      <Label>Třída ekvivalence</Label>
+      <Hint>Přidá atribut do nové třídy ekvivalence </Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>CategorialPartialCedentSetting</Name>
+      <Label>Zadání kategoriálního dílčího cedentu</Label>
+      <Hint>Vytvoří novou krabičku zadání kategoriálního dílčího cedentu.</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>Attribute</Name>
+      <Label>Atribut</Label>
+      <Hint>Vytvoří novou krabičku atribut pro další ruční úpravy kategorií.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+  <Phrases>
+    <Phrase>
+      <PhraseIdentifier>UnsupportedColumnDatatype</PhraseIdentifier>
+      <PhraseText>Nopodporovaný datový typ sloupce</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>NumericOrStringDatatypesSupportedOnly</PhraseIdentifier>
+      <PhraseText>Equidistatní atribut nepodporuje následující datové typy DateTime, Time, Boolean, Unknown.</PhraseText>
+    </Phrase>
+  </Phrases>
+</BoxLocalization>

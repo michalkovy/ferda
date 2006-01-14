@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.FFTTask</Identifier>
+  <Label>4ft Úloha</Label>
+  <Hint>Dataminingová procedura 4ft-Miner pro hledání různých asociačních pravidel.</Hint>
+  <Categories>
+    <Category>
+      <Name>FFTMiner</Name>
+      <Label>4ft-Miner</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>Run</Name>
+      <Label>Spusť</Label>
+      <Hint>Spustí 4ft-Miner proceduru (tj. spustí generování hypotéz)</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>AntecedentSetting</Name>
+      <Label>Zadání antecedentu</Label>
+      <Hint>Určení množiny relevantních antecedentů.</Hint>
+    </Socket>
+    <Socket>
+      <Name>SuccedentSetting</Name>
+      <Label>Zadání sukcedentu</Label>
+      <Hint>Určení množiny relevantních sukcedentů.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ConditionSetting</Name>
+      <Label>Zadání podmínky</Label>
+      <Hint>Určení množiny relevantních podmínek.</Hint>
+    </Socket>
+    <Socket>
+      <Name>FFTQuantifier</Name>
+      <Label>4ft Kvantifikátor</Label>
+      <Hint>Určení 4ft kvantifikátoru pro úlohu</Hint>
+    </Socket>
+    <Socket>
+      <Name>MissingsType</Name>
+      <Label>Chybějící údaje</Label>
+      <Hint>Způsob práce s chybějícími údaji.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Deleting</Name>
+          <Label>Vynechávat</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>PesimisticFillUp</Name>
+          <Label>Pesimistické doplňování</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>OptimisticFillUp</Name>
+          <Label>Optimistické doplňování</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Prolong100A</Name>
+      <Label>Prodlužovat antecedenty</Label>
+      <Hint>Včetně prodloužení antecedentu u implikací platných na 100%</Hint>
+    </Socket>
+    <Socket>
+      <Name>Prolong100S</Name>
+      <Label>Prodlužovat sukcednty</Label>
+      <Hint>Včetně prodloužení sukcedentu u implikací platných na 100%</Hint>
+    </Socket>
+    <Socket>
+      <Name>IncludeSymetric</Name>
+      <Label>Zahrnout symetrii</Label>
+      <Hint>Včetně symetrických hypotéz</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationState</Name>
+      <Label>Stav</Label>
+      <Hint>Určí jestli generování hypotéz bylo dokončeno či přerušeno.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>DidNotStart</Name>
+          <Label>Nezačalo</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Running</Name>
+          <Label>Generuji</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Completed</Name>
+          <Label>Dokončeno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Interrupted</Name>
+          <Label>Přerušeno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Canceled</Name>
+          <Label>Zrušeno</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>GenerationNrOfTests</Name>
+      <Label>Počet verifikací</Label>
+      <Hint>Počet verifikací v průběhu testu.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationNrOfHypotheses</Name>
+      <Label>Počet hypotéz</Label>
+      <Hint>Počet vygenerovaných hypotéz.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationStartTime</Name>
+      <Label>Začátek testu</Label>
+      <Hint>Datum a čas zahájení testu.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationTotalTime</Name>
+      <Label>Celkový čas</Label>
+      <Hint>Celkový čas generování hypotéz.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Task Params</Name>
+      <Label>Parametry úlohy</Label>
+    </PropertyCategory>
+    <PropertyCategory>
+      <Name>Generating</Name>
+      <Label>Generování</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+</BoxLocalization>

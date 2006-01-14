@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.DataMatrix</Identifier>
+  <Label>Tabulka</Label>
+  <Hint>Určení datové matice (tabulky) a jejích parametrů</Hint>
+  <Categories>
+    <Category>
+      <Name>Datasource</Name>
+      <Label>Zdroj dat</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>TestPrimaryKeyColumns</Name>
+      <Label>Test primárního klíče</Label>
+      <Hint>Otestuje, zda primární klíč neobsahuje duplicitní hodnoty.</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>Database</Name>
+      <Label>Databáze</Label>
+      <Hint>Určí datový zroj, ze kterého tabulka pochází</Hint>
+    </Socket>
+    <Socket>
+      <Name>Name</Name>
+      <Label>Jméno</Label>
+      <Hint>Název tabulky.</Hint>
+    </Socket>
+    <Socket>
+      <Name>PrimaryKeyColumns</Name>
+      <Label>Primární klíč</Label>
+      <Hint>Seznam sloupců určujících primární klíč tabulky.</Hint>
+    </Socket>
+    <Socket>
+      <Name>RecordCount</Name>
+      <Label>Počet záznamů</Label>
+      <Hint>Počet záznamů v tabulce (předpočítaná hodnota).</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Statistics</Name>
+      <Label>Statistika</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>DerivedColumn</Name>
+      <Label>Odvozený sloupec</Label>
+      <Hint>Vytvoří krabičku nového odvozeného sloupce</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>Column</Name>
+      <Label>Sloupec @Name</Label>
+      <Hint>Vytvoří krabičku odpovídající sloupci @Name</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>AllColumns</Name>
+      <Label>Všechny sloupce v tabulce</Label>
+      <Hint>Vytvoří krabičky pro všechny sloupce v této tabulce.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+  <Phrases>
+    <Phrase>
+      <PhraseIdentifier>TestPrimaryKey</PhraseIdentifier>
+      <PhraseText>Test primarního klíče</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>ActionTestTestPrimaryKeySucceed</PhraseIdentifier>
+      <PhraseText>Nebyli nalezeny žádné duplicity v primárním klíči.</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>ActionTestTestPrimaryKeyFailed</PhraseIdentifier>
+      <PhraseText>V zadaném primáním klíči byli nalezeny duplicity! Zadejte prosím správný primární klíč.</PhraseText>
+    </Phrase>
+  </Phrases>
+</BoxLocalization>

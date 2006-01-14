@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.BooleanPartialCedentSetting</Identifier>
+  <Label>Booleovský dílčí ced. (&amp;)</Label>
+  <Hint>Zadání booleovského dílčího cedentu a jeho parametrů</Hint>
+  <Categories>
+    <Category>
+      <Name>BooleanAttribute</Name>
+      <Label>Booleovský atribut</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>LiteralSetting</Name>
+      <Label>Zadání literálu</Label>
+      <Hint>Určí množinu zadání literálů pro zadání booleovského dílčího cedentu</Hint>
+    </Socket>
+    <Socket>
+      <Name>EquivalenceClass</Name>
+      <Label>Třída ekvivalence</Label>
+      <Hint>Určí množinu tříd ekvivalence pro zadání booleovského dílčího cedentu</Hint>
+    </Socket>
+    <Socket>
+      <Name>MinLen</Name>
+      <Label>Minimal length</Label>
+      <Hint>Minimální délka dílčího cedentu.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MaxLen</Name>
+      <Label>Maximal length</Label>
+      <Hint>Maximální délka dílčího cedentu.</Hint>
+    </Socket>
+  </Sockets>
+</BoxLocalization>

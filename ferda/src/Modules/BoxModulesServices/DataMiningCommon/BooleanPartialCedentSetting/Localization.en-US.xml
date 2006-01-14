@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.BooleanPartialCedentSetting</Identifier>
+  <Label>BooleanPCS (&amp;)</Label>
+  <Hint>Boolean partial cedent setting i. e. setting for  boolean partial cedent and it`s parameters</Hint>
+  <Categories>
+    <Category>
+      <Name>BooleanAttribute</Name>
+      <Label>BooleanAttribute</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>LiteralSetting</Name>
+      <Label>Literal setting</Label>
+      <Hint>Defines set of literal settings for Boolean partial setting</Hint>
+    </Socket>
+    <Socket>
+      <Name>EquivalenceClass</Name>
+      <Label>Equivalence class</Label>
+      <Hint>Defines set of equivalence classes for Boolean partial setting</Hint>
+    </Socket>
+    <Socket>
+      <Name>MinLen</Name>
+      <Label>Minimal length</Label>
+      <Hint>Minimal length of partial cedent.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MaxLen</Name>
+      <Label>Maximal length</Label>
+      <Hint>Maximal length of partial cedent.</Hint>
+    </Socket>
+  </Sockets>
+</BoxLocalization>

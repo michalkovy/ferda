@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.Attributes.EachValueOneCategoryAttribute</Identifier>
+  <Label>Hodnota ~ Kategorie</Label>
+  <Hint>Každá hodnota z domény sloupce odpovídá jedné kategorii.</Hint>
+  <Categories>
+    <Category>
+      <Name>Attribute</Name>
+      <Label>Atributy</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>ColumnOrDerivedColumn</Name>
+      <Label>Sloupec</Label>
+      <Hint>Určí sloupec nebo odvozený sloupec.</Hint>
+    </Socket>
+    <Socket>
+      <Name>NameInLiterals</Name>
+      <Label>Jméno v literálech</Label>
+      <Hint>Alternativní krátký název.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Categories</Name>
+      <Label>Kategorie</Label>
+      <Hint>Množina kategorií. Kategorie je hodnota atributu. Je určena množinou hodnot sloupce.</Hint>
+    </Socket>
+    <Socket>
+      <Name>CountOfCategories</Name>
+      <Label>Počet kategorií</Label>
+      <Hint>Počet kategorií.</Hint>
+    </Socket>
+    <Socket>
+      <Name>XCategory</Name>
+      <Label>X-Kategorie</Label>
+      <Hint>Kategorie pro chybějící údaje.</Hint>
+    </Socket>
+    <Socket>
+      <Name>IncludeNullCategory</Name>
+      <Label>Null kategorie</Label>
+      <Hint>Kategorie obsahující null hodnoty.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Categories</Name>
+      <Label>Kategorie</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>AtomSetting</Name>
+      <Label>Zadání koeficientu</Label>
+      <Hint>Vytvoří novou krabičku zadání koeficientu.</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EquivalenceClass</Name>
+      <Label>Třída ekvivalence</Label>
+      <Hint>Přidá atribut do nové třídy ekvivalence </Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>CategorialPartialCedentSetting</Name>
+      <Label>Zadání kategoriálního dílčího cedentu</Label>
+      <Hint>Vytvoří novou krabičku zadání kategoriálního dílčího cedentu.</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>Attribute</Name>
+      <Label>Atribut</Label>
+      <Hint>Vytvoří novou krabičku atribut pro další ruční úpravy kategorií.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

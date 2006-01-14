@@ -1,0 +1,464 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C2CB7B04-923E-44D0-B989-A8CAEB23B06C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LISpMinerTasks</RootNamespace>
+    <AssemblyName>LISpMinerTasks</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaServerBase.dll</HintPath>
+    </Reference>
+    <Reference Include="iceboxcs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b555a647d8de49c2">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\icecs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CFTask\CFTaskBoxInfo.cs" />
+    <Compile Include="CFTask\CFTaskFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\AbstractCFTaskQuantifierBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\AbstractCFTaskQuantifierFunctions.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\AnyValue\AnyValueBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\AnyValue\AnyValueFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\AverageValue\AverageValueBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\AverageValue\AverageValueFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\MaxValue\MaxValueBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\MaxValue\MaxValueFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\MinValue\MinValueBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\MinValue\MinValueFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\ArithmeticAverage\ArithmeticAverageBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\ArithmeticAverage\ArithmeticAverageFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\Asymetry\AsymetryBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\Asymetry\AsymetryFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\DiscreteOrdinaryVariationBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\DiscreteOrdinaryVariationFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\GeometricAverage\GeometricAverageBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\GeometricAverage\GeometricAverageFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\NominalVariation\NominalVariationBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\NominalVariation\NominalVariationFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\Skewness\SkewnessBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\Skewness\SkewnessFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\StandardDeviation\StandardDeviationBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\StandardDeviation\StandardDeviationFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\Variance\VarianceBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\Variance\VarianceFunctionsI.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\VariationRatio\VariationRatioBoxInfo.cs" />
+    <Compile Include="CFTask\Quantifiers\Functional\VariationRatio\VariationRatioFunctionsI.cs" />
+    <Compile Include="FFTTask\FFTTaskBoxInfo.cs" />
+    <Compile Include="FFTTask\FFTTaskFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\AbstractFFTTaskQuantifierBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\AbstractFFTTaskQuantifierFunctions.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\AboveAverageImplication\AboveAverageImplicationBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\AboveAverageImplication\AboveAverageImplicationFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\BaseCeil\BaseCeilBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\BaseCeil\BaseCeilFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\BelowAverageImplication\BelowAverageImplicationBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\BelowAverageImplication\belowaverageimplicationfunctionsi.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\ChiSquared\ChiSquaredBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\ChiSquared\ChiSquaredFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\CriticalEquivalence\CriticalEquivalenceBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\CriticalEquivalence\CriticalEquivalenceFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\CriticalImplication\CriticalImplicationBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\CriticalImplication\CriticalImplicationFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\DoubleCriticalImplication\DoubleCriticalImplicationBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\DoubleCriticalImplication\DoubleCriticalImplicationFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\DoubleFoundedImplication\DoubleFoundedImplicationBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\DoubleFoundedImplication\DoubleFoundedImplicationFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\E\EBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\E\EFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\Fisher\FisherBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\Fisher\FisherFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\FoundedEquivalence\FoundedEquivalenceBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\FoundedEquivalence\FoundedEquivalenceFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\FoundedImplication\FoundedImplicationBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\FoundedImplication\FoundedImplicationFunctionsI.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\SimpleDeviation\SimpleDeviationBoxInfo.cs" />
+    <Compile Include="FFTTask\Quantifiers\Functional\SimpleDeviation\SimpleDeviationFunctionsI.cs" />
+    <Compile Include="KLTask\KLTaskBoxInfo.cs" />
+    <Compile Include="KLTask\KLTaskFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\AbstractKLTaskQuantifierBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\AbstractKLTaskQuantifierFunctions.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\AnyValue\AnyValueBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\AnyValue\AnyValueFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\AverageValue\AverageValueBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\AverageValue\AverageValueFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\MaxValue\MaxValueBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\MaxValue\MaxValueFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\MinValue\MinValueBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\MinValue\MinValueFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\ChiSquareTest\ChiSquareTestBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\ChiSquareTest\ChiSquareTestFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\ConditionalEntropy\ConditionalEntropyBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\ConditionalEntropy\ConditionalEntropyFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\FunctionEachRow\FunctionEachRowBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\FunctionEachRow\FunctionEachRowFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\FunctionSumOfRows\FunctionSumOfRowsBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\FunctionSumOfRows\FunctionSumOfRowsFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\InformationDependency\InformationDependencyBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\InformationDependency\InformationDependencyFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\Kendal\KendalBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\Kendal\KendalFunctionsI.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\MutualInformationNormalized\MutualInformationNormalizedBoxInfo.cs" />
+    <Compile Include="KLTask\Quantifiers\Functional\MutualInformationNormalized\MutualInformationNormalizedFunctionsI.cs" />
+    <Compile Include="LMTasks.cs" />
+    <Compile Include="MetabaseLayer\CFTask.cs" />
+    <Compile Include="MetabaseLayer\Common.cs" />
+    <Compile Include="MetabaseLayer\Constants.cs" />
+    <Compile Include="MetabaseLayer\DataStructure.cs" />
+    <Compile Include="MetabaseLayer\FFTTask.cs" />
+    <Compile Include="MetabaseLayer\GZip.cs" />
+    <Compile Include="MetabaseLayer\KLTask.cs" />
+    <Compile Include="MetabaseLayer\Metabase.cs" />
+    <Compile Include="MetabaseLayer\PropertySettingHelper.cs" />
+    <Compile Include="MetabaseLayer\SDCFTask.cs" />
+    <Compile Include="MetabaseLayer\SDFFTTask.cs" />
+    <Compile Include="MetabaseLayer\SDKLTask.cs" />
+    <Compile Include="MetabaseLayer\Task.cs" />
+    <Compile Include="SDCFTask\Quantifiers\AbstractSDCFTaskQuantifierBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\AbstractSDCFTaskQuantifierFunctions.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\AnyValue\AnyValueBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\AnyValue\AnyValueFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\AverageValue\AverageValueBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\AverageValue\AverageValueFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\MaxValue\MaxValueBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\MaxValue\MaxValueFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\MinValue\MinValueBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\MinValue\MinValueFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\ArithmeticAverage\ArithmeticAverageBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\ArithmeticAverage\ArithmeticAverageFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\Asymetry\AsymetryBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\Asymetry\AsymetryFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\DiscreteOrdinaryVariationBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\DiscreteOrdinaryVariationFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\GeometricAverage\GeometricAverageBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\GeometricAverage\GeometricAverageFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\NominalVariation\NominalVariationBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\NominalVariation\NominalVariationFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\Skewness\SkewnessBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\Skewness\SkewnessFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\StandardDeviation\StandardDeviationBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\StandardDeviation\StandardDeviationFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\Variance\VarianceBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\Variance\VarianceFunctionsI.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\VariationRatio\VariationRatioBoxInfo.cs" />
+    <Compile Include="SDCFTask\Quantifiers\Functional\VariationRatio\VariationRatioFunctionsI.cs" />
+    <Compile Include="SDCFTask\SDCFTaskBoxInfo.cs" />
+    <Compile Include="SDCFTask\SDCFTaskFunctionsI.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\AbstractSDFFTTaskQuantifierBoxInfo.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\AbstractSDFFTTaskQuantifierFunctions.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Aggregation\BaseCeil\BaseCeilBoxInfo.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Aggregation\BaseCeil\BaseCeilFunctionsI.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Aggregation\MaxValue\MaxValueBoxInfo.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Aggregation\MaxValue\MaxValueFunctionsI.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Aggregation\MinValue\MinValueBoxInfo.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Aggregation\MinValue\MinValueFunctionsI.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesBoxInfo.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesFunctionsI.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Functional\AboveAverageImplication\AboveAverageImplicationBoxInfo.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Functional\AboveAverageImplication\AboveAverageImplicationFunctionsI.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Functional\DoubleFoundedImplication\DoubleFoundedImplicationBoxInfo.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Functional\DoubleFoundedImplication\DoubleFoundedImplicationFunctionsI.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Functional\FoundedEquivalence\FoundedEquivalenceBoxInfo.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Functional\FoundedEquivalence\FoundedEquivalenceFunctionsI.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Functional\FoundedImplication\FoundedImplicationBoxInfo.cs" />
+    <Compile Include="SDFFTTask\Quantifiers\Functional\FoundedImplication\FoundedImplicationFunctionsI.cs" />
+    <Compile Include="SDFFTTask\SDFFTTaskBoxInfo.cs" />
+    <Compile Include="SDFFTTask\SDFFTTaskFunctionsI.cs" />
+    <Compile Include="SDKLTask\Quantifiers\AbstractSDKLTaskQuantifierBoxInfo.cs" />
+    <Compile Include="SDKLTask\Quantifiers\AbstractSDKLTaskQuantifierFunctions.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\AnyValue\AnyValueBoxInfo.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\AnyValue\AnyValueFunctionsI.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\AverageValue\AverageValueBoxInfo.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\AverageValue\AverageValueFunctionsI.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\MaxValue\MaxValueBoxInfo.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\MaxValue\MaxValueFunctionsI.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\MinValue\MinValueBoxInfo.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\MinValue\MinValueFunctionsI.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesBoxInfo.cs" />
+    <Compile Include="SDKLTask\Quantifiers\Aggregation\SumOfValues\SumOfValuesFunctionsI.cs" />
+    <Compile Include="SDKLTask\SDKLTaskBoxInfo.cs" />
+    <Compile Include="SDKLTask\SDKLTaskFunctionsI.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CFTask\BoxConfig.xml" />
+    <Content Include="CFTask\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\AnyValue\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\AnyValue\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\AnyValue\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\AverageValue\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\AverageValue\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\AverageValue\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\MaxValue\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\MaxValue\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\MaxValue\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\MinValue\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\MinValue\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\MinValue\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\SumOfValues\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\SumOfValues\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Aggregation\SumOfValues\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\ArithmeticAverage\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\ArithmeticAverage\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\ArithmeticAverage\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\Asymetry\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\Asymetry\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\Asymetry\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\GeometricAverage\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\GeometricAverage\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\GeometricAverage\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\NominalVariation\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\NominalVariation\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\NominalVariation\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\Skewness\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\Skewness\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\Skewness\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\StandardDeviation\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\StandardDeviation\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\StandardDeviation\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\Variance\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\Variance\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\Variance\Localization.en-US.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\VariationRatio\BoxConfig.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\VariationRatio\Localization.cs-CZ.xml" />
+    <Content Include="CFTask\Quantifiers\Functional\VariationRatio\Localization.en-US.xml" />
+    <Content Include="FFTTask\BoxConfig.xml" />
+    <Content Include="FFTTask\boxIcon.ico" />
+    <Content Include="FFTTask\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\AboveAverageImplication\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\AboveAverageImplication\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\AboveAverageImplication\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\BaseCeil\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\BaseCeil\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\BaseCeil\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\BelowAverageImplication\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\BelowAverageImplication\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\BelowAverageImplication\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\ChiSquared\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\ChiSquared\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\ChiSquared\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\CriticalEquivalence\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\CriticalEquivalence\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\CriticalEquivalence\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\CriticalImplication\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\CriticalImplication\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\CriticalImplication\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\DoubleCriticalImplication\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\DoubleCriticalImplication\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\DoubleCriticalImplication\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\DoubleFoundedImplication\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\DoubleFoundedImplication\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\DoubleFoundedImplication\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\E\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\E\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\E\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\Fisher\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\Fisher\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\Fisher\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\FoundedEquivalence\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\FoundedEquivalence\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\FoundedEquivalence\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\FoundedImplication\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\FoundedImplication\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\FoundedImplication\Localization.en-US.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\SimpleDeviation\BoxConfig.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\SimpleDeviation\Localization.cs-CZ.xml" />
+    <Content Include="FFTTask\Quantifiers\Functional\SimpleDeviation\Localization.en-US.xml" />
+    <Content Include="KLTask\BoxConfig.xml" />
+    <Content Include="KLTask\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\AnyValue\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\AnyValue\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\AnyValue\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\AverageValue\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\AverageValue\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\AverageValue\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\MaxValue\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\MaxValue\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\MaxValue\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\MinValue\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\MinValue\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\MinValue\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\SumOfValues\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\SumOfValues\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Aggregation\SumOfValues\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\ChiSquareTest\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\ChiSquareTest\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\ChiSquareTest\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\ConditionalEntropy\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\ConditionalEntropy\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\ConditionalEntropy\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\FunctionEachRow\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\FunctionEachRow\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\FunctionEachRow\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\FunctionSumOfRows\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\FunctionSumOfRows\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\FunctionSumOfRows\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\InformationDependency\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\InformationDependency\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\InformationDependency\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\Kendal\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\Kendal\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\Kendal\Localization.en-US.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\MutualInformationNormalized\BoxConfig.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\MutualInformationNormalized\Localization.cs-CZ.xml" />
+    <Content Include="KLTask\Quantifiers\Functional\MutualInformationNormalized\Localization.en-US.xml" />
+    <Content Include="SDCFTask\BoxConfig.xml" />
+    <Content Include="SDCFTask\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\AnyValue\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\AnyValue\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\AnyValue\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\AverageValue\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\AverageValue\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\AverageValue\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\MaxValue\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\MaxValue\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\MaxValue\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\MinValue\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\MinValue\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\MinValue\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\SumOfValues\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\SumOfValues\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Aggregation\SumOfValues\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\ArithmeticAverage\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\ArithmeticAverage\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\ArithmeticAverage\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\Asymetry\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\Asymetry\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\Asymetry\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\DiscreteOrdinaryVariation\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\GeometricAverage\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\GeometricAverage\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\GeometricAverage\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\NominalVariation\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\NominalVariation\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\NominalVariation\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\Skewness\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\Skewness\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\Skewness\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\StandardDeviation\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\StandardDeviation\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\StandardDeviation\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\Variance\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\Variance\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\Variance\Localization.en-US.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\VariationRatio\BoxConfig.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\VariationRatio\Localization.cs-CZ.xml" />
+    <Content Include="SDCFTask\Quantifiers\Functional\VariationRatio\Localization.en-US.xml" />
+    <Content Include="SDFFTTask\BoxConfig.xml" />
+    <Content Include="SDFFTTask\Localization.cs-CZ.xml" />
+    <Content Include="SDFFTTask\Localization.en-US.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\BaseCeil\BoxConfig.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\BaseCeil\Localization.cs-CZ.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\BaseCeil\Localization.en-US.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\MaxValue\BoxConfig.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\MaxValue\Localization.cs-CZ.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\MaxValue\Localization.en-US.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\MinValue\BoxConfig.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\MinValue\Localization.cs-CZ.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\MinValue\Localization.en-US.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\SumOfValues\BoxConfig.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\SumOfValues\Localization.cs-CZ.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Aggregation\SumOfValues\Localization.en-US.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\AboveAverageImplication\BoxConfig.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\AboveAverageImplication\Localization.cs-CZ.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\AboveAverageImplication\Localization.en-US.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\DoubleFoundedImplication\BoxConfig.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\DoubleFoundedImplication\Localization.cs-CZ.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\DoubleFoundedImplication\Localization.en-US.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\FoundedEquivalence\BoxConfig.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\FoundedEquivalence\Localization.cs-CZ.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\FoundedEquivalence\Localization.en-US.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\FoundedImplication\BoxConfig.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\FoundedImplication\Localization.cs-CZ.xml" />
+    <Content Include="SDFFTTask\Quantifiers\Functional\FoundedImplication\Localization.en-US.xml" />
+    <Content Include="SDKLTask\BoxConfig.xml" />
+    <Content Include="SDKLTask\Localization.cs-CZ.xml" />
+    <Content Include="SDKLTask\Localization.en-US.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\AnyValue\BoxConfig.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\AnyValue\Localization.cs-CZ.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\AnyValue\Localization.en-US.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\AverageValue\BoxConfig.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\AverageValue\Localization.cs-CZ.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\AverageValue\Localization.en-US.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\MaxValue\BoxConfig.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\MaxValue\Localization.cs-CZ.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\MaxValue\Localization.en-US.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\MinValue\BoxConfig.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\MinValue\Localization.cs-CZ.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\MinValue\Localization.en-US.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\SumOfValues\BoxConfig.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\SumOfValues\Localization.cs-CZ.xml" />
+    <Content Include="SDKLTask\Quantifiers\Aggregation\SumOfValues\Localization.en-US.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MetabaseLayer\DB\LISpMinerMetabaseEmpty.mdb.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="SDFFTTask\Quantifiers\Functional\generated\" />
+    <Folder Include="SDKLTask\Quantifiers\Functional\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.CFTask.Quantifiers.Functional.VariationRatio</Identifier>
+  <Label>Variation ratio</Label>
+  <Hint>Variation ratio = 1-f(modal)</Hint>
+  <Categories>
+    <Category>
+      <Name>CFMiner</Name>
+      <Label>CF-Miner</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relace</Label>
+      <Hint>Relace</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Equal</Name>
+          <Label>Je rovno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThan</Name>
+          <Label>Menší než</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThanOrEqual</Name>
+          <Label>Menší nebo rovno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThan</Name>
+          <Label>Větší než</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqual</Name>
+          <Label>Větší nebo rovno</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Treshold</Name>
+      <Label>Prahová hodnota</Label>
+      <Hint>Prahová hodnota je porovnávána s aktuální hodnotou.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>CFTask</Name>
+      <Label>CF úloha</Label>
+      <Hint>Vytvoří novou krabičku CF úloha.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

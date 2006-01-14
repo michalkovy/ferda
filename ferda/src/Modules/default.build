@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<project name="Ferda Modules" default="build" basedir=".">
+	<description>Ferda Modules</description>
+	<target name="build" description="Build Modules">
+		<copy todir="${build.dir}">
+			<fileset>
+				<include name="BoxModulesServices/**.xml"/>
+				<include name="BoxModulesServices/**.svg"/>
+				<include name="BoxModulesServices/**.ico"/>
+				<include name="BoxModulesServices/**.zip"/>
+			</fileset>
+		</copy>
+		<csc target="library" output="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}" doc="${path::combine(build.dir,'FerdaBoxInterfaces.xml')}" debug="${debug}" optimize="${optimize}">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="**/generated/**.cs"/>
+				<exclude name="Core/Base/generated/*.cs"/>
+				<include name="Core/Helpers/**.cs"/>
+				<include name="Core/Quantifiers/**.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+		<copy todir="${frontendbin.dir}">
+			<fileset basedir="${build.dir}">
+				<include name="FerdaBoxInterfaces.*"/>
+			</fileset>
+		</copy>
+		<csc target="library" output="${path::combine(build.dir,'FerdaServerBase.dll')}" doc="${path::combine(build.dir,'FerdaServerBase.xml')}" debug="${debug}" optimize="${optimize}">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="Core/Base/**.cs"/>
+				<exclude name="Core/Base/Exceptions.cs"/>
+				<include name="Core/Boxes/**.cs"/>
+				<exclude name="**/generated/**.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+		<csc target="library" output="${path::combine(build.dir,'FerdaDataMiningCommonBoxes.dll')}" doc="${path::combine(build.dir,'FerdaDataMiningCommonBoxes.xml')}" debug="${debug}" optimize="${optimize}">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="BoxModulesServices/DataMiningCommon/**.cs"/>
+				<exclude name="BoxModulesServices/DataMiningCommon/**/generated/**.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+		<if test="${platform::is-win32()}">
+			<csc target="library" output="${path::combine(build.dir,'FerdaLMTasksBoxes.dll')}" doc="${path::combine(build.dir,'FerdaLMTasksBoxes.xml')}" debug="${debug}" optimize="${optimize}">
+				<nowarn>
+					<warning number="1591"/>
+				</nowarn>
+				<sources>
+					<include name="BoxModulesServices/LISpMinerTasks/**.cs"/>
+					<exclude name="BoxModulesServices/LISpMinerTasks/**/generated/**.cs"/>
+					<!-- <include name="Core/Quantifiers/**.cs"/> -->
+				</sources>
+				<references>
+					<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+					<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+					<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
+					<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+					<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+					<include name="System.dll"/>
+					<include name="System.Data.dll"/>
+					<include name="System.Xml.dll"/>
+				</references>
+			</csc>
+		</if>
+	</target>
+	<target name="clean">
+
+	<!-- asi zbytecny
+		<delete failonerror="false">
+			<fileset basedir="${build.dir}">
+				<include name="FerdaModules.dll*"/>
+			</fileset>
+		</delete>
+		<delete failonerror="false">
+			<fileset basedir="${build.dir}">
+				<include name="Boxes/Database/*.xml"/>
+				<include name="Boxes/Database/*.svg"/>
+				<include name="Boxes/Database/*.ico"/>
+			</fileset>
+		</delete>
+		-->
+	</target>
+</project>

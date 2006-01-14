@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.EquivalenceClass</Identifier>
+  <Label>Třída ekvivalence</Label>
+  <Hint>Určení třídy ekvivalence atrubutů či literálů v rámci jednoho booleského dílčího cedentu</Hint>
+  <Categories>
+    <Category>
+      <Name>BooleanAttribute</Name>
+      <Label>Booleovský atribut</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>LiteralSettingOrAttribute</Name>
+      <Label>Zadání literálu nebo atribut</Label>
+      <Hint>Určí množinu atributů nebo zadání literálů pro třídu ekvivalence.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>BooleanPartialCedentSetting</Name>
+      <Label>Zadání booleovského dílčího cedentu</Label>
+      <Hint>Vytvoří novou krabičku zadání booleovnského dílčího cedentu.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

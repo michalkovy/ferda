@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.MultiColumn</Identifier>
+  <Label>Složený sloupec</Label>
+  <Hint>Určení složeného sloupce a jeho parametrů</Hint>
+  <Categories>
+    <Category>
+      <Name>Datasource</Name>
+      <Label>Zdroj dat</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>Column</Name>
+      <Label>Sloupec</Label>
+      <Hint>Určí sloupec určený pro „přetypování“ na složený sloupec</Hint>
+    </Socket>
+    <Socket>
+      <Name>MCNames</Name>
+      <Label>Jména</Label>
+      <Hint>Jména položek, ze kterých se skládá složený sloupec odělená středníkem ';'.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MCLengths</Name>
+      <Label>Délky</Label>
+      <Hint>Délky políček ve složeném sloupci (bez oddělovače); 0 pro proměnnou délku políček s oddělovači.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MCdelimiter</Name>
+      <Label>Oddělovač</Label>
+      <Hint>Oddělovací textový řetězec pro složený sloupec.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>Column</Name>
+      <Label>Sloupec</Label>
+      <Hint>Vytvoří krabičku sloupce s názvem @Name.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.DerivedColumn</Identifier>
+  <Label>Odvozený sloupec</Label>
+  <Hint>Určení odvozeného sloupce a jeho parametrů</Hint>
+  <Categories>
+    <Category>
+      <Name>Datasource</Name>
+      <Label>Zdroj dat</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>TestColumnSelectExpression</Name>
+      <Label>Test formule</Label>
+      <Hint>Ověří správnost výrazu.</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>DataMatrix</Name>
+      <Label>Tabulka</Label>
+      <Hint>Určí tabulku z databáze, ze které odvozený sloupec pochází</Hint>
+    </Socket>
+    <Socket>
+      <Name>Formula</Name>
+      <Label>Výraz</Label>
+      <Hint>Výraz pro výpočet hodnot sloupce.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueSubType</Name>
+      <Label>Typ hodnot</Label>
+      <Hint>Typ hodnot sloupce.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Unknown</Name>
+          <Label>Unknown</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>BooleanType</Name>
+          <Label>Boolean</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DateType</Name>
+          <Label>Date</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DateTimeType</Name>
+          <Label>Date Time</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>TimeType</Name>
+          <Label>Time</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>ShortIntegerType</Name>
+          <Label>Short Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>IntegerType</Name>
+          <Label>Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LongIntegerType</Name>
+          <Label>Long Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>UnsignedShortIntegerType</Name>
+          <Label>Unsigned Short Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>UnsignedIntegerType</Name>
+          <Label>Unsigned Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>UnsignedLongIntegerType</Name>
+          <Label>Unsigned Long Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>FloatType</Name>
+          <Label>Float</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DoubleType</Name>
+          <Label>Double</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DecimalType</Name>
+          <Label>Decimal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>StringType</Name>
+          <Label>String</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ValueMin</Name>
+      <Label>Minimum</Label>
+      <Hint>Minimální hodnota ve sloupci.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueMax</Name>
+      <Label>Maximum</Label>
+      <Hint>Maximální hodnota ve sloupci.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueAverage</Name>
+      <Label>Průměr</Label>
+      <Hint>Průměrná hodnota ve sloupci.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueVariability</Name>
+      <Label>Rozptyl</Label>
+      <Hint>Rozptyl hodnot ve sloupci.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueStandardDeviation</Name>
+      <Label>Směrodatná odchylka</Label>
+      <Hint>Střední odchylka hodnot ve sloupci .</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueDistincts</Name>
+      <Label>Počet různých hodnot</Label>
+      <Hint>Počet různých hodnot ve sloupci.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Statistics</Name>
+      <Label>Statistika</Label>
+    </PropertyCategory>
+    <PropertyCategory>
+      <Name>Derived column</Name>
+      <Label>Odvozený sloupec</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>Attribute</Name>
+      <Label>Atribut</Label>
+      <Hint>Kategorizuje sloupec, tím vytváří novou krabičku atributu.</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EachValueOneCategoryAttribute</Name>
+      <Label>Each value one category attribute</Label>
+      <Hint>Each value of the column becomes one category</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EquidistantIntervalsAttribute</Name>
+      <Label>Equidistant intervals attribute</Label>
+      <Hint>Intervals of the same length; parameters are starting value and length of intervals</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EquifrequencyIntervalsAttribute</Name>
+      <Label>Equifrequency intervals attribute</Label>
+      <Hint>There will be nearly the same number objects in each interval; parameter is number of intervals in which you want divide objects</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+  <Phrases>
+    <Phrase>
+      <PhraseIdentifier>TestColumnSelectExpression</PhraseIdentifier>
+      <PhraseText>Test formule odvozeného sloupce</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>TestColumnSelectExpressionSucceed</PhraseIdentifier>
+      <PhraseText>Zadnaná formule je formulována správně.</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>TestColumnSelectExpressionFailed</PhraseIdentifier>
+      <PhraseText>Zadaná formule není ve správném formátu! Zadejte prosím správnou formuli.</PhraseText>
+    </Phrase>
+  </Phrases>
+</BoxLocalization>

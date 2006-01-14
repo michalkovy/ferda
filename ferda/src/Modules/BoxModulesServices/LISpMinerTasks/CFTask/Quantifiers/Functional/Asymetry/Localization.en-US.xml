@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.CFTask.Quantifiers.Functional.Asymetry</Identifier>
+  <Label>Asymetry</Label>
+  <Hint>Asymetry coeficient of cardinal values</Hint>
+  <Categories>
+    <Category>
+      <Name>CFMiner</Name>
+      <Label>CF-Miner</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relation</Label>
+      <Hint>Relation</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Equal</Name>
+          <Label>Equal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThan</Name>
+          <Label>Less than</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThanOrEqual</Name>
+          <Label>Less than or equal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThan</Name>
+          <Label>Greater than</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqual</Name>
+          <Label>Greater than or equal</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Treshold</Name>
+      <Label>Treshold</Label>
+      <Hint>Treshold is compared with value.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>CFTask</Name>
+      <Label>CF Task</Label>
+      <Hint>Creates a new CF task box.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

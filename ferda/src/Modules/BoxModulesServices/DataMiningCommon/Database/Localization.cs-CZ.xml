@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.Database</Identifier>
+  <Label>Databáze</Label>
+  <Hint>Určení datového zdroje a jeho parametrů</Hint>
+  <Categories>
+    <Category>
+      <Name>Datasource</Name>
+      <Label>Zdroj dat</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>TestConnectionString</Name>
+      <Label>Test připojovacího řetězce</Label>
+      <Hint>Provede test připojení k databázi se zadaným připojovacím řetězcem</Hint>
+    </Action>
+    <Action>
+      <Name>ReloadInfo</Name>
+      <Label>Obnovit</Label>
+      <Hint>Provede znovunačtení struktury a statistik databáze, tabulek a sloupců.</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>ConnectionString</Name>
+      <Label>ODBC připojovací řetězec</Label>
+      <Hint>Připojovací řetězec pro určení ODBC datového zdroje dat pro analýzu.</Hint>
+    </Socket>
+    <Socket>
+      <Name>DatabaseName</Name>
+      <Label>Jméno databáze</Label>
+      <Hint>Jméno databáze.</Hint>
+    </Socket>
+    <Socket>
+      <Name>DataSource</Name>
+      <Label>Datový zdroj</Label>
+      <Hint>Jméno serveru nebo jméno souboru datového zdroje.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Driver</Name>
+      <Label>Ovladač</Label>
+      <Hint>Jméno ODBC ovladače pro toto spojení.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ServerVersion</Name>
+      <Label>Verze serveru</Label>
+      <Hint>Verze serveru, ke kterému je klient připojen.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>DataMatrix</Name>
+      <Label>Tabulka @Name</Label>
+      <Hint>Vytvoří krabičku odpovídající tabulce @Name</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>AllDataMatrixes</Name>
+      <Label>Všechny tabulky v DB</Label>
+      <Hint>Vytvoří krabičky pro všechy tabulky v této databázi.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+  <Phrases>
+    <Phrase>
+      <PhraseIdentifier>ActionTestConnectionString</PhraseIdentifier>
+      <PhraseText>Test připojovacího řetězce</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>ActionTestConnectionStringSucceed</PhraseIdentifier>
+      <PhraseText>Test připojení pomocí zadaného připojovacího řetězce se úspěšně podařil.</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>ActionTestConnectionStringFailed</PhraseIdentifier>
+      <PhraseText>Test připojení pomocí zadaného připojovacího řetězce se nezdařil! Zadejte prosím správný připojovací řetězec.</PhraseText>
+    </Phrase>
+  </Phrases>
+</BoxLocalization>

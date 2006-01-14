@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.KLTask.Quantifiers.Aggregation.AverageValue</Identifier>
+  <Label>Average value</Label>
+  <Hint>Average frequency from range.</Hint>
+  <Categories>
+    <Category>
+      <Name>KLMiner.Quantifiers.Aggregation</Name>
+      <Label>KL-Miner.Quantifiers.Aggregation</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>RowFrom</Name>
+      <Label>From row</Label>
+      <Hint>Definition of range.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Half</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>All</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>RowTo</Name>
+      <Label>To row</Label>
+      <Hint>Definition of range.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Half</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>All</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ColumnFrom</Name>
+      <Label>From column</Label>
+      <Hint>Definition of range.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Half</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>All</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ColumnTo</Name>
+      <Label>To column</Label>
+      <Hint>Definition of range.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Half</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>All</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relation</Label>
+      <Hint>Relation</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Equal</Name>
+          <Label>Equal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThan</Name>
+          <Label>Less than</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThanOrEqual</Name>
+          <Label>Less than or equal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThan</Name>
+          <Label>Greater than</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqual</Name>
+          <Label>Greater than or equal</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Treshold</Name>
+      <Label>Treshold</Label>
+      <Hint>Treshold is compared with value.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Units</Name>
+      <Label>Units</Label>
+      <Hint>Unit for expression of treshold and actual value.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>RelativeToActCondition</Name>
+          <Label>Relative [%] to act condition</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>RelativeToAllObjects</Name>
+          <Label>Relative [%] to all objects</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>RelativeToMaxFrequency</Name>
+          <Label>Relative [%] to max frequency</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>AbsoluteNumber</Name>
+          <Label>Absolute number</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Category range</Name>
+      <Label>Category range</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>KLTask</Name>
+      <Label>KL Task</Label>
+      <Hint>Creates a new KL task box.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

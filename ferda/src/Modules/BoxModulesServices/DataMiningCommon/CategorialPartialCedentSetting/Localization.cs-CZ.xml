@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.CategorialPartialCedentSetting</Identifier>
+  <Label>Kategoriální dílčí ced.</Label>
+  <Hint>Zadání kategoriálního dílčího cedentu a jeho parametrů</Hint>
+  <Categories>
+    <Category>
+      <Name>Attribute</Name>
+      <Label>Atributy</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>Attribute</Name>
+      <Label>Atribut</Label>
+      <Hint>Určení zdrojových atributů pro vytvoření zadání dílčího kategoriálního cedentu.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MinLen</Name>
+      <Label>Minimal length</Label>
+      <Hint>Minimální délka dílčího cedentu.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MaxLen</Name>
+      <Label>Maximal length</Label>
+      <Hint>Minimální délka dílčího cedentu.</Hint>
+    </Socket>
+  </Sockets>
+</BoxLocalization>

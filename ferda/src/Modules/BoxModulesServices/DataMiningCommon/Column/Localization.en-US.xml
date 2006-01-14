@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.Column</Identifier>
+  <Label>Column</Label>
+  <Hint>Defines column of the table and its parameters</Hint>
+  <Categories>
+    <Category>
+      <Name>Datasource</Name>
+      <Label>Datasource</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>DataMatrixOrMultiColumn</Name>
+      <Label>Data matrix or Multi-column</Label>
+      <Hint>Defines data matrix or Multi-column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Name</Name>
+      <Label>Name</Label>
+      <Hint>Name of column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueSubType</Name>
+      <Label>Value type</Label>
+      <Hint>Column data type.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Unknown</Name>
+          <Label>Unknown</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>BooleanType</Name>
+          <Label>Boolean</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DateType</Name>
+          <Label>Date</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DateTimeType</Name>
+          <Label>Date Time</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>TimeType</Name>
+          <Label>Time</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>ShortIntegerType</Name>
+          <Label>Short Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>IntegerType</Name>
+          <Label>Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LongIntegerType</Name>
+          <Label>Long Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>UnsignedShortIntegerType</Name>
+          <Label>Unsigned Short Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>UnsignedIntegerType</Name>
+          <Label>Unsigned Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>UnsignedLongIntegerType</Name>
+          <Label>Unsigned Long Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>FloatType</Name>
+          <Label>Float</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DoubleType</Name>
+          <Label>Double</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DecimalType</Name>
+          <Label>Decimal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>StringType</Name>
+          <Label>String</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ValueMin</Name>
+      <Label>Minimum</Label>
+      <Hint>Minimal value in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueMax</Name>
+      <Label>Maximum</Label>
+      <Hint>Maximal value in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueAverage</Name>
+      <Label>Average</Label>
+      <Hint>Average value in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueVariability</Name>
+      <Label>Variability</Label>
+      <Hint>Variability of values in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueStandardDeviation</Name>
+      <Label>Standard deviation</Label>
+      <Hint>Average deviation of values in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueDistincts</Name>
+      <Label>Distinct values</Label>
+      <Hint>Number of distinct values in the column.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Statistics</Name>
+      <Label>Statistics</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>MultiColumn</Name>
+      <Label>Multi-column</Label>
+      <Hint>User defines the column as Multi-column. This Multi-column can serve as a table in a specific context (it can be used for creation of new column boxes)</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>Attribute</Name>
+      <Label>Attribute</Label>
+      <Hint>Categorizes the column thus creating new attribute box.</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EachValueOneCategoryAttribute</Name>
+      <Label>Each value one category attribute</Label>
+      <Hint>Each value of the column becomes one category</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EquidistantIntervalsAttribute</Name>
+      <Label>Equidistant intervals attribute</Label>
+      <Hint>Intervals of the same length; parameters are starting value and length of intervals</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EquifrequencyIntervalsAttribute</Name>
+      <Label>Equifrequency intervals attribute</Label>
+      <Hint>There will be nearly the same number objects in each interval; parameter is number of intervals in which you want divide objects</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.CategorialPartialCedentSetting</Identifier>
+  <Label>CategorialPCS</Label>
+  <Hint>Categorial partial cedent setting i. e. setting for categorial partial cedent and it`s parameters</Hint>
+  <Categories>
+    <Category>
+      <Name>Attribute</Name>
+      <Label>Attributes</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>Attribute</Name>
+      <Label>Attribute</Label>
+      <Hint>Selection of source attributes for the creation of partial categorial cedent.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MinLen</Name>
+      <Label>Minimal length</Label>
+      <Hint>Minimal length of partial cedent.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MaxLen</Name>
+      <Label>Maximal length</Label>
+      <Hint>Maximal length of partial cedent.</Hint>
+    </Socket>
+  </Sockets>
+</BoxLocalization>

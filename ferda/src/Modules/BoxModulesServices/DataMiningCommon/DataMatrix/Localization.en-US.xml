@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.DataMatrix</Identifier>
+  <Label>Data matrix</Label>
+  <Hint>Defines data matrix and its parameters</Hint>
+  <Categories>
+    <Category>
+      <Name>Datasource</Name>
+      <Label>Datasource</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>TestPrimaryKeyColumns</Name>
+      <Label>Test primary key</Label>
+      <Hint>This will test enered primary key for duplicit values.</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>Database</Name>
+      <Label>Database</Label>
+      <Hint>Defines data source for data matrix</Hint>
+    </Socket>
+    <Socket>
+      <Name>Name</Name>
+      <Label>Name</Label>
+      <Hint>Name of table.</Hint>
+    </Socket>
+    <Socket>
+      <Name>PrimaryKeyColumns</Name>
+      <Label>Primary key</Label>
+      <Hint>List of columns that define the primary key of table.</Hint>
+    </Socket>
+    <Socket>
+      <Name>RecordCount</Name>
+      <Label>Records count</Label>
+      <Hint>Number of rows in the table (pre-computed field).</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Statistics</Name>
+      <Label>Statistics</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>DerivedColumn</Name>
+      <Label>Derived column</Label>
+      <Hint>Creates box of a new defived column</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>Column</Name>
+      <Label>Column @Name</Label>
+      <Hint>Creates box corresponding to the column @Name</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>AllColumns</Name>
+      <Label>All columns in data matrix</Label>
+      <Hint>Creates boxes for all columns inthis datamatrix.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+  <Phrases>
+    <Phrase>
+      <PhraseIdentifier>TestPrimaryKey</PhraseIdentifier>
+      <PhraseText>Test primary key</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>ActionTestTestPrimaryKeySucceed</PhraseIdentifier>
+      <PhraseText>No duplicates found in specified primary key.</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>ActionTestTestPrimaryKeyFailed</PhraseIdentifier>
+      <PhraseText>Duplicit values found in specified primary key!</PhraseText>
+    </Phrase>
+  </Phrases>
+</BoxLocalization>

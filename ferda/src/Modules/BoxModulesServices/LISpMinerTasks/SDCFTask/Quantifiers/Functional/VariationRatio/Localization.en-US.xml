@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.SDCFTask.Quantifiers.Functional.VariationRatio</Identifier>
+  <Label>Variation ratio</Label>
+  <Hint>Variation ratio = 1-f(modal)</Hint>
+  <Categories>
+    <Category>
+      <Name>SDCFMiner</Name>
+      <Label>SDCF-Miner</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>OperationMode</Name>
+      <Label>Operation mode</Label>
+      <Hint>Operation mode</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>FirstSetFrequencies</Name>
+          <Label>First set frequencies</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>SecondSetFrequencies</Name>
+          <Label>Second set frequencies</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DifferencesOfAbsoluteFrequencies</Name>
+          <Label>Differences of absolute frequencies</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DifferencesOfRelativeFrequencies</Name>
+          <Label>Differences of relative frequencies</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DifferenceOfQuantifierValues</Name>
+          <Label>Difference of quantifier values</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>AbsoluteDifferenceOfQuantifierValues</Name>
+          <Label>Absolute difference of quantifier values</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relation</Label>
+      <Hint>Relation</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Equal</Name>
+          <Label>Equal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThan</Name>
+          <Label>Less than</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThanOrEqual</Name>
+          <Label>Less than or equal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThan</Name>
+          <Label>Greater than</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqual</Name>
+          <Label>Greater than or equal</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Treshold</Name>
+      <Label>Treshold</Label>
+      <Hint>Treshold is compared with value.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>SDCFTask</Name>
+      <Label>SDCF Task</Label>
+      <Hint>Creates a new SDCF task box.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

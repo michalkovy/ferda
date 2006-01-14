@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.DerivedColumn</Identifier>
+  <Label>Derived column</Label>
+  <Hint>Defines column derived from column(s) of a table and its parameters</Hint>
+  <Categories>
+    <Category>
+      <Name>Datasource</Name>
+      <Label>Datasource</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>TestColumnSelectExpression</Name>
+      <Label>Test formula</Label>
+      <Hint>This will test formula expression validity.</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>DataMatrix</Name>
+      <Label>Data matrix</Label>
+      <Hint>Defines source data matrix for derived column</Hint>
+    </Socket>
+    <Socket>
+      <Name>Formula</Name>
+      <Label>Formula</Label>
+      <Hint>Formula to calculate column values.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueSubType</Name>
+      <Label>Value type</Label>
+      <Hint>Column data type.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Unknown</Name>
+          <Label>Unknown</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>BooleanType</Name>
+          <Label>Boolean</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DateType</Name>
+          <Label>Date</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DateTimeType</Name>
+          <Label>Date Time</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>TimeType</Name>
+          <Label>Time</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>ShortIntegerType</Name>
+          <Label>Short Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>IntegerType</Name>
+          <Label>Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LongIntegerType</Name>
+          <Label>Long Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>UnsignedShortIntegerType</Name>
+          <Label>Unsigned Short Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>UnsignedIntegerType</Name>
+          <Label>Unsigned Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>UnsignedLongIntegerType</Name>
+          <Label>Unsigned Long Integer</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>FloatType</Name>
+          <Label>Float</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DoubleType</Name>
+          <Label>Double</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DecimalType</Name>
+          <Label>Decimal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>StringType</Name>
+          <Label>String</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ValueMin</Name>
+      <Label>Minimum</Label>
+      <Hint>Minimal value in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueMax</Name>
+      <Label>Maximum</Label>
+      <Hint>Maximal value in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueAverage</Name>
+      <Label>Average</Label>
+      <Hint>Average value in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueVariability</Name>
+      <Label>Variability</Label>
+      <Hint>Variability of values in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueStandardDeviation</Name>
+      <Label>Standard deviation</Label>
+      <Hint>Average deviation of values in the column.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ValueDistincts</Name>
+      <Label>Distinct values</Label>
+      <Hint>Number of distinct values in the column.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Statistics</Name>
+      <Label>Statistics</Label>
+    </PropertyCategory>
+    <PropertyCategory>
+      <Name>Derived column</Name>
+      <Label>Derived column</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>Attribute</Name>
+      <Label>Attribute</Label>
+      <Hint>Categorizes the column thus creating new attribute box.</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EachValueOneCategoryAttribute</Name>
+      <Label>Each value one category attribute</Label>
+      <Hint>Each value of the column becomes one category</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EquidistantIntervalsAttribute</Name>
+      <Label>Equidistant intervals attribute</Label>
+      <Hint>Intervals of the same length; parameters are starting value and length of intervals</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EquifrequencyIntervalsAttribute</Name>
+      <Label>Equifrequency intervals attribute</Label>
+      <Hint>There will be nearly the same number objects in each interval; parameter is number of intervals in which you want divide objects</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+  <Phrases>
+    <Phrase>
+      <PhraseIdentifier>TestColumnSelectExpression</PhraseIdentifier>
+      <PhraseText>Test of the derived column formula</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>TestColumnSelectExpressionSucceed</PhraseIdentifier>
+      <PhraseText>Specified derived column formula expression is correct.</PhraseText>
+    </Phrase>
+    <Phrase>
+      <PhraseIdentifier>TestColumnSelectExpressionFailed</PhraseIdentifier>
+      <PhraseText>Specified derived column formula expression is not correct!</PhraseText>
+    </Phrase>
+  </Phrases>
+</BoxLocalization>

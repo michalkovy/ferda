@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.KLTask.Quantifiers.Functional.FunctionSumOfRows</Identifier>
+  <Label>Function - sum of rows</Label>
+  <Hint>Function with condition for sum of maximal values from rows (value in [%])</Hint>
+  <Categories>
+    <Category>
+      <Name>KLMiner.Quantifiers.Functional</Name>
+      <Label>KL-Miner.Kvantifikátory.Funkční</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>RowFrom</Name>
+      <Label>Od řádku</Label>
+      <Hint>Definice rozpětí</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Polovina</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>Všechny</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>RowTo</Name>
+      <Label>Do řádku</Label>
+      <Hint>Definice rozpětí</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Polovina</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>Všechny</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ColumnFrom</Name>
+      <Label>Od slopce</Label>
+      <Hint>Definice rozpětí</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Polovina</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>Všechny</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ColumnTo</Name>
+      <Label>Do sloupce</Label>
+      <Hint>Definice rozpětí</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Polovina</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>Všechny</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relace</Label>
+      <Hint>Relace</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Equal</Name>
+          <Label>Je rovno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThan</Name>
+          <Label>Menší než</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThanOrEqual</Name>
+          <Label>Menší nebo rovno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThan</Name>
+          <Label>Větší než</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqual</Name>
+          <Label>Větší nebo rovno</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Treshold</Name>
+      <Label>Prahová hodnota</Label>
+      <Hint>Prahová hodnota je porovnávána s aktuální hodnotou.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Units</Name>
+      <Label>Units</Label>
+      <Hint>Unit for expression of treshold and actual value.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>RelativeNumber</Name>
+          <Label>Relative number</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>AbsoluteNumber</Name>
+          <Label>Absolute number</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Category range</Name>
+      <Label>Rozmezí kategorií</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>KLTask</Name>
+      <Label>KL úloha</Label>
+      <Hint>Vytvoří novou krabičku KL úloha.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>
