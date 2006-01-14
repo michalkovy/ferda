@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project name="Fedra library sources" default="build" basedir=".">
+	<description>project Ferda library sources</description>
+	<target name="build" description="Builds libsrc" 
+		depends="DockDotNET, Netron" />
+	<target name="clean" description="Cleans libsrc" 
+		depends="DockDotNETClean, NetronClean" />
+	<target name ="DockDotNET">
+		<if test="${platform::is-win32()}">
+			<nant buildfile="DockDotNET/default.build" target="build" />
+		</if>
+	</target>
+	<target name="Netron" >
+		<nant buildfile="NAFGraph/default.build" target="build" />
+	</target>
+	<target name ="DockDotNETClean">
+		<nant buildfile="DockDotNET/default.build" target="clean" />
+	</target>
+	<target name="NetronClean" >
+		<nant buildfile="NAFGraph/default.build" target="clean" />
+	</target>	
+</project>

@@ -1,0 +1,453 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50215</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{95C388C8-DD59-4993-BCC3-14A0862A24D8}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>NetronGraphLib</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Netron.GraphLib</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE; </DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>NetronLibDoc.xml</DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Main items|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Automata|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'LogoSyntax|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NetronMaths, Version=2.1.1786.17601, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NetronMaths.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\Attributes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\GraphMLDataAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\BezierHandleCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\ConnectionCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\ConnectorCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\ShapeCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ConnectionSummary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ConnectionSummaryCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\FerdaConstants.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\GraphLibConfigurationHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\GraphObjectsLibrary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\GraphObjectsLibraryCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ShapeSummary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ShapeSummaryCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConnectionPainter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\BezierEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\BezierHandle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\BezierPainter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\BezierTracker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Bezier\TangentHandle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Default\DefaultPainter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connections\Rectangular\RectangularPainter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConnectionTracker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Connector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Delegates\ConnectionEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Delegates\Delegates.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Delegates\PropertySpecEventHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Enums\AutomataDataTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Enums\Enums.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphAbstract.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphLayout\GraphLayout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphLayout\LayoutFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GraphLayout\SpringEmbedder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IAutomataCell.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IGraphLayout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IGraphSite.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\ILayoutNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\Binary\BinarySerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\Collections\DataCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\DataExtensionType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\DataType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\DefaultType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\EdgeType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\EndPointType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\enums\EndPointTypeType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\enums\GraphEdgeDefaultType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\enums\KeyForType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\GraphMLSerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\GraphMLType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\GraphType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\HyperedgeType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\KeyType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\LocatorType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\NodeType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\GraphML\PortType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Selector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shape.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ShapeTracker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tracker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\ConnectionStyleEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\GraphControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\GraphControlDesigner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\GraphMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\GraphShapesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\GraphTreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\GraphUserControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\PointFTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\ShapesTab.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ShapesTabItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\SizeFTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Stamper.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\TextEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TextUIEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ADTConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\ConnectionTypeEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Controls\NComboBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Controls\NetronGraphControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Controls\NetronGraphControlCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Controls\NListItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Controls\NListtemCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\Controls\NTextBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\FreeArrow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\FreeArrowCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\MouseCursors.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\PropertyBag.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\PropertySpec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\PropertySpecEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\PropertyTable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="default.build" />
+    <None Include="NetronLicense.rtf" />
+    <Content Include="NetronLicense.txt" />
+    <EmbeddedResource Include="Resources\Add.cur" />
+    <EmbeddedResource Include="Resources\Cross.cur" />
+    <EmbeddedResource Include="Resources\Grip.cur" />
+    <EmbeddedResource Include="Resources\Move.cur" />
+    <EmbeddedResource Include="Resources\Select.cur" />
+    <EmbeddedResource Include="Resources\SimpleNode.gif" />
+    <EmbeddedResource Include="Resources\UnknownShape.gif" />
+    <EmbeddedResource Include="UI\GraphControl.bmp" />
+    <EmbeddedResource Include="UI\GraphShapesView.bmp" />
+    <EmbeddedResource Include="UI\Stamper.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
