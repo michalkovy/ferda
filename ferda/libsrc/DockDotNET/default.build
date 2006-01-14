@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<project name="DockDotNET docking library" default="build" basedir=".">
+	<description>Build file for the docking library</description>
+	<target name="build">
+		<!-- Tohle zatim jeste neumim pouzit
+		<csc target="library" output="${path::combine(build.dir,'DockDotNET.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="*.cs" />
+			</sources>
+			<resources>
+				<include name="img/FlatButton.bmp" />
+			</resources>
+		</csc>
+		-->
+		<csc target="library" output="${path::combine(build.dir,'DockDotNET.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="*.cs" />
+			</sources>
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Drawing.dll"/>
+			</references>
+			<resources>
+				<include name="img/FlatButton.bmp" />
+			</resources>
+		</csc>
+	</target>
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset basedir="${build.dir}">
+				<include name="DockDotNET.dll*" />
+			</fileset>
+
+			<!--
+			<fileset basedir="${build.dir}">
+				<include name="FerdaProjectManager.dll*"/>
+			</fileset>
+			-->			
+		</delete>
+	</target>
+</project>

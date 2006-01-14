@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project name="Netron graphical library" default="build" basedir=".">
+	<target name="build">
+		<csc target="library" output="${path::combine(build.dir,'NAFGraph.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="/*.cs" />
+				<include name="Attributes/*.cs" />
+				<include name="Collections/*.cs" />
+				<include name="Configuration/*.cs" />
+				<include name="Connections/Bezier/*.cs" />
+				<include name="Connections/Default/*.cs" />
+				<include name="Connections/Rectangular/*.cs" />
+				<include name="Delegates/*.cs" />
+				<include name="Enums/*.cs" />
+				<include name="GraphLayout/*.cs" />
+				<include name="Interfaces/*.cs" />
+				<include name="IO/GraphML/*.cs" />
+				<include name="IO/GraphML/Binary/*.cs" />
+				<include name="IO/GraphML/Collections/*.cs" />
+				<include name="IO/GraphML/enums/*.cs" />
+				<include name="Delegates/*.cs" />
+				<include name="UI/*.cs" />
+				<include name="Utils/*.cs" />
+				<include name="Utils/Controls/*.cs" />
+
+				<!-- <include name="NAFGraph/**.cs" /> -->
+			</sources>
+
+			<resources  prefix="Netron.GraphLib.Resources" >
+				<include name="Resources/*.cur" />
+				<include name="Resources/*.gif" />
+			</resources>
+			<resources prefix="Netron.GraphLib.UI">
+				<include name="UI/*.bmp" />
+			</resources>
+			
+			<references>
+				<include name="System.dll" />
+				<include name="System.Data.dll" />
+				<include name="System.Design.dll" />
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll" />
+				<include name="System.XML.dll" />
+				
+				<!-- Tohle se bude jeste taky predelavat na spravnou cestu-->				
+				<include name="${path::combine(lib.dir,'NetronMaths.dll')}" />
+			</references>
+			
+		</csc>
+	</target>
+	<target name="clean">
+		<delete failonerror="false">
+			<!--
+			<fileset basedir="${build.dir}">
+				<include name="FerdaProjectManager.dll*"/>
+			</fileset>
+			-->
+			<fileset basedir="${build.dir}">
+				<include name="NetronGraphLib.dll*" />
+			</fileset>
+		</delete>
+	</target>
+</project>
