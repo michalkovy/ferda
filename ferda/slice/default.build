@@ -1,0 +1,193 @@
+﻿<?xml version="1.0"?>
+<project name="Slice to C#" default="slice" basedir=".">
+	<description>Generates .cs files from slice</description>
+	<!--
+		Požadované vlastnosti:
+			* build.dir		- (path) kam se má vytvořená dokumentace dát
+	-->
+	<target name="clean" description="Smaže vytvořené">
+		<delete failonerror="false">
+			<fileset basedir="${build.dir}">
+				<include name="**/generated/**.cs"/>
+			</fileset>
+		</delete>
+		<delete dir="${path::combine(moddoc.dir,'modules')}" failonerror="false"/>
+	</target>
+	<target name="slice" description="Create C# files from slice">
+		<uptodate property="actual1">
+			<sourcefiles>
+				<include name="Modules/*.ice"/>
+			</sourcefiles>
+			<targetfiles>
+				<include name="${build.dir}/Modules/Core/Base/generated/*.cs"/>
+			</targetfiles>
+		</uptodate>
+		<uptodate property="actual2">
+			<sourcefiles>
+				<include name="Modules/Boxes/**/*.ice"/>
+			</sourcefiles>
+			<targetfiles>
+				<include name="${build.dir}/Modules/BoxModulesServices/**/generated/*.cs"/>
+			</targetfiles>
+		</uptodate>
+		<if test="${not(actual1) or not(actual2)}">
+			<echo message="Generuji .cs z .ice souboru v adresari Modules..."/>
+			<mkdir dir="${build.dir}/Modules/Core/Base/generated"/>
+			<exec program="slice2cs">
+				<arg value="-I."/>
+				<arg value="--output-dir"/>
+				<arg value="${build.dir}/Modules/Core/Base/generated"/>
+				<arg file="Modules/Modules.ice"/>
+				<arg file="Modules/Exceptions.ice"/>
+				<arg file="Modules/BoxType.ice"/>
+				<arg file="Modules/BuiltinSequences.ice"/>
+				<arg file="Modules/BasicPropertyTypes.ice"/>
+				<arg file="Modules/OtherPropertyTypes.ice"/>
+				<arg file="Modules/Common.ice"/>
+			</exec>
+			<echo message="Generuji .cs z .ice souboru v adresari ModulesManager..."/>
+			<mkdir dir="${build.dir}/ModulesManager/generated"/>
+			<exec program="slice2cs">
+				<arg value="-I."/>
+				<arg value="--output-dir"/>
+				<arg value="${build.dir}/ModulesManager/generated"/>
+				<arg file="ModulesManager/ManagersEngine.ice"/>
+			</exec>
+			<echo message="Generuji .cs z .ice souboru v adresari Modules/Boxes..."/>
+			<property name="parentDirectoryName" value="${path::get-full-path('Modules/Boxes/')}"/>
+			<!-- <echo message="Parent directory name: ${parentDirectoryName}" /> -->
+			<foreach item="Folder" property="foldername">
+				<in>
+					<items>
+						<include name="Modules/Boxes/**"/>
+					</items>
+				</in>
+				<do>
+					<!-- <echo message="Folder name: ${path::get-full-path(foldername)}" /> -->
+					<!-- <echo message="***: ${foldername}" />  -->
+					<if test="${not(string::ends-with(foldername, 'Boxes'))}">
+						<!-- <echo message="foldername          : ${foldername}" /> -->
+						<!-- <echo message="parentDirectoryName : ${parentDirectoryName}" /> -->
+						<if test="${platform::is-win32()}">
+							<property name="directoryName" value="${string::substring(foldername, string::get-length(parentDirectoryName), string::get-length(path::get-full-path(foldername)) - string::get-length(parentDirectoryName))}"/>
+						</if>
+						<if test="${not(platform::is-win32())}">
+							<property name="directoryName" value="${string::substring(foldername, string::get-length(parentDirectoryName) + 1, string::get-length(path::get-full-path(foldername)) - string::get-length(parentDirectoryName) - 1)}"/>
+						</if>
+						<!-- <echo message="Directory name: ${directoryName}" /> -->
+						<property name="dirPath" value="${path::combine(path::combine(path::combine(build.dir,'Modules/BoxModulesServices/'), directoryName), 'generated')}"/>
+					</if>
+					<foreach item="File" property="filename">
+						<in>
+							<items>
+								<include name="${foldername}/*.ice"/>
+							</items>
+						</in>
+						<do>
+							<mkdir dir="${dirPath}"/>
+							<exec program="slice2cs">
+								<arg value="-I."/>
+								<arg value="--output-dir"/>
+								<arg value="${dirPath}"/>
+								<arg file="${filename}"/>
+							</exec>
+						</do>
+					</foreach>
+				</do>
+			</foreach>
+		</if>
+	</target>
+	<target name="doc">
+		<uptodate property="aktualni">
+			<sourcefiles>
+				<include name="$Modules/*.ice"/>
+				<include name="$ModulesManager/*.ice"/>
+				<!--
+				<include name="$Modules/Boxes/**.ice"/>
+				-->
+			</sourcefiles>
+			<targetfiles>
+				<include name="${build.dir}/modules/index.html"/>
+			</targetfiles>
+		</uptodate>
+		<if test="${not(aktualni)}">
+			<echo message="Generating .sgml from .ice file Modules.ice..."/>
+			<exec program="slice2docbook">
+				<arg value="--stand-alone"/>
+				<arg value="-I."/>
+				<arg value="--no-globals"/>
+				<arg file="${build.dir}/Modules.sgml"/>
+				<arg file="Modules/Modules.ice"/>
+				<arg file="Modules/Exceptions.ice"/>
+				<arg file="Modules/BoxType.ice"/>
+				<arg file="Modules/BuiltinSequences.ice"/>
+				<arg file="Modules/BasicPropertyTypes.ice"/>
+				<arg file="Modules/Common.ice"/>
+				<arg file="ModulesManager/ManagersEngine.ice"/>
+			</exec>
+			<echo message="Generating .html from .sgml file Modules.sgml..."/>
+			<if test="${not platform::is-win32()}">
+				<exec program="docbook2html" failonerror="false">
+					<arg value="-o"/>
+					<arg>
+						<path>
+							<pathelement dir="${build.dir}/modules/"/>
+						</path>
+					</arg>
+					<arg>
+						<path>
+							<pathelement file="${build.dir}/Modules.sgml"/>
+						</path>
+					</arg>
+				</exec>
+			</if>
+			<!-- bohuzel Modules.sgml neni validni, takze nasledujici nefunguje -->
+			<if test="${false}">
+				<!-- <if test="${platform::is-win32()}"> -->
+				<if test="${not(file::exists(sablonaDocBookXhtml))}">
+					<fail message="Neexistuje soubor s šablonou pro docbook: '${sablonaDocBookXhtml}'"/>
+				</if>
+				<foreach item="File" property="input.file">
+					<in>
+						<items>
+							<include name="${build.dir}/Modules.sgml"/>
+						</items>
+					</in>
+					<do>
+						<property name="output.fileup" value="${path::get-file-name(path::change-extension(input.file,'html'))}"/>
+						<property name="output.file" value="${path::combine(build.dir,output.fileup)}"/>
+						<echo message="Generuji XHTML z DocBook souboru '${path::get-file-name(input.file)}'..."/>
+						<if test="${use.xsltproc}">
+							<exec program="xsltproc">
+								<arg value="--novalid"/>
+								<arg value="--nonet"/>
+								<arg value="--xinclude"/>
+								<arg value="-o"/>
+								<arg>
+									<path>
+										<pathelement file="${output.file}"/>
+									</path>
+								</arg>
+								<arg>
+									<path>
+										<pathelement file="${sablonaDocBookXhtml}"/>
+									</path>
+								</arg>
+								<arg>
+									<path>
+										<pathelement file="${input.file}"/>
+									</path>
+								</arg>
+							</exec>
+						</if>
+						<if test="${not(use.xsltproc)}">
+							<style style="${sablonaDocBookXhtml}" in="${input.file}" out="${output.file}"/>
+						</if>
+					</do>
+				</foreach>
+			</if>
+			<echo message="Deleting .sgml file..."/>
+			<delete file="${build.dir}/Modules.sgml"/>
+		</if>
+	</target>
+</project>
