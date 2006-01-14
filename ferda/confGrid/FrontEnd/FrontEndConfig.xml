@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrontEndConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectManagerOptions>
+    <StartIceGridLocaly>true</StartIceGridLocaly>
+    <StopIceGridLocaly>false</StopIceGridLocaly>
+    <ServersToStop>
+      <string>0</string>
+    </ServersToStop>
+    <IceBinPath />
+    <LocalePrefs>
+      <string>en-US</string>
+      <string>cs-CZ</string>
+    </LocalePrefs>
+  </ProjectManagerOptions>
+  <FrontEndIceObjects />
+</FrontEndConfig>
