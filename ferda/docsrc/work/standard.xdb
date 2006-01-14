@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE article PUBLIC '-//OASIS//DTD DocBook XML V4.2//EN'
+               'http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd'>
+<article lang="cs">
+	<articleinfo>
+		<title>Standardy našeho týmu</title>
+		<author>
+			<firstname>Michal</firstname>
+			<surname>Kováč</surname>
+			<email>michal.kovac.develop@centrum.cz</email>
+		</author>
+		<othercredit>
+			<firstname>Tomáš</firstname>
+			<surname>Kuchař</surname>
+			<email>tomas.kuchar@gmail.com</email>
+		</othercredit>
+		<othercredit>
+			<firstname>Martin</firstname>
+			<surname>Ralbovský</surname>
+			<email>martin.ralbovsky@gmail.com</email>
+		</othercredit>
+	</articleinfo>
+	<abstract>
+		<para>Tento text by měl shrnout všechny dohody, které jsme učinili či učiníme v našem týmu.</para>
+	</abstract>
+	<section>
+		<title>Dokumentace</title>
+		<para>Všechny dokumenty by měli být pokud možno v Docbooku. Pěkný úvod
+		viz. <ulink url="http://www.kosek.cz/xml/db/">Kosek</ulink>. Znaková sada
+		UTF-8. Čeština s háčky, české uvozovky (0x201E,0x201C „“
+		Alt+0132,Alt+0147) a vůbec nepoužívat ASCII náhražky pro české znaky, ale
+		správné UTF-8 znaky (trojtečky (0x2026 … Alt+0133), pomlčky (0x2013 –
+		Alt+0150), úzké nezlomitelné mezery (0x2009 „ “),… ). Používat správně anglické uvozovky Alt+0147 “ a Alt+0148 ”. Kdy se dané znaky
+		používají viz. například <ulink
+		url="http://www.root.cz/clanky/strucny-uvod-do-typografie/">stručný úvod
+		do typografie</ulink>.</para>
+	</section>
+	<section>
+		<title>C# styl kódu</title>
+		<para>Všechny zdrojové soubory opět v UTF-8, odsazování tabulátorem,
+		maximální šířka textu osmdesát znaků. Dodržování <ulink
+		url="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconnamingguidelines.asp">naming
+		guidelines</ulink>. Závorky v konstrukci if:</para>
+		<programlisting>
+if ( a == b )
+{
+	a = a - 1;
+}
+else
+{
+	a = b;
+}
+		</programlisting>
+	</section>
+	<section>
+		<title>Obsah C# kódů</title>
+		<para>Používal bych nový C# s podporou šablon, může to značně urychlit a
+		zhezčit náš kód. Viz. <ulink
+		url="http://msdn2.microsoft.com/library/512aeb7t.aspx">šablony</ulink>,
+		<ulink url="http://msdn2.microsoft.com/library/0yw3tz5k.aspx">anonymní
+		metody</ulink>, <ulink
+		url="http://msdn2.microsoft.com/library/dscyy5s0.aspx">iterátory</ulink>,
+		<ulink url="http://msdn2.microsoft.com/library/wa80x488.aspx">částečné
+		definice tříd</ulink>, <ulink
+		url="http://msdn2.microsoft.com/library/79b3xss3.aspx">statické
+		třídy</ulink>, <ulink
+		url="http://msdn2.microsoft.com/library/sea07341.aspx">kovariance a
+		kontravariance</ulink> či <ulink
+		url="http://msdn2.microsoft.com/library/75e8y5dd.aspx">přístupová práva
+		vlastností</ulink>. Je důležité kvůli přenositelnosti dodržovat velikost
+		písmen u psaní názvů souborů do zdrojáků (i do zdrojáků pro NAnt).</para>
+	</section>
+	<section>
+		<title>Názvy souborů a adresářů</title>
+		<para>Přípony souborů psát malým písmem (například psát .dll místo .DLL).
+		Velikost písmen v názvu souboru by měla odpovídat tomu, co
+		obsahuje.</para>
+		<para>Dále by tu měla být dohodnutá adresářová struktura.</para>
+	</section>
+	<section>
+		<title>Nástroje, které používáme</title>
+		<table>
+			<title>Používané programy</title>
+			<tgroup cols="3">
+				<thead>
+					<row>
+						<entry>Název</entry>
+						<entry>Popis</entry>
+						<entry>Dokumentace</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry><ulink url="http://nant.sourceforge.net/">NAnt</ulink></entry>
+						<entry>utilitka pro build .NET aplikací pomocí XML konfiguráků</entry>
+						<entry><ulink url="http://nant.sourceforge.net/nightly/latest/help/">HTML dokumentace</ulink></entry>
+					</row>
+					<row>
+						<entry><ulink url="http://ndoc.sourceforge.net">NDoc</ulink></entry>
+						<entry>program na generování dokumentace – je v NAntu</entry>
+						<entry><ulink url="http://ndoc.sourceforge.net/usersguide.html">online nápověda</ulink></entry>
+					</row>
+					<row>
+						<entry><ulink url="http://www.nunit.org/">NUnit</ulink></entry>
+						<entry>knihovna na testy jednotek – je v Nantu</entry>
+						<entry><ulink url="http://www.nunit.org/documentation.html">různé nápovědy</ulink></entry>
+					</row>
+					<row>
+						<entry><ulink url="http://www.zeroc.com">ICE</ulink></entry>
+						<entry>Internet Communications Engine – middleware</entry>
+						<entry><ulink url="http://www.zeroc.com/download.html#doc">1400 stránková kniha</ulink></entry>
+					</row>
+					<row>
+						<entry><ulink url="http://netron.sourceforge.net/">Netron</ulink></entry>
+						<entry>.NET grafická knihovna na tvorbu diagramů</entry>
+						<entry><ulink
+						url="http://netron.sf.net/downloads/Netron%20Graph%20Library%20Architecture%20v0.3.pdf">nepříliš
+						dokonalý popis a ukázky</ulink></entry>
+					</row>
+					<row>
+						<entry><ulink url="http://www.zlatkovic.com/libxml.en.html">xsltproc</ulink></entry>
+						<entry>program na převod XML pomocí XSL šablony</entry>
+						<entry><ulink url="http://xmlsoft.org/XSLT/xsltproc.html">manuálová stránka</ulink></entry>
+					</row>
+					<row>
+						<entry><ulink url="http://nsis.sourceforge.net/">NSIS</ulink></entry>
+						<entry>skriptovatelný instalátor pro Windows</entry>
+						<entry><ulink url="http://nsis.sourceforge.net/Docs/">HTML nápověda</ulink></entry>
+					</row>
+					<row>
+						<entry><ulink url="http://www.mono-project.com/">Mono</ulink></entry>
+						<entry>otevřená implementace .NET Frameworku plus spousta věcí navíc</entry>
+						<entry><ulink url="http://www.go-mono.com/docs/">nejen popis tříd a popis jazyka C#</ulink></entry>
+					</row>
+					<row>
+						<entry><ulink url="http://www.dotnetmagic.com">Magic Library</ulink></entry>
+						<entry>Používáme verzi 1.7.4, za kterou se ještě nemusí platit a může se volně modifikovat. Jediná 
+							omezující podmínka je, že musíme uvést jejich domovskou stránku někde v našem About boxu
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</section>
+</article>

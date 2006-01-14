@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE article PUBLIC '-//OASIS//DTD DocBook XML V4.4//EN'
+               'http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd'>
+<article lang="cs">
+	<articleinfo>
+		<title>Analýza vzhledu modulů a práce s nimi</title>
+		<author>
+			<firstname>Michal</firstname>
+			<surname>Kováč</surname>
+			<email>michal.kovac.develop@centrum.cz</email>
+		</author>
+	</articleinfo>
+	<abstract>
+		<para>Tento text by měl podrobně rozebrat jak náš program bude pracovat s
+	 moduly a jak vůbec moduly budou vypadat.</para>
+	</abstract>
+	<section>
+		<title>ICE</title>
+		<para>Na jednom počítači poběží IcePack, který bude registrovat jednotlivé
+	 služby. Každá služba pak může běžet na jiném počítači. Na každém takovém
+	 počítači bude běžet IcePack Node a pro c++ a java služby také daný IceBox.
+	 Služba bude u nás většinou obsahovat právě jeden ObjectAdapter. To je to,
+	 co odpovídá našim modulům. Objekt pak odpovídá instanci modulu. My
+	 například budeme mít modul cedent. Instance modulu cedent je pak již
+	 konkrétní cedent v aplikaci.</para>
+	</section>
+	<section>
+		<title>Slice návrh modulů</title>
+		<programlisting><xi:include  href="../../slice/Modules/Modules.ice"  parse="text"  
+      xmlns:xi="http://www.w3.org/2001/XInclude" />
+		</programlisting>
+	</section>
+</article>

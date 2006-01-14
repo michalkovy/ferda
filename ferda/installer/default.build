@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<project name="Ferda installer" default="installer" basedir=".">
+	<description>Ferda installer</description>
+	<property name="ice.dir" value="c:\Ice-2.1.2\" unless="${property::exists('ice.dir')}"/>
+	<property name="nsis.dir" value="c:\Program Files\NSIS\" unless="${property::exists('nsis.dir')}"/>
+	<target name="clean" description="clean build">
+		<delete file="ferda_install.exe" failonerror="false" if="$file::exists('ferda_install.exe')}"/>
+	</target>
+	<target name="installer">
+		<exec program="${path::combine(nsis.dir,'makensis.exe')}">
+			<arg value="main.nsi"/>
+		</exec>
+	</target>
+</project>

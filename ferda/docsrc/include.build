@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<project name="Documentation generation">
+	<target name="clean" description="Smaže dokumentaci">
+		<delete dir="${build.dir}" failonerror="false"/>
+	</target>
+	<target name="doc" description="Vytvoří dokumentaci">
+		<mkdir dir="${build.dir}"/>
+		<call target="docbookxhtml" />
+		<call target="xmltodocbooktoxhtml" />
+		<call target="imagesforxhtml" />
+	</target>
+	<target name="docbookxhtml" description="Vytvoří xhtml dokumentaci k docbook souborům">
+		<if test="${not(file::exists(sablonaDocBookXhtml))}">
+			<fail message="Neexistuje soubor s šablonou pro docbook: '${sablonaDocBookXhtml}'"/>
+		</if>
+		<foreach item="File" property="input.file">
+			<in>
+				<items>
+					<include name="*.xdb" />
+				</items>
+			</in>
+			<do>
+				<property name="output.fileup" value="${path::get-file-name(path::change-extension(input.file,'html'))}"/>
+				<property name="output.file" value="${path::combine(build.dir,output.fileup)}"/>
+				<uptodate property="aktualni">
+					<sourcefiles>
+						<include name="${input.file}" />
+					</sourcefiles>
+					<targetfiles>
+						<include name="${output.file}" />
+					</targetfiles>
+				</uptodate>
+				<if test="${not(aktualni)}">
+					<echo message="Generuji XHTML z DocBook souboru '${path::get-file-name(input.file)}'..."/>
+					<if test="${use.xsltproc}">
+						<exec program="xsltproc">
+							<arg value="--novalid"/>
+							<arg value="--nonet"/>
+							<arg value="--xinclude"/>
+							<arg value="-o"/>
+							<arg>
+								<path>
+									<pathelement file="${output.file}"/>
+								</path>
+							</arg>
+							<arg>
+								<path>
+									<pathelement file="${sablonaDocBookXhtml}"/>
+								</path>
+							</arg>
+							<arg>
+								<path>
+									<pathelement file="${input.file}"/>
+								</path>
+							</arg>
+						</exec>
+					</if>
+					<if test="${not(use.xsltproc)}">
+						<style style="${sablonaDocBookXhtml}" in="${input.file}" out="${output.file}" />
+					</if>
+				</if>
+			</do>
+		</foreach>
+	</target>
+	<target name="xmltodocbooktoxhtml" description="Vytvoří xhtml dokumentaci k xml souborům">
+		<if test="${not(file::exists(sablonaDocBookXhtml))}">
+			<fail message="Neexistuje soubor s šablonou pro docbook: '${sablonaDocBookXhtml}'"/>
+		</if>
+		<foreach item="File" property="input.file">
+			<in>
+				<items>
+					<include name="*.xml" />
+				</items>
+			</in>
+			<do>
+				<property name="middle.fileup" value="${path::get-file-name(path::change-extension(input.file,'xdb'))}"/>
+				<property name="middle.file" value="${path::combine(build.dir,middle.fileup)}"/>
+				<property name="output.file" value="${path::change-extension(middle.file,'html')}"/>
+				<property name="stylesheet.file" value="${path::change-extension(input.file,'xsl')}"/>
+				<if test="${file::exists(stylesheet.file)}">
+					<uptodate property="aktualni">
+						<sourcefiles>
+							<include name="${input.file}" />
+							<include name="${stylesheet.file}" />
+						</sourcefiles>
+						<targetfiles>
+							<include name="${output.file}" />
+						</targetfiles>
+					</uptodate>
+					<if test="${not(aktualni)}">
+						<echo message="Generuji DocBook ze souboru '${path::get-file-name(input.file)}'..."/>
+						<if test="${use.xsltproc}">
+							<exec program="xsltproc">
+								<arg value="--novalid"/>
+								<arg value="--nonet"/>
+								<arg value="--xinclude"/>
+								<arg value="-o"/>
+								<arg>
+									<path>
+										<pathelement file="${middle.file}"/>
+									</path>
+								</arg>
+								<arg>
+									<path>
+										<pathelement file="${stylesheet.file}"/>
+									</path>
+								</arg>
+								<arg>
+									<path>
+										<pathelement file="${input.file}"/>
+									</path>
+								</arg>
+							</exec>
+							<echo message="Generuji XHTML ze souboru '${path::get-file-name(middle.file)}'..."/>
+							<exec program="xsltproc">
+								<arg value="--novalid"/>
+								<arg value="--nonet"/>
+								<arg value="--xinclude"/>
+								<arg value="-o"/>
+								<arg>
+									<path>
+										<pathelement file="${output.file}"/>
+									</path>
+								</arg>
+								<arg>
+									<path>
+										<pathelement file="${sablonaDocBookXhtml}"/>
+									</path>
+								</arg>
+								<arg>
+									<path>
+										<pathelement file="${middle.file}"/>
+									</path>
+								</arg>
+							</exec>
+						</if>
+						<if test="${not(use.xsltproc)}">
+							<style style="${stylesheet.file}" in="${input.file}" out="${middle.file}" />
+							<echo message="Generuji XHTML ze souboru '${path::get-file-name(middle.file)}'..."/>
+							<style style="${sablonaDocBookXhtml}" in="${middle.file}" out="${output.file}" />
+						</if>
+						<delete file="${middle.file}"/>
+					</if>
+				</if>
+			</do>
+		</foreach>
+	</target>
+	<target name="imagesforxhtml" description="Zkopíruje obrázky k html souborům">
+		<copy todir="${build.dir}">
+			<fileset>
+				<include name="*.png" />
+				<exclude name="${build.dir}/**" />
+			</fileset>
+		</copy>
+	</target>
+</project>
+
