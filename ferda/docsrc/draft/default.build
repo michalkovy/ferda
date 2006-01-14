@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<project name="documentation-draft" default="doc" basedir=".">
+	<description>Documentation - draft</description>
+	<!--
+		Požadované vlastnosti:
+			* build.dir		- (path) kam se má vytvořená dokumentace dát
+			* sablonaDocBookXhtml	- (path) stylesheet pro docbook -> xhtml
+			* use.xsltproc		- (true|false) zda používat k převodu xml souborů pomocí xsl program xsltproc
+	-->
+	<property name="build.dir" value="${path::combine(build.dir,'draft')}" />
+	<include buildfile="../include.build"/>
+</project>

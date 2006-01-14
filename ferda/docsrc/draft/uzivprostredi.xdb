@@ -1,0 +1,1065 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<firstname>Martin</firstname>
+				<surname>Ralbovský</surname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+			<othercredit>
+				<firstname>Tomáš</firstname>
+				<surname>Kuchař</surname>
+				<email>tomas.kuchar@gmail.com</email>
+			</othercredit>
+			<othercredit>
+				<firstname>Michal</firstname>
+				<surname>Kováč</surname>
+				<email>michal.kovac.develop@centrum.cz</email>
+			</othercredit>
+		</authorgroup>
+		<pubdate>2005-03-10</pubdate>
+		<title>Návrh uživatelského rozhraní pro dataminingový systém Ferda</title>
+		<titleabbrev>Návrh UI</titleabbrev>
+		<revhistory>
+      <revision>
+        <revnumber>3.1</revnumber>
+        <date>2005-12-29</date>
+        <revremark>
+          Přidal jsem nové akce kontextového menu
+        </revremark>
+      </revision>
+      <revision>
+        <revnumber>3.0</revnumber>
+        <date>2005-11-24</date>
+        <revremark>
+          Oprava celého dokumentu, podle stávající verze Ferdy (aby mohl sloužit
+          zároveň jako uživatelská dokumentace FrontEndu)
+        </revremark>
+      </revision>
+      <revision>
+        <revnumber>2.8</revnumber>
+        <date>2005-5-8</date>
+        <revremark>
+          Předělal jsem část archiv, kde jsem změnil obrázek a přidal akce
+          do menu, které se dají dělat s krabičkou.
+        </revremark>
+      </revision>
+			<revision>
+				<revnumber>2.7</revnumber>
+				<date>2005-07-28</date>
+				<revremark>
+					Odstranil jsem z Menu->Úpravy akce Rozbalit a Zabalit, protože
+					kdyby se to dělo nad krabičkou, tak nevime, který socket rozbalit/
+					zabalit. Netron neumi udržet focus nad socketem a opravdu se mi
+					to nechce předělávat.
+				</revremark>
+			</revision>
+			<revision>
+				<revnumber>2.6</revnumber>
+				<date>2005-07-27</date>
+				<revremark>
+					Přídání uživatelské práce s pracovní plochou pomocí kláves - většinou 
+					z Netronu, ale je dobré když je to někde poznamenané.
+				</revremark>
+			</revision>
+			<revision>
+				<revnumber>2.5</revnumber>
+				<date>2005-07-24</date>
+				<revremark>
+					Přidal jsem do kontextových akcí nad volnou pracovní plochou taky
+					Nová krabička.
+				</revremark>
+			</revision>
+			<revision>
+				<revnumber>2.4</revnumber>
+				<date>2005-04-19</date>
+				<revremark>Změna chování v Menu->Pracovní plocha</revremark>
+			</revision>
+			<revision>
+				<revnumber>2.3</revnumber>
+				<date>2005-04-15</date>
+				<revremark>Přídání obrázku Panelu vlastností a některé další drobné úpravy</revremark>
+			</revision>
+			<revision>
+				<revnumber>2.2</revnumber>
+				<date>2005-04-05</date>
+				<revremark>Rozšířená verze + poznámky ostatních</revremark>
+			</revision>
+			<revision>
+				<revnumber>2.1</revnumber>
+				<date>2005-03-39</date>
+				<revremark>Kompletní rozšířená verze</revremark>
+			</revision>
+			<revision>
+				<revnumber>2.0</revnumber>
+				<date>2005-03-26</date>				
+				<revremark>Rozšířená verze o podrobnosti</revremark>
+			</revision>
+			<revision>
+				<revnumber>1.4</revnumber>
+				<date>2005-03-15</date>
+				<revremark>Oprava špatného kódování dokumentu a menších chyb</revremark>
+			</revision>
+			<revision>
+				<revnumber>1.3</revnumber>
+				<date>2005-03-15</date>
+				<revremark>Upřesnění zabalování a rozbalování v pracovní ploše</revremark>
+			</revision>
+			<revision>
+				<revnumber>1.2</revnumber>
+				<date>2005-03-14</date>
+				<revremark>Další oprava chyb</revremark>
+			</revision>
+			<revision>
+				<revnumber>1.1</revnumber>
+				<date>2005-03-14</date>
+				<revremark>Oprava stylistických a věcných chyb</revremark>
+			</revision>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2005-03-13</date>
+				<revremark>Zanesení připomínek od ostatních členů projektu</revremark>
+<!--
+				V dokumentu nemůže být oboje revremark i revdescription
+				<revdescription>
+					<itemizedlist mark="bullet">
+						<listitem>Opravení autorství dokumentu</listitem>
+						<listitem>Přepsání tagů formalpara na section</listitem>
+						<listitem>České ascii uvozovky</listitem>
+						<listitem>Lišty přejmenované na panely nástrojů</listitem>
+						<listitem>Uživatel může mít víc pracovních ploch (přidání)</listitem>
+						<listitem>Properties bar přejmenovaný na panel nástrojů</listitem>
+						<listitem>Předělaný odstavec o modulech
+								– nově krabičkách</listitem>
+						<listitem>další drobné úpravy</listitem>
+					</itemizedlist>
+				</revdescription>  
+-->
+			</revision>
+		</revhistory>
+	</articleinfo>
+	<abstract>
+		<para>
+			Dokument popisuje uživatelské rozhraní data-miningového systému Ferda.
+			Definuje části pracovního prostředí a udává u nich, jakým způsobem s
+			nimi bude uživatel pracovat.
+		</para>
+	</abstract>
+	<section>
+		<title>Dokovací pracovní prostředí</title>
+		<para>
+			Veškeré komponenty (části pracovního prostředí) kromě hlavního menu aplikace a
+			Panelů nástrojů se budou dát přesouvat po pracovní ploše pomocí
+			mechanizmu dokování oken. Program bude mít přednastavené rozložení
+			jednotlivých částí (Archiv krabiček a Nová krabička vlevo, Kontextová nápověda a Panel
+			vlastností vpravo), může si však libovolně nastavit rozložení komponent.
+			Mechanizmus dokování je standard používaný uživatelském prostředí
+			vývojových nástrojů (MS Visual Studio a jiné). 
+		</para>
+	</section>
+	<section>
+		<title>Krabička – modul ze strany uživatele</title>
+		<para>
+			Původně chtěl projektový tým použít pro grafický prvek data-miningu v
+			terminologii uživatelského rozhraní slovo „modul“, převzaté z
+			terminologie architektury systému Ferda. Protože jsme si ale vědomi,
+			že „modul“ je slovo, které se používá v mnoha významech, rozhodli jsme
+			se grafický prvek, se kterým uživatel pracuje na ploše pojmenovat
+			jinak (aby se s ničím nemohl splést) – krabička.
+		</para>
+		
+		<para>
+			V krabičkové terminologii rozlišujeme čtyři termíny: kategorie
+			krabičky, typ krabičky, jméno krabičky a krabička. Rozdíly budou
+			zřejmé když terminologii vysvětlíme na příkladu krabičky typu 4ft
+			úloha. Krabička je jedna konkrétní instance typu 4ft úloha, tj. jedna
+			konkrétně zadaná úloha pro 4ft-Miner definovaná svými parametry jako
+			jsou konkrétní antecedenty, sukcedenty, podmínky, kvantifikátory a
+			další parametry. Tuto krabičku si může uživatel nějak pojmenovat či mu
+			bude standardně nějaké pojmenování nabídnuto.  Typ krabičky 4ft úloha
+			je označení pro všechny instance 4ft úloh.  Konečně kategorie krabičky
+			v tomto případě odpovídá úlohám, kde je vedle 4ft ještě třeba SD4ft,
+			KL, SDKL, CF, SDCF a KEX úloha.
+		</para>
+		
+		<para>
+			Krabička je pro uživatele grafický objekt, který se dá používat na
+			pracovní ploše. Krabička je reprezentována ikonou, názvem a obsahuje
+			vlastnosti, které může uživatel měnit. Dále obsahuje zásuvky, do
+			kterých se dají připojovat jiné krabičky. Toto zapojení bude na
+			pracovní ploše znázorněno šipkou z připojené krabičky do zásuvky.
+			Každá krabička má nadefinovaný seznam metod, které se s ní dají
+			provádět.
+		</para>				
+		<para>
+			Každá krabička může mít nadefinovaných několik modulů pro interakci.
+			Modul pro interakci znamená volání akce nad funkcí krabičky, 
+      kterou zajišťuje jiný modul 
+			než samotná krabička. Často to může být část pracovního prostředí:
+			dialogy, tabulky grafy...
+		</para>
+		
+		<para>
+			Navrhované krabičky na vytvoření je koncept, který podle nás
+			značně zjednoduší vizuální data-minig ve Ferdovi. Krabička může
+			nabízet v kontextovém menu nebo v hlavním menu aplikace seznam krabiček,
+			na které když uživatel klikne, tak se vytvoří, nastaví se u nich 
+			patřičné vlastnosti a zapojení. Nejlépe to lze ukázat na příkladu. Mějme
+			krabičku <emphasis>databáze</emphasis>, ta může navrhovat vytvoření
+			krabičky <emphasis>tabulka</emphasis>. V kontextovém menu této krabičky
+			bude tedy pod položkou <emphasis>Navrhované krabičky na vytvoření</emphasis>
+			seznam názvů tabulek v databázi. Jestliže uživatel klikne, na některou
+			tabulku, vytvoří se vedle krabičky <emphasis>databáze</emphasis> krabička
+			<emphasis>tabulka</emphasis>, nastaví se u ní vlastnost <emphasis>
+			Jméno tabulky v databázi</emphasis> na jméno, které si uživatel vybral.
+			Dále se krabička <emphasis>databáze</emphasis> propojí s touto novou
+			krabičkou <emphasis>tabulka</emphasis>.
+		</para>
+		
+		<para>
+			Krabička bude v sobě obsahovat plnou informaci o tom, co je do ní
+			zapojeno, popřípadě čeho je výsledkem, i když to na pracovní ploše
+			nemusí být vidět (ve Ferdově vizuálním data-miningu to znamená část
+			grafu, která do něho pomocí propojení „zleva“ ústí).  Tuto informaci
+			se může uživatel dozvědět pomocí mechanizmu skrývání, zabalování a rozbalování,
+			které zajišťuje pracovní plocha.	
+		</para>
+	</section>
+	<section>
+		<title>Části pracovního prostředí</title>
+		<section>
+			<title>Menu</title>
+			 <para>
+				Aplikace má menu, ze kterého se budou volat její nejdůležitější
+				funkce. V součastné době má menu statickou část, ze které se dají volat
+        akce obsluhující aplikaci stále stejně. Dále menu obsahuje dynamickou část,
+        která se mění v závislosti na krabičce (krabičkách) označených v archivu, 
+        nebo na pracovní ploše.
+			</para>
+			<section>
+				<title>Funkce v menu aplikace</title>
+				<section>
+					<title>Soubor</title>
+					<para>
+						Skupina příkazů Soubor obsahuje příkazy pro správu projektu. Projekt 
+						v systému Ferda znamená z uživatelského hlediska to, co je v archivu a
+						na všech pracovních plochách.
+					</para>
+					<itemizedlist mark="bullet">
+						<listitem>
+              <formalpara>
+                <title>Nový projekt</title>
+                <para>
+                  Systém vytvoří nový prázdný projekt.
+                </para>                
+              </formalpara>
+						</listitem>
+            <listitem>
+              <formalpara>
+                <title>Otevřít projekt</title>
+                <para>
+                  Otevře projekt na určeném místě, používá k tomu
+                  standardní OpenFileDialog v .NET.
+                </para>
+              </formalpara>
+            </listitem>
+						<listitem>
+							<formalpara>
+								<title>Uložit projekt</title>
+								<para>
+									Uloží rozpracovaný projekt na místo určené pomocí
+									standardního dialogu SaveFileDialog v .NET.
+								</para>
+							</formalpara>
+						</listitem>
+						<listitem>
+							<formalpara>
+								<title>Zavřít</title>
+								<para>
+									Nejdříve se systém uživatele zeptá, jestli chce uložit
+									změny ve stávajícím projektu. Poté popřípadě uloží projekt,
+									uvolní všechny zdroje a zavře aplikaci.
+								</para>
+							</formalpara>
+						</listitem>
+					</itemizedlist>
+				</section>
+				<section>
+					<title>Úpravy</title>
+					<para>
+						Skupina příkazů Úpravy obsahuje standardní akce pro ovládání krabiček. 
+            Menu se tvoří dynamicky v závislosti na označených krabičkách na pracovní
+            ploše, nebo v archivu. Jestliže je označená jedna krabička, tak se do tohoto
+            menu přidají i její <emphasis>akce</emphasis>, <emphasis>moduly pro interakci
+            </emphasis> a <emphasis>moduly nabízené na vytvoření </emphasis>
+					</para>
+				</section>
+				<section>
+					<title>Zobrazit</title>
+					<para>
+						Skupina Zobrazit je další skupina příkazů, která je obvyklá u aplikací s více
+						ovládacími komponentami. Uživatel si v rámci dokovacího prostředí volně přesouvá
+						a dokuje různé komponenty jako Archiv krabiček, nebo Panel vlastností.
+						Kdyby náhodou uživatel některou z těchto komponent zavřel, může si jí znovu
+						otevřít pomocí stejně pojmenovaného příkazu v <emphasis>Zobrazit</emphasis>.
+					</para>
+					<itemizedlist mark="bullet">
+						<listitem>
+              <para>
+                Archiv
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Nová krabička
+              </para>
+            </listitem>
+						<listitem>
+              <para>
+                Kontextová nápověda
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Panel vlastností
+              </para>
+            </listitem>
+					</itemizedlist>
+				</section>
+				<section>
+					<title>Pracovní plocha</title>
+					<para>
+						Skupina příkazů <emphasis>Pracovní plocha</emphasis> slouží k pohodlnější práci s
+						pracovními plochami. 
+						Měl by umožňovat základní funkčnost pracovních ploch:
+					</para>
+					<itemizedlist mark="bullet">
+						<listitem>
+              <formalpara>
+                <title>Nová pracovní plocha</title>
+                <para>
+                  Vytvoří novou prázdnou pracovní plochu
+                </para>
+              </formalpara>
+             </listitem>
+						<listitem>
+              <formalpara>
+                <title>Otevřít pracovní plochu</title>
+                <para>
+                  V podmenu této akce se zobrazí názvy pracovních ploch, které se nacházejí v
+                  projektu, ale nejsou otevřené. Jestliže uživatel klikne na jednu z těchto
+                  ploch, otevře se.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>
+                  Odstranit pracovní plochu
+                </title>
+                <para>
+                  Kliknutím na jednu z pracovních ploch v podmenu této akce ostraní uživatel
+                  příslušnou pracovní plochu z projektu. Krabičky, které byli na této pracovní
+                  ploše však zůstávají v archivu. 
+                </para>
+              </formalpara>
+            </listitem>
+					</itemizedlist>
+				</section>
+				<section>
+					<title>Nástroje</title>
+					<para>
+						Skupina příkazů Nástroje bude obsahovat nástroje na konfiguraci aplikace.
+						Zatím přesně nevíme, které nastavení uživateli zpřístupníme. V této skupině
+						se bude určitě nastavovat lokalizace programu, některé vyspělé nastavení pracovního
+						prostředí, možná adresa ICE Pack Serveru
+						nebo dynamické načítání modulů do aplikace. 
+            Skupina příkazů Nástroje obsahuje nástroje na konfiguraci aplikace. Prozatím obsahuje
+            příkaz <emphasis>Možnosti</emphasis>, který zobrazuje dialog <emphasis>Možnosti</emphasis>,
+            zatím ze značné části nedokončený.
+					</para>
+				</section>
+				<section>
+					<title>Nápověda</title>
+					<para>
+            Under construction :)
+					</para>
+				</section>
+			</section>
+		</section>
+		<section>
+			<title>Panely nástrojů</title>
+			<para>
+        Panel nástrojů je alternativa k hlavnímu menu aplikace a kontextovému menu nad krabičkama
+        v archivu či na pracovní ploše. Každá položka má svoji ikonu a jestliže nad ní uživatel
+        podrží myš, zobrazí se název této akce. Kliknutí na ikonu vyvolá stejnou akci jak 
+        kliknutí na korespondující příkaz v menu. 
+			</para>
+		</section>
+		<section>
+			<title>Archivy</title>
+			<para>
+				Archiv je vedle pracovní plochy hlavní koncept, který má uživateli
+				ulehčit dobývání znalostí. Všechny krabičky, které uživatel
+				vytvořil, budou zaznamenány v archivu. Uživatel se tímto může lehce
+				vracet k dřívějším postupům a dále je používat. Při výchozím nastavení 
+				bude panel s archivem umístěn v levé části
+				pracovního prostředí.
+			</para>
+
+			<para>
+				Komponenta archivu se skládá ze tří částí. První část tvoří rolovací nabídka,
+				ve kterém je seznam všech typů krabiček, které má uživatel v projektu
+				k dispozici. Druhá část je tvořena .NET komponentou TreeView pro 
+				zobrazování archivu. Každá položka v archivu je reprezentovaná ikonou
+				a popisem.
+				Třetí část obsahuje dvě tlačítka pro interpretaci rozbalování archivu -
+				po směru nebo proti směru zapojení.
+			</para>
+			
+			<para>
+				Vizuální reprezentace archivu
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="archiv.png" format="PNG" />
+					</imageobject>			
+				</mediaobject>
+			</para>
+				
+			<section>
+				<title>Uživatelská práce s archivy</title>
+				<itemizedlist mark="bullet"> 
+					<listitem>
+						<formalpara>
+							<title>Přepínání mezi částmi archivu</title>
+							<para>
+								Uživatel může pomocí tabulátoru přepínat mezi částmi archivu.
+							</para>
+						</formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+							<title>Vertikální prohlížení archivu</title>
+							<para>
+								Vertikální prohlížení: uživatel přepíná mezi typy krabiček, které
+								má v archivu. Dělá to pomocí první části tak, že v combo-boxu 
+								vybere typ krabičky. Systém potom do TreeView zobrazí pod sebou
+								všechny krabičky v archivu, které jsou stejného typu.
+							</para>
+						</formalpara>
+					</listitem>
+					<listitem>
+            <formalpara>
+              <title>Změna směru prohlížení archivu</title>
+              <para>
+                Archiv podporuje prohlížení po a proti směru zapojení. K rozlišení
+                směru zapojení slouží třetí část archivu. První tlačítko reprezentuje
+                prohlížení po směru zapojení a druhé proti směru. Uživatel jedno
+                standardně označí, druhé se automaticky zruší. Takto je jasné,
+                jak se má v dané chvíli rozbalovat. Po změně strany prohlížení se
+                TreeView nastaví do základní pozice: zobrazí se všechny krabičky typu
+                vyznačeného v rolovací nabídce v první části archivu.
+              </para>
+            </formalpara>
+					</listitem>
+					<listitem>
+            <formalpara>
+              <title>Horizontální prohlížení archivu</title>
+              <para>
+                Horizontální prohlížení archivu znamená to, že uživatel zkoumá archiv
+                po směru výstupních nebo vstupních šipek(podle toho jak je nastaveno).
+                V případě výstupních šipek si uživatel standardním způsobem klikne
+                na křížek(vlevo) u krabičky v TreeView. Následně komponenta rozbalí všechny
+                krabičky, které jsou propojené výstupní šipkou z krabičkou, se kterou
+                se pracuje.
+              </para>
+            </formalpara>
+            <para>
+                V případě vstupních šipek uživatel také pro rozbalení šipek na křížek
+                u krabičky a ta mu ukáže všechny krabičky propojené vstupující šipkou.
+                Zde je třeba poznamenat, že i když se vizuálně rozbaluje doprava,
+                rozbaluje se podle vstupních šipek, tedy v pracovní ploše směrem doleva.
+             </para>
+					</listitem>
+					<listitem>
+						<formalpara>
+							<title>Zobrazení krabičky v Panelu vlastností, kontextové nápovědě a na ploše</title>
+							<para>
+								Jestliže uživatel klikne levým tlačítkem na krabičku v TreeView 
+								části archivu, zobrazí se mu vlastnosti krabičky v Panelu vlastností
+								a kontextová nápověda ke krabičce. Jestliže se krabička nachází na
+                pracovní ploše, která je aktivní, označí se tato krabička červeně.
+							</para>
+						</formalpara>
+					</listitem>
+					<listitem>
+            <formalpara>
+              <title>Přejmenování krabičky</title>
+              <para>
+                Uživatel může pomocí kontextového menu přejmenovat krabičku. Po vybrání
+                položky <emphasis>Přejmenovat</emphasis> v kontextovém menu zadá nové
+                jméno a potvrdí <emphasis>Enter</emphasis>. Akce se dá provádět i standardním
+                klávesovým příkazem <emphasis>F2</emphasis>.
+              </para>
+            </formalpara>
+					</listitem>
+          <listitem>
+            <formalpara>
+              <title>Uživatelská poznámka</title>
+              <para>
+                Ke každé krabičče v archivu má uživatel k dispozici uživatelskou poznámku -
+                text, který si může uživatel ke krabičce přidat. Jestliže uživatel vybere
+                položku <emphasis>Uživatelská poznámka</emphasis> v kontextovém menu,
+                zobrazí se dialog, ve kterém zadá poznámku. Akce se dá provádět i klávesou
+                <emphasis>F3</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+					<listitem>
+            <formalpara>
+              <title>Kopírování krabičky do schránky</title>
+              <para>
+                Po vybrání položky <emphasis>Kopírovat</emphasis> v kontextovém menu
+                se krabička nakopíruje do schránky. Akce se dá provádět i standardním
+                klávesovým příkazem <emphasis>Ctrl+C</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+							<title>Klonování krabičky</title>
+							<para>
+								Klonování krabičky znamená vytvoření nové instance typu krabičky v
+								archivu. Nová krabička zdědí všechny vlastnosti i vstupní připojení krabičky staré,
+								bude to ale nový samostatný objekt v archivu (i v celém projektu).
+								Uživatel klonuje krabičku kliknutím na položku <emphasis>Klonovat</emphasis>
+                v kontextovém menu. Systém potom vytvoří a v archivu zobrazí novou
+                naklonovanou krabičku. Akce se dá provádět i
+                klávesovým příkazem <emphasis>Ctrl+E</emphasis>.
+              </para>
+						</formalpara>
+					</listitem>
+					<listitem>
+            <formalpara>
+              <title>Odstranění krabičky z archivu</title>
+              <para>
+                Odstranění krabičky z archivu znamená pro uživatele úplné vymazání
+                krabičky z celého projektu a ztrátu veškeré informace s krabičkou
+                spojené. Uživatel odstraní krabičku kliknutím na
+                <emphasis>Odstranit z archivu</emphasis> v kontextovém menu. Systém se
+                uživatele zeptá, jestli chce opravdu odstranit krabičku a na kladnou
+                odpověď krabičku vymaže. Akce se dá provádět i
+                klávesovým příkazem <emphasis>Del</emphasis>.
+              </para>
+            </formalpara>
+					</listitem>
+					<listitem>
+            <formalpara>
+              <title>Moduly pro interakci</title>
+              <para>
+                Pod příkazem kontextového menu <emphasis>Moduly pro interakci</emphasis>
+                bude systém uživateli nabízet všechny moduly pro interakci, které daná
+                krabička nabízí. Více informací v sekci Krabička - modul ze strany uživatele
+                (Moduly pro interakci).
+              </para>
+            </formalpara>
+					</listitem>
+					<listitem>
+            <formalpara>
+              <title>Spouštění metod krabiček</title>
+              <para>
+                Každý typ krabičky může mít metody, které se dají v pracovním
+                prostředí pouštět. Všechny metody se v pracovní ploše dají pouštět
+                pomocí kontextového menu <emphasis>Akce</emphasis>, každá metoda tam 
+                má svoji položku, která
+                je pojmenovaná stejně.
+              </para>
+            </formalpara>
+					</listitem>
+				</itemizedlist>
+			</section>
+		
+		</section>
+		<section>
+			<title>Panel vlastností</title>
+			<para>
+				Panel vlastností je ovládací prvek, pomocí něhož nastavujeme
+				vlastnosti všech krabiček. Jednoduché vlastnosti krabiček se
+				nastavují přímo v něm, pro složitější bude panel volat dialogy,
+				které vlastnost nastaví.
+			</para>
+			<para>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="properties.png" format="PNG" />
+					</imageobject>
+				</mediaobject>
+			</para>
+			<para>
+				Krabička může mít mnoho vlastností, které mohou patřit do nějaké skupiny.
+				Uživatelské prostředí zobrazuje všechny vlastnosti krabičky, které
+				dostává od tvůrce krabičky, a řadí je do skupin.
+			</para>
+      <para>
+        Jestliže uživatel označí na pracovní ploše víc krabiček, zobrazí se v panelu
+        vlastností ty vlastnosti krabiček, které jsou stejné. Pokud tyto vlastnosti
+        mají stejnou hodnotu, zobrazí se v panelu i tato hodnota. Jestliže uživatel
+        nastaví některou vlastnost, hodnota se automaticky zapíše
+        do všech označených krabiček.
+      </para>
+			<section>
+				<title>Uživatelská práce s Panelem vlastností</title>
+				<para>
+					Pro implementaci Panelu vlastností se bude používat standardní komponenta
+					PropertyGrid v .NET Framework. Veškerá uživatelská práce s touto
+					komponentou je tedy popsána a dokument se jí nebude zabývat. 
+				</para>
+			</section>
+		</section>
+    <section>
+      <title>Nová krabička</title>
+      <para>
+        Komponenta Nová krabička slouží ke tvorbě nových krabiček v systému Ferda.
+        Obsahuje krabičky rozdělené tématicky rozdělené do stromové struktury. 
+        Uživatel tvoří nové krabičky přetažením zvoleného typu krabičky na plochu.
+      </para>
+    </section>
+		<section>
+			<title>Kontextová nápověda</title>
+			<para>
+				Kontextová nápověda má za úkol jednoduše seznámit uživatele s
+				funkčností krabičky právě označené na pracovní ploše. Bude
+				obsahovat základní informace o funkci krabičky, jejích vlastnostech
+				a možnostech připojení. Stránka může obsahovat odkazy na jiné
+				relevantní stránky.
+			</para>
+			<para>
+				Na konkrétní podobě kontextové nápovědy se stále ještě pracuje.
+			</para>
+		</section>
+		<section>
+			<title>Pracovní plocha</title>
+			<para>
+				Pracovní plocha je hlavní komponenta pro vizuální
+				data-mining.  Uživatel si na ni vkládá jednotlivé krabičky,
+				propojuje je, rozbaluje a zabaluje a 
+				„spouští“ (volá jejich metody).
+			</para>
+			<para>
+				Uživatel není omezen jednou pracovní plochou, může si zobrazit víc
+				pracovních ploch a přepínat mezi nimi.
+			</para>
+			<section>
+				<title>Možnosti pracovní plochy</title>
+				<section>
+					<title>Akce pracovní plochy </title>
+					<itemizedlist mark="bullet">
+						<listitem>
+              <para>Označení krabiček</para>
+             </listitem>
+						<listitem>
+              <para>
+                Zobrazení krabičky v Panelu vlastností
+                a Kontextové nápovědě
+              </para>
+             </listitem>						
+						<listitem>
+              <para>
+                Přesouvání krabiček
+              </para>
+            </listitem>
+						<listitem>
+              <para>Podpora drag&amp;drop</para>
+            </listitem>
+						<listitem>
+              <para>Vytvoření zapojení</para>
+            </listitem>
+					</itemizedlist>
+				</section>
+				<section>
+					<title>Akce pomocí kontextového menu nad prázdnou plochou</title>
+					<itemizedlist mark="bullet">
+						<listitem>
+              <para>Vložení krabičky</para>
+            </listitem>
+						<listitem>
+              <para>Rozvržení grafu</para>
+            </listitem>
+            <listitem>
+              <para>Vytvořit krabičku skupina</para>
+            </listitem>
+					</itemizedlist>
+				</section>
+				<section>
+					<title>Akce pomocí kontextového menu nad krabičkou</title>
+					<itemizedlist mark="bullet">
+            <listitem>
+              <para>Přejmenování krabičky</para>
+            </listitem>
+            <listitem>
+              <para>Uživatelská poznámka</para>
+            </listitem>
+						<listitem>
+              <para>Klonování krabičky</para>
+            </listitem>
+						<listitem>
+              <para>Kopírování krabičky do schránky</para>
+            </listitem>
+						<listitem>
+              <para>Lokalizace krabičky v archivu</para>
+            </listitem>
+						<listitem>
+              <para>Odstranění krabiček z pracovní plochy</para>
+            </listitem>
+						<listitem>
+              <para>Odstranění krabiček z archivu</para>
+            </listitem>
+						<listitem>
+              <para>Moduly pro interakci</para>
+            </listitem>
+						<listitem>
+              <para>Navrhované krabičky na vytvoření</para>
+            </listitem>
+						<listitem>
+              <para>Spouštění akcí krabičky</para>
+            </listitem>
+            <listitem>
+              <para>Zabalení všech zapojení krabičky</para>
+            </listitem>
+            <listitem>
+              <para>Rozbalení jedné vrstvy všech zapojení krabičky</para>
+            </listitem>
+            <listitem>
+              <para>Rozbalení všech vrstev všech zapojení krabičky</para>
+            </listitem>
+					</itemizedlist>
+				</section>
+				<section>
+					<title>Akce pomocí kontextového menu nad zásuvkou</title>
+					<itemizedlist mark="bullet">
+					  <listitem>
+              <para>Zabalení zapojení zásuvky</para>
+            </listitem>
+            <listitem>
+              <para>Rozbalení jedné vrstvy zapojení zásuvky</para>
+            </listitem>
+            <listitem>
+              <para>Rozbalení všech vrstev zapojení zásuvky</para>
+            </listitem>
+					</itemizedlist>
+				</section>
+			</section>
+			<section>
+				<title>Uživatelská práce s pracovní plochou</title>
+				<itemizedlist mark="bullet">
+					<listitem>
+						<formalpara>
+							<title>Označení krabiček</title>
+							<para>
+								Uživatel může označit krabičky tak, že zmáčkne levé tlačítko myši a udělá kolem
+								nich obdélník. Označování krabiček je dobré na přesouvání, odstranění více krabiček,
+								nebo na jejich skrývání, popřípadě nastavování stejných vlastností
+							</para>
+						</formalpara>
+					</listitem>
+          <listitem>
+            <formalpara>
+              <title>Uživatelská poznámka</title>
+              <para>
+                Ke každé krabičče v archivu má uživatel k dispozici uživatelskou poznámku -
+                text, který si může uživatel ke krabičce přidat. Jestliže uživatel vybere
+                položku <emphasis>Uživatelská poznámka</emphasis> v kontextovém menu,
+                zobrazí se dialog, ve kterém zadá poznámku. Akce se dá provádět i klávesou
+                <emphasis>F3</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+						<formalpara>
+							<title>Nová krabička</title>
+							<para>
+                Uživatel si na pracovní ploše tvoří krabičky přetahováním z komponenty
+                <emphasis>Nová krabička</emphasis>. 
+							</para>
+						</formalpara>
+					</listitem>
+					<listitem>	
+						<formalpara>
+							<title>Zobrazení krabiček v Panelu vlastností
+						a kontextové nápovědě</title>
+							<para>
+								Jestliže uživatel klikne levým tlačítkem na krabičku na pracovní 
+								ploše, nebo označí více krabiček levým nebo pravým tlačítkem, 
+								zobrazí se mu vlastnosti krabičky v Panelu vlastností
+								a kontextová nápověda ke krabičce. jestliže je označených více krabiček,
+								potom se v Panelu vlastností zobrazí jenom ty vlastnosti, které jsou
+								u všech krabiček stejné. 
+							</para>							
+						</formalpara>
+					</listitem>					
+					<listitem>
+						<formalpara>
+							<title>Přesouvání krabiček</title>
+							<para>
+								Uživatel přesunuje krabičky tak, že označí jednu nebo více krabiček na
+								pracovní ploše. Potom se stisklým levým tlačítkem přesune krabičky na
+								požadované místo.
+							</para>
+						</formalpara>
+					</listitem>
+					<listitem>
+						<formalpara>
+							<title>Podpora drag&amp;drop</title>
+							<para>
+								Pracovní plocha podporuje drag&amp;drop (přetahování z jiných komponent) z archivu
+								a Panelu nástrojů. Pro umístnění krabičky existující v archivu na pracovní plochu
+								může uživatel použít drag&amp;drop. Označí levým tlačítkem v archivu
+								krabičku a přetáhne ji nad pracovní plochu. Systém nejdříve zkontroluje, jestli
+								uvedená krabička již na pracovní ploše není.
+								Potom tam  zobrazí krabičku
+								a správně ji připojí do zbývajících krabiček na pracovní ploše.
+							</para>
+							<para>
+								Pro vytvoření nové krabičky může uživatel použít drag&amp;drop z komponenty
+								<emphasis>Nová krabička</emphasis>. Vybere levým tlačítkem typ krabičky, který chce
+								vytvořit a přetáhne ho na pracovní plochu. Systém tam vytvoří novou krabičku
+								požadovaného typu.
+							</para>
+						</formalpara>
+					</listitem>
+					<listitem>
+						<formalpara>
+							<title>Vytvoření zapojení</title>
+							<para>
+								Vizuální zapojování krabiček na pracovní ploše představuje nejobvyklejší
+								způsob tvoření zapojení mezi krabičkami. Uživatel nejdříve najede myší
+								nad krabičku. Poté mu systém ukáže nad jednotlivými zásuvkami držátka, 
+								na které uživatel najede myší, a se zmáčknutým levým tlačítkem přejede
+								myší až nad krabičku, kterou chce zapojit. Systém poté zkontroluje
+								typovou správnost zapojení: jestliže se krabičky nedají propojit uvedeným
+								způsobem, vygeneruje chybovou hlášku, jinak vytvoří nové zapojení
+								mezi krabičkami.
+							</para>
+						</formalpara>
+					</listitem>
+					<listitem>
+						<formalpara>
+							<title>Vložení krabičky</title>
+							<para>
+								Uživatel může vložit na pracovní plochu krabičku ve schránce pomocí příkazu
+								<emphasis>Vložit</emphasis> kontextového menu. Na rozdíl od klonování se 
+								nevytváří nová instance krabičky, pouze se kopíruje krabička ze schránky.
+								Je to tedy stejný postup, jako při použití drag&amp;drop z archivu. Systém
+								opět kontroluje, jestli už na konkrétní pracovní ploše už stejná krabička není.
+								Akce se dá provádět i standardním klávesovým příkazem <emphasis>Ctrl+V</emphasis>.
+							</para>
+						</formalpara>
+					</listitem>
+          <listitem>
+            <formalpara>
+              <title>Rozvržení grafu</title>
+              <para>
+                Po příkazu kontextového menu <emphasis>Rozvržení grafu</emphasis>
+                se spustí layout algoritmus, který uživateli uspořádá krabičky na
+                pracovní ploše. Toto se může hodit, jestliže je na pracovní ploše
+                moc krabiček, či se krabičky překrývají.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Přejmenování krabičky</title>
+              <para>
+                Uživatel může přejmenovat libovolnou krabičku pomocí příkazu
+                <emphasis>Přejmenovat</emphasis> kontextového menu, nebo pomocí
+                standarní klávesové zkratky <emphasis>F2</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+					<listitem>
+						<formalpara>
+							<title>Klonování krabičky</title>
+							<para>
+								Klonování krabičky znamená vytvoření nové instance typu krabičky na
+								pracovní ploše (a tím i v archivu).
+								Nová krabička zdědí všechny vlastnosti i vstupní připojení krabičky staré,
+								bude to ale nový samostatný objekt v archivu (i v celém projektu).
+								Uživatel klonuje krabičku kliknutím na položku <emphasis>Klonovat</emphasis>
+								v kontextovém menu. Systém potom vytvoří a na pracovní ploše zobrazí novou
+								naklonovanou krabičku.
+							</para>
+						</formalpara>
+					</listitem>
+					<listitem>
+						<formalpara>
+							<title>Kopírování krabičky do schránky</title>
+							<para>
+								Po vybrání položky <emphasis>Kopírovat</emphasis> v kontextovém menu
+								se krabička nakopíruje do schránky. Akce se dá provádět i standardním
+								klávesovým příkazem <emphasis>Ctrl+C</emphasis>. Krabička uchovaná ve
+								schránce se dále dá vkládat nebo klonovat.
+							</para>
+						</formalpara>
+					</listitem>
+          <listitem>
+            <formalpara>
+              <title>Lokalizace krabičky v archivu</title>
+              <para>
+                Někdy je pro uživatele důležité získat rychlý přehled o krabičce a
+                jejím okolí, který se obtížně získává z pracovní plochy nebo z
+                vlastností. Pro to slouží položka kontextového menu <emphasis>
+                  Lokalizuj v archivu
+                </emphasis>. Systém na ni reaguje nastavením
+                TreeView části archivu do základní pozice s typem, který odpovídá
+                krabičky (viz Změna směru prohlížení archivu, Vertikální prohlížení
+                archivu) a vyznačí tam vybranou krabičku. Uživatel může použít také
+                klávesovou zkratku<emphasis>Ctrl+H</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Vytvoření krabičky skupina</title>
+              <para>
+                Jestliže si uživatel označí na ploše více krabiček, může je umístnit do
+                skupiny pomocí položky kontextového menu <emphasis>Vytvořit krabičku skupina
+                </emphasis>. Systém následně vytvoří krabičku skupina, všechny označené
+                krabičky do ní zapojí a následně skryje. Klávesová zkratka pro tuto akci
+                je <emphasis>Ctrl+G</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Odstranění krabiček z pracovní plochy</title>
+              <para>
+                Odstranění krabiček z pracovní plochy znamená na rozdíl od odstranění
+                z archivu jenom vymazání vizuálního prvku reprezentujícího krabičku
+                z konkrétní pracovní plochy. Krabičky tedy zůstává v archivu. Tento
+                postup se hodí, jestli je pracovní plocha přeplněná a uživatel si
+                ji chce vyčistit o některé krabičky.
+              </para>
+              <para>
+                Uživatel může odstranit krabičky po označení buď položkou <emphasis>
+                  Odstranit z pracovní plochy
+                </emphasis>, nebo standardně na klávesu
+                <emphasis>Delete</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Odstranění krabiček z archivu</title>
+              <para>
+                Odstranění krabičky z archivu znamená pro uživatele úplné vymazání
+                krabičky z celého projektu a ztrátu veškeré informace s krabičkou
+                spojené. Uživatel odstraní krabičky kliknutím na
+                <emphasis>Odstranit z archivu</emphasis> v kontextovém menu. Systém se
+                uživatele zeptá, jestli chce opravdu odstranit krabičky a na kladnou
+                odpověď krabičky vymaže. Může také použít klávesovou zkratku<emphasis>Ctrl+R</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Moduly pro interakci</title>
+              <para>
+                V podmenu této položky se nacházejí všechny moduly, které
+                krabička uživateli poskytuje. Kliknutím na název jednotlivého
+                modulu se modul spustí.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Navrhované krabičky na vytvoření</title>
+              <para>
+                V podmenu této položky se nacházejí všechny krabičky, které
+                se dají za označenou krabičkou vytvořit a propojit. 
+                Kliknutím na název krabičky se krabička vytvoří.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Zabalení všech zapojení krabičky</title>
+              <para>
+                Jestliže chce uživatel zabalit všechna připojení, které
+                vedou do všech zásuvek krabičky, použije položku kontextového 
+                menu <emphasis>Zabalení všech připojení krabičky</emphasis>, nebo
+                klávesovou zkratku <emphasis>Ctrl+P</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Rozbalení jedné vrstvy všech zapojení krabičky</title>
+              <para>
+                Tato položka kontextového menu slouží k rozbalení jedné vrstvy
+                krabiček, které jsou zapojené do všech zásuvek aktivní krabičky.
+                Existuje také klávesová zkratka <emphasis>Ctrl+S</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Rozbalení všech vrstev všech zapojení krabičky</title>
+              <para>
+                Tato položka kontextového menu slouží k rozbalení všech vrstvy
+                krabiček, které jsou zapojené do všech zásuvek aktivní krabičky.
+                Existuje také klávesová zkratka <emphasis>Ctrl+U</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+					<listitem>
+						<formalpara>
+							<title>Spouštění akcí krabičky</title>
+							<para>
+								Každý typ krabičky může mít akce, které se dají v pracovním
+								prostředí pouštět. Všechny akce se v pracovní ploše dají pouštět
+								pomocí kontextového menu, každá akce tam má svoji položku, která
+								je pojmenovaná stejně (krabička může mít ještě i hlavní metodu, která
+								se dá pouštět i dvojklikem).
+							</para>
+						</formalpara>
+					</listitem>
+				</itemizedlist>
+			</section>
+			<section>
+				<title>Uživatelská práce pomocí kláves</title>
+				<para>
+					Uživatel má možnost pracovat s pracovní plochou i pomocí kláves.
+					Definované jsou následující akce:
+				</para>
+				<itemizedlist mark="bullet">
+					<listitem>
+            <para>
+              Klávesa <emphasis>Esc</emphasis> zruší označení krabiček.
+            </para>
+					</listitem>
+					<listitem>
+            <para>
+              Klávesa <emphasis>Del</emphasis> vyvolaná nad krabičkou zruší
+              všechny její připojení. Jestliže je vyvolaná nad připojením,
+              zruší použe toto připojení.
+            </para>
+					</listitem>
+					<listitem>
+            <para>
+              Klávesa <emphasis>Ctrl+A</emphasis> označí všechny krabičky.
+            </para>
+					</listitem>
+					<listitem>
+            <para>
+              Klávesa <emphasis>Ctrl+šipka</emphasis> posune označené krabičky ve
+              směru šipky.
+            </para>
+					</listitem>
+				</itemizedlist>
+			</section>
+		</section>
+	</section>
+</article>

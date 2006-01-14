@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE article PUBLIC '-//OASIS//DTD DocBook XML V4.2//EN'
+               'http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd'>
+<article lang="cs">
+	<articleinfo>
+		<title>Ferda roadmap</title>
+		<author>
+			<firstname>Michal</firstname>
+			<surname>Kováč</surname>
+			<email>michal.kovac.develop@centrum.cz</email>
+		</author>
+	</articleinfo>
+	<abstract>
+		<para>Popis toho, jak bude vypadat cesta k první verzi.</para>
+	</abstract>
+	<section>
+		<title>18. 7. 2005 Verze 0.2</title>
+		<para>Tato verze by měla obsahovat všechny základní stavební kameny.</para>
+		<para>Michal by měl již mít hotový plně funkční Modules manager a začít pracovat na project manageru.</para>
+		<para>Tomáš by měl mít minimálně hotový systém na tvorbu krabiček a všechny jednoduché krabičky (možná bez SVG obrázků).</para>
+		<para>Alex by měl mít hotové skoro všechny moduly pro interakci a pro nastavování parametrů a mít již rozdělanou práci na složitějších (resulty).</para>
+		<para>Martin by měl mít hotové rozpracované všechny těžké controly na FrontEndu a zkoušet jejich funkci na pokusných modulech.</para>
+	</section>
+	<section>
+		<title>1. 8. 2005 Verze 0.4</title>
+		<para>Tato verze by měla obsahovat skoro celou funkcionalitu potřebnou pro první uživatelsky fungující verzi.</para>
+		<para>Michal by měl již mít hotovu většinu věcí z project manageru</para>
+		<para>Tomáš by již měl mít hotové všechny krabičky</para>
+		<para>Alex by již měl mít hotové všechny moduly pro interakci a pro nastavování parametrů</para>
+		<para>Martin dokončuje funkčnost FrontEndu a napojuje ho na project manager.</para>
+	</section>
+	<section>
+		<title>15. 8. 2005 Verze 0.6</title>
+		<para>Tato verze by již měla normálně fungovat s možností výskytu chyb v GUI a project manageru a chybějící nezásadní funkcionality.</para>
+		<para>Michal by měl dodělat project manager.</para>
+		<para>Tomáš vyladí krabičky k dokonalosti a popřípadě pomůže s něčím Michalovi.</para>
+		<para>Alex udělá již naprosto dokonalý installer, vyladí chyby, které se objeví po práci s jeho moduly, a popřípadě pomůže s jinými věcmi, co se objeví.</para>
+		<para>Martin dokončí vizuální prostředí FrontEnd (funkčnost dle uzivprostredi.xdb)</para>
+		<para>Také by již měl být napsán dokument, s kterým bychom jeli na Znalosti 2006.</para>
+	</section>
+	<section>
+		<title>29. 8. 2005 Verze 0.8</title>
+		<para>Naprosto funkční a odladěná verze, která by měla umět to, co jsme slíbili. Po této verzi se budou dodělávat věci, na které se přijde později, že by bylo dobré, je tam mít, či dokonce nutné, jen jsme to nedomysleli, a chybky, které se náhodou objeví.</para>
+		<para>Všichni budou tedy ladit chyby (věřte mi, zabere to dost času, než se z padající verze udělá bezproblémová), dopisovat dokumentaci, aby byla pěkná, dělat pořádek, atd.</para>
+		<para>Michal napíše installer pro Linux.</para>
+	</section>
+	<section>
+		<title>12. 9. 2005 Verze 0.9</title>
+		<para>Dodělané věci, na které se přijde později, že by bylo dobré, je tam mít, či dokonce nutné, jen jsme to nedomysleli, a chybky, které se náhodou objeví.</para>
+		<para>Tato verze se nainstaluje pro zkoušku na MFF a bude se testovat.</para>
+	</section>
+	<section>
+		<title>26. 9. 2005 Verze 1.0</title>
+		<para>Oprava posledních chyb.</para>
+		<para>Tato verze se nainstaluje na MFF napevno.</para>
+	</section>
+</article>

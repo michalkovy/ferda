@@ -1,0 +1,22 @@
+Dokumentace systému Ferda
+#########################
+
+Popis adresářové struktury:
+
+draft
+   - obsahuje návrhy na to, jak bude systém Ferda vypadat
+
+work
+   - dokumenty popisující a upřesňující práci na systému Ferda
+
+--------------------------------------------------------------
+
+Tvorba dokumentace ze zdrojových souborů
+
+$ nant
+
+--------------------------------------------------------------
+
+Smazání dokumentace (zdrojové soubory zůstanou)
+
+$ nant clean
