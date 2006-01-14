@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrontEndConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectManagerOptions>
+    <StartIceGridLocaly>true</StartIceGridLocaly>
+    <StopIceGridLocaly>true</StopIceGridLocaly>
+    <IceGridAsService>false</IceGridAsService>
+    <SentenceForWait>[ icegridnode: Server: changed server `0' state to `Inactive' ]</SentenceForWait>
+    <ServersToStop />
+    <IceBinPath />
+    <LocalePrefs>
+      <string>en-US</string>
+      <string>cs-CZ</string>
+    </LocalePrefs>
+  </ProjectManagerOptions>
+  <FrontEndIceObjects />
+</FrontEndConfig>

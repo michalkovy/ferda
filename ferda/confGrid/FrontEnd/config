@@ -1,0 +1,13 @@
+#
+# The IceGrid locator proxy.
+#
+Ice.Default.Locator=IceGrid/Locator:tcp -h 127.0.0.1 -p 12000
+
+Ice.MessageSizeMax=10240
+#default 1024kB~1MB
+
+
+#
+# Modules Manager adaper.
+#
+ModulesManager.Endpoints=tcp -h 127.0.0.1:udp -h 127.0.0.1

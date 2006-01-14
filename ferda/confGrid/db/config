@@ -1,0 +1,36 @@
+#
+# The IceGrid locator proxy.
+#
+Ice.Default.Locator=IceGrid/Locator:tcp -h 127.0.0.1 -p 12000
+
+Ice.MessageSizeMax=10240
+#default 1024kB~1MB
+
+#
+# IceGrid registry configuration.
+#
+IceGrid.Registry.Client.Endpoints=tcp -h 127.0.0.1 -p 12000
+IceGrid.Registry.Server.Endpoints=tcp -h 127.0.0.1
+IceGrid.Registry.Internal.Endpoints=tcp -h 127.0.0.1
+IceGrid.Registry.Admin.Endpoints=tcp -h 127.0.0.1
+
+#
+# IceGrid node configuration.
+#
+IceGrid.Node.Name=Local
+IceGrid.Node.Endpoints=tcp -h 127.0.0.1
+IceGrid.Node.CollocateRegistry=1
+#IceGrid.Node.Output=db
+#IceGrid.Node.RedirectErrToOut=1
+
+#
+# Trace properties.
+#
+IceGrid.Node.Trace.Activator=3
+IceGrid.Node.Trace.Adapter=2
+IceGrid.Node.Trace.Server=3
+
+#Ice.Trace.Location=2
+
+FerdaDataMiningCommonAdapter.ThreadPool.Size=10
+FerdaLMTasksAdapter.ThreadPool.Size=10

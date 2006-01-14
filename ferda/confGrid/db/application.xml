@@ -1,0 +1,183 @@
+<icegrid>
+	<application name="FerdaModulesApplication">
+		<replica-group id="FerdaDataMiningCommonBoxesReplicaAdapter">
+			<object identity="AtomSettingFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AttributesAttributeFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AttributesEachValueOneCategoryAttributeFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AttributesEquidistantIntervalsAttributeFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AttributesEquifrequencyIntervalsAttributeFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="BooleanPartialCedentSettingFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="CategorialPartialCedentSettingFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="ColumnFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DatabaseFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataMatrixFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DerivedColumnFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="EquivalenceClassFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="LiteralSettingFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+
+			<object identity="BoolT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="ShortT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="IntT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="LongT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="FloatT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="DoubleT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="StringT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="TimeT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="DateT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="DateTimeT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+		</replica-group>
+		
+		<replica-group id="FerdaLMTasksBoxesReplicaAdapter" >
+			<object identity="FFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AboveAverageImplicationFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="BaseCeilFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="BelowAverageImplicationFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="ChiSquaredFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DoubleFoundedImplicationFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DoubleCriticalImplicationFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="FisherFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="FoundedEquivalenceFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="FoundedImplicationFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="SimpleDeviationFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="CriticalEquivalenceFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="CriticalImplicationFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			
+			<object identity="SDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AboveAverageImplicationFunctionalQuantifiersSDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DoubleFoundedImplicationFunctionalQuantifiersSDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="FoundedEquivalenceFunctionalQuantifiersSDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="FoundedImplicationFunctionalQuantifiersSDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="BaseCeilAggregationQuantifiersSDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MaxValueAggregationQuantifiersSDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MinValueAggregationQuantifiersSDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="SumOfValuesAggregationQuantifiersSDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			
+			<object identity="KLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="FunctionSumOfRowsFunctionalQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="FunctionEachRowFunctionalQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<!--
+			<object identity="ChiSquareTestFunctionalQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			-->
+			<object identity="ConditionalEntropyFunctionalQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MutualInformationNormalizedFunctionalQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="InformationDependencyFunctionalQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="KendalFunctionalQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="SumOfValuesAggregationQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MinValueAggregationQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MaxValueAggregationQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AverageValueAggregationQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AnyValueAggregationQuantifiersKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			
+			
+			<object identity="SDKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="SumOfValuesAggregationQuantifiersSDKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MinValueAggregationQuantifiersSDKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MaxValueAggregationQuantifiersSDKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AverageValueAggregationQuantifiersSDKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AnyValueAggregationQuantifiersSDKLTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			
+			<object identity="CFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AnyValueAggregationQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AverageValueAggregationQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MaxValueAggregationQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MinValueAggregationQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="SumOfValuesAggregationQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="ArithmeticAverageFunctionalQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AsymetryFunctionalQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DiscreteOrdinaryVariationFunctionalQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="GeometricAverageFunctionalQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="NominalVariationFunctionalQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="SkewnessFunctionalQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="StandardDeviationFunctionalQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="VarianceFunctionalQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="VariationRatioFunctionalQuantifiersCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			
+			<object identity="SDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AnyValueAggregationQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AverageValueAggregationQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MaxValueAggregationQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="MinValueAggregationQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="SumOfValuesAggregationQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="ArithmeticAverageFunctionalQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="AsymetryFunctionalQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DiscreteOrdinaryVariationFunctionalQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="GeometricAverageFunctionalQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="NominalVariationFunctionalQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="SkewnessFunctionalQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="StandardDeviationFunctionalQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="VarianceFunctionalQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="VariationRatioFunctionalQuantifiersSDCFTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+				
+		</replica-group>
+		
+		<service-template id="FerdaServiceTemplate">
+			<parameter name="name"/>
+			<parameter name="entry"/>
+			<parameter name="endpoints"/>
+			<service name="${name}" entry="${entry}">
+				<adapter name="${service}"
+					register-process="true"
+					endpoints="${endpoints}"
+					replica-group="${service}ReplicaAdapter"/>
+			</service>
+		</service-template>
+		
+		<server-template id="FerdaServerTemplate">
+			<parameter name="index"/>
+			<parameter name="endpoints" default="tcp:udp" />
+			<icebox id="${index}" exe="iceboxnet" activation="on-demand" pwd="${application.distrib}">
+				<service-instance template="FerdaServiceTemplate" 
+					name="FerdaDataMiningCommonBoxes"
+					entry="FerdaDataMiningCommonBoxes.dll:Ferda.Modules.DataMiningCommon.Service"
+					endpoints="${endpoints}"/>
+				<service-instance template="FerdaServiceTemplate" 
+					name="FerdaLMTasksBoxes"
+					entry="FerdaLMTasksBoxes.dll:Ferda.Modules.LMTasks.Service"
+					endpoints="${endpoints}"/>
+				<property name="Ice.ThreadPool.Server.Size" value="10"/>
+			</icebox>
+		</server-template>
+		
+		<server-template id="IcePatch2">
+
+       <parameter name="instance-name" default="${application}.IcePatch2"/>
+       <parameter name="endpoints" default="default"/>
+       <parameter name="directory"/>
+
+       <server id="${instance-name}" exe="icepatch2server" application-distrib="false" activation="on-demand">
+
+         <adapter name="IcePatch2" endpoints="${endpoints}">
+           <object identity="${instance-name}/server" type="::IcePatch2::FileServer"/>
+         </adapter>
+
+         <adapter name="IcePatch2.Admin" id=""
+                  endpoints="tcp -h 127.0.0.1" register-process="true"/>
+
+         <property name="IcePatch2.InstanceName" value="${instance-name}"/>
+         <property name="IcePatch2.Directory" value="${directory}"/>
+
+       </server>
+
+    </server-template>
+    <distrib />
+		
+		<node name="Local">
+			<server-instance template="FerdaServerTemplate" 
+				index="0"
+				endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1" />
+			<server-instance template="IcePatch2"
+				directory="./Server/" />
+
+		</node>
+
+	</application>
+
+</icegrid>
+
+
+
+
+
+
+
+
