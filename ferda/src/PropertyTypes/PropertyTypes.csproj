@@ -1,0 +1,62 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50215</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E9E4BB07-E87A-4941-9009-FC4BDFE63E31}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Ferda.Modules</RootNamespace>
+    <AssemblyName>PropertyTypes</AssemblyName>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral">
+      <HintPath>..\..\bin\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=2.1.2.0, Culture=neutral, PublicKeyToken=1f998c50fec78381" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <ItemGroup>
+    <Compile Include="BoolTI.cs" />
+    <Compile Include="CategoriesTI.cs" />
+    <Compile Include="DateTI.cs" />
+    <Compile Include="DateTimeTI.cs" />
+    <Compile Include="DoubleTI.cs" />
+    <Compile Include="FloatTI.cs" />
+    <Compile Include="GenerationInfoTI.cs" />
+    <Compile Include="HypothesesTI.cs" />
+    <Compile Include="IntTI.cs" />
+    <Compile Include="IValue.cs" />
+    <Compile Include="LongTI.cs" />
+    <Compile Include="ObjectFactoryForPropertyTypes.cs" />
+    <Compile Include="PropertyBoxModuleFactoryCreatorI.cs" />
+    <Compile Include="PropertyBoxModuleFactoryI.cs" />
+    <Compile Include="PropertyBoxModuleI.cs" />
+    <Compile Include="PropertyReapThread.cs" />
+    <Compile Include="ShortTI.cs" />
+    <Compile Include="StringSeqTI.cs" />
+    <Compile Include="StringTI.cs" />
+    <Compile Include="TimeTI.cs" />
+    <Compile Include="ValueT.cs" />
+  </ItemGroup>
+</Project>

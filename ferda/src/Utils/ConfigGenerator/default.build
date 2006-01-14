@@ -1,0 +1,29 @@
+﻿<?xml version="1.0"?>
+<project name="Ferda Config Generator" default="build" basedir=".">
+	<description>Ferda Config Generator</description>
+	<target name="build" description="Build Config Generator">
+		<mkdir dir="${utils.dir}"/>
+		<csc target="exe" output="${path::combine(utils.dir,'FerdaUtilsConfigGenerator.exe')}" debug="${debug}" optimize="${optimize}">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="*.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(serverbin.dir,'FerdaServerBase.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll"/>
+				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+	</target>
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset basedir="${utils.dir}">
+				<include name="FerdaUtilsConfigGenerator.exe*"/>
+			</fileset>
+		</delete>
+	</target>
+</project>

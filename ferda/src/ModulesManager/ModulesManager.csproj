@@ -1,0 +1,69 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{57A6E5AB-189A-47D9-9E11-E45E93503FF4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Ferda.ModulesManager</RootNamespace>
+    <AssemblyName>ModulesManager</AssemblyName>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\icecs.dll</HintPath>
+    </Reference>
+    <Reference Include="icegridcs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b555a647d8de49c2">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\icegridcs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <ItemGroup>
+    <Compile Include="BoxModule.cs" />
+    <Compile Include="BoxModuleFactoryCreator.cs" />
+    <Compile Include="BoxModuleForManager.cs" />
+    <Compile Include="BoxModuleIceFactories.cs" />
+    <Compile Include="BoxModuleLockerI.cs" />
+    <Compile Include="BoxModuleProjectInformationI.cs" />
+    <Compile Include="GroupBox.cs" />
+    <Compile Include="GroupBoxFactoryCreator.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="HelpFiles.cs" />
+    <Compile Include="IAppPrefs.cs" />
+    <Compile Include="IBoxModule.cs" />
+    <Compile Include="IBoxModuleFactoryCreator.cs" />
+    <Compile Include="IIceHelper.cs" />
+    <Compile Include="IIcePrefs.cs" />
+    <Compile Include="ManagersEngineI.cs" />
+    <Compile Include="ManagersLocatorI.cs" />
+    <Compile Include="ModuleForInteractionInfo.cs" />
+    <Compile Include="ModulesManager.cs" />
+    <Compile Include="OutputI.cs" />
+  </ItemGroup>
+</Project>

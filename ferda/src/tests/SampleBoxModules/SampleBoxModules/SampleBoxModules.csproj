@@ -1,0 +1,68 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BFAB0932-1166-406F-9965-E3A20B981752}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SampleBoxModules</RootNamespace>
+    <AssemblyName>SampleBoxModules</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaServerBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaServerBase.dll</HintPath>
+    </Reference>
+    <Reference Include="iceboxcs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b555a647d8de49c2">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=2.1.2.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\icecs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Boxes\SampleBoxModule\generated\SampleBoxModule.cs" />
+    <Compile Include="Boxes\SampleBoxModule\SampleBoxModuleBoxInfo.cs" />
+    <Compile Include="Boxes\SampleBoxModule\SampleBoxModuleFunctionsI.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Boxes\SampleBoxModule\slice\SampleBoxModule.ice" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
