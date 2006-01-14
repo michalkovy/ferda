@@ -1,0 +1,5 @@
+NEWS is a text file that contains a list of worth mentioning changes. For each
+new release, add one or more items to the top of the file and specify the
+version they pertain to. Don't discard old items, leave them in the file after
+the newer ones. This way, users upgrading from any previous version can see
+what is new.
