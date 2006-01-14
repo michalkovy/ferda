@@ -1,0 +1,5 @@
+Uninstallation on Windows
+
+If you installed Ferda with installer run uninstaller
+otherwise run "nant uninstall" in Ferda subversion root
+directory.

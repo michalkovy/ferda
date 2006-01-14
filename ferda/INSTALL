@@ -1,0 +1,35 @@
+	HOW TO BUILD AND INSTALL WITHOUT INSTALLER FERDA ON YOUR WINDOWS SYSTEM 
+
+Please go through these steps to successfully install ferda on your system:
+
+1) Install .NET 2 SDK
+2) Install last night version of NAnt (nant.sourceforge.net)
+3) Install Ice (www.zeroc.com)
+4) Set PATH environment variable to have Ice bin directory and NAnt vbin directory in.
+5) Run "nant fullinstall"
+You can specify these options in this step:
+-D:ice.dir=ICEPATH	path to Ice directory, if not C:\Ice-3.0.0
+-D:optimize=true		optimize generated code
+-D:debug=None				do not create debug symbols
+
+Now you have created and installed Ferda to bin directory.
+
+There are other nant build targets:
+nant src					compile Ferda
+nant config				config Ferda
+nant uninstall		uninstall Ferda
+nant clean				clean files created with compilation
+nant install			install compiled and configured Ferda
+nant refresh			uninstall, clean, compile and install Ferda
+nant debugsrc			like "nant src but" creates version for debuggin on side of Modules
+nant debugrefresh	like "nant refresh" but creates version for debuggin on side of Modules
+nant debuginstall like "nant install" but creates version for debuggin on side of Modules
+
+Version for debugging
+If you create Ferda with commans "nant debug...", you have to execute modules application
+yourselves before running Ferda. So you can execute that in a debugger.
+
+To compile an installer, update to the latest subversion version and create a directory
+in the Ferda subversion root, named ThirdParty. Copy Ice into that directory and name it
+"ice". Now you can compile Ferda installer with command "nant installer". (You have to
+have NSIS installed)

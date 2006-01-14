@@ -1,0 +1,90 @@
+Michal
+ ? Grid computing
+ - problem velkych projetku
+ - Uzivatel definuj, kde bezi ktera krabicka
+ - upravy equifrequency algoritumus k obrazu svému
+ - moznost udelat z property socket - vylepsit
+   - automaticky zapojit krabka daneho typu pri zesoketovani vlastnosti
+   - ted, kdyz se zapoji spravna krabka a vyplni se tam dana hodnota do ni ve vlastnostech krabky, do ktere je zapojena, se hodnota neprojevi - to je spatne
+   - kdyz se rekne, ze to nema byt zasuvka a v tu chvili je tam neco zapojeneho, musi se to odpojit a ta hodnota, co tam byla v posledni chvili, se musi ulozit do te krabky
+ - krabicky reprezentujici typy hodnot vlastnosti
+   - udelat CategoriesT krabicku a mozna neco obecneho
+   - implementovat v ModulesManageru hledani techto typu krabek
+   - co s moduly pro nastavovani parametru - specialni typ pro kazdy modul?
+ - udelat, aby napriklad FloatT byl DoubleT
+ - v diplomce
+   - Lambda kravicku
+   - +, -, *, /, minimalizaca, ... kravicky
+ - Samovypinani backendu?
+ - Usporadavani krabicek
+ - vylepsit archiv o dalsi comba
+ - akce zpet? - alespon reseni zmeny pro ukladani projektu
+ - const int factoryRefreshTime = 300000;	const int factoryRefreshedTestTime = 1000000; z Modules.ice do nejakeho konfigu (nesouhlasim)
+ - v src/Modules/BoxModuleI.cs(238) je funkce, ktera nevim (pise Tomas) co ma delat, tak pocitam, ze ji implementujes a zdokumentujes ji v Modules.ice
+ 		public override SocketInfo[] getAdditionalSockets(Ice.Current __current)
+ - opravit spousteni sluzeb (adapter se aktivuje nyni driv, nez tam jsou objekty - to muze vest k chybam)
+ - factory pro communicator se v IceBoxu nacita vicekrat - to je zbytecne
+ - sitovy archiv
+Martin
+ - krabicky jdou posouvat nahoru a doleva mimo viditelnou plochu
+ - plocha o neco vetsi nez je potreba (vysvetlim proc, navrhnu moznost jak udelat ... tomas)
+ - performance
+ - bug s comboboxy v property gridu
+ - vyjimky ... pri vyjimce oznacit prislusnou krabicu (+ pokud mozno i vlastnost)
+ - moznost udelat z property socket (Michal to ma pry pripravene)
+ - Label nad krabickou - pridat hint ke krabicce (tim je mysleno, ze hint zobrazovany nad krabickou by mìl vypadat asi takhle (vyjadreno v html :-)) "<b>box.label</b></br>box.hint")
+ - kazda krabicka ma svoje notes (jako notepad) -  u michala v IBoxModule UserHint
+ - listy tlacitek - ikony v ruznych menu a v icon liste
+ - Netron
+   - zoom
+   - mapa
+   - tree layout?
+   - print + print preview
+ - svg
+ - ukladani nastaveni rozlozeni pracovni plochy (i modulu pro interakci a modulu pro nastaveni) - dohodni se se Sasou
+ - vyber nekolika krabicek -> udelat skupinu (RightClick)
+ - dynamic (kontext) help
+ - FrontEnd se umi spustit s parametrem *.xfp souboru (reaguje na asociaci)
+ - help - uzivatelska napoveda k prostredi
+ - AddIn zobrazujici pomoci AcrobatReadru ten PDF help
+ - Prescreen - grafika
+ - moznosti - pridat vse v iceConfig a vylepsit vyber lokalizaci
+ - Lokalizace
+   - prescreen: myslim, ze "priprava/inicializace" je lepsi nez "nahravani", co vy na to? (tomas), Adobe pouziva "zavadi se" a "inicializuje se"
+   - property grid: booleovske vlastnosti True/False -> Ano/Ne
+ - DateTime property -> kalendar nestaci
+ - dynamic help
+ - ProjectManager.ProjectManager.Load nove vraci seznam chyb ke kterym doslo pri nacitani projektu - ukazat uzivatelovi
+ - kdyz je mezikrabickami ciste vodorovna sipka (neni sikam -> je vysoka asi 1px), tak nenimozny ji uchopit a smazat
+Tomas
+ - CF, SDCF kvantifikatory ... implementovat vypocty
+ - spolu se Sasou MultiColumn
+ - Rozchodit STULONG
+ - prezentace + webcast o pridavani novych krabicek
+ - dodelat cachovani
+ - udelam nejake unit testy (ale radeji az nad vlastni implementaci ... bude tam dost zmen)
+ - Sasa mi da CategoriesDisjunktivityTest, CategoriesFrequencies
+ - ChiSquare quantifier
+ - napoveda (z Rauchovych skript)
+ - Lokalizovat texty vyjimek.
+ - rozhazim celou sln mozna do vice sln, ale urcite vice projektu
+Sasa
+ - installer
+		konfigurace Ice
+		lepe konfigurovatelny - pridavani novych casti jednoduse
+ - Result Browser - ASC jen kdyz uz chce
+ - !!!panel vlastnosti
+ ? Result Browser by mohl mit field MaxNumberOfHypothesisToShow (v takovem pripade by musel byt ukazan uzivateli pocet vsech hypotez)
+ ? Result Browser - Michal navrhoval "stromovou strukturu" hypotez
+ ? vsechny 2/3D grafy - jsou v AttributeFrequency, ColumnFrequency
+ ? MultiColumn dialog
+ ? Moduly pro interakci ... nejake sexy vystupy/reporty (XML, ASCII, CSV, XHTML, DocBook, RTF)
+Vsichni
+ - DOKUMENTACE
+ - navrhuju progress .. vysvetlim
+Else
+ - ikony
+ - webove stranky
+Dalsi namety pro dalsi diplomky a projekty
+ - TimeTransf
+ - Kex?

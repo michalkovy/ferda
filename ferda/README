@@ -1,0 +1,17 @@
+-----------------------------
+  F E R D A   N O T E S
+-----------------------------
+
+There are some isues you have to know:
+
+Ferda needs .NET Framework 2.0 to be installed on your computer
+and .NET Framework 1.1 or lower to NOT be installed!
+
+Property of box Database with name "Connection string",
+has to contain "DSN" ODBC connection string.
+ 
+Do not give database files on places, where no everyone
+can use yours computer can access it (do not use for
+example remote disks), there can be problems with it.
+
+Read INSTALL file for building and installation instructions.

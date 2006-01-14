@@ -1,0 +1,377 @@
+﻿<?xml version="1.0"?>
+<project name="Ferda" default="all" basedir=".">
+	<description>projekt Ferda</description>
+	<property name="default.build" value="default.build"/>
+	<property name="debug" value="Enable" unless="${property::exists('debug')}"/>
+	<property name="optimize" value="false" unless="${property::exists('optimize')}"/>
+	<property name="create.assemblyinfo" value="false" unless="${property::exists('create.assemblyinfo')}"/>
+	<property name="bin.dir" value="${path::get-full-path('bin')}"/>
+	<property name="frontendbin.dir" value="${path::get-full-path('bin/FrontEnd')}"/>
+	<property name="serverbin.dir" value="${path::get-full-path('bin/Server')}"/>
+	<property name="lib.dir" value="${path::get-full-path('lib')}"/>
+	<property name="doc.dir" value="${path::get-full-path('doc')}"/>
+	<property name="moddoc.dir" value="${path::get-full-path('doc')}"/>
+	<property name="conf.dir" value="${path::get-full-path('conf')}"/>
+	<property name="src.dir" value="${path::get-full-path('src')}"/>
+	<property name="test.dir" value="${path::get-full-path('test')}"/>
+	<property name="docsrc.dir" value="${path::get-full-path('docsrc')}"/>
+	<property name="slice.dir" value="${path::get-full-path('slice')}"/>
+	<property name="libsrc.dir" value="${path::get-full-path('libsrc')}"/>
+	<property name="utils.dir" value="${path::get-full-path('utils')}"/>
+	<property name="snapshot.dir" value="${path::combine(directory::get-current-directory(),'snapshot')}" unless="${property::exists('snapshot.dir')}"/>
+	<property name="docs.build.file" value="docs/docs.build"/>
+	<property name="ice.dir" value="c:\Ice-3.0.0\" unless="${property::exists('ice.dir')}"/>
+	<property name="installer.dir" value="${path::get-full-path('installer')}"/>
+	<target name="clean" description="Smaže build">
+		<nant buildfile="${path::combine(slice.dir,default.build)}" target="clean">
+			<properties>
+				<property name="build.dir" value="${src.dir}"/>
+			</properties>
+		</nant>
+		<nant target="clean">
+			<buildfiles>
+				<include name="${docsrc.dir}/**/default.build"/>
+			</buildfiles>
+			<properties>
+				<property name="build.dir" value="${doc.dir}"/>
+			</properties>
+		</nant>
+		<nant buildfile="${path::combine(libsrc.dir,'default.build')}" target="clean">
+			<properties>
+				<property name="build.dir" value="${bin.dir}"/>
+			</properties>
+		</nant>
+		<nant buildfile="${path::combine(src.dir,'default.build')}" target="clean">
+			<properties>
+				<property name="build.dir" value="${bin.dir}"/>
+			</properties>
+		</nant>
+		<delete dir="${bin.dir}" failonerror="false" if="${directory::exists(bin.dir)}"/>
+	</target>
+	<target name="programdoc" depends="src,programdoconly">
+	</target>
+	<target name="programdoconly">
+		<uptodate property="help.uptodate">
+			<targetfiles>
+				<include name="${doc.dir}/programHelp/*.html"/>
+			</targetfiles>
+			<sourcefiles basedir="${bin.dir}">
+				<include name="Server/FerdaServerBase.dll"/>
+				<include name="Server/FerdaBoxInterfaces.dll"/>
+				<include name="Server/FerdaDataMiningCommonBoxes.dll"/>
+				<include name="Server/FerdaLMTasksBoxes.dll"/>
+
+				<include name="FrontEnd/FerdaModulesManager.dll"/>
+				<include name="FrontEnd/FerdaProjectManager.dll"/>
+
+				<include name="FrontEnd/FerdaFrontEnd.exe"/>
+			</sourcefiles>
+		</uptodate>
+		<if test="${not(help.uptodate)}">
+			<ndoc>
+				<assemblies basedir="${bin.dir}">
+					<include name="Server/FerdaServerBase.dll"/>
+					<include name="Server/FerdaBoxInterfaces.dll"/>
+
+					<include name="Server/FerdaDataMiningCommonBoxes.dll"/>
+
+					<!--
+						<include name="Server/FerdaLMTasksBoxes.dll"/>
+					-->
+
+					<include name="FrontEnd/FerdaModulesManager.dll"/>
+					<include name="FrontEnd/FerdaProjectManager.dll"/>
+
+					 <include name="FrontEnd/FerdaFrontEnd.exe"/>
+				</assemblies>
+				<referencepaths>
+					<include name="${bin.dir}"/>
+					<include name="${bin.dir}/Server"/>
+					<include name="${bin.dir}/FrontEnd"/>
+				</referencepaths>
+				<documenters>
+					<documenter name="MSDN">
+						<property name="OutputDirectory" value="${doc.dir}/programHelp"/>
+						<property name="HtmlHelpName" value="Ferda"/>
+						<!-- <property name="HtmlHelpCompilerFilename" value="hhc.exe"/> -->
+						<property name="IncludeFavorites" value="False"/>
+						<property name="Title" value="An NDoc Documented Class Library"/>
+						<property name="SplitTOCs" value="False"/>
+						<property name="DefaulTOC" value=""/>
+						<property name="ShowVisualBasic" value="True"/>
+						<property name="ShowMissingSummaries" value="True"/>
+						<property name="ShowMissingRemarks" value="False"/>
+						<property name="ShowMissingParams" value="True"/>
+						<property name="ShowMissingReturns" value="True"/>
+						<property name="ShowMissingValues" value="True"/>
+						<property name="DocumentInternals" value="False"/>
+						<property name="DocumentProtected" value="True"/>
+						<property name="DocumentPrivates" value="False"/>
+						<property name="DocumentEmptyNamespaces" value="False"/>
+						<property name="IncludeAssemblyVersion" value="False"/>
+						<property name="CopyrightText" value=""/>
+						<property name="CopyrightHref" value=""/>
+					</documenter>
+				</documenters>
+			</ndoc>
+		</if>
+	</target>
+	<target name="doc">
+		<nant>
+			<buildfiles>
+				<include name="${docsrc.dir}/**/default.build"/>
+			</buildfiles>
+			<properties>
+				<property name="build.dir" value="${doc.dir}"/>
+				<property name="sablonaDocBookXhtml" value="${path::get-full-path('stylesheets/docbook/xhtml/docbook.xsl')}" unless="${property::exists('sablonaDocBookXhtml')}"/>
+				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}"/>
+			</properties>
+		</nant>
+		<nant buildfile="${path::combine(slice.dir,default.build)}" target="doc">
+			<properties>
+				<property name="build.dir" value="${moddoc.dir}"/>
+				<property name="sablonaDocBookXhtml" value="${path::get-full-path('stylesheets/docbook/xhtml/docbook.xsl')}" unless="${property::exists('sablonaDocBookXhtml')}"/>
+				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}"/>
+			</properties>
+		</nant>
+	</target>
+	<target name="slice">
+		<nant buildfile="${path::combine(slice.dir,default.build)}">
+			<properties>
+				<property name="build.dir" value="${src.dir}"/>
+			</properties>
+		</nant>
+	</target>
+	<target name="src" depends="slice">
+		<mkdir dir="${bin.dir}"/>
+		<mkdir dir="${frontendbin.dir}"/>
+		<mkdir dir="${serverbin.dir}"/>
+		<nant buildfile="${path::combine(libsrc.dir,'default.build')}" target="build">
+			<properties>
+				<property name="build.dir" value="${frontendbin.dir}"/>
+			</properties>
+		</nant>
+		<nant buildfile="${path::combine(src.dir,'default.build')}" />
+		<copy todir="${frontendbin.dir}">
+			<fileset basedir="lib">
+				<include name="icecs.dll"/>
+				<include name="icegridcs.dll"/>
+				<include name="NetronMaths.dll"/>
+        <include name="TeeChart.Lite.dll"/>
+        <include name="TeeChart.Lite.Languages.dll"/>
+			</fileset>
+		</copy>
+		<copy todir="${serverbin.dir}">
+			<fileset basedir="lib">
+				<include name="icecs.dll"/>
+				<include name="icegridcs.dll"/>
+				<include name="lispMinerGens/*"/>
+			</fileset>
+		</copy>
+	</target>
+	<target name="config">
+		<mkdir dir="${bin.dir}/db"/>
+		<mkdir dir="${bin.dir}/db/node"/>
+		<mkdir dir="${bin.dir}/db/registry"/>
+		<copy todir="${bin.dir}">
+			<fileset basedir="conf">
+				<include name="**"/>
+			</fileset>
+		</copy>
+		<xmlpoke file="bin/db/application.xml" xpath="/icegrid/application[@name = 'FerdaModulesApplication']/node[@name = 'Local']/server-instance[@template = 'FerdaServerTemplate']/@pwd" value="${path::get-full-path('bin/Server/')}"/>
+		<!-- <delete failonerror="false">
+			<fileset basedir="${bin.dir}/db/node">
+				<include name="**" />
+				<exclude name="." />
+			</fileset>
+		</delete>
+		<delete failonerror="false">
+			<fileset basedir="${bin.dir}/db/registry">
+				<include name="**" />
+				<exclude name="." />
+			</fileset>
+		</delete> -->
+	</target>
+	<target name="test" depends="src,config">
+		<nant buildfile="${path::combine(test.dir,'default.build')}">
+			<properties>
+				<property name="build.dir" value="${bin.dir}"/>
+			</properties>
+		</nant>
+	</target>
+	<target name="utils">
+		<nant buildfile="${path::combine(utils.dir,'default.build')}">
+			<properties>
+				<property name="build.dir" value="${utils.dir}"/>
+			</properties>
+		</nant>
+	</target>
+	<target name="testonly">
+		<nant buildfile="${path::combine(test.dir,'default.build')}">
+			<properties>
+				<property name="build.dir" value="${bin.dir}"/>
+			</properties>
+		</nant>
+	</target>
+	<target name="all" description="Vytvoří Ferdu" depends="slice,src,config,doc"/>
+	<target name="install" description="Installs Ferda">
+		<!-- nothing to do -->
+	</target>
+	<target name="gridinstall" description="Installs Ferda For More Nodes">
+		<exec program="icegridnode">
+			<arg value="--install"/>
+			<arg value="FerdaIceGridNode"/>
+			<arg value="--executable"/>
+			<arg value="${path::combine(ice.dir,'bin/icegridnode.exe')}"/>
+			<arg value="--Ice.Config=${path::get-full-path('bin/db/config')}"/>
+			<arg value="--IceGrid.Registry.Data=${path::get-full-path('bin/db/registry')}"/>
+			<arg value="--IceGrid.Node.Data=${path::get-full-path('bin/db/node')}"/>
+		</exec>
+		<exec program="icegridnode">
+			<arg value="--start"/>
+			<arg value="FerdaIceGridNode"/>
+		</exec>
+		<xmlpoke file="bin/db/application.xml" xpath="/icegrid/application[@name = 'FerdaModulesApplication']/node[@name = 'Local']/server-instance[@template = 'IcePatch2']/@directory" value="${path::get-full-path('bin/Server/')}"/>
+		<exec program="icepatch2calc">
+			<arg value="${path::get-full-path('bin/Server')}"/>
+		</exec>
+		<exec program="icegridadmin">
+			<arg value="--Ice.Config=${path::get-full-path('bin/db/config')}"/>
+			<arg value="-e"/>
+			<arg value="application add 'bin\db\application.xml'"/>
+		</exec>
+	</target>
+	<target name="fullinstall" depends="src,config,install"/>
+	<target name="uninstall" description="Uninstalls Ferda">
+		<!-- nothing to do -->
+	</target>
+	<target name="griduninstall" description="Uninstalls Ferda">
+		<exec program="icegridnode" failonerror="false">
+			<arg value="--stop"/>
+			<arg value="FerdaIceGridNode"/>
+		</exec>
+		<exec program="icegridnode" failonerror="false">
+			<arg value="--uninstall"/>
+			<arg value="FerdaIceGridNode"/>
+		</exec>
+	</target>
+	<target name="refresh" depends="uninstall,clean,fullinstall"/>
+	<target name="snapshot" description="Vytvoří snapshot" depends="clean,all">
+		<tstamp property="build.date" pattern="yyyyMMdd" verbose="true"/>
+		<mkdir dir="${snapshot.dir}"/>
+		<zip zipfile="${path::combine(snapshot.dir,'ferda'+build.date+'.zip')}">
+			<fileset basedir="${bin.dir}" prefix="bin">
+				<include name="**"/>
+			</fileset>
+			<fileset basedir="${lib.dir}" prefix="lib">
+				<include name="**"/>
+			</fileset>
+			<fileset basedir="${doc.dir}" prefix="doc">
+				<include name="**"/>
+			</fileset>
+			<fileset basedir="${conf.dir}" prefix="conf">
+				<include name="**"/>
+			</fileset>
+			<fileset>
+				<include name="INSTALL"/>
+				<include name="README"/>
+				<include name="NEWS"/>
+				<include name="LICENSE"/>
+				<include name="COPYRIGHT"/>
+				<include name="AUTHORS"/>
+			</fileset>
+		</zip>
+		<tar destfile="${path::combine(snapshot.dir,'ferda'+build.date+'.tar.bz2')}" compression="BZip2">
+			<fileset basedir="${bin.dir}" prefix="bin">
+				<include name="**"/>
+			</fileset>
+			<fileset basedir="${lib.dir}" prefix="lib">
+				<include name="**"/>
+			</fileset>
+			<fileset basedir="${doc.dir}" prefix="doc">
+				<include name="**"/>
+			</fileset>
+			<fileset basedir="${conf.dir}" prefix="conf">
+				<include name="**"/>
+			</fileset>
+			<fileset>
+				<include name="INSTALL"/>
+				<include name="README"/>
+				<include name="NEWS"/>
+				<include name="LICENSE"/>
+				<include name="COPYRIGHT"/>
+				<include name="AUTHORS"/>
+			</fileset>
+		</tar>
+		<copy todir="${directory::get-current-directory()}">
+			<fileset basedir="web">
+				<include name="**"/>
+			</fileset>
+		</copy>
+	</target>
+	<target name="installer" depends="uninstall,clean">
+		<property name="debug" value="None"/>
+		<property name="optimize" value="true"/>
+		<call target="src" />
+		<call target="config" />
+		<nant buildfile="${path::combine(installer.dir,default.build)}" target="installer" />
+	</target>
+	<target name="runiceboxnet">
+		<copy todir="${serverbin.dir}">
+			<!-- <fileset basedir="${bin.dir}/db/node/servers/0/config"> -->
+			<fileset basedir="${bin.dir}/db">
+				<include name="config"/>
+			</fileset>
+		</copy>
+		<exec program="iceboxnet" workingdir="${serverbin.dir}">
+			<arg value="--Ice.Config=config"/>
+		</exec>
+	</target>
+	<target name="boxconfig">
+		<!-- TODO -->
+		<copy todir="${utils.dir}">
+			<fileset basedir="${frontendbin.dir}">
+				<include name="FerdaServerBase.*"/>
+			</fileset>
+		</copy>
+		<property name="boxconfig.output.dir" value="${src.dir}/Modules/BoxModulesServices"/>
+		<property name="boxconfig.input.dir" value="${src.dir}/Modules/BoxModulesServices"/>
+		<property name="config.generator.util" value="${utils.dir}/FerdaUtilsConfigGenerator.exe"/>
+		<echo message="Generuji soubory BoxConfig.xml"/>
+		<exec program="${config.generator.util}">
+			<arg value="-inputFileName"/>
+			<arg file="${boxconfig.input.dir}/boxes.xml"/>
+			<arg value="-outputFileName"/>
+			<arg value="BoxConfig.xml"/>
+			<arg value="-taskType"/>
+			<arg value="BoxConfig"/>
+			<arg value="-outputBaseDirectory"/>
+			<arg path="${boxconfig.output.dir}"/>
+			<arg value="-silent"/>
+		</exec>
+		<echo message="Generuji soubory Localization.en-US.xml"/>
+		<exec program="${config.generator.util}">
+			<arg value="-inputFileName"/>
+			<arg file="docsrc/draft/boxesLocalization.en-US.xml"/>
+			<arg value="-outputFileName"/>
+			<arg value="Localization.en-US.xml"/>
+			<arg value="-taskType"/>
+			<arg value="Localization"/>
+			<arg value="-outputBaseDirectory"/>
+			<arg path="${boxconfig.output.dir}"/>
+			<arg value="-silent"/>
+		</exec>
+		<echo message="Generuji soubory Localization.cs-CZ.xml"/>
+		<exec program="${config.generator.util}">
+			<arg value="-inputFileName"/>
+			<arg file="docsrc/draft/boxesLocalization.cs-CZ.xml"/>
+			<arg value="-outputFileName"/>
+			<arg value="Localization.cs-CZ.xml"/>
+			<arg value="-taskType"/>
+			<arg value="Localization"/>
+			<arg value="-outputBaseDirectory"/>
+			<arg path="${boxconfig.output.dir}"/>
+			<arg value="-silent"/>
+		</exec>
+	</target>
+</project>
