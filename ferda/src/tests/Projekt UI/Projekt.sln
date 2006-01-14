@@ -1,0 +1,63 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FerdaGUI", "FerdaGUI\FerdaGUI.csproj", "{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}"
+	ProjectSection(ProjectDependencies) = postProject
+		{24CC1A8E-385A-4B37-8821-21D4918BA793} = {24CC1A8E-385A-4B37-8821-21D4918BA793}
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8} = {95C388C8-DD59-4993-BCC3-14A0862A24D8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicShapes", "..\..\..\libsrc\BasicShapes\BasicShapes.csproj", "{24CC1A8E-385A-4B37-8821-21D4918BA793}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetronGraphLib", "..\..\..\libsrc\NAFGraph\NetronGraphLib.csproj", "{95C388C8-DD59-4993-BCC3-14A0862A24D8}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Automata = Automata
+		Debug = Debug
+		LogoSyntax = LogoSyntax
+		Main items = Main items
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.Automata.ActiveCfg = Release|.NET
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.Automata.Build.0 = Release|.NET
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.Debug.ActiveCfg = Debug|.NET
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.Debug.Build.0 = Debug|.NET
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.LogoSyntax.ActiveCfg = Release|.NET
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.LogoSyntax.Build.0 = Release|.NET
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.Main items.ActiveCfg = Release|.NET
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.Main items.Build.0 = Release|.NET
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.Release.ActiveCfg = Release|.NET
+		{4B3BB8B3-9C7D-4765-8952-5FD37D04CB35}.Release.Build.0 = Release|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.Automata.ActiveCfg = Release|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.Automata.Build.0 = Release|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.Debug.ActiveCfg = Debug|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.Debug.Build.0 = Debug|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.LogoSyntax.ActiveCfg = Release|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.LogoSyntax.Build.0 = Release|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.Main items.ActiveCfg = Release|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.Main items.Build.0 = Release|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.Release.ActiveCfg = Release|.NET
+		{24CC1A8E-385A-4B37-8821-21D4918BA793}.Release.Build.0 = Release|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Automata.ActiveCfg = Automata|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Automata.Build.0 = Automata|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Debug.ActiveCfg = Debug|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Debug.Build.0 = Debug|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.LogoSyntax.ActiveCfg = LogoSyntax|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.LogoSyntax.Build.0 = LogoSyntax|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Main items.ActiveCfg = Main items|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Main items.Build.0 = Main items|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Release.ActiveCfg = Release|.NET
+		{95C388C8-DD59-4993-BCC3-14A0862A24D8}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(SolutionItems) = postSolution
+		default.build = default.build
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

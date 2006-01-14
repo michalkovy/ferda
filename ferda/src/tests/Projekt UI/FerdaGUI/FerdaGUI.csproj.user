@@ -1,0 +1,48 @@
+<VisualStudioProject>
+    <CSHARP LastOpenVersion = "7.10.3077" >
+        <Build>
+            <Settings ReferencePath = "D:\Make\Projekt\subversion\lib\;D:\Make\Projekt\subversion\libsrc\NAFGraph\bin\Debug\;F:\Make\c#\Projekt\NAFGraph\bin\Debug\;D:\Make\c#\Projekt\bin\;D:\Make\c#\Projekt\;D:\Make\c#\Projekt\FerdaGUI\;D:\Make\c#\Projekt\assembly\;D:\Make\c#\proj pokus2\assembly\;F:\Make\c#\Projekt\bin\;F:\Make\c#\Projekt\BasicShapes\bin\Debug\;D:\Make\c#\Projekt UI\BasicShapes\bin\Debug\;D:\Make\Projekt\subversion\src\tests\Projekt UI\NAFGraph\bin\Debug\;D:\Make\Projekt\subversion\src\tests\Projekt UI\BasicShapes\bin\Debug\;D:\Make\Projekt\subversion\libsrc\BasicShapes\bin\Debug\" >
+                <Config
+                    Name = "Debug"
+                    EnableASPDebugging = "false"
+                    EnableASPXDebugging = "false"
+                    EnableUnmanagedDebugging = "false"
+                    EnableSQLServerDebugging = "false"
+                    RemoteDebugEnabled = "false"
+                    RemoteDebugMachine = ""
+                    StartAction = "Project"
+                    StartArguments = ""
+                    StartPage = ""
+                    StartProgram = ""
+                    StartURL = ""
+                    StartWorkingDirectory = ""
+                    StartWithIE = "true"
+                />
+                <Config
+                    Name = "Release"
+                    EnableASPDebugging = "false"
+                    EnableASPXDebugging = "false"
+                    EnableUnmanagedDebugging = "false"
+                    EnableSQLServerDebugging = "false"
+                    RemoteDebugEnabled = "false"
+                    RemoteDebugMachine = ""
+                    StartAction = "Project"
+                    StartArguments = ""
+                    StartPage = ""
+                    StartProgram = ""
+                    StartURL = ""
+                    StartWorkingDirectory = ""
+                    StartWithIE = "false"
+                />
+            </Settings>
+        </Build>
+        <OtherProjectSettings
+            CopyProjectDestinationFolder = ""
+            CopyProjectUncPath = ""
+            CopyProjectOption = "0"
+            ProjectView = "ProjectFiles"
+            ProjectTrust = "0"
+        />
+    </CSHARP>
+</VisualStudioProject>
+
