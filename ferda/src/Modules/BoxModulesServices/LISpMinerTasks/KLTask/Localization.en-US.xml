@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.KLTask</Identifier>
+  <Label>KL Task</Label>
+  <Hint>Data mining procedure KL-Miner mines for patterns based on evaluation of two-dimensional contingency tables.</Hint>
+  <Categories>
+    <Category>
+      <Name>KLMiner</Name>
+      <Label>KL-Miner</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>Run</Name>
+      <Label>Run</Label>
+      <Hint>This will run KLMiner procedure (it means run generation of hypotheses)</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>AntecedentSetting</Name>
+      <Label>Antecedent setting</Label>
+      <Hint>Defines set of relevant antecedents.</Hint>
+    </Socket>
+    <Socket>
+      <Name>SuccedentSetting</Name>
+      <Label>Succedent setting</Label>
+      <Hint>Defines set of relevant succedents.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ConditionSetting</Name>
+      <Label>Condition setting</Label>
+      <Hint>Defines set of relevant conditions.</Hint>
+    </Socket>
+    <Socket>
+      <Name>KLQuantifier</Name>
+      <Label>KL Quantifier</Label>
+      <Hint>Defines KL quantifier for task</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationState</Name>
+      <Label>State</Label>
+      <Hint>Determines if the generation of hypotheses is completed, interrupted or canceled.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>DidNotStart</Name>
+          <Label>Didn't start</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Running</Name>
+          <Label>Running</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Completed</Name>
+          <Label>Completed</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Interrupted</Name>
+          <Label>Interrupted</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Canceled</Name>
+          <Label>Canceled</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>GenerationNrOfTests</Name>
+      <Label>Number of verifications</Label>
+      <Hint>Number of verifications during the generation.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationNrOfHypotheses</Name>
+      <Label>Hypotheses count</Label>
+      <Hint>Number of generated hypotheses.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationStartTime</Name>
+      <Label>Start Time</Label>
+      <Hint>Date and time when generation of task started.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationTotalTime</Name>
+      <Label>Total time</Label>
+      <Hint>Total time of generation of hypotheses.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Generating</Name>
+      <Label>Generating</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+</BoxLocalization>

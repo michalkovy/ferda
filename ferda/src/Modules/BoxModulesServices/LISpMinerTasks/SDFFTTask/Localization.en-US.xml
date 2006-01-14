@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.SDFFTTask</Identifier>
+  <Label>SD4ft Task</Label>
+  <Hint>Data mining procedure SD4ft-Miner mines for couples of sets that differ significantly in respect to some association rule.</Hint>
+  <Categories>
+    <Category>
+      <Name>SDFFTMiner</Name>
+      <Label>SD4ft-Miner</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>Run</Name>
+      <Label>Run</Label>
+      <Hint>This will run SD4ftMiner procedure (it means run generation of hypotheses)</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>AntecedentSetting</Name>
+      <Label>Antecedent setting</Label>
+      <Hint>Defines set of relevant antecedents.</Hint>
+    </Socket>
+    <Socket>
+      <Name>SuccedentSetting</Name>
+      <Label>Succedent setting</Label>
+      <Hint>Defines set of relevant succedents.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ConditionSetting</Name>
+      <Label>Condition setting</Label>
+      <Hint>Defines set of relevant conditions.</Hint>
+    </Socket>
+    <Socket>
+      <Name>SDFFTQuantifier</Name>
+      <Label>SD4ft Quantifier</Label>
+      <Hint>Defines SD4ft quantifier for task</Hint>
+    </Socket>
+    <Socket>
+      <Name>Cedent1</Name>
+      <Label>Cedent 1</Label>
+      <Hint>?Cedent1</Hint>
+    </Socket>
+    <Socket>
+      <Name>Cedent2</Name>
+      <Label>Cedent 2</Label>
+      <Hint>?Cedent2</Hint>
+    </Socket>
+    <Socket>
+      <Name>FirstSet</Name>
+      <Label>First Set</Label>
+      <Hint>?FirstSet</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Cedent1</Name>
+          <Label>Cedent 1</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>SecondSet</Name>
+      <Label>Second Set</Label>
+      <Hint>?SecondSet</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Cedent2</Name>
+          <Label>Cedent 2</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Cedent1AndCedent2</Name>
+          <Label>Cedent 1 AND Cedent 2</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>MissingsType</Name>
+      <Label>Missings handling</Label>
+      <Hint>Way of handling of missing values.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Deleting</Name>
+          <Label>Deleting</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>PesimisticFillUp</Name>
+          <Label>Pesimistic fill up</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>OptimisticFillUp</Name>
+          <Label>Optimistic fill up</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>GenerationState</Name>
+      <Label>State</Label>
+      <Hint>Determines if the generation of hypotheses is completed, interrupted or canceled.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>DidNotStart</Name>
+          <Label>Didn't start</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Running</Name>
+          <Label>Running</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Completed</Name>
+          <Label>Completed</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Interrupted</Name>
+          <Label>Interrupted</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Canceled</Name>
+          <Label>Canceled</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>GenerationNrOfTests</Name>
+      <Label>Number of verifications</Label>
+      <Hint>Number of verifications during the generation.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationNrOfHypotheses</Name>
+      <Label>Hypotheses count</Label>
+      <Hint>Number of generated hypotheses.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationStartTime</Name>
+      <Label>Start Time</Label>
+      <Hint>Date and time when generation of task started.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationTotalTime</Name>
+      <Label>Total time</Label>
+      <Hint>Total time of generation of hypotheses.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Task Params</Name>
+      <Label>Task Params</Label>
+    </PropertyCategory>
+    <PropertyCategory>
+      <Name>Generating</Name>
+      <Label>Generating</Label>
+    </PropertyCategory>
+    <PropertyCategory>
+      <Name>Sets</Name>
+      <Label>Sets</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+</BoxLocalization>

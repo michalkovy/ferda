@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.SDKLTask.Quantifiers.Aggregation.AverageValue</Identifier>
+  <Label>Average value</Label>
+  <Hint>Average frequency from range of source contingency table.</Hint>
+  <Categories>
+    <Category>
+      <Name>SDKLMiner</Name>
+      <Label>SDKL-Miner</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>OperationMode</Name>
+      <Label>Operation mode</Label>
+      <Hint>Operation mode</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>FirstSetFrequencies</Name>
+          <Label>First set frequencies</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>SecondSetFrequencies</Name>
+          <Label>Second set frequencies</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DifferencesOfAbsoluteFrequencies</Name>
+          <Label>Differences of absolute frequencies</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DifferencesOfRelativeFrequencies</Name>
+          <Label>Differences of relative frequencies</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DifferenceOfQuantifierValues</Name>
+          <Label>Difference of quantifier values</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>AbsoluteDifferenceOfQuantifierValues</Name>
+          <Label>Absolute difference of quantifier values</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>RowFrom</Name>
+      <Label>From row</Label>
+      <Hint>Definition of range.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Half</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>All</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>RowTo</Name>
+      <Label>To row</Label>
+      <Hint>Definition of range.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Half</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>All</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ColumnFrom</Name>
+      <Label>From column</Label>
+      <Hint>Definition of range.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Half</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>All</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ColumnTo</Name>
+      <Label>To column</Label>
+      <Hint>Definition of range.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Half</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>All</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relation</Label>
+      <Hint>Relation</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Equal</Name>
+          <Label>Equal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThan</Name>
+          <Label>Less than</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThanOrEqual</Name>
+          <Label>Less than or equal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThan</Name>
+          <Label>Greater than</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqual</Name>
+          <Label>Greater than or equal</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Treshold</Name>
+      <Label>Treshold</Label>
+      <Hint>Treshold is compared with value.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Units</Name>
+      <Label>Units</Label>
+      <Hint>Unit for expression of treshold and actual value.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>RelativeToActCondition</Name>
+          <Label>Relative [%] to act condition</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>RelativeToAllObjects</Name>
+          <Label>Relative [%] to all objects</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>RelativeToMaxFrequency</Name>
+          <Label>Relative [%] to max frequency</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>AbsoluteNumber</Name>
+          <Label>Absolute number</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Category range</Name>
+      <Label>Category range</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>SDKLTask</Name>
+      <Label>SDKL Task</Label>
+      <Hint>Creates a new SDKL task box.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

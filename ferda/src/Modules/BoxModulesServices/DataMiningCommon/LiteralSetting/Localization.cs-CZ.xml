@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.LiteralSetting</Identifier>
+  <Label>Zadání literálu</Label>
+  <Hint>Zadání typu a znaménka literálů</Hint>
+  <Categories>
+    <Category>
+      <Name>BooleanAttribute</Name>
+      <Label>Booleovský atribut</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>AtomSetting</Name>
+      <Label>Atom</Label>
+      <Hint>Zadání atomu.</Hint>
+    </Socket>
+    <Socket>
+      <Name>LiteralType</Name>
+      <Label>Typ literálu</Label>
+      <Hint>Typ literálu (základní, zbývající)</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Basic</Name>
+          <Label>Základní</Label>
+          <ShortLabel>!</ShortLabel>
+        </SelectOption>
+        <SelectOption>
+          <Name>Remaining</Name>
+          <Label>Zbývající</Label>
+          <ShortLabel>?</ShortLabel>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>GaceType</Name>
+      <Label>Znaménko literálu (gace)</Label>
+      <Hint>Znaménko literálu (pozitivni, negativní, obě).</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Positive</Name>
+          <Label>Pozitivní</Label>
+          <ShortLabel>+</ShortLabel>
+        </SelectOption>
+        <SelectOption>
+          <Name>Negative</Name>
+          <Label>Negativní</Label>
+          <ShortLabel>-</ShortLabel>
+        </SelectOption>
+        <SelectOption>
+          <Name>Both</Name>
+          <Label>Obě</Label>
+          <ShortLabel>+/-</ShortLabel>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>EquivalenceClass</Name>
+      <Label>Třída ekvivalence</Label>
+      <Hint>Přidá atribut do nové třídy ekvivalence </Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>BooleanPartialCedentSetting</Name>
+      <Label>Zadání booleovského dílčího cedentu</Label>
+      <Hint>Vytvoří novou krabičku zadání booleovnského dílčího cedentu.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

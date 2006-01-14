@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.FFTTask.Quantifiers.Functional.CriticalEquivalence</Identifier>
+  <Label>Critical Equivalence</Label>
+  <Hint>The binomical test does not reject on the level alpha the null hypothesis P(A and S have the same truth value)&lt;=p in favour of alternative P(A and S have the same truth value)&gt;p</Hint>
+  <Categories>
+    <Category>
+      <Name>FFTMiner.Quantifiers.Functional</Name>
+      <Label>4ft-Miner.Kvantifikátory.Funkční</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relation</Label>
+      <Hint>Relation</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>LessThanOrEqualCore</Name>
+          <Label>Lower (less than or equal)</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqualCore</Name>
+          <Label>Upper (greater than or equal)</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ParamP</Name>
+      <Label>P</Label>
+      <Hint>Parameter p</Hint>
+    </Socket>
+    <Socket>
+      <Name>ParamAlpha</Name>
+      <Label>Alpha</Label>
+      <Hint>Parameter Alpha</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>FFTTask</Name>
+      <Label>4ft úloha</Label>
+      <Hint>Vytvoří novou krabičku 4ft úloha.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.FFTTask.Quantifiers.Functional.DoubleFoundedImplication</Identifier>
+  <Label>Double Founded Implication</Label>
+  <Hint>a/(a+b+c) &gt;= p ... at least 100*p [%] of objects satisfying A or S satisfy both A and S</Hint>
+  <Categories>
+    <Category>
+      <Name>FFTMiner.Quantifiers.Functional</Name>
+      <Label>4ft-Miner.Quantifiers.Functional</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>ParamP</Name>
+      <Label>P</Label>
+      <Hint>Parameter p</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>FFTTask</Name>
+      <Label>4ft Task</Label>
+      <Hint>Creates a new 4ft task box.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

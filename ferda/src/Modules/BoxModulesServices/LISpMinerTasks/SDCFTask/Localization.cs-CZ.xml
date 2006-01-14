@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.SDCFTask</Identifier>
+  <Label>SDCF Úloha</Label>
+  <Hint>?</Hint>
+  <Categories>
+    <Category>
+      <Name>SDCFMiner</Name>
+      <Label>SDCF-Miner</Label>
+    </Category>
+  </Categories>
+  <Actions>
+    <Action>
+      <Name>Run</Name>
+      <Label>Spusť</Label>
+      <Hint>Spustí SDCF-Miner proceduru (tj. spustí generování hypotéz)</Hint>
+    </Action>
+  </Actions>
+  <Sockets>
+    <Socket>
+      <Name>AntecedentSetting</Name>
+      <Label>Zadání antecedentu</Label>
+      <Hint>Určení množiny relevantních antecedentů.</Hint>
+    </Socket>
+    <Socket>
+      <Name>ConditionSetting</Name>
+      <Label>Zadání podmínky</Label>
+      <Hint>Určení množiny relevantních podmínek.</Hint>
+    </Socket>
+    <Socket>
+      <Name>SDCFQuantifier</Name>
+      <Label>SDCF Kvantifikátor</Label>
+      <Hint>Určení SDCF kvantifikátoru pro úlohu</Hint>
+    </Socket>
+    <Socket>
+      <Name>Cedent1</Name>
+      <Label>Cedent 1</Label>
+      <Hint>?Cedent1</Hint>
+    </Socket>
+    <Socket>
+      <Name>Cedent2</Name>
+      <Label>Cedent 2</Label>
+      <Hint>?Cedent2</Hint>
+    </Socket>
+    <Socket>
+      <Name>FirstSet</Name>
+      <Label>První množina</Label>
+      <Hint>?FirstSet</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Cedent1</Name>
+          <Label>Cedent 1</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>SecondSet</Name>
+      <Label>Druhá množina</Label>
+      <Hint>?SecondSet</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Cedent2</Name>
+          <Label>Cedent 2</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Cedent1AndCedent2</Name>
+          <Label>Cedent 1 &amp; Cedent 2</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>GenerationState</Name>
+      <Label>Stav</Label>
+      <Hint>Určí jestli generování hypotéz bylo dokončeno či přerušeno.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>DidNotStart</Name>
+          <Label>Nezačalo</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Running</Name>
+          <Label>Generuji</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Completed</Name>
+          <Label>Dokončeno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Interrupted</Name>
+          <Label>Přerušeno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Canceled</Name>
+          <Label>Zrušeno</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>GenerationNrOfTests</Name>
+      <Label>Počet verifikací</Label>
+      <Hint>Počet verifikací v průběhu testu.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationNrOfHypotheses</Name>
+      <Label>Počet hypotéz</Label>
+      <Hint>Počet vygenerovaných hypotéz.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationStartTime</Name>
+      <Label>Začátek testu</Label>
+      <Hint>Datum a čas zahájení testu.</Hint>
+    </Socket>
+    <Socket>
+      <Name>GenerationTotalTime</Name>
+      <Label>Celkový čas</Label>
+      <Hint>Celkový čas generování hypotéz.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Generating</Name>
+      <Label>Generování</Label>
+    </PropertyCategory>
+    <PropertyCategory>
+      <Name>Sets</Name>
+      <Label>Množiny</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+</BoxLocalization>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.MultiColumn</Identifier>
+  <Label>Multi-column</Label>
+  <Hint>Defines Multi-column derived from column of a table and its parameters</Hint>
+  <Categories>
+    <Category>
+      <Name>Datasource</Name>
+      <Label>Datasource</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>Column</Name>
+      <Label>Column</Label>
+      <Hint>Defines column for type casting to mutli-column</Hint>
+    </Socket>
+    <Socket>
+      <Name>MCNames</Name>
+      <Label>Names</Label>
+      <Hint>Names of fields in Multi-column separated by semicolon ';'.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MCLengths</Name>
+      <Label>Names</Label>
+      <Hint>Lengths of fields in Multi-column (with no delimiters); 0 for variable length with delimiters.</Hint>
+    </Socket>
+    <Socket>
+      <Name>MCdelimiter</Name>
+      <Label>Delimiter</Label>
+      <Hint>Delimiter string for Multi-column data.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>Column</Name>
+      <Label>Column</Label>
+      <Hint>Creates a new column box with name @Name.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

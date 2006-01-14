@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.EquivalenceClass</Identifier>
+  <Label>Class of equivalence</Label>
+  <Hint>Defines class of equivalence of attributes or literals for a boolean partial cedent</Hint>
+  <Categories>
+    <Category>
+      <Name>BooleanAttribute</Name>
+      <Label>BooleanAttribute</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>LiteralSettingOrAttribute</Name>
+      <Label>Literal setting or Attribute</Label>
+      <Hint>Defines set of attributes or literal settings for equivalence class</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>BooleanPartialCedentSetting</Name>
+      <Label>Boolean partial cedent setting</Label>
+      <Hint>Creates a new boolean partial cedent box.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

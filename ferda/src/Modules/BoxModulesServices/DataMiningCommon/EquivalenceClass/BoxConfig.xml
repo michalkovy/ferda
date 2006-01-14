@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><Box xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.EquivalenceClass</Identifier>
+  <IconPath>boxIcon.ico</IconPath>
+  <DesignPath>boxDesign.svg</DesignPath>
+  <Categories>
+    <string>BooleanAttribute</string>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>LiteralSettingOrAttribute</Name>
+      <SocketTypes>
+        <BoxType>
+          <FunctionIceId>::Ferda::Modules::Boxes::DataMiningCommon::Attributes::AbstractAttributeFunctions</FunctionIceId>
+        </BoxType>
+        <BoxType>
+          <FunctionIceId>::Ferda::Modules::Boxes::DataMiningCommon::LiteralSetting::LiteralSettingFunctions</FunctionIceId>
+        </BoxType>
+      </SocketTypes>
+      <MoreThanOne>true</MoreThanOne>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>BooleanPartialCedentSetting</Name>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</Box>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.SDCFTask.Quantifiers.Functional.Skewness</Identifier>
+  <Label>Skewness</Label>
+  <Hint>Skewness of cardinal values.</Hint>
+  <Categories>
+    <Category>
+      <Name>SDCFMiner</Name>
+      <Label>SDCF-Miner</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>OperationMode</Name>
+      <Label>Mód operace</Label>
+      <Hint>Mód operace</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>FirstSetFrequencies</Name>
+          <Label>Četnosti první množiny</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>SecondSetFrequencies</Name>
+          <Label>Četnosti druhé množiny</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DifferencesOfAbsoluteFrequencies</Name>
+          <Label>Rozdíly absolutních četností</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DifferencesOfRelativeFrequencies</Name>
+          <Label>Rozdíly relativních četností</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>DifferenceOfQuantifierValues</Name>
+          <Label>Rozdíl hodnot kvantifikátoru</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>AbsoluteDifferenceOfQuantifierValues</Name>
+          <Label>Absolutní rozdíl hodnot kvantifikátoru</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relace</Label>
+      <Hint>Relace</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Equal</Name>
+          <Label>Je rovno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThan</Name>
+          <Label>Menší než</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThanOrEqual</Name>
+          <Label>Menší nebo rovno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThan</Name>
+          <Label>Větší než</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqual</Name>
+          <Label>Větší nebo rovno</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Treshold</Name>
+      <Label>Prahová hodnota</Label>
+      <Hint>Prahová hodnota je porovnávána s aktuální hodnotou.</Hint>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>SDCFTask</Name>
+      <Label>SDCF úloha</Label>
+      <Hint>Vytvoří novou krabičku SDCF úloha.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

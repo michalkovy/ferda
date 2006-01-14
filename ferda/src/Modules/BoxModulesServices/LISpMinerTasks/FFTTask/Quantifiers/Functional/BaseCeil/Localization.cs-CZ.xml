@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.FFTTask.Quantifiers.Functional.BaseCeil</Identifier>
+  <Label>Base/Ceil Quantifier</Label>
+  <Hint>Base/Ceil Quantifier</Hint>
+  <Categories>
+    <Category>
+      <Name>FFTMiner.Quantifiers.Functional</Name>
+      <Label>4ft-Miner.Kvantifikátory.Funkční</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relation</Label>
+      <Hint>Relation</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>LessThanOrEqualCore</Name>
+          <Label>Less than or equal</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqualCore</Name>
+          <Label>Greater than or equal</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Treshold</Name>
+      <Label>Treshold</Label>
+      <Hint>Treshold is compared with value.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Units</Name>
+      <Label>Units</Label>
+      <Hint>Unit for expression of treshold and actual value.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>RelativeNumberCore</Name>
+          <Label>Relative number</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>AbsoluteNumberCore</Name>
+          <Label>Absolute number</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+  </Sockets>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>FFTTask</Name>
+      <Label>4ft úloha</Label>
+      <Hint>Vytvoří novou krabičku 4ft úloha.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

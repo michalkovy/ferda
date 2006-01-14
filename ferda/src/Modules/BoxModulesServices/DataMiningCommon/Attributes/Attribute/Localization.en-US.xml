@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>DataMiningCommon.Attributes.Attribute</Identifier>
+  <Label>Attribute</Label>
+  <Hint>You will Defines attribute (categorized column) and its parameters</Hint>
+  <Categories>
+    <Category>
+      <Name>Attribute</Name>
+      <Label>Attributes</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>ColumnOrDerivedColumn</Name>
+      <Label>Column</Label>
+      <Hint>Defines column or derived column .</Hint>
+    </Socket>
+    <Socket>
+      <Name>NameInLiterals</Name>
+      <Label>Name in literals</Label>
+      <Hint>Alternative short name.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Categories</Name>
+      <Label>Categories</Label>
+      <Hint>Categories set. Category value of attribute, it is defined by set of column values</Hint>
+    </Socket>
+    <Socket>
+      <Name>CountOfCategories</Name>
+      <Label>Count of categories</Label>
+      <Hint>Category for missing values.</Hint>
+    </Socket>
+    <Socket>
+      <Name>XCategory</Name>
+      <Label>X-Category</Label>
+      <Hint>Category for missing values.</Hint>
+    </Socket>
+    <Socket>
+      <Name>IncludeNullCategory</Name>
+      <Label>Include null Category</Label>
+      <Hint>Category with null values.</Hint>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Categories</Name>
+      <Label>Categories</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>AtomSetting</Name>
+      <Label>Atom setting</Label>
+      <Hint>Creates a new coefficient setting box.</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>EquivalenceClass</Name>
+      <Label>Class of equivalence</Label>
+      <Hint>Adds attribute to a new Class of Equivalence box.</Hint>
+    </ModulesAskingForCreation>
+    <ModulesAskingForCreation>
+      <Name>CategorialPartialCedentSetting</Name>
+      <Label>Categorial partial cedent setting</Label>
+      <Hint>Creates a new categorial partial cedent box.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>

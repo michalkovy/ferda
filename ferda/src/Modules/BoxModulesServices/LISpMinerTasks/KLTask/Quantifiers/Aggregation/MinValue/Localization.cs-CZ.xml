@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
+  <Identifier>LISpMinerTasks.KLTask.Quantifiers.Aggregation.MinValue</Identifier>
+  <Label>Min value</Label>
+  <Hint>Minimal frequency from range.</Hint>
+  <Categories>
+    <Category>
+      <Name>KLMiner.Quantifiers.Aggregation</Name>
+      <Label>KL-Miner.Kvantifikátory.Agregační</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>RowFrom</Name>
+      <Label>Od řádku</Label>
+      <Hint>Definice rozpětí</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Polovina</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>Všechny</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>RowTo</Name>
+      <Label>Do řádku</Label>
+      <Hint>Definice rozpětí</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Polovina</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>Všechny</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ColumnFrom</Name>
+      <Label>Od slopce</Label>
+      <Hint>Definice rozpětí</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Polovina</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>Všechny</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>ColumnTo</Name>
+      <Label>Do sloupce</Label>
+      <Hint>Definice rozpětí</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>1</Name>
+          <Label>1</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Half</Name>
+          <Label>Polovina</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>All</Name>
+          <Label>Všechny</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Relation</Name>
+      <Label>Relace</Label>
+      <Hint>Relace</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>Equal</Name>
+          <Label>Je rovno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThan</Name>
+          <Label>Menší než</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>LessThanOrEqual</Name>
+          <Label>Menší nebo rovno</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThan</Name>
+          <Label>Větší než</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>GreaterThanOrEqual</Name>
+          <Label>Větší nebo rovno</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+    <Socket>
+      <Name>Treshold</Name>
+      <Label>Prahová hodnota</Label>
+      <Hint>Prahová hodnota je porovnávána s aktuální hodnotou.</Hint>
+    </Socket>
+    <Socket>
+      <Name>Units</Name>
+      <Label>Jednotky</Label>
+      <Hint>Jednotky pro vyjádření prahové a aktuální hodnoty.</Hint>
+      <SelectOptions>
+        <SelectOption>
+          <Name>RelativeToActCondition</Name>
+          <Label>Relativně [%] vůči objektům splňujícím podmínku</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>RelativeToAllObjects</Name>
+          <Label>Relativně [%] vůči všem objektům</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>RelativeToMaxFrequency</Name>
+          <Label>Relativně [%] vůči nejvyšší četnosti</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>AbsoluteNumber</Name>
+          <Label>Absolutní číslo</Label>
+        </SelectOption>
+      </SelectOptions>
+    </Socket>
+  </Sockets>
+  <PropertyCategories>
+    <PropertyCategory>
+      <Name>Category range</Name>
+      <Label>Rozmezí kategorií</Label>
+    </PropertyCategory>
+  </PropertyCategories>
+  <ModulesAskingForCreationSeq>
+    <ModulesAskingForCreation>
+      <Name>KLTask</Name>
+      <Label>KL úloha</Label>
+      <Hint>Vytvoří novou krabičku KL úloha.</Hint>
+    </ModulesAskingForCreation>
+  </ModulesAskingForCreationSeq>
+</BoxLocalization>
