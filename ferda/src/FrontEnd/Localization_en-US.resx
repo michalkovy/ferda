@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ArchiveAgainstText" xml:space="preserve">
+    <value>Against connections</value>
+  </data>
+  <data name="ArchiveAllText" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="ArchiveAlongText" xml:space="preserve">
+    <value>Along connections</value>
+  </data>
+  <data name="ArchiveContentText" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="box" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>box.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BoxExceptionDailogBox" xml:space="preserve">
+    <value>Box</value>
+  </data>
+  <data name="BoxExceptionDialogCaption" xml:space="preserve">
+    <value>Box Exception</value>
+  </data>
+  <data name="BoxExceptionDialogDetails" xml:space="preserve">
+    <value>Exception details:</value>
+  </data>
+  <data name="BoxExceptionDialogKecy" xml:space="preserve">
+    <value>has thrown an exception.</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ContextHelpContentText" xml:space="preserve">
+    <value>Context Help</value>
+  </data>
+  <data name="DeleteFromArchiveCaption" xml:space="preserve">
+    <value>Deleting from archive</value>
+  </data>
+  <data name="DeleteFromArchiveMessage" xml:space="preserve">
+    <value>Do you really want to delete the box from archive? It will be deleted from all the views in the project!</value>
+  </data>
+  <data name="DesktopBadConnectionCaption" xml:space="preserve">
+    <value>Connection Error</value>
+  </data>
+  <data name="DesktopBadConnectionDescription" xml:space="preserve">
+    <value>Connection can be added only from an output connector of a box to an input connector of other box.</value>
+  </data>
+  <data name="DesktopBadConnectionInvalidType" xml:space="preserve">
+    <value>Incosistence in box and socket type</value>
+  </data>
+  <data name="DesktopBoxAlreadyExistsCaption" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="DesktopBoxAlreadyExistsText" xml:space="preserve">
+    <value>The view already contains this box</value>
+  </data>
+  <data name="DesktopCannotWriteCaption" xml:space="preserve">
+    <value>Connection error</value>
+  </data>
+  <data name="DesktopCannotWriteText" xml:space="preserve">
+    <value>Cannot connect a box because the box is locked by other box</value>
+  </data>
+  <data name="DesktopDeleteConnection" xml:space="preserve">
+    <value>Delete Connection</value>
+  </data>
+  <data name="DesktopLayout" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="DesktopMoreThanOneErrorText" xml:space="preserve">
+    <value>The socket does not allow more than one connected boxes</value>
+  </data>
+  <data name="LoadingAddIns" xml:space="preserve">
+    <value>Loadins add-ins ...</value>
+  </data>
+  <data name="LoadingArchive" xml:space="preserve">
+    <value>Loading archive ...</value>
+  </data>
+  <data name="LoadingContextHelp" xml:space="preserve">
+    <value>Loading context help..</value>
+  </data>
+  <data name="LoadingDesktop" xml:space="preserve">
+    <value>Loading desktop ...</value>
+  </data>
+  <data name="LoadingDocking" xml:space="preserve">
+    <value>Loading docking ...</value>
+  </data>
+  <data name="LoadingIcons" xml:space="preserve">
+    <value>Loading icons ...</value>
+  </data>
+  <data name="LoadingMenus" xml:space="preserve">
+    <value>Loading menus ...</value>
+  </data>
+  <data name="LoadingNewBox" xml:space="preserve">
+    <value>Loading new boxes ... </value>
+  </data>
+  <data name="LoadingProjectManager" xml:space="preserve">
+    <value>Loading Project Manager...</value>
+  </data>
+  <data name="LoadingProperties" xml:space="preserve">
+    <value>Loading properties ...</value>
+  </data>
+  <data name="LoadingSVG" xml:space="preserve">
+    <value>Loading SVG ...</value>
+  </data>
+  <data name="LocalizationLabel" xml:space="preserve">
+    <value>Choose the localization of the application</value>
+  </data>
+  <data name="LocalizationLabel2" xml:space="preserve">
+    <value>Localization will be changed during the next start of the application</value>
+  </data>
+  <data name="LocalizationTab" xml:space="preserve">
+    <value>Localization</value>
+  </data>
+  <data name="MakeGroup" xml:space="preserve">
+    <value>Make a group box</value>
+  </data>
+  <data name="MenuActions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="MenuArchiveDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MenuDesktop" xml:space="preserve">
+    <value>Desktop</value>
+  </data>
+  <data name="MenuDesktopNewDesktop" xml:space="preserve">
+    <value>New Desktop</value>
+  </data>
+  <data name="MenuDesktopOpenDesktop" xml:space="preserve">
+    <value>Open Desktop</value>
+  </data>
+  <data name="MenuDesktopRemoveDesktop" xml:space="preserve">
+    <value>Remove Desktop</value>
+  </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MenuEditClone" xml:space="preserve">
+    <value>Clone</value>
+  </data>
+  <data name="MenuEditCopy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="MenuEditDeleteFromArchive" xml:space="preserve">
+    <value>Delete from Archive</value>
+  </data>
+  <data name="MenuEditDeleteFromDesktop" xml:space="preserve">
+    <value>Delete from Desktop</value>
+  </data>
+  <data name="MenuEditHide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="MenuEditLocalizeInArchive" xml:space="preserve">
+    <value>Localize in Archive</value>
+  </data>
+  <data name="MenuEditNewBox" xml:space="preserve">
+    <value>New Box</value>
+  </data>
+  <data name="MenuEditPackAllSockets" xml:space="preserve">
+    <value>Pack all Sockets</value>
+  </data>
+  <data name="MenuEditPackSocket" xml:space="preserve">
+    <value>Pack Socket</value>
+  </data>
+  <data name="MenuEditPaste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="MenuEditRedo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="MenuEditRename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="MenuEditUndo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="MenuEditUnpackAllLayers" xml:space="preserve">
+    <value>Unpack all Layers</value>
+  </data>
+  <data name="MenuEditUnpackAllLayersAllSockets" xml:space="preserve">
+    <value>Unpack all Layers all Sockets</value>
+  </data>
+  <data name="MenuEditUnpackOneLayer" xml:space="preserve">
+    <value>Unpack one layer</value>
+  </data>
+  <data name="MenuEditUnpackOneLayerAllSockets" xml:space="preserve">
+    <value>Unpack one layer of all Sockets</value>
+  </data>
+  <data name="MenuFile" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="MenuFileAllFiles" xml:space="preserve">
+    <value>All files</value>
+  </data>
+  <data name="MenuFileExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="MenuFileFerdaProjectFiles" xml:space="preserve">
+    <value>Ferda project files</value>
+  </data>
+  <data name="MenuFileNewProject" xml:space="preserve">
+    <value>New Project</value>
+  </data>
+  <data name="MenuFileOpenProject" xml:space="preserve">
+    <value>Open Project</value>
+  </data>
+  <data name="MenuFileSaveChanges" xml:space="preserve">
+    <value>Do you want to save the current project?</value>
+  </data>
+  <data name="MenuFileSaveProject" xml:space="preserve">
+    <value>Save Project</value>
+  </data>
+  <data name="MenuHelp" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="MenuHelpAbout" xml:space="preserve">
+    <value>About Ferda</value>
+  </data>
+  <data name="MenuHelpApplicationHelp" xml:space="preserve">
+    <value>Ferda Help</value>
+  </data>
+  <data name="MenuHelpTheoreticalHelp" xml:space="preserve">
+    <value>Theoretical Help</value>
+  </data>
+  <data name="MenuModulesAskingCreation" xml:space="preserve">
+    <value>Modules asking for creation</value>
+  </data>
+  <data name="MenuModulesForInteraction" xml:space="preserve">
+    <value>Modules for interaction</value>
+  </data>
+  <data name="MenuNewViewName" xml:space="preserve">
+    <value>New desktop</value>
+  </data>
+  <data name="MenuTools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="MenuToolsPreferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="MenuView" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="MenuViewArchive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="MenuViewContextHelp" xml:space="preserve">
+    <value>Context Help</value>
+  </data>
+  <data name="MenuViewNewBox" xml:space="preserve">
+    <value>New Boxes</value>
+  </data>
+  <data name="MenuViewPropertyGrid" xml:space="preserve">
+    <value>Property Grid</value>
+  </data>
+  <data name="MenuViewToolBar" xml:space="preserve">
+    <value>ToolBar</value>
+  </data>
+  <data name="NewBoxContentText" xml:space="preserve">
+    <value>New Boxes</value>
+  </data>
+  <data name="OKButton" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OpenDesktopDialogCaption" xml:space="preserve">
+    <value>Open a desktop</value>
+  </data>
+  <data name="OpenDesktopDialogOK" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="PreferencesDialogCaption" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="ProjectLoadErrorCaption" xml:space="preserve">
+    <value>Errors have occured while loading the project</value>
+  </data>
+  <data name="PropertiesCannotWriteCaption" xml:space="preserve">
+    <value>Input error</value>
+  </data>
+  <data name="PropertiesCannotWriteText" xml:space="preserve">
+    <value>Cannot set a box property because the box is locked by other box</value>
+  </data>
+  <data name="PropertiesContentText" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="PropertiesOutputConnector" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="PropertyConnectorDescription" xml:space="preserve">
+    <value>Set the connections for this socket</value>
+  </data>
+  <data name="PropertySocketHint" xml:space="preserve">
+    <value>Sets if the property is visible as a socket</value>
+  </data>
+  <data name="PropertySocketName" xml:space="preserve">
+    <value>Visible sockets</value>
+  </data>
+  <data name="RemoveDesktopDialogCaption" xml:space="preserve">
+    <value>Remove a desktop</value>
+  </data>
+  <data name="RemoveDesktopDialogOK" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RenameDialogCaption" xml:space="preserve">
+    <value>Set a new box name</value>
+  </data>
+  <data name="socket" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>socket.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StringComboAddingControlButtonText" xml:space="preserve">
+    <value>Set the property to another value</value>
+  </data>
+  <data name="StringComboAddingControlText" xml:space="preserve">
+    <value>Write another value:</value>
+  </data>
+  <data name="UserNote" xml:space="preserve">
+    <value>User note</value>
+  </data>
+  <data name="UserNoteCaption" xml:space="preserve">
+    <value>User note for box: </value>
+  </data>
+</root>

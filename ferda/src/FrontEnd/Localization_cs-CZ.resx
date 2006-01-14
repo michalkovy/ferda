@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ArchiveAgainstText" xml:space="preserve">
+    <value>Proti směru zapojení</value>
+  </data>
+  <data name="ArchiveAllText" xml:space="preserve">
+    <value>Všechny</value>
+  </data>
+  <data name="ArchiveAlongText" xml:space="preserve">
+    <value>Po směru zapojení</value>
+  </data>
+  <data name="ArchiveContentText" xml:space="preserve">
+    <value>Archív</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="box" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>box.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BoxExceptionDailogBox" xml:space="preserve">
+    <value>V krabičce</value>
+  </data>
+  <data name="BoxExceptionDialogCaption" xml:space="preserve">
+    <value>Výjimka krabičky</value>
+  </data>
+  <data name="BoxExceptionDialogDetails" xml:space="preserve">
+    <value>Podrobnosti výjimky:</value>
+  </data>
+  <data name="BoxExceptionDialogKecy" xml:space="preserve">
+    <value>nastala výjimka.</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>Storno</value>
+  </data>
+  <data name="ContextHelpContentText" xml:space="preserve">
+    <value>Kontextová nápověda</value>
+  </data>
+  <data name="DeleteFromArchiveCaption" xml:space="preserve">
+    <value>Smazání z archivu</value>
+  </data>
+  <data name="DeleteFromArchiveMessage" xml:space="preserve">
+    <value>Opravdu chcete smazat krabičku z archivu? Tímto se vymaže i ze všech pohledů!</value>
+  </data>
+  <data name="DesktopBadConnectionCaption" xml:space="preserve">
+    <value>Chyba připojení</value>
+  </data>
+  <data name="DesktopBadConnectionDescription" xml:space="preserve">
+    <value>Lze připojit vždy pouze z výstupního konektoru krabičky do vstupního konktoru jiné krabičky.</value>
+  </data>
+  <data name="DesktopBadConnectionInvalidType" xml:space="preserve">
+    <value>Nekonzistence typu socketu a krabičky</value>
+  </data>
+  <data name="DesktopBoxAlreadyExistsCaption" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="DesktopBoxAlreadyExistsText" xml:space="preserve">
+    <value>Pracovní plocha už tuto krabičku obsahuje</value>
+  </data>
+  <data name="DesktopCannotWriteCaption" xml:space="preserve">
+    <value>Chyba zapojení</value>
+  </data>
+  <data name="DesktopCannotWriteText" xml:space="preserve">
+    <value>Nelze zapojit krabičku, protože ji uzamkla jiná krabička</value>
+  </data>
+  <data name="DesktopDeleteConnection" xml:space="preserve">
+    <value>Smazat připojení</value>
+  </data>
+  <data name="DesktopLayout" xml:space="preserve">
+    <value>Rozvržení grafu</value>
+  </data>
+  <data name="DesktopMoreThanOneErrorText" xml:space="preserve">
+    <value>Zásuvka nepovoluje zapojení více než jedné krabičky.</value>
+  </data>
+  <data name="LoadingAddIns" xml:space="preserve">
+    <value>Inicializace přídavných modulů... </value>
+  </data>
+  <data name="LoadingArchive" xml:space="preserve">
+    <value>Inicializace archivu ...</value>
+  </data>
+  <data name="LoadingContextHelp" xml:space="preserve">
+    <value>Inicializace kontextové nápovědy...</value>
+  </data>
+  <data name="LoadingDesktop" xml:space="preserve">
+    <value>Inicializace pracovních ploch ...</value>
+  </data>
+  <data name="LoadingDocking" xml:space="preserve">
+    <value>Inicializace dokování ...</value>
+  </data>
+  <data name="LoadingIcons" xml:space="preserve">
+    <value>Inicializace ikon ...</value>
+  </data>
+  <data name="LoadingMenus" xml:space="preserve">
+    <value>Inicializace menu ...</value>
+  </data>
+  <data name="LoadingNewBox" xml:space="preserve">
+    <value>Inicializace nových krabiček ...</value>
+  </data>
+  <data name="LoadingProjectManager" xml:space="preserve">
+    <value>Inicializace Project Manageru...</value>
+  </data>
+  <data name="LoadingProperties" xml:space="preserve">
+    <value>Inicializace vlastností ... </value>
+  </data>
+  <data name="LoadingSVG" xml:space="preserve">
+    <value>Inicializace SVG ...</value>
+  </data>
+  <data name="LocalizationLabel" xml:space="preserve">
+    <value>Zvolte lokalizaci aplikace</value>
+  </data>
+  <data name="LocalizationLabel2" xml:space="preserve">
+    <value>Lokalizace se změní při dalším startu aplikace</value>
+  </data>
+  <data name="LocalizationTab" xml:space="preserve">
+    <value>Lokalizace</value>
+  </data>
+  <data name="MakeGroup" xml:space="preserve">
+    <value>Vytvořit krabičku skupina</value>
+  </data>
+  <data name="MenuActions" xml:space="preserve">
+    <value>Akce</value>
+  </data>
+  <data name="MenuArchiveDelete" xml:space="preserve">
+    <value>Odstranit</value>
+  </data>
+  <data name="MenuDesktop" xml:space="preserve">
+    <value>Pracovní plocha</value>
+  </data>
+  <data name="MenuDesktopNewDesktop" xml:space="preserve">
+    <value>Nová pracovní plocha</value>
+  </data>
+  <data name="MenuDesktopOpenDesktop" xml:space="preserve">
+    <value>Otevřit pracovní plochu</value>
+  </data>
+  <data name="MenuDesktopRemoveDesktop" xml:space="preserve">
+    <value>Odstranit pracovní plochu</value>
+  </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>Úpravy</value>
+  </data>
+  <data name="MenuEditClone" xml:space="preserve">
+    <value>Klonovat</value>
+  </data>
+  <data name="MenuEditCopy" xml:space="preserve">
+    <value>Kopírovat</value>
+  </data>
+  <data name="MenuEditDeleteFromArchive" xml:space="preserve">
+    <value>Odstranit z archivu</value>
+  </data>
+  <data name="MenuEditDeleteFromDesktop" xml:space="preserve">
+    <value>Odstranit z pracovní plochy</value>
+  </data>
+  <data name="MenuEditHide" xml:space="preserve">
+    <value>Skrýt</value>
+  </data>
+  <data name="MenuEditLocalizeInArchive" xml:space="preserve">
+    <value>Lokalizuj v archivu</value>
+  </data>
+  <data name="MenuEditNewBox" xml:space="preserve">
+    <value>Nová krabička</value>
+  </data>
+  <data name="MenuEditPackAllSockets" xml:space="preserve">
+    <value>Zabal všechny zapojení</value>
+  </data>
+  <data name="MenuEditPackSocket" xml:space="preserve">
+    <value>Zabalit zapojení</value>
+  </data>
+  <data name="MenuEditPaste" xml:space="preserve">
+    <value>Vložit</value>
+  </data>
+  <data name="MenuEditRedo" xml:space="preserve">
+    <value>Znovu</value>
+  </data>
+  <data name="MenuEditRename" xml:space="preserve">
+    <value>Přejmenovat</value>
+  </data>
+  <data name="MenuEditUndo" xml:space="preserve">
+    <value>Zpět</value>
+  </data>
+  <data name="MenuEditUnpackAllLayers" xml:space="preserve">
+    <value>Rozbal všechny vrstvy</value>
+  </data>
+  <data name="MenuEditUnpackAllLayersAllSockets" xml:space="preserve">
+    <value>Rozbal všechny vrstvy všech zapojení</value>
+  </data>
+  <data name="MenuEditUnpackOneLayer" xml:space="preserve">
+    <value>Rozbalit jednu vrstvu</value>
+  </data>
+  <data name="MenuEditUnpackOneLayerAllSockets" xml:space="preserve">
+    <value>Rozbal jednu vrstvu všech zapojení</value>
+  </data>
+  <data name="MenuFile" xml:space="preserve">
+    <value>Soubor</value>
+  </data>
+  <data name="MenuFileAllFiles" xml:space="preserve">
+    <value>Všechny soubory</value>
+  </data>
+  <data name="MenuFileExit" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="MenuFileFerdaProjectFiles" xml:space="preserve">
+    <value>Soubory Ferda Project</value>
+  </data>
+  <data name="MenuFileNewProject" xml:space="preserve">
+    <value>Nový projekt</value>
+  </data>
+  <data name="MenuFileOpenProject" xml:space="preserve">
+    <value>Otevřít projekt</value>
+  </data>
+  <data name="MenuFileSaveChanges" xml:space="preserve">
+    <value>Chcete uložit stávající projekt?</value>
+  </data>
+  <data name="MenuFileSaveProject" xml:space="preserve">
+    <value>Uložit projekt</value>
+  </data>
+  <data name="MenuHelp" xml:space="preserve">
+    <value>Nápověda</value>
+  </data>
+  <data name="MenuHelpAbout" xml:space="preserve">
+    <value>O Ferdovi</value>
+  </data>
+  <data name="MenuHelpApplicationHelp" xml:space="preserve">
+    <value>Nápověda aplikace Ferda</value>
+  </data>
+  <data name="MenuHelpTheoreticalHelp" xml:space="preserve">
+    <value>Teoretická nápověda</value>
+  </data>
+  <data name="MenuModulesAskingCreation" xml:space="preserve">
+    <value>Moduly nabízené na vytvoření</value>
+  </data>
+  <data name="MenuModulesForInteraction" xml:space="preserve">
+    <value>Moduly pro interakci</value>
+  </data>
+  <data name="MenuNewViewName" xml:space="preserve">
+    <value>Nová pracovní plocha</value>
+  </data>
+  <data name="MenuTools" xml:space="preserve">
+    <value>Nástroje</value>
+  </data>
+  <data name="MenuToolsPreferences" xml:space="preserve">
+    <value>Možnosti</value>
+  </data>
+  <data name="MenuView" xml:space="preserve">
+    <value>Zobrazit</value>
+  </data>
+  <data name="MenuViewArchive" xml:space="preserve">
+    <value>Archiv</value>
+  </data>
+  <data name="MenuViewContextHelp" xml:space="preserve">
+    <value>Kontextovou nápovědu</value>
+  </data>
+  <data name="MenuViewNewBox" xml:space="preserve">
+    <value>Nové krabičky</value>
+  </data>
+  <data name="MenuViewPropertyGrid" xml:space="preserve">
+    <value>Vlastnosti</value>
+  </data>
+  <data name="MenuViewToolBar" xml:space="preserve">
+    <value>Panel nástrojů</value>
+  </data>
+  <data name="NewBoxContentText" xml:space="preserve">
+    <value>Nové krabičky</value>
+  </data>
+  <data name="OKButton" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OpenDesktopDialogCaption" xml:space="preserve">
+    <value>Otevřít pracovní plochu</value>
+  </data>
+  <data name="OpenDesktopDialogOK" xml:space="preserve">
+    <value>Otevřít</value>
+  </data>
+  <data name="PreferencesDialogCaption" xml:space="preserve">
+    <value>Možnosti</value>
+  </data>
+  <data name="ProjectLoadErrorCaption" xml:space="preserve">
+    <value>Při nahrávání projektu nastaly chyby</value>
+  </data>
+  <data name="PropertiesCannotWriteCaption" xml:space="preserve">
+    <value>Chyba záznamu</value>
+  </data>
+  <data name="PropertiesCannotWriteText" xml:space="preserve">
+    <value>Nelze nastavit vlastnost krabičky, protože ji uzamkla jiná krabička</value>
+  </data>
+  <data name="PropertiesContentText" xml:space="preserve">
+    <value>Vlastnosti</value>
+  </data>
+  <data name="PropertiesOutputConnector" xml:space="preserve">
+    <value>Výstupní</value>
+  </data>
+  <data name="PropertyConnectorDescription" xml:space="preserve">
+    <value>Nastavte propojení pro tuto zásuvku</value>
+  </data>
+  <data name="PropertySocketHint" xml:space="preserve">
+    <value>Určuje, jestli je daná vlastnost vidět jako zásuvka</value>
+  </data>
+  <data name="PropertySocketName" xml:space="preserve">
+    <value>Viditelné zásuvky</value>
+  </data>
+  <data name="RemoveDesktopDialogCaption" xml:space="preserve">
+    <value>Odstranit pracovní plochu</value>
+  </data>
+  <data name="RemoveDesktopDialogOK" xml:space="preserve">
+    <value>Odstranit</value>
+  </data>
+  <data name="RenameDialogCaption" xml:space="preserve">
+    <value>Zadejte nové jméno krabičky</value>
+  </data>
+  <data name="socket" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>socket.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StringComboAddingControlButtonText" xml:space="preserve">
+    <value>Nastavit do vlastnosti jinou hodnotu</value>
+  </data>
+  <data name="StringComboAddingControlText" xml:space="preserve">
+    <value>Zadejte jinou hodnotu:</value>
+  </data>
+  <data name="UserNote" xml:space="preserve">
+    <value>Uživatelská poznámka</value>
+  </data>
+  <data name="UserNoteCaption" xml:space="preserve">
+    <value>Uživatelská poznámka pro krabičku: </value>
+  </data>
+</root>

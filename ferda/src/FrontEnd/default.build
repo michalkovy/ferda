@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<project name="Ferda FrontEnd" default="build" basedir=".">
+	<description>Builds the user interface for the Ferda system</description>
+	<property name="addInsBuild.dir" value="${path::combine(build.dir,'AddIns')}"/>
+	<target name="build">	
+<mkdir dir="${addInsBuild.dir}" />
+		<nant buildfile="${path::combine('AddIns','default.build')}" target="buildmain"/>
+		
+		<csc target="winexe" output="${path::combine(build.dir,'FerdaFrontEnd.exe')}" doc="${path::combine(build.dir,'FerdaFrontEnd.xml')}" debug="${debug}" optimize="${optimize}" win32icon="ferda.ico">
+			<sources>
+				<include name="**.cs" />
+				<exclude name="AddIns/**.cs" />
+			</sources>
+			<resources prefix="Ferda.FrontEnd">
+				<include name="*.resx" />
+			</resources>
+			<references>
+				<include name="System.dll" />
+				<include name="System.Data.dll" />
+				<include name="System.Design.dll" />
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll" />
+				<include name="System.XML.dll" />
+				<include name="${path::combine(build.dir,'FerdaProjectManager.dll')}" />
+				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}" />
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}" />
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}" />
+
+				<include name="${path::combine(build.dir,'NAFGraph.dll')}" />
+				<include name="${path::combine(build.dir,'DockDotNET.dll')}" />
+				<include name="${path::combine(lib.dir,'icecs.dll')}" />
+			</references>
+		</csc>
+         <nant buildfile="${path::combine('AddIns','default.build')}" target="buildaddins"/>
+
+
+		
+
+    <copy todir="${build.dir}">
+      <fileset basedir=".">
+        <include name="*.bmp" />
+        <include name="*.ico" />
+      </fileset>
+    </copy>
+    
+		<copy todir="${path::combine(build.dir, 'Icons')}">
+			<fileset basedir="./Icons">
+				<include name="*.ico" />
+			</fileset>
+		</copy>
+		
+	</target>
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset basedir="${build.dir}">
+				<include name="FrontEndAddInHelper.dll" />
+				<include name="FerdaFrontEnd.exe" />
+			</fileset>
+		</delete>
+		<delete dir="${addInsBuild.dir}" failonerror="false" if="${directory::exists(addInsBuild.dir)}"/>
+	</target>
+</project>
