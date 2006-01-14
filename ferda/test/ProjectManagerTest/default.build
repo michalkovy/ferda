@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<project name="NAnt.Console" default="test">
+	<!--
+        Required properties:
+            * build.dir             - (path) root level to build to, assemblies will go in ${build.
+dir}/bin
+            * debug           - (true|false) debug build?
+    -->
+	<target name="build">
+		<!-- build test assembly -->
+		<csc target="library" warnaserror="true" debug="${debug}" output="${build.dir}/ProjectManagerTest.dll">
+			<sources failonempty="true">
+				<include name="**/*.cs"/>
+				<!-- common assembly-level attributes 
+                <include name="../../src/CommonAssemblyInfo.cs" /> -->
+			</sources>
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+				<include name="System.Drawing.dll"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'icepackcs.dll')}"/>
+				<include name="${lib.dir}/log4net.dll"/>
+				<include name="${build.dir}/FerdaModulesManager.dll"/>
+				<include name="${build.dir}/FerdaProjectManager.dll"/>
+				<include name="${build.dir}/FerdaBase.dll"/>
+				<include name="${lib.dir}/nunit.framework.dll"/>
+			</references>
+		</csc>
+	</target>
+	<target name="test" depends="build">
+		<nunit2>
+			<formatter type="Plain"/>
+			<test assemblyname="${build.dir}/ProjectManagerTest.dll"/>
+		</nunit2>
+	</target>
+</project>
