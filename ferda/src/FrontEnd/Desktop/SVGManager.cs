@@ -2,12 +2,15 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 
 using Ferda.ModulesManager;
 using Ferda.Modules;
+using SharpVectors.Dom.Svg;
+using SharpVectors.Renderer.Gdi;
 
 
 namespace Ferda.FrontEnd.Desktop 
@@ -23,17 +26,31 @@ namespace Ferda.FrontEnd.Desktop
         /// <summary>
         /// Default constructor - for now loads the socket and box bitmaps
         /// </summary>
-        public SVGManager()
+        public SVGManager(Control control)
         {
             socket = new Bitmap("socket.bmp");
             box = new Bitmap("box.bmp");
+
+            boxBitmaps = new Dictionary<string, Bitmap>();
+            myControl = control;
         }
 
-        //Hashtables for storing the bitmaps for sockets and boxes
-        //private Dictionary<ISocket,  Bitmap> socketBitmaps;
-        //private Dictionary<IBoxModule, Bitmap> boxBitmaps;
+        //HashTable for storing the bitmaps of svgs of boxes
+        private Dictionary<string, Bitmap> boxBitmaps;
+        
+        /// <summary>
+        /// The socket image when there is no socket svg (there can be one)
+        /// </summary>
         private Bitmap socket;
+        /// <summary>
+        /// The box image when there is no boxDesign.svg file of the box
+        /// </summary>
         private Bitmap box;
+
+        /// <summary>
+        /// Required by SharpVectorLibrary to paint on some control
+        /// </summary>
+        private Control myControl;
 
         /// <summary>
         /// Function returns the bitmap of the BoxModule. It creates the bitmap
@@ -43,12 +60,10 @@ namespace Ferda.FrontEnd.Desktop
         /// <returns>Bitmap of the box</returns>
         public Bitmap GetBoxBitmap(ModulesManager.IBoxModule boxModule)
         {
-            //planovany postup:
-            //1. Zjisti se IFactoryCreator, z neho se vezme Identifier nebo Label
-            //2. Podiva se do boxBitmaps jestli uz tam takova bitmapa je
-            //3. Vrati bitmapu, jestli ne tak ji pomoci SVG vytvori a potom ji vrati
+            IBoxModuleFactoryCreator creator = boxModule.MadeInCreator;
 
-            if (boxModule.MadeInCreator.Icon.Length != 0)
+            //prozatim je to takhle
+            if (creator.Icon.Length != 0)
             {
                 MemoryStream stream = new MemoryStream(boxModule.MadeInCreator.Icon);
                 Icon icon = new Icon(stream);
@@ -58,6 +73,39 @@ namespace Ferda.FrontEnd.Desktop
             {
                 return box;
             }
+
+            /*
+            //bude to ale takhle
+            if (boxBitmaps.ContainsKey(creator.Identifier))
+            {
+                return boxBitmaps[creator.Identifier];
+            }
+            else
+            {
+                //there is a svg design file
+                if (creator.Design != string.Empty)
+                {
+                    SvgWindow window;
+                    GdiRenderer renderer;
+
+                    //setting up the renderer and the svgWindow
+                    renderer = new GdiRenderer();
+                    window = new SvgWindow(myControl, renderer);
+                    window.Src = creator.Design;
+
+                    renderer.Render(window.Document as SvgDocument);
+                    Bitmap image = renderer.RasterImage;
+
+                    boxBitmaps.Add(creator.Identifier, image);
+                    return image;
+                }
+                //there is no svg design file
+                else
+                {
+                    return box;
+                }
+            }
+            */
         }
 
         /// <summary>

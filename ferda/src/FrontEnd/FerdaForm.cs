@@ -481,7 +481,7 @@ using Ferda.ModulesManager;
         /// </summary>
         private void SetupSVG()
         {
-            svgManager = new Ferda.FrontEnd.Desktop.SVGManager();
+            svgManager = new Ferda.FrontEnd.Desktop.SVGManager(this);
         }
 
         #endregion

@@ -15,6 +15,12 @@
 				<include name="*.resx" />
 			</resources>
 			<references>
+        <include name="${path::combine(lib.dir,'SharpVectorXml.dll')}" />
+        <include name="${path::combine(lib.dir,'SharpVectorScripting.dll')}" />
+        <include name="${path::combine(lib.dir,'SharpVectorRenderingEngine.dll')}" />
+        <include name="${path::combine(lib.dir,'SharpVectorObjectModel.dll')}" />
+        <include name="${path::combine(lib.dir,'SharpVectorCss.dll')}" />        
+        
 				<include name="System.dll" />
 				<include name="System.Data.dll" />
 				<include name="System.Design.dll" />
@@ -29,12 +35,10 @@
 				<include name="${path::combine(build.dir,'NAFGraph.dll')}" />
 				<include name="${path::combine(build.dir,'DockDotNET.dll')}" />
 				<include name="${path::combine(lib.dir,'icecs.dll')}" />
-			</references>
+  		</references>
 		</csc>
-         <nant buildfile="${path::combine('AddIns','default.build')}" target="buildaddins"/>
-
-
-		
+    
+    <nant buildfile="${path::combine('AddIns','default.build')}" target="buildaddins"/>
 
     <copy todir="${build.dir}">
       <fileset basedir=".">
@@ -48,6 +52,12 @@
 				<include name="*.ico" />
 			</fileset>
 		</copy>
+
+    <copy todir="${path::combine(build.dir, 'dtd')}">
+      <fileset basedir="${path::combine(lib.dir,'dtd')}">
+        <include name="*.dtd" />
+      </fileset>
+    </copy>    
 		
 	</target>
 	<target name="clean">
