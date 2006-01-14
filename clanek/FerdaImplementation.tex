@@ -1,0 +1,262 @@
+\documentclass[handout]{beamer}
+%\usepackage{czech}
+\usepackage{beamerthemeshadow}
+\usepackage{pgf}
+%\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps}
+%\beamertemplatenavigationsymbolsempty
+
+\pgfdeclareimage[interpolate=true,height=7cm]{designimage}{designB}
+\pgfdeclareimage[interpolate=true,height=3cm]{designimageSmall}{designB}
+\pgfdeclareimage[interpolate=true,height=3.5cm]{creatorFactoryimage}{creatorFactory}
+
+\title{Ferda Implementation}
+\author{Michal Kov\'{a}\v{c}}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Introduction}
+\frame{
+	\frametitle{Table Of Contents}
+	\tableofcontents[pausesections]
+}
+
+\subsection{Frameworks, languages and utilities used}
+\begin{frame}
+	\frametitle{Frameworks, languages and utilities used}
+	\begin{block}{Frameworks used}
+		\begin{itemize}[<+->]
+			\item .NET Framework 2.0 (or Mono)
+			\item Internet Communications Engine (Ice)
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{Language used}
+		\begin{itemize}
+			\item C\# 2.0
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{Utilities and libraries used}
+		\begin{itemize}[<+->]
+			\item NAnt, NDoc, NUnit
+			\item Netron Graphic Library, DockDotNet
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{Implementation resolutions}
+\begin{frame}
+	\frametitle{Implementation resolutions}
+	\begin{block}<+->{License}
+		\begin{itemize}
+			\item GNU General Public License
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{Implementation resolution}
+		\begin{itemize}[<+->]
+			\item Everything localizable 
+			\item Well documented
+			\item Modular
+			\item User friendly
+			\item Microsoft standards
+			\item Docking
+		\end{itemize}
+	\end{block}	
+\end{frame}
+
+\section{Parts of Ferda system}
+\begin{frame}
+	\frametitle{Parts of Ferda system}
+	\pgfuseimage{designimage}
+\end{frame}
+
+\subsection{FrontEnd, Modules and Project Manager}
+\begin{frame}
+	\frametitle{FrontEnd, Modules and Project Manager}
+	\begin{columns}
+		\begin{column}{4.5cm}
+			\pgfuseimage{designimageSmall}
+		\end{column}
+		\begin{column}{6.5cm}
+			\begin{block}{FrontEnd}
+				\begin{itemize}[<+->]
+					\item Interaction with user
+					\item Add Ins
+				\end{itemize}
+			\end{block}
+			\begin{block}<+->{Project Manager}
+				\begin{itemize}[<+->]
+					\item Represents archive and desktops
+					\item Loads and saves XML project files
+				\end{itemize}
+			\end{block}
+			\begin{block}<+->{Modules Manager}
+				\begin{itemize}[<+->]
+					\item Communicates with Ice layer
+					\item Represents modules for upper layers
+					\item Offers help functions for modules
+				\end{itemize}
+			\end{block}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\subsection{Ice layer}
+\begin{frame}
+	\frametitle{Ice layer}
+	\begin{block}{Why Internet Communications Engine}
+		\begin{itemize}[<+->]
+			\item Language independence
+			\item Distributed computing
+			\item ``Easy''
+			\item (Grid computing\dots )
+		\end{itemize}
+	\end{block}	
+	\begin{block}<+->{Why not CORBA or .NET Remoting}
+		\begin{itemize}[<+->]
+			\item Multilingual
+			\item Multiplatform
+			\item Effective
+			\item Simple
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{Modules}
+\begin{frame}
+	\frametitle{Modules}
+	\begin{block}{Ice layer conclusions for modules}
+		\begin{itemize}[<+->]
+			\item Inside independent applications
+			\item Loaded automatically from network
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{Our implemented box modules}
+		\begin{itemize}[<+->]
+			\item Layer between Ice and box modules applications
+			\item Customizable by configuring XML files
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\section{Box modules implementation}
+
+\subsection{Box module creator and factory}
+\begin{frame}
+	\frametitle{Box module creator and factory}
+	\begin{columns}
+		\begin{column}{5cm}
+			\pgfuseimage{creatorFactoryimage}
+		\end{column}
+		\begin{column}{6cm}	
+			\begin{block}{Creator}
+				\begin{itemize}[<+->]
+					\item Singleton class representing box
+					\item Creates box module factory
+				\end{itemize}
+			\end{block}
+			\begin{block}<+->{Factory}
+				\begin{itemize}[<+->]
+					\item One instance for one client
+					\item Has knowledge about client
+					\item Creates box instances
+					\item Distributed garbage collector
+				\end{itemize}	
+			\end{block}
+			\begin{block}<+->{Box instance}
+				\begin{itemize}[<+->]
+					\item Connected boxes, properties
+				\end{itemize}	
+			\end{block}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\subsection{Box module}
+\begin{frame}
+	\frametitle{Box module}
+	\begin{block}{Main parts of box modules}
+		\begin{itemize}[<+->]
+			\item Sockets (and properties)
+			\item Functions
+		\end{itemize}
+	\end{block}
+	
+	\begin{block}<+->{Other parts of box modules}
+		\begin{itemize}[<+->]
+			\item Identifier
+			\item Icon and SVG design
+			\item Names of categories
+			\item Box modules asking for creation
+			\item Actions
+			\item Name of property driving label
+			\item Dynamic help
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Formalized boxes}
+	\begin{block}{Box}
+		Box is $\left<S,F\right>$ where
+		\begin{itemize}[<+->]
+			\item $S$ is a set of sockets
+			\item $F$ is a set of functions
+		\end{itemize}
+	\end{block}	
+	\begin{block}<+->{Socket}
+		Socket is $\left<n,T\right>$ where
+		\begin{itemize}[<+->]
+			\item $n$ is socket name
+			\item $T$ is a set of box types
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{Predicate}
+		$has(f,i)$ where $f$ is function and $i$ is ``Ice identifier''
+	\end{block}
+\end{frame}
+
+\subsection{Types of boxes}
+\begin{frame}
+	\frametitle{Types of boxes}
+	\begin{block}{Type}
+		Type is $\left<i,S\right>$ where
+		\begin{itemize}[<+->]
+			\item $i$ is ``Ice identifier''
+			\item $S$ is a set of $\left<n,i\right>$
+			\begin{itemize}[<+->]
+				\item $n$ is socket name
+				\item $i$ is ``Ice identifier''
+			\end{itemize}
+		\end{itemize}
+	\end{block}	
+	\begin{block}<+->{Box is of type}
+		Box $B=\left<S,F\right>$ is of type $A=\left<i,Z\right>$ iff 
+		\begin{enumerate}[<+->]
+			\item $(\forall \left<n,j\right>\in Z)(\exists \left<m,T\right>\in S)(\exists \left<y,W\right>\in T)(m=n \wedge j=y)$
+			\item $(\exists f\in F)(has(f,i))$
+		\end{enumerate}
+	\end{block}
+\end{frame}
+
+\part{Summary}
+\section{Summary}
+
+\begin{frame}
+	\frametitle{Summary}
+	\begin{block}{Ferda is}
+		\begin{itemize}[<+->]
+			\item Visual user tool
+			\item Extensible
+			\item Strong
+			\item Network distributable
+		\end{itemize}
+	\end{block}
+	
+	\begin{exampleblock}<+->{Download Ferda}
+		http://sourceforge.net/projects/ferda
+	\end{exampleblock}
+\end{frame}
+
+\end{document}

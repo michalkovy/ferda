@@ -1,0 +1,420 @@
+\documentclass[czech]{llncs}
+\usepackage{czech}
+\usepackage{amssymb}
+\input{unity}
+
+\title{Ferda, nové vizuální prostøedí pro dobıvání znalostí}
+\author{Michal Kováè, Tomáš Kuchaø, Alexander Kuzmin, Martin Ralbovskı}
+\institute{Univerzita Karlova v~Praze, Matematicko-fyzikální fakulta
+\\Ke Karlovu 3, 121 16 Praha 2
+\\\email{ferda-users@lists.sourceforge.net}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Jedním z cílù návrhu programu Ferda bylo vytvoøit aplikaci, která nahradí stávající
+uivatelské prostøedí systému na dobıvání znalostí LISp-Miner
+(lispminer.vse.cz) novım, vizuálnì a uivatelsky pøívìtivìjším pracovním
+prostøedím. Ferda pøináší pohled na zadání úlohy dobıvání znalostí jako na~zapsání funkce pomocí vizuálních objektù -- krabièek. Krabièky mají parametry a~vyhodnocují své funkce nad hodnotami tìchto parametrù. Program je navren
+modulárnì tak, aby jej bylo moné snadno rozšiøovat o~další krabièky. Podaøilo
+se vytvoøit prostøedí, které zpøehledòuje a zjednodušuje uivatelskou práci se~systémem LISp-Miner a~nabízí další monosti vızkumu a~rozšiøování.
+\end{abstract}
+
+{\small {\bf Klíèová slova:} Ferda, LISp-Miner, vizuální programování, krabièka, zásuvka}
+
+\section{Úvod}
+Historie systému LISp-Miner\cite{LISpA}\cite{LISpReference} sahá do roku 1996, kdy byl navren. Jde o~akademickı softwarovı systém pro vıuku (zejména FIS VŠE a~MFF UK) a~vızkum v~oblasti dobıvání znalostí z~databází. Systém obsahuje øadu modulù, které umoòují potøebnım zpùsobem transformovat prvotní data, provádìt vlastní analızy a~vhodnım zpùsobem prezentovat vısledky. Systém je stále ve vıvoji, kterı pokrıvá jak implementaci novıch modulù -- v~posledních dvou letech byl rozšíøen o~nové procedury -- tak i~prohlubování a~rozšiøování modulù ji implementovanıch. Vedlejším dùsledkem tohoto vıvoje jsou stále vìtší nároky na uivatele systému, pokud chce vyuít všech moností systému LISp-Miner. Pro snadné porozumìní jistım èástem èlánku pøedpokládáme, e je ètenáø ji seznámen se systémem ~LISp-Miner.
+
+Ferda vzniká jako softwarovı projekt na~Matematicko-fyzikální fakultì Univerzity Karlovy v~Praze pod vedením doc. RNDr. Jana Raucha, CSc. (Vysoká škola ekonomická v~Praze). Projekt má za úkol zpøehlednit a~zjednodušit postup pouívání existujících a~pokud mono i~budoucích modulù systému LISp-Miner pøi dobıvání znalostí. Stávající postup se skládá z~postupného spouštìní rùznıch aplikací a~nastavování parametrù, mezi nimi nejsou na první pohled vidìt souvislosti. V~dùsledku toho se proces získávání dat stává pro bìné uivatele nejasnım a~nepøehlednım.
+
+Ferda pøedstavuje spoleèné vizuální prostøedí pro následující procedury systému
+LISp-Miner: \emph{4ft-Miner}, \emph{SD4ft-Miner}, \emph{KL-Miner},
+\emph{SDKL-Miner}, \emph{CF-Miner} a \emph{SDCF-Miner}.
+
+\image{prostrediLabel}{Prostøedí Ferda}{prostredi}{12cm}{9cm}
+
+Ferda pøináší vizuální model postupu dobıvání znalostí podobnı svou zásadou
+\emph{plocha jako pracovní nástroj dobıvání znalostí} (obrázek \ref{prostrediLabel})
+ systémùm SPSS Clementine\cite{Clementine}, SAS Enterprise Miner\cite{SAS} a~Weka\cite{Weka}. Srovnání tìchto systému s~Ferdou naleznete v~\reflink{sekci}{srovnani}.
+
+Ferda není pouze prostøedí, které pracuje nad systémem LISp-Miner, ale jedná se
+o~samostatnou jednoduše rozšiøitelnou aplikaci, která mùe bıt vyuita pro
+rùzné typy úloh.
+
+V~následujících odstavcích nejdøíve popíšeme základní ideu hlavních objektù
+prostøedí Ferda (krabièek). Poté nastíníme základy zásad implementace pøi
+nich poukáeme na rozšiøitelnost, modularitu a distribuovatelnost prostøedí
+Ferda. Bude následovat popis prvkù prostøedí Ferda, na kterıch bude ukázáno
+jak uivateli zjednoduší práci. K~závìru bude popsán pøíklad dobıvání znalostí
+pomocí prostøedí Ferda.
+
+\section{Krabièky}
+Ferda pøináší pohled na zadání úlohy dobıvání znalostí jako na zapsání funkce
+pomocí jistıch vizuálních objektù -- tzv. krabièek. Kadá krabièka zastává také
+roli funkce nebo nìkolika funkcí. Krabièky mají parametry a vyhodnocují své
+funkce nad hodnotami tìchto parametrù. Parametrùm se u~krabièek øíká zásuvky.
+Do zásuvek se zapojují jiné krabièky. Krabièky jsou rozdìleny podle typù a do
+kadé zásuvky lze zapojit pouze nìkteré typy krabièek.
+
+Pomocí øady jednoduchıch krabièek je uivateli umonìno sestavovat vlastní
+algoritmy. Ferda tedy rovnì pøedstavuje nìco jako uivatelskı programovací
+jazyk. Na krabièky se lze však také dívat jako na konstrukce logiky èi
+sémantiky, ke které existuje lambda-kategoriální gramatika.
+
+\subsection{Krabièky formálnì}
+Krabièka je dvojice $\left<S,F\right>$, kde $S$ je mnoina zásuvek a $F$ je mnoina funkcí. Zásuvka je dvojice $\left<n,T\right>$, kde $n$ je název zásuvky a $T$ je mnoina typù krabièek, zapojitelnıch do této zásuvky.
+
+\subsection{Ukázka moností krabièek}
+Ukame si krabièky na pøíkladu. Nebude však z~oblasti dobıvání znalostí, jak by
+se dalo oèekávat. Místo toho budou krabièky pøedvedeny na jednoduché funkci
+sèítání, která je vıhodná tím, e na ní lze ukázat nìkolik moností
+krabièek. Bude to také názornìjší pro ètenáøe, kteøí neznají systém LISp-Miner.
+
+Mìjme krabièku \emph{sèítání}. Funkcí této krabièky je souèet dvou èísel. Pro kadé
+z~tìchto èísel bude mít krabièka \emph{sèítání} zásuvku, do které bude moné
+zapojit krabièku typu \emph{èíslo}. Sama krabièka \emph{sèítání} je však také
+typu \emph{èíslo}. Nyní øeknìme, e chceme spoèítat $3+7+12$. 
+
+Za tím úèelem definujme krabièku typu èíslo, její funkcí je èíselná konstanta. Krabièky kromì
+zásuvek mohou mít vlastnosti. Vlastnosti jsou, stejnì jako zásuvky,
+rùznıch typù, napøíklad \emph{øetìzec}, \emph{èísla} (ta jsou v~programu
+rozdìlena podle velikostí a toho, zda jsou s~desetinou èárkou) èi \emph{datum}.
+Jedinou vlastností vıše definované krabièky bude \emph{hodnota èíselné konstanty}. 
+Vısledná zapojení pro vıpoèet $3+7+12$ je na obrázku \ref{scitani1Label}.
+
+\image{scitani1Label}{Jednoduché sèítání}{scitani1}{5cm}{3.36cm}
+Vlastnosti a zásuvky pøedstavují vstupní parametry pro funkce, které krabièka reprezentuje.
+Hodnoty zásuvek se nastavují vdy pomocí pøipojení jiné krabièky, zatím co hodnoty vlastností se mohou nastavovat
+pomocí speciální komponenty v~pracovním prostøedím -- panelu vlastností. U~vlastností lze
+pøepínat mezi nastavováním hodnoty pomocí krabièek a pomocí panelu vlastností.
+Vlastnostem toti odpovídají zásuvky stejného názvu a typu, které jsou však ve vıchozím nastavení
+uivateli skryty, ale je moné si je nechat zobrazit. Díky tomu, mùe mít
+naše krabièka sèítání namísto dvou zásuvek dvì vlastnosti typu èíslo a tak náš
+vzorec $3+7+12$ lze zapsat, jak je znázornìno na obrázku \ref{scitani2Label},
+místo pomocí pìti krabièek pouze pomocí krabièek dvou.
+
+\image{scitani2Label}{Sèítání pomocí dvou krabièek}{scitani2}{3.3cm}{1.52cm}
+
+Do nìkterıch zásuvek je moné zapojit více ne jednu krabièku. Proto lze vytvoøit
+krabièku sèítání, která má jednu zásuvku a seète všechna èísla reprezentovaná
+krabièkami, které jsou zapojeny do této zásuvky, viz. obrázek \ref{scitani3Label}.
+
+\image{scitani3Label}{Krabièka pro multisèítání}{scitani3}{3.5cm}{4.48cm}
+
+V~definici krabièky stálo, e krabièka mùe reprezentovat více funkcí.
+Demonstrujme tuto schopnost krabièky ji na pøíkladu z~dobıvání znalostí. Ferda
+obsahuje pro dobıvání znalostí mimo jiné tøi základní krabièky --
+\emph{Databáze}, \emph{Tabulka} a \emph{Sloupec}. Krabièka \emph{Databáze}
+zastává roli nìkolika funkcí. Jedna vrací seznam tabulek v~databázi, jiná vrací
+zpùsob, jakım se má pøipojovat k~datovému zdroji. Tento zpùsob nastavuje
+uivatel ve vlastnosti \emph{Pøipojovací øetìzec} této krabièky.
+
+\section{Zásady implementace}
+Ferda je psán pod licencí GNU General Public License (GPL). Licence
+umoòuje program
+zdarma pouívat, zaruèuje, e jsou k~dispozici zdrojové soubory, a umoòuje
+rozšiøování programu nìkım jinım, pokud vıslednı kód je také pod licencí GPL.
+
+Vìtšina souèasného kódu je napsána v~druhé verzi jazyka C\#. Vıslednı program
+bìí nad prostøedím .NET Framework. Nìkteré èásti také je moné spustit nad
+prostøedím Mono\cite{Mono}, které bìí nejen na operaèním systému Windows, ale
+napøíklad i na systému Linux èi Mac OS. Autoøi by chtìli docílit toho, aby všechny
+nynìjší èásti prostøedí Ferda bylo moné spustit nad prostøedím Mono.
+
+Program je navren modulárnì tak, aby jej bylo moné relativnì snadno
+rozšiøovat o~další krabièky. Krabièka mùe bıt samostatnı program napsanı
+v~jednom z~mnoha programovacích jazykù. Je moné nechat distribuovat vıpoèet po
+síti, napøíklad kadá krabièka mùe bìet na jiném stroji. To vše lze díky
+tomu, e je Ferda postaven nad technologií Internet Communications
+Engine (Ice)\cite{Ice}.
+Jedná se o~rychlı objektovı otevøenı middleware podobnı uznávanému standardu
+v~této oblasti -- CORBA.
+
+
+\section{Pracovní prostøedí}
+Pøi návrhu pracovního prostøedí systému Ferda se tvùrci snaili dret se co nejvíce 
+standardù v~oblasti programování a vizuálního programování. 
+Proto byly pro prostøedí zvoleny standardní komponenty (èásti pracovního prostøedí), na které je
+uivatel zvyklı z~rùznıch jinıch nástrojù a nebude mu dìlat problémy zaèít je pouívat i
+ve Ferdovi. Jedním z nich je mechanizmus dokování oken. Všechny komponenty, u~kterıch to má 
+smysl, je moné pomocí tohoto mechanizmu
+pøesouvat po pracovní ploše, èi skrıvat. Dokování je
+standard pouívanı v~uivatelskıch prostøedích mnohıch produktù, 
+za všechny jmenujme Microsoft Visual Studio.
+
+Vrame se ke krabièkám. Pro uivatele je krabièka grafickı objekt na pracovní ploše. 
+Krabièka je malı ètverec s~ikonou, kterı má na stranách menší ètverce -- zásuvky. Jednotlivé zásuvky
+propojuje uivatel na ploše kliknutím a pøetáhnutím myši. 
+
+V pøedchozích odstavcích byl ètenáø seznámen s funkcemi krabièek. V pracovním 
+prostøedí lze funkce vyvolat pomocí poloky \emph{Akce} kontextového menu nad krabièkou,
+jak je vidìt na obrázku \ref{krabickyLabel}.
+
+\image{krabickyLabel}{Krabièky a kontextové menu}{krabicky}{8cm}{6cm}
+
+Krabièka je nìkdy tak sloitá, e samotné nastavování vlastností a
+propojování zásuvek nestaèí na pohodlnou uivatelskou práci.
+Proto mùe mít nadefinované moduly pro interakci. Modul pro
+interakci znamená volání akce, kterou zajišuje jinı modul ne samotná
+krabièka. Èasto to mùe bıt èást pracovního prostøedí: dialogy, tabulky
+grafy\dots. 
+
+Krabièka èasto nabízí v~kontextovém
+menu nebo v~hlavním menu aplikace seznam krabièek, které se mohou automaticky 
+vytvoøit s~pøednastavenımi hodnotami vlastností a zapojení. 
+Nejlépe to lze vysvìtlit na pøíkladu. Mìjme krabièku \emph{Databáze}, ta
+navrhuje vytvoøení krabièky \emph{Tabulka}. V~kontextovém menu této krabièky
+bude tedy pod polokou \emph{Navrhované krabièky na vytvoøení} seznam názvù
+tabulek v~databázi. Jestlie uivatel klikne, na nìkterou tabulku, vytvoøí se
+vedle krabièky \emph{Databáze} krabièka \emph{Tabulka}, nastaví se u~ní
+vlastnost \emph{Jméno tabulky v~databázi} na jméno, které si uivatel vybral.
+Dále se krabièka \emph{Databáze} propojí s~touto novou krabièkou
+\emph{Tabulka}.
+
+Jestlie srovnáme vıše popsané zpùsoby uivatelské práce s~Ferdou se
+zpùsobem, jakım se formulují úlohy v~pùvodním uivatelském rozhraní systému 
+LISp-Miner, vidíme, e je Ferda v~mnoha ohledech pøívìtivìjší.
+Zatímco v~pùvodním rozhraní, bylo k~zadání celé úlohy a k~procházení jejích vısledkù 
+zapotøebí pouití tøí rùznıch programù (napøíklad pro úlohu pro 4ft-Miner to jsou programy 
+\emph{LMDataSource}, \emph{4ftTask} a \emph{4ftResult}), ve Ferdovi je vše integrováno do 
+jednoho nástroje. Je však nutné poèítat s~tím, e pomìrnì velké mnoství krabièek mùe bıt
+pro uivatele zaèáteèníka matoucí a i zkušenı uivatel starého systému mùe v~poèátcích 
+tápat. Stávající zkušenosti ukazují, e \emph{Navrhované krabièky na vytvoøení}
+velmi usnadòují zaèáteèníkùm práci ve Ferdovi.
+
+Komplikovanìjší úlohy dobıvání znalostí z~dat vyadují, aby na ploše bylo velké
+mnoství krabièek zapojenıch do sebe. Uivatel, kterı pracuje s~touto úlohou,
+èasto nechce znát celé komplikované zapojení všech krabièek a zajímá ho jenom
+vısledek. Pro tyto pøípady Ferda nabízí systém zabalování a rozbalování
+krabièek. Uivatel klikne na zásuvku, kterou chce zabalit, popøípadì na
+celou krabièku, jestlie chce zabalit všechny zásuvky krabièky, a zvolí
+patøiènou akci v~kontextovém menu.  Poté z~pracovní plochy zmizí krabièky a na
+zásuvce se objeví symbol, e je v~ní nìco zabaleno viz. obrázek
+\ref{zabalovaniLabel}. Stejnım zpùsobem potom mùe krabièky rozbalit.
+
+\image{zabalovaniLabel}{Zabalování krabièek}{zabalovani}{12cm}{4.75cm}
+
+Uivatel není v~pracovním prostøedí Ferda omezen jednou pracovní plochou.
+Mùe tvoøit a ukládat libovolnı poèet pracovních ploch.  Toto pomáhá
+rozdìlit si komplikované úlohy na menší podèásti a pracovat na nich oddìlenì.
+
+\subsection{Archiv krabièek}
+
+Archiv je vedle pracovní plochy další zpùsob, jak uivateli usnadnit a pøedevším 
+zefektivnit jeho práci. Všechny krabièky, které uivatel vytvoøil, jsou
+zaznamenány v~archivu. Uivatel se mùe v archivu lehce vracet k~døívìjším postupùm
+a dále je pouívat. Pøi vıchozím nastavení je panel s~archivem umístìn v~levé
+èásti pracovního prostøedí, jak je vidìt na obrázku \ref{prostrediLabel}.
+
+Uivatel mùe procházet archiv horizontálnì nebo vertikálnì. Pøi vertikálním
+prohlíení uivatel pøepíná mezi typy krabièek, které má v~archivu.
+Systém potom
+zobrazí pod sebou všechny krabièky v~archivu, které jsou daného
+typu. Horizontální prohlíení archivu znamená to, e uivatel zkoumá 
+archiv po nebo proti smìru zapojení šipek propojujících jednotlivé zásuvky krabièek.
+
+Pro propojení archivu a pracovní plochy slouí funkce pracovní plochy nazvaná
+\emph{Lokalizovat v~archivu}. Pøi této akci kontextového menu nad krabièkou
+na pracovní ploše se vyhledá daná krabièka v~archivu a oznaèí se. Tato funkce
+se opìt hodí kdy uivatel ztrácí pøehled nad mnostvím krabièek,
+které vytvoøil.
+
+Všechny uivatelem vytvoøené krabièky jsou automaticky ukládány do archivu, 
+odkud je mùe uivatel kdykoliv vyzvedávat, upravovat jejich nastaveni èí pouívat 
+je v~novıch kontextech. Archiv naplòuje poadavky dlouholetıch uivatelù 
+systému LISp-Miner na jednotné úloištì krokù dobıvání znalostí jako napøíklad 
+zadání cedentù, zadání literálù nebo zadání tøíd ekvivalence.
+
+\subsection{Panel vlastností}
+
+Panel vlastností je ovládací prvek, pomocí nìho nastavujeme vlastnosti všech
+krabièek. Jednoduché vlastnosti krabièek se nastavují pøímo v~nìm, pro
+sloitìjší panel volá dialogy, které vlastnost nastaví. Panel
+vlastností (PropertyGrid) je standardizovaná komponenta .NET Framework a
+pouívá se v~mnoha jinıch programech. Panel vlastností pøináší dùleité zlepšení oproti pùvodní verzi 
+uivatelského rozhraní systému LISp-Miner - jednotnı zpùsob 
+nastavování vlastností všech objektù.
+
+\subsection{Kontextová nápovìda}
+Kontextová nápovìda má za úkol jednoduše seznámit uivatele s~funkèností
+krabièky právì oznaèené na pracovní ploše. Pøi oznaèení krabièky na
+pracovní ploše èi v archivu se pro krabièku vygeneruje dynamická nápovìda v~komponentì
+Kontextová nápovìda. Obsahuje základní informace o~funkci krabièky, jejích
+vlastnostech a zásuvkách. Nápovìda mùe obsahovat i odkazy na stránky v~externích 
+dokumentech v~rùznıch formátech, za všechny jmenujme alespoò HTML èi PDF.
+
+\section{Implementované krabièky}
+
+Ve Ferdovi jsou
+implementovány i krabièky, které rozšiøují monosti systému.
+
+\subsection{Krabièky jednoduchıch datovıch typù} Jsou vytvoøeny krabièky pro
+nastavování jednoduchıch datovıch typù (textovı øetìzec, èíslo, datum, ...),
+které pak lze zapojit do zásuvek nastavujících tyto vlastnosti. Napøíklad
+krabièka \emph{Zadání booleovského dílèího cedentu} má mimo jiné vlastnosti pro
+nastavení minimálního a maximálního poètu literálù v~cedentu. Tyto délky se
+standardnì nastavují v~panelu vlastností krabièky, lze z~nich však vytvoøit
+zásuvky akceptující krabièky stejného datového typu. To napøíklad umoòuje
+analytikovi nastavit vıše zmínìnou maximální délku v~krabièce \emph{Èíslo},
+kterou pak pøipojí do patøièné zásuvky. Toté mùe udìlat u~více vlastností
+rùznıch krabièek a pak pouze jednou zmìnou hodnoty v~krabièce \emph{Èíslo}
+zmìnit nastavení mnoha krabièek najednou.
+
+\subsection{Krabièka skupina} Krabièka \emph{Skupina} je dalším praktickım
+pomocníkem analytika pøi práci s~Ferdou. Pøíklad: Analytik pøipraví
+nìkolik krabièek rùznıch 4ft-kvantifikátorù, které zapojí do krabièky
+\emph{4ft-Task}. Nyní, bude-li chtít pouít stejné kvantifikátory u~jiné
+4ft úlohy, musí znovu vytvoøit pro všechny tyto kvantifikátory spojení s~novou
+krabièkou \emph{4ft-Task}. Tuto neefektivitu práce øeší Ferda krabièkou
+skupina. \emph{Skupina} umoòuje seskupování krabièek jakéhokoli typu, tuto
+skupinu pak mùe analytik snadno znovu pouít na jiném místì v~jiném kontextu.
+Sama o~sobì \emph{Skupina} neposkytuje ádné funkce, pøi jejím zapojování do
+nìjaké zásuvky vystupuje stejnì jako krabièky do ní zapojené tj. jestlie
+zásuvka vyaduje nìjaké funkce, \emph{Skupina} do nìj nepùjde zapojit, pokud
+kadá krabièka uvnitø \emph{Skupiny} neposkytuje tyto funkce. Rovnì platí, e
+pokud lze do zásuvek zapojit jen omezenı poèet krabièek, nebude moné do nìj
+zapojit \emph{Skupinu} pokud do ní není zapojen stejnì omezenı poèet krabièek.
+\emph{Skupina} je tak pro uivatele vedle archivu dalším snadno pouitelnım
+pomocníkem pro vytváøení a uchovávání pracovních postupù.
+
+\subsection{Dynamické a nedynamické atributy}
+V~modulu \emph{LMDataSource} systému LISp-Miner existuje nìkolik moností
+pro vytvoøení atributu. Uivatel mùe ruènì vytvoøit seznamy hodnot èi
+intervalù hodnot, tvoøící jednotlivé kategorie, nebo pøi jejich vytváøení mùe
+pouít tøi vestavìné algoritmy pro automatické generování kategorií a tyto pak
+ruènì upravit. Jde o~algoritmy:
+\begin{description}
+       \item[Each value one category] pro kadou hodnotu z~domény sloupce vytvoøí
+       právì jednu kategorii.
+       \item[Equidistant intervals] generuje intervaly stejné délky od zadané
+       poèáteèní hodnoty prvního intervalu, po poslední hodnotu v~doménì sloupce.
+       \item[Equifrequency intervals] generuje zadanı poèet kategorií s~pøiblinì
+       stejnım poètem objektù v~kadé kategorii.
+\end{description}
+Pokud se však data pro analızu zmìní, je èasto tøeba pro uchování aktuální struktury vytvoøenıch atributù aplikovat tyto algoritmy znovu, protoe ji vytvoøené struktury zpìtnì nereflektují zmìny v~datech. Ve Ferdovi byla tato nepøíjemná vlastnost odstranìna tím, e byly vytvoøeny krabièky tzv. dynamickıch atributù, které ve chvíli kdy od nìj jiná krabièka
+vyaduje mnoinu kategorií, ovìøí zda nedošlo ke zmìnì dat a pokud ano, automaticky vygenerují struktury atributù odpovídající aktuálním datùm. Tato vlastnost, mimo jiné, umoní analytikovi relativnì snadno zkoumat rozdíly ve vısledcích dobıvání nad databází, její data se v~prùbìhu èasu mìní. Uivateli je však i nadále ponechána monost ruènì vytváøet kategorie a nechat si pøi tom pomáhat tìmito algoritmy (krabièkami dynamickıch atributù).
+
+\section{Pøíklad øešení úlohy}
+Na obrázku \ref{prostrediLabel} je naznaèeno zadání dvou úloh pro \emph{4ft-Miner}, které mají
+témìø stejné parametry, liší se pouze zadanımi kvantifikátory. Z~obrázku je
+patrné, e ji nebylo nutné znovu vytváøet zadání cedentù pro obì úlohy zvláš,
+tak jak tomu je v~pùvodním uivatelském rozhraní systému LISp-Miner, ale
+zde ji uivatel snadno opakovanì pouil døíve nadefinované -- archivované -- zadání
+cedentù.
+
+Další práci, která by vznikala v~dùsledku èetného vytváøení spojení mezi
+krabièkami, si mùe analytik ušetøit pomocí døíve zmínìné krabièky
+\emph{Skupina}. Napøíklad obì úlohy na obrázku mají definovány ètyøi
+kvantifikátory, z~nich tøi jsou spoleèné, ale jeden kvantifikátor má kadá
+úloha jinı. Analytik vytvoøil a nastavil tøi spoleèné kvantifikátory, ty
+umístil do krabièky \emph{Skupina}, tu zapojil do pøíslušné zásuvky obou
+4ft-úloh a poté u jen vytvoøil krabièky lišících se kvantifikátorù a také obì
+zapojil do zásuvek pøíslušnıch krabièek.
+
+Na tomto pøíkladu je rovnì naznaèeno pouívání krabièek dynamickıch atributù.
+Takto formulovaná úloha toti umoòuje pozdìjší spuštìní s~tím, e se, bude-li
+si to uivatel pøát, u~dynamickıch atributù znovu dynamicky vygenerují mnoiny
+kategorií, co v~pøípadì, e se v~databázi zmìnily domény èi frekvence
+u~sloupcù (pøípadnì odvozenıch), z~nich jsou odvozeny tyto atributy, ušetøí
+analytikovi mnoho jeho práce, kterou by v~døívìjší implementaci grafického rozhraní
+systému LISp-Miner musel udìlat tj. znovu ruènì u~kadého atributu
+provést generování mnoiny kategorií.
+
+\image{ekvivalenceLabel}{Vylepšení tøídy ekvivalence}{prostrediEkvivalence}{12cm}{3.28cm}
+
+Ètenáø, kterı ji má zkušenosti se tøídami ekvivalence v~systému LISp-Miner, si
+mùe povšimnout, e další zmìny oproti pùvodnímu rozhraní systému
+LISp-Miner doznala \emph{Tøída ekvivalence}, do ní šlo pùvodnì
+zaøazovat pouze zadání literálù. Ve Ferdovi je moné navíc vytváøet u tøídy
+ekvivalence atributù. To znamená, e všechna zadání literálù, která budou
+odvozena z~tìchto atributù jsou ve stejné tøídì ekvivalence. V~tomto pøíkladì
+jsou z~krabièky \emph{Odvozenı sloupec} pojmenované \emph{Salary -- payments}
+odvozeny dva dynamické atributy typu \emph{Equidistantní intervaly} pojmenované
+\emph{Equidistant 1000} a \emph{Equidistant 2000} (èíslo v~názvu oznaèuje délku
+intervalù). Zøejmì nemá smysl, aby v~cedentech vystupovali zároveò literály
+odvozené z~obou tìchto atributù, proto jsou oba atributy zaøazeny do jedné
+tøídy ekvivalence.
+
+\labeldest{srovnani}{\section{Porovnání s~podobnımi systémy}}
+Porovnáme-li pohled na úlohu dobıvání znalostí ve Ferdovi a v~konkurenèních
+aplikacích -- za všechny jmenujme napøíklad komerèní produkty Clementine od SPSS a SAS Enterprise Miner, a nekomerèní program Weka -- ve všech tìchto aplikacích
+se pracuje s~podobnımi objekty jako jsou krabièky. Zatímco ve Ferdovi
+krabièka reprezentuje funkce, v~ostatních aplikacích je to spíše èást procesu
+dobıvání znalostí, proto pojem zásuvka jak jej o známe z~Ferdy nemá v~tìchto
+aplikacích smysl. Jejich krabièky mají pouze jeden vstupní bod a veliké
+mnoství parametrù se nastavuje pomocí rùznıch dialogù, to má za následek menší opakovatelnost pouití a vìtší sloitost aplikace z~hlediska uivatele. Na druhou
+stranu zpracování úlohy ve Ferdovi vede k~vìtšímu mnoství typù krabièek,
+kterım by mìl uivatel rozumìt, i k~vìtšímu mnoství krabièek na pracovní
+ploše, které mùe vést k~obtínìjší orientaci uivatele. Tomu však byla
+vìnována pozornost a byla vyvinuta øada mechanismù, jen by mìla tyto problémy øešit.
+
+\section{Závìr}
+Aèkoli prostøedí Ferda je teprve v~beta verzi, naše první praktické zkušenosti
+s~ním pøivedly uspokojivé vısledky. Vizuální prostøedí Ferdy, které
+pøevauje v~moderních systémech na dobıvání znalostí, integruje døíve roztøíštìnı postup v~systému LISp-Miner. Monosti
+pracovního prostøedí popsané v~tomto èlánku v èele s~archivem krabièek,
+pracovní plochou nebo zabalováním a rozbalováním krabièek, pravdìpodobnì zjednoduší
+a zefektivní práci analytika pøi dobıvání znalostí. Osvìdèily se i nové nápady
+v~èele s~krabièkou \emph{Skupina} a dynamickımi atributy popsané ve shodnì
+pojmenovanıch èástech tohoto èlánku, které rozšiøují zábìr stávajícího systému.
+
+Za nejvìtší vıhodu prostøedí však jeho tvùrci povaují jeho modularitu a
+rozšiøitelnost. Napøíklad není pøíliš tìké vytvoøit krabièku, která bude
+sekvenènì mìnit nastavení mezí dynamickıch atributù a bude si tak sama
+simulovat data mìnící se v~èase. Otevírá se také prostor pro vytváøení
+jednoduchıch krabièek heuristicky simulujících práci analytika. Napøíklad
+jednoduché krabièky dynamicky upravující nastavení zadání koeficientù èi kvantifikátorù úlohy tak,
+aby byly vlastnosti i poèet vıslednıch hypotéz uspokojující pro uivatele.
+
+V~budoucnu by Ferda mìl bıt rozšíøen o~nové procedury dobıvání znalostí. Za
+zmínku stojí procedura RelMiner\cite{RelMiner}, která poèítá asociaèní pravidla nad
+hvìzdicovitım relaèním schématem. Ferda je také vhodnım kandidátem na prostøedí
+pro projekt EverMiner\cite{Peking}.
+
+\begin{thebibliography}{99}
+
+\bibitem{LISpA} J. Rauch, M. Šimùnek. Systém LISp-Miner \emph{ZNALOSTI 2003, 2. roèník konference} Ostrava 2003. ISBN 80-248-0229-5.
+
+\bibitem{LISpReference} Seznam publikací tıkajících se systému LISp-Miner. http://lispminer.vse.cz/references.html.
+
+\bibitem{Peking} J. Rauch, M. Šimùnek. \emph{GUHA Method and Granular Computing}. Beijing 25.07.2005 - 27.07.2005. In: HU, Xiaohua, LIU, Qing, SKOWRON, Andrzej, LIN, Tsau Young, YAGER, Ronald R., ZANG, Bo (ed.). IEEE 2005. Piscataway: IEEE, 2005, s. 630-635.
+
+\bibitem{KnowledgeDiscovery} P. Aubrecht, M. Kejkula, P. Kremen, L. Novakova, J. Rauch, M. Simunek, O. Stepankova. \emph{Mining in Hepatitis Data by LISp-Miner and SumatraTT}. Accepted for publication in proceedings of Discovery Challenge 2005 see 
+http://lisp.vse.cz/challenge/ecmlpkdd2005/chall2005.htm.
+
+\bibitem{RelMiner} Martin Ducháèek. Diplomová práce 2005 \emph{Nástroj pro správu databází s~vyuitím pro multi-relaèní DataMining}.
+
+\bibitem{Ice} ZeroC. http://www.zeroc.com, Internet Communications Engine (Ice).
+
+\bibitem{Mono} Mono Project. http://www.mono-project.com.
+
+\bibitem{Clementine} Clementine. http://www.spss.com/es/noticias/npclementine.htm. Clementine Data Mining System.
+
+\bibitem{Weka} Weka. http://www.cs.waikato.ac.nz/$\sim$ml/weka. Weka - Java Programs for Machine Learning, University of Waikato.
+
+\bibitem{SAS} SAS Enterprise Miner. http://www.sas.com/technologies/analytics/datamining/miner/
+
+\end{thebibliography}
+
+\medskip
+
+\noindent \textbf{Annotation:}
+
+\smallskip
+
+\noindent \textit{Ferda, new visual environment for data mining}
+
+\smallskip
+
+\noindent The goal of project Ferda was to create an application which will
+replace the current user environment for the data mining system LISp-Miner
+(lispminer.vse.cz) by a new, more visually and user friendly working
+environment. Ferda brings in the conception of data mining task as the record of
+the function using visual objects -- boxes. Boxes have their parameters and
+evaluate their functions based on the values of the parameters. The program is
+modular and is designed to make the addition of new boxes easy. We have created
+the environment that organizes and simplifies user interaction with the
+LISp-Miner system and offers further possibilities for research and extensions.
+
+\end{document}
