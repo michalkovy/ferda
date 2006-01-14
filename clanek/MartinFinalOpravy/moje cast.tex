@@ -1,0 +1,111 @@
+\section{Pracovní prostøedí}
+Pøi návrhu pracovního prostøedí systému Ferda se tvùrci snaili dret se co nejvíce 
+standardù v~oblasti programování a vizuálního programování. 
+Proto byly pro prostøedí zvoleny standardní komponenty (èásti pracovního prostøedí), na které je
+uivatel zvyklı z~rùznıch jinıch nástrojù a nebude mu dìlat problémy zaèít je pouívat i
+ve Ferdovi. Jedním z nich je mechanizmus dokování oken. Všechny komponenty, u~kterıch to má 
+smysl, je moné pomocí tohoto mechanizmu
+pøesouvat po pracovní ploše, èi skrıvat. Dokování je
+standard pouívanı v~uivatelskıch prostøedích mnohıch produktù, 
+za všechny jmenujme Microsoft Visual Studio.
+
+Vrame se ke krabièkám. Pro uivatele je krabièka grafickı objekt na pracovní ploše. 
+Krabièka je malı ètverec s~ikonou, kterı má na stranách menší ètverce -- zásuvky. Jednotlivé zásuvky
+propojuje uivatel na ploše kliknutím a pøetáhnutím myši. 
+
+V pøechozích odstavcích byl ètenáø seznámen s funkcemi krabièek. V pracovním 
+prostøedí lze funkce vyvolat pomocí poloky \emph{Akce} kontextového menu nad krabièkou,
+jak je vidìt na obrázku \ref{krabickyLabel}.
+
+\image{krabickyLabel}{Krabièky a kontextové menu}{krabicky}{8cm}{6cm}
+
+Krabièka je nìkdy tak sloitá, e samotné nastavování vlastností a
+propojování zásuvek nestaèí na pohodlnou uivatelskou práci.
+Proto mùe mít nadefinované moduly pro interakci. Modul pro
+interakci znamená volání akce, kterou zajišuje jinı modul ne samotná
+krabièka. Èasto to mùe bıt èást pracovního prostøedí: dialogy, tabulky
+grafy\dots. 
+
+Krabièka èasto nabízí v~kontextovém
+menu nebo v~hlavním menu aplikace seznam krabièek, které se mohou automaticky 
+vytvoøit s~pøednastavenımi hodnotami vlastností a zapojení. 
+Nejlépe to lze vysvìtlit na pøíkladu. Mìjme krabièku \emph{Databáze}, ta
+navrhuje vytvoøení krabièky \emph{Tabulka}. V~kontextovém menu této krabièky
+bude tedy pod polokou \emph{Navrhované krabièky na vytvoøení} seznam názvù
+tabulek v~databázi. Jestlie uivatel klikne, na nìkterou tabulku, vytvoøí se
+vedle krabièky \emph{Databáze} krabièka \emph{Tabulka}, nastaví se u~ní
+vlastnost \emph{Jméno tabulky v~databázi} na jméno, které si uivatel vybral.
+Dále se krabièka \emph{Databáze} propojí s~touto novou krabièkou
+\emph{Tabulka}.
+
+Jestlie srovnáme vıše popsané zpùsoby uivatelské práce s~Ferdou se
+zpùsobem, jakım se formulují úlohy v~pùvodním uivatelském rozhraní systému 
+LISp-Miner, vidíme, e je Ferda v~mnoha ohledech pøívìtivìjší.
+Zatímco v~pùvodním rozhraní, bylo k~zadání celé úlohy a k~procházení jejích vısledkù 
+zapotøebí pouití tøí rùznıch programù (napøíklad pro úlohu pro 4ft-Miner to jsou programy 
+\emph{LMDataSource}, \emph{4ftTask} a \emph{4ftResult}), ve Ferdovi je vše integrováno do 
+jednoho nástroje. Je však nutné poèítat s~tím, e pomìrnì velké mnoství krabièek mùe bıt
+pro uivatele zaèáteèníka matoucí a i zkušenı uivatel starého systému mùe v~poèátcích 
+tápat. Stávající zkušenosti ukazují, e \emph{Navrhované krabièky na vytvoøení}
+velmi usnadòují zaèáteèníkùm práci ve Ferdovi.
+
+Komplikovanìjší úlohy dobıvání znalostí z~dat vyadují, aby na ploše bylo velké
+mnoství krabièek zapojenıch do sebe. Uivatel, kterı pracuje s~touto úlohou,
+èasto nechce znát celé komplikované zapojení všech krabièek a zajímá ho jenom
+vısledek. Pro tyto pøípady Ferda nabízí systém zabalování a rozbalování
+krabièek. Uivatel klikne na zásuvku, kterou chce zabalit, popøípadì na
+celou krabièku, jestlie chce zabalit všechny zásuvky krabièky, a zvolí
+patøiènou akci v~kontextovém menu.  Poté z~pracovní plochy zmizí krabièky a na
+zásuvce se objeví symbol, e je v~ní nìco zabaleno viz. obrázek
+\ref{zabalovaniLabel}. Stejnım zpùsobem potom mùe krabièky rozbalit.
+
+\image{zabalovaniLabel}{Zabalování krabièek}{zabalovani}{12cm}{4.75cm}
+
+Uivatel není v~pracovním prostøedí Ferda omezen jednou pracovní plochou.
+Mùe tvoøit a ukládat libovolnı poèet pracovních ploch.  Toto pomáhá
+rozdìlit si komplikované úlohy na menší podèásti a pracovat na nich oddìlenì.
+
+\subsection{Archiv krabièek}
+
+Archiv je vedle pracovní plochy další zpùsob, jak uivateli usnadnit a pøedevším 
+zefektivnit jeho práci. Všechny krabièky, které uivatel vytvoøil, jsou
+zaznamenány v~archivu. Uivatel se mùe v archivu lehce vracet k~døívìjším postupùm
+a dále je pouívat. Pøi vıchozím nastavení je panel s~archivem umístìn v~levé
+èásti pracovního prostøedí, jak je vidìt na obrázku \ref{prostrediLabel}.
+
+Uivatel mùe procházet archiv horizontálnì nebo vertikálnì. Pøi vertikálním
+prohlíení uivatel pøepíná mezi typy krabièek, které má v~archivu.
+Systém potom
+zobrazí pod sebou všechny krabièky v~archivu, které jsou daného
+typu. Horizontální prohlíení archivu znamená to, e uivatel zkoumá 
+archiv po nebo proti smìru zapojení šipek propojujících jednotlivé zásuvky krabièek.
+
+Pro propojení archivu a pracovní plochy slouí funkce pracovní plochy nazvaná
+\emph{Lokalizovat v~archivu}. Pøi této akci kontextového menu nad krabièkou
+na pracovní ploše se vyhledá daná krabièka v~archivu a oznaèí se. Tato funkce
+se opìt hodí kdy uivatel ztrácí pøehled nad mnostvím krabièek,
+které vytvoøil.
+
+Všechny uivatelem vytvoøené krabièky jsou automaticky ukládány do archivu, 
+odkud je mùe uivatel kdykoliv vyzvedávat, upravovat jejich nastaveni èí pouívat 
+je v~novıch kontextech. Archiv naplòuje poadavky dlouholetıch uivatelù 
+systému LISp-Miner na jednotné uloištì krokù dobıvání znalostí jako napøíklad 
+zadání cedentù, zadání literálù nebo zadání tøíd ekvivalence.
+
+\subsection{Panel vlastností}
+
+Panel vlastností je ovládací prvek, pomocí nìho nastavujeme vlastnosti všech
+krabièek. Jednoduché vlastnosti krabièek se nastavují pøímo v~nìm, pro
+sloitìjší panel volá dialogy, které vlastnost nastaví. Panel
+vlastností (PropertyGrid) je standardizovaná komponenta .NET Framework a
+pouívá se v~mnoha jinıch programech. Panel vlastností pøináší dùleité zlepšení oproti pùvodní verzi 
+uivatelského rozhraní systému LISp-Miner - jednotnı zpùsob 
+nastavování vlastností všech objektù.
+
+\subsection{Kontextová nápovìda}
+Kontextová nápovìda má za úkol jednoduše seznámit uivatele s~funkèností
+krabièky právì oznaèené na pracovní ploše. Pøi oznaèení krabièky na
+pracovní ploše èi v archivu se pro krabièku vygeneruje dynamická nápovìda v~komponentì
+Kontextová nápovìda. Obsahuje základní informace o~funkci krabièky, jejích
+vlastnostech a zásuvkách. Nápovìda mùe obsahovat i odkazy na stránky v~externích 
+dokumentech v~rùznıch formátech, za všechny jmenujme alespoò HTML èi PDF.

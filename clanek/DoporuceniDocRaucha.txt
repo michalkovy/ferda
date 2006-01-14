@@ -1,0 +1,33 @@
+﻿Adresa
+	- matfyz
+
+Uvod
+	- proc se to dela, cile - viz prostredi LISp-Miner
+	- u nas toho je tady vic, protoze mi delame nejaky obecny system
+	- srovnani s obdobnými systémy (Clementine, SAS?, ..), alespoň ze o nich víme
+		- v čem jsme jiní/stejní a proč
+	- popis struktury článku (jak říkal, az to napiseme, tak sepstat nejaky "seznam" odstavcu)
+	- někam na začátek obrázek (prostředí), aby to čtenáře chytlo (neco jako tehle dokument ve vetach)
+
+Clanek
+	- co je nového - (minimálně) seznam věcí
+		- otevřený (veřejný, modifikovatelný)
+		- platforma
+		- distribuovatelnost
+		- sila
+		- archiv
+		- ... tady si myslim, ze bych vubec nesetril
+	- nove GUI
+		- popis alespoň těch nejdulezitejsich, nejzajimavejsich komponent
+		- to ye vycházíme z nějakých zaběhlých "standardů" + co je jine/stejne
+		- hlavni rysy, ty nejlepsi rozebrat
+		- priklad, ktery ukaze hezke pohodlne veci ve Ferdovi
+			- zabalovani, archivovani, moduly nabízene pro vytvoření, ...
+	- priklad reseni ulohy
+		- ukazat na nem nejake featury ... napr 4ft, SD4ft ulohy, kde se jen jednou definuji cedenty
+
+Optimisticky Zaver :-)
+	- prinasime nove moznosti, ty jsou ... (+ odkazy na predchozi text)
+	- udelali jsme prvni dve ulohy a zdalo se to byt dost husty a osvedcilo se to, protoze tam lecos (treba archiv) funguje + odkazy na predchozi odstavce, aby to nevyselo ve vzduchu
+	- aplikovatelnost jinde (Rel-Miner)
+	- dalsi plany/moznosti

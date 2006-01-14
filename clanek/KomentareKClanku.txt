@@ -1,0 +1,84 @@
+﻿Co se nelibilo:
+
+chybi "skúseností s prostredím Ferda z pohľadu konkrétnych užívateľov" - s tim asi nic neudelame,ne?
+
+"Podobne, Ferda podporuje interakciu cez vlastnosti alebo cez vstupy a
+výstupy. Vedeli by ste zovšeobecniť, kedy je jeden prístup k tvorbe
+programu výrazne lepší ako druhý?" - zamyslim se, zda to zapracuji 
+
+"kontextuálna nápoveda... ako vzali užívatelia túto
+možnosť na vedomie? Klasicky je známe, že experti využívajú omnoho
+menej takejto pomoci ako začiatočníci. Platí to i pre Ferdu?" - chtelo by mozna nekde u dockingu upozornit,
+ze se to hodi pro rozdeleni uzivatelu na experty / novacky...
+
+"Má Ferda niečo ako kontrolu konzistencie? Toto je zaujímave skôr z
+toho pohľadu, o ktorom sa zmieňujete, totiž Ferda ako systém na
+formuláciu logiky a sémantiky." - pise se tam, ze jde zapojit jen nektere krabicky do nekterych - asi jo - 
+vic nemame, takze o tom nepsat, ne?
+
+"Na záver, uvažujete o podpore kolaboratívneho vytvárania programov v
+prostredí, alebo niečo na spôsob zdieľaného archívu v danej skupine
+analytikov (toto je zvyčajne žiadané v praxi...)" - o tom bych v clanku take nepsal, ale jedna se o "muj"
+vzdaleny archiv, o kterem jsem uvazoval, a je videt, ze vubec neni od veci...
+
+Už sám název článku je zavádějící, již v první větě abstraktu je napsáno,
+že cílem je nahradit stávající uživatelské prostředí systému Lisp Miner" - mělo by tam být,
+něco jako "jedním z cílů bylo,
+ale bude se to rozšiřovat..."
+
+"Po věcné stránce mi chybí zejména příklad, který by ukazoval i jednoduchou úlohu řešenou dříve
+v Lisp Mineru a nyní ve Ferdovi, která by ukázala výhody oproti původnímu řešení.
+Příklad se sčítáním mi přijde jako zcela nevhodný." - na úlohu není asi už ve článku místo a o
+předělání sčítání na něco jiného přemýšlím, ale nemám žádný vhodný "dataminingový" příklad,
+který by dokázal sčítání nahradit
+
+"Po jazykové stránce na mě článek působí dojmem jako by si ho autoři po sobě ani nepřečetli,
+článek obsahuje řadu gramatických chyb a překlepů. Upřednostnila bych spisovnou češtinu před
+češtinou obecnou (např. str. 7 uživatel může tápat). Doporučila bych i přerovnat odstavce tak,
+aby témata na sebe navazovali, např. sekce 2.2 Porovnání s podobnými systémy by mohla být až
+na konci a nemusela končit větou „Ta budou popsána dále“"
+ - to je CHYBA! Čtěme si ho a několikrát!
+
+"text neobsahuje odkaz na 4. položku literatury"
+ - zkontrolovat
+
+"Jde o clanek napsany tak trochu formou uzivatelskeho manualu, a navic 
+ne zcela prehledne. 
+Logicka stavba neni idealni, vyznam casti textu neni jasny. Jeden 
+priklad za vsechny: v casti 'Ukazka moznosti krabicek' se teprve 
+uvadi, ze krabicky mohou mit vlastnosti, coz by melo byt urcite 
+uvedeno driv."
+ - zamyslet se nad logickou stavbou, ale nejsem si jist, zda to je dobre moc prekopat
+
+"Veskere pojmy jsou definovany hodne volnym a nejednoznacnym zpusobem. 
+Bylo by velmi vhodne zavest (byt jednoduchy) formalni model a oddelit 
+ho od popisu implementace." - zkusit vlozit formalizaci krabicek
+
+"Nektere formulace jsou na odborny clanek ponekud nezvykle, 
+napr.: 'Osvedcily se i nove napady v cele s krabickou Skupina...' - 
+nehlede na styl psani, kde je nejaky hmatatelny dukaz, ze se tento 
+napad osvedcil? Chybi evaluace at uz z vypocetniho nebo uzivatelskeho 
+hlediska!" - opravit! A znovu precist vse, byt vice sebekriticti!
+
+"Citovat napr. zminovanou lambda-kategorialni gramatiku" - mozna pripsat jen formulizace krabicek
+
+"Nove zavedene pojmy by bylo vhodne v textu odlisit napr. kurzivou." - vubec projet typografii
+
+"Existuje moznost popsat omezeni na zapojovani krabicek deklarativne, 
+pomoci znalostni baze, kterou by system umel zpracovat?" - to je podobne jako nahore - melo by byt v clanku,
+ze lze zapojit jen nektere krabky do nekterych, dle typu, vic tam nemame - otazka zni, zda to je spatne?
+(aneb Tomasova semantika krabicek)
+
+"Porovnani s podobnymi systemy (cast 2.2) by si zaslouzilo samostatnou 
+sekci." - sekci mozna ano, otazka zda neco pripsat?
+
+"Mimochodem, nestalo by za to spojit vyhody obou koncepci, tj. umoznit 
+explicitni slucovani krabicek do nejakych fazi procesu KDD? (To neni 
+totez jako sbalovani/rozbalovani casti grafu)" - neumim si moc predstavit - v clanku nic o tom bych nedaval
+
+"Na obrazku 1 neni jasne, co jsou ty dve ulohy zminovane na zacatku 
+casti 6 - ctenar vidi jen jeden graf, ktery neni dale cleneny."
+ - hmm, to by chtelo vysvetlit - lepe rict kde co presne je
+
+Neni jasny vztah DP citovane jako [5] k praci T. Karbana.
+ - To mne take ne - smazat?
