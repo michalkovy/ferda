@@ -4,6 +4,7 @@ using System.Text;
 using Ferda.ModulesManager;
 using System.Resources;
 using System.Windows.Forms;
+using System.IO;
 using Ferda.ProjectManager;
 
 namespace Ferda.FrontEnd
@@ -30,8 +31,18 @@ namespace Ferda.FrontEnd
             string loadErrors = string.Empty;
             if (fileName != "")
             {
-                System.IO.FileStream fs =
-                   new System.IO.FileStream(fileName, System.IO.FileMode.Open);
+                FileStream fs = null;
+                try
+                {
+                    fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open);
+                }
+                catch(FileNotFoundException)
+                {
+                    MessageBox.Show(resManager.GetString("ProjectLoadFileNotFound"),
+                        resManager.GetString("ProjectLoadErrorCaption"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 try
                 {
                     Cursor previosCursor = parent.Cursor;
