@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutDialogDescription" xml:space="preserve">
+    <value>Ferda je uživatelsky přívětivý prostředek pro dobývání znalostí. Používá modulární multiplatformní systému používajícím Internet Communications Engine. Ferda se dá dobře použít zejména při práci s asociačními pravidly. </value>
+  </data>
+  <data name="AboutDialogDevelopers" xml:space="preserve">
+    <value>Vyvinuli: </value>
+  </data>
+  <data name="AboutDialogText" xml:space="preserve">
+    <value>O aplikaci Ferda DataMiner</value>
+  </data>
+  <data name="AboutDialogVersion" xml:space="preserve">
+    <value>Verze: </value>
+  </data>
   <data name="ArchiveAgainstText" xml:space="preserve">
     <value>Proti směru zapojení</value>
   </data>
@@ -128,10 +140,6 @@
   </data>
   <data name="ArchiveContentText" xml:space="preserve">
     <value>Archív</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="box" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>box.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BoxExceptionDailogBox" xml:space="preserve">
     <value>V krabičce</value>
@@ -420,9 +428,6 @@
   </data>
   <data name="RenameDialogCaption" xml:space="preserve">
     <value>Zadejte nové jméno krabičky</value>
-  </data>
-  <data name="socket" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>socket.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="StringComboAddingControlButtonText" xml:space="preserve">
     <value>Nastavit do vlastnosti jinou hodnotu</value>
