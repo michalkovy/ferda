@@ -399,6 +399,9 @@
   <data name="ProjectLoadErrorCaption" xml:space="preserve">
     <value>Při nahrávání projektu nastaly chyby</value>
   </data>
+  <data name="ProjectLoadFileNotFound" xml:space="preserve">
+    <value>Nebyl nalezen cílový soubor</value>
+  </data>
   <data name="PropertiesCannotWriteCaption" xml:space="preserve">
     <value>Chyba záznamu</value>
   </data>

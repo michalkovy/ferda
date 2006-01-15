@@ -399,6 +399,9 @@
   <data name="ProjectLoadErrorCaption" xml:space="preserve">
     <value>Errors have occured while loading the project</value>
   </data>
+  <data name="ProjectLoadFileNotFound" xml:space="preserve">
+    <value>File not fount</value>
+  </data>
   <data name="PropertiesCannotWriteCaption" xml:space="preserve">
     <value>Input error</value>
   </data>
