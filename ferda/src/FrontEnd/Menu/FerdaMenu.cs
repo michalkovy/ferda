@@ -415,6 +415,8 @@ namespace Ferda.FrontEnd.Menu
                 theoreticalHelp,
                 about
             });
+
+            about.Click += new EventHandler(about_Click);
         }
 
         #endregion
@@ -1071,6 +1073,18 @@ namespace Ferda.FrontEnd.Menu
             {
                 localizationManager.LocalePrefs = prefDialog.LocalePrefs;
             }
+        }
+
+        /// <summary>
+        /// Event handles the Help->About click and evokes the
+        /// AboutDialog
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void about_Click(object sender, EventArgs e)
+        {
+            AboutDialog aboutDialog = new AboutDialog(ResManager);
+            aboutDialog.ShowDialog();
         }
 
         #endregion
