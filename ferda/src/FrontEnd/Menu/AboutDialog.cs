@@ -103,7 +103,6 @@ namespace Ferda.FrontEnd.Menu
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutDialog));
             this.PImage = new System.Windows.Forms.Panel();
             this.BOk = new System.Windows.Forms.Button();
             this.LFerda = new System.Windows.Forms.Label();
@@ -114,7 +113,7 @@ namespace Ferda.FrontEnd.Menu
             // 
             // PImage
             // 
-            this.PImage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PImage.BackgroundImage")));
+            this.PImage.BackgroundImage = global::Ferda.FrontEnd.Localization_en_US.ferda64;
             this.PImage.Location = new System.Drawing.Point(12, 12);
             this.PImage.Name = "PImage";
             this.PImage.Size = new System.Drawing.Size(64, 64);
