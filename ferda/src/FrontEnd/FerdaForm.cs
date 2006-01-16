@@ -497,7 +497,7 @@ using Ferda.ModulesManager;
         /// <param name="displayer">Displayer of the properties (if an Add-in has a property)</param>
         private static void loadAddIns(IOwnerOfAddIn ownerOfAddIn,
             Ice.ObjectAdapter objectAdapter,
-            Ferda.ModulesManager.ModulesManager modulesManager, Properties.IPropertiesDisplayer displayer)
+            Ferda.ModulesManager.ModulesManager modulesManager, Properties.IOtherObjectDisplayer displayer)
 		{
 			System.Collections.Specialized.StringCollection proxies
 				= new System.Collections.Specialized.StringCollection();
