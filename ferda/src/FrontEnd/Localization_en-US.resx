@@ -141,6 +141,10 @@
   <data name="ArchiveContentText" xml:space="preserve">
     <value>Archive</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Box" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Box.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BoxExceptionDailogBox" xml:space="preserve">
     <value>Box</value>
   </data>
@@ -194,6 +198,9 @@
   </data>
   <data name="DesktopMoreThanOneErrorText" xml:space="preserve">
     <value>The socket does not allow more than one connected boxes</value>
+  </data>
+  <data name="ferda64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ferda64.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LoadingAddIns" xml:space="preserve">
     <value>Loadins add-ins ...</value>
