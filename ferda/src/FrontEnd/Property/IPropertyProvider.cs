@@ -14,7 +14,7 @@ namespace Ferda.FrontEnd.Properties
         /// <summary>
         /// Sets the displayer to know where to display the properties.
         /// </summary>
-        IPropertiesDisplayer Displayer
+        IOtherObjectDisplayer Displayer
         {
             set;
         }
