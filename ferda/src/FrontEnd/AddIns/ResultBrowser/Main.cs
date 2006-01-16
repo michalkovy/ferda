@@ -10,7 +10,7 @@ namespace Ferda
     {
         public class Main : Ferda.FrontEnd.AddIns.AbstractMain, IPropertyProvider
         {
-            IPropertiesDisplayer displayer;
+            IOtherObjectDisplayer displayer;
 
             public override string NameOfObject
             {
@@ -33,7 +33,7 @@ namespace Ferda
 
             #region IPropertyProvider Members
 
-            public IPropertiesDisplayer Displayer
+            public IOtherObjectDisplayer Displayer
             {
                 set
                 {

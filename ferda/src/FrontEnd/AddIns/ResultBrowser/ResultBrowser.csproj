@@ -1,116 +1,112 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E6660922-A2E7-4F8D-9F0A-28498D775381}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>ResultBrowser</AssemblyName>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>Ferda.FrontEnd.AddIns.ResultBrowser</RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>.\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>.\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="DockDotNET, Version=1.0.2177.34787, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\DockDotNET.dll</HintPath>
-    </Reference>
-    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
-    </Reference>
-    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="FerdaFrontEnd, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <ExecutableExtension>.exe</ExecutableExtension>
-      <HintPath>..\..\..\..\bin\FrontEnd\FerdaFrontEnd.exe</HintPath>
-    </Reference>
-    <Reference Include="FerdaModulesManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
-    </Reference>
-    <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\FrontEndAddInHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="icecs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\icecs.dll</HintPath>
-    </Reference>
-    <Reference Include="icegridcs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b555a647d8de49c2">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\icegridcs.dll</HintPath>
-    </Reference>
-    <Reference Include="NAFGraph, Version=2.1.2177.34788, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\NAFGraph.dll</HintPath>
-    </Reference>
-    <Reference Include="NetronMaths, Version=2.1.1786.17601, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\NetronMaths.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="TeeChart.Lite, Version=1.0.1224.38244, Culture=neutral, PublicKeyToken=9c8126276c77bdb7">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\lib\TeeChart.Lite.dll</HintPath>
-    </Reference>
-    <Reference Include="TeeChart.Lite.Languages, Version=1.0.1224.38244, Culture=neutral, PublicKeyToken=9c8126276c77bdb7">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\lib\TeeChart.Lite.Languages.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="FerdaResultBrowserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FerdaResultBrowserControl.designer.cs">
-      <DependentUpon>FerdaResultBrowserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FerdaResultBrowserControl.Graph.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Main.cs" />
-    <Compile Include="MyIce\ResultBrowserIce.cs" />
-    <Compile Include="NonGUIClasses\FerdaResult.cs" />
-    <Compile Include="NonGUIClasses\Sorter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="FerdaResultBrowserControl.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FerdaResultBrowserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Localization_cs-CZ.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Localization_en-US.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dummy\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
-  <ProjectExtensions>
-    <VisualStudio AllowExistingFolder="true" />
-  </ProjectExtensions>
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E6660922-A2E7-4F8D-9F0A-28498D775381}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ResultBrowser</AssemblyName>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace>Ferda.FrontEnd.AddIns.ResultBrowser</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DockDotNET, Version=1.0.2177.34787, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\DockDotNET.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaFrontEnd, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <ExecutableExtension>.exe</ExecutableExtension>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaFrontEnd.exe</HintPath>
+    </Reference>
+    <Reference Include="FerdaModulesManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
+    </Reference>
+    <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FrontEndAddInHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\icecs.dll</HintPath>
+    </Reference>
+    <Reference Include="icegridcs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b555a647d8de49c2">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\icegridcs.dll</HintPath>
+    </Reference>
+    <Reference Include="NAFGraph, Version=2.1.2177.34788, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\NAFGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="NetronMaths, Version=2.1.1786.17601, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\NetronMaths.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TeeChart.Lite, Version=1.0.1224.38244, Culture=neutral, PublicKeyToken=9c8126276c77bdb7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\TeeChart.Lite.dll</HintPath>
+    </Reference>
+    <Reference Include="TeeChart.Lite.Languages, Version=1.0.1224.38244, Culture=neutral, PublicKeyToken=9c8126276c77bdb7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\TeeChart.Lite.Languages.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FerdaResultBrowserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FerdaResultBrowserControl.designer.cs">
+      <DependentUpon>FerdaResultBrowserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FerdaResultBrowserControl.Graph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main.cs" />
+    <Compile Include="MyIce\ResultBrowserIce.cs" />
+    <Compile Include="NonGUIClasses\FerdaResult.cs" />
+    <Compile Include="NonGUIClasses\Sorter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization_cs-CZ.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization_en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dummy\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
 </Project>
