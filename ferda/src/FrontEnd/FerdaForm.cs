@@ -8,6 +8,7 @@ using Ferda.ProjectManager;
 using System.Resources;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -75,6 +76,9 @@ using Ferda.ModulesManager;
         //prescreen
         private static FerdaPrescreen prescreen;
 
+        //the name of the project
+        private string projectName = string.Empty;
+
         #endregion
 
         #region Properties
@@ -127,6 +131,26 @@ using Ferda.ModulesManager;
             get
             {
                 return (nodes.Count == 0);
+            }
+        }
+
+        #endregion
+
+        #region IControlsManager implementation
+
+        /// <summary>
+        /// If there is an opened project, this property shows the name of the opened
+        /// project, otherwise it is a string.Empty
+        /// </summary>
+        public string ProjectName
+        {
+            set
+            {
+                projectName = value;
+            }
+            get
+            {
+                return projectName;
             }
         }
 
@@ -572,7 +596,7 @@ using Ferda.ModulesManager;
             form.SetupResources(iceConfig);
             
             //switching to the "bin" directory
-            string previousDir = SwitchToBinDirectory();
+            string previousDir = FrontEndCommon.SwitchToBinDirectory();
 
             prescreen.DisplayText(form.ResManager.GetString("LoadingProjectManager"));
             //loading the project manager
@@ -591,7 +615,7 @@ using Ferda.ModulesManager;
 			pm.ModulesManager.AddModuleServices(iceConfig.FrontEndIceObjects);
 
             //switching to the directory from where it was executed
-            SwitchToPreviousDirectory(previousDir);
+            FrontEndCommon.SwitchToPreviousDirectory(previousDir);
 
             //loading the associated file (if there is one)
             if (args.Length > 0)
@@ -900,11 +924,14 @@ using Ferda.ModulesManager;
             archive.Archive = projectManager.Archive;
             archive.ArchiveSetupAfterLoadProject();
             //deleting the views
+            /* It does not have to be here, because the ClearDocking() method
+             * does the business
             foreach (DockWindow wnd in viewContents)
             {
                 dockingManager.RemoveForm(wnd);
                 wnd.IsVisible = false;
             }
+            */
 
             //creating the new views
             views = new List<FerdaDesktop>();
@@ -1042,6 +1069,31 @@ using Ferda.ModulesManager;
             }
         }
 
+        /// <summary>
+        /// Method that fills the project manager with a new view. It is used
+        /// when a new project is created
+        /// </summary>
+        public void FillPM()
+        {
+            ProjectManager.View v1 =
+                projectManager.NewView(ResManager.GetString("MenuDesktopNewDesktop"));
+        }
+
+        /// <summary>
+        /// It is used when a new project is created. Any modules for interaction that
+        /// are docked in the center of the screen should be removed.
+        /// </summary>
+        public void ClearDocking()
+        {
+            while (dockingManager.ListDocument.Count > 0)
+            {
+                DockPanel dockPanel = (DockPanel)dockingManager.ListDocument[0];
+                DockWindow dockWindow = dockPanel.Form;
+                dockingManager.RemoveForm(dockWindow);
+                dockWindow.IsVisible = false;
+            }
+        }
+
         #endregion
 
         #region OwnerOfAddIn implementation
@@ -1123,49 +1175,6 @@ using Ferda.ModulesManager;
         }
 
         #endregion
-
-        #region Static functions
-
-        /// <summary>
-        /// Switches the application to the directory in the parameter
-        /// </summary>
-        /// <param name="previosDir">A path of the directory where
-        /// the application should be returned</param>
-        private static void SwitchToPreviousDirectory(string previousDir)
-        {
-            Directory.SetCurrentDirectory(previousDir);
-        }
-
-        /// <summary>
-        /// Switches to the directory where all the resources are
-        /// placed
-        /// </summary>
-        /// <returns>A string containing the path of the previous
-        /// directory</returns>
-        private static string SwitchToBinDirectory()
-        {            
-            //getting where directory, where the assembly resides (FerdaFrontEnd.exe)    
-            //getting the full location fo the .exe file
-            string assemblyDir = Assembly.GetExecutingAssembly().Location;
-            //replacing the .exe by the name of the config file
-            int lastDash = assemblyDir.LastIndexOf('\\');
-            assemblyDir = assemblyDir.Remove(lastDash);
-            Directory.SetCurrentDirectory(assemblyDir);
-
-            return Directory.GetCurrentDirectory();
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Method that fills the project manager with a new view. It is used
-        /// when a new project is created
-        /// </summary>
-        public void FillPM()
-        {
-            ProjectManager.View v1 =
-                projectManager.NewView(ResManager.GetString("MenuDesktopNewDesktop"));
-        }
 
         #endregion //Methods
 

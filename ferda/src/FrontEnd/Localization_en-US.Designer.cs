@@ -732,6 +732,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save project as.
+        /// </summary>
+        internal static string MenuFileSaveProjectAs {
+            get {
+                return ResourceManager.GetString("MenuFileSaveProjectAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
         internal static string MenuHelp {

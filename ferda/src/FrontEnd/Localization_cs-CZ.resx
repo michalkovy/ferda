@@ -336,6 +336,9 @@
   <data name="MenuFileSaveProject" xml:space="preserve">
     <value>Uložit projekt</value>
   </data>
+  <data name="MenuFileSaveProjectAs" xml:space="preserve">
+    <value>Uložit projekt jako</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>Nápověda</value>
   </data>
