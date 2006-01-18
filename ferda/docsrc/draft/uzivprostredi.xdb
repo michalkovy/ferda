@@ -25,6 +25,14 @@
 		<titleabbrev>Návrh UI</titleabbrev>
 		<revhistory>
       <revision>
+        <revnumber>3.2</revnumber>
+        <date>2006-17-01</date>
+        <revremark>
+          Přidání položky <emphasis>Uložit jako</emphasis> do hlavního menu + přidání
+          nápovědy do hlavního menu
+        </revremark>
+      </revision>
+      <revision>
         <revnumber>3.1</revnumber>
         <date>2005-12-29</date>
         <revremark>
@@ -270,11 +278,20 @@
 							<formalpara>
 								<title>Uložit projekt</title>
 								<para>
-									Uloží rozpracovaný projekt na místo určené pomocí
-									standardního dialogu SaveFileDialog v .NET.
+                  Uloží projekt na disk, jestliže předtím žádný projekt nebyl
+                  otevřený, chová se stejně jako <emphasis>Uložit projekt jako</emphasis>
 								</para>
 							</formalpara>
 						</listitem>
+            <listitem>
+              <formalpara>
+                <title>Uložit projekt jako</title>
+                <para>
+                  Uloží rozpracovaný projekt na místo určené pomocí
+                  standardního dialogu SaveFileDialog v .NET.
+                </para>
+              </formalpara>
+            </listitem>
 						<listitem>
 							<formalpara>
 								<title>Zavřít</title>
@@ -385,8 +402,36 @@
 				<section>
 					<title>Nápověda</title>
 					<para>
-            Under construction :)
+            Tato skupina příkazů obashuje nápovědu o systému
 					</para>
+          <itemizedlist mark="bullet">
+            <listitem>
+              <formalpara>
+                <title>Nápověda aplikace Ferda</title>
+                <para>
+                  Vyvolá nápovědu o aplikaci Ferda a zacházení s ní.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Teoretická nápověda</title>
+                <para>
+                  Vyvolá dokument ve formátu pdf, který bude obsahovat
+                  nápovědu teorii za systémem LISp-miner a jeho procedurami
+                  na dobývání znalostí.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>O Ferdovi</title>
+                <para>
+                  Vyvolá standardní dialog o aplikaci a jejích tvůrcích 
+                </para>
+              </formalpara>
+            </listitem>
+          </itemizedlist>
 				</section>
 			</section>
 		</section>
@@ -624,7 +669,7 @@
       <para>
         Komponenta Nová krabička slouží ke tvorbě nových krabiček v systému Ferda.
         Obsahuje krabičky rozdělené tématicky rozdělené do stromové struktury. 
-        Uživatel tvoří nové krabičky přetažením zvoleného typu krabičky na plochu.
+        Uživatel tvoří nové krabičky přetažením zvoleného typu krabičky na pracovní plochu.
       </para>
     </section>
 		<section>
