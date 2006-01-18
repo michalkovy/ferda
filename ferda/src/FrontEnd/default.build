@@ -53,6 +53,12 @@
 			</fileset>
 		</copy>
 
+    <copy todir="${path::combine(build.dir, 'Help')}">
+      <fileset basedir="./Help">
+        <include name="*.*" /> 
+      </fileset>
+    </copy>
+
     <copy todir="${path::combine(build.dir, 'dtd')}">
       <fileset basedir="${path::combine(lib.dir,'dtd')}">
         <include name="*.dtd" />

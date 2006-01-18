@@ -343,6 +343,9 @@
   <data name="MenuFileSaveProject" xml:space="preserve">
     <value>Save Project</value>
   </data>
+  <data name="MenuFileSaveProjectAs" xml:space="preserve">
+    <value>Save project as</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>Help</value>
   </data>

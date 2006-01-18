@@ -11,6 +11,16 @@ namespace Ferda.FrontEnd
     public interface IControlsManager
     {
         /// <summary>
+        /// If there is an opened project, this property shows the name of the opened
+        /// project, otherwise it is a string.Empty
+        /// </summary>
+        string ProjectName
+        {
+            set;
+            get;
+        }
+
+        /// <summary>
         /// Forces all the relevant controls to adapt
         /// </summary>
         void GlobalAdapt();
@@ -25,6 +35,12 @@ namespace Ferda.FrontEnd
         /// when a new project is created
         /// </summary>
         void FillPM();
+
+        /// <summary>
+        /// It is used when a new project is created. Any modules for interaction that
+        /// are docked in the center of the screen should be removed.
+        /// </summary>
+        void ClearDocking();
 
         /// <summary>
         /// Function that returns the names of the views that are opened in the

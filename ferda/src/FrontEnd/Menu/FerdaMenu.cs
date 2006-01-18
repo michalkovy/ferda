@@ -48,6 +48,7 @@ namespace Ferda.FrontEnd.Menu
         private ToolStripMenuItem newProject;
         private ToolStripMenuItem openProject;
         private ToolStripMenuItem saveProject;
+        private ToolStripMenuItem saveProjectAs;
         private ToolStripMenuItem exit;
 
         /// Group View
@@ -219,11 +220,13 @@ namespace Ferda.FrontEnd.Menu
             newProject = new ToolStripMenuItem(ResManager.GetString("MenuFileNewProject"));
             openProject = new ToolStripMenuItem(ResManager.GetString("MenuFileOpenProject"));
             saveProject = new ToolStripMenuItem(ResManager.GetString("MenuFileSaveProject"));
+            saveProjectAs = new ToolStripMenuItem(ResManager.GetString("MenuFileSaveProjectAs"));
             exit = new ToolStripMenuItem(ResManager.GetString("MenuFileExit"));
 
             newProject.ShortcutKeys = (Keys)Shortcut.CtrlN;
             openProject.ShortcutKeys = (Keys)Shortcut.CtrlO;
             saveProject.ShortcutKeys = (Keys)Shortcut.CtrlS;
+            saveProjectAs.ShortcutKeys = (Keys)Shortcut.CtrlShiftS;
             exit.ShortcutKeys = (Keys)Shortcut.AltF4;
 
             newProject.Image = iconProvider.GetIcon("NewProject").ToBitmap();
@@ -236,12 +239,14 @@ namespace Ferda.FrontEnd.Menu
                     newProject,
                     openProject,
                     saveProject,
+                    saveProjectAs,
                     exit
                 });
 
             newProject.Click += new EventHandler(newProject_Click);
             openProject.Click += new EventHandler(openProject_Click);
             saveProject.Click += new EventHandler(saveProject_Click);
+            saveProjectAs.Click += new EventHandler(saveProjectAs_Click);
             exit.Click += new EventHandler(exit_Click);
         }
 
@@ -417,6 +422,7 @@ namespace Ferda.FrontEnd.Menu
             });
 
             about.Click += new EventHandler(about_Click);
+            applicationHelp.Click += new EventHandler(applicationHelp_Click);
         }
 
         #endregion
@@ -606,6 +612,51 @@ namespace Ferda.FrontEnd.Menu
             }
         }
 
+        /// <summary>
+        /// Provides core functionality for saving a Ferda project to a specified
+        /// location
+        /// </summary>
+        /// <param name="fileName">Name of the file where the project should be
+        /// saved</param>
+        protected void SaveProjectCore(string fileName)
+        {
+            //saving the project to the location
+            System.IO.FileStream fs =
+                new System.IO.FileStream(fileName, System.IO.FileMode.Create);
+            try
+            {
+                Cursor previosCursor = Parent.Cursor;
+                Parent.Cursor = Cursors.WaitCursor;
+                Parent.Refresh();
+                projectManager.SaveProject(fs);
+                Parent.Cursor = previosCursor;
+            }
+            finally
+            {
+                fs.Close();
+            }
+        }
+
+        /// <summary>
+        /// Saves the project as
+        /// </summary>
+        private void SaveProjectAsCore()
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = ResManager.GetString("MenuFileSaveProject");
+            dialog.Filter = ResManager.GetString("MenuFileFerdaProjectFiles")
+                + "|*.xfp|" + ResManager.GetString("MenuFileAllFiles")
+                + "|*.*";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                if (dialog.FileName != "")
+                {
+                    SaveProjectCore(dialog.FileName);
+                }
+            }
+        }
+
         #endregion
 
         #region Event handlers
@@ -674,6 +725,7 @@ namespace Ferda.FrontEnd.Menu
 
             //creating a new project
             projectManager.NewProject();
+            controlsManager.ClearDocking();
             controlsManager.FillPM();
             controlsManager.GlobalAdapt();
         }
@@ -767,33 +819,24 @@ namespace Ferda.FrontEnd.Menu
         /// </remarks>
         public void saveProject_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Title = ResManager.GetString("MenuFileSaveProject");
-            dialog.Filter = ResManager.GetString("MenuFileFerdaProjectFiles")
-                + "|*.xfp|" + ResManager.GetString("MenuFileAllFiles")
-                + "|*.*";
-
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (controlsManager.ProjectName != string.Empty)
             {
-                if (dialog.FileName != "")
-                {
-                    //saving the project to the location
-                    System.IO.FileStream fs =
-                        new System.IO.FileStream(dialog.FileName, System.IO.FileMode.Create);
-                    try
-                    {
-                        Cursor previosCursor = Parent.Cursor;
-                        Parent.Cursor = Cursors.WaitCursor;
-                        Parent.Refresh();
-                        projectManager.SaveProject(fs);
-                        Parent.Cursor = previosCursor;
-                    }
-                    finally
-                    {
-                        fs.Close();
-                    }
-                }
+                SaveProjectCore(controlsManager.ProjectName);
             }
+            else
+            {
+                SaveProjectAsCore();
+            }
+        }
+
+        /// <summary>
+        /// Event handles the File->Save Project As click
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void saveProjectAs_Click(object sender, EventArgs e)
+        {
+            SaveProjectAsCore();           
         }
 
         /// <summary>
@@ -1075,6 +1118,8 @@ namespace Ferda.FrontEnd.Menu
             }
         }
 
+        #region Help group
+
         /// <summary>
         /// Event handles the Help->About click and evokes the
         /// AboutDialog
@@ -1086,6 +1131,21 @@ namespace Ferda.FrontEnd.Menu
             AboutDialog aboutDialog = new AboutDialog(ResManager);
             aboutDialog.ShowDialog();
         }
+
+        /// <summary>
+        /// Event handles the Help->ApplicationHelp click and
+        /// displayes the help for the application
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void applicationHelp_Click(object sender, EventArgs e)
+        {
+            string path = FrontEndCommon.GetBinPath();
+            path += "\\Help\\uzivnapoveda.html";
+            System.Diagnostics.Process.Start(path);
+        }
+
+        #endregion
 
         #endregion
     }
