@@ -29,8 +29,6 @@ namespace Ferda
             }
 
 
-
-
             #region IPropertyProvider Members
 
             public IOtherObjectDisplayer Displayer
