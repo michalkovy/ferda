@@ -1,0 +1,979 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en" >
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <firstname>Martin</firstname>        
+        <surname>Ralbovský</surname>
+        <email>martin.ralbovsky@gmail.com</email>
+      </author>
+      <othercredit>
+        <firstname>Tomáš</firstname>
+        <surname>Kuchař</surname>
+        <email>tomas.kuchar@gmail.com</email>
+      </othercredit>
+      <othercredit>
+        <firstname>Michal</firstname>
+        <surname>Kováč</surname>
+        <email>michal.kovac.develop@centrum.cz</email>
+      </othercredit>      
+    </authorgroup>
+    <pubdate>2006-01-24</pubdate>
+    <title>
+      Ferda FrontEnd - User environment for the Ferda DataMiner datamining system
+    </title>
+    <titleabbrev>
+      UserEnvironment
+    </titleabbrev>
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2006-01-24</date>
+        <revremark>Initial translation from the Czech version of the document
+        </revremark>
+      </revision>
+    </revhistory>
+  </articleinfo>    
+  <abstract>
+    <para>
+      This document describes the user interface of the datamining system
+      Ferda DataMiner. It defines the parts of working environment and describes
+      how user works with these parts.
+    </para>
+  </abstract>
+  <section>
+    <title>Dockable working environment</title>
+    <para>
+      All the components (parts of the working environment) except of the 
+      main application menu and the Toolbar are movable across the 
+      working space by the means of the docking mechanism. The program has
+      a preset setting of the components (Archive and New Box on the left, 
+      Properties and Context Help on the right). However, user can dock the 
+      components freely. The docking mechanism is a standard used mainly in
+      the user environment of the development tools (MS Visual Studio etc.)
+    </para>
+  </section>
+  <section>
+    <title>Box - module from the users view</title>
+    <para>
+      The project team wanted orginally to use the word "module" for a graphical
+      element of the user environment. However the word is used in many different
+      context, so we decided to name the graphical element of the visual programming
+      otherwise - a box.
+    </para>
+    <para>
+      We distinguish between 4 term in the box terminology: box category, box type,
+      box name and box. We use an example to illustrate the differences of the
+      terminology. We have the 4ft task box. A box is one particular 
+      instance of the box type 4ft task. It is defined by its parameters
+      (antecedent, succedent, quantifiers...). User can name this box or he
+      can used the standard name provided by the system. The box type 4ft task
+      is a identifier of all instances of 4ft tasks. Finally, the box category in this
+      case would be 4ft-Miner category, which besides the task contains a set 
+      of quantifiers specific for the 4-ft task. 
+    </para>
+    <para>
+      For the user, box is a graphical object, that can be used on the desktop. Box is
+      represented by icon, name and set of properties, that the user can change. Furthermore,
+      it contains sockets, where other boxes can be connected. This connection will
+      be represented on the desktop by an arrow from the connected box into the socket.
+      Each box type has a predefined list of actions, which can be used with the box instances
+      of this type.
+    </para>
+    <para>
+      A box type can also contain Modules for interaction. Module for interaction means executing
+      an action of the box, which is provided by other module that the box itself. Modules for
+      interaction can be dialogs, tables, graphs...
+    </para>
+    <para>
+      Boxes asking for creation is a concept, that should simplify the visual datamining in Ferda. A
+      box can offer a list box boxes in its context menu or in the main application menu. When a
+      user clicks on the box(in the menu), clicked box is created, and the properties and connections are
+      properly set. We should create a demonstrative example to show how it works. Let us have a 
+      <emphasis>Database</emphasis> box. This box offers to create a <emphasis>Data matrix</emphasis> box.
+      There is a list of data matrices names in the database in the context menu of the 
+      <emphasis>Database</emphasis> box under the <emphasis>Boxes asking for creation</emphasis> item
+      (this works only when there the <emphasis>Database</emphasis> box has a valid ODBC 
+      connection string set).
+      When the user clicks on one of the names of data matrices, a new <emphasis>Data matrix</emphasis>
+      box will be created besides the <emphasis>Database</emphasis>. Moreover, the 
+      <emphasis>Database</emphasis> box will be connected to the newly created
+      <emphasis>Data Matrix</emphasis> box.
+    </para>
+    <para>
+      A box contains a full information what is connected inside the box, even
+      if the user does not see it on the desktop(in Ferda's visual datamining it
+      means the part of the graph that leads to the box "from the left"). User
+      can know this information with the aid of packing and unpacking mechanism,
+      which is provided by the desktop(more in the desktop section).
+    </para>
+  </section>
+  <section>
+    <title>Parts of the working environment</title>
+    <section>
+      <title>Menu</title>
+      <simpara>
+        Application has a menu that provides the most important functionality.
+        The menu consists of a static part and a dynamic part. The static part
+        calls functions that manage the whole application. The dynamic part is
+        dependent on the box (boxes) selected on the desktop or in the archive.
+      </simpara>
+      <section>
+        <title>Application menu functions</title>
+        <section>
+          <title>File</title>
+          <simpara>
+            The File group of the menu contains actions for managing the project.
+            Project for the user means all the boxes in the archive and in all the
+            desktops.
+          </simpara>
+          <itemizedlist mark="bullet">
+            <listitem>
+              <formalpara>
+                <title>New project</title>
+                <para>
+                  System creates a blank new project.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Open project</title>
+                <para>
+                  Opens project on a defined location. It uses the standard
+                  .NET OpenFileDialog.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Save project</title>
+                <para>
+                  Saves the project on the disc. If there wasn't an open project,
+                  it behaves exactly like <emphasis>Save project as</emphasis>.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Save project as</title>
+                <para>
+                  Saves the current project into a location specified by the 
+                  standard .NET SaveFileDialog.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Close</title>
+                <para>
+                  Ask the user if he wants to save the changes in current
+                  project. Then optionally saves the project, releases all
+                  the resources and closes the application.
+                </para>
+              </formalpara>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Edit</title>
+          <para>
+            The Edit group of the menu contains actions for controlling the boxes.
+            Menu is created dynamically depending on the selected boxes in the archive
+            or on the desktop. If there is only one box selected, submenus
+            <emphasis>Actions</emphasis>, <emphasis>Modules for interaction</emphasis>
+            and <emphasis>Boxes asking for creation</emphasis> are added to the menu.
+          </para>
+        </section>
+        <section>
+          <title>View</title>
+          <para>
+            The View file group is another group of actions common in the applications
+            with more user components. User can freely move and dock various components
+            as the Archive or Property Grid. If the user closes one of the components,
+            it can be opened again by clicking on its name in the 
+            <emphasis>View</emphasis> menu group.
+          </para>
+          <itemizedlist mark="bullet">
+            <listitem>
+              <para>Archive</para>
+            </listitem>
+            <listitem>
+              <para>New box</para>
+            </listitem>
+            <listitem>
+              <para>Context help</para>
+            </listitem>
+            <listitem>
+              <para>Property Grid</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Desktop</title>
+          <para>
+            The Desktop group of the menu is designed for a more confortable
+            work with the desktops. It provides the functionality for opening
+            and closing the desktops (maybe more in the future).
+          </para>
+          <itemizedlist mark="bullet">
+            <listitem>
+              <formalpara>
+                <title>New desktop</title>
+                <para>
+                  Creates a new blank desktop
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Open desktop</title>
+                <para>
+                  There is a list of names of desktops that are in the project,
+                  but are not opened at the moment in the submenu of this item.
+                  When the user clicks at one of the names, the desktop will
+                  open.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Remove desktop</title>
+                <para>
+                  By clicking at one of the desktop names in the submenu of
+                  this item, user deletes that desktop from the project.
+                  Boxes that were on the desktop remain in the Archive.
+                </para>
+              </formalpara>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Tools</title>
+          <para>
+            The Tools menu group contains the tools to confugure the application.
+            We do not know yet which kinds of setting will be accessigle to the
+            user. There will be the localization of the application, some
+            advanced settings of the environment, maybe the ICE Pack Server address
+            or dynamic modules loading into the application present in this 
+            section. For now, it contains the item <emphasis>Preferences
+            </emphasis> that displays the incomplete <emphasis>Preferences</emphasis>
+            dialog.
+          </para>
+        </section>
+        <section>
+          <title>Help</title>
+          <para>
+            This group contains the help of the system.
+          </para>
+          <itemizedlist mark="bullet">
+            <listitem>
+              <formalpara>
+                <title>Ferda help</title>
+                <para>
+                  It shows the user the help about FrontEnd user environment and
+                  how to use it.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Theoretical help</title>
+                <para>
+                  This item shows a pdf-style document, that will contain
+                  the theoretical background behind the Ferda system
+                  (the LISp-Miner datamining procedures).
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>About Ferda</title>
+                <para>
+                  Shows the standard About dialog.
+                </para>
+              </formalpara>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+    </section>
+    <section>
+      <title>Toolbar</title>
+      <para>
+        Toolbar is an alternative for the main application menu and the
+        context menu of the boxes. Each item in the toolbar has its own
+        icon and when user holds the mouse on the icon, it shows the 
+        name of the action represented by the icon. By clicking on the
+        icon, the same action is executed as it would by in the corresponding
+        item in the menu.
+      </para>
+    </section>
+    <section>
+      <title>Archive</title>
+      <para>
+        The aim of archive is to simplify the process of datamining for the user.
+        All boxes that have been created by the user are stored in the archive.
+        User can thus easilly return to previous practises and reuse them. 
+        With initial setting, the archive is located on the left side of user
+        environment.
+      </para>
+      <para>
+        The archive component consists of three parts. The first part is a combo-box
+        with all the box types that the user used in the project. The secont part is
+        a .NET TreeView component for showing the archive. Each item in the archive
+        is represented by an icon and a name. The third part contains 2 buttons for
+        interpertation of unpacking of the archive - along or against the direction
+        of connections.
+      </para>
+      <para>
+        Visual representation of the archive
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="archiv.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </para>
+      <section>
+        <title>User work with the archive</title>
+        <itemizedlist mark="bullet">
+          <listitem>
+            <formalpara>
+              <title>Switching through the archive parts</title>
+              <para>
+                User can switch through the archive parts by using tab.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Vertical archive browsing</title>
+              <para>
+                Vertical browsing: user selects a box type that he has in his 
+                archive. He is doing it by selecting a box type in the combo-box.
+                System shows in the TreeView all boxes of that type that are
+                in the archive.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Change of archive browsing direction</title>
+              <para>
+                The archive supports browsing against and along the connection
+                direction. The 2 buttons at the bottom of the archive aid to
+                distinguish this direction. The first button represents browsing
+                along the connection direction, the other one against. When user
+                selects one of the button, the other one deselects automatically.
+                Therefore it is clear in which direction to unpack. After a change
+                of direction archive is reset into the initial position: all
+                boxes of type selected in the combobox are displayed.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Horizontal archive browsing</title>
+              <para>
+                Horizontal archive browsing means, that user examines the archiv
+                in the direction of incoming or outgoing arrows on the desktop -
+                along and against the connection direction.
+                In case of outgoing arrows (along the connection direction)
+                user clicks on the cross(on the left)
+                by the box in the TreeView. Afterwards the component unpacks all the
+                boxes, that are connected by an outgoing arrow with the working
+                (clicked) box.
+              </para>
+            </formalpara>
+            <para>
+              In case of incoming arrows (against the connection direction) user 
+              also uses click on the cross beside the box. Than, all the boxes 
+              connected to some socket of the box are displayed. One should remark
+              that even if in the TreeView the unpacking goes to the right, on
+              the desktop it would be to the left.
+            </para>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Showing the box in the Property Grid, Context help and on 
+              the Desktop</title>
+              <para>
+                If user left-clicks on a box in the TreeView part of the archive,
+                the properties of the box are showed in the Property Grid and
+                the boxes context help is shown in the Context Help. If the 
+                box is visible in any of the desktops, it is highlighted red.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Renaming the box</title>
+              <para>
+                User can rename any box with the aid of the context menu,
+                item <emphasis>Rename</emphasis>. After clicking on
+                <emphasis>Rename</emphasis> in the context menu, user inserts
+                a new name and clicks <emphasis>Enter</emphasis>. The action
+                can be done also by a standard key <emphasis>F2</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>User note</title>
+              <para>
+                For each box in the archive, user can add a user note - a text
+                attachable to the box. User can do this by clicking on
+                <emphasis>User note</emphasis> item in the context menu of the
+                box. Than a dialog is displayed where the user can insert (edit)
+                the note. This can be done also by <emphasis>F3</emphasis> key 
+                pressing.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Copying the box into the clipboard</title>
+              <para>
+                After selecting the <emphasis>Copy</emphasis> item in the context
+                menu, the box is copied into the clipboard. This can be done also 
+                by pressing <emphasis>Ctrl+C</emphasis> key.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Box cloning</title>
+              <para>
+                Cloning of the box means creating a new instance of the box type
+                in the archive. The new box inherits all the properties and 
+                input connections of the cloned old box. However, it will be a 
+                new independent object in the archive (and in the whole project).
+                User clones the box by clicking on the <emphasis>Clone</emphasis>
+                item in the context menu. System then creates and displays the
+                new box in the archive. This can be done also
+                by pressing <emphasis>Ctrl+E</emphasis> key.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Deleting the box from archive</title>
+              <para>
+                Deleting box from the archive neans for the user a complete
+                removal of the box from the whole project and loss of all
+                information connected to the box. User deletes the box by 
+                clicking on the <emphasis>Delete from archive</emphasis>
+                item in the context menu. System then asks the user if he
+                wants really to delete the box and deletes it on approval.
+                This can be done also
+                by pressing <emphasis>Del</emphasis> key.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Modules for interaction</title>
+              <para>
+                The <emphasis>Modules for interaction</emphasis> submenu
+                offers the user all the modules for interaction that the
+                given box provides. More information in the 
+                <emphasis>Box - module from the users view</emphasis> section.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Executing the box actions</title>
+              <para>
+                Each box type can have actions, that can be run in the 
+                user environment. All actions are to be executed by 
+                the context menu <emphasis>Actions</emphasis> submenu,
+                each action having there its own item with the same name. 
+              </para>
+            </formalpara>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section>
+      <title>Property grid</title>
+      <para>
+        Property grid is a user control, where user can set the properties of
+        all boxes. Properties of simple types can by set directly in the 
+        property grid, for more complex properties the property grid runs
+        dialogs with the ability to set the property.
+      </para>
+      <para>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="properties.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </para>
+      <para>
+        A box can have many properties and they can belong to several groups. 
+        The property grid component shows all the visible properties of the
+        box and sorts them into property groups.
+      </para>
+      <para>
+        If the user selectes more than one box on the desktop, there are properties
+        displayed in the property grid that have all the boxes in common. If the 
+        properies share also the same value, the value is displayed. If user
+        set some of the common properties, the value is automatically set into
+        all the selected boxes.
+      </para>
+      <para>
+        There is a special group of properties in the property grid called
+        <emphasis>Visible sockets</emphasis>. For each normal writable property
+        of the socket, there is one boolean property in the <emphasis>Visible 
+        sockets</emphasis> group, implicitly set to <emphasis>false</emphasis>.
+        If the user sets this property to <emphasis>true</emphasis>, a new
+        socket is created on the desktop for the selected box. This socket
+        represents this property. Afterwards, the property can be set only
+        at the desktop by connecting a box into the socket and it is read-only
+        in the propety grid. Socket can be removed after resetting the value
+        of the property in the <emphasis>Visible sockets</emphasis> to <emphasis>
+        false</emphasis>.
+      </para>
+      <section>
+        <title>User work with the Property grid</title>
+        <para>
+          The standard .NET component PropertyGrid is used for the implementation
+          of Ferda's Property Grid. All the user work with this component is
+          specified in the .NET library.
+        </para>
+      </section>
+    </section>
+    <section>
+      <title>New Box</title>
+      <para>
+        The New box component is used for creation of new boxes in the Ferda
+        application. It contains boxes divided thematically into a tree
+        structure. User creates new boxes by dragging a selected box type
+        from the New box component and dropping it into the desktop.
+      </para>
+    </section>
+    <section>
+      <title>Context help</title>
+      <para>
+        The aim of the context help is to introduce the user with the 
+        functionality of the box currently selected in the desktop
+        (archive). It contains basic information about the box, 
+        its properties and sockets. The help page can contain links
+        to other relevant pages. 
+      </para>
+    </section>
+    <section>
+      <title>Desktop</title>
+      <para>
+        Desktop is the main component for visual datamining. User
+        inserts new boxes into the desktop, connects them, packs
+        or unpacks them, and executes them (calls their actions).
+      </para>
+      <para>
+        User is not limited by only one desktop, he can open, show and hide
+        as many desktops as he wants.
+      </para>
+      <section>
+        <title>Abilities of the desktop</title>
+        <section>
+          <title>Actions of the desktop</title>
+          <itemizedlist mark="bullet">
+            <listitem>
+              <para>Selecting boxes</para>
+            </listitem>
+            <listitem>
+              <para>Showing the box in the Property grid and the Context help</para>
+            </listitem>
+            <listitem>
+              <para>Moving the boxes</para>
+            </listitem>
+            <listitem>
+              <para>Drag&amp;drop support</para>
+            </listitem>
+            <listitem>
+              <para>Creating a connection</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>The context menu actions above the blank desktop</title>
+          <itemizedlist mark="bullet">
+            <listitem>
+              <para>Pasting a box</para>
+            </listitem>
+            <listitem>
+              <para>Graph layout</para>
+            </listitem>
+            <listitem>
+              <para>Making a group box</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>The context menu actions above a box</title>
+          <itemizedlist mark="bullet">
+            <listitem>
+              <para>Renaming a box</para>
+            </listitem>
+            <listitem>
+              <para>User note</para>
+            </listitem>
+            <listitem>
+              <para>Cloning a box</para>
+            </listitem>
+            <listitem>
+              <para>Copying the box to the clipboard</para>
+            </listitem>
+            <listitem>
+              <para>Localizing the box in archive</para>
+            </listitem>
+            <listitem>
+              <para>Deleting the boxes from the desktop</para>
+            </listitem>
+            <listitem>
+              <para>Deleting the boxes from the archive</para>
+            </listitem>
+            <listitem>
+              <para>Modules for interaction</para>
+            </listitem>
+            <listitem>
+              <para>Boxes asking for creation</para>
+            </listitem>
+            <listitem>
+              <para>Executing actions of the boxes</para>
+            </listitem>
+            <listitem>
+              <para>Packing all sockets of the box</para>
+            </listitem>
+            <listitem>
+              <para>Unpacking of one layer of all sockets of the box</para>
+            </listitem>
+            <listitem>
+              <para>Unpacking of all layers of all sockets of the box</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>The context menu actions above a socket</title>
+          <itemizedlist mark="bullet">
+            <listitem>
+              <para>Packing of a socket</para>
+            </listitem>
+            <listitem>
+              <para>Unpacking of one layer of a socket</para>
+            </listitem>
+            <listitem>
+              <para>
+                Unpacking of all layers of a socket
+              </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+      <section>
+        <title>User work with the desktop</title>
+        <itemizedlist mark="bullet">
+          <listitem>
+            <formalpara>
+              <title>Selecting boxes</title>
+              <para>
+                User can selecet boxes on the desktop by clicking th left mouse
+                button and creating a rectangle around the boxes. Selecting boxes
+                can be used for moving the boxes, deleting the boxes or setting 
+                the common properties.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>User note</title>
+              <para>
+                For each box in the archive, user can add a user note - a text
+                attachable to the box. User can do this by clicking on
+                <emphasis>User note</emphasis> item in the context menu of the
+                box. Than a dialog is displayed where the user can insert (edit)
+                the note. This can be done also by <emphasis>F3</emphasis> key
+                pressing.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>New box</title>
+              <para>
+                User creates new boxes on the desktop by dragging and dropping
+                them from the <emphasis>New box</emphasis> component.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Showing the box in the Property grid and the Context help</title>
+              <para>
+                If the user left-clicks on the box on the desktop or selectes more
+                boxes on the desktop, properties of the box(es) are showed in the Property
+                grid and context help. More information in the <emphasis>Property 
+                grid</emphasis> section.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Moving the boxes</title>
+              <para>
+                User moves the boxes around when he selects one or more boxes
+                on the desktop. The by pressing the left mouse button and 
+                moving the mouse user can move the boxes into the desired location.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Drag&amp;drop support</title>
+              <para>
+                The desktop supports drag&amp;drop from the Archive and New
+                box components. For placing a box existing in the archive user
+                can use drag&amp;drop. User selects the box in the archive by
+                left clicking on it and the drags it into the desktop. System
+                checks if there is not already this box somewhere on the desktop. 
+                Afterwards, it shows the box on the desktop and connects it
+                correctly into the remaining boxes on the desktop.
+              </para>
+            </formalpara>
+            <para>
+              For creating a new box, user can drag&amp;drop from the New box
+              component. For more information, see the <emphasis>New box</emphasis>
+              section.
+            </para>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Creating a connection</title>
+              <para>
+                Visual connecting of the boxes on the desktop is the most
+                common way to crate connection between the boxes. First of
+                all, user places the mouse on the output connector of the
+                box he wishes to connect. Than the system shows him the handle
+                on the socket and then the user left clicks on the handle, 
+                with the left mouse button clicked he moves with the mouse
+                onto the socket of the box, he wishes to connect. System 
+                checks the type consistency of the connection. If it is not
+                correct, it generates an error message, otherwise it creates
+                a new connection.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Pasting a box</title>
+              <para>
+                User can paste a box into the desktop by clicking on the <emphasis>Paste
+                </emphasis> item of the context menu. In comparison with cloning the box,
+                no new instance of the box is created while pasting. So it is the same 
+                practise as using drag&amp;drop from the archive. System again checks,
+                if there is already that box in the desktop and adds the box to the desktop,
+                if not. This can be done also
+                by pressing <emphasis>Ctrl+V</emphasis> key.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Graph layout</title>
+              <para>
+                A layout algorithm is being initiated after the <emphasis>Graph layout
+                </emphasis> context menu item click. This algorithm will redistribute
+                the boxes on the desktop. It can be useful, when the boxes overlay
+                each other.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Renaming the box</title>
+              <para>
+                User can rename any box with the aid of the context menu,
+                item <emphasis>Rename</emphasis>. After clicking on
+                <emphasis>Rename</emphasis> in the context menu, user inserts
+                a new name and clicks <emphasis>Enter</emphasis>. The action
+                can be done also by a standard key <emphasis>F2</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Box cloning</title>
+              <para>
+                Cloning of the box means creating a new instance of the box type
+                in the archive. The new box inherits all the properties and
+                input connections of the cloned old box. However, it will be a
+                new independent object in the archive (and in the whole project).
+                User clones the box by clicking on the <emphasis>Clone</emphasis>
+                item in the context menu. System then creates and displays the
+                new box in the archive. This can be done also
+                by pressing <emphasis>Ctrl+E</emphasis> key.
+              </para>
+            </formalpara>            
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Copying the box into the clipboard</title>
+              <para>
+                After selecting the <emphasis>Copy</emphasis> item in the context
+                menu, the box is copied into the clipboard. This can be done also
+                by pressing <emphasis>Ctrl+C</emphasis> key.
+              </para>
+            </formalpara>            
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Localizing the box in archive</title>
+              <para>
+                Sometimes it is important for the user to get a quick overview
+                of the box and its neighbourhood, that cannot be gotten from the
+                desktop or property grid. For these purposes, there is a 
+                <emphasis>Localize in archive</emphasis> context menu action.
+                System reacts by setting the TreeView archive part into the 
+                basic position that corresponds to the box type of the selected
+                box. (see Archive, Vertical Archive browsing). The system also
+                selects the box in the archive. User can evoke this action also
+                with the <emphasis>Ctrl+H</emphasis> key.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Making a group box</title>
+              <para>
+                When user selects more boxes on the desktop, he can place
+                them into a <emphasis>group</emphasis> box by clicking on
+                the <emphasis>Make a group box</emphasis> context menu item.
+                System then creates a group box, connects all the selected
+                boxes into the group box and hides the selected boxes. The 
+                keyboard shortcut for this action is <emphasis>Ctrl+G</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Deleting the boxes from the desktop</title>
+              <para>
+                Deleting the boxes from the desktop means (in comparison to
+                deleting boxes from the archive) deleting the visual representation
+                from the focused desktop. This can be used when the desktop
+                is overfilled with boxes and the user can erase some boxes.
+                User can delete the boxes from desktop by clicking on <emphasis>Delete
+                from desktop</emphasis> context menu item or keyboard shortcut
+                <emphasis>Delete</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Deleting the box from archive</title>
+              <para>
+                Deleting box from the archive neans for the user a complete
+                removal of the box from the whole project and loss of all
+                information connected to the box. User deletes the box by
+                clicking on the <emphasis>Delete from archive</emphasis>
+                item in the context menu. System then asks the user if he
+                wants really to delete the box and deletes it on approval.
+                This can be done also
+                by pressing <emphasis>Del</emphasis> key.
+              </para>              
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Modules for interaction</title>
+              <para>
+                The <emphasis>Modules for interaction</emphasis> submenu
+                offers the user all the modules for interaction that the
+                given box provides. More information in the
+                <emphasis>Box - module from the users view</emphasis> section.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Executing the box actions</title>
+              <para>
+                Each box type can have actions, that can be run in the
+                user environment. All actions are to be executed by
+                the context menu <emphasis>Actions</emphasis> submenu,
+                each action having there its own item with the same name.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Boxes asking for creation</title>
+              <para>
+                There are all the boxes that can be created from this box
+                by the mechanism or Boxes asking for creation. User can select
+                and create a box by clicking on its name in the submenu of
+                this item.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Packing all sockets of the box</title>
+              <para>
+                When the user wants to pack all the ingoing connected boxes,
+                he uses the context menu item <emphasis>Pack all sockets</emphasis>
+                or the keyboard shortcut <emphasis>Ctrl+P</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Unpacking of one layer of all sockets of the box</title>
+              <para>
+                This context menu item unpacks one layer of boxes, that are
+                connected to all the sockets of the box. There is also a keyboard
+                shortcut <emphasis>Ctrl+S</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Unpacking of all layers of all sockets of the box</title>
+              <para>
+                This context menu item unpacks all layers of boxes, that are
+                connected to all the sockets of the box. There is also a keyboard
+                shortcut <emphasis>Ctrl+U</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>User desktop work with the keyboard</title>
+        <para>
+          User can apply following keyboard actions on the desktop:
+        </para>
+        <itemizedlist mark="bullet">
+          <listitem>
+            <para>
+              <emphasis>Esc</emphasis> key cancels the box selection.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The <emphasis>Del</emphasis> key pressed with selected
+              connection deletes this connection.
+            </para>
+          </listitem>
+          <listitem>
+            <para>The <emphasis>Ctrl+A</emphasis> selects all boxes on the desktop.
+          </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+  </section>
+</article>

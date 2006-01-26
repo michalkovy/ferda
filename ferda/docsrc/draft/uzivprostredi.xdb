@@ -21,133 +21,207 @@
 			</othercredit>
 		</authorgroup>
 		<pubdate>2005-03-10</pubdate>
-		<title>Návrh uživatelského rozhraní pro dataminingový systém Ferda</title>
-		<titleabbrev>Návrh UI</titleabbrev>
-		<revhistory>
+		<title>Ferda FrontEnd - Uživatelské rozhraní pro dataminingový systém Ferda DataMiner</title>
+		<titleabbrev>UzivatelskeRozhrani</titleabbrev>
+    <revhistory>
+      <revision>
+        <revnumber>3.3</revnumber>
+        <date>2006-01-24</date>
+        <revdescription>
+          <simpara>
+            Při překládání do angličtiny opravuju některé drobné věcné chyby, přidán odstavec o
+            nastavování vlastností jako zásuvek.
+          </simpara>
+        </revdescription>
+      </revision>
       <revision>
         <revnumber>3.2</revnumber>
         <date>2006-17-01</date>
-        <revremark>
-          Přidání položky <emphasis>Uložit jako</emphasis> do hlavního menu + přidání
-          nápovědy do hlavního menu
-        </revremark>
+        <revdescription>
+          <simpara>
+            Přidání položky <emphasis>Uložit jako</emphasis> do hlavního menu + přidání
+            nápovědy do hlavního menu
+          </simpara>
+        </revdescription>
       </revision>
       <revision>
         <revnumber>3.1</revnumber>
         <date>2005-12-29</date>
-        <revremark>
-          Přidal jsem nové akce kontextového menu
-        </revremark>
+        <revdescription>
+          <simpara>
+            Přidal jsem nové akce kontextového menu
+          </simpara>
+        </revdescription>
       </revision>
       <revision>
         <revnumber>3.0</revnumber>
         <date>2005-11-24</date>
-        <revremark>
-          Oprava celého dokumentu, podle stávající verze Ferdy (aby mohl sloužit
-          zároveň jako uživatelská dokumentace FrontEndu)
-        </revremark>
+        <revdescription>
+          <simpara>
+            Oprava celého dokumentu, podle stávající verze Ferdy (aby mohl sloužit
+            zároveň jako uživatelská dokumentace FrontEndu)
+          </simpara>
+        </revdescription>
       </revision>
       <revision>
         <revnumber>2.8</revnumber>
         <date>2005-5-8</date>
-        <revremark>
-          Předělal jsem část archiv, kde jsem změnil obrázek a přidal akce
-          do menu, které se dají dělat s krabičkou.
-        </revremark>
+        <revdescription>
+          <simpara>
+            Předělal jsem část archiv, kde jsem změnil obrázek a přidal akce
+            do menu, které se dají dělat s krabičkou.
+          </simpara>
+        </revdescription>
       </revision>
-			<revision>
-				<revnumber>2.7</revnumber>
-				<date>2005-07-28</date>
-				<revremark>
-					Odstranil jsem z Menu->Úpravy akce Rozbalit a Zabalit, protože
-					kdyby se to dělo nad krabičkou, tak nevime, který socket rozbalit/
-					zabalit. Netron neumi udržet focus nad socketem a opravdu se mi
-					to nechce předělávat.
-				</revremark>
-			</revision>
-			<revision>
-				<revnumber>2.6</revnumber>
-				<date>2005-07-27</date>
-				<revremark>
-					Přídání uživatelské práce s pracovní plochou pomocí kláves - většinou 
-					z Netronu, ale je dobré když je to někde poznamenané.
-				</revremark>
-			</revision>
-			<revision>
-				<revnumber>2.5</revnumber>
-				<date>2005-07-24</date>
-				<revremark>
-					Přidal jsem do kontextových akcí nad volnou pracovní plochou taky
-					Nová krabička.
-				</revremark>
-			</revision>
-			<revision>
-				<revnumber>2.4</revnumber>
-				<date>2005-04-19</date>
-				<revremark>Změna chování v Menu->Pracovní plocha</revremark>
-			</revision>
-			<revision>
-				<revnumber>2.3</revnumber>
-				<date>2005-04-15</date>
-				<revremark>Přídání obrázku Panelu vlastností a některé další drobné úpravy</revremark>
-			</revision>
-			<revision>
-				<revnumber>2.2</revnumber>
-				<date>2005-04-05</date>
-				<revremark>Rozšířená verze + poznámky ostatních</revremark>
-			</revision>
-			<revision>
-				<revnumber>2.1</revnumber>
-				<date>2005-03-39</date>
-				<revremark>Kompletní rozšířená verze</revremark>
-			</revision>
-			<revision>
-				<revnumber>2.0</revnumber>
-				<date>2005-03-26</date>				
-				<revremark>Rozšířená verze o podrobnosti</revremark>
-			</revision>
-			<revision>
-				<revnumber>1.4</revnumber>
-				<date>2005-03-15</date>
-				<revremark>Oprava špatného kódování dokumentu a menších chyb</revremark>
-			</revision>
-			<revision>
-				<revnumber>1.3</revnumber>
-				<date>2005-03-15</date>
-				<revremark>Upřesnění zabalování a rozbalování v pracovní ploše</revremark>
-			</revision>
-			<revision>
-				<revnumber>1.2</revnumber>
-				<date>2005-03-14</date>
-				<revremark>Další oprava chyb</revremark>
-			</revision>
-			<revision>
-				<revnumber>1.1</revnumber>
-				<date>2005-03-14</date>
-				<revremark>Oprava stylistických a věcných chyb</revremark>
-			</revision>
-			<revision>
-				<revnumber>1.0</revnumber>
-				<date>2005-03-13</date>
-				<revremark>Zanesení připomínek od ostatních členů projektu</revremark>
-<!--
-				V dokumentu nemůže být oboje revremark i revdescription
+      <revision>
+        <revnumber>2.7</revnumber>
+        <date>2005-07-28</date>
+        <revdescription>
+          <simpara>
+            Odstranil jsem z Menu->Úpravy akce Rozbalit a Zabalit, protože
+            kdyby se to dělo nad krabičkou, tak nevime, který socket rozbalit/
+            zabalit. Netron neumi udržet focus nad socketem a opravdu se mi
+            to nechce předělávat.
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>2.6</revnumber>
+        <date>2005-07-27</date>
+        <revdescription>
+          <simpara>
+            Přídání uživatelské práce s pracovní plochou pomocí kláves - většinou
+            z Netronu, ale je dobré když je to někde poznamenané.
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>2.5</revnumber>
+        <date>2005-07-24</date>
+        <revdescription>
+          <simpara>
+            Přidal jsem do kontextových akcí nad volnou pracovní plochou taky
+            Nová krabička.
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>2.4</revnumber>
+        <date>2005-04-19</date>
+        <revdescription>
+          <simpara>
+            Změna chování v Menu->Pracovní plocha
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>2.3</revnumber>
+        <date>2005-04-15</date>
+        <revdescription>
+          <simpara>
+            Přídání obrázku Panelu vlastností a některé další drobné úpravy
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>2.2</revnumber>
+        <date>2005-04-05</date>
+        <revdescription>
+          <simpara>
+            Rozšířená verze + poznámky ostatních
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>2.1</revnumber>
+        <date>2005-03-39</date>
+        <revdescription>
+          <simpara>
+            Kompletní rozšířená verze
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>2.0</revnumber>
+        <date>2005-03-26</date>
+        <revdescription>
+          <simpara>
+            Rozšířená verze o podrobnosti
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>1.4</revnumber>
+        <date>2005-03-15</date>
+        <revdescription>
+          <simpara>
+            Oprava špatného kódování dokumentu a menších chyb
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>1.3</revnumber>
+        <date>2005-03-15</date>
+        <revdescription>
+          <simpara>
+            Upřesnění zabalování a rozbalování v pracovní ploše
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>1.2</revnumber>
+        <date>2005-03-14</date>
+        <revdescription>
+          <simpara>
+            Další oprava chyb
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>1.1</revnumber>
+        <date>2005-03-14</date>
+        <revdescription>
+          <simpara>
+            Oprava stylistických a věcných chyb
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2005-03-13</date>
 				<revdescription>
 					<itemizedlist mark="bullet">
-						<listitem>Opravení autorství dokumentu</listitem>
-						<listitem>Přepsání tagů formalpara na section</listitem>
-						<listitem>České ascii uvozovky</listitem>
-						<listitem>Lišty přejmenované na panely nástrojů</listitem>
-						<listitem>Uživatel může mít víc pracovních ploch (přidání)</listitem>
-						<listitem>Properties bar přejmenovaný na panel nástrojů</listitem>
-						<listitem>Předělaný odstavec o modulech
-								– nově krabičkách</listitem>
-						<listitem>další drobné úpravy</listitem>
+						<listitem>
+              <simpara>Opravení autorství dokumentu</simpara>
+            </listitem>
+						<listitem>
+              <simpara>Přepsání tagů formalpara na section</simpara>
+            </listitem>
+						<listitem>
+              <simpara>České ascii uvozovky</simpara>
+            </listitem>
+						<listitem>
+              <simpara>Lišty přejmenované na panely nástrojů</simpara>
+            </listitem>
+						<listitem>
+              <simpara>Uživatel může mít víc pracovních ploch (přidání)</simpara>
+            </listitem>
+						<listitem>
+              <simpara>Properties bar přejmenovaný na panel nástrojů</simpara>
+            </listitem>
+						<listitem>
+              <simpara>
+                Předělaný odstavec o modulech
+                – nově krabičkách
+              </simpara>
+            </listitem>
+						<listitem>
+              <simpara>další drobné úpravy</simpara>
+            </listitem>
 					</itemizedlist>
 				</revdescription>  
--->
-			</revision>
-		</revhistory>
+      </revision>
+    </revhistory>
 	</articleinfo>
 	<abstract>
 		<para>
@@ -160,10 +234,10 @@
 		<title>Dokovací pracovní prostředí</title>
 		<para>
 			Veškeré komponenty (části pracovního prostředí) kromě hlavního menu aplikace a
-			Panelů nástrojů se budou dát přesouvat po pracovní ploše pomocí
-			mechanizmu dokování oken. Program bude mít přednastavené rozložení
+			Panelů nástrojů se dají přesouvat po pracovní ploše pomocí
+			mechanizmu dokování oken. Program má přednastavené rozložení
 			jednotlivých částí (Archiv krabiček a Nová krabička vlevo, Kontextová nápověda a Panel
-			vlastností vpravo), může si však libovolně nastavit rozložení komponent.
+			vlastností vpravo), uživatel si však může libovolně nastavit rozložení komponent.
 			Mechanizmus dokování je standard používaný uživatelském prostředí
 			vývojových nástrojů (MS Visual Studio a jiné). 
 		</para>
@@ -189,8 +263,8 @@
 			další parametry. Tuto krabičku si může uživatel nějak pojmenovat či mu
 			bude standardně nějaké pojmenování nabídnuto.  Typ krabičky 4ft úloha
 			je označení pro všechny instance 4ft úloh.  Konečně kategorie krabičky
-			v tomto případě odpovídá úlohám, kde je vedle 4ft ještě třeba SD4ft,
-			KL, SDKL, CF, SDCF a KEX úloha.
+			v tomto případě bude 4ft-Miner, kde jsou vedle 4ft úlohy ještě kvantifikátory
+      specifické pro 4ft-Miner.
 		</para>
 		
 		<para>
@@ -199,7 +273,7 @@
 			vlastnosti, které může uživatel měnit. Dále obsahuje zásuvky, do
 			kterých se dají připojovat jiné krabičky. Toto zapojení bude na
 			pracovní ploše znázorněno šipkou z připojené krabičky do zásuvky.
-			Každá krabička má nadefinovaný seznam metod, které se s ní dají
+			Každá krabička má nadefinovaný seznam akcí, které se s ní dají
 			provádět.
 		</para>				
 		<para>
@@ -217,45 +291,47 @@
 			na které když uživatel klikne, tak se vytvoří, nastaví se u nich 
 			patřičné vlastnosti a zapojení. Nejlépe to lze ukázat na příkladu. Mějme
 			krabičku <emphasis>databáze</emphasis>, ta může navrhovat vytvoření
-			krabičky <emphasis>tabulka</emphasis>. V kontextovém menu této krabičky
+			krabičky <emphasis>tabulka</emphasis>(bude tam pouze v případě, že krabička
+      <emphasis>Databáze</emphasis> má správně nastavenou vlastnost
+      <emphasis>ODBC připojovací řetězec</emphasis>).
+      V kontextovém menu této krabičky
 			bude tedy pod položkou <emphasis>Navrhované krabičky na vytvoření</emphasis>
 			seznam názvů tabulek v databázi. Jestliže uživatel klikne, na některou
 			tabulku, vytvoří se vedle krabičky <emphasis>databáze</emphasis> krabička
-			<emphasis>tabulka</emphasis>, nastaví se u ní vlastnost <emphasis>
-			Jméno tabulky v databázi</emphasis> na jméno, které si uživatel vybral.
+			<emphasis>tabulka</emphasis>.
 			Dále se krabička <emphasis>databáze</emphasis> propojí s touto novou
 			krabičkou <emphasis>tabulka</emphasis>.
 		</para>
 		
 		<para>
-			Krabička bude v sobě obsahovat plnou informaci o tom, co je do ní
+			Krabička v sobě obsahuje plnou informaci o tom, co je do ní
 			zapojeno, popřípadě čeho je výsledkem, i když to na pracovní ploše
 			nemusí být vidět (ve Ferdově vizuálním data-miningu to znamená část
 			grafu, která do něho pomocí propojení „zleva“ ústí).  Tuto informaci
-			se může uživatel dozvědět pomocí mechanizmu skrývání, zabalování a rozbalování,
-			které zajišťuje pracovní plocha.	
+			se může uživatel dozvědět pomocí mechanizmu zabalování a rozbalování,
+			které zajišťuje pracovní plocha(více v sekci pracovní plocha).
 		</para>
 	</section>
 	<section>
 		<title>Části pracovního prostředí</title>
 		<section>
 			<title>Menu</title>
-			 <para>
+			 <simpara>
 				Aplikace má menu, ze kterého se budou volat její nejdůležitější
 				funkce. V součastné době má menu statickou část, ze které se dají volat
         akce obsluhující aplikaci stále stejně. Dále menu obsahuje dynamickou část,
         která se mění v závislosti na krabičce (krabičkách) označených v archivu, 
         nebo na pracovní ploše.
-			</para>
+			</simpara>
 			<section>
 				<title>Funkce v menu aplikace</title>
 				<section>
 					<title>Soubor</title>
-					<para>
+					<simpara>
 						Skupina příkazů Soubor obsahuje příkazy pro správu projektu. Projekt 
 						v systému Ferda znamená z uživatelského hlediska to, co je v archivu a
 						na všech pracovních plochách.
-					</para>
+					</simpara>
 					<itemizedlist mark="bullet">
 						<listitem>
               <formalpara>
@@ -310,8 +386,8 @@
 						Skupina příkazů Úpravy obsahuje standardní akce pro ovládání krabiček. 
             Menu se tvoří dynamicky v závislosti na označených krabičkách na pracovní
             ploše, nebo v archivu. Jestliže je označená jedna krabička, tak se do tohoto
-            menu přidají i její <emphasis>akce</emphasis>, <emphasis>moduly pro interakci
-            </emphasis> a <emphasis>moduly nabízené na vytvoření </emphasis>
+            menu přidají i její <emphasis>Akce</emphasis>, <emphasis>Moduly pro interakci
+            </emphasis> a <emphasis>Krabičky nabízené na vytvoření </emphasis>
 					</para>
 				</section>
 				<section>
@@ -351,7 +427,7 @@
 					<para>
 						Skupina příkazů <emphasis>Pracovní plocha</emphasis> slouží k pohodlnější práci s
 						pracovními plochami. 
-						Měl by umožňovat základní funkčnost pracovních ploch:
+						Umožňovat základní funkčnost pracovních ploch:
 					</para>
 					<itemizedlist mark="bullet">
 						<listitem>
@@ -389,7 +465,7 @@
 				<section>
 					<title>Nástroje</title>
 					<para>
-						Skupina příkazů Nástroje bude obsahovat nástroje na konfiguraci aplikace.
+						Skupina příkazů Nástroje obsahuje nástroje na konfiguraci aplikace.
 						Zatím přesně nevíme, které nastavení uživateli zpřístupníme. V této skupině
 						se bude určitě nastavovat lokalizace programu, některé vyspělé nastavení pracovního
 						prostředí, možná adresa ICE Pack Serveru
@@ -409,7 +485,8 @@
               <formalpara>
                 <title>Nápověda aplikace Ferda</title>
                 <para>
-                  Vyvolá nápovědu o aplikaci Ferda a zacházení s ní.
+                  Vyvolá nápovědu o uživatelském prostředí Ferda  FrontEnd
+                  a zacházení s ním.
                 </para>
               </formalpara>
             </listitem>
@@ -445,7 +522,7 @@
 			</para>
 		</section>
 		<section>
-			<title>Archivy</title>
+			<title>Archiv</title>
 			<para>
 				Archiv je vedle pracovní plochy hlavní koncept, který má uživateli
 				ulehčit dobývání znalostí. Všechny krabičky, které uživatel
@@ -458,9 +535,9 @@
 			<para>
 				Komponenta archivu se skládá ze tří částí. První část tvoří rolovací nabídka,
 				ve kterém je seznam všech typů krabiček, které má uživatel v projektu
-				k dispozici. Druhá část je tvořena .NET komponentou TreeView pro 
+				použil. Druhá část je tvořena .NET komponentou TreeView pro 
 				zobrazování archivu. Každá položka v archivu je reprezentovaná ikonou
-				a popisem.
+				a názvem.
 				Třetí část obsahuje dvě tlačítka pro interpretaci rozbalování archivu -
 				po směru nebo proti směru zapojení.
 			</para>
@@ -504,7 +581,7 @@
                 směru zapojení slouží třetí část archivu. První tlačítko reprezentuje
                 prohlížení po směru zapojení a druhé proti směru. Uživatel jedno
                 standardně označí, druhé se automaticky zruší. Takto je jasné,
-                jak se má v dané chvíli rozbalovat. Po změně strany prohlížení se
+                jak se má v dané chvíli rozbalovat. Po změně směru prohlížení se
                 TreeView nastaví do základní pozice: zobrazí se všechny krabičky typu
                 vyznačeného v rolovací nabídce v první části archivu.
               </para>
@@ -523,11 +600,11 @@
               </para>
             </formalpara>
             <para>
-                V případě vstupních šipek uživatel také pro rozbalení šipek na křížek
-                u krabičky a ta mu ukáže všechny krabičky propojené vstupující šipkou.
-                Zde je třeba poznamenat, že i když se vizuálně rozbaluje doprava,
-                rozbaluje se podle vstupních šipek, tedy v pracovní ploše směrem doleva.
-             </para>
+              V případě vstupních šipek uživatel také pro rozbalení šipek na křížek
+              u krabičky a ta mu ukáže všechny krabičky propojené vstupující šipkou.
+              Zde je třeba poznamenat, že i když se vizuálně rozbaluje doprava,
+              rozbaluje se podle vstupních šipek, tedy v pracovní ploše směrem doleva.
+            </para>            
 					</listitem>
 					<listitem>
 						<formalpara>
@@ -536,7 +613,7 @@
 								Jestliže uživatel klikne levým tlačítkem na krabičku v TreeView 
 								části archivu, zobrazí se mu vlastnosti krabičky v Panelu vlastností
 								a kontextová nápověda ke krabičce. Jestliže se krabička nachází na
-                pracovní ploše, která je aktivní, označí se tato krabička červeně.
+                kterékoli pracovní ploše, označí se tato krabička červeně.
 							</para>
 						</formalpara>
 					</listitem>
@@ -614,11 +691,11 @@
 					</listitem>
 					<listitem>
             <formalpara>
-              <title>Spouštění metod krabiček</title>
+              <title>Spouštění akcí krabiček</title>
               <para>
-                Každý typ krabičky může mít metody, které se dají v pracovním
-                prostředí pouštět. Všechny metody se v pracovní ploše dají pouštět
-                pomocí kontextového menu <emphasis>Akce</emphasis>, každá metoda tam 
+                Každý typ krabičky může mít akce, které se dají v pracovním
+                prostředí pouštět. Všechny akce se dají pouštět
+                pomocí kontextového menu <emphasis>Akce</emphasis>, každá akce tam 
                 má svoji položku, která
                 je pojmenovaná stejně.
               </para>
@@ -654,6 +731,18 @@
         mají stejnou hodnotu, zobrazí se v panelu i tato hodnota. Jestliže uživatel
         nastaví některou vlastnost, hodnota se automaticky zapíše
         do všech označených krabiček.
+      </para>
+      <para>
+        Zvláštní skupinou vlastností je skupina <emphasis>Viditelné zásuvky</emphasis>. 
+        Pro každou 
+        normálni vlastnost krabičky, do které se dá zapisovat, je zde jedna boolská
+        hodnota, implicitně nastavená na <emphasis>false</emphasis> 
+        Jestliže se vlastnost nastaví na <emphasis>true</emphasis>, objeví se u označené
+        ktabičky na ploše nová zásuvka, která representuje tuto vlastnost. Poté už
+        se dá daná vlastnost nastavovat pouze pomocí krabiček na ploše, v panelu 
+        vlastností bude vlastnost jenom pro čtení. Zásuvka se dá odbrat po zpětném 
+        nastavení hodnoty vlastnosti ve <emphasis>Viditelné zásuvky</emphasis> na 
+        <emphasis>false</emphasis>.
       </para>
 			<section>
 				<title>Uživatelská práce s Panelem vlastností</title>
@@ -691,7 +780,7 @@
 				Pracovní plocha je hlavní komponenta pro vizuální
 				data-mining.  Uživatel si na ni vkládá jednotlivé krabičky,
 				propojuje je, rozbaluje a zabaluje a 
-				„spouští“ (volá jejich metody).
+				„spouští“ (volá jejich akce).
 			</para>
 			<para>
 				Uživatel není omezen jednou pracovní plochou, může si zobrazit víc
@@ -806,7 +895,7 @@
 							<para>
 								Uživatel může označit krabičky tak, že zmáčkne levé tlačítko myši a udělá kolem
 								nich obdélník. Označování krabiček je dobré na přesouvání, odstranění více krabiček,
-								nebo na jejich skrývání, popřípadě nastavování stejných vlastností
+								popřípadě nastavování stejných vlastností
 							</para>
 						</formalpara>
 					</listitem>
@@ -867,23 +956,24 @@
 								Potom tam  zobrazí krabičku
 								a správně ji připojí do zbývajících krabiček na pracovní ploše.
 							</para>
-							<para>
-								Pro vytvoření nové krabičky může uživatel použít drag&amp;drop z komponenty
-								<emphasis>Nová krabička</emphasis>. Vybere levým tlačítkem typ krabičky, který chce
-								vytvořit a přetáhne ho na pracovní plochu. Systém tam vytvoří novou krabičku
-								požadovaného typu.
-							</para>
 						</formalpara>
-					</listitem>
+            <para>
+              Pro vytvoření nové krabičky může uživatel použít drag&amp;drop z komponenty
+              <emphasis>Nová krabička</emphasis>. Vybere levým tlačítkem typ krabičky, který chce
+              vytvořit a přetáhne ho na pracovní plochu. Systém tam vytvoří novou krabičku
+              požadovaného typu.
+            </para>
+          </listitem>
 					<listitem>
 						<formalpara>
 							<title>Vytvoření zapojení</title>
 							<para>
 								Vizuální zapojování krabiček na pracovní ploše představuje nejobvyklejší
 								způsob tvoření zapojení mezi krabičkami. Uživatel nejdříve najede myší
-								nad krabičku. Poté mu systém ukáže nad jednotlivými zásuvkami držátka, 
+								nad výstupní zásuvku krabičky, kterou chce zapojovat. 
+                Poté mu systém ukáže nad zásuvkou držátko, 
 								na které uživatel najede myší, a se zmáčknutým levým tlačítkem přejede
-								myší až nad krabičku, kterou chce zapojit. Systém poté zkontroluje
+								myší až nad zásuvku krabičky, kterou chce zapojit. Systém poté zkontroluje
 								typovou správnost zapojení: jestliže se krabičky nedají propojit uvedeným
 								způsobem, vygeneruje chybovou hlášku, jinak vytvoří nové zapojení
 								mezi krabičkami.
@@ -986,8 +1076,6 @@
                 z konkrétní pracovní plochy. Krabičky tedy zůstává v archivu. Tento
                 postup se hodí, jestli je pracovní plocha přeplněná a uživatel si
                 ji chce vyčistit o některé krabičky.
-              </para>
-              <para>
                 Uživatel může odstranit krabičky po označení buď položkou <emphasis>
                   Odstranit z pracovní plochy
                 </emphasis>, nebo standardně na klávesu
@@ -1087,9 +1175,8 @@
 					</listitem>
 					<listitem>
             <para>
-              Klávesa <emphasis>Del</emphasis> vyvolaná nad krabičkou zruší
-              všechny její připojení. Jestliže je vyvolaná nad připojením,
-              zruší použe toto připojení.
+              Klávesa <emphasis>Del</emphasis> vyvolaná nad připojením,
+              zruší toto připojení.
             </para>
 					</listitem>
 					<listitem>
