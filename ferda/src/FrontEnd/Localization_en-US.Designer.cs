@@ -777,7 +777,7 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modules asking for creation.
+        ///   Looks up a localized string similar to Boxes asking for creation.
         /// </summary>
         internal static string MenuModulesAskingCreation {
             get {

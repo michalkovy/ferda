@@ -359,7 +359,7 @@
     <value>Theoretical Help</value>
   </data>
   <data name="MenuModulesAskingCreation" xml:space="preserve">
-    <value>Modules asking for creation</value>
+    <value>Boxes asking for creation</value>
   </data>
   <data name="MenuModulesForInteraction" xml:space="preserve">
     <value>Modules for interaction</value>
