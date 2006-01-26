@@ -1,10 +1,10 @@
 using System;
-using Ferda.Modules.Boxes.AbstractQuantifier;
-using Ferda.Modules.Boxes.SDFFTTask.Quantifiers.AbstractSDFFTQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.AbstractSDFFTQuantifier;
 using Ferda.Modules.Quantifiers;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Aggregation.BaseCeil
+namespace Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Aggregation.BaseCeil
 {
 	class BaseCeilFunctionsI : AbstractSDFFTTaskQuantifierFunctionsAggregation
 	{

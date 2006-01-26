@@ -90,8 +90,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EachValueOneCategoryAt
 				columnStruct.dataMatrix.database.connectionString,
 				columnStruct.dataMatrix.dataMatrixName,
 				columnStruct.columnSelectExpression,
-                boxModule.StringIceIdentity,
-				true);
+                boxModule.StringIceIdentity);
 			GeneratedAttribute categoriesInfo = getCategoriesInfo(columnStruct);
 			result.column = columnStruct;
 			result.categories = categoriesInfo.CategoriesStruct;

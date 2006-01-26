@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Modules.DataMiningCommon
+namespace Ferda.Modules.Boxes.DataMiningCommon
 {
     public class Service : Ferda.Modules.FerdaServiceI
 	{
@@ -75,21 +75,13 @@ namespace Ferda.Modules.DataMiningCommon
 
 
 #if CONSOLE_APPLICATION_FOR_SERVICE_STATARTUP_DEBUGGING
+        private void registerBox(string factoryIdentifier, BoxInfo boxInfo)
+        { }
+
         public static void Main(string[] args)
         {
-            new Boxes.DataMiningCommon.AtomSetting.AtomSettingBoxInfo();
-            new Boxes.DataMiningCommon.Attributes.Attribute.AttributeBoxInfo();
-            new Boxes.DataMiningCommon.Attributes.EachValueOneCategoryAttribute.EachValueOneCategoryAttributeBoxInfo();
-            new Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAttribute.EquidistantIntervalsAttributeBoxInfo();
-            new Boxes.DataMiningCommon.Attributes.EquifrequencyIntervalsAttribute.EquifrequencyIntervalsAttributeBoxInfo();
-            new Boxes.DataMiningCommon.BooleanPartialCedentSetting.BooleanPartialCedentSettingBoxInfo();
-            new Boxes.DataMiningCommon.CategorialPartialCedentSetting.CategorialPartialCedentSettingBoxInfo();
-            new Boxes.DataMiningCommon.Column.ColumnBoxInfo();
-            new Boxes.DataMiningCommon.Database.DatabaseBoxInfo();
-            new Boxes.DataMiningCommon.DataMatrix.DataMatrixBoxInfo();
-            new Boxes.DataMiningCommon.DerivedColumn.DerivedColumnBoxInfo();
-            new Boxes.DataMiningCommon.EquivalenceClass.EquivalenceClassBoxInfo();
-            new Boxes.DataMiningCommon.LiteralSetting.LiteralSettingBoxInfo();
+            Service service = new Service();
+            service.registerBoxes();
         }
 #endif
     }

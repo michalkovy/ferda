@@ -17,7 +17,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 			Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnStruct columnStruct,
 			string boxIdentity)
 		{
-			Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum simpleColumnType = Ferda.Modules.Helpers.Data.Column.ColumnSimpleSubType(columnStruct.columnSubType);
+			Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum simpleColumnType = Ferda.Modules.Helpers.Data.Column.GetColumnSimpleSubTypeBySubType(columnStruct.columnSubType);
 			if (simpleColumnType != Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Integral
 				&& simpleColumnType != Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Floating)
 				throw Ferda.Modules.Exceptions.BadParamsError(null, boxIdentity, simpleColumnType.ToString(), restrictionTypeEnum.DbColumnDataType);
@@ -30,33 +30,30 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 			switch (domainType)
 			{
 				case AttributeDomainEnum.WholeDomain:
-					frequencies = Ferda.Modules.Helpers.Data.Column.ComputeColumnDistinctsAndItsFrequencies(
+					frequencies = Ferda.Modules.Helpers.Data.Column.GetDistinctsAndFrequencies(
 						columnStruct.dataMatrix.database.connectionString,
 						columnStruct.dataMatrix.dataMatrixName,
 						columnStruct.columnSelectExpression,
-						boxIdentity,
-						true);
+						boxIdentity);
 					from = to = 0;
 					break;
 				case AttributeDomainEnum.SubDomainValueBounds:
-					frequencies = Ferda.Modules.Helpers.Data.Column.ComputeColumnDistinctsAndItsFrequencies(
+                    frequencies = Ferda.Modules.Helpers.Data.Column.GetDistinctsAndFrequencies(
 						columnStruct.dataMatrix.database.connectionString,
 						columnStruct.dataMatrix.dataMatrixName,
 						columnStruct.columnSelectExpression,
 						columnStruct.columnSelectExpression + ">=" + from + " AND " + columnStruct.columnSelectExpression + "<=" + to,
-						boxIdentity,
-						true);
+						boxIdentity);
 					startValue = (float)from;
 					endValue = (float)to;
 					from = to = 0;
 					break;
 				case AttributeDomainEnum.SubDomainNumberOfValuesBounds:
-					frequencies = Ferda.Modules.Helpers.Data.Column.ComputeColumnDistinctsAndItsFrequencies(
+                    frequencies = Ferda.Modules.Helpers.Data.Column.GetDistinctsAndFrequencies(
 						columnStruct.dataMatrix.database.connectionString,
 						columnStruct.dataMatrix.dataMatrixName,
 						columnStruct.columnSelectExpression,
-						boxIdentity,
-						true);
+						boxIdentity);
 					break;
 				default:
 					throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(domainType);
@@ -82,19 +79,19 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 				case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Floating:
 					for (int i = fromUi; i < (frequenciesCount - toUi); i++)
 					{
-						item = frequencies.Rows[i]["TmpName"];
+						item = frequencies.Rows[i][Ferda.Modules.Helpers.Data.Column.SelectDistincts];
 						if (item == System.DBNull.Value)
 							continue;
-						dataArray.Add(new EquifrequencyIntervalGenerator.Data(Convert.ToSingle(item), Convert.ToInt32(frequencies.Rows[i]["Frequency"])));
+                        dataArray.Add(new EquifrequencyIntervalGenerator.Data(Convert.ToSingle(item), Convert.ToInt32(frequencies.Rows[i][Ferda.Modules.Helpers.Data.Column.SelectFrequency])));
 					}
 					break;
 				case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Integral:
 					for (int i = fromUi; i < (frequenciesCount - toUi); i++)
 					{
-						item = frequencies.Rows[i]["TmpName"];
+                        item = frequencies.Rows[i][Ferda.Modules.Helpers.Data.Column.SelectDistincts];
 						if (item == System.DBNull.Value)
 							continue;
-						dataArray.Add(new EquifrequencyIntervalGenerator.Data(Convert.ToInt64(item), Convert.ToInt32(frequencies.Rows[i]["Frequency"])));
+                        dataArray.Add(new EquifrequencyIntervalGenerator.Data(Convert.ToInt64(item), Convert.ToInt32(frequencies.Rows[i][Ferda.Modules.Helpers.Data.Column.SelectFrequency])));
 					}
 					break;
 				default:

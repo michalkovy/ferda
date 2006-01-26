@@ -13,7 +13,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EachValueOneCategoryAt
 			string columnSelectExpression,
 			string boxIdentity)
 		{
-			DataTable dataTable = Ferda.Modules.Helpers.Data.Column.ColumnDistinctValues(connectionString, dataMatrixName, columnSelectExpression, boxIdentity, true);
+			DataTable dataTable = Ferda.Modules.Helpers.Data.Column.GetDistincts(connectionString, dataMatrixName, columnSelectExpression, boxIdentity);
 			CategoriesStruct categoriesStructValue = new CategoriesStruct();
 			List<SelectString> categoriesNames = new List<SelectString>();
 			categoriesStructValue.enums = new EnumCategorySeq();

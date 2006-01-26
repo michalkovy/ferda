@@ -56,73 +56,81 @@ namespace Ferda.Modules.Boxes
         #region Files
 
         /// <summary>
-        /// <para><c>Key</c> is the file`s path.</para>
-        /// <para><c>Value</c> is the content of the file as array of bytes.</para>
-        /// </summary>
-        private static Dictionary<string, byte[]> cachedFiles = new Dictionary<string, byte[]>();
-
-        /// <summary>
-        /// Tries to get the file from by the path specified by <c>filePath</c>.
+        /// Tries to get specified binary file from by the path 
+        /// specified by <c>filePath</c>.
         /// </summary>
         /// <param name="directoryPath">Path to the file.</param>
         /// <param name="fileName">Name of the file.</param>
         /// <param name="fallOnError">True if an exception can be thrown on error.</param>
-        /// <param name="useCache">Iff true the readed file is cached to memory i.e. 
+        /// <returns>Array of <see cref="T:System.Byte">Bytes</see>.</returns>
+        /// <exception cref="T:System.Exception">
+        /// If <c>fallOnError</c> is <c>true</c> and 
+        /// any error occured while getting the file.
+        /// </exception>
+        public static byte[] TryGetBinaryFile(string directoryPath, string fileName, bool fallOnError)
+        {
+            if (!String.IsNullOrEmpty(fileName))
+            {
+                if (String.IsNullOrEmpty(directoryPath))
+                    directoryPath = String.Empty;
+
+                // build whole path
+                string filePath = Path.Combine(directoryPath, fileName);
+                try
+                {
+                    if (File.Exists(filePath) || fallOnError)
+                    {
+                        return File.ReadAllBytes(filePath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("FileHelper01: TryGetBinaryFile(" + filePath + "):" + ex.Message);
+                    if (fallOnError)
+                        throw ex;
+                }
+            }
+            return new byte[0];
+        }
+
+        /// <summary>
+        /// Tries to get specified string file from by the path 
+        /// specified by <c>filePath</c>.
+        /// </summary>
+        /// <param name="directoryPath">Path to the file.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="fallOnError">True if an exception can be thrown on error.</param>
         /// reading the file is executed only once.</param>
         /// <returns>Array of <see cref="T:System.Byte">Bytes</see>.</returns>
         /// <exception cref="T:System.Exception">
         /// If <c>fallOnError</c> is <c>true</c> and 
         /// any error occured while getting the file.
         /// </exception>
-        public static byte[] TryGetFile(string directoryPath, string fileName, bool fallOnError, bool useCache)
+        public static string TryGetStringFile(string directoryPath, string fileName, bool fallOnError)
         {
             if (!String.IsNullOrEmpty(fileName))
             {
-                byte[] result;
                 if (String.IsNullOrEmpty(directoryPath))
                     directoryPath = String.Empty;
 
+                // build whole path
                 string filePath = Path.Combine(directoryPath, fileName);
-                //is file cached (alredy readed in memory)
-                if (useCache && cachedFiles.TryGetValue(filePath, out result))
+                try
                 {
-                    return result;
+                    if (File.Exists(filePath) || fallOnError)
+                    {
+                        return File.ReadAllText(filePath);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        if (File.Exists(filePath) || fallOnError)
-                        {
-                            //gets stream
-                            FileStream fileStream = new FileStream(filePath, FileMode.Open);
-
-                            //reads stream and create result
-                            int fileLength = (int)(fileStream.Length);
-                            result = new byte[fileLength];
-                            fileStream.Read(result, 0, fileLength);
-
-                            //close stream
-                            fileStream.Close();
-
-                            //save readed file to cache
-                            if (useCache)
-                                cachedFiles.Add(filePath, result);
-
-                            return result;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("FileHelper01: TryGetFile(" + filePath + "):" + ex.Message);
-                        if (fallOnError)
-                            throw ex;
-                    }
+                    Debug.WriteLine("FileHelper02: TryGetStringFile(" + filePath + "):" + ex.Message);
+                    if (fallOnError)
+                        throw ex;
                 }
             }
-            return new byte[0];
+            return String.Empty;
         }
-
         #endregion
     }
 }

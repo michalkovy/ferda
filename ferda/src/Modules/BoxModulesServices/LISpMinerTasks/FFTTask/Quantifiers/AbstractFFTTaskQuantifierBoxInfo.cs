@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Modules.Boxes.FFTTask.Quantifiers
+namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers
 {
 	public abstract class AbstractFFTTaskQuantifierBoxInfo : BoxInfo
 	{
@@ -36,7 +36,7 @@ namespace Ferda.Modules.Boxes.FFTTask.Quantifiers
 					case "FFTTask":
 						moduleConnection.socketName = "FFTQuantifier";
 						singleModuleAFC.newBoxModuleIdentifier =
-							Ferda.Modules.Boxes.FFTTask.FFTTaskBoxInfo.typeIdentifier;
+							Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.FFTTaskBoxInfo.typeIdentifier;
 						break;
 					default:
 						throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(moduleAFCName);

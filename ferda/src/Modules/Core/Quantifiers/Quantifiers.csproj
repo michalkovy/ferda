@@ -44,8 +44,15 @@
     <Compile Include="Combinatorics.cs" />
     <Compile Include="ContingencyTable.cs" />
     <Compile Include="FourFoldContingencyTable.cs" />
+    <Compile Include="NineFoldContingencyTable.cs" />
     <Compile Include="OneDimensionalContingencyTable.cs" />
     <Compile Include="TwoDimensionalContingencyTable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{5A2270C8-8780-4820-88C1-8AE0D5101E3D}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

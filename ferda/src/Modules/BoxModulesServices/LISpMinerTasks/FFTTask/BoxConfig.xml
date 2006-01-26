@@ -51,7 +51,7 @@
       <Name>FFTQuantifier</Name>
       <SocketTypes>
         <BoxType>
-          <FunctionIceId>::Ferda::Modules::Boxes::FFTTask::Quantifiers::AbstractFFTQuantifier::AbstractFFTQuantifierFunctions</FunctionIceId>
+          <FunctionIceId>::Ferda::Modules::Boxes::LISpMinerTasks::FFTTask::Quantifiers::AbstractFFTQuantifier::AbstractFFTQuantifierFunctions</FunctionIceId>
         </BoxType>
       </SocketTypes>
       <MoreThanOne>true</MoreThanOne>

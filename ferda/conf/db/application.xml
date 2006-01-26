@@ -111,11 +111,11 @@
 		</replica-group>
 
 		<!-- Sample Box Modules DEMO -->
-		<!-- ->
-		<replica-group id="SampleBoxModulesReplicaAdapter" >
-			<object identity="SampleBoxModuleSampleBoxModules" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+		<!-- -->
+		<replica-group id="FerdaSampleBoxesReplicaAdapter" >
+			<object identity="BodyMassIndexSampleFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
-		<!- -->
+		<!-- -->
 
 		<service-template id="FerdaServiceTemplate">
 			<parameter name="name"/>
@@ -136,20 +136,20 @@
 			<icebox id="${index}" exe="iceboxnet" activation="on-demand" pwd="${pwd}">
 				<service-instance template="FerdaServiceTemplate"
 					name="FerdaDataMiningCommonBoxes"
-					entry="FerdaDataMiningCommonBoxes.dll:Ferda.Modules.DataMiningCommon.Service"
+					entry="FerdaDataMiningCommonBoxes.dll:Ferda.Modules.Boxes.DataMiningCommon.Service"
 					endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate"
 					name="FerdaLMTasksBoxes"
-					entry="FerdaLMTasksBoxes.dll:Ferda.Modules.LMTasks.Service"
+					entry="FerdaLMTasksBoxes.dll:Ferda.Modules.Boxes.LISpMinerTasks.Service"
 					endpoints="${endpoints}"/>
 
 				<!-- Sample Box Modules DEMO -->
-				<!-- ->
-				<service-instance template="SampleBoxModules"
-					name="SampleBoxModules"
-					entry="SampleBoxModules.dll:SampleBoxModules.Service"
+				<!-- -->
+				<service-instance template="FerdaServiceTemplate"
+					name="FerdaSampleBoxes"
+					entry="FerdaSampleBoxes.dll:Ferda.Modules.Boxes.Sample.Service"
 					endpoints="${endpoints}"/>
-				<!- -->
+				<!-- -->
 
 				<property name="Ice.ThreadPool.Server.Size" value="10"/>
 				<property name="Ice.ThreadPool.Server.SizeMax" value="50"/>

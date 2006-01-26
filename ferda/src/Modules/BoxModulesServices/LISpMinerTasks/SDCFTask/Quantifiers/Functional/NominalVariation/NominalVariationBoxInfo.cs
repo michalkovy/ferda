@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.SDCFTask.Quantifiers.Functional.NominalVariation
+namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.NominalVariation
 {
-	class NominalVariationBoxInfo : Ferda.Modules.Boxes.SDCFTask.Quantifiers.AbstractSDCFTaskQuantifierBoxInfo
+	class NominalVariationBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers.AbstractSDCFTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier =
 			"LISpMinerTasks.SDCFTask.Quantifiers.Functional.NominalVariation";

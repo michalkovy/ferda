@@ -10,22 +10,24 @@
 module Ferda {
 	module Modules {
 		module Boxes {
-			module KLTask	{
+			module LISpMinerTasks {
+				module KLTask	{
 
-				struct TaskStruct {
-					Ferda::Modules::Boxes::DataMiningCommon::CategorialPartialCedentSetting::CategorialPartialCedentSettingStructSeq antecedentSetting;
-					Ferda::Modules::Boxes::DataMiningCommon::CategorialPartialCedentSetting::CategorialPartialCedentSettingStructSeq succedentSetting;
-					Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq conditionSetting;
-					Ferda::Modules::Boxes::AbstractLMTask::QuantifierSettingStructSeq quantifiers;
-				};
+					struct TaskStruct {
+						Ferda::Modules::Boxes::DataMiningCommon::CategorialPartialCedentSetting::CategorialPartialCedentSettingStructSeq antecedentSetting;
+						Ferda::Modules::Boxes::DataMiningCommon::CategorialPartialCedentSetting::CategorialPartialCedentSettingStructSeq succedentSetting;
+						Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq conditionSetting;
+						Ferda::Modules::Boxes::LISpMinerTasks::AbstractLMTask::QuantifierSettingStructSeq quantifiers;
+					};
 
-				interface KLTaskFunctions extends Ferda::Modules::Boxes::AbstractLMTask::AbstractLMTaskFunctions {
-					nonmutating TaskStruct getTask()
-							throws
-								Ferda::Modules::BoxRuntimeError,
-								Ferda::Modules::BadValueError,
-								Ferda::Modules::BadParamsError,
-								Ferda::Modules::NoConnectionInSocketError;
+					interface KLTaskFunctions extends Ferda::Modules::Boxes::LISpMinerTasks::AbstractLMTask::AbstractLMTaskFunctions {
+						nonmutating TaskStruct getTask()
+								throws
+									Ferda::Modules::BoxRuntimeError,
+									Ferda::Modules::BadValueError,
+									Ferda::Modules::BadParamsError,
+									Ferda::Modules::NoConnectionInSocketError;
+					};
 				};
 			};
 		};

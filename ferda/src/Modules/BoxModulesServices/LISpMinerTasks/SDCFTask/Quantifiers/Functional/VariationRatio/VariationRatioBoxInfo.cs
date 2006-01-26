@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.SDCFTask.Quantifiers.Functional.VariationRatio
+namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.VariationRatio
 {
-	class VariationRatioBoxInfo : Ferda.Modules.Boxes.SDCFTask.Quantifiers.AbstractSDCFTaskQuantifierBoxInfo
+	class VariationRatioBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers.AbstractSDCFTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier =
 			"LISpMinerTasks.SDCFTask.Quantifiers.Functional.VariationRatio";

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.SDCFTask.Quantifiers.Functional.ArithmeticAverage
+namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.ArithmeticAverage
 {
-	class ArithmeticAverageBoxInfo : Ferda.Modules.Boxes.SDCFTask.Quantifiers.AbstractSDCFTaskQuantifierBoxInfo
+	class ArithmeticAverageBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers.AbstractSDCFTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier =
 			"LISpMinerTasks.SDCFTask.Quantifiers.Functional.ArithmeticAverage";

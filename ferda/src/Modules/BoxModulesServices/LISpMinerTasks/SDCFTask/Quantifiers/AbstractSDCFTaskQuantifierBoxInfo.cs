@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Modules.Boxes.SDCFTask.Quantifiers
+namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers
 {
 	public abstract class AbstractSDCFTaskQuantifierBoxInfo : BoxInfo
 	{
@@ -36,7 +36,7 @@ namespace Ferda.Modules.Boxes.SDCFTask.Quantifiers
 					case "SDCFTask":
 						moduleConnection.socketName = "SDCFQuantifier";
 						singleModuleAFC.newBoxModuleIdentifier =
-							Ferda.Modules.Boxes.SDCFTask.SDCFTaskBoxInfo.typeIdentifier;
+							Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.SDCFTaskBoxInfo.typeIdentifier;
 						break;
 					default:
 						throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(moduleAFCName);

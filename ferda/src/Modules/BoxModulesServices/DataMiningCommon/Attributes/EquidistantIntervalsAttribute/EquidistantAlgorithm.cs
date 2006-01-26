@@ -214,7 +214,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                     catch (System.ArgumentException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
                     catch (System.OverflowException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
                     catch (System.FormatException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
-                    distincts = Ferda.Modules.Helpers.Data.Column.ColumnDistinctValues(column.dataMatrix.database.connectionString, column.dataMatrix.dataMatrixName, column.columnSelectExpression, boxIdentity, true);
+                    distincts = Ferda.Modules.Helpers.Data.Column.GetDistincts(column.dataMatrix.database.connectionString, column.dataMatrix.dataMatrixName, column.columnSelectExpression, boxIdentity);
                     if (distincts.Rows.Count > fromTmp + toTmp)
                     {
                         from = distincts.Rows[fromTmp].ItemArray[0].ToString();
@@ -234,7 +234,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
             if (String.IsNullOrEmpty(to))
                 to = column.statistics.ValueMax;
 
-            switch (Ferda.Modules.Helpers.Data.Column.ColumnSimpleSubType(column.columnSubType))
+            switch (Ferda.Modules.Helpers.Data.Column.GetColumnSimpleSubTypeBySubType(column.columnSubType))
             {
                 case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Floating:
                     float fromTmpFl, toTmpFl;
@@ -285,7 +285,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                  */
                 case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.String:
                     if (distincts == null)
-                        distincts = Ferda.Modules.Helpers.Data.Column.ColumnDistinctValues(column.dataMatrix.database.connectionString, column.dataMatrix.dataMatrixName, column.columnSelectExpression, boxIdentity, true);
+                        distincts = Ferda.Modules.Helpers.Data.Column.GetDistincts(column.dataMatrix.database.connectionString, column.dataMatrix.dataMatrixName, column.columnSelectExpression, boxIdentity);
                     //TODO lepe distincts (dle from a to)
                     return generateString(from, to, (long)length, distincts);
                 case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Boolean:
@@ -296,7 +296,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                     //TODO
                     throw Ferda.Modules.Exceptions.BadParamsError(null, boxIdentity, null, restrictionTypeEnum.DbColumnDataType);
                 default:
-                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(Ferda.Modules.Helpers.Data.Column.ColumnSimpleSubType(column.columnSubType));
+                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(Ferda.Modules.Helpers.Data.Column.GetColumnSimpleSubTypeBySubType(column.columnSubType));
             }
         }
     }

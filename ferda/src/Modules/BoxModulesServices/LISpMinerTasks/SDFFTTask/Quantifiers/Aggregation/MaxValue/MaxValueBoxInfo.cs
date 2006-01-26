@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Aggregation.MaxValue
+namespace Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Aggregation.MaxValue
 {
-	class MaxValueBoxInfo : Ferda.Modules.Boxes.SDFFTTask.Quantifiers.AbstractSDFFTTaskQuantifierBoxInfo
+	class MaxValueBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.AbstractSDFFTTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.SDFFTTask.Quantifiers.Aggregation.MaxValue"; 

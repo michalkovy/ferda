@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.DoubleFoundedImplication
+namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.DoubleFoundedImplication
 {
-	class DoubleFoundedImplicationBoxInfo : Ferda.Modules.Boxes.FFTTask.Quantifiers.AbstractFFTTaskQuantifierBoxInfo
+	class DoubleFoundedImplicationBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.AbstractFFTTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.FFTTask.Quantifiers.Functional.DoubleFoundedImplication";

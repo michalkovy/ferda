@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.FunctionEachRow
+namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.FunctionEachRow
 {
-	class FunctionEachRowBoxInfo : Ferda.Modules.Boxes.KLTask.Quantifiers.AbstractKLTaskQuantifierBoxInfo
+	class FunctionEachRowBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.AbstractKLTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.KLTask.Quantifiers.Functional.FunctionEachRow";

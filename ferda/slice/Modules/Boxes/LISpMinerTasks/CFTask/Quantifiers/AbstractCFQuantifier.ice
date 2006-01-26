@@ -8,17 +8,19 @@
 module Ferda {
 	module Modules {
 		module Boxes {
-			module CFTask {
-				module Quantifiers {
-					module AbstractCFQuantifier {
+			module LISpMinerTasks {
+				module CFTask {
+					module Quantifiers {
+						module AbstractCFQuantifier {
 
-						/*
-						class QuantifierSetting extends Ferda::Modules::Boxes::AbstractQuantifier::AbstractQuantifierSetting {
-							IntSeq contingencyTableRow;
-						};
-						*/
+							/*
+							class QuantifierSetting extends Ferda::Modules::Boxes::LISpMinerTasks::AbstractQuantifier::AbstractQuantifierSetting {
+								IntSeq contingencyTableRow;
+							};
+							*/
 
-						interface AbstractCFQuantifierFunctions extends Ferda::Modules::Boxes::AbstractQuantifier::AbstractQuantifierFunctions {
+							interface AbstractCFQuantifierFunctions extends Ferda::Modules::Boxes::LISpMinerTasks::AbstractQuantifier::AbstractQuantifierFunctions {
+							};
 						};
 					};
 				};

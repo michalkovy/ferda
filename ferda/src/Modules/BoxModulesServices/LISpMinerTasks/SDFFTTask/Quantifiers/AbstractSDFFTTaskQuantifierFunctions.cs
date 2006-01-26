@@ -1,10 +1,10 @@
 using System;
-using Ferda.Modules.Boxes.AbstractQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
 using System.Collections.Generic;
-using Ferda.Modules.Boxes.SDFFTTask.Quantifiers.AbstractSDFFTQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.AbstractSDFFTQuantifier;
 using Ferda.Modules.Quantifiers;
 
-namespace Ferda.Modules.Boxes.SDFFTTask.Quantifiers
+namespace Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers
 {
 	public abstract class AbstractSDFFTTaskQuantifierFunctions : AbstractSDFFTQuantifierFunctionsDisp_, IFunctions
 	{

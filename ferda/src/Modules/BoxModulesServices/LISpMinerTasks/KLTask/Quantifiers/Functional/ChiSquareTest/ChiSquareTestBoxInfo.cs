@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.ChiSquareTest
+namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.ChiSquareTest
 {
-	class ChiSquareTestBoxInfo : Ferda.Modules.Boxes.KLTask.Quantifiers.AbstractKLTaskQuantifierBoxInfo
+	class ChiSquareTestBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.AbstractKLTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.KLTask.Quantifiers.Functional.ChiSquareTest";

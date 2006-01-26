@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.CFTask.Quantifiers.Functional.StandardDeviation
+namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers.Functional.StandardDeviation
 {
-	class StandardDeviationBoxInfo : Ferda.Modules.Boxes.CFTask.Quantifiers.AbstractCFTaskQuantifierBoxInfo
+	class StandardDeviationBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers.AbstractCFTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier =
 			"LISpMinerTasks.CFTask.Quantifiers.Functional.StandardDeviation";

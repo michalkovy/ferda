@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Odbc;
 using System.Data;
-using Ferda.Modules.Boxes.KLTask;
-using Ferda.Modules.Boxes.AbstractLMTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.KLTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 
 namespace Ferda.Modules.MetabaseLayer
 {
@@ -27,7 +27,7 @@ namespace Ferda.Modules.MetabaseLayer
 		}
 		protected override void saveTask(object input, int masterTaskID, string boxIdentity)
 		{
-			Ferda.Modules.Boxes.KLTask.TaskStruct taskDescription = (TaskStruct)input;
+			Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct taskDescription = (TaskStruct)input;
 
 			string tableName = "taTaskKL";
 			string autoIncrementColumn = common.GetAutoIncrementColumnName(tableName);
@@ -49,10 +49,10 @@ namespace Ferda.Modules.MetabaseLayer
 			foreach (QuantifierSettingStruct quantifier in quantifiers)
 			{
 				propertySettingHelper = new PropertySettingHelper(quantifier.setting);
-				int fromRow = Ferda.Modules.Quantifiers.ContingencyTable.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("RowFrom"));
-				int toRow = Ferda.Modules.Quantifiers.ContingencyTable.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("RowTo"));
-				int fromColumn = Ferda.Modules.Quantifiers.ContingencyTable.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("ColumnFrom"));
-				int toColumn = Ferda.Modules.Quantifiers.ContingencyTable.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("ColumnTo"));
+				int fromRow = Ferda.Modules.Helpers.Common.Parsing.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("RowFrom"));
+				int toRow = Ferda.Modules.Helpers.Common.Parsing.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("RowTo"));
+				int fromColumn = Ferda.Modules.Helpers.Common.Parsing.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("ColumnFrom"));
+				int toColumn = Ferda.Modules.Helpers.Common.Parsing.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("ColumnTo"));
 				RelationEnum relation = (RelationEnum)Enum.Parse(typeof(RelationEnum), propertySettingHelper.GetStringProperty("Relation"));
 				double treshold = propertySettingHelper.GetDoubleProperty("Treshold");
 				bool quantifierWithUnits = true;
@@ -76,42 +76,42 @@ namespace Ferda.Modules.MetabaseLayer
 				int quantifierTypeID = 0;
 				switch (quantifier.typeIdentifier)
 				{
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Aggregation.SumOfValues.SumOfValuesBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Aggregation.SumOfValues.SumOfValuesBoxInfo.typeIdentifier:
 						quantifierTypeID = 1;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Aggregation.MinValue.MinValueBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Aggregation.MinValue.MinValueBoxInfo.typeIdentifier:
 						quantifierTypeID = 2;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Aggregation.MaxValue.MaxValueBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Aggregation.MaxValue.MaxValueBoxInfo.typeIdentifier:
 						quantifierTypeID = 3;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Aggregation.AverageValue.AverageValueBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Aggregation.AverageValue.AverageValueBoxInfo.typeIdentifier:
 						quantifierTypeID = 4;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Aggregation.AnyValue.AnyValueBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Aggregation.AnyValue.AnyValueBoxInfo.typeIdentifier:
 						quantifierTypeID = 5;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.FunctionSumOfRows.FunctionSumOfRowsBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.FunctionSumOfRows.FunctionSumOfRowsBoxInfo.typeIdentifier:
 						quantifierWithRelativeTreshold = true;
 						quantifierTypeID = 8;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.FunctionEachRow.FunctionEachRowBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.FunctionEachRow.FunctionEachRowBoxInfo.typeIdentifier:
 						quantifierWithRelativeTreshold = true;
 						quantifierTypeID = 9;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.ChiSquareTest.ChiSquareTestBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.ChiSquareTest.ChiSquareTestBoxInfo.typeIdentifier:
 						quantifierTypeID = 7;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.ConditionalEntropy.ConditionalEntropyBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.ConditionalEntropy.ConditionalEntropyBoxInfo.typeIdentifier:
 						quantifierTypeID = 10;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.MutualInformationNormalized.MutualInformationNormalizedBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.MutualInformationNormalized.MutualInformationNormalizedBoxInfo.typeIdentifier:
 						quantifierTypeID = 13;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.InformationDependency.InformationDependencyBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.InformationDependency.InformationDependencyBoxInfo.typeIdentifier:
 						quantifierTypeID = 11;
 						break;
-					case Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.Kendal.KendalBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.Kendal.KendalBoxInfo.typeIdentifier:
 						kendalQuantifier = true;
 						quantifierTypeID = 14;
 						break;
@@ -167,7 +167,7 @@ namespace Ferda.Modules.MetabaseLayer
 
 		protected override void readResults(int taskID, long allObjectsCount, object taskDescription, out GeneratingStruct generation, out HypothesisStruct[] result)
 		{
-			//Ferda.Modules.Boxes.KLTask.TaskStruct input = (TaskStruct)taskDescription;
+			//Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct input = (TaskStruct)taskDescription;
 			generation = common.GetGeneratingStruct(taskID);
 			List<HypothesisStruct> hypothesesResult = new List<HypothesisStruct>();
 			HypothesisStruct hypothesisStruct;
@@ -197,7 +197,7 @@ namespace Ferda.Modules.MetabaseLayer
 
 		protected override BooleanCedent[] getBooleanCedents(object taskDescription)
 		{
-			Ferda.Modules.Boxes.KLTask.TaskStruct input = (TaskStruct)taskDescription;
+			Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct input = (TaskStruct)taskDescription;
 			List<BooleanCedent> result = new List<BooleanCedent>();
 			addBooleanCedents(input.conditionSetting, CedentEnum.Condition, ref result);
 			return result.ToArray();
@@ -205,7 +205,7 @@ namespace Ferda.Modules.MetabaseLayer
 
 		protected override CategorialCedent[] getCategorialCedents(object taskDescription)
 		{
-			Ferda.Modules.Boxes.KLTask.TaskStruct input = (TaskStruct)taskDescription;
+			Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct input = (TaskStruct)taskDescription;
 			List<CategorialCedent> result = new List<CategorialCedent>();
 			addCategorialCedent(input.antecedentSetting, CedentEnum.Antecedent, ref result);
 			addCategorialCedent(input.succedentSetting, CedentEnum.Succedent, ref result);

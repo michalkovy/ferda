@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Odbc;
 using System.Data;
-using Ferda.Modules.Boxes.FFTTask;
-using Ferda.Modules.Boxes.AbstractLMTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.FFTTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 
 namespace Ferda.Modules.MetabaseLayer
 {
@@ -27,7 +27,7 @@ namespace Ferda.Modules.MetabaseLayer
 		}
 		protected override void saveTask(object input, int masterTaskID, string boxIdentity)
 		{
-			Ferda.Modules.Boxes.FFTTask.TaskStruct taskDescription = (TaskStruct)input;
+			Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.TaskStruct taskDescription = (TaskStruct)input;
 
 			string tableName = "taTaskFT";
 			string autoIncrementColumn = common.GetAutoIncrementColumnName(tableName);
@@ -83,13 +83,13 @@ namespace Ferda.Modules.MetabaseLayer
 				//ParamP,ParamAlfa,ParamBeta,ParamDelta
 				switch (quantifier.typeIdentifier)
 				{
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.AboveAverageImplication.AboveAverageImplicationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.AboveAverageImplication.AboveAverageImplicationBoxInfo.typeIdentifier:
 						//15  Above Average Implication          ;;;;p
 						//ParamK
 						properties.Add("ParamP", propertySettingHelper.GetDoubleProperty("ParamK"));
 						saveQuantifier(taskID, 15, properties, false);
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.BaseCeil.BaseCeilBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.BaseCeil.BaseCeilBoxInfo.typeIdentifier:
 						//18  BASE                               ;;count;p;
 						//19  Ceiling                            ;;count;p;
 						//17  Support                            p;;;;
@@ -119,19 +119,19 @@ namespace Ferda.Modules.MetabaseLayer
 								break;
 						}
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.BelowAverageImplication.BelowAverageImplicationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.BelowAverageImplication.BelowAverageImplicationBoxInfo.typeIdentifier:
 						//16  Below Average Implication          ;;;;p
 						//ParamK
 						properties.Add("ParamP", propertySettingHelper.GetDoubleProperty("ParamK"));
 						saveQuantifier(taskID, 16, properties, false);
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.DoubleFoundedImplication.DoubleFoundedImplicationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.DoubleFoundedImplication.DoubleFoundedImplicationBoxInfo.typeIdentifier:
 						//4   Double Founded Implication         p;
 						//ParamP
 						properties.Add("ParamP", propertySettingHelper.GetDoubleProperty("ParamP"));
 						saveQuantifier(taskID, 4, properties, false);
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.DoubleCriticalImplication.DoubleCriticalImplicationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.DoubleCriticalImplication.DoubleCriticalImplicationBoxInfo.typeIdentifier:
 						//5   Double Lower Critical Implication  p;;Alpha
 						//6   Double Upper Critical Implication  p;;Alpha
 						//ParamP,ParamAlpha
@@ -148,37 +148,37 @@ namespace Ferda.Modules.MetabaseLayer
 								break;
 						}
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.E.EBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.E.EBoxInfo.typeIdentifier:
 						//14  E-quantifier                       ;;Delta
 						//ParamP
 						properties.Add("ParamDelta", propertySettingHelper.GetDoubleProperty("ParamP"));
 						saveQuantifier(taskID, 4, properties, false);
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.Fisher.FisherBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.Fisher.FisherBoxInfo.typeIdentifier:
 						//11  Fisher quantifier                  ;;Alpha
 						//ParamAlpha
 						properties.Add("ParamAlfa", propertySettingHelper.GetDoubleProperty("ParamAlpha"));
 						saveQuantifier(taskID, 11, properties, false);
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.FoundedEquivalence.FoundedEquivalenceBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.FoundedEquivalence.FoundedEquivalenceBoxInfo.typeIdentifier:
 						//7   Founded Equivalence                p;
 						//ParamP
 						properties.Add("ParamP", propertySettingHelper.GetDoubleProperty("ParamP"));
 						saveQuantifier(taskID, 7, properties, false);
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.FoundedImplication.FoundedImplicationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.FoundedImplication.FoundedImplicationBoxInfo.typeIdentifier:
 						//1   Founded Implication                p;
 						//ParamP
 						properties.Add("ParamP", propertySettingHelper.GetDoubleProperty("ParamP"));
 						saveQuantifier(taskID, 1, properties, false);
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.ChiSquared.ChiSquaredBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.ChiSquared.ChiSquaredBoxInfo.typeIdentifier:
 						//12  Chi-Squared quantifier             ;;Alpha
 						//ParamAlpha
 						properties.Add("ParamAlfa", propertySettingHelper.GetDoubleProperty("ParamAlpha"));
 						saveQuantifier(taskID, 12, properties, false);
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.CriticalEquivalence.CriticalEquivalenceBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.CriticalEquivalence.CriticalEquivalenceBoxInfo.typeIdentifier:
 						//8   Lower Critical Equivalence         p;;Alpha
 						//9   Upper Critical Equivalence         p;;Alpha
 						//ParamP,ParamAlpha
@@ -196,7 +196,7 @@ namespace Ferda.Modules.MetabaseLayer
 								break;
 						}
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.CriticalImplication.CriticalImplicationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.CriticalImplication.CriticalImplicationBoxInfo.typeIdentifier:
 						//2   Lower Critical Implication         p;;Alpha
 						//3   Upper Critical Implication         p;;Alpha
 						//ParamP,ParamAlpha
@@ -213,7 +213,7 @@ namespace Ferda.Modules.MetabaseLayer
 								break;
 						}
 						break;
-					case Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.SimpleDeviation.SimpleDeviationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.SimpleDeviation.SimpleDeviationBoxInfo.typeIdentifier:
 						//10  Simple Deviation                   ;;;;Delta
 						//ParamK
 						properties.Add("ParamDelta", propertySettingHelper.GetDoubleProperty("ParamK"));
@@ -251,7 +251,7 @@ namespace Ferda.Modules.MetabaseLayer
 
 		protected override BooleanCedent[] getBooleanCedents(object taskDescription)
 		{
-			Ferda.Modules.Boxes.FFTTask.TaskStruct input = (TaskStruct)taskDescription;
+			Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.TaskStruct input = (TaskStruct)taskDescription;
 			List<BooleanCedent> result = new List<BooleanCedent>();
 			addBooleanCedents(input.antecedentSetting, CedentEnum.Antecedent, ref result);
 			addBooleanCedents(input.succedentSetting, CedentEnum.Succedent, ref result);

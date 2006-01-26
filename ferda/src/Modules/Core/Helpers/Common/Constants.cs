@@ -2,11 +2,17 @@ namespace Ferda.Modules.Helpers.Common
 {
 	public static class Constants
 	{
-		private const string dbNullCategoryName = "_DB_Null";
+		private const string dbNullCategoryName = "_DbNull";
 		public static string DbNullCategoryName
 		{
 			get { return dbNullCategoryName; }
-		} 
+		}
+
+        private const string emptyStringCategoryName = "_EmptyString";
+        public static string EmptyStringCategoryName
+        {
+            get { return emptyStringCategoryName; }
+        } 
 
 		private const char leftClosedInterval = '<';
 		public static char LeftClosedInterval

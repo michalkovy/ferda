@@ -51,7 +51,7 @@
       <Name>KLQuantifier</Name>
       <SocketTypes>
         <BoxType>
-          <FunctionIceId>::Ferda::Modules::Boxes::KLTask::Quantifiers::AbstractKLQuantifier::AbstractKLQuantifierFunctions</FunctionIceId>
+          <FunctionIceId>::Ferda::Modules::Boxes::LISpMinerTasks::KLTask::Quantifiers::AbstractKLQuantifier::AbstractKLQuantifierFunctions</FunctionIceId>
         </BoxType>
       </SocketTypes>
       <MoreThanOne>true</MoreThanOne>

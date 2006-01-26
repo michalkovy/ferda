@@ -52,7 +52,7 @@
       <Name>SDKLQuantifier</Name>
       <SocketTypes>
         <BoxType>
-          <FunctionIceId>::Ferda::Modules::Boxes::SDKLTask::Quantifiers::AbstractSDKLQuantifier::AbstractSDKLQuantifierFunctions</FunctionIceId>
+          <FunctionIceId>::Ferda::Modules::Boxes::LISpMinerTasks::SDKLTask::Quantifiers::AbstractSDKLQuantifier::AbstractSDKLQuantifierFunctions</FunctionIceId>
         </BoxType>
       </SocketTypes>
       <MoreThanOne>true</MoreThanOne>

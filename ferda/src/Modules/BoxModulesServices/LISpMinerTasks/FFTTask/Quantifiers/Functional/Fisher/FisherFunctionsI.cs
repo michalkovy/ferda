@@ -1,10 +1,10 @@
 using System;
-using Ferda.Modules.Boxes.AbstractQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
 using System.Collections.Generic;
 using Ferda.Modules.Quantifiers;
-using Ferda.Modules.Boxes.FFTTask.Quantifiers.AbstractFFTQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.AbstractFFTQuantifier;
 
-namespace Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.Fisher
+namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.Fisher
 {
 	/// <summary>
 	/// Fisher quantifier.

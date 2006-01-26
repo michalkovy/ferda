@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using FrontEnd.AddIns.ResultBrowser;
 using Ferda.Modules;
-using Ferda.Modules.Boxes.AbstractLMTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 using Ferda.ModulesManager;
 using System.Resources;
 using System.Reflection;

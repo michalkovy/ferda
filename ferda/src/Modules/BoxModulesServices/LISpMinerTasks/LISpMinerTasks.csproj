@@ -117,6 +117,7 @@
     <Compile Include="FFTTask\Quantifiers\Functional\FoundedImplication\FoundedImplicationFunctionsI.cs" />
     <Compile Include="FFTTask\Quantifiers\Functional\SimpleDeviation\SimpleDeviationBoxInfo.cs" />
     <Compile Include="FFTTask\Quantifiers\Functional\SimpleDeviation\SimpleDeviationFunctionsI.cs" />
+    <Compile Include="ILISpMinerAbstractTask.cs" />
     <Compile Include="KLTask\KLTaskBoxInfo.cs" />
     <Compile Include="KLTask\KLTaskFunctionsI.cs" />
     <Compile Include="KLTask\Quantifiers\AbstractKLTaskQuantifierBoxInfo.cs" />
@@ -145,6 +146,9 @@
     <Compile Include="KLTask\Quantifiers\Functional\Kendal\KendalFunctionsI.cs" />
     <Compile Include="KLTask\Quantifiers\Functional\MutualInformationNormalized\MutualInformationNormalizedBoxInfo.cs" />
     <Compile Include="KLTask\Quantifiers\Functional\MutualInformationNormalized\MutualInformationNormalizedFunctionsI.cs" />
+    <Compile Include="LISpMinerAbstractSDTask.cs" />
+    <Compile Include="LISpMinerAbstractTask.cs" />
+    <Compile Include="LISpMinerAbstractTaskBoxInfo.cs" />
     <Compile Include="LMTasks.cs" />
     <Compile Include="MetabaseLayer\CFTask.cs" />
     <Compile Include="MetabaseLayer\Common.cs" />

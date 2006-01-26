@@ -8,18 +8,20 @@
 module Ferda {
 	module Modules {
 		module Boxes {
-			module SDFFTTask {
-				module Quantifiers {
-					module AbstractSDFFTQuantifier {
+			module LISpMinerTasks {
+				module SDFFTTask {
+					module Quantifiers {
+						module AbstractSDFFTQuantifier {
 
-						/*
-						class QuantifierSetting extends Ferda::Modules::Boxes::AbstractQuantifier::AbstractQuantifierSetting {
-							FourFoldTableStruct firstFourFoldTable;
-							FourFoldTableStruct secondFourFoldTable;
-						};
-						*/
+							/*
+							class QuantifierSetting extends Ferda::Modules::Boxes::LISpMinerTasks::AbstractQuantifier::AbstractQuantifierSetting {
+								FourFoldTableStruct firstFourFoldTable;
+								FourFoldTableStruct secondFourFoldTable;
+							};
+							*/
 
-						interface AbstractSDFFTQuantifierFunctions extends Ferda::Modules::Boxes::AbstractQuantifier::AbstractQuantifierFunctions {
+							interface AbstractSDFFTQuantifierFunctions extends Ferda::Modules::Boxes::LISpMinerTasks::AbstractQuantifier::AbstractQuantifierFunctions {
+							};
 						};
 					};
 				};

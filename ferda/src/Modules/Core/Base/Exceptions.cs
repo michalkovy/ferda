@@ -108,6 +108,15 @@ namespace Ferda.Modules
             return ex;
         }
 
+        public static Ferda.Modules.BadParamsError BadParamsUnexpectedReasonError(Exception e, string boxIdentity)
+        {
+            Debug.WriteLine(e.Message);
+            Ferda.Modules.BadParamsError ex = new BadParamsError(e);
+            ex.boxIdentity = boxIdentity;
+            ex.restrictionType = restrictionTypeEnum.UnexpectedReason;
+            return ex;
+        }
+
         /// <summary>
         /// Gets SwitchCaseNotImplementedError exception.
         /// This exception should be thrown in <c>default</c> branch of 

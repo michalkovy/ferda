@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
 using System.Data;
-using Ferda.Modules.LMTasks;
-using Ferda.Modules.Boxes.SDCFTask;
-using Ferda.Modules.Boxes.AbstractLMTask;
-using Ferda.Modules.Boxes.SDCFTask.Quantifiers;
+using Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers;
 
 namespace Ferda.Modules.MetabaseLayer
 {
@@ -29,7 +28,7 @@ namespace Ferda.Modules.MetabaseLayer
 
         protected override BooleanCedent[] getBooleanCedents(object taskDescription)
         {
-            Ferda.Modules.Boxes.SDCFTask.TaskStruct input = (TaskStruct)taskDescription;
+            Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.TaskStruct input = (TaskStruct)taskDescription;
             List<BooleanCedent> result = new List<BooleanCedent>();
             addBooleanCedents(input.conditionSetting, CedentEnum.Condition, ref result);
             addBooleanCedents(input.firstCedentSetting, CedentEnum.FirstSet, ref result);
@@ -39,7 +38,7 @@ namespace Ferda.Modules.MetabaseLayer
 
         protected override CategorialCedent[] getCategorialCedents(object taskDescription)
         {
-            Ferda.Modules.Boxes.SDCFTask.TaskStruct input = (TaskStruct)taskDescription;
+            Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.TaskStruct input = (TaskStruct)taskDescription;
             List<CategorialCedent> result = new List<CategorialCedent>();
             addCategorialCedent(input.antecedentSetting, CedentEnum.Antecedent, ref result);
             return result.ToArray();
@@ -48,7 +47,7 @@ namespace Ferda.Modules.MetabaseLayer
 
         protected override void saveTask(object taskStruct, int masterTaskID, string boxIdentity)
         {
-            Ferda.Modules.Boxes.SDCFTask.TaskStruct taskDescription = (TaskStruct)taskStruct;
+            Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.TaskStruct taskDescription = (TaskStruct)taskStruct;
 
             string tableName = "taTaskDC";
             string autoIncrementColumn = common.GetAutoIncrementColumnName(tableName);
@@ -132,59 +131,59 @@ namespace Ferda.Modules.MetabaseLayer
                 #region Quantifiers switch
                 switch (quantifier.typeIdentifier)
                 {
-                    case Boxes.SDCFTask.Quantifiers.Aggregation.SumOfValues.SumOfValuesBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Aggregation.SumOfValues.SumOfValuesBoxInfo.typeIdentifier:
                         quantifierTypeID = 1;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Aggregation.MinValue.MinValueBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Aggregation.MinValue.MinValueBoxInfo.typeIdentifier:
                         quantifierTypeID = 2;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Aggregation.MaxValue.MaxValueBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Aggregation.MaxValue.MaxValueBoxInfo.typeIdentifier:
                         quantifierTypeID = 3;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Aggregation.AverageValue.AverageValueBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Aggregation.AverageValue.AverageValueBoxInfo.typeIdentifier:
                         quantifierTypeID = 4;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Aggregation.AnyValue.AnyValueBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Aggregation.AnyValue.AnyValueBoxInfo.typeIdentifier:
                         quantifierTypeID = 5;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Functional.VariationRatio.VariationRatioBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.VariationRatio.VariationRatioBoxInfo.typeIdentifier:
                         quantifierTypeID = 8;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Functional.NominalVariation.NominalVariationBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.NominalVariation.NominalVariationBoxInfo.typeIdentifier:
                         quantifierTypeID = 9;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Functional.DiscreteOrdinaryVariation.DiscreteOrdinaryVariationBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.DiscreteOrdinaryVariation.DiscreteOrdinaryVariationBoxInfo.typeIdentifier:
                         quantifierTypeID = 10;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Functional.ArithmeticAverage.ArithmeticAverageBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.ArithmeticAverage.ArithmeticAverageBoxInfo.typeIdentifier:
                         quantifierTypeID = 11;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Functional.GeometricAverage.GeometricAverageBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.GeometricAverage.GeometricAverageBoxInfo.typeIdentifier:
                         quantifierTypeID = 12;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Functional.Variance.VarianceBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.Variance.VarianceBoxInfo.typeIdentifier:
                         quantifierTypeID = 13;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Functional.StandardDeviation.StandardDeviationBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.StandardDeviation.StandardDeviationBoxInfo.typeIdentifier:
                         quantifierTypeID = 14;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Functional.Skewness.SkewnessBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.Skewness.SkewnessBoxInfo.typeIdentifier:
                         quantifierTypeID = 15;
                         break;
 
-                    case Boxes.SDCFTask.Quantifiers.Functional.Asymetry.AsymetryBoxInfo.typeIdentifier:
+                    case Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.Asymetry.AsymetryBoxInfo.typeIdentifier:
                         quantifierTypeID = 16;
                         break;
 
@@ -209,8 +208,8 @@ namespace Ferda.Modules.MetabaseLayer
 
                 try
                 {
-                    fromColumn = Ferda.Modules.Quantifiers.ContingencyTable.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("CategoryRangeFrom"));
-                    toColumn = Ferda.Modules.Quantifiers.ContingencyTable.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("CategoryRangeTo"));
+                    fromColumn = Ferda.Modules.Helpers.Common.Parsing.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("CategoryRangeFrom"));
+                    toColumn = Ferda.Modules.Helpers.Common.Parsing.ZeroBasedBoundFromOneBasedString(propertySettingHelper.GetStringProperty("CategoryRangeTo"));
                 }
                 catch (ArgumentException)
                 {

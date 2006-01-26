@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.SDKLTask.Quantifiers.Aggregation.AverageValue
+namespace Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.Quantifiers.Aggregation.AverageValue
 {
-	class AverageValueBoxInfo : Ferda.Modules.Boxes.SDKLTask.Quantifiers.AbstractSDKLTaskQuantifierBoxInfo
+	class AverageValueBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.Quantifiers.AbstractSDKLTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.SDKLTask.Quantifiers.Aggregation.AverageValue";

@@ -1,10 +1,10 @@
 using System;
-using Ferda.Modules.Boxes.AbstractQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
 using System.Collections.Generic;
-using Ferda.Modules.Boxes.CFTask.Quantifiers.AbstractCFQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers.AbstractCFQuantifier;
 using Ferda.Modules.Quantifiers;
 
-namespace Ferda.Modules.Boxes.CFTask.Quantifiers
+namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers
 {
 	/// <summary>
 	/// Defined properties: Relation and Treshold.

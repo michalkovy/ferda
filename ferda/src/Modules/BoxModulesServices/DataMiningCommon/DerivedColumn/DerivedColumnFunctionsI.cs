@@ -43,7 +43,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
                     cacheSetting.Add("ColumnSelectExpression", columnSelectExpression);
                     if (IsObsolete(lastReloadTime, cacheSetting))
                     {
-                        value = Ferda.Modules.Helpers.Data.Column.ComputeStatistics(connectionString, dataMatrixName, columnSelectExpression, columnValueSubType, boxIdentity, true);
+                        value = Ferda.Modules.Helpers.Data.Column.GetStatistics(connectionString, dataMatrixName, columnSelectExpression, columnValueSubType, boxIdentity);
                     }
                     return value;
                 }
@@ -81,8 +81,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
 				connectionString,
 				dataMatrixName,
 				columnSelectExpression,
-                boxModule.StringIceIdentity,
-				true);
+                boxModule.StringIceIdentity);
 			ColumnStruct result = new ColumnStruct();
 			result.statistics = getStatisticsStruct(dataMatrixStruct);
 			result.dataMatrix = dataMatrixStruct;
@@ -95,7 +94,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
 		public override string[] getDistinctValues(Ice.Current __current)
 		{
 			DataMatrixStruct dataMatrixStruct = getDataMatrixFunctionsPrx().getDataMatrix();
-            return Helpers.Data.Column.ColumnDistinctValuesStringSeq(dataMatrixStruct.database.connectionString, dataMatrixStruct.dataMatrixName, columnSelectExpression, boxModule.StringIceIdentity);
+            return Helpers.Data.Column.GetDistinctsStringSeq(dataMatrixStruct.database.connectionString, dataMatrixStruct.dataMatrixName, columnSelectExpression, boxModule.StringIceIdentity);
 		}
 		#endregion
 
@@ -118,8 +117,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
 					dataMatrixStruct.database.connectionString,
 					dataMatrixStruct.dataMatrixName,
 					columnSelectExpression,
-                    boxModule.StringIceIdentity, 
-					true);
+                    boxModule.StringIceIdentity);
 				return true;
 			}
             catch (Ferda.Modules.BoxRuntimeError) { }

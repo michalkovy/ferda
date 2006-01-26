@@ -43,7 +43,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
                     cacheSetting.Add("ColumnSelectExpression", columnSelectExpression);
                     if (IsObsolete(lastReloadTime, cacheSetting))
                     {
-                        value = Ferda.Modules.Helpers.Data.Column.ComputeStatistics(connectionString, dataMatrixName, columnSelectExpression, columnValueSubType, boxIdentity, true);
+                        value = Ferda.Modules.Helpers.Data.Column.GetStatistics(connectionString, dataMatrixName, columnSelectExpression, columnValueSubType, boxIdentity);
                     }
                     return value;
                 }
@@ -77,8 +77,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
                     cacheSetting.Add("ColumnSelectExpression", columnSelectExpression);
                     if (IsObsolete(lastReloadTime, cacheSetting))
                         value =
-                            Ferda.Modules.Helpers.Data.Column.ComputeColumnSubType(
-                                Ferda.Modules.Helpers.Data.Column.ComputeColumnType(connectionString, dataMatrixName, columnSelectExpression, boxIdentity, true));
+                            Ferda.Modules.Helpers.Data.Column.GetColumnSubTypeByDataType(
+                                Ferda.Modules.Helpers.Data.Column.GetDataType(connectionString, dataMatrixName, columnSelectExpression, boxIdentity));
                     return value;
                 }
 			}
@@ -106,8 +106,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
 				connectionString,
 				dataMatrixName,
 				columnSelectExpression,
-                boxModule.StringIceIdentity,
-				true);
+                boxModule.StringIceIdentity);
 			ColumnStruct result = new ColumnStruct();
 			result.statistics = getStatisticsStruct(dataMatrixStruct);
 			result.dataMatrix = dataMatrixStruct;
@@ -120,7 +119,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
 		public override string[] getDistinctValues(Ice.Current __current)
 		{
 			DataMatrixStruct dataMatrixStruct = getDataMatrixFunctionsPrx().getDataMatrix();
-            return Helpers.Data.Column.ColumnDistinctValuesStringSeq(dataMatrixStruct.database.connectionString, dataMatrixStruct.dataMatrixName, columnSelectExpression, boxModule.StringIceIdentity);
+            return Helpers.Data.Column.GetDistinctsStringSeq(dataMatrixStruct.database.connectionString, dataMatrixStruct.dataMatrixName, columnSelectExpression, boxModule.StringIceIdentity);
 		}
 		#endregion
 

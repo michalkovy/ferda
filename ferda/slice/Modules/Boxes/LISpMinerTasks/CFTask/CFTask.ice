@@ -10,21 +10,23 @@
 module Ferda {
 	module Modules {
 		module Boxes {
-			module CFTask	{
+			module LISpMinerTasks {
+				module CFTask	{
 
-				struct TaskStruct {
-					Ferda::Modules::Boxes::DataMiningCommon::CategorialPartialCedentSetting::CategorialPartialCedentSettingStructSeq antecedentSetting;
-					Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq conditionSetting;
-					Ferda::Modules::Boxes::AbstractLMTask::QuantifierSettingStructSeq quantifiers;
-				};
+					struct TaskStruct {
+						Ferda::Modules::Boxes::DataMiningCommon::CategorialPartialCedentSetting::CategorialPartialCedentSettingStructSeq antecedentSetting;
+						Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq conditionSetting;
+						Ferda::Modules::Boxes::LISpMinerTasks::AbstractLMTask::QuantifierSettingStructSeq quantifiers;
+					};
 
-				interface CFTaskFunctions extends Ferda::Modules::Boxes::AbstractLMTask::AbstractLMTaskFunctions {
-					nonmutating TaskStruct getTask()
-							throws
-								Ferda::Modules::BoxRuntimeError,
-								Ferda::Modules::BadValueError,
-								Ferda::Modules::BadParamsError,
-								Ferda::Modules::NoConnectionInSocketError;
+					interface CFTaskFunctions extends Ferda::Modules::Boxes::LISpMinerTasks::AbstractLMTask::AbstractLMTaskFunctions {
+						nonmutating TaskStruct getTask()
+								throws
+									Ferda::Modules::BoxRuntimeError,
+									Ferda::Modules::BadValueError,
+									Ferda::Modules::BadParamsError,
+									Ferda::Modules::NoConnectionInSocketError;
+					};
 				};
 			};
 		};

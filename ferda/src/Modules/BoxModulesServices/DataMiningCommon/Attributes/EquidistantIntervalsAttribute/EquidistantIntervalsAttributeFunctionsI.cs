@@ -1,5 +1,5 @@
 using System;
-using Ferda.Modules.Boxes.AbstractQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
 using System.Collections.Generic;
 using Ferda.Modules.Boxes.DataMiningCommon.Column;
 using Ferda.Modules.Helpers.Data;
@@ -160,8 +160,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                 columnStruct.dataMatrix.database.connectionString,
                 columnStruct.dataMatrix.dataMatrixName,
                 columnStruct.columnSelectExpression,
-                boxModule.StringIceIdentity,
-                true);
+                boxModule.StringIceIdentity);
             GeneratedAttribute categoriesInfo = getCategoriesInfo(columnStruct);
             result.column = columnStruct;
             result.categories = categoriesInfo.CategoriesStruct;
