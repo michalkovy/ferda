@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.BelowAverageImplication
+namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.BelowAverageImplication
 {
-	class BelowAverageImplicationBoxInfo : Ferda.Modules.Boxes.FFTTask.Quantifiers.AbstractFFTTaskQuantifierBoxInfo
+	class BelowAverageImplicationBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.AbstractFFTTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.FFTTask.Quantifiers.Functional.BelowAverageImplication";

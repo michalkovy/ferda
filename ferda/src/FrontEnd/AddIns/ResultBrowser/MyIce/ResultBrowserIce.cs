@@ -304,17 +304,17 @@ namespace Ferda
 
                 Ice.ObjectPrx prx1 = prx;
 
-                
 
-                Modules.Boxes.AbstractLMTask.AbstractLMTaskFunctionsPrx tprx =
 
-                    Modules.Boxes.AbstractLMTask.AbstractLMTaskFunctionsPrxHelper.checkedCast(prx);
+                Modules.Boxes.LISpMinerTasks.AbstractLMTask.AbstractLMTaskFunctionsPrx tprx =
+
+                    Modules.Boxes.LISpMinerTasks.AbstractLMTask.AbstractLMTaskFunctionsPrxHelper.checkedCast(prx);
 
                 Modules.HypothesisStruct [] hypotheses = tprx.getResult();
 
 
 
-                Modules.Boxes.AbstractLMTask.QuantifierProvider[] used_quantifiers =
+                Modules.Boxes.LISpMinerTasks.AbstractLMTask.QuantifierProvider[] used_quantifiers =
 
                     tprx.getQuantifierProviders();
 

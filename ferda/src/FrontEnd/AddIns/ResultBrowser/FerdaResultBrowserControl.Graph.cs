@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using Ferda.Modules.Boxes.AbstractLMTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 using Ferda.Modules;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
@@ -122,7 +122,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 {
                     barSeries.Add(number);
                 }
-                chart.Series.Add(barSeries);        
+                chart.Series.Add(barSeries);
             }
         }
         #endregion

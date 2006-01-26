@@ -23,32 +23,12 @@ namespace Ferda.Modules.Helpers.Data
             public CachedConnection(OdbcConnection odbcConnection)
             {
                 connection = odbcConnection;
-                isExclusive = false;
-                try
-                {
-                    if (odbcConnection.State != System.Data.ConnectionState.Open)
-                        odbcConnection.Open();
-                    OdbcConnection testConnection = new OdbcConnection(odbcConnection.ConnectionString);
-                    testConnection.Open();
-                }
-                catch
-                {
-                    isExclusive = true;
-                }
-                //For debugging purposes - simulate testing over databases with exclusive access
-                isExclusive = true;
             }
 
             private OdbcConnection connection;
             public OdbcConnection Connection
             {
                 get { return connection; }
-            }
-
-            private bool isExclusive;
-            public bool IsExclusive
-            {
-                get { return isExclusive; }
             }
         }
 
@@ -79,14 +59,6 @@ namespace Ferda.Modules.Helpers.Data
                 odbcConnections[odbcConnectionString].Connection.Close();
                 odbcConnections.Remove(odbcConnectionString);
             }
-        }
-
-        public static void LeaveConnection(string odbcConnectionString)
-        {
-            CachedConnection cachedConnection;
-            if (odbcConnections.TryGetValue(odbcConnectionString, out cachedConnection))
-                if (cachedConnection.IsExclusive)
-                    cachedConnection.Connection.Close();
         }
 
         private struct stackInfo
@@ -121,65 +93,44 @@ namespace Ferda.Modules.Helpers.Data
             CachedConnection cachedConnection;
             OdbcConnection result = null;
 
-            try
+            //iff connection exist (was saved)
+            if (odbcConnections.TryGetValue(odbcConnectionString, out cachedConnection))
             {
-                //iff connection exist (was saved)
-                if (odbcConnections.TryGetValue(odbcConnectionString, out cachedConnection))
-                {
-                    result = cachedConnection.Connection;
-                    //connection is not opened
-                    if ((result.State == System.Data.ConnectionState.Closed)
-                        || (result.State == System.Data.ConnectionState.Broken))
-                        try
-                        {
-                            result.Open();
-                        }
-                        catch (Exception e)
-                        {
-                            throw BadConnectionStringError(e, boxIdentity);
-                        }
-                }
-                //iff connection doesn`t exist (wasn`t saved)
-                else if (!odbcConnections.ContainsKey(odbcConnectionString))
-                {
+                result = cachedConnection.Connection;
+                //connection is not opened
+                if ((result.State == System.Data.ConnectionState.Closed)
+                    || (result.State == System.Data.ConnectionState.Broken))
                     try
                     {
-                        result = new OdbcConnection(odbcConnectionString);
                         result.Open();
                     }
                     catch (Exception e)
                     {
                         throw BadConnectionStringError(e, boxIdentity);
                     }
-                    //save opened connection if odbcConnectionString is valid
-                    odbcConnections.Add(odbcConnectionString, new CachedConnection(result));
-                }
-
-                //test if connection was opened
-                if (result != null && result.State == System.Data.ConnectionState.Open)
-                    return result;
-                else
-                {
-                    throw BadConnectionStringError(null, boxIdentity);
-                }
             }
-            catch (Exception ex)
+            //iff connection doesn`t exist (wasn`t saved)
+            else if (!odbcConnections.ContainsKey(odbcConnectionString))
             {
-#if CONNECTIONS_SHARING_DEBUG
-                if (odbcConnections.TryGetValue(odbcConnectionString, out cachedConnection))
+                try
                 {
-                    if (cachedConnection.IsExclusive
-                        && boxIdentity != connectionsSharingDebug[odbcConnectionString].BoxIdentity
-                        && cachedConnection.Connection.State == System.Data.ConnectionState.Open)
-                    {
-                        System.Diagnostics.Debug.WriteLine("<Ferda.Modules.Helpers.Data.OdbcConnections odbcConnectionString=\"" + odbcConnectionString + "\">");
-                        System.Diagnostics.Debug.Write(connectionsSharingDebug[odbcConnectionString]);
-                        System.Diagnostics.Debug.WriteLine("</Ferda.Modules.Helpers.Data.OdbcConnections>");
-                    }
+                    result = new OdbcConnection(odbcConnectionString);
+                    result.Open();
                 }
-                connectionsSharingDebug[odbcConnectionString] = new stackInfo(Ferda.Modules.Helpers.Common.CallStack.DumpStack(), boxIdentity);
-#endif
-                throw ex;
+                catch (Exception e)
+                {
+                    throw BadConnectionStringError(e, boxIdentity);
+                }
+                //save opened connection if odbcConnectionString is valid
+                odbcConnections.Add(odbcConnectionString, new CachedConnection(result));
+            }
+
+            //test if connection was opened
+            if (result != null && result.State == System.Data.ConnectionState.Open)
+                return result;
+            else
+            {
+                throw BadConnectionStringError(null, boxIdentity);
             }
         }
     }

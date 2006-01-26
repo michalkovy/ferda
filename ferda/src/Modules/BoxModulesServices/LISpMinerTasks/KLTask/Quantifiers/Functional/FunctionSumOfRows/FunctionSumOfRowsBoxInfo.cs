@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.FunctionSumOfRows
+namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.FunctionSumOfRows
 {
-	class FunctionSumOfRowsBoxInfo : Ferda.Modules.Boxes.KLTask.Quantifiers.AbstractKLTaskQuantifierBoxInfo
+	class FunctionSumOfRowsBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.AbstractKLTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.KLTask.Quantifiers.Functional.FunctionSumOfRows";

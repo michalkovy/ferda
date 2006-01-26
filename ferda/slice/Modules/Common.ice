@@ -207,7 +207,8 @@ module Ferda {
 		    Running,
 		    Completed,
 		    Interrupted,
-		    Canceled
+		    Canceled,
+		    Failed
 		};
 
 

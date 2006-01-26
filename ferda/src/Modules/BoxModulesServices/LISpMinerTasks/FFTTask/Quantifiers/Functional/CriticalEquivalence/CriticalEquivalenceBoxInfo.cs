@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.CriticalEquivalence
+namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.CriticalEquivalence
 {
-	class CriticalEquivalenceBoxInfo : Ferda.Modules.Boxes.FFTTask.Quantifiers.AbstractFFTTaskQuantifierBoxInfo
+	class CriticalEquivalenceBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.AbstractFFTTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.FFTTask.Quantifiers.Functional.CriticalEquivalence";

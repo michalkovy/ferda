@@ -93,6 +93,27 @@
 				</references>
 			</csc>
 		</if>
+		<if test="${platform::is-win32()}">
+			<csc target="library" output="${path::combine(build.dir,'FerdaSampleBoxes.dll')}" doc="${path::combine(build.dir,'FerdaSampleBoxes.xml')}" debug="${debug}" optimize="${optimize}">
+				<nowarn>
+					<warning number="1591"/>
+				</nowarn>
+				<sources>
+					<include name="BoxModulesServices/Sample/**.cs"/>
+					<exclude name="BoxModulesServices/Sample/**/generated/**.cs"/>
+				</sources>
+				<references>
+					<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+					<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+					<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
+					<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+					<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+					<include name="System.dll"/>
+					<include name="System.Data.dll"/>
+					<include name="System.Xml.dll"/>
+				</references>
+			</csc>
+		</if>
 	</target>
 	<target name="clean">
 

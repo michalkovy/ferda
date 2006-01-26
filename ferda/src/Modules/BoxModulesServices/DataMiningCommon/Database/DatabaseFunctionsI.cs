@@ -51,7 +51,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
         public override DatabaseStruct getDatabase(Ice.Current __current)
         {
             DatabaseStruct result = new DatabaseStruct();
-            Ferda.Modules.Helpers.Data.Database.TestConnectionString(connectionString, boxModule.StringIceIdentity, true);
+            Ferda.Modules.Helpers.Data.Database.TestConnectionString(connectionString, boxModule.StringIceIdentity);
             result.connectionString = connectionString;
             result.lastReloadInfo = lastReloadInfo;
             return result;
@@ -59,7 +59,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
 
         public override DataMatrixInfo[] explainDatabaseStructure(Ice.Current __current)
         {
-            return Ferda.Modules.Helpers.Data.Database.ExplainDatabaseStructure(connectionString, boxModule.StringIceIdentity, true);
+            return Ferda.Modules.Helpers.Data.Database.Explain(connectionString, null, boxModule.StringIceIdentity);
         }
 
         #region Cache: DataMatrixNames
@@ -73,7 +73,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
                     Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
                     cacheSetting.Add("ConnectionString", connectionString);
                     if (IsObsolete(lastReloadTime, cacheSetting))
-                        value = Ferda.Modules.Helpers.Data.Database.GetTables(connectionString, boxIdentity, true);
+                        value = Ferda.Modules.Helpers.Data.Database.GetTables(connectionString, null, boxIdentity);
                     return value;
                 }
             }
@@ -94,7 +94,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
         {
             try
             {
-                Ferda.Modules.Helpers.Data.Database.TestConnectionString(connectionString, null, true);
+                Ferda.Modules.Helpers.Data.Database.TestConnectionString(connectionString, null);
                 return true;
             }
             catch { }
@@ -143,7 +143,6 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
                             {
                                 value.ServerVersion = String.Empty;
                             }
-                            Ferda.Modules.Helpers.Data.OdbcConnections.LeaveConnection(connectionString);
                         }
                         catch (Ferda.Modules.BadParamsError ex)
                         {

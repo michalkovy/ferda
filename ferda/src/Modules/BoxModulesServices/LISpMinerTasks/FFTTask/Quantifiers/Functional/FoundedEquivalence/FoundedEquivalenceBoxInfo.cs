@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.FFTTask.Quantifiers.Functional.FoundedEquivalence
+namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.FoundedEquivalence
 {
-	class FoundedEquivalenceBoxInfo : Ferda.Modules.Boxes.FFTTask.Quantifiers.AbstractFFTTaskQuantifierBoxInfo
+	class FoundedEquivalenceBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.AbstractFFTTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.FFTTask.Quantifiers.Functional.FoundedEquivalence";

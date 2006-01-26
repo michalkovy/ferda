@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Tomas Kuchar (Ru-Board) -->
 <BoxesLocalization xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ferda.is-a-geek.net
-boxesLocalization.xsd">
+../Core/Boxes/boxesLocalization.xsd">
 	<BoxLocalization>
 		<Identifier>DataMiningCommon.Database</Identifier>
 		<Label>Databáze</Label>
@@ -8333,5 +8333,127 @@ boxesLocalization.xsd">
 				<Hint>Vytvoří novou krabičku SDKL úloha.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Sample.BodyMassIndex</Identifier>
+		<Label>Body Mass Index</Label>
+		<Hint>BMI - (Body Mass Index = index tělesné zdatnosti = kg/m^2) je považován za kritérium vyjadřující "přiměřenou" tělesnou hmotnost související se zdravím.</Hint>
+		<Categories>
+			<Category>
+				<Name>SampleBoxes</Name>
+				<Label>Ukázkové krabičky</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Height</Name>
+				<Label>Výška</Label>
+				<Hint>Sloupec, kde je uložena výška osoby.</Hint>
+			</Socket>
+			<Socket>
+				<Name>Weight</Name>
+				<Label>Hmotnost</Label>
+				<Hint>Sloupec, kde je uložena hmonost osoby.</Hint>
+			</Socket>
+			<Socket>
+				<Name>HeightUnits</Name>
+				<Label>Jednotky výšky</Label>
+				<Hint>Jednotky použité ve sloupci výšky.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Meter</Name>
+						<Label>Metr</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Cenimeter</Name>
+						<Label>Cenimetr</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Milimeter</Name>
+						<Label>Milimetr</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Foot</Name>
+						<Label>Stopa (UK)</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Inch</Name>
+						<Label>Palec (UK)</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>WeightUnits</Name>
+				<Label>Jednotky hmotnosti</Label>
+				<Hint>Jednotky použité ve sloupci hmotnosti</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Kilogram</Name>
+						<Label>Kilogram</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Gram</Name>
+						<Label>Gram</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Pound</Name>
+						<Label>Libra (UK)</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Height</Name>
+				<Label>Výška</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Weight</Name>
+				<Label>Hmotnost</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>Attribute</Name>
+				<Label>Atribut</Label>
+				<Hint>Tato krabička bude použita jako sloupec, kategorie definujete ve vytvořené krabičce atribut.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>AtomSetting</Name>
+				<Label>Zadání atomu</Label>
+				<Hint>Tato krabička bude použita jako atribut, lze proto přímo použít v nové krabičce zadání atomu.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>CategorialPartialCedentSetting</Name>
+				<Label>Zadání dílčího kategoriálního cedentu</Label>
+				<Hint>Tato krabička bude použita jako (kategoriální) atribut, lze proto přímo použít v nové krabičce zadání dílčího kategoriálního cedentu.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
+		<Phrases>
+			<Phrase>
+				<PhraseIdentifier>ExtremelyUnderweight</PhraseIdentifier>
+				<PhraseText>Vyzáblá postva [&lt; 15]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>Underweight</PhraseIdentifier>
+				<PhraseText>Hubená postava [15 - 20]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>Normal</PhraseIdentifier>
+				<PhraseText>Normalní postava [20 - 25]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>Overweight</PhraseIdentifier>
+				<PhraseText>Postava s nadváhou [25 - 30]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>Obese</PhraseIdentifier>
+				<PhraseText>Obézní postava [&gt; 30]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>BodyMassIndex</PhraseIdentifier>
+				<PhraseText>BMI - index tělexné hmotnosti</PhraseText>
+			</Phrase>
+		</Phrases>
 	</BoxLocalization>
 </BoxesLocalization>

@@ -41,7 +41,7 @@
       <Name>CFQuantifier</Name>
       <SocketTypes>
         <BoxType>
-          <FunctionIceId>::Ferda::Modules::Boxes::CFTask::Quantifiers::AbstractCFQuantifier::AbstractCFQuantifierFunctions</FunctionIceId>
+          <FunctionIceId>::Ferda::Modules::Boxes::LISpMinerTasks::CFTask::Quantifiers::AbstractCFQuantifier::AbstractCFQuantifierFunctions</FunctionIceId>
         </BoxType>
       </SocketTypes>
       <MoreThanOne>true</MoreThanOne>

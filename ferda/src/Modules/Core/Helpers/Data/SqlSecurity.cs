@@ -74,22 +74,27 @@ namespace Ferda.Modules.Helpers.Data
 				};
 			foreach (string badWord in badWords)
 			{
-				if (inputSql.Contains(badWord))
+				if (inputSql.Contains(" " + badWord + " "))
 					return true;
 			}
 			return false;
 		}
 
 		/// <summary>
-		/// Escapes "`" character.
+		/// Trims the specified string and escapes "`" character.
 		/// </summary>
 		/// <param name="inputSql">Input SQL text for process.</param>
 		/// <returns>Safe SQL literal witch duplexed "`".</returns>
 		public static string SafeSqlObjectName(string inputSql)
 		{
-			if (String.IsNullOrEmpty(inputSql))
-				return "";
-			return inputSql.Replace("`", "``");
+
+            if (String.IsNullOrEmpty(inputSql))
+                return String.Empty;
+            else
+            {
+                inputSql.Trim();
+                return inputSql.Replace("`", "``");
+            }
 		}
 
 		/// <summary>

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.MutualInformationNormalized
+namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.MutualInformationNormalized
 {
-	class MutualInformationNormalizedBoxInfo : Ferda.Modules.Boxes.KLTask.Quantifiers.AbstractKLTaskQuantifierBoxInfo
+	class MutualInformationNormalizedBoxInfo : Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.AbstractKLTaskQuantifierBoxInfo
 	{
 		public const string typeIdentifier = 
 			"LISpMinerTasks.KLTask.Quantifiers.Functional.MutualInformationNormalized";

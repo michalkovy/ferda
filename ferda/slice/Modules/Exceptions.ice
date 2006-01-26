@@ -47,7 +47,8 @@ module Ferda {
 			DbColumn, // could not found the column in the data matrix (table) in the database
 			DbColumnDataType, // bad data type of the column
 			DbPrimaryKey, // values in the column(s) are not unique i.e. the specified column(s) is(are) not primery
-			AttributeCategoriesDisjunctivity // categories of the attribute are not disjunctive
+			AttributeCategoriesDisjunctivity, // categories of the attribute are not disjunctive
+			UnexpectedReason // unexpected(unknown) reason for exception
 		};
 
 		exception BadParamsError extends BoxRuntimeError{

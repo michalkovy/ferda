@@ -94,7 +94,6 @@ namespace Ferda.Modules.Quantifiers
         {
             get
             {
-                ComputeRowAndColumnSums();
                 double numerator, sumK, sumL, denominator;
                 numerator = sumK = sumL = 0;
                 denominator = this.denominator;
@@ -102,6 +101,8 @@ namespace Ferda.Modules.Quantifiers
                 int firstRowIndex = FirstRowIndex;
                 int firstColumnIndex = FirstColumnIndex;
                 int lastColumnIndex = LastColumnIndex;
+                long[] rowSums = PreparedSums.RowSums;
+                long[] columnSums = PreparedSums.ColumnSums;
                 for (int rowIndex = firstRowIndex; rowIndex <= LastRowIndex; rowIndex++)
                 {
                     double rowSum = rowSums[rowIndex - firstRowIndex] / denominator;
@@ -236,11 +237,10 @@ namespace Ferda.Modules.Quantifiers
         {
             get
             {
-                ComputeRowAndColumnSums();
                 double denominator = this.denominator;
                 double result = 0;
 
-                foreach (long number in columnSums)
+                foreach (long number in PreparedSums.ColumnSums)
                 {
                     double item = number / denominator;
                     result += item * Math.Log(item, 2);
@@ -266,11 +266,10 @@ namespace Ferda.Modules.Quantifiers
         {
             get
             {
-                ComputeRowAndColumnSums();
                 double denominator = this.denominator;
                 double result = 0;
 
-                foreach (long number in rowSums)
+                foreach (long number in PreparedSums.RowSums)
                 {
                     double item = number / denominator;
                     result += item * Math.Log(item, 2);
@@ -287,7 +286,6 @@ namespace Ferda.Modules.Quantifiers
         {
             get
             {
-                ComputeRowAndColumnSums();
                 double denominator = this.denominator;
                 double result = 0;
 

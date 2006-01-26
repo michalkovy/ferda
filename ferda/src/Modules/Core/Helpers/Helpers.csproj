@@ -52,12 +52,19 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Csv.cs" />
+    <Compile Include="Common\Parsing.cs" />
     <Compile Include="Data\Attribute.cs" />
     <Compile Include="Data\Column.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\DataMatrix.cs" />
     <Compile Include="Data\OdbcConnections.cs" />
     <Compile Include="Data\SqlSecurity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{E10C446E-8D76-41AB-89EC-C5C45F56D1D4}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

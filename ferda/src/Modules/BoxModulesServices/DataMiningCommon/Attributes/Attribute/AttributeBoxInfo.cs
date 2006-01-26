@@ -32,7 +32,6 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute
 			ModulesAskingForCreation moduleAFC;
 			ModulesConnection moduleConnection;
 			ModuleAskingForCreation singleModuleAFC;
-			Ferda.ModulesManager.BoxModuleProjectInformationPrx projectInfoPrx = boxModule.Manager.getProjectInformation();
 			foreach (string moduleAFCName in modulesAFC.Keys)
 			{
 				moduleAFC = modulesAFC[moduleAFCName];

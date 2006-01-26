@@ -25,28 +25,28 @@ namespace Ferda.Modules.Quantifiers
         public FourFoldContingencyTable(int[][] contingencyTable)
             : base(contingencyTable)
         {
-            if (!this.IsFourFoldTable)
+            if (!this.IsBasicFourFoldTable)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be four fold!", restrictionTypeEnum.BadFormat);
         }
 
         public FourFoldContingencyTable(long[][] contingencyTable)
             : base(contingencyTable)
         {
-            if (!this.IsFourFoldTable)
+            if (!this.IsBasicFourFoldTable)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be four fold!", restrictionTypeEnum.BadFormat);
         }
 
         public FourFoldContingencyTable(long[,] contingencyTable)
             : base(contingencyTable)
         {
-            if (!this.IsFourFoldTable)
+            if (!this.IsBasicFourFoldTable)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be four fold!", restrictionTypeEnum.BadFormat);
         }
 
         public FourFoldContingencyTable(long[,] contingencyTable, long denominator)
             : base(contingencyTable, denominator)
         {
-            if (!this.IsFourFoldTable)
+            if (!this.IsBasicFourFoldTable)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be four fold!", restrictionTypeEnum.BadFormat);
         }
 

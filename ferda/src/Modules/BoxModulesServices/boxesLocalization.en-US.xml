@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Tomas Kuchar (Ru-Board) -->
 <BoxesLocalization xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ferda.is-a-geek.net
-boxesLocalization.xsd">
+../Core/Boxes/boxesLocalization.xsd">
 	<BoxLocalization>
 		<Identifier>DataMiningCommon.Database</Identifier>
 		<Label>Database</Label>
@@ -8333,5 +8333,127 @@ boxesLocalization.xsd">
 				<Hint>Creates a new SDKL task box.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Sample.BodyMassIndex</Identifier>
+		<Label>Body Mass Index</Label>
+		<Hint>BMI equals a person's weight in kilograms divided by height in meters squared. (BMI=kg/m^2).</Hint>
+		<Categories>
+			<Category>
+				<Name>SampleBoxes</Name>
+				<Label>Sample Boxes</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Height</Name>
+				<Label>Height</Label>
+				<Hint>Column where height of the person is specified.</Hint>
+			</Socket>
+			<Socket>
+				<Name>Weight</Name>
+				<Label>Weight</Label>
+				<Hint>Column where weight of the person is specified.</Hint>
+			</Socket>
+			<Socket>
+				<Name>HeightUnits</Name>
+				<Label>Height units</Label>
+				<Hint>Units of specified height column.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Meter</Name>
+						<Label>Meter</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Cenimeter</Name>
+						<Label>Cenimeter</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Milimeter</Name>
+						<Label>Milimeter</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Foot</Name>
+						<Label>Foot</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Inch</Name>
+						<Label>Inch</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>WeightUnits</Name>
+				<Label>Weight units</Label>
+				<Hint>Units of specified weight column</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Kilogram</Name>
+						<Label>Kilogram</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Gram</Name>
+						<Label>Gram</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Pound</Name>
+						<Label>Pound (lb.)</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Height</Name>
+				<Label>Height</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Weight</Name>
+				<Label>Weight</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>Attribute</Name>
+				<Label>Attribute</Label>
+				<Hint>Categorizes the column thus creating new attribute box.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>AtomSetting</Name>
+				<Label>Atom setting</Label>
+				<Hint>Creates a new coefficient setting box.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>CategorialPartialCedentSetting</Name>
+				<Label>Categorial partial cedent setting</Label>
+				<Hint>Creates a new categorial partial cedent box.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
+		<Phrases>
+			<Phrase>
+				<PhraseIdentifier>ExtremelyUnderweight</PhraseIdentifier>
+				<PhraseText>Extremely underweight [&lt; 15]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>Underweight</PhraseIdentifier>
+				<PhraseText>Underweight [15 - 20]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>Normal</PhraseIdentifier>
+				<PhraseText>Normal [20 - 25]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>Overweight</PhraseIdentifier>
+				<PhraseText>Overweight [25 - 30]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>Obese</PhraseIdentifier>
+				<PhraseText>Obese [&gt; 30]</PhraseText>
+			</Phrase>
+			<Phrase>
+				<PhraseIdentifier>BodyMassIndex</PhraseIdentifier>
+				<PhraseText>Body Mass Index</PhraseText>
+			</Phrase>
+		</Phrases>
 	</BoxLocalization>
 </BoxesLocalization>

@@ -151,7 +151,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         {
             try
             {
-                Ferda.Modules.Helpers.Data.Database.TestConnectionString(connectionString, null, true);
+                Ferda.Modules.Helpers.Data.Database.TestConnectionString(connectionString, null);
                 return true;
             }
             catch { }

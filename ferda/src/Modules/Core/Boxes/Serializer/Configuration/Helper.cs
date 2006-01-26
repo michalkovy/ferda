@@ -155,7 +155,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         public string[] Categories
         { get { return this.box.Categories; } }
 
-        private Dictionary<string, Boxes.Serializer.Configuration.Socket> sockets = new Dictionary<string, Socket>();
+        private SortedList<string, Boxes.Serializer.Configuration.Socket> sockets = new SortedList<string, Socket>();
         /// <summary>
         /// Gets the sockets.
         /// </summary>
@@ -163,12 +163,12 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is the socket`s name.</para>
         /// <para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Socket"/>.</para>
         /// </value>
-        public Dictionary<string, Boxes.Serializer.Configuration.Socket> Sockets
+        public SortedList<string, Boxes.Serializer.Configuration.Socket> Sockets
         {
             get { return sockets; }
         }
 
-        private Dictionary<string, Boxes.Serializer.Configuration.Property> properties = new Dictionary<string, Property>();
+        private SortedList<string, Boxes.Serializer.Configuration.Property> properties = new SortedList<string, Property>();
         /// <summary>
         /// Gets the properties.
         /// </summary>
@@ -176,7 +176,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is name of the property.</para>
         /// <para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Property"/>.</para>
         /// </value>
-        public Dictionary<string, Boxes.Serializer.Configuration.Property> Properties
+        public SortedList<string, Boxes.Serializer.Configuration.Property> Properties
         {
             get { return properties; }
         }

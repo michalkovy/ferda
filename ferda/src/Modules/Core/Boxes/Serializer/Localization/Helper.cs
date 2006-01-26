@@ -170,7 +170,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// <para><c>Key</c> is name (if you like identifier) of the phrase.</para>
         /// <para><c>Value</c> is localized text of the phrase.</para>
         /// </value>
-        private Dictionary<string, string> phrases = new Dictionary<string, string>();
+        private SortedList<string, string> phrases = new SortedList<string, string>();
 
         /// <summary>
         /// Tries to the get specified phrase (<c>phraseIdentifier</c>).

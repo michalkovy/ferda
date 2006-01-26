@@ -15,7 +15,7 @@ using Ferda.Modules;
 using Ferda.Modules.Boxes.DataMiningCommon.Attributes;
 using Ferda.Modules.Boxes.DataMiningCommon.Column;
 using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
-using Ferda.Modules.Boxes.AbstractLMTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 
 namespace Ferda.Modules.MetabaseLayer
 {
@@ -245,9 +245,9 @@ namespace Ferda.Modules.MetabaseLayer
             foreach (DataRow row in table.Rows)
             {
                 if (kl)
-                    result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
+                    result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
                 else
-                    result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
+                    result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
             }
             return result;
         }
@@ -289,9 +289,9 @@ namespace Ferda.Modules.MetabaseLayer
             foreach (DataRow row in table.Rows)
             {
                 if (kl)
-                    result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
+                    result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
                 else
-                    result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
+                    result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
             }
             return result;
         }
@@ -772,8 +772,11 @@ namespace Ferda.Modules.MetabaseLayer
         }
         private int SetValue(string value)
         {
-            if (value == null) //String.IsNullOrEmpty
+            if (value == Ferda.Modules.Helpers.Common.Constants.DbNullCategoryName
+                || value == null /* nemelo by nastat */ )
                 return this.SetValue();
+            if (value == Ferda.Modules.Helpers.Common.Constants.EmptyStringCategoryName)
+                value = String.Empty;
             string tableName = "tmValue";
             string autoIncrementColumn = GetAutoIncrementColumnName(tableName);
             int autoIncrementValue = GetTableAutoIncrementValue(tableName, 1);
@@ -1305,7 +1308,7 @@ namespace Ferda.Modules.MetabaseLayer
             }
 
             //Test values of primary key columns for duplicits (also test connection string and existence of data matrix)
-            Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(connectionString, dataMatrixName, primaryKeyColumns, boxIdentity, true);
+            Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(connectionString, dataMatrixName, primaryKeyColumns, boxIdentity);
             #endregion
 
             ColumnStruct columnStruct;
@@ -1371,7 +1374,7 @@ namespace Ferda.Modules.MetabaseLayer
                                 columnInfo.name,
                                 dataMatrixDBID,
                                 ColumnTypeEnum.Ordinary,
-                                Ferda.Modules.Helpers.Data.Column.ComputeColumnSubType(columnInfo.dataType),
+                                Ferda.Modules.Helpers.Data.Column.GetColumnSubTypeByDataType(columnInfo.dataType),
                                 columnInfo.name,
                                 i);
                             this.columns.Add(columnInfo.name, tmpColumnID);

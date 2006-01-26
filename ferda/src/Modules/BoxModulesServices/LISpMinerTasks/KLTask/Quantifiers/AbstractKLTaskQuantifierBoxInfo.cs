@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Modules.Boxes.KLTask.Quantifiers
+namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers
 {
 	public abstract class AbstractKLTaskQuantifierBoxInfo : BoxInfo
 	{
@@ -36,7 +36,7 @@ namespace Ferda.Modules.Boxes.KLTask.Quantifiers
 					case "KLTask":
 						moduleConnection.socketName = "KLQuantifier";
 						singleModuleAFC.newBoxModuleIdentifier =
-							Ferda.Modules.Boxes.KLTask.KLTaskBoxInfo.typeIdentifier;
+							Ferda.Modules.Boxes.LISpMinerTasks.KLTask.KLTaskBoxInfo.typeIdentifier;
 						break;
 					default:
 						throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(moduleAFCName);

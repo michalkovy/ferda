@@ -1,10 +1,10 @@
 using System;
-using Ferda.Modules.Boxes.AbstractQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
 using System.Collections.Generic;
-using Ferda.Modules.Boxes.KLTask.Quantifiers.AbstractKLQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.AbstractKLQuantifier;
 using Ferda.Modules.Quantifiers;
 
-namespace Ferda.Modules.Boxes.KLTask.Quantifiers
+namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers
 {
 	/// <summary>
 	/// Defined properties: RowFrom, RowTo, ColumnFrom, ColumnTo, Relation and Treshold.

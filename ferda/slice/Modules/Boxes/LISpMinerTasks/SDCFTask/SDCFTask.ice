@@ -10,25 +10,27 @@
 module Ferda {
 	module Modules {
 		module Boxes {
-			module SDCFTask	{
+			module LISpMinerTasks {
+				module SDCFTask	{
 
-				struct TaskStruct {
-					Ferda::Modules::Boxes::DataMiningCommon::CategorialPartialCedentSetting::CategorialPartialCedentSettingStructSeq antecedentSetting;
-					Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq conditionSetting;
-					Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq firstCedentSetting;
-					Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq secondCedentSetting;
-					WorkingWithCedentsFirstSetEnum firstSet;
-					WorkingWithCedentsSecondSetEnum secondSet;
-					Ferda::Modules::Boxes::AbstractLMTask::QuantifierSettingStructSeq quantifiers;
-				};
+					struct TaskStruct {
+						Ferda::Modules::Boxes::DataMiningCommon::CategorialPartialCedentSetting::CategorialPartialCedentSettingStructSeq antecedentSetting;
+						Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq conditionSetting;
+						Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq firstCedentSetting;
+						Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingStructSeq secondCedentSetting;
+						WorkingWithCedentsFirstSetEnum firstSet;
+						WorkingWithCedentsSecondSetEnum secondSet;
+						Ferda::Modules::Boxes::LISpMinerTasks::AbstractLMTask::QuantifierSettingStructSeq quantifiers;
+					};
 
-				interface SDCFTaskFunctions extends Ferda::Modules::Boxes::AbstractLMTask::AbstractLMTaskFunctions {
-					nonmutating TaskStruct getTask()
-							throws
-								Ferda::Modules::BoxRuntimeError,
-								Ferda::Modules::BadValueError,
-								Ferda::Modules::BadParamsError,
-								Ferda::Modules::NoConnectionInSocketError;
+					interface SDCFTaskFunctions extends Ferda::Modules::Boxes::LISpMinerTasks::AbstractLMTask::AbstractLMTaskFunctions {
+						nonmutating TaskStruct getTask()
+								throws
+									Ferda::Modules::BoxRuntimeError,
+									Ferda::Modules::BadValueError,
+									Ferda::Modules::BadParamsError,
+									Ferda::Modules::NoConnectionInSocketError;
+					};
 				};
 			};
 		};

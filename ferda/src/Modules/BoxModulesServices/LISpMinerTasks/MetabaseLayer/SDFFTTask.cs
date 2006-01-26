@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Ferda.Modules.Boxes.SDFFTTask;
-using Ferda.Modules.Boxes.AbstractQuantifier;
-using Ferda.Modules.Boxes.AbstractLMTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 using System.Data.Odbc;
 using System.Data;
 using Ferda.Modules.Boxes.DataMiningCommon.BooleanPartialCedentSetting;
@@ -33,7 +33,7 @@ namespace Ferda.Modules.MetabaseLayer
 
 		protected override void saveTask(object input, int masterTaskID, string boxIdentity)
 		{
-			Ferda.Modules.Boxes.SDFFTTask.TaskStruct taskDescription = (TaskStruct)input;
+			Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.TaskStruct taskDescription = (TaskStruct)input;
 			string tableName = "taTaskDF";
 			string autoIncrementColumn = common.GetAutoIncrementColumnName(tableName);
 			long autoIncrementValue = common.GetTableAutoIncrementValue(tableName, 1);
@@ -73,31 +73,31 @@ namespace Ferda.Modules.MetabaseLayer
                 #region Quantifier switch
                 switch (quantifier.typeIdentifier)
 				{
-					case Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Aggregation.SumOfValues.SumOfValuesBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Aggregation.SumOfValues.SumOfValuesBoxInfo.typeIdentifier:
 						quantifierTypeID = 1;
 						break;
-					case Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Aggregation.MinValue.MinValueBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Aggregation.MinValue.MinValueBoxInfo.typeIdentifier:
 						quantifierTypeID = 2;
 						break;
-					case Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Aggregation.MaxValue.MaxValueBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Aggregation.MaxValue.MaxValueBoxInfo.typeIdentifier:
 						quantifierTypeID = 3;
 						break;
-					case Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Aggregation.BaseCeil.BaseCeilBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Aggregation.BaseCeil.BaseCeilBoxInfo.typeIdentifier:
 						quantifierTypeID = 20;
 						break;
-					case Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Functional.FoundedImplication.FoundedImplicationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Functional.FoundedImplication.FoundedImplicationBoxInfo.typeIdentifier:
 						units = UnitsEnum.AbsoluteNumber;
 						quantifierTypeID = 4;
 						break;
-					case Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Functional.AboveAverageImplication.AboveAverageImplicationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Functional.AboveAverageImplication.AboveAverageImplicationBoxInfo.typeIdentifier:
 						units = UnitsEnum.AbsoluteNumber;
 						quantifierTypeID = 5;
 						break;
-					case Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Functional.DoubleFoundedImplication.DoubleFoundedImplicationBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Functional.DoubleFoundedImplication.DoubleFoundedImplicationBoxInfo.typeIdentifier:
 						units = UnitsEnum.AbsoluteNumber;
 						quantifierTypeID = 9;
 						break;
-					case Ferda.Modules.Boxes.SDFFTTask.Quantifiers.Functional.FoundedEquivalence.FoundedEquivalenceBoxInfo.typeIdentifier:
+					case Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Functional.FoundedEquivalence.FoundedEquivalenceBoxInfo.typeIdentifier:
 						units = UnitsEnum.AbsoluteNumber;
 						quantifierTypeID = 12;
 						break;
@@ -150,7 +150,7 @@ namespace Ferda.Modules.MetabaseLayer
 
 		protected override BooleanCedent[] getBooleanCedents(object taskDescription)
 		{
-			Ferda.Modules.Boxes.SDFFTTask.TaskStruct input = (TaskStruct)taskDescription;
+			Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.TaskStruct input = (TaskStruct)taskDescription;
 			List<BooleanCedent> result = new List<BooleanCedent>();
 			addBooleanCedents(input.antecedentSetting, CedentEnum.Antecedent, ref result);
 			addBooleanCedents(input.succedentSetting, CedentEnum.Succedent, ref result);

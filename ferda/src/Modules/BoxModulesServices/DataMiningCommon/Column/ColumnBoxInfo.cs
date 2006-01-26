@@ -136,7 +136,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
                 case "ValueDistincts":
                     return new Ferda.Modules.LongTI(Func.GetStatistics().ValueDistincts);
                 default:
-                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(propertyName);
+                    return null;
+                    //throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(propertyName);
             }
         }
     }

@@ -9,41 +9,43 @@
 module Ferda {
 	module Modules {
 		module Boxes {
-			module AbstractLMTask	{
+			module LISpMinerTasks {
+				module AbstractLMTask	{
 
-				struct QuantifierSettingStruct {
-					string typeIdentifier;
-					Ferda::Modules::PropertySettingSeq setting;
-				};
-				sequence<QuantifierSettingStruct> QuantifierSettingStructSeq;
+					struct QuantifierSettingStruct {
+						string typeIdentifier;
+						Ferda::Modules::PropertySettingSeq setting;
+					};
+					sequence<QuantifierSettingStruct> QuantifierSettingStructSeq;
 
-				struct QuantifierProvider
-				{
-					Ferda::Modules::Boxes::AbstractQuantifier::AbstractQuantifierFunctions* functions;
-					string localizedBoxLabel;
-					string userBoxLabel;
-				};
-				sequence<QuantifierProvider> QuantifierProviderSeq;
+					struct QuantifierProvider
+					{
+						Ferda::Modules::Boxes::LISpMinerTasks::AbstractQuantifier::AbstractQuantifierFunctions* functions;
+						string localizedBoxLabel;
+						string userBoxLabel;
+					};
+					sequence<QuantifierProvider> QuantifierProviderSeq;
 
-				interface AbstractLMTaskFunctions {
-					nonmutating HypothesisStructSeq getResult()
-							throws
-								Ferda::Modules::BoxRuntimeError,
-								Ferda::Modules::BadValueError,
-								Ferda::Modules::BadParamsError,
-								Ferda::Modules::NoConnectionInSocketError;
-					nonmutating GeneratingStruct getGeneratingInfo()
-							throws
-								Ferda::Modules::BoxRuntimeError,
-								Ferda::Modules::BadValueError,
-								Ferda::Modules::BadParamsError,
-								Ferda::Modules::NoConnectionInSocketError;
-					nonmutating QuantifierProviderSeq getQuantifierProviders()
-							throws
-								Ferda::Modules::BoxRuntimeError,
-								Ferda::Modules::BadValueError,
-								Ferda::Modules::BadParamsError,
-								Ferda::Modules::NoConnectionInSocketError;
+					interface AbstractLMTaskFunctions {
+						nonmutating HypothesisStructSeq getResult()
+								throws
+									Ferda::Modules::BoxRuntimeError,
+									Ferda::Modules::BadValueError,
+									Ferda::Modules::BadParamsError,
+									Ferda::Modules::NoConnectionInSocketError;
+						nonmutating GeneratingStruct getGeneratingInfo()
+								throws
+									Ferda::Modules::BoxRuntimeError,
+									Ferda::Modules::BadValueError,
+									Ferda::Modules::BadParamsError,
+									Ferda::Modules::NoConnectionInSocketError;
+						nonmutating QuantifierProviderSeq getQuantifierProviders()
+								throws
+									Ferda::Modules::BoxRuntimeError,
+									Ferda::Modules::BadValueError,
+									Ferda::Modules::BadParamsError,
+									Ferda::Modules::NoConnectionInSocketError;
+					};
 				};
 			};
 		};

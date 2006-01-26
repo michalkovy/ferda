@@ -51,7 +51,7 @@
       <Name>SDFFTQuantifier</Name>
       <SocketTypes>
         <BoxType>
-          <FunctionIceId>::Ferda::Modules::Boxes::SDFFTTask::Quantifiers::AbstractSDFFTQuantifier::AbstractSDFFTQuantifierFunctions</FunctionIceId>
+          <FunctionIceId>::Ferda::Modules::Boxes::LISpMinerTasks::SDFFTTask::Quantifiers::AbstractSDFFTQuantifier::AbstractSDFFTQuantifierFunctions</FunctionIceId>
         </BoxType>
       </SocketTypes>
       <MoreThanOne>true</MoreThanOne>

@@ -1,67 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Modules.Quantifiers
 {
     public class ContingencyTable
     {
-        #region CASTING
-        /* CASTING
-		//Resim to, ze spadne pretypovani na radcich (+-) 943 973
-		public T Retype<T>(ContingencyTable table)
-			where T : ContingencyTable
-		{
-				if (typeof(T) == typeof(ContingencyTable))
-					return (T)table;
-				else if (typeof(T) == typeof(FourFoldContingencyTable))
-					return (T)ContingencyTable2FourFoldContingencyTable(table);
-				else if (typeof(T) == typeof(TwoDimensionalContingencyTable))
-					return (T)ContingencyTable2TwoDimensionalContingencyTable(table);
-		}
-	
-		//public static explicit operator FourFoldContingencyTable(ContingencyTable contingecyTable)
-		public static FourFoldContingencyTable ContingencyTable2FourFoldContingencyTable(ContingencyTable contingecyTable)
-		{
-			if (contingecyTable.IsBasicFourFoldTable)
-				return new FourFoldContingencyTable(contingecyTable.table, contingecyTable.denominator);
-			else if (contingecyTable.IsFourFoldTable)
-			{
-				int firstColumnIndex = contingecyTable.FirstColumnIndex;
-				int firstRowIndex = contingecyTable.FirstRowIndex;
-				return new FourFoldContingencyTable(
-					contingecyTable.table[firstRowIndex, firstColumnIndex],
-					contingecyTable.table[firstRowIndex, firstColumnIndex + 1],
-					contingecyTable.table[firstRowIndex + 1, firstColumnIndex],
-					contingecyTable.table[firstRowIndex + 1, firstColumnIndex + 1],
-					contingecyTable.denominator);
-			}
-			else
-				throw new InvalidCastException();
-		}
-
-		public static TwoDimensionalContingencyTable ContingencyTable2TwoDimensionalContingencyTable(ContingencyTable contingecyTable)
-		{
-			try
-			{
-				return new TwoDimensionalContingencyTable(contingecyTable.table, contingecyTable.denominator);
-			}
-			catch (Exception ex)
-			{
-				throw new InvalidCastException("", ex);
-			}
-		}
-		*/
-        #endregion
+        #region Core Functions
 
         #region Constructors
         public ContingencyTable()
         {
-            denominator = 1;
+            PreparedSums = new PreparedSums(this);
         }
-
         public ContingencyTable(int[][] contingencyTable)
         {
+            PreparedSums = new PreparedSums(this);
+
             int numOfRows = contingencyTable.Length;
             if (numOfRows <= 0)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Bad shape of contingecy table!", restrictionTypeEnum.BadFormat);
@@ -85,6 +41,8 @@ namespace Ferda.Modules.Quantifiers
         }
         public ContingencyTable(long[][] contingencyTable)
         {
+            PreparedSums = new PreparedSums(this);
+
             int numOfRows = contingencyTable.Length;
             if (numOfRows <= 0)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Bad shape of contingecy table!", restrictionTypeEnum.BadFormat);
@@ -104,27 +62,43 @@ namespace Ferda.Modules.Quantifiers
                 rowNumber++;
             }
             Table = newTable;
-            denominator = 1;
         }
         /// <summary>
         /// Constructor (with default denominator=1).
         /// </summary>
-        /// <param name="contingencyTable">Array of contingency table rows. Value of table[0][0] is value of A.</param>
+        /// <param name="contingencyTable">Array of contingency table rows. 
+        /// Value of table[0][0] is value of A.</param>
         public ContingencyTable(long[,] contingencyTable)
         {
+            PreparedSums = new PreparedSums(this);
+
             Table = contingencyTable;
-            denominator = 1;
         }
 
         public ContingencyTable(long[,] contingencyTable, long denominator)
         {
+            PreparedSums = new PreparedSums(this);
+
             Table = contingencyTable;
             this.denominator = denominator;
         }
         #endregion
 
         #region Fields (table, denominator)
+
+        /// <summary>
+        /// Provides some prepared sums. 
+        /// Computations are lazy evaluated and results are cached.
+        /// </summary>
+        public PreparedSums PreparedSums;
+
         protected long denominator = 1;
+        /// <summary>
+        /// Gets the denominator or (instead of set) multiples the 
+        /// denominator by given <c>value</c> (default value of the
+        /// denominator is <c>1</c>).
+        /// </summary>
+        /// <value>The denominator.</value>
         public long Denominator
         {
             get { return denominator; }
@@ -133,8 +107,17 @@ namespace Ferda.Modules.Quantifiers
 
         protected long[,] table;
         /// <summary>
-        /// Table [x][c], <c>x</c> is index of row, <c>c</c> is index of column.
+        /// Table [r, c], <c>r</c> is index of row, <c>c</c> is index of column.
+        /// At position [0, 0] is item at first row and first column, 
+        /// if you like <b>a-frequency</b>.
         /// </summary>
+        /// <remarks>
+        /// </remarks>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown if contingency table has bad shape i.e. no rows or no columns;
+        /// or any item of the table is &lt; 0. (Contingency table should have all
+        /// items possitive.)
+        /// </exception>
         public long[,] Table
         {
             private set
@@ -157,7 +140,21 @@ namespace Ferda.Modules.Quantifiers
         }
         #endregion
 
-        #region Arithmetic (operator+, operator-, operator==, operator!=, Div(value))
+        #region Arithmetic (operator+, operator-, operator==, operator!=, GetHashCode, Div(value))
+        /// <summary>
+        /// Operator <b>==</b>.
+        /// </summary>
+        /// <param name="a">First contingecy table.</param>
+        /// <param name="b">Second contingecy table.</param>
+        /// <returns>
+        /// <c>true</c> iff all corresponding items of specified tables (in space 
+        /// restricted by their bounds) are equal but also their denominators equals;
+        /// otherwise, <c>false</c>. 
+        /// </returns>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown iff specified contingecy tables (more precisely its submatrixes)
+        /// has differend shapes.
+        /// </exception>
         public static bool operator ==(ContingencyTable a, ContingencyTable b)
         {
             int aFirstRowIndex = a.FirstRowIndex;
@@ -174,8 +171,8 @@ namespace Ferda.Modules.Quantifiers
             long resultDenominator = aMultiplicator * bMultiplicator;
             if (aMultiplicator == bMultiplicator)
             {
-                aMultiplicator = bMultiplicator = 1;
                 resultDenominator = aMultiplicator;
+                aMultiplicator = bMultiplicator = 1;
             }
 
             if ((aLastRowIndex - aFirstRowIndex) == (bLastRowIndex - bFirstRowIndex)
@@ -197,6 +194,76 @@ namespace Ferda.Modules.Quantifiers
             throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Uncompatible sizes of contingecy tables to combine!", restrictionTypeEnum.BadFormat);
         }
 
+        private enum operatorType
+        {
+            Plus,
+            Minus
+        }
+
+        private static ContingencyTable internalOperator(ContingencyTable a, ContingencyTable b, operatorType operatorType)
+        {
+            int aFirstRowIndex = a.FirstRowIndex;
+            int aLastRowIndex = a.LastRowIndex;
+            int aFirstColumnIndex = a.FirstColumnIndex;
+            int aLastColumnIndex = a.LastColumnIndex;
+            int bFirstRowIndex = b.FirstRowIndex;
+            int bLastRowIndex = b.LastRowIndex;
+            int bFirstColumnIndex = b.FirstColumnIndex;
+            int bLastColumnIndex = b.LastColumnIndex;
+
+            long aMultiplicator = b.Denominator;
+            long bMultiplicator = a.Denominator;
+            long resultDenominator = aMultiplicator * bMultiplicator;
+            if (aMultiplicator == bMultiplicator)
+            {
+                resultDenominator = aMultiplicator;
+                aMultiplicator = bMultiplicator = 1;
+            }
+
+            if ((aLastRowIndex - aFirstRowIndex) == (bLastRowIndex - bFirstRowIndex)
+                && (aLastColumnIndex - aFirstColumnIndex) == (bLastColumnIndex - bFirstColumnIndex))
+            {
+                int aToBRowShift = bFirstRowIndex - aFirstRowIndex;
+                int aToBColumnShift = bFirstColumnIndex - aFirstColumnIndex;
+                long[,] result = new long[aLastRowIndex - aFirstRowIndex + 1, aLastColumnIndex - aFirstColumnIndex + 1];
+                for (int rowIndex = aFirstRowIndex; rowIndex <= aLastRowIndex; rowIndex++)
+                {
+                    for (int columnIndex = aFirstColumnIndex; columnIndex <= aLastColumnIndex; columnIndex++)
+                    {
+                        if (operatorType == operatorType.Plus)
+                        {
+                            result[rowIndex - aFirstRowIndex, columnIndex - aFirstColumnIndex] =
+                                a.table[rowIndex, columnIndex] * aMultiplicator
+                                + b.table[rowIndex - aToBRowShift, columnIndex - aToBColumnShift] * bMultiplicator;
+                        }
+                        else if (operatorType == operatorType.Minus)
+                        {
+                            result[rowIndex - aFirstRowIndex, columnIndex - aFirstColumnIndex] =
+                                Math.Abs(
+                                    a.table[rowIndex, columnIndex] * aMultiplicator
+                                    - b.table[rowIndex - aToBRowShift, columnIndex - aToBColumnShift] * bMultiplicator);
+                        }
+                    }
+                }
+                return new ContingencyTable(result, resultDenominator);
+            }
+            throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Uncompatible sizes of contingecy tables to combine!", restrictionTypeEnum.BadFormat);
+        }
+
+        /// <summary>
+        /// Operator <b>!=</b>.
+        /// </summary>
+        /// <param name="a">First contingecy table.</param>
+        /// <param name="b">Second contingecy table.</param>
+        /// <returns>
+        /// <c>true</c> iff all corresponding items of specified tables (in space 
+        /// restricted by their bounds) are not equal and also their denominators 
+        /// are equals different; otherwise, <c>false</c>. 
+        /// </returns>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown iff specified contingecy tables (more precisely its submatrixes)
+        /// has differend shapes.
+        /// </exception>
         public static bool operator !=(ContingencyTable a, ContingencyTable b)
         {
             return !(a == b);
@@ -209,9 +276,22 @@ namespace Ferda.Modules.Quantifiers
                 + 7 * firstRowIndex
                 + 11 * lastRowIndex
                 + 13 * (int)denominator
-                + (int)SumOfValuesAggregation;
+                + 17 * (int)SumOfValuesAggregation;
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="T:System.Object"></see> 
+        /// is equal to the current <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.
+        /// </summary>
+        /// <param name="obj">
+        /// The <see cref="T:System.Object"></see> to compare with the current 
+        /// <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the specified <see cref="T:System.Object"></see> is equal to 
+        /// the current <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>; 
+        /// otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(Object obj)
         {
             ContingencyTable contingencyTable = obj as ContingencyTable;
@@ -222,99 +302,49 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// If submatrixes of <c>a</c> and <c>b</c> are not of the same 
-        /// size throws Ferda.Modules.BadParamsError() otherwise
-        /// returns new ContingencyTable with corresponding denominator
-        /// as OutputContingencyTable_ij(Abs(A_kl + B_mn)).
+        /// ContingencyTable with corresponding denominator
+        /// and the contingecy table, where Table_ij = (A_kl + B_mn). 
+        /// (k, l, m, n indexes depends on bounds of input tables, usually
+        /// k = m = i and l = n = j)
         /// </summary>
+        /// <param name="a">First contingecy table.</param>
+        /// <param name="b">Second contingecy table.</param>
+        /// <returns>
+        /// [Sub]matrix as result of adding by items. 
+        /// </returns>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown iff specified contingecy tables (more precisely its submatrixes)
+        /// has differend shapes.
+        /// </exception>
         public static ContingencyTable operator +(ContingencyTable a, ContingencyTable b)
         {
-            int aFirstRowIndex = a.FirstRowIndex;
-            int aLastRowIndex = a.LastRowIndex;
-            int aFirstColumnIndex = a.FirstColumnIndex;
-            int aLastColumnIndex = a.LastColumnIndex;
-            int bFirstRowIndex = b.FirstRowIndex;
-            int bLastRowIndex = b.LastRowIndex;
-            int bFirstColumnIndex = b.FirstColumnIndex;
-            int bLastColumnIndex = b.LastColumnIndex;
-
-            long aMultiplicator = b.Denominator;
-            long bMultiplicator = a.Denominator;
-            long resultDenominator = aMultiplicator * bMultiplicator;
-            if (aMultiplicator == bMultiplicator)
-            {
-                aMultiplicator = bMultiplicator = 1;
-                resultDenominator = aMultiplicator;
-            }
-
-            if ((aLastRowIndex - aFirstRowIndex) == (bLastRowIndex - bFirstRowIndex)
-                && (aLastColumnIndex - aFirstColumnIndex) == (bLastColumnIndex - bFirstColumnIndex))
-            {
-                int aToBRowShift = bFirstRowIndex - aFirstRowIndex;
-                int aToBColumnShift = bFirstColumnIndex - aFirstColumnIndex;
-                long[,] result = new long[aLastRowIndex - aFirstRowIndex + 1, aLastColumnIndex - aFirstColumnIndex + 1];
-                for (int rowIndex = aFirstRowIndex; rowIndex <= aLastRowIndex; rowIndex++)
-                {
-                    for (int columnIndex = aFirstColumnIndex; columnIndex <= aLastColumnIndex; columnIndex++)
-                    {
-                        result[rowIndex - aFirstRowIndex, columnIndex - aFirstColumnIndex] =
-                            Math.Abs(
-                                a.table[rowIndex, columnIndex] * aMultiplicator
-                                + b.table[rowIndex - aToBRowShift, columnIndex - aToBColumnShift] * bMultiplicator);
-                    }
-                }
-                return new ContingencyTable(result, resultDenominator);
-            }
-            throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Uncompatible sizes of contingecy tables to combine!", restrictionTypeEnum.BadFormat);
+            return internalOperator(a, b, operatorType.Plus);
         }
 
         /// <summary>
-        /// If submatrixes of <c>a</c> and <c>b</c> are not of the same 
-        /// size throws Ferda.Modules.BadParamsError() otherwise
-        /// returns new ContingencyTable with corresponding denominator
-        /// as OutputContingencyTable_ij(Abs(A_kl - B_mn)).
+        /// ContingencyTable with corresponding denominator
+        /// and the contingecy table, where Table_ij = (Abs(A_kl - B_mn)). 
+        /// (k, l, m, n indexes depends on bounds of input tables, usually
+        /// k = m = i and l = n = j)
         /// </summary>
+        /// <param name="a">First contingecy table.</param>
+        /// <param name="b">Second contingecy table.</param>
+        /// <returns>
+        /// [Sub]matrix as result of subtraction by items. 
+        /// </returns>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown iff specified contingecy tables (more precisely its submatrixes)
+        /// has differend shapes.
+        /// </exception> 
         public static ContingencyTable operator -(ContingencyTable a, ContingencyTable b)
         {
-            int aFirstRowIndex = a.FirstRowIndex;
-            int aLastRowIndex = a.LastRowIndex;
-            int aFirstColumnIndex = a.FirstColumnIndex;
-            int aLastColumnIndex = a.LastColumnIndex;
-            int bFirstRowIndex = b.FirstRowIndex;
-            int bLastRowIndex = b.LastRowIndex;
-            int bFirstColumnIndex = b.FirstColumnIndex;
-            int bLastColumnIndex = b.LastColumnIndex;
-
-            long aMultiplicator = b.Denominator;
-            long bMultiplicator = a.Denominator;
-            long resultDenominator = aMultiplicator * bMultiplicator;
-            if (aMultiplicator == bMultiplicator)
-            {
-                aMultiplicator = bMultiplicator = 1;
-                resultDenominator = aMultiplicator;
-            }
-
-            if ((aLastRowIndex - aFirstRowIndex) == (bLastRowIndex - bFirstRowIndex)
-                && (aLastColumnIndex - aFirstColumnIndex) == (bLastColumnIndex - bFirstColumnIndex))
-            {
-                int aToBRowShift = bFirstRowIndex - aFirstRowIndex;
-                int aToBColumnShift = bFirstColumnIndex - aFirstColumnIndex;
-                long[,] result = new long[aLastRowIndex - aFirstRowIndex + 1, aLastColumnIndex - aFirstColumnIndex + 1];
-                for (int rowIndex = aFirstRowIndex; rowIndex <= aLastRowIndex; rowIndex++)
-                {
-                    for (int columnIndex = aFirstColumnIndex; columnIndex <= aLastColumnIndex; columnIndex++)
-                    {
-                        result[rowIndex - aFirstRowIndex, columnIndex - aFirstColumnIndex] =
-                            Math.Abs(
-                                a.table[rowIndex, columnIndex] * aMultiplicator
-                                - b.table[rowIndex - aToBRowShift, columnIndex - aToBColumnShift] * bMultiplicator);
-                    }
-                }
-                return new ContingencyTable(result, resultDenominator);
-            }
-            throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Uncompatible sizes of contingecy tables to combine!", restrictionTypeEnum.BadFormat);
+            return internalOperator(a, b, operatorType.Minus);
         }
 
+        /// <summary>
+        /// Multiplies the denominator by the specified <c>value</c>.
+        /// </summary>
+        /// <param name="value">The multiplicator for the denomitor.</param>
         public void Div(long value)
         {
             this.denominator *= value;
@@ -322,6 +352,14 @@ namespace Ferda.Modules.Quantifiers
         #endregion
 
         #region Four Fold Table
+        /// <summary>
+        /// Gets a value indicating whether this instance is basic (i.e. a-frequency
+        /// is on [0, 0] and and on the contrary in last row and column is d-frequency [1, 1])
+        /// bottom-right) four fold table.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is basic four fold table; otherwise, <c>false</c>.
+        /// </value>
         public bool IsBasicFourFoldTable
         {
             get
@@ -332,6 +370,13 @@ namespace Ferda.Modules.Quantifiers
                     && LastColumnIndex == 1);
             }
         }
+        /// <summary>
+        /// Gets a value indicating whether this instance is four fold table i.e. its shape
+        /// is 2x2.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is four fold table; otherwise, <c>false</c>.
+        /// </value>
         public bool IsFourFoldTable
         {
             get
@@ -344,66 +389,92 @@ namespace Ferda.Modules.Quantifiers
         }
         #endregion
 
+        #region Nine Fold Table
+        /// <summary>
+        /// Gets a value indicating whether this instance is basic (i.e. a-frequency
+        /// is on [0, 0] and and on the contrary in last row and column is d-frequency [2, 2])
+        /// bottom-right) nine fold table.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is basic nine fold table; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsBasicNineFoldTable
+        {
+            get
+            {
+                return (FirstRowIndex == 0
+                    && LastRowIndex == 2
+                    && FirstColumnIndex == 0
+                    && LastColumnIndex == 2);
+            }
+        }
+        /// <summary>
+        /// Gets a value indicating whether this instance is four fold table i.e. its shape
+        /// is 3x3.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is four fold table; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsNineFoldTable
+        {
+            get
+            {
+                return (
+                    (LastRowIndex - FirstRowIndex + 1) == 3
+                    && (LastColumnIndex - FirstColumnIndex + 1) == 3
+                    );
+            }
+        }
+        #endregion
+
         #region OneDimensional Table
+        /// <summary>
+        /// Gets a value indicating whether this instance is basic one dimensional 
+        /// table. (first row index equals to last row index equals to zero)
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is basic one dimensional table; 
+        /// otherwise, <c>false</c>.
+        /// </value>
+        public bool IsBasicOneDimensionalTable
+        {
+            get
+            {
+                return (FirstRowIndex == 0
+                    && LastRowIndex == 0);
+            }
+        }
+        /// <summary>
+        /// Gets a value indicating whether this instance is one dimensional 
+        /// table. (first row index equals to last row index)
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is one dimensional; otherwise, <c>false</c>.
+        /// </value>
         public bool IsOneDimensional
         {
             get
             {
-                return ((LastRowIndex - FirstRowIndex + 1) == 1);
+                return ((LastRowIndex - FirstRowIndex) == 0);
             }
         }
         #endregion
 
         #region Bounds (Int32 or RangeEnum)
         /// <summary>
-        /// This function try to parse <see cref="T:Ferda.Modules.RangeEnum"/> item or integer value from <c>oneBasedBound</c>. First item has bound equal to 1!
-        /// </summary>
-        /// <param name="oneBasedBound">String representing <see cref="T:Ferda.Modules.RangeEnum"/> or integer &lt; 0. Bound is counted from 1.</param>
-        /// <returns>
-        /// <remarks>Input bound is from range 1 .. maxBound but output bound is from range 0 .. maxBound-1.</remarks>
-        /// <para>Returns -1 iff RangeEnum.All was entered.</para>
-        /// <para>Returns -2 iff RangeEnum.Half was entered.</para>
-        /// <para>Otherwise returns parsed integer -1 .</para>.</returns>
-        /// <exception cref="T:Ferda.Modules.Exceptions.BadParamsError">If parsing integer or RangeEnum from parameter <c>oneBasedBound</c> was unsuccesfull or parsed integer isn`t &lt; 0.</exception>
-        public static int ZeroBasedBoundFromOneBasedString(string oneBasedBound)
-        {
-            try
-            {
-                RangeEnum rangeEnum = (RangeEnum)Enum.Parse(typeof(RangeEnum), oneBasedBound);
-                if (rangeEnum == RangeEnum.All)
-                    return -1;
-                if (rangeEnum == RangeEnum.Half)
-                    return -2;
-            }
-            catch (ArgumentException) { }
-            try
-            {
-                int result = Convert.ToInt32(oneBasedBound);
-                if (result <= 0)
-                    throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Bound have to greater than 0! Current bound is: " + oneBasedBound, restrictionTypeEnum.Minimum);
-                return result - 1;
-            }
-            catch (ArgumentException ex)
-            {
-                throw Ferda.Modules.Exceptions.BadParamsError(ex, null, "Argument Exception converting bound " + oneBasedBound, restrictionTypeEnum.BadFormat);
-            }
-            catch (OverflowException ex)
-            {
-                throw Ferda.Modules.Exceptions.BadParamsError(ex, null, "Overflow Exception converting bound " + oneBasedBound, restrictionTypeEnum.BadFormat);
-            }
-            catch (FormatException ex)
-            {
-                throw Ferda.Modules.Exceptions.BadParamsError(ex, null, "Format Exception converting bound " + oneBasedBound, restrictionTypeEnum.BadFormat);
-            }
-        }
-        /// <summary>
-        /// This function try to parse <see cref="T:Ferda.Modules.RangeEnum"/> item or integer value from <c>zeroBasedBound</c>. First item has bound equal to 0!
+        /// Tries to parse and evaluate <see cref="T:Ferda.Modules.RangeEnum"/> 
+        /// or integer from input string (one-based) and returns 
+        /// (zero-based) index of column/row.
         /// </summary>
         /// <param name="lastItemIndex">Index of last possible item from range (counted from zero).</param>
-        /// <param name="zeroBasedBound">String representing <see cref="T:Ferda.Modules.RangeEnum"/> or integer &lt; 0. Bound is counted from 1.</param>
+        /// <param name="oneBasedBound">String representing <see cref="T:Ferda.Modules.RangeEnum"/> or integer &lt; 0. Bound is counted from 1.</param>
         /// <returns>Bound counted from zero.</returns>
-        public static int Bound(int lastItemIndex, int zeroBasedBound)
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown iff parsing of param <c>oneBasedBound</c> was unsuccessful.
+        /// </exception>
+        protected static int bound(int lastItemIndex, string oneBasedBound)
         {
+            int zeroBasedBound = Parsing.ZeroBasedBoundFromOneBasedString(oneBasedBound);
             if (zeroBasedBound == -1)
                 return lastItemIndex;
             else if (zeroBasedBound == -2)
@@ -413,50 +484,74 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Set index of first row item (counted form 1) in contingency table.
+        /// Set index of first row item (one-based i.e. counted form 1) in contingency table.
         /// </summary>
-        /// <remarks>Allowed values are form <c>Int32</c> domain or <c>RangeEnum</c> enumeration.</remarks>
+        /// <remarks>
+        /// Allowed values are from <see cref="T:System.Int32"/> domain or 
+        /// <see cref="T:Ferda.Modules.RangeEnum"/> enumeration.
+        /// </remarks>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown iff parsing was unsuccessful.
+        /// </exception>
         public string StartRowBound
         {
             set
             {
-                firstRowIndex = Bound(MaxRowIndex, ZeroBasedBoundFromOneBasedString(value));
+                firstRowIndex = bound(MaxRowIndex, value);
             }
         }
 
         /// <summary>
-        /// Set index of last row item (counted form 1) in contingency table.
+        /// Set index of last row item (one-based i.e. counted form 1) in contingency table.
         /// </summary>
-        /// <remarks>Allowed values are form <c>Int32</c> domain or <c>RangeEnum</c> enumeration.</remarks>
+        /// <remarks>
+        /// Allowed values are from <see cref="T:System.Int32"/> domain or 
+        /// <see cref="T:Ferda.Modules.RangeEnum"/> enumeration.
+        /// </remarks>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown iff parsing was unsuccessful.
+        /// </exception>
         public string EndRowBound
         {
             set
             {
-                lastRowIndex = Bound(MaxRowIndex, ZeroBasedBoundFromOneBasedString(value));
+                lastRowIndex = bound(MaxRowIndex, value);
             }
         }
 
         /// <summary>
-        /// Set index of first column item (counted form 1) in contingency table.
+        /// Set index of first column item (one-based i.e. counted form 1) in contingency table.
         /// </summary>
-        /// <remarks>Allowed values are form <c>Int32</c> domain or <c>RangeEnum</c> enumeration.</remarks>
+        /// <remarks>
+        /// Allowed values are from <see cref="T:System.Int32"/> domain or 
+        /// <see cref="T:Ferda.Modules.RangeEnum"/> enumeration.
+        /// </remarks>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown iff parsing was unsuccessful.
+        /// </exception>
         public string StartColumnBound
         {
             set
             {
-                firstColumnIndex = Bound(MaxColumnIndex, ZeroBasedBoundFromOneBasedString(value));
+                firstColumnIndex = bound(MaxColumnIndex, value);
             }
         }
 
         /// <summary>
-        /// Set index of last column item (counted form 1) in contingency table.
+        /// Set index of last column item (one-based i.e. counted form 1) in contingency table.
         /// </summary>
-        /// <remarks>Allowed values are form <c>Int32</c> domain or <c>RangeEnum</c> enumeration.</remarks>
+        /// <remarks>
+        /// Allowed values are from <see cref="T:System.Int32"/> domain or 
+        /// <see cref="T:Ferda.Modules.RangeEnum"/> enumeration.
+        /// </remarks>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// Thrown iff parsing was unsuccessful.
+        /// </exception>
         public string EndColumnBound
         {
             set
             {
-                lastColumnIndex = Bound(MaxColumnIndex, ZeroBasedBoundFromOneBasedString(value));
+                lastColumnIndex = bound(MaxColumnIndex, value);
             }
         }
         #endregion
@@ -521,15 +616,22 @@ namespace Ferda.Modules.Quantifiers
                 return table.GetLength(1) - 1;
             }
         }
-        #endregion
 
-        public int Count
+        /// <summary>
+        /// Gets the count of used cells i.e. number of items of the 
+        /// contingency tables in space restricted by the bounds.
+        /// </summary>
+        /// <value>The count of used cells.</value>
+        public int CountOfUsedCells
         {
             get
             {
                 return (LastRowIndex - FirstRowIndex + 1) * (LastColumnIndex - FirstColumnIndex + 1);
             }
         }
+        #endregion
+
+        #endregion
 
         #region Comparing (2 numbers, [Core]RelationEnum)
         public static bool Compare(double leftSideNumber, CoreRelationEnum relation, double rightSideNumber)
@@ -615,45 +717,11 @@ namespace Ferda.Modules.Quantifiers
         private static T Minus<T>(T a, T b)
             where T : ContingencyTable, new()
         {
-            int aFirstRowIndex = a.FirstRowIndex;
-            int aLastRowIndex = a.LastRowIndex;
-            int aFirstColumnIndex = a.FirstColumnIndex;
-            int aLastColumnIndex = a.LastColumnIndex;
-            int bFirstRowIndex = b.FirstRowIndex;
-            int bLastRowIndex = b.LastRowIndex;
-            int bFirstColumnIndex = b.FirstColumnIndex;
-            int bLastColumnIndex = b.LastColumnIndex;
-
-            long aMultiplicator = b.Denominator;
-            long bMultiplicator = a.Denominator;
-            long resultDenominator = aMultiplicator * bMultiplicator;
-            if (aMultiplicator == bMultiplicator)
-            {
-                aMultiplicator = bMultiplicator = 1;
-                resultDenominator = aMultiplicator;
-            }
-
-            if ((aLastRowIndex - aFirstRowIndex) == (bLastRowIndex - bFirstRowIndex)
-                && (aLastColumnIndex - aFirstColumnIndex) == (bLastColumnIndex - bFirstColumnIndex))
-            {
-                int aToBRowShift = bFirstRowIndex - aFirstRowIndex;
-                int aToBColumnShift = bFirstColumnIndex - aFirstColumnIndex;
-                long[,] result = new long[aLastRowIndex - aFirstRowIndex + 1, aLastColumnIndex - aFirstColumnIndex + 1];
-                for (int rowIndex = aFirstRowIndex; rowIndex <= aLastRowIndex; rowIndex++)
-                {
-                    for (int columnIndex = aFirstColumnIndex; columnIndex <= aLastColumnIndex; columnIndex++)
-                    {
-                        result[rowIndex - aFirstRowIndex, columnIndex - aFirstColumnIndex] =
-                            Math.Abs(
-                                a.table[rowIndex, columnIndex] * aMultiplicator
-                                - b.table[rowIndex - aToBRowShift, columnIndex - aToBColumnShift] * bMultiplicator);
-                    }
-                }
-                T resultObject = new T();
-                resultObject.Table = result;
-                resultObject.Denominator = resultDenominator;
-            }
-            throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Uncompatible sizes of contingecy tables to combine!", restrictionTypeEnum.BadFormat);
+            ContingencyTable result = internalOperator(a, b, operatorType.Minus);
+            T resultObject = new T();
+            resultObject.Table = result.Table;
+            resultObject.Denominator = result.Denominator;
+            return resultObject;
         }
 
         private static T Combine<T>(T a, T b, OperationModeEnum operationMode)
@@ -707,15 +775,14 @@ namespace Ferda.Modules.Quantifiers
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(operationMode);
             }
         }
-        #endregion
 
         public static bool IsOperationModeOverQuantifierValues(OperationModeEnum operationMode)
         {
-            if (operationMode == OperationModeEnum.AbsoluteDifferenceOfQuantifierValues
-                || operationMode == OperationModeEnum.DifferenceOfQuantifierValues)
-                return true;
-            return false;
+            return (operationMode == OperationModeEnum.AbsoluteDifferenceOfQuantifierValues
+                || operationMode == OperationModeEnum.DifferenceOfQuantifierValues);
         }
+
+        #endregion
 
         #region Aggregation Quantifiers
         public static double MaxValueAggregationValue(ContingencyTable table)
@@ -786,7 +853,7 @@ namespace Ferda.Modules.Quantifiers
         {
             get
             {
-                return SumOfValuesAggregation / (double)Count * (double)denominator;
+                return SumOfValuesAggregation / (double)CountOfUsedCells * (double)denominator;
             }
         }
         #endregion
@@ -884,44 +951,96 @@ namespace Ferda.Modules.Quantifiers
         }
 
         #endregion
+    }
 
-        #region Row and Column Sums (rowSum, columnSum, allSum) denominator is not processed
-        /// <summary>
-        /// Sum of all values in row [x]. Index is number of row.
-        /// </summary>
+    /// <summary>
+    /// Provides some computations that are lazy evaluated (when requested)
+    /// and cached.
+    /// </summary>
+    public class PreparedSums
+    {
         protected long[] rowSums;
         /// <summary>
-        /// Sum of all values in column [c]. Index is number of column.
+        /// Sum of all values in row [r]. Denominator is not applied.
         /// </summary>
+        public long[] RowSums
+        {
+            get
+            {
+                Compute();
+                return rowSums;
+            }
+        }
+
         protected long[] columnSums;
         /// <summary>
-        /// Sum of all values in table;
+        /// Sum of all values in column [c]. Denominator is not applied.
         /// </summary>
-        protected long allSum;
-        protected bool doneComputeRowAndColumnSums = false;
-        public void ComputeRowAndColumnSums()
+        public long[] ColumnSums
         {
-            if (doneComputeRowAndColumnSums)
-                return;
-            rowSums = new long[LastRowIndex - FirstRowIndex + 1];
-            rowSums.Initialize();
-            columnSums = new long[LastColumnIndex - FirstColumnIndex + 1];
-            columnSums.Initialize();
-            long item;
-            int lastColumnIndex = LastColumnIndex;
-            for (int rowIndex = FirstRowIndex; rowIndex <= LastRowIndex; rowIndex++)
+            get
             {
-                for (int columnIndex = FirstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
-                {
-                    item = table[rowIndex, columnIndex];
-                    rowSums[rowIndex] += item;
-                    columnSums[columnIndex] += item;
-                    allSum += item;
-                }
+                Compute();
+                return columnSums;
             }
-            doneComputeRowAndColumnSums = true;
         }
-        #endregion
+
+        protected long totalSum;
+        /// <summary>
+        /// Sum of all values in table. Denominator is not applied
+        /// </summary>
+        public long TotalSum
+        {
+            get
+            {
+                Compute();
+                return totalSum;
+            }
+        }
+
+        protected ContingencyTable contingencyTable;
+
+        /// <summary>
+        /// Initializes a new instance of the 
+        /// <see cref="T:Ferda.Modules.Quantifiers.PreparedSums"/> class.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        public PreparedSums(ContingencyTable table)
+        {
+            this.contingencyTable = table;
+        }
+
+        private bool computed = false;
+        protected void Compute()
+        {
+            if (!computed)
+                Refresh();
+        }
+        /// <summary>
+        /// Refreshes prepared sums.
+        /// </summary>
+        /// <remarks>
+        /// Useful when ContingencyTable.table changed.
+        /// </remarks>
+        public void Refresh()
+        {
+            rowSums = new long[contingencyTable.LastRowIndex - contingencyTable.FirstRowIndex + 1];
+            rowSums.Initialize();
+            columnSums = new long[contingencyTable.LastColumnIndex - contingencyTable.FirstColumnIndex + 1];
+            columnSums.Initialize();
+            int lastColumnIndex = contingencyTable.LastColumnIndex;
+            int firstColumnIndex = contingencyTable.FirstColumnIndex;
+            for (int rowIndex = contingencyTable.FirstRowIndex; rowIndex <= contingencyTable.LastRowIndex; rowIndex++)
+            {
+                for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
+                {
+                    rowSums[rowIndex] += contingencyTable.Table[rowIndex, columnIndex];
+                    columnSums[columnIndex] += contingencyTable.Table[rowIndex, columnIndex];
+                }
+                totalSum += rowSums[rowIndex];
+            }
+            this.computed = true;
+        }
     }
 }
 /*

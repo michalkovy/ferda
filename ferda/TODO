@@ -59,15 +59,11 @@ Martin
 Tomas
  - CF, SDCF kvantifikatory ... implementovat vypocty
  - spolu se Sasou MultiColumn
- - Rozchodit STULONG
  - prezentace + webcast o pridavani novych krabicek
- - dodelat cachovani
- - udelam nejake unit testy (ale radeji az nad vlastni implementaci ... bude tam dost zmen)
  - Sasa mi da CategoriesDisjunktivityTest, CategoriesFrequencies
- - ChiSquare quantifier
+ - ChiSquare quantifier ... bug reported to Karby
  - napoveda (z Rauchovych skript)
  - Lokalizovat texty vyjimek.
- - rozhazim celou sln mozna do vice sln, ale urcite vice projektu
 Sasa
  - installer
 		konfigurace Ice
@@ -79,6 +75,12 @@ Sasa
  ? vsechny 2/3D grafy - jsou v AttributeFrequency, ColumnFrequency
  ? MultiColumn dialog
  ? Moduly pro interakci ... nejake sexy vystupy/reporty (XML, ASCII, CSV, XHTML, DocBook, RTF)
+ - nejake unit testy
+ - CategoriesDisjunktivityTest, CategoriesFrequencies Tomasovi
+ - data pro a vypocty CF, SDCF kvantifikatoru
+ 		vypocty jsou implementovany v
+ 		Ferda.Modules.Quantifiers.OneDimensionalContingencyTable
+ 		ale nekolik kvantifikatoru vyzaduje vyplnene pole NumericValues (Field)
 Vsichni
  - DOKUMENTACE
  - navrhuju progress .. vysvetlim

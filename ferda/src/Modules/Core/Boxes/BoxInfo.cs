@@ -498,7 +498,7 @@ namespace Ferda.Modules.Boxes
             foreach (Boxes.Serializer.Localization.Helper boxLocalization in this.boxLocalizations.Values)
             {
                 if (boxLocalization.HelpFilesPaths.TryGetValue(identifier, out helpFilePath))
-                    return BoxInfoHelper.TryGetFile(configFilesDirectoryPath, helpFilePath, false, false);
+                    return BoxInfoHelper.TryGetBinaryFile(configFilesDirectoryPath, helpFilePath, false);
             }
             return null;
         }
@@ -535,9 +535,7 @@ namespace Ferda.Modules.Boxes
                     socket.Name,
                     (localizedSocket == null) ? "" : localizedSocket.Label,
                     (localizedSocket == null) ? "" : localizedSocket.Hint,
-                    System.Convert.ToString(
-                        BoxInfoHelper.TryGetFile(configFilesDirectoryPath, socket.DesignPath, false, false)
-                        ),
+                    BoxInfoHelper.TryGetStringFile(configFilesDirectoryPath, socket.DesignPath, false),
                     this.box.GetSocketTypes(socket.Name),
                     socket.SettingProperties,
                     socket.MoreThanOne
@@ -978,7 +976,7 @@ namespace Ferda.Modules.Boxes
         {
             get
             {
-                return BoxInfoHelper.TryGetFile(configFilesDirectoryPath, this.box.IconPath, false, false);
+                return BoxInfoHelper.TryGetBinaryFile(configFilesDirectoryPath, this.box.IconPath, false);
             }
         }
 
@@ -1008,7 +1006,7 @@ namespace Ferda.Modules.Boxes
             get
             {
                 return System.Convert.ToString(
-                    BoxInfoHelper.TryGetFile(configFilesDirectoryPath, this.box.DesignPath, false, false)
+                    BoxInfoHelper.TryGetStringFile(configFilesDirectoryPath, this.box.DesignPath, false)
                     );
             }
         }
@@ -1090,7 +1088,7 @@ namespace Ferda.Modules.Boxes
                     action.Name,
                     boxLocalization.Actions[action.Name].Label,
                     boxLocalization.Actions[action.Name].Hint,
-                    BoxInfoHelper.TryGetFile(configFilesDirectoryPath, action.IconPath, false, false),
+                    BoxInfoHelper.TryGetBinaryFile(configFilesDirectoryPath, action.IconPath, false),
                     this.GetActionInfoNeededConnectedSockets(action.Name)
                     );
                 result.Add(resultItem);

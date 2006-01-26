@@ -49,7 +49,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
                     cacheSetting.Add("ConnectionString", connectionString);
                     cacheSetting.Add("DataMatrixName", dataMatrixName);
                     if (IsObsolete(lastReloadTime, cacheSetting))
-                        value = Ferda.Modules.Helpers.Data.DataMatrix.ComputeRecordsCount(connectionString, dataMatrixName, boxIdentity, true);
+                        value = Ferda.Modules.Helpers.Data.DataMatrix.GetRecordsCount(connectionString, dataMatrixName, boxIdentity);
                     return value;
                 }
 			}
@@ -71,7 +71,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
 		{
 			DatabaseStruct databaseStruct = this.getDatabaseFunctionsPrx().getDatabase();
 			string myIdentity = Ice.Util.identityToString(this.boxModule.IceIdentity);
-			Ferda.Modules.Helpers.Data.DataMatrix.TestDataMatrixExists(databaseStruct.connectionString, dataMatrixName, myIdentity, true);
+			Ferda.Modules.Helpers.Data.DataMatrix.TestDataMatrixExists(databaseStruct.connectionString, dataMatrixName, myIdentity);
 			DataMatrixStruct result = new DataMatrixStruct();
 			result.database = databaseStruct;
 			result.dataMatrixName = dataMatrixName;
@@ -94,7 +94,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
                     cacheSetting.Add("ConnectionString", connectionString);
                     cacheSetting.Add("DataMatrixName", dataMatrixName);
                     if (IsObsolete(lastReloadTime, cacheSetting))
-                        value = Ferda.Modules.Helpers.Data.DataMatrix.ColumnsNames(connectionString, dataMatrixName, boxIdentity, true);
+                        value = Ferda.Modules.Helpers.Data.DataMatrix.GetColumns(connectionString, dataMatrixName, boxIdentity);
                     return value;
                 }
 			}
@@ -112,7 +112,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
 
 		public override ColumnInfo[] explainDataMatrixStructure(Ice.Current __current)
 		{
-            return Ferda.Modules.Helpers.Data.DataMatrix.ExplainDataMatrixStructure(connectionString, dataMatrixName, boxModule.StringIceIdentity, true);
+            return Ferda.Modules.Helpers.Data.DataMatrix.Explain(connectionString, dataMatrixName, boxModule.StringIceIdentity);
 		}
 
 		#endregion
@@ -131,7 +131,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
 		{
 			try
 			{
-                Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(connectionString, dataMatrixName, primaryKeyColumns, boxModule.StringIceIdentity, true);
+                Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(connectionString, dataMatrixName, primaryKeyColumns, boxModule.StringIceIdentity);
 				return true;
 			}
             catch (Ferda.Modules.BoxRuntimeError) { }

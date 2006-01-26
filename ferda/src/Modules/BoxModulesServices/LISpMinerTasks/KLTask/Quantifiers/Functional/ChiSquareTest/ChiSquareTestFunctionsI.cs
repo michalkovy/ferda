@@ -1,9 +1,9 @@
 using System;
-using Ferda.Modules.Boxes.KLTask.Quantifiers;
+using Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers;
 using Ferda.Modules.Quantifiers;
 using System.Collections.Generic;
 
-namespace Ferda.Modules.Boxes.KLTask.Quantifiers.Functional.ChiSquareTest
+namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.ChiSquareTest
 {
 	class ChiSquareTestFunctionsI : AbstractKLTaskQuantifierFunctions
 	{

@@ -9,7 +9,7 @@ using Ferda.Modules;
 using Ferda.FrontEnd.AddIns;
 using Ferda.FrontEnd.External;
 using Ferda.FrontEnd.Properties;
-using Ferda.Modules.Boxes.AbstractLMTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 using System.Resources;
 using System.Reflection;
 using Ferda.ModulesManager;
