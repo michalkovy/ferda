@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns;
 using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
+using Ferda.Modules.Boxes.DataMiningCommon.Column;
 using Ferda.FrontEnd.AddIns.ColumnFrequency;
 
 using System.Resources;
@@ -44,11 +45,13 @@ namespace Ferda
                 localizationString = "en-US";
 
             }
-            #endregion
-
-
-            #region Other ice
-
+            #endregion
+
+
+            #region Other ice
+
+
+
             public override Ferda.Modules.BoxType[] getAcceptedBoxTypes(Ice.Current __current)
             {
                 Modules.BoxType boxType = new Modules.BoxType();
@@ -124,14 +127,18 @@ namespace Ferda
 
             public override string[] getNeededConnectedSockets(Ice.Current __current)
             {
-                return new string[0];
-            }
-
-            #endregion
-
-
-            #region IceRun
-
+                return new string[0];
+
+            }
+
+
+
+            #endregion
+
+
+            #region IceRun
+
+
             public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
             {
 
@@ -165,8 +172,9 @@ namespace Ferda
 
                 try
                 {
+                    ColumnStruct colStruct = prx.getColumn();
                     string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                    Ferda.FrontEnd.AddIns.ColumnFrequency.ColumnFrequency control = new ColumnFrequency(localePrefs, prx.getColumn());
+                    Ferda.FrontEnd.AddIns.ColumnFrequency.ColumnFrequency control = new ColumnFrequency(localePrefs, colStruct);
                     this.ownerOfAddIn.ShowDockableControl(control, label + " " + resManager.GetString("ColumnFrequency"));
                 }
 
@@ -198,10 +206,14 @@ namespace Ferda
                 {
                     MessageBox.Show(resManager.GetString("BoxNotConnected"), resManager.GetString("Error"),
                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-            }
-
-            #endregion
+                }
+
+            }
+
+
+
+            #endregion
+
         }
     }
 }

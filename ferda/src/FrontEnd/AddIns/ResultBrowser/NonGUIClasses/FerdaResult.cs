@@ -25,7 +25,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         private ResourceManager resManager;
 
-       /// <summary>
+        /// <summary>
         /// Localization string, en-US or cs-CZ for now.
         /// </summary>
         private string localizationString;
@@ -95,7 +95,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
 
         #region Column methods
-       
+
         /// <summary>
         /// Method for retrieving used column names.
         /// </summary>
@@ -142,7 +142,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                 {
                     this.SelectedQuantifiers[i] = 0;
                     return;
-               }
+                }
             }
         }
 
@@ -220,7 +220,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
                     firstRun = false;
                 }
-            }     
+            }
 
             if (returnString.Length == 0)
             {
@@ -302,7 +302,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                     {
                         returnString.Append('\u00AC' + literal.literalName + "(");
                     }
-                   else
+                    else
                     {
                         returnString.Append(literal.literalName + "(");
                     }
@@ -373,52 +373,6 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             return returnString.ToString();
         }
 
-        /*
-        /// <summary>
-        /// Method for getting hypothesis data
-        /// </summary>
-        /// <param name="hypothesis">Hypothesis to get data from</param>
-        /// <returns>Formatted string with hypothesis data</returns>
-        public String GetHypothesisData(HypothesisStruct hypothesis)
-        {
-            StringBuilder returnString = new StringBuilder();
-            //HypothesisStruct hypothesis = (HypothesisStruct)this.Hypotheses[idHypothese];
-           // returnString.Append(this.resManager.GetString("HypothesisId") + ": "
-          //      + idHypothese + "\n\n" + this.resManager.GetString("Antecedent") + ":\t");
-
-            if (String.IsNullOrEmpty(FerdaResult.GetAntecedent(hypothesis)))
-            {
-                returnString.Append("(" + this.resManager.GetString("NoRestriction") + ")\n");
-            }
-            else
-            {
-                returnString.Append(FerdaResult.GetAntecedent(hypothesis) + "\n");
-            }
-
-            returnString.Append(this.resManager.GetString("Succedent") + "\t");
-            if (String.IsNullOrEmpty(FerdaResult.GetSuccedent(hypothesis)))
-            {
-                returnString.Append("(" + this.resManager.GetString("NoRestriction") + ")\n\n");
-            }
-
-            else
-            {
-                returnString.Append(FerdaResult.GetSuccedent(hypothesis) + "\n\n");
-            }
-            returnString.Append(this.resManager.GetString("ContingencyTable") + ": \n" +
-            this.GetHypothesisTable(hypothesis) +
-            "\n\n\n" +
-            this.resManager.GetString("AppliedQuantifiers") + ":\n\n");
-
-            foreach (QuantifierProvider quantifier in this.UsedQuantifiers)
-            {
-                returnString.Append(quantifier.localizedBoxLabel + " ("
-                    + quantifier.userBoxLabel + "): " + "\t"
-                + quantifier.functions.Value(hypothesis.quantifierSetting) + "\n\n");
-            }
-            return returnString.ToString();
-        }
-        */
         /// <summary>
         /// Method which gets used quantifiers names
         /// </summary>
@@ -426,13 +380,22 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         public List<string> GetUsedQuantifiersNames()
         {
             List<string> returnList = new List<string>();
-
             foreach (QuantifierProvider quantifier in this.UsedQuantifiers)
             {
                 returnList.Add(quantifier.localizedBoxLabel + " ("
                     + quantifier.userBoxLabel + ")" + "\t");
             }
+            return returnList;
+        }
 
+        public List<string> GetAllQuantifierNames()
+        {
+            List<string> returnList = new List<string>();
+            foreach (QuantifierProvider quantifier in this.AllQuantifiers)
+            {
+                returnList.Add(quantifier.localizedBoxLabel + " ("
+                    + quantifier.userBoxLabel + ")" + "\t");
+            }
             return returnList;
         }
 
@@ -494,11 +457,11 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
 
         /// <summary>
-        /// Method which applies quantifiers on the contingency table data.
+        /// Method which applies selected quantifiers on the contingency table data.
         /// </summary>
-        /// <param name="hypothese">hypothese to take table from</param>
+        /// <param name="hypothese">Hypothese to take tables from</param>
         /// <returns>List of values for each quantifier</returns>
-        protected List<double> ApplyQuantifiers(HypothesisStruct hypothese)
+        protected List<double> ApplySelectedQuantifiers(HypothesisStruct hypothese)
         {
             List<double> returnList = new List<double>();
             for (int i = 0; i < this.AllQuantifiers.Length; i++)
@@ -511,16 +474,41 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             return returnList;
         }
 
+        /// <summary>
+        /// Method which applies all quantifiers on the contingency table data.
+        /// </summary>
+        /// <param name="hypothese">Hypothese to take tables from</param>
+        /// <returns>List of values for each quantifier</returns>
+        protected List<double> ApplyAllQuantifiers(HypothesisStruct hypothese)
+        {
+            List<double> returnList = new List<double>();
+            for (int i = 0; i < this.AllQuantifiers.Length; i++)
+            {
+                returnList.Add(this.AllQuantifiers[i].functions.Value(hypothese.quantifierSetting));
+            }
+            return returnList;
+        }
+
 
 
         /// <summary>
-        /// Method which applies quantifiers on the hypothese fourpole table
+        /// Method which applies selected quantifiers on the hypothese fourpole table
         /// </summary>
         /// <param name="hypothese"></param>
         /// <returns>Arraylist of values</returns>
-        public List<double> QuantifierValues(HypothesisStruct hypothese)
+        public List<double> SelectedQuantifierValues(HypothesisStruct hypothese)
         {
-            return this.ApplyQuantifiers(hypothese);
+            return this.ApplySelectedQuantifiers(hypothese);
+        }
+
+        /// <summary>
+        /// Method which applies all quantifiers on the hypothese fourpole table
+        /// </summary>
+        /// <param name="hypothese"></param>
+        /// <returns>Arraylist of values</returns>
+        public List<double> AllQuantifierValues(HypothesisStruct hypothese)
+        {
+            return this.ApplyAllQuantifiers(hypothese);
         }
 
 
@@ -551,7 +539,6 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         #region Localization
 
         public void ChangeRm(ResourceManager rm)
-
         {
 
             this.resManager = rm;
@@ -561,7 +548,6 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
 
         #endregion
-
     }
 }
 

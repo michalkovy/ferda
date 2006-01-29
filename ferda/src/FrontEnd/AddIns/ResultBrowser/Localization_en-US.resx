@@ -138,8 +138,8 @@
   <data name="ColumnCondition" xml:space="preserve">
     <value>Condition</value>
   </data>
-  <data name="ColumnHypotheseName" xml:space="preserve">
-    <value>Hypothese</value>
+  <data name="ColumnHypothesisName" xml:space="preserve">
+    <value>Hypothesis name</value>
   </data>
   <data name="ColumnSuccedent" xml:space="preserve">
     <value>Succedent</value>

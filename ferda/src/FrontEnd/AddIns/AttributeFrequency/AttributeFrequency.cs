@@ -38,30 +38,20 @@ namespace Ferda
             /// </summary>
             private long rowCount;
 
-            /*
-            /// <summary>
-            /// Attribute struct to work with
-            /// </summary>
-            private AbstractAttributeStruct attributeStruct;
-             * */
-
 
             /// <summary>
             /// ColumnStruct for the column of the attribute
             /// </summary>
             private ColumnStruct columnStruct;
 
-
             /// <summary>
             /// Categories to count frequences on
             /// </summary>
-            private CategoriesStruct categoriesStruct;
-
-            /// <summary>
-            /// Datatable containing data from the SQL query
-            /// </summary>
-            private ArrayList tempTable;
-            
+            private CategoriesStruct categoriesStruct;
+            /// <summary>
+            /// Datatable containing data from the SQL query
+            /// </summary>
+            private ArrayList tempTable;       
 
             #endregion
 
@@ -76,57 +66,42 @@ namespace Ferda
                 try
                 {
                     locale = localePrefs[0];
-
                     localizationString = locale;
                   //  Thread.CurrentThread.CurrentCulture = new CultureInfo(locale);
                   //  Thread.CurrentThread.CurrentUICulture = new CultureInfo(locale);
                   //  locale = "Ferda.FrontEnd.AddIns.AttributeFr.Localization." + locale;      
                     locale = "Ferda.FrontEnd.AddIns.AttributeFrequency.Localization_" + locale;
-
-                    resManager = new ResourceManager(locale,
-                Assembly.GetExecutingAssembly());
-
+                    resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
                 }
-
                 catch
                 {
                  //   Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                  //   Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
                     localizationString = "en-US";
-
                 }
                 this.rowCount = attributeStruct.column.dataMatrix.recordsCount;
                 this.columnStruct = attributeStruct.column;
                 this.categoriesStruct = attributeStruct.categories;
                 InitializeComponent();
                 DBInteraction myDb = new DBInteraction(columnStruct, this.categoriesStruct, resManager);
-                this.ListViewInit();
-                this.InitializeGraph();
-                this.tempTable = myDb.GetCategoriesFrequences(this.categoriesStruct);
-                this.ArrayListToListView(this.tempTable);
-                this.DrawBarsFromDataTable(this.tempTable, this.AttributeFrequencyChart);
-                this.ToolStripMenuItemAbsolute.CheckedChanged += new EventHandler(ToolStripMenuItem_AbCheckedChanged);
-                this.ToolStripMenuItemPie.CheckedChanged += new EventHandler(ToolStripMenuItemPie_CheckedChanged);
+                this.ListViewInit();
+                this.InitializeGraph();
+                this.tempTable = myDb.GetCategoriesFrequences(this.categoriesStruct);
+                this.ArrayListToListView(this.tempTable);
+                this.DrawBarsFromDataTable(this.tempTable, this.AttributeFrequencyBarChart);
+                this.DrawAreaFromDataTable(this.tempTable, this.AttributeFrequencyAreaChart);
+                this.DrawPieFromDataTable(this.tempTable, this.AttributeFrequencyPieChart);
+                this.ToolStripMenuItemAbsolute.CheckedChanged += new EventHandler(ToolStripMenuItem_AbCheckedChanged);
             }
 
-            #endregion
-
-
+            #endregion
             #region Context menu handlers
-
-            void ToolStripMenuItem_AbCheckedChanged(object sender, EventArgs e)
-            {
-                this.DrawBarsFromDataTable(this.tempTable, this.AttributeFrequencyChart);
+            void ToolStripMenuItem_AbCheckedChanged(object sender, EventArgs e)
+            {
+                this.DrawBarsFromDataTable(this.tempTable, this.AttributeFrequencyBarChart);
+                this.DrawAreaFromDataTable(this.tempTable, this.AttributeFrequencyAreaChart);
+                this.DrawPieFromDataTable(this.tempTable, this.AttributeFrequencyPieChart);
             }
-
-            void ToolStripMenuItemPie_CheckedChanged(object sender, EventArgs e)
-            {
-                if (this.AttributeFrequencyChart.Series.Count > 0)
-                {
-                    this.DrawBarsFromDataTable(this.tempTable, this.AttributeFrequencyChart);
-                }
-            }
-
             #endregion
 
 
@@ -166,10 +141,7 @@ namespace Ferda
                     else
                     {
                         newItem.SubItems.Add("0");
-                    }
-
-                    
-
+                    }  
                     this.AttributeFrListView.Items.Add(newItem);
                 }
             }
@@ -180,7 +152,6 @@ namespace Ferda
             private void ListViewInit()
             {
                 this.ChangeLocale(resManager);
-
                 //adding a handling method for column sorting
                 this.AttributeFrListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnFrListView_ColumnClick);
             }
@@ -202,7 +173,6 @@ namespace Ferda
                     AttributeFrListView.Sorting = SortOrder.Ascending;
 
                 AttributeFrListView.ListViewItemSorter = columnSorter;
-
             }
 
             #endregion
@@ -240,11 +210,12 @@ namespace Ferda
             {
                 this.FrequencyColumn.Text = rm.GetString("FrequencyColumn");
                 this.ValuesColumn.Text = rm.GetString("ValueColumn");
-                this.PercentageColumn.Text = rm.GetString("PercentageColumn");
-                this.TabPageGraph.Text = rm.GetString("TabPageGraph");
-                this.TabPageText.Text = rm.GetString("TabPageText");
-                this.ToolStripMenuItemAbsolute.Text = rm.GetString("ToolStripMenuItemAbsolute");
-                this.ToolStripMenuItemPie.Text = rm.GetString("ToolStripMenuItemPie");
+                this.PercentageColumn.Text = rm.GetString("PercentageColumn");
+                this.TabPageBarChart.Text = rm.GetString("TabPageBarChart");
+                this.TabPageAreaChart.Text = rm.GetString("TabPageAreaChart");
+                this.TabPagePieChart.Text = rm.GetString("TabPagePieChart");
+                this.TabPageText.Text = rm.GetString("TabPageText");
+                this.ToolStripMenuItemAbsolute.Text = rm.GetString("ToolStripMenuItemAbsolute");
             }
 
             #endregion

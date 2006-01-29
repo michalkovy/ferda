@@ -57,7 +57,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses
         private string ComposeShowTableQuery()
         {
             return "SELECT * FROM "
-            + this.dataMatrixName;
+            + "`" + this.dataMatrixName + "`";
         }
 
         /// <summary>

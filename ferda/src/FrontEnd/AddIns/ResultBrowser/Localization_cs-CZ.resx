@@ -138,8 +138,8 @@
   <data name="ColumnCondition" xml:space="preserve">
     <value>Podmínka</value>
   </data>
-  <data name="ColumnHypotheseName" xml:space="preserve">
-    <value>Hypotéza</value>
+  <data name="ColumnHypothesisName" xml:space="preserve">
+    <value>Jméno hypotézy</value>
   </data>
   <data name="ColumnSuccedent" xml:space="preserve">
     <value>Sukcedent</value>

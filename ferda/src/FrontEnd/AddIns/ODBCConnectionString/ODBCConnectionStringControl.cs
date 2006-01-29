@@ -11,7 +11,8 @@ using System.Reflection;
 
 
 namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
-{
+{
+
     public partial class ODBCConnectionStringControl : Form, Ferda.FrontEnd.IIconProvider
     {
         #region Private variables
@@ -29,18 +30,18 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         /// <summary>
         /// Resulting DSN
         /// </summary>
-        private string returnString;
-
-        /// <summary>
-        /// Current path (for icon loading)
-        /// </summary>
-        private string path;
-
-        /// <summary>
-        /// Dictionary that contains all the icons for the application, ]
-        /// that are keyed by string values. See 
-        /// <see cref="F:Ferda.FrontEnd.FerdaForm.LoadIcons"/> for their names
-        /// </summary>
+        private string returnString;
+
+        /// <summary>
+        /// Current path (for icon loading)
+        /// </summary>
+        private string path;
+
+        /// <summary>
+        /// Dictionary that contains all the icons for the application, ]
+        /// that are keyed by string values. See 
+        /// <see cref="F:Ferda.FrontEnd.FerdaForm.LoadIcons"/> for their names
+        /// </summary>
         private Dictionary<string, Icon> iconProvider;
 
 
@@ -85,7 +86,8 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
                 resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ODBCConnectionString.Localization_en-US",
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
-            }
+            }
+
             this.path = Assembly.GetExecutingAssembly().Location;
             InitializeComponent();
             this.ChangeLocale(resManager);
@@ -106,7 +108,8 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.TextBoxCustomConnectionString.KeyPress += new KeyPressEventHandler(TextBoxCustomConnectionString_KeyPress);
             this.ComboboxExistingSources.SelectionChangeCommitted += new EventHandler(ComboboxExistingSources_SelectionChangeCommitted);
             this.TextBoxUsername.LostFocus += new EventHandler(TextBoxUsername_LostFocus);
-            this.TextBoxPassword.LostFocus += new EventHandler(TextBoxPassword_LostFocus);
+            this.TextBoxPassword.LostFocus += new EventHandler(TextBoxPassword_LostFocus);
+
             this.LoadIcons();
             this.InitIcons();
         }
@@ -123,18 +126,18 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
                 this.StatusBarCurrent.Text = this.resManager.GetString("CurrentDSN")
                 + ": "
                 + this.resManager.GetString("None");
-        }
-
-        /// <summary>
-        /// Method to load all icons
-        /// </summary>
-        private void InitIcons()
-        {
-            this.Icon = iconProvider["FerdaIcon"];
-            this.ToolStripButtonCancel.Image = iconProvider["CancelIcon"].ToBitmap();
-            this.ToolStripButtonOk.Image = iconProvider["OkIcon"].ToBitmap();
-            this.ToolStripButtonTest.Image = iconProvider["TestIcon"].ToBitmap();
-            this.ToolStripButtonOdbc.Image = iconProvider["NewIcon"].ToBitmap();
+        }
+
+        /// <summary>
+        /// Method to load all icons
+        /// </summary>
+        private void InitIcons()
+        {
+            this.Icon = iconProvider["FerdaIcon"];
+            this.ToolStripButtonCancel.Image = iconProvider["CancelIcon"].ToBitmap();
+            this.ToolStripButtonOk.Image = iconProvider["OkIcon"].ToBitmap();
+            this.ToolStripButtonTest.Image = iconProvider["TestIcon"].ToBitmap();
+            this.ToolStripButtonOdbc.Image = iconProvider["NewIcon"].ToBitmap();
         }
 
         #endregion
@@ -192,45 +195,43 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             {
                 ComboboxExistingSources.SelectedIndex = 0;
             }
+        }
 
-        }
-
-        /// <summary>
-        /// Loads the icons for the application
-        /// </summary>
-        /// <remarks>
-        /// Sometimes, the program path can change and at this time, no icons
-        /// are present
-        /// </remarks>
-        private void LoadIcons()
-        {
-            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex("(\\\\)");
-            string[] s = r.Split(this.path);
-            string newPath = "";
-
-            for (int j = 0; j < s.GetLength(0) - 3; j++)
-            {
-                newPath = newPath + s[j];
-            }
-
-            Icon i;
-            iconProvider = new Dictionary<string, Icon>();
-
-            //loading the program icon
-            i = new Icon(newPath + "ferda.ico");
-            iconProvider.Add("FerdaIcon", i);
-
-            i = new Icon(newPath + "\\Icons\\Save project.ico");
-            iconProvider.Add("OkIcon", i);
-
-            i = new Icon(newPath + "\\Icons\\Exit.ico");
-            iconProvider.Add("CancelIcon", i);
-
-            i = new Icon(newPath + "\\Icons\\New project.ico");
-            iconProvider.Add("NewIcon", i);
-
-            i = new Icon(newPath + "\\Icons\\Pack sockets.ico");
-            iconProvider.Add("TestIcon", i);
+        /// <summary>
+        /// Loads the icons for the application
+        /// </summary>
+        /// <remarks>
+        /// Sometimes, the program path can change and at this time, no icons
+        /// are present
+        /// </remarks>
+        private void LoadIcons()
+        {
+            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex("(\\\\)");
+            string[] s = r.Split(this.path);
+            string newPath = "";
+            for (int j = 0; j < s.GetLength(0) - 3; j++)
+            {
+                newPath = newPath + s[j];
+            }
+
+            Icon i;
+            iconProvider = new Dictionary<string, Icon>();
+
+            //loading the program icon
+            i = new Icon(newPath + "FerdaFrontEnd.ico");
+            iconProvider.Add("FerdaIcon", i);
+
+            i = new Icon(newPath + "\\Icons\\Save project.ico");
+            iconProvider.Add("OkIcon", i);
+
+            i = new Icon(newPath + "\\Icons\\Exit.ico");
+            iconProvider.Add("CancelIcon", i);
+
+            i = new Icon(newPath + "\\Icons\\New project.ico");
+            iconProvider.Add("NewIcon", i);
+
+            i = new Icon(newPath + "\\Icons\\Pack sockets.ico");
+            iconProvider.Add("TestIcon", i);
         }
 
         #endregion
@@ -267,24 +268,20 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         public void ChangeLocale(ResourceManager rm)
         {
             this.Text = rm.GetString("ConnectionString");
-
             this.ToolStripButtonCancel.Text = rm.GetString("ButtonCancel");
             this.ToolStripButtonOk.Text = rm.GetString("ButtonOk");
            // this.ToolStripButtonRefresh.Text = rm.GetString("ButtonRefresh");
             this.ButtonRefresh.Text = rm.GetString("ButtonRefresh");
             this.ToolStripButtonTest.Text = rm.GetString("ButtonTest");
             this.ToolStripButtonOdbc.Text = rm.GetString("ButtonOdbcConnection");
-
             this.LabelInputDataSource.Text = rm.GetString("InputDataSource");
             this.LabelInputServerAuth.Text = rm.GetString("InputAuth");
             this.LabelInputUsername.Text = rm.GetString("Username");
             this.LabelPassword.Text = rm.GetString("Password");
             this.LabelResultingString.Text = rm.GetString("ResultingString");
             this.LabelWhatToInput.Text = rm.GetString("InputFollowing");
-
             this.RadioUseCustomString.Text = rm.GetString("InputCustomConnectionString");
             this.RadioUseDSN.Text = rm.GetString("InputDataSource");
-
             this.CheckBoxAllowPasswordSave.Text = rm.GetString("SavePassword");
             this.CheckBoxEmptyPassword.Text = rm.GetString("EmptyPassword");
         }
@@ -294,6 +291,11 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
 
         #region Toolbuttons and statusbars handlers
 
+        /// <summary>
+        /// Handler which calls windows dialog for ODBC datasource
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripButtonOdbc_Click(object sender, EventArgs e)
         {
 
@@ -311,7 +313,6 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             
 
         }
-
 
         /// <summary>
         /// Method which closes the window without connection string modification.
@@ -535,20 +536,33 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
                 this.TextBoxNewConnectionString.Text = String.Empty;
                 this.ToolStripButtonTest.Enabled = false;
             }
-        }
+        }     
 
-        
-
+        /// <summary>
+        /// Handler for save password checkpoint
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckBoxAllowPasswordSave_CheckedChanged(object sender, EventArgs e)
         {
             this.TextBoxNewConnectionString.Text = this.ComposeString();
         }
 
+        /// <summary>
+        /// Handler which composes connection string based on already inputted data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBoxPassword_LostFocus(object sender, EventArgs e)
         {
             this.TextBoxNewConnectionString.Text = this.ComposeString();
         }
 
+        /// <summary>
+        /// Handler which composes connection string based on already inputted data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBoxUsername_LostFocus(object sender, EventArgs e)
         {
             this.TextBoxNewConnectionString.Text = this.ComposeString();
@@ -565,21 +579,21 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.FillList();
         }
 
-        #endregion
-
-
-        #region IIconProvider Members
-
-        /// <summary>
-        /// Gets the icon specified by icons string identifier
-        /// </summary>
-        /// <param name="IconName">Name of the icon</param>
-        /// <returns>Icon that is connected to this name</returns>
-        public Icon GetIcon(string IconName)
-        {
-            return iconProvider[IconName];
-        }
-
-        #endregion
+        #endregion
+
+
+        #region IIconProvider Members
+
+        /// <summary>
+        /// Gets the icon specified by icons string identifier
+        /// </summary>
+        /// <param name="IconName">Name of the icon</param>
+        /// <returns>Icon that is connected to this name</returns>
+        public Icon GetIcon(string IconName)
+        {
+            return iconProvider[IconName];
+        }
+
+        #endregion
     }
 }

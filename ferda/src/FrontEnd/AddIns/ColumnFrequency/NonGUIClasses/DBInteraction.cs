@@ -79,10 +79,10 @@ namespace Ferda
             {
                 return "SELECT "
                 + "`" + this.columnSelectExpression + "`" + " AS `Value`"
-                + ", COUNT(" + this.columnSelectExpression + ") AS `Cnt`"
-                + " FROM " + this.dataMatrixName
-                + " GROUP BY " + this.columnSelectExpression
-                + " ORDER BY " + this.columnSelectExpression;
+                + ", COUNT(" + "`" + this.columnSelectExpression + "`" + ") AS `Cnt`"
+                + " FROM " + "`" + this.dataMatrixName + "`"
+                + " GROUP BY " + "`" + this.columnSelectExpression + "`"
+                + " ORDER BY " + "`" + this.columnSelectExpression + "`";
             }
 
             /// <summary>

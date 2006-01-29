@@ -44,6 +44,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         IOtherObjectDisplayer displayer;
 
+        /// <summary>
+        /// Auxiliary index for previously selected hypothesis
+        /// </summary>
+        private int previousIndex = -1;
+
         #endregion
 
 
@@ -107,6 +112,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.HypothesesListView.Columns.Add(this.ColumnAntecedent);
             this.HypothesesListView.Columns.Add(this.ColumnSuccedent);
             this.HypothesesListView.Columns.Add(this.ColumnCondition);
+            this.HypothesesListView.Columns[0].Width = 250;
+            this.HypothesesListView.Columns[1].Width = 250;
+            this.HypothesesListView.Columns[2].Width = 250;
+            this.HypothesesListView.Columns[3].Width = 250;
 
             //setting locale
             this.ChangeLocale(this.resManager);
@@ -126,7 +135,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 ColumnHeader header = new ColumnHeader();
                 header.Text = name;
-                header.Width = 100;
+                header.Width = 250;
                 this.HypothesesListView.Columns.Add(header);
             }
 
@@ -147,7 +156,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 item.SubItems.Add(FerdaResult.GetCondition(hypothese));
 
                 //quantifiers
-                foreach (object value in resultBrowser.QuantifierValues(hypothese))
+                foreach (object value in resultBrowser.SelectedQuantifierValues(hypothese))
                 {
                    item.SubItems.Add(value.ToString());
                 }
@@ -252,7 +261,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             try
             {
                 index = (int)view.SelectedItems[0].Tag;
-                hypothesis = this.resultBrowser.GetHypothese(index);
+                if (index == previousIndex)
+                {
+                    return;
+                }
+                else
+                {
+                    hypothesis = this.resultBrowser.GetHypothese(index);
+                    previousIndex = index;
+                }
             }
 
             catch
@@ -293,7 +310,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             //name
             PropertySpec hName = new PropertySpec(
-                resManager.GetString("ColumnHypotheseName"),
+                resManager.GetString("ColumnHypothesisName"),
                 typeof(string),
                 resManager.GetString("HypothesisData"),
                 resManager.GetString("HypothesisData"),
@@ -301,7 +318,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 );
             hName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
             table.Properties.Add(hName);
-            table[resManager.GetString("ColumnHypotheseName")] = FerdaResult.GetHypothesisName(hypothesis);
+            table[resManager.GetString("ColumnHypothesisName")] = FerdaResult.GetHypothesisName(hypothesis);
 
             //antecedent
             PropertySpec hAntecedent = new PropertySpec(
@@ -313,7 +330,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 );
             hAntecedent.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
             table.Properties.Add(hAntecedent);
-            table[resManager.GetString("ColumnAntecedent")] = FerdaResult.GetHypothesisName(hypothesis);
+            table[resManager.GetString("ColumnAntecedent")] = FerdaResult.GetAntecedent(hypothesis);
 
             //succedent
             PropertySpec hSuccedent = new PropertySpec(
@@ -325,7 +342,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 );
             hSuccedent.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
             table.Properties.Add(hSuccedent);
-            table[resManager.GetString("ColumnSuccedent")] = FerdaResult.GetHypothesisName(hypothesis);
+            table[resManager.GetString("ColumnSuccedent")] = FerdaResult.GetSuccedent(hypothesis);
 
             //condition
             PropertySpec hCondition = new PropertySpec(
@@ -337,7 +354,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 );
             hCondition.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
             table.Properties.Add(hCondition);
-            table[resManager.GetString("ColumnCondition")] = FerdaResult.GetHypothesisName(hypothesis);
+            table[resManager.GetString("ColumnCondition")] = FerdaResult.GetCondition(hypothesis);
 
             #endregion
 
@@ -345,8 +362,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             #region Used quantifiers and their values
 
             //used quantifiers and their values
-            List<string> quantifierNames = this.resultBrowser.GetUsedQuantifiersNames();
-            List<double> quantifierValues = this.resultBrowser.QuantifierValues(hypothesis);
+            List<string> quantifierNames = this.resultBrowser.GetAllQuantifierNames();
+            List<double> quantifierValues = this.resultBrowser.AllQuantifierValues(hypothesis);
 
             //if the count is not the same, something must be very wrong...
             if (quantifierNames.Count == quantifierValues.Count)
@@ -469,7 +486,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         }
 
         #endregion
-
     }
 }
 
