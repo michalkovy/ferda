@@ -561,6 +561,203 @@ namespace Ferda {
 					this.UnpackAllLayers(box,socket.name);
 				}
 			}
+
+            private List<IBoxModule> boxesAround(List<IBoxModule> boxes, List<IBoxModule> oldBoxes)
+            {
+                List<IBoxModule> result = new List<IBoxModule>(boxes);
+                List<IBoxModule> newBoxes = new List<IBoxModule>();
+                foreach (IBoxModule box in boxes)
+                {
+                    foreach (IBoxModule otherBox in box.ConnectionsFrom())
+                    {
+                        if (this.ContainsBox(otherBox) && 
+                            !oldBoxes.Contains(otherBox) && 
+                            !result.Contains(otherBox))
+                        {
+                            result.Add(otherBox);
+                            newBoxes.Add(otherBox);
+                        }
+                    }
+                    foreach (IBoxModule otherBox in box.ConnectedTo())
+                    {
+                        if (this.ContainsBox(otherBox) &&
+                            !oldBoxes.Contains(otherBox) &&
+                            !result.Contains(otherBox))
+                        {
+                            result.Add(otherBox);
+                            newBoxes.Add(otherBox);
+                        }
+                    }
+                }
+                oldBoxes.AddRange(boxes);
+                if (newBoxes.Count>0)
+                    result.AddRange(boxesAround(newBoxes, oldBoxes));
+                return result;
+            }
+
+            private List<List<IBoxModule>> getComponents()
+            {
+                List<List<IBoxModule>> components = new List<List<IBoxModule>>();
+                IBoxModule[] boxesInView = this.Boxes;
+                if (boxesInView.Length == 0) return new List<List<IBoxModule>>();
+                List<IBoxModule> firstItem = new List<IBoxModule>();
+                firstItem.Add(boxesInView[0]);
+                int i = 0;
+                bool finded;
+                do
+                {
+                    components.Add(boxesAround(firstItem, new List<IBoxModule>()));
+                    List<IBoxModule> boxesInViewCopy = new List<IBoxModule>(boxesInView);
+                    foreach (List<IBoxModule> component in components)
+                    {
+                        foreach (IBoxModule box in component)
+                        {
+                            boxesInViewCopy.Remove(box);
+                        }
+                    }
+                    i++;
+                    finded = (boxesInViewCopy.Count > 0);
+                    if (finded)
+                    {
+                        firstItem = new List<IBoxModule>();
+                        firstItem.Add(boxesInViewCopy[0]);
+                    }
+                } while (finded);
+                return components;
+            }
+
+            private Dictionary<IBoxModule, int> getTopology(out Dictionary<IBoxModule, int> fromTop)
+            {
+                fromTop = new Dictionary<IBoxModule, int>();
+                List<List<IBoxModule>> components = getComponents();
+                IBoxModule[] boxesInView = this.Boxes;
+                if (boxesInView.Length == 0) return new Dictionary<IBoxModule, int>();
+                Dictionary<IBoxModule, List<IBoxModule>> connectionsFrom = new Dictionary<IBoxModule, List<IBoxModule>>();
+                foreach (IBoxModule box in boxesInView)
+                {
+                    List<IBoxModule> otherBoxes = new List<IBoxModule>();
+                    foreach (IBoxModule otherBox in box.ConnectionsFrom())
+                    {
+                        if (this.ContainsBox(otherBox))
+                            otherBoxes.Add(otherBox);
+                    }
+                    connectionsFrom[box] = otherBoxes;
+                }
+                Dictionary<IBoxModule, int> topology = new Dictionary<IBoxModule, int>();
+                foreach (List<IBoxModule> component in components)
+                {
+                    List<IBoxModule> boxesToGoThrough = new List<IBoxModule>(component);
+                    for (int i = 0; boxesToGoThrough.Count > 0; i++)
+                    {
+                        List<IBoxModule> findedBoxes = new List<IBoxModule>();
+                        foreach (IBoxModule box in boxesToGoThrough)
+                        {
+                            if (connectionsFrom[box].Count == 0)
+                            {
+                                topology[box] = i;
+                                findedBoxes.Add(box);
+                            }
+                        }
+                        if (findedBoxes.Count == 0)
+                        {
+                            int minimum = Int32.MaxValue;
+                            IBoxModule minimumBox = null;
+                            foreach (IBoxModule box in component)
+                            {
+                                if (connectionsFrom[box].Count < minimum)
+                                {
+                                    minimum = connectionsFrom[box].Count;
+                                    minimumBox = box;
+                                }
+                            }
+                            connectionsFrom[minimumBox].Clear();
+                            topology[minimumBox] = i;
+                            findedBoxes.Add(minimumBox);
+                        }
+                        foreach (IBoxModule box in findedBoxes)
+                            boxesToGoThrough.Remove(box);
+                        foreach (IBoxModule box in boxesToGoThrough)
+                        {
+                            foreach (IBoxModule findedBox in findedBoxes)
+                            {
+                                if (connectionsFrom[box].Contains(findedBox))
+                                    connectionsFrom[box].Remove(findedBox);
+                            }
+                        }
+                    }
+                }
+                bool somethingDone;
+                do
+                {
+                    somethingDone = false;
+                    foreach (IBoxModule box in boxesInView)
+                    {
+                        int boxTopology = topology[box];
+                        int minimum = Int32.MaxValue;
+                        bool somethingAfter = false;
+                        foreach (IBoxModule otherBox in box.ConnectedTo())
+                        {
+                            if (this.ContainsBox(otherBox))
+                            {
+                                somethingAfter = true;
+                                if (topology[otherBox] < minimum)
+                                    minimum = topology[otherBox];
+                            }
+                        }
+                        minimum--;
+                        if (somethingAfter && minimum > boxTopology)
+                        {
+                            somethingDone = true;
+                            topology[box] = minimum;
+                        }
+                    }
+                }
+                while (somethingDone);
+
+                
+                Dictionary<int, List<int>>topologiesTops = new Dictionary<int, List<int>>();
+                foreach (List<IBoxModule> component in components)
+                {
+                    IBoxModule firstBox = null;
+                    foreach (IBoxModule box in component)
+                    {
+                        if (topology[box] == 0)
+                        {
+                            firstBox = box;
+                            break;
+                        }
+                    }
+                    int actualTop = 0;
+                    fromTop[firstBox] = actualTop;
+                    topologiesTops[0] = new List<int>();
+                    topologiesTops[0].Add(actualTop);
+                }
+                
+                return topology;
+            }
+
+            private void goLeftRightForTops(Dictionary<int, List<int>> topologiesTops,
+                Dictionary<IBoxModule, int> fromTop,
+                IBoxModule firstBox,
+                Dictionary<IBoxModule, int> topology)
+            {
+
+            }
+
+            /// <summary>
+            /// Changes positions of boxes to nice configuration
+            /// </summary>
+            public void Relayout()
+            {
+                IBoxModule[] boxesInView = this.Boxes;
+                if (boxesInView.Length == 0) return;
+                Dictionary<IBoxModule, int> tops;
+                Dictionary<IBoxModule, int> topology = getTopology(out tops);
+                foreach (IBoxModule box in boxesInView)
+                {
+                    this.SetPosition(box, new PointF(topology[box] * 80 + 50, 150));
+                }
+            }
 		}
     }
 }

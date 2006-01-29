@@ -256,6 +256,8 @@ namespace Ferda.ModulesManager
 
 		public abstract Ferda.Modules.PropertyValue GetPropertyOther(string name);
 
+        public abstract void GetProperty_async(Ferda.Modules.AMI_BoxModule_getProperty callBack, string name);
+
 		public abstract string GetPropertyOtherAbout(string name);
 
 		public abstract bool IsPossibleToSetWithAbout(string name);

@@ -21,6 +21,8 @@ namespace Ferda {
 				new StringCollection();
 			private Dictionary<string,List<IBoxModule>> boxesWithLabel =
 				new Dictionary<string,List<IBoxModule>>();
+            private Dictionary<string, StringCollection> labelsInCategory =
+                new Dictionary<string, StringCollection>();
 			private List<View> views;
             private Dictionary<int, IBoxModule> boxesByProjectIdentifier =
                 new Dictionary<int, IBoxModule>();
@@ -55,6 +57,21 @@ namespace Ferda {
 					boxesWithLabel[label] = new List<IBoxModule>();
 				}
 				boxesWithLabel[label].Add(box);
+                foreach (string category in creator.BoxCategories)
+                {
+                    if (!labelsInCategory.ContainsKey(category))
+                    {
+                        labelsInCategory[category] = new StringCollection();
+                        labelsInCategory[category].Add(label);
+                    }
+                    else
+                    {
+                        if (!labelsInCategory[category].Contains(label))
+                        {
+                            labelsInCategory[category].Add(label);
+                        }
+                    }
+                }
 			}
 			
 			/// <summary>
@@ -83,6 +100,7 @@ namespace Ferda {
 					if(boxesInCategory[category].Count == 0)
 					{
 						boxCategories.Remove(category);
+                        labelsInCategory[category].Clear();
 					}
 				}
 				string label = creator.Label;
@@ -90,6 +108,10 @@ namespace Ferda {
 				if(boxesWithLabel[label].Count == 0)
 				{
 					boxCategories.Remove(label);
+                    foreach (StringCollection labels in labelsInCategory.Values)
+                    {
+                        if (labels.Contains(label)) labels.Remove(label);
+                    }
 				}
 			}
 			
@@ -167,24 +189,51 @@ namespace Ferda {
 			/// <returns>An array of <see cref="T:Ferda.ModulesManager.IBoxModule"/>
 			/// representing boxes with type <paramref name="archiveBoxType"/>
 			/// </returns>
-			/// <param name="archiveBoxType">A string representation
-			/// of box type</param>
-            public IBoxModule[] ListBoxesWithType(string archiveBoxType) {
-				//TODO co pokud box label stejny jako kategorie
-				if(boxCategories.Contains(archiveBoxType))
+            /// <param name="boxCategory">A string representation
+			/// of category of box. If null or empty then returns all.</param>
+            /// <param name="archiveBoxType">A string representation
+            /// of label of box. If null or empty then returns all.</param>
+            public IBoxModule[] ListBoxesWithType(string boxCategory, string boxLabel) {
+                if (String.IsNullOrEmpty(boxLabel))
+                {
+                    if (boxCategories.Contains(boxCategory))
+                    {
+                        IBoxModule[] resultArray = boxesInCategory[boxCategory].ToArray();
+                        Array.Sort<IBoxModule>(resultArray);
+                        return resultArray;
+                    }
+                }
+                if (boxLabels.Contains(boxLabel))
 				{
-					IBoxModule[] resultArray = boxesInCategory[archiveBoxType].ToArray();
-					Array.Sort<IBoxModule>(resultArray);
-					return resultArray;
-				}
-				if(boxLabels.Contains(archiveBoxType))
-				{
-					IBoxModule[] resultArray = boxesWithLabel[archiveBoxType].ToArray();
+                    IBoxModule[] resultArray = boxesWithLabel[boxLabel].ToArray();
 					Array.Sort<IBoxModule>(resultArray);
 					return resultArray;
 				}
 				return new IBoxModule[0];
             }
+
+            /// <summary>
+            /// Returns labels of boxes in category
+            /// </summary>
+            /// <param name="boxCategory">A string representation
+            /// of category of box. If null or empty then returns all.</param>
+            /// <returns>Collaction of labels of boxes</returns>
+            public StringCollection ListBoxLabelsInCategory(string boxCategory)
+            {
+                if (String.IsNullOrEmpty(boxCategory))
+                {
+                    return this.boxLabels;
+                }
+                if (labelsInCategory.ContainsKey(boxCategory))
+                {
+                    return labelsInCategory[boxCategory];
+                }
+                else
+                {
+                    return new StringCollection();
+                }
+            }
+
 
 			/// <summary>
 			/// Gets boxes connected to some socket of box <paramref name="box"/>.
@@ -244,14 +293,10 @@ namespace Ferda {
 
                 get {
 					int bc = boxCategories.Count;
-					int bl = boxLabels.Count;
-                    string[] result = new string[bc + boxLabels.Count];
+                    string[] result = new string[bc];
 					if(bc > 0)
 						boxCategories.CopyTo(result, 0);
-					if(bl > 0)
-						boxLabels.CopyTo(result, bc);
-					Array.Sort<string>(result, 0, bc);
-					Array.Sort<string>(result, bc, bl);
+					Array.Sort<string>(result);
 					return result;
                 }
             }

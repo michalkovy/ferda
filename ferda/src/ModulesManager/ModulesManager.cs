@@ -399,6 +399,14 @@ namespace Ferda {
 				this.lnkHelper.ManagersEngineI.ManagersLocatorI.AddIceObjectProxies(proxies);
             }
 
+            public void UnlockAllBoxes()
+            {
+                foreach (Ferda.ModulesManager.BoxModule box in boxModuleByProxyIdentity.Values)
+                {
+                    box.UnlockAll();
+                }
+            }
+
             private Dictionary<string, BoxModuleFactoryCreatorPrx> creatorPrxs;
 			private System.Collections.Generic.Dictionary<string,IBoxModuleFactoryCreator> boxModuleFactoryCreators =
 				new System.Collections.Generic.Dictionary<string,IBoxModuleFactoryCreator>();
