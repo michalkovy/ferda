@@ -72,6 +72,18 @@ namespace Ferda.FrontEnd.Desktop
         ///</remarks>
         void Adapt();
 
+        /// <summary>
+        /// Removes a box from the desktop
+        /// </summary>
+        /// <param name="box">IBoxmodule to be removed</param>
+        void RemoveBox(IBoxModule box);
+
+        /// <summary>
+        /// Adds a box to the desktop
+        /// </summary>
+        /// <param name="box">Box to be added</param>
+        void AddBox(IBoxModule box);
+
 		///<summary>
 		///This function is called when the localization
 		///of the application is changed - the whole menu needs to be redrawn

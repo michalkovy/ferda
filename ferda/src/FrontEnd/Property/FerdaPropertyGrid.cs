@@ -18,11 +18,11 @@ using Ferda.FrontEnd.Desktop;
 namespace Ferda.FrontEnd.Properties
 {
     /// <summary>
-	/// Property Grid for the Ferda application
-	/// </summary>
-	///<stereotype>control</stereotype>
+    /// Property Grid for the Ferda application
+    /// </summary>
+    ///<stereotype>control</stereotype>
     internal class FerdaPropertyGrid : System.Windows.Forms.PropertyGrid, IPropertiesDisplayer,
-        IOtherObjectDisplayer
+        IOtherObjectDisplayer, IAsyncPropertyManager
     {
         #region Class fields
 
@@ -41,6 +41,11 @@ namespace Ferda.FrontEnd.Properties
         protected IBoxModule selectedBox;
 
         protected External.PropertyTable propertyBag;
+
+        /// <summary>
+        /// Structure where temporary values of the properties are stored
+        /// </summary>
+        protected Dictionary<string, object> temporaryValues;
 
         #endregion
 
@@ -104,7 +109,7 @@ namespace Ferda.FrontEnd.Properties
         ///Tady nekde by mel oznamit vsem ostatnim kontrolum, ze doslo ke
         ///zmene...
         ///</remarks>
-        public List <IBoxModule> SelectedBoxes
+        public List<IBoxModule> SelectedBoxes
         {
             set
             {
@@ -157,12 +162,15 @@ namespace Ferda.FrontEnd.Properties
         #region Constructor
 
         ///<summary>
-		/// Default constructor for FerdaPropertyGrid class.
-		///<summary>
-        public FerdaPropertyGrid(Menu.ILocalizationManager locManager, 
+        /// Default constructor for FerdaPropertyGrid class.
+        ///</summary>
+        ///<param name="locManager">Localization manager of the application</param>
+        ///<param name="menuDisp">Menu of the application</param>
+        ///<param name="toolBar">Toolbar of the application</param>
+        public FerdaPropertyGrid(Menu.ILocalizationManager locManager,
             IMenuDisplayer menuDisp, IMenuDisplayer toolBar)
             : base()
-		{
+        {
             viewDisplayers = new List<IViewDisplayer>();
 
             localizationManager = locManager;
@@ -186,25 +194,29 @@ namespace Ferda.FrontEnd.Properties
         #region IPropertiesDisplayer & implementation
 
         ///<summary>
-		///Retrieves the selected object from the desktop or archive and
+        ///Retrieves the selected object from the desktop or archive and
         ///displays its properties in the property bar
-		///</summary>
+        ///</summary>
         public void Adapt()
         {
+            temporaryValues = new Dictionary<string, object>();
+
             if (IsOneBoxSelected) //creating properties for 1 box only
             {
-                propertyBag = CreatePropertiesFromBox(SelectedBox);
+                propertyBag = CreatePropertiesFromBox(SelectedBox, false);
+                CreateTemporaryValues(propertyBag);
                 AddSocketProperties(propertyBag, SelectedBox);
+
                 this.SelectedObject = propertyBag;
             }
             else
             {
-                PropertyTable[] tables = new PropertyTable[SelectedBoxes.Count];
-                for (int i = 0; i < SelectedBoxes.Count; i++)
-                {
-                    tables[i] = CreatePropertiesFromBox(SelectedBoxes[i]);
-                }
-                this.SelectedObjects = tables;
+                //PropertyTable[] tables = new PropertyTable[SelectedBoxes.Count];
+                //for (int i = 0; i < SelectedBoxes.Count; i++)
+                //{
+                //    tables[i] = CreatePropertiesFromBox(SelectedBoxes[i], true);
+                //}
+                //this.SelectedObjects = tables;
             }
         }
 
@@ -213,10 +225,10 @@ namespace Ferda.FrontEnd.Properties
         ///of the application is changed - the whole menu needs to be redrawn
         ///</summary>
         public void ChangeLocalization()
-		{
+        {
             //updating the resource manager
             ResManager = localizationManager.ResManager;
-		}
+        }
 
         /// <summary>
         /// Resets the propetry grid to be without properties
@@ -242,6 +254,32 @@ namespace Ferda.FrontEnd.Properties
 
         #endregion
 
+        #region IAsyncPropertyManager implementation + related functions
+
+        /// <summary>
+        /// Creates the temporary values into the temporaryValues dictionary
+        /// </summary>
+        /// <param name="table">Table from where to get the properties</param>
+        protected void CreateTemporaryValues(PropertyTable table)
+        {
+            foreach (FerdaPropertySpec ps in table.Properties)
+            {
+                //temporaryValues.Add(ps.Name, 
+            }
+        }
+
+        /// <summary>
+        /// The property value is changed, so the the propertyGrid should be
+        /// refilled with new values
+        /// </summary>
+        /// <param name="catcher">Catcher of the connection</param>
+        /// <param name="value">New value of the property</param>
+        public void ChangedPropertyValue(AsyncPropertyCatcher catcher, object value)
+        {
+        }
+
+        #endregion
+
         #region Creating properties
 
         /// <summary>
@@ -249,8 +287,11 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         /// <param name="box">Box from where the properties should be
         /// loaded</param>
+        /// <param name="moreBoxes">
+        /// If the property is created for one or more boxes
+        /// </param>
         /// <returns>A bag full of properties from the box</returns>
-        protected PropertyTable CreatePropertiesFromBox(IBoxModule box)
+        protected PropertyTable CreatePropertiesFromBox(IBoxModule box, bool moreBoxes)
         {
             PropertyTable bag = new PropertyTable();
             IBoxModuleFactoryCreator creator = box.MadeInCreator;
@@ -266,7 +307,10 @@ namespace Ferda.FrontEnd.Properties
                 {
                     if (box.IsPropertySetWithSettingModule(pinfo.name))
                     { //creating the "other" property
-                        CreateOtherProperty(pinfo, box, bag);
+                        if (!moreBoxes)
+                        {
+                            CreateOtherProperty(pinfo, box, bag);
+                        }
                     }
                     else
                     { //creating normal property
@@ -313,7 +357,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                     }
 
-               }
+                }
             }
 
             //AddConnectionProperties();
@@ -396,7 +440,7 @@ namespace Ferda.FrontEnd.Properties
                 if (!IsOneBoxSelected)
                 {
                     return;
-                } 
+                }
                 //TODO az se vyresi problem s jinymi typy u selectedObjects, tak se tohle vypusti
 
                 if (box.ArePropertyOptionsObligatory(pinfo.name))
@@ -481,8 +525,8 @@ namespace Ferda.FrontEnd.Properties
             ps.Description = si.hint;
             ps.Category = pinfo.categoryName;
 
-            if (box.IsPossibleToSetWithAbout(pinfo.name)) 
-                //using a OtherPropertyAddingConverter
+            if (box.IsPossibleToSetWithAbout(pinfo.name))
+            //using a OtherPropertyAddingConverter
             {
                 if (box.IsPropertyReadOnly(pinfo.name) || box.GetPropertySocking(pinfo.name))
                 {
@@ -536,7 +580,7 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="e">Parameters of the property to set</param>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="typeName">Type of the property</param>
-        protected void SetNormalProperty(PropertySpecEventArgs e, 
+        protected void SetNormalProperty(PropertySpecEventArgs e,
             string propertyName, string typeName)
         {
             switch (typeName)
@@ -582,8 +626,8 @@ namespace Ferda.FrontEnd.Properties
                             {
                                 OtherProperty op = e.Value as OtherProperty;
                                 SelectedBox.SetPropertyOtherAbout(propertyName, op.Result);
-                                SelectedBox.WriteExit();
                             }
+                            SelectedBox.WriteExit();
                         }
                         else
                         {
@@ -865,7 +909,7 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="propertyName">Name of the property (socket)</param>
         /// <returns>The indication if a socking of the property has been
         /// changed.</returns>
-        protected bool SetSocketProperty(PropertySpecEventArgs e, string 
+        protected bool SetSocketProperty(PropertySpecEventArgs e, string
             propertyName)
         {
             bool previousValue = SelectedBox.GetPropertySocking(propertyName);
@@ -897,9 +941,9 @@ namespace Ferda.FrontEnd.Properties
         /// Gets a normal property of the box (not the socket one)
         /// </summary>
         /// <param name="e">Parameters of the property to set</param>
-        /// <param name="propertyName">Name of the property</param>
+        /// <param name="realPropertyName">Name of the property</param>
         /// <param name="typeName">Type of the property</param>
-        private void GetNormalProperty(PropertySpecEventArgs e, string 
+        private void GetNormalProperty(PropertySpecEventArgs e, string
             realPropertyName, string typeName)
         {
             //the object when we get values from more selected boxes
@@ -1113,8 +1157,8 @@ namespace Ferda.FrontEnd.Properties
                 case "::Ferda::Modules::DateT":
                     return "System.DateTime";
 
-				case "::Ferda::Modules::DateTimeT":
-					return "System.DateTime";
+                case "::Ferda::Modules::DateTimeT":
+                    return "System.DateTime";
 
                 case "::Ferda::Modules::TimeT":
                     return "System.TimeSpan";
@@ -1314,7 +1358,7 @@ namespace Ferda.FrontEnd.Properties
                 SelectedBoxes.CopyTo(boxes);
             }
 
-            StringSequence seq = new StringSequence(array, name, 
+            StringSequence seq = new StringSequence(array, name,
                 realPropertyName, boxes, ResManager, archiveDisplayer, viewDisplayers, this);
             return seq;
         }
@@ -1356,14 +1400,14 @@ namespace Ferda.FrontEnd.Properties
         /// Function returns a OtherProperty object generated from the box
         /// and property
         /// </summary>
-        /// <param name="box">Box that contains the property</param>
-        /// <param name="realPropertyName">Name of the property</param>
+        /// <param name="SelectedBox">Box that contains the property</param>
+        /// <param name="propertyName">Name of the property</param>
         /// <returns>An OtherProperty object that contains the
         /// properties options</returns>
         private OtherProperty GetOtherProperty(IBoxModule SelectedBox, string propertyName)
         {
-             return new OtherProperty(SelectedBox, propertyName, archiveDisplayer, viewDisplayers,
-                 this, ResManager);
+            return new OtherProperty(SelectedBox, propertyName, archiveDisplayer, viewDisplayers,
+                this, ResManager);
         }
 
         /// <summary>
@@ -1376,9 +1420,9 @@ namespace Ferda.FrontEnd.Properties
         {
             foreach (PropertyInfo pinfo in box.MadeInCreator.Properties)
             {
-				//Tomas Kuchar wrote
-				if (!pinfo.visible)
-					continue;
+                //Tomas Kuchar wrote
+                if (!pinfo.visible)
+                    continue;
 
                 SocketInfo si = box.MadeInCreator.GetSocket(pinfo.name);
                 if (si.label == propertyLabel)
@@ -1410,7 +1454,7 @@ namespace Ferda.FrontEnd.Properties
             {
                 case "System.String":
                     //a variable that holds the value of the first item
-                    string tempString = 
+                    string tempString =
                         SelectedBoxes[0].GetPropertyString(realPropertyName);
 
                     //iterating through the other items to see if there is another value
@@ -1618,13 +1662,13 @@ namespace Ferda.FrontEnd.Properties
             }
             else
             {
-                realPropertyName = GetPropertyName(e.Property.Name, SelectedBoxes[0]);                
+                realPropertyName = GetPropertyName(e.Property.Name, SelectedBoxes[0]);
             }
 
             //parsing the string to get the type name without assembly information
             int firstComma = e.Property.TypeName.IndexOf(',');
             string typeName;
-            
+
             if (firstComma == -1)
             {
                 typeName = e.Property.TypeName;
@@ -1703,8 +1747,6 @@ namespace Ferda.FrontEnd.Properties
                     view.Adapt();
                 }
             }
-            //adapts also the property grid
-            this.Adapt();
         }
 
         #endregion

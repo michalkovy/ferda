@@ -77,10 +77,9 @@ namespace Ferda.FrontEnd.Desktop
         /// Constructor of the FerdaConnector clss
         /// </summary>
         /// <param name="o">the underlying shape to which the connector belongs</param>
-        /// <param name="ConnectorName">the name of the connector</param>
-        /// <param name="MultipleConnections">wether the connector allows more than one connection</param>
         /// <param name="socket">The connector will represent this socket</param>
         /// <param name="svgMan">SVGManager for drawing svg bitmaps</param>
+        /// <param name="packed">If the connector is packed in the beginning</param>
         /// <remarks>
         /// Nevim jeste, jestli se oplati pro kazdy konektor drzet
         /// si svuj vlastni socket, zatim se to vyuziva jenom pri konstrukci k ziskani

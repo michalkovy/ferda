@@ -64,7 +64,7 @@ namespace Ferda.FrontEnd.Properties
         public string selectedLabel;
 
         //Archive and View displayers to be updated when the class changes a property
-        protected Archive.IArchiveDisplayer archiveDisplayer;
+        private Archive.IArchiveDisplayer archiveDisplayer;
         private List<Desktop.IViewDisplayer> viewDisplayers;
 
         #endregion

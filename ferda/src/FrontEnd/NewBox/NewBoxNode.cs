@@ -5,15 +5,26 @@ using System.Windows.Forms;
 
 namespace Ferda.FrontEnd.NewBox
 {
+    /// <summary>
+    /// Determines the type of the node (if it is a box or a category
+    /// of boxes)
+    /// </summary>
     public enum ENodeType
     {
-        Box, Category
+        /// <summary>
+        /// It is a box
+        /// </summary>
+        Box, 
+        /// <summary>
+        /// It is a category of boxes
+        /// </summary>
+        Category
     }
 
     /// <summary>
     /// Class for the tree nodes in the NewBox control. It has additional
     /// information about the type of the node (if it is a box type or a 
-    /// category) for drag&drop operations
+    /// category) for drag&amp;drop operations
     /// </summary>
     class NewBoxNode : TreeNode
     {
@@ -53,6 +64,7 @@ namespace Ferda.FrontEnd.NewBox
         /// </summary>
         /// <param name="name">name of the node</param>
         /// <param name="type">type of the node</param>
+        /// <param name="ident">ICE identifier of the box factory</param>
         public NewBoxNode(string name, ENodeType type, string ident) : base(name)
         {
             nodeType = type;

@@ -19,13 +19,26 @@ namespace Ferda.FrontEnd.Properties
     {
         #region Class fields
 
-        //this has to be public, because we need to react on the double click
-        //from the editor
+        /// <summary>
+        /// Listbox with the options
+        /// </summary>
+        /// <remarks>
+        /// this has to be public, because we need to react on the double click
+        /// from the editor
+        /// </remarks>
         public ListBox LBOptions;
+
+        /// <summary>
+        /// BUtton to add an option
+        /// </summary>
+        /// <remarks>
+        /// this has to be public, because we need to react on the double click
+        /// from the editor
+        /// </remarks>
         public Button BAddOption;
         private TextBox TBNewOption;
         private Label LText;
-        protected StringSequence sequence;
+        private StringSequence sequence;
 
         #endregion
 

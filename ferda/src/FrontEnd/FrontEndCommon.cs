@@ -83,7 +83,7 @@ namespace Ferda.FrontEnd
         /// <summary>
         /// Switches the application to the directory in the parameter
         /// </summary>
-        /// <param name="previosDir">A path of the directory where
+        /// <param name="previousDir">A path of the directory where
         /// the application should be returned</param>
         public static void SwitchToPreviousDirectory(string previousDir)
         {

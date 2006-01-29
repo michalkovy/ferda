@@ -26,6 +26,9 @@ namespace Ferda.FrontEnd
 
         #region Constructor
 
+        /// <summary>
+        /// Initial constructor
+        /// </summary>
         public FerdaPrescreen()
         {
             InitializeComponent();

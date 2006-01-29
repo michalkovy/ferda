@@ -31,7 +31,9 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         protected string result;
 
-        //Archive and View displayers to be updated when the class changes a property
+        /// <summary>
+        /// Archive and View displayers to be updated when the class changes a property
+        /// </summary>
         protected Archive.IArchiveDisplayer archiveDisplayer;
         private List<Desktop.IViewDisplayer> viewDisplayers;
 

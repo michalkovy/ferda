@@ -6,7 +6,7 @@
 <mkdir dir="${addInsBuild.dir}" />
 		<nant buildfile="${path::combine('AddIns','default.build')}" target="buildmain"/>
 		
-		<csc target="winexe" output="${path::combine(build.dir,'FerdaFrontEnd.exe')}" doc="${path::combine(build.dir,'FerdaFrontEnd.xml')}" debug="${debug}" optimize="${optimize}" win32icon="ferda.ico">
+		<csc target="winexe" output="${path::combine(build.dir,'FerdaFrontEnd.exe')}" doc="${path::combine(build.dir,'FerdaFrontEnd.xml')}" debug="${debug}" optimize="${optimize}" win32icon="FerdaFrontEnd.ico">
 			<sources>
 				<include name="**.cs" />
 				<exclude name="AddIns/**.cs" />

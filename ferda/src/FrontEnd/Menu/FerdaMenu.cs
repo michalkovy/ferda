@@ -65,7 +65,7 @@ namespace Ferda.FrontEnd.Menu
         /// Group Tools
 		private ToolStripMenuItem preferences;
         // using FerdaPreferencesDialog
-		///maybe something more
+		// maybe something more
 
         /// Group Help
         private ToolStripMenuItem applicationHelp;
@@ -571,7 +571,7 @@ namespace Ferda.FrontEnd.Menu
         /// from that control. Because they wouldnt work, the click events have to be
         /// corrected by this method
         /// </summary>
-        /// <param name="newArray">Array containg the menu items</param>
+        /// <param name="items">Array containg the menu items</param>
         private void CorrectDynamicClick(ToolStripItem[] items)
         {
             foreach (ToolStripItem i in items)
@@ -640,7 +640,8 @@ namespace Ferda.FrontEnd.Menu
         /// <summary>
         /// Saves the project as
         /// </summary>
-        private void SaveProjectAsCore()
+        /// <returns>True if uer clicked Ok in the SaveFile dialog, false otherwise</returns>
+        private bool SaveProjectAsCore()
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Title = ResManager.GetString("MenuFileSaveProject");
@@ -654,7 +655,21 @@ namespace Ferda.FrontEnd.Menu
                 {
                     SaveProjectCore(dialog.FileName);
                 }
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines if the project contains any boxes.
+        /// </summary>
+        /// <returns>If there are boxes in the project</returns>
+        private bool ProjectContainsBoxes()
+        {
+            return (projectManager.Archive.Boxes.Length != 0);
         }
 
         #endregion
@@ -679,47 +694,23 @@ namespace Ferda.FrontEnd.Menu
             MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
             DialogResult result;
 
-            // Displays the MessageBox.
-            result = MessageBox.Show(this, message, caption, buttons,
-                MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-
-            if (result == DialogResult.Cancel) //does nothing
+            if (ProjectContainsBoxes())
             {
-                return;
-            }
+                // Displays the MessageBox.
+                result = MessageBox.Show(this, message, caption, buttons,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 
-            if (result == DialogResult.Yes) //saving the current project
-            {
-                SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Title = ResManager.GetString("MenuFileSaveProject");
-                saveDialog.Filter = ResManager.GetString("MenuFileFerdaProjectFiles")
-                    + "|*.xfp|" + ResManager.GetString("MenuFileAllFiles")
-                    + "|*.*";
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (saveDialog.FileName != "")
-                    {
-                        //saving the project to the location
-                        System.IO.FileStream fs =
-                            new System.IO.FileStream(saveDialog.FileName, System.IO.FileMode.Create);
-                        try
-                        {
-                            Cursor previosCursor = Parent.Cursor;
-                            Parent.Cursor = Cursors.WaitCursor;
-                            Parent.Refresh();
-                            projectManager.SaveProject(fs);
-                            Parent.Cursor = previosCursor;
-                        }
-                        finally
-                        {
-                            fs.Close();
-                        }
-                    }
-                }
-                else
+                if (result == DialogResult.Cancel) //does nothing
                 {
                     return;
+                }
+
+                if (result == DialogResult.Yes) //saving the current project
+                {
+                    if (!SaveProjectAsCore())
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -748,47 +739,23 @@ namespace Ferda.FrontEnd.Menu
             MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
             DialogResult result;
 
-            // Displays the MessageBox.
-            result = MessageBox.Show(this, message, caption, buttons,
-                MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-
-            if (result == DialogResult.Cancel) //does nothing
+            if (ProjectContainsBoxes())
             {
-                return;
-            }
+                // Displays the MessageBox.
+                result = MessageBox.Show(this, message, caption, buttons,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 
-            if (result == DialogResult.Yes) //saving the current project
-            {
-                SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Title = ResManager.GetString("MenuFileSaveProject");
-                saveDialog.Filter = ResManager.GetString("MenuFileFerdaProjectFiles")
-                    + "|*.xfp|" + ResManager.GetString("MenuFileAllFiles")
-                    + "|*.*";
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (saveDialog.FileName != "")
-                    {
-                        //saving the project to the location
-                        System.IO.FileStream fs =
-                            new System.IO.FileStream(saveDialog.FileName, System.IO.FileMode.Create);
-                        try
-                        {
-                            Cursor previosCursor = Parent.Cursor;
-                            Parent.Cursor = Cursors.WaitCursor;
-                            Parent.Refresh();
-                            projectManager.SaveProject(fs);
-                            Parent.Cursor = previosCursor;
-                        }
-                        finally
-                        {
-                            fs.Close();
-                        }
-                    }
-                }
-                else
+                if (result == DialogResult.Cancel) //does nothing
                 {
                     return;
+                }
+
+                if (result == DialogResult.Yes) //saving the current project
+                {
+                    if (!SaveProjectAsCore())
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -803,6 +770,7 @@ namespace Ferda.FrontEnd.Menu
             {
                 string fileName = dialog.FileName;
 
+                controlsManager.ClearDocking();
                 FrontEndCommon.LoadProject(fileName, this, resManager, 
                     ref projectManager, controlsManager);
             }
@@ -856,47 +824,23 @@ namespace Ferda.FrontEnd.Menu
             MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
             DialogResult result;
 
-            // Displays the MessageBox.
-            result = MessageBox.Show(this, message, caption, buttons,
-                MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-
-            if (result == DialogResult.Cancel) //does nothing
+            if (ProjectContainsBoxes())
             {
-                return;
-            }
+                // Displays the MessageBox.
+                result = MessageBox.Show(this, message, caption, buttons,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 
-            if (result == DialogResult.Yes) //saving the current project
-            {
-                SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Title = ResManager.GetString("MenuFileSaveProject");
-                saveDialog.Filter = ResManager.GetString("MenuFileFerdaProjectFiles")
-                    + "|*.xfp|" + ResManager.GetString("MenuFileAllFiles")
-                    + "|*.*";
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (saveDialog.FileName != "")
-                    {
-                        //saving the project to the location
-                        System.IO.FileStream fs =
-                            new System.IO.FileStream(saveDialog.FileName, System.IO.FileMode.Create);
-                        try
-                        {
-                            Cursor previosCursor = Parent.Cursor;
-                            Parent.Cursor = Cursors.WaitCursor;
-                            Parent.Refresh();
-                            projectManager.SaveProject(fs);
-                            Parent.Cursor = previosCursor;
-                        }
-                        finally
-                        {
-                            fs.Close();
-                        }
-                    }
-                }
-                else
+                if (result == DialogResult.Cancel) //does nothing
                 {
                     return;
+                }
+
+                if (result == DialogResult.Yes) //saving the current project
+                {
+                    if (!SaveProjectAsCore())
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -915,14 +859,17 @@ namespace Ferda.FrontEnd.Menu
         void Actions_Click(object sender, EventArgs e)
         {
             IBoxModule box;
+            IBoxSelector selector;
 
             if (ControlHasFocus is IViewDisplayer)
             {
                 box = ((IViewDisplayer)ControlHasFocus).SelectedBoxes[0];
+                selector = ((FerdaDesktop)ControlHasFocus);
             }
             else //it is an archive
             {
                 box = ((IArchiveDisplayer)ControlHasFocus).SelectedBox;
+                selector = ((FerdaArchive)ControlHasFocus);
             }
 
             //run the action
@@ -931,7 +878,7 @@ namespace Ferda.FrontEnd.Menu
                 if (info.label == sender.ToString())
                 {
                     ActionExceptionCatcher catcher =
-                        new ActionExceptionCatcher(projectManager, ResManager);
+                        new ActionExceptionCatcher(projectManager, ResManager, selector);
 					box.RunAction_async(catcher, info.name);
                     break;
                 }
