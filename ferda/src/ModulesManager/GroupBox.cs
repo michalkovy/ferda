@@ -503,6 +503,11 @@ namespace Ferda.ModulesManager
 		{
 			throw new Ferda.Modules.NameNotExistError();
 		}
+
+        public override void GetProperty_async(AMI_BoxModule_getProperty callBack, string name)
+        {
+            callBack.ice_exception(new Ferda.Modules.NameNotExistError());
+        }
 		
 		/// <summary>
 		/// Method GetPropertyOtherAbout
@@ -715,5 +720,5 @@ namespace Ferda.ModulesManager
 		
 		private GroupBoxFactoryCreator creator;
 		private string userName = "Group";
-	}
+    }
 }

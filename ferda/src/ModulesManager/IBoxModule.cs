@@ -306,7 +306,7 @@ namespace Ferda.ModulesManager
 		void SetPropertyOther(string name, Ferda.Modules.PropertyValue value);
 
 		/// <summary>
-		/// Gets byte[] representation of value of property with name <paramref name="name"/>
+        /// Gets <see cref="T:Ferda.Modules.PropertyValue"/> representation of value of property with name <paramref name="name"/>
 		/// and not standard type
 		/// </summary>
 		/// <returns>A <see cref="T:Ferda.Modules.PropertyValue"/> representing value of property</returns>
@@ -314,6 +314,14 @@ namespace Ferda.ModulesManager
 		/// <exception cref="T:Ferda.Modules.NameNotExistError">property with name
 		/// <paramref name="name"/> and not of standard type was not found</exception>
 		Ferda.Modules.PropertyValue GetPropertyOther(string name);
+
+        /// <summary>
+        /// Gets <see cref="T:Ferda.Modules.PropertyValue"/> representation of value of property with name <paramref name="name"/> asynchronously
+        /// </summary>
+        /// <param name="callBack">A <see cref="T:Ferda.Modules.AMI_BoxModule_runAction"/> call back interface will be used for catching exceptions</param>
+        /// <param name="name">A string representing name of property</param>
+        /// <seealso cref="M:Ferda.ModulesManager.IBoxModule.GetPropertyOther(System.String)"/>
+        void GetProperty_async(Ferda.Modules.AMI_BoxModule_getProperty callBack, string name);
 
 		/// <summary>
 		/// Gets string representation of value of property with name <paramref name="name"/>
@@ -482,8 +490,8 @@ namespace Ferda.ModulesManager
 		/// <summary>
 		/// Executes action <paramref name="actionName"/> asynchronously
 		/// </summary>
-		/// <param name="callBack">A string representing name of action for execution</param>
-		/// <param name="actionName">A <see cref="T:Ferda.Modules.AMI_BoxModule_runAction"/> call back interface will be used for catching exceptions</param>
+        /// <param name="callBack">A <see cref="T:Ferda.Modules.AMI_BoxModule_runAction"/> call back interface will be used for catching exceptions</param>
+        /// <param name="actionName">A string representing name of action for execution</param>
 		/// <seealso cref="M:Ferda.ModulesManager.IBoxModule.RunAction(System.String)"/>
 		/// <seealso cref="M:Ferda.ModulesManager.IBoxModule.IsPossibleToRunAction(System.String)"/>
 		void RunAction_async(Ferda.Modules.AMI_BoxModule_runAction callBack, string actionName);

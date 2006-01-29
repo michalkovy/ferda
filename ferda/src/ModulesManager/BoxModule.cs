@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Ferda.Modules;
+using System.Diagnostics;
 
 namespace Ferda
 {
@@ -423,6 +424,11 @@ namespace Ferda
             {
 				return this.iceBoxModulePrx.getProperty(name);
             }
+
+            public override void GetProperty_async(AMI_BoxModule_getProperty callBack, string name)
+            {
+                this.iceBoxModulePrx.getProperty_async(callBack, name);
+            }
 			
 			public override string GetPropertyOtherAbout(string name)
             {
@@ -794,14 +800,15 @@ namespace Ferda
 				}
 			}
 			
-			private delegate void lockUnlock(BoxModule boxModule);
-			
-			private void lockUnlockRecursive(IBoxModule box, BoxModule lockBox, Stack<IBoxModule> stack, lockUnlock lockingUnlocking)
+			private void lockUnlockRecursive(IBoxModule box, BoxModule lockBox, Stack<IBoxModule> stack, bool locking)
 			{
 				BoxModule boxModule = box as BoxModule;
 				if(boxModule!=null)
 				{
-					lockingUnlocking(lockBox);
+                    if(locking)
+                        boxModule.LockByBox(lockBox);
+                    else
+                        boxModule.UnlockByBox(lockBox);
 				}
 				else
 				{
@@ -810,7 +817,7 @@ namespace Ferda
 						if(!stack.Contains(newBox))
 						{
 							stack.Push(newBox);
-							lockUnlockRecursive(newBox, lockBox, stack,lockingUnlocking);
+                            lockUnlockRecursive(newBox, lockBox, stack, locking);
 							stack.Pop();
 						}
 					}
@@ -824,12 +831,12 @@ namespace Ferda
 					if(!locks.Contains(box))
 					{
 						locks.Add(box);
-						System.Threading.Monitor.Enter(this);
+                        //Debug.WriteLine("Vstupuji " + this.UserName);
 						Stack<IBoxModule> stack = new Stack<IBoxModule>();
 						foreach(IBoxModule otherBox in this.ConnectionsFrom())
 						{
 							stack.Push(otherBox);
-							lockUnlockRecursive(otherBox,box,stack,new lockUnlock(LockByBox));
+                            lockUnlockRecursive(otherBox, box, stack, true);
 							stack.Pop();
 						}
 					}
@@ -838,7 +845,6 @@ namespace Ferda
 			
 			protected internal void Lock()
 			{
-				//sakra co tu zamknout
 				lock(lockObject)
 				{
 					lockNumber++;
@@ -856,13 +862,12 @@ namespace Ferda
 					if(locks.Contains(box))
 					{
 						locks.Remove(box);
-						if(locks.Count==0)
-							System.Threading.Monitor.Exit(this);
+                        //Debug.WriteLine("Opoustim " + this.UserName);
 						Stack<IBoxModule> stack = new Stack<IBoxModule>();
 						foreach(IBoxModule otherBox in this.ConnectionsFrom())
 						{
 							stack.Push(otherBox);
-							lockUnlockRecursive(otherBox,box,stack,new lockUnlock(UnlockByBox));
+                            lockUnlockRecursive(otherBox, box, stack, false);
 							stack.Pop();
 						}
 					}
@@ -880,6 +885,19 @@ namespace Ferda
 					}
 				}
 			}
+
+            protected internal void UnlockAll()
+            {
+                lock (lockObject)
+                {
+                    lockNumber = 0;
+                    lock(locks)
+				    {
+                        //Debug.WriteLine("Opoustim " + this.UserName);
+                        locks.Clear();
+                    }
+                }
+            }
 			
 			/// <summary>
 			/// Method TryWriteEnter
@@ -887,7 +905,18 @@ namespace Ferda
 			/// <returns>A bool</returns>
 			public override bool TryWriteEnter()
 			{
-				return System.Threading.Monitor.TryEnter(this);
+                System.Threading.Monitor.Enter(locks);
+                bool vystup = (locks.Count == 0);
+                
+                //Debug.WriteLine("Vstupuji by try " + this.UserName + " " + vystup.ToString());
+
+                if (vystup)
+                    return true;
+                else
+                {
+                    System.Threading.Monitor.Exit(locks);
+                    return false;
+                }
 			}
 			
 			/// <summary>
@@ -896,7 +925,8 @@ namespace Ferda
 			/// <returns>A bool</returns>
 			public override void WriteExit()
 			{
-				System.Threading.Monitor.Exit(this);
+                //Debug.WriteLine("Opoustim po try " + this.UserName);
+                System.Threading.Monitor.Exit(locks);
 			}
 			
 			private int lockNumber = 0;
