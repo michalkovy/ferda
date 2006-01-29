@@ -28,8 +28,9 @@ Section "$(FileAssociation)" FileAssociation
   StrCmp $0 "" 0 "${Index}-Skip"
 	WriteRegStr HKCR "FerdaDataMiner.Project" "" "Ferda DataMiner Project"
 	WriteRegStr HKCR "FerdaDataMiner.Project\shell" "" "open"
-	WriteRegStr HKCR "FerdaDataMiner.Project\DefaultIcon" "" "$INSTDIR\FrontEnd\ferda.ico,0"
+	;WriteRegStr HKCR "FerdaDataMiner.Project\DefaultIcon" "" "$INSTDIR\FrontEnd\FerdaFrontEnd.ico,0"
 "${Index}-Skip:"
+WriteRegStr HKCR "FerdaDataMiner.Project\DefaultIcon" "" "$INSTDIR\FrontEnd\FerdaFrontEnd.ico,0"
   WriteRegStr HKCR "FerdaDataMiner.Project\shell\open\command" "" \
     '$INSTDIR\FrontEnd\FerdaFrontEnd.exe "%1"'
   WriteRegStr HKCR "FerdaDataMiner.Project\shell\edit" "" "Edit Options File"

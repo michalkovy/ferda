@@ -53,6 +53,15 @@
 				<arg value="${build.dir}/ModulesManager/generated"/>
 				<arg file="ModulesManager/ManagersEngine.ice"/>
 			</exec>
+
+			<echo message="Generuji .cs z .ice souboru v adresari Statistics..."/>
+			<mkdir dir="${build.dir}/Statistics/generated"/>
+			<exec program="slice2cs">
+				<arg value="-I."/>
+				<arg value="--output-dir"/>
+				<arg value="${build.dir}/Statistics/generated"/>
+				<arg file="Statistics/Statistics.ice"/>
+			</exec>
 			<echo message="Generuji .cs z .ice souboru v adresari Modules/Boxes..."/>
 			<property name="parentDirectoryName" value="${path::get-full-path('Modules/Boxes/')}"/>
 			<!-- <echo message="Parent directory name: ${parentDirectoryName}" /> -->

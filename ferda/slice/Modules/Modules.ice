@@ -560,7 +560,7 @@ module Ferda {
 			/**
 			 *
 			 * Executes action of specified name.
-			 * Invocation of this method is asynchronous.
+			 * Invocation of this method can be asynchronous.
 			 *
 			 **/
 			["ami"] void runAction(string actionName)
@@ -653,7 +653,7 @@ module Ferda {
 
 			/**
 			 *
-			 * Gets value of the property. Invocation of this method is asynchronous.
+			 * Gets value of the property. Invocation of this method can be asynchronous.
 			 *
 			 * @throws NameNotExistError Is thrown if property with propertyName does
 			 * not exist in this BoxModule.
