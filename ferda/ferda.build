@@ -20,7 +20,7 @@
 	<property name="utils.dir" value="${path::get-full-path('utils')}"/>
 	<property name="snapshot.dir" value="${path::combine(directory::get-current-directory(),'snapshot')}" unless="${property::exists('snapshot.dir')}"/>
 	<property name="docs.build.file" value="docs/docs.build"/>
-	<property name="ice.dir" value="c:\Ice-3.0.0\" unless="${property::exists('ice.dir')}"/>
+	<property name="ice.dir" value="c:\Ice-3.0.1\" unless="${property::exists('ice.dir')}"/>
 	<property name="installer.dir" value="${path::get-full-path('installer')}"/>
 	<target name="clean" description="Smaže build">
 		<nant buildfile="${path::combine(slice.dir,default.build)}" target="clean">
@@ -68,52 +68,52 @@
 			</sourcefiles>
 		</uptodate>
 		<if test="${not(help.uptodate)}">
-			<ndoc>
-				<assemblies basedir="${bin.dir}">
-					<include name="Server/FerdaServerBase.dll"/>
-					<include name="Server/FerdaBoxInterfaces.dll"/>
-
-					<include name="Server/FerdaDataMiningCommonBoxes.dll"/>
-
-					<!--
+      <ndoc>
+        <assemblies basedir="${bin.dir}">
+          <include name="Server/FerdaServerBase.dll"/>
+          <!--
+          <include name="Server/FerdaBoxInterfaces.dll"/>
+          -->
+          <include name="Server/FerdaDataMiningCommonBoxes.dll"/>
+          <!--
 						<include name="Server/FerdaLMTasksBoxes.dll"/>
 					-->
 
-					<include name="FrontEnd/FerdaModulesManager.dll"/>
-					<include name="FrontEnd/FerdaProjectManager.dll"/>
+          <include name="FrontEnd/FerdaModulesManager.dll"/>
+          <include name="FrontEnd/FerdaProjectManager.dll"/>
 
-					 <include name="FrontEnd/FerdaFrontEnd.exe"/>
-				</assemblies>
-				<referencepaths>
-					<include name="${bin.dir}"/>
-					<include name="${bin.dir}/Server"/>
-					<include name="${bin.dir}/FrontEnd"/>
-				</referencepaths>
-				<documenters>
-					<documenter name="MSDN">
-						<property name="OutputDirectory" value="${doc.dir}/programHelp"/>
-						<property name="HtmlHelpName" value="Ferda"/>
-						<!-- <property name="HtmlHelpCompilerFilename" value="hhc.exe"/> -->
-						<property name="IncludeFavorites" value="False"/>
-						<property name="Title" value="An NDoc Documented Class Library"/>
-						<property name="SplitTOCs" value="False"/>
-						<property name="DefaulTOC" value=""/>
-						<property name="ShowVisualBasic" value="True"/>
-						<property name="ShowMissingSummaries" value="True"/>
-						<property name="ShowMissingRemarks" value="False"/>
-						<property name="ShowMissingParams" value="True"/>
-						<property name="ShowMissingReturns" value="True"/>
-						<property name="ShowMissingValues" value="True"/>
-						<property name="DocumentInternals" value="False"/>
-						<property name="DocumentProtected" value="True"/>
-						<property name="DocumentPrivates" value="False"/>
-						<property name="DocumentEmptyNamespaces" value="False"/>
-						<property name="IncludeAssemblyVersion" value="False"/>
-						<property name="CopyrightText" value=""/>
-						<property name="CopyrightHref" value=""/>
-					</documenter>
-				</documenters>
-			</ndoc>
+          <include name="FrontEnd/FerdaFrontEnd.exe"/>
+        </assemblies>
+        <referencepaths>
+          <include name="${bin.dir}"/>
+          <include name="${bin.dir}/Server"/>
+          <include name="${bin.dir}/FrontEnd"/>
+        </referencepaths>
+        <documenters>
+          <documenter name="MSDN">
+            <property name="OutputDirectory" value="${doc.dir}/programHelp"/>
+            <property name="HtmlHelpName" value="Ferda"/>
+            <!-- <property name="HtmlHelpCompilerFilename" value="hhc.exe"/> -->
+            <property name="IncludeFavorites" value="False"/>
+            <property name="Title" value="An NDoc Documented Class Library"/>
+            <property name="SplitTOCs" value="False"/>
+            <property name="DefaulTOC" value=""/>
+            <property name="ShowVisualBasic" value="True"/>
+            <property name="ShowMissingSummaries" value="True"/>
+            <property name="ShowMissingRemarks" value="False"/>
+            <property name="ShowMissingParams" value="True"/>
+            <property name="ShowMissingReturns" value="True"/>
+            <property name="ShowMissingValues" value="True"/>
+            <property name="DocumentInternals" value="False"/>
+            <property name="DocumentProtected" value="True"/>
+            <property name="DocumentPrivates" value="False"/>
+            <property name="DocumentEmptyNamespaces" value="False"/>
+            <property name="IncludeAssemblyVersion" value="False"/>
+            <property name="CopyrightText" value=""/>
+            <property name="CopyrightHref" value=""/>
+          </documenter>
+        </documenters>
+      </ndoc>      
 		</if>
 	</target>
 	<target name="doc">
