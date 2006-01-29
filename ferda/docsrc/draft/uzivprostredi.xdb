@@ -25,6 +25,15 @@
 		<titleabbrev>UzivatelskeRozhrani</titleabbrev>
     <revhistory>
       <revision>
+        <revnumber>3.4</revnumber>
+        <date>2006-01-28</date>
+        <revdescription>
+          <simpara>
+            Úpravy klávesových zkratek u pracovní plochy
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
         <revnumber>3.3</revnumber>
         <date>2006-01-24</date>
         <revdescription>
@@ -1079,7 +1088,7 @@
                 Uživatel může odstranit krabičky po označení buď položkou <emphasis>
                   Odstranit z pracovní plochy
                 </emphasis>, nebo standardně na klávesu
-                <emphasis>Delete</emphasis>
+                <emphasis>Cltr+D</emphasis>
               </para>
             </formalpara>
           </listitem>
@@ -1092,7 +1101,7 @@
                 spojené. Uživatel odstraní krabičky kliknutím na
                 <emphasis>Odstranit z archivu</emphasis> v kontextovém menu. Systém se
                 uživatele zeptá, jestli chce opravdu odstranit krabičky a na kladnou
-                odpověď krabičky vymaže. Může také použít klávesovou zkratku<emphasis>Ctrl+R</emphasis>
+                odpověď krabičky vymaže. Může také použít klávesovou zkratku<emphasis>Del</emphasis>
               </para>
             </formalpara>
           </listitem>
