@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="Ferda Modules" default="build" basedir=".">
+	<description>Ferda Modules</description>
+	<target name="build" description="Build Statistics">
+
+		<csc target="library" output="${path::combine(build.dir,'FerdaStatistics.dll')}" doc="${path::combine(build.dir,'FerdaBoxInterfaces.xml')}" debug="${debug}" optimize="${optimize}">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="**.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+   				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+	</target>
+		
+		
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset basedir="${build.dir}">
+				<include name="FerdaStatistics.dll*"/>
+			</fileset>
+		</delete>
+	</target>
+</project>
