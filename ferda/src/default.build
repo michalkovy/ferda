@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <project name="Ferda sources" default="build" basedir=".">
 	<description>project Ferda sources</description>
-	<target name="build" description="Build sources" depends="FerdaBaseBuild,ProjectManagerBuild,ModulesManagerBuild,ModulesBuild,FrontEndBuild,UtilsBuild"/> <!-- ,FrontEndBuild -->
-	<target name="clean" description="Clean builds" depends="FerdaBaseClean,ProjectManagerClean,ModulesManagerClean,ModulesClean,FrontEndClean,UtilsClean"/>
+	<target name="build" description="Build sources" depends="FerdaBaseBuild,ProjectManagerBuild,ModulesManagerBuild,ModulesBuild,StatisticsBuild,FrontEndBuild,UtilsBuild"/> <!-- ,FrontEndBuild -->
+	<target name="clean" description="Clean builds" depends="FerdaBaseClean,ProjectManagerClean,ModulesManagerClean,ModulesClean,StatisticsClean,FrontEndClean,UtilsClean"/>
 	<target name="ProjectManagerBuild" depends="ModulesManagerBuild,FerdaBaseBuild">
 		<nant buildfile="ProjectManager/default.build" target="build">
 			<properties>
@@ -56,6 +56,16 @@
 			</properties>
 		</nant>
 	</target>
+
+
+         <target name="StatisticsBuild" depends="FerdaBaseBuild">
+		<nant buildfile="Statistics/default.build" target="build">
+			<properties>
+				<property name="build.dir" value="${serverbin.dir}"/>
+			</properties>
+		</nant>
+	</target>
+
 	<target name="ModulesClean">
 		<nant buildfile="Modules/default.build" target="clean">
 			<properties>
@@ -63,6 +73,14 @@
 			</properties>
 		</nant>
 	</target>
+	<target name="StatisticsClean">
+		<nant buildfile="Statistics/default.build" target="clean">
+			<properties>
+				<property name="build.dir" value="${serverbin.dir}"/>
+			</properties>
+		</nant>
+	</target>
+
 	<target name="FerdaBaseBuild" description="Build modules" depends="FerdaBaseCreate-common-assemblyinfo">
 		<csc target="library" output="${path::combine(serverbin.dir,'FerdaBase.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
