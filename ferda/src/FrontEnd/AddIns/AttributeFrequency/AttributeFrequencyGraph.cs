@@ -1,163 +1,250 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
-using Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses;
-
-namespace Ferda.FrontEnd.AddIns.AttributeFrequency
-{
-    public partial class AttributeFrequency
-    {
-        #region Private variables
-
-        private Steema.TeeChart.TChart AttributeFrequencyChart;
-
-        #endregion
-
-        #region Initialization
-
-        /// <summary>
-        /// Method to initialize Steema chart component for displaying contingency table
-        /// </summary>
-        private void InitializeGraph()
-        {
-            this.TabPageGraph.SuspendLayout();
-            this.SuspendLayout();
-            this.AttributeFrequencyChart = new Steema.TeeChart.TChart();
-
-            this.AttributeFrequencyChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AttributeFrequencyChart.Header.Lines = new string[] { resManager.GetString("AttributeFrequencyChart") };
-            this.AttributeFrequencyChart.Location = new System.Drawing.Point(0, 0);
-
-            this.AttributeFrequencyChart.Header.Visible = true;
-
-            this.AttributeFrequencyChart.Aspect.View3D = false;
-            this.AttributeFrequencyChart.Axes.Left.Labels.Style = Steema.TeeChart.AxisLabelStyle.Text;
-            //     this.AttributeFrequencyChart.DoubleClick += new EventHandler(tChart1_DoubleClick);
-            this.AttributeFrequencyChart.Size = new System.Drawing.Size(466, 286);
-
-            this.TabPageGraph.Controls.Add(AttributeFrequencyChart);
-            this.TabPageGraph.ResumeLayout(false);
-            this.ResumeLayout(false);
-        }
-
-        #endregion
-
-        #region Other private methods
-        /*
-        void ColumnFrequencyChart_GetAxisLabel(object sender, Steema.TeeChart.GetAxisLabelEventArgs e)
-        {
-            if (((Steema.TeeChart.Axis)sender).Equals(this.ColumnFrequencyChart.Axes.Bottom))
-            {
-                
-                marks.Style = Steema.TeeChart.Styles.MarksStyles.Legend;
-               e.LabelText = Convert.ToString(e.Series.LegendString(e.ValueIndex,style));
-            } 
-        }*/
-
-
-        /// <summary>
-        /// Method to draw frequency graph from the datatable
-        /// </summary>
-        /// <param name="dataTable">DataTable with the source data</param>
-        /// <param name="chart">Chart to insert bars into</param>
-        private void DrawBarsFromDataTable(ArrayList categoriesFrequency, Steema.TeeChart.TChart chart)
-        {
-            chart.Series.RemoveAllSeries();
-            Steema.TeeChart.Styles.HorizBar barSeriesBar;
-            Steema.TeeChart.Styles.Pie barSeriesPie;
-            if (this.ToolStripMenuItemPie.Checked)
-            {
-                barSeriesPie = new Steema.TeeChart.Styles.Pie();
-                barSeriesPie.ColorEach = true;
-                barSeriesPie.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
-
-                barSeriesPie.Marks.Visible = true;
-                foreach (CategoryFrequency catFrequency in categoriesFrequency)
-                {
-                    double temp;
-                    try
-                    {
-                        temp = Convert.ToDouble(catFrequency.count);
-                    }
-                    catch
-                    {
-                        temp = 0;
-                    }
-                    if (this.ToolStripMenuItemAbsolute.Checked)
-                    {
-                        barSeriesPie.Add(temp, catFrequency.key);
-                    }
-                    else
-                    {
-                        if ((temp != 0) && (this.rowCount != 0))
-                        {
-                            temp = Math.Round(((temp / (double)this.rowCount) * 100), 2);
-                            barSeriesPie.Add(temp, catFrequency.key);
-                        }
-                        else
-                        {
-                            barSeriesPie.Add(0, catFrequency.key);
-                        }
-                    }
-                    chart.Series.Add(barSeriesPie);
-                }
-            }
-            else
-            {
-                barSeriesBar = new Steema.TeeChart.Styles.HorizBar();
-                barSeriesBar.MultiBar = Steema.TeeChart.Styles.MultiBars.SideAll;
-
-                barSeriesBar.ColorEach = true;
-                barSeriesBar.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
-
-                barSeriesBar.Marks.Visible = true;
-                foreach (CategoryFrequency catFrequency in categoriesFrequency)
-                {
-                    double temp;
-                    try
-                    {
-                        temp = Convert.ToDouble(catFrequency.count);
-                    }
-                    catch
-                    {
-                        temp = 0;
-                    }
-                    if (this.ToolStripMenuItemAbsolute.Checked)
-                    {
-                        barSeriesBar.Add(temp, catFrequency.key);
-                    }
-                    else
-                    {
-                        if ((temp != 0) && (this.rowCount != 0))
-                        {
-                            temp = Math.Round(((temp / (double)this.rowCount) * 100), 2);
-                            barSeriesBar.Add(temp, catFrequency.key);
-                        }
-                        else
-                        {
-                            barSeriesBar.Add(0, catFrequency.key);
-                        }
-                    }
-                    chart.Series.Add(barSeriesBar);
-                }
-            }
-        }
-
-        
-        #endregion
-
-        #region Debugging
-
-        /*
-        void tChart1_DoubleClick(object sender, EventArgs e)
-        {
-            ColumnFrequencyChart.ShowEditor();
-        }
-        */
-        #endregion
-        }
-    }
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Text;
+using System.Windows.Forms;
+using Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses;
+
+
+namespace Ferda.FrontEnd.AddIns.AttributeFrequency
+{
+    public partial class AttributeFrequency
+    {
+
+        #region Private variables
+
+        /// <summary>
+        /// Bar chart
+        /// </summary>
+        private Steema.TeeChart.TChart AttributeFrequencyBarChart;
+
+        /// <summary>
+        /// Area chart
+        /// </summary>
+        private Steema.TeeChart.TChart AttributeFrequencyAreaChart;
+
+        /// <summary>
+        /// Pie chart
+        /// </summary>
+        private Steema.TeeChart.TChart AttributeFrequencyPieChart;
+
+        #endregion
+
+
+        #region Initialization
+
+
+        /// <summary>
+        /// Method to initialize Steema chart component for displaying contingency table
+        /// </summary>
+        private void InitializeGraph()
+        {
+            this.TabPageBarChart.SuspendLayout();
+            this.SuspendLayout();
+            this.AttributeFrequencyBarChart = new Steema.TeeChart.TChart();
+            this.AttributeFrequencyBarChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AttributeFrequencyBarChart.Header.Lines = new string[] { resManager.GetString("AttributeFrequencyBarChart") };
+            this.AttributeFrequencyBarChart.Location = new System.Drawing.Point(0, 0);
+            this.AttributeFrequencyBarChart.Header.Visible = true;
+            this.AttributeFrequencyBarChart.Aspect.View3D = false;
+            this.AttributeFrequencyBarChart.Axes.Left.Labels.Style = Steema.TeeChart.AxisLabelStyle.Text;
+            //     this.AttributeFrequencyChart.DoubleClick += new EventHandler(tChart1_DoubleClick);
+            this.AttributeFrequencyBarChart.Size = new System.Drawing.Size(466, 286);
+            this.TabPageBarChart.Controls.Add(AttributeFrequencyBarChart);
+
+            this.AttributeFrequencyAreaChart = new Steema.TeeChart.TChart();
+            this.AttributeFrequencyAreaChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AttributeFrequencyAreaChart.Header.Lines = new string[] { resManager.GetString("AttributeFrequencyAreaChart") };
+            this.AttributeFrequencyAreaChart.Location = new System.Drawing.Point(0, 0);
+            this.AttributeFrequencyAreaChart.Header.Visible = true;
+            this.AttributeFrequencyAreaChart.Aspect.View3D = false;
+            this.AttributeFrequencyAreaChart.Axes.Left.Labels.Style = Steema.TeeChart.AxisLabelStyle.Text;
+            //     this.AttributeFrequencyChart.DoubleClick += new EventHandler(tChart1_DoubleClick);
+            this.AttributeFrequencyAreaChart.Size = new System.Drawing.Size(466, 286);
+            this.TabPageAreaChart.Controls.Add(AttributeFrequencyAreaChart);
+
+            this.AttributeFrequencyPieChart = new Steema.TeeChart.TChart();
+            this.AttributeFrequencyPieChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AttributeFrequencyPieChart.Header.Lines = new string[] { resManager.GetString("AttributeFrequencyPieChart") };
+            this.AttributeFrequencyPieChart.Location = new System.Drawing.Point(0, 0);
+            this.AttributeFrequencyPieChart.Header.Visible = true;
+            this.AttributeFrequencyPieChart.Aspect.View3D = false;
+            this.AttributeFrequencyPieChart.Axes.Left.Labels.Style = Steema.TeeChart.AxisLabelStyle.Text;
+            //     this.AttributeFrequencyChart.DoubleClick += new EventHandler(tChart1_DoubleClick);
+            this.AttributeFrequencyPieChart.Size = new System.Drawing.Size(466, 286);
+            this.TabPagePieChart.Controls.Add(AttributeFrequencyPieChart);
+
+            this.TabPageBarChart.ResumeLayout(false);
+            this.ResumeLayout(false);
+        }
+
+
+
+        #endregion
+
+
+
+        #region Other private methods
+
+        /// <summary>
+        /// Method to draw frequency bar graph from the datatable
+        /// </summary>
+        /// <param name="dataTable">DataTable with the source data</param>
+        /// <param name="chart">Chart to insert bars into</param>
+        private void DrawBarsFromDataTable(ArrayList categoriesFrequency, Steema.TeeChart.TChart chart)
+        {
+            chart.Series.RemoveAllSeries();
+            Steema.TeeChart.Styles.HorizBar barSeriesBar;
+            barSeriesBar = new Steema.TeeChart.Styles.HorizBar();
+            barSeriesBar.MultiBar = Steema.TeeChart.Styles.MultiBars.SideAll;
+            barSeriesBar.ColorEach = true;
+            barSeriesBar.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
+            barSeriesBar.Marks.Visible = true;
+            foreach (CategoryFrequency catFrequency in categoriesFrequency)
+            {
+                double temp;
+                try
+                {
+                    temp = Convert.ToDouble(catFrequency.count);
+                }
+                catch
+                {
+                    temp = 0;
+                }
+                if (this.ToolStripMenuItemAbsolute.Checked)
+                {
+                    barSeriesBar.Add(temp, catFrequency.key);
+                }
+                else
+                {
+                    if ((temp != 0) && (this.rowCount != 0))
+                    {
+                        temp = Math.Round(((temp / (double)this.rowCount) * 100), 2);
+                        barSeriesBar.Add(temp, catFrequency.key);
+                    }
+                    else
+                    {
+                        barSeriesBar.Add(0, catFrequency.key);
+                    }
+                }
+                chart.Series.Add(barSeriesBar);
+            }
+        }
+
+        /// <summary>
+        /// Method to draw frequency area graph from the datatable
+        /// </summary>
+        /// <param name="dataTable">DataTable with the source data</param>
+        /// <param name="chart">Chart to insert area into</param>
+        private void DrawAreaFromDataTable(ArrayList categoriesFrequency, Steema.TeeChart.TChart chart)
+        {
+            chart.Series.RemoveAllSeries();
+            Steema.TeeChart.Styles.Area areaSeries;
+            areaSeries = new Steema.TeeChart.Styles.Area();
+            areaSeries.ColorEach = true;
+            areaSeries.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
+            areaSeries.Marks.Visible = true;
+            foreach (CategoryFrequency catFrequency in categoriesFrequency)
+            {
+                double temp;
+                try
+                {
+                    temp = Convert.ToDouble(catFrequency.count);
+                }
+                catch
+                {
+                    temp = 0;
+                }
+                if (this.ToolStripMenuItemAbsolute.Checked)
+                {
+                    areaSeries.Add(temp, catFrequency.key);
+                }
+                else
+                {
+                    if ((temp != 0) && (this.rowCount != 0))
+                    {
+                        temp = Math.Round(((temp / (double)this.rowCount) * 100), 2);
+                        areaSeries.Add(temp, catFrequency.key);
+                    }
+                    else
+                    {
+                        areaSeries.Add(0, catFrequency.key);
+                    }
+                }
+                chart.Series.Add(areaSeries);
+            }
+        }
+
+
+        /// <summary>
+        /// Method to draw frequency pie graph from the datatable
+        /// </summary>
+        /// <param name="dataTable">DataTable with the source data</param>
+        /// <param name="chart">Chart to insert pie into</param>
+        private void DrawPieFromDataTable(ArrayList categoriesFrequency, Steema.TeeChart.TChart chart)
+        {
+            chart.Series.RemoveAllSeries();
+            Steema.TeeChart.Styles.Pie pieSeries;
+            pieSeries = new Steema.TeeChart.Styles.Pie();
+            pieSeries.ColorEach = true;
+            pieSeries.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
+            pieSeries.Marks.Visible = true;
+            foreach (CategoryFrequency catFrequency in categoriesFrequency)
+            {
+                double temp;
+                try
+                {
+                    temp = Convert.ToDouble(catFrequency.count);
+                }
+                catch
+                {
+                    temp = 0;
+                }
+                if (this.ToolStripMenuItemAbsolute.Checked)
+                {
+                    pieSeries.Add(temp, catFrequency.key);
+                }
+                else
+                {
+                    if ((temp != 0) && (this.rowCount != 0))
+                    {
+                        temp = Math.Round(((temp / (double)this.rowCount) * 100), 2);
+                        pieSeries.Add(temp, catFrequency.key);
+                    }
+                    else
+                    {
+                        pieSeries.Add(0, catFrequency.key);
+                    }
+                }
+                chart.Series.Add(pieSeries);
+            }
+        }
+
+
+
+        #endregion
+
+
+
+        #region Debugging
+
+
+
+        /*
+
+        void tChart1_DoubleClick(object sender, EventArgs e)
+
+        {
+
+            ColumnFrequencyChart.ShowEditor();
+
+        }
+
+        */
+
+        #endregion
+
+    }
+}

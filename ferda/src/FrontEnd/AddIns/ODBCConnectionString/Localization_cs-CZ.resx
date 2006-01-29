@@ -159,13 +159,13 @@
   <data name="InputCustomConnectionString" xml:space="preserve">
     <value>Zadejte vlastní připojovací řetězec: </value>
   </data>
-  <data name="InputDataSourceName" xml:space="preserve">
+  <data name="InputDataSource" xml:space="preserve">
     <value>Zvolte název datového zdroje:</value>
   </data>
   <data name="InputFollowing" xml:space="preserve">
     <value>Pro připojení ke zdroji dat zadejte následující:</value>
   </data>
-  <data name="MessageTitleFailure" xml:space="preserve">
+  <data name="MessageTitleFail" xml:space="preserve">
     <value>Chyba</value>
   </data>
   <data name="MessageTitleSuccess" xml:space="preserve">

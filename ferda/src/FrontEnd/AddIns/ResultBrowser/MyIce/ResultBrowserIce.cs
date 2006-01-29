@@ -106,7 +106,7 @@ namespace Ferda
 
                 a.neededSockets = new NeededSocket[0];
 
-                a.functionIceId = "::Ferda::Modules::Boxes::AbstractLMTask::AbstractLMTaskFunctions";
+                a.functionIceId = "::Ferda::Modules::Boxes::LISpMinerTasks::AbstractLMTask::AbstractLMTaskFunctions";
 
                 return new BoxType [] {a};
 

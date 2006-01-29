@@ -111,6 +111,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="chart">Chart to draw bars into</param>
         private void DrawBarsFromFirstTable(HypothesisStruct hypothese,Steema.TeeChart.TChart chart )
         {
+            chart.Series.Clear();
            Random random = new Random();
             foreach (int[] arr in hypothese.quantifierSetting.firstContingencyTableRows)
             {
