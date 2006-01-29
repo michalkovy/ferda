@@ -29,12 +29,9 @@ Martin
  - krabicky jdou posouvat nahoru a doleva mimo viditelnou plochu
  - plocha o neco vetsi nez je potreba (vysvetlim proc, navrhnu moznost jak udelat ... tomas)
  - performance
- - bug s comboboxy v property gridu
  - vyjimky ... pri vyjimce oznacit prislusnou krabicu (+ pokud mozno i vlastnost)
  - moznost udelat z property socket (Michal to ma pry pripravene)
- - Label nad krabickou - pridat hint ke krabicce (tim je mysleno, ze hint zobrazovany nad krabickou by mìl vypadat asi takhle (vyjadreno v html :-)) "<b>box.label</b></br>box.hint")
  - kazda krabicka ma svoje notes (jako notepad) -  u michala v IBoxModule UserHint
- - listy tlacitek - ikony v ruznych menu a v icon liste
  - Netron
    - zoom
    - mapa
@@ -42,21 +39,14 @@ Martin
    - print + print preview
  - svg
  - ukladani nastaveni rozlozeni pracovni plochy (i modulu pro interakci a modulu pro nastaveni) - dohodni se se Sasou
- - vyber nekolika krabicek -> udelat skupinu (RightClick)
  - dynamic (kontext) help
- - FrontEnd se umi spustit s parametrem *.xfp souboru (reaguje na asociaci)
  - help - uzivatelska napoveda k prostredi
  - AddIn zobrazujici pomoci AcrobatReadru ten PDF help
- - Prescreen - grafika
  - moznosti - pridat vse v iceConfig a vylepsit vyber lokalizaci
- - Lokalizace
-   - prescreen: myslim, ze "priprava/inicializace" je lepsi nez "nahravani", co vy na to? (tomas), Adobe pouziva "zavadi se" a "inicializuje se"
-   - property grid: booleovske vlastnosti True/False -> Ano/Ne
  - DateTime property -> kalendar nestaci
- - dynamic help
- - ProjectManager.ProjectManager.Load nove vraci seznam chyb ke kterym doslo pri nacitani projektu - ukazat uzivatelovi
  - kdyz je mezikrabickami ciste vodorovna sipka (neni sikam -> je vysoka asi 1px), tak nenimozny ji uchopit a smazat
 Tomas
+ - LADIT!
  - CF, SDCF kvantifikatory ... implementovat vypocty
  - spolu se Sasou MultiColumn
  - prezentace + webcast o pridavani novych krabicek
@@ -68,6 +58,7 @@ Sasa
  - installer
 		konfigurace Ice
 		lepe konfigurovatelny - pridavani novych casti jednoduse
+		*.xfp souboru asociaciovat
  - Result Browser - ASC jen kdyz uz chce
  - !!!panel vlastnosti
  ? Result Browser by mohl mit field MaxNumberOfHypothesisToShow (v takovem pripade by musel byt ukazan uzivateli pocet vsech hypotez)
