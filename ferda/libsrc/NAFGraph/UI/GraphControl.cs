@@ -1813,6 +1813,16 @@ namespace Netron.GraphLib.UI
 			}
 			Update();	
 		}
+
+        /// <summary>
+        /// Deletes a connection - especially for Ferda usage
+        /// </summary>
+        /// <param name="con">connection to be deleted</param>
+        protected void DeleteConnection(Connection con)
+        {
+            con.Delete();
+        }
+
 		/// <summary>
 		/// Adds the given shape summary to the context menu
 		/// </summary>

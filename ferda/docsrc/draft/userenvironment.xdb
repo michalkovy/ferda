@@ -29,6 +29,11 @@
     </titleabbrev>
     <revhistory>
       <revision>
+        <revnumber>1.1</revnumber>
+        <date>2006-01-28</date>
+        <revremark>Changed the keyboard shortcuts for desktop</revremark>
+      </revision>
+      <revision>
         <revnumber>1.0</revnumber>
         <date>2006-01-24</date>
         <revremark>Initial translation from the Czech version of the document
@@ -867,7 +872,7 @@
                 is overfilled with boxes and the user can erase some boxes.
                 User can delete the boxes from desktop by clicking on <emphasis>Delete
                 from desktop</emphasis> context menu item or keyboard shortcut
-                <emphasis>Delete</emphasis>.
+                <emphasis>Ctrl+D</emphasis>.
               </para>
             </formalpara>
           </listitem>
