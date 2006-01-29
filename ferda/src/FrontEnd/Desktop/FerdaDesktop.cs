@@ -32,7 +32,7 @@ namespace Ferda.FrontEnd.Desktop
 	/// krabicka selektnuta... a korespondovat s Project Managerem
 	/// </remarks>
 	///<stereotype>control</stereotype>
-    class FerdaDesktop : GraphControl, IViewDisplayer
+    class FerdaDesktop : GraphControl, IViewDisplayer, IBoxSelector
     {
         #region Private fields
 
@@ -162,7 +162,7 @@ namespace Ferda.FrontEnd.Desktop
         ///<summary>
 		///Determines which boxes are selected in the control
 		///</summary>
-		public List <ModulesManager.IBoxModule> SelectedBoxes
+		public List <IBoxModule> SelectedBoxes
 		{
             get
             {
@@ -266,9 +266,22 @@ namespace Ferda.FrontEnd.Desktop
 
         ///<summary>
 		/// Default constructor for FerdaView class.
-		///<summary>
+		///</summary>
+        ///<param name="locManager">
+        /// Interface that takes care of the 
+        ///localizacion in the application
+        /// </param>
+        ///<param name="svgMan">
+        /// Interface for providing SVG graphics
+        ///</param>
+        ///<param name="menuDisp">Menu displayer</param>
+        ///<param name="view">The view thath should be connected to this desktop</param>
+        ///<param name="pm">The project manager of the application</param>
+        ///<param name="arch">Control that displays the archive</param>
+        ///<param name="provider">Provider of the icons</param>
+        ///<param name="toolBar">Toolbar control</param>
 		public FerdaDesktop(Menu.ILocalizationManager locManager,
-            SVGManager man, IMenuDisplayer menuDisp, ProjectManager.View view,
+            SVGManager svgMan, IMenuDisplayer menuDisp, ProjectManager.View view,
             ProjectManager.ProjectManager pm, Archive.IArchiveDisplayer arch, 
             IIconProvider provider, IMenuDisplayer toolBar)
             : base()
@@ -281,7 +294,7 @@ namespace Ferda.FrontEnd.Desktop
             ResManager = localizationManager.ResManager;
 
             //adding the svgManager
-            svgManager = man;
+            svgManager = svgMan;
 
             //setting the menu displayer
             menuDisplayer = menuDisp;
@@ -428,7 +441,6 @@ namespace Ferda.FrontEnd.Desktop
         /// </summary>
         public void RefreshBoxNames()
         {
-            //Adapt();
             foreach (BoxNode bn in Nodes)
             {
                 if (!View.ContainsBox(bn.Box))
@@ -536,6 +548,42 @@ namespace Ferda.FrontEnd.Desktop
             }
         }
 
+        /// <summary>
+        /// Removes a box from the desktop
+        /// </summary>
+        /// <param name="box">IBoxmodule to be removed</param>
+        public void RemoveBox(IBoxModule box)
+        {
+            List<BoxNode> toRemove = new List<BoxNode>();
+
+            foreach (BoxNode node in Nodes)
+            {
+                if (node.Box == box)
+                {
+                    toRemove.Add(node);
+                }
+            }
+
+            foreach (BoxNode node in toRemove)
+            {
+                Nodes.Remove(node);
+            }
+        }
+
+        /// <summary>
+        /// Adds a box to the desktop
+        /// </summary>
+        /// <param name="box">Box to be added</param>
+        public void AddBox(IBoxModule box)
+        {
+            BoxNode boxNode = new BoxNode(this, box, SvgManager, view, ResManager);
+            boxNode.X = view.GetPosition(box).X;
+            boxNode.Y = view.GetPosition(box).Y;
+
+            //adding the box
+            Nodes.Add(boxNode);
+        }
+
         #endregion
 
         #region Event cores
@@ -545,7 +593,9 @@ namespace Ferda.FrontEnd.Desktop
         /// </summary>
         private void LayoutCore()
         {
-            this.StartLayout();
+            //this.StartLayout();
+            view.Relayout();
+            Adapt();
         }
 
         /// <summary>
@@ -614,16 +664,25 @@ namespace Ferda.FrontEnd.Desktop
 
             if (result == DialogResult.Yes)
             {
+                //deleting the nodes from the archive
                 foreach (BoxNode bn in SelectedShapes)
                 {
                     IBoxModule box = bn.Box;
                     projectManager.Archive.Remove(box);
                 }
-                //adapts all the views
-                foreach (FerdaDesktop desktop in Views)
+                //adapts all the views - we dont need to redraw them
+                foreach (IViewDisplayer desktop in Views)
                 {
-                    desktop.Adapt();
+                    if (desktop != this)
+                    {
+                        foreach (BoxNode bn in SelectedShapes)
+                        {
+                            desktop.RemoveBox(bn.Box);
+                        }
+                    }
                 }
+
+                RemoveBoxes(SelectedShapes);
 
                 //adapts the archive displayer
                 archiveDisplayer.Adapt();
@@ -807,6 +866,7 @@ namespace Ferda.FrontEnd.Desktop
                 if (box.TryWriteEnter())
                 {
                     box.UserHint = dialog.UserNote;
+                    box.WriteExit();
                 }
                 else
                 {
@@ -851,6 +911,7 @@ namespace Ferda.FrontEnd.Desktop
                         //showing the messageBox
                         MessageBox.Show(ResManager.GetString("DesktopBadConnectionInvalidType"),
                             ResManager.GetString("DesktopBadConnectionCaption"));
+                        box.WriteExit();
                         return;
                     }
                     catch (ConnectionExistsError)
@@ -858,6 +919,7 @@ namespace Ferda.FrontEnd.Desktop
                         //showing the messageBox
                         MessageBox.Show(ResManager.GetString("DesktopMoreThanOneErrorText"),
                             ResManager.GetString("DesktopBadConnectionCaption"));
+                        box.WriteExit();
                         return;
                     }
                     box.WriteExit();
@@ -867,6 +929,11 @@ namespace Ferda.FrontEnd.Desktop
                     FrontEndCommon.CannotWriteToBox(box, ResManager);
                 }
             }
+
+            //if there is a box that all the selected boxes are connected
+            //into, we should connect also the new group box into that
+            //box
+
 
             //after all is connected, we can hide the boxes from the view
             foreach (IBoxModule fromBox in SelectedBoxes)
@@ -1026,7 +1093,7 @@ namespace Ferda.FrontEnd.Desktop
 
                 ToolStripMenuItem deleteFromArchive =
                     new ToolStripMenuItem(ResManager.GetString("MenuEditDeleteFromArchive"));
-                deleteFromArchive.ShortcutKeys = (Keys)Shortcut.CtrlR;
+                deleteFromArchive.ShortcutKeys = (Keys)Shortcut.Del;
                 deleteFromArchive.Image = provider.GetIcon("DeleteFromArchive").ToBitmap();
                 deleteFromArchive.Click += new EventHandler(deleteFromArchive_Click);
 
@@ -1269,7 +1336,7 @@ namespace Ferda.FrontEnd.Desktop
             copy.ShortcutKeys = (Keys)Shortcut.CtrlC;
             clone.ShortcutKeys = (Keys)Shortcut.CtrlE;
             deleteFromDesktop.ShortcutKeys = (Keys)Shortcut.CtrlD;
-            deleteFromArchive.ShortcutKeys = (Keys)Shortcut.CtrlR;
+            deleteFromArchive.ShortcutKeys = (Keys)Shortcut.Del;
             packAllSockets.ShortcutKeys = (Keys)Shortcut.CtrlP;
             unpackAllLayersAllSockets.ShortcutKeys = (Keys)Shortcut.CtrlU;
             unpackOneLayerAllSockets.ShortcutKeys = (Keys)Shortcut.CtrlS;
@@ -1392,6 +1459,24 @@ namespace Ferda.FrontEnd.Desktop
             Cursor = previousCursor;
         }
 
+        /// <summary>
+        /// Removes the box in the parameter from the desktop
+        /// (used when deleting from archive)
+        /// </summary>
+        /// <param name="boxes">Boxes to be removed</param>
+        /// <remarks>There no need to have a
+        /// IBoxModule list in the argument, because
+        /// this command can be only accessible from 
+        /// the desktop (not from the archive)</remarks>
+        public void RemoveBoxes(ShapeCollection boxes)
+        {
+            foreach (BoxNode node in boxes)
+            {
+                RemoveShape(node);
+            }
+            SelectedBoxes.Clear();
+        }
+
         #endregion
 
         #region Events
@@ -1426,7 +1511,7 @@ namespace Ferda.FrontEnd.Desktop
         /// Handles the creation of a new connection. It does not allow a connection
         /// from a intput connector to a output connector (it must be other way around)
         /// </summary>
-        /// <param name="sender">Sender of the event</param>
+        /// <param name="Sender">Sender of the event</param>
         /// <param name="e">Event parameters</param>
         /// <returns>
         /// If true, the connection is added by the Netron library,
@@ -1488,6 +1573,7 @@ namespace Ferda.FrontEnd.Desktop
                         //showing the messageBox
                         MessageBox.Show(ResManager.GetString("DesktopBadConnectionInvalidType"),
                             ResManager.GetString("DesktopBadConnectionCaption"));
+                        toBox.WriteExit();
                         return false;
                     }
                     catch (ConnectionExistsError)
@@ -1495,6 +1581,7 @@ namespace Ferda.FrontEnd.Desktop
                         //showing the messageBox
                         MessageBox.Show(ResManager.GetString("DesktopMoreThanOneErrorText"),
                             ResManager.GetString("DesktopBadConnectionCaption"));
+                        toBox.WriteExit();
                         return false;
                     }
                     toBox.WriteExit();
@@ -1580,6 +1667,7 @@ namespace Ferda.FrontEnd.Desktop
 		///</summary>
 		protected override void OnDragDrop(DragEventArgs drgevent)
 		{
+            IBoxModule box = null;
             IBoxModuleFactoryCreator creator = null;
             string text = ResManager.GetString("DesktopBoxAlreadyExistsText");
             string caption = ResManager.GetString("DesktopBoxAlreadyExistsCaption");
@@ -1615,10 +1703,11 @@ namespace Ferda.FrontEnd.Desktop
                     throw new ApplicationException(
                         "Creator of a box was not found according to the identifier.");
                 }
-                IBoxModule box = creator.CreateBoxModule();
+                box = creator.CreateBoxModule();
 
                 projectManager.Archive.Add(box);
                 view.Add(box, clientPoint);
+                AddBox(box);
             }
 
             o = drgevent.Data.GetData(typeof(FerdaTreeNode));
@@ -1626,7 +1715,7 @@ namespace Ferda.FrontEnd.Desktop
             //we are getting the data from the archive
             if (o is FerdaTreeNode)
             {
-                IBoxModule box = ((FerdaTreeNode)o).Box;
+                box = ((FerdaTreeNode)o).Box;
 
                 if (!view.ContainsBox(box))
                 {
@@ -1636,11 +1725,9 @@ namespace Ferda.FrontEnd.Desktop
                 {
                     MessageBox.Show(text, caption);
                 }
+                Adapt();
             }
 
-            //TODO - pri pridavani krabicky je to tady strasne neefektivni,
-            //lepsi by bylo, kdyby se vytvoril rovnou aj node, ktery by se pridal
-            Adapt();
             archiveDisplayer.Adapt();
         }
 
@@ -1651,7 +1738,7 @@ namespace Ferda.FrontEnd.Desktop
         /// GraphControl does not provide direct acces to the connections.
         /// </summary>
         /// <param name="sender">Sender of the event</param>
-        /// <param name="e">Event parameters</param>
+        /// <param name="con">Information about the connection that has been deleted</param>
         void FerdaDesktop_OnFerdaDeleteConnection(object sender, Netron.GraphLib.Connection con)
         {
             try
@@ -1678,18 +1765,33 @@ namespace Ferda.FrontEnd.Desktop
         }
 
         /// <summary>
-        /// Event when a shape is removed
+        /// This should delete all the connectors of the shape
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="shape">Shape that is being removed</param>
         void FerdaDesktop_OnShapeRemoved(object sender, Shape shape)
         {
             BoxNode bn = shape as BoxNode;
-            view.Remove(bn.Box);
+            if (bn != null)
+            {
+                //removing all the edges
+                foreach (Connector connector in shape.Connectors)
+                {
+                    foreach (Netron.GraphLib.Connection connection in Edges)
+                    {
+                        if (connection.From == connector || connection.To == connector)
+                        {
+                            DeleteConnection(connection);
+                        }
+                    }
+                }
 
-            Adapt();
-            archiveDisplayer.Adapt();
-            propertiesDisplayer.Reset();
+                IBoxModule box = bn.Box;
+                view.Remove(box);
+
+                //removing the node
+                Nodes.Remove(shape);
+            }
         }
 
         #region Context menu events
@@ -1846,7 +1948,7 @@ namespace Ferda.FrontEnd.Desktop
                 if (info.label == sender.ToString())
                 {
                     ActionExceptionCatcher catcher = 
-                        new ActionExceptionCatcher(projectManager, ResManager);
+                        new ActionExceptionCatcher(projectManager, ResManager, this);
 					box.RunAction_async(catcher, info.name);
                     break;
                 }

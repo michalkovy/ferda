@@ -59,6 +59,11 @@ namespace Ferda.FrontEnd
             }
         }
 
+        /// <summary>
+        /// Default constructor for the class
+        /// </summary>
+        /// <param name="n">name of the dialog</param>
+        /// <param name="res">Resource manager for the resources</param>
         public RenameDialog(string n, ResourceManager res)
         {
             InitializeComponent();

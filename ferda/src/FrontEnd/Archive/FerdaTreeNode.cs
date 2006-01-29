@@ -105,6 +105,12 @@ namespace Ferda.FrontEnd.Archive
         /// <param name="box">box that will be represented by this node</param>
         /// <param name="alongDirection">the direction of expanding</param>
         /// <param name="arch">Archive where this box belongs</param>
+        /// <param name="parent">Parent component of the archive</param>
+        /// <param name="iconDictionary">Icon dictionary containing all the icons
+        /// for the box visualization</param>
+        /// <param name="list">Some image list</param>
+        /// <param name="provider">Control providing access to all the icons</param>
+        /// <param name="projManager">Project manager of the application</param>
         public FerdaTreeNode(ModulesManager.IBoxModule box, bool alongDirection, 
             ProjectManager.Archive arch, FerdaArchive parent, Dictionary<string, int> iconDictionary,
             ImageList list, IIconProvider provider, ProjectManager.ProjectManager projManager)
@@ -228,6 +234,7 @@ namespace Ferda.FrontEnd.Archive
         /// Fills the static fields of context menu for the node
         /// </summary>
         /// <param name="cMenu">Context menu of the TreeNode</param>
+        /// <param name="provider">Interface that provides icons for the boxes</param>
         private void SetStaticContextMenu(ContextMenuStrip cMenu, IIconProvider provider)
         {
             //handling normal items
@@ -441,7 +448,8 @@ namespace Ferda.FrontEnd.Archive
                 if (info.label == sender.ToString())
                 {
                     ActionExceptionCatcher catcher =
-                        new ActionExceptionCatcher(projectManager, ParentTreeView.ResManager);
+                        new ActionExceptionCatcher(projectManager, ParentTreeView.ResManager, 
+                        parentTreeView);
 					box.RunAction_async(catcher, info.name);
                     break;
                 }

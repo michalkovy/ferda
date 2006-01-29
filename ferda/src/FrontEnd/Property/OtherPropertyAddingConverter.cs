@@ -61,7 +61,7 @@ namespace Ferda.FrontEnd.Properties
         /// Determines if the class can be converted from other class (string)
         /// </summary>
         /// <param name="context">Context of the conversion</param>
-        /// <param name="destinationType">Source type</param>
+        /// <param name="sourceType">Source type</param>
         /// <returns>true if it can be converted, false otherwise</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, 
             Type sourceType)

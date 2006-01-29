@@ -9,6 +9,9 @@ using System.Resources;
 
 namespace Ferda.FrontEnd
 {
+    /// <summary>
+    /// User can edit the notes of the boxes with this class
+    /// </summary>
     public class UserNoteDialog : Form
     {
         #region Fields

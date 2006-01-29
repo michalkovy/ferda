@@ -76,6 +76,11 @@ namespace Ferda.FrontEnd.NewBox
         /// <summary>
         /// Default constructor
         /// </summary>
+        /// <param name="locManager">Localization manager of the application</param>
+        /// <param name="menuDisp">Menu of the application</param>
+        /// <param name="modManager">Modules manager</param>
+        /// <param name="iconProvider">Provider of the icons for the component</param>
+        /// <param name="toolBar">ToolBar of the application</param>
         public NewBoxTreeView(Menu.ILocalizationManager locManager, 
             Menu.IMenuDisplayer menuDisp, ModulesManager.ModulesManager modManager, 
             IIconProvider iconProvider, Menu.IMenuDisplayer toolBar)
@@ -396,7 +401,7 @@ namespace Ferda.FrontEnd.NewBox
 
 
         /// <summary>
-        /// Reacts to a mouse move - prepares the drag&drop operation
+        /// Reacts to a mouse move - prepares the drag&amp;drop operation
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event parameters</param>
@@ -423,7 +428,7 @@ namespace Ferda.FrontEnd.NewBox
         }
 
         /// <summary>
-        /// Reacts to a mouse move - prepares the drag&drop operation
+        /// Reacts to a mouse move - prepares the drag&amp;drop operation
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event parameters</param>

@@ -66,7 +66,10 @@ namespace Ferda.FrontEnd.ContextHelp
 
         ///<summary>
 		/// Default constructor for FerdaContextHelp class.
-		///<summary>
+		///</summary>
+        ///<param name="locManager">Manager of the localization of the application</param>
+        ///<param name="menuDisp">The displayer of the menu</param>
+        ///<param name="toolBar">The toolbar of the application</param>
         public FerdaContextHelp(ILocalizationManager locManager, IMenuDisplayer menuDisp, 
             IMenuDisplayer toolBar)
             : base()

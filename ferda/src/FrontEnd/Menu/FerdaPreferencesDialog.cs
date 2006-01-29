@@ -99,7 +99,7 @@ namespace Ferda.FrontEnd.Menu
 
         ///<summary>
         /// Default constructor for FerdaView class.
-        ///<summary>
+        ///</summary>
         public FerdaPreferencesDialog(ResourceManager resources, ILocalizationManager manager)
             : base()
         {

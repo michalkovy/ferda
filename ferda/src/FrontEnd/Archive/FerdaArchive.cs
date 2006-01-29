@@ -5,6 +5,7 @@ using System.Resources;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 using Ferda.FrontEnd.Menu;
 using Ferda.FrontEnd;
@@ -15,10 +16,11 @@ using Ferda.ModulesManager;
 namespace Ferda.FrontEnd.Archive
 {
     /// <summary>
-	/// Control class for Ferda archive
-	/// </summary>
-	///<stereotype>control</stereotype>
-    class FerdaArchive : System.Windows.Forms.UserControl, IArchiveDisplayer
+    /// Control class for Ferda archive
+    /// </summary>
+    ///<stereotype>control</stereotype>
+    class FerdaArchive : System.Windows.Forms.UserControl, IArchiveDisplayer,
+        IBoxSelector
     {
         #region Fields
 
@@ -34,7 +36,7 @@ namespace Ferda.FrontEnd.Archive
 
         //Archive that will set the class
         private ProjectManager.Archive archive;
-        private ComboBox CBArchive;
+        private ComboBox CBCategories;
 
         //ProjectManger to display the messages about the box to the user
         private ProjectManager.ProjectManager projectManager;
@@ -59,6 +61,7 @@ namespace Ferda.FrontEnd.Archive
 
         //Icon provider for the application
         private IIconProvider iconProvider;
+        private ComboBox CBTypes;
 
         /// <summary>
         /// Dictionary that converts the name of the box to a number
@@ -169,7 +172,7 @@ namespace Ferda.FrontEnd.Archive
         /// <summary>
         /// All the views of the project
         /// </summary>
-        public  List<FerdaDesktop> Views
+        public List<FerdaDesktop> Views
         {
             get
             {
@@ -212,14 +215,15 @@ namespace Ferda.FrontEnd.Archive
         #region Constructor
 
         ///<summary>
-		/// Default constructor for FerdaArchive class.
-		///</summary>
-		public FerdaArchive(Menu.ILocalizationManager locManager, 
-            Menu.IMenuDisplayer menuDisp, IFerdaClipboard clipboard, 
-            ProjectManager.Archive arch, IIconProvider iconProvider, 
-            Menu.IMenuDisplayer toolBar, 
-            ProjectManager.ProjectManager projManager) : base()
-		{
+        /// Default constructor for FerdaArchive class.
+        ///</summary>
+        public FerdaArchive(Menu.ILocalizationManager locManager,
+            Menu.IMenuDisplayer menuDisp, IFerdaClipboard clipboard,
+            ProjectManager.Archive arch, IIconProvider iconProvider,
+            Menu.IMenuDisplayer toolBar,
+            ProjectManager.ProjectManager projManager)
+            : base()
+        {
             //setting the icon
             naIcon = iconProvider.GetIcon("NAIcon");
             this.iconProvider = iconProvider;
@@ -258,7 +262,8 @@ namespace Ferda.FrontEnd.Archive
             TVArchive.LabelEdit = true;
             TVArchive.AfterLabelEdit += new NodeLabelEditEventHandler(TVArchive_AfterLabelEdit);
 
-            CBArchive.SelectedIndexChanged += new EventHandler(CBArchive_SelectedIndexChanged);
+            CBCategories.SelectedIndexChanged += new EventHandler(CBArchive_SelectedIndexChanged);
+            CBTypes.SelectedIndexChanged += new EventHandler(CBTypes_SelectedIndexChanged);
             RBAlong.CheckedChanged += new EventHandler(RBAlong_CheckedChanged);
             TVArchive.AfterSelect += new TreeViewEventHandler(TVArchive_AfterSelect);
 
@@ -280,15 +285,17 @@ namespace Ferda.FrontEnd.Archive
 
             //resets the archive to an "initial position"
             //ResetArchive(ResManager.GetString("ArchiveAllText"), true);
-            if (CBArchive.Items.Count > 1)
+            if (CBCategories.Items.Count > 1)
             {
-                ResetArchive(CBArchive.Items[1].ToString(), true);
-                CBArchive.SelectedIndex = 1;
+                ResetArchive(CBCategories.Items[1].ToString(),
+                    ResManager.GetString("ArchiveAllText"), true);
+                CBCategories.SelectedIndex = 1;
             }
             else
             {
-                ResetArchive(CBArchive.Items[0].ToString(), true);
-                CBArchive.SelectedIndex = 0;
+                ResetArchive(CBCategories.Items[0].ToString(),
+                    ResManager.GetString("ArchiveAllText"), true);
+                CBCategories.SelectedIndex = 0;
             }
         }
 
@@ -313,48 +320,58 @@ namespace Ferda.FrontEnd.Archive
             this.TVArchive = new System.Windows.Forms.TreeView();
             this.RBAlong = new System.Windows.Forms.RadioButton();
             this.RBAgainst = new System.Windows.Forms.RadioButton();
-            this.CBArchive = new System.Windows.Forms.ComboBox();
+            this.CBCategories = new System.Windows.Forms.ComboBox();
+            this.CBTypes = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            //
+            // 
             // TVArchive
-            //
+            // 
             this.TVArchive.FullRowSelect = true;
             this.TVArchive.HotTracking = true;
-            this.TVArchive.Location = new System.Drawing.Point(1, 23);
+            this.TVArchive.Location = new System.Drawing.Point(0, 44);
             this.TVArchive.Name = "TVArchive";
-            this.TVArchive.Size = new System.Drawing.Size(140, 400);
+            this.TVArchive.Size = new System.Drawing.Size(140, 380);
             this.TVArchive.TabIndex = 1;
-            //
+            // 
             // RBAlong
-            //
+            // 
             this.RBAlong.AutoSize = true;
             this.RBAlong.Location = new System.Drawing.Point(1, 425);
             this.RBAlong.Name = "RBAlong";
-            this.RBAlong.Size = new System.Drawing.Size(81, 17);
+            this.RBAlong.Size = new System.Drawing.Size(85, 17);
             this.RBAlong.TabIndex = 2;
             this.RBAlong.Text = "radioButton1";
-            //
+            // 
             // RBAgainst
-            //
+            // 
             this.RBAgainst.AutoSize = true;
             this.RBAgainst.Location = new System.Drawing.Point(1, 442);
             this.RBAgainst.Name = "RBAgainst";
-            this.RBAgainst.Size = new System.Drawing.Size(81, 17);
+            this.RBAgainst.Size = new System.Drawing.Size(85, 17);
             this.RBAgainst.TabIndex = 3;
             this.RBAgainst.Text = "radioButton2";
-            //
-            // CBArchive
-            //
-            this.CBArchive.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBArchive.FormattingEnabled = true;
-            this.CBArchive.Location = new System.Drawing.Point(1, 1);
-            this.CBArchive.Name = "CBArchive";
-            this.CBArchive.Size = new System.Drawing.Size(140, 21);
-            this.CBArchive.TabIndex = 0;
-            //
+            // 
+            // CBCategories
+            // 
+            this.CBCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBCategories.FormattingEnabled = true;
+            this.CBCategories.Location = new System.Drawing.Point(0, 0);
+            this.CBCategories.Name = "CBCategories";
+            this.CBCategories.Size = new System.Drawing.Size(140, 22);
+            this.CBCategories.TabIndex = 0;
+            // 
+            // CBTypes
+            // 
+            this.CBTypes.FormattingEnabled = true;
+            this.CBTypes.Location = new System.Drawing.Point(0, 22);
+            this.CBTypes.Name = "CBTypes";
+            this.CBTypes.Size = new System.Drawing.Size(140, 22);
+            this.CBTypes.TabIndex = 4;
+            // 
             // FerdaArchive
-            //
-            this.Controls.Add(this.CBArchive);
+            // 
+            this.Controls.Add(this.CBTypes);
+            this.Controls.Add(this.CBCategories);
             this.Controls.Add(this.RBAgainst);
             this.Controls.Add(this.RBAlong);
             this.Controls.Add(this.TVArchive);
@@ -379,13 +396,18 @@ namespace Ferda.FrontEnd.Archive
                 this.Size = Parent.Size;
 
                 //adjusting the size of the control and all its child controls
-                int h = Parent.Size.Height - c.ArchiveButtonsHeight - c.ArchiveComboHeight;
+                //height of the treeview
+                int h = Parent.Size.Height - c.ArchiveButtonsHeight - (2 * c.ArchiveComboHeight);
+                //width of the treeview
                 int w = Parent.Size.Width - c.ArchiveBlankSpace;
                 TVArchive.Size = new Size(w, h);
-                CBArchive.Size = new Size(w, c.ArchiveComboHeight);
-                RBAlong.Location = new Point(c.ArchiveLeftBlank, c.ArchiveComboHeight + h + 1);
-                RBAgainst.Location = 
-                    new Point(c.ArchiveLeftBlank, c.ArchiveComboHeight + h + 1 + c.ArchiveButtonsHeight / 2);
+                CBCategories.Size = new Size(w, c.ArchiveComboHeight);
+                CBTypes.Size = new Size(w, c.ArchiveComboHeight);
+                RBAlong.Location = new Point(c.ArchiveLeftBlank,
+                    (2 * c.ArchiveComboHeight) + h + 1);
+                RBAgainst.Location =
+                    new Point(c.ArchiveLeftBlank,
+                    (2 * c.ArchiveComboHeight) + h + 1 + c.ArchiveButtonsHeight / 2);
             }
         }
 
@@ -394,15 +416,42 @@ namespace Ferda.FrontEnd.Archive
         /// </summary>
         public void FillBoxTypes()
         {
-            CBArchive.Items.Clear();
+            CBCategories.Items.Clear();
 
             string[] types = archive.ArchiveBoxTypes;
 
-            CBArchive.Items.Add(ResManager.GetString("ArchiveAllText"));
+            CBCategories.Items.Add(ResManager.GetString("ArchiveAllText"));
 
             foreach (string type in types)
             {
-                CBArchive.Items.Add(type);
+                CBCategories.Items.Add(type);
+            }
+        }
+
+        /// <summary>
+        /// Fills the 2nd comboBox (CBTypes) with labels from the archive
+        /// according to the category name in the parameter
+        /// </summary>
+        /// <param name="boxCategory">Box category according to
+        /// which the types of the boxes should be changed</param>
+        public void FillBoxLabels(string boxCategory)
+        {
+            StringCollection types;
+            CBTypes.Items.Clear();
+
+            CBTypes.Items.Add(ResManager.GetString("ArchiveAllText"));
+            if (boxCategory == ResManager.GetString("ArchiveAllText"))
+            {
+                types = archive.ListBoxLabelsInCategory(null);
+            }
+            else
+            {
+                types = archive.ListBoxLabelsInCategory(boxCategory);
+            }
+
+            foreach (string type in types)
+            {
+                CBTypes.Items.Add(type);
             }
         }
 
@@ -410,11 +459,13 @@ namespace Ferda.FrontEnd.Archive
         /// Resets the archive to the main position according to the
         /// selected box type and direction
         /// </summary>
-        /// <param name="BoxType">Type of the box</param>
+        /// <param name="BoxCategory">Type of the box</param>
+        /// <param name="BoxLabel">Boxes of which label (box type) should be
+        /// taken</param>
         /// <param name="AlongDirection">
         /// True if the direction is along, false if against direction
         /// </param>
-        public void ResetArchive(string BoxType, bool AlongDirection)
+        public void ResetArchive(string BoxCategory, string BoxLabel, bool AlongDirection)
         {
             FerdaTreeNode treeNode;
 
@@ -431,22 +482,34 @@ namespace Ferda.FrontEnd.Archive
             iconDictionary.Add("naIcon", 0);
 
             archive.RefreshOrder();
-            if (BoxType == ResManager.GetString("ArchiveAllText"))
+            //getting all the boxes in the archive
+            if (BoxCategory == ResManager.GetString("ArchiveAllText"))
             {
                 foreach (ModulesManager.IBoxModule b in archive.SortedBoxes)
                 {
-                    treeNode = new FerdaTreeNode(b, AlongDirection, 
+                    treeNode = new FerdaTreeNode(b, AlongDirection,
                         Archive, this, iconDictionary, list, iconProvider, projectManager);
                     TVArchive.Nodes.Add(treeNode);
                 }
             }
+            //getting only boxes from one category
             else
             {
-                ModulesManager.IBoxModule[] boxesList = archive.ListBoxesWithType(BoxType);
+                IBoxModule[] boxesList;
+                //all boxes in that category
+                if (BoxLabel == ResManager.GetString("ArchiveAllText"))
+                {
+                    boxesList = archive.ListBoxesWithType(BoxCategory, null);
+                }
+                //a specified box type
+                else
+                {
+                    boxesList = archive.ListBoxesWithType(BoxCategory, BoxLabel);
+                }
 
                 foreach (ModulesManager.IBoxModule b in boxesList)
                 {
-                    treeNode = new FerdaTreeNode(b, AlongDirection, 
+                    treeNode = new FerdaTreeNode(b, AlongDirection,
                         Archive, this, iconDictionary, list, iconProvider, projectManager);
                     TVArchive.Nodes.Add(treeNode);
                 }
@@ -472,7 +535,7 @@ namespace Ferda.FrontEnd.Archive
             }
             else
             {
-                 activeNode = TVArchive.SelectedNode as FerdaTreeNode;
+                activeNode = TVArchive.SelectedNode as FerdaTreeNode;
             }
             if (activeNode == null)
             {
@@ -554,28 +617,40 @@ namespace Ferda.FrontEnd.Archive
 
             //indexing from one, because first group is all and every box belongs
             //to all group. We want to know a specific group
-            for (i = 1; i < CBArchive.Items.Count; i++)
+            for (i = 1; i < CBCategories.Items.Count; i++)
             {
-                if (types.Contains(CBArchive.Items[i].ToString()))
+                if (types.Contains(CBCategories.Items[i].ToString()))
                 {
-                    boxtype = CBArchive.Items[i].ToString();
+                    boxtype = CBCategories.Items[i].ToString();
                     break;
                 }
             }
 
-            ResetArchive(boxtype, true);
-
             //selecting the boxtype
-            for (i = 0; i < CBArchive.Items.Count; i++)
+            for (i = 0; i < CBCategories.Items.Count; i++)
             {
-                string item = (string)CBArchive.Items[i];
+                string item = (string)CBCategories.Items[i];
                 if (item == boxtype)
                 {
                     break;
                 }
             }
+            CBCategories.SelectedIndex = i;
 
-            CBArchive.SelectedIndex = i;
+            //filling the labels in the second combo-box
+            FillBoxLabels(boxtype);
+            for (i = 0; i < CBTypes.Items.Count; i++)
+            {
+                string item = (string)CBTypes.Items[i];
+                if (item == box.MadeInCreator.Label)
+                {
+                    break;
+                }
+            }
+            CBTypes.SelectedIndex = i;
+
+            //resetting the archive
+            ResetArchive(boxtype, box.MadeInCreator.Label, true);
 
             //now we have to select the box in the list...
             foreach (FerdaTreeNode tn in TVArchive.Nodes)
@@ -600,24 +675,33 @@ namespace Ferda.FrontEnd.Archive
             mySelectedNode = null;
 
             int i;
-            string oldText = CBArchive.SelectedItem.ToString();
+            string oldText = CBCategories.SelectedItem.ToString();
 
             FillBoxTypes();
 
             //selecting the boxtype
-            for (i = 0; i < CBArchive.Items.Count; i++)
+            for (i = 0; i < CBCategories.Items.Count; i++)
             {
-                string item = (string)CBArchive.Items[i];
+                string item = (string)CBCategories.Items[i];
                 if (item == oldText)
                 {
                     break;
                 }
             }
 
-            CBArchive.SelectedIndex = i;
-
-            //resets the archive to an "initial position"
-            ResetArchive(oldText, true);
+            if (i == CBCategories.Items.Count)
+            {
+                CBCategories.SelectedIndex = 0;
+                //resets the archive to an "initial position"
+                ResetArchive(ResManager.GetString("ArchiveAllText"),
+                    ResManager.GetString("ArchiveAllText"), true);
+            }
+            else
+            {
+                CBCategories.SelectedIndex = i;
+                //resets the archive to an "initial position"
+                ResetArchive(oldText, ResManager.GetString("ArchiveAllText"), true);
+            }
 
             menuDisplayer.Adapt();
             toolBar.Adapt();
@@ -633,6 +717,19 @@ namespace Ferda.FrontEnd.Archive
             {
                 tn.RefreshName();
             }
+        }
+
+        #endregion
+
+        #region IBoxSelector implementation
+
+        /// <summary>
+        /// When a box is selected in the archive, it should also be selected on the 
+        /// view. This function selects the box in the desktop
+        /// </summary>
+        /// <param name="box">Box to be selected</param>
+        public void SelectBox(IBoxModule box)
+        {
         }
 
         #endregion
@@ -732,6 +829,7 @@ namespace Ferda.FrontEnd.Archive
                 if (box.TryWriteEnter())
                 {
                     box.UserHint = dialog.UserNote;
+                    box.WriteExit();
                 }
                 else
                 {
@@ -768,14 +866,36 @@ namespace Ferda.FrontEnd.Archive
         }
 
         /// <summary>
-        /// Redraws the archive according to the new settings of the ComboBox
+        /// Redraws the treeview according to the new settings of this ComboBox
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event parameters</param>
         void CBArchive_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int index = CBArchive.SelectedIndex;
-            ResetArchive(CBArchive.Items[index].ToString(), RBAlong.Checked);
+            //getting the index
+            int index = CBCategories.SelectedIndex;
+            //filling the labels in the second combo-box
+            FillBoxLabels(CBCategories.Items[index].ToString());
+            //selecting the first item in the combo-box
+            CBTypes.SelectedIndex = 0;
+            //resetting the archive
+            ResetArchive(CBCategories.Items[index].ToString(),
+                ResManager.GetString("ArchiveAllText"), RBAlong.Checked);
+        }
+
+        /// <summary>
+        /// Redraws the treeview accordint to the new settings of this ComboBox
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void CBTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //getting the indexes
+            int categoryIndex = CBCategories.SelectedIndex;
+            int typeIndex = CBTypes.SelectedIndex;
+            //resetting the archive
+            ResetArchive(CBCategories.Items[categoryIndex].ToString(),
+                CBTypes.Items[typeIndex].ToString(), RBAlong.Checked);
         }
 
         /// <summary>
@@ -785,14 +905,16 @@ namespace Ferda.FrontEnd.Archive
         /// <param name="e">Event parameters</param>
         void RBAlong_CheckedChanged(object sender, EventArgs e)
         {
-            int index = CBArchive.SelectedIndex;
+            int index = CBCategories.SelectedIndex;
             if (index == -1)
             {
-                ResetArchive(CBArchive.Items[0].ToString(), RBAlong.Checked);
+                ResetArchive(CBCategories.Items[0].ToString(),
+                    ResManager.GetString("ArchiveAllText"), RBAlong.Checked);
             }
             else
             {
-                ResetArchive(CBArchive.Items[index].ToString(), RBAlong.Checked);
+                ResetArchive(CBCategories.Items[index].ToString(),
+                    ResManager.GetString("ArchiveAllText"), RBAlong.Checked);
             }
         }
 
@@ -830,7 +952,7 @@ namespace Ferda.FrontEnd.Archive
         }
 
         /// <summary>
-        /// Reacts to a mouse move - prepares the drag&drop operation
+        /// Reacts to a mouse move - prepares the drag&amp;drop operation
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event parameters</param>

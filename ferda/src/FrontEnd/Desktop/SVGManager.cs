@@ -74,38 +74,37 @@ namespace Ferda.FrontEnd.Desktop
                 return box;
             }
 
-            /*
             //bude to ale takhle
-            if (boxBitmaps.ContainsKey(creator.Identifier))
-            {
-                return boxBitmaps[creator.Identifier];
-            }
-            else
-            {
-                //there is a svg design file
-                if (creator.Design != string.Empty)
-                {
-                    SvgWindow window;
-                    GdiRenderer renderer;
+            //if (boxBitmaps.ContainsKey(creator.Identifier))
+            //{
+            //    return boxBitmaps[creator.Identifier];
+            //}
+            //else
+            //{
+            //    there is a svg design file
+            //    if (creator.Design != string.Empty)
+            //    {
+            //        SvgWindow window;
+            //        GdiRenderer renderer;
 
-                    //setting up the renderer and the svgWindow
-                    renderer = new GdiRenderer();
-                    window = new SvgWindow(myControl, renderer);
-                    window.Src = creator.Design;
+            //        setting up the renderer and the svgWindow
+            //        renderer = new GdiRenderer();
+            //        window = new SvgWindow(myControl, renderer);
+            //        SvgDocument document = new SvgDocument(window);
+            //        document.LoadXml(creator.Design);
 
-                    renderer.Render(window.Document as SvgDocument);
-                    Bitmap image = renderer.RasterImage;
+            //        renderer.Render(window.Document as SvgDocument);
+            //        Bitmap image = renderer.RasterImage;
 
-                    boxBitmaps.Add(creator.Identifier, image);
-                    return image;
-                }
-                //there is no svg design file
-                else
-                {
-                    return box;
-                }
-            }
-            */
+            //        boxBitmaps.Add(creator.Identifier, image);
+            //        return image;
+            //    }
+            //    there is no svg design file
+            //    else
+            //    {
+            //        return box;
+            //    }
+            //}
         }
 
         /// <summary>

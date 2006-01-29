@@ -166,6 +166,10 @@ namespace Ferda.FrontEnd.Desktop
 		/// </remarks>
         /// <param name="site">Interface of a graph site (control)
 		/// </param>
+        /// <param name="box">Box that is connected with this node</param>
+        /// <param name="resM">Resource manager of the application</param>
+        /// <param name="svgman">Provider of svg images</param>
+        /// <param name="view">View where this box is located</param>
 		public BoxNode(IGraphSite site, ModulesManager.IBoxModule box, 
             SVGManager svgman, ProjectManager.View view, ResourceManager resM)
             : base(site)

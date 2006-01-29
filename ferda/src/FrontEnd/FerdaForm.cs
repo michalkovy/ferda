@@ -95,6 +95,9 @@ using Ferda.ModulesManager;
             }
         }
 
+        /// <summary>
+        /// Manager of the SVG graphics (for the desktop)
+        /// </summary>
         public Desktop.SVGManager SvgManager
         {
             get
@@ -191,6 +194,8 @@ using Ferda.ModulesManager;
         /// necessary setup for the form.
         /// </summary>
         /// <param name="pm">Project Manager of the application</param>
+        /// <param name="prescreen">Prescreen where text about application
+        /// loading is displayed</param>
         public void RightAfterConstructor(ProjectManager.ProjectManager pm, 
             FerdaPrescreen prescreen)
         {
@@ -274,7 +279,7 @@ using Ferda.ModulesManager;
             iconProvider = new Dictionary<string, Icon>();
 
             //loading the program icon
-            i = new Icon("ferda.ico");
+            i = new Icon("FerdaFrontEnd.ico");
             iconProvider.Add("FerdaIcon", i);
 
             //loading the newbox and archive icons
@@ -505,7 +510,12 @@ using Ferda.ModulesManager;
         /// </summary>
         private void SetupSVG()
         {
-            svgManager = new Ferda.FrontEnd.Desktop.SVGManager(this);
+            Control c = new Control();
+            c.Visible = false;
+            c.Size = new Size(32, 32);
+            this.Controls.Add(c);
+
+            svgManager = new Ferda.FrontEnd.Desktop.SVGManager(c);
         }
 
         #endregion
@@ -1119,6 +1129,7 @@ using Ferda.ModulesManager;
         /// Method ShowDockableControl
         /// </summary>
         /// <param name="userControl">A  System.Windows.Forms.UserControl</param>
+        /// <param name="name">Text of the control</param>
         public void ShowDockableControl(UserControl userControl, string name)
         {
             DockWindow dockWindow = new DockWindow();
@@ -1150,6 +1161,12 @@ using Ferda.ModulesManager;
 
         #region OutputPrx implementation
 
+        /// <summary>
+        /// Shows a message box
+        /// </summary>
+        /// <param name="type">Type of the message</param>
+        /// <param name="name">Title of the message</param>
+        /// <param name="message">text of the message</param>
         public void writeMsg(MsgType type, string name, string message)
         {
             switch (type)
@@ -1169,6 +1186,13 @@ using Ferda.ModulesManager;
             }
         }
 
+        /// <summary>
+        /// Shows a message box
+        /// </summary>
+        /// <param name="type">Type of the message</param>
+        /// <param name="name">Title of the message</param>
+        /// <param name="message">text of the message</param>
+        /// <param name="context">ICE context of the message</param>
         public void writeMsg(MsgType type, string name, string message, Ice.Context context)
         {
             writeMsg(type, name, message);

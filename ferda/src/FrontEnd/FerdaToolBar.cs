@@ -93,7 +93,7 @@ namespace Ferda.FrontEnd
 
         ///<summary>
         /// Default constructor for FerdaToolBar class.
-        ///<summary>
+        ///</summary>
         public FerdaToolBar(ILocalizationManager lockManager, IIconProvider provider, 
             Menu.FerdaMenu menu)
             : base()

@@ -8,6 +8,10 @@ using System.Windows.Forms;
 
 namespace Ferda.FrontEnd.NewBox
 {
+    /// <summary>
+    /// Control that allows the user to create new boxes by dragging
+    /// them to the desktop
+    /// </summary>
     public class NewBoxControl : UserControl
     {
         #region Fields
@@ -30,6 +34,15 @@ namespace Ferda.FrontEnd.NewBox
             set { heightConstant = value; }
         }
 
+
+        /// <summary>
+        /// Default constructor for the class
+        /// </summary>
+        /// <param name="locManager">Interface that takes care of the localization</param>
+        /// <param name="menuDisp">Menu displayer</param>
+        /// <param name="modManager">Modules Manager</param>
+        /// <param name="iconProvider">Provider of the icons</param>
+        /// <param name="toolBar">ToolBar of the application</param>
         public NewBoxControl(Menu.ILocalizationManager locManager,
             Menu.IMenuDisplayer menuDisp, ModulesManager.ModulesManager modManager,
             IIconProvider iconProvider, Menu.IMenuDisplayer toolBar)
@@ -51,6 +64,10 @@ namespace Ferda.FrontEnd.NewBox
             this.PerformLayout();
         }
 
+        /// <summary>
+        /// Changes the size of all its child components according to the
+        /// size of the parent
+        /// </summary>
         public void ChangeSize()
         {
             if (Parent != null)
