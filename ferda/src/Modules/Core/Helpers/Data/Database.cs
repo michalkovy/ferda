@@ -132,7 +132,7 @@ namespace Ferda.Modules.Helpers.Data
                     dataMatrixInfo.remarks = row["REMARKS"].ToString();
 
                     //complete OdbcCommand and execute
-                    odbcCommand.CommandText = "SELECT COUNT(*) FROM " + dataMatrixInfo.name;
+                    odbcCommand.CommandText = "SELECT COUNT(*) FROM " + "`" + dataMatrixInfo.name + "`";
                     dataMatrixInfo.rowCount = Convert.ToInt32(odbcCommand.ExecuteScalar());
 
                     result.Add(dataMatrixInfo);

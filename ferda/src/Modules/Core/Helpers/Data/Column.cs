@@ -27,7 +27,7 @@ namespace Ferda.Modules.Helpers.Data
 
             try
             {
-                OdbcCommand command = new OdbcCommand("SELECT " + columnSelectExpression + " FROM " + dataMatrixName + " WHERE 0", conn);
+                OdbcCommand command = new OdbcCommand("SELECT " + "`" + columnSelectExpression + "`" + " FROM " + "`" + dataMatrixName + "`" + " WHERE 0", conn);
                 command.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -177,7 +177,8 @@ namespace Ferda.Modules.Helpers.Data
                 TestColumnSelectExpression(odbcConnectionString, dataMatrixName, columnName, boxIdentity);
 
                 //or other reason for exception
-                throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
+                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
+                return null;
             }
         }
 
@@ -213,12 +214,12 @@ namespace Ferda.Modules.Helpers.Data
 
             string query =
                 "SELECT "
-                    + columnSelectExpression + " AS " + SelectDistincts
-                    + ", COUNT(" + columnSelectExpression + ") AS " + SelectFrequency
+                    + "`" + columnSelectExpression + "`" + " AS " + SelectDistincts
+                    + ", COUNT(" + "`" + columnSelectExpression +"`" + ") AS " + SelectFrequency
                 + " FROM " + dataMatrixName
                     + where
-                    + " GROUP BY " + columnSelectExpression
-                    + " ORDER BY " + columnSelectExpression;
+                    + " GROUP BY " + "`" + columnSelectExpression + "`"
+                    + " ORDER BY " + "`" + columnSelectExpression + "`";
             try
             {
 
@@ -233,7 +234,8 @@ namespace Ferda.Modules.Helpers.Data
                 TestColumnSelectExpression(odbcConnectionString, dataMatrixName, columnSelectExpression, boxIdentity);
 
                 //or other reason for exception
-                throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
+                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
+                return null;
             }
         }
 
@@ -291,14 +293,14 @@ namespace Ferda.Modules.Helpers.Data
 
             try
             {
-                OdbcDataAdapter myDataAdapter = new OdbcDataAdapter("SELECT DISTINCT " + columnSelectExpression + " FROM " + dataMatrixName, conn);
+                OdbcDataAdapter myDataAdapter = new OdbcDataAdapter("SELECT DISTINCT " + "`" + columnSelectExpression + "`" + " FROM " + "`" + dataMatrixName + "`", conn);
                 System.Data.DataSet myDataSet = new System.Data.DataSet();
                 myDataAdapter.Fill(myDataSet);
                 statisticsStruct.ValueDistincts = Convert.ToInt64(myDataSet.Tables[0].Rows.Count);
 
                 /* much more effective but unsupported 
                  * UNDONE tohle predelat
-                odbcCommand.CommandText = "SELECT COUNT(DISTINCT " + columnSelectExpression + ") FROM " + dataMatrixName;
+                odbcCommand.CommandText = "SELECT COUNT(DISTINCT " + "`" + columnSelectExpression + "`" + ") FROM " + "`" + dataMatrixName + "`";
                 statisticsStruct.ValueDistincts = Convert.ToInt64(odbcCommand.ExecuteScalar());
                  * */
 
@@ -310,20 +312,21 @@ namespace Ferda.Modules.Helpers.Data
                 TestColumnSelectExpression(odbcConnectionString, dataMatrixName, columnSelectExpression, boxIdentity);
 
                 //or other reason for exception
-                throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
+                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
+                return null;
             }
 
-            string selectMaxExpression = "MAX(" + columnSelectExpression + ") AS Maximum";
-            string selectMinExpression = "MIN(" + columnSelectExpression + ") AS Minimum";
+            string selectMaxExpression = "MAX(" + "`" + columnSelectExpression + "`" + ") AS Maximum";
+            string selectMinExpression = "MIN(" + "`" + columnSelectExpression + "`" + ") AS Minimum";
             string selectAvgExpression = (isCardinal)
-                ? "AVG(" + columnSelectExpression + ") AS Average"
-                : "AVG(LEN(" + columnSelectExpression + ")) AS Average";
+                ? "AVG(" + "`" + columnSelectExpression + "`" + ") AS Average"
+                : "AVG(LEN(" + "`" + columnSelectExpression + "`" + ")) AS Average";
 
             odbcCommand.CommandText = "SELECT "
                 + selectMaxExpression + ","
                 + selectMinExpression + ","
                 + selectAvgExpression 
-                + " FROM " + dataMatrixName;
+                + " FROM " + "`" + dataMatrixName + "`";
 
             //System.Diagnostics.Debug.WriteLine("aggr_s:" + DateTime.Now.ToString());
             OdbcDataReader odbcDataReader = odbcCommand.ExecuteReader();
@@ -340,15 +343,15 @@ namespace Ferda.Modules.Helpers.Data
             //System.Diagnostics.Debug.WriteLine("card_s:" + DateTime.Now.ToString());
             if (isCardinal)
             {
-                odbcCommand.CommandText = "SELECT COUNT(1) FROM " + dataMatrixName;
+                odbcCommand.CommandText = "SELECT COUNT(1) FROM " + "`" + dataMatrixName + "`";
                 long dataMatrixRowsCount = Convert.ToInt64(odbcCommand.ExecuteScalar());
 
                 //TODO optimize this
                 odbcCommand.CommandText =
                     "SELECT SUM( "
-                        + "(" + columnSelectExpression + " - '" + statisticsStruct.ValueAverage + "')"
-                        + " * (" + columnSelectExpression + " - '" + statisticsStruct.ValueAverage + "')"
-                        + ") FROM " + dataMatrixName;
+                        + "(" + "`" + columnSelectExpression +"`" + " - '" + statisticsStruct.ValueAverage + "')"
+                        + " * (" + "`" + columnSelectExpression + "`" + " - '" + statisticsStruct.ValueAverage + "')"
+                        + ") FROM " + "`" + dataMatrixName + "`";
 
                 statisticsStruct.ValueVariability = Convert.ToDouble(odbcCommand.ExecuteScalar()) / dataMatrixRowsCount;
                 statisticsStruct.ValueStandardDeviation = Math.Sqrt(statisticsStruct.ValueVariability);
@@ -361,30 +364,30 @@ namespace Ferda.Modules.Helpers.Data
             //begin of old implementation
             object commandResult;
 
-            odbcCommand.CommandText = "SELECT MAX(" + columnSelectExpression + ") AS Maximum FROM " + dataMatrixName;
+            odbcCommand.CommandText = "SELECT MAX(" + "`" + columnSelectExpression + "`" + ") AS Maximum FROM " + + "`" + dataMatrixName + "`";
             commandResult = odbcCommand.ExecuteScalar();
             statisticsStruct.ValueMax =
                 (commandResult != null) ? commandResult.ToString() : null;
 
-            odbcCommand.CommandText = "SELECT MIN(" + columnSelectExpression + ") AS Minimum FROM " + dataMatrixName;
+            odbcCommand.CommandText = "SELECT MIN(" + "`" + columnSelectExpression + "`" + ") AS Minimum FROM " + "`" + dataMatrixName + "`";
             commandResult = odbcCommand.ExecuteScalar();
             statisticsStruct.ValueMin =
                 (commandResult != null) ? commandResult.ToString() : null;
 
             if (isCardinal)
             {
-                odbcCommand.CommandText = "SELECT AVG(" + columnSelectExpression + ") AS Average FROM " + dataMatrixName;
+                odbcCommand.CommandText = "SELECT AVG(" + "`" + columnSelectExpression +"`" + ") AS Average FROM " + "`" + dataMatrixName + "`";
                 commandResult = odbcCommand.ExecuteScalar();
                 statisticsStruct.ValueAverage = (commandResult != null) ? commandResult.ToString() : null;
 
-                odbcCommand.CommandText = "SELECT COUNT(1) FROM " + dataMatrixName;
+                odbcCommand.CommandText = "SELECT COUNT(1) FROM " + "`" + dataMatrixName + "`";
                 long dataMatrixRowsCount = Convert.ToInt64(odbcCommand.ExecuteScalar());
 
                 odbcCommand.CommandText =
                     "SELECT SUM( "
-                        + "(" + columnSelectExpression + " - '" + statisticsStruct.ValueAverage + "')"
-                        + "* (" + columnSelectExpression + " - '" + statisticsStruct.ValueAverage + "')"
-                        + ") AS Variability FROM " + dataMatrixName;
+                        + "(" + "`" + columnSelectExpression + "`" + " - '" + statisticsStruct.ValueAverage + "')"
+                        + "* (" + "`" + columnSelectExpression + "`" + " - '" + statisticsStruct.ValueAverage + "')"
+                        + ") AS Variability FROM " + "`" + dataMatrixName + "`";
 
                 statisticsStruct.ValueVariability =
                     Convert.ToDouble(odbcCommand.ExecuteScalar()) / dataMatrixRowsCount;
@@ -393,7 +396,7 @@ namespace Ferda.Modules.Helpers.Data
             }
             else
             {
-                odbcCommand.CommandText = "SELECT AVG(LEN(" + columnSelectExpression + ")) AS AverageLen FROM " + dataMatrixName;
+                odbcCommand.CommandText = "SELECT AVG(LEN(" + "`" + columnSelectExpression + "`" + ")) AS AverageLen FROM " + "`" + dataMatrixName + "`";
                 commandResult = odbcCommand.ExecuteScalar();
                 statisticsStruct.ValueAverage = (commandResult != null) ? commandResult.ToString() : null;
 
@@ -431,7 +434,7 @@ namespace Ferda.Modules.Helpers.Data
             try
             {
                 OdbcDataAdapter myDataAdapter = new OdbcDataAdapter(
-                    "SELECT DISTINCT " + columnSelectExpression + " AS " + SelectDistincts + " FROM " + dataMatrixName,
+                    "SELECT DISTINCT " + columnSelectExpression + " AS " + SelectDistincts + " FROM " + "`" + dataMatrixName + "`",
                     conn);
                 DataSet myDataSet = new DataSet();
                 myDataAdapter.Fill(myDataSet);
@@ -443,7 +446,8 @@ namespace Ferda.Modules.Helpers.Data
                 TestColumnSelectExpression(odbcConnectionString, dataMatrixName, columnSelectExpression, boxIdentity);
 
                 //or other reason for exception
-                throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
+                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
+                return null;
             }
         }
 
