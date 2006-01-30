@@ -7,7 +7,7 @@
 				<include name="BoxModulesServices/**.xml"/>
 				<include name="BoxModulesServices/**.svg"/>
 				<include name="BoxModulesServices/**.ico"/>
-				<include name="BoxModulesServices/**.zip"/>
+				<include name="BoxModulesServices/**.gz"/>
 			</fileset>
 		</copy>
 		<csc target="library" output="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}" doc="${path::combine(build.dir,'FerdaBoxInterfaces.xml')}" debug="${debug}" optimize="${optimize}">
