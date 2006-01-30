@@ -566,8 +566,9 @@ namespace Ferda.FrontEnd.Desktop
 
             foreach (BoxNode node in toRemove)
             {
-                Nodes.Remove(node);
+                RemoveShape(node);
             }
+            SelectedBoxes.Clear();
         }
 
         /// <summary>
@@ -576,12 +577,13 @@ namespace Ferda.FrontEnd.Desktop
         /// <param name="box">Box to be added</param>
         public void AddBox(IBoxModule box)
         {
-            BoxNode boxNode = new BoxNode(this, box, SvgManager, view, ResManager);
-            boxNode.X = view.GetPosition(box).X;
-            boxNode.Y = view.GetPosition(box).Y;
+            Adapt();
+            //BoxNode boxNode = new BoxNode(this, box, SvgManager, view, ResManager);
+            //boxNode.X = view.GetPosition(box).X;
+            //boxNode.Y = view.GetPosition(box).Y;
 
-            //adding the box
-            Nodes.Add(boxNode);
+            ////adding the box
+            //Nodes.Add(boxNode);
         }
 
         #endregion
