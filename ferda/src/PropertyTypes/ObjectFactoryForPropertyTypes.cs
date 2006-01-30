@@ -60,21 +60,38 @@ namespace Ferda.Modules
 		public static void addFactoryToCommunicator(Ice.Communicator communicator,
 				ObjectFactoryForPropertyTypes factory)
 		{
-			communicator.addObjectFactory(factory, "::Ferda::Modules::BoolT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::ShortT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::IntT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::LongT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::FloatT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::DoubleT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::StringT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::StringSeqT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::TimeT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::DateT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::DateTimeT");
-
-			communicator.addObjectFactory(factory, "::Ferda::Modules::CategoriesT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::GenerationInfoT");
-			communicator.addObjectFactory(factory, "::Ferda::Modules::HypothesesT");
+            lock (communicator)
+            {
+                if(communicator.findObjectFactory("::Ferda::Modules::BoolT")==null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::BoolT");
+                if (communicator.findObjectFactory("::Ferda::Modules::ShortT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::ShortT");
+                if (communicator.findObjectFactory("::Ferda::Modules::IntT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::IntT");
+                if (communicator.findObjectFactory("::Ferda::Modules::LongT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::LongT");
+                if (communicator.findObjectFactory("::Ferda::Modules::FloatT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::FloatT");
+                if (communicator.findObjectFactory("::Ferda::Modules::DoubleT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::DoubleT");
+                if (communicator.findObjectFactory("::Ferda::Modules::StringT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::StringT");
+                if (communicator.findObjectFactory("::Ferda::Modules::StringSeqT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::StringSeqT");
+                if (communicator.findObjectFactory("::Ferda::Modules::TimeT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::TimeT");
+                if (communicator.findObjectFactory("::Ferda::Modules::DateT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::DateT");
+                if (communicator.findObjectFactory("::Ferda::Modules::DateTimeT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::DateTimeT");
+                
+                if (communicator.findObjectFactory("::Ferda::Modules::CategoriesT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::CategoriesT");
+                if (communicator.findObjectFactory("::Ferda::Modules::GenerationInfoT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::GenerationInfoT");
+                if (communicator.findObjectFactory("::Ferda::Modules::HypothesesT") == null)
+                    communicator.addObjectFactory(factory, "::Ferda::Modules::HypothesesT");
+            }
 		}
 	}
 }
