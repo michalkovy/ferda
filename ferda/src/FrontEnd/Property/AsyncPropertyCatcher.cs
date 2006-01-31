@@ -9,27 +9,31 @@ namespace Ferda.FrontEnd.Properties
     {
         #region Fields
 
-        /// <summary>
-        /// Value of the property that is beeing changed
-        /// </summary>
-        protected object propertyValue;
-
-        /// <summary>
-        /// The manager of all the properties of the box
-        /// </summary>
-        protected IAsyncPropertyManager myManager;
+        private IAsyncPropertyManager myManager;
+        private string propertyName;
+        private string propertyType;
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Value of the property that is beeing changed
+        /// Name (not the label) of the property that is beeing changed
         /// </summary>
-        public object PropertyValue
+        public string PropertyName
         {
-            get { return propertyValue; }
-            set { propertyValue = value; }
+            get { return propertyName; }
+            set { propertyName = value; }
+        }
+
+        /// <summary>
+        /// Type of the property (for good type conversion in the 
+        /// propertyGrid.Temporary values
+        /// </summary>
+        public string PropertyType
+        {
+            get { return propertyType; }
+            set { propertyType = value; }
         }
 
         #endregion
@@ -40,9 +44,13 @@ namespace Ferda.FrontEnd.Properties
         /// Default constructor
         /// </summary>
         /// <param name="man">Manager of this property</param>
-        public AsyncPropertyCatcher(IAsyncPropertyManager man)
+        /// <param name="propName">Name of the property</param>
+        public AsyncPropertyCatcher(IAsyncPropertyManager man, string propName,
+            string propertyType)
         {
             myManager = man;
+            propertyName = propName;
+            this.propertyType = propertyType;
         }
 
         #endregion
