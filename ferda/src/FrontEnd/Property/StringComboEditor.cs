@@ -76,8 +76,11 @@ namespace Ferda.FrontEnd.Properties
 
                 StringSequence seq = value as StringSequence;
 
+                //getting the list of options from the box
+                SelectString [] array = seq.GetArray();
+
                 //filling the listbox
-                foreach (SelectString ss in seq.array)
+                foreach (SelectString ss in array)
                 {
                     listBox.Items.Add(ss.label);
                 }
@@ -88,7 +91,7 @@ namespace Ferda.FrontEnd.Properties
                 {
                     //setting the property into the ProjectManager
                     string name = string.Empty;
-                    foreach (SelectString ss in seq.array)
+                    foreach (SelectString ss in array)
                     {
                         if (ss.label == listBox.SelectedItem.ToString())
                         {

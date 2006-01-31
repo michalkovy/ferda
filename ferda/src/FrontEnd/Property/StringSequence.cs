@@ -34,7 +34,7 @@ namespace Ferda.FrontEnd.Properties
         /// <summary>
         /// Box containing the property
         /// </summary>
-        protected IBoxModule[] boxes;
+        public IBoxModule[] boxes;
 
         /// <summary>
         /// Resource Manager to write the error message
@@ -48,20 +48,15 @@ namespace Ferda.FrontEnd.Properties
         protected IPropertiesDisplayer propertiesDisplayer;
 
         /// <summary>
-        /// The string sequence
-        /// </summary>
-        public SelectString[] array;
-
-        /// <summary>
-        /// Selected string as a result of user selecting in the property grid
-        /// </summary>
-        public string selectedName;
-
-        /// <summary>
         /// Label for the converter to be displayed in the grid (different from 
         /// name of the string)
         /// </summary>
         public string selectedLabel;
+
+        /// <summary>
+        /// Name of the property that has been selected
+        /// </summary>
+        public string selectedName;
 
         //Archive and View displayers to be updated when the class changes a property
         private Archive.IArchiveDisplayer archiveDisplayer;
@@ -98,17 +93,15 @@ namespace Ferda.FrontEnd.Properties
         /// in the property grid</param>
         /// <param name="views">Views to be refreshed</param>
         /// <param name="prop">To reset the propertygrid afterwards</param>
-        public StringSequence(SelectString[] options, string selected,
-            string name, IBoxModule [] b, ResourceManager res, 
+        public StringSequence(string name, IBoxModule [] b, ResourceManager res, 
             Archive.IArchiveDisplayer arch, List<Desktop.IViewDisplayer> views,
-            IPropertiesDisplayer prop)
+            IPropertiesDisplayer prop, string label)
         {
             boxes = b;
             propertyName = name;
             resManager = res;
 
-            array = options;
-            selectedLabel = selected;
+            this.selectedLabel = label;
 
             archiveDisplayer = arch;
             viewDisplayers = views;
@@ -140,7 +133,7 @@ namespace Ferda.FrontEnd.Properties
                     {
                         view.RefreshBoxNames();
                     }
-                    propertiesDisplayer.Adapt();
+                    //propertiesDisplayer.Adapt();
                 }
                 else
                 {
@@ -157,24 +150,24 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="sequence1">First sequence to compare</param>
         /// <param name="sequence2">Second sequence to compare</param>
         /// <returns>True if identical, false otherwise</returns>
-        public static bool EqualArrays(StringSequence sequence1, 
-            StringSequence sequence2)
-        {
-            if (sequence1.array.Length != sequence2.array.Length)
-            {
-                return false;
-            }
+        //public static bool EqualArrays(StringSequence sequence1, 
+        //    StringSequence sequence2)
+        //{
+        //    if (sequence1.array.Length != sequence2.array.Length)
+        //    {
+        //        return false;
+        //    }
 
-            for (int i = 0; i < sequence1.array.Length; i++)
-            {
-                if (sequence1.array[i] != sequence2.array[i])
-                {
-                    return false;
-                }
-            }
+        //    for (int i = 0; i < sequence1.array.Length; i++)
+        //    {
+        //        if (sequence1.array[i] != sequence2.array[i])
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         /// <summary>
         /// Function returns, if 2 sequences have identical selected strings
@@ -186,6 +179,16 @@ namespace Ferda.FrontEnd.Properties
             StringSequence sequence2)
         {
             return String.Equals(sequence1.selectedLabel, sequence2.selectedLabel);
+        }
+
+        /// <summary>
+        /// Gets the array of options for this property
+        /// </summary>
+        /// <returns>array of options for this property</returns>
+        public SelectString[] GetArray()
+        {
+            SelectString[] array = boxes[0].GetPropertyOptions(propertyName);
+            return array;
         }
 
         #endregion
