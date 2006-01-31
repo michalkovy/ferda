@@ -59,7 +59,7 @@ namespace Ferda.FrontEnd.Properties
             BAddOption.Text = seq.ResManager.GetString("StringComboAddingControlButtonText");
 
             //filling the listbox
-            foreach (SelectString ss in sequence.array)
+            foreach (SelectString ss in sequence.GetArray())
             {
                 LBOptions.Items.Add(ss.label);
             }
@@ -94,24 +94,6 @@ namespace Ferda.FrontEnd.Properties
         {
             if (TBNewOption.Text != "")
             {
-                //checking if there is a corresponding option
-                //string name = string.Empty;
-                //foreach (SelectString ss in sequence.array)
-                //{
-                //    if (ss.label == TBNewOption.Text)
-                //    {
-                //        name = ss.name;
-                //        break;
-                //    }
-                //}
-
-                ////checking some name was found
-                //if (name == string.Empty)
-                //{
-                //    throw new 
-                //        ApplicationException("Inconsistent label and name in SelectString");
-                //}
-
                 sequence.selectedName = TBNewOption.Text;
                 sequence.selectedLabel = TBNewOption.Text;
                 sequence.SetSelectedOption();
@@ -127,7 +109,7 @@ namespace Ferda.FrontEnd.Properties
             {
                 //setting the property into the ProjectManager
                 string name = string.Empty;
-                foreach (SelectString ss in sequence.array)
+                foreach (SelectString ss in sequence.GetArray())
                 {
                     if (ss.label == LBOptions.SelectedItem.ToString())
                     {

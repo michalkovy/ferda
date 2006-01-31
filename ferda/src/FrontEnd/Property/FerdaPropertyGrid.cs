@@ -304,6 +304,10 @@ namespace Ferda.FrontEnd.Properties
                     temporaryValues.Add(propertyName, new TimeSpan());
                     break;
 
+                case "Ferda.FrontEnd.Properties.StringSequence":
+                    temporaryValues.Add(propertyName, null);
+                    break;
+
                 default:
                     break;
             }
@@ -331,6 +335,16 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "Ferda.FrontEnd.Properties.OtherProperty":
+                    break;
+
+                case "Ferda.FrontEnd.Properties.StringSequence":
+                    string selectedValue = ((StringT)value).stringValue;
+                    //creating a new stringSequence
+                    StringSequence seq = new StringSequence(catcher.PropertyName,
+                        new IBoxModule[] { SelectedBox }, 
+                        ResManager, ArchiveDisplayer, ViewDisplayers,
+                        this, selectedValue);
+                    temporaryValues[catcher.PropertyName] = seq;
                     break;
 
                 case "System.String":
@@ -600,7 +614,6 @@ namespace Ferda.FrontEnd.Properties
                     //adding to the bag
                     bag.Properties.Add(ps);
                 }
-
                 else
                 //user can add his own option to the string selection
                 {
@@ -631,6 +644,12 @@ namespace Ferda.FrontEnd.Properties
 
                     //adding to the bag
                     bag.Properties.Add(ps);
+                }
+
+                //adding the asynch stuff
+                if (IsOneBoxSelected)
+                {
+                    AddAsyncStuff(pinfo.name, "Ferda.FrontEnd.Properties.StringSequence");
                 }
             }
         }
@@ -1140,22 +1159,21 @@ namespace Ferda.FrontEnd.Properties
                 case "Ferda.FrontEnd.Properties.StringSequence":
                     if (IsOneBoxSelected)
                     {
-                        e.Value = GetStringSequence(SelectedBox, realPropertyName);
+                        e.Value = (StringSequence)temporaryValues[realPropertyName];
                     }
                     else
                     {
-                        value = GetStringSequenceMoreBoxes(realPropertyName);
-                        if (value != null)
-                        {
-                            e.Value = (StringSequence)value;
-                        }
+                        //value = GetStringSequenceMoreBoxes(realPropertyName);
+                        //if (value != null)
+                        //{
+                        //    e.Value = (StringSequence)value;
+                        //}
                     }
                     break;
 
                 case "System.String":
                     if (IsOneBoxSelected)
                     {
-                        //e.Value = SelectedBox.GetPropertyString(realPropertyName);
                         e.Value = (string)temporaryValues[realPropertyName];
                     }
                     else
@@ -1171,7 +1189,6 @@ namespace Ferda.FrontEnd.Properties
                 case "System.Int32":
                     if (IsOneBoxSelected)
                     {
-                        //e.Value = SelectedBox.GetPropertyInt(realPropertyName);
                         e.Value = (Int32)temporaryValues[realPropertyName];
                     }
                     else
@@ -1187,7 +1204,6 @@ namespace Ferda.FrontEnd.Properties
                 case "System.Boolean":
                     if (IsOneBoxSelected)
                     {
-                        //e.Value = SelectedBox.GetPropertyBool(realPropertyName);
                         e.Value = (bool)temporaryValues[realPropertyName];
                     }
                     else
@@ -1203,7 +1219,6 @@ namespace Ferda.FrontEnd.Properties
                 case "System.Int16":
                     if (IsOneBoxSelected)
                     {
-                        //e.Value = SelectedBox.GetPropertyShort(realPropertyName);
                         e.Value = (Int16)temporaryValues[realPropertyName];
                     }
                     else
@@ -1219,7 +1234,6 @@ namespace Ferda.FrontEnd.Properties
                 case "System.Int64":
                     if (IsOneBoxSelected)
                     {
-                        //e.Value = SelectedBox.GetPropertyLong(realPropertyName);
                         e.Value = (Int64)temporaryValues[realPropertyName];
                     }
                     else
@@ -1235,7 +1249,6 @@ namespace Ferda.FrontEnd.Properties
                 case "System.Single":
                     if (IsOneBoxSelected)
                     {
-                        //e.Value = SelectedBox.GetPropertyFloat(realPropertyName);
                         e.Value = (Single)temporaryValues[realPropertyName];
                     }
                     else
@@ -1251,7 +1264,6 @@ namespace Ferda.FrontEnd.Properties
                 case "System.Double":
                     if (IsOneBoxSelected)
                     {
-                        //e.Value = SelectedBox.GetPropertyDouble(realPropertyName);
                         e.Value = (Double)temporaryValues[realPropertyName];
                     }
                     else
@@ -1279,7 +1291,6 @@ namespace Ferda.FrontEnd.Properties
                 case "System.TimeSpan":
                     if (IsOneBoxSelected)
                     {
-                        //e.Value = SelectedBox.GetPropertyTime(realPropertyName);
                         e.Value = (TimeSpan)temporaryValues[realPropertyName];
                     }
                     else
@@ -1498,89 +1509,36 @@ namespace Ferda.FrontEnd.Properties
 
         /// <summary>
         /// Function returns a <see cref="T:Ferda.FrontEnd.Properties.StringSequence"/>
-        /// object generated from the box and
-        /// property
-        /// </summary>
-        /// <param name="box">Box that contains the property</param>
-        /// <param name="realPropertyName">Name of the property</param>
-        /// <returns>A <see cref="T:Ferda.FrontEnd.Properties.StringSequence"/> 
-        /// object that contains the
-        /// properties options</returns>
-        protected StringSequence GetStringSequence(IBoxModule box, string realPropertyName)
-        {
-            SelectString[] array;
-
-            //determining the type of the property
-            array = box.GetPropertyOptions(realPropertyName);
-
-            if (array.Length == 0)
-            {
-                throw new ApplicationException("Inconsistence in StringT types");
-            }
-
-            //getting the selected property
-            //String selectedLabel = box.GetPropertyString(realPropertyName);
-            //setting the property into the ProjectManager
-            string name = string.Empty;
-            foreach (SelectString ss in array)
-            {
-                if (ss.name == box.GetPropertyString(realPropertyName))
-                {
-                    name = ss.label;
-                    break;
-                }
-            }
-
-            //setting the right constructor for the StringSequence -
-            //it should contain all the boxes 
-            IBoxModule[] boxes;
-            if (IsOneBoxSelected)
-            {
-                boxes = new IBoxModule[] { SelectedBox };
-            }
-            else
-            {
-                boxes = new IBoxModule[SelectedBoxes.Count];
-                SelectedBoxes.CopyTo(boxes);
-            }
-
-            StringSequence seq = new StringSequence(array, name,
-                realPropertyName, boxes, ResManager, archiveDisplayer, viewDisplayers, this);
-            return seq;
-        }
-
-        /// <summary>
-        /// Function returns a <see cref="T:Ferda.FrontEnd.Properties.StringSequence"/>
         /// object generated from the all the selected boxes and the property name
         /// </summary>
         /// <param name="realPropertyName">Name of the property</param>
         /// <returns>A <see cref="T:Ferda.FrontEnd.Properties.StringSequence"/> 
         /// object that contains the
         /// properties options</returns>
-        protected StringSequence GetStringSequenceMoreBoxes(string realPropertyName)
-        {
-            StringSequence firstSeq = GetStringSequence(SelectedBoxes[0], realPropertyName);
-            StringSequence otherSeq;
+        //protected StringSequence GetStringSequenceMoreBoxes(string realPropertyName)
+        //{
+        //    StringSequence firstSeq = GetStringSequence(SelectedBoxes[0], realPropertyName);
+        //    StringSequence otherSeq;
 
-            for (int i = 1; i < SelectedBoxes.Count; i++)
-            {
-                otherSeq = GetStringSequence(SelectedBoxes[i], realPropertyName);
+        //    for (int i = 1; i < SelectedBoxes.Count; i++)
+        //    {
+        //        otherSeq = GetStringSequence(SelectedBoxes[i], realPropertyName);
 
-                //if the sequences have different values inside, return null;
-                if (!StringSequence.EqualArrays(firstSeq, otherSeq))
-                {
-                    return null;
-                }
+        //        //if the sequences have different values inside, return null;
+        //        //if (!StringSequence.EqualArrays(firstSeq, otherSeq))
+        //        //{
+        //        //    return null;
+        //        //}
 
-                //if the sequences have differnent selected string, return null
-                if (!StringSequence.EqualSelections(firstSeq, otherSeq))
-                {
-                    return null;
-                }
-            }
+        //        //if the sequences have differnent selected string, return null
+        //        if (!StringSequence.EqualSelections(firstSeq, otherSeq))
+        //        {
+        //            return null;
+        //        }
+        //    }
 
-            return firstSeq;
-        }
+        //    return firstSeq;
+        //}
 
         /// <summary>
         /// Function returns a OtherProperty object generated from the box
@@ -1885,7 +1843,6 @@ namespace Ferda.FrontEnd.Properties
             }
             else
             {
-                //GetNormalProperty(e, realPropertyName, typeName);
                 GetNormalProperty(e, realPropertyName, typeName);
             }
             Parent.Cursor = c;
