@@ -35,22 +35,24 @@ namespace Ferda.FrontEnd.Desktop
             myControl = control;
         }
 
-        //HashTable for storing the bitmaps of svgs of boxes
-        private Dictionary<string, Bitmap> boxBitmaps;
+        ///<summary>
+        ///HashTable for storing the bitmaps of svgs of boxes
+        ///</summary>
+        protected Dictionary<string, Bitmap> boxBitmaps;
         
         /// <summary>
         /// The socket image when there is no socket svg (there can be one)
         /// </summary>
-        private Bitmap socket;
+        protected Bitmap socket;
         /// <summary>
         /// The box image when there is no boxDesign.svg file of the box
         /// </summary>
-        private Bitmap box;
+        protected Bitmap box;
 
         /// <summary>
         /// Required by SharpVectorLibrary to paint on some control
         /// </summary>
-        private Control myControl;
+        protected Control myControl;
 
         /// <summary>
         /// Function returns the bitmap of the BoxModule. It creates the bitmap

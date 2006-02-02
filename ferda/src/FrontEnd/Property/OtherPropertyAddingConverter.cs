@@ -13,7 +13,7 @@ namespace Ferda.FrontEnd.Properties
     /// The converter for all the Ferda OtherProperties
     /// It converts the property to and from a string.
     /// </summary>
-    public class OtherPropertyAddingConverter : TypeConverter
+    internal class OtherPropertyAddingConverter : TypeConverter
     {
         /// <summary>
         /// Determines if the class can be converted to other class

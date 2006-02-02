@@ -10,7 +10,7 @@ namespace Ferda.FrontEnd.NewBox
     /// The class compares two IBoxModuleFactoryCreator classes. It compares them
     /// according to their labels
     /// </summary>
-    class IBoxModuleFactoryCreatorComparer : IComparer<IBoxModuleFactoryCreator>
+    internal class IBoxModuleFactoryCreatorComparer : IComparer<IBoxModuleFactoryCreator>
     {
         #region Interface methods
 

@@ -12,28 +12,48 @@ namespace Ferda.FrontEnd.ContextHelp
 	/// Dynamic help control - some kind of a browser
 	/// </summary>
 	///<stereotype>control</stereotype>
-    class FerdaContextHelp : System.Windows.Forms.UserControl, 
+    public class FerdaContextHelp : System.Windows.Forms.UserControl, 
         IContextHelpDisplayer
     {
         #region Class fields
 
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
+        /// <summary>
+        /// Localization manager of the application
+        /// </summary>
         private ILocalizationManager localizationManager;
 
-        private IMenuDisplayer menuDisplayer;
-        private IMenuDisplayer toolBar;
+        /// <summary>
+        /// The menu of the application
+        /// </summary>
+        protected IMenuDisplayer menuDisplayer;
+        /// <summary>
+        /// The toolbar of the application
+        /// </summary>
+        protected IMenuDisplayer toolBar;
 
         //control that have all the boxes in common
-        private Label LBoxType;
-        private RichTextBox RTBBoxTypeHint;
-        private Label LBoxName;
+        /// <summary>
+        /// Label that shows type of the box
+        /// </summary>
+        protected Label LBoxType;
+        /// <summary>
+        /// TextBox that shows the hint about the box type
+        /// </summary>
+        protected RichTextBox RTBBoxTypeHint;
+        /// <summary>
+        /// Label that shows name of the box
+        /// </summary>
+        protected Label LBoxName;
 
         //the box we are working with
         private IBoxModule selectedBox;
 
-        //the distance between the first
-        private int itemsOffset = 20;
+        /// <summary>
+        /// the distance between the first
+        /// </summary>
+        protected int itemsOffset = 20;
 
         #endregion
 

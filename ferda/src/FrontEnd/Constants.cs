@@ -10,7 +10,7 @@ namespace Ferda
         /// <summary>
         /// Defines the constants needed for Ferda FrontEnd
         /// </summary>
-        class Constants
+        public class Constants
         {
             /// <summary>
             /// Width of stripes such as FerdaMenu or FerdaToolBar.

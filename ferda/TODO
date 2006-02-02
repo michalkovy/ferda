@@ -29,9 +29,7 @@ Martin
  - krabicky jdou posouvat nahoru a doleva mimo viditelnou plochu
  - plocha o neco vetsi nez je potreba (vysvetlim proc, navrhnu moznost jak udelat ... tomas)
  - performance
- - vyjimky ... pri vyjimce oznacit prislusnou krabicu (+ pokud mozno i vlastnost)
- - moznost udelat z property socket (Michal to ma pry pripravene)
- - kazda krabicka ma svoje notes (jako notepad) -  u michala v IBoxModule UserHint
+ - User Note - cast dokovaciho prostredi
  - Netron
    - zoom
    - mapa

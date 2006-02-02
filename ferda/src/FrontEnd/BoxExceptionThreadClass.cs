@@ -9,7 +9,7 @@ namespace Ferda.FrontEnd
     /// <summary>
     /// Class for displaying the BoxExceptionDialog to the user in another thread
     /// </summary>
-    public class BoxExceptionThreadClass
+    internal class BoxExceptionThreadClass
     {
         /// <summary>
         /// Resource manager

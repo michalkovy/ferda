@@ -452,6 +452,6 @@
     <value>User note</value>
   </data>
   <data name="UserNoteCaption" xml:space="preserve">
-    <value>User note for box: </value>
+    <value>User note: </value>
   </data>
 </root>

@@ -11,19 +11,27 @@ namespace Ferda.FrontEnd
 	/// Toolbar for Ferda application, will contain Delphi like bar with
     /// categories and boxes and normal toolbar buttons...
 	/// </summary>
-    /// <remark>
-    /// Still dont know shat type of Control will it be
-    /// </remark>
 	///<stereotype>control</stereotype>
-    class FerdaToolBar : ToolStrip, IMenuDisplayer
+    public class FerdaToolBar : ToolStrip, IMenuDisplayer
     {
         #region Private fields
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
+        /// <summary>
+        /// Determines in the FerdaToolBar, which control is now
+        /// focused. The Other option stays for ModulesForInteraction and/or
+        /// other controls.
+        /// </summary>
+        private Control controlHasFocus;
 
-        //Interfaces needed for control to have all the functionality
-        private ILocalizationManager localizationManager;
-        private IIconProvider iconProvider;
+        /// <summary>
+        /// Localization manager
+        /// </summary>
+        protected ILocalizationManager localizationManager;
+        /// <summary>
+        /// Provider of the icons for the toolbar
+        /// </summary>
+        protected IIconProvider iconProvider;
 
         //menu that contains all the action handlers
         private Menu.FerdaMenu menu;
@@ -37,13 +45,6 @@ namespace Ferda.FrontEnd
         //Other icons
         private ToolStripButton preferences;
         private ToolStripButton newDesktop;
-
-        /// <summary>
-        /// Determines in the FerdaToolBar, which control is now
-        /// focused. The Other option stays for ModulesForInteraction and/or
-        /// other controls.
-        /// </summary>
-        private Control controlHasFocus;
 
         #endregion
 

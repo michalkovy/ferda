@@ -10,7 +10,7 @@ namespace Ferda.FrontEnd
     /// Class that catches the exceptions comming from other layers of the system
     /// and displayes them to the user
     /// </summary>
-    public class ActionExceptionCatcher : Ferda.Modules.AMI_BoxModule_runAction
+    internal class ActionExceptionCatcher : Ferda.Modules.AMI_BoxModule_runAction
     {
         #region Fields
 

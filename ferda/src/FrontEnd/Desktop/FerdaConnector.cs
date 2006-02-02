@@ -15,14 +15,14 @@ namespace Ferda.FrontEnd.Desktop
     /// function, more suitable for the purposes of Ferda. This function
     /// draws a bitmap onto canvas.
     /// </summary>
-    class FerdaConnector : Connector
+    public class FerdaConnector : Connector
     {
         #region Protected fields
 
         /// <summary>
         /// SVGManager that holds the bitmap of the socket
         /// </summary>
-        SVGManager svgManager;
+        protected SVGManager svgManager;
 
         /// <summary>
         /// A bitmap that will be drawn on the canvas in the paint method
@@ -32,12 +32,12 @@ namespace Ferda.FrontEnd.Desktop
         /// <summary>
         /// The socket this connector is representing
         /// </summary>
-        protected SocketInfo socket;
+        private SocketInfo socket;
 
         /// <summary>
         /// Determines if something is packed in the connector
         /// </summary>
-        protected bool hasPacked;
+        private bool hasPacked;
 
         #endregion
 

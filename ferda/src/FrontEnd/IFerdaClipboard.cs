@@ -7,7 +7,7 @@ namespace Ferda.FrontEnd
     /// <summary>
     /// My implementation of clipboart, it remembers list of nodes
     /// </summary>
-    interface IFerdaClipboard
+    public interface IFerdaClipboard
     {
         /// <summary>
         /// Nodes contained in the clipboard

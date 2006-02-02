@@ -8,7 +8,7 @@ namespace Ferda.FrontEnd.Properties
     /// The interface is implemented when a control wants asynchrone
     /// changing of properties
     /// </summary>
-    internal interface IAsyncPropertyManager
+    public interface IAsyncPropertyManager
     {
         /// <summary>
         /// The property value is changed, so the the propertyGrid should be

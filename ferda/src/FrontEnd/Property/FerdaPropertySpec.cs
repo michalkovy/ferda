@@ -10,7 +10,7 @@ namespace Ferda.FrontEnd.Properties
     /// with information about the type of the property - if it is a socket
     /// property or a normal property
     /// </summary>
-    public class FerdaPropertySpec : PropertySpec
+    internal class FerdaPropertySpec : PropertySpec
     {
         private bool socketProperty;
 
