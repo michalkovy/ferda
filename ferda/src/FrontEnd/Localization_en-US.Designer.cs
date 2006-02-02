@@ -1056,7 +1056,7 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User note for box: .
+        ///   Looks up a localized string similar to User note: .
         /// </summary>
         internal static string UserNoteCaption {
             get {

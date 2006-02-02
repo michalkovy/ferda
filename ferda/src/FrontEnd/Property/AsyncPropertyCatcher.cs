@@ -5,7 +5,12 @@ using Ferda.Modules;
 
 namespace Ferda.FrontEnd.Properties
 {
-    internal class AsyncPropertyCatcher : AMI_BoxModule_getProperty
+    /// <summary>
+    /// This class provides functionality for asynchronous property catching
+    /// (getting). Through the ice_response method it notifies the propertyGrid, 
+    /// that a property has been changed.
+    /// </summary>
+    public class AsyncPropertyCatcher : AMI_BoxModule_getProperty
     {
         #region Fields
 

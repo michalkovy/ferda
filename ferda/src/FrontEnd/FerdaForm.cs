@@ -26,41 +26,55 @@ using Ferda.ModulesManager;
         Menu.ILocalizationManager, IFerdaClipboard, IControlsManager, IOwnerOfAddIn,
         IIconProvider
     {
-        #region Private class fields
+        #region Class fields
 
-        //all children controls
-		private Archive.FerdaArchive archive;
-        private Properties.FerdaPropertyGrid propertyGrid;
-        private Menu.FerdaMenu menu;
-        private FerdaToolBar toolBar;
+        /// <summary>
+        /// Archive control
+        /// </summary>
+		protected Archive.FerdaArchive archive;
+        /// <summary>
+        /// PropertyGrid control
+        /// </summary>
+        protected Properties.FerdaPropertyGrid propertyGrid;
+        /// <summary>
+        /// Menu of the application
+        /// </summary>
+        protected Menu.FerdaMenu menu;
+        /// <summary>
+        /// Toolbar of the application
+        /// </summary>
+        protected FerdaToolBar toolBar;
+        /// <summary>
+        /// ContextHelp control
+        /// </summary>
         private ContextHelp.FerdaContextHelp contextHelp;
+        /// <summary>
+        /// New box control
+        /// </summary>
         private NewBox.NewBoxControl newBox;
+        /// <summary>
+        /// User note control
+        /// </summary>
+        private UserNote.FerdaUserNote userNote;
 
-        //All views of the control
-        private List<FerdaDesktop> views = new List<FerdaDesktop>();
+        /// <summary>
+        /// All view controls
+        /// </summary>
+        protected List<FerdaDesktop> views = new List<FerdaDesktop>();
+
         private List<DockWindow> viewContents = new List<DockWindow>();
-
-        //One SVGManager for the whole application
-        private SVGManager svgManager;
-
-        //Some modules for interaction
-        //private IModuleForInteraction[] modules;
-
 		//docking fields
 		private DockDotNET.DockManager dockingManager;
         private DockDotNET.DockWindow archiveContent;
         private DockDotNET.DockWindow propertyGridContent;
         private DockDotNET.DockWindow contextHelpContent;
         private DockDotNET.DockWindow newBoxContent;
+        private DockDotNET.DockWindow userNoteContent;
 
-        //resource manager and localization string of the application
-        private ResourceManager resManager;
-
-        //ProjectManager
-        private ProjectManager.ProjectManager projectManager;
-
-        //IFerdaClipboard implementation
-        private List<ModulesManager.IBoxModule> nodes = new List<ModulesManager.IBoxModule>();
+        /// <summary>
+        /// Project manager
+        /// </summary>
+        protected ProjectManager.ProjectManager projectManager;
 
 		private static FrontEndConfig iceConfig;
 
@@ -71,13 +85,21 @@ using Ferda.ModulesManager;
         /// that are keyed by string values. See 
         /// <see cref="F:Ferda.FrontEnd.FerdaForm.LoadIcons"/> for their names
         /// </summary>
-        private Dictionary<string, Icon> iconProvider;
+        protected Dictionary<string, Icon> iconProvider;
 
-        //prescreen
-        private static FerdaPrescreen prescreen;
+        /// <summary>
+        /// Prescreen 
+        /// </summary>
+        protected static FerdaPrescreen prescreen;
 
         //the name of the project
         private string projectName = string.Empty;
+        //One SVGManager for the whole application
+        private SVGManager svgManager;
+        //resource manager and localization string of the application
+        private ResourceManager resManager;
+        //IFerdaClipboard implementation
+        private List<ModulesManager.IBoxModule> nodes = new List<ModulesManager.IBoxModule>();
 
         #endregion
 
@@ -225,6 +247,7 @@ using Ferda.ModulesManager;
             SetupArchive();
             prescreen.DisplayText(ResManager.GetString("LoadingNewBox"));
             SetupNewBox();
+            SetupUserNote();
             prescreen.DisplayText(ResManager.GetString("LoadingDesktop"));
             SetupDesktop();
 
@@ -259,7 +282,7 @@ using Ferda.ModulesManager;
         /// </summary>
         /// <param name="config">File with application configuration
         /// </param>
-        private void SetupResources(FrontEndConfig config)
+        protected void SetupResources(FrontEndConfig config)
         {
             //setting the ResManager resource manager and localization string
             string locString = "Ferda.FrontEnd.Localization_" + config.ProjectManagerOptions.LocalePrefs[0];
@@ -273,7 +296,7 @@ using Ferda.ModulesManager;
         /// Sometimes, the program path can change and at this time, no icons
         /// are present
         /// </remarks>
-        private void LoadIcons()
+        protected void LoadIcons()
         {
             Icon i;
             iconProvider = new Dictionary<string, Icon>();
@@ -349,7 +372,7 @@ using Ferda.ModulesManager;
         /// <code>FerdaMenu</code>, <code>FerdaToolBar</code> and
         /// <code>FerdaStatusBar</code>
         /// </summary>
-        private void SetupStripes()
+        protected void SetupStripes()
         {
             //menu
             menu = new Menu.FerdaMenu(this, this, projectManager, this, this);
@@ -365,7 +388,7 @@ using Ferda.ModulesManager;
         /// <summary>
         /// Initializes the archive of the application
         /// </summary>
-        private void SetupArchive()
+        protected void SetupArchive()
         {
             //creating the archive and its content
             archive = new Ferda.FrontEnd.Archive.FerdaArchive(this, menu, this, 
@@ -395,7 +418,7 @@ using Ferda.ModulesManager;
         /// <summary>
         /// Initializes the NewBoxTreeView of the application
         /// </summary>
-        private void SetupNewBox()
+        protected void SetupNewBox()
         {
             //creating the newBox and its content
             newBox = new FrontEnd.NewBox.NewBoxControl(this, menu, 
@@ -417,7 +440,7 @@ using Ferda.ModulesManager;
         /// <summary>
         /// Initializes the desktop (view) of the application
         /// </summary>
-        private void SetupDesktop()
+        protected void SetupDesktop()
         {
             foreach (ProjectManager.View view in projectManager.Views)
             {
@@ -438,6 +461,7 @@ using Ferda.ModulesManager;
                 desktop.Clipboard = this;
                 desktop.PropertiesDisplayer = propertyGrid;
                 desktop.ContextHelpDisplayer = contextHelp;
+                desktop.UserNote = userNote;
 
                 //event for changing names
                 desktopContent.TextChanged += new EventHandler(desktopContent_TextChanged);
@@ -462,7 +486,7 @@ using Ferda.ModulesManager;
         /// <summary>
         /// Initializes the property grid of the application
         /// </summary>
-        private void SetupProperties()
+        protected void SetupProperties()
         {
             //creating the property grid and its content
             propertyGrid = new Ferda.FrontEnd.Properties.FerdaPropertyGrid(this, menu, toolBar);
@@ -486,7 +510,7 @@ using Ferda.ModulesManager;
         /// <summary>
         /// Initializes the dynamic help of the application
         /// </summary>
-        private void SetupContextHelp()
+        protected void SetupContextHelp()
         {
             //creating the dynamic help and its content
             contextHelp = new Ferda.FrontEnd.ContextHelp.FerdaContextHelp(this, menu, toolBar);
@@ -506,9 +530,40 @@ using Ferda.ModulesManager;
         }
 
         /// <summary>
+        /// Initializes the user note control of the application
+        /// </summary>
+        protected void SetupUserNote()
+        {
+            //creating the user note control and its content
+            userNote = new UserNote.FerdaUserNote();
+            userNoteContent = new DockWindow();
+            //I dont really know how this works, but putting there a smaller number
+            //makes the user note a little bit smaller
+            userNoteContent.Size = new Size(150, 50);
+
+            //synchronizing the sizes of the content and userNote
+            userNoteContent.ClientSize = userNoteContent.Size;
+            userNoteContent.Resize += new EventHandler(userNoteContent_Resize);
+
+            //Settings required by teh DockDotNet library to dock anything
+            userNoteContent.DockType = DockContainerType.ToolWindow;
+            userNoteContent.Text = ResManager.GetString("UserNoteCaption");
+            userNoteContent.ResumeLayout(false);
+
+            userNoteContent.Controls.Add(userNote);
+
+            archive.UserNote = userNote;
+            foreach (FerdaDesktop desktop in views)
+            {
+                desktop.UserNote = userNote;
+            }
+            userNote.Reset();
+        }
+
+        /// <summary>
         /// Initialization of all the SVG stuff in the application
         /// </summary>
-        private void SetupSVG()
+        protected void SetupSVG()
         {
             Control c = new Control();
             c.Visible = false;
@@ -671,7 +726,7 @@ using Ferda.ModulesManager;
         ///<remarks>
         /// Ferda is using DockDotNET as its docking library.
         ///</remarks>
-        private void SetupDocking()
+        protected void SetupDocking()
         {
             Ferda.FrontEnd.Constants constants;
             constants = new Constants();
@@ -721,6 +776,11 @@ using Ferda.ModulesManager;
             DockContainer cont = contextHelpContent.HostContainer;
             cont.DockWindow(propertyGridContent, DockStyle.Fill);
 
+            //docking the userNote
+            dockingManager.AddForm(userNoteContent);
+            AddOwnedForm(userNoteContent);
+            cont.DockWindow(userNoteContent, DockStyle.Bottom);
+
             //docking the newBox
             dockingManager.AddForm(newBoxContent);
             AddOwnedForm(newBoxContent);
@@ -741,6 +801,7 @@ using Ferda.ModulesManager;
             {
                 SetupArchive();
                 archive.Views = views;
+                archive.UserNote = userNote;
 
                 if (newBoxContent.IsVisible)
                 {
@@ -834,22 +895,54 @@ using Ferda.ModulesManager;
             }
             else
             {
+                //the necessary stuff
                 SetupNewBox();
+                dockingManager.AddForm(newBoxContent);
+                AddOwnedForm(newBoxContent);
 
                 if (archiveContent.IsVisible)
                 {
                     //docking according to the archive
-                    dockingManager.AddForm(newBoxContent);
-                    AddOwnedForm(newBoxContent);
                     DockContainer cont = archiveContent.HostContainer;
                     cont.DockWindow(newBoxContent, DockStyle.Fill);
                 }
                 else
                 {
                     //docking to the left side as a first control
-                    dockingManager.AddForm(newBoxContent);
-                    AddOwnedForm(newBoxContent);
                     dockingManager.DockWindow(newBoxContent, DockStyle.Left);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Shows the user note control
+        /// </summary>
+        public void ShowUserNote()
+        {
+            if (!userNoteContent.IsVisible)
+            {
+                //the nececcary docking initialization
+                SetupUserNote();
+                dockingManager.AddForm(userNoteContent);
+                AddOwnedForm(userNoteContent);
+
+                //tries to dock it to the archive
+                if (propertyGridContent.IsVisible)
+                {
+                    DockContainer cont = propertyGridContent.HostContainer;
+                    cont.DockWindow(userNoteContent, DockStyle.Bottom);
+                    return;
+                }
+
+                //tries to dock it to the propertyGrid
+                if (contextHelpContent.IsVisible)
+                {
+                    DockContainer cont = contextHelpContent.HostContainer;
+                    cont.DockWindow(userNoteContent, DockStyle.Bottom);
+                }
+                else //it has to make a new docking group
+                {
+                    dockingManager.DockWindow(userNoteContent, DockStyle.Right);
                 }
             }
         }
@@ -989,6 +1082,7 @@ using Ferda.ModulesManager;
             newDesktop.Clipboard = this;
             newDesktop.PropertiesDisplayer = propertyGrid;
             newDesktop.ContextHelpDisplayer = contextHelp;
+            newDesktop.UserNote = userNote;
 
             //adding the views
             newDesktop.Views = views;
@@ -1062,7 +1156,7 @@ using Ferda.ModulesManager;
             AddOwnedForm(desktopContent);
             dockingManager.DockWindow(desktopContent, DockStyle.Fill);
         }
-
+        
         /// <summary>
         /// Closes a view that is opened in the FerdaForm
         /// </summary>
@@ -1252,6 +1346,16 @@ using Ferda.ModulesManager;
         void contextHelpContent_Resize(object sender, EventArgs e)
         {
             contextHelp.ChangeSize();
+        }
+
+        /// <summary>
+        /// Forces the userNote to resize
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void userNoteContent_Resize(object sender, EventArgs e)
+        {
+            userNote.ChangeSize();    
         }
 
         /// <summary>

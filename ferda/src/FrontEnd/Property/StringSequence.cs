@@ -22,7 +22,7 @@ namespace Ferda.FrontEnd.Properties
     /// I could not find any better solution to the problem of passing the data
     /// to the editor than to save it all into the StringSequence object.
     /// </remarks>
-    public class StringSequence
+    internal class StringSequence
     {
         #region Class fields
 

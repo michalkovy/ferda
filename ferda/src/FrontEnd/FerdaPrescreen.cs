@@ -20,7 +20,10 @@ namespace Ferda.FrontEnd
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private Label LMessages;
+        /// <summary>
+        /// Label for displaying the messages
+        /// </summary>
+        protected Label LMessages;
 
         #endregion
 

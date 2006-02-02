@@ -26,14 +26,17 @@ namespace Ferda.FrontEnd.NewBox
     /// information about the type of the node (if it is a box type or a 
     /// category) for drag&amp;drop operations
     /// </summary>
-    class NewBoxNode : TreeNode
+    public class NewBoxNode : TreeNode
     {
-        #region Protected fields
+        #region Private fields
+
         protected ENodeType nodeType;
         protected string identifier;
+
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Type of the node
         /// </summary>

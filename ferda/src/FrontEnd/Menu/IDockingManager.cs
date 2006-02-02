@@ -35,6 +35,11 @@ namespace Ferda
                 /// </summary>
                 void ShowNewBox();
 
+                /// <summary>
+                /// Shows the user note control
+                /// </summary>
+                void ShowUserNote();
+
                 /* I decided that this is not necessary for the application
                 ///<summary>
                 ///Shows the application's tooooooooolbar

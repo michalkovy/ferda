@@ -20,7 +20,7 @@ namespace Ferda.FrontEnd.Properties
     /// Property Grid for the Ferda application
     /// </summary>
     ///<stereotype>control</stereotype>
-    internal class FerdaPropertyGrid : System.Windows.Forms.PropertyGrid, IPropertiesDisplayer,
+    public class FerdaPropertyGrid : System.Windows.Forms.PropertyGrid, IPropertiesDisplayer,
         IOtherObjectDisplayer, IAsyncPropertyManager
     {
         #region Class fields
@@ -30,15 +30,27 @@ namespace Ferda.FrontEnd.Properties
 
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
-        private Menu.ILocalizationManager localizationManager;
+        /// <summary>
+        /// Localization manager of the application
+        /// </summary>
+        protected Menu.ILocalizationManager localizationManager;
 
-        private IMenuDisplayer menuDisplayer;
-        private IMenuDisplayer toolBar;
+        /// <summary>
+        /// Menu of the application
+        /// </summary>
+        protected IMenuDisplayer menuDisplayer;
+        /// <summary>
+        /// Toolbar of the application
+        /// </summary>
+        protected IMenuDisplayer toolBar;
 
-        protected bool isOneBoxSelected;
-        protected List<IBoxModule> selectedBoxes;
-        protected IBoxModule selectedBox;
+        private bool isOneBoxSelected;
+        private List<IBoxModule> selectedBoxes;
+        private IBoxModule selectedBox;
 
+        /// <summary>
+        /// The property bag where values of the property are stored
+        /// </summary>
         protected External.PropertyTable propertyBag;
 
         /// <summary>
@@ -660,7 +672,7 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="pinfo">Information about the property</param>
         /// <param name="box">Box where it finds the other property</param>
         /// <param name="bag">Bag where to put the propertyspec</param>
-        private void CreateOtherProperty(PropertyInfo pinfo, IBoxModule box, PropertyTable bag)
+        protected void CreateOtherProperty(PropertyInfo pinfo, IBoxModule box, PropertyTable bag)
         {
             FerdaPropertySpec ps;
 
@@ -748,7 +760,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else //setting the property for all the selected boxes
@@ -762,7 +774,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                CannotWriteToBox(box);
+                                FrontEndCommon.CannotWriteToBox(box, ResManager);
                             }
                         }
                     }
@@ -782,7 +794,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else
@@ -800,7 +812,7 @@ namespace Ferda.FrontEnd.Properties
                                 }
                                 else
                                 {
-                                    CannotWriteToBox(box);
+                                    FrontEndCommon.CannotWriteToBox(box, ResManager);
                                 }
                             }
                         }
@@ -824,7 +836,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else //setting the property for all the selected boxes
@@ -838,7 +850,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                CannotWriteToBox(box);
+                                FrontEndCommon.CannotWriteToBox(box, ResManager);
                             }
                         }
                     }
@@ -859,7 +871,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else //setting the property for all the selected boxes
@@ -873,7 +885,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                CannotWriteToBox(box);
+                                FrontEndCommon.CannotWriteToBox(box, ResManager);
                             }
                         }
                     }
@@ -894,7 +906,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else //setting the property for all the selected boxes
@@ -908,7 +920,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                CannotWriteToBox(box);
+                                FrontEndCommon.CannotWriteToBox(box, ResManager);
                             }
                         }
                     }
@@ -929,7 +941,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else //setting the property for all the selected boxes
@@ -943,7 +955,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                CannotWriteToBox(box);
+                                FrontEndCommon.CannotWriteToBox(box, ResManager);
                             }
                         }
                     }
@@ -964,7 +976,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else //setting the property for all the selected boxes
@@ -978,7 +990,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                CannotWriteToBox(box);
+                                FrontEndCommon.CannotWriteToBox(box, ResManager);
                             }
                         }
                     }
@@ -999,7 +1011,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else //setting the property for all the selected boxes
@@ -1013,7 +1025,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                CannotWriteToBox(box);
+                                FrontEndCommon.CannotWriteToBox(box, ResManager);
                             }
                         }
                     }
@@ -1034,7 +1046,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else //setting the property for all the selected boxes
@@ -1048,7 +1060,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                CannotWriteToBox(box);
+                                FrontEndCommon.CannotWriteToBox(box, ResManager);
                             }
                         }
                     }
@@ -1069,7 +1081,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            CannotWriteToBox(SelectedBox);
+                            FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                         }
                     }
                     else //setting the property for all the selected boxes
@@ -1083,7 +1095,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                CannotWriteToBox(box);
+                                FrontEndCommon.CannotWriteToBox(box, ResManager);
                             }
                         }
                     }
@@ -1122,7 +1134,7 @@ namespace Ferda.FrontEnd.Properties
                 }
                 else
                 {
-                    CannotWriteToBox(SelectedBox);
+                    FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                 }
 
                 return true;
@@ -1136,7 +1148,7 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="realPropertyName">Name of the property(identifier)</param>
         /// <param name="propertyLabel">Localized label of the property</param>
         /// <param name="typeName">Type of the property</param>
-        private void GetNormalProperty(PropertySpecEventArgs e, string
+        protected void GetNormalProperty(PropertySpecEventArgs e, string
             realPropertyName, string typeName)
         {
             //the object when we get values from more selected boxes
@@ -1324,7 +1336,7 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         /// <param name="typeClassIceId">ICE Ferda type</param>
         /// <returns>normal system type identifier</returns>
-        public string GetNormalType(string typeClassIceId)
+        protected string GetNormalType(string typeClassIceId)
         {
             switch (typeClassIceId)
             {
@@ -1548,7 +1560,7 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="propertyName">Name of the property</param>
         /// <returns>An OtherProperty object that contains the
         /// properties options</returns>
-        private OtherProperty GetOtherProperty(IBoxModule SelectedBox, string propertyName)
+        protected OtherProperty GetOtherProperty(IBoxModule SelectedBox, string propertyName)
         {
             return new OtherProperty(SelectedBox, propertyName, archiveDisplayer, viewDisplayers,
                 this, ResManager);
@@ -1739,16 +1751,6 @@ namespace Ferda.FrontEnd.Properties
         #endregion
 
         #region Other methods
-
-        /// <summary>
-        /// Shows a messagebox saying that user cannot write to the box
-        /// </summary>
-        protected void CannotWriteToBox(IBoxModule box)
-        {
-            MessageBox.Show(
-                ResManager.GetString("PropertiesCannotWriteText"),
-                box.UserName + ": " + ResManager.GetString("PropertiesCannotWriteCaption"));
-        }
 
         /// <summary>
         /// Changes the size of the child controls. Archive has to do it 

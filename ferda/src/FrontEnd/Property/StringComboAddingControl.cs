@@ -15,7 +15,7 @@ namespace Ferda.FrontEnd.Properties
     /// add new value to the combobox. It is used to edit and select 
     /// a option of the string
     /// </summary>
-    public class StringComboAddingControl : UserControl
+    internal class StringComboAddingControl : UserControl
     {
         #region Class fields
 

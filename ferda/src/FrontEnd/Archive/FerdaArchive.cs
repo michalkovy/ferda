@@ -19,24 +19,46 @@ namespace Ferda.FrontEnd.Archive
     /// Control class for Ferda archive
     /// </summary>
     ///<stereotype>control</stereotype>
-    class FerdaArchive : System.Windows.Forms.UserControl, IArchiveDisplayer,
+    public class FerdaArchive : System.Windows.Forms.UserControl, IArchiveDisplayer,
         IBoxSelector
     {
         #region Fields
 
-        //Interfaces needed for control to have all the functionality
-        private Menu.ILocalizationManager localizationManager;
-        private Menu.IMenuDisplayer menuDisplayer;
-        private Menu.IMenuDisplayer toolBar;
+        /// <summary>
+        /// The localization manager - takes care of localizing
+        /// </summary>
+        protected Menu.ILocalizationManager localizationManager;
+        /// <summary>
+        /// Menu of the application
+        /// </summary>
+        protected Menu.IMenuDisplayer menuDisplayer;
+        /// <summary>
+        /// Toolbar of the application
+        /// </summary>
+        protected Menu.IMenuDisplayer toolBar;
+
         private Properties.IPropertiesDisplayer propertiesDisplayer;
-        private ContextHelp.IContextHelpDisplayer contextHelpDisplayer;
-        private TreeView TVArchive;
-        private RadioButton RBAlong;
-        private RadioButton RBAgainst;
+        protected ContextHelp.IContextHelpDisplayer contextHelpDisplayer;
+        /// <summary>
+        /// Archive part of the control
+        /// </summary>
+        protected TreeView TVArchive;
+        /// <summary>
+        /// Radio button for moving along the connections
+        /// </summary>
+        protected RadioButton RBAlong;
+        /// <summary>
+        /// Radio button for moving against the connections
+        /// </summary>
+        protected RadioButton RBAgainst;
 
         //Archive that will set the class
         private ProjectManager.Archive archive;
-        private ComboBox CBCategories;
+
+        /// <summary>
+        /// Combo box to display the box categories
+        /// </summary>
+        protected ComboBox CBCategories;
 
         //ProjectManger to display the messages about the box to the user
         private ProjectManager.ProjectManager projectManager;
@@ -55,19 +77,30 @@ namespace Ferda.FrontEnd.Archive
 
         //All the views of the project
         private List<FerdaDesktop> views;
+        
+        /// <summary>
+        /// Icon for the boxes that don't have their icon
+        /// </summary>
+        protected Icon naIcon;
 
-        //Icon for the boxes that don't have their icon
-        private Icon naIcon;
+        //userNote control
+        private UserNote.IUserNoteDisplayer userNote;
 
-        //Icon provider for the application
-        private IIconProvider iconProvider;
-        private ComboBox CBTypes;
+        /// <summary>
+        /// Icon provider for the application
+        /// </summary>
+        protected IIconProvider iconProvider;
+
+        /// <summary>
+        /// Combo box that displays the types of boxes
+        /// </summary>
+        protected ComboBox CBTypes;
 
         /// <summary>
         /// Dictionary that converts the name of the box to a number
         /// for the .NET framework
         /// </summary>
-        private Dictionary<string, int> iconDictionary;
+        protected Dictionary<string, int> iconDictionary;
 
         #endregion
 
@@ -91,6 +124,21 @@ namespace Ferda.FrontEnd.Archive
                         "Archive.ResManager cannot be null");
                 }
                 return resManager;
+            }
+        }
+
+        /// <summary>
+        /// The desktop can adapt this interface to display a user note of a box
+        /// </summary>
+        public UserNote.IUserNoteDisplayer UserNote
+        {
+            set
+            {
+                userNote = value;
+            }
+            get
+            {
+                return userNote;
             }
         }
 
@@ -555,12 +603,6 @@ namespace Ferda.FrontEnd.Archive
                 return;
             }
 
-            if (bn.ToolTipText == ResManager.GetString("UserNote"))
-            {
-                UserNote(activeNode);
-                return;
-            }
-
             if (bn.ToolTipText == ResManager.GetString("MenuEditCopy"))
             {
                 Copy(activeNode.Box);
@@ -811,33 +853,6 @@ namespace Ferda.FrontEnd.Archive
             PropertiesDisplayer.Reset();
         }
 
-        /// <summary>
-        /// Shows the user note dialog to enable the user to set the note
-        /// (IBoxModule.UserHint)
-        /// </summary>
-        /// <param name="tn">node to be edited</param>
-        public void UserNote(FerdaTreeNode tn)
-        {
-            IBoxModule box = tn.Box;
-
-            UserNoteDialog dialog = new UserNoteDialog(ResManager, box.UserName,
-                box.UserHint);
-
-            dialog.ShowDialog();
-            if (dialog.DialogResult == DialogResult.OK)
-            {
-                if (box.TryWriteEnter())
-                {
-                    box.UserHint = dialog.UserNote;
-                    box.WriteExit();
-                }
-                else
-                {
-                    FrontEndCommon.CannotWriteToBox(box, ResManager);
-                }
-            }
-        }
-
         #endregion
 
         #endregion
@@ -949,6 +964,10 @@ namespace Ferda.FrontEnd.Archive
             //forcing the context help to adapt
             contextHelpDisplayer.SelectedBox = this.SelectedBox;
             contextHelpDisplayer.Adapt();
+
+            //forcing the user note to adapt
+            userNote.SelectedBox = this.SelectedBox;
+            userNote.Adapt();
         }
 
         /// <summary>
@@ -1016,6 +1035,9 @@ namespace Ferda.FrontEnd.Archive
                 {
                     view.Adapt();
                 }
+                //here it is not necessaty to adapt also the user note
+                //control, because the change of the label of the box does not
+                //affect the user note of the box
             }
             else
             {

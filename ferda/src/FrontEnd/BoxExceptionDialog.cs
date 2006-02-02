@@ -17,13 +17,30 @@ namespace Ferda.FrontEnd
     {
         #region Fields
 
-        //Form controls
-        private Panel panel1;
-        private Label LBox;
-        private Label LBoxName;
-        private Label LExceptionKecy;
-        private Label LExceptionDetails;
-        private RichTextBox RTBExceptionDetails;
+        /// <summary>
+        /// Panel that holds the picture of the box
+        /// </summary>
+        protected Panel panel1;
+        /// <summary>
+        /// Label saying box
+        /// </summary>
+        protected Label LBox;
+        /// <summary>
+        /// Label with the name of the box
+        /// </summary>
+        protected Label LBoxName;
+        /// <summary>
+        /// Label with some exception stuff
+        /// </summary>
+        protected Label LExceptionKecy;
+        /// <summary>
+        /// Exception details label
+        /// </summary>
+        protected Label LExceptionDetails;
+        /// <summary>
+        /// Text box with details of the exception
+        /// </summary>
+        protected RichTextBox RTBExceptionDetails;
         private System.Windows.Forms.Button BOk;
         /// <summary>
         /// Required designer variable.

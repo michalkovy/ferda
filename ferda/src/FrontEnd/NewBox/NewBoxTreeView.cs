@@ -14,7 +14,7 @@ namespace Ferda.FrontEnd.NewBox
     /// <summary>
     /// A NewBoxTreeView TreeView is the main way to add new nodes to the desktop and archive
     /// </summary>
-    class NewBoxTreeView : TreeView
+    public class NewBoxTreeView : TreeView
     {
         #region Class fields
 
@@ -23,13 +23,23 @@ namespace Ferda.FrontEnd.NewBox
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        //Interfaces needed for control to have all the functionality
-        private Menu.ILocalizationManager localizationManager;
-        private Menu.IMenuDisplayer menuDisplayer;
-        private Menu.IMenuDisplayer toolBar;
+        ///<summary>
+        ///Localization manager of the application
+        ///</summary>
+        protected Menu.ILocalizationManager localizationManager;
+        /// <summary>
+        /// Menu of the application
+        /// </summary>
+        protected Menu.IMenuDisplayer menuDisplayer;
+        /// <summary>
+        /// Toolbar of the application
+        /// </summary>
+        protected Menu.IMenuDisplayer toolBar;
 
-        //ModulesManager
-        private ModulesManager.ModulesManager modulesManager;
+        /// <summary>
+        /// Modules manager of the application
+        /// </summary>
+        protected ModulesManager.ModulesManager modulesManager;
 
         //node for drag&drop operations
         private NewBoxNode mySelectedNode;
@@ -38,11 +48,16 @@ namespace Ferda.FrontEnd.NewBox
         /// Dictionary that converts the name of the box to a number
         /// for the .NET framework
         /// </summary>
-        private Dictionary<string, int> iconDictionary;
+        protected Dictionary<string, int> iconDictionary;
 
-        //icons for the control
-        private Icon naIcon;
-        private Icon folderIcon;
+        /// <summary>
+        /// Not available icon
+        /// </summary>
+        protected Icon naIcon;
+        /// <summary>
+        /// Folder icon
+        /// </summary>
+        protected Icon folderIcon;
 
         //constant for determining the height of the textbox
         private int widthConstant;
@@ -72,6 +87,8 @@ namespace Ferda.FrontEnd.NewBox
         }
 
         #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Default constructor
@@ -108,12 +125,16 @@ namespace Ferda.FrontEnd.NewBox
             MouseDown += new MouseEventHandler(NewBoxTreeView_MouseDown);
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Fills the image list of the tree view and the dictionary for
         /// converting category names into icons.
         /// </summary>
         /// <param name="creators">creators of boxes in the project</param>
-        private void FillImageList(IBoxModuleFactoryCreator[] creators)
+        protected void FillImageList(IBoxModuleFactoryCreator[] creators)
         {
             int j = 0;
 
@@ -368,6 +389,8 @@ namespace Ferda.FrontEnd.NewBox
             }
             base.Dispose(disposing);
         }
+
+        #endregion
 
         #region Component Designer generated code
 

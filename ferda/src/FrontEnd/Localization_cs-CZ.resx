@@ -445,6 +445,6 @@
     <value>Uživatelská poznámka</value>
   </data>
   <data name="UserNoteCaption" xml:space="preserve">
-    <value>Uživatelská poznámka pro krabičku: </value>
+    <value>Uživatelská poznámka: </value>
   </data>
 </root>

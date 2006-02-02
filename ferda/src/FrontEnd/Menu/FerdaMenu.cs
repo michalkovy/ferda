@@ -24,7 +24,7 @@ namespace Ferda.FrontEnd.Menu
     /// must be supported.
     /// </remarks>
     ///<stereotype>control</stereotype>
-	internal class FerdaMenu : MenuStrip, IMenuDisplayer
+	public class FerdaMenu : MenuStrip, IMenuDisplayer
     {
         #region Private fields
 
@@ -56,6 +56,7 @@ namespace Ferda.FrontEnd.Menu
         private ToolStripMenuItem newBoxTV;
         private ToolStripMenuItem contextHelp;
         private ToolStripMenuItem propertyGrid;
+        private ToolStripMenuItem userNote;
 
 		/// Group Desktop
 		private ToolStripMenuItem newDesktop;
@@ -319,12 +320,17 @@ namespace Ferda.FrontEnd.Menu
             newBoxTV.Click += new EventHandler(newBoxTV_Click);
             newBoxTV.ShortcutKeys = (Keys)Shortcut.Ctrl3;
 
+            userNote = new ToolStripMenuItem(ResManager.GetString("UserNote"));
+            userNote.Click += new EventHandler(userNote_Click);
+            userNote.ShortcutKeys = (Keys)Shortcut.Ctrl4;
+
             this.view.DropDownItems.AddRange(new ToolStripItem[]
                 {
                     archive,
                     contextHelp,
                     newBoxTV,
-                    propertyGrid
+                    propertyGrid,
+                    userNote
                 });
         }
 
@@ -523,7 +529,7 @@ namespace Ferda.FrontEnd.Menu
         /// <summary>
         /// Sets the menu to be used when the archive is focused
         /// </summary>
-        private void SetForArchive()
+        protected void SetForArchive()
         {
             //enable edit and desktop
             desktop.Enabled = true;
@@ -546,7 +552,7 @@ namespace Ferda.FrontEnd.Menu
         /// <summary>
         /// Sets the menu to be used whed desktop is focused
         /// </summary>
-        private void SetForDesktop()
+        protected void SetForDesktop()
         {
             //enable edit and desktop
             desktop.Enabled = true;
@@ -572,7 +578,7 @@ namespace Ferda.FrontEnd.Menu
         /// corrected by this method
         /// </summary>
         /// <param name="items">Array containg the menu items</param>
-        private void CorrectDynamicClick(ToolStripItem[] items)
+        protected void CorrectDynamicClick(ToolStripItem[] items)
         {
             foreach (ToolStripItem i in items)
             {
@@ -641,7 +647,7 @@ namespace Ferda.FrontEnd.Menu
         /// Saves the project as
         /// </summary>
         /// <returns>True if uer clicked Ok in the SaveFile dialog, false otherwise</returns>
-        private bool SaveProjectAsCore()
+        protected bool SaveProjectAsCore()
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Title = ResManager.GetString("MenuFileSaveProject");
@@ -667,7 +673,7 @@ namespace Ferda.FrontEnd.Menu
         /// Determines if the project contains any boxes.
         /// </summary>
         /// <returns>If there are boxes in the project</returns>
-        private bool ProjectContainsBoxes()
+        protected bool ProjectContainsBoxes()
         {
             return (projectManager.Archive.Boxes.Length != 0);
         }
@@ -990,6 +996,17 @@ namespace Ferda.FrontEnd.Menu
         void newBoxTV_Click(object sender, EventArgs e)
         {
             dockingManager.ShowNewBox();
+        }
+
+        /// <summary>
+        /// Event handles the View->UserNote click, displays (and docks the UserNote
+        /// control)
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void userNote_Click(object sender, EventArgs e)
+        {
+            dockingManager.ShowUserNote();
         }
 
         #endregion

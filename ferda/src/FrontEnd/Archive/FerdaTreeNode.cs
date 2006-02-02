@@ -14,14 +14,24 @@ namespace Ferda.FrontEnd.Archive
     /// The class is a classical TreeNode with a info about the IBoxModule that
     /// this tree node represents
     /// </summary>
-    class FerdaTreeNode : TreeNode
+    public class FerdaTreeNode : TreeNode
     {
-        protected ModulesManager.IBoxModule box;
-        protected bool alongDirection;
-        protected ProjectManager.Archive archive;
+        #region Class fields
+
+        private ModulesManager.IBoxModule box;
+        private bool alongDirection;
+        private ProjectManager.Archive archive;
+        /// <summary>
+        /// Project manager of the application
+        /// </summary>
         protected ProjectManager.ProjectManager projectManager;
-        protected FerdaArchive parentTreeView;
+        private FerdaArchive parentTreeView;
+        /// <summary>
+        /// Provider of icons
+        /// </summary>
         protected IIconProvider provider;
+
+        #endregion
 
         #region Properties
 
@@ -98,6 +108,8 @@ namespace Ferda.FrontEnd.Archive
         }
 
         #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Constructor that sets the Box property
@@ -177,6 +189,8 @@ namespace Ferda.FrontEnd.Archive
             }
         }
 
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -198,7 +212,7 @@ namespace Ferda.FrontEnd.Archive
         /// Fills the dynamic fields of context menu for the node
         /// </summary>
         /// <param name="cMenu">Context menu of the TreeNode</param>
-        private void SetDynamicContextMenu(ContextMenuStrip cMenu)
+        protected void SetDynamicContextMenu(ContextMenuStrip cMenu)
         {
             bool containsDynamic = false;
 
@@ -235,11 +249,9 @@ namespace Ferda.FrontEnd.Archive
         /// </summary>
         /// <param name="cMenu">Context menu of the TreeNode</param>
         /// <param name="provider">Interface that provides icons for the boxes</param>
-        private void SetStaticContextMenu(ContextMenuStrip cMenu, IIconProvider provider)
+        protected void SetStaticContextMenu(ContextMenuStrip cMenu, IIconProvider provider)
         {
             //handling normal items
-            ToolStripMenuItem userNote =
-                new ToolStripMenuItem(ParentTreeView.ResManager.GetString("UserNote"));
             ToolStripMenuItem rename =
                 new ToolStripMenuItem(ParentTreeView.ResManager.GetString("MenuEditRename"));
             ToolStripMenuItem copy =
@@ -250,21 +262,18 @@ namespace Ferda.FrontEnd.Archive
             copy.Click += new EventHandler(copy_Click);
             rename.Click += new EventHandler(rename_Click);
             clone.Click += new EventHandler(clone_Click);
-            userNote.Click += new EventHandler(userNote_Click);
 
             //shortcuts
-            userNote.ShortcutKeys = Keys.F3;
             rename.ShortcutKeys = Keys.F2;
             copy.ShortcutKeys = (Keys)Shortcut.CtrlC;
             clone.ShortcutKeys = (Keys)Shortcut.CtrlE;
 
             //icons
-            userNote.Image = provider.GetIcon("UserNote").ToBitmap();
             rename.Image = provider.GetIcon("Rename").ToBitmap();
             copy.Image = provider.GetIcon("Copy").ToBitmap();
             clone.Image = provider.GetIcon("Clone").ToBitmap();
 
-            cMenu.Items.AddRange(new ToolStripItem[] {userNote, rename, copy, clone });
+            cMenu.Items.AddRange(new ToolStripItem[] {rename, copy, clone });
 
             if (!ParentTreeView.Clipboard.IsEmpty)
             {
@@ -307,7 +316,6 @@ namespace Ferda.FrontEnd.Archive
                 act.DropDownItems.Add(i);
             }
         }
-
 
         /// <summary>
         /// Creates ModulesForInteraction submenu for a selected box
@@ -497,17 +505,6 @@ namespace Ferda.FrontEnd.Archive
                     break;
                 }
             }
-        }
-
-        /// <summary>
-        /// Shows the user note dialog to enable the user to set the note
-        /// (IBoxModule.UserHint)
-        /// </summary>
-        /// <param name="sender">Sender of the event</param>
-        /// <param name="e">Event parameters</param>
-        void userNote_Click(object sender, EventArgs e)
-        {
-            parentTreeView.UserNote(this);
         }
 
         #endregion

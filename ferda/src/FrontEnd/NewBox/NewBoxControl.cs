@@ -25,6 +25,8 @@ namespace Ferda.FrontEnd.NewBox
 
         #endregion
 
+        #region Properties
+
         /// <summary>
         /// Constant for determining the height of the textbox
         /// </summary>
@@ -34,6 +36,9 @@ namespace Ferda.FrontEnd.NewBox
             set { heightConstant = value; }
         }
 
+        #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Default constructor for the class
@@ -64,6 +69,10 @@ namespace Ferda.FrontEnd.NewBox
             this.PerformLayout();
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Changes the size of all its child components according to the
         /// size of the parent
@@ -81,5 +90,7 @@ namespace Ferda.FrontEnd.NewBox
             textBox.Location = new Point(2, this.Height - HeightConstant + 4);
             textBox.Size = new Size(this.Width, HeightConstant);
         }
+
+        #endregion
     }
 }

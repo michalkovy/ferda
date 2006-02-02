@@ -12,15 +12,19 @@ namespace Ferda.FrontEnd.Menu
 	/// Class represents all the settings available in the project.
 	/// </summary>
     /// <remarks>
-    /// Forma neni modularni do te miry, ze by si cetla nekde z konfiguraku
-    /// vsechny mozne lokalizace. Kdyz se vyskytne nova lokalizace,
-    /// musi se rucne pridat do Listboxu
+    /// There is not complete documentation of this class (should be public but
+    /// is internal), because it will be remaked in the short future.
     /// </remarks>
 	/// <stereotype>control</stereotype>
-    class FerdaPreferencesDialog : Form
+    internal class FerdaPreferencesDialog : Form
 	{
-        //Controls for the Preferences dialog
+        /// <summary>
+        /// A tab control
+        /// </summary>
         private TabControl tabControl1;
+        /// <summary>
+        /// Page that concerns localization
+        /// </summary>
         private TabPage TPLocalization;
         private Button BOK;
         private Button BCancel;
@@ -97,6 +101,8 @@ namespace Ferda.FrontEnd.Menu
             }
         }
 
+        #region Constructor
+
         ///<summary>
         /// Default constructor for FerdaView class.
         ///</summary>
@@ -115,6 +121,10 @@ namespace Ferda.FrontEnd.Menu
             LLocalization.Text = ResManager.GetString("LocalizationLabel");
             LLocalization2.Text = ResManager.GetString("LocalizationLabel2");
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Fills the listbox with localization values
@@ -244,5 +254,7 @@ namespace Ferda.FrontEnd.Menu
             this.ResumeLayout(false);
 
         }
-	}
+
+        #endregion
+    }
 }

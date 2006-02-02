@@ -15,18 +15,36 @@ namespace Ferda.FrontEnd.Menu
     /// </summary>
     public class AboutDialog : Form
     {
-        private Panel PImage;
-        private Button BOk;
-        private Label LFerda;
-        private RichTextBox RTBDescription;
-        private LinkLabel LLAddress;
-        private Label LVersion;
         #region Fields
 
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        /// <summary>
+        /// Panel to hold the Ferda image
+        /// </summary>
+        protected Panel PImage;
+        /// <summary>
+        /// OK button
+        /// </summary>
+        protected Button BOk;
+        /// <summary>
+        /// Ferda label
+        /// </summary>
+        protected Label LFerda;
+        /// <summary>
+        /// Description of the project
+        /// </summary>
+        protected RichTextBox RTBDescription;
+        /// <summary>
+        /// Link label with sourceforge address
+        /// </summary>
+        protected LinkLabel LLAddress;
+        /// <summary>
+        /// Version of the application
+        /// </summary>
+        protected Label LVersion;
 
         #endregion
 
@@ -71,7 +89,7 @@ namespace Ferda.FrontEnd.Menu
         /// </summary>
         /// <param name="assembly">Assembly</param>
         /// <returns>string that contains the version of the assebly</returns>
-        private string GetVersionFromAssembly(Assembly assembly)
+        protected string GetVersionFromAssembly(Assembly assembly)
         {
             string tmp = assembly.FullName;
             int startOfVersion = tmp.IndexOf("Version=");

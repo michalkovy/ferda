@@ -6,7 +6,7 @@ using System.Resources;
 namespace Ferda.FrontEnd.Menu
 {
     /// <summary>
-    /// Interface presnets functionality for all the controls to be able
+    /// Interface presents functionality for all the controls to be able
     /// to change their localizations
     /// </summary>
     public interface ILocalizationManager
