@@ -4,6 +4,10 @@ using System.Text;
 
 namespace Ferda.FrontEnd.UserNote
 {
+    /// <summary>
+    /// Class implementing this interface should be able to edit a user note
+    /// of a selected box. 
+    /// </summary>
     public interface IUserNoteDisplayer
     {
         ///<summary>

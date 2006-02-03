@@ -30,8 +30,8 @@ namespace Ferda.FrontEnd.NewBox
     {
         #region Private fields
 
-        protected ENodeType nodeType;
-        protected string identifier;
+        private ENodeType nodeType;
+        private string identifier;
 
         #endregion
 

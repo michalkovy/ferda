@@ -38,7 +38,7 @@ namespace Ferda.FrontEnd.Archive
         protected Menu.IMenuDisplayer toolBar;
 
         private Properties.IPropertiesDisplayer propertiesDisplayer;
-        protected ContextHelp.IContextHelpDisplayer contextHelpDisplayer;
+        private ContextHelp.IContextHelpDisplayer contextHelpDisplayer;
         /// <summary>
         /// Archive part of the control
         /// </summary>

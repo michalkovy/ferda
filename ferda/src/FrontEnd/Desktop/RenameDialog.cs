@@ -7,10 +7,10 @@ using System.Resources;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Ferda.FrontEnd
+namespace Ferda.FrontEnd.Desktop
 {
     /// <summary>
-    /// Dialog to rename a caption
+    /// Dialog to rename a caption of a box
     /// </summary>
     /// <stereotype>control</stereotype>
     public class RenameDialog : Form

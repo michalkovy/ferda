@@ -8,8 +8,8 @@ using Ferda.FrontEnd.Menu;
 namespace Ferda.FrontEnd
 {
     /// <summary>
-	/// Toolbar for Ferda application, will contain Delphi like bar with
-    /// categories and boxes and normal toolbar buttons...
+	/// Toolbar for Ferda application, icons of the most important actions
+    /// in the project. Consists of static part and dynamic part, that changes 
 	/// </summary>
 	///<stereotype>control</stereotype>
     public class FerdaToolBar : ToolStrip, IMenuDisplayer
@@ -154,7 +154,7 @@ namespace Ferda.FrontEnd
         /// Removes the dynamic part of the items (everything to the left from
         /// preferences)
         /// </summary>
-        private void RemoveDynamicPart()
+        protected void RemoveDynamicPart()
         {
             //+ 1 means the separator behind the preferences as last piece
             int i = Items.IndexOf(preferences) + 2;
@@ -172,7 +172,7 @@ namespace Ferda.FrontEnd
         /// <summary>
         /// Sets the toolbar for archive (archive has focus)
         /// </summary>
-        private void SetForArchive()
+        protected void SetForArchive()
         {
             ToolStripButton button;
             //value determining if a menu item contains submenu (thus should not
@@ -224,7 +224,7 @@ namespace Ferda.FrontEnd
         /// <summary>
         /// Sets the toolbar for desktop (the desktop has focus)
         /// </summary>
-        private void SetForDesktop()
+        protected void SetForDesktop()
         {
             ToolStripButton button;
             //value determining if a menu item contains submenu (thus should not
@@ -276,7 +276,7 @@ namespace Ferda.FrontEnd
         /// <summary>
         /// Sets the file part of the toolbar
         /// </summary>
-        private void SetupFile()
+        protected void SetupFile()
         {
             newProject = new ToolStripButton(iconProvider.GetIcon("NewProject").ToBitmap());
             openProject = new ToolStripButton(iconProvider.GetIcon("OpenProject").ToBitmap());
@@ -309,7 +309,7 @@ namespace Ferda.FrontEnd
         /// <summary>
         /// Sets the other icons that are in the menu (preferences and new desktop)
         /// </summary>
-        private void SetupOther()
+        protected void SetupOther()
         {
             preferences = new ToolStripButton(iconProvider.GetIcon("Properties").ToBitmap());
             newDesktop = new ToolStripButton(iconProvider.GetIcon("NewDesktop").ToBitmap());

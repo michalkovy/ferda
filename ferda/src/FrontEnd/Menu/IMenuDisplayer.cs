@@ -4,7 +4,8 @@ using System.Windows.Forms;
 namespace Ferda.FrontEnd.Menu
 {
     /// <summary>
-    /// Interface to communicate with the Ferda menu
+    /// Interface to communicate with the Ferda menu. A class wanting to
+    /// display the menu should implement this interface. 
     /// </summary>
     public interface IMenuDisplayer
     {

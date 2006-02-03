@@ -11,7 +11,8 @@ namespace Ferda.FrontEnd.Properties
     /// <summary>
     /// This class is used to set and get other properties.
     /// It contains the property name and the box which is changing the property
-    /// and a result for type converting
+    /// and a result for type converting. It is used to display setting modules
+    /// in the property grid.
     /// </summary>
     public class OtherProperty
     {

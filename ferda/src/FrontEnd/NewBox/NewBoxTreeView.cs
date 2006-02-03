@@ -12,7 +12,10 @@ using Ferda.ModulesManager;
 namespace Ferda.FrontEnd.NewBox
 {
     /// <summary>
-    /// A NewBoxTreeView TreeView is the main way to add new nodes to the desktop and archive
+    /// A NewBoxTreeView is tree view part of the <see cref="T:Ferda.FrontEnd.NewBox.NewBoxControl"/>
+    /// class that is used for creating new boxes on the desktop. Class has functionality
+    /// to load complicated ProjectManager and ModulesManager structures and to display
+    /// the box creators in a tree structure.
     /// </summary>
     public class NewBoxTreeView : TreeView
     {

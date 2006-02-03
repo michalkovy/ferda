@@ -8,7 +8,7 @@ namespace Ferda.FrontEnd.Archive
 {
     ///<summary>
 	///Each control that displays a Ferda archive should implement this
-	///interface
+	///interface in order to cooperate with other controls.
 	///</summary>
     public interface IArchiveDisplayer
 	{

@@ -422,9 +422,6 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         /// <param name="box">Box from where the properties should be
         /// loaded</param>
-        /// <param name="moreBoxes">
-        /// If the property is created for one or more boxes
-        /// </param>
         /// <returns>A bag full of properties from the box</returns>
         protected PropertyTable CreatePropertiesFromBox(IBoxModule box)
         {
@@ -1146,7 +1143,6 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         /// <param name="e">Parameters of the property to set</param>
         /// <param name="realPropertyName">Name of the property(identifier)</param>
-        /// <param name="propertyLabel">Localized label of the property</param>
         /// <param name="typeName">Type of the property</param>
         protected void GetNormalProperty(PropertySpecEventArgs e, string
             realPropertyName, string typeName)
@@ -1404,6 +1400,7 @@ namespace Ferda.FrontEnd.Properties
             }
         }
 
+        /*
         /// <summary>
         /// The method gets the correct date (or datetime) property according
         /// to the property name. The DateT and DateTimeT structures of the 
@@ -1411,7 +1408,6 @@ namespace Ferda.FrontEnd.Properties
         /// we must know which function to call (GetPropertyDate or GetPropertyDateTime)
         /// </summary>
         /// <param name="e">Arguments of the propertyBag_GetValue event</param>
-        /*
         protected void GetCorrectDateType(PropertySpecEventArgs e)
         {
             string propertyName = GetPropertyName(e.Property.Name, SelectedBox);
@@ -1519,6 +1515,7 @@ namespace Ferda.FrontEnd.Properties
             e.Value = tempValue;
         }
 
+        /*
         /// <summary>
         /// Function returns a <see cref="T:Ferda.FrontEnd.Properties.StringSequence"/>
         /// object generated from the all the selected boxes and the property name
@@ -1527,6 +1524,7 @@ namespace Ferda.FrontEnd.Properties
         /// <returns>A <see cref="T:Ferda.FrontEnd.Properties.StringSequence"/> 
         /// object that contains the
         /// properties options</returns>
+        */
         //protected StringSequence GetStringSequenceMoreBoxes(string realPropertyName)
         //{
         //    StringSequence firstSeq = GetStringSequence(SelectedBoxes[0], realPropertyName);

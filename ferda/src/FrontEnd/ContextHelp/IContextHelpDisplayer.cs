@@ -12,10 +12,9 @@ namespace Ferda
         {
 
             ///<summary>
-			///Each control that displays a Ferda dynamic help should implement this
+			///Each control that displays a Ferda context help should implement this
 			///interface
 			///</summary>
-
             public interface IContextHelpDisplayer
 			{
                 ///<summary>

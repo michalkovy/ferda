@@ -50,6 +50,7 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         /// <param name="man">Manager of this property</param>
         /// <param name="propName">Name of the property</param>
+        /// <param name="propertyType">Type of the property</param>
         public AsyncPropertyCatcher(IAsyncPropertyManager man, string propName,
             string propertyType)
         {
