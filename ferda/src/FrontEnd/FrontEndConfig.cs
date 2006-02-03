@@ -8,7 +8,7 @@ namespace Ferda.FrontEnd
 {
     /// <summary>
     /// Structure, that holds information about the ice configuration of the
-    /// application
+    /// Ferda application
     /// </summary>
 	public struct FrontEndConfig
 	{

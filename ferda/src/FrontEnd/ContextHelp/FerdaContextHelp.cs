@@ -9,7 +9,9 @@ using Ferda.Modules;
 namespace Ferda.FrontEnd.ContextHelp
 {
     /// <summary>
-	/// Dynamic help control - some kind of a browser
+	/// The context help control is displays information about each box
+    /// and displays them as hyperlinks to a pdf-file. The contextual information
+    /// can be edited in the boxes configuration.
 	/// </summary>
 	///<stereotype>control</stereotype>
     public class FerdaContextHelp : System.Windows.Forms.UserControl, 

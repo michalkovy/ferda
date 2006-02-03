@@ -5,7 +5,8 @@ using System.Text;
 namespace Ferda.FrontEnd
 {
     /// <summary>
-    /// My implementation of clipboart, it remembers list of nodes
+    /// My implementation of clipboart, it remembers list of nodes. It does not
+    /// cooperate with the normal system clipboard.
     /// </summary>
     public interface IFerdaClipboard
     {

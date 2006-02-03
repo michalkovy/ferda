@@ -15,7 +15,9 @@ using Ferda.ProjectManager;
 namespace Ferda.FrontEnd.Desktop
 {
 	/// <summary>
-	/// Class that represents all Ferda nodes on the desktop
+	/// Class that represents all Ferda nodes on the desktop. In addition to the 
+    /// Netron graphical nodes, it contains information about the box behind the
+    /// node.
 	/// </summary>
     /// <remarks>
     /// <para>

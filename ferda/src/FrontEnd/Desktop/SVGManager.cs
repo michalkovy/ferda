@@ -20,6 +20,12 @@ namespace Ferda.FrontEnd.Desktop
     /// Class will provide additional functionality for extracting GDI+
     /// code from svg
 	/// </summary>
+    /// <remarks>
+    /// The recent implementation is without svg support, although the 
+    /// code that turns svg into gdi+ is already written. It is because
+    /// the external SVG library that we use does not support all the
+    /// SVG versions and moreover, it slows the program a lot.
+    /// </remarks>
 	///<stereotype>container</stereotype>
     public class SVGManager
 	{

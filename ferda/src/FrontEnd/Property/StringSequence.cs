@@ -84,15 +84,13 @@ namespace Ferda.FrontEnd.Properties
         /// <summary>
         /// Default constructor for the class
         /// </summary>
-        /// <param name="options">Options of the property</param>
         /// <param name="arch">archive of the application</param>
         /// <param name="b">The property belongs to this boxes</param>
         /// <param name="name">Name of the property</param>
         /// <param name="res">Default resource manager</param>
-        /// <param name="selected">Selected string as a result of user selection
-        /// in the property grid</param>
         /// <param name="views">Views to be refreshed</param>
         /// <param name="prop">To reset the propertygrid afterwards</param>
+        /// <param name="label">Label, that is selected in the sequence</param>
         public StringSequence(string name, IBoxModule [] b, ResourceManager res, 
             Archive.IArchiveDisplayer arch, List<Desktop.IViewDisplayer> views,
             IPropertiesDisplayer prop, string label)
@@ -144,12 +142,14 @@ namespace Ferda.FrontEnd.Properties
             }
         }
 
+        /*
         /// <summary>
         /// Function returns, if 2 sequences have identical option arrays
         /// </summary>
         /// <param name="sequence1">First sequence to compare</param>
         /// <param name="sequence2">Second sequence to compare</param>
         /// <returns>True if identical, false otherwise</returns>
+        */
         //public static bool EqualArrays(StringSequence sequence1, 
         //    StringSequence sequence2)
         //{

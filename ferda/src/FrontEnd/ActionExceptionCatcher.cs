@@ -38,6 +38,9 @@ namespace Ferda.FrontEnd
         /// displaying which box has thrown an exception
         /// </param>
         /// <param name="resManager">Manager of the resources</param>
+        /// <param name="selector">If a control has the ability to select
+        /// a box that has thrown the exception, it can be also passed
+        /// as a parameter</param>
         public ActionExceptionCatcher(ProjectManager.ProjectManager projManager,
             ResourceManager resManager, IBoxSelector selector)
         {

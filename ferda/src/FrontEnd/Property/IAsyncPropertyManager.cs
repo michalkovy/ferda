@@ -5,7 +5,7 @@ using System.Text;
 namespace Ferda.FrontEnd.Properties
 {
     /// <summary>
-    /// The interface is implemented when a control wants asynchrone
+    /// The interface is implemented when a control wants asynchronous
     /// changing of properties
     /// </summary>
     public interface IAsyncPropertyManager

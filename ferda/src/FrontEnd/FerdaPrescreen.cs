@@ -9,9 +9,9 @@ using System.Windows.Forms;
 namespace Ferda.FrontEnd
 {
     /// <summary>
-    /// This form is viewed when the Ferda program starts. There is a delay
-    /// for the IceGrid and ModulesManager to start
-    /// </summary>
+    /// This form is viewed when the Ferda program starts. It has the ability to 
+    /// show the user what is beeing initialized at the moment.
+    /// /// </summary>
     public class FerdaPrescreen : Form
     {
         #region Class fields

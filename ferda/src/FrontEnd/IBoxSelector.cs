@@ -6,8 +6,12 @@ using Ferda.ModulesManager;
 namespace Ferda.FrontEnd
 {
     /// <summary>
-    /// Control implementing this interface should be able to select
+    /// Control implementing this interface should be able to select a box
     /// </summary>
+    /// <example>
+    /// FerdaDesktop implements this interface and is able to select a box 
+    /// on the desktop with a red rectangle around.
+    /// </example>
     public interface IBoxSelector
     {
         /// <summary>
