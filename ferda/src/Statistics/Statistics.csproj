@@ -28,6 +28,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Server\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaDataMiningCommonBoxes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Server\FerdaDataMiningCommonBoxes.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaLMTasksBoxes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Server\FerdaLMTasksBoxes.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaSampleBoxes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Server\FerdaSampleBoxes.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Server\FerdaServerBase.dll</HintPath>
+    </Reference>
     <Reference Include="iceboxcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\iceboxcs.dll</HintPath>
@@ -41,8 +65,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CFTask\Asym.cs" />
+    <Compile Include="CFTask\AvgA.cs" />
+    <Compile Include="CFTask\AvgG.cs" />
+    <Compile Include="CFTask\DorVar.cs" />
+    <Compile Include="CFTask\Max.cs" />
+    <Compile Include="CFTask\Min.cs" />
+    <Compile Include="CFTask\NomVar.cs" />
+    <Compile Include="CFTask\Skew.cs" />
+    <Compile Include="CFTask\StDev.cs" />
+    <Compile Include="CFTask\Sum.cs" />
+    <Compile Include="CFTask\V.cs" />
+    <Compile Include="CFTask\Var.cs" />
     <Compile Include="FFT\Support.cs" />
     <Compile Include="generated\Statistics.cs" />
+    <Compile Include="KLTask\AIC.cs" />
+    <Compile Include="KLTask\ChiSq.cs" />
+    <Compile Include="KLTask\FncR.cs" />
+    <Compile Include="KLTask\FncS.cs" />
+    <Compile Include="KLTask\HC.cs" />
+    <Compile Include="KLTask\HCR.cs" />
+    <Compile Include="KLTask\HR.cs" />
+    <Compile Include="KLTask\ID.cs" />
+    <Compile Include="KLTask\Max.cs" />
+    <Compile Include="KLTask\MI.cs" />
+    <Compile Include="KLTask\Min.cs" />
+    <Compile Include="KLTask\Sum.cs" />
+    <Compile Include="KLTask\TauB.cs" />
+    <Compile Include="SDFFT\A.cs" />
+    <Compile Include="SDFFT\AvgDf.cs" />
+    <Compile Include="SDFFT\B.cs" />
+    <Compile Include="SDFFT\C.cs" />
+    <Compile Include="SDFFT\ChiSq.cs" />
+    <Compile Include="SDFFT\Cmplt.cs" />
+    <Compile Include="SDFFT\Conf.cs" />
+    <Compile Include="SDFFT\D.cs" />
+    <Compile Include="SDFFT\DConf.cs" />
+    <Compile Include="SDFFT\DfAvg.cs" />
+    <Compile Include="SDFFT\DfConf.cs" />
+    <Compile Include="SDFFT\DfDFUI.cs" />
+    <Compile Include="SDFFT\DfFUE.cs" />
+    <Compile Include="SDFFT\DLBound.cs" />
+    <Compile Include="SDFFT\DSum.cs" />
+    <Compile Include="SDFFT\DUBound.cs" />
+    <Compile Include="SDFFT\EConf.cs" />
+    <Compile Include="SDFFT\ELBound.cs" />
+    <Compile Include="SDFFT\EUBound.cs" />
+    <Compile Include="SDFFT\Fisher.cs" />
+    <Compile Include="SDFFT\LBound.cs" />
+    <Compile Include="SDFFT\N.cs" />
+    <Compile Include="SDFFT\R.cs" />
+    <Compile Include="SDFFT\Supp.cs" />
+    <Compile Include="SDFFT\UBound.cs" />
     <Compile Include="ServiceI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
