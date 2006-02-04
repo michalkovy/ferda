@@ -2,23 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Statistics.SDFFT
+namespace Ferda.Statistics.FFTTask
 {
-    class DfConf : Ferda.Statistics.StatisticsProviderDisp_
+    class Support : Ferda.Statistics.StatisticsProviderDisp_
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return 123.456F;
         }
 
         public override string getTaskType(Ice.Current current__)
         {
-            return "LISpMinerTasks.SDFFTask";
+            return "LISpMinerTasks.FFTTask";
         }
 
         public override string getStatisticsName(Ice.Current current__)
         {
-            return "DfConf";
+            return "Support";
         }
     }
 }

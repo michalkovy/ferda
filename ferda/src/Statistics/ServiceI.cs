@@ -12,7 +12,7 @@ namespace Ferda.Statistics
         public void start(string name, Ice.Communicator communicator, string[] args)
         {
             _adapter = communicator.createObjectAdapter(name);
-            _adapter.add(new FFT.Support(), Ice.Util.stringToIdentity("FFTSupport"));
+            _adapter.add(new FFTTask.Support(), Ice.Util.stringToIdentity("FFTSupport"));
             _adapter.activate();
 
         }

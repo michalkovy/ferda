@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Statistics.SDFFT
+namespace Ferda.Statistics.SDFFTTask
 {
-    class DLBound : Ferda.Statistics.StatisticsProviderDisp_
+    class R : Ferda.Statistics.StatisticsProviderDisp_
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
@@ -13,12 +13,12 @@ namespace Ferda.Statistics.SDFFT
 
         public override string getTaskType(Ice.Current current__)
         {
-            return "LISpMinerTasks.SDFFTask";
+            return "LISpMinerTasks.SDFFTTask";
         }
 
         public override string getStatisticsName(Ice.Current current__)
         {
-            return "DLBound";
+            return "R";
         }
     }
 }
