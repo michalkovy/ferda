@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Statistics.FFT
+namespace Ferda.Statistics.KLTask
 {
-    class Support : Ferda.Statistics.StatisticsProviderDisp_
+    class HCR : Ferda.Statistics.StatisticsProviderDisp_
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
@@ -13,7 +13,12 @@ namespace Ferda.Statistics.FFT
 
         public override string getTaskType(Ice.Current current__)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return "KLTask";
+        }
+
+        public override string getStatisticsName(Ice.Current current__)
+        {
+            return "H(C|R)";
         }
     }
 }
