@@ -8,12 +8,12 @@ namespace Ferda.Statistics.FFT
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return 123.456F;
         }
 
         public override string getTaskType(Ice.Current current__)
         {
-            return "FFTask";
+            return "LISpMinerTasks.FFTask";
         }
 
         public override string getStatisticsName(Ice.Current current__)

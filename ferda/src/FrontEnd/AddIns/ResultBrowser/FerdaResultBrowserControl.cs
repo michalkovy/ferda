@@ -49,12 +49,17 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private int previousIndex = -1;
 
+        /// <summary>
+        /// List of statistics function proxies
+        /// </summary>
+        List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies;
+
         #endregion
 
 
         #region Constructor
 
-        public FerdaResultBrowserControl(string[] localePrefs, HypothesisStruct[] hypotheses, QuantifierProvider[] used_quantifiers, IOtherObjectDisplayer Displayer)
+        public FerdaResultBrowserControl(string[] localePrefs, HypothesisStruct[] hypotheses, QuantifierProvider[] used_quantifiers, IOtherObjectDisplayer Displayer, List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -79,9 +84,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             resultBrowser.IceRun(hypotheses, used_quantifiers);
             this.displayer = Displayer;
             this.displayer.Reset();
-            
-            //test
-          //  this.FillPropertyGrid(2);
+            this.statisticsProxies = statisticsProxies;
             
             this.Initialize();
         }
@@ -428,6 +431,37 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     j1++;
                 }
                 i1++;
+            }
+
+            #endregion
+
+
+            #region Statistics functions
+
+            foreach (Ferda.Statistics.StatisticsProviderPrx proxy in this.statisticsProxies)
+            {
+                string temp = "";
+                string temp1 = proxy.getStatisticsName();
+
+                try
+                {
+                    temp = proxy.getStatistics(hypothesis.quantifierSetting).ToString();
+                }
+                catch
+                {
+                    temp = this.resManager.GetString("StatisticsUnimplemented");
+                }
+
+                PropertySpec statistics = new PropertySpec(
+                    temp1,
+                    typeof(string),
+                    this.resManager.GetString("Statistics"),
+                    this.resManager.GetString("Statistics"),
+                    temp
+                    );
+                statistics.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(statistics);
+                table[temp1] = temp;
             }
 
             #endregion

@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
     </Reference>
+    <Reference Include="FerdaStatistics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaStatistics.dll</HintPath>
+    </Reference>
     <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FrontEndAddInHelper.dll</HintPath>

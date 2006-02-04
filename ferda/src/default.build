@@ -56,8 +56,6 @@
 			</properties>
 		</nant>
 	</target>
-
-
          <target name="StatisticsBuild" depends="FerdaBaseBuild">
 		<nant buildfile="Statistics/default.build" target="build">
 			<properties>
