@@ -134,12 +134,24 @@ namespace Ferda
                 catch
                 {
                 }
+
+                
+
+                //getting proxy for task identifier
+                Ice.ObjectPrx prx2 = boxModuleParam.getMyFactory();
+                
+                Modules.BoxModuleFactoryPrx tprx2 = 
+                Modules.BoxModuleFactoryPrxHelper.checkedCast(prx2);
+
+                string taskType = tprx2.getMyFactoryCreator().getIdentifier();
+
+                //getting proxy for hypotheses and quantifiers
                 Ice.ObjectPrx prx = boxModuleParam.getFunctions();
-                Ice.ObjectPrx prx1 = prx;
+
                 Modules.Boxes.LISpMinerTasks.AbstractLMTask.AbstractLMTaskFunctionsPrx tprx =
                     Modules.Boxes.LISpMinerTasks.AbstractLMTask.AbstractLMTaskFunctionsPrxHelper.checkedCast(prx);
                 Modules.HypothesisStruct [] hypotheses = tprx.getResult();
-
+                
                 Modules.Boxes.LISpMinerTasks.AbstractLMTask.QuantifierProvider[] used_quantifiers =
                     tprx.getQuantifierProviders();
 
@@ -148,7 +160,7 @@ namespace Ferda
                     manager.getManagersLocator().findAllObjectsWithType("::Ferda::Statistics::StatisticsProvider");
 
                 //get from task box
-                string taskType = "LISpMinerTasks.FFTask";
+               // string taskType = "LISpMinerTasks.FFTask";
                 string temp = "";
 
                 List<Ferda.Statistics.StatisticsProviderPrx> proxies = new List<Ferda.Statistics.StatisticsProviderPrx>();
