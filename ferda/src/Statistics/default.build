@@ -19,8 +19,12 @@
 				<include name="System.Xml.dll"/>
 			</references>
 		</csc>
+    <copy todir="${frontendbin.dir}">
+      <fileset basedir="${build.dir}">
+        <include name="FerdaStatistics.*"/>
+      </fileset>
+    </copy>
 	</target>
-		
 		
 	<target name="clean">
 		<delete failonerror="false">

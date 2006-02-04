@@ -189,6 +189,12 @@
   <data name="ResultBrowserModule" xml:space="preserve">
     <value>Result browser module</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="StatisticsUnimplemented" xml:space="preserve">
+    <value>Function not implemented</value>
+  </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
   </data>

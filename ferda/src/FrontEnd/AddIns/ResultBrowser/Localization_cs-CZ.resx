@@ -189,6 +189,12 @@
   <data name="ResultBrowserModule" xml:space="preserve">
     <value>Modul pro prohlížení výsledků</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistika</value>
+  </data>
+  <data name="StatisticsUnimplemented" xml:space="preserve">
+    <value>Funkce není implementována</value>
+  </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
   </data>

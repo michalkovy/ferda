@@ -7,6 +7,8 @@ module Ferda {
 			nonmutating float getStatistics(Ferda::Modules::AbstractQuantifierSetting quantifierSetting);
 			
 			nonmutating string getTaskType();
+
+			nonmutating string getStatisticsName();
 			
 		};		
 	};		
