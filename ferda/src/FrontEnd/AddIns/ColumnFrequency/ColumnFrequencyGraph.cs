@@ -224,8 +224,49 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             }
         }
 
-        #endregion
 
+        /// <summary>
+        /// Handles copying the chart to clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ToolStripMenuItemCopyChart_Click(object sender, EventArgs e)
+        {
+            switch (TabControlColumnFrequency.SelectedIndex)
+            {
+                case 1:
+                    Bitmap bitMap = new Bitmap(
+                        this.ColumnFrequencyAreaChart.Bitmap,
+                        this.ColumnFrequencyAreaChart.Size.Width, 
+                        this.ColumnFrequencyAreaChart.Size.Height
+                        );
+                    Clipboard.SetImage(bitMap);
+                    break;
+
+                case 2:
+                    Bitmap bitMap1 = new Bitmap(
+                        this.ColumnFrequencyBarChart.Bitmap,
+                        this.ColumnFrequencyBarChart.Size.Width,
+                        this.ColumnFrequencyBarChart.Size.Height
+                        );
+                    Clipboard.SetImage(bitMap1);
+                    break;
+
+                case 3:
+                    Bitmap bitMap2 = new Bitmap(
+                         this.ColumnFrequencyPieChart.Bitmap,
+                         this.ColumnFrequencyPieChart.Size.Width,
+                         this.ColumnFrequencyPieChart.Size.Height
+                         );
+                    Clipboard.SetImage(bitMap2);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        #endregion
 
 
         #region Debugging
@@ -245,11 +286,6 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         */
 
         #endregion
-
-
-
-
-
     }
 
 }

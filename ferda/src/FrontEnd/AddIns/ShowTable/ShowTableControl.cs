@@ -14,7 +14,6 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
 {
     public partial class ShowTableControl : UserControl
     {
-
         #region Private variables
 
         /// <summary>
@@ -39,42 +38,93 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
 
         #endregion
 
+
         #region Constructor
         public ShowTableControl(string[] localePrefs, string[] columns, DataMatrixStruct dataMatrixName)
         {
             //setting the ResManager resource manager and localization string
-
             string locale;
             try
             {
                 locale = localePrefs[0];
-
                 localizationString = locale;
-
                 locale = "Ferda.FrontEnd.AddIns.ShowTable.Localization_" + locale;
-
-                resManager = new ResourceManager(locale,
-            Assembly.GetExecutingAssembly());
-
+                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
-
             catch
             {
                 resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ShowTable.Localization_en-US",
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
-
             this.columns = columns;
             this.dataMatrix = dataMatrixName;
             InitializeComponent();
+            this.ChangeLocale(this.resManager);
             this.ListViewInit();
-
             DBInteraction explainTable = new DBInteraction(this.dataMatrix.dataMatrixName, this.dataMatrix);
             this.MakeListView(explainTable.ShowTable());
+            this.ToolStripMenuItemCopyAll.Click += new EventHandler(ToolStripMenuItemCopyAll_Click);
+            this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
         }
 
         #endregion
+
+
+        #region Context menu handlers
+
+        void ToolStripMenuItemCopySelected_Click(object sender, EventArgs e)
+        {
+            StringBuilder copyString = new StringBuilder();
+
+            foreach (ColumnHeader header in this.ListViewShowTable.Columns)
+            {
+                copyString.Append(header.Text + "\t");
+            }
+            //deleting last tab
+            copyString.Remove(copyString.Length - 1, 1);
+            copyString.AppendLine();
+            foreach (ListViewItem item in this.ListViewShowTable.SelectedItems)
+            {
+                foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                {
+                    copyString.Append(subItem.Text + "\t");
+                }
+
+                //deleting last tab
+                copyString.Remove(copyString.Length - 1, 1);
+                copyString.AppendLine();
+            }
+            Clipboard.SetDataObject(copyString.ToString(), true);
+        }
+
+        void ToolStripMenuItemCopyAll_Click(object sender, EventArgs e)
+        {
+            StringBuilder copyString = new StringBuilder();
+
+            foreach (ColumnHeader header in this.ListViewShowTable.Columns)
+            {
+                copyString.Append(header.Text + "\t");
+            }
+            //deleting last tab
+            copyString.Remove(copyString.Length - 1, 1);
+            copyString.AppendLine();
+            foreach (ListViewItem item in this.ListViewShowTable.Items)
+            {
+                foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                {
+                    copyString.Append(subItem.Text + "\t");
+                }
+
+                //deleting last tab
+                copyString.Remove(copyString.Length - 1, 1);
+                copyString.AppendLine();
+            }
+            Clipboard.SetDataObject(copyString.ToString(), true);
+        }
+
+        #endregion
+
 
         #region Initialization
 
@@ -113,5 +163,41 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
 
         #endregion
 
+
+        #region Localization
+        /// <summary>
+        /// Resource manager of the application, it is filled according to the
+        /// current localization
+        /// </summary>
+        public ResourceManager ResManager
+        {
+            get
+            {
+                return resManager;
+            }
+        }
+
+        /// <summary>
+        /// Localization string of the application, possible values are "en-US" and "cs-CZ"
+        /// </summary>
+        public string LocalizationString
+        {
+            get
+            {
+                return localizationString;
+            }
+        }
+
+        /// <summary>
+        /// Method to change l10n.
+        /// </summary>
+        /// <param name="rm">Resource manager to handle new l10n resource</param>
+        private void ChangeLocale(ResourceManager rm)
+        {
+            this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
+            this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
+        }
+
+        #endregion
     }
 }

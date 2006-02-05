@@ -109,10 +109,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         /// <param name="hypothese">Hypothese to take contingency table from</param>
         /// <param name="chart">Chart to draw bars into</param>
-        private void DrawBarsFromFirstTable(HypothesisStruct hypothese,Steema.TeeChart.TChart chart )
+        private void DrawBarsFromFirstTable(HypothesisStruct hypothese, Steema.TeeChart.TChart chart)
         {
             chart.Series.Clear();
-           Random random = new Random();
+            Random random = new Random();
             foreach (int[] arr in hypothese.quantifierSetting.firstContingencyTableRows)
             {
                 Steema.TeeChart.Styles.Bar barSeries = new Steema.TeeChart.Styles.Bar();
@@ -126,6 +126,22 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 chart.Series.Add(barSeries);
             }
         }
+
+        /// <summary>
+        /// Handles copying the chart to clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ToolStripCopyChart_Click(object sender, EventArgs e)
+        {
+            Bitmap bitMap = new Bitmap(
+                        this.ContingencyTableChart.Bitmap,
+                        this.ContingencyTableChart.Size.Width,
+                        this.ContingencyTableChart.Size.Height
+                        );
+            Clipboard.SetImage(bitMap);
+        }
+
         #endregion
     }
 }

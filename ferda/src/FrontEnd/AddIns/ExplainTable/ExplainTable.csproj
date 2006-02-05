@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50215</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{29CAFB25-390F-4764-9BE5-58BA893561B6}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -30,39 +30,31 @@
   <ItemGroup>
     <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FerdaBase.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
     </Reference>
     <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FerdaBoxInterfaces.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="FerdaDataMiningCommonBoxes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FerdaDataMiningCommonBoxes.exe</HintPath>
-    </Reference>
-    <Reference Include="FerdaFrontEnd, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FerdaFrontEnd.exe</HintPath>
-    </Reference>
-    <Reference Include="FerdaLMTasksBoxes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FerdaLMTasksBoxes.exe</HintPath>
+      <HintPath>..\..\..\..\bin\Server\FerdaDataMiningCommonBoxes.dll</HintPath>
     </Reference>
     <Reference Include="FerdaModulesManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FerdaModulesManager.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
     </Reference>
     <Reference Include="FerdaProjectManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FerdaProjectManager.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaProjectManager.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaServerBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FerdaServerBase.dll</HintPath>
+      <HintPath>..\..\..\..\bin\Server\FerdaServerBase.dll</HintPath>
     </Reference>
     <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEndAddInHelper.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\FrontEndAddInHelper.dll</HintPath>
     </Reference>
     <Reference Include="icecs, Version=2.1.2.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
@@ -84,7 +76,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="MyIce\ExplainTableIce.cs" />
     <Compile Include="NonGUIClasses\listviewitemcomparer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Localization_cs-CZ.resx" />
     <EmbeddedResource Include="Localization_en-US.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

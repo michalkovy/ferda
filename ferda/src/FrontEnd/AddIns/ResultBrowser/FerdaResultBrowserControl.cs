@@ -73,7 +73,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             catch
             {
                 resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ResultBrowser.Localization_en-US",
-
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
@@ -198,6 +197,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             this.RefreshBrowser();
             this.ToolStripShowGraphEdit.Click += new EventHandler(ToolStripShowGraphEdit_Click);
+            this.ToolStripCopyChart.Click += new EventHandler(ToolStripCopyChart_Click);
         }
 
         #endregion
@@ -517,6 +517,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelVOffset.Text = rm.GetString("LabelVOffset");
             this.LabelZoom.Text = rm.GetString("LabelZoom");
             this.LabelRotation.Text = rm.GetString("LabelRotation");
+            this.ToolStripCopyChart.Text = rm.GetString("CopyChart");
         }
 
         #endregion

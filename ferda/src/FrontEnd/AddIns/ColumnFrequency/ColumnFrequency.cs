@@ -17,12 +17,12 @@ namespace Ferda
         public partial class ColumnFrequency : UserControl
         {
             #region Private variables
-      
+
             /// <summary>
             /// Resource manager
             /// </summary>
             private ResourceManager resManager;
-         
+
             /// <summary>
             /// Localization string, en-US or cs-CZ for now.
             /// </summary>
@@ -39,12 +39,12 @@ namespace Ferda
             /// </summary>
             private DataTable tempTable;
 
-         
+
             #endregion
 
 
             #region Constructor
-            public ColumnFrequency(string [] localePrefs,ColumnStruct columnStruct)
+            public ColumnFrequency(string[] localePrefs, ColumnStruct columnStruct)
             {
                 //setting the ResManager resource manager and localization string
                 string locale;
@@ -53,7 +53,7 @@ namespace Ferda
                     locale = localePrefs[0];
                     localizationString = locale;
                     locale = "Ferda.FrontEnd.AddIns.ColumnFr.Localization_" + locale;
-                    resManager = new ResourceManager(locale,Assembly.GetExecutingAssembly());
+                    resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
                 }
                 catch
                 {
@@ -62,7 +62,7 @@ namespace Ferda
                 }
                 this.rowCount = columnStruct.dataMatrix.recordsCount;
                 InitializeComponent();
-                DBInteraction myDb = new DBInteraction(columnStruct,resManager);
+                DBInteraction myDb = new DBInteraction(columnStruct, resManager);
                 this.ListViewInit();
                 this.InitializeGraph();
                 this.tempTable = myDb.GetAllValuesCount();
@@ -71,6 +71,9 @@ namespace Ferda
                 this.DrawBarsFromDataTable(this.tempTable, this.ColumnFrequencyBarChart);
                 this.DrawPieFromDataTable(this.tempTable, this.ColumnFrequencyPieChart);
                 this.ToolStripMenuItemAbsolute.CheckedChanged += new EventHandler(ToolStripMenuItem_AbCheckedChanged);
+                this.ToolStripMenuItemCopyAll.Click += new EventHandler(ToolStripMenuItemCopyAll_Click);
+                this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
+                this.ToolStripMenuItemCopyChart.Click += new EventHandler(ToolStripMenuItemCopyChart_Click);
             }
 
             #endregion
@@ -85,11 +88,14 @@ namespace Ferda
             /// <returns></returns>
             private void FrDataTableToFrListView(DataTable dataTable)
             {
+                StringBuilder toolTip = new StringBuilder();
                 foreach (DataRow dataRow in dataTable.Rows)
                 {
                     ListViewItem newItem = new ListViewItem();
                     newItem.Text = dataRow[0].ToString();
+                    toolTip.Append(dataRow[0].ToString());
                     newItem.SubItems.Add(dataRow[1].ToString());
+                    toolTip.Append("\t" + dataRow[1].ToString());
                     double temp;
                     try
                     {
@@ -105,12 +111,18 @@ namespace Ferda
                     {
                         temp = Math.Round(((temp / (double)this.rowCount) * 100), 2);
                         newItem.SubItems.Add(temp.ToString());
+                        toolTip.Append("\t" + temp.ToString());
                     }
                     else
                     {
                         newItem.SubItems.Add("0");
+                        toolTip.Append("\t" + "0");
                     }
+                    toolTip.AppendLine();
+                    toolTip.Append(" (" + this.resManager.GetString("RightClickToCopySelected") + ")");
+                    newItem.ToolTipText = toolTip.ToString();
                     this.ColumnFrListView.Items.Add(newItem);
+                    toolTip.Remove(0, toolTip.Length);
                 }
             }
 
@@ -154,6 +166,50 @@ namespace Ferda
                 this.DrawPieFromDataTable(this.tempTable, this.ColumnFrequencyPieChart);
             }
 
+            void ToolStripMenuItemCopyAll_Click(object sender, EventArgs e)
+            {
+                StringBuilder copyString = new StringBuilder();
+                copyString.Append(this.resManager.GetString("ValueColumn") + "\t" +
+                    this.resManager.GetString("FrequencyColumn") + "\t" +
+                    this.resManager.GetString("PercentageColumn"));
+                copyString.AppendLine();
+
+                foreach (ListViewItem item in this.ColumnFrListView.Items)
+                {
+                    foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                    {
+                        copyString.Append(subItem.Text + "\t");
+                    }
+
+                    //deleting last tab
+                    copyString.Remove(copyString.Length - 1, 1);
+                    copyString.AppendLine();
+                }
+                Clipboard.SetDataObject(copyString.ToString(), true);
+            }
+
+            void ToolStripMenuItemCopySelected_Click(object sender, EventArgs e)
+            {
+                StringBuilder copyString = new StringBuilder();
+                copyString.Append(this.resManager.GetString("ValueColumn") + "\t" +
+                    this.resManager.GetString("FrequencyColumn") + "\t" +
+                    this.resManager.GetString("PercentageColumn"));
+                copyString.AppendLine();
+
+                foreach (ListViewItem item in this.ColumnFrListView.SelectedItems)
+                {
+                    foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                    {
+                        copyString.Append(subItem.Text + "\t");
+                    }
+
+                    //deleting last tab
+                    copyString.Remove(copyString.Length - 1, 1);
+                    copyString.AppendLine();
+                }
+                Clipboard.SetDataObject(copyString.ToString(), true);
+            }
+
             #endregion
 
 
@@ -195,6 +251,9 @@ namespace Ferda
                 this.TabPagePieChart.Text = rm.GetString("TabPagePieChart");
                 this.TabPageText.Text = rm.GetString("TabPageText");
                 this.ToolStripMenuItemAbsolute.Text = rm.GetString("ToolStripMenuItemAbsolute");
+                this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
+                this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
+                this.ToolStripMenuItemCopyChart.Text = rm.GetString("CopyChart");
             }
             #endregion
         }

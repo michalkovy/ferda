@@ -123,16 +123,25 @@
   <data name="BoxNotConnected" xml:space="preserve">
     <value>Box not connected</value>
   </data>
+  <data name="CopyAllToClipboard" xml:space="preserve">
+    <value>Copy all items to clipboard</value>
+  </data>
+  <data name="CopySelectedToClipboard" xml:space="preserve">
+    <value>Copy selected items to clipboard</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="NoDataMatrix" xml:space="preserve">
     <value>No data matrix</value>
   </data>
+  <data name="RightClickToCopySelected" xml:space="preserve">
+    <value>right-click for copy options</value>
+  </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>
   </data>
   <data name="ShowTableModule" xml:space="preserve">
-    <value>ShowTable module</value>
+    <value>Show table module</value>
   </data>
 </root>

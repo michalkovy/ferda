@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -71,6 +72,7 @@
               <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -88,6 +90,7 @@
               <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -114,46 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BadColumnSelectExpression">
-    <value xml:space="preserve">Bad column select expression</value>
+  <data name="BadColumnSelectExpression" xml:space="preserve">
+    <value>Bad column select expression</value>
   </data>
-  <data name="BadConnectionString">
-    <value xml:space="preserve">Bad connection string</value>
+  <data name="BadConnectionString" xml:space="preserve">
+    <value>Bad connection string</value>
   </data>
-  <data name="BoxNotConnected">
-    <value xml:space="preserve">Box not connected</value>
+  <data name="BoxNotConnected" xml:space="preserve">
+    <value>Box not connected</value>
   </data>
-  <data name="Count">
-    <value xml:space="preserve">Count</value>
+  <data name="CopyAllToClipboard" xml:space="preserve">
+    <value>Copy all items to clipboard</value>
   </data>
-  <data name="DataBaseInfo">
-    <value xml:space="preserve">info</value>
+  <data name="CopySelectedToClipboard" xml:space="preserve">
+    <value>Copy selected items to clipboard</value>
   </data>
-  <data name="DataBaseInfoModule">
-    <value xml:space="preserve">Database info module</value>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
   </data>
-  <data name="Error">
-    <value xml:space="preserve">Error</value>
+  <data name="DataBaseInfo" xml:space="preserve">
+    <value>info</value>
   </data>
-  <data name="ExplainDataGrid">
-    <value xml:space="preserve">Explain table datagrid</value>
+  <data name="DataBaseInfoModule" xml:space="preserve">
+    <value>Database info module</value>
   </data>
-  <data name="Percentage">
-    <value xml:space="preserve">Percentage</value>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
   </data>
-  <data name="Remarks">
-    <value xml:space="preserve">Remarks</value>
+  <data name="ExplainDataGrid" xml:space="preserve">
+    <value>Explain table datagrid</value>
   </data>
-  <data name="RowCount">
-    <value xml:space="preserve">Row count</value>
+  <data name="Percentage" xml:space="preserve">
+    <value>Percentage</value>
   </data>
-  <data name="TableName">
-    <value xml:space="preserve">Table name</value>
+  <data name="Remarks" xml:space="preserve">
+    <value>Remarks</value>
   </data>
-  <data name="Type">
-    <value xml:space="preserve">Type</value>
+  <data name="RightClickToCopySelected" xml:space="preserve">
+    <value>right-click for copy options</value>
   </data>
-  <data name="Value">
-    <value xml:space="preserve">Value</value>
+  <data name="RowCount" xml:space="preserve">
+    <value>Row count</value>
+  </data>
+  <data name="TableName" xml:space="preserve">
+    <value>Table name</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
   </data>
 </root>

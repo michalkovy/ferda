@@ -50,37 +50,97 @@ namespace Ferda
                 try
                 {
                     locale = localePrefs[0];
-
                     localizationString = locale;
-
                     locale = "Ferda.FrontEnd.AddIns.ExplainTable.Localization_" + locale;
-
-                    resManager = new ResourceManager(locale,
-                Assembly.GetExecutingAssembly());
-
+                    resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
                 }
-
                 catch
                 {
                     resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ExplainTable.Localization_en-US",
                 Assembly.GetExecutingAssembly());
                     localizationString = "en-US";
                 }
-
                 this.dataMatrix = dataMatrix;
-
                 this.dataMatrixStruct = dataMatrixStruct;
-
                 InitializeComponent();
-
                 this.ListViewInit();
-
                 this.MakeListView();
-
+                this.ToolStripMenuItemCopyAll.Click += new EventHandler(ToolStripMenuItemCopyAll_Click);
+                this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
             }
 
             #endregion
 
+
+            #region Context menu handlers
+
+            void ToolStripMenuItemCopySelected_Click(object sender, EventArgs e)
+            {
+                StringBuilder copyString = new StringBuilder();
+                copyString.Append(this.resManager.GetString("ColumnName") + "\t" +
+                    this.resManager.GetString("ColumnAllowDBNull") + "\t" +
+                    this.resManager.GetString("ColumnOrdinal") + "\t" +
+                    this.resManager.GetString("ColumnSize") + "\t" +
+                    this.resManager.GetString("ColumnDataType") + "\t" +
+                    this.resManager.GetString("ColumnAutoIncrement") + "\t" +
+                    this.resManager.GetString("ColumnIsKey") + "\t" +
+                    this.resManager.GetString("ColumnIsLong") + "\t" +
+                    this.resManager.GetString("ColumnIsReadOnly") + "\t" +
+                    this.resManager.GetString("ColumnIsRowVersion") + "\t" +
+                    this.resManager.GetString("ColumnIsUnique") + "\t" +
+                    this.resManager.GetString("ColumnNumericalPrecision") + "\t" +
+                    this.resManager.GetString("ColumnNumericalScale") + "\t" +
+                    this.resManager.GetString("ColumnProviderType"));
+                copyString.AppendLine();
+
+                foreach (ListViewItem item in this.ExplainTableListView.SelectedItems)
+                {
+                    foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                    {
+                        copyString.Append(subItem.Text + "\t");
+                    }
+
+                    //deleting last tab
+                    copyString.Remove(copyString.Length - 1, 1);
+                    copyString.AppendLine();
+                }
+                Clipboard.SetDataObject(copyString.ToString(), true);
+            }
+
+            void ToolStripMenuItemCopyAll_Click(object sender, EventArgs e)
+            {
+                StringBuilder copyString = new StringBuilder();
+                copyString.Append(this.resManager.GetString("ColumnName") + "\t" +
+                    this.resManager.GetString("ColumnAllowDBNull") + "\t" +
+                    this.resManager.GetString("ColumnOrdinal") + "\t" +
+                    this.resManager.GetString("ColumnSize") + "\t" +
+                    this.resManager.GetString("ColumnDataType") + "\t" +
+                    this.resManager.GetString("ColumnAutoIncrement") + "\t" +
+                    this.resManager.GetString("ColumnIsKey") + "\t" +
+                    this.resManager.GetString("ColumnIsLong") + "\t" +
+                    this.resManager.GetString("ColumnIsReadOnly") + "\t" +
+                    this.resManager.GetString("ColumnIsRowVersion") + "\t" +
+                    this.resManager.GetString("ColumnIsUnique") + "\t" +
+                    this.resManager.GetString("ColumnNumericalPrecision") + "\t" +
+                    this.resManager.GetString("ColumnNumericalScale") + "\t" +
+                    this.resManager.GetString("ColumnProviderType"));
+                copyString.AppendLine();
+
+                foreach (ListViewItem item in this.ExplainTableListView.Items)
+                {
+                    foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                    {
+                        copyString.Append(subItem.Text + "\t");
+                    }
+
+                    //deleting last tab
+                    copyString.Remove(copyString.Length - 1, 1);
+                    copyString.AppendLine();
+                }
+                Clipboard.SetDataObject(copyString.ToString(), true);
+            }
+
+            #endregion
 
             /// <summary>
             /// Method to fill ListView with ColumnInfo data
@@ -183,6 +243,8 @@ namespace Ferda
                 this.ColumnOrdinal.Text = rm.GetString("ColumnOrdinal");
                 this.ColumnProviderType.Text = rm.GetString("ColumnProviderType");
                 this.ColumnSize.Text = rm.GetString("ColumnSize");
+                this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
+                this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
             }
 
             #endregion
