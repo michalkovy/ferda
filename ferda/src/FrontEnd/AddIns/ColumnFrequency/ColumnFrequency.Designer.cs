@@ -37,14 +37,20 @@ namespace Ferda
                 this.ValuesColumn = new System.Windows.Forms.ColumnHeader();
                 this.FrequencyColumn = new System.Windows.Forms.ColumnHeader();
                 this.PercentageColumn = new System.Windows.Forms.ColumnHeader();
-                this.TabPageBarChart = new System.Windows.Forms.TabPage();
-                this.ContextMenuGraphParams = new System.Windows.Forms.ContextMenuStrip(this.components);
-                this.ToolStripMenuItemAbsolute = new System.Windows.Forms.ToolStripMenuItem();
-                this.TabPagePieChart = new System.Windows.Forms.TabPage();
+                this.ContextMenuDataTab = new System.Windows.Forms.ContextMenuStrip(this.components);
+                this.ToolStripMenuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
+                this.ToolStripMenuItemCopySelected = new System.Windows.Forms.ToolStripMenuItem();
                 this.TabPageAreaChart = new System.Windows.Forms.TabPage();
+                this.ContextMenuGraph = new System.Windows.Forms.ContextMenuStrip(this.components);
+                this.ToolStripMenuItemAbsolute = new System.Windows.Forms.ToolStripMenuItem();
+                this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+                this.ToolStripMenuItemCopyChart = new System.Windows.Forms.ToolStripMenuItem();
+                this.TabPageBarChart = new System.Windows.Forms.TabPage();
+                this.TabPagePieChart = new System.Windows.Forms.TabPage();
                 this.TabControlColumnFrequency.SuspendLayout();
                 this.TabPageText.SuspendLayout();
-                this.ContextMenuGraphParams.SuspendLayout();
+                this.ContextMenuDataTab.SuspendLayout();
+                this.ContextMenuGraph.SuspendLayout();
                 this.SuspendLayout();
                 // 
                 // TabControlColumnFrequency
@@ -77,11 +83,13 @@ namespace Ferda
             this.ValuesColumn,
             this.FrequencyColumn,
             this.PercentageColumn});
+                this.ColumnFrListView.ContextMenuStrip = this.ContextMenuDataTab;
                 this.ColumnFrListView.Dock = System.Windows.Forms.DockStyle.Fill;
                 this.ColumnFrListView.FullRowSelect = true;
                 this.ColumnFrListView.GridLines = true;
                 this.ColumnFrListView.Location = new System.Drawing.Point(3, 3);
                 this.ColumnFrListView.Name = "ColumnFrListView";
+                this.ColumnFrListView.ShowItemToolTips = true;
                 this.ColumnFrListView.Size = new System.Drawing.Size(453, 230);
                 this.ColumnFrListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
                 this.ColumnFrListView.TabIndex = 2;
@@ -100,9 +108,66 @@ namespace Ferda
                 // 
                 this.PercentageColumn.Width = 90;
                 // 
+                // ContextMenuDataTab
+                // 
+                this.ContextMenuDataTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemCopyAll,
+            this.ToolStripMenuItemCopySelected});
+                this.ContextMenuDataTab.Name = "ContextMenuDataTab";
+                this.ContextMenuDataTab.Size = new System.Drawing.Size(180, 48);
+                // 
+                // ToolStripMenuItemCopyAll
+                // 
+                this.ToolStripMenuItemCopyAll.Name = "ToolStripMenuItemCopyAll";
+                this.ToolStripMenuItemCopyAll.Size = new System.Drawing.Size(179, 22);
+                this.ToolStripMenuItemCopyAll.Text = "toolStripMenuItem1";
+                // 
+                // ToolStripMenuItemCopySelected
+                // 
+                this.ToolStripMenuItemCopySelected.Name = "ToolStripMenuItemCopySelected";
+                this.ToolStripMenuItemCopySelected.Size = new System.Drawing.Size(179, 22);
+                this.ToolStripMenuItemCopySelected.Text = "toolStripMenuItem1";
+                // 
+                // TabPageAreaChart
+                // 
+                this.TabPageAreaChart.ContextMenuStrip = this.ContextMenuGraph;
+                this.TabPageAreaChart.Location = new System.Drawing.Point(4, 22);
+                this.TabPageAreaChart.Name = "TabPageAreaChart";
+                this.TabPageAreaChart.Size = new System.Drawing.Size(459, 236);
+                this.TabPageAreaChart.TabIndex = 3;
+                this.TabPageAreaChart.Text = "tabPage1";
+                this.TabPageAreaChart.UseVisualStyleBackColor = true;
+                // 
+                // ContextMenuGraph
+                // 
+                this.ContextMenuGraph.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemAbsolute,
+            this.toolStripSeparator1,
+            this.ToolStripMenuItemCopyChart});
+                this.ContextMenuGraph.Name = "ContextMenuGraphParams";
+                this.ContextMenuGraph.Size = new System.Drawing.Size(180, 54);
+                // 
+                // ToolStripMenuItemAbsolute
+                // 
+                this.ToolStripMenuItemAbsolute.CheckOnClick = true;
+                this.ToolStripMenuItemAbsolute.Name = "ToolStripMenuItemAbsolute";
+                this.ToolStripMenuItemAbsolute.Size = new System.Drawing.Size(179, 22);
+                this.ToolStripMenuItemAbsolute.Text = "Absolute";
+                // 
+                // toolStripSeparator1
+                // 
+                this.toolStripSeparator1.Name = "toolStripSeparator1";
+                this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
+                // 
+                // ToolStripMenuItemCopyChart
+                // 
+                this.ToolStripMenuItemCopyChart.Name = "ToolStripMenuItemCopyChart";
+                this.ToolStripMenuItemCopyChart.Size = new System.Drawing.Size(179, 22);
+                this.ToolStripMenuItemCopyChart.Text = "toolStripMenuItem1";
+                // 
                 // TabPageBarChart
                 // 
-                this.TabPageBarChart.ContextMenuStrip = this.ContextMenuGraphParams;
+                this.TabPageBarChart.ContextMenuStrip = this.ContextMenuGraph;
                 this.TabPageBarChart.Location = new System.Drawing.Point(4, 22);
                 this.TabPageBarChart.Name = "TabPageBarChart";
                 this.TabPageBarChart.Padding = new System.Windows.Forms.Padding(3);
@@ -111,23 +176,9 @@ namespace Ferda
                 this.TabPageBarChart.Text = "Chart";
                 this.TabPageBarChart.UseVisualStyleBackColor = true;
                 // 
-                // ContextMenuGraphParams
-                // 
-                this.ContextMenuGraphParams.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemAbsolute});
-                this.ContextMenuGraphParams.Name = "ContextMenuGraphParams";
-                this.ContextMenuGraphParams.Size = new System.Drawing.Size(128, 26);
-                // 
-                // ToolStripMenuItemAbsolute
-                // 
-                this.ToolStripMenuItemAbsolute.CheckOnClick = true;
-                this.ToolStripMenuItemAbsolute.Name = "ToolStripMenuItemAbsolute";
-                this.ToolStripMenuItemAbsolute.Size = new System.Drawing.Size(127, 22);
-                this.ToolStripMenuItemAbsolute.Text = "Absolute";
-                // 
                 // TabPagePieChart
                 // 
-                this.TabPagePieChart.ContextMenuStrip = this.ContextMenuGraphParams;
+                this.TabPagePieChart.ContextMenuStrip = this.ContextMenuGraph;
                 this.TabPagePieChart.Location = new System.Drawing.Point(4, 22);
                 this.TabPagePieChart.Name = "TabPagePieChart";
                 this.TabPagePieChart.Padding = new System.Windows.Forms.Padding(3);
@@ -135,16 +186,6 @@ namespace Ferda
                 this.TabPagePieChart.TabIndex = 2;
                 this.TabPagePieChart.Text = "tabPage1";
                 this.TabPagePieChart.UseVisualStyleBackColor = true;
-                // 
-                // TabPageAreaChart
-                // 
-                this.TabPageAreaChart.ContextMenuStrip = this.ContextMenuGraphParams;
-                this.TabPageAreaChart.Location = new System.Drawing.Point(4, 22);
-                this.TabPageAreaChart.Name = "TabPageAreaChart";
-                this.TabPageAreaChart.Size = new System.Drawing.Size(459, 236);
-                this.TabPageAreaChart.TabIndex = 3;
-                this.TabPageAreaChart.Text = "tabPage1";
-                this.TabPageAreaChart.UseVisualStyleBackColor = true;
                 // 
                 // ColumnFrequency
                 // 
@@ -155,7 +196,8 @@ namespace Ferda
                 this.Size = new System.Drawing.Size(467, 262);
                 this.TabControlColumnFrequency.ResumeLayout(false);
                 this.TabPageText.ResumeLayout(false);
-                this.ContextMenuGraphParams.ResumeLayout(false);
+                this.ContextMenuDataTab.ResumeLayout(false);
+                this.ContextMenuGraph.ResumeLayout(false);
                 this.ResumeLayout(false);
 
             }
@@ -171,9 +213,14 @@ namespace Ferda
             private System.Windows.Forms.TabPage TabPageBarChart;
             private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAbsolute;
 
-            private System.Windows.Forms.ContextMenuStrip ContextMenuGraphParams;
+            private System.Windows.Forms.ContextMenuStrip ContextMenuGraph;
             private System.Windows.Forms.TabPage TabPagePieChart;
-            private System.Windows.Forms.TabPage TabPageAreaChart;
+            private System.Windows.Forms.TabPage TabPageAreaChart;
+            private System.Windows.Forms.ContextMenuStrip ContextMenuDataTab;
+            private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopyAll;
+            private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopySelected;
+            private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+            private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopyChart;
 
 
         }

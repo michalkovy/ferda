@@ -99,6 +99,10 @@
     <Compile Include="NonGUIClasses\Sorter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FerdaResultBrowserControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FerdaResultBrowserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Localization_cs-CZ.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

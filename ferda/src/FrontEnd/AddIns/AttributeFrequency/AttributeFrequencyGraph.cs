@@ -222,7 +222,46 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             }
         }
 
+        /// <summary>
+        /// Handles copying the chart to clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ToolStripMenuItemCopyChart_Click(object sender, EventArgs e)
+        {
+            switch (TabControlAttributeFrequency.SelectedIndex)
+            {
+                case 1:
+                    Bitmap bitMap = new Bitmap(
+                        this.AttributeFrequencyAreaChart.Bitmap,
+                        this.AttributeFrequencyAreaChart.Size.Width,
+                        this.AttributeFrequencyAreaChart.Size.Height
+                        );
+                    Clipboard.SetImage(bitMap);
+                    break;
 
+                case 2:
+                    Bitmap bitMap1 = new Bitmap(
+                        this.AttributeFrequencyBarChart.Bitmap,
+                        this.AttributeFrequencyBarChart.Size.Width,
+                        this.AttributeFrequencyBarChart.Size.Height
+                        );
+                    Clipboard.SetImage(bitMap1);
+                    break;
+
+                case 3:
+                    Bitmap bitMap2 = new Bitmap(
+                         this.AttributeFrequencyPieChart.Bitmap,
+                         this.AttributeFrequencyPieChart.Size.Width,
+                         this.AttributeFrequencyPieChart.Size.Height
+                         );
+                    Clipboard.SetImage(bitMap2);
+                    break;
+
+                default:
+                    break;
+            }
+        }
 
         #endregion
 

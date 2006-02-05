@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -71,6 +72,7 @@
               <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -88,6 +90,7 @@
               <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -114,76 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BadColumnSelectExpression">
-    <value xml:space="preserve">Neplatný výraz pro výběr sloupce</value>
+  <data name="BadColumnSelectExpression" xml:space="preserve">
+    <value>Neplatný výraz pro výběr sloupce</value>
   </data>
-  <data name="BadConnectionString">
-    <value xml:space="preserve">Neplatný řetězec pro připojení</value>
+  <data name="BadConnectionString" xml:space="preserve">
+    <value>Neplatný řetězec pro připojení</value>
   </data>
-  <data name="BoxNotConnected">
-    <value xml:space="preserve">Krabička není zapojena</value>
+  <data name="BoxNotConnected" xml:space="preserve">
+    <value>Krabička není zapojena</value>
   </data>
-  <data name="ColumnAllowDBNull">
-    <value xml:space="preserve">Povolit hodnoty null</value>
+  <data name="ColumnAllowDBNull" xml:space="preserve">
+    <value>Povolit hodnoty null</value>
   </data>
-  <data name="ColumnAutoIncrement">
-    <value xml:space="preserve">Auto increment</value>
+  <data name="ColumnAutoIncrement" xml:space="preserve">
+    <value>Auto increment</value>
   </data>
-  <data name="ColumnDataType">
-    <value xml:space="preserve">Datový typ</value>
+  <data name="ColumnDataType" xml:space="preserve">
+    <value>Datový typ</value>
   </data>
-  <data name="ColumnIsKey">
-    <value xml:space="preserve">Je klíč</value>
+  <data name="ColumnIsKey" xml:space="preserve">
+    <value>Je klíč</value>
   </data>
-  <data name="ColumnIsLong">
-    <value xml:space="preserve">Je long</value>
+  <data name="ColumnIsLong" xml:space="preserve">
+    <value>Je long</value>
   </data>
-  <data name="ColumnIsReadOnly">
-    <value xml:space="preserve">Je pouze pro čtení</value>
+  <data name="ColumnIsReadOnly" xml:space="preserve">
+    <value>Je pouze pro čtení</value>
   </data>
-  <data name="ColumnIsRowVersion">
-    <value xml:space="preserve">Je verzí řádku</value>
+  <data name="ColumnIsRowVersion" xml:space="preserve">
+    <value>Je verzí řádku</value>
   </data>
-  <data name="ColumnIsUnique">
-    <value xml:space="preserve">Je unikátní</value>
+  <data name="ColumnIsUnique" xml:space="preserve">
+    <value>Je unikátní</value>
   </data>
-  <data name="ColumnName">
-    <value xml:space="preserve">Název</value>
+  <data name="ColumnName" xml:space="preserve">
+    <value>Název</value>
   </data>
-  <data name="ColumnNumericalPrecision">
-    <value xml:space="preserve">Numerická přesnost</value>
+  <data name="ColumnNumericalPrecision" xml:space="preserve">
+    <value>Numerická přesnost</value>
   </data>
-  <data name="ColumnNumericalScale">
-    <value xml:space="preserve">Numerické měřítko</value>
+  <data name="ColumnNumericalScale" xml:space="preserve">
+    <value>Numerické měřítko</value>
   </data>
-  <data name="ColumnOrdinal">
-    <value xml:space="preserve">Ordinál</value>
+  <data name="ColumnOrdinal" xml:space="preserve">
+    <value>Ordinál</value>
   </data>
-  <data name="ColumnProviderType">
-    <value xml:space="preserve">Typ providera</value>
+  <data name="ColumnProviderType" xml:space="preserve">
+    <value>Typ providera</value>
   </data>
-  <data name="ColumnSize">
-    <value xml:space="preserve">Velikost</value>
+  <data name="ColumnSize" xml:space="preserve">
+    <value>Velikost</value>
   </data>
-  <data name="Error">
-    <value xml:space="preserve">Chyba</value>
+  <data name="CopyAllToClipboard" xml:space="preserve">
+    <value>Zkopírovat všechny položky do schránky</value>
   </data>
-  <data name="Explain">
-    <value xml:space="preserve">Explain</value>
+  <data name="CopyChart" xml:space="preserve">
+    <value>Zkopírovat graf do schránky</value>
   </data>
-  <data name="ExplainTable">
-    <value xml:space="preserve">Explain table</value>
+  <data name="CopySelectedToClipboard" xml:space="preserve">
+    <value>Zkopírovat vybrané položky do schránky</value>
   </data>
-  <data name="ExplainTableModule">
-    <value xml:space="preserve">Modul explain table</value>
+  <data name="Error" xml:space="preserve">
+    <value>Chyba</value>
   </data>
-  <data name="NoDataMatrix">
-    <value xml:space="preserve">Chybí matice dat</value>
+  <data name="Explain" xml:space="preserve">
+    <value>Explain</value>
   </data>
-  <data name="Type">
-    <value xml:space="preserve">Typ</value>
+  <data name="ExplainTable" xml:space="preserve">
+    <value>Explain table</value>
   </data>
-  <data name="Value">
-    <value xml:space="preserve">Hodnota</value>
+  <data name="ExplainTableModule" xml:space="preserve">
+    <value>Modul explain table</value>
+  </data>
+  <data name="NoDataMatrix" xml:space="preserve">
+    <value>Chybí matice dat</value>
+  </data>
+  <data name="RightClickToCopySelected" xml:space="preserve">
+    <value>klikněte pravým tlačítkem pro volby kopírování</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Hodnota</value>
   </data>
 </root>

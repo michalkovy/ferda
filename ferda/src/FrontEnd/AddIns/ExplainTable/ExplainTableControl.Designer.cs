@@ -30,6 +30,7 @@ namespace Ferda
             /// </summary>
             private void InitializeComponent()
             {
+                this.components = new System.ComponentModel.Container();
                 this.ExplainTableListView = new System.Windows.Forms.ListView();
                 this.ColumnName = new System.Windows.Forms.ColumnHeader();
                 this.ColumnAllowDBNull = new System.Windows.Forms.ColumnHeader();
@@ -45,6 +46,10 @@ namespace Ferda
                 this.ColumnNumericalPrecision = new System.Windows.Forms.ColumnHeader();
                 this.ColumnNumericalScale = new System.Windows.Forms.ColumnHeader();
                 this.ColumnProviderType = new System.Windows.Forms.ColumnHeader();
+                this.ContextMenuData = new System.Windows.Forms.ContextMenuStrip(this.components);
+                this.ToolStripMenuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
+                this.ToolStripMenuItemCopySelected = new System.Windows.Forms.ToolStripMenuItem();
+                this.ContextMenuData.SuspendLayout();
                 this.SuspendLayout();
                 // 
                 // ExplainTableListView
@@ -64,6 +69,7 @@ namespace Ferda
             this.ColumnNumericalPrecision,
             this.ColumnNumericalScale,
             this.ColumnProviderType});
+                this.ExplainTableListView.ContextMenuStrip = this.ContextMenuData;
                 this.ExplainTableListView.Dock = System.Windows.Forms.DockStyle.Fill;
                 this.ExplainTableListView.FullRowSelect = true;
                 this.ExplainTableListView.GridLines = true;
@@ -73,11 +79,32 @@ namespace Ferda
                 this.ExplainTableListView.Size = new System.Drawing.Size(730, 262);
                 this.ExplainTableListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
                 this.ExplainTableListView.TabIndex = 0;
+                this.ExplainTableListView.UseCompatibleStateImageBehavior = false;
                 this.ExplainTableListView.View = System.Windows.Forms.View.Details;
                 // 
                 // ColumnName
                 // 
                 this.ColumnName.Width = 144;
+                // 
+                // ContextMenuData
+                // 
+                this.ContextMenuData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemCopyAll,
+            this.ToolStripMenuItemCopySelected});
+                this.ContextMenuData.Name = "ContextMenuData";
+                this.ContextMenuData.Size = new System.Drawing.Size(180, 48);
+                // 
+                // ToolStripMenuItemCopyAll
+                // 
+                this.ToolStripMenuItemCopyAll.Name = "ToolStripMenuItemCopyAll";
+                this.ToolStripMenuItemCopyAll.Size = new System.Drawing.Size(179, 22);
+                this.ToolStripMenuItemCopyAll.Text = "toolStripMenuItem1";
+                // 
+                // ToolStripMenuItemCopySelected
+                // 
+                this.ToolStripMenuItemCopySelected.Name = "ToolStripMenuItemCopySelected";
+                this.ToolStripMenuItemCopySelected.Size = new System.Drawing.Size(179, 22);
+                this.ToolStripMenuItemCopySelected.Text = "toolStripMenuItem1";
                 // 
                 // ExplainTable
                 // 
@@ -86,6 +113,7 @@ namespace Ferda
                 this.Controls.Add(this.ExplainTableListView);
                 this.Name = "ExplainTable";
                 this.Size = new System.Drawing.Size(730, 262);
+                this.ContextMenuData.ResumeLayout(false);
                 this.ResumeLayout(false);
 
             }
@@ -107,6 +135,9 @@ namespace Ferda
             private System.Windows.Forms.ColumnHeader ColumnProviderType;
             private System.Windows.Forms.ColumnHeader ColumnAllowDBNull;
             private System.Windows.Forms.ColumnHeader ColumnNumericalScale;
+            private System.Windows.Forms.ContextMenuStrip ContextMenuData;
+            private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopyAll;
+            private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopySelected;
 
         }
     }

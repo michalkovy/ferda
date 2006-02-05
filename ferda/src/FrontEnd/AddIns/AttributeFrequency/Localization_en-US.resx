@@ -141,6 +141,15 @@
   <data name="BoxNotConnected" xml:space="preserve">
     <value>Box not connected</value>
   </data>
+  <data name="CopyAllToClipboard" xml:space="preserve">
+    <value>Copy all items to clipboard</value>
+  </data>
+  <data name="CopyChart" xml:space="preserve">
+    <value>Copy chart to clipboard</value>
+  </data>
+  <data name="CopySelectedToClipboard" xml:space="preserve">
+    <value>Copy selected items to clipboard</value>
+  </data>
   <data name="Count" xml:space="preserve">
     <value>Count</value>
   </data>
@@ -155,6 +164,9 @@
   </data>
   <data name="PercentageColumn" xml:space="preserve">
     <value>Percentage</value>
+  </data>
+  <data name="RightClickToCopySelected" xml:space="preserve">
+    <value>right-click for copy options</value>
   </data>
   <data name="TabPageAreaChart" xml:space="preserve">
     <value>Area chart</value>

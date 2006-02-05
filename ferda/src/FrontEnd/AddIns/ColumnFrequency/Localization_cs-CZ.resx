@@ -141,6 +141,15 @@
   <data name="ColumnFrequencyPieChart" xml:space="preserve">
     <value>Výsečový graf frekvence sloupců</value>
   </data>
+  <data name="CopyAllToClipboard" xml:space="preserve">
+    <value>Zkopírovat všechny položky do schránky</value>
+  </data>
+  <data name="CopyChart" xml:space="preserve">
+    <value>Zkopírovat graf do schránky</value>
+  </data>
+  <data name="CopySelectedToClipboard" xml:space="preserve">
+    <value>Zkopírovat vybrané položky do schránky</value>
+  </data>
   <data name="Count" xml:space="preserve">
     <value>Počet</value>
   </data>
@@ -158,6 +167,9 @@
   </data>
   <data name="PercentageColumn" xml:space="preserve">
     <value>Procent</value>
+  </data>
+  <data name="RightClickToCopySelected" xml:space="preserve">
+    <value>klikněte pravým tlačítkem pro volby kopírování</value>
   </data>
   <data name="TabPageAreaChart" xml:space="preserve">
     <value>Plošný graf</value>

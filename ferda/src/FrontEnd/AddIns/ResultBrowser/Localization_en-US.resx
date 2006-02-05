@@ -147,6 +147,9 @@
   <data name="ContingencyTable" xml:space="preserve">
     <value>Contingency table</value>
   </data>
+  <data name="CopyChart" xml:space="preserve">
+    <value>Copy chart to clipboard</value>
+  </data>
   <data name="Empty" xml:space="preserve">
     <value>Empty</value>
   </data>

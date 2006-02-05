@@ -123,16 +123,25 @@
   <data name="BoxNotConnected" xml:space="preserve">
     <value>Krabička není zapojena</value>
   </data>
+  <data name="CopyAllToClipboard" xml:space="preserve">
+    <value>Zkopírovat všechny položky do schránky</value>
+  </data>
+  <data name="CopySelectedToClipboard" xml:space="preserve">
+    <value>Zkopírovat vybrané položky do schránky</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Chyba</value>
   </data>
   <data name="NoDataMatrix" xml:space="preserve">
     <value>Chybí matice dat</value>
   </data>
+  <data name="RightClickToCopySelected" xml:space="preserve">
+    <value>klikněte pravým tlačítkem pro volby kopírování</value>
+  </data>
   <data name="Show" xml:space="preserve">
     <value>Zobrazit</value>
   </data>
   <data name="ShowTableModule" xml:space="preserve">
-    <value>Modul ShowTable</value>
+    <value>Modul Show table</value>
   </data>
 </root>
