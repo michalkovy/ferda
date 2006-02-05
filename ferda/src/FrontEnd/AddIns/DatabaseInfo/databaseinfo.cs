@@ -34,6 +34,7 @@ namespace Ferda
 
             #endregion
 
+
             #region Constructor
             public DataBaseInfo(string [] localePrefs,DataMatrixInfo [] dataMatrix)
             {
@@ -43,14 +44,9 @@ namespace Ferda
                 try
                 {
                     locale = localePrefs[0];
-
                     localizationString = locale;
-
                     locale = "Ferda.FrontEnd.AddIns.DataBaseInfo.Localization_" + locale;
-
-                    resManager = new ResourceManager(locale,
-                Assembly.GetExecutingAssembly());
-
+                    resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
                 }
 
                 catch
@@ -58,15 +54,67 @@ namespace Ferda
                     resManager = new ResourceManager("Ferda.FrontEnd.AddIns.DataBaseInfo.Localization_en-US",
                 Assembly.GetExecutingAssembly());
                     localizationString = "en-US";
-                }
-
-                
+                }   
                 this.dataMatrix = dataMatrix;
-
                 InitializeComponent();
                 this.ListViewInit();
                 this.FillDBInfoListView();
+                this.ToolStripMenuItemCopyAll.Click += new EventHandler(ToolStripMenuItemCopyAll_Click);
+                this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
             }
+
+            #endregion
+
+
+            #region Context menu handlers
+
+            void ToolStripMenuItemCopyAll_Click(object sender, EventArgs e)
+            {
+                StringBuilder copyString = new StringBuilder();
+                copyString.Append(this.resManager.GetString("TableName") + "\t" +
+                    this.resManager.GetString("Remarks") + "\t" +
+                    this.resManager.GetString("RowCound") + "\t" +
+                    this.resManager.GetString("Type"));
+                copyString.AppendLine();
+
+                foreach (ListViewItem item in this.DataBaseInfoListView.Items)
+                {
+                    foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                    {
+                        copyString.Append(subItem.Text + "\t");
+                    }
+
+                    //deleting last tab
+                    copyString.Remove(copyString.Length - 1, 1);
+                    copyString.AppendLine();
+                }
+                Clipboard.SetDataObject(copyString.ToString(), true);
+            }
+
+            void ToolStripMenuItemCopySelected_Click(object sender, EventArgs e)
+            {
+                StringBuilder copyString = new StringBuilder();
+                copyString.Append(this.resManager.GetString("TableName") + "\t" +
+                    this.resManager.GetString("Remarks") + "\t" +
+                    this.resManager.GetString("RowCound") + "\t" +
+                    this.resManager.GetString("Type"));
+                copyString.AppendLine();
+
+                foreach (ListViewItem item in this.DataBaseInfoListView.SelectedItems)
+                {
+                    foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                    {
+                        copyString.Append(subItem.Text + "\t");
+                    }
+
+                    //deleting last tab
+                    copyString.Remove(copyString.Length - 1, 1);
+                    copyString.AppendLine();
+                }
+                Clipboard.SetDataObject(copyString.ToString(), true);
+            }
+
+
             #endregion
 
             #region Private methods
@@ -77,7 +125,6 @@ namespace Ferda
             private void ListViewInit()
             {
                 this.ChangeLocale(resManager);
-
                 //adding a handling method for column sorting
                 this.DataBaseInfoListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.DataBaseInfoListView_ColumnClick);
             }
@@ -154,6 +201,8 @@ namespace Ferda
                 this.TableRemarks.Text = rm.GetString("Remarks");
                 this.TableRowCount.Text = rm.GetString("RowCount");
                 this.TableType.Text = rm.GetString("Type");
+                this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
+                this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
             }
         }
     }
