@@ -260,6 +260,8 @@ namespace Ferda.ModulesManager
 
 		public abstract string GetPropertyOtherAbout(string name);
 
+        public abstract string GetPropertyOtherAboutFromValue(string name, Ferda.Modules.PropertyValue value);
+
 		public abstract bool IsPossibleToSetWithAbout(string name);
 
 		public abstract void SetPropertyOtherAbout(string name, string value);

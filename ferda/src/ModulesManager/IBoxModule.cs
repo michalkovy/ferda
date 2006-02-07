@@ -333,6 +333,17 @@ namespace Ferda.ModulesManager
 		/// <paramref name="name"/> and not of standard type was not found</exception>
 		string GetPropertyOtherAbout(string name);
 
+        /// <summary>
+        /// Gets string representation of value of property with name <paramref name="name"/>
+        /// and not standard type if value is <paramref name="value"/>
+        /// </summary>
+        /// <returns>A string representing value of property</returns>
+        /// <param name="name">A string representing name of property</param>
+        /// <param name="value">A <see cref="T:Ferda.Modules.PropertyValue"/> representing value of property</param>
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">property with name
+        /// <paramref name="name"/> and not of standard type was not found</exception>
+        string GetPropertyOtherAboutFromValue(string name, Ferda.Modules.PropertyValue value);
+
 		/// <summary>
 		/// Looks if it is possible to set by string representation of other property its value
 		/// </summary>

@@ -518,6 +518,12 @@ namespace Ferda.ModulesManager
 		{
 			throw new Ferda.Modules.NameNotExistError();
 		}
+
+
+        public override string GetPropertyOtherAboutFromValue(string name, Ferda.Modules.PropertyValue value)
+        {
+            throw new Ferda.Modules.NameNotExistError();
+        }
 		
 		/// <summary>
 		/// Method IsPossibleToSetWithAbout
