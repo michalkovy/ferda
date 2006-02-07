@@ -155,7 +155,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         public string[] Categories
         { get { return this.box.Categories; } }
 
-        private SortedList<string, Boxes.Serializer.Configuration.Socket> sockets = new SortedList<string, Socket>();
+        private Dictionary<string, Boxes.Serializer.Configuration.Socket> sockets = new Dictionary<string, Socket>();
         /// <summary>
         /// Gets the sockets.
         /// </summary>
@@ -163,7 +163,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is the socket`s name.</para>
         /// <para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Socket"/>.</para>
         /// </value>
-        public SortedList<string, Boxes.Serializer.Configuration.Socket> Sockets
+        public Dictionary<string, Boxes.Serializer.Configuration.Socket> Sockets
         {
             get { return sockets; }
         }

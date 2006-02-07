@@ -15,16 +15,15 @@ Martin
  - help - uzivatelska napoveda k prostredi
  - AddIn zobrazujici pomoci AcrobatReadru ten PDF help
 Tomas
- - PDF help ke krabickam databaze, tabulka a sloupec
- - LADIT!
- - CF, SDCF kvantifikatory ... implementovat vypocty
- - MultiColumn
- - prezentace + webcast o pridavani novych krabicek
+ - PDF help ke krabickam databaze, tabulka a sloupec (nesouhlasim)
+ - dokumentace pridavani novych krabicek (za sebe: mam to hotovy, Michal to musi dopsat a treba Alex prelozit)
  - ChiSquare quantifier ... bug reported to Karby
- - opravit poradi zasuvek u krabicek (nekdo to nekde sorti)
 Sasa
  - overit a dodelat poradne funkcnost vsech tasku
+ - CF, SDCF kvantifikatory ... doimplementovat vypocty
+ - grafy v resultu s popiskami
 Vsichni
  - programatorska dokumentace
  - udelat GPL hlavicky .cs souborum
  - dat na web novou verzi Ferdy
+ - LADIT!
