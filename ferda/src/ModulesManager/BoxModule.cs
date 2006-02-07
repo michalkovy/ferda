@@ -432,13 +432,22 @@ namespace Ferda
 			
 			public override string GetPropertyOtherAbout(string name)
             {
-				//TODO: overit, ze jsem nekoho dostal
 				SettingModulePrx prx = this.managersLocatorI.findSettingModule(
                     this.madeInCreator.GetProperty(name).settingModuleIdentifier);
 					if(prx != null)
 					return prx.getPropertyAbout(this.GetPropertyOther(name));
 				else
 					return "";
+            }
+
+            public override string GetPropertyOtherAboutFromValue(string name, Ferda.Modules.PropertyValue value)
+            {
+                SettingModulePrx prx = this.managersLocatorI.findSettingModule(
+                    this.madeInCreator.GetProperty(name).settingModuleIdentifier);
+                if (prx != null)
+                    return prx.getPropertyAbout(value);
+                else
+                    return "";
             }
 			
 			public override bool IsPossibleToSetWithAbout(string name)

@@ -108,8 +108,52 @@ namespace Ferda {
 						creator.getIdentifier(), creator);
 					}
 				}
+                refreshModules();
 				Debug.WriteLine("Refresh in ManagersLocatorI ended");
 			}
+
+            private void refreshModules()
+            {
+                Debug.WriteLine("Adding SettingModules...");
+                List<ObjectPrx> settingModules = new List<ObjectPrx>();
+                ObjectPrx[] settingModulesArray = this.findAllObjectsWithType("::Ferda::Modules::SettingModule");
+                foreach (ObjectPrx settingModule in settingModulesArray) settingModules.Add(settingModule);
+                settingModulesArray = this.findAllObjectsWithType("::Ferda::Modules::SettingModuleWithStringAbility");
+                foreach (ObjectPrx settingModule in settingModulesArray)
+                {
+                    if (!settingModules.Contains(settingModule))
+                        settingModules.Add(settingModule);
+                }
+
+                settingModuleByIdentifier.Clear();
+                foreach (ObjectPrx settingModuleUntyped in settingModules)
+                {
+                    SettingModulePrx settingModule =
+                    SettingModulePrxHelper.checkedCast(settingModuleUntyped);
+
+                    settingModuleByIdentifier[settingModule.getIdentifier()] = settingModule;
+                }
+
+                Debug.WriteLine("Adding ModulesForInteraction...");
+                modulesForInteractionByBoxType.Clear();
+                ObjectPrx[] modulesForInteraction = this.findAllObjectsWithType("::Ferda::Modules::ModuleForInteraction");
+                foreach (ObjectPrx moduleForInteractionUntyped in modulesForInteraction)
+                {
+                    ModuleForInteractionPrx moduleForInteraction =
+                    ModuleForInteractionPrxHelper.checkedCast(moduleForInteractionUntyped);
+                    BoxType[] acceptedBoxTypes = moduleForInteraction.getAcceptedBoxTypes();
+                    foreach (BoxType acceptedBoxType in acceptedBoxTypes)
+                    {
+                        List<ModuleForInteractionPrx> modulesInThisType;
+                        if (!modulesForInteractionByBoxType.TryGetValue(acceptedBoxType, out modulesInThisType))
+                        {
+                            modulesInThisType = new List<ModuleForInteractionPrx>();
+                            modulesForInteractionByBoxType[acceptedBoxType] = modulesInThisType;
+                        }
+                        modulesInThisType.Add(moduleForInteraction);
+                    }
+                }
+            }
 			
 			public bool IsWithIceId(string iceId, BoxModuleFactoryCreatorPrx creator)
 			{
@@ -221,55 +265,29 @@ namespace Ferda {
             /// <param name="settingModuleIdentifier">A string</param>
             /// <param name="__current">An Ice.Current</param>
             public override SettingModulePrx findSettingModule(String settingModuleIdentifier, Current __current) {
-                List<ObjectPrx> settingModules = new List<ObjectPrx>();
-				ObjectPrx[] settingModulesArray = this.findAllObjectsWithType("::Ferda::Modules::SettingModule");
-				foreach(ObjectPrx settingModule in settingModulesArray) settingModules.Add(settingModule);
-				settingModulesArray = this.findAllObjectsWithType("::Ferda::Modules::SettingModuleWithStringAbility");
-				foreach(ObjectPrx settingModule in settingModulesArray)
-				{
-					if(!settingModules.Contains(settingModule))
-						settingModules.Add(settingModule);
-				}
-				foreach(ObjectPrx settingModuleUntyped in settingModules)
-				{
-					SettingModulePrx settingModule =
-					SettingModulePrxHelper.checkedCast(settingModuleUntyped);
-                    if (settingModule.getIdentifier() == settingModuleIdentifier)
-						return settingModule;
-				}
+                SettingModulePrx result;
+                if(settingModuleByIdentifier.TryGetValue(settingModuleIdentifier, out result))
+                    return result;
                 return null;
             }
 
             public override ModuleForInteractionPrx findModuleForInteraction(BoxModuleFactoryCreatorPrx creator, Current __current) {
-                ObjectPrx[] modulesForInteraction = this.findAllObjectsWithType("::Ferda::Modules::ModuleForInteraction");
-				foreach(ObjectPrx moduleForInteractionUntyped in modulesForInteraction)
-				{
-					ModuleForInteractionPrx moduleForInteraction =
-					ModuleForInteractionPrxHelper.checkedCast(moduleForInteractionUntyped);
-					BoxType[] acceptedBoxTypes = moduleForInteraction.getAcceptedBoxTypes();
-					foreach(BoxType acceptedBoxType in acceptedBoxTypes)
-					{
-						if(HasBoxType(acceptedBoxType,creator))
-							return moduleForInteraction;
-					}
-				}
+                List<ModuleForInteractionPrx> result = new List<ModuleForInteractionPrx>();
+                foreach (BoxType acceptedBoxType in modulesForInteractionByBoxType.Keys)
+                {
+                    if (HasBoxType(acceptedBoxType, creator))
+                        return modulesForInteractionByBoxType[acceptedBoxType][0];
+                }
                 return null;
             }
 
             public override ModuleForInteractionPrx[] findAllModulesForInteraction(BoxModuleFactoryCreatorPrx creator, Current __current) {
                 List<ModuleForInteractionPrx> result = new List<ModuleForInteractionPrx>();
-				ObjectPrx[] modulesForInteraction = this.findAllObjectsWithType("::Ferda::Modules::ModuleForInteraction");
-				foreach(ObjectPrx moduleForInteractionUntyped in modulesForInteraction)
-				{
-					ModuleForInteractionPrx moduleForInteraction =
-					ModuleForInteractionPrxHelper.checkedCast(moduleForInteractionUntyped);
-					BoxType[] acceptedBoxTypes = moduleForInteraction.getAcceptedBoxTypes();
-					foreach(BoxType acceptedBoxType in acceptedBoxTypes)
-					{
-						if(HasBoxType(acceptedBoxType,creator))
-							result.Add(moduleForInteraction);
-					}
-				}
+                foreach (BoxType acceptedBoxType in modulesForInteractionByBoxType.Keys)
+                {
+                    if (HasBoxType(acceptedBoxType, creator))
+                        result.AddRange(modulesForInteractionByBoxType[acceptedBoxType]);
+                }
                 return result.ToArray();
             }
 
@@ -343,19 +361,27 @@ namespace Ferda {
 						}
 					}
 				}
-				if(additionalProxiesIceIds.ContainsKey("::Ferda::Modules::BoxModuleFactoryCreator"))
-					this.Refresh();
+                if (additionalProxiesIceIds.ContainsKey("::Ferda::Modules::BoxModuleFactoryCreator"))
+                    this.Refresh();
+                else
+                    if (additionalProxiesIceIds.ContainsKey("::Ferda::Modules::ModuleForInteraction")
+                        || additionalProxiesIceIds.ContainsKey("::Ferda::Modules::SettingModule"))
+                        refreshModules();
 			}
 			
 			private IceGrid.QueryPrx query;
 			private Ice.ObjectAdapter adapter;
 			private List<ObjectPrx> additionalProxies =
 				new List<ObjectPrx>();
+            private Dictionary<string, SettingModulePrx> settingModuleByIdentifier =
+                new Dictionary<string, SettingModulePrx>();
 			private Dictionary<string,List<ObjectPrx>> additionalProxiesIceIds =
 				new Dictionary<string,List<ObjectPrx>>();
 			private Dictionary<string,BoxModuleFactoryCreatorPrx>
 				boxModuleFactoryCreatorsByIdentifier;
 			private Helper helper;
+            private Dictionary<BoxType, List<ModuleForInteractionPrx>> modulesForInteractionByBoxType =
+                new Dictionary<BoxType, List<ModuleForInteractionPrx>>();
         }
     }
 }

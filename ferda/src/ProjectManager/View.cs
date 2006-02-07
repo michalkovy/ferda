@@ -714,26 +714,91 @@ namespace Ferda {
                 }
                 while (somethingDone);
 
-                
+                //tops = topology from top
                 Dictionary<int, List<int>>topologiesTops = new Dictionary<int, List<int>>();
+                int topsMinimum = 0;
                 foreach (List<IBoxModule> component in components)
                 {
-                    IBoxModule firstBox = null;
-                    foreach (IBoxModule box in component)
+                    Dictionary<IBoxModule, int> temporaryFromTop = new Dictionary<IBoxModule, int>();
+                    Dictionary<int, int> temporaryMaxTop = new Dictionary<int, int>();
+                    IBoxModule lastBox = findSomethingNewLast(temporaryFromTop, component);
+                    while (lastBox != null)
                     {
-                        if (topology[box] == 0)
+                        recurseTopsDown(lastBox, temporaryFromTop, temporaryMaxTop, component, topology);
+                        lastBox = findSomethingNewLast(temporaryFromTop, component);
+                    }
+
+                    //TODO make better
+                    int nextTopsMinimum = topsMinimum;
+                    foreach (KeyValuePair<IBoxModule, int> oneTop in temporaryFromTop)
+                    {
+                        int newValue = oneTop.Value + topsMinimum;
+                        fromTop[oneTop.Key] = newValue;
+                        if (newValue + 1 > nextTopsMinimum)
                         {
-                            firstBox = box;
-                            break;
+                            nextTopsMinimum = newValue + 1;
                         }
                     }
-                    int actualTop = 0;
+                    topsMinimum = nextTopsMinimum;
+                    
+
+                    /*int actualTop = 0;
                     fromTop[firstBox] = actualTop;
                     topologiesTops[0] = new List<int>();
-                    topologiesTops[0].Add(actualTop);
+                    topologiesTops[0].Add(actualTop);*/
                 }
                 
                 return topology;
+            }
+
+            private IBoxModule findSomethingNewLast(Dictionary<IBoxModule, int> temporaryFromTop, List<IBoxModule> component)
+            {
+                foreach (IBoxModule box in component)
+                {
+                    if (!temporaryFromTop.ContainsKey(box))
+                    {
+                        bool somethingAfter = false;
+                        foreach (IBoxModule otherBox in box.ConnectedTo())
+                        {
+                            if (component.Contains(otherBox))
+                            {
+                                somethingAfter = true;
+                                break;
+                            }
+                        }
+                        if (!somethingAfter) return box;
+                    }
+                }
+                return null;
+            }
+
+            private void recurseTopsDown(IBoxModule lastBox, Dictionary<IBoxModule, int> temporaryFromTop, Dictionary<int, int> temporaryMaxTop, List<IBoxModule> component, Dictionary<IBoxModule, int> topology)
+            {
+                if (!temporaryFromTop.ContainsKey(lastBox))
+                {
+                    int fromLeft = topology[lastBox];
+                    int top;
+                    if (!temporaryMaxTop.ContainsKey(fromLeft))
+                    {
+                        temporaryMaxTop[fromLeft] = 0;
+                        top = 0;
+                    }
+                    else
+                    {
+                        top = temporaryMaxTop[fromLeft] + 1;
+                        temporaryMaxTop[fromLeft] = top;
+                    }
+                    temporaryFromTop[lastBox] = top;
+
+                    foreach (SocketInfo socket in lastBox.Sockets)
+                    {
+                        foreach (IBoxModule box in lastBox.GetConnections(socket.name))
+                        {
+                            if (component.Contains(box))
+                                recurseTopsDown(box, temporaryFromTop, temporaryMaxTop, component, topology);
+                        }
+                    }
+                }
             }
 
             private void goLeftRightForTops(Dictionary<int, List<int>> topologiesTops,
@@ -755,8 +820,9 @@ namespace Ferda {
                 Dictionary<IBoxModule, int> topology = getTopology(out tops);
                 foreach (IBoxModule box in boxesInView)
                 {
-                    this.SetPosition(box, new PointF(topology[box] * 80 + 50, 150));
+                    this.SetPosition(box, new PointF(topology[box] * 80 + 50, tops[box] * 80 + 50));
                 }
+                oldPositions.Clear();
             }
 		}
     }

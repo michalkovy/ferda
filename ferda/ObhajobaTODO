@@ -1,0 +1,30 @@
+Michal
+ - moznost udelat z property socket - vylepsit
+   - automaticky zapojit krabka daneho typu pri zesoketovani vlastnosti
+   - ted, kdyz se zapoji spravna krabka a vyplni se tam dana hodnota do ni ve vlastnostech krabky, do ktere je zapojena, se hodnota neprojevi - to je spatne
+   - kdyz se rekne, ze to nema byt zasuvka a v tu chvili je tam neco zapojeneho, musi se to odpojit a ta hodnota, co tam byla v posledni chvili, se musi ulozit do te krabky
+ - usporadavani krabicek
+ - propertyBoxy opravit zapojitelnost do group boxu
+ - vyladit funkcnost helpu na strane modules manageru
+ - webove stranky
+Martin
+ - opravit ikony "double implikace" a "ekvivalence"
+ - opravit problem vyberu krabicek na plose hodne dole
+ - property grid
+ - dynamic (kontext) help
+ - help - uzivatelska napoveda k prostredi
+ - AddIn zobrazujici pomoci AcrobatReadru ten PDF help
+Tomas
+ - PDF help ke krabickam databaze, tabulka a sloupec
+ - LADIT!
+ - CF, SDCF kvantifikatory ... implementovat vypocty
+ - MultiColumn
+ - prezentace + webcast o pridavani novych krabicek
+ - ChiSquare quantifier ... bug reported to Karby
+ - opravit poradi zasuvek u krabicek (nekdo to nekde sorti)
+Sasa
+ - overit a dodelat poradne funkcnost vsech tasku
+Vsichni
+ - programatorska dokumentace
+ - udelat GPL hlavicky .cs souborum
+ - dat na web novou verzi Ferdy
