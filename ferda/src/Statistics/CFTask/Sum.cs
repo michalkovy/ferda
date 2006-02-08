@@ -8,17 +8,7 @@ namespace Ferda.Statistics.CFTask
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
-            int returnValue = 0;
-
-            foreach (int[] values in quantifierSetting.firstContingencyTableRows)
-            {
-                foreach (int value in values)
-                {
-                    returnValue += value;
-                }
-            }
-
-            return returnValue;
+            return (float)Common.Functions.Sum(quantifierSetting.firstContingencyTableRows);
         }
 
         public override string getTaskType(Ice.Current current__)

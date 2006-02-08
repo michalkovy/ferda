@@ -43,5 +43,25 @@ namespace Ferda.Statistics.Common
 
             return returnValue;
         }
+
+        /// <summary>
+        /// Returns sum of 2-dimension table
+        /// </summary>
+        /// <param name="table">2-dimension array of integers</param>
+        /// <returns>Sum</returns>
+        public static int Sum(int[][] table)
+        {
+            int returnValue = 0;
+
+            foreach (int[] values in table)
+            {
+                foreach (int value in values)
+                {
+                    returnValue += value;
+                }
+            }
+
+            return returnValue;
+        }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Statistics.SDCFTask
+namespace Ferda.Statistics.SDKLTask
 {
     class OneMax : Ferda.Statistics.StatisticsProviderDisp_
     {
@@ -13,7 +13,7 @@ namespace Ferda.Statistics.SDCFTask
 
         public override string getTaskType(Ice.Current current__)
         {
-            return "LISpMinerTasks.SDCFTask";
+            return "LISpMinerTasks.SDCKLask";
         }
 
         public override string getStatisticsName(Ice.Current current__)

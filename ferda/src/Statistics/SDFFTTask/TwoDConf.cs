@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Statistics.SDCFTask
+namespace Ferda.Statistics.SDFFTTask
 {
-    class OneMax : Ferda.Statistics.StatisticsProviderDisp_
+    class TwoDConf : Ferda.Statistics.StatisticsProviderDisp_
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
@@ -13,12 +13,12 @@ namespace Ferda.Statistics.SDCFTask
 
         public override string getTaskType(Ice.Current current__)
         {
-            return "LISpMinerTasks.SDCFTask";
+            return "LISpMinerTasks.SDFFTTask";
         }
 
         public override string getStatisticsName(Ice.Current current__)
         {
-            return "1st-Max";
+            return "2nd-DConf";
         }
     }
 }
