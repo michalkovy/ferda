@@ -8,7 +8,17 @@ namespace Ferda.Statistics.CFTask
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
-            throw new Exception("The method or operation is not implemented.");
+            int returnValue = 0;
+
+            foreach (int[] values in quantifierSetting.firstContingencyTableRows)
+            {
+                foreach (int value in values)
+                {
+                    returnValue += value;
+                }
+            }
+
+            return returnValue;
         }
 
         public override string getTaskType(Ice.Current current__)

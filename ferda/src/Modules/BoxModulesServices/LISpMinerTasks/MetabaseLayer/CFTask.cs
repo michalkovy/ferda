@@ -124,7 +124,13 @@ namespace Ferda.Modules.MetabaseLayer
                 int toColumn = 0;
                 int quantifierTypeID = 0;
 
-                RelationEnum relation = (RelationEnum)Enum.Parse(typeof(RelationEnum), propertySettingHelper.GetStringProperty("Relation"));
+                RelationEnum relation = RelationEnum.Equal;
+
+                try
+                {
+                    relation = (RelationEnum)Enum.Parse(typeof(RelationEnum), propertySettingHelper.GetStringProperty("Relation"));
+                }
+                catch (ArgumentException) { }
                 double threshold = propertySettingHelper.GetDoubleProperty("Treshold");
 
                 #region Quantifiers switch
@@ -248,7 +254,7 @@ namespace Ferda.Modules.MetabaseLayer
                     + quantifierTypeID + ","
                     + aggregationQuantifierValue
                     + unitsColumnValue
-                    + threshold.ToString() + ","
+                    + "'" + threshold.ToString() + "'" + ","
                     + common.Constants.RelationEnumDictionary[relation]
                     + ")";
 

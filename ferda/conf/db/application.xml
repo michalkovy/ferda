@@ -111,7 +111,38 @@
     </replica-group>
 
     <replica-group id="FerdaStatisticsReplicaAdapter" >
-      <object identity="FFTSupport" type="::Ferda::Statistics::StatisticsProvider"/>
+
+      <!--
+      4ft statistics
+      -->     
+      <object identity="FFTTSupport" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTA" type="::Ferda::Statistics::StatisticsProvider"/> 
+      <object identity="FFTTAvgDf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTB" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTC" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTCmPlt" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTD" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTDConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTDLBound" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTDUBound" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTEConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTELBound" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTEUBound" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTFisher" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTChiSq" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTLBound" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTN" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTR" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="FFTTUBound" type="::Ferda::Statistics::StatisticsProvider"/>
+
+      <!--
+      cft statistics
+      -->
+      <object identity="CFSum" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="CFMin" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="CFMax" type="::Ferda::Statistics::StatisticsProvider"/>
+
     </replica-group>
 
 		<!-- Sample Box Modules DEMO -->

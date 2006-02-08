@@ -4,17 +4,18 @@ using System.Text;
 
 namespace Ferda.Statistics.FFTTask
 {
-    class Support : Ferda.Statistics.StatisticsProviderDisp_
+    class EConf : Ferda.Statistics.StatisticsProviderDisp_
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
-            //a/(a+b+c+d)
+            //(a+d)/(a+b+c+d)
             return
-                (
-                quantifierSetting.firstContingencyTableRows[0][0]
+                (float)(
+                quantifierSetting.firstContingencyTableRows[0][0] +
+                quantifierSetting.firstContingencyTableRows[1][1]
                 )
                 /
-                (
+                (float)(
                 quantifierSetting.firstContingencyTableRows[0][0] +
                 quantifierSetting.firstContingencyTableRows[0][1] +
                 quantifierSetting.firstContingencyTableRows[1][0] +
@@ -29,7 +30,7 @@ namespace Ferda.Statistics.FFTTask
 
         public override string getStatisticsName(Ice.Current current__)
         {
-            return "Support";
+            return "EConf";
         }
     }
 }

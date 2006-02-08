@@ -2,23 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.Statistics.CFTask
+namespace Ferda.Statistics.FFTTask
 {
-    class Max : Ferda.Statistics.StatisticsProviderDisp_
+    class DUBound : Ferda.Statistics.StatisticsProviderDisp_
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
-            return (float)Common.Functions.Max(quantifierSetting.firstContingencyTableRows);
+            throw new Exception("The method or operation is not implemented.");
         }
 
         public override string getTaskType(Ice.Current current__)
         {
-            return "LISpMinerTasks.CFTask";
+            return "LISpMinerTasks.FFTTask";
         }
 
         public override string getStatisticsName(Ice.Current current__)
         {
-            return "Max";
+            return "DUBound";
         }
     }
 }
