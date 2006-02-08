@@ -18,7 +18,7 @@ namespace Ferda.Statistics.SDCFTask
 
         public override string getStatisticsName(Ice.Current current__)
         {
-            return "V";
+            return "1st-V";
         }
     }
 }
