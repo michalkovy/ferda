@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ferda.Statistics.SDCFTask
 {
-    class DorVar : Ferda.Statistics.StatisticsProviderDisp_
+    class OneDorVar : Ferda.Statistics.StatisticsProviderDisp_
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
