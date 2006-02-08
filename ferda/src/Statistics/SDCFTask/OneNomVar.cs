@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ferda.Statistics.SDCFTask
 {
-    class Sum : Ferda.Statistics.StatisticsProviderDisp_
+    class OneNomVar : Ferda.Statistics.StatisticsProviderDisp_
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
@@ -18,7 +18,7 @@ namespace Ferda.Statistics.SDCFTask
 
         public override string getStatisticsName(Ice.Current current__)
         {
-            return "Sum";
+            return "NomVar";
         }
     }
 }
