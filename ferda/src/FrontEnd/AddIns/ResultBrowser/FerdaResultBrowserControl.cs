@@ -409,6 +409,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     table[i1.ToString() + "-" + j1.ToString()] = value;
                     j1++;
                 }
+                j1 = 1;
                 i1++;
             }
 
@@ -430,6 +431,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     table[i1.ToString() + "-" + j1.ToString()] = value;
                     j1++;
                 }
+                j1 = 1;
                 i1++;
             }
 
