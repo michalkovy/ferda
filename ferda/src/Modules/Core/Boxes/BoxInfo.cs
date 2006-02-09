@@ -187,7 +187,14 @@ namespace Ferda.Modules.Boxes
                 Debug.WriteLine(message);
                 throw new Exception(message);
             }
+#if !DEBUG
+            }
+            catch
+            {
+            }
+#endif
         }
+
         #endregion
 
         #region Localization files
