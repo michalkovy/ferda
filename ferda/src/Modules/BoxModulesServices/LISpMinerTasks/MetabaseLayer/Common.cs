@@ -218,7 +218,7 @@ namespace Ferda.Modules.MetabaseLayer
                     tableName = "tiDKFrequencyI";
                     hypothesisColumnName = "HypothesisDKID";
                     kl = true;
-                    setType = " AND CedentTypeID=" + CedentEnum.FirstSet;
+                    setType = " AND CedentTypeID=" + constants.CedentEnumDictionary[CedentEnum.FirstSet];
                     break;
 
                 case TaskTypeEnum.CF:
@@ -229,7 +229,7 @@ namespace Ferda.Modules.MetabaseLayer
                 case TaskTypeEnum.SDCF:
                     tableName = "tiDCFrequencyI";
                     hypothesisColumnName = "HypothesisDCID";
-                    setType = " AND CedentTypeID=" + CedentEnum.FirstSet;
+                    setType = " AND CedentTypeID=" + constants.CedentEnumDictionary[CedentEnum.FirstSet];
                     break;
 
                 default:
@@ -289,19 +289,31 @@ namespace Ferda.Modules.MetabaseLayer
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(taskType);
             }
-            DataTable table = ExecuteSelectQuery("SELECT * FROM " + tableName + " WHERE TaskID=" + taskID + " AND " + hypothesisColumnName + "=" + hypothesisID + " AND CedentTypeID=" + CedentEnum.SecondSet);
-            AbstractAttributeStruct rowAttribute = GetAttributeStruct(rowAttributeIdentifier);
+            DataTable table = ExecuteSelectQuery("SELECT * FROM " + tableName + " WHERE TaskID=" + taskID + " AND " + hypothesisColumnName + "=" + hypothesisID + " AND CedentTypeID=" + constants.CedentEnumDictionary[CedentEnum.FirstSet]);
+            
+            AbstractAttributeStruct rowAttribute;
             AbstractAttributeStruct columnAttribute = GetAttributeStruct(columnAttributeIdentifier);
             List<int[]> resultList = new List<int[]>();
-            for (int i = 0; i < rowAttribute.countOfCategories; i++)
+            if (kl)
+            {
+                rowAttribute = GetAttributeStruct(rowAttributeIdentifier);
+                for (int i = 0; i < rowAttribute.countOfCategories; i++)
+                    resultList.Add(new int[columnAttribute.countOfCategories]);
+            }
+            else
+            {
                 resultList.Add(new int[columnAttribute.countOfCategories]);
+            }
+            
             int[][] result = resultList.ToArray();
             foreach (DataRow row in table.Rows)
             {
                 if (kl)
-                    result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
+                   // result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
+                    result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
                 else
-                    result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
+                    //result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
+                    result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
             }
             return result;
         }
