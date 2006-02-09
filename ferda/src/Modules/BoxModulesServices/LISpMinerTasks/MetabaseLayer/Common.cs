@@ -236,18 +236,28 @@ namespace Ferda.Modules.MetabaseLayer
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(taskType);
             }
             DataTable table = ExecuteSelectQuery("SELECT * FROM " + tableName + " WHERE TaskID=" + taskID + " AND " + hypothesisColumnName + "=" + hypothesisID + setType);
-            AbstractAttributeStruct rowAttribute = GetAttributeStruct(rowAttributeIdentifier);
+            AbstractAttributeStruct rowAttribute;
             AbstractAttributeStruct columnAttribute = GetAttributeStruct(columnAttributeIdentifier);
             List<int[]> resultList = new List<int[]>();
-            for (int i = 0; i < rowAttribute.countOfCategories; i++)
+            if (kl)
+            {
+                rowAttribute = GetAttributeStruct(rowAttributeIdentifier);
+                for (int i = 0; i < rowAttribute.countOfCategories; i++)
+                    resultList.Add(new int[columnAttribute.countOfCategories]);
+            }
+            else
+            {
                 resultList.Add(new int[columnAttribute.countOfCategories]);
+            }
             int[][] result = resultList.ToArray();
             foreach (DataRow row in table.Rows)
             {
                 if (kl)
-                    result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
+                    //result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
+                    result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
                 else
-                    result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
+                    //result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
+                    result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
             }
             return result;
         }
