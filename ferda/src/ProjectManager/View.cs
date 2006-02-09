@@ -728,7 +728,8 @@ namespace Ferda {
                         lastBox = findSomethingNewLast(temporaryFromTop, component);
                     }
 
-                    //TODO make better
+                    createBetterTops(temporaryFromTop, temporaryMaxTop, component, topology);
+
                     int nextTopsMinimum = topsMinimum;
                     foreach (KeyValuePair<IBoxModule, int> oneTop in temporaryFromTop)
                     {
@@ -801,12 +802,84 @@ namespace Ferda {
                 }
             }
 
-            private void goLeftRightForTops(Dictionary<int, List<int>> topologiesTops,
-                Dictionary<IBoxModule, int> fromTop,
-                IBoxModule firstBox,
-                Dictionary<IBoxModule, int> topology)
+            private void createBetterTops(Dictionary<IBoxModule, int> temporaryFromTop, Dictionary<int, int> temporaryMaxTop, List<IBoxModule> component, Dictionary<IBoxModule, int> topology)
             {
+                int maxTop = 0;
+                int maxTopId = 0;
+                foreach (KeyValuePair<int,int> maxTopPair in temporaryMaxTop)
+                {
+                    if (maxTopPair.Value > maxTop)
+                    {
+                        maxTop = maxTopPair.Value;
+                        maxTopId = maxTopPair.Key;
+                    }
+                }
+                for (int i = maxTopId + 1; i < temporaryMaxTop.Keys.Count; i++)
+                {
+                    createBetterTopsOnColumn(temporaryFromTop, component, topology, i, true);
+                }
+                for (int i = maxTopId - 1; i >= 0; i--)
+                {
+                    createBetterTopsOnColumn(temporaryFromTop, component, topology, i, false);
+                }
 
+            }
+
+            private void createBetterTopsOnColumn(Dictionary<IBoxModule, int> temporaryFromTop, List<IBoxModule> component, Dictionary<IBoxModule, int> topology, int columnId, bool left)
+            {
+                SortedList<int, IBoxModule> column = new SortedList<int, IBoxModule>();
+                foreach (KeyValuePair<IBoxModule, int> topologyPairs in topology)
+                {
+                    if (component.Contains(topologyPairs.Key) && topologyPairs.Value == columnId)
+                        column[temporaryFromTop[topologyPairs.Key]] = topologyPairs.Key;
+                }
+
+                for (int i = 0; i < column.Count; i++)
+                {
+                    IBoxModule[] connections;
+                    if (left)
+                        connections = column[i].ConnectionsFrom().ToArray();
+                    else
+                        connections = column[i].ConnectedTo();
+                    int j = 0;
+                    int sum = 0;
+                    foreach (IBoxModule connectedBox in connections)
+                    {
+                        if (component.Contains(connectedBox))
+                        {
+                            sum += temporaryFromTop[connectedBox];
+                            j++;
+                        }
+                    }
+                    if (j > 0)
+                    {
+                        temporaryFromTop[column[i]] = sum / j;
+                    }
+                    else
+                    {
+                        if (i > 0)
+                            temporaryFromTop[column[i]] = temporaryFromTop[column[i - 1]] + 1;
+                    }
+                }
+
+                bool somethingDone = true;
+                while (somethingDone)
+                {
+                    somethingDone = false;
+                    for (int i = 0; i < column.Count - 1; i++)
+                    {
+                        IBoxModule firstBox = column[i];
+                        IBoxModule secondBox = column[i+1];
+                        int firstTop = temporaryFromTop[firstBox];
+                        int secondTop = temporaryFromTop[secondBox];
+                        if (firstTop >= secondTop)
+                        {
+                            somethingDone = true;
+                            temporaryFromTop[firstBox] = (firstTop + secondTop) / 2;
+                            temporaryFromTop[secondBox] = temporaryFromTop[firstBox] + 1;
+                        }
+                    }
+                }
             }
 
             /// <summary>

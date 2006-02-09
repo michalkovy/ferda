@@ -12,10 +12,12 @@ Martin
  - dynamic (kontext) help
  - help - uzivatelska napoveda k prostredi
  - AddIn zobrazujici pomoci AcrobatReadru ten PDF help
+ - opravit chyba "delete" funguje i mimo plochu (v propertyGridu...)
 Tomas
  - PDF help ke krabickam databaze, tabulka a sloupec (nesouhlasim)
  - dokumentace pridavani novych krabicek (za sebe: mam to hotovy, Michal to musi dopsat a treba Alex prelozit)
  - ChiSquare quantifier ... bug reported to Karby
+ - Co dela vlastnost "categories" u dynamickych atributu?! - zrejme odstranit
 Sasa
  - overit a dodelat poradne funkcnost vsech tasku
  - CF, SDCF kvantifikatory ... doimplementovat vypocty (??)
