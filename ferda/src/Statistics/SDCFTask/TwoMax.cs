@@ -8,7 +8,7 @@ namespace Ferda.Statistics.SDCFTask
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return Common.Functions.Max(quantifierSetting.secondContingencyTableRows);
         }
 
         public override string getTaskType(Ice.Current current__)
