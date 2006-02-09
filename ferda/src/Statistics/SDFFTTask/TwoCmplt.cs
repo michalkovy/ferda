@@ -8,7 +8,16 @@ namespace Ferda.Statistics.SDFFTTask
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
-            throw new Exception("The method or operation is not implemented.");
+            //a/(a+c)
+            return
+                (float)(
+                quantifierSetting.secondContingencyTableRows[0][0]
+                )
+                /
+                (float)(
+                quantifierSetting.secondContingencyTableRows[0][0] +
+                quantifierSetting.secondContingencyTableRows[1][0]
+                );
         }
 
         public override string getTaskType(Ice.Current current__)
