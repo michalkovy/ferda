@@ -13,10 +13,9 @@ chyba Netronu, tak na to seru)
  - help - uzivatelska napoveda k prostredi
  - AddIn zobrazujici pomoci AcrobatReadru ten PDF help
 Tomas
- - PDF help ke krabickam databaze, tabulka a sloupec (nesouhlasim ja o tom vubec nic netusim, vubec nevim jak by mel vypadat ten TeX souboru i odkazy do pdfka, takze aspon tohle nekdo udela, ja pak udelam patricne konfiguraky)
+ - PDF help ke krabickam databaze, tabulka a sloupec (nesouhlasim ja o tom vubec nic netusim, vubec nevim jak by mel vypadat ten TeX souboru i odkazy do pdfka, takze aspon tohle nekdo udela, ja pak udelam patricne konfiguraky; navic se mi podsouva neco, co mel delat nekdo jinej)
  - dokumentace pridavani novych krabicek (za sebe: mam to hotovy, Michal to musi dopsat a treba Alex prelozit)
  - ChiSquare quantifier ... bug reported to Karby
- - Co dela vlastnost "categories" u dynamickych atributu?! - zrejme odstranit
  - rozchodit BMI krabicku
  - pripomen, ze musime vyresit NDoc - doopravdy je .dll ndocu v NAnt (jen musis hledat)
 Sasa

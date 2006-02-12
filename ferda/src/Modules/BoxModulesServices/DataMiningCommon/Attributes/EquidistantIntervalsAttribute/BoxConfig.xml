@@ -25,15 +25,6 @@
       <MoreThanOne>false</MoreThanOne>
     </Socket>
     <Socket>
-      <Name>Categories</Name>
-      <SocketTypes>
-        <BoxType>
-          <FunctionIceId>::Ferda::Modules::CategoriesTInterface</FunctionIceId>
-        </BoxType>
-      </SocketTypes>
-      <MoreThanOne>false</MoreThanOne>
-    </Socket>
-    <Socket>
       <Name>Lenght</Name>
       <SocketTypes>
         <BoxType>
@@ -112,13 +103,6 @@
       <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
       <Visible>true</Visible>
       <ReadOnly>false</ReadOnly>
-    </Property>
-    <Property>
-      <Name>Categories</Name>
-      <TypeClassIceId>::Ferda::Modules::CategoriesT</TypeClassIceId>
-      <CategoryName>Categories</CategoryName>
-      <Visible>true</Visible>
-      <ReadOnly>true</ReadOnly>
     </Property>
     <Property>
       <Name>Lenght</Name>

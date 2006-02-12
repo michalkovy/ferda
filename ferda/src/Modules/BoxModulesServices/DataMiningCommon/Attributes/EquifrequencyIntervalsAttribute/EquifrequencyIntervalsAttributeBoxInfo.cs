@@ -42,8 +42,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 			EquifrequencyIntervalsAttributeFunctionsI Func = (EquifrequencyIntervalsAttributeFunctionsI)boxModule.FunctionsIObj;
 			switch (propertyName)
 			{
-                case "Categories":
-                    return new Ferda.Modules.CategoriesTI(Func.GetGeneratedAttribute().CategoriesStruct);
+                //case "Categories":
+                //    return new Ferda.Modules.CategoriesTI(Func.GetGeneratedAttribute().CategoriesStruct);
 				case "IncludeNullCategory":
                     return new Ferda.Modules.StringTI(Func.GetGeneratedAttribute().IncludeNullCategoryName);
 				default:
