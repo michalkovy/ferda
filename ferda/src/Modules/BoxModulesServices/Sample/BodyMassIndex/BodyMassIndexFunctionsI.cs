@@ -157,23 +157,23 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// </listheader>
         /// <item>
         /// <term>&lt; 15 </term>
-        /// <description><b>Extremely underweight</b>; vyz·bl· postava</description>
+        /// <description><b>Extremely underweight</b>; vyz√°bl√° postava</description>
         /// </item>
         /// <item>
         /// <term>15 - 20</term>
-        /// <description><b>Underweight</b>; huben· postava</description>
+        /// <description><b>Underweight</b>; huben√° postava</description>
         /// </item>
         /// <item>
         /// <term>20 - 25</term>
-        /// <description><b>Normal</b>; norm·lnÌ postava</description>
+        /// <description><b>Normal</b>; norm√°ln√≠ postava</description>
         /// </item>
         /// <item>
         /// <term>25 - 30</term>
-        /// <description><b>Overweight</b>; postava s nadv·hou</description>
+        /// <description><b>Overweight</b>; postava s nadv√°hou</description>
         /// </item>
         /// <item>
         /// <term>&gt; 30</term>
-        /// <description><b>Obese</b>; obÈznÌ postava</description>
+        /// <description><b>Obese</b>; ob√©zn√≠ postava</description>
         /// </item>
         /// </list>
         /// </remarks>

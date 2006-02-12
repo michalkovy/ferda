@@ -67,9 +67,9 @@ namespace Ferda.FrontEnd.Menu
             str.Append("\n\n"); 
             str.Append(resManager.GetString("AboutDialogDevelopers"));
             str.Append("\nAlexander Kuzmin:\tAddIns, Modules for Interaction");
-            str.Append("\nMichal Kov·Ë:\tProject Manager, Modules Manager");
-            str.Append("\nTom·ö Kucha¯:\tImplementation of boxes");
-            str.Append("\nMartin Ralbovsk˝:\tFrontEnd");
+            str.Append("\nMichal Kov√°ƒç:\tProject Manager, Modules Manager");
+            str.Append("\nTom√°≈° Kucha≈ô:\tImplementation of boxes");
+            str.Append("\nMartin Ralbovsk√Ω:\tFrontEnd");
 
             this.RTBDescription.Text = str.ToString();
             

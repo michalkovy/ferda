@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <project name="Ferda Config Generator" default="build" basedir=".">
 	<description>Ferda Config Generator</description>
 	<target name="build" description="Build Config Generator">
@@ -22,7 +22,7 @@
 	<target name="clean">
 		<delete failonerror="false">
 			<fileset basedir="${utils.dir}">
-				<include name="FerdaUtilsConfigGenerator.exe*"/>
+				<include name="FerdaUtilsConfigGenerator.*"/>
 			</fileset>
 		</delete>
 	</target>

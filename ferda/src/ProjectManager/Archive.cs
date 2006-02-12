@@ -1,3 +1,23 @@
+// Archive.cs - Archive of boxes in project
+//
+// Author: Michal Kováč <michal.kovac.develop@centrum.cz>
+//
+// Copyright (c) 2005 Michal Kováč 
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using Ferda.Modules;
 using Ferda.ModulesManager;
@@ -38,6 +58,10 @@ namespace Ferda {
 				this.views = views;
 			}
 			
+            /// <summary>
+            /// Adds categorie and labels of box <paramref name="box"/> to class structures
+            /// </summary>
+            /// <param name="box">A box</param>
 			private void addBoxCategories(IBoxModule box)
 			{
 				IBoxModuleFactoryCreator creator = box.MadeInCreator;
@@ -90,7 +114,12 @@ namespace Ferda {
                     boxesByProjectIdentifier.Add(box.ProjectIdentifier,box);
 				}
             }
-			
+
+            /// <summary>
+            /// Removes categorie and labels of box <paramref name="box"/> from class structures
+            /// if there are no other box which have the same category or label
+            /// </summary>
+            /// <param name="box">A box</param>
 			private void removeBoxCategories(IBoxModule box)
 			{
 				IBoxModuleFactoryCreator creator = box.MadeInCreator;
@@ -115,6 +144,13 @@ namespace Ferda {
 				}
 			}
 			
+            /// <summary>
+            /// Adds box module with specified project identifier
+            /// </summary>
+            /// <param name="box">An <see cref="T:Ferda.ModulesManager.IBoxModule"/>
+            /// representation of box</param>
+            /// <param name="projectIdentifier">An integer representing unicate
+            /// identifier in project</param>
 			protected internal void AddWithIdentifier(IBoxModule box, int projectIdentifier)
 			{
 				if(!boxes.Contains(box))
@@ -184,14 +220,15 @@ namespace Ferda {
             }
 
 			/// <summary>
-			/// Lists boxes with type <paramref name="archiveBoxType"/>
+            /// Lists boxes with type specified by <paramref name="boxCategory"/>
+            /// and <paramref name="boxLabel"/>
 			/// </summary>
 			/// <returns>An array of <see cref="T:Ferda.ModulesManager.IBoxModule"/>
 			/// representing boxes with type <paramref name="archiveBoxType"/>
 			/// </returns>
             /// <param name="boxCategory">A string representation
 			/// of category of box. If null or empty then returns all.</param>
-            /// <param name="archiveBoxType">A string representation
+            /// <param name="boxLabel">A string representation
             /// of label of box. If null or empty then returns all.</param>
             public IBoxModule[] ListBoxesWithType(string boxCategory, string boxLabel) {
                 if (String.IsNullOrEmpty(boxLabel))
