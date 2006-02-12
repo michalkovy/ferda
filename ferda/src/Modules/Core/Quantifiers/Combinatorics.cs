@@ -1,6 +1,6 @@
 /*
  * 
- * Author: Tom� Karban <karby@matfyz.cz>
+ * Author: Tomáš Karban <karby@matfyz.cz>
  * 
  */
 

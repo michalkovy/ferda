@@ -1,6 +1,6 @@
 /*
  * 
- * Vych·zÌ z kÛdu Tom·öe Karbana <karby@matfyz.cz>
+ * Vych√°z√≠ z k√≥du Tom√°≈°e Karbana <karby@matfyz.cz>
  * 
  */
 

@@ -6,40 +6,40 @@ namespace Ferda.Modules.Boxes.Sample
 {
     /// <summary>
     /// <para>
-    /// Tento èlánek popisuje postup, jakım lze relativnì snadno pøidat 
-    /// vlastní krabièku do systému „Ferda“. Tento èlánek popisuje postup 
-    /// práce ve vıvojovém prostøedí Microsoft Visual Studia 2005 za pouití
-    /// jazyka C# verze 2.0. Analogicky lze pouít i jiná prostøedí a jazyky
-    /// podporované platformou .NET nebo ICE.
+    /// Tento ÄlÃ¡nek popisuje postup, jakÃ½m lze relativnÄ› snadno pÅ™idat 
+    /// vlastnÃ­ krabiÄku do systÃ©mu â€Ferdaâ€œ. Tento ÄlÃ¡nek popisuje postup 
+    /// prÃ¡ce ve vÃ½vojovÃ©m prostÅ™edÃ­ Microsoft Visual Studia 2005 za pouÅ¾itÃ­
+    /// jazyka C# verze 2.0. Analogicky lze pouÅ¾Ã­t i jinÃ¡ prostÅ™edÃ­ a jazyky
+    /// podporovanÃ© platformou .NET nebo ICE.
     /// </para>
     /// </summary>
     /// <remarks>
-    /// <b>Prostøedky</b>
-    /// <para>Potøebné nástroje
+    /// <b>ProstÅ™edky</b>
+    /// <para>PotÅ™ebnÃ© nÃ¡stroje
     /// <list type="bullet">
     /// <item>
     /// <term><see href="http://www.zeroc.com">Ice</see></term>
     /// <description>
-    /// Na stroji, kde chcete pouštìt Ferdu musí bıt Ice nainstalováno.
-    /// Dále budeme pøi implementaci krabièek potøebovat utilitu <b>slice2cs</b>,
-    /// která bude generovat C# kód z našich slice návrhù krabièek (viz. dále).
-    /// V neposlední øadì budeme potøebovat pøi buildìní projektu reference na 
-    /// nìkolik Ice knihoven (viz. dále).
+    /// Na stroji, kde chcete pouÅ¡tÄ›t Ferdu musÃ­ bÃ½t Ice nainstalovÃ¡no.
+    /// DÃ¡le budeme pÅ™i implementaci krabiÄek potÅ™ebovat utilitu <b>slice2cs</b>,
+    /// kterÃ¡ bude generovat C# kÃ³d z naÅ¡ich slice nÃ¡vrhÅ¯ krabiÄek (viz. dÃ¡le).
+    /// V neposlednÃ­ Å™adÄ› budeme potÅ™ebovat pÅ™i buildÄ›nÃ­ projektu reference na 
+    /// nÄ›kolik Ice knihoven (viz. dÃ¡le).
     /// </description>
     /// </item>
     /// </list>
     /// </para>
-    /// <para>Potøebné reference
+    /// <para>PotÅ™ebnÃ© reference
     /// <list type="bullet">
     /// <item>
     /// <term>FerdaBase.dll</term>
     /// <description>
     /// <para>
-    /// Tato knihovna obsahuje datové struktury a datové typy, se kterımi 
-    /// systém Ferda pracuje, ...
+    /// Tato knihovna obsahuje datovÃ© struktury a datovÃ© typy, se kterÃ½mi 
+    /// systÃ©m Ferda pracuje, ...
     /// </para>
     /// <para>
-    /// Tato knihovna je distribuována spolu s Ferdou.
+    /// Tato knihovna je distribuovÃ¡na spolu s Ferdou.
     /// </para>
     /// </description>
     /// </item>
@@ -47,15 +47,15 @@ namespace Ferda.Modules.Boxes.Sample
     /// <term>FerdaServerBase.dll</term>
     /// <description>
     /// <para>
-    /// Mimo jiné obsahuje tøídu <see cref="T:Ferda.Modules.BoxModuleI"/>, která je 
-    /// nezbytná pro implementaci krabièky ... implementuje toti rozhraní pro komunikaci
+    /// Mimo jinÃ© obsahuje tÅ™Ã­du <see cref="T:Ferda.Modules.BoxModuleI"/>, kterÃ¡ je 
+    /// nezbytnÃ¡ pro implementaci krabiÄky ... implementuje totiÅ¾ rozhranÃ­ pro komunikaci
     /// s ModulesManagerem a ProjectManagerem (viz. dokumentace k Architekture Ferdy).
-    /// Pro implementaci novıch krabièek je proto nezbytná implementace interface 
-    /// <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>. Tato knihovna obsahuje øadu pomocnıch 
-    /// tøíd o kterıch budeme hovoøit pozdìji.
+    /// Pro implementaci novÃ½ch krabiÄek je proto nezbytnÃ¡ implementace interface 
+    /// <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>. Tato knihovna obsahuje Å™adu pomocnÃ½ch 
+    /// tÅ™Ã­d o kterÃ½ch budeme hovoÅ™it pozdÄ›ji.
     /// </para>
     /// <para>
-    /// Tato knihovna je distribuována spolu s Ferdou.
+    /// Tato knihovna je distribuovÃ¡na spolu s Ferdou.
     /// </para>
     /// </description>
     /// </item>
@@ -63,11 +63,11 @@ namespace Ferda.Modules.Boxes.Sample
     /// <term>FerdaBoxInterfaces.dll</term>
     /// <description>
     /// <para>
-    /// Obsahuje kód vygenerovanı ze slice návrhù krabièek distribuovanıch s Ferdou 
-    /// tj. tato knihovna je nezbytná pokud chcete volat funkce tìchto krabièek.
+    /// Obsahuje kÃ³d vygenerovanÃ½ ze slice nÃ¡vrhÅ¯ krabiÄek distribuovanÃ½ch s Ferdou 
+    /// tj. tato knihovna je nezbytnÃ¡ pokud chcete volat funkce tÄ›chto krabiÄek.
     /// </para>
     /// <para>
-    /// Tato knihovna je distribuována spolu s Ferdou.
+    /// Tato knihovna je distribuovÃ¡na spolu s Ferdou.
     /// </para>
     /// </description>
     /// </item>
@@ -75,10 +75,10 @@ namespace Ferda.Modules.Boxes.Sample
     /// <term>icecs.dll</term>
     /// <description>
     /// <para>
-    /// Knihovna pro práci s Ice v jazyce C#.
+    /// Knihovna pro prÃ¡ci s Ice v jazyce C#.
     /// </para>
     /// <para>
-    /// Tato knihovna je distribuována mj. s Ice.
+    /// Tato knihovna je distribuovÃ¡na mj. s Ice.
     /// </para>
     /// </description>
     /// </item>
@@ -86,108 +86,108 @@ namespace Ferda.Modules.Boxes.Sample
     /// <term>iceboxcs.dll</term>
     /// <description>
     /// <para>
-    /// Píšete-li vlastní slubu, v ni pobìí Vámi vytvoøené krabièky (postup viz. níe) 
-    /// implementujete abstraktní tøídu <see cref="T:Ferda.Modules.FerdaServiceI"/>, která 
-    /// zase implementuje interface IceBox.Service - Ten je definován v iceboxcs.dll.
+    /// PÃ­Å¡ete-li vlastnÃ­ sluÅ¾bu, v niÅ¾ pobÄ›Å¾Ã­ VÃ¡mi vytvoÅ™enÃ© krabiÄky (postup viz. nÃ­Å¾e) 
+    /// implementujete abstraktnÃ­ tÅ™Ã­du <see cref="T:Ferda.Modules.FerdaServiceI"/>, kterÃ¡ 
+    /// zase implementuje interface IceBox.Service - Ten je definovÃ¡n v iceboxcs.dll.
     /// </para>
     /// <para>
-    /// Tato knihovna je distribuována mj. s Ice.
+    /// Tato knihovna je distribuovÃ¡na mj. s Ice.
     /// </para>
     /// </description>
     /// </item>
     /// </list>
     /// </para>
-    /// <b>Implementace krabièky</b>
+    /// <b>Implementace krabiÄky</b>
     /// <para>
-    /// Na krabièku (nìkdy té BoxModule nebo jen Module) se mùeme dívat z dvou rùznıch
-    /// pohledù.
+    /// Na krabiÄku (nÄ›kdy tÃ©Å¾ BoxModule nebo jen Module) se mÅ¯Å¾eme dÃ­vat z dvou rÅ¯znÃ½ch
+    /// pohledÅ¯.
     /// <list type="number">
     /// <item>
-    /// <term>Krabièka z pohledu Project Manageru a Modules Manageru</term>
+    /// <term>KrabiÄka z pohledu Project Manageru a Modules Manageru</term>
     /// <description>
     /// <para>
-    /// Kadá krabièka musí implementovat øadu funkcí, které umoní Modules (nìkdy Project)
-    /// Manageru zprostøedkovávat rùzné informace/data a funkcionalitu Front-Endu (nìkdy jinım 
-    /// krabièkám). Pøíkladem takovıch funkcí mohou bıt funkce pro získání seznamu a popisu 
-    /// vlastností (property) a zásuvek (socket) nebo napøíklad labelu krabièky èi nápovìdy 
-    /// ke krabièce atd. Zájemci se mohou podívat napøíklad na následující slice návrhy 
+    /// KaÅ¾dÃ¡ krabiÄka musÃ­ implementovat Å™adu funkcÃ­, kterÃ© umoÅ¾nÃ­ Modules (nÄ›kdy Project)
+    /// Manageru zprostÅ™edkovÃ¡vat rÅ¯znÃ© informace/data a funkcionalitu Front-Endu (nÄ›kdy jinÃ½m 
+    /// krabiÄkÃ¡m). PÅ™Ã­kladem takovÃ½ch funkcÃ­ mohou bÃ½t funkce pro zÃ­skÃ¡nÃ­ seznamu a popisu 
+    /// vlastnostÃ­ (property) a zÃ¡suvek (socket) nebo napÅ™Ã­klad labelu krabiÄky Äi nÃ¡povÄ›dy 
+    /// ke krabiÄce atd. ZÃ¡jemci se mohou podÃ­vat napÅ™Ã­klad na nÃ¡sledujÃ­cÃ­ slice nÃ¡vrhy 
     /// <c>Ferda.Modules.BoxModule</c>, <c>Ferda.Modules.BoxModuleFactory</c> a 
-    /// <c>Ferda.Modules.BoxModuleFactoryCreator</c>; pøípadnì pøímo na dokumentaci k implementaci 
-    /// tìchto návrhù (FerdaServerBase.dll) <see cref="T:Ferda.Modules.BoxModuleI"/>, 
+    /// <c>Ferda.Modules.BoxModuleFactoryCreator</c>; pÅ™Ã­padnÄ› pÅ™Ã­mo na dokumentaci k implementaci 
+    /// tÄ›chto nÃ¡vrhÅ¯ (FerdaServerBase.dll) <see cref="T:Ferda.Modules.BoxModuleI"/>, 
     /// <see cref="T:Ferda.Modules.BoxModuleFactoryI"/> a 
     /// <see cref="T:Ferda.Modules.BoxModuleFactoryCreatorI"/>.
     /// </para>
     /// <para>
-    /// Bude zde popsán nejsnadnìjší a nejefektivnìjší zpùsob jak tutu funkcionalitu 
-    /// implementovat. Jak ji bylo uvedeno vıše pøíslušné slice návrhy jsou ji 
-    /// implementovány v knihovnì FerdaServerBase.dll, kde je také øada pomocnıch funkcí.
-    /// Zbıvá ovšem implemetnovat interface <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>.
-    /// Ten od nás odstínil nìkteré detaily implementace vıše zmínìnıch slice návrhù.
+    /// Bude zde popsÃ¡n nejsnadnÄ›jÅ¡Ã­ a nejefektivnÄ›jÅ¡Ã­ zpÅ¯sob jak tutu funkcionalitu 
+    /// implementovat. Jak jiÅ¾ bylo uvedeno vÃ½Å¡e pÅ™Ã­sluÅ¡nÃ© slice nÃ¡vrhy jsou jiÅ¾ 
+    /// implementovÃ¡ny v knihovnÄ› FerdaServerBase.dll, kde je takÃ© Å™ada pomocnÃ½ch funkcÃ­.
+    /// ZbÃ½vÃ¡ ovÅ¡em implemetnovat interface <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>.
+    /// Ten od nÃ¡s odstÃ­nil nÄ›kterÃ© detaily implementace vÃ½Å¡e zmÃ­nÄ›nÃ½ch slice nÃ¡vrhÅ¯.
     /// </para>
     /// <para>
-    /// Interface <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> mùete imlementovat 
-    /// pøímo, co je ovšem ponìkud zdlouhavı proces, nebo je zde potøeba øešit napøíklad
-    /// lokalizaci apod. Proto zde popíšeme daleko rychlejší zpùsob. Je pøipraveno nìkolik
-    /// tøíd (rovnì ve FerdaServerBase.dll), pomocí nich budete mnoha práce zproštìni.
-    /// Budete muset pouze implementovat abstraktní tøídu <see cref="T:Ferda.Modules.Boxes.BoxInfo"/>
-    /// tj. asi 6 funkcí a bude-li to tøeba pøetííte nìkolik virtuálních funkcí:
+    /// Interface <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> mÅ¯Å¾ete imlementovat 
+    /// pÅ™Ã­mo, coÅ¾ je ovÅ¡em ponÄ›kud zdlouhavÃ½ proces, neboÅ¥ je zde potÅ™eba Å™eÅ¡it napÅ™Ã­klad
+    /// lokalizaci apod. Proto zde popÃ­Å¡eme daleko rychlejÅ¡Ã­ zpÅ¯sob. Je pÅ™ipraveno nÄ›kolik
+    /// tÅ™Ã­d (rovnÄ›Å¾ ve FerdaServerBase.dll), pomocÃ­ nichÅ¾ budete mnoha prÃ¡ce zproÅ¡tÄ›ni.
+    /// Budete muset pouze implementovat abstraktnÃ­ tÅ™Ã­du <see cref="T:Ferda.Modules.Boxes.BoxInfo"/>
+    /// tj. asi 6 funkcÃ­ a bude-li to tÅ™eba pÅ™etÃ­Å¾Ã­te nÄ›kolik virtuÃ¡lnÃ­ch funkcÃ­:
     /// <list type="table">
     /// <item>
     /// <term><see cref="M:Ferda.Modules.Boxes.BoxInfo.GetPropertyObjectFromInterface(System.String,Ice.ObjectPrx)"/></term>
     /// <description>
-    /// Implementujte, pokud pouíváte „nestadardní“ datovı typ pro vlastnost/zásuvku. 
-    /// Implicitnì vrací null. TODO
+    /// Implementujte, pokud pouÅ¾Ã­vÃ¡te â€nestadardnÃ­â€œ datovÃ½ typ pro vlastnost/zÃ¡suvku. 
+    /// ImplicitnÄ› vracÃ­ null. TODO
     /// </description>
     /// </item>
     /// <item>
     /// <term><see cref="M:Ferda.Modules.Boxes.BoxInfo.GetReadOnlyPropertyValue(System.String,Ferda.Modules.BoxModuleI)"/></term>
     /// <description>
-    /// Implementujte, pokud Vaše krabièka má nìjakou readonly vlastnost 
-    /// (zde implementujete její vıpoèet). Není-li implementována pøestoe 
-    /// je potøeba, je vyvolána vıjimka.
+    /// Implementujte, pokud VaÅ¡e krabiÄka mÃ¡ nÄ›jakou readonly vlastnost 
+    /// (zde implementujete jejÃ­ vÃ½poÄet). NenÃ­-li implementovÃ¡na pÅ™estoÅ¾e 
+    /// je potÅ™eba, je vyvolÃ¡na vÃ½jimka.
     /// </description>
     /// </item>
     /// <item>
     /// <term><see cref="M:Ferda.Modules.Boxes.BoxInfo.IsPropertySet(System.String,Ferda.Modules.PropertyValue)"/></term>
     /// <description>
-    /// Implementujte, pokud pouíváte „nestadardní“ datovı typ (kterı nepouíváte 
-    /// pouze jako readonly vlastnost). Umoní (nejen) Front-Endu rozpoznat, kdy 
-    /// je vlastnost ji nastavena. Implicitnì vrací <c>true</c>.
+    /// Implementujte, pokud pouÅ¾Ã­vÃ¡te â€nestadardnÃ­â€œ datovÃ½ typ (kterÃ½ nepouÅ¾Ã­vÃ¡te 
+    /// pouze jako readonly vlastnost). UmoÅ¾nÃ­ (nejen) Front-Endu rozpoznat, kdy 
+    /// je vlastnost jiÅ¾ nastavena. ImplicitnÄ› vracÃ­ <c>true</c>.
     /// </description>
     /// </item>
     /// <item>
     /// <term><see cref="M:Ferda.Modules.Boxes.BoxInfo.GetDynamicHelpItems(System.String[],Ferda.Modules.BoxModuleI)"/></term>
     /// <description>
-    /// Tato funkce implicitnì vrací všechny definované poloky dynamické (v tuto 
-    /// chvíli ještì nedynamické) nápovìdy. Chcete-li, aby se obsah nápovedy 
-    /// dynamicky mìnil podle vnitøního stavu krabièky, pøetìte tuto funkci.
+    /// Tato funkce implicitnÄ› vracÃ­ vÅ¡echny definovanÃ© poloÅ¾ky dynamickÃ© (v tuto 
+    /// chvÃ­li jeÅ¡tÄ› nedynamickÃ©) nÃ¡povÄ›dy. Chcete-li, aby se obsah nÃ¡povedy 
+    /// dynamicky mÄ›nil podle vnitÅ™nÃ­ho stavu krabiÄky, pÅ™etÄ›Å¾te tuto funkci.
     /// </description>
     /// </item>
     /// <item>
     /// <term><see cref="M:Ferda.Modules.Boxes.BoxInfo.RunAction(System.String,Ferda.Modules.BoxModuleI)"/></term>
     /// <description>
-    /// Implementujte, pokud má Vaše krabièka nìjaké 
+    /// Implementujte, pokud mÃ¡ VaÅ¡e krabiÄka nÄ›jakÃ© 
     /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Actions">akce</see>
-    /// (které uivatel explicitnì volá z Front-Endu). Není-li implementována 
-    /// pøestoe je potøeba, je vyvolána vyvolá vıjimka.
+    /// (kterÃ© uÅ¾ivatel explicitnÄ› volÃ¡ z Front-Endu). NenÃ­-li implementovÃ¡na 
+    /// pÅ™estoÅ¾e je potÅ™eba, je vyvolÃ¡na vyvolÃ¡ vÃ½jimka.
     /// </description>
     /// </item>
     /// </list>
-    /// K abstraktním i vıše uvedenım virtuálním funkcím jsou v programátorské nápovìdì 
-    /// uvedeny pøíklady, jak je implementovat, proto je zde nebudu dále komentovat.
-    /// Nezbytnım krokem pøi implementaci interfacu <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>
-    /// s pomocí abstraktní tøídy <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> je vytvoøení
-    /// konfiguraèních a lokalizaèních XML souborù a jejich správné umístìní v adresáøové
-    /// struktuøe Ferdy (TODO zdokumentovat).
+    /// K abstraktnÃ­m i vÃ½Å¡e uvedenÃ½m virtuÃ¡lnÃ­m funkcÃ­m jsou v programÃ¡torskÃ© nÃ¡povÄ›dÄ› 
+    /// uvedeny pÅ™Ã­klady, jak je implementovat, proto je zde nebudu dÃ¡le komentovat.
+    /// NezbytnÃ½m krokem pÅ™i implementaci interfacu <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>
+    /// s pomocÃ­ abstraktnÃ­ tÅ™Ã­dy <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> je vytvoÅ™enÃ­
+    /// konfiguraÄnÃ­ch a lokalizaÄnÃ­ch XML souborÅ¯ a jejich sprÃ¡vnÃ© umÃ­stÄ›nÃ­ v adresÃ¡Å™ovÃ©
+    /// struktuÅ™e Ferdy (TODO zdokumentovat).
     /// </para>
-    /// <b>Konfiguraèní a lokalizaèní XML soubory</b>
+    /// <b>KonfiguraÄnÃ­ a lokalizaÄnÃ­ XML soubory</b>
     /// <para>
-    /// Konfiguraèní a lokalizaèní soubory vytváøejte podle pøíslušnıch XSD schémat 
-    /// a nápovìdy:
+    /// KonfiguraÄnÃ­ a lokalizaÄnÃ­ soubory vytvÃ¡Å™ejte podle pÅ™Ã­sluÅ¡nÃ½ch XSD schÃ©mat 
+    /// a nÃ¡povÄ›dy:
     /// <list type="bullet">
     /// <listheader>
     /// <term>dokumentace</term>
-    /// <description>XSD schémata</description>
+    /// <description>XSD schÃ©mata</description>
     /// </listheader>
     /// <item>
     /// <term><see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box"/></term>
@@ -198,34 +198,34 @@ namespace Ferda.Modules.Boxes.Sample
     /// <description>src/Modules/Core/Boxes/boxLocalization.xsd</description>
     /// </item>
     /// </list>
-    /// Pøi konstrukci objektu <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> se tyto
-    /// XML kofiguraèní resp. lokalizaèní soubory deserealizují. Pomocí tìchto dat 
-    /// je imlementována øada funkcí z <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>.
+    /// PÅ™i konstrukci objektu <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> se tyto
+    /// XML kofiguraÄnÃ­ resp. lokalizaÄnÃ­ soubory deserealizujÃ­. PomocÃ­ tÄ›chto dat 
+    /// je imlementovÃ¡na Å™ada funkcÃ­ z <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>.
     /// </para>
     /// </description>
     /// </item>
     /// <item>
-    /// <term>Krabièka z pohledu ostatních krabièek</term>
+    /// <term>KrabiÄka z pohledu ostatnÃ­ch krabiÄek</term>
     /// <description>
     /// <para>
-    /// Krabièka z poledu ostatních krabièek poskytuje urèitou funkci resp. funkce (vlastní 
-    /// funkcionalita krabièky). V tuto chvíli je vhodné se podívat na dokumentaci 
-    /// k formalizmu principu zapojování krabièek do zásuvek (TODO Michal). Na tomto místì uvedu jen 
-    /// velmi struèné a nepøesné (avšak v tuto chvili snad postaèující) vysvìtlení:
-    /// kadá krabièka implementuje urèitı interface (tj funkci/mnoinu funkcí) resp. 
-    /// nìkolik intefacu. Tyto interface jsou (vnitøním mechanismem Ice) pojmenovány 
-    /// a zásuvky (sokety) pak uvedou 
+    /// KrabiÄka z poledu ostatnÃ­ch krabiÄek poskytuje urÄitou funkci resp. funkce (vlastnÃ­ 
+    /// funkcionalita krabiÄky). V tuto chvÃ­li je vhodnÃ© se podÃ­vat na dokumentaci 
+    /// k formalizmu principu zapojovÃ¡nÃ­ krabiÄek do zÃ¡suvek (TODO Michal). Na tomto mÃ­stÄ› uvedu jen 
+    /// velmi struÄnÃ© a nepÅ™esnÃ© (avÅ¡ak v tuto chvili snad postaÄujÃ­cÃ­) vysvÄ›tlenÃ­:
+    /// kaÅ¾dÃ¡ krabiÄka implementuje urÄitÃ½ interface (tj funkci/mnoÅ¾inu funkcÃ­) resp. 
+    /// nÄ›kolik intefacu. Tyto interface jsou (vnitÅ™nÃ­m mechanismem Ice) pojmenovÃ¡ny 
+    /// a zÃ¡suvky (sokety) pak uvedou 
     /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.BoxType.FunctionIceId">
-    /// seznam jmen interfacu</see>, které akceptují.
+    /// seznam jmen interfacu</see>, kterÃ© akceptujÃ­.
     /// </para>
     /// <para>
-    /// Uveïme na tomto místì jednoduchı pøíklad toho, jak implementovat 
-    /// funkcionalitu krabièky z pohledu ostatních krabièek. Nejprve je tøeba 
-    /// vytvoøit slice návrh (interface) a definovat tak funkci/mnoinu funkcí, 
-    /// které krabièka implementuje. V následujícím pøíkladu definujeme dva interfacei.
-    /// Naše krabièka, která pak bude implementovat intervace 
-    /// <c>MyBoxModule.MyBoxModuleFunctions</c> bude moci bıt zasunuta do zásuvek 
-    /// akceptujících alespoò jeden z následujícíh (pojmenovanych) interfacu: 
+    /// UveÄme na tomto mÃ­stÄ› jednoduchÃ½ pÅ™Ã­klad toho, jak implementovat 
+    /// funkcionalitu krabiÄky z pohledu ostatnÃ­ch krabiÄek. Nejprve je tÅ™eba 
+    /// vytvoÅ™it slice nÃ¡vrh (interface) a definovat tak funkci/mnoÅ¾inu funkcÃ­, 
+    /// kterÃ© krabiÄka implementuje. V nÃ¡sledujÃ­cÃ­m pÅ™Ã­kladu definujeme dva interfacei.
+    /// NaÅ¡e krabiÄka, kterÃ¡ pak bude implementovat intervace 
+    /// <c>MyBoxModule.MyBoxModuleFunctions</c> bude moci bÃ½t zasunuta do zÃ¡suvek 
+    /// akceptujÃ­cÃ­ch alespoÅˆ jeden z nÃ¡sledujÃ­cÃ­h (pojmenovanych) interfacu: 
     /// <c>::MyBoxModule::MyBoxModuleFunctionsCore</c>
     /// nebo <c>::MyBoxModule::MyBoxModuleFunctions</c>. 
     /// </para>
@@ -235,58 +235,58 @@ namespace Ferda.Modules.Boxes.Sample
     /// {
     ///     interface MyBoxModuleFunctionsCore
     ///     {
-    ///         // tato funkce vráti øetìzec "Hello World!"
+    ///         // tato funkce vrÃ¡ti Å™etÄ›zec "Hello World!"
     ///         nonmutating string HelloWorld();
     ///     };
     /// 
     /// 	interface MyBoxModuleFunctions extends MyBoxModule::MyBoxModuleFunctionsCore
     /// 	{
-    ///         // tato funkce vrátí vstupní øetìzec (echoString)
+    ///         // tato funkce vrÃ¡tÃ­ vstupnÃ­ Å™etÄ›zec (echoString)
     ///         nonmutating string Echo(string echoString);
     /// 
-    /// 		/* ... další funkce ... */
+    /// 		/* ... dalÅ¡Ã­ funkce ... */
     /// 	};
     /// };
     /// </code>
     /// <para>
-    /// Nyní pomocí utility slie2cs vygenerujeme z našeho slice návrhu 
-    /// (soubor MyBoxModule.ice) C# kód (jeho obsah nás pøíliš/vùbec 
-    /// nemusí zajímat). Postup generování je dobøe popsán k dokumentaci 
-    /// k Ice, zde uvedeme jen nástin a jednoduchı pøíklad:
-    /// Nech cesta ke adresáøi Ice/bin (napø. c:\Ice-3.0.0\bin\") je 
-    /// v cestì (systémová promìnná PATH) pak následujícím pøíkazem 
-    /// (z pøíkazové øádky resp. v shellu) vygenerujeme C# kód z našich
-    /// slice návrhù.
+    /// NynÃ­ pomocÃ­ utility slie2cs vygenerujeme z naÅ¡eho slice nÃ¡vrhu 
+    /// (soubor MyBoxModule.ice) C# kÃ³d (jehoÅ¾ obsah nÃ¡s pÅ™Ã­liÅ¡/vÅ¯bec 
+    /// nemusÃ­ zajÃ­mat). Postup generovÃ¡nÃ­ je dobÅ™e popsÃ¡n k dokumentaci 
+    /// k Ice, zde uvedeme jen nÃ¡stin a jednoduchÃ½ pÅ™Ã­klad:
+    /// NechÅ¥ cesta ke adresÃ¡Å™i Ice/bin (napÅ™. c:\Ice-3.0.0\bin\") je 
+    /// v cestÄ› (systÃ©movÃ¡ promÄ›nnÃ¡ PATH) pak nÃ¡sledujÃ­cÃ­m pÅ™Ã­kazem 
+    /// (z pÅ™Ã­kazovÃ© Å™Ã¡dky resp. v shellu) vygenerujeme C# kÃ³d z naÅ¡ich
+    /// slice nÃ¡vrhÅ¯.
     /// <code>
     /// $ slice2cs [options] slice-files
     /// Options:
-    /// - Argument -IDIR, kde DIR je cesta k *.ice souborùm tj. slice návrhùm, 
-    ///   na které se v našem slice návru odkazujeme pomocí direktivy #include
-	/// - Argument --output-dir je cesta do adresáøe, kam se vısledné C# (*.cs) 
-    ///   soubor/y vygenerují.
+    /// - Argument -IDIR, kde DIR je cesta k *.ice souborÅ¯m tj. slice nÃ¡vrhÅ¯m, 
+    ///   na kterÃ© se v naÅ¡em slice nÃ¡vru odkazujeme pomocÃ­ direktivy #include
+	/// - Argument --output-dir je cesta do adresÃ¡Å™e, kam se vÃ½slednÃ© C# (*.cs) 
+    ///   soubor/y vygenerujÃ­.
     /// Slice-Files:
-	/// - Seznam souborù ke zpracování (vygeneruje *.cs ze zadanıch *.ice)
+	/// - Seznam souborÅ¯ ke zpracovÃ¡nÃ­ (vygeneruje *.cs ze zadanÃ½ch *.ice)
     /// 
-    /// Více z pøíkazové øádky pomocí $ slice2cs --help
+    /// VÃ­ce z pÅ™Ã­kazovÃ© Å™Ã¡dky pomocÃ­ $ slice2cs --help
     /// </code>
-    /// V našem pøípadì tedy:
+    /// V naÅ¡em pÅ™Ã­padÄ› tedy:
     /// <code>
     /// $ mkdir generated
     /// $ slice2cs --output-dir generated MyBoxModule.ice
     /// </code>
     /// </para>
     /// <para>
-    /// Jak ji bylo uvedeno vıše naše krabièka bude implementovat inferface 
+    /// Jak jiÅ¾ bylo uvedeno vÃ½Å¡e naÅ¡e krabiÄka bude implementovat inferface 
     /// <c>MyBoxModule.MyBoxModuleFunctions</c> (chcete-li 
-    /// <c>::MyBoxModule::MyBoxModuleFunctions</c>), toho dosáhneme tak, e 
-    /// vytvoøíme novu tøídu, která bude implementovat abstraktní (vygenerovanou 
-    /// tøídu) <c>MyBoxModuleFunctionsDisp_</c> (jmenuje se stejne jako námi 
-    /// definovanı interface ve slice návrhu + øetìzec "<c>Disp_</c>").
-    /// Povšimnìte si prosím, e tøída implementující funkce krabièky musí 
-    /// rovnì implementovat interface <see cref="T:Ferda.Modules.IFunctions"/>
-    /// (implementuje se vdy stejnì). Zde jen naokraj uvedu, e z modulu 
-    /// (ve slice návrhu) <c>MyBoxModule</c> byl vygenerován stejnojmennı 
-    /// <c>namespace</c> (více v dokumentaci k Ice).
+    /// <c>::MyBoxModule::MyBoxModuleFunctions</c>), toho dosÃ¡hneme tak, Å¾e 
+    /// vytvoÅ™Ã­me novu tÅ™Ã­du, kterÃ¡ bude implementovat abstraktnÃ­ (vygenerovanou 
+    /// tÅ™Ã­du) <c>MyBoxModuleFunctionsDisp_</c> (jmenuje se stejne jako nÃ¡mi 
+    /// definovanÃ½ interface ve slice nÃ¡vrhu + Å™etÄ›zec "<c>Disp_</c>").
+    /// PovÅ¡imnÄ›te si prosÃ­m, Å¾e tÅ™Ã­da implementujÃ­cÃ­ funkce krabiÄky musÃ­ 
+    /// rovnÄ›Å¾ implementovat interface <see cref="T:Ferda.Modules.IFunctions"/>
+    /// (implementuje se vÅ¾dy stejnÄ›). Zde jen naokraj uvedu, Å¾e z modulu 
+    /// (ve slice nÃ¡vrhu) <c>MyBoxModule</c> byl vygenerovÃ¡n stejnojmennÃ½ 
+    /// <c>namespace</c> (vÃ­ce v dokumentaci k Ice).
     /// </para>
     /// <code>
     /// namespace MyBoxModule
@@ -317,7 +317,7 @@ namespace Ferda.Modules.Boxes.Sample
     /// 			return echoString;
     /// 		}
     /// 
-    ///			/* ... další funkce ... */
+    ///			/* ... dalÅ¡Ã­ funkce ... */
     ///		}
     /// }
     /// </code>
@@ -325,12 +325,12 @@ namespace Ferda.Modules.Boxes.Sample
     /// </item>
     /// </list>
     /// </para>
-    /// <b>Registrace krabièky</b>
+    /// <b>Registrace krabiÄky</b>
     /// TODO Michal ... + zdokumentovat tu Service svini :-)
     /// <para>
-    /// Vytvoøte tøídu, která implementuje abstraktní tøídu 
+    /// VytvoÅ™te tÅ™Ã­du, kterÃ¡ implementuje abstraktnÃ­ tÅ™Ã­du 
     /// <see cref="T:Ferda.Modules.FerdaServiceI"/>. K tomu 
-    /// staèí implementovat (triviálnì) jednu její metodu 
+    /// staÄÃ­ implementovat (triviÃ¡lnÄ›) jednu jejÃ­ metodu 
     /// <see cref="M:Ferda.Modules.FerdaServiceI.registerBoxes()"/>.
     /// </para>
     /// <code>
@@ -349,7 +349,7 @@ namespace Ferda.Modules.Boxes.Sample
     /// }
     /// </code>
     /// <para>
-    /// Nyní je potøeba ... tj conf/db/application.xml, odinstalovat + nainstalovat (refresh)
+    /// NynÃ­ je potÅ™eba ... tj conf/db/application.xml, odinstalovat + nainstalovat (refresh)
     /// </para>
     /// </remarks>
     /// <seealso href="http://www.microsoft.com/net/">Microsoft .NET Framework</seealso>

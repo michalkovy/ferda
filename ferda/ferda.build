@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <project name="Ferda" default="all" basedir=".">
 	<description>projekt Ferda</description>
 	<property name="default.build" value="default.build"/>
@@ -70,11 +70,11 @@
 		<if test="${not(help.uptodate)}">
       <ndoc>
         <assemblies basedir="${bin.dir}">
-          <include name="Server/FerdaServerBase.dll"/>
+<!--          <include name="Server/FerdaServerBase.dll"/> -->
           <!--
           <include name="Server/FerdaBoxInterfaces.dll"/>
           -->
-          <include name="Server/FerdaDataMiningCommonBoxes.dll"/>
+<!--          <include name="Server/FerdaDataMiningCommonBoxes.dll"/> -->
           <!--
 						<include name="Server/FerdaLMTasksBoxes.dll"/>
 					-->
@@ -82,7 +82,7 @@
           <include name="FrontEnd/FerdaModulesManager.dll"/>
           <include name="FrontEnd/FerdaProjectManager.dll"/>
 
-          <include name="FrontEnd/FerdaFrontEnd.exe"/>
+<!--          <include name="FrontEnd/FerdaFrontEnd.exe"/> -->
         </assemblies>
         <referencepaths>
           <include name="${bin.dir}"/>
@@ -92,10 +92,10 @@
         <documenters>
           <documenter name="MSDN">
             <property name="OutputDirectory" value="${doc.dir}/programHelp"/>
-            <property name="HtmlHelpName" value="Ferda"/>
+            <property name="HtmlHelpName" value="FerdaForProgrammers"/>
             <!-- <property name="HtmlHelpCompilerFilename" value="hhc.exe"/> -->
             <property name="IncludeFavorites" value="False"/>
-            <property name="Title" value="An NDoc Documented Class Library"/>
+            <property name="Title" value="Documentation of Ferda system for programmers"/>
             <property name="SplitTOCs" value="False"/>
             <property name="DefaulTOC" value=""/>
             <property name="ShowVisualBasic" value="True"/>

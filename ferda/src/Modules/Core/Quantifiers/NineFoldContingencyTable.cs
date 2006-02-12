@@ -14,7 +14,7 @@ namespace Ferda.Modules.Quantifiers
     /// ANTx   |   fx,1    fx,x    fx,0
     /// notANT |   f0,1    f0,x    f0,0
     /// </code>
-    /// See lecture notes doc. Rauch ("Dobıvání znalostí z databází" 2005-2006)
+    /// See lecture notes doc. Rauch ("DobÃ½vÃ¡nÃ­ znalostÃ­ z databÃ¡zÃ­" 2005-2006)
     /// DBI_022_04_4_listopadu/DBI_022_neuplna_inf.ppt
     /// </summary>
     public class NineFoldContingencyTable : ContingencyTable
@@ -263,11 +263,11 @@ namespace Ferda.Modules.Quantifiers
         #region Secured FourFoldTables
         /*
          * Definice: 
-         * Zabezpeèená ètyøpolní tabulka < as, bs, cs, ds > pro matici MX 
-         * s neúplnou informací a pro asociaèní pravidlo Ant ~ Succ je ètyøpolní 
-         * tabulka splòující podmínku : 
-         *  Val(Ant ~ Succ, M) = 1 v kadém doplnìní M matice MX 
-         *  právì kdy ~(as, bs, cs, ds ) = 1.
+         * ZabezpeÄenÃ¡ ÄtyÅ™polnÃ­ tabulka < as, bs, cs, ds > pro matici MX 
+         * s neÃºplnou informacÃ­ a pro asociaÄnÃ­ pravidlo Ant ~ Succ je ÄtyÅ™polnÃ­ 
+         * tabulka splÅˆujÃ­cÃ­ podmÃ­nku : 
+         *  Val(Ant ~ Succ, M) = 1 v kaÅ¾dÃ©m doplnÄ›nÃ­ M matice MX 
+         *  prÃ¡vÄ› kdyÅ¾ ~(as, bs, cs, ds ) = 1.
          * 
          */
 
@@ -301,11 +301,11 @@ namespace Ferda.Modules.Quantifiers
         #region Optimistical FourFoldTables
         /*
          * Definice: 
-         * Optimistická ètyøpolní tabulka < ao, bo, co, do > pro matici MX
-         * s neúplnou informací a pro asociaèní pravidlo Ant ~ Succ je ètyøpolní 
-         * tabulka splòující podmínku : 
-         *  Existuje doplnìní M matice MX tak e Val(Ant ~ Succ, M) = 1 
-         *  právì kdy    ~(ao, bo, co, do ) = 1.
+         * OptimistickÃ¡ ÄtyÅ™polnÃ­ tabulka < ao, bo, co, do > pro matici MX
+         * s neÃºplnou informacÃ­ a pro asociaÄnÃ­ pravidlo Ant ~ Succ je ÄtyÅ™polnÃ­ 
+         * tabulka splÅˆujÃ­cÃ­ podmÃ­nku : 
+         *  Existuje doplnÄ›nÃ­ M matice MX tak Å¾e Val(Ant ~ Succ, M) = 1 
+         *  prÃ¡vÄ› kdyÅ¾    ~(ao, bo, co, do ) = 1.
          * 
          */
         //<f1,1 + f1,X + fX,1 + fX,X; f0,1; 0; 0>

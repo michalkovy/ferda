@@ -19,11 +19,13 @@
 				<include name="System.Xml.dll"/>
 			</references>
 		</csc>
+		<mkdir dir="${path::combine(build.dir,'HelpFiles')}"/>
 	</target>
 	<target name="clean">
 		<delete failonerror="false">
 			<fileset basedir="${build.dir}">
 				<include name="FerdaModulesManager.dll*"/>
+				<include name="HelpFiles/**"/>
 			</fileset>
 		</delete>
 		<delete failonerror="false">
