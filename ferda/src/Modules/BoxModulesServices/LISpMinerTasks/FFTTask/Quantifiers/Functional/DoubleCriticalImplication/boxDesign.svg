@@ -14,9 +14,9 @@
    id="svg1306"
    sodipodi:version="0.32"
    inkscape:version="0.43"
-   sodipodi:docbase="C:\Make\Projekt\svg\4ft"
-   sodipodi:docname="doubleCriticalImplication.svg"
-   inkscape:export-filename="C:\Make\Projekt\svg\4ft\doubleCritImp.png"
+   sodipodi:docbase="C:\Make\Projekt\berlios\ferda\src\Modules\BoxModulesServices\LISpMinerTasks\FFTTask\Quantifiers\Functional\DoubleCriticalImplication"
+   sodipodi:docname="boxDesign.svg"
+   inkscape:export-filename="C:\icon.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -51,8 +51,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="18.21875"
-     inkscape:cx="25.008937"
-     inkscape:cy="16"
+     inkscape:cx="18.422316"
+     inkscape:cy="16.493997"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
@@ -120,7 +120,7 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot1488"
-       transform="matrix(4.34375,0,0,1.652483,-172.7492,12.65834)"
+       transform="matrix(5.10565,0,0,3.372806,-203.4529,-5.839168)"
        style="fill:#ffff00;fill-opacity:1"><flowRegion
          id="flowRegion1490"
          style="fill:url(#linearGradient2395);fill-opacity:1"><rect
@@ -148,49 +148,23 @@
     <rect
        style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:0"
        id="rect3298"
-       width="12"
-       height="1.8867153"
-       x="10"
-       y="20.439108" />
+       width="20"
+       height="4"
+       x="11"
+       y="7" />
     <rect
        style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:0"
-       id="rect5070"
-       width="12"
-       height="2.01055"
-       x="10"
-       y="24" />
-    <text
-       xml:space="preserve"
-       style="font-size:23.86183167px;font-style:normal;font-weight:normal;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="19.96764"
-       y="27.432981"
-       id="text5072"
-       transform="scale(0.848483,1.178574)"><tspan
-         sodipodi:role="line"
-         id="tspan5074"
-         x="19.96764"
-         y="27.432981">&gt;</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:22.32099724px;font-style:normal;font-weight:normal;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="-0.064555168"
-       y="17.749676"
-       id="text1375"
-       transform="scale(1.183312,0.845086)"><tspan
-         sodipodi:role="line"
-         id="tspan1377"
-         x="-0.064555168"
-         y="17.749676">2</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:27.2766571px;font-style:normal;font-weight:normal;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="14.257713"
-       y="15.939607"
-       id="text2252"
-       transform="scale(1.06264,0.941052)"><tspan
-         sodipodi:role="line"
-         id="tspan2254"
-         x="14.257713"
-         y="15.939607">x</tspan></text>
+       id="rect1401"
+       width="20"
+       height="4"
+       x="11"
+       y="14" />
+    <rect
+       style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:0"
+       id="rect1403"
+       width="20"
+       height="4"
+       x="11"
+       y="21" />
   </g>
 </svg>
