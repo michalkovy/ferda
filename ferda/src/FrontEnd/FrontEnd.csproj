@@ -1,0 +1,300 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{205D7BAE-F73D-4B47-B465-E39DDC8D631C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ferda.FrontEnd</RootNamespace>
+    <AssemblyName>FerdaFrontEnd</AssemblyName>
+    <StartupObject />
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>http://localhost/FrontEnd/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationVersion>1.0.0.*</ApplicationVersion>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\FrontEnd\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DocumentationFile>..\..\bin\FrontEnd\FerdaFrontEnd.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DebugSymbols>false</DebugSymbols>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DocumentationFile />
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaModulesManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaProjectManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\FrontEnd\FerdaProjectManager.dll</HintPath>
+    </Reference>
+    <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\FrontEnd\FrontEndAddInHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=2.1.2.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\icecs.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectorCss, Version=0.3.0.24798, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharpVectorCss.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectorObjectModel, Version=0.3.0.24889, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharpVectorObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectorRenderingEngine, Version=0.3.0.24890, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharpVectorRenderingEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectorScripting, Version=0.3.0.39436, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharpVectorScripting.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectorXml, Version=1.0.2197.39435, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharpVectorXml.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\libsrc\DockDotNET\DockDotNET.csproj">
+      <Project>{611CD99D-5C85-49BC-BCD1-CA928A1A186C}</Project>
+      <Name>DockDotNET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\libsrc\NAFGraph\NetronGraphLib.csproj">
+      <Project>{95C388C8-DD59-4993-BCC3-14A0862A24D8}</Project>
+      <Name>NetronGraphLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <InProject>False</InProject>
+      <ProductName>.NET Framework 2.0 Beta</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="BoxExceptionThreadClass.cs" />
+    <Compile Include="Desktop\RenameDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IBoxSelector.cs" />
+    <Compile Include="Localization_cs-CZ.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization_cs-CZ.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization_en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization_en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActionExceptionCatcher.cs" />
+    <Compile Include="Archive\FerdaArchive.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <EmbeddedResource Include="Archive\FerdaArchive.resx">
+      <DependentUpon>FerdaArchive.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Archive\FerdaTreeNode.cs" />
+    <Compile Include="Archive\IArchiveDisplayer.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <None Include="box.bmp" />
+    <Compile Include="BoxExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Desktop\BoxNode.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ContextHelp\FerdaContextHelp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ContextHelp\IContextHelpDisplayer.cs" />
+    <None Include="default.build" />
+    <Compile Include="Desktop\FerdaDesktop.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Desktop\IViewDisplayer.cs" />
+    <Compile Include="Desktop\SVGManager.cs" />
+    <Compile Include="Desktop\FerdaConnector.cs" />
+    <Compile Include="FerdaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FerdaPrescreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FerdaToolBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FrontEndCommon.cs" />
+    <Compile Include="FrontEndConfig.cs" />
+    <Compile Include="IControlsManager.cs" />
+    <Compile Include="IFerdaClipboard.cs" />
+    <Compile Include="IIconProvider.cs" />
+    <Compile Include="Menu\FerdaMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Menu\FerdaPreferencesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu\IDockingManager.cs" />
+    <Compile Include="Menu\ILocalizationManager.cs" />
+    <Compile Include="Menu\IMenuDisplayer.cs" />
+    <Compile Include="NewBox\IBoxModuleFactoryCreatorComparer.cs" />
+    <Compile Include="NewBox\NewBoxControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NewBox\NewBoxNode.cs" />
+    <Compile Include="NewBox\NewBoxTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OutputI.cs" />
+    <Compile Include="Property\AsyncPropertyCatcher.cs" />
+    <EmbeddedResource Include="Desktop\RenameDialog.resx">
+      <DependentUpon>RenameDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FerdaPrescreen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FerdaPrescreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization_cs-CZ.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localization_cs-CZ.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization_en-US.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localization_en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu\FerdaPreferencesDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FerdaPreferencesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Property\FerdaPropertyGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Property\FerdaPropertySpec.cs" />
+    <Compile Include="Property\IAsyncPropertyManager.cs" />
+    <Compile Include="Property\IPropertiesDisplayer.cs" />
+    <Compile Include="Property\IPropertyProvider.cs" />
+    <Compile Include="Property\OtherProperty.cs" />
+    <Compile Include="Property\OtherPropertyAddingConverter.cs" />
+    <Compile Include="Property\OtherPropertyConverter.cs" />
+    <Compile Include="Property\IOtherObjectDisplayer.cs" />
+    <Compile Include="Property\OtherPropertyEditor.cs" />
+    <Compile Include="Property\PropertyBag.cs" />
+    <Compile Include="Property\StringComboAddingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <EmbeddedResource Include="Property\StringComboAddingControl.resx">
+      <DependentUpon>StringComboAddingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Property\StringComboAddingEditor.cs" />
+    <Compile Include="Property\StringComboEditor.cs" />
+    <Compile Include="Property\StringSequence.cs" />
+    <Compile Include="Property\StringSequenceConverter.cs" />
+    <Compile Include="UserNote\FerdaUserNote.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserNote\IUserNoteDisplayer.cs" />
+    <None Include="socket.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\libsrc\NAFGraph\NetronGraphLib.csproj">
+      <Name>NetronGraphLib</Name>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+      <Project>{95C388C8-DD59-4993-BCC3-14A0862A24D8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\libsrc\DockDotNET\DockDotNET.csproj">
+      <Name>DockDotNET</Name>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+      <Project>{611CD99D-5C85-49BC-BCD1-CA928A1A186C}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FerdaFrontEnd.ico" />
+    <Content Include="Help\archiv.png" />
+    <Content Include="Help\casti.png" />
+    <Content Include="Help\properties.png" />
+    <Content Include="Help\uzivnapoveda.html" />
+    <Content Include="Icons\Category.ico" />
+    <Content Include="Icons\Clone.ico" />
+    <Content Include="Icons\Copy.ico" />
+    <Content Include="Icons\Delete from Archive.ico" />
+    <Content Include="Icons\Delete from Desktop.ico" />
+    <Content Include="Icons\Exit.ico" />
+    <Content Include="Icons\Layout.ico" />
+    <Content Include="Icons\Localize in archive.ico" />
+    <Content Include="Icons\MakeGroup.ico" />
+    <Content Include="Icons\NA.ico" />
+    <Content Include="Icons\New Desktop.ico" />
+    <Content Include="Icons\New project.ico" />
+    <Content Include="Icons\Open project.ico" />
+    <Content Include="Icons\Pack all sockets.ico" />
+    <Content Include="Icons\Pack sockets.ico" />
+    <Content Include="Icons\Paste.ico" />
+    <Content Include="Icons\Properties.ico" />
+    <Content Include="Icons\Rename Icon.ico" />
+    <Content Include="Icons\Save project.ico" />
+    <Content Include="Icons\Unpack all sockets all layers.ico" />
+    <Content Include="Icons\Unpack all sockets one layer.ico" />
+    <Content Include="Icons\Unpack socket all layers.ico" />
+    <Content Include="Icons\Unpack socket one layer.ico" />
+    <Content Include="Icons\UserNote.ico" />
+    <None Include="Resources\Box.png" />
+    <None Include="Resources\ferda64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+</Project>
