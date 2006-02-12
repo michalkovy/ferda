@@ -177,8 +177,7 @@ namespace Ferda.Modules.Helpers.Data
                 TestColumnSelectExpression(odbcConnectionString, dataMatrixName, columnName, boxIdentity);
 
                 //or other reason for exception
-                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
-                return null;
+                throw Ferda.Modules.Exceptions.BadParamsUnexpectedReasonError(ex, boxIdentity);
             }
         }
 
@@ -234,8 +233,7 @@ namespace Ferda.Modules.Helpers.Data
                 TestColumnSelectExpression(odbcConnectionString, dataMatrixName, columnSelectExpression, boxIdentity);
 
                 //or other reason for exception
-                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
-                return null;
+                throw Ferda.Modules.Exceptions.BadParamsUnexpectedReasonError(ex, boxIdentity);
             }
         }
 
@@ -263,8 +261,8 @@ namespace Ferda.Modules.Helpers.Data
 
         /// <summary>
         /// Gets the <see cref="T:Ferda.Modules.Boxes.DataMiningCommon.Column.StatisticsStruct">statistics</see>
-        /// i.e. count of distinct values, minimal value, maximal value, average value 
-        /// (if value type is not cardinal average length is returned) and for cardinal values
+        /// i.e. count of distinct values, minimal result, maximal result, average result 
+        /// (if result type is not cardinal average length is returned) and for cardinal values
         /// also computes variability and standard deviation.
         /// </summary>
         /// <param name="odbcConnectionString">The ODBC connection string.</param>
@@ -274,8 +272,8 @@ namespace Ferda.Modules.Helpers.Data
         /// <param name="boxIdentity">The box identity.</param>
         /// <returns>
         /// <see cref="T:Ferda.Modules.Boxes.DataMiningCommon.Column.StatisticsStruct"/> 
-        /// i.e. count of distinct values, minimal value, maximal value, average value 
-        /// (if value type is not cardinal average length is returned) and for cardinal values
+        /// i.e. count of distinct values, minimal result, maximal result, average result 
+        /// (if result type is not cardinal average length is returned) and for cardinal values
         /// also computes variability and standard deviation.
         /// </returns>
         public static StatisticsStruct GetStatistics(string odbcConnectionString, string dataMatrixName, string columnSelectExpression, ValueSubTypeEnum columnSubType, string boxIdentity)
@@ -312,8 +310,7 @@ namespace Ferda.Modules.Helpers.Data
                 TestColumnSelectExpression(odbcConnectionString, dataMatrixName, columnSelectExpression, boxIdentity);
 
                 //or other reason for exception
-                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
-                return null;
+                throw Ferda.Modules.Exceptions.BadParamsUnexpectedReasonError(ex, boxIdentity);
             }
 
             string selectMaxExpression = "MAX(" + "`" + columnSelectExpression + "`" + ") AS Maximum";
@@ -446,8 +443,7 @@ namespace Ferda.Modules.Helpers.Data
                 TestColumnSelectExpression(odbcConnectionString, dataMatrixName, columnSelectExpression, boxIdentity);
 
                 //or other reason for exception
-                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
-                return null;
+                throw Ferda.Modules.Exceptions.BadParamsUnexpectedReasonError(ex, boxIdentity);
             }
         }
 

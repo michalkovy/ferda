@@ -141,7 +141,7 @@ namespace Ferda.Modules.Helpers.Data
 			/*
 			PropertySetting countOfCategoriesProperty = new PropertySetting();
 			countOfCategoriesProperty.propertyName = "CountOfCategories";
-			countOfCategoriesProperty.value = new Ferda.Modules.LongTI(countOfCategories);
+			countOfCategoriesProperty.result = new Ferda.Modules.LongTI(countOfCategories);
 			 */
 
 			PropertySetting xCategoryProperty = new PropertySetting();

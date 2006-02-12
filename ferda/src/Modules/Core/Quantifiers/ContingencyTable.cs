@@ -67,7 +67,7 @@ namespace Ferda.Modules.Quantifiers
         /// Constructor (with default denominator=1).
         /// </summary>
         /// <param name="contingencyTable">Array of contingency table rows. 
-        /// Value of table[0][0] is value of A.</param>
+        /// Value of table[0][0] is result of A.</param>
         public ContingencyTable(long[,] contingencyTable)
         {
             PreparedSums = new PreparedSums(this);
@@ -95,10 +95,10 @@ namespace Ferda.Modules.Quantifiers
         protected long denominator = 1;
         /// <summary>
         /// Gets the denominator or (instead of set) multiples the 
-        /// denominator by given <c>value</c> (default value of the
+        /// denominator by given <c>result</c> (default result of the
         /// denominator is <c>1</c>).
         /// </summary>
-        /// <value>The denominator.</value>
+        /// <result>The denominator.</result>
         public long Denominator
         {
             get { return denominator; }
@@ -140,7 +140,7 @@ namespace Ferda.Modules.Quantifiers
         }
         #endregion
 
-        #region Arithmetic (operator+, operator-, operator==, operator!=, GetHashCode, Div(value))
+        #region Arithmetic (operator+, operator-, operator==, operator!=, GetHashCode, Div(result))
         /// <summary>
         /// Operator <b>==</b>.
         /// </summary>
@@ -342,9 +342,9 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Multiplies the denominator by the specified <c>value</c>.
+        /// Multiplies the denominator by the specified <c>result</c>.
         /// </summary>
-        /// <param name="value">The multiplicator for the denomitor.</param>
+        /// <param name="result">The multiplicator for the denomitor.</param>
         public void Div(long value)
         {
             this.denominator *= value;
@@ -353,13 +353,13 @@ namespace Ferda.Modules.Quantifiers
 
         #region Four Fold Table
         /// <summary>
-        /// Gets a value indicating whether this instance is basic (i.e. a-frequency
+        /// Gets a result indicating whether this instance is basic (i.e. a-frequency
         /// is on [0, 0] and and on the contrary in last row and column is d-frequency [1, 1])
         /// bottom-right) four fold table.
         /// </summary>
-        /// <value>
+        /// <result>
         /// <c>true</c> if this instance is basic four fold table; otherwise, <c>false</c>.
-        /// </value>
+        /// </result>
         public bool IsBasicFourFoldTable
         {
             get
@@ -371,12 +371,12 @@ namespace Ferda.Modules.Quantifiers
             }
         }
         /// <summary>
-        /// Gets a value indicating whether this instance is four fold table i.e. its shape
+        /// Gets a result indicating whether this instance is four fold table i.e. its shape
         /// is 2x2.
         /// </summary>
-        /// <value>
+        /// <result>
         /// <c>true</c> if this instance is four fold table; otherwise, <c>false</c>.
-        /// </value>
+        /// </result>
         public bool IsFourFoldTable
         {
             get
@@ -391,13 +391,13 @@ namespace Ferda.Modules.Quantifiers
 
         #region Nine Fold Table
         /// <summary>
-        /// Gets a value indicating whether this instance is basic (i.e. a-frequency
+        /// Gets a result indicating whether this instance is basic (i.e. a-frequency
         /// is on [0, 0] and and on the contrary in last row and column is d-frequency [2, 2])
         /// bottom-right) nine fold table.
         /// </summary>
-        /// <value>
+        /// <result>
         /// <c>true</c> if this instance is basic nine fold table; otherwise, <c>false</c>.
-        /// </value>
+        /// </result>
         public bool IsBasicNineFoldTable
         {
             get
@@ -409,12 +409,12 @@ namespace Ferda.Modules.Quantifiers
             }
         }
         /// <summary>
-        /// Gets a value indicating whether this instance is four fold table i.e. its shape
+        /// Gets a result indicating whether this instance is four fold table i.e. its shape
         /// is 3x3.
         /// </summary>
-        /// <value>
+        /// <result>
         /// <c>true</c> if this instance is four fold table; otherwise, <c>false</c>.
-        /// </value>
+        /// </result>
         public bool IsNineFoldTable
         {
             get
@@ -429,13 +429,13 @@ namespace Ferda.Modules.Quantifiers
 
         #region OneDimensional Table
         /// <summary>
-        /// Gets a value indicating whether this instance is basic one dimensional 
+        /// Gets a result indicating whether this instance is basic one dimensional 
         /// table. (first row index equals to last row index equals to zero)
         /// </summary>
-        /// <value>
+        /// <result>
         /// <c>true</c> if this instance is basic one dimensional table; 
         /// otherwise, <c>false</c>.
-        /// </value>
+        /// </result>
         public bool IsBasicOneDimensionalTable
         {
             get
@@ -445,12 +445,12 @@ namespace Ferda.Modules.Quantifiers
             }
         }
         /// <summary>
-        /// Gets a value indicating whether this instance is one dimensional 
+        /// Gets a result indicating whether this instance is one dimensional 
         /// table. (first row index equals to last row index)
         /// </summary>
-        /// <value>
+        /// <result>
         /// <c>true</c> if this instance is one dimensional; otherwise, <c>false</c>.
-        /// </value>
+        /// </result>
         public bool IsOneDimensional
         {
             get
@@ -621,7 +621,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the count of used cells i.e. number of items of the 
         /// contingency tables in space restricted by the bounds.
         /// </summary>
-        /// <value>The count of used cells.</value>
+        /// <result>The count of used cells.</result>
         public int CountOfUsedCells
         {
             get
@@ -666,7 +666,7 @@ namespace Ferda.Modules.Quantifiers
         }
         #endregion
 
-        #region Units converting (value, [Core]UnitsEnum, ...)
+        #region Units converting (result, [Core]UnitsEnum, ...)
         public double ConvertUnits(double value, CoreUnitsEnum units)
         {
             switch (units)
@@ -877,7 +877,7 @@ namespace Ferda.Modules.Quantifiers
                     if (allObjectsCount.HasValue)
                         multipledTreshold = multipledTreshold * allObjectsCount.Value / 100;
                     else
-                        throw new Exception("optionalNumberForRelativeComparing value needed for UnitsEnum.RelativeToAllObjects");
+                        throw new Exception("optionalNumberForRelativeComparing result needed for UnitsEnum.RelativeToAllObjects");
                     break;
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(units);

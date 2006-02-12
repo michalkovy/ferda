@@ -51,7 +51,6 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
                 moduleAFC = modulesAFC[moduleAFCName];
                 moduleConnection = new ModulesConnection();
                 singleModuleAFC = new ModuleAskingForCreation();
-                singleModuleAFC = new ModuleAskingForCreation();
                 switch (moduleAFCName)
                 {
                     case "Attribute":

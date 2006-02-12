@@ -25,6 +25,15 @@ module Ferda {
 					};
 					sequence<DataMatrixInfo> DataMatrixInfoSeq;
 
+					//see corresponding fields of System.Data.Odbc.OdbcConnection (.NET Framework)
+					struct ConnectionInfo
+					{
+            string databaseName;
+            string dataSource;
+            string driver;
+            string serverVersion;
+					};
+
 					interface	TablesNamesProvider	{
 						nonmutating	StringSeq	getTables()
 							throws

@@ -73,7 +73,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>f1,1</c> (Antecedent &amp; Succedent) frequency of the 9f-table
         /// (nine fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>f1,1</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>f1,1</c> frequency of the 9f-table (nine fold table).</result>
         private long f11
         {
             get { return table[0, 0]; }
@@ -84,7 +84,7 @@ namespace Ferda.Modules.Quantifiers
         /// (nine fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>F1,1</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>F1,1</c> frequency of the 9f-table (nine fold table).</result>
         public double F11
         {
             get { return f11 / (double)denominator; }
@@ -94,7 +94,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>f1,x</c> (Antecedent &amp; SuccedentX) frequency of the 
         /// 9f-table (nine fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>f1,x</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>f1,x</c> frequency of the 9f-table (nine fold table).</result>
         private long f1x
         {
             get { return table[0, 1]; }
@@ -105,7 +105,7 @@ namespace Ferda.Modules.Quantifiers
         /// (nine fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>F1,x</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>F1,x</c> frequency of the 9f-table (nine fold table).</result>
         public double F1x
         {
             get { return f1x / (double)denominator; }
@@ -115,7 +115,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>f1,0</c> (Antecedent &amp; notSuccedent) frequency of the 9f-table 
         /// (nine fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>f1,0</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>f1,0</c> frequency of the 9f-table (nine fold table).</result>
         private long f10
         {
             get { return table[0, 2]; }
@@ -126,7 +126,7 @@ namespace Ferda.Modules.Quantifiers
         /// (nine fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>F1,0</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>F1,0</c> frequency of the 9f-table (nine fold table).</result>
         public double F10
         {
             get { return f10 / (double)denominator; }
@@ -136,7 +136,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>fx,1</c> (AntecedentX &amp; Succedent) frequency of the 9f-table
         /// (nine fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>fx,1</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>fx,1</c> frequency of the 9f-table (nine fold table).</result>
         private long fx1
         {
             get { return table[1, 0]; }
@@ -147,7 +147,7 @@ namespace Ferda.Modules.Quantifiers
         /// (nine fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>Fx,1</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>Fx,1</c> frequency of the 9f-table (nine fold table).</result>
         public double Fx1
         {
             get { return fx1 / (double)denominator; }
@@ -157,7 +157,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>fx,x</c> (AntecedentX &amp; SuccedentX) frequency of the 
         /// 9f-table (nine fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>fx,x</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>fx,x</c> frequency of the 9f-table (nine fold table).</result>
         private long fxx
         {
             get { return table[1, 1]; }
@@ -168,7 +168,7 @@ namespace Ferda.Modules.Quantifiers
         /// (nine fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>Fx,x</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>Fx,x</c> frequency of the 9f-table (nine fold table).</result>
         public double Fxx
         {
             get { return fxx / (double)denominator; }
@@ -178,7 +178,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>fx,0</c> (AntecedentX &amp; notSuccedent) frequency of the 9f-table 
         /// (nine fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>fx,0</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>fx,0</c> frequency of the 9f-table (nine fold table).</result>
         private long fx0
         {
             get { return table[1, 2]; }
@@ -189,7 +189,7 @@ namespace Ferda.Modules.Quantifiers
         /// (nine fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>Fx,0</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>Fx,0</c> frequency of the 9f-table (nine fold table).</result>
         public double Fx0
         {
             get { return fx0 / (double)denominator; }
@@ -199,7 +199,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>f0,1</c> (notAntecedent &amp; Succedent) frequency of the 9f-table
         /// (nine fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>f0,1</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>f0,1</c> frequency of the 9f-table (nine fold table).</result>
         private long f01
         {
             get { return table[1, 0]; }
@@ -210,7 +210,7 @@ namespace Ferda.Modules.Quantifiers
         /// (nine fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>F0,1</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>F0,1</c> frequency of the 9f-table (nine fold table).</result>
         public double F01
         {
             get { return f01 / (double)denominator; }
@@ -220,7 +220,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>f0,x</c> (notAntecedent &amp; SuccedentX) frequency of the 
         /// 9f-table (nine fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>f0,x</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>f0,x</c> frequency of the 9f-table (nine fold table).</result>
         private long f0x
         {
             get { return table[1, 1]; }
@@ -231,7 +231,7 @@ namespace Ferda.Modules.Quantifiers
         /// (nine fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>F0,x</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>F0,x</c> frequency of the 9f-table (nine fold table).</result>
         public double F0x
         {
             get { return f0x / (double)denominator; }
@@ -241,7 +241,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>f0,0</c> (notAntecedent &amp; notSuccedent) frequency of the 9f-table 
         /// (nine fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>f0,0</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>f0,0</c> frequency of the 9f-table (nine fold table).</result>
         private long f00
         {
             get { return table[1, 2]; }
@@ -252,7 +252,7 @@ namespace Ferda.Modules.Quantifiers
         /// (nine fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>F0,0</c> frequency of the 9f-table (nine fold table).</value>
+        /// <result>The <c>F0,0</c> frequency of the 9f-table (nine fold table).</result>
         public double F00
         {
             get { return f00 / (double)denominator; }

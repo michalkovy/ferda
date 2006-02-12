@@ -151,7 +151,7 @@ namespace Ferda.Modules.Helpers.Caching
             {
                 if (lastSettingForEqualTest.TryGetValue(item.Key, out value))
                 {
-                    // tests equality of last and current value
+                    // tests equality of last and current result
                     if (value == item.Value)
                         continue;
                     else if ((value != null && item.Value != null)

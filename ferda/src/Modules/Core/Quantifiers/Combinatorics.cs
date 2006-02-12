@@ -27,7 +27,7 @@ namespace Ferda.Modules.Quantifiers
         static Combinatorics()
         {
             #region Initialization of factorials (long)
-            long factorial = 1;  // value for 0!
+            long factorial = 1;  // result for 0!
             _factorials[0] = factorial;
             for (int i = 1; i < 21; i++)
             {
@@ -37,7 +37,7 @@ namespace Ferda.Modules.Quantifiers
             #endregion
             
             #region Initialization of factorials (double)
-            double factorialDouble = 1.0;  // value for 0!
+            double factorialDouble = 1.0;  // result for 0!
             _factorialsDouble[0] = factorialDouble;
             for (int i = 1; i < _factorialsDoubleMax; i++)
             {
@@ -47,7 +47,7 @@ namespace Ferda.Modules.Quantifiers
             #endregion
 
             #region Initialization of log factorials
-            double logFactorial = 0.0;  // value for log(0!)
+            double logFactorial = 0.0;  // result for log(0!)
             _logFactorials[0] = logFactorial;
             for (int i = 1; i < _logFactorialsMax; i++)
             {
@@ -353,12 +353,12 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Computes the smallest power of 2 greater than or equal to the given integer.
         /// </summary>
-        /// <param name="value">Lower bound for the requested power of 2.</param>
+        /// <param name="result">Lower bound for the requested power of 2.</param>
         /// <returns>The smallest power of 2 greater than or equal to the given integer.</returns>
         public static int GetPowerOfTwo(int value)
         {
             if (value < 1)
-                throw new ArgumentOutOfRangeException("value", value, "Value must be at least 1.");
+                throw new ArgumentOutOfRangeException("result", value, "Value must be at least 1.");
 
             int power = 1;
             while (power < value)
@@ -407,7 +407,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Computes a natural logarightm of gamma function.
         /// </summary>
-        /// <param name="value">Input value.</param>
+        /// <param name="result">Input result.</param>
         /// <returns>A natural logarithm of gamma function.</returns>
         /// <remarks>
         /// <para>For definition of a gamma function see 
@@ -726,7 +726,7 @@ namespace Ferda.Modules.Quantifiers
         /// </summary>
         /// <param name="a">Parameter a.</param>
         /// <param name="x">Parameter x.</param>
-        /// <returns>A value of incomplete gamma function in the point (a, x).</returns>
+        /// <returns>A result of incomplete gamma function in the point (a, x).</returns>
         /// <exception cref="ArgumentOutOfRangeException">Parameter a must be greater than 0.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Parameter x must be greater than or equal to 0.</exception>
         /// <remarks>
@@ -805,11 +805,11 @@ namespace Ferda.Modules.Quantifiers
 
 
         /// <summary>
-        /// Computes the value of chi-square probability density function with k degrees of freedom.
+        /// Computes the result of chi-square probability density function with k degrees of freedom.
         /// </summary>
         /// <param name="x">Point of function.</param>
         /// <param name="k">Degrees of freedom.</param>
-        /// <returns>The value of chi-square probability density function with k degrees of freedom.</returns>
+        /// <returns>The result of chi-square probability density function with k degrees of freedom.</returns>
         /// <remarks>
         /// <para>It is computed using gamma function, see
         /// <a href="http://en.wikipedia.org/wiki/Chi_square_distribution">http://en.wikipedia.org/wiki/Chi_square_distribution</a>.</para>
@@ -849,11 +849,11 @@ namespace Ferda.Modules.Quantifiers
 
         
         /// <summary>
-        /// Computes the value of chi-square cummulative distribution function with k degrees of freedom.
+        /// Computes the result of chi-square cummulative distribution function with k degrees of freedom.
         /// </summary>
         /// <param name="x">The point of function.</param>
         /// <param name="k">Degrees of freedom.</param>
-        /// <returns>The value of chi-square cummulative distribution function with k degrees of freedom.</returns>
+        /// <returns>The result of chi-square cummulative distribution function with k degrees of freedom.</returns>
         /// <remarks>
         /// <para>It is computed using incomplete gamma function, see
         /// <a href="http://en.wikipedia.org/wiki/Chi_square_distribution">http://en.wikipedia.org/wiki/Chi_square_distribution</a>.</para>

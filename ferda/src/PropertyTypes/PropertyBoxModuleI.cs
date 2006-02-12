@@ -192,7 +192,7 @@ using Ice;namespace Ferda.Modules
 		{
 			return new SelectString[0];
 		}
-		
+
 		/// <summary>
 		/// Method isPropertySet
 		/// </summary>
@@ -252,6 +252,14 @@ using Ice;namespace Ferda.Modules
 		public override string[] getDefaultUserLabel(Current __current)
 		{
 			return new string[0];
+		}
+
+		/// <summary>
+		/// Method validate
+		/// </summary>
+		/// <param name="__current">An Ice.Current</param>
+		public override void validate(Ice.Current __current)
+		{
 		}
 	}
 }

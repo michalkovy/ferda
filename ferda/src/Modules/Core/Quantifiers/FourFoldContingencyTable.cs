@@ -66,7 +66,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Gets the <c>a</c> frequency of the 4f-table (four fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>a</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>a</c> frequency of the 4f-table (four fold table).</result>
         private long a
         {
             get { return table[0, 0]; }
@@ -76,7 +76,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>a</c> frequency of the 4f-table (four fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>a</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>a</c> frequency of the 4f-table (four fold table).</result>
         public double A
         {
             get { return a / (double)denominator; }
@@ -85,7 +85,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Gets the <c>b</c> frequency of the 4f-table (four fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>b</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>b</c> frequency of the 4f-table (four fold table).</result>
         private long b
         {
             get { return table[0, 1]; }
@@ -95,7 +95,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>b</c> frequency of the 4f-table (four fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>b</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>b</c> frequency of the 4f-table (four fold table).</result>
         public double B
         {
             get { return b / (double)denominator; }
@@ -104,7 +104,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Gets the <c>c</c> frequency of the 4f-table (four fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>c</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>c</c> frequency of the 4f-table (four fold table).</result>
         private long c
         {
             get { return table[1, 0]; }
@@ -114,7 +114,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>c</c> frequency of the 4f-table (four fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>c</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>c</c> frequency of the 4f-table (four fold table).</result>
         public double C
         {
             get { return c / (double)denominator; }
@@ -123,7 +123,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Gets the <c>d</c> frequency of the 4f-table (four fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>d</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>d</c> frequency of the 4f-table (four fold table).</result>
         private long d
         {
             get { return table[1, 1]; }
@@ -133,7 +133,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>d</c> frequency of the 4f-table (four fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>d</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>d</c> frequency of the 4f-table (four fold table).</result>
         public double D
         {
             get { return d / (double)denominator; }
@@ -142,7 +142,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Gets the <c>r = a + b</c> frequency of the 4f-table (four fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>r = a + b</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>r = a + b</c> frequency of the 4f-table (four fold table).</result>
         private long r
         {
             get { return a + b; }
@@ -152,7 +152,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>r = a + b</c> frequency of the 4f-table (four fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>r = a + b</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>r = a + b</c> frequency of the 4f-table (four fold table).</result>
         public double R
         {
             get { return r / (double)denominator; }
@@ -161,7 +161,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Gets the <c>s = c + d</c> frequency of the 4f-table (four fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>s = c + d</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>s = c + d</c> frequency of the 4f-table (four fold table).</result>
         private long s
         {
             get { return c + d; }
@@ -171,7 +171,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>s = c + d</c> frequency of the 4f-table (four fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>s = c + d</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>s = c + d</c> frequency of the 4f-table (four fold table).</result>
         public double S
         {
             get { return s / (double)denominator; }
@@ -180,7 +180,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Gets the <c>k = a + c</c> frequency of the 4f-table (four fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>k = a + c</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>k = a + c</c> frequency of the 4f-table (four fold table).</result>
         private long k
         {
             get { return a + c; }
@@ -190,7 +190,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>k = a + c</c> frequency of the 4f-table (four fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>k = a + c</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>k = a + c</c> frequency of the 4f-table (four fold table).</result>
         public double K
         {
             get { return k / (double)denominator; }
@@ -199,7 +199,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Gets the <c>l = b + d</c> frequency of the 4f-table (four fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>l = b + d</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>l = b + d</c> frequency of the 4f-table (four fold table).</result>
         private long l
         {
             get { return b + d; }
@@ -209,7 +209,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>l = b + d</c> frequency of the 4f-table (four fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>l = b + d</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>l = b + d</c> frequency of the 4f-table (four fold table).</result>
         public double L
         {
             get { return l / (double)denominator; }
@@ -218,7 +218,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Gets the <c>n = a + b + c + d</c> frequency of the 4f-table (four fold table). (always absolute number)
         /// </summary>
-        /// <value>The <c>n = a + b + c + d</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>n = a + b + c + d</c> frequency of the 4f-table (four fold table).</result>
         private long n
         {
             get { return a + b + c + d; }
@@ -228,7 +228,7 @@ namespace Ferda.Modules.Quantifiers
         /// Gets the <c>n = a + b + c + d</c> frequency of the 4f-table (four fold table). (divided by the 
         /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <value>The <c>n = a + b + c + d</c> frequency of the 4f-table (four fold table).</value>
+        /// <result>The <c>n = a + b + c + d</c> frequency of the 4f-table (four fold table).</result>
         public double N
         {
             get { return n / (double)denominator; }
@@ -266,9 +266,9 @@ namespace Ferda.Modules.Quantifiers
 
         #region AboveAverageImplication
         /// <summary>
-        /// Computes the above average strength value.
+        /// Computes the above average strength result.
         /// </summary>
-        /// <returns>Above average strength value defined as <c>(a / (a + b)) * ((a + b + c + d) / (a + c))</c> if <c>a &gt; 0</c>; otherwise it returns zero.</returns>
+        /// <returns>Above average strength result defined as <c>(a / (a + b)) * ((a + b + c + d) / (a + c))</c> if <c>a &gt; 0</c>; otherwise it returns zero.</returns>
         /// <remarks>
         /// <para>If a = 0, returns 0.</para>
         /// </remarks>
@@ -292,11 +292,11 @@ namespace Ferda.Modules.Quantifiers
 
         #region BelowAverageImplication
         /// <summary>
-        /// Computes the below average strength value.
+        /// Computes the below average strength result.
         /// </summary>
-        /// <returns>Below average strength value defined as <c>((a + b) / a) * ((a + c) / (a + b + c + d))</c> with two exceptions: returns zero if <c>(a + c) = 0</c> and returns +INF if <c>a = 0</c>.</returns>
+        /// <returns>Below average strength result defined as <c>((a + b) / a) * ((a + c) / (a + b + c + d))</c> with two exceptions: returns zero if <c>(a + c) = 0</c> and returns +INF if <c>a = 0</c>.</returns>
         /// <remarks>
-        /// <para>The below average quantifier value must be explicitly defined for <c>a = 0</c> as +INF to prevent division by zero.</para>
+        /// <para>The below average quantifier result must be explicitly defined for <c>a = 0</c> as +INF to prevent division by zero.</para>
         /// <para>Furthermore, if <c>(a + c) = 0</c>, the result +INF (= extremely strong hypothesis) would not make sense, so it is defined as zero (= no hypothesis) instead.</para>
         /// </remarks>
         public double BelowAverageImplicationValue()
@@ -334,9 +334,9 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Returns the value of alpha that would be neccessary to reject a null hypothesis.
+        /// Returns the result of alpha that would be neccessary to reject a null hypothesis.
         /// </summary>
-        /// <returns>The minimum value of alpha that is neccessary to reject a null hypothesis.</returns>
+        /// <returns>The minimum result of alpha that is neccessary to reject a null hypothesis.</returns>
         public double ChiSquareValue()
         {
             //TODO: Karbyho ChiSquare quantifier asi ne uplne funguje
@@ -395,7 +395,7 @@ namespace Ferda.Modules.Quantifiers
 
         #region Double(Lower/Upper)CriticalImplication
         /// <summary>
-        /// Computes a value of double critical implication sum minus alpha
+        /// Computes a result of double critical implication sum minus alpha
         /// </summary>
         public double DoubleCriticalImplicationSumMinusAlpha(double p, params object[] parameters)
         {
@@ -417,9 +417,9 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Computes the statistical strength value at the specified significance (alpha).
+        /// Computes the statistical strength result at the specified significance (alpha).
         /// </summary>
-        /// <returns>Statistical strength value at the specified significance (alpha).</returns>
+        /// <returns>Statistical strength result at the specified significance (alpha).</returns>
         /// <remarks>
         /// <para>Computes the numerical solution of the following equation (for variable p):</para>
         /// <para><c>Sum[i = 0..a] x! / (i! * (x - i)!) * p^i * (1.0 - p)^(x - i) - alpha = 0.0</c>,
@@ -432,9 +432,9 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Returns <c>true</c> if the statistical strength value is greater than or equal to the p parameter with the specified statistical significance (alpha).
+        /// Returns <c>true</c> if the statistical strength result is greater than or equal to the p parameter with the specified statistical significance (alpha).
         /// </summary>
-        /// <returns><c>true</c> if if the statistical strength value is greater than or equal to the p parameter with the specified statistical significance (alpha).</returns>
+        /// <returns><c>true</c> if if the statistical strength result is greater than or equal to the p parameter with the specified statistical significance (alpha).</returns>
         /// <remarks>
         /// <para>It computes the following condition:</para>
         /// <para><c>Sum[i = a..x] x! / (i! * (x - i)!) * p^i * (1 - p)^(x - i) &lt;= (or &gt;=) alpha</c>,
@@ -450,9 +450,9 @@ namespace Ferda.Modules.Quantifiers
 
         #region E
         /// <summary>
-        /// Returns value of expression (<c>a</c> + <c>d</c>) / (<c>a</c> + <c>b</c> + <c>c</c> + <c>d</c>) from 4ft-table.
+        /// Returns result of expression (<c>a</c> + <c>d</c>) / (<c>a</c> + <c>b</c> + <c>c</c> + <c>d</c>) from 4ft-table.
         /// </summary>
-        /// <returns>The value of expression (<c>a</c> + <c>d</c>) / (<c>a</c> + <c>b</c> + <c>c</c> + <c>d</c>) 4ft-table.</returns>
+        /// <returns>The result of expression (<c>a</c> + <c>d</c>) / (<c>a</c> + <c>b</c> + <c>c</c> + <c>d</c>) 4ft-table.</returns>
         public double EValue()
         {
             return (this.A + this.D) / this.N;
@@ -462,7 +462,7 @@ namespace Ferda.Modules.Quantifiers
         /// See [054 Redundance vystupu 4ftMiner.doc]
         /// Returns the validity of E-quantifier, i.e. true iff the (<c>a</c> + <c>d</c>) / (<c>a</c> + <c>b</c> + <c>c</c> + <c>d</c>) from 4ft-table is greater than or equal to the specified param <c>p</c>.
         /// </summary>
-        /// <returns><c>true</c> iff the value of E-quantifier is greater than or equal to the specified param <c>p</c>.</returns>
+        /// <returns><c>true</c> iff the result of E-quantifier is greater than or equal to the specified param <c>p</c>.</returns>
         public bool EValidity(double p)
         {
             return (EValue() >= p);
@@ -499,9 +499,9 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Computes the value of Fisher quantifier.
+        /// Computes the result of Fisher quantifier.
         /// </summary>
-        /// <returns>The value <c>Sum[i = a..x] (r! * s! * k! * l!) / (n! * i! * (r-i)! * (k-i)! * (n+i-r-k)!)</c>, where <c>x = min(r, k)</c>.</returns>
+        /// <returns>The result <c>Sum[i = a..x] (r! * s! * k! * l!) / (n! * i! * (r-i)! * (k-i)! * (n+i-r-k)!)</c>, where <c>x = min(r, k)</c>.</returns>
         /// <remarks>
         /// <para>There is a special case defined explicitly:</para>
         /// <para>If <c>(a * d) &lt;= (b * c)</c>, return 0.</para>
@@ -583,7 +583,7 @@ namespace Ferda.Modules.Quantifiers
 
         #region (Lower/Upper)CriticalEquivalence
         /// <summary>
-        /// Computes a value of critical equivalence sum minus alpha
+        /// Computes a result of critical equivalence sum minus alpha
         /// </summary>
         public double CriticalEquivalenceSumMinusAlpha(double p, params object[] parameters)
         {
@@ -605,9 +605,9 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Computes the statistical strength value at the specified significance (alpha).
+        /// Computes the statistical strength result at the specified significance (alpha).
         /// </summary>
-        /// <returns>Statistical strength value at the specified significance (alpha).</returns>
+        /// <returns>Statistical strength result at the specified significance (alpha).</returns>
         /// <remarks>
         /// <para>Computes the numerical solution of the following equation (for variable p):</para>
         /// <para><c>Sum[i = a..n] n! / (i! * (n - i)!) * p^i * (1.0 - p)^(n - i) - alpha = 0.0</c>.</para>
@@ -619,9 +619,9 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Returns <c>true</c> if the statistical strength value is greater than or equal to the p parameter with the specified statistical significance (alpha).
+        /// Returns <c>true</c> if the statistical strength result is greater than or equal to the p parameter with the specified statistical significance (alpha).
         /// </summary>
-        /// <returns><c>true</c> if if the statistical strength value is greater than or equal to the p parameter with the specified statistical significance (alpha).</returns>
+        /// <returns><c>true</c> if if the statistical strength result is greater than or equal to the p parameter with the specified statistical significance (alpha).</returns>
         /// <remarks>
         /// <para>It computes the following condition:</para>
         /// <para><c>Sum[i = a..n] n! / (i! * (n - i)!) * p^i * (1 - p)^(n - i) &lt;= (or &gt;=) alpha</c>.</para>
@@ -636,7 +636,7 @@ namespace Ferda.Modules.Quantifiers
 
         #region (Lower/Upper)CriticalImplication
         /// <summary>
-        /// Computes a value of critical implication sum minus alpha
+        /// Computes a result of critical implication sum minus alpha
         /// </summary>
         public double CriticalImplicationSumMinusAlpha(double p, params object[] parameters)
         {
@@ -658,9 +658,9 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Computes the statistical confidence value at the specified significance (alpha).
+        /// Computes the statistical confidence result at the specified significance (alpha).
         /// </summary>
-        /// <returns>Statistical confidence value at the specified significance (alpha).</returns>
+        /// <returns>Statistical confidence result at the specified significance (alpha).</returns>
         /// <remarks>
         /// <para>Computes the numerical solution of the following equation (for variable p):</para>
         /// <para><c>Sum[i = a..r] r! / (i! * (r - i)!) * p^i * (1.0 - p)^(r - i) - alpha = 0.0</c></para>
@@ -672,9 +672,9 @@ namespace Ferda.Modules.Quantifiers
         }
 
         /// <summary>
-        /// Returns <c>true</c> if the statistical confidence value is greater than or equal to the p parameter with the specified statistical significance (alpha).
+        /// Returns <c>true</c> if the statistical confidence result is greater than or equal to the p parameter with the specified statistical significance (alpha).
         /// </summary>
-        /// <returns><c>true</c> if if the statistical confidence value is greater than or equal to the p parameter with the specified statistical significance (alpha).</returns>
+        /// <returns><c>true</c> if if the statistical confidence result is greater than or equal to the p parameter with the specified statistical significance (alpha).</returns>
         /// <remarks>
         /// <para>It computes the following condition:</para>
         /// <para><c>Sum[i = a..r] r! / (i! * (r - i)!) * p^i * (1 - p)^(r - i) &lt;= (or &gt;=) alpha</c>.</para>
@@ -689,9 +689,9 @@ namespace Ferda.Modules.Quantifiers
 
         #region SimpleDeviation
         /// <summary>
-        /// Computes the simple deviation strength value.
+        /// Computes the simple deviation strength result.
         /// </summary>
-        /// <returns>Simple deviation strength value defined as <c>ln(ad/bc) / ln(2)</c>.</returns>
+        /// <returns>Simple deviation strength result defined as <c>ln(ad/bc) / ln(2)</c>.</returns>
         /// <remarks>
         /// <para>There are special cases defined explicitly:</para>
         /// <para>If both <c>(a * d) = 0</c> and <c>(b * c) = 0</c>, return 0.</para>

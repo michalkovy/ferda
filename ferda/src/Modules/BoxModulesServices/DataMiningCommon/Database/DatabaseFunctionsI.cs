@@ -19,30 +19,40 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
         #endregion
 
         #region Properties
-        protected string connectionString
+        public string ConnectionString
         {
             get
             {
-                return this.boxModule.GetPropertyString("ConnectionString");
+                return this.boxModule.GetPropertyString(DatabaseBoxInfo.OdbcConnectionStringPropertyName);
             }
         }
 
-        protected DateTimeTI lastReloadInfo
+        public DateTimeTI LastReloadInfo
         {
             get
             {
-                DateTimeTI result = (DateTimeTI)(this.boxModule.getProperty("LastReloadInfo"));
+                DateTimeTI result = (DateTimeTI)(this.boxModule.getProperty(DatabaseBoxInfo.LastReloadInfoPropertyName));
                 if (result.year == 0 || result.month == 0 || result.day == 0)
                 {
                     result = new DateTimeTI(DateTime.Now);
-                    this.boxModule.setProperty("LastReloadInfo", result);
+                    this.boxModule.setProperty(DatabaseBoxInfo.LastReloadInfoPropertyName, result);
                 }
                 return result;
-                //return new DateTimeTI(this.boxModule.PropertiesDateTime["LastReloadInfo"]);
+                //return new DateTimeTI(this.boxModule.PropertiesDateTime[DatabaseBoxInfo.LastReloadInfoPropertyName]);
             }
             set
             {
-                this.boxModule.setProperty("LastReloadInfo", value);
+                this.boxModule.setProperty(DatabaseBoxInfo.LastReloadInfoPropertyName, value);
+            }
+        }
+
+        public string[] AcceptableTypesOfTables
+        {
+            get
+            {
+                //UNDONE
+                return new string[0];
+                //DatabaseBoxInfo.AcceptableTypesOfTablesPropertyName
             }
         }
         #endregion
@@ -50,120 +60,28 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
         #region Functions
         public override DatabaseStruct getDatabase(Ice.Current __current)
         {
-            DatabaseStruct result = new DatabaseStruct();
-            Ferda.Modules.Helpers.Data.Database.TestConnectionString(connectionString, boxModule.StringIceIdentity);
-            result.connectionString = connectionString;
-            result.lastReloadInfo = lastReloadInfo;
-            return result;
+            return new DatabaseStruct(ConnectionString, LastReloadInfo);
         }
 
+        private ExplainDatabaseStructureCache explainDatabaseStructureCache = new ExplainDatabaseStructureCache();
         public override DataMatrixInfo[] explainDatabaseStructure(Ice.Current __current)
         {
-            return Ferda.Modules.Helpers.Data.Database.Explain(connectionString, null, boxModule.StringIceIdentity);
+            return explainDatabaseStructureCache.Value(boxModule.StringIceIdentity, LastReloadInfo, ConnectionString, AcceptableTypesOfTables);
         }
 
-        #region Cache: DataMatrixNames
-        private class dataMatrixNamesCache : Ferda.Modules.Helpers.Caching.Cache
-        {
-            private string[] value = new string[0];
-            public string[] Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString)
-            {
-                lock (this)
-                {
-                    Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-                    cacheSetting.Add("ConnectionString", connectionString);
-                    if (IsObsolete(lastReloadTime, cacheSetting))
-                        value = Ferda.Modules.Helpers.Data.Database.GetTables(connectionString, null, boxIdentity);
-                    return value;
-                }
-            }
-        }
-        private dataMatrixNamesCache dataMatrixNamesCached = new dataMatrixNamesCache();
-        #endregion
+        private DataMatrixNamesCache dataMatrixNamesCached = new DataMatrixNamesCache();
         public override string[] getTables(Ice.Current __current)
         {
-            return dataMatrixNamesCached.Value(boxModule.StringIceIdentity, lastReloadInfo, connectionString);
-        }
-        #endregion
-
-        #region Sockets
-        #endregion
-
-        #region Actions
-        public bool TestConnectionStringAction()
-        {
-            try
-            {
-                Ferda.Modules.Helpers.Data.Database.TestConnectionString(connectionString, null);
-                return true;
-            }
-            catch { }
-            return false;
-        }
-
-        public void ReloadInfoAction()
-        {
-            lastReloadInfo = new DateTimeTI(DateTime.Now);
-            return;
+            return dataMatrixNamesCached.Value(boxModule.StringIceIdentity, LastReloadInfo, ConnectionString, AcceptableTypesOfTables);
         }
         #endregion
 
         #region BoxInfo
-        #region Cache: Connection`s properties
-        public struct ConnectionProperties
+        private ConnectionInfoCache connectionInfoCache = new ConnectionInfoCache();
+        public ConnectionInfo GetConnectionInfo()
         {
-            public string DatabaseName;
-            public string DataSource;
-            public string Driver;
-            public string ServerVersion;
+            return connectionInfoCache.Value(boxModule.StringIceIdentity, LastReloadInfo, ConnectionString);
         }
-
-        private class connectionPropertiesCache : Ferda.Modules.Helpers.Caching.Cache
-        {
-            private ConnectionProperties value;
-            public ConnectionProperties Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString)
-            {
-                lock (this)
-                {
-                    Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-                    cacheSetting.Add("ConnectionString", connectionString);
-                    if (IsObsolete(lastReloadTime, cacheSetting))
-                    {
-                        try
-                        {
-                            System.Data.Odbc.OdbcConnection conn = Ferda.Modules.Helpers.Data.OdbcConnections.GetConnection(connectionString, null);
-                            value.DatabaseName = conn.Database;
-                            value.DataSource = conn.DataSource;
-                            value.Driver = conn.Driver;
-                            try
-                            {
-                                value.ServerVersion = conn.ServerVersion;
-                            }
-                            catch (InvalidOperationException)
-                            {
-                                value.ServerVersion = String.Empty;
-                            }
-                        }
-                        catch (Ferda.Modules.BadParamsError ex)
-                        {
-                            if (ex.restrictionType != Ferda.Modules.restrictionTypeEnum.DbConnectionString)
-                                throw ex;
-                            value.DatabaseName = String.Empty;
-                            value.DataSource = String.Empty;
-                            value.Driver = String.Empty;
-                            value.ServerVersion = String.Empty;
-                        }
-                    }
-                    return value;
-                }
-            }
-        }
-        private connectionPropertiesCache connectionPropertiesCached = new connectionPropertiesCache();
-        public ConnectionProperties getConnectionProperties()
-        {
-            return connectionPropertiesCached.Value(boxModule.StringIceIdentity, lastReloadInfo, connectionString);
-        }
-        #endregion
 
         public string[] GetTables()
         {

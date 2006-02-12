@@ -119,8 +119,7 @@ namespace Ferda.Modules.Helpers.Data
                 TestDataMatrixExists(odbcConnectionString, dataMatrixName, boxIdentity);
 
                 //or other reason for exception
-                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
-                return 0;
+                throw Ferda.Modules.Exceptions.BadParamsUnexpectedReasonError(ex, boxIdentity);
             }
         }
 
@@ -174,8 +173,7 @@ namespace Ferda.Modules.Helpers.Data
                 TestDataMatrixExists(odbcConnectionString, dataMatrixName, boxIdentity);
 
                 //or other reason for exception
-                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
-                return null;
+                throw Ferda.Modules.Exceptions.BadParamsUnexpectedReasonError(ex, boxIdentity);
             }
             return result.ToArray();
         }
@@ -213,8 +211,7 @@ namespace Ferda.Modules.Helpers.Data
                 TestDataMatrixExists(odbcConnectionString, dataMatrixName, boxIdentity);
 
                 //or other reason for exception
-                //throw Ferda.Modules.Exceptions.BadParamsUnknownReasonError(ex, boxIdentity);
-                return null;
+                throw Ferda.Modules.Exceptions.BadParamsUnexpectedReasonError(ex, boxIdentity);
             }
             return result.ToArray();
         }

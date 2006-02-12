@@ -6,176 +6,139 @@ using Ferda.Modules.Boxes.DataMiningCommon.Database;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
 {
-	class DataMatrixFunctionsI : DataMatrixFunctionsDisp_, IFunctions
-	{
-		protected BoxModuleI boxModule;
-		//protected IBoxInfo boxInfo;
+    class DataMatrixFunctionsI : DataMatrixFunctionsDisp_, IFunctions
+    {
+        protected BoxModuleI boxModule;
+        //protected IBoxInfo boxInfo;
 
-		#region IFunctions Members
-		public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
-		{
-			this.boxModule = boxModule;
-			//this.boxInfo = boxInfo;
-		}
-		#endregion
+        #region IFunctions Members
+        public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
+        {
+            this.boxModule = boxModule;
+            //this.boxInfo = boxInfo;
+        }
+        #endregion
 
-		#region Properties
-		protected string dataMatrixName
-		{
-			get
-			{
-				return this.boxModule.GetPropertyString("Name");
-			}
-		}
+        #region Properties
+        public string DataMatrixName
+        {
+            get
+            {
+                return this.boxModule.GetPropertyString(DataMatrixBoxInfo.DataMatrixNamePropertyName);
+            }
+        }
 
-		protected string[] primaryKeyColumns
-		{
-			get
-			{
+        public string[] PrimaryKeyColumns
+        {
+            get
+            {
                 return Ferda.Modules.Helpers.Common.Csv.Csv2Strings(
-                    this.boxModule.GetPropertyString("PrimaryKeyColumns"));
-			}
-		}
+                    this.boxModule.GetPropertyString(DataMatrixBoxInfo.PrimaryKeyColumnsPropertyName));
+            }
+        }
 
-		#region Cache: RecordsCount
-		private class recordsCountCache : Ferda.Modules.Helpers.Caching.Cache
-		{
-			private long value;
-			public long Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString, string dataMatrixName)
-			{
-                lock (this)
-                {
-                    Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-                    cacheSetting.Add("ConnectionString", connectionString);
-                    cacheSetting.Add("DataMatrixName", dataMatrixName);
-                    if (IsObsolete(lastReloadTime, cacheSetting))
-                        value = Ferda.Modules.Helpers.Data.DataMatrix.GetRecordsCount(connectionString, dataMatrixName, boxIdentity);
-                    return value;
-                }
-			}
-		}
-		private recordsCountCache recordsCountCached = new recordsCountCache();
-		#endregion
-		private long getRecordsCount()
-		{
-			DatabaseStruct databaseStruct = getDatabaseFunctionsPrx().getDatabase();
-			return recordsCountCached.Value(
+        private RecordsCountCache recordsCountCache = new RecordsCountCache();
+        public long RecordsCount
+        {
+            get
+            {
+                DatabaseStruct databaseStruct = GetDatabaseFunctionsPrx().getDatabase();
+                return recordsCountCache.Value(
+                    boxModule.StringIceIdentity,
+                    databaseStruct.lastReloadInfo,
+                    databaseStruct.connectionString,
+                    DataMatrixName);
+            }
+        }
+        #endregion
+
+        #region Functions
+        public override DataMatrixStruct getDataMatrix(Ice.Current __current)
+        {
+            DatabaseStruct databaseStruct = this.GetDatabaseFunctionsPrx().getDatabase();
+
+            DataMatrixStruct result = new DataMatrixStruct();
+
+            result.database = databaseStruct;
+            result.dataMatrixName = DataMatrixName;
+            result.recordsCount = RecordsCount;
+            result.primaryKeyColumns = PrimaryKeyColumns;
+            result.explainDataMatrix = explainDataMatrixStructure();
+
+            return result;
+        }
+
+        private ColumnsNamesCache columnsNamesCache = new ColumnsNamesCache();
+        public override string[] getColumns(Ice.Current __current)
+        {
+            DatabaseStruct databaseStruct = GetDatabaseFunctionsPrx().getDatabase();
+            return columnsNamesCache.Value(
                 boxModule.StringIceIdentity,
-				databaseStruct.lastReloadInfo,
-				databaseStruct.connectionString, dataMatrixName);
-		}
-		#endregion
+                databaseStruct.lastReloadInfo,
+                databaseStruct.connectionString,
+                DataMatrixName);
+        }
 
-		#region Functions
-		public override DataMatrixStruct getDataMatrix(Ice.Current __current)
-		{
-			DatabaseStruct databaseStruct = this.getDatabaseFunctionsPrx().getDatabase();
-			string myIdentity = Ice.Util.identityToString(this.boxModule.IceIdentity);
-			Ferda.Modules.Helpers.Data.DataMatrix.TestDataMatrixExists(databaseStruct.connectionString, dataMatrixName, myIdentity);
-			DataMatrixStruct result = new DataMatrixStruct();
-			result.database = databaseStruct;
-			result.dataMatrixName = dataMatrixName;
-			result.recordsCount = this.getRecordsCount();
-			result.primaryKeyColumns = this.primaryKeyColumns;
-			result.explainDataMatrix = this.explainDataMatrixStructure();
-
-			return result;
-		}
-
-		#region Cache: ColumnsNames
-		private class columnsNamesCache : Ferda.Modules.Helpers.Caching.Cache
-		{
-			private string[] value;
-			public string[] Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString, string dataMatrixName)
-			{
-                lock (this)
-                {
-                    Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-                    cacheSetting.Add("ConnectionString", connectionString);
-                    cacheSetting.Add("DataMatrixName", dataMatrixName);
-                    if (IsObsolete(lastReloadTime, cacheSetting))
-                        value = Ferda.Modules.Helpers.Data.DataMatrix.GetColumns(connectionString, dataMatrixName, boxIdentity);
-                    return value;
-                }
-			}
-		}
-		private columnsNamesCache columnsNamesCached = new columnsNamesCache();
-		#endregion
-		public override string[] getColumns(Ice.Current __current)
-		{
-			DatabaseStruct databaseStruct = getDatabaseFunctionsPrx().getDatabase();
-			return columnsNamesCached.Value(
+        private ExplainDataMatrixStructureCache explainDataMatrixStructureCache = new ExplainDataMatrixStructureCache();
+        public override ColumnInfo[] explainDataMatrixStructure(Ice.Current __current)
+        {
+            DatabaseStruct databaseStruct = GetDatabaseFunctionsPrx().getDatabase();
+            return explainDataMatrixStructureCache.Value(
                 boxModule.StringIceIdentity,
-				databaseStruct.lastReloadInfo,
-				databaseStruct.connectionString, dataMatrixName);
-		}
+                databaseStruct.lastReloadInfo,
+                databaseStruct.connectionString,
+                DataMatrixName);
+        }
 
-		public override ColumnInfo[] explainDataMatrixStructure(Ice.Current __current)
-		{
-            return Ferda.Modules.Helpers.Data.DataMatrix.Explain(connectionString, dataMatrixName, boxModule.StringIceIdentity);
-		}
+        #endregion
 
-		#endregion
+        #region Sockets
+        public DatabaseFunctionsPrx GetDatabaseFunctionsPrx()
+        {
+            return DatabaseFunctionsPrxHelper.checkedCast(
+                SocketConnections.GetObjectPrx(boxModule, "Database")
+                );
+        }
+        #endregion
 
-		#region Sockets
-		private DatabaseFunctionsPrx getDatabaseFunctionsPrx()
-		{
-			return DatabaseFunctionsPrxHelper.checkedCast(
-				SocketConnections.GetObjectPrx(boxModule, "Database")
-				);
-		}
-		#endregion
-
-		#region Actions
-		public bool RunActionTestPrimaryKeyColumns()
-		{
-			try
-			{
-                Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(connectionString, dataMatrixName, primaryKeyColumns, boxModule.StringIceIdentity);
-				return true;
-			}
+        #region BoxInfo
+        public string[] GetTablesNames()
+        {
+            try
+            {
+                return GetDatabaseFunctionsPrx().getTables();
+            }
             catch (Ferda.Modules.BoxRuntimeError) { }
-			return false;
-		}
-		#endregion
+            return new string[0];
+        }
 
-		#region BoxInfo
-		public string[] GetTablesNames()
-		{
-			try
-			{
-				return getDatabaseFunctionsPrx().getTables();
-			}
+        public long GetRecordsCount()
+        {
+            try
+            {
+                return RecordsCount;
+            }
             catch (Ferda.Modules.BoxRuntimeError) { }
-			return new string[0];
-		}
+            return 0;
+        }
 
-		public long GetRecordsCount()
-		{
-			try
-			{
-				return getRecordsCount();
-			}
+        public string[] GetColumns()
+        {
+            try
+            {
+                return getColumns();
+            }
             catch (Ferda.Modules.BoxRuntimeError) { }
-			return 0;
-		}
-		public string[] GetColumns()
-		{
-			try
-			{
-				return getColumns();
-			}
-            catch (Ferda.Modules.BoxRuntimeError) { }
-			return new string[0];
-		}
-		#endregion
+            return new string[0];
+        }
+        #endregion
 
-		private string connectionString
-		{
-			get
-			{
-				return getDatabaseFunctionsPrx().getDatabase().connectionString;
-			}
-		}
-	}
+        private string connectionString
+        {
+            get
+            {
+                return GetDatabaseFunctionsPrx().getDatabase().connectionString;
+            }
+        }
+    }
 }

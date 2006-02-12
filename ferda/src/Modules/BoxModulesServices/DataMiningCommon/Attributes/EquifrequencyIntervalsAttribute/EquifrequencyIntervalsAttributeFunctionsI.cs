@@ -85,10 +85,10 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
                 lock (this)
                 {
                     Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-                    cacheSetting.Add("ConnectionString", columnStruct.dataMatrix.database.connectionString);
-                    cacheSetting.Add("DataMatrixName", columnStruct.dataMatrix.dataMatrixName);
-                    cacheSetting.Add("DataMatrixRecordsCount", columnStruct.dataMatrix.recordsCount);
-                    cacheSetting.Add("ColumnSelectExpression", columnStruct.columnSelectExpression);
+                    cacheSetting.Add(Database.DatabaseBoxInfo.typeIdentifier + Database.DatabaseBoxInfo.OdbcConnectionStringPropertyName, columnStruct.dataMatrix.database.connectionString);
+                    cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.DataMatrixNamePropertyName, columnStruct.dataMatrix.dataMatrixName);
+                    cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.RecordCountPropertyName, columnStruct.dataMatrix.recordsCount);
+                    cacheSetting.Add(Column.ColumnBoxInfo.typeIdentifier + Column.ColumnBoxInfo.ColumnSelectExpressionPropertyName, columnStruct.columnSelectExpression);
                     cacheSetting.Add("DomainType", domainType);
                     cacheSetting.Add("From", from);
                     cacheSetting.Add("To", to);

@@ -1618,5 +1618,10 @@ namespace Ferda.Modules
         }
 
         #endregion
+
+        public override void validate(Ice.Current current__)
+        {
+            boxInfo.Validate(this);
+        }
     }
 }

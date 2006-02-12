@@ -27,7 +27,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            string odbcConnectionString = boxModule.GetPropertyString("ConnectionString");
+            string odbcConnectionString = boxModule.GetPropertyString(OdbcConnectionStringPropertyName);
             if (!String.IsNullOrEmpty(odbcConnectionString))
             {
                 string[] itemsOfConnectionString = odbcConnectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
@@ -128,8 +128,21 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
 
         private void TestConnectionStringAction(BoxModuleI boxModule)
         {
-            DatabaseFunctionsI Func = (DatabaseFunctionsI)(boxModule.FunctionsIObj);
-            if (Func.TestConnectionStringAction())
+            bool isConnectionStringValid = false;
+            try
+            {
+                Ferda.Modules.Helpers.Data.Database.TestConnectionString(
+                    boxModule.GetPropertyString(OdbcConnectionStringPropertyName),
+                    boxModule.StringIceIdentity);
+                isConnectionStringValid = true;
+            }
+            catch (BadParamsError ex)
+            {
+                if (ex.restrictionType != restrictionTypeEnum.DbConnectionString)
+                    throw ex;
+            }
+           
+            if (isConnectionStringValid)
                 // test succeed
                 boxModule.OutputMessage(
                     Ferda.ModulesManager.MsgType.Info,
@@ -145,10 +158,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
 
         private void ReloadInfoAction(BoxModuleI boxModule)
         {
-            DatabaseFunctionsI Func = (DatabaseFunctionsI)boxModule.FunctionsIObj;
-            Func.ReloadInfoAction();
-
-            System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection();
+            DatabaseFunctionsI functionsIObj = (DatabaseFunctionsI)boxModule.FunctionsIObj;
+            functionsIObj.LastReloadInfo = new DateTimeTI(DateTime.Now);
         }
 
         public override PropertyValue GetReadOnlyPropertyValue(String propertyName, BoxModuleI boxModule)
@@ -157,16 +168,29 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
             switch (propertyName)
             {
                 case "DatabaseName":
-                    return new Ferda.Modules.StringTI(Func.getConnectionProperties().DatabaseName);
+                    return new Ferda.Modules.StringTI(Func.GetConnectionInfo().databaseName);
                 case "DataSource":
-                    return new Ferda.Modules.StringTI(Func.getConnectionProperties().DataSource);
+                    return new Ferda.Modules.StringTI(Func.GetConnectionInfo().dataSource);
                 case "Driver":
-                    return new Ferda.Modules.StringTI(Func.getConnectionProperties().Driver);
+                    return new Ferda.Modules.StringTI(Func.GetConnectionInfo().driver);
                 case "ServerVersion":
-                    return new Ferda.Modules.StringTI(Func.getConnectionProperties().ServerVersion);
+                    return new Ferda.Modules.StringTI(Func.GetConnectionInfo().serverVersion);
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(propertyName);
             }
         }
+
+        public override void Validate(BoxModuleI boxModule)
+        {
+            Ferda.Modules.Helpers.Data.Database.TestConnectionString(
+                boxModule.GetPropertyString(OdbcConnectionStringPropertyName),
+                boxModule.StringIceIdentity);
+        }
+
+        #region Names of Properties
+        public const string OdbcConnectionStringPropertyName = "ConnectionString";
+        public const string LastReloadInfoPropertyName = "LastReloadInfo";
+        public const string AcceptableTypesOfTablesPropertyName = "AcceptableTypesOfTables";
+        #endregion
     }
 }

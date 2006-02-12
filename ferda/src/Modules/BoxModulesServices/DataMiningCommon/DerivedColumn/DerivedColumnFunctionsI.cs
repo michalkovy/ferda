@@ -37,10 +37,10 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
                 lock (this)
                 {
                     Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-                    cacheSetting.Add("ConnectionString", connectionString);
-                    cacheSetting.Add("DataMatrixName", dataMatrixName);
-                    cacheSetting.Add("DataMatrixRecordsCount", dataMatrixRecordsCount);
-                    cacheSetting.Add("ColumnSelectExpression", columnSelectExpression);
+                    cacheSetting.Add(Database.DatabaseBoxInfo.typeIdentifier + Database.DatabaseBoxInfo.OdbcConnectionStringPropertyName, connectionString);
+                    cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.DataMatrixNamePropertyName, dataMatrixName);
+                    cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.RecordCountPropertyName, dataMatrixRecordsCount);
+                    cacheSetting.Add(Column.ColumnBoxInfo.typeIdentifier + Column.ColumnBoxInfo.ColumnSelectExpressionPropertyName, columnSelectExpression);
                     if (IsObsolete(lastReloadTime, cacheSetting))
                     {
                         value = Ferda.Modules.Helpers.Data.Column.GetStatistics(connectionString, dataMatrixName, columnSelectExpression, columnValueSubType, boxIdentity);
