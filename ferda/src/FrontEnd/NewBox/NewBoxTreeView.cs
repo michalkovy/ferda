@@ -154,7 +154,7 @@ namespace Ferda.FrontEnd.NewBox
                     stream = new MemoryStream(creators[i].Icon);
                     icon = new Icon(stream);
                     list.Images.Add(icon);
-                    iconDictionary.Add(creators[i].Label, j);
+                    iconDictionary.Add(creators[i].Identifier, j);
                     j++;
                 }
             }
@@ -338,10 +338,10 @@ namespace Ferda.FrontEnd.NewBox
             foreach (IBoxModuleFactoryCreator c in newNodes)
             {
                 NewBoxNode node = new NewBoxNode(c.Label, ENodeType.Box, c.Identifier);
-                if (iconDictionary.ContainsKey(c.Label))
+                if (iconDictionary.ContainsKey(c.Identifier))
                 {
-                    node.ImageIndex = iconDictionary[c.Label];
-                    node.SelectedImageIndex = iconDictionary[c.Label];
+                    node.ImageIndex = iconDictionary[c.Identifier];
+                    node.SelectedImageIndex = iconDictionary[c.Identifier];
                 }
                 else
                 {

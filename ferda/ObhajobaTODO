@@ -6,12 +6,12 @@ Michal
  - propertyBoxy opravit zapojitelnost do group boxu
 Martin
  - opravit ikony "double implikace" a "ekvivalence"
- - opravit problem vyberu krabicek na plose hodne dole
+ - opravit problem vyberu krabicek na plose hodne dole (nejspis je to moje chyba, jestli je to
+chyba Netronu, tak na to seru)
  - property grid
- - dynamic (kontext) help
+ - dynamic (kontext) help (at to Tom udela pro DB, tabulka a sloupec, potom se to bude dat testovat)
  - help - uzivatelska napoveda k prostredi
  - AddIn zobrazujici pomoci AcrobatReadru ten PDF help
- - opravit chyba "delete" funguje i mimo plochu (v propertyGridu...)
 Tomas
  - PDF help ke krabickam databaze, tabulka a sloupec (nesouhlasim)
  - dokumentace pridavani novych krabicek (za sebe: mam to hotovy, Michal to musi dopsat a treba Alex prelozit)
