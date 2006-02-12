@@ -2346,7 +2346,7 @@ namespace Netron.GraphLib.UI
 				CtrlShift = true;
 			}
 
-			if(e.KeyCode==Keys.F8)
+			if(e.KeyCode==Keys.Delete)
 			{
 				this.OnDelete(this, EventArgs.Empty);
 			}

@@ -603,13 +603,13 @@ namespace Ferda.FrontEnd.Desktop
         /// <param name="box">Box to be added</param>
         public void AddBox(IBoxModule box)
         {
-            Adapt();
-            //BoxNode boxNode = new BoxNode(this, box, SvgManager, view, ResManager);
-            //boxNode.X = view.GetPosition(box).X;
-            //boxNode.Y = view.GetPosition(box).Y;
+            //Adapt();
+            BoxNode boxNode = new BoxNode(this, box, SvgManager, view, ResManager);
+            boxNode.X = view.GetPosition(box).X;
+            boxNode.Y = view.GetPosition(box).Y;
 
-            ////adding the box
-            //Nodes.Add(boxNode);
+            //adding the box
+            Nodes.Add(boxNode);
         }
 
         #endregion
@@ -680,6 +680,11 @@ namespace Ferda.FrontEnd.Desktop
         /// </summary>
         protected void DeleteFromArchiveCore()
         {
+            if (!this.Focused)
+            {
+                return;
+            }
+
             string caption = ResManager.GetString("DeleteFromArchiveCaption");
             string message = ResManager.GetString("DeleteFromArchiveMessage");
 
@@ -1089,7 +1094,7 @@ namespace Ferda.FrontEnd.Desktop
 
                 ToolStripMenuItem deleteFromArchive =
                     new ToolStripMenuItem(ResManager.GetString("MenuEditDeleteFromArchive"));
-                deleteFromArchive.ShortcutKeys = (Keys)Shortcut.Del;
+                deleteFromArchive.ShortcutKeys = (Keys)Shortcut.ShiftDel;
                 deleteFromArchive.Image = provider.GetIcon("DeleteFromArchive").ToBitmap();
                 deleteFromArchive.Click += new EventHandler(deleteFromArchive_Click);
 
@@ -1328,7 +1333,7 @@ namespace Ferda.FrontEnd.Desktop
             copy.ShortcutKeys = (Keys)Shortcut.CtrlC;
             clone.ShortcutKeys = (Keys)Shortcut.CtrlE;
             deleteFromDesktop.ShortcutKeys = (Keys)Shortcut.CtrlD;
-            deleteFromArchive.ShortcutKeys = (Keys)Shortcut.Del;
+            deleteFromArchive.ShortcutKeys = (Keys)Shortcut.ShiftDel;
             packAllSockets.ShortcutKeys = (Keys)Shortcut.CtrlP;
             unpackAllLayersAllSockets.ShortcutKeys = (Keys)Shortcut.CtrlU;
             unpackOneLayerAllSockets.ShortcutKeys = (Keys)Shortcut.CtrlS;

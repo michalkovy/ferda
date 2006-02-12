@@ -289,7 +289,7 @@ namespace Ferda.FrontEnd.Archive
             ToolStripMenuItem delete =
                 new ToolStripMenuItem(ParentTreeView.ResManager.GetString("MenuArchiveDelete"));
             delete.Click += new EventHandler(delete_Click);
-            delete.ShortcutKeys = Keys.Delete;
+            delete.ShortcutKeys = (Keys)Shortcut.ShiftDel;
             delete.Image = provider.GetIcon("DeleteFromArchive").ToBitmap();
             cMenu.Items.AddRange(new ToolStripItem[] { sep, delete });
         }
