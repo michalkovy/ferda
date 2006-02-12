@@ -253,10 +253,8 @@ namespace Ferda.Modules.MetabaseLayer
             foreach (DataRow row in table.Rows)
             {
                 if (kl)
-                    //result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
                     result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
                 else
-                    //result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
                     result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
             }
             return result;
@@ -309,10 +307,8 @@ namespace Ferda.Modules.MetabaseLayer
             foreach (DataRow row in table.Rows)
             {
                 if (kl)
-                   // result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
                     result[Convert.ToInt32(row["Row"])][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
                 else
-                    //result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row[Ferda.Modules.Helpers.Data.Column.SelectFrequency]);
                     result[0][Convert.ToInt32(row["Col"])] = Convert.ToInt32(row["Frequency"]);
             }
             return result;

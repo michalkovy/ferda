@@ -84,7 +84,7 @@ namespace Ferda.Modules.Helpers.Data
         {
             //Iff publishableTypesOfTables == null than system and temporary tables are not publishable.
             if (publishableTypesOfTables == null)
-                publishableTypesOfTables = 
+                publishableTypesOfTables =
                     new string[] { "TABLE", "VIEW", "ALIAS", "SYNONYM", "EXTERNAL TABLE" };
 
             //temporary and system tables (or views) are not publishable
@@ -94,6 +94,46 @@ namespace Ferda.Modules.Helpers.Data
                     return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Gets the connection info. (some fields of <see cref="T:System.Data.Odbc.OdbcConnection"/>)
+        /// If specified <c>odbcConnectionString</c> doesn`t work empty strings are returned in
+        /// result fields.
+        /// </summary>
+        /// <param name="odbcConnectionString">The ODBC connection string.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <returns>
+        /// <see cref="Ferda.Modules.Boxes.DataMiningCommon.Database.ConnectionInfo"/>
+        /// </returns>
+        public static ConnectionInfo GetConnectionInfo(string odbcConnectionString, string boxIdentity)
+        {
+            ConnectionInfo result = new ConnectionInfo();
+            try
+            {
+                OdbcConnection conn = Ferda.Modules.Helpers.Data.OdbcConnections.GetConnection(odbcConnectionString, boxIdentity);
+                result.databaseName = conn.Database;
+                result.dataSource = conn.DataSource;
+                result.driver = conn.Driver;
+                try
+                {
+                    result.serverVersion = conn.ServerVersion;
+                }
+                catch (InvalidOperationException)
+                {
+                    result.serverVersion = String.Empty;
+                }
+            }
+            catch (Ferda.Modules.BadParamsError ex)
+            {
+                if (ex.restrictionType != Ferda.Modules.restrictionTypeEnum.DbConnectionString)
+                    throw ex;
+                result.databaseName = String.Empty;
+                result.dataSource = String.Empty;
+                result.driver = String.Empty;
+                result.serverVersion = String.Empty;
+            }
+            return result;
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return boxModule.GetPropertyString("Name");
+            return boxModule.GetPropertyString(DataMatrixNamePropertyName);
         }
 
         public override PropertyValue GetPropertyObjectFromInterface(String propertyName, Ice.ObjectPrx objectPrx)
@@ -113,7 +113,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
         {
             switch (propertyName)
             {
-                case "RecordCount":
+                case RecordCountPropertyName:
                     DataMatrixFunctionsI Func = (DataMatrixFunctionsI)boxModule.FunctionsIObj;
                     return new Ferda.Modules.LongTI(Func.GetRecordsCount());
                 default:
@@ -125,11 +125,11 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
         {
             switch (propertyName)
             {
-                case "Name":
+                case DataMatrixNamePropertyName:
                     return BoxInfoHelper.StringArrayToSelectStringArray(
                         ((DataMatrixFunctionsI)boxModule.FunctionsIObj).GetTablesNames()
                         );
-                case "PrimaryKeyColumns":
+                case PrimaryKeyColumnsPropertyName:
                     return BoxInfoHelper.StringArrayToSelectStringArray(
                         ((DataMatrixFunctionsI)boxModule.FunctionsIObj).GetColumns()
                         );
@@ -143,17 +143,30 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
             switch (actionName)
             {
                 case "TestPrimaryKeyColumns":
-                    this.RunActionTestPrimaryKeyColumns(boxModule);
+                    this.TestPrimaryKeyColumnsAction(boxModule);
                     break;
                 default:
                     throw Ferda.Modules.Exceptions.NameNotExistError(null, null, null, actionName);
             }
         }
 
-        private void RunActionTestPrimaryKeyColumns(BoxModuleI boxModule)
+        private void TestPrimaryKeyColumnsAction(BoxModuleI boxModule)
         {
-            DataMatrixFunctionsI Func = (DataMatrixFunctionsI)boxModule.FunctionsIObj;
-            if (Func.RunActionTestPrimaryKeyColumns())
+            bool isPrimaryKey = false;
+            DataMatrixFunctionsI functionsIObj = (DataMatrixFunctionsI)boxModule.FunctionsIObj;
+            try
+            {
+                Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(
+                    functionsIObj.GetDatabaseFunctionsPrx().getDatabase().connectionString,
+                    functionsIObj.DataMatrixName,
+                    functionsIObj.PrimaryKeyColumns,
+                    boxModule.StringIceIdentity
+                    );
+                isPrimaryKey = true;
+            }
+            catch (Ferda.Modules.BoxRuntimeError) { }
+
+            if (isPrimaryKey)
                 // test succeed
                 boxModule.OutputMessage(
                     Ferda.ModulesManager.MsgType.Info,
@@ -166,5 +179,26 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
                     "TestPrimaryKey",
                     "ActionTestTestPrimaryKeyFailed");
         }
+
+        public override void Validate(BoxModuleI boxModule)
+        {
+            DataMatrixFunctionsI functionsIObj = (DataMatrixFunctionsI)boxModule.FunctionsIObj;
+            Database.DatabaseStruct databaseStruct = functionsIObj.GetDatabaseFunctionsPrx().getDatabase();
+            Ferda.Modules.Helpers.Data.DataMatrix.TestDataMatrixExists(
+                databaseStruct.connectionString, 
+                functionsIObj.DataMatrixName, 
+                boxModule.StringIceIdentity);
+            Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(
+                databaseStruct.connectionString,
+                functionsIObj.DataMatrixName,
+                functionsIObj.PrimaryKeyColumns,
+                boxModule.StringIceIdentity);
+        }
+
+        #region Names of Properties
+        public const string DataMatrixNamePropertyName = "Name";
+        public const string PrimaryKeyColumnsPropertyName = "PrimaryKeyColumns";
+        public const string RecordCountPropertyName = "RecordCount";
+        #endregion
     }
 }

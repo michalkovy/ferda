@@ -780,5 +780,15 @@ namespace Ferda.Modules.Boxes
         /// exists; otherwise, <c>false</c>.
         /// </returns>
         bool TryGetPhrase(string phraseIdentifier, out string phraseLocalizedText, string[] localePrefs);
+
+        /// <summary>
+        /// Validates the specified box module. (e.g. setting of some properties
+        /// is right (satisfies its restrictions) but box module can not work with
+        /// this setting e.g. property "OdbcConnectionString" is valid ODBC connection
+        /// string but the box module can not connect with given value to the 
+        /// specified data source.)
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        void Validate(BoxModuleI boxModule);
 	}
 }

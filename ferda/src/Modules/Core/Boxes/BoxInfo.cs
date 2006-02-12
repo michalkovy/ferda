@@ -1167,5 +1167,14 @@ namespace Ferda.Modules.Boxes
             Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
             return boxLocalization.TryGetPhrase(phraseIdentifier, out phraseLocalizedText);
         }
+
+        #region IBoxInfo Members
+
+
+        public virtual void Validate(BoxModuleI boxModule)
+        {
+        }
+
+        #endregion
     }
 }

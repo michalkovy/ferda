@@ -5,7 +5,7 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{DF228977-8A10-49B5-A896-1B07A179E450}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DataMiningCommon</RootNamespace>
     <AssemblyName>DataMiningCommon</AssemblyName>
@@ -79,10 +79,16 @@
     <Compile Include="CategorialPartialCedentSetting\CategorialPartialCedentSettingFunctionsI.cs" />
     <Compile Include="Column\ColumnBoxInfo.cs" />
     <Compile Include="Column\ColumnFunctionsI.cs" />
+    <Compile Include="Database\ConnectionInfoCache.cs" />
     <Compile Include="Database\DatabaseBoxInfo.cs" />
     <Compile Include="Database\DatabaseFunctionsI.cs" />
+    <Compile Include="Database\DataMatrixNamesCache.cs" />
+    <Compile Include="Database\ExplainDatabaseStructureCache.cs" />
+    <Compile Include="DataMatrix\ColumnsNamesCache.cs" />
     <Compile Include="DataMatrix\DataMatrixBoxInfo.cs" />
     <Compile Include="DataMatrix\DataMatrixFunctionsI.cs" />
+    <Compile Include="DataMatrix\ExplainDataMatrixStructureCache.cs" />
+    <Compile Include="DataMatrix\RecordsCountCache.cs" />
     <Compile Include="DataMiningCommon.cs" />
     <Compile Include="DerivedColumn\DerivedColumnBoxInfo.cs" />
     <Compile Include="DerivedColumn\DerivedColumnFunctionsI.cs" />

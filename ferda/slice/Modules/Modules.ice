@@ -429,14 +429,14 @@ module Ferda {
 			 *
 			 **/
 			string regexp;
-			
+
 			/**
 			 *
 			 * Identifier of SettingModule which have to be used
 			 * for setting this property. When it is set to "",
 			 * non Setting Module will be used.
 			 *
-			 **/ 
+			 **/
 			string settingModuleIdentifier;
 		};
 		sequence<PropertyInfo> PropertyInfoSeq;
@@ -726,6 +726,26 @@ module Ferda {
 			 *
 			 **/
 			nonmutating BoxModuleFactory* getMyFactory();
+
+			/**
+			 *
+			 * Validates box module (e.g. its settings).
+			 *
+			 * @throws BoxRuntimeError Is thrown if some runtime error ocured.
+			 *
+			 * @throws BadValueError Is thrown if function/method gets bad values.
+			 *
+			 * @throws BadParamsError Is thrown if some property/socket has bad value.
+			 *
+			 * @throws NoConnectionInSocketError Is thrown if some connection is required.
+			 *
+			 **/
+			nonmutating void validate()
+				throws
+					BoxRuntimeError,
+					BadValueError,
+					BadParamsError,
+					NoConnectionInSocketError;
 		};
 
 		interface Entity {

@@ -61,7 +61,7 @@ namespace Ferda.Modules.Helpers.Common
 
         /// <summary>
         /// Tries to parse <see cref="T:Ferda.Modules.RangeEnum"/> item 
-        /// or integer value from <c>oneBasedBound</c>. First item has 
+        /// or integer result from <c>oneBasedBound</c>. First item has 
         /// bound equal to 1!
         /// </summary>
         /// <param name="oneBasedBound">

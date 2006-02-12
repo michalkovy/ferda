@@ -27,7 +27,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return boxModule.GetPropertyString("Name");
+            return boxModule.GetPropertyString(ColumnSelectExpressionPropertyName);
         }
 
         public override SelectString[] GetPropertyOptions(String propertyName, BoxModuleI boxModule)
@@ -53,7 +53,12 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
             PropertySetting propertySetting;
             Ferda.ModulesManager.BoxModuleProjectInformationPrx projectInfoPrx = boxModule.Manager.getProjectInformation();
             string label = projectInfoPrx.getUserLabel(boxModule.StringIceIdentity);
+
+            //TODO switch column type:
             ValueSubTypeEnum columnValueSubType = ((ColumnFunctionsI)boxModule.FunctionsIObj).GetColumnSubType();
+            //ValueSubTypeEnum columnValueSubType = (ValueSubTypeEnum)(Enum.Parse(typeof(ValueSubTypeEnum), boxModule.GetPropertyString("ValueSubType")));
+
+
             foreach (string moduleAFCName in modulesAFC.Keys)
             {
                 moduleAFC = modulesAFC[moduleAFCName];
@@ -62,10 +67,12 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
                 switch (moduleAFCName)
                 {
                     case "MultiColumn":
-                        moduleConnection.socketName = "Column";
+                        //TODO MultiColumn is not implemented yet.
+
+                        //moduleConnection.socketName = "Column";
                         //singleModuleAFC.newBoxModuleIdentifier =
                         //	Ferda.Modules.Boxes.DataMiningCommon.MultiColumn.MultiColumnBoxInfo.typeIdentifier;
-                        continue; //TODO MultiColumn is not implemented yet.
+                        continue;
                     case "Attribute":
                     case "EachValueOneCategoryAttribute":
                     case "EquifrequencyIntervalsAttribute":
@@ -122,6 +129,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
             switch (propertyName)
             {
                 case "ValueSubType":
+                    //TODO for derived column
                     return new Ferda.Modules.StringTI(Func.GetColumnSubType().ToString());
                 case "ValueMin":
                     return new Ferda.Modules.StringTI(Func.GetStatistics().ValueMin);
@@ -136,9 +144,65 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
                 case "ValueDistincts":
                     return new Ferda.Modules.LongTI(Func.GetStatistics().ValueDistincts);
                 default:
-                    return null;
-                    //throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(propertyName);
+                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(propertyName);
             }
         }
+
+        public override void RunAction(string actionName, BoxModuleI boxModule)
+        {
+            switch (actionName)
+            {
+                case "TestColumnSelectExpression":
+                    this.TestColumnSelectExpressionAction(boxModule);
+                    break;
+                default:
+                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(actionName);
+            }
+        }
+
+        private void TestColumnSelectExpressionAction(BoxModuleI boxModule)
+        {
+            ColumnFunctionsI functionsIObj = (ColumnFunctionsI)boxModule.FunctionsIObj;
+            bool isColumnSelectExpressionValid = false;
+            try
+            {
+                DataMatrix.DataMatrixStruct dataMatrixStruct = functionsIObj.GetDataMatrixFunctionsPrx().getDataMatrix();
+                Ferda.Modules.Helpers.Data.Column.TestColumnSelectExpression(
+                    dataMatrixStruct.database.connectionString,
+                    dataMatrixStruct.dataMatrixName,
+                    functionsIObj.ColumnSelectExpression,
+                    boxModule.StringIceIdentity);
+                isColumnSelectExpressionValid = true;
+            }
+            catch (Ferda.Modules.BoxRuntimeError) { }
+
+            if (isColumnSelectExpressionValid)
+                // test succeed
+                boxModule.OutputMessage(
+                    Ferda.ModulesManager.MsgType.Info,
+                    "TestColumnSelectExpression",
+                    "TestColumnSelectExpressionSucceed");
+            else
+                // test failed
+                boxModule.OutputMessage(
+                    Ferda.ModulesManager.MsgType.Warning,
+                    "TestColumnSelectExpression",
+                    "TestColumnSelectExpressionFailed");
+        }
+
+        public override void Validate(BoxModuleI boxModule)
+        {
+            ColumnFunctionsI functionsIObj = (ColumnFunctionsI)boxModule.FunctionsIObj;
+            DataMatrix.DataMatrixStruct dataMatrixStruct = functionsIObj.GetDataMatrixFunctionsPrx().getDataMatrix();
+            Ferda.Modules.Helpers.Data.Column.TestColumnSelectExpression(
+                dataMatrixStruct.database.connectionString,
+                dataMatrixStruct.dataMatrixName,
+                functionsIObj.ColumnSelectExpression,
+                boxModule.StringIceIdentity);
+        }
+
+        #region Names of Properties
+        public const string ColumnSelectExpressionPropertyName = "Name";
+        #endregion
     }
 }

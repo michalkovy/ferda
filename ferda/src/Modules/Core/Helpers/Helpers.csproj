@@ -52,6 +52,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Csv.cs" />
+    <Compile Include="Common\Others.cs" />
     <Compile Include="Common\Parsing.cs" />
     <Compile Include="Data\Attribute.cs" />
     <Compile Include="Data\Column.cs" />
