@@ -113,7 +113,7 @@
             <property name="CopyrightHref" value=""/>
           </documenter>
         </documenters>
-      </ndoc>      
+      </ndoc>
 		</if>
 	</target>
 	<target name="doc">
@@ -352,7 +352,7 @@
 		<echo message="Generuji soubory Localization.en-US.xml"/>
 		<exec program="${config.generator.util}">
 			<arg value="-inputFileName"/>
-			<arg file="docsrc/draft/boxesLocalization.en-US.xml"/>
+			<arg file="${boxconfig.input.dir}/boxesLocalization.en-US.xml"/>
 			<arg value="-outputFileName"/>
 			<arg value="Localization.en-US.xml"/>
 			<arg value="-taskType"/>
@@ -364,7 +364,7 @@
 		<echo message="Generuji soubory Localization.cs-CZ.xml"/>
 		<exec program="${config.generator.util}">
 			<arg value="-inputFileName"/>
-			<arg file="docsrc/draft/boxesLocalization.cs-CZ.xml"/>
+			<arg file="${boxconfig.input.dir}/boxesLocalization.cs-CZ.xml"/>
 			<arg value="-outputFileName"/>
 			<arg value="Localization.cs-CZ.xml"/>
 			<arg value="-taskType"/>

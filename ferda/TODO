@@ -44,13 +44,11 @@ Martin
  - DateTime property -> kalendar nestaci
  - kdyz je mezikrabickami ciste vodorovna sipka (neni sikam -> je vysoka asi 1px), tak nenimozny ji uchopit a smazat
 Tomas
- - LADIT!
  - CF, SDCF kvantifikatory ... implementovat vypocty
  - spolu se Sasou MultiColumn
  - prezentace + webcast o pridavani novych krabicek
  - Sasa mi da CategoriesDisjunktivityTest, CategoriesFrequencies
  - ChiSquare quantifier ... bug reported to Karby
- - napoveda (z Rauchovych skript)
  - Lokalizovat texty vyjimek.
 Sasa
  - installer
@@ -73,6 +71,7 @@ Sasa
 Vsichni
  - DOKUMENTACE
  - navrhuju progress .. vysvetlim
+ - LADIT!
 Else
  - ikony
  - webove stranky

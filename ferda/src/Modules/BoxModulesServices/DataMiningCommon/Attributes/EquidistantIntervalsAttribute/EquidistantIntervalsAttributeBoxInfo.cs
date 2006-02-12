@@ -42,8 +42,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
             EquidistantIntervalsAttributeFunctionsI Func = (EquidistantIntervalsAttributeFunctionsI)boxModule.FunctionsIObj;
             switch (propertyName)
             {
-                case "Categories":
-                    return new Ferda.Modules.CategoriesTI(Func.GetGeneratedAttribute().CategoriesStruct);
+                //case "Categories":
+                //    return new Ferda.Modules.CategoriesTI(Func.GetGeneratedAttribute().CategoriesStruct);
                 case "CountOfCategories":
                     return new Ferda.Modules.LongTI(Func.GetGeneratedAttribute().CategoriesCount);
                 case "IncludeNullCategory":
