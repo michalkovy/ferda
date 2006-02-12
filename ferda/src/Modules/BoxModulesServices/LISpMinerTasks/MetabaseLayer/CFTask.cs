@@ -227,7 +227,7 @@ namespace Ferda.Modules.MetabaseLayer
                 }
                 else
                 {
-                    aggregationQuantifierValue = "1, -1";
+                    aggregationQuantifierValue = "1, -1, ";
                 }
 
                 if (quantifierWithUnits)
