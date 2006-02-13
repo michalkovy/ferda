@@ -49,7 +49,8 @@ namespace Ferda.FrontEnd.Properties
             {
                 OtherProperty prop = value as OtherProperty;
 
-                return prop.Box.GetPropertyOtherAbout(prop.PropertyName);
+                //return prop.Box.GetPropertyOtherAbout(prop.PropertyName);
+                return prop.Result;
             }
             else
             {

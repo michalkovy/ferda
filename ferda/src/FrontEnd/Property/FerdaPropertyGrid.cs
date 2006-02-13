@@ -47,6 +47,7 @@ namespace Ferda.FrontEnd.Properties
         private bool isOneBoxSelected;
         private List<IBoxModule> selectedBoxes;
         private IBoxModule selectedBox;
+        private int boxIdentifier;
 
         /// <summary>
         /// The property bag where values of the property are stored
@@ -61,6 +62,22 @@ namespace Ferda.FrontEnd.Properties
         #endregion
 
         #region Propetries
+        
+        /// <summary>
+        /// Identifier of the box which properties are beeing shown
+        /// at the moment. It serves the asynchronous property getting.
+        /// </summary>
+        public int BoxIdentifier
+        {
+            set
+            {
+                boxIdentifier = value;
+            }
+            get
+            {
+                return boxIdentifier;
+            }
+        }
 
         /// <summary>
         /// View displayer
@@ -214,6 +231,7 @@ namespace Ferda.FrontEnd.Properties
 
             if (IsOneBoxSelected) //creating properties for 1 box only
             {
+                boxIdentifier = SelectedBox.ProjectIdentifier;
                 propertyBag = CreatePropertiesFromBox(SelectedBox);
                 AddSocketProperties(propertyBag, SelectedBox);
 
@@ -282,6 +300,7 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "Ferda.FrontEnd.Properties.OtherProperty":
+                    temporaryValues.Add(propertyName, null);
                     break;
 
                 case "System.String":
@@ -326,7 +345,9 @@ namespace Ferda.FrontEnd.Properties
 
             //writing to the asyncprotpertyCatchers 
             AsyncPropertyCatcher catcher = 
-                new AsyncPropertyCatcher(this, propertyName, normalType);
+                new AsyncPropertyCatcher(this, propertyName, normalType, 
+                SelectedBox.ProjectIdentifier);
+            //Console.WriteLine("Box: " + SelectedBox.ProjectIdentifier.ToString() + " property: " + propertyName);
             SelectedBox.GetProperty_async(catcher, propertyName);
         }
 
@@ -347,6 +368,12 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "Ferda.FrontEnd.Properties.OtherProperty":
+                    string resultValue = SelectedBox.GetPropertyOtherAboutFromValue(catcher.PropertyName, 
+                        (PropertyValue)value);
+                    OtherProperty prop = new OtherProperty(SelectedBox, catcher.PropertyName, 
+                        archiveDisplayer, viewDisplayers, this, ResManager);
+                    prop.Result = resultValue;
+                    temporaryValues[catcher.PropertyName] = prop;
                     break;
 
                 case "Ferda.FrontEnd.Properties.StringSequence":
@@ -722,6 +749,7 @@ namespace Ferda.FrontEnd.Properties
                 }
             }
 
+            AddAsyncStuff(pinfo.name, "Ferda.FrontEnd.Properties.OtherProperty");
             bag.Properties.Add(ps);
         }
 
@@ -1156,7 +1184,8 @@ namespace Ferda.FrontEnd.Properties
                 case "Ferda.FrontEnd.Properties.OtherProperty":
                     if (IsOneBoxSelected)
                     {
-                        e.Value = GetOtherProperty(SelectedBox, realPropertyName);
+                        //e.Value = GetOtherProperty(SelectedBox, realPropertyName);
+                        e.Value = (OtherProperty)temporaryValues[realPropertyName];
                     }
                     else
                     {
@@ -1818,8 +1847,8 @@ namespace Ferda.FrontEnd.Properties
         /// </remarks>
         void propertyBag_GetValue(object sender, PropertySpecEventArgs e)
         {
-            Cursor c = Cursor;
-            Parent.Cursor = Cursors.WaitCursor;
+            //Cursor c = Cursor;
+            //Parent.Cursor = Cursors.WaitCursor;
 
             //getting the real name of the property, not the label
             string realPropertyName = "";
@@ -1845,7 +1874,7 @@ namespace Ferda.FrontEnd.Properties
             {
                 GetNormalProperty(e, realPropertyName, typeName);
             }
-            Parent.Cursor = c;
+            //Parent.Cursor = c;
         }
 
         /// <summary>

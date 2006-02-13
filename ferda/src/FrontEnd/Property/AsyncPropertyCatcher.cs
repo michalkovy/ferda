@@ -17,6 +17,7 @@ namespace Ferda.FrontEnd.Properties
         private IAsyncPropertyManager myManager;
         private string propertyName;
         private string propertyType;
+        private int boxIdentifier;
 
         #endregion
 
@@ -51,12 +52,15 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="man">Manager of this property</param>
         /// <param name="propName">Name of the property</param>
         /// <param name="propertyType">Type of the property</param>
+        /// <param name="identifier">Identifier of the box which has this
+        /// property</param>
         public AsyncPropertyCatcher(IAsyncPropertyManager man, string propName,
-            string propertyType)
+            string propertyType, int identifier)
         {
             myManager = man;
             propertyName = propName;
             this.propertyType = propertyType;
+            this.boxIdentifier = identifier;
         }
 
         #endregion
@@ -67,7 +71,11 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="value">value of the property</param>
         public override void ice_response(Ferda.Modules.PropertyValue value)
         {
-            myManager.ChangedPropertyValue(this, value);
+            //Console.WriteLine("Box: " + boxIdentifier + " property: " + propertyName + " writes.");
+            if (myManager.BoxIdentifier == boxIdentifier)
+            {
+                myManager.ChangedPropertyValue(this, value);
+            }
         }
 
         /// <summary>
