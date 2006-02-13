@@ -492,6 +492,7 @@ using Ferda.ModulesManager;
             propertyGrid = new Ferda.FrontEnd.Properties.FerdaPropertyGrid(this, menu, toolBar);
             propertyGridContent = new DockWindow();
             propertyGridContent.Resize += new EventHandler(propertyGridContent_Resize);
+            propertyGrid.Name = "PropertyGrid";
 
             //synchronizing the sizes of content and propertyGrid
             propertyGridContent.ClientSize = propertyGrid.Size;

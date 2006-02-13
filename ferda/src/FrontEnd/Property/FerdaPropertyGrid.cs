@@ -28,6 +28,8 @@ namespace Ferda.FrontEnd.Properties
         private List<IViewDisplayer> viewDisplayers;
         private IArchiveDisplayer archiveDisplayer;
 
+        delegate void RefreshDelegate(PropertyTable bag);
+
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
         /// <summary>
@@ -47,7 +49,7 @@ namespace Ferda.FrontEnd.Properties
         private bool isOneBoxSelected;
         private List<IBoxModule> selectedBoxes;
         private IBoxModule selectedBox;
-        private int boxIdentifier;
+        private Int32 clickID = 0;
 
         /// <summary>
         /// The property bag where values of the property are stored
@@ -58,6 +60,10 @@ namespace Ferda.FrontEnd.Properties
         /// Structure where temporary values of the properties are stored
         /// </summary>
         protected Dictionary<string, object> temporaryValues;
+        /// <summary>
+        /// A dictionary to get a type of the property from the 
+        /// </summary>
+        protected Dictionary<string, string> temporaryPropertyTypes;
 
         #endregion
 
@@ -67,15 +73,21 @@ namespace Ferda.FrontEnd.Properties
         /// Identifier of the box which properties are beeing shown
         /// at the moment. It serves the asynchronous property getting.
         /// </summary>
-        public int BoxIdentifier
+        public Int32 ClickID
         {
             set
             {
-                boxIdentifier = value;
+                lock (this)
+                {
+                    clickID = value;
+                }
             }
             get
             {
-                return boxIdentifier;
+                lock (this)
+                {
+                    return clickID;
+                }
             }
         }
 
@@ -213,6 +225,7 @@ namespace Ferda.FrontEnd.Properties
 
             //setting the focus
             Enter += new EventHandler(FerdaPropertyGrid_Enter);
+
         }
 
         #endregion
@@ -228,11 +241,13 @@ namespace Ferda.FrontEnd.Properties
         public void Adapt()
         {
             temporaryValues = new Dictionary<string, object>();
+            temporaryPropertyTypes = new Dictionary<string, string>();
 
             if (IsOneBoxSelected) //creating properties for 1 box only
             {
-                boxIdentifier = SelectedBox.ProjectIdentifier;
-                propertyBag = CreatePropertiesFromBox(SelectedBox);
+                PropertyTable prop = CreatePropertiesFromBox(SelectedBox);
+                propertyBag = prop;
+                CreateAsyncCatchers();
                 AddSocketProperties(propertyBag, SelectedBox);
 
                 this.SelectedObject = propertyBag;
@@ -285,70 +300,89 @@ namespace Ferda.FrontEnd.Properties
         #region IAsyncPropertyManager implementation + related functions
 
         /// <summary>
+        /// Increases the number of clicks in on the desktop
+        /// </summary>
+        /// <returns>Number of clicks on the desktop</returns>
+        public int IncreaseClickID()
+        {
+            int tmp;
+            lock (this)
+            {
+                tmp = ++clickID;
+            }
+
+            return tmp;
+        }
+
+        /// <summary>
         /// Add the temporary values into the temporaryValues dictionary
         /// </summary>
         /// <param name="normalType">Type of the property</param>
         /// <param name="propertyName">Name of the property (not the localized label)
         /// </param>
-        protected void AddAsyncStuff(string propertyName, string normalType)
+        protected void AddAsyncTemporary(string propertyName, string normalType)
         {
-            //writing to the temporaryValues dictionary
-            switch (normalType)
+            lock (temporaryValues)
             {
-                case "System.Int32":
-                    temporaryValues.Add(propertyName, 0);
-                    break;
+                //writing to the temporaryValues dictionary
+                switch (normalType)
+                {
+                    case "System.Int32":
+                        temporaryValues.Add(propertyName, 0);
+                        break;
 
-                case "Ferda.FrontEnd.Properties.OtherProperty":
-                    temporaryValues.Add(propertyName, null);
-                    break;
+                    case "Ferda.FrontEnd.Properties.OtherProperty":
+                        temporaryValues.Add(propertyName, null);
+                        break;
 
-                case "System.String":
-                    temporaryValues.Add(propertyName, string.Empty);
-                    break;
+                    case "System.String":
+                        temporaryValues.Add(propertyName, string.Empty);
+                        break;
 
-                case "System.Boolean":
-                    temporaryValues.Add(propertyName, false);
-                    break;
+                    case "System.Boolean":
+                        temporaryValues.Add(propertyName, false);
+                        break;
 
-                case "System.Int16":
-                    temporaryValues.Add(propertyName, (Int16)0);
-                    break;
+                    case "System.Int16":
+                        temporaryValues.Add(propertyName, (Int16)0);
+                        break;
 
-                case "System.Int64":
-                    temporaryValues.Add(propertyName, (Int64)0);
-                    break;
+                    case "System.Int64":
+                        temporaryValues.Add(propertyName, (Int64)0);
+                        break;
 
-                case "System.Double":
-                    temporaryValues.Add(propertyName, (Double)0);
-                    break;
+                    case "System.Double":
+                        temporaryValues.Add(propertyName, (Double)0);
+                        break;
 
-                case "System.Single":
-                    temporaryValues.Add(propertyName, (Single)0);
-                    break;
+                    case "System.Single":
+                        temporaryValues.Add(propertyName, (Single)0);
+                        break;
 
-                case "System.DateTime":
-                    temporaryValues.Add(propertyName, new DateTime());
-                    break;
+                    case "System.DateTime":
+                        temporaryValues.Add(propertyName, new DateTime());
+                        break;
 
-                case "System.TimeSpan":
-                    temporaryValues.Add(propertyName, new TimeSpan());
-                    break;
+                    case "System.TimeSpan":
+                        temporaryValues.Add(propertyName, new TimeSpan());
+                        break;
 
-                case "Ferda.FrontEnd.Properties.StringSequence":
-                    temporaryValues.Add(propertyName, null);
-                    break;
+                    case "Ferda.FrontEnd.Properties.StringSequence":
+                        temporaryValues.Add(propertyName, null);
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
 
+            temporaryPropertyTypes.Add(propertyName, normalType);
             //writing to the asyncprotpertyCatchers 
-            AsyncPropertyCatcher catcher = 
-                new AsyncPropertyCatcher(this, propertyName, normalType, 
-                SelectedBox.ProjectIdentifier);
-            //Console.WriteLine("Box: " + SelectedBox.ProjectIdentifier.ToString() + " property: " + propertyName);
-            SelectedBox.GetProperty_async(catcher, propertyName);
+            //AsyncPropertyCatcher catcher = 
+            //    new AsyncPropertyCatcher(this, propertyName, normalType, 
+            //    SelectedBox.ProjectIdentifier);
+            ////Console.WriteLine("Box: " + SelectedBox.ProjectIdentifier.ToString() + " property: " + propertyName);
+            //SelectedBox.GetProperty_async(catcher, propertyName);
         }
 
         /// <summary>
@@ -361,83 +395,116 @@ namespace Ferda.FrontEnd.Properties
         {
             //changing one of the temporary values
             //writing to the temporaryValues dictionary
-            switch (catcher.PropertyType)
+            lock (temporaryValues)
             {
-                case "System.Int32":
-                    temporaryValues[catcher.PropertyName] = ((IntT)value).intValue;
-                    break;
+                switch (catcher.PropertyType)
+                {
+                    case "System.Int32":
+                        temporaryValues[catcher.PropertyName] = ((IntT)value).intValue;
+                        break;
 
-                case "Ferda.FrontEnd.Properties.OtherProperty":
-                    string resultValue = SelectedBox.GetPropertyOtherAboutFromValue(catcher.PropertyName, 
-                        (PropertyValue)value);
-                    OtherProperty prop = new OtherProperty(SelectedBox, catcher.PropertyName, 
-                        archiveDisplayer, viewDisplayers, this, ResManager);
-                    prop.Result = resultValue;
-                    temporaryValues[catcher.PropertyName] = prop;
-                    break;
+                    case "Ferda.FrontEnd.Properties.OtherProperty":
+                        string resultValue = SelectedBox.GetPropertyOtherAboutFromValue(catcher.PropertyName,
+                            (PropertyValue)value);
+                        OtherProperty prop = new OtherProperty(SelectedBox, catcher.PropertyName,
+                            archiveDisplayer, viewDisplayers, this, ResManager);
+                        prop.Result = resultValue;
+                        temporaryValues[catcher.PropertyName] = prop;
+                        break;
 
-                case "Ferda.FrontEnd.Properties.StringSequence":
-                    string selectedValue = ((StringT)value).stringValue;
-                    //creating a new stringSequence
-                    StringSequence seq = new StringSequence(catcher.PropertyName,
-                        new IBoxModule[] { SelectedBox }, 
-                        ResManager, ArchiveDisplayer, ViewDisplayers,
-                        this, selectedValue);
-                    temporaryValues[catcher.PropertyName] = seq;
-                    break;
+                    case "Ferda.FrontEnd.Properties.StringSequence":
+                        string selectedValue = ((StringT)value).stringValue;
+                        //creating a new stringSequence
+                        StringSequence seq = new StringSequence(catcher.PropertyName,
+                            new IBoxModule[] { SelectedBox },
+                            ResManager, ArchiveDisplayer, ViewDisplayers,
+                            this, selectedValue);
+                        temporaryValues[catcher.PropertyName] = seq;
+                        break;
 
-                case "System.String":
-                    temporaryValues[catcher.PropertyName] = ((StringT)value).stringValue;
-                    break;
+                    case "System.String":
+                        temporaryValues[catcher.PropertyName] = ((StringT)value).stringValue;
+                        break;
 
-                case "System.Boolean":
-                    temporaryValues[catcher.PropertyName] = ((BoolT)value).boolValue;
-                    break;
+                    case "System.Boolean":
+                        temporaryValues[catcher.PropertyName] = ((BoolT)value).boolValue;
+                        break;
 
-                case "System.Int16":
-                    temporaryValues[catcher.PropertyName] = ((ShortT)value).shortValue;
-                    break;
+                    case "System.Int16":
+                        temporaryValues[catcher.PropertyName] = ((ShortT)value).shortValue;
+                        break;
 
-                case "System.Int64":
-                    temporaryValues[catcher.PropertyName] = ((LongT)value).longValue;
-                    break;
+                    case "System.Int64":
+                        temporaryValues[catcher.PropertyName] = ((LongT)value).longValue;
+                        break;
 
-                case "System.Double":
-                    temporaryValues[catcher.PropertyName] = ((DoubleT)value).doubleValue;
-                    break;
+                    case "System.Double":
+                        temporaryValues[catcher.PropertyName] = ((DoubleT)value).doubleValue;
+                        break;
 
-                case "System.Single":
-                    temporaryValues[catcher.PropertyName] = ((FloatT)value).floatValue;                    
-                    break;
+                    case "System.Single":
+                        temporaryValues[catcher.PropertyName] = ((FloatT)value).floatValue;
+                        break;
 
-                case "System.DateTime":
-                    //a date property is treated differently due to unexisting conversion
-                    if (value is DateT)
-                    {
-                        DateT v = (DateT)value;
-                        temporaryValues[catcher.PropertyName] = new DateTime(v.year,
-                            v.month, v.day);
-                    }
-                    else //it is a DateTimeT thing
-                    {
-                        DateTimeT v = (DateTimeT)value;
-                        temporaryValues[catcher.PropertyName] = new DateTime(v.year,
-                            v.month, v.day, v.hour, v.minute, v.second);
-                    }
-                    break;
+                    case "System.DateTime":
+                        //a date property is treated differently due to unexisting conversion
+                        if (value is DateT)
+                        {
+                            DateT v = (DateT)value;
+                            temporaryValues[catcher.PropertyName] = new DateTime(v.year,
+                                v.month, v.day);
+                        }
+                        else //it is a DateTimeT thing
+                        {
+                            DateTimeT v = (DateTimeT)value;
+                            temporaryValues[catcher.PropertyName] = new DateTime(v.year,
+                                v.month, v.day, v.hour, v.minute, v.second);
+                        }
+                        break;
 
-                case "System.TimeSpan":
-                    TimeT val = (TimeT)value;
-                    temporaryValues[catcher.PropertyName] = new TimeSpan(val.hour,
-                        val.minute, val.second);
-                    break;
+                    case "System.TimeSpan":
+                        TimeT val = (TimeT)value;
+                        temporaryValues[catcher.PropertyName] = new TimeSpan(val.hour,
+                            val.minute, val.second);
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
 
             //refilling the propertyGrid
-            SelectedObject = propertyBag;
+            SetPropertyGrid(propertyBag);
+        }
+
+        protected void CreateAsyncCatchers()
+        {
+            lock (temporaryValues)
+            {
+                foreach (string propertyName in temporaryValues.Keys)
+                {
+                    AsyncPropertyCatcher catcher = new AsyncPropertyCatcher(this,
+                        propertyName, temporaryPropertyTypes[propertyName]);
+                    SelectedBox.GetProperty_async(catcher, propertyName);
+                }
+            }
+        }
+
+        private void SetPropertyGrid(PropertyTable bag)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.InvokeRequired)
+            {
+                RefreshDelegate d = new RefreshDelegate(SetPropertyGrid);
+                this.Invoke(d, new object[] { bag });
+            }
+            else
+            {
+                this.SelectedObject = bag;
+            }
+
         }
 
         #endregion
@@ -453,6 +520,7 @@ namespace Ferda.FrontEnd.Properties
         protected PropertyTable CreatePropertiesFromBox(IBoxModule box)
         {
             PropertyTable bag = new PropertyTable();
+            bag.ClickID = IncreaseClickID();
             IBoxModuleFactoryCreator creator = box.MadeInCreator;
 
             FerdaPropertySpec ps;
@@ -517,7 +585,7 @@ namespace Ferda.FrontEnd.Properties
                                 //adding the asynchronous stuff
                                 if (IsOneBoxSelected)
                                 {
-                                    AddAsyncStuff(pinfo.name, normalType);
+                                    AddAsyncTemporary(pinfo.name, normalType);
                                 }
                             }
                             else
@@ -607,7 +675,7 @@ namespace Ferda.FrontEnd.Properties
                 //adding the asynch stuff
                 if (IsOneBoxSelected)
                 {
-                    AddAsyncStuff(pinfo.name, "System.String");
+                    AddAsyncTemporary(pinfo.name, "System.String");
                 }
             }
             else //a combo-box should be used
@@ -685,7 +753,7 @@ namespace Ferda.FrontEnd.Properties
                 //adding the asynch stuff
                 if (IsOneBoxSelected)
                 {
-                    AddAsyncStuff(pinfo.name, "Ferda.FrontEnd.Properties.StringSequence");
+                    AddAsyncTemporary(pinfo.name, "Ferda.FrontEnd.Properties.StringSequence");
                 }
             }
         }
@@ -749,7 +817,7 @@ namespace Ferda.FrontEnd.Properties
                 }
             }
 
-            AddAsyncStuff(pinfo.name, "Ferda.FrontEnd.Properties.OtherProperty");
+            AddAsyncTemporary(pinfo.name, "Ferda.FrontEnd.Properties.OtherProperty");
             bag.Properties.Add(ps);
         }
 
@@ -1177,172 +1245,175 @@ namespace Ferda.FrontEnd.Properties
         {
             //the object when we get values from more selected boxes
             object value;
-            switch (typeName)
+            lock (temporaryValues)
             {
-                //TODO doresit jeste nejak i tohle - kdyz se ptaji na OtherProperty,
-                //hlavne nejak rozumne odladit
-                case "Ferda.FrontEnd.Properties.OtherProperty":
-                    if (IsOneBoxSelected)
-                    {
-                        //e.Value = GetOtherProperty(SelectedBox, realPropertyName);
-                        e.Value = (OtherProperty)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        throw new ApplicationException("This situation should not happen, other property can be set for one selected box only");
-                    }
-                    break;
-                //tohle taky doresit
-                case "Ferda.FrontEnd.Properties.StringSequence":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (StringSequence)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        //value = GetStringSequenceMoreBoxes(realPropertyName);
-                        //if (value != null)
-                        //{
-                        //    e.Value = (StringSequence)value;
-                        //}
-                    }
-                    break;
-
-                case "System.String":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (string)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        value = GetMoreBoxesProperty(typeName, realPropertyName);
-                        if (value != null)
+                switch (typeName)
+                {
+                    //TODO doresit jeste nejak i tohle - kdyz se ptaji na OtherProperty,
+                    //hlavne nejak rozumne odladit
+                    case "Ferda.FrontEnd.Properties.OtherProperty":
+                        if (IsOneBoxSelected)
                         {
-                            e.Value = (string)value;
+                            //e.Value = GetOtherProperty(SelectedBox, realPropertyName);
+                            e.Value = (OtherProperty)temporaryValues[realPropertyName];
                         }
-                    }
-                    break;
-
-                case "System.Int32":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (Int32)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        value = GetMoreBoxesProperty(typeName, realPropertyName);
-                        if (value != null)
+                        else
                         {
-                            e.Value = (Int32)value;
+                            throw new ApplicationException("This situation should not happen, other property can be set for one selected box only");
                         }
-                    }
-                    break;
-
-                case "System.Boolean":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (bool)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        value = GetMoreBoxesProperty(typeName, realPropertyName);
-                        if (value != null)
+                        break;
+                    //tohle taky doresit
+                    case "Ferda.FrontEnd.Properties.StringSequence":
+                        if (IsOneBoxSelected)
                         {
-                            e.Value = (bool)value;
+                            e.Value = (StringSequence)temporaryValues[realPropertyName];
                         }
-                    }
-                    break;
-
-                case "System.Int16":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (Int16)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        value = GetMoreBoxesProperty(typeName, realPropertyName);
-                        if (value != null)
+                        else
                         {
-                            e.Value = (Int16)value;
+                            //value = GetStringSequenceMoreBoxes(realPropertyName);
+                            //if (value != null)
+                            //{
+                            //    e.Value = (StringSequence)value;
+                            //}
                         }
-                    }
-                    break;
+                        break;
 
-                case "System.Int64":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (Int64)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        value = GetMoreBoxesProperty(typeName, realPropertyName);
-                        if (value != null)
+                    case "System.String":
+                        if (IsOneBoxSelected)
                         {
-                            e.Value = (Int64)value;
+                            e.Value = (string)temporaryValues[realPropertyName];
                         }
-                    }
-                    break;
-
-                case "System.Single":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (Single)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        value = GetMoreBoxesProperty(typeName, realPropertyName);
-                        if (value != null)
+                        else
                         {
-                            e.Value = (Single)value;
+                            value = GetMoreBoxesProperty(typeName, realPropertyName);
+                            if (value != null)
+                            {
+                                e.Value = (string)value;
+                            }
                         }
-                    }
-                    break;
+                        break;
 
-                case "System.Double":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (Double)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        value = GetMoreBoxesProperty(typeName, realPropertyName);
-                        if (value != null)
+                    case "System.Int32":
+                        if (IsOneBoxSelected)
                         {
-                            e.Value = (Double)value;
+                            e.Value = (Int32)temporaryValues[realPropertyName];
                         }
-                    }
-                    break;
-
-                case "System.DateTime":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (DateTime)temporaryValues[realPropertyName];
-                        //GetCorrectDateType(e);
-                    }
-                    else
-                    {
-                        GetCorrectDateTypeMoreBoxes(e);
-                    }
-                    break;
-
-                case "System.TimeSpan":
-                    if (IsOneBoxSelected)
-                    {
-                        e.Value = (TimeSpan)temporaryValues[realPropertyName];
-                    }
-                    else
-                    {
-                        value = GetMoreBoxesProperty(typeName, realPropertyName);
-                        if (value != null)
+                        else
                         {
-                            e.Value = (TimeSpan)value;
+                            value = GetMoreBoxesProperty(typeName, realPropertyName);
+                            if (value != null)
+                            {
+                                e.Value = (Int32)value;
+                            }
                         }
-                    }
-                    break;
+                        break;
 
-                default:
-                    //here other types will be treated
-                    break;
+                    case "System.Boolean":
+                        if (IsOneBoxSelected)
+                        {
+                            e.Value = (bool)temporaryValues[realPropertyName];
+                        }
+                        else
+                        {
+                            value = GetMoreBoxesProperty(typeName, realPropertyName);
+                            if (value != null)
+                            {
+                                e.Value = (bool)value;
+                            }
+                        }
+                        break;
+
+                    case "System.Int16":
+                        if (IsOneBoxSelected)
+                        {
+                            e.Value = (Int16)temporaryValues[realPropertyName];
+                        }
+                        else
+                        {
+                            value = GetMoreBoxesProperty(typeName, realPropertyName);
+                            if (value != null)
+                            {
+                                e.Value = (Int16)value;
+                            }
+                        }
+                        break;
+
+                    case "System.Int64":
+                        if (IsOneBoxSelected)
+                        {
+                            e.Value = (Int64)temporaryValues[realPropertyName];
+                        }
+                        else
+                        {
+                            value = GetMoreBoxesProperty(typeName, realPropertyName);
+                            if (value != null)
+                            {
+                                e.Value = (Int64)value;
+                            }
+                        }
+                        break;
+
+                    case "System.Single":
+                        if (IsOneBoxSelected)
+                        {
+                            e.Value = (Single)temporaryValues[realPropertyName];
+                        }
+                        else
+                        {
+                            value = GetMoreBoxesProperty(typeName, realPropertyName);
+                            if (value != null)
+                            {
+                                e.Value = (Single)value;
+                            }
+                        }
+                        break;
+
+                    case "System.Double":
+                        if (IsOneBoxSelected)
+                        {
+                            e.Value = (Double)temporaryValues[realPropertyName];
+                        }
+                        else
+                        {
+                            value = GetMoreBoxesProperty(typeName, realPropertyName);
+                            if (value != null)
+                            {
+                                e.Value = (Double)value;
+                            }
+                        }
+                        break;
+
+                    case "System.DateTime":
+                        if (IsOneBoxSelected)
+                        {
+                            e.Value = (DateTime)temporaryValues[realPropertyName];
+                            //GetCorrectDateType(e);
+                        }
+                        else
+                        {
+                            GetCorrectDateTypeMoreBoxes(e);
+                        }
+                        break;
+
+                    case "System.TimeSpan":
+                        if (IsOneBoxSelected)
+                        {
+                            e.Value = (TimeSpan)temporaryValues[realPropertyName];
+                        }
+                        else
+                        {
+                            value = GetMoreBoxesProperty(typeName, realPropertyName);
+                            if (value != null)
+                            {
+                                e.Value = (TimeSpan)value;
+                            }
+                        }
+                        break;
+
+                    default:
+                        //here other types will be treated
+                        break;
+                }
             }
         }
 
@@ -1847,34 +1918,44 @@ namespace Ferda.FrontEnd.Properties
         /// </remarks>
         void propertyBag_GetValue(object sender, PropertySpecEventArgs e)
         {
-            //Cursor c = Cursor;
-            //Parent.Cursor = Cursors.WaitCursor;
-
-            //getting the real name of the property, not the label
-            string realPropertyName = "";
-
-            if (IsOneBoxSelected)
+            PropertyTable table = sender as PropertyTable;
+            if (table == null)
             {
-                realPropertyName = GetPropertyName(e.Property.Name, SelectedBox);
-            }
-            else
-            {
-                realPropertyName = GetPropertyName(e.Property.Name, SelectedBoxes[0]);
+                throw new ApplicationException("It is not a property bag");
             }
 
-            string typeName = RealTypeName(e.Property.TypeName);
-
-            FerdaPropertySpec pfs = e.Property as FerdaPropertySpec;
-
-            if (pfs.SocketProperty)
+            lock (this)
             {
-                GetSocketProperty(e, realPropertyName);
+                if (table.ClickID != this.ClickID)
+                {
+                    return;
+                }
+
+                //getting the real name of the property, not the label
+                string realPropertyName = "";
+
+                if (IsOneBoxSelected)
+                {
+                    realPropertyName = GetPropertyName(e.Property.Name, SelectedBox);
+                }
+                else
+                {
+                    realPropertyName = GetPropertyName(e.Property.Name, SelectedBoxes[0]);
+                }
+
+                string typeName = RealTypeName(e.Property.TypeName);
+
+                FerdaPropertySpec pfs = e.Property as FerdaPropertySpec;
+
+                if (pfs.SocketProperty)
+                {
+                    GetSocketProperty(e, realPropertyName);
+                }
+                else
+                {
+                    GetNormalProperty(e, realPropertyName, typeName);
+                }
             }
-            else
-            {
-                GetNormalProperty(e, realPropertyName, typeName);
-            }
-            //Parent.Cursor = c;
         }
 
         /// <summary>

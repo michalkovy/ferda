@@ -1044,5 +1044,10 @@ namespace Ferda.FrontEnd.External
 			propValues[e.Property.Name] = e.Value;
 			base.OnSetValue(e);
 		}
+
+        /// <summary>
+        /// ID of the click on a desktop (for FERDA)
+        /// </summary>
+        public int ClickID;
 	}
 }

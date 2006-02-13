@@ -47,8 +47,11 @@ namespace Ferda.FrontEnd.Properties
         {
             if (destinationType == typeof(string))
             {
+                if (value == null)
+                {
+                    return string.Empty;
+                }
                 OtherProperty prop = value as OtherProperty;
-
                 return prop.Box.GetPropertyOtherAbout(prop.PropertyName);
             }
             else
