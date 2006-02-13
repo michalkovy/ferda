@@ -1590,6 +1590,7 @@ namespace Ferda.FrontEnd.Desktop
                 else
                 {
                     FrontEndCommon.CannotWriteToBox(toBox, ResManager);
+                    return false;
                 }
             }
             else

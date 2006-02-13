@@ -70,19 +70,13 @@
 		<if test="${not(help.uptodate)}">
       <ndoc>
         <assemblies basedir="${bin.dir}">
-<!--          <include name="Server/FerdaServerBase.dll"/> -->
-          <!--
-          <include name="Server/FerdaBoxInterfaces.dll"/>
-          -->
-<!--          <include name="Server/FerdaDataMiningCommonBoxes.dll"/> -->
-          <!--
-						<include name="Server/FerdaLMTasksBoxes.dll"/>
-					-->
-
+          <include name="Server/FerdaServerBase.dll"/>
+          <!--<include name="Server/FerdaBoxInterfaces.dll"/>-->
+          <include name="Server/FerdaDataMiningCommonBoxes.dll"/>
+	     <include name="Server/FerdaLMTasksBoxes.dll"/>
           <include name="FrontEnd/FerdaModulesManager.dll"/>
           <include name="FrontEnd/FerdaProjectManager.dll"/>
-
-<!--          <include name="FrontEnd/FerdaFrontEnd.exe"/> -->
+         <include name="FrontEnd/FerdaFrontEnd.exe"/>
         </assemblies>
         <referencepaths>
           <include name="${bin.dir}"/>
