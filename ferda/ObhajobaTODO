@@ -5,7 +5,6 @@ Michal
    - kdyz se rekne, ze to nema byt zasuvka a v tu chvili je tam neco zapojeneho, musi se to odpojit a ta hodnota, co tam byla v posledni chvili, se musi ulozit do te krabky
  - propertyBoxy opravit zapojitelnost do group boxu
 Martin
- - opravit ikony "double implikace" a "ekvivalence"
  - opravit problem vyberu krabicek na plose hodne dole (nejspis je to moje chyba, jestli je to
 chyba Netronu, tak na to seru)
  - property grid

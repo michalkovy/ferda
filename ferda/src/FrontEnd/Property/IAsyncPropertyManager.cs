@@ -11,16 +11,6 @@ namespace Ferda.FrontEnd.Properties
     public interface IAsyncPropertyManager
     {
         /// <summary>
-        /// Identifier of the box which properties are beeing shown
-        /// at the moment. It serves the asynchronous property getting.
-        /// </summary>
-        int BoxIdentifier
-        {
-            set;
-            get;
-        }
-
-        /// <summary>
         /// The property value is changed, so the the propertyGrid should be
         /// refilled with new values
         /// </summary>

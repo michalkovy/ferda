@@ -1429,25 +1429,25 @@ namespace Ferda.FrontEnd.Desktop
             //sending info to the propertygrid and context help
             if ( SelectedBoxes.Count > 1 )
             {
+                contextHelpDisplayer.Reset();
+                userNote.Reset();
+
                 propertiesDisplayer.SelectedBoxes = SelectedBoxes;
                 propertiesDisplayer.IsOneBoxSelected = false;
                 propertiesDisplayer.Adapt();
-
-                contextHelpDisplayer.Reset();
-                userNote.Reset();
             }
 
             if (SelectedBoxes.Count == 1)
             {
-                propertiesDisplayer.SelectedBox = SelectedBoxes[0];
-                propertiesDisplayer.IsOneBoxSelected = true;
-                propertiesDisplayer.Adapt();
-
                 contextHelpDisplayer.SelectedBox = SelectedBoxes[0];
                 contextHelpDisplayer.Adapt();
 
                 userNote.SelectedBox = SelectedBoxes[0];
                 userNote.Adapt();
+
+                propertiesDisplayer.SelectedBox = SelectedBoxes[0];
+                propertiesDisplayer.IsOneBoxSelected = true;
+                propertiesDisplayer.Adapt();
             }
 
             if (SelectedBoxes.Count == 0)
