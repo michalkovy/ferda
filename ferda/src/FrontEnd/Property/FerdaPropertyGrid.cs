@@ -482,7 +482,7 @@ namespace Ferda.FrontEnd.Properties
                     }
                     break;
 
-                //TODO tohle nejak doresit, zatim to necham tak
+
                 case "Ferda.FrontEnd.Properties.StringSequence":
                     string selectedValue = ((StringT)value).stringValue;
                     //creating a new stringSequence
@@ -1035,67 +1035,107 @@ namespace Ferda.FrontEnd.Properties
                 FerdaPropertySpec ps;
                 if (pinfo.visible)
                 {
-                    if (boxes[0].IsPropertySetWithSettingModule(pinfo.name))
-                    { 
-                        //without other property
-                        //if (IsOneBoxSelected)
-                        //{
-                        //    CreateOtherProperty(pinfo, box, bag);
-                        //}
+                    //two known other property types - StringSeqT and CategoriesT
+                    if (pinfo.typeClassIceId == "::Ferda::Modules::StringSeqT" ||
+                        pinfo.typeClassIceId == "::Ferda::Modules::CategoriesT")
+                    {
+                        //CreateOtherProperty(pinfo, box, bag);
+                        //continue;
                     }
-                    else //creating normal property
-                    { 
-                        //two known other property types - StringSeqT and CategoriesT
-                        if (pinfo.typeClassIceId == "::Ferda::Modules::StringSeqT" ||
-                            pinfo.typeClassIceId == "::Ferda::Modules::CategoriesT")
-                        {
-                            //CreateOtherProperty(pinfo, box, bag);
-                            //continue;
-                        }
 
-                        //strings are also dealt with separatelly
-                        if (pinfo.typeClassIceId == "::Ferda::Modules::StringT")
+                    //strings are also dealt with separatelly
+                    if (pinfo.typeClassIceId == "::Ferda::Modules::StringT")
+                    {
+                        //deterimining if we can use a module to set the property
+                        //bool canBeSetWithModule = true;
+                        //foreach (IBoxModule box in boxes)
+                        //{
+                        //    canBeSetWithModule = 
+                        //        box.IsPropertySetWithSettingModule(pinfo.name);
+                        //}
+                        ////we can set the property with a module (ODBC Connection string)
+                        //if (canBeSetWithModule)
+                        //{
+                        //    string normalType = GetNormalType(pinfo.typeClassIceId);
+                        //    if (normalType != "")
+                        //    {
+                        //        //getting the displayable name of the property
+                        //        SocketInfo si = firstCreator.GetSocket(pinfo.name);
+                        //        ps = new FerdaPropertySpec(si.label, normalType, false);
+                        //        ps.Category = pinfo.categoryName;
+                        //        //getting the hint
+                        //        ps.Description = si.hint;
+
+                        //        //setting the attributes of the property
+                        //        if (IsPropertyReadOnlyMoreBoxes(boxes, pinfo.name) ||
+                        //            IsPropertySockedMoreBoxes(boxes, pinfo.name))
+                        //        {
+                        //            ps.Attributes = new Attribute[]
+                        //            {
+                        //                ReadOnlyAttribute.Yes,
+                        //                new TypeConverterAttribute(typeof(OtherPropertyAddingConverter)), 
+                        //                new EditorAttribute(typeof(OtherPropertyEditor), 
+                        //                typeof(System.Drawing.Design.UITypeEditor))
+                        //            };
+                        //        }
+                        //        else
+                        //        {
+                        //            ps.Attributes = new Attribute[]
+                        //            {
+                        //                new TypeConverterAttribute(typeof(OtherPropertyAddingConverter)),
+                        //                new EditorAttribute(typeof(OtherPropertyEditor), 
+                        //                typeof(System.Drawing.Design.UITypeEditor))
+                        //            };
+                        //        }
+
+                        //        //getting the property to the bag
+                        //        bag.Properties.Add(ps);
+                        //        //adding the asynchronous stuff
+                        //        AddAsyncTemporary(pinfo.name, "Ferda.FrontEnd.Properties.OtherProperty", true);
+                        //    }
+                        //}
+                        //else
                         {
-                            //CreateStringProperty(pinfo, box, bag);
+                            //it is a normal string property
+                            CreateStringProperty(pinfo, boxes[0], bag);
+                        }
+                    }
+                    else
+                    {
+                        string normalType = GetNormalType(pinfo.typeClassIceId);
+
+                        //This is a normal type, creating a normal property for it
+                        if (normalType != "")
+                        {
+                            //getting the displayable name of the property
+                            SocketInfo si = firstCreator.GetSocket(pinfo.name);
+                            ps = new FerdaPropertySpec(si.label, normalType, false);
+                            ps.Category = pinfo.categoryName;
+
+                            //geting the socket information about the category
+                            ps.Description = si.hint;
+
+                            //it is readonly or it is already there as a socket -
+                            //cannot edit "socketed" value
+                            if (IsPropertyReadOnlyMoreBoxes(boxes, pinfo.name) ||
+                                IsPropertySockedMoreBoxes(boxes, pinfo.name))
+                            {
+                                ps.Attributes = new Attribute[]
+                                {
+                                   ReadOnlyAttribute.Yes
+                                };
+                            }
+
+                            bag.Properties.Add(ps);
+
+                            //adding the asynchronous stuff
+                            AddAsyncTemporary(pinfo.name, normalType, true);
                         }
                         else
                         {
-                            string normalType = GetNormalType(pinfo.typeClassIceId);
-
-                            //This is a normal type, creating a normal property for it
-                            if (normalType != "")
-                            {
-                                //getting the displayable name of the property
-                                SocketInfo si = firstCreator.GetSocket(pinfo.name);
-                                ps = new FerdaPropertySpec(si.label, normalType, false);
-                                ps.Category = pinfo.categoryName;
-
-                                //geting the socket information about the category
-                                ps.Description = si.hint;
-
-                                //it is readonly or it is already there as a socket -
-                                //cannot edit "socketed" value
-                                if (IsPropertyReadOnlyMoreBoxes(boxes, pinfo.name) ||
-                                    IsPropertySockedMoreBoxes(boxes, pinfo.name))
-                                {
-                                    ps.Attributes = new Attribute[]
-                                    {
-                                       ReadOnlyAttribute.Yes
-                                    };
-                                }
-
-                                bag.Properties.Add(ps);
-
-                                //adding the asynchronous stuff
-                                AddAsyncTemporary(pinfo.name, normalType, true);
-                            }
-                            else
-                            {
-                                throw new ApplicationException("Wierd type that we dont know!!!");
-                            }
+                            throw new ApplicationException("Wierd type that we dont know!!!");
                         }
                     }
-
                 }
             }
             return bag;
@@ -1234,10 +1274,7 @@ namespace Ferda.FrontEnd.Properties
                 bag.Properties.Add(ps);
 
                 //adding the asynch stuff
-                if (IsOneBoxSelected)
-                {
-                    AddAsyncTemporary(pinfo.name, "System.String", false);
-                }
+                AddAsyncTemporary(pinfo.name, "System.String", !IsOneBoxSelected); 
             }
             else //a combo-box should be used
             {
@@ -1246,7 +1283,6 @@ namespace Ferda.FrontEnd.Properties
                 {
                     return;
                 }
-                //TODO az se vyresi problem s jinymi typy u selectedObjects, tak se tohle vypusti
 
                 if (box.ArePropertyOptionsObligatory(pinfo.name))
                 //this means user cannot edit values
