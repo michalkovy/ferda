@@ -63,9 +63,10 @@ namespace Ferda.FrontEnd.Properties
             IServiceProvider provider, object value)
         {
             OtherProperty op = value as OtherProperty;
-
-            op.SetProperty();
-
+            if (op != null)
+            {
+                op.SetProperty();
+            }
             return op;
         }
     }
