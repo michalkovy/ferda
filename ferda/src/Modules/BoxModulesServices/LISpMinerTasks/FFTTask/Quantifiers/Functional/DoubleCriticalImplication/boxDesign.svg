@@ -14,9 +14,9 @@
    id="svg1306"
    sodipodi:version="0.32"
    inkscape:version="0.43"
-   sodipodi:docbase="C:\Make\Projekt\berlios\ferda\src\Modules\BoxModulesServices\LISpMinerTasks\FFTTask\Quantifiers\Functional\DoubleCriticalImplication"
-   sodipodi:docname="boxDesign.svg"
-   inkscape:export-filename="C:\icon.png"
+   sodipodi:docbase="C:\Make\Projekt\svg\4ft"
+   sodipodi:docname="criticalEqv32.svg"
+   inkscape:export-filename="C:\Make\Projekt\svg\4ft\criticalImp32.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -51,8 +51,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="18.21875"
-     inkscape:cx="18.422316"
-     inkscape:cy="16.493997"
+     inkscape:cx="18.224429"
+     inkscape:cy="16.449408"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
@@ -88,7 +88,7 @@
            height="20.093229"
            x="2.2325809"
            y="7.0843959" /></flowRegion><flowPara
-         id="flowPara1320" /></flowRoot>    <rect
+         id="flowPara1320"></flowPara></flowRoot>    <rect
        style="opacity:1;fill:#f00000;fill-opacity:1;stroke:#000000;stroke-width:0.86000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect2097"
        width="15.390697"
@@ -120,7 +120,7 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot1488"
-       transform="matrix(5.10565,0,0,3.372806,-203.4529,-5.839168)"
+       transform="matrix(4.34375,0,0,3.139279,-172.7492,-4.365637)"
        style="fill:#ffff00;fill-opacity:1"><flowRegion
          id="flowRegion1490"
          style="fill:url(#linearGradient2395);fill-opacity:1"><rect
@@ -148,23 +148,38 @@
     <rect
        style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:0"
        id="rect3298"
-       width="20"
-       height="4"
-       x="11"
-       y="7" />
+       width="12"
+       height="3"
+       x="14.451115"
+       y="12" />
     <rect
        style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:0"
-       id="rect1401"
-       width="20"
-       height="4"
-       x="11"
-       y="14" />
-    <rect
-       style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:0"
-       id="rect1403"
-       width="20"
-       height="4"
-       x="11"
-       y="21" />
+       id="rect5070"
+       width="12"
+       height="3"
+       x="14.506003"
+       y="17" />
+    <text
+       xml:space="preserve"
+       style="font-size:26.44411469px;font-style:normal;font-weight:normal;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="13.633139"
+       y="16.585115"
+       id="text5967"
+       transform="scale(0.502932,1.988342)"><tspan
+         sodipodi:role="line"
+         id="tspan5969"
+         x="13.633139"
+         y="16.585115">&lt;</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:27.05864334px;font-style:normal;font-weight:normal;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="-64.007881"
+       y="-0.14694455"
+       id="text5975"
+       transform="matrix(-0.514405,1.704696e-2,-4.892461e-2,-1.942373,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan5977"
+         x="-64.007881"
+         y="-0.14694455">&lt;</tspan></text>
   </g>
 </svg>
