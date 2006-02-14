@@ -1030,7 +1030,7 @@ namespace Ferda.FrontEnd.Properties
             }
 
             //iterating through all the common properties
-            foreach (PropertyInfo pinfo in firstCreator.Properties)
+            foreach (PropertyInfo pinfo in commonProperties)
             {
                 FerdaPropertySpec ps;
                 if (pinfo.visible)
