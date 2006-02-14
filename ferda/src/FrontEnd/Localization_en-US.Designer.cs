@@ -984,6 +984,24 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Property setting error:.
+        /// </summary>
+        internal static string PropertyMoreBoxesErrorCaption {
+            get {
+                return ResourceManager.GetString("PropertyMoreBoxesErrorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attempted property setting for more boxes failed - one or more box is locked..
+        /// </summary>
+        internal static string PropertyMoreBoxesErrorText {
+            get {
+                return ResourceManager.GetString("PropertyMoreBoxesErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sets if the property is visible as a socket.
         /// </summary>
         internal static string PropertySocketHint {

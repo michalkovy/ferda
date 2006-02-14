@@ -29,6 +29,16 @@ namespace Ferda.FrontEnd
         }
 
         /// <summary>
+        /// Shows a messagebox saying that property setting of more boxes has failed
+        /// </summary>
+        /// <param name="resManager">Resource Manager of the application</param>
+        public static void CannotSetPropertyMoreBoxes(ResourceManager resManager)
+        {
+            MessageBox.Show(resManager.GetString("PropertyMoreBoxesErrorCaption"),
+                resManager.GetString("PropertyMoreBoxesErrorText"));
+        }
+
+        /// <summary>
         /// Loads the project and writes the information about the project File
         /// </summary>
         /// <param name="fileName">Name of the xpf file from where the project is loaded</param>

@@ -17,6 +17,29 @@ using Ferda.FrontEnd.Desktop;
 namespace Ferda.FrontEnd.Properties
 {
     /// <summary>
+    /// It is used for asynchronous property getting, when there are more boxes 
+    /// selected. It determines the state of the property getting.
+    /// </summary>
+    public enum EMoreBoxesTemporaryValueState
+    {
+        /// <summary>
+        /// No property value has returned from asynchronous calling, the 
+        /// value of the property is set to initial value
+        /// </summary>
+        First,
+        /// <summary>
+        /// One (or more) properties have returned and they have the same value
+        /// </summary>
+        Right,
+        /// <summary>
+        /// The properties returning from asychnronous calling are different, 
+        /// therefore the right behaviour is to set the property value back
+        /// to initial value
+        /// </summary>
+        Wrong
+    }
+
+    /// <summary>
     /// Property Grid for the Ferda application
     /// </summary>
     ///<stereotype>control</stereotype>
@@ -64,6 +87,13 @@ namespace Ferda.FrontEnd.Properties
         /// A dictionary to get a type of the property from the 
         /// </summary>
         protected Dictionary<string, string> temporaryPropertyTypes;
+        /// <summary>
+        /// When there are more boxes selected, this dictionary stores
+        /// information if there is the initial value written in the
+        /// temporaryValues dictionary, or some box already wrote something
+        /// there
+        /// </summary>
+        protected Dictionary<string, EMoreBoxesTemporaryValueState> moreBoxesValuesState;
 
         #endregion
 
@@ -242,24 +272,24 @@ namespace Ferda.FrontEnd.Properties
         {
             temporaryValues = new Dictionary<string, object>();
             temporaryPropertyTypes = new Dictionary<string, string>();
+            moreBoxesValuesState = 
+                new Dictionary<string, EMoreBoxesTemporaryValueState>();
 
             if (IsOneBoxSelected) //creating properties for 1 box only
             {
                 PropertyTable prop = CreatePropertiesFromBox(SelectedBox);
                 propertyBag = prop;
-                CreateAsyncCatchers();
+                CreateAsyncCatchersOneBox();
                 AddSocketProperties(propertyBag, SelectedBox);
 
                 this.SelectedObject = propertyBag;
             }
-            else
+            else //creating it for more selected boxes
             {
-                //PropertyTable[] tables = new PropertyTable[SelectedBoxes.Count];
-                //for (int i = 0; i < SelectedBoxes.Count; i++)
-                //{
-                //    tables[i] = CreatePropertiesFromBox(SelectedBoxes[i], true);
-                //}
-                //this.SelectedObjects = tables;
+                PropertyTable prop = CreatePropertiesFromMoreBoxes(SelectedBoxes);
+                propertyBag = prop;
+                CreateAsyncCatchersMoreBoxes();
+                this.SelectedObject = propertyBag;
             }
         }
 
@@ -315,12 +345,14 @@ namespace Ferda.FrontEnd.Properties
         }
 
         /// <summary>
-        /// Add the temporary values into the temporaryValues dictionary
+        /// Add the temporary values into the temporaryValues dictionary and to the
+        /// temporaryPropertyType dictionary
         /// </summary>
         /// <param name="normalType">Type of the property</param>
         /// <param name="propertyName">Name of the property (not the localized label)
         /// </param>
-        protected void AddAsyncTemporary(string propertyName, string normalType)
+        /// <param name="moreBoxes">We are creating for one ore more boxes</param>
+        protected void AddAsyncTemporary(string propertyName, string normalType, bool moreBoxes)
         {
             lock (temporaryValues)
             {
@@ -377,12 +409,14 @@ namespace Ferda.FrontEnd.Properties
             }
 
             temporaryPropertyTypes.Add(propertyName, normalType);
-            //writing to the asyncprotpertyCatchers 
-            //AsyncPropertyCatcher catcher = 
-            //    new AsyncPropertyCatcher(this, propertyName, normalType, 
-            //    SelectedBox.ProjectIdentifier);
-            ////Console.WriteLine("Box: " + SelectedBox.ProjectIdentifier.ToString() + " property: " + propertyName);
-            //SelectedBox.GetProperty_async(catcher, propertyName);
+            if (moreBoxes)
+            {
+                lock (moreBoxesValuesState)
+                {
+                    moreBoxesValuesState.Add(propertyName, 
+                        EMoreBoxesTemporaryValueState.First);
+                }
+            }
         }
 
         /// <summary>
@@ -391,93 +425,421 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         /// <param name="catcher">Catcher of the connection</param>
         /// <param name="value">New value of the property</param>
-        public void ChangedPropertyValue(AsyncPropertyCatcher catcher, object value)
+        /// <param name="moreBoxes">If the refresh of the property grid is 
+        /// from one or more boxes</param>
+        public void ChangedPropertyValue(AsyncPropertyCatcher catcher, object value, bool moreBoxes)
         {
             //changing one of the temporary values
             //writing to the temporaryValues dictionary
-            lock (temporaryValues)
+            switch (catcher.PropertyType)
             {
-                switch (catcher.PropertyType)
-                {
-                    case "System.Int32":
-                        temporaryValues[catcher.PropertyName] = ((IntT)value).intValue;
-                        break;
+                case "System.Int32":
+                    Int32 int32Value = ((IntT)value).intValue;
+                    lock (temporaryValues)
+                    {
+                        if (moreBoxes)
+                        {
+                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            {
+                                //no box has written to the property
+                                case EMoreBoxesTemporaryValueState.First:
+                                    temporaryValues[catcher.PropertyName] = int32Value;
+                                    moreBoxesValuesState[catcher.PropertyName] =
+                                        EMoreBoxesTemporaryValueState.Right;
+                                    break;
 
-                    case "Ferda.FrontEnd.Properties.OtherProperty":
-                        string resultValue = SelectedBox.GetPropertyOtherAboutFromValue(catcher.PropertyName,
-                            (PropertyValue)value);
-                        OtherProperty prop = new OtherProperty(SelectedBox, catcher.PropertyName,
-                            archiveDisplayer, viewDisplayers, this, ResManager);
-                        prop.Result = resultValue;
+                                //all the previos boxes wrote the same value
+                                case EMoreBoxesTemporaryValueState.Right:
+                                    if (int32Value != (Int32)temporaryValues[catcher.PropertyName])
+                                    {
+                                        temporaryValues[catcher.PropertyName] = (Int32)0;
+                                        moreBoxesValuesState[catcher.PropertyName] = 
+                                            EMoreBoxesTemporaryValueState.Wrong;
+                                    }
+                                    break;
+                                //values from the boxes are different
+                                case EMoreBoxesTemporaryValueState.Wrong:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            temporaryValues[catcher.PropertyName] = int32Value;
+                        }
+                    }
+                    break;
+
+                case "Ferda.FrontEnd.Properties.OtherProperty":
+                    //here is no moreBoxes here
+                    string resultValue = SelectedBox.GetPropertyOtherAboutFromValue(catcher.PropertyName,
+                        (PropertyValue)value);
+                    OtherProperty prop = new OtherProperty(SelectedBox, catcher.PropertyName,
+                        archiveDisplayer, viewDisplayers, this, ResManager);
+                    prop.Result = resultValue;
+                    lock (temporaryValues)
+                    {
                         temporaryValues[catcher.PropertyName] = prop;
-                        break;
+                    }
+                    break;
 
-                    case "Ferda.FrontEnd.Properties.StringSequence":
-                        string selectedValue = ((StringT)value).stringValue;
-                        //creating a new stringSequence
-                        StringSequence seq = new StringSequence(catcher.PropertyName,
-                            new IBoxModule[] { SelectedBox },
-                            ResManager, ArchiveDisplayer, ViewDisplayers,
-                            this, selectedValue);
+                //TODO tohle nejak doresit, zatim to necham tak
+                case "Ferda.FrontEnd.Properties.StringSequence":
+                    string selectedValue = ((StringT)value).stringValue;
+                    //creating a new stringSequence
+                    StringSequence seq = new StringSequence(catcher.PropertyName,
+                        new IBoxModule[] { SelectedBox },
+                        ResManager, ArchiveDisplayer, ViewDisplayers,
+                        this, selectedValue);
+                    lock (temporaryValues)
+                    {
                         temporaryValues[catcher.PropertyName] = seq;
-                        break;
+                    }
+                    break;
 
-                    case "System.String":
-                        temporaryValues[catcher.PropertyName] = ((StringT)value).stringValue;
-                        break;
-
-                    case "System.Boolean":
-                        temporaryValues[catcher.PropertyName] = ((BoolT)value).boolValue;
-                        break;
-
-                    case "System.Int16":
-                        temporaryValues[catcher.PropertyName] = ((ShortT)value).shortValue;
-                        break;
-
-                    case "System.Int64":
-                        temporaryValues[catcher.PropertyName] = ((LongT)value).longValue;
-                        break;
-
-                    case "System.Double":
-                        temporaryValues[catcher.PropertyName] = ((DoubleT)value).doubleValue;
-                        break;
-
-                    case "System.Single":
-                        temporaryValues[catcher.PropertyName] = ((FloatT)value).floatValue;
-                        break;
-
-                    case "System.DateTime":
-                        //a date property is treated differently due to unexisting conversion
-                        if (value is DateT)
+                case "System.String":
+                    string valueString = ((StringT)value).stringValue;
+                    lock (temporaryValues)
+                    {
+                        if (moreBoxes)
                         {
-                            DateT v = (DateT)value;
-                            temporaryValues[catcher.PropertyName] = new DateTime(v.year,
-                                v.month, v.day);
+                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            {
+                                //no box has written to the property
+                                case EMoreBoxesTemporaryValueState.First:
+                                    temporaryValues[catcher.PropertyName] = valueString;
+                                    moreBoxesValuesState[catcher.PropertyName] =
+                                        EMoreBoxesTemporaryValueState.Right;
+                                    break;
+
+                                //all the previos boxes wrote the same value
+                                case EMoreBoxesTemporaryValueState.Right:
+                                    if (valueString != (string)temporaryValues[catcher.PropertyName])
+                                    {
+                                        temporaryValues[catcher.PropertyName] = string.Empty;
+                                        moreBoxesValuesState[catcher.PropertyName] =
+                                            EMoreBoxesTemporaryValueState.Wrong;
+                                    }
+                                    break;
+                                //values from the boxes are different
+                                case EMoreBoxesTemporaryValueState.Wrong:
+                                    break;
+                            }
                         }
-                        else //it is a DateTimeT thing
+                        else
                         {
-                            DateTimeT v = (DateTimeT)value;
-                            temporaryValues[catcher.PropertyName] = new DateTime(v.year,
+                            temporaryValues[catcher.PropertyName] = valueString;
+                        }
+                    }
+                    break;
+
+                case "System.Boolean":
+                    bool boolValue = ((BoolT)value).boolValue;
+                    lock (temporaryValues)
+                    {
+                        if (moreBoxes)
+                        {
+                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            {
+                                //no box has written to the property
+                                case EMoreBoxesTemporaryValueState.First:
+                                    temporaryValues[catcher.PropertyName] = boolValue;
+                                    moreBoxesValuesState[catcher.PropertyName] =
+                                        EMoreBoxesTemporaryValueState.Right;
+                                    break;
+
+                                //all the previos boxes wrote the same value
+                                case EMoreBoxesTemporaryValueState.Right:
+                                    if (boolValue != (bool)temporaryValues[catcher.PropertyName])
+                                    {
+                                        temporaryValues[catcher.PropertyName] = false;
+                                        moreBoxesValuesState[catcher.PropertyName] =
+                                            EMoreBoxesTemporaryValueState.Wrong;
+                                    }
+                                    break;
+                                //values from the boxes are different
+                                case EMoreBoxesTemporaryValueState.Wrong:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            temporaryValues[catcher.PropertyName] = boolValue;
+                        }
+                    }
+                    break;
+
+                case "System.Int16":
+                    Int16 shortValue = ((ShortT)value).shortValue;
+                    lock (temporaryValues)
+                    {
+                        if (moreBoxes)
+                        {
+                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            {
+                                //no box has written to the property
+                                case EMoreBoxesTemporaryValueState.First:
+                                    temporaryValues[catcher.PropertyName] = shortValue;
+                                    moreBoxesValuesState[catcher.PropertyName] =
+                                        EMoreBoxesTemporaryValueState.Right;
+                                    break;
+
+                                //all the previos boxes wrote the same value
+                                case EMoreBoxesTemporaryValueState.Right:
+                                    if (shortValue != (Int16)temporaryValues[catcher.PropertyName])
+                                    {
+                                        temporaryValues[catcher.PropertyName] = (Int16)0;
+                                        moreBoxesValuesState[catcher.PropertyName] =
+                                            EMoreBoxesTemporaryValueState.Wrong;
+                                    }
+                                    break;
+                                //values from the boxes are different
+                                case EMoreBoxesTemporaryValueState.Wrong:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            temporaryValues[catcher.PropertyName] = shortValue;
+                        }
+                    }
+                    break;
+
+                case "System.Int64":
+                    Int64 longValue = ((LongT)value).longValue;
+                    lock (temporaryValues)
+                    {
+                        if (moreBoxes)
+                        {
+                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            {
+                                //no box has written to the property
+                                case EMoreBoxesTemporaryValueState.First:
+                                    temporaryValues[catcher.PropertyName] = longValue;
+                                    moreBoxesValuesState[catcher.PropertyName] =
+                                        EMoreBoxesTemporaryValueState.Right;
+                                    break;
+
+                                //all the previos boxes wrote the same value
+                                case EMoreBoxesTemporaryValueState.Right:
+                                    if (longValue != (Int64)temporaryValues[catcher.PropertyName])
+                                    {
+                                        temporaryValues[catcher.PropertyName] = (Int64)0;
+                                        moreBoxesValuesState[catcher.PropertyName] =
+                                            EMoreBoxesTemporaryValueState.Wrong;
+                                    }
+                                    break;
+                                //values from the boxes are different
+                                case EMoreBoxesTemporaryValueState.Wrong:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            temporaryValues[catcher.PropertyName] = longValue;
+                        }
+                    }
+                    break;
+
+                case "System.Double":
+                    Double doubleValue = ((DoubleT)value).doubleValue;
+                    lock (temporaryValues)
+                    {
+                        if (moreBoxes)
+                        {
+                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            {
+                                //no box has written to the property
+                                case EMoreBoxesTemporaryValueState.First:
+                                    temporaryValues[catcher.PropertyName] = doubleValue;
+                                    moreBoxesValuesState[catcher.PropertyName] =
+                                        EMoreBoxesTemporaryValueState.Right;
+                                    break;
+
+                                //all the previos boxes wrote the same value
+                                case EMoreBoxesTemporaryValueState.Right:
+                                    if (doubleValue != (Double)temporaryValues[catcher.PropertyName])
+                                    {
+                                        temporaryValues[catcher.PropertyName] = (Double)0;
+                                        moreBoxesValuesState[catcher.PropertyName] =
+                                            EMoreBoxesTemporaryValueState.Wrong;
+                                    }
+                                    break;
+                                //values from the boxes are different
+                                case EMoreBoxesTemporaryValueState.Wrong:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            temporaryValues[catcher.PropertyName] = doubleValue;
+                        }
+                    }
+                    break;
+
+                case "System.Single":
+                    Single singleValue = ((FloatT)value).floatValue;
+                    lock (temporaryValues)
+                    {
+                        if (moreBoxes)
+                        {
+                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            {
+                                //no box has written to the property
+                                case EMoreBoxesTemporaryValueState.First:
+                                    temporaryValues[catcher.PropertyName] = singleValue;
+                                    moreBoxesValuesState[catcher.PropertyName] =
+                                        EMoreBoxesTemporaryValueState.Right;
+                                    break;
+
+                                //all the previos boxes wrote the same value
+                                case EMoreBoxesTemporaryValueState.Right:
+                                    if (singleValue != (Single)temporaryValues[catcher.PropertyName])
+                                    {
+                                        temporaryValues[catcher.PropertyName] = (Single)0;
+                                        moreBoxesValuesState[catcher.PropertyName] =
+                                            EMoreBoxesTemporaryValueState.Wrong;
+                                    }
+                                    break;
+                                //values from the boxes are different
+                                case EMoreBoxesTemporaryValueState.Wrong:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            temporaryValues[catcher.PropertyName] = singleValue;
+                        }
+                    }
+                    break;
+
+                case "System.DateTime":
+                    //a date property is treated differently due to unexisting conversion
+                    if (value is DateT)
+                    {
+                        DateT v = (DateT)value;
+                        DateTime dateTimeValue = new DateTime(v.year, v.month, v.day);
+                        lock (temporaryValues)
+                        {
+                            if (moreBoxes)
+                            {
+                                switch (moreBoxesValuesState[catcher.PropertyName])
+                                {
+                                    //no box has written to the property
+                                    case EMoreBoxesTemporaryValueState.First:
+                                        temporaryValues[catcher.PropertyName] = dateTimeValue;
+                                        moreBoxesValuesState[catcher.PropertyName] =
+                                            EMoreBoxesTemporaryValueState.Right;
+                                        break;
+
+                                    //all the previos boxes wrote the same value
+                                    case EMoreBoxesTemporaryValueState.Right:
+                                        if (dateTimeValue != (DateTime)temporaryValues[catcher.PropertyName])
+                                        {
+                                            temporaryValues[catcher.PropertyName] = new DateTime();
+                                            moreBoxesValuesState[catcher.PropertyName] =
+                                                EMoreBoxesTemporaryValueState.Wrong;
+                                        }
+                                        break;
+                                    //values from the boxes are different
+                                    case EMoreBoxesTemporaryValueState.Wrong:
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                temporaryValues[catcher.PropertyName] = dateTimeValue;
+                            }
+                        }
+                    }
+                    else //it is a DateTimeT thing
+                    {
+                        DateTimeT v = (DateTimeT)value;
+                        DateTime dtValue = new DateTime(v.year,
                                 v.month, v.day, v.hour, v.minute, v.second);
+                        lock (temporaryValues)
+                        {
+                            if (moreBoxes)
+                            {
+                                switch (moreBoxesValuesState[catcher.PropertyName])
+                                {
+                                    //no box has written to the property
+                                    case EMoreBoxesTemporaryValueState.First:
+                                        temporaryValues[catcher.PropertyName] = dtValue;
+                                        moreBoxesValuesState[catcher.PropertyName] =
+                                            EMoreBoxesTemporaryValueState.Right;
+                                        break;
+
+                                    //all the previos boxes wrote the same value
+                                    case EMoreBoxesTemporaryValueState.Right:
+                                        if (dtValue != (DateTime)temporaryValues[catcher.PropertyName])
+                                        {
+                                            temporaryValues[catcher.PropertyName] = new DateTime();
+                                            moreBoxesValuesState[catcher.PropertyName] =
+                                                EMoreBoxesTemporaryValueState.Wrong;
+                                        }
+                                        break;
+                                    //values from the boxes are different
+                                    case EMoreBoxesTemporaryValueState.Wrong:
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                temporaryValues[catcher.PropertyName] = dtValue;
+                            }
                         }
-                        break;
+                    }
+                    break;
 
-                    case "System.TimeSpan":
-                        TimeT val = (TimeT)value;
-                        temporaryValues[catcher.PropertyName] = new TimeSpan(val.hour,
-                            val.minute, val.second);
-                        break;
+                case "System.TimeSpan":
+                    TimeT val = (TimeT)value;
+                    TimeSpan timeSpanValue = new TimeSpan(val.hour, val.minute, val.second);
+                    lock (temporaryValues)
+                    {
+                        if (moreBoxes)
+                        {
+                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            {
+                                //no box has written to the property
+                                case EMoreBoxesTemporaryValueState.First:
+                                    temporaryValues[catcher.PropertyName] = timeSpanValue;
+                                    moreBoxesValuesState[catcher.PropertyName] =
+                                        EMoreBoxesTemporaryValueState.Right;
+                                    break;
 
-                    default:
-                        break;
-                }
+                                //all the previos boxes wrote the same value
+                                case EMoreBoxesTemporaryValueState.Right:
+                                    if (timeSpanValue != (TimeSpan)temporaryValues[catcher.PropertyName])
+                                    {
+                                        temporaryValues[catcher.PropertyName] = new TimeSpan();
+                                        moreBoxesValuesState[catcher.PropertyName] =
+                                            EMoreBoxesTemporaryValueState.Wrong;
+                                    }
+                                    break;
+                                //values from the boxes are different
+                                case EMoreBoxesTemporaryValueState.Wrong:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            temporaryValues[catcher.PropertyName] = timeSpanValue;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
             }
 
             //refilling the propertyGrid
             SetPropertyGrid(propertyBag);
         }
 
-        protected void CreateAsyncCatchers()
+        /// <summary>
+        /// Creates asynchronous catchers for getting properties out of the ICE layer
+        /// </summary>
+        protected void CreateAsyncCatchersOneBox()
         {
             lock (temporaryValues)
             {
@@ -490,6 +852,31 @@ namespace Ferda.FrontEnd.Properties
             }
         }
 
+        /// <summary>
+        /// Creates asynchronous catchers for getting properties out of the ICE layer
+        /// when more than one box is selected on the desktop
+        /// </summary>
+        protected void CreateAsyncCatchersMoreBoxes()
+        {
+            lock (temporaryValues)
+            {
+                foreach (string propertyName in temporaryValues.Keys)
+                {
+                    foreach (IBoxModule box in SelectedBoxes)
+                    {
+                        AsyncPropertyCatcher catcher = new AsyncPropertyCatcher(this,
+                            propertyName, temporaryPropertyTypes[propertyName], true);
+                        box.GetProperty_async(catcher, propertyName);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// A special method to refresh the property grid with a new property bag,
+        /// that can be called from other threads than the owner thread.
+        /// </summary>
+        /// <param name="bag">A bag with the right values of the properties</param>
         private void SetPropertyGrid(PropertyTable bag)
         {
             // InvokeRequired required compares the thread ID of the
@@ -504,7 +891,6 @@ namespace Ferda.FrontEnd.Properties
             {
                 this.SelectedObject = bag;
             }
-
         }
 
         #endregion
@@ -519,7 +905,9 @@ namespace Ferda.FrontEnd.Properties
         /// <returns>A bag full of properties from the box</returns>
         protected PropertyTable CreatePropertiesFromBox(IBoxModule box)
         {
+            //initializing a new bag
             PropertyTable bag = new PropertyTable();
+            //increasing the number of clicks of the user on the desktop
             bag.ClickID = IncreaseClickID();
             IBoxModuleFactoryCreator creator = box.MadeInCreator;
 
@@ -581,12 +969,7 @@ namespace Ferda.FrontEnd.Properties
                                 }
 
                                 bag.Properties.Add(ps);
-
-                                //adding the asynchronous stuff
-                                if (IsOneBoxSelected)
-                                {
-                                    AddAsyncTemporary(pinfo.name, normalType);
-                                }
+                                AddAsyncTemporary(pinfo.name, normalType, false);
                             }
                             else
                             {
@@ -594,12 +977,190 @@ namespace Ferda.FrontEnd.Properties
                             }
                         }
                     }
+                }
+            }
+            return bag;
+        }
 
+        /// <summary>
+        /// Adds the common properties of the selected boxes on the desktop
+        /// to the <see cref="T:Ferda.FrontEnd.External.PropertyTable"/> 
+        /// object. Common properties mean that all the boxes have the property
+        /// of that name and the same type.
+        /// </summary>
+        /// <param name="boxes">The boxes from which the properties should 
+        /// be created</param>
+        /// <returns>A <see cref="T:Ferda.FrontEnd.External.PropertyTable"/>
+        /// object filled with common properties</returns>
+        protected PropertyTable CreatePropertiesFromMoreBoxes(IList<IBoxModule> boxes)
+        {
+            //structure where the common properties will be stored
+            List<PropertyInfo> commonProperties = new List<PropertyInfo>();
+
+            //initializing a new bag
+            PropertyTable bag = new PropertyTable();
+            bag.GetValue += new PropertySpecEventHandler(propertyBag_GetValue);
+            bag.SetValue += new PropertySpecEventHandler(propertyBag_SetValue);
+            //increasing the number of clicks of the user on the desktop
+            bag.ClickID = IncreaseClickID();
+
+            //first creator - properties from this creator will be 
+            //compared to creators from other boxes
+            IBoxModuleFactoryCreator firstCreator = boxes[0].MadeInCreator;
+
+            //iterating throutg all the properties of the first selected box
+            foreach (PropertyInfo info in firstCreator.Properties)
+            {
+                bool contains = true;
+
+                //all the boxes should include this property
+                for (int i = 1; i < boxes.Count; i++)
+                {
+                    contains = ContainsPropertyInfo(boxes[i].MadeInCreator, info);
+                    if (!contains)
+                    {
+                        break;
+                    }
+                }
+
+                if (contains)
+                {
+                    commonProperties.Add(info);
                 }
             }
 
-            //AddConnectionProperties();
+            //iterating through all the common properties
+            foreach (PropertyInfo pinfo in firstCreator.Properties)
+            {
+                FerdaPropertySpec ps;
+                if (pinfo.visible)
+                {
+                    if (boxes[0].IsPropertySetWithSettingModule(pinfo.name))
+                    { 
+                        //without other property
+                        //if (IsOneBoxSelected)
+                        //{
+                        //    CreateOtherProperty(pinfo, box, bag);
+                        //}
+                    }
+                    else //creating normal property
+                    { 
+                        //two known other property types - StringSeqT and CategoriesT
+                        if (pinfo.typeClassIceId == "::Ferda::Modules::StringSeqT" ||
+                            pinfo.typeClassIceId == "::Ferda::Modules::CategoriesT")
+                        {
+                            //CreateOtherProperty(pinfo, box, bag);
+                            //continue;
+                        }
+
+                        //strings are also dealt with separatelly
+                        if (pinfo.typeClassIceId == "::Ferda::Modules::StringT")
+                        {
+                            //CreateStringProperty(pinfo, box, bag);
+                        }
+                        else
+                        {
+                            string normalType = GetNormalType(pinfo.typeClassIceId);
+
+                            //This is a normal type, creating a normal property for it
+                            if (normalType != "")
+                            {
+                                //getting the displayable name of the property
+                                SocketInfo si = firstCreator.GetSocket(pinfo.name);
+                                ps = new FerdaPropertySpec(si.label, normalType, false);
+                                ps.Category = pinfo.categoryName;
+
+                                //geting the socket information about the category
+                                ps.Description = si.hint;
+
+                                //it is readonly or it is already there as a socket -
+                                //cannot edit "socketed" value
+                                if (IsPropertyReadOnlyMoreBoxes(boxes, pinfo.name) ||
+                                    IsPropertySockedMoreBoxes(boxes, pinfo.name))
+                                {
+                                    ps.Attributes = new Attribute[]
+                                    {
+                                       ReadOnlyAttribute.Yes
+                                    };
+                                }
+
+                                bag.Properties.Add(ps);
+
+                                //adding the asynchronous stuff
+                                AddAsyncTemporary(pinfo.name, normalType, true);
+                            }
+                            else
+                            {
+                                throw new ApplicationException("Wierd type that we dont know!!!");
+                            }
+                        }
+                    }
+
+                }
+            }
             return bag;
+        }
+
+        /// <summary>
+        /// Determines if the property is socked in more boxes (it is taken out to the
+        /// desktop as a socket). The rule is that if there is one box that has this 
+        /// property socked, then it is socked in all the boxes.
+        /// </summary>
+        /// <param name="boxes">Boxes with the property</param>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>If the property is socked in all the boxes</returns>
+        protected static bool IsPropertySockedMoreBoxes(IList<IBoxModule> boxes, string propertyName)
+        {
+            foreach (IBoxModule box in boxes)
+            {
+                if (box.GetPropertySocking(propertyName))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Determines if the property is readonly in more boxes. The rule is that
+        /// if there is one box that has this property as a readonly property,
+        /// it will be readonly in all the boxes.
+        /// </summary>
+        /// <param name="boxes">Boxes with the property</param>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>If the property is readonly in all the boxes</returns>
+        protected static bool IsPropertyReadOnlyMoreBoxes(IList<IBoxModule> boxes, string propertyName)
+        {
+            foreach (IBoxModule box in boxes)
+            {
+                if (box.IsPropertyReadOnly(propertyName))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Determines if the creator in the first argument contains the property in
+        /// the second argument. It is tested to the same property name and property
+        /// type
+        /// </summary>
+        /// <param name="iBoxModuleFactoryCreator">A creator with properties</param>
+        /// <param name="property">A particular property</param>
+        /// <returns>True if contains, false otherwise</returns>
+        protected static bool ContainsPropertyInfo(IBoxModuleFactoryCreator iBoxModuleFactoryCreator, PropertyInfo property)
+        {
+            foreach (PropertyInfo info in iBoxModuleFactoryCreator.Properties)
+            {
+                if ((info.name == property.name) &&
+                    (info.typeClassIceId == property.typeClassIceId))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -675,7 +1236,7 @@ namespace Ferda.FrontEnd.Properties
                 //adding the asynch stuff
                 if (IsOneBoxSelected)
                 {
-                    AddAsyncTemporary(pinfo.name, "System.String");
+                    AddAsyncTemporary(pinfo.name, "System.String", false);
                 }
             }
             else //a combo-box should be used
@@ -753,7 +1314,8 @@ namespace Ferda.FrontEnd.Properties
                 //adding the asynch stuff
                 if (IsOneBoxSelected)
                 {
-                    AddAsyncTemporary(pinfo.name, "Ferda.FrontEnd.Properties.StringSequence");
+                    AddAsyncTemporary(pinfo.name, 
+                        "Ferda.FrontEnd.Properties.StringSequence", false);
                 }
             }
         }
@@ -816,8 +1378,10 @@ namespace Ferda.FrontEnd.Properties
                     };
                 }
             }
-
-            AddAsyncTemporary(pinfo.name, "Ferda.FrontEnd.Properties.OtherProperty");
+            if (IsOneBoxSelected)
+            {
+                AddAsyncTemporary(pinfo.name, "Ferda.FrontEnd.Properties.OtherProperty", false);
+            }
             bag.Properties.Add(ps);
         }
 
@@ -839,14 +1403,14 @@ namespace Ferda.FrontEnd.Properties
                 //the string sequence is dealt separatelly in the string combo editor
                 //and stringcombo adding editor
                 case "System.Int32":
+                    //first setting the value into the temporary structures
+                    temporaryValues[propertyName] = e.Value;
+                    SelectedObject = propertyBag;
+
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
                         {
-                            //first setting the value into the temporary structures
-                            temporaryValues[propertyName] = (int)e.Value;
-                            SelectedObject = propertyBag;
-
                             //then setting it to the box
                             SelectedBox.SetPropertyInt(propertyName, (int)e.Value);
                             SelectedBox.WriteExit();
@@ -858,6 +1422,7 @@ namespace Ferda.FrontEnd.Properties
                     }
                     else //setting the property for all the selected boxes
                     {
+                        bool couldWrite = true;
                         foreach (IBoxModule box in SelectedBoxes)
                         {
                             if (box.TryWriteEnter())
@@ -867,8 +1432,12 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                FrontEndCommon.CannotWriteToBox(box, ResManager);
+                                couldWrite = false;
                             }
+                        }
+                        if (!couldWrite)
+                        {
+                            FrontEndCommon.CannotSetPropertyMoreBoxes(ResManager);
                         }
                     }
                     break;
@@ -914,16 +1483,14 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "System.String":
+                    //first setting the value into the temporary structures
+                    temporaryValues[propertyName] = e.Value;
+                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
                         {
-                            //first setting the value into the temporary structures
-                            temporaryValues[propertyName] = (string)e.Value;
-                            SelectedObject = propertyBag;
-
                             //then setting it to the box
-
                             SelectedBox.SetPropertyString(propertyName, (string)e.Value);
                             SelectedBox.WriteExit();
                         }
@@ -934,6 +1501,7 @@ namespace Ferda.FrontEnd.Properties
                     }
                     else //setting the property for all the selected boxes
                     {
+                        bool couldWrite = true;
                         foreach (IBoxModule box in SelectedBoxes)
                         {
                             if (box.TryWriteEnter())
@@ -943,21 +1511,24 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                FrontEndCommon.CannotWriteToBox(box, ResManager);
+                                couldWrite = false;
                             }
+                        }
+                        if (!couldWrite)
+                        {
+                            FrontEndCommon.CannotSetPropertyMoreBoxes(ResManager);
                         }
                     }
                     break;
 
                 case "System.Boolean":
+                    //first setting the value into the temporary structures
+                    temporaryValues[propertyName] = e.Value;
+                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
                         {
-                            //first setting the value into the temporary structures
-                            temporaryValues[propertyName] = (bool)e.Value;
-                            SelectedObject = propertyBag;
-
                             //then setting it to the box
                             SelectedBox.SetPropertyBool(propertyName, (bool)e.Value);
                             SelectedBox.WriteExit();
@@ -969,6 +1540,7 @@ namespace Ferda.FrontEnd.Properties
                     }
                     else //setting the property for all the selected boxes
                     {
+                        bool couldWrite = true;
                         foreach (IBoxModule box in SelectedBoxes)
                         {
                             if (box.TryWriteEnter())
@@ -978,21 +1550,24 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                FrontEndCommon.CannotWriteToBox(box, ResManager);
+                                couldWrite = false;
                             }
+                        }
+                        if (!couldWrite)
+                        {
+                            FrontEndCommon.CannotSetPropertyMoreBoxes(ResManager);
                         }
                     }
                     break;
 
                 case "System.Int16":
+                    //first setting the value into the temporary structures
+                    temporaryValues[propertyName] = e.Value;
+                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
                         {
-                            //first setting the value into the temporary structures
-                            temporaryValues[propertyName] = (short)e.Value;
-                            SelectedObject = propertyBag;
-
                             //then setting it to the box
                             SelectedBox.SetPropertyShort(propertyName, (short)e.Value);
                             SelectedBox.WriteExit();
@@ -1004,30 +1579,34 @@ namespace Ferda.FrontEnd.Properties
                     }
                     else //setting the property for all the selected boxes
                     {
+                        bool couldWrite = true;
                         foreach (IBoxModule box in SelectedBoxes)
                         {
                             if (box.TryWriteEnter())
                             {
-                                box.SetPropertyShort(propertyName, (short)e.Value);
+                                box.SetPropertyShort(propertyName, (Int16)e.Value);
                                 box.WriteExit();
                             }
                             else
                             {
-                                FrontEndCommon.CannotWriteToBox(box, ResManager);
+                                couldWrite = false;
                             }
+                        }
+                        if (!couldWrite)
+                        {
+                            FrontEndCommon.CannotSetPropertyMoreBoxes(ResManager);
                         }
                     }
                     break;
 
                 case "System.Int64":
+                    //first setting the value into the temporary structures
+                    temporaryValues[propertyName] = e.Value;
+                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
                         {
-                            //first setting the value into the temporary structures
-                            temporaryValues[propertyName] = (long)e.Value;
-                            SelectedObject = propertyBag;
-
                             //then setting it to the box
                             SelectedBox.SetPropertyLong(propertyName, (long)e.Value);
                             SelectedBox.WriteExit();
@@ -1039,30 +1618,34 @@ namespace Ferda.FrontEnd.Properties
                     }
                     else //setting the property for all the selected boxes
                     {
+                        bool couldWrite = true;
                         foreach (IBoxModule box in SelectedBoxes)
                         {
                             if (box.TryWriteEnter())
                             {
-                                box.SetPropertyLong(propertyName, (long)e.Value);
+                                box.SetPropertyLong(propertyName, (Int64)e.Value);
                                 box.WriteExit();
                             }
                             else
                             {
-                                FrontEndCommon.CannotWriteToBox(box, ResManager);
+                                couldWrite = false;
                             }
+                        }
+                        if (!couldWrite)
+                        {
+                            FrontEndCommon.CannotSetPropertyMoreBoxes(ResManager);
                         }
                     }
                     break;
 
                 case "System.Double":
+                    //first setting the value into the temporary structures
+                    temporaryValues[propertyName] = e.Value;
+                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
                         {
-                            //first setting the value into the temporary structures
-                            temporaryValues[propertyName] = (double)e.Value;
-                            SelectedObject = propertyBag;
-
                             //then setting it to the box
                             SelectedBox.SetPropertyDouble(propertyName, (double)e.Value);
                             SelectedBox.WriteExit();
@@ -1074,30 +1657,34 @@ namespace Ferda.FrontEnd.Properties
                     }
                     else //setting the property for all the selected boxes
                     {
+                        bool couldWrite = true;
                         foreach (IBoxModule box in SelectedBoxes)
                         {
                             if (box.TryWriteEnter())
                             {
-                                box.SetPropertyDouble(propertyName, (double)e.Value);
+                                box.SetPropertyDouble(propertyName, (Double)e.Value);
                                 box.WriteExit();
                             }
                             else
                             {
-                                FrontEndCommon.CannotWriteToBox(box, ResManager);
+                                couldWrite = false;
                             }
+                        }
+                        if (!couldWrite)
+                        {
+                            FrontEndCommon.CannotSetPropertyMoreBoxes(ResManager);
                         }
                     }
                     break;
 
                 case "System.Single":
+                    //first setting the value into the temporary structures
+                    temporaryValues[propertyName] = e.Value;
+                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
                         {
-                            //first setting the value into the temporary structures
-                            temporaryValues[propertyName] = (float)e.Value;
-                            SelectedObject = propertyBag;
-
                             //then setting it to the box
                             SelectedBox.SetPropertyFloat(propertyName, (float)e.Value);
                             SelectedBox.WriteExit();
@@ -1109,6 +1696,7 @@ namespace Ferda.FrontEnd.Properties
                     }
                     else //setting the property for all the selected boxes
                     {
+                        bool couldWrite = true;
                         foreach (IBoxModule box in SelectedBoxes)
                         {
                             if (box.TryWriteEnter())
@@ -1118,21 +1706,24 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                FrontEndCommon.CannotWriteToBox(box, ResManager);
+                                couldWrite = false;
                             }
+                        }
+                        if (!couldWrite)
+                        {
+                            FrontEndCommon.CannotSetPropertyMoreBoxes(ResManager);
                         }
                     }
                     break;
 
                 case "System.DateTime":
+                    //first setting the value into the temporary structures
+                    temporaryValues[propertyName] = e.Value;
+                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
                         {
-                            //first setting the value into the temporary structures
-                            temporaryValues[propertyName] = (DateTime)e.Value;
-                            SelectedObject = propertyBag;
-
                             //then setting it to the box
                             SetCorrectDateType(e, SelectedBox);
                             SelectedBox.WriteExit();
@@ -1144,6 +1735,7 @@ namespace Ferda.FrontEnd.Properties
                     }
                     else //setting the property for all the selected boxes
                     {
+                        bool couldWrite = true;
                         foreach (IBoxModule box in SelectedBoxes)
                         {
                             if (box.TryWriteEnter())
@@ -1153,21 +1745,24 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                FrontEndCommon.CannotWriteToBox(box, ResManager);
+                                couldWrite = false;
                             }
+                        }
+                        if (!couldWrite)
+                        {
+                            FrontEndCommon.CannotSetPropertyMoreBoxes(ResManager);
                         }
                     }
                     break;
 
                 case "System.TimeSpan":
+                    //first setting the value into the temporary structures
+                    temporaryValues[propertyName] = (TimeSpan)e.Value;
+                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
                         {
-                            //first setting the value into the temporary structures
-                            temporaryValues[propertyName] = (TimeSpan)e.Value;
-                            SelectedObject = propertyBag;
-
                             //then setting it to the box
                             SelectedBox.SetPropertyTime(propertyName, (TimeSpan)e.Value);
                             SelectedBox.WriteExit();
@@ -1179,6 +1774,7 @@ namespace Ferda.FrontEnd.Properties
                     }
                     else //setting the property for all the selected boxes
                     {
+                        bool couldWrite = true;
                         foreach (IBoxModule box in SelectedBoxes)
                         {
                             if (box.TryWriteEnter())
@@ -1188,8 +1784,12 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                FrontEndCommon.CannotWriteToBox(box, ResManager);
+                                couldWrite = false;
                             }
+                        }
+                        if (!couldWrite)
+                        {
+                            FrontEndCommon.CannotSetPropertyMoreBoxes(ResManager);
                         }
                     }
                     break;
@@ -1243,171 +1843,59 @@ namespace Ferda.FrontEnd.Properties
         protected void GetNormalProperty(PropertySpecEventArgs e, string
             realPropertyName, string typeName)
         {
-            //the object when we get values from more selected boxes
-            object value;
             lock (temporaryValues)
             {
                 switch (typeName)
                 {
-                    //TODO doresit jeste nejak i tohle - kdyz se ptaji na OtherProperty,
-                    //hlavne nejak rozumne odladit
                     case "Ferda.FrontEnd.Properties.OtherProperty":
                         if (IsOneBoxSelected)
                         {
-                            //e.Value = GetOtherProperty(SelectedBox, realPropertyName);
                             e.Value = (OtherProperty)temporaryValues[realPropertyName];
                         }
-                        else
+                        else //setting otherOtherProperty for more boxes does not make sense
                         {
                             throw new ApplicationException("This situation should not happen, other property can be set for one selected box only");
                         }
                         break;
-                    //tohle taky doresit
+
                     case "Ferda.FrontEnd.Properties.StringSequence":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (StringSequence)temporaryValues[realPropertyName];
-                        }
-                        else
-                        {
-                            //value = GetStringSequenceMoreBoxes(realPropertyName);
-                            //if (value != null)
-                            //{
-                            //    e.Value = (StringSequence)value;
-                            //}
-                        }
+                        e.Value = (StringSequence)temporaryValues[realPropertyName];
                         break;
 
                     case "System.String":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (string)temporaryValues[realPropertyName];
-                        }
-                        else
-                        {
-                            value = GetMoreBoxesProperty(typeName, realPropertyName);
-                            if (value != null)
-                            {
-                                e.Value = (string)value;
-                            }
-                        }
+                        e.Value = (string)temporaryValues[realPropertyName];
                         break;
 
                     case "System.Int32":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (Int32)temporaryValues[realPropertyName];
-                        }
-                        else
-                        {
-                            value = GetMoreBoxesProperty(typeName, realPropertyName);
-                            if (value != null)
-                            {
-                                e.Value = (Int32)value;
-                            }
-                        }
+                        e.Value = (Int32)temporaryValues[realPropertyName];
                         break;
 
                     case "System.Boolean":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (bool)temporaryValues[realPropertyName];
-                        }
-                        else
-                        {
-                            value = GetMoreBoxesProperty(typeName, realPropertyName);
-                            if (value != null)
-                            {
-                                e.Value = (bool)value;
-                            }
-                        }
+                        e.Value = (bool)temporaryValues[realPropertyName];
                         break;
 
                     case "System.Int16":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (Int16)temporaryValues[realPropertyName];
-                        }
-                        else
-                        {
-                            value = GetMoreBoxesProperty(typeName, realPropertyName);
-                            if (value != null)
-                            {
-                                e.Value = (Int16)value;
-                            }
-                        }
+                        e.Value = (Int16)temporaryValues[realPropertyName];
                         break;
 
                     case "System.Int64":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (Int64)temporaryValues[realPropertyName];
-                        }
-                        else
-                        {
-                            value = GetMoreBoxesProperty(typeName, realPropertyName);
-                            if (value != null)
-                            {
-                                e.Value = (Int64)value;
-                            }
-                        }
+                        e.Value = (Int64)temporaryValues[realPropertyName];
                         break;
 
                     case "System.Single":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (Single)temporaryValues[realPropertyName];
-                        }
-                        else
-                        {
-                            value = GetMoreBoxesProperty(typeName, realPropertyName);
-                            if (value != null)
-                            {
-                                e.Value = (Single)value;
-                            }
-                        }
+                        e.Value = (Single)temporaryValues[realPropertyName];
                         break;
 
                     case "System.Double":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (Double)temporaryValues[realPropertyName];
-                        }
-                        else
-                        {
-                            value = GetMoreBoxesProperty(typeName, realPropertyName);
-                            if (value != null)
-                            {
-                                e.Value = (Double)value;
-                            }
-                        }
+                        e.Value = (Double)temporaryValues[realPropertyName];
                         break;
 
                     case "System.DateTime":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (DateTime)temporaryValues[realPropertyName];
-                            //GetCorrectDateType(e);
-                        }
-                        else
-                        {
-                            GetCorrectDateTypeMoreBoxes(e);
-                        }
+                        e.Value = (DateTime)temporaryValues[realPropertyName];
                         break;
 
                     case "System.TimeSpan":
-                        if (IsOneBoxSelected)
-                        {
-                            e.Value = (TimeSpan)temporaryValues[realPropertyName];
-                        }
-                        else
-                        {
-                            value = GetMoreBoxesProperty(typeName, realPropertyName);
-                            if (value != null)
-                            {
-                                e.Value = (TimeSpan)value;
-                            }
-                        }
+                        e.Value = (TimeSpan)temporaryValues[realPropertyName];
                         break;
 
                     default:
@@ -1500,36 +1988,6 @@ namespace Ferda.FrontEnd.Properties
             }
         }
 
-        /*
-        /// <summary>
-        /// The method gets the correct date (or datetime) property according
-        /// to the property name. The DateT and DateTimeT structures of the 
-        /// ModulesManager are both converted to the DateTime structure. Thus
-        /// we must know which function to call (GetPropertyDate or GetPropertyDateTime)
-        /// </summary>
-        /// <param name="e">Arguments of the propertyBag_GetValue event</param>
-        protected void GetCorrectDateType(PropertySpecEventArgs e)
-        {
-            string propertyName = GetPropertyName(e.Property.Name, SelectedBox);
-
-            foreach (PropertyInfo pinfo in SelectedBox.MadeInCreator.Properties)
-            {
-                if (pinfo.name == propertyName)
-                {
-                    if (pinfo.typeClassIceId == "::Ferda::Modules::DateTimeT")
-                    {
-                        e.Value = SelectedBox.GetPropertyDateTime(propertyName);
-                    }
-                    if (pinfo.typeClassIceId == "::Ferda::Modules::DateT")
-                    {
-                        e.Value = SelectedBox.GetPropertyDate(propertyName);
-                    }
-                    break;
-                }
-            }
-        }
-        */
-
         /// <summary>
         /// The method gets the correct date (or datetime) property according
         /// to the property name for more boxes. The DateT and DateTimeT structures of the 
@@ -1613,55 +2071,6 @@ namespace Ferda.FrontEnd.Properties
             }
 
             e.Value = tempValue;
-        }
-
-        /*
-        /// <summary>
-        /// Function returns a <see cref="T:Ferda.FrontEnd.Properties.StringSequence"/>
-        /// object generated from the all the selected boxes and the property name
-        /// </summary>
-        /// <param name="realPropertyName">Name of the property</param>
-        /// <returns>A <see cref="T:Ferda.FrontEnd.Properties.StringSequence"/> 
-        /// object that contains the
-        /// properties options</returns>
-        */
-        //protected StringSequence GetStringSequenceMoreBoxes(string realPropertyName)
-        //{
-        //    StringSequence firstSeq = GetStringSequence(SelectedBoxes[0], realPropertyName);
-        //    StringSequence otherSeq;
-
-        //    for (int i = 1; i < SelectedBoxes.Count; i++)
-        //    {
-        //        otherSeq = GetStringSequence(SelectedBoxes[i], realPropertyName);
-
-        //        //if the sequences have different values inside, return null;
-        //        //if (!StringSequence.EqualArrays(firstSeq, otherSeq))
-        //        //{
-        //        //    return null;
-        //        //}
-
-        //        //if the sequences have differnent selected string, return null
-        //        if (!StringSequence.EqualSelections(firstSeq, otherSeq))
-        //        {
-        //            return null;
-        //        }
-        //    }
-
-        //    return firstSeq;
-        //}
-
-        /// <summary>
-        /// Function returns a OtherProperty object generated from the box
-        /// and property
-        /// </summary>
-        /// <param name="SelectedBox">Box that contains the property</param>
-        /// <param name="propertyName">Name of the property</param>
-        /// <returns>An OtherProperty object that contains the
-        /// properties options</returns>
-        protected OtherProperty GetOtherProperty(IBoxModule SelectedBox, string propertyName)
-        {
-            return new OtherProperty(SelectedBox, propertyName, archiveDisplayer, viewDisplayers,
-                this, ResManager);
         }
 
         /// <summary>
