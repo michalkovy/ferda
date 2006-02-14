@@ -17,6 +17,7 @@ namespace Ferda.FrontEnd.Properties
         private IAsyncPropertyManager myManager;
         private string propertyName;
         private string propertyType;
+        private bool moreBoxes = false;
 
         #endregion
 
@@ -41,6 +42,16 @@ namespace Ferda.FrontEnd.Properties
             set { propertyType = value; }
         }
 
+        /// <summary>
+        /// Determines, if on the desktop there are more than one
+        /// boxes selected
+        /// </summary>
+        public bool MoreBoxes
+        {
+            get { return moreBoxes; }
+            set { moreBoxes = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -59,7 +70,26 @@ namespace Ferda.FrontEnd.Properties
             this.propertyType = propertyType;
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="man">Manager of this property</param>
+        /// <param name="propName">Name of the property</param>
+        /// <param name="propertyType">Type of the property</param>
+        /// <param name="moreBoxes">
+        /// Determines, if on the desktop there are more than one
+        /// boxes selected        
+        /// </param>
+        public AsyncPropertyCatcher(IAsyncPropertyManager man, string propName,
+            string propertyType, bool moreBoxes)
+            : this(man, propName, propertyType)
+        {
+            this.moreBoxes = moreBoxes;
+        }
+
         #endregion
+
+        #region Methods
 
         /// <summary>
         /// Ice has thrown a message, that a value of a property has been changed
@@ -67,7 +97,7 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="value">value of the property</param>
         public override void ice_response(Ferda.Modules.PropertyValue value)
         {
-                myManager.ChangedPropertyValue(this, value);
+            myManager.ChangedPropertyValue(this, value, moreBoxes);
         }
 
         /// <summary>
@@ -77,5 +107,7 @@ namespace Ferda.FrontEnd.Properties
         public override void ice_exception(Ice.Exception ex)
         {
         }
+
+        #endregion
     }
 }

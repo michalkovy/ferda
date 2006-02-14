@@ -970,6 +970,24 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chyba nastavení vlastnosti:.
+        /// </summary>
+        internal static string PropertyMoreBoxesErrorCaption {
+            get {
+                return ResourceManager.GetString("PropertyMoreBoxesErrorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Požadováné nastavení vlastnosti u více krabiček se nezdařilo - jedna nebo více krabiček je zamčená.
+        /// </summary>
+        internal static string PropertyMoreBoxesErrorText {
+            get {
+                return ResourceManager.GetString("PropertyMoreBoxesErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Určuje, jestli je daná vlastnost vidět jako zásuvka.
         /// </summary>
         internal static string PropertySocketHint {

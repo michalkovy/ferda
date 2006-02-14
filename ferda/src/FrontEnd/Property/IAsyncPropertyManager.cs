@@ -16,6 +16,9 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         /// <param name="catcher">Catcher of the connection</param>
         /// <param name="value">New value of the property</param>
-        void ChangedPropertyValue(AsyncPropertyCatcher catcher, object value);
+        /// <param name="moreBoxes">If the refresh of the property grid is 
+        /// from one or more boxes</param>
+        void ChangedPropertyValue(AsyncPropertyCatcher catcher, object value, 
+            bool moreBoxes);
     }
 }

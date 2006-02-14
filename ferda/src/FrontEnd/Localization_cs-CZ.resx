@@ -420,6 +420,12 @@
   <data name="PropertyConnectorDescription" xml:space="preserve">
     <value>Nastavte propojení pro tuto zásuvku</value>
   </data>
+  <data name="PropertyMoreBoxesErrorCaption" xml:space="preserve">
+    <value>Chyba nastavení vlastnosti:</value>
+  </data>
+  <data name="PropertyMoreBoxesErrorText" xml:space="preserve">
+    <value>Požadováné nastavení vlastnosti u více krabiček se nezdařilo - jedna nebo více krabiček je zamčená</value>
+  </data>
   <data name="PropertySocketHint" xml:space="preserve">
     <value>Určuje, jestli je daná vlastnost vidět jako zásuvka</value>
   </data>
