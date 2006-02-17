@@ -12,7 +12,7 @@ namespace Ferda.FrontEnd.Properties
     /// <summary>
     /// Editor that is used to display a combobox of string options
     /// </summary>
-    class StringComboEditor : UITypeEditor
+    internal class StringComboEditor : UITypeEditor
     {
         protected ListBox listBox;
         protected IWindowsFormsEditorService edSvc;

@@ -13,7 +13,7 @@ namespace Ferda.FrontEnd.Properties
     /// Editor that is used to display combobox with options and a textbox to add
     /// new options
     /// </summary>
-    class StringComboAddingEditor : UITypeEditor
+    internal class StringComboAddingEditor : UITypeEditor
     {
         /// <summary>
         /// Service provider for the class
