@@ -13,7 +13,7 @@ namespace Ferda.FrontEnd.Properties
     /// This class converts the StringSequence class to and from string.
     /// It does not allow adding a new value
     /// </summary>
-    class StringSequenceConverter : TypeConverter
+    internal class StringSequenceConverter : TypeConverter
     {
         /// <summary>
         /// Determines if the class can be converted to other class

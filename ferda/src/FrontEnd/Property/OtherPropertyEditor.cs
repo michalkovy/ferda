@@ -12,7 +12,7 @@ namespace Ferda.FrontEnd.Properties
     /// <summary>
     /// Editor that is used for any OtherProperty
     /// </summary>
-    class OtherPropertyEditor : UITypeEditor
+    internal class OtherPropertyEditor : UITypeEditor
     {
         /// <summary>
         /// Constructor of the class

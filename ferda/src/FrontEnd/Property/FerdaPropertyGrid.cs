@@ -94,6 +94,10 @@ namespace Ferda.FrontEnd.Properties
         /// there
         /// </summary>
         protected Dictionary<string, EMoreBoxesTemporaryValueState> moreBoxesValuesState;
+        /// <summary>
+        /// Locker for temporary values
+        /// </summary>
+        private object tempLocker = new object();
 
         #endregion
 
@@ -107,14 +111,14 @@ namespace Ferda.FrontEnd.Properties
         {
             set
             {
-                lock (this)
+                lock (tempLocker)
                 {
                     clickID = value;
                 }
             }
             get
             {
-                lock (this)
+                lock (tempLocker)
                 {
                     return clickID;
                 }
@@ -272,7 +276,7 @@ namespace Ferda.FrontEnd.Properties
         {
             temporaryValues = new Dictionary<string, object>();
             temporaryPropertyTypes = new Dictionary<string, string>();
-            moreBoxesValuesState = 
+            moreBoxesValuesState =
                 new Dictionary<string, EMoreBoxesTemporaryValueState>();
 
             if (IsOneBoxSelected) //creating properties for 1 box only
@@ -354,8 +358,16 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="moreBoxes">We are creating for one ore more boxes</param>
         protected void AddAsyncTemporary(string propertyName, string normalType, bool moreBoxes)
         {
-            lock (temporaryValues)
+            lock (tempLocker)
             {
+                if (temporaryValues.ContainsKey(propertyName))
+                {
+                    if (!temporaryPropertyTypes.ContainsKey(normalType))
+                    {
+                        temporaryPropertyTypes.Add(propertyName, normalType);
+                    }
+                    return;
+                }
                 //writing to the temporaryValues dictionary
                 switch (normalType)
                 {
@@ -406,14 +418,11 @@ namespace Ferda.FrontEnd.Properties
                     default:
                         break;
                 }
-            }
 
-            temporaryPropertyTypes.Add(propertyName, normalType);
-            if (moreBoxes)
-            {
-                lock (moreBoxesValuesState)
+                temporaryPropertyTypes.Add(propertyName, normalType);
+                if (moreBoxes)
                 {
-                    moreBoxesValuesState.Add(propertyName, 
+                    moreBoxesValuesState.Add(propertyName,
                         EMoreBoxesTemporaryValueState.First);
                 }
             }
@@ -435,7 +444,7 @@ namespace Ferda.FrontEnd.Properties
             {
                 case "System.Int32":
                     Int32 int32Value = ((IntT)value).intValue;
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         if (moreBoxes)
                         {
@@ -476,7 +485,7 @@ namespace Ferda.FrontEnd.Properties
                     OtherProperty prop = new OtherProperty(SelectedBox, catcher.PropertyName,
                         archiveDisplayer, viewDisplayers, this, ResManager);
                     prop.Result = resultValue;
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         temporaryValues[catcher.PropertyName] = prop;
                     }
@@ -490,7 +499,7 @@ namespace Ferda.FrontEnd.Properties
                         new IBoxModule[] { SelectedBox },
                         ResManager, ArchiveDisplayer, ViewDisplayers,
                         this, selectedValue);
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         temporaryValues[catcher.PropertyName] = seq;
                     }
@@ -498,7 +507,7 @@ namespace Ferda.FrontEnd.Properties
 
                 case "System.String":
                     string valueString = ((StringT)value).stringValue;
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         if (moreBoxes)
                         {
@@ -534,7 +543,7 @@ namespace Ferda.FrontEnd.Properties
 
                 case "System.Boolean":
                     bool boolValue = ((BoolT)value).boolValue;
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         if (moreBoxes)
                         {
@@ -570,7 +579,7 @@ namespace Ferda.FrontEnd.Properties
 
                 case "System.Int16":
                     Int16 shortValue = ((ShortT)value).shortValue;
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         if (moreBoxes)
                         {
@@ -606,7 +615,7 @@ namespace Ferda.FrontEnd.Properties
 
                 case "System.Int64":
                     Int64 longValue = ((LongT)value).longValue;
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         if (moreBoxes)
                         {
@@ -642,7 +651,7 @@ namespace Ferda.FrontEnd.Properties
 
                 case "System.Double":
                     Double doubleValue = ((DoubleT)value).doubleValue;
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         if (moreBoxes)
                         {
@@ -678,7 +687,7 @@ namespace Ferda.FrontEnd.Properties
 
                 case "System.Single":
                     Single singleValue = ((FloatT)value).floatValue;
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         if (moreBoxes)
                         {
@@ -718,7 +727,7 @@ namespace Ferda.FrontEnd.Properties
                     {
                         DateT v = (DateT)value;
                         DateTime dateTimeValue = new DateTime(v.year, v.month, v.day);
-                        lock (temporaryValues)
+                        lock (tempLocker)
                         {
                             if (moreBoxes)
                             {
@@ -756,7 +765,7 @@ namespace Ferda.FrontEnd.Properties
                         DateTimeT v = (DateTimeT)value;
                         DateTime dtValue = new DateTime(v.year,
                                 v.month, v.day, v.hour, v.minute, v.second);
-                        lock (temporaryValues)
+                        lock (tempLocker)
                         {
                             if (moreBoxes)
                             {
@@ -794,7 +803,7 @@ namespace Ferda.FrontEnd.Properties
                 case "System.TimeSpan":
                     TimeT val = (TimeT)value;
                     TimeSpan timeSpanValue = new TimeSpan(val.hour, val.minute, val.second);
-                    lock (temporaryValues)
+                    lock (tempLocker)
                     {
                         if (moreBoxes)
                         {
@@ -841,7 +850,7 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         protected void CreateAsyncCatchersOneBox()
         {
-            lock (temporaryValues)
+            lock (tempLocker)
             {
                 foreach (string propertyName in temporaryValues.Keys)
                 {
@@ -858,12 +867,13 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         protected void CreateAsyncCatchersMoreBoxes()
         {
-            lock (temporaryValues)
+            lock (tempLocker)
             {
                 foreach (string propertyName in temporaryValues.Keys)
                 {
                     foreach (IBoxModule box in SelectedBoxes)
                     {
+                        //tady byl problem s tim, ze to nemohlo najit jmeno
                         AsyncPropertyCatcher catcher = new AsyncPropertyCatcher(this,
                             propertyName, temporaryPropertyTypes[propertyName], true);
                         box.GetProperty_async(catcher, propertyName);
@@ -1274,7 +1284,7 @@ namespace Ferda.FrontEnd.Properties
                 bag.Properties.Add(ps);
 
                 //adding the asynch stuff
-                AddAsyncTemporary(pinfo.name, "System.String", !IsOneBoxSelected); 
+                AddAsyncTemporary(pinfo.name, "System.String", !IsOneBoxSelected);
             }
             else //a combo-box should be used
             {
@@ -1350,7 +1360,7 @@ namespace Ferda.FrontEnd.Properties
                 //adding the asynch stuff
                 if (IsOneBoxSelected)
                 {
-                    AddAsyncTemporary(pinfo.name, 
+                    AddAsyncTemporary(pinfo.name,
                         "Ferda.FrontEnd.Properties.StringSequence", false);
                 }
             }
@@ -1879,7 +1889,7 @@ namespace Ferda.FrontEnd.Properties
         protected void GetNormalProperty(PropertySpecEventArgs e, string
             realPropertyName, string typeName)
         {
-            lock (temporaryValues)
+            lock (tempLocker)
             {
                 switch (typeName)
                 {
@@ -2369,7 +2379,7 @@ namespace Ferda.FrontEnd.Properties
                 throw new ApplicationException("It is not a property bag");
             }
 
-            lock (this)
+            lock (tempLocker)
             {
                 if (table.ClickID != this.ClickID)
                 {
