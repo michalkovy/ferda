@@ -5,6 +5,7 @@ using System.Text;
 using FrontEnd.AddIns.ResultBrowser;
 using Ferda.Modules;
 using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
 using Ferda.ModulesManager;
 using System.Resources;
 using System.Reflection;
@@ -47,7 +48,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <summary>
         /// Array of all quantifiers.
         /// </summary>
-        private QuantifierProvider[] AllQuantifiers;
+      //  private QuantifierProvider[] AllQuantifiers;
 
 
         /// <summary>
@@ -61,6 +62,8 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Represented by the array of boolean flags.
         /// </summary>
         private int[] SelectedQuantifiers;
+
+        private Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier.AbstractQuantifierFunctionsPrx [] proxy;
 
         #endregion
 
@@ -87,8 +90,15 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             //working with quantifiers - need to obtain all quantifier, for now working only with used ones
 
             this.UsedQuantifiers = used_quantifiers;
-            this.AllQuantifiers = this.UsedQuantifiers;
-            this.SelectedQuantifiers = new int[this.AllQuantifiers.Length];
+          //  this.AllQuantifiers = this.UsedQuantifiers;
+            this.SelectedQuantifiers = new int[this.UsedQuantifiers.Length];
+
+            proxy = new AbstractQuantifierFunctionsPrx[this.UsedQuantifiers.Length];
+
+            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
+            {
+                this.proxy[i] = this.UsedQuantifiers[i].functions;
+            }
         }
 
         #endregion
@@ -119,7 +129,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         {
             ArrayList returnArray = new ArrayList();
 
-            foreach (QuantifierProvider quantifier in this.AllQuantifiers)
+            foreach (QuantifierProvider quantifier in this.UsedQuantifiers)
             {
                 if (!this.QuantifierIsUsed(quantifier))
                 {
@@ -138,7 +148,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         {
             for (int i = 0; i < this.SelectedQuantifiers.Length; i++)
             {
-                if (this.GetColumnName(this.AllQuantifiers[i]) == columnName)
+                if (this.GetColumnName(this.UsedQuantifiers[i]) == columnName)
                 {
                     this.SelectedQuantifiers[i] = 0;
                     return;
@@ -152,9 +162,9 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <param name="columnName">Column name to add.</param>
         public void AddColumn(String columnName)
         {
-            for (int i = 0; i < this.AllQuantifiers.Length; i++)
+            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
-                if (this.GetColumnName(this.AllQuantifiers[i]) == columnName)
+                if (this.GetColumnName(this.UsedQuantifiers[i]) == columnName)
                 {
                     this.SelectedQuantifiers[i] = 1;
                     return;
@@ -175,7 +185,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             {
                 if (this.SelectedQuantifiers[i] == 1)
                 {
-                    returnArray.Add(this.AllQuantifiers[i].localizedBoxLabel.ToString());
+                    returnArray.Add(this.UsedQuantifiers[i].localizedBoxLabel.ToString());
                 }
             }
             return returnArray;
@@ -452,7 +462,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         public List<string> GetAllQuantifierNames()
         {
             List<string> returnList = new List<string>();
-            foreach (QuantifierProvider quantifier in this.AllQuantifiers)
+            foreach (QuantifierProvider quantifier in this.UsedQuantifiers)
             {
                 returnList.Add(quantifier.localizedBoxLabel + " ("
                     + quantifier.userBoxLabel + ")" + "\t");
@@ -483,9 +493,9 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <returns></returns>
         protected bool QuantifierIsSelected(QuantifierProvider quantifier)
         {
-            for (int i = 0; i < this.AllQuantifiers.Length; i++)
+            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
-                if (quantifier == this.AllQuantifiers[i])
+                if (quantifier == this.UsedQuantifiers[i])
                 {
                     if (this.SelectedQuantifiers[i] == 1)
                     {
@@ -525,11 +535,11 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         protected List<double> ApplySelectedQuantifiers(HypothesisStruct hypothese)
         {
             List<double> returnList = new List<double>();
-            for (int i = 0; i < this.AllQuantifiers.Length; i++)
+            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
                 if (this.SelectedQuantifiers[i] == 1)
                 {
-                    returnList.Add(this.AllQuantifiers[i].functions.Value(hypothese.quantifierSetting));
+                    returnList.Add(this.proxy[i].Value(hypothese.quantifierSetting));
                 }
             }
             return returnList;
@@ -543,9 +553,9 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         protected List<double> ApplyAllQuantifiers(HypothesisStruct hypothese)
         {
             List<double> returnList = new List<double>();
-            for (int i = 0; i < this.AllQuantifiers.Length; i++)
+            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
-                returnList.Add(this.AllQuantifiers[i].functions.Value(hypothese.quantifierSetting));
+                returnList.Add(this.proxy[i].Value(hypothese.quantifierSetting));
             }
             return returnList;
         }

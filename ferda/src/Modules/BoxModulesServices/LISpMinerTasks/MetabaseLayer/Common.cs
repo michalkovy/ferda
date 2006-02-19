@@ -179,7 +179,7 @@ namespace Ferda.Modules.MetabaseLayer
         {
             ArrayList res = new ArrayList();
             List<string> result = new List<string>();
-            DataTable categories = ExecuteSelectQuery("SELECT Name FROM tmQuantity WHERE QuantityID=" + QuantityID);
+            DataTable categories = ExecuteSelectQuery("SELECT Name FROM tmCategory WHERE QuantityID=" + QuantityID + " order by Ord");
             foreach (DataRow category in categories.Rows)
             {
                 result.Add(category["Name"].ToString());
@@ -243,10 +243,6 @@ namespace Ferda.Modules.MetabaseLayer
                     throw new Exception("SwitchBranchNotImplemented");
 
             }
-
-        //    string query = "SELECT QuantityID from `" + tdLiteralTableName + "` WHERE `" +
-          //      tdLiteralIDColumn + "`=" + literalIdentifier; 
-
             List<LiteralStruct> result = new List<LiteralStruct>();
             LiteralStruct literalStruct;
             DataTable literals = ExecuteSelectQuery(
@@ -273,7 +269,7 @@ namespace Ferda.Modules.MetabaseLayer
 
                 literalStruct.literalIdentifier = Convert.ToInt32(literal[tdLiteralIDColumn]);
                 literalStruct.literalName = literal["Name"].ToString();
-              //  literalStruct.categoriesNames = GetCategorialLiteralCategoriesNames(taskType, taskID, literalIID);
+                literalStruct.categoriesNames = GetCategorialLiteralCategoriesNames(Convert.ToInt32(literal["QuantityID"]));
                 result.Add(literalStruct);
             }
             return result.ToArray();

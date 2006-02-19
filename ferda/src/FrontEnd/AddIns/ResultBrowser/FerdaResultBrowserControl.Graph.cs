@@ -52,7 +52,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         #endregion
 
 
-        #region TrackBar handlers (modifying graph view)
+        #region Chart option handlers (modifying graph view)
 
         private void TrackBar3d_Scroll(object sender, EventArgs e)
         {
@@ -75,7 +75,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ContingencyTableChart.Aspect.VertOffset = this.TrackBarVOffset.Value;
         }
 
-        private void TrackBarRotation_Scroll(object sender, EventArgs e)
+      /*  private void TrackBarRotation_Scroll(object sender, EventArgs e)
         {
             this.ContingencyTableChart.Aspect.Rotation = this.TrackBarRotation.Value;
         }
@@ -88,6 +88,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private void TrackBarElevation_Scroll(object sender, EventArgs e)
         {
             this.ContingencyTableChart.Aspect.Elevation = this.TrackBarElevation.Value;
+        }*/
+
+        private void CheckBoxShowLabels_CheckedChanged(object sender, EventArgs e)
+        {
+            ShowLabels(this.ContingencyTableChart);
         }
 
         #endregion
@@ -123,7 +128,31 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 {
                     barSeries.Add(number);
                 }
+
+                if (this.CheckBoxShowLabels.Checked)
+                {
+                    barSeries.Marks.Visible = true;
+                }
+                else
+                {
+                    barSeries.Marks.Visible = false;
+                }
                 chart.Series.Add(barSeries);
+            }
+        }
+
+        private void ShowLabels(Steema.TeeChart.TChart chart)
+        {
+            foreach (Steema.TeeChart.Styles.Series serie in chart.Series)
+            {
+                if (this.CheckBoxShowLabels.Checked)
+                {
+                    serie.Marks.Visible = true;
+                }
+                else
+                {
+                    serie.Marks.Visible = false;
+                }
             }
         }
 

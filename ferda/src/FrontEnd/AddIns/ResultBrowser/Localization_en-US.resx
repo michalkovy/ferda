@@ -192,6 +192,9 @@
   <data name="ResultBrowserModule" xml:space="preserve">
     <value>Result browser module</value>
   </data>
+  <data name="ShowLabels" xml:space="preserve">
+    <value>Show labels</value>
+  </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
   </data>

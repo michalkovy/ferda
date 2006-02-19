@@ -37,12 +37,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ColumnSuccedent = new System.Windows.Forms.ColumnHeader();
             this.ColumnCondition = new System.Windows.Forms.ColumnHeader();
             this.GroupBoxChangeGraph = new System.Windows.Forms.GroupBox();
-            this.LabelElevation = new System.Windows.Forms.Label();
-            this.TrackBarElevation = new System.Windows.Forms.TrackBar();
-            this.LabelPerspective = new System.Windows.Forms.Label();
-            this.TrackBarPerspective = new System.Windows.Forms.TrackBar();
-            this.LabelRotation = new System.Windows.Forms.Label();
-            this.TrackBarRotation = new System.Windows.Forms.TrackBar();
+            this.CheckBoxShowLabels = new System.Windows.Forms.CheckBox();
             this.LabelVOffset = new System.Windows.Forms.Label();
             this.LabelHOffset = new System.Windows.Forms.Label();
             this.TrackBarVOffset = new System.Windows.Forms.TrackBar();
@@ -59,9 +54,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.Panel2.SuspendLayout();
             this.ResultBrowserSplit.SuspendLayout();
             this.GroupBoxChangeGraph.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TrackBarElevation)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrackBarPerspective)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrackBarRotation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarVOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarHOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarZoom)).BeginInit();
@@ -114,29 +106,24 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // ColumnHypotheseName
             // 
-            this.ColumnHypotheseName.Width = 107;
+            this.ColumnHypotheseName.Width = 250;
             // 
             // ColumnAntecedent
             // 
-            this.ColumnAntecedent.Width = 104;
+            this.ColumnAntecedent.Width = 180;
             // 
             // ColumnSuccedent
             // 
-            this.ColumnSuccedent.Width = 104;
+            this.ColumnSuccedent.Width = 180;
             // 
             // ColumnCondition
             // 
-            this.ColumnCondition.Width = 101;
+            this.ColumnCondition.Width = 180;
             // 
             // GroupBoxChangeGraph
             // 
             this.GroupBoxChangeGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GroupBoxChangeGraph.Controls.Add(this.LabelElevation);
-            this.GroupBoxChangeGraph.Controls.Add(this.TrackBarElevation);
-            this.GroupBoxChangeGraph.Controls.Add(this.LabelPerspective);
-            this.GroupBoxChangeGraph.Controls.Add(this.TrackBarPerspective);
-            this.GroupBoxChangeGraph.Controls.Add(this.LabelRotation);
-            this.GroupBoxChangeGraph.Controls.Add(this.TrackBarRotation);
+            this.GroupBoxChangeGraph.Controls.Add(this.CheckBoxShowLabels);
             this.GroupBoxChangeGraph.Controls.Add(this.LabelVOffset);
             this.GroupBoxChangeGraph.Controls.Add(this.LabelHOffset);
             this.GroupBoxChangeGraph.Controls.Add(this.TrackBarVOffset);
@@ -153,74 +140,16 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.GroupBoxChangeGraph.Text = "View options";
             this.GroupBoxChangeGraph.Visible = false;
             // 
-            // LabelElevation
+            // CheckBoxShowLabels
             // 
-            this.LabelElevation.AutoSize = true;
-            this.LabelElevation.Location = new System.Drawing.Point(209, 56);
-            this.LabelElevation.Name = "LabelElevation";
-            this.LabelElevation.Size = new System.Drawing.Size(51, 13);
-            this.LabelElevation.TabIndex = 13;
-            this.LabelElevation.Text = "Elevation";
-            this.LabelElevation.Visible = false;
-            // 
-            // TrackBarElevation
-            // 
-            this.TrackBarElevation.LargeChange = 10;
-            this.TrackBarElevation.Location = new System.Drawing.Point(278, 46);
-            this.TrackBarElevation.Maximum = 100;
-            this.TrackBarElevation.Name = "TrackBarElevation";
-            this.TrackBarElevation.Size = new System.Drawing.Size(71, 42);
-            this.TrackBarElevation.TabIndex = 12;
-            this.TrackBarElevation.TickFrequency = 10;
-            this.TrackBarElevation.Value = 15;
-            this.TrackBarElevation.Visible = false;
-            this.TrackBarElevation.Scroll += new System.EventHandler(this.TrackBarElevation_Scroll);
-            // 
-            // LabelPerspective
-            // 
-            this.LabelPerspective.AutoSize = true;
-            this.LabelPerspective.Location = new System.Drawing.Point(209, 26);
-            this.LabelPerspective.Name = "LabelPerspective";
-            this.LabelPerspective.Size = new System.Drawing.Size(63, 13);
-            this.LabelPerspective.TabIndex = 11;
-            this.LabelPerspective.Text = "Perspective";
-            this.LabelPerspective.Visible = false;
-            // 
-            // TrackBarPerspective
-            // 
-            this.TrackBarPerspective.LargeChange = 10;
-            this.TrackBarPerspective.Location = new System.Drawing.Point(278, 16);
-            this.TrackBarPerspective.Maximum = 100;
-            this.TrackBarPerspective.Name = "TrackBarPerspective";
-            this.TrackBarPerspective.Size = new System.Drawing.Size(71, 42);
-            this.TrackBarPerspective.TabIndex = 10;
-            this.TrackBarPerspective.TickFrequency = 10;
-            this.TrackBarPerspective.Value = 15;
-            this.TrackBarPerspective.Visible = false;
-            this.TrackBarPerspective.Scroll += new System.EventHandler(this.TrackBarPerspective_Scroll);
-            // 
-            // LabelRotation
-            // 
-            this.LabelRotation.AutoSize = true;
-            this.LabelRotation.Location = new System.Drawing.Point(6, 146);
-            this.LabelRotation.Name = "LabelRotation";
-            this.LabelRotation.Size = new System.Drawing.Size(47, 13);
-            this.LabelRotation.TabIndex = 9;
-            this.LabelRotation.Text = "Rotation";
-            this.LabelRotation.Visible = false;
-            // 
-            // TrackBarRotation
-            // 
-            this.TrackBarRotation.LargeChange = 30;
-            this.TrackBarRotation.Location = new System.Drawing.Point(63, 136);
-            this.TrackBarRotation.Maximum = 360;
-            this.TrackBarRotation.Name = "TrackBarRotation";
-            this.TrackBarRotation.Size = new System.Drawing.Size(71, 42);
-            this.TrackBarRotation.SmallChange = 10;
-            this.TrackBarRotation.TabIndex = 8;
-            this.TrackBarRotation.TickFrequency = 30;
-            this.TrackBarRotation.Value = 345;
-            this.TrackBarRotation.Visible = false;
+            this.CheckBoxShowLabels.AutoSize = true;
+            this.CheckBoxShowLabels.Location = new System.Drawing.Point(9, 145);
+            this.CheckBoxShowLabels.Name = "CheckBoxShowLabels";
+            this.CheckBoxShowLabels.Size = new System.Drawing.Size(83, 17);
+            this.CheckBoxShowLabels.TabIndex = 9;
+            this.CheckBoxShowLabels.Text = "Show labels";
+            this.CheckBoxShowLabels.UseVisualStyleBackColor = true;
+            this.CheckBoxShowLabels.CheckedChanged += new System.EventHandler(this.CheckBoxShowLabels_CheckedChanged);
             // 
             // LabelVOffset
             // 
@@ -247,10 +176,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarVOffset.Maximum = 1500;
             this.TrackBarVOffset.Minimum = -1500;
             this.TrackBarVOffset.Name = "TrackBarVOffset";
-            this.TrackBarVOffset.Size = new System.Drawing.Size(71, 42);
+            this.TrackBarVOffset.Size = new System.Drawing.Size(173, 42);
             this.TrackBarVOffset.SmallChange = 100;
             this.TrackBarVOffset.TabIndex = 5;
-            this.TrackBarVOffset.TickFrequency = 300;
+            this.TrackBarVOffset.TickFrequency = 100;
             this.TrackBarVOffset.Scroll += new System.EventHandler(this.TrackBarVOffset_Scroll);
             // 
             // TrackBarHOffset
@@ -260,10 +189,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarHOffset.Maximum = 1500;
             this.TrackBarHOffset.Minimum = -1500;
             this.TrackBarHOffset.Name = "TrackBarHOffset";
-            this.TrackBarHOffset.Size = new System.Drawing.Size(71, 42);
+            this.TrackBarHOffset.Size = new System.Drawing.Size(173, 42);
             this.TrackBarHOffset.SmallChange = 100;
             this.TrackBarHOffset.TabIndex = 4;
-            this.TrackBarHOffset.TickFrequency = 300;
+            this.TrackBarHOffset.TickFrequency = 100;
             this.TrackBarHOffset.Scroll += new System.EventHandler(this.TrackBarHOffset_Scroll);
             // 
             // LabelZoom
@@ -282,10 +211,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarZoom.Maximum = 1000;
             this.TrackBarZoom.Minimum = 5;
             this.TrackBarZoom.Name = "TrackBarZoom";
-            this.TrackBarZoom.Size = new System.Drawing.Size(71, 42);
+            this.TrackBarZoom.Size = new System.Drawing.Size(173, 42);
             this.TrackBarZoom.SmallChange = 50;
             this.TrackBarZoom.TabIndex = 2;
-            this.TrackBarZoom.TickFrequency = 100;
+            this.TrackBarZoom.TickFrequency = 50;
             this.TrackBarZoom.Value = 100;
             this.TrackBarZoom.Scroll += new System.EventHandler(this.TrackBarZoom_Scroll);
             // 
@@ -304,10 +233,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBar3d.Location = new System.Drawing.Point(63, 16);
             this.TrackBar3d.Maximum = 100;
             this.TrackBar3d.Name = "TrackBar3d";
-            this.TrackBar3d.Size = new System.Drawing.Size(71, 42);
+            this.TrackBar3d.Size = new System.Drawing.Size(173, 42);
             this.TrackBar3d.SmallChange = 10;
             this.TrackBar3d.TabIndex = 0;
-            this.TrackBar3d.TickFrequency = 10;
+            this.TrackBar3d.TickFrequency = 5;
             this.TrackBar3d.Value = 15;
             this.TrackBar3d.Scroll += new System.EventHandler(this.TrackBar3d_Scroll);
             // 
@@ -318,7 +247,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.toolStripSeparator1,
             this.ToolStripCopyChart});
             this.ContextMenuGraphRightClick.Name = "ContextMenuGraphRightClick";
-            this.ContextMenuGraphRightClick.Size = new System.Drawing.Size(180, 76);
+            this.ContextMenuGraphRightClick.Size = new System.Drawing.Size(180, 54);
             // 
             // ToolStripShowGraphEdit
             // 
@@ -350,9 +279,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.ResumeLayout(false);
             this.GroupBoxChangeGraph.ResumeLayout(false);
             this.GroupBoxChangeGraph.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TrackBarElevation)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrackBarPerspective)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrackBarRotation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarVOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarHOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarZoom)).EndInit();
@@ -380,15 +306,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.TrackBar TrackBarZoom;
         private System.Windows.Forms.Label LabelVOffset;
         private System.Windows.Forms.Label LabelHOffset;
-        private System.Windows.Forms.TrackBar TrackBarVOffset;
-        private System.Windows.Forms.TrackBar TrackBarHOffset;
-        private System.Windows.Forms.TrackBar TrackBarRotation;
-        private System.Windows.Forms.Label LabelRotation;
-        private System.Windows.Forms.Label LabelPerspective;
-        private System.Windows.Forms.TrackBar TrackBarPerspective;
-        private System.Windows.Forms.Label LabelElevation;
-        private System.Windows.Forms.TrackBar TrackBarElevation;
+        private System.Windows.Forms.TrackBar TrackBarVOffset;
+
+        private System.Windows.Forms.TrackBar TrackBarHOffset;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripCopyChart;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripCopyChart;
+        private System.Windows.Forms.CheckBox CheckBoxShowLabels;
     }
 }
