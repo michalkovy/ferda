@@ -20,13 +20,13 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
             // The column is integer
 
-            int lvi1Int = 0;
-            int lvi2Int = 0;
+            double lvi1Int = 0;
+            double lvi2Int = 0;
 
-            try
+            if (column > 3)
             {
-                lvi1Int = Convert.ToInt32(lvi1.SubItems[column].Text.ToString());
-                lvi2Int = Convert.ToInt32(lvi2.SubItems[column].Text.ToString());
+                lvi1Int = Convert.ToDouble(lvi1.SubItems[column].Text.ToString());
+                lvi2Int = Convert.ToDouble(lvi2.SubItems[column].Text.ToString());
 
                 // Return the normal compare.. if x < y then return -1
                 if (bAscending)
@@ -47,29 +47,17 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
                 return 1;
             }
-
-            catch
+            else
             {
-                try
-                {
-                    string lvi1String = lvi1.SubItems[column].ToString();
-                    string lvi2String = lvi2.SubItems[column].ToString();
+                string lvi1String = lvi1.SubItems[column].ToString();
+                string lvi2String = lvi2.SubItems[column].ToString();
+                // Return the normal Compare
+                if (bAscending)
+                    return String.Compare(lvi1String, lvi2String);
 
-                    // Return the normal Compare
-                    if (bAscending)
-                        return String.Compare(lvi1String, lvi2String);
-
-                    // Return the negated Compare
-                    return -String.Compare(lvi1String, lvi2String);
-                }
-
-                catch
-                {
-                    return 0;
-                }
+                // Return the negated Compare
+                return -String.Compare(lvi1String, lvi2String);
             }
- 
         }
-
     }
 }

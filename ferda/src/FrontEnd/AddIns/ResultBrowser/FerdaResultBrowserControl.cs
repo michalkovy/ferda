@@ -54,6 +54,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies;
 
+        /// <summary>
+        /// Sorter for the listview
+        /// </summary>
+        Sorter columnSorter = new Sorter();
+
         #endregion
 
 
@@ -98,14 +103,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private void RefreshBrowser()
         {
-
+            this.columnSorter.column = 0;
             //disabling the column click handler (sorter)
             this.HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
 
+           
             //clearing all the items
             this.HypothesesListView.Items.Clear();
-
-
+            /*
             //clearing all the columns
             this.HypothesesListView.Columns.Clear();
 
@@ -118,9 +123,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.HypothesesListView.Columns[1].Width = 250;
             this.HypothesesListView.Columns[2].Width = 250;
             this.HypothesesListView.Columns[3].Width = 250;
-
             //setting locale
             this.ChangeLocale(this.resManager);
+            */
+
+           while (this.HypothesesListView.Columns.Count > 4)
+            {
+                this.HypothesesListView.Columns.RemoveAt(4);
+            }
 
             //adding handler to display hypothesis details in richtextbox
             HypothesesListView.ItemActivate += new EventHandler(ItemSelectHandler);
@@ -137,10 +147,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 ColumnHeader header = new ColumnHeader();
                 header.Text = name;
-                header.Width = 250;
+                header.Name = name;
+                header.Width = 200;
+                header.TextAlign = HorizontalAlignment.Right;
                 this.HypothesesListView.Columns.Add(header);
             }
-
 
             //adding hypotheses
             int i = 0;
@@ -168,8 +179,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 i++;
             }
         }
-
-
 
         /// <summary>
         /// Method for Result listview initialization
@@ -246,7 +255,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 this.HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
                 this.HypothesesListView.Columns.RemoveByKey(item.Text);
             }
-
             this.RefreshBrowser();
         }
 
@@ -289,10 +297,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClickOnColumn(object sender, System.Windows.Forms.ColumnClickEventArgs e)
-        {
-            Sorter columnSorter = new Sorter();
+        {    
             columnSorter.column = e.Column;
-
             if ((columnSorter.bAscending = (HypothesesListView.Sorting == SortOrder.Ascending)))
                 HypothesesListView.Sorting = SortOrder.Descending;
             else
@@ -308,6 +314,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private void FillPropertyGrid(HypothesisStruct hypothesis)
         {
             PropertyTable table = new PropertyTable();
+
 
             #region Filling in name, antecedent, succedent, condition
 
@@ -468,6 +475,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             #endregion
 
+
             this.displayer.Reset();
             this.displayer.OtherObjectAdapt(table);
         }
@@ -509,7 +517,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         {
            this.ColumnAntecedent.Text = rm.GetString("ColumnAntecedent");
             this.ColumnCondition.Text = rm.GetString("ColumnCondition");
-            this.ColumnHypotheseName.Text = rm.GetString("ColumnHypotheseName");
+            this.ColumnHypotheseName.Text = rm.GetString("ColumnHypothesisName");
             this.ColumnSuccedent.Text = rm.GetString("ColumnSuccedent");
             this.GroupBoxChangeGraph.Text = rm.GetString("GraphViewOptions");
             this.ToolStripShowGraphEdit.Text = rm.GetString("GraphViewOptions");
@@ -518,8 +526,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelHOffset.Text = rm.GetString("LabelHOffset");
             this.LabelVOffset.Text = rm.GetString("LabelVOffset");
             this.LabelZoom.Text = rm.GetString("LabelZoom");
-            this.LabelRotation.Text = rm.GetString("LabelRotation");
+    //        this.LabelRotation.Text = rm.GetString("LabelRotation");
             this.ToolStripCopyChart.Text = rm.GetString("CopyChart");
+            this.CheckBoxShowLabels.Text = rm.GetString("ShowLabels");
         }
 
         #endregion
