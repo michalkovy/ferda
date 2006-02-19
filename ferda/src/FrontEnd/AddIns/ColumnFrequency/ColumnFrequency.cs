@@ -44,7 +44,7 @@ namespace Ferda
 
 
             #region Constructor
-            public ColumnFrequency(string[] localePrefs, ColumnStruct columnStruct)
+            public ColumnFrequency(string[] localePrefs, ColumnInfo columnInfo)
             {
                 //setting the ResManager resource manager and localization string
                 string locale;
@@ -60,9 +60,9 @@ namespace Ferda
                     resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ColumnFr.Localization_en-US", Assembly.GetExecutingAssembly());
                     localizationString = "en-US";
                 }
-                this.rowCount = columnStruct.dataMatrix.recordsCount;
+                this.rowCount = columnInfo.dataMatrix.recordsCount;
                 InitializeComponent();
-                DBInteraction myDb = new DBInteraction(columnStruct, resManager);
+                DBInteraction myDb = new DBInteraction(columnInfo, resManager);
                 this.ListViewInit();
                 this.InitializeGraph();
                 this.tempTable = myDb.GetAllValuesCount();

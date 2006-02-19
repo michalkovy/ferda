@@ -58,7 +58,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute
 		public override AbstractAttributeStruct getAbstractAttribute(Ice.Current __current)
 		{
 			AbstractAttributeStruct result = new AbstractAttributeStruct();
-			result.column = getColumnFunctionsPrx().getColumn();
+			result.column = getColumnFunctionsPrx().getColumnInfo();
 			result.categories = Categories;
             Ferda.Modules.Helpers.Data.Attribute.TestCategoriesDisjunctivity(result.categories, boxModule.StringIceIdentity);
 			result.countOfCategories = Ferda.Modules.Helpers.Data.Attribute.CategoriesCount(result.categories);

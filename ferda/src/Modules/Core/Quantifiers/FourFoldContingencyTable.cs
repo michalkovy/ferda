@@ -470,7 +470,7 @@ namespace Ferda.Modules.Quantifiers
         #endregion
 
         #region Fisher
-        private double FisherHelper()
+        private double fisherHelper()
         {
             if (denominator != 1)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Denominator have to be equal to 1", restrictionTypeEnum.Other);
@@ -510,7 +510,7 @@ namespace Ferda.Modules.Quantifiers
         {
             if (a * d <= b * c)
                 return 0.0D;
-            return FisherHelper();
+            return fisherHelper();
         }
 
         /// <summary>
@@ -521,7 +521,7 @@ namespace Ferda.Modules.Quantifiers
         {
             if (a * d <= b * c)
                 return false;
-            return (FisherHelper() <= alpha);
+            return (fisherHelper() <= alpha);
         }
         #endregion
 

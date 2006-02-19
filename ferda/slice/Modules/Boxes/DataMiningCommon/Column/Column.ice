@@ -12,7 +12,7 @@ module Ferda {
 			module DataMiningCommon {
 				module Column	{
 
-					struct StatisticsStruct {
+					struct StatisticsInfo {
 						string ValueMin;
 						string ValueMax;
 						string ValueAverage;
@@ -27,8 +27,8 @@ module Ferda {
 						MultiColumnField
 					};
 
-					struct ColumnStruct	{
-						Ferda::Modules::Boxes::DataMiningCommon::DataMatrix::DataMatrixStruct dataMatrix;
+					struct ColumnInfo	{
+						Ferda::Modules::Boxes::DataMiningCommon::DataMatrix::DataMatrixInfo dataMatrix;
 						ColumnTypeEnum columnType;
 						/**
 						 *
@@ -37,14 +37,14 @@ module Ferda {
 						 **/
 						string columnSelectExpression;
 						ValueSubTypeEnum columnSubType;
-						StatisticsStruct statistics;
+						StatisticsInfo statistics;
 					};
 
 					interface ColumnCoreFunctions {
 					};
 
 					interface ColumnFunctions extends ColumnCoreFunctions {
-						nonmutating ColumnStruct getColumn()
+						nonmutating ColumnInfo getColumnInfo()
 							throws
 								Ferda::Modules::BoxRuntimeError,
 								Ferda::Modules::BadValueError,

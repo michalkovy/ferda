@@ -10,7 +10,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
 {
     public static class EquidistantAlgorithm
     {
-        private static GeneratedAttribute generateFloating(float from, float to, SidesEnum closedFrom, float length, ColumnStruct column)
+        private static GeneratedAttribute generateFloating(float from, float to, SidesEnum closedFrom, float length, ColumnInfo column)
         {
             FloatIntervalStruct intervalTemplate = new FloatIntervalStruct();
             char leftBound, rightBound;
@@ -54,7 +54,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                 result.floatIntervals.Count);
         }
 
-        private static GeneratedAttribute generateIntegral(long from, long to, SidesEnum closedFrom, long length, ColumnStruct column)
+        private static GeneratedAttribute generateIntegral(long from, long to, SidesEnum closedFrom, long length, ColumnInfo column)
         {
             LongIntervalStruct intervalTemplate = new LongIntervalStruct();
             char leftBound, rightBound;
@@ -98,7 +98,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                 result.longIntervals.Count);
         }
         /*
-                private static Output generateDateTime(DateTime from, DateTime to, SidesEnum closedFrom, long length, ColumnStruct column)
+                private static Output generateDateTime(DateTime from, DateTime to, SidesEnum closedFrom, long length, ColumnInfo column)
                 {
                     //TODO
                     Output output = new Output();
@@ -160,7 +160,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                 result.enums.Count);
         }
         /*
-                private static Output generateBoolean(bool from, bool to, SidesEnum closedFrom, long length, ColumnStruct column)
+                private static Output generateBoolean(bool from, bool to, SidesEnum closedFrom, long length, ColumnInfo column)
                 {
                     //TODO
                     Output output = new Output();
@@ -181,7 +181,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
 			string to,
 			SidesEnum closedFrom,
 			double length,
-			ColumnStruct column,
+			ColumnInfo column,
 			string boxIdentity)
         {
             if (length <= 0)
@@ -214,7 +214,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                     catch (System.ArgumentException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
                     catch (System.OverflowException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
                     catch (System.FormatException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
-                    distincts = Ferda.Modules.Helpers.Data.Column.GetDistincts(column.dataMatrix.database.connectionString, column.dataMatrix.dataMatrixName, column.columnSelectExpression, boxIdentity);
+                    distincts = Ferda.Modules.Helpers.Data.Column.GetDistincts(column.dataMatrix.database.odbcConnectionString, column.dataMatrix.dataMatrixName, column.columnSelectExpression, boxIdentity);
                     if (distincts.Rows.Count > fromTmp + toTmp)
                     {
                         from = distincts.Rows[fromTmp].ItemArray[0].ToString();
@@ -285,7 +285,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                  */
                 case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.String:
                     if (distincts == null)
-                        distincts = Ferda.Modules.Helpers.Data.Column.GetDistincts(column.dataMatrix.database.connectionString, column.dataMatrix.dataMatrixName, column.columnSelectExpression, boxIdentity);
+                        distincts = Ferda.Modules.Helpers.Data.Column.GetDistincts(column.dataMatrix.database.odbcConnectionString, column.dataMatrix.dataMatrixName, column.columnSelectExpression, boxIdentity);
                     //TODO lepe distincts (dle from a to)
                     return generateString(from, to, (long)length, distincts);
                 case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Boolean:

@@ -127,7 +127,7 @@ namespace Ferda.Modules.Quantifiers
 				}
 				if (numberOfAllRecords == 0)
 					return 0;
-				return ( (numberOfValuesGreaterThanAverage - numberOfValuesLessThanAverage) / numberOfAllRecords) / (double)denominator;
+				return (numberOfValuesGreaterThanAverage - numberOfValuesLessThanAverage) / (numberOfAllRecords * (double)denominator);
 			}
 		}
 

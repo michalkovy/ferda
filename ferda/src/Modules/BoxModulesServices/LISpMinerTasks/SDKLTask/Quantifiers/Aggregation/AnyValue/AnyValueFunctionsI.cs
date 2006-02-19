@@ -44,8 +44,8 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.Quantifiers.Aggregation.An
 			}
 			else
 			{
-				TwoDimensionalContingencyTable combinedTable =
-					(TwoDimensionalContingencyTable)TwoDimensionalContingencyTable.Combine(tableA, tableB, OperationMode);
+				TwoDimensionalContingencyTable combinedTable = 
+                    ContingencyTable.Combine<TwoDimensionalContingencyTable>(tableA, tableB, OperationMode);
 				return combinedTable.AnyValue(Relation, Treshold, Units, setting.allObjectsCount, out value);
 			}
 		}

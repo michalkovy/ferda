@@ -11,19 +11,19 @@ module Ferda {
 			module DataMiningCommon {
 				module Database	{
 
-					struct DatabaseStruct	{
-						string connectionString;
+					struct DatabaseInfo	{
+						string odbcConnectionString;
 						DateTimeT lastReloadInfo;
 					};
 
-					struct DataMatrixInfo
+					struct DataMatrixSchemaInfo
 					{
 						string name;
 						string type;
 						string remarks;
 						long rowCount;
 					};
-					sequence<DataMatrixInfo> DataMatrixInfoSeq;
+					sequence<DataMatrixSchemaInfo> DataMatrixSchemaInfoSeq;
 
 					//see corresponding fields of System.Data.Odbc.OdbcConnection (.NET Framework)
 					struct ConnectionInfo
@@ -34,8 +34,8 @@ module Ferda {
             string serverVersion;
 					};
 
-					interface	TablesNamesProvider	{
-						nonmutating	StringSeq	getTables()
+					interface	DataMatrixNamesProviderFunctions	{
+						nonmutating	StringSeq	getDataMatrixNames()
 							throws
 								Ferda::Modules::BoxRuntimeError,
 								Ferda::Modules::BadValueError,
@@ -43,14 +43,20 @@ module Ferda {
 								Ferda::Modules::NoConnectionInSocketError;
 					};
 
-					interface DatabaseFunctions extends TablesNamesProvider {
-						nonmutating	DatabaseStruct getDatabase()
+					interface DatabaseFunctions extends DataMatrixNamesProviderFunctions {
+						nonmutating	DatabaseInfo getDatabaseInfo()
 							throws
 								Ferda::Modules::BoxRuntimeError,
 								Ferda::Modules::BadValueError,
 								Ferda::Modules::BadParamsError,
 								Ferda::Modules::NoConnectionInSocketError;
-						nonmutating DataMatrixInfoSeq explainDatabaseStructure()
+						nonmutating DataMatrixSchemaInfoSeq explain()
+							throws
+								Ferda::Modules::BoxRuntimeError,
+								Ferda::Modules::BadValueError,
+								Ferda::Modules::BadParamsError,
+								Ferda::Modules::NoConnectionInSocketError;
+						nonmutating ConnectionInfo getConnectionInfo()
 							throws
 								Ferda::Modules::BoxRuntimeError,
 								Ferda::Modules::BadValueError,

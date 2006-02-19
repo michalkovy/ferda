@@ -353,7 +353,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Computes the smallest power of 2 greater than or equal to the given integer.
         /// </summary>
-        /// <param name="result">Lower bound for the requested power of 2.</param>
+        /// <param name="value">Upper bound for the requested power of 2.</param>
         /// <returns>The smallest power of 2 greater than or equal to the given integer.</returns>
         public static int GetPowerOfTwo(int value)
         {
@@ -407,7 +407,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Computes a natural logarightm of gamma function.
         /// </summary>
-        /// <param name="result">Input result.</param>
+        /// <param name="value">Input value.</param>
         /// <returns>A natural logarithm of gamma function.</returns>
         /// <remarks>
         /// <para>For definition of a gamma function see 

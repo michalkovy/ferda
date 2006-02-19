@@ -344,7 +344,7 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// Multiplies the denominator by the specified <c>result</c>.
         /// </summary>
-        /// <param name="result">The multiplicator for the denomitor.</param>
+        /// <param name="value">The multiplicator for the denomitor.</param>
         public void Div(long value)
         {
             this.denominator *= value;
@@ -724,7 +724,7 @@ namespace Ferda.Modules.Quantifiers
             return resultObject;
         }
 
-        private static T Combine<T>(T a, T b, OperationModeEnum operationMode)
+        public static T Combine<T>(T a, T b, OperationModeEnum operationMode)
             where T : ContingencyTable, new()
         {
             switch (operationMode)
@@ -744,24 +744,24 @@ namespace Ferda.Modules.Quantifiers
             }
         }
 
-        public static ContingencyTable Combine(ContingencyTable a, ContingencyTable b, OperationModeEnum operationMode)
-        {
-            switch (operationMode)
-            {
-                case OperationModeEnum.FirstSetFrequencies:
-                    return a;
-                case OperationModeEnum.SecondSetFrequencies:
-                    return b;
-                case OperationModeEnum.DifferencesOfAbsoluteFrequencies:
-                    return a - b;
-                case OperationModeEnum.DifferencesOfRelativeFrequencies:
-                    a.Div((long)a.SumOfValuesAggregation);
-                    b.Div((long)b.SumOfValuesAggregation);
-                    return a - b;
-                default:
-                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(operationMode);
-            }
-        }
+        //public static ContingencyTable Combine(ContingencyTable a, ContingencyTable b, OperationModeEnum operationMode)
+        //{
+        //    switch (operationMode)
+        //    {
+        //        case OperationModeEnum.FirstSetFrequencies:
+        //            return a;
+        //        case OperationModeEnum.SecondSetFrequencies:
+        //            return b;
+        //        case OperationModeEnum.DifferencesOfAbsoluteFrequencies:
+        //            return a - b;
+        //        case OperationModeEnum.DifferencesOfRelativeFrequencies:
+        //            a.Div((long)a.SumOfValuesAggregation);
+        //            b.Div((long)b.SumOfValuesAggregation);
+        //            return a - b;
+        //        default:
+        //            throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(operationMode);
+        //    }
+        //}
 
         public static double Combine(double firstQuantifierValue, double secondQuantifierValue, OperationModeEnum operationMode)
         {

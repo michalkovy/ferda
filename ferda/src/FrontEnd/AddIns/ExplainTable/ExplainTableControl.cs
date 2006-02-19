@@ -30,19 +30,19 @@ namespace Ferda
             private string localizationString;
 
             /// <summary>
-            /// ColumnInfo array
+            /// ColumnSchemaInfo array
             /// </summary>
-            private ColumnInfo[] dataMatrix;
+            private ColumnSchemaInfo[] dataMatrix;
 
             /// <summary>
-            /// DataMatrixStruct
+            /// DataMatrixInfo
             /// </summary>
-            private DataMatrixStruct dataMatrixStruct;
+            private DataMatrixInfo dataMatrixInfo;
 
             #endregion
 
             #region Constructor
-            public ExplainTable(string [] localePrefs,ColumnInfo [] dataMatrix, DataMatrixStruct dataMatrixStruct)
+            public ExplainTable(string [] localePrefs,ColumnSchemaInfo [] dataMatrix, DataMatrixInfo dataMatrixInfo)
             {
                 //setting the ResManager resource manager and localization string
 
@@ -61,7 +61,7 @@ namespace Ferda
                     localizationString = "en-US";
                 }
                 this.dataMatrix = dataMatrix;
-                this.dataMatrixStruct = dataMatrixStruct;
+                this.dataMatrixInfo = dataMatrixInfo;
                 InitializeComponent();
                 this.ListViewInit();
                 this.MakeListView();
@@ -143,11 +143,11 @@ namespace Ferda
             #endregion
 
             /// <summary>
-            /// Method to fill ListView with ColumnInfo data
+            /// Method to fill ListView with ColumnSchemaInfo data
             /// </summary>
             private void MakeListView()
             {
-                foreach (ColumnInfo columnInfo in this.dataMatrix)
+                foreach (ColumnSchemaInfo columnInfo in this.dataMatrix)
                 {
                     ListViewItem newItem = new ListViewItem();
                     newItem.Text = columnInfo.name;

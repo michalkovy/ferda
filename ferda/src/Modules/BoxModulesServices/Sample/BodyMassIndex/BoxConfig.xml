@@ -59,6 +59,12 @@
           <Name>Milimeter</Name>
         </SelectOption>
         <SelectOption>
+          <Name>Mile</Name>
+        </SelectOption>
+        <SelectOption>
+          <Name>Yard</Name>
+        </SelectOption>
+        <SelectOption>
           <Name>Foot</Name>
         </SelectOption>
         <SelectOption>
@@ -82,6 +88,9 @@
         </SelectOption>
         <SelectOption>
           <Name>Pound</Name>
+        </SelectOption>
+        <SelectOption>
+          <Name>Ounce</Name>
         </SelectOption>
       </SelectOptions>
       <Visible>true</Visible>

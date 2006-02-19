@@ -30,13 +30,13 @@ namespace Ferda
             /// <summary>
             /// Datamatrix array to convert to listview
             /// </summary>
-            private DataMatrixInfo[] dataMatrix;
+            private DataMatrixSchemaInfo[] dataMatrix;
 
             #endregion
 
 
             #region Constructor
-            public DataBaseInfo(string [] localePrefs,DataMatrixInfo [] dataMatrix)
+            public DataBaseInfo(string[] localePrefs, DataMatrixSchemaInfo[] dataMatrix)
             {
                 //setting the ResManager resource manager and localization string
 
@@ -134,7 +134,7 @@ namespace Ferda
             /// </summary>
             private void FillDBInfoListView()
             {
-                foreach (DataMatrixInfo value in this.dataMatrix)
+                foreach (DataMatrixSchemaInfo value in this.dataMatrix)
                 {
                     ListViewItem newItem = new ListViewItem();
                     newItem.Text = value.name;

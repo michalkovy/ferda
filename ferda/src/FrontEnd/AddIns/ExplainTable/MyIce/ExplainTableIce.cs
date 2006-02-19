@@ -151,7 +151,7 @@ namespace Ferda
                 {
 
                     string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                    Ferda.FrontEnd.AddIns.ExplainTable.ExplainTable control = new ExplainTable(localePrefs, prx.explainDataMatrixStructure(), prx.getDataMatrix());
+                    Ferda.FrontEnd.AddIns.ExplainTable.ExplainTable control = new ExplainTable(localePrefs, prx.explain(), prx.getDataMatrixInfo());
                     this.ownerOfAddIn.ShowDockableControl(control, resManager.GetString("Explain") + " " + label);
                 }
 

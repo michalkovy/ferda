@@ -23,7 +23,7 @@ namespace Ferda.Modules.Boxes
         public static SelectString[] StringArrayToSelectStringArray(string[] input)
         {
             if ((input == null) || (input.Length == 0))
-                return null;
+                return new SelectString[0];
             List<SelectString> result = new List<SelectString>();
             foreach (string item in input)
             {
@@ -100,7 +100,6 @@ namespace Ferda.Modules.Boxes
         /// <param name="directoryPath">Path to the file.</param>
         /// <param name="fileName">Name of the file.</param>
         /// <param name="fallOnError">True if an exception can be thrown on error.</param>
-        /// reading the file is executed only once.</param>
         /// <returns>Array of <see cref="T:System.Byte">Bytes</see>.</returns>
         /// <exception cref="T:System.Exception">
         /// If <c>fallOnError</c> is <c>true</c> and 

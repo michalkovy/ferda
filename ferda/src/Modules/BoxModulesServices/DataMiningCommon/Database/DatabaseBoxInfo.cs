@@ -70,7 +70,15 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
                 {
                     case "DataMatrix":
                         DatabaseFunctionsI Func = (DatabaseFunctionsI)boxModule.FunctionsIObj;
-                        string[] dataMatrixNames = Func.GetTables();
+                        string[] dataMatrixNames;
+                        try
+                        {
+                            dataMatrixNames = Func.getDataMatrixNames();
+                        }
+                        catch (Ferda.Modules.BoxRuntimeError)
+                        {
+                            dataMatrixNames = new string[0];
+                        }
                         if (dataMatrixNames != null && dataMatrixNames.Length > 0)
                         {
                             moduleConnection = new ModulesConnection();
@@ -141,7 +149,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
                 if (ex.restrictionType != restrictionTypeEnum.DbConnectionString)
                     throw ex;
             }
-           
+
             if (isConnectionStringValid)
                 // test succeed
                 boxModule.OutputMessage(
@@ -168,13 +176,13 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
             switch (propertyName)
             {
                 case "DatabaseName":
-                    return new Ferda.Modules.StringTI(Func.GetConnectionInfo().databaseName);
+                    return new Ferda.Modules.StringTI(Func.getConnectionInfo().databaseName);
                 case "DataSource":
-                    return new Ferda.Modules.StringTI(Func.GetConnectionInfo().dataSource);
+                    return new Ferda.Modules.StringTI(Func.getConnectionInfo().dataSource);
                 case "Driver":
-                    return new Ferda.Modules.StringTI(Func.GetConnectionInfo().driver);
+                    return new Ferda.Modules.StringTI(Func.getConnectionInfo().driver);
                 case "ServerVersion":
-                    return new Ferda.Modules.StringTI(Func.GetConnectionInfo().serverVersion);
+                    return new Ferda.Modules.StringTI(Func.getConnectionInfo().serverVersion);
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(propertyName);
             }
@@ -188,7 +196,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
         }
 
         #region Names of Properties
-        public const string OdbcConnectionStringPropertyName = "ConnectionString";
+        public const string OdbcConnectionStringPropertyName = "OdbcConnectionString";
         public const string LastReloadInfoPropertyName = "LastReloadInfo";
         public const string AcceptableTypesOfTablesPropertyName = "AcceptableTypesOfTables";
         #endregion

@@ -172,9 +172,9 @@ namespace Ferda
 
                 try
                 {
-                    ColumnStruct colStruct = prx.getColumn();
+                    ColumnInfo columnInfo = prx.getColumnInfo();
                     string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                    Ferda.FrontEnd.AddIns.ColumnFrequency.ColumnFrequency control = new ColumnFrequency(localePrefs, colStruct);
+                    Ferda.FrontEnd.AddIns.ColumnFrequency.ColumnFrequency control = new ColumnFrequency(localePrefs, columnInfo);
                     this.ownerOfAddIn.ShowDockableControl(control, label + " " + resManager.GetString("ColumnFrequency"));
                 }
 

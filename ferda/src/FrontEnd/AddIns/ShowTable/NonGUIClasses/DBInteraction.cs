@@ -20,9 +20,9 @@ namespace Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses
 
 
         #region Contructor
-        public DBInteraction(string dataMatrixName,DataMatrixStruct dataMatrixStruct)
+        public DBInteraction(string dataMatrixName, DataMatrixInfo dataMatrixStruct)
         {
-            this.connectionString = dataMatrixStruct.database.connectionString;
+            this.connectionString = dataMatrixStruct.database.odbcConnectionString;
 
             this.dataMatrixName = dataMatrixName;
 

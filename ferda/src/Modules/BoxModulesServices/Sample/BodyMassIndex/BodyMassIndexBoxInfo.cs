@@ -23,7 +23,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         {
             try
             {
-                return ((BodyMassIndexFunctionsI)boxModule.FunctionsIObj).getColumn().columnSelectExpression;
+                return ((BodyMassIndexFunctionsI)boxModule.FunctionsIObj).getColumnInfo().columnSelectExpression;
             }
             catch
             {

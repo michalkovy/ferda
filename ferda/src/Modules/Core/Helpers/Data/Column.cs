@@ -260,7 +260,7 @@ namespace Ferda.Modules.Helpers.Data
         }
 
         /// <summary>
-        /// Gets the <see cref="T:Ferda.Modules.Boxes.DataMiningCommon.Column.StatisticsStruct">statistics</see>
+        /// Gets the <see cref="T:Ferda.Modules.Boxes.DataMiningCommon.Column.StatisticsInfo">statistics</see>
         /// i.e. count of distinct values, minimal result, maximal result, average result 
         /// (if result type is not cardinal average length is returned) and for cardinal values
         /// also computes variability and standard deviation.
@@ -271,19 +271,18 @@ namespace Ferda.Modules.Helpers.Data
         /// <param name="columnSubType">Type of the column sub.</param>
         /// <param name="boxIdentity">The box identity.</param>
         /// <returns>
-        /// <see cref="T:Ferda.Modules.Boxes.DataMiningCommon.Column.StatisticsStruct"/> 
+        /// <see cref="T:Ferda.Modules.Boxes.DataMiningCommon.Column.StatisticsInfo"/> 
         /// i.e. count of distinct values, minimal result, maximal result, average result 
         /// (if result type is not cardinal average length is returned) and for cardinal values
         /// also computes variability and standard deviation.
         /// </returns>
-        public static StatisticsStruct GetStatistics(string odbcConnectionString, string dataMatrixName, string columnSelectExpression, ValueSubTypeEnum columnSubType, string boxIdentity)
+        public static StatisticsInfo GetStatistics(string odbcConnectionString, string dataMatrixName, string columnSelectExpression, ValueSubTypeEnum columnSubType, string boxIdentity)
         {
-            //return new StatisticsStruct();
 
             //throws exception if odbcConnectionString is wrong
             OdbcConnection conn = Ferda.Modules.Helpers.Data.OdbcConnections.GetConnection(odbcConnectionString, boxIdentity);
 
-            StatisticsStruct statisticsStruct = new StatisticsStruct();
+            StatisticsInfo result = new StatisticsInfo();
             OdbcCommand odbcCommand = new OdbcCommand();
             odbcCommand.Connection = conn;
 
@@ -294,12 +293,12 @@ namespace Ferda.Modules.Helpers.Data
                 OdbcDataAdapter myDataAdapter = new OdbcDataAdapter("SELECT DISTINCT " + "`" + columnSelectExpression + "`" + " FROM " + "`" + dataMatrixName + "`", conn);
                 System.Data.DataSet myDataSet = new System.Data.DataSet();
                 myDataAdapter.Fill(myDataSet);
-                statisticsStruct.ValueDistincts = Convert.ToInt64(myDataSet.Tables[0].Rows.Count);
+                result.ValueDistincts = Convert.ToInt64(myDataSet.Tables[0].Rows.Count);
 
                 /* much more effective but unsupported 
                  * UNDONE tohle predelat
                 odbcCommand.CommandText = "SELECT COUNT(DISTINCT " + "`" + columnSelectExpression + "`" + ") FROM " + "`" + dataMatrixName + "`";
-                statisticsStruct.ValueDistincts = Convert.ToInt64(odbcCommand.ExecuteScalar());
+                result.ValueDistincts = Convert.ToInt64(odbcCommand.ExecuteScalar());
                  * */
 
                 isCardinal = IsColumSubTypeCardinal(GetColumnSubTypeByDataType(GetDataType(odbcConnectionString, dataMatrixName, columnSelectExpression, boxIdentity)));
@@ -331,9 +330,9 @@ namespace Ferda.Modules.Helpers.Data
 
             if (odbcDataReader.Read())
             {
-                statisticsStruct.ValueMax = odbcDataReader["Maximum"].ToString();
-                statisticsStruct.ValueMin = odbcDataReader["Minimum"].ToString();
-                statisticsStruct.ValueAverage = odbcDataReader["Average"].ToString();
+                result.ValueMax = odbcDataReader["Maximum"].ToString();
+                result.ValueMin = odbcDataReader["Minimum"].ToString();
+                result.ValueAverage = odbcDataReader["Average"].ToString();
             }
             odbcDataReader.Close();
 
@@ -346,12 +345,12 @@ namespace Ferda.Modules.Helpers.Data
                 //TODO optimize this
                 odbcCommand.CommandText =
                     "SELECT SUM( "
-                        + "(" + "`" + columnSelectExpression +"`" + " - '" + statisticsStruct.ValueAverage + "')"
-                        + " * (" + "`" + columnSelectExpression + "`" + " - '" + statisticsStruct.ValueAverage + "')"
+                        + "(" + "`" + columnSelectExpression +"`" + " - '" + result.ValueAverage + "')"
+                        + " * (" + "`" + columnSelectExpression + "`" + " - '" + result.ValueAverage + "')"
                         + ") FROM " + "`" + dataMatrixName + "`";
 
-                statisticsStruct.ValueVariability = Convert.ToDouble(odbcCommand.ExecuteScalar()) / dataMatrixRowsCount;
-                statisticsStruct.ValueStandardDeviation = Math.Sqrt(statisticsStruct.ValueVariability);
+                result.ValueVariability = Convert.ToDouble(odbcCommand.ExecuteScalar()) / dataMatrixRowsCount;
+                result.ValueStandardDeviation = Math.Sqrt(result.ValueVariability);
             }
             //System.Diagnostics.Debug.WriteLine("card_e:" + DateTime.Now.ToString());
 
@@ -363,50 +362,50 @@ namespace Ferda.Modules.Helpers.Data
 
             odbcCommand.CommandText = "SELECT MAX(" + "`" + columnSelectExpression + "`" + ") AS Maximum FROM " + + "`" + dataMatrixName + "`";
             commandResult = odbcCommand.ExecuteScalar();
-            statisticsStruct.ValueMax =
+            result.ValueMax =
                 (commandResult != null) ? commandResult.ToString() : null;
 
             odbcCommand.CommandText = "SELECT MIN(" + "`" + columnSelectExpression + "`" + ") AS Minimum FROM " + "`" + dataMatrixName + "`";
             commandResult = odbcCommand.ExecuteScalar();
-            statisticsStruct.ValueMin =
+            result.ValueMin =
                 (commandResult != null) ? commandResult.ToString() : null;
 
             if (isCardinal)
             {
                 odbcCommand.CommandText = "SELECT AVG(" + "`" + columnSelectExpression +"`" + ") AS Average FROM " + "`" + dataMatrixName + "`";
                 commandResult = odbcCommand.ExecuteScalar();
-                statisticsStruct.ValueAverage = (commandResult != null) ? commandResult.ToString() : null;
+                result.ValueAverage = (commandResult != null) ? commandResult.ToString() : null;
 
                 odbcCommand.CommandText = "SELECT COUNT(1) FROM " + "`" + dataMatrixName + "`";
                 long dataMatrixRowsCount = Convert.ToInt64(odbcCommand.ExecuteScalar());
 
                 odbcCommand.CommandText =
                     "SELECT SUM( "
-                        + "(" + "`" + columnSelectExpression + "`" + " - '" + statisticsStruct.ValueAverage + "')"
-                        + "* (" + "`" + columnSelectExpression + "`" + " - '" + statisticsStruct.ValueAverage + "')"
+                        + "(" + "`" + columnSelectExpression + "`" + " - '" + result.ValueAverage + "')"
+                        + "* (" + "`" + columnSelectExpression + "`" + " - '" + result.ValueAverage + "')"
                         + ") AS Variability FROM " + "`" + dataMatrixName + "`";
 
-                statisticsStruct.ValueVariability =
+                result.ValueVariability =
                     Convert.ToDouble(odbcCommand.ExecuteScalar()) / dataMatrixRowsCount;
 
-                statisticsStruct.ValueStandardDeviation = Math.Sqrt(statisticsStruct.ValueVariability);
+                result.ValueStandardDeviation = Math.Sqrt(result.ValueVariability);
             }
             else
             {
                 odbcCommand.CommandText = "SELECT AVG(LEN(" + "`" + columnSelectExpression + "`" + ")) AS AverageLen FROM " + "`" + dataMatrixName + "`";
                 commandResult = odbcCommand.ExecuteScalar();
-                statisticsStruct.ValueAverage = (commandResult != null) ? commandResult.ToString() : null;
+                result.ValueAverage = (commandResult != null) ? commandResult.ToString() : null;
 
-                statisticsStruct.ValueVariability = 0;
+                result.ValueVariability = 0;
 
-                statisticsStruct.ValueStandardDeviation = 0;
+                result.ValueStandardDeviation = 0;
             }
 
             //end of old implementation
             /* */
             #endregion
 
-            return statisticsStruct;
+            return result;
         }
 
         /// <summary>

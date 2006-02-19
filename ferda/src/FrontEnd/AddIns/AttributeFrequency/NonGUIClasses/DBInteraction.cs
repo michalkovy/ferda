@@ -70,21 +70,21 @@ namespace Ferda
 
 
             #region Contructor
-            public DBInteraction(ColumnStruct columnStruct, CategoriesStruct categoriesStruct, ResourceManager rm)
+            public DBInteraction(ColumnInfo columnInfo, CategoriesStruct categoriesStruct, ResourceManager rm)
             {
-                this.connectionString = columnStruct.dataMatrix.database.connectionString;
+                this.connectionString = columnInfo.dataMatrix.database.odbcConnectionString;
 
-                this.columnSelectExpression = columnStruct.columnSelectExpression;
+                this.columnSelectExpression = columnInfo.columnSelectExpression;
 
-                this.dataMatrixName = columnStruct.dataMatrix.dataMatrixName;
+                this.dataMatrixName = columnInfo.dataMatrix.dataMatrixName;
 
-                this.rowCount = columnStruct.dataMatrix.recordsCount;
+                this.rowCount = columnInfo.dataMatrix.recordsCount;
 
                 this.rm = rm;
 
                 this.categoriesStruct = categoriesStruct;
 
-                this.columnType = columnStruct.columnSubType;
+                this.columnType = columnInfo.columnSubType;
 
                 this.connection = this.GetConnection();
 
@@ -172,19 +172,23 @@ namespace Ferda
                     }
                     //if both bounds of current interval are infinity, no restriction is needed
                     if ((longInterval.leftBoundType == BoundaryEnum.Infinity) && (longInterval.rightBoundType == BoundaryEnum.Infinity))
-                        return "";
-
+                        return "";
+
+
+
                     returnString.Append("`" + columnSelectExpression + "`");
                     bool left = false;
                     if (longInterval.leftBoundType == BoundaryEnum.Round)
-                    {
+                    {
+
                         returnString.Append(" > " + longInterval.leftBound);
                         left = true;
                     }
                     else
                     {
                         if (longInterval.leftBoundType == BoundaryEnum.Sharp)
-                        {
+                        {
+
                             returnString.Append(" >= " + longInterval.leftBound);
                             left = true;
                         }
@@ -194,9 +198,11 @@ namespace Ferda
                     if (longInterval.rightBoundType == BoundaryEnum.Round)
                     {
                         if (left)
-                        {
+                        {
+
                             returnString.Append(" AND `" + columnSelectExpression + "`");
-                        }
+                        }
+
                         returnString.Append(" < " + longInterval.rightBound);
                     }
                     else
@@ -204,9 +210,11 @@ namespace Ferda
                         if (longInterval.rightBoundType == BoundaryEnum.Sharp)
                         {
                             if (left)
-                            {
+                            {
+
                                 returnString.Append(" AND `" + columnSelectExpression + "`");
-                            }
+                            }
+
                             returnString.Append(" <= " + longInterval.rightBound);
                         }
                         //Infinity is left, no restriction needed
@@ -240,20 +248,24 @@ namespace Ferda
 
                     //if both bounds are infinity, no restriction is needed
                     if ((floatInterval.leftBoundType == BoundaryEnum.Infinity) && (floatInterval.rightBoundType == BoundaryEnum.Infinity))
-                        return "";
-
+                        return "";
+
+
+
                     returnString.Append("`" + columnSelectExpression + "`");
                     bool left = false;
 
                     if (floatInterval.leftBoundType == BoundaryEnum.Round)
-                    {
+                    {
+
                         returnString.Append(" > " + floatInterval.leftBound);
                         left = true;
                     }
                     else
                     {
                         if (floatInterval.leftBoundType == BoundaryEnum.Sharp)
-                        {
+                        {
+
                             returnString.Append(" >= " + floatInterval.leftBound);
                             left = true;
                         }
@@ -262,9 +274,11 @@ namespace Ferda
                     if (floatInterval.rightBoundType == BoundaryEnum.Round)
                     {
                         if (left)
-                        {
+                        {
+
                             returnString.Append(" AND `" + columnSelectExpression + "`");
-                        }
+                        }
+
                         returnString.Append(" < " + floatInterval.rightBound);
                     }
                     else
@@ -272,10 +286,13 @@ namespace Ferda
                         if (floatInterval.rightBoundType == BoundaryEnum.Sharp)
                         {
                             if (left)
-                            {
+                            {
+
                                 returnString.Append(" AND `" + columnSelectExpression + "`");
-                            }
-
+                            }
+
+
+
                             returnString.Append(" <= " + floatInterval.rightBound);
                         }
                         //Infinity is left, no restriction needed
@@ -312,20 +329,24 @@ namespace Ferda
 
                     //if both bounds are infinity, no restriction is needed
                     if ((dateTimeInterval.leftBoundType == BoundaryEnum.Infinity) && (dateTimeInterval.rightBoundType == BoundaryEnum.Infinity))
-                        return "";
-
+                        return "";
+
+
+
                     returnString.Append("`" + columnSelectExpression + "`");
                     bool left = false;
 
                     if (dateTimeInterval.leftBoundType == BoundaryEnum.Round)
-                    {
+                    {
+
                         returnString.Append(" > " + dateTimeInterval.leftBound);
                         left = true;
                     }
                     else
                     {
                         if (dateTimeInterval.leftBoundType == BoundaryEnum.Sharp)
-                        {
+                        {
+
                             returnString.Append(" >= " + dateTimeInterval.leftBound);
                             left = true;
                         }
@@ -335,9 +356,11 @@ namespace Ferda
                     if (dateTimeInterval.rightBoundType == BoundaryEnum.Round)
                     {
                         if (left)
-                        {
+                        {
+
                             returnString.Append(" AND `" + columnSelectExpression + "`");
-                        }
+                        }
+
                         returnString.Append(" < " + dateTimeInterval.rightBound);
                     }
                     else
@@ -345,9 +368,11 @@ namespace Ferda
                         if (dateTimeInterval.rightBoundType == BoundaryEnum.Sharp)
                         {
                             if (left)
-                            {
+                            {
+
                                 returnString.Append(" AND `" + columnSelectExpression + "`");
-                            }
+                            }
+
                             returnString.Append(" <= " + dateTimeInterval.rightBound);
                         }
                         //Infinity is left, no restriction needed
@@ -379,7 +404,8 @@ namespace Ferda
                     else
                     {
                         returnString.Append(" OR ");
-                    }
+                    }
+
                     returnString.Append("`" + columnSelectExpression + "` = ");
                     if ((this.columnType == ValueSubTypeEnum.StringType) || (this.columnType == ValueSubTypeEnum.Unknown))
                         returnString.Append("'");
@@ -431,12 +457,14 @@ namespace Ferda
             /// <summary>
             /// Method for counting categories' frequences
             /// </summary>
-            /// <returns></returns>
+            /// <returns></returns>
+
             public ArrayList GetCategoriesFrequences(CategoriesStruct categories)
             {
                 ArrayList returnList = new ArrayList();
 
-                bool everything = false;
+                bool everything = false;
+
                 foreach (DictionaryEntry singleEnum in categories.enums)
                 {
                     String[] stringSeq = (String[])singleEnum.Value;
@@ -464,8 +492,10 @@ namespace Ferda
                         newEntry.count = 0;
                     }
                     returnList.Add(newEntry);
-                }
-
+                }
+
+
+
                 foreach (DictionaryEntry singleLong in categories.longIntervals)
                 {
                     LongIntervalStruct[] longSeq = (LongIntervalStruct[])singleLong.Value;
@@ -502,8 +532,10 @@ namespace Ferda
                         newEntry.count = 0;
                     }
                     returnList.Add(newEntry);
-                }
-
+                }
+
+
+
                 foreach (DictionaryEntry singleFloat in categories.floatIntervals)
                 {
                     FloatIntervalStruct[] floatSeq = (FloatIntervalStruct[])singleFloat.Value;
@@ -540,8 +572,10 @@ namespace Ferda
                         newEntry.count = 0;
                     }
                     returnList.Add(newEntry);
-                }
-
+                }
+
+
+
                 foreach (DictionaryEntry singleDateTime in categories.dateTimeIntervals)
                 {
                     DateTimeIntervalStruct[] dateTimeSeq = (DateTimeIntervalStruct[])singleDateTime.Value;

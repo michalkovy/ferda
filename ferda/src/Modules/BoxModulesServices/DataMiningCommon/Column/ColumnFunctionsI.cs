@@ -35,8 +35,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
                 //switch ordinary/derived column
 
                 //ordinary
-                DataMatrixStruct dataMatrixStruct = GetDataMatrixFunctionsPrx().getDataMatrix();
-                return valueSubTypeCached.Value(boxModule.StringIceIdentity, dataMatrixStruct.database.lastReloadInfo, dataMatrixStruct.database.connectionString, dataMatrixStruct.dataMatrixName, ColumnSelectExpression, true);
+                DataMatrixInfo dataMatrixInfo = GetDataMatrixFunctionsPrx().getDataMatrixInfo();
+                return valueSubTypeCached.Value(boxModule.StringIceIdentity, dataMatrixInfo.database.lastReloadInfo, dataMatrixInfo.database.odbcConnectionString, dataMatrixInfo.dataMatrixName, ColumnSelectExpression, true);
 
                 //derived
                 //return (ValueSubTypeEnum)(Enum.Parse(typeof(ValueSubTypeEnum), this.boxModule.GetPropertyString("ValueSubType")));
@@ -53,11 +53,11 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
             }
         }
 
-        #region Cache: StatisticsStruct
-        private class statisticsStructCache : Ferda.Modules.Helpers.Caching.Cache
+        #region Cache: StatisticsInfo
+        private class statisticsInfoCache : Ferda.Modules.Helpers.Caching.Cache
         {
-            private StatisticsStruct value;
-            public StatisticsStruct Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString, string dataMatrixName, long dataMatrixRecordsCount, string columnSelectExpression, ValueSubTypeEnum columnValueSubType)
+            private StatisticsInfo value;
+            public StatisticsInfo Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString, string dataMatrixName, long dataMatrixRecordsCount, string columnSelectExpression, ValueSubTypeEnum columnValueSubType)
             {
                 lock (this)
                 {
@@ -70,20 +70,22 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
                     {
                         value = Ferda.Modules.Helpers.Data.Column.GetStatistics(connectionString, dataMatrixName, columnSelectExpression, columnValueSubType, boxIdentity);
                     }
+                    if (value == null)
+                        value = new StatisticsInfo();
                     return value;
                 }
             }
         }
-        private statisticsStructCache statisticsStructCached = new statisticsStructCache();
+        private statisticsInfoCache statisticsInfoCached = new statisticsInfoCache();
         #endregion
-        protected StatisticsStruct getStatisticsStruct(DataMatrixStruct dataMatrixStruct)
+        protected StatisticsInfo getStatisticsStruct(DataMatrixInfo dataMatrixInfo)
         {
-            return statisticsStructCached.Value(boxModule.StringIceIdentity, dataMatrixStruct.database.lastReloadInfo, dataMatrixStruct.database.connectionString, dataMatrixStruct.dataMatrixName, dataMatrixStruct.recordsCount, ColumnSelectExpression, ColumnValueSubType);
+            return statisticsInfoCached.Value(boxModule.StringIceIdentity, dataMatrixInfo.database.lastReloadInfo, dataMatrixInfo.database.odbcConnectionString, dataMatrixInfo.dataMatrixName, dataMatrixInfo.recordsCount, ColumnSelectExpression, ColumnValueSubType);
         }
-        protected StatisticsStruct getStatisticsStruct()
+        protected StatisticsInfo getStatisticsInfo()
         {
-            DataMatrixStruct dataMatrixStruct = GetDataMatrixFunctionsPrx().getDataMatrix();
-            return getStatisticsStruct(dataMatrixStruct);
+            DataMatrixInfo dataMatrixInfo = GetDataMatrixFunctionsPrx().getDataMatrixInfo();
+            return getStatisticsStruct(dataMatrixInfo);
         }
         #endregion
 
@@ -109,22 +111,22 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
         }
         private valueSubTypeCache valueSubTypeCached = new valueSubTypeCache();
         #endregion
-        protected ValueSubTypeEnum getColumnValueSubType(DataMatrixStruct dataMatrixStruct)
+        protected ValueSubTypeEnum getColumnValueSubType(DataMatrixInfo dataMatrixInfo)
         {
-            return valueSubTypeCached.Value(boxModule.StringIceIdentity, dataMatrixStruct.database.lastReloadInfo, dataMatrixStruct.database.connectionString, dataMatrixStruct.dataMatrixName, ColumnSelectExpression, true);
+            return valueSubTypeCached.Value(boxModule.StringIceIdentity, dataMatrixInfo.database.lastReloadInfo, dataMatrixInfo.database.odbcConnectionString, dataMatrixInfo.dataMatrixName, ColumnSelectExpression, true);
         }
         protected ValueSubTypeEnum getColumnValueSubType()
         {
-            DataMatrixStruct dataMatrixStruct = GetDataMatrixFunctionsPrx().getDataMatrix();
-            return getColumnValueSubType(dataMatrixStruct);
+            DataMatrixInfo dataMatrixInfo = GetDataMatrixFunctionsPrx().getDataMatrixInfo();
+            return getColumnValueSubType(dataMatrixInfo);
         }
 
         public bool IsColumnOrdinary()
         {
-            DataMatrixStruct dataMatrixStruct = GetDataMatrixFunctionsPrx().getDataMatrix();
+            DataMatrixInfo dataMatrixInfo = GetDataMatrixFunctionsPrx().getDataMatrixInfo();
             string[] columns = Ferda.Modules.Helpers.Data.DataMatrix.GetColumns(
-                dataMatrixStruct.database.connectionString,
-                dataMatrixStruct.dataMatrixName,
+                dataMatrixInfo.database.odbcConnectionString,
+                dataMatrixInfo.dataMatrixName,
                 boxModule.StringIceIdentity);
             string columnSelectExpression = ColumnSelectExpression;
             foreach (string columnInDataMatrix in columns)
@@ -137,14 +139,14 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
 
         public ValueSubTypeEnum GetColumnValueSubType()
         {
-            DataMatrixStruct dataMatrixStruct = GetDataMatrixFunctionsPrx().getDataMatrix();
+            DataMatrixInfo dataMatrixInfo = GetDataMatrixFunctionsPrx().getDataMatrixInfo();
             //switch ordinary/derived column
 
             //ordinary
             return Ferda.Modules.Helpers.Data.Column.GetColumnSubTypeByDataType(
                 Ferda.Modules.Helpers.Data.Column.GetDataType(
-                dataMatrixStruct.database.connectionString,
-                dataMatrixStruct.dataMatrixName,
+                dataMatrixInfo.database.odbcConnectionString,
+                dataMatrixInfo.dataMatrixName,
                 ColumnSelectExpression,
                 boxModule.StringIceIdentity));
             //derived
@@ -152,23 +154,23 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
         }
 
         #region Functions
-        public override ColumnStruct getColumn(Ice.Current __current)
+        public override ColumnInfo getColumnInfo(Ice.Current __current)
         {
-            DataMatrixStruct dataMatrixStruct = this.GetDataMatrixFunctionsPrx().getDataMatrix();
-            string dataMatrixName = dataMatrixStruct.dataMatrixName;
-            ColumnStruct result = new ColumnStruct();
-            result.statistics = getStatisticsStruct(dataMatrixStruct);
-            result.dataMatrix = dataMatrixStruct;
+            DataMatrixInfo dataMatrixInfo = this.GetDataMatrixFunctionsPrx().getDataMatrixInfo();
+            string dataMatrixName = dataMatrixInfo.dataMatrixName;
+            ColumnInfo result = new ColumnInfo();
+            result.statistics = getStatisticsStruct(dataMatrixInfo);
+            result.dataMatrix = dataMatrixInfo;
             result.columnSelectExpression = ColumnSelectExpression;
-            result.columnSubType = getColumnValueSubType(dataMatrixStruct);
+            result.columnSubType = getColumnValueSubType(dataMatrixInfo);
             result.columnType = ColumnType;
             return result;
         }
 
         public override string[] getDistinctValues(Ice.Current __current)
         {
-            DataMatrixStruct dataMatrixStruct = GetDataMatrixFunctionsPrx().getDataMatrix();
-            return Helpers.Data.Column.GetDistinctsStringSeq(dataMatrixStruct.database.connectionString, dataMatrixStruct.dataMatrixName, ColumnSelectExpression, boxModule.StringIceIdentity);
+            DataMatrixInfo dataMatrixInfo = GetDataMatrixFunctionsPrx().getDataMatrixInfo();
+            return Helpers.Data.Column.GetDistinctsStringSeq(dataMatrixInfo.database.odbcConnectionString, dataMatrixInfo.dataMatrixName, ColumnSelectExpression, boxModule.StringIceIdentity);
         }
         #endregion
 
@@ -189,7 +191,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
         {
             try
             {
-                return this.GetDataMatrixFunctionsPrx().getColumns();
+                return this.GetDataMatrixFunctionsPrx().getColumnsNames();
             }
             catch (Ferda.Modules.BoxRuntimeError) { }
             return new string[0];
@@ -204,14 +206,14 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
             return ValueSubTypeEnum.Unknown;
         }
 
-        public StatisticsStruct GetStatistics()
+        public StatisticsInfo GetStatistics()
         {
             try
             {
-                return getStatisticsStruct();
+                return getStatisticsInfo();
             }
             catch (Ferda.Modules.BoxRuntimeError) { }
-            return new StatisticsStruct();
+            return new StatisticsInfo();
         }
         #endregion
     }
