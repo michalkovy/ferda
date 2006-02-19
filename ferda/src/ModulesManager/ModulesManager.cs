@@ -356,7 +356,9 @@ namespace Ferda {
                 }
                 Debug.WriteLine("End refreshing...");
                 this.lnkHelper.BoxModuleIceFactories.EndFactoriesRefreshing();
-                Debug.WriteLine("Waiting for thread...");
+                Debug.WriteLine("Saving help files config...");
+                helpFiles.SaveHelpFilesConfig();
+                Debug.WriteLine("Waiting for refreshing thread...");
                 refreshThread.Join();
             }
 

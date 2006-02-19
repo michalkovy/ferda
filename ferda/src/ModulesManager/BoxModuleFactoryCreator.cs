@@ -323,9 +323,9 @@ namespace Ferda {
 			
 			public String GetHelpFilePath(string identifier)
 			{
-				int actualVersion = helpFiles.GetHelpFileVersion(identifier);
-				if(actualVersion < 0 ||
-				   actualVersion < helpFileInfos[identifier].version)
+				int? actualVersion = helpFiles.GetHelpFileVersion(identifier);
+				if(actualVersion == null ||
+				   actualVersion.Value < helpFileInfos[identifier].version)
 				{
 					helpFiles.SaveHelpFile(identifier,
 										   helpFileInfos[identifier].version,

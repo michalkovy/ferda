@@ -20,12 +20,19 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace Ferda.ModulesManager
 {
 	public class HelpFiles
 	{
-		struct HelpFileManagersInfo
+        public HelpFiles()
+        {
+            if (File.Exists(System.IO.Path.Combine(savePath, helpFilesConfigFileName)))
+                this.LoadHelpFilesConfig();
+        }
+
+		public struct HelpFileManagersInfo
 		{
 			private string identifier;
 			private int version;
@@ -77,25 +84,37 @@ namespace Ferda.ModulesManager
 				}
 			}
 		}
+
+        public struct HelpKeyValue
+        {
+            public HelpKeyValue(string key, HelpFileManagersInfo value)
+            {
+                Key = key;
+                Value = value;
+            }
+
+            public string Key;
+            public HelpFileManagersInfo Value;
+        }
 		
 		public string GetHelpFilePath(string identifier)
 		{
 			HelpFileManagersInfo fileNfo;
-			if(this.heplFiles.TryGetValue(identifier, out fileNfo))
+			if(this.helpFiles.TryGetValue(identifier, out fileNfo))
 			{
 				return fileNfo.Path;
 			}
 			return null;
 		}
 		
-		public int GetHelpFileVersion(string identifier)
+		public int? GetHelpFileVersion(string identifier)
 		{
 			HelpFileManagersInfo fileNfo;
-			if(this.heplFiles.TryGetValue(identifier, out fileNfo))
+			if(this.helpFiles.TryGetValue(identifier, out fileNfo))
 			{
 				return fileNfo.Version;
 			}
-			return -1;
+			return null;
 		}
 		
 		public void SaveHelpFile(string identifier, int version ,byte[] file)
@@ -112,13 +131,39 @@ namespace Ferda.ModulesManager
 			{
 				stream.Close();
 			}
-			heplFiles[identifier] = new HelpFileManagersInfo(identifier,
+			helpFiles[identifier] = new HelpFileManagersInfo(identifier,
 															 version,
 															 path);
 		}
+
+        public void LoadHelpFilesConfig()
+        {
+
+            XmlSerializer s = new XmlSerializer(typeof(HelpKeyValue[]));
+            TextReader r = new StreamReader(System.IO.Path.Combine(savePath, helpFilesConfigFileName));
+            HelpKeyValue[] helpFilesCopy = (HelpKeyValue[])s.Deserialize(r);
+            foreach (HelpKeyValue pair in helpFilesCopy)
+                helpFiles[pair.Key] = pair.Value;
+            r.Close();
+        }
+
+        public void SaveHelpFilesConfig()
+        {
+            List<HelpKeyValue> helpFilesCopy =
+                new List<HelpKeyValue>(helpFiles.Count);
+            foreach(KeyValuePair<string, HelpFileManagersInfo> pair in helpFiles)
+            {
+                helpFilesCopy.Add(new HelpKeyValue(pair.Key, pair.Value));
+            }
+            XmlSerializer s = new XmlSerializer(typeof(HelpKeyValue[]));
+            TextWriter w = new StreamWriter(System.IO.Path.Combine(savePath, helpFilesConfigFileName));
+            s.Serialize(w, helpFilesCopy.ToArray());
+            w.Close();
+        }
 		
-		private Dictionary<string,HelpFileManagersInfo> heplFiles =
+		private Dictionary<string,HelpFileManagersInfo> helpFiles =
 			new Dictionary<string,HelpFileManagersInfo>();
 		const string savePath = "HelpFiles";
+        const string helpFilesConfigFileName = "HelpFilesConfig.xml";
 	}
 }
