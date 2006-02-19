@@ -146,7 +146,7 @@ namespace Ferda.Modules.Helpers.Data
         /// Array of <see cref="T:Ferda.Modules.Boxes.DataMiningCommon.Database.DataMatrixInfo"/>.
         /// </returns>
         /// <exception cref="T:Ferda.Modules.BadParamsError"/>
-        public static DataMatrixInfo[] Explain(string odbcConnectionString, string[] acceptableTypesOfTables, string boxIdentity)
+        public static DataMatrixSchemaInfo[] Explain(string odbcConnectionString, string[] acceptableTypesOfTables, string boxIdentity)
         {
             //get connection
             OdbcConnection conn = Ferda.Modules.Helpers.Data.OdbcConnections.GetConnection(odbcConnectionString, boxIdentity);
@@ -159,23 +159,23 @@ namespace Ferda.Modules.Helpers.Data
             odbcCommand.Connection = conn;
 
             //result variable
-            List<DataMatrixInfo> result = new List<DataMatrixInfo>();
+            List<DataMatrixSchemaInfo> result = new List<DataMatrixSchemaInfo>();
 
             foreach (DataRow row in schema.Rows)
             {
                 //only publishable tables or views are added to result
                 if (IsTableTypePublishable(row["TABLE_TYPE"].ToString(), acceptableTypesOfTables))
                 {
-                    DataMatrixInfo dataMatrixInfo = new DataMatrixInfo();
-                    dataMatrixInfo.name = row["TABLE_NAME"].ToString();
-                    dataMatrixInfo.type = row["TABLE_TYPE"].ToString();
-                    dataMatrixInfo.remarks = row["REMARKS"].ToString();
+                    DataMatrixSchemaInfo dataMatrixSchemaInfo = new DataMatrixSchemaInfo();
+                    dataMatrixSchemaInfo.name = row["TABLE_NAME"].ToString();
+                    dataMatrixSchemaInfo.type = row["TABLE_TYPE"].ToString();
+                    dataMatrixSchemaInfo.remarks = row["REMARKS"].ToString();
 
                     //complete OdbcCommand and execute
-                    odbcCommand.CommandText = "SELECT COUNT(*) FROM " + "`" + dataMatrixInfo.name + "`";
-                    dataMatrixInfo.rowCount = Convert.ToInt32(odbcCommand.ExecuteScalar());
+                    odbcCommand.CommandText = "SELECT COUNT(*) FROM " + "`" + dataMatrixSchemaInfo.name + "`";
+                    dataMatrixSchemaInfo.rowCount = Convert.ToInt32(odbcCommand.ExecuteScalar());
 
-                    result.Add(dataMatrixInfo);
+                    result.Add(dataMatrixSchemaInfo);
                 }
             }
             return result.ToArray();

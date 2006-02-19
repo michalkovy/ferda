@@ -12,7 +12,7 @@ module Ferda {
 			module DataMiningCommon {
 				module DataMatrix	{
 
-					struct ColumnInfo
+					struct ColumnSchemaInfo
 					{
 						string name;
 						int columnOrdinal;
@@ -29,24 +29,18 @@ module Ferda {
 						bool isKey;
 						bool isAutoIncrement;
 					};
-					sequence<ColumnInfo> ColumnInfoSeq;
+					sequence<ColumnSchemaInfo> ColumnSchemaInfoSeq;
 
-					struct DataMatrixStruct {
-						Ferda::Modules::Boxes::DataMiningCommon::Database::DatabaseStruct database;
+					struct DataMatrixInfo {
+						Ferda::Modules::Boxes::DataMiningCommon::Database::DatabaseInfo database;
 						string dataMatrixName;
 						StringSeq primaryKeyColumns;
 						long recordsCount;
-						ColumnInfoSeq explainDataMatrix;
+						ColumnSchemaInfoSeq explainDataMatrix;
 					};
 
-					interface	ColumnsNamesProvider {
-						nonmutating StringSeq getColumns()
-							throws
-								Ferda::Modules::BoxRuntimeError,
-								Ferda::Modules::BadValueError,
-								Ferda::Modules::BadParamsError,
-								Ferda::Modules::NoConnectionInSocketError;
-						nonmutating ColumnInfoSeq explainDataMatrixStructure()
+					interface	ColumnsNamesProviderFunctions {
+						nonmutating StringSeq getColumnsNames()
 							throws
 								Ferda::Modules::BoxRuntimeError,
 								Ferda::Modules::BadValueError,
@@ -54,8 +48,14 @@ module Ferda {
 								Ferda::Modules::NoConnectionInSocketError;
 					};
 
-					interface DataMatrixFunctions extends ColumnsNamesProvider {
-						nonmutating DataMatrixStruct getDataMatrix()
+					interface DataMatrixFunctions extends ColumnsNamesProviderFunctions {
+						nonmutating DataMatrixInfo getDataMatrixInfo()
+							throws
+								Ferda::Modules::BoxRuntimeError,
+								Ferda::Modules::BadValueError,
+								Ferda::Modules::BadParamsError,
+								Ferda::Modules::NoConnectionInSocketError;
+						nonmutating ColumnSchemaInfoSeq explain()
 							throws
 								Ferda::Modules::BoxRuntimeError,
 								Ferda::Modules::BadValueError,

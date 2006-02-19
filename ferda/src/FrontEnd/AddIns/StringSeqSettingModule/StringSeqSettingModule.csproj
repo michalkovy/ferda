@@ -1,0 +1,97 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F2FFC388-A7F4-429F-969F-16977E8C4111}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>StringSeqSettingModule</AssemblyName>
+    <RootNamespace>StringSeqSettingModule</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaBoxInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaModulesManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaProjectManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaProjectManager.dll</HintPath>
+    </Reference>
+    <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FrontEndAddInHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\icecs.dll</HintPath>
+    </Reference>
+    <Reference Include="icegridcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\icegridcs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="StringSeqForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringSeqSettingModule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".svn\dir-wcprops" />
+    <None Include=".svn\empty-file" />
+    <None Include=".svn\entries" />
+    <None Include=".svn\format" />
+    <None Include=".svn\prop-base\Main.cs.svn-base" />
+    <None Include=".svn\prop-base\StringSeqForm.cs.svn-base" />
+    <None Include=".svn\prop-base\StringSeqSettingModule.cs.svn-base" />
+    <None Include=".svn\props\Main.cs.svn-work" />
+    <None Include=".svn\props\StringSeqForm.cs.svn-work" />
+    <None Include=".svn\props\StringSeqSettingModule.cs.svn-work" />
+    <None Include=".svn\text-base\Main.cs.svn-base" />
+    <None Include=".svn\text-base\StringSeqForm.cs.svn-base" />
+    <None Include=".svn\text-base\StringSeqSettingModule.cs.svn-base" />
+    <None Include=".svn\wcprops\Main.cs.svn-work" />
+    <None Include=".svn\wcprops\StringSeqForm.cs.svn-work" />
+    <None Include=".svn\wcprops\StringSeqSettingModule.cs.svn-work" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".svn\README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".svn\tmp\prop-base\" />
+    <Folder Include=".svn\tmp\props\" />
+    <Folder Include=".svn\tmp\text-base\" />
+    <Folder Include=".svn\tmp\wcprops\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

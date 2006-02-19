@@ -14,10 +14,10 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 			double from,
 			double to,
 			long countOfCategories,
-			Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnStruct columnStruct,
+			Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnInfo columnInfo,
 			string boxIdentity)
 		{
-			Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum simpleColumnType = Ferda.Modules.Helpers.Data.Column.GetColumnSimpleSubTypeBySubType(columnStruct.columnSubType);
+			Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum simpleColumnType = Ferda.Modules.Helpers.Data.Column.GetColumnSimpleSubTypeBySubType(columnInfo.columnSubType);
 			if (simpleColumnType != Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Integral
 				&& simpleColumnType != Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Floating)
 				throw Ferda.Modules.Exceptions.BadParamsError(null, boxIdentity, simpleColumnType.ToString(), restrictionTypeEnum.DbColumnDataType);
@@ -25,24 +25,24 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 			//dataArray.Add(new Data(currentValue, currentCount));
 			ArrayList dataArray = new ArrayList();
 			DataTable frequencies = null;
-			float startValue = Convert.ToSingle(columnStruct.statistics.ValueMin);
-			float endValue = Convert.ToSingle(columnStruct.statistics.ValueMax);
+			float startValue = Convert.ToSingle(columnInfo.statistics.ValueMin);
+			float endValue = Convert.ToSingle(columnInfo.statistics.ValueMax);
 			switch (domainType)
 			{
 				case AttributeDomainEnum.WholeDomain:
 					frequencies = Ferda.Modules.Helpers.Data.Column.GetDistinctsAndFrequencies(
-						columnStruct.dataMatrix.database.connectionString,
-						columnStruct.dataMatrix.dataMatrixName,
-						columnStruct.columnSelectExpression,
+                        columnInfo.dataMatrix.database.odbcConnectionString,
+						columnInfo.dataMatrix.dataMatrixName,
+						columnInfo.columnSelectExpression,
 						boxIdentity);
 					from = to = 0;
 					break;
 				case AttributeDomainEnum.SubDomainValueBounds:
                     frequencies = Ferda.Modules.Helpers.Data.Column.GetDistinctsAndFrequencies(
-						columnStruct.dataMatrix.database.connectionString,
-						columnStruct.dataMatrix.dataMatrixName,
-						columnStruct.columnSelectExpression,
-						columnStruct.columnSelectExpression + ">=" + from + " AND " + columnStruct.columnSelectExpression + "<=" + to,
+                        columnInfo.dataMatrix.database.odbcConnectionString,
+						columnInfo.dataMatrix.dataMatrixName,
+						columnInfo.columnSelectExpression,
+						columnInfo.columnSelectExpression + ">=" + from + " AND " + columnInfo.columnSelectExpression + "<=" + to,
 						boxIdentity);
 					startValue = (float)from;
 					endValue = (float)to;
@@ -50,9 +50,9 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 					break;
 				case AttributeDomainEnum.SubDomainNumberOfValuesBounds:
                     frequencies = Ferda.Modules.Helpers.Data.Column.GetDistinctsAndFrequencies(
-						columnStruct.dataMatrix.database.connectionString,
-						columnStruct.dataMatrix.dataMatrixName,
-						columnStruct.columnSelectExpression,
+                        columnInfo.dataMatrix.database.odbcConnectionString,
+						columnInfo.dataMatrix.dataMatrixName,
+						columnInfo.columnSelectExpression,
 						boxIdentity);
 					break;
 				default:

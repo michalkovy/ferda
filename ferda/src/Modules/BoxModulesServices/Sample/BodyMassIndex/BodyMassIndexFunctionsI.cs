@@ -63,16 +63,16 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                 return ColumnFunctionsPrxHelper.checkedCast(otherObjectPrx);
         }
 
-        public override Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnStruct getColumn(Ice.Current current__)
+        public override Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnInfo getColumnInfo(Ice.Current current__)
         {
             // locks all sockets and properties of current and (recursively) all souce boxes
             boxModule.Manager.getBoxModuleLocker().lockBoxModule(boxModule.StringIceIdentity);
 
-            ColumnStruct heightColumn = HeightColumn.getColumn();
-            ColumnStruct weightColumn = WeightColumn.getColumn();
+            ColumnInfo heightColumn = HeightColumn.getColumnInfo();
+            ColumnInfo weightColumn = WeightColumn.getColumnInfo();
 
             // test if both columns come from the same datamatrix
-            if (heightColumn.dataMatrix.database.connectionString != weightColumn.dataMatrix.database.connectionString
+            if (heightColumn.dataMatrix.database.odbcConnectionString != weightColumn.dataMatrix.database.odbcConnectionString
                 || heightColumn.dataMatrix.dataMatrixName != weightColumn.dataMatrix.dataMatrixName)
                 throw Ferda.Modules.Exceptions.BadValueError(
                     null,
@@ -88,7 +88,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
             string heightInMeters = convertToMeters(heightColumn.columnSelectExpression, HeightUnits);
             string weightInKilograms = convertToKilograms(weightColumn.columnSelectExpression, WeightUnits);
 
-            ColumnStruct result = new ColumnStruct();
+            ColumnInfo result = new ColumnInfo();
             result.columnSelectExpression = "(" + weightInKilograms + ") / ((" + heightInMeters + ") * (" + heightInMeters + "))";
             result.columnSubType = Ferda.Modules.ValueSubTypeEnum.FloatType;
             result.columnType = ColumnTypeEnum.Derived;
@@ -110,10 +110,26 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                     return columnSelectExpression + "/100";
                 case "Milimeter":
                     return columnSelectExpression + "/1000";
+                case "Mile":
+                    {
+                        double multiplicator = 1609.344;
+                        return columnSelectExpression + "*" + multiplicator.ToString();
+                    }
+                case "Yard":
+                    {
+                        double multiplicator = 0.9144;
+                        return columnSelectExpression + "*" + multiplicator.ToString();
+                    }
                 case "Foot":
-                    return columnSelectExpression + "/1000"; //TODO
+                    {
+                        double multiplicator = 0.3048;
+                        return columnSelectExpression + "*" + multiplicator.ToString();
+                    }
                 case "Inch":
-                    return columnSelectExpression + "/1000"; //TODO
+                    {
+                        double multiplicator = 0.0254;
+                        return columnSelectExpression + "*" + multiplicator.ToString();
+                    }
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(columnUnits);
             }
@@ -128,7 +144,15 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                 case "Gram":
                     return columnSelectExpression + "/1000";
                 case "Pound":
-                    return columnSelectExpression + "/1000"; //TODO
+                    {
+                        double multiplicator = 	0.45359237; //TODO
+                        return columnSelectExpression + "*" + multiplicator.ToString();
+                    }
+                case "Ounce":
+                    {
+                        double multiplicator = 0.028349523125;
+                        return columnSelectExpression + "*" + multiplicator.ToString();
+                    }
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(columnUnits);
             }
@@ -136,9 +160,9 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
 
         public override string[] getDistinctValues(Ice.Current current__)
         {
-            ColumnStruct bmiColumn = this.getColumn();
+            ColumnInfo bmiColumn = this.getColumnInfo();
             return Ferda.Modules.Helpers.Data.Column.GetDistinctsStringSeq(
-                bmiColumn.dataMatrix.database.connectionString,
+                bmiColumn.dataMatrix.database.odbcConnectionString,
                 bmiColumn.dataMatrix.dataMatrixName,
                 bmiColumn.columnSelectExpression,
                 boxModule.StringIceIdentity);
@@ -216,7 +240,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                 );
 
             result.categories = categories;
-            result.column = this.getColumn();
+            result.column = this.getColumnInfo();
             result.countOfCategories = result.categories.floatIntervals.Count;
             result.identifier = boxModule.PersistentIdentity;
             result.includeNullCategory = "";

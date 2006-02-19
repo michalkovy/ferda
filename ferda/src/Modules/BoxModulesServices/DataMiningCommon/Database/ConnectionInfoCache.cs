@@ -26,6 +26,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
                 {
                     value = Ferda.Modules.Helpers.Data.Database.GetConnectionInfo(connectionString, boxIdentity);
                 }
+                if (value == null)
+                    value = new ConnectionInfo();
                 return value;
             }
         }

@@ -26,7 +26,7 @@
 		</Actions>
 		<Sockets>
 			<Socket>
-				<Name>ConnectionString</Name>
+				<Name>OdbcConnectionString</Name>
 				<Label>ODBC připojovací řetězec</Label>
 				<Hint>Připojovací řetězec pro určení ODBC datového zdroje dat pro analýzu.</Hint>
 			</Socket>
@@ -8362,23 +8362,31 @@
 				<SelectOptions>
 					<SelectOption>
 						<Name>Meter</Name>
-						<Label>Metr</Label>
+						<Label>Metr [m]</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Cenimeter</Name>
-						<Label>Cenimetr</Label>
+						<Label>Cenimetr [cm]</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Milimeter</Name>
-						<Label>Milimetr</Label>
+						<Label>Milimetr [mm]</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Mile</Name>
+						<Label>Míle [mi] (Mile)</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Yard</Name>
+						<Label>Yard [yd]</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Foot</Name>
-						<Label>Stopa (UK)</Label>
+						<Label>Stopa [ft] (Foot)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Inch</Name>
-						<Label>Palec (UK)</Label>
+						<Label>Palec [in] (Inch)</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
@@ -8389,15 +8397,19 @@
 				<SelectOptions>
 					<SelectOption>
 						<Name>Kilogram</Name>
-						<Label>Kilogram</Label>
+						<Label>Kilogram [kg]</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Gram</Name>
-						<Label>Gram</Label>
+						<Label>Gram [g]</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Pound</Name>
-						<Label>Libra (UK)</Label>
+						<Label>Libra [lb] (Pound)</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Ounce</Name>
+						<Label>Unce [oz] (Ounce)</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>

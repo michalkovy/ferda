@@ -6,7 +6,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
 {
     public class ExplainDataMatrixStructureCache : Ferda.Modules.Helpers.Caching.Cache
     {
-        private ColumnInfo[] value = new ColumnInfo[0];
+        private ColumnSchemaInfo[] value = new ColumnSchemaInfo[0];
 
         /// <summary>
         /// Gets infos about columns in specified data source`s table.
@@ -16,7 +16,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
         /// <param name="connectionString">The connection string.</param>
         /// <param name="dataMatrixName">Name of the data matrix.</param>
         /// <returns></returns>
-        public ColumnInfo[] Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString, string dataMatrixName)
+        public ColumnSchemaInfo[] Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString, string dataMatrixName)
         {
             lock (this)
             {
@@ -25,6 +25,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
                 cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.DataMatrixNamePropertyName, dataMatrixName);
                 if (IsObsolete(lastReloadTime, cacheSetting))
                     value = Ferda.Modules.Helpers.Data.DataMatrix.Explain(connectionString, dataMatrixName, boxIdentity);
+                if (value == null)
+                    value = new ColumnSchemaInfo[0];
                 return value;
             }
         }

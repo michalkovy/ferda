@@ -141,7 +141,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable.MyIce
             {
 
                 string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                Ferda.FrontEnd.AddIns.ShowTable.ShowTableControl control = new ShowTableControl(localePrefs, prx.getColumns(),prx.getDataMatrix());
+                Ferda.FrontEnd.AddIns.ShowTable.ShowTableControl control = new ShowTableControl(localePrefs, prx.getColumnsNames(), prx.getDataMatrixInfo());
                 this.ownerOfAddIn.ShowDockableControl(control, resManager.GetString("Show") + " " + label);
             }
 

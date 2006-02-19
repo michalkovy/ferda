@@ -26,23 +26,31 @@
       <SelectOptions>
         <SelectOption>
           <Name>Meter</Name>
-          <Label>Meter</Label>
+          <Label>Meter [m]</Label>
         </SelectOption>
         <SelectOption>
           <Name>Cenimeter</Name>
-          <Label>Cenimeter</Label>
+          <Label>Cenimeter [cm]</Label>
         </SelectOption>
         <SelectOption>
           <Name>Milimeter</Name>
-          <Label>Milimeter</Label>
+          <Label>Milimeter [mm]</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Mile</Name>
+          <Label>Mile [mi]</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Yard</Name>
+          <Label>Yard [yd]</Label>
         </SelectOption>
         <SelectOption>
           <Name>Foot</Name>
-          <Label>Foot</Label>
+          <Label>Foot [ft]</Label>
         </SelectOption>
         <SelectOption>
           <Name>Inch</Name>
-          <Label>Inch</Label>
+          <Label>Inch [in]</Label>
         </SelectOption>
       </SelectOptions>
     </Socket>
@@ -53,15 +61,19 @@
       <SelectOptions>
         <SelectOption>
           <Name>Kilogram</Name>
-          <Label>Kilogram</Label>
+          <Label>Kilogram [kg]</Label>
         </SelectOption>
         <SelectOption>
           <Name>Gram</Name>
-          <Label>Gram</Label>
+          <Label>Gram [g]</Label>
         </SelectOption>
         <SelectOption>
           <Name>Pound</Name>
-          <Label>Pound (lb.)</Label>
+          <Label>Pound [lb]</Label>
+        </SelectOption>
+        <SelectOption>
+          <Name>Ounce</Name>
+          <Label>Ounce [oz]</Label>
         </SelectOption>
       </SelectOptions>
     </Socket>

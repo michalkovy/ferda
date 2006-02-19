@@ -17,7 +17,7 @@
   </Actions>
   <Sockets>
     <Socket>
-      <Name>ConnectionString</Name>
+      <Name>OdbcConnectionString</Name>
       <SocketTypes>
         <BoxType>
           <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
@@ -73,7 +73,7 @@
   </Sockets>
   <Properties>
     <Property>
-      <Name>ConnectionString</Name>
+      <Name>OdbcConnectionString</Name>
       <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
       <Visible>true</Visible>
       <ReadOnly>false</ReadOnly>

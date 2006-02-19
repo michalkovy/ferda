@@ -34,15 +34,15 @@ namespace Ferda
 
 
             #region Contructor
-            public DBInteraction(ColumnStruct columnStruct, ResourceManager rm)
+            public DBInteraction(ColumnInfo columnInfo, ResourceManager rm)
             {
-                this.connectionString = columnStruct.dataMatrix.database.connectionString;
+                this.connectionString = columnInfo.dataMatrix.database.odbcConnectionString;
 
-                this.columnSelectExpression = columnStruct.columnSelectExpression;
+                this.columnSelectExpression = columnInfo.columnSelectExpression;
 
-                this.dataMatrixName = columnStruct.dataMatrix.dataMatrixName;
+                this.dataMatrixName = columnInfo.dataMatrix.dataMatrixName;
 
-                this.rowCount = columnStruct.dataMatrix.recordsCount;
+                this.rowCount = columnInfo.dataMatrix.recordsCount;
 
                 this.rm = rm;
 

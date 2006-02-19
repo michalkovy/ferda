@@ -132,13 +132,13 @@ namespace Ferda.Modules.Helpers.Data
         /// <returns>An array of <see cref="T:Ferda.Modules.Boxes.DataMiningCommon.DataMatrix.ColumnInfo"/>.</returns>
         /// <remarks><see cref="T:Ferda.Modules.Boxes.DataMiningCommon.DataMatrix.ColumnInfo"/> is similar to result of <see cref="M:System.Data.Odbc.OdbcDataReader.GetSchemaTable"/>.</remarks>
         /// <exception cref="T:Ferda.Modules.BadParamsError">Thrown if <c>odbcConnectionString</c> or <c>dataMatrixName</c> parameter is wrong.</exception>
-        public static ColumnInfo[] Explain(string odbcConnectionString, string dataMatrixName, string boxIdentity)
+        public static ColumnSchemaInfo[] Explain(string odbcConnectionString, string dataMatrixName, string boxIdentity)
         {
             //throws exception if odbcConnectionString is wrong
             OdbcConnection conn = Ferda.Modules.Helpers.Data.OdbcConnections.GetConnection(odbcConnectionString, boxIdentity);
 
-            List<ColumnInfo> result = new List<ColumnInfo>();
-            ColumnInfo columnInfo;
+            List<ColumnSchemaInfo> result = new List<ColumnSchemaInfo>();
+            ColumnSchemaInfo columnSchemaInfo;
 
             //create SQL (empty ... WHERE 0) query over dataMatrixName (this select given data matrix)
             dataMatrixName = SqlSecurity.SafeSqlObjectName(dataMatrixName);
@@ -149,22 +149,22 @@ namespace Ferda.Modules.Helpers.Data
                 //see documentation for System.Data.Odbc.OdbcDataReader.GetSchemaTable()
                 foreach (DataRow row in odbcCommand.ExecuteReader().GetSchemaTable().Rows)
                 {
-                    columnInfo = new ColumnInfo();
-                    columnInfo.name = row["ColumnName"].ToString();
-                    columnInfo.columnOrdinal = Convert.ToInt32(row["ColumnOrdinal"]);
-                    columnInfo.columnSize = Convert.ToInt32(row["ColumnSize"]);
-                    columnInfo.numericPrecision = Convert.ToInt32(row["NumericPrecision"]);
-                    columnInfo.numericScale = Convert.ToInt32(row["NumericScale"]);
-                    columnInfo.providerType = Convert.ToInt32(row["ProviderType"]);
-                    columnInfo.dataType = row["DataType"].ToString();
-                    columnInfo.isLong = Convert.ToBoolean(row["IsLong"]);
-                    columnInfo.allowDBNull = Convert.ToBoolean(row["AllowDBNull"]);
-                    columnInfo.isReadOnly = Convert.ToBoolean(row["IsReadOnly"]);
-                    columnInfo.isRowVersion = Convert.ToBoolean(row["IsRowVersion"]);
-                    columnInfo.isUnique = Convert.ToBoolean(row["IsUnique"]);
-                    columnInfo.isKey = Convert.ToBoolean(row["IsKey"]);
-                    columnInfo.isAutoIncrement = Convert.ToBoolean(row["IsAutoIncrement"]);
-                    result.Add(columnInfo);
+                    columnSchemaInfo = new ColumnSchemaInfo();
+                    columnSchemaInfo.name = row["ColumnName"].ToString();
+                    columnSchemaInfo.columnOrdinal = Convert.ToInt32(row["ColumnOrdinal"]);
+                    columnSchemaInfo.columnSize = Convert.ToInt32(row["ColumnSize"]);
+                    columnSchemaInfo.numericPrecision = Convert.ToInt32(row["NumericPrecision"]);
+                    columnSchemaInfo.numericScale = Convert.ToInt32(row["NumericScale"]);
+                    columnSchemaInfo.providerType = Convert.ToInt32(row["ProviderType"]);
+                    columnSchemaInfo.dataType = row["DataType"].ToString();
+                    columnSchemaInfo.isLong = Convert.ToBoolean(row["IsLong"]);
+                    columnSchemaInfo.allowDBNull = Convert.ToBoolean(row["AllowDBNull"]);
+                    columnSchemaInfo.isReadOnly = Convert.ToBoolean(row["IsReadOnly"]);
+                    columnSchemaInfo.isRowVersion = Convert.ToBoolean(row["IsRowVersion"]);
+                    columnSchemaInfo.isUnique = Convert.ToBoolean(row["IsUnique"]);
+                    columnSchemaInfo.isKey = Convert.ToBoolean(row["IsKey"]);
+                    columnSchemaInfo.isAutoIncrement = Convert.ToBoolean(row["IsAutoIncrement"]);
+                    result.Add(columnSchemaInfo);
                 }
             }
             catch (Exception ex)

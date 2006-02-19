@@ -56,7 +56,11 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
                     case "Column":
                         DataMatrixFunctionsI Func = (DataMatrixFunctionsI)boxModule.FunctionsIObj;
                         string[] columnsNames = null;
-                        columnsNames = Func.GetColumns();
+                        try
+                        {
+                            columnsNames = Func.getColumnsNames();
+                        }
+                        catch (Ferda.Modules.BoxRuntimeError) { }
                         if (columnsNames != null && columnsNames.Length > 0)
                         {
                             moduleConnection = new ModulesConnection();
@@ -115,7 +119,13 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
             {
                 case RecordCountPropertyName:
                     DataMatrixFunctionsI Func = (DataMatrixFunctionsI)boxModule.FunctionsIObj;
-                    return new Ferda.Modules.LongTI(Func.GetRecordsCount());
+                    long recordsCount = 0;
+                    try
+                    {
+                        recordsCount = Func.RecordsCount;
+                    }
+                    catch (Ferda.Modules.BoxRuntimeError) { }
+                    return new Ferda.Modules.LongTI(recordsCount);
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(propertyName);
             }
@@ -126,13 +136,21 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
             switch (propertyName)
             {
                 case DataMatrixNamePropertyName:
-                    return BoxInfoHelper.StringArrayToSelectStringArray(
-                        ((DataMatrixFunctionsI)boxModule.FunctionsIObj).GetTablesNames()
-                        );
+                    string[] dataMatrixNames = null;
+                    try
+                    {
+                        dataMatrixNames = ((DataMatrixFunctionsI)boxModule.FunctionsIObj).GetDatabaseFunctionsPrx().getDataMatrixNames();
+                    }
+                    catch (Ferda.Modules.BoxRuntimeError) {}
+                    return BoxInfoHelper.StringArrayToSelectStringArray(dataMatrixNames);
                 case PrimaryKeyColumnsPropertyName:
-                    return BoxInfoHelper.StringArrayToSelectStringArray(
-                        ((DataMatrixFunctionsI)boxModule.FunctionsIObj).GetColumns()
-                        );
+                    string[] columnNames = null;
+                    try
+                    {
+                        columnNames = ((DataMatrixFunctionsI)boxModule.FunctionsIObj).getColumnsNames();
+                    }
+                    catch (Ferda.Modules.BoxRuntimeError) { }
+                    return BoxInfoHelper.StringArrayToSelectStringArray(columnNames);
                 default:
                     return null;
             }
@@ -157,7 +175,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
             try
             {
                 Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(
-                    functionsIObj.GetDatabaseFunctionsPrx().getDatabase().connectionString,
+                    functionsIObj.GetDatabaseFunctionsPrx().getDatabaseInfo().odbcConnectionString,
                     functionsIObj.DataMatrixName,
                     functionsIObj.PrimaryKeyColumns,
                     boxModule.StringIceIdentity
@@ -183,13 +201,13 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
         public override void Validate(BoxModuleI boxModule)
         {
             DataMatrixFunctionsI functionsIObj = (DataMatrixFunctionsI)boxModule.FunctionsIObj;
-            Database.DatabaseStruct databaseStruct = functionsIObj.GetDatabaseFunctionsPrx().getDatabase();
+            Database.DatabaseInfo databaseInfo = functionsIObj.GetDatabaseFunctionsPrx().getDatabaseInfo();
             Ferda.Modules.Helpers.Data.DataMatrix.TestDataMatrixExists(
-                databaseStruct.connectionString, 
-                functionsIObj.DataMatrixName, 
+                databaseInfo.odbcConnectionString,
+                functionsIObj.DataMatrixName,
                 boxModule.StringIceIdentity);
             Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(
-                databaseStruct.connectionString,
+                databaseInfo.odbcConnectionString,
                 functionsIObj.DataMatrixName,
                 functionsIObj.PrimaryKeyColumns,
                 boxModule.StringIceIdentity);

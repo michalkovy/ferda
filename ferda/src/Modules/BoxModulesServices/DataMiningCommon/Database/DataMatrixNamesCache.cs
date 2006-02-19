@@ -33,6 +33,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
 
                 if (IsObsolete(lastReloadTime, cacheSetting))
                     value = Ferda.Modules.Helpers.Data.Database.GetTables(connectionString, null, boxIdentity);
+                if (value == null)
+                    value = new string[0];
                 return value;
             }
         }

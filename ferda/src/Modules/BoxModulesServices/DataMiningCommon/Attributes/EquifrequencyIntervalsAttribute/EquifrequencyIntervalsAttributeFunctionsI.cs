@@ -80,20 +80,20 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 			/// <summary>
 			/// It is strongly recommended to call this functions before calling any other function in this class.
 			/// </summary>
-			public GeneratedAttribute Value(string boxIdentity, BoxModuleI boxModule, ColumnStruct columnStruct, AttributeDomainEnum domainType, double from, double to, long countOfCategories)
+			public GeneratedAttribute Value(string boxIdentity, BoxModuleI boxModule, ColumnInfo columnInfo, AttributeDomainEnum domainType, double from, double to, long countOfCategories)
 			{
                 lock (this)
                 {
                     Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-                    cacheSetting.Add(Database.DatabaseBoxInfo.typeIdentifier + Database.DatabaseBoxInfo.OdbcConnectionStringPropertyName, columnStruct.dataMatrix.database.connectionString);
-                    cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.DataMatrixNamePropertyName, columnStruct.dataMatrix.dataMatrixName);
-                    cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.RecordCountPropertyName, columnStruct.dataMatrix.recordsCount);
-                    cacheSetting.Add(Column.ColumnBoxInfo.typeIdentifier + Column.ColumnBoxInfo.ColumnSelectExpressionPropertyName, columnStruct.columnSelectExpression);
+                    cacheSetting.Add(Database.DatabaseBoxInfo.typeIdentifier + Database.DatabaseBoxInfo.OdbcConnectionStringPropertyName, columnInfo.dataMatrix.database.odbcConnectionString);
+                    cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.DataMatrixNamePropertyName, columnInfo.dataMatrix.dataMatrixName);
+                    cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.RecordCountPropertyName, columnInfo.dataMatrix.recordsCount);
+                    cacheSetting.Add(Column.ColumnBoxInfo.typeIdentifier + Column.ColumnBoxInfo.ColumnSelectExpressionPropertyName, columnInfo.columnSelectExpression);
                     cacheSetting.Add("DomainType", domainType);
                     cacheSetting.Add("From", from);
                     cacheSetting.Add("To", to);
                     cacheSetting.Add("CountOfCategories", countOfCategories);
-                    if (IsObsolete(columnStruct.dataMatrix.database.lastReloadInfo, cacheSetting))
+                    if (IsObsolete(columnInfo.dataMatrix.database.lastReloadInfo, cacheSetting))
                     {
                         try
                         {
@@ -102,7 +102,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
                                 from,
                                 to,
                                 countOfCategories,
-                                columnStruct,
+                                columnInfo,
                                 boxIdentity);
                         }
                         catch (Ferda.Modules.BadParamsError ex)
@@ -119,6 +119,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
                                 throw Ferda.Modules.Exceptions.BoxRuntimeError(ex, boxModule.StringIceIdentity, null);
                         }
                     }
+                    if (value == null)
+                        value = new GeneratedAttribute();
                     return value;
                 }
 			}
@@ -126,27 +128,27 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 		private categoriesCache categoriesCached = new categoriesCache();
 		private GeneratedAttribute getCategoriesInfo()
 		{
-			ColumnStruct columnStruct = getColumnFunctionsPrx().getColumn();
-            return categoriesCached.Value(boxModule.StringIceIdentity, this.boxModule, columnStruct, Domain, From, To, CountOfCategories);
+			ColumnInfo columnInfo = getColumnFunctionsPrx().getColumnInfo();
+            return categoriesCached.Value(boxModule.StringIceIdentity, this.boxModule, columnInfo, Domain, From, To, CountOfCategories);
 		}
-		private GeneratedAttribute getCategoriesInfo(ColumnStruct columnStruct)
+		private GeneratedAttribute getCategoriesInfo(ColumnInfo columnInfo)
 		{
-            return categoriesCached.Value(boxModule.StringIceIdentity, this.boxModule, columnStruct, Domain, From, To, CountOfCategories);
+            return categoriesCached.Value(boxModule.StringIceIdentity, this.boxModule, columnInfo, Domain, From, To, CountOfCategories);
 		}
 		#endregion
 
 		#region Functions
 		public override AbstractAttributeStruct getAbstractAttribute(Ice.Current __current)
 		{
-			ColumnStruct columnStruct = this.getColumnFunctionsPrx().getColumn();
+			ColumnInfo columnInfo = this.getColumnFunctionsPrx().getColumnInfo();
 			AbstractAttributeStruct result = new AbstractAttributeStruct();
 			Ferda.Modules.Helpers.Data.Column.TestColumnSelectExpression(
-				columnStruct.dataMatrix.database.connectionString,
-				columnStruct.dataMatrix.dataMatrixName,
-				columnStruct.columnSelectExpression,
+                columnInfo.dataMatrix.database.odbcConnectionString,
+				columnInfo.dataMatrix.dataMatrixName,
+				columnInfo.columnSelectExpression,
                 boxModule.StringIceIdentity);
-			GeneratedAttribute categoriesInfo = getCategoriesInfo(columnStruct);
-			result.column = columnStruct;
+			GeneratedAttribute categoriesInfo = getCategoriesInfo(columnInfo);
+			result.column = columnInfo;
 			result.categories = categoriesInfo.CategoriesStruct;
 			//AttributeFunctionsI.TestCategoriesDisjunctivity(sumOfRowMax.categories, boxIdentity);
 			//This test is useless here (vain / effort / wastage)

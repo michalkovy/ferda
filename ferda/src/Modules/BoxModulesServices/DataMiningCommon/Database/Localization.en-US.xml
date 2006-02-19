@@ -22,7 +22,7 @@
   </Actions>
   <Sockets>
     <Socket>
-      <Name>ConnectionString</Name>
+      <Name>OdbcConnectionString</Name>
       <Label>ODBC connection string</Label>
       <Hint>Connection string for ODBC data source that defines database for analyzing.</Hint>
     </Socket>

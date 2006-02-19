@@ -40,9 +40,9 @@ namespace Ferda
 
 
             /// <summary>
-            /// ColumnStruct for the column of the attribute
+            /// ColumnInfo for the column of the attribute
             /// </summary>
-            private ColumnStruct columnStruct;
+            private ColumnInfo columnInfo;
 
             /// <summary>
             /// Categories to count frequences on
@@ -82,10 +82,10 @@ namespace Ferda
                     localizationString = "en-US";
                 }
                 this.rowCount = attributeStruct.column.dataMatrix.recordsCount;
-                this.columnStruct = attributeStruct.column;
+                this.columnInfo = attributeStruct.column;
                 this.categoriesStruct = attributeStruct.categories;
                 InitializeComponent();
-                DBInteraction myDb = new DBInteraction(columnStruct, this.categoriesStruct, resManager);
+                DBInteraction myDb = new DBInteraction(columnInfo, this.categoriesStruct, resManager);
                 this.ListViewInit();
                 this.InitializeGraph();
                 this.tempTable = myDb.GetCategoriesFrequences(this.categoriesStruct);

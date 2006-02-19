@@ -22,7 +22,7 @@
   </Actions>
   <Sockets>
     <Socket>
-      <Name>ConnectionString</Name>
+      <Name>OdbcConnectionString</Name>
       <Label>ODBC připojovací řetězec</Label>
       <Hint>Připojovací řetězec pro určení ODBC datového zdroje dat pro analýzu.</Hint>
     </Socket>

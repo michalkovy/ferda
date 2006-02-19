@@ -166,10 +166,10 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
             bool isColumnSelectExpressionValid = false;
             try
             {
-                DataMatrix.DataMatrixStruct dataMatrixStruct = functionsIObj.GetDataMatrixFunctionsPrx().getDataMatrix();
+                DataMatrix.DataMatrixInfo dataMatrixInfo = functionsIObj.GetDataMatrixFunctionsPrx().getDataMatrixInfo();
                 Ferda.Modules.Helpers.Data.Column.TestColumnSelectExpression(
-                    dataMatrixStruct.database.connectionString,
-                    dataMatrixStruct.dataMatrixName,
+                    dataMatrixInfo.database.odbcConnectionString,
+                    dataMatrixInfo.dataMatrixName,
                     functionsIObj.ColumnSelectExpression,
                     boxModule.StringIceIdentity);
                 isColumnSelectExpressionValid = true;
@@ -193,10 +193,10 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
         public override void Validate(BoxModuleI boxModule)
         {
             ColumnFunctionsI functionsIObj = (ColumnFunctionsI)boxModule.FunctionsIObj;
-            DataMatrix.DataMatrixStruct dataMatrixStruct = functionsIObj.GetDataMatrixFunctionsPrx().getDataMatrix();
+            DataMatrix.DataMatrixInfo dataMatrixInfo = functionsIObj.GetDataMatrixFunctionsPrx().getDataMatrixInfo();
             Ferda.Modules.Helpers.Data.Column.TestColumnSelectExpression(
-                dataMatrixStruct.database.connectionString,
-                dataMatrixStruct.dataMatrixName,
+                dataMatrixInfo.database.odbcConnectionString,
+                dataMatrixInfo.dataMatrixName,
                 functionsIObj.ColumnSelectExpression,
                 boxModule.StringIceIdentity);
         }

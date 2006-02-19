@@ -13,7 +13,7 @@ module Ferda {
 				module Attributes {
 
 					struct AbstractAttributeStruct {
-						Ferda::Modules::Boxes::DataMiningCommon::Column::ColumnStruct column;
+						Ferda::Modules::Boxes::DataMiningCommon::Column::ColumnInfo column;
 						int identifier; //boxModule.Manager.getProjectInformation().getProjectIdentifier(Ice.Util.identityToString(this.boxModule.MyIdentity));
 						string nameInLiterals;
 						long countOfCategories;

@@ -1375,23 +1375,23 @@ namespace Ferda.Modules.MetabaseLayer
             string[] primaryKeyColumns = null; //must be sorted (for BinarySearch)
             string connectionString = null;
             allRowsInTaskDataMatrixCount = 0;
-            ColumnInfo[] columnInfoSeq = null;
-            Ferda.Modules.Boxes.DataMiningCommon.DataMatrix.DataMatrixStruct dataMatrixStruct;
+            ColumnSchemaInfo[] columnSchemaInfoSeq = null;
+            Ferda.Modules.Boxes.DataMiningCommon.DataMatrix.DataMatrixInfo dataMatrixInfo;
 
             #region DataMatrix (tmMatrix)
             {
                 AbstractAttributeStruct abstractAttributeStruct = abstractAttributes[0];
-                dataMatrixStruct = abstractAttributeStruct.column.dataMatrix;
+                dataMatrixInfo = abstractAttributeStruct.column.dataMatrix;
 
                 //only for first attribute/column ... each attribute in one task must be in one and only one data matrix
-                columnInfoSeq = dataMatrixStruct.explainDataMatrix;
-                dataMatrixName = dataMatrixStruct.dataMatrixName;
-                dataMatrixDBID = SetDataMatrix(dataMatrixName, dataMatrixStruct.recordsCount);
+                columnSchemaInfoSeq = dataMatrixInfo.explainDataMatrix;
+                dataMatrixName = dataMatrixInfo.dataMatrixName;
+                dataMatrixDBID = SetDataMatrix(dataMatrixName, dataMatrixInfo.recordsCount);
                 updateTask(taskID, dataMatrixDBID);
 
-                allRowsInTaskDataMatrixCount = dataMatrixStruct.recordsCount;
+                allRowsInTaskDataMatrixCount = dataMatrixInfo.recordsCount;
 
-                string connectionStringForSave = dataMatrixStruct.database.connectionString.Trim();
+                string connectionStringForSave = dataMatrixInfo.database.odbcConnectionString.Trim();
                 if (connectionStringForSave.StartsWith("DSN=", StringComparison.InvariantCultureIgnoreCase))
                     connectionStringForSave = connectionStringForSave.Substring(4);
 
@@ -1400,8 +1400,8 @@ namespace Ferda.Modules.MetabaseLayer
                     + " strValue='" + connectionStringForSave + "' "
                     + " WHERE Name='DSN'");
 
-                connectionString = dataMatrixStruct.database.connectionString;
-                primaryKeyColumns = dataMatrixStruct.primaryKeyColumns;
+                connectionString = dataMatrixInfo.database.odbcConnectionString;
+                primaryKeyColumns = dataMatrixInfo.primaryKeyColumns;
                 Array.Sort(primaryKeyColumns);
             }
 
@@ -1409,7 +1409,7 @@ namespace Ferda.Modules.MetabaseLayer
             Ferda.Modules.Helpers.Data.DataMatrix.TestValuesInEnteredPrimaryKeyColumnsAreNotUniqueError(connectionString, dataMatrixName, primaryKeyColumns, boxIdentity);
             #endregion
 
-            ColumnStruct columnStruct;
+            ColumnInfo columnInfo;
             CategoriesStruct categories;
             int columnID;
             int columnThereforeAlsoAttributeValueSubTypeDBID = 0;
@@ -1443,17 +1443,17 @@ namespace Ferda.Modules.MetabaseLayer
                 }
                 else
                 {
-                    columnStruct = abstractAttributeStruct.column;
+                    columnInfo = abstractAttributeStruct.column;
                     primaryKeyColumnPosition = Array.BinarySearch(primaryKeyColumns, abstractAttributeStruct.column.columnSelectExpression);
-                    columnThereforeAlsoAttributeValueSubTypeDBID = this.constants.ValueSubTypeEnumDictionary[columnStruct.columnSubType];
+                    columnThereforeAlsoAttributeValueSubTypeDBID = this.constants.ValueSubTypeEnumDictionary[columnInfo.columnSubType];
                     columnID = SetColumn(
-                        columnStruct.columnSelectExpression,
+                        columnInfo.columnSelectExpression,
                         dataMatrixDBID,
-                        columnStruct.columnType,
-                        columnStruct.columnSubType,
+                        columnInfo.columnType,
+                        columnInfo.columnSubType,
                         columnSelectExpression,
                         (primaryKeyColumnPosition >= 0) ? primaryKeyColumnPosition + 1 : -1);
-                    this.columns.Add(columnStruct.columnSelectExpression, columnID);
+                    this.columns.Add(columnInfo.columnSelectExpression, columnID);
                 }
 
                 int i = 0;
@@ -1464,18 +1464,18 @@ namespace Ferda.Modules.MetabaseLayer
                         continue;
                     if (this.columns.ContainsKey(primaryKeyColumn))
                         continue;
-                    foreach (ColumnInfo columnInfo in columnInfoSeq)
+                    foreach (ColumnSchemaInfo columnSchemaInfo in columnSchemaInfoSeq)
                     {
-                        if (columnInfo.name == primaryKeyColumn)
+                        if (columnSchemaInfo.name == primaryKeyColumn)
                         {
                             int tmpColumnID = SetColumn(
-                                columnInfo.name,
+                                columnSchemaInfo.name,
                                 dataMatrixDBID,
                                 ColumnTypeEnum.Ordinary,
-                                Ferda.Modules.Helpers.Data.Column.GetColumnSubTypeByDataType(columnInfo.dataType),
-                                columnInfo.name,
+                                Ferda.Modules.Helpers.Data.Column.GetColumnSubTypeByDataType(columnSchemaInfo.dataType),
+                                columnSchemaInfo.name,
                                 i);
-                            this.columns.Add(columnInfo.name, tmpColumnID);
+                            this.columns.Add(columnSchemaInfo.name, tmpColumnID);
                             break;
                         }
                     }

@@ -22,7 +22,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes
             {
                 ColumnFunctionsPrx columnFunctionsPrx =
                     ColumnFunctionsPrxHelper.checkedCast(objectPrx);
-                return columnFunctionsPrx.getColumn().columnSelectExpression;
+                return columnFunctionsPrx.getColumnInfo().columnSelectExpression;
             }
             return null;
         }

@@ -32,15 +32,15 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         private string[] columns;
 
         /// <summary>
-        /// DataMatrixStruct
+        /// DataMatrixInfo
         /// </summary>
-        private DataMatrixStruct dataMatrix;
+        private DataMatrixInfo dataMatrix;
 
         #endregion
 
 
         #region Constructor
-        public ShowTableControl(string[] localePrefs, string[] columns, DataMatrixStruct dataMatrixName)
+        public ShowTableControl(string[] localePrefs, string[] columns, DataMatrixInfo dataMatrix)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -58,7 +58,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
                 localizationString = "en-US";
             }
             this.columns = columns;
-            this.dataMatrix = dataMatrixName;
+            this.dataMatrix = dataMatrix;
             InitializeComponent();
             this.ChangeLocale(this.resManager);
             this.ListViewInit();

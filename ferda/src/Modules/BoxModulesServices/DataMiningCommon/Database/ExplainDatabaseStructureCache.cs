@@ -6,7 +6,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
 {
     public class ExplainDatabaseStructureCache : Ferda.Modules.Helpers.Caching.Cache
     {
-        private DataMatrixInfo[] value = new DataMatrixInfo[0];
+        private DataMatrixSchemaInfo[] value = new DataMatrixSchemaInfo[0];
 
         /// <summary>
         /// Gets infos about tables in specified data source.
@@ -16,7 +16,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
         /// <param name="connectionString">The connection string.</param>
         /// <param name="acceptableTypesOfTables">The acceptable types of tables.</param>
         /// <returns></returns>
-        public DataMatrixInfo[] Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString, string[] acceptableTypesOfTables)
+        public DataMatrixSchemaInfo[] Value(string boxIdentity, DateTimeT lastReloadTime, string connectionString, string[] acceptableTypesOfTables)
         {
             lock (this)
             {
@@ -32,6 +32,8 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
                 if (IsObsolete(lastReloadTime, cacheSetting))
                     value = Ferda.Modules.Helpers.Data.Database.Explain(connectionString, acceptableTypesOfTables, boxIdentity);
 
+                if (value == null)
+                    value = new DataMatrixSchemaInfo[0];
                 return value;
             }
         }
