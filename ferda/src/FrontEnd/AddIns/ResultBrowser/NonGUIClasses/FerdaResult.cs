@@ -196,39 +196,53 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         {
             StringBuilder returnString = new StringBuilder();
             bool firstRun = true;
-            foreach (BooleanLiteralStruct literal in hypothesis.boolenliterals)
+            bool boolCedent = false;
+            if (hypothesis.literals.Length > 0)
             {
-                if (literal.cedentType == CedentEnum.Antecedent)
+                foreach (LiteralStruct literal in hypothesis.literals)
                 {
-                    if (!firstRun)
+                    if (literal.cedentType == CedentEnum.Antecedent)
                     {
-                        returnString.Append(") & ");
+                        returnString.Append(literal.literalName);
                     }
-                    if (literal.negation)
-                    {
-                        returnString.Append('\u00AC' + literal.literalName + "(");
-                    }
-                    else
-                    {
-                        returnString.Append(literal.literalName + "(");
-                    }
-
-                    foreach (String category in literal.categoriesNames)
-                    {
-                        returnString.Append(category.ToString());
-                    }
-
-                    firstRun = false;
-                }
-            }
-
-            if (returnString.Length == 0)
-            {
-                return "Empty";
+                }   
             }
             else
             {
-                returnString.Append(")");
+                boolCedent = true;
+                foreach (BooleanLiteralStruct literal in hypothesis.booleanLiterals)
+                {
+                    if (literal.cedentType == CedentEnum.Antecedent)
+                    {
+                        if (!firstRun)
+                        {
+                            returnString.Append(") & ");
+                        }
+                        if (literal.negation)
+                        {
+                            returnString.Append('\u00AC' + literal.literalName + "(");
+                        }
+                        else
+                        {
+                            returnString.Append(literal.literalName + "(");
+                        }
+                        foreach (String category in literal.categoriesNames)
+                        {
+                            returnString.Append(category.ToString());
+                        }
+                        firstRun = false;
+                    }
+                }  
+            }
+            if (returnString.Length == 0)
+            {
+                return String.Empty;
+            }
+            else
+            {
+                if(boolCedent)
+                    returnString.Append(")");
+
                 return returnString.ToString();
             }
         }
@@ -242,40 +256,55 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         {
             StringBuilder returnString = new StringBuilder();
             bool firstRun = true;
-            foreach (BooleanLiteralStruct literal in hypothese.boolenliterals)
+            bool boolCedent = false;
+
+            if (hypothese.literals.Length > 0)
             {
-                if (literal.cedentType == CedentEnum.Succedent)
+                foreach (LiteralStruct literal in hypothese.literals)
                 {
-                    if (!firstRun)
+                    if (literal.cedentType == CedentEnum.Succedent)
                     {
-                        returnString.Append(") & ");
+                        returnString.Append(literal.literalName);
                     }
-                    if (literal.negation)
+                }   
+            }
+            else
+            {
+                boolCedent = true;
+                foreach (BooleanLiteralStruct literal in hypothese.booleanLiterals)
+                {
+                    if (literal.cedentType == CedentEnum.Succedent)
                     {
-                        returnString.Append('\u00AC' + literal.literalName + "(");
+                        if (!firstRun)
+                        {
+                            returnString.Append(") & ");
+                        }
+                        if (literal.negation)
+                        {
+                            returnString.Append('\u00AC' + literal.literalName + "(");
+                        }
+                        else
+                        {
+                            returnString.Append(literal.literalName + "(");
+                        }
+                        foreach (String category in literal.categoriesNames)
+                        {
+                            returnString.Append(category.ToString());
+                        }
+                        firstRun = false;
                     }
-
-                    else
-                    {
-                        returnString.Append(literal.literalName + "(");
-                    }
-
-                    foreach (String category in literal.categoriesNames)
-                    {
-                        returnString.Append(category.ToString());
-                    }
-                    firstRun = false;
-                }
+                }    
             }
 
             if (returnString.Length == 0)
             {
-                return "Empty";
+                return String.Empty;
             }
 
             else
             {
-                returnString.Append(")");
+                if(boolCedent)
+                    returnString.Append(")");
                 return returnString.ToString();
             }
         }
@@ -290,7 +319,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         {
             StringBuilder returnString = new StringBuilder();
             bool firstRun = true;
-            foreach (BooleanLiteralStruct literal in hypothese.boolenliterals)
+            foreach (BooleanLiteralStruct literal in hypothese.booleanLiterals)
             {
                 if (literal.cedentType == CedentEnum.Condition)
                 {
@@ -334,9 +363,41 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         public static String GetHypothesisName(HypothesisStruct hypothesis)
         {
             StringBuilder returnString = new StringBuilder();
-            returnString.Append(FerdaResult.GetAntecedent(hypothesis) +
+            if (hypothesis.literals.Length > 0)
+            {
+                string temp, temp1;
+                temp = temp1 = String.Empty;
+                temp = FerdaResult.GetAntecedent(hypothesis);
+                temp1 = FerdaResult.GetSuccedent(hypothesis);
+                if (temp != String.Empty)
+                {
+                    if (temp1 != String.Empty)
+                    {
+                        returnString.Append(temp + " " + '\u00D7' + " " + temp1);
+                    }
+                    else
+                    {
+                        returnString.Append(temp);
+                    }
+                }
+                else
+                {
+                    if (temp1 != String.Empty)
+                    {
+                        returnString.Append(temp1);
+                    }
+                    else
+                    {
+                        returnString.Append(String.Empty);
+                    }
+                } 
+            }
 
-                '\u2022' + '\u2022' + FerdaResult.GetSuccedent(hypothesis));
+            else
+            {
+                returnString.Append(FerdaResult.GetAntecedent(hypothesis) +
+                   '\u2022' + '\u2022' + FerdaResult.GetSuccedent(hypothesis));
+            }
 
             if (!FerdaResult.GetCondition(hypothesis).Equals(""))
             {

@@ -175,6 +175,18 @@ namespace Ferda.Modules.MetabaseLayer
             return result.ToArray();
         }
 
+        public string[] GetCategorialLiteralCategoriesNames(int QuantityID)
+        {
+            ArrayList res = new ArrayList();
+            List<string> result = new List<string>();
+            DataTable categories = ExecuteSelectQuery("SELECT Name FROM tmQuantity WHERE QuantityID=" + QuantityID);
+            foreach (DataRow category in categories.Rows)
+            {
+                result.Add(category["Name"].ToString());
+            }
+            return result.ToArray();
+        } 
+
         //tiLiteralI
         public BooleanLiteralStruct[] GetBooleanLiterals(int taskID, int hypothesisID)
         {
@@ -195,6 +207,74 @@ namespace Ferda.Modules.MetabaseLayer
                 booleanLiteralStruct.literalName = this.attributeNameInLiterals[literalDbID];
                 booleanLiteralStruct.categoriesNames = GetBooleanLiteralCategoriesNames(taskID, literalIID);
                 result.Add(booleanLiteralStruct);
+            }
+            return result.ToArray();
+        }
+
+        public LiteralStruct[] GetCategorialLiterals(TaskTypeEnum taskType, int taskID, int hypothesisID)
+        {
+            string tdLiteralTableName = String.Empty;
+            string tdLiteralIDColumn = String.Empty;
+            
+            string tdCedentDTableName = String.Empty;
+            string tdCedentDIDColumn = String.Empty;
+            switch (taskType)
+            {
+                case TaskTypeEnum.CF:
+                case TaskTypeEnum.SDCF:
+                    tdLiteralTableName = "tdCFLiteralD";
+                    tdLiteralIDColumn = "CFLiteralDID";
+
+                    tdCedentDTableName = "tdCFCedentD";
+                    tdCedentDIDColumn = "CFCedentDID";
+
+                    break;
+
+                case TaskTypeEnum.KL:
+                case TaskTypeEnum.SDKL:
+                    tdLiteralTableName = "tdKLLiteralD";
+                    tdLiteralIDColumn = "KLLiteralDID";
+
+                    tdCedentDTableName = "tdKLCedentD";
+                    tdCedentDIDColumn = "KLCedentDID";
+                    break;
+
+                default:
+                    throw new Exception("SwitchBranchNotImplemented");
+
+            }
+
+        //    string query = "SELECT QuantityID from `" + tdLiteralTableName + "` WHERE `" +
+          //      tdLiteralIDColumn + "`=" + literalIdentifier; 
+
+            List<LiteralStruct> result = new List<LiteralStruct>();
+            LiteralStruct literalStruct;
+            DataTable literals = ExecuteSelectQuery(
+                "SELECT " + 
+                tdLiteralTableName + "." + tdLiteralIDColumn + ", " +
+                tdCedentDTableName + "." + tdCedentDIDColumn + ", " +
+                tdLiteralTableName + ".QuantityID, "  +
+                "tmQuantity.Name, CedentTypeID" +
+                " FROM `"
+                + tdCedentDTableName + "`, `" + tdLiteralTableName + "`, `tmQuantity` " +
+                "WHERE TaskID=" + taskID + " AND " +
+                tdCedentDTableName + "." + tdCedentDIDColumn + "=" +
+                tdLiteralTableName + "." + tdCedentDIDColumn + 
+                " AND tmQuantity.QuantityID=" +
+                tdLiteralTableName + "." + "QuantityID"
+                );
+
+            foreach (DataRow literal in literals.Rows)
+            {
+                literalStruct = new LiteralStruct();
+                literalStruct.cedentType =
+                    Constants.CedentEnumDictionaryBackward[
+                        Convert.ToInt32(literal["CedentTypeID"])];
+
+                literalStruct.literalIdentifier = Convert.ToInt32(literal[tdLiteralIDColumn]);
+                literalStruct.literalName = literal["Name"].ToString();
+              //  literalStruct.categoriesNames = GetCategorialLiteralCategoriesNames(taskType, taskID, literalIID);
+                result.Add(literalStruct);
             }
             return result.ToArray();
         }

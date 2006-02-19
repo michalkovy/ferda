@@ -55,10 +55,12 @@ namespace Ferda.Modules.MetabaseLayer
             {
                 int hypothesisID = Convert.ToInt32(hypothese["HypothesisID"]);
                 hypothesisStruct = new HypothesisStruct();
-                hypothesisStruct.boolenliterals = common.GetBooleanLiterals(taskID, hypothesisID);
+                hypothesisStruct.booleanLiterals = common.GetBooleanLiterals(taskID, hypothesisID);
+                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.CF, taskID, hypothesisID);
+           //     hypothesisStruct.literals = common.Get
                 //  hypothesisStruct.literals = common.Get
                 LiteralStruct columnLiteral = new LiteralStruct();
-                columnLiteral.literalDimension = LiteralDimensionEnum.SecondDimension;
+                columnLiteral.cedentType = CedentEnum.Antecedent;
                 columnLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["CFLiteralDID"])];
                // hypothesisStruct.literals = new LiteralStruct[] { rowLiteral, columnLiteral };
 

@@ -177,14 +177,14 @@ namespace Ferda.Modules.MetabaseLayer
 			{
 				int hypothesisID = Convert.ToInt32(hypothese["HypothesisID"]);
 				hypothesisStruct = new HypothesisStruct();
-				hypothesisStruct.boolenliterals = common.GetBooleanLiterals(taskID, hypothesisID);
+				hypothesisStruct.booleanLiterals = common.GetBooleanLiterals(taskID, hypothesisID);
 				LiteralStruct rowLiteral = new LiteralStruct();
-				rowLiteral.literalDimension = LiteralDimensionEnum.FirstDimension;
+				rowLiteral.cedentType = CedentEnum.Antecedent;
+                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.KL, taskID, hypothesisID);
 				rowLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["KLLiteralDRowID"])];
 				LiteralStruct columnLiteral = new LiteralStruct();
-				columnLiteral.literalDimension = LiteralDimensionEnum.SecondDimension;
+                columnLiteral.cedentType = CedentEnum.Succedent;
 				columnLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["KLLiteralDColID"])];
-				hypothesisStruct.literals = new LiteralStruct[] { rowLiteral, columnLiteral };
 				quantifierSetting = new AbstractQuantifierSetting();
 				quantifierSetting.firstContingencyTableRows = common.GetContingecyTable(this.taskType, taskID, hypothesisID, rowLiteral.literalIdentifier, columnLiteral.literalIdentifier);
 				quantifierSetting.secondContingencyTableRows = new int[0][];
