@@ -1,0 +1,25 @@
+Tomas:
+Kdyz udelam zapojeni Barbory databaze, tabulka, sloupce, ale pak zmenim databazi na stulong a kliknu na tabulku, dojde k vyjimce
+
+Martin:
+Pokud v dialogu pro nastavovani Ferdy zmenim locale, nerekne mi to ani, ze k tomu, aby to zapusobilo, musim restartovat program
+
+Tomas+Sasa:
+Databaze Stulong, tabulka Entry sloupec VINO - distinct values=2, minimum=11, maximum=11 - divne, ne? Mozna to jeste chapu, pokud ta druha hodnota je null, co je ale divne - modul pro interakci frekvenci tam ukazuje neco s zadnou hodnotou a frekvenci 0 - to je urcite spatne - pokud tam neco je (i null), tak by to melo mit nejakou frekvenci
+
+Databaze Seat(predam), tabulka Alhambra, sloupec seriova_vybava - blbne jak modul pro interakci tak se neukazuji statistiky (jedna se o sloupec typu Memo/Text(nebo,jak to nazyvate - proste "neomezena" delka textu))
+
+Sasa:
+Area chart bych vazne vyhodil, pouze zavadi - mrkni se napriklad na Databaze Stulong, tabulka Entry sloupec STAV - to, co tam ma nejvetsi frekvenci tam neni vubec videt...
+
+Tomas:
+Chyba pri kliku na "each value one category" z Databaze "Xtreme Sample Database 2005" (soucasti Crystal Reports z Visual Studia), tabulka Orders, sloupec Ship Via
+
+Chyba pri kliknuti na derived column hned po vytvoreni pomoci "krabicek navrhovanych na vytvoreni"
+
+Sasa, nicmene 1) a 3) jsou veci,ze kterych bychom se meli poucit vsichni:
+Pomalost result browseru pri praci s pouzitymi kvantifikatory, cim to je:
+1) pouzivas tento konstrukt: this.AllQuantifiers[i].functions.Value(hypothese.quantifierSetting)
+- to je hodne pomale - nejpomalejsi je na tom ".functions" (nebudu moc vysvetlovat hlubiny Ice, ale jde o to, ze ty pri kazdem pocitani kvantifikatoru si z instance krabky kvantifakatoru zjistujes jeho functions(i kdyz bys to mohl udelat jen jednou) - to je relativne draha operace, drazsi nez samotny vypocet kvantifikatoru (zavolani ".Value(...)"), jelikoz se musi udelat nova proxyna (tyrida ktera "dela",ze je vzdalenym objektem) na tve strane...) - proste zjisti si functions kvantifikatoru jen na zacatku jednou a pak pracuj s nimi (samotna krabka kvantifikatoru te uz nemusi vubec zajimat)
+(asi odvolavam, ale zamysli se: 2) zrejme tam budes zjistovat ty hodnoty kvantifikatoru nekolikrat - nebo nevim (uz asi vim - viz 3. bod) proc kdyz si tam dam jeden pouzity kvantifikator, sesortim to, oboje je jeste relativne pouzitelny pri nejakych 38000 hypotezach (myslim, ze tolik mi vyslo), ale jak tam reknu, ze chci dalsi kvantifikator videt, uz se nedockam (tedy i kdyz by to melo byt zhruba 2x tolik casu, bude to asi 2x38000x tolik casu))
+3) "pekna" a zasadni chyba (prisel jsem na to az ted): tvoje implementace compare v Sorter dela to, ze "zamerne" dochazi k vyjimkam - to je HODNE hnusne - vyjimky by se meli vyuzivat k "NECEKANYM" ale moznym stavum, ty to pouzivas k cekane veci! Ver mi odchytat .NETu 60000 vyjimek trva STRASNE DLOUHO! Proto to zrejme je takovy porod cekat na vysledek!
