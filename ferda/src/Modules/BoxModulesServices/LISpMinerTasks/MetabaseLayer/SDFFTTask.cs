@@ -132,7 +132,7 @@ namespace Ferda.Modules.MetabaseLayer
 			foreach (DataRow hypothese in hypothesis.Rows)
 			{
 				hypothesisStruct = new HypothesisStruct();
-				hypothesisStruct.boolenliterals = common.GetBooleanLiterals(taskID, Convert.ToInt32(hypothese["HypothesisID"]));
+				hypothesisStruct.booleanLiterals = common.GetBooleanLiterals(taskID, Convert.ToInt32(hypothese["HypothesisID"]));
 				hypothesisStruct.literals = new LiteralStruct[0];
 				quantifierSetting = new AbstractQuantifierSetting();
 				quantifierSetting.firstContingencyTableRows = new int[2][];

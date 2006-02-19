@@ -225,8 +225,11 @@ module Ferda {
 				};
 
 				struct LiteralStruct {
-					LiteralDimensionEnum literalDimension;
-					int literalIdentifier; //points to LiteralSetting.identifier
+					CedentEnum cedentType;
+					StringSeq categoriesNames;
+					string literalName;
+					double categoriesValues;
+					int literalIdentifier;
 				};
 				sequence<LiteralStruct> LiteralStructSeq;
 
@@ -234,14 +237,14 @@ module Ferda {
 					CedentEnum cedentType;
 					StringSeq categoriesNames;
 					bool negation;
-					int literalIdentifier; //points to LiteralSetting.identifier
 					string literalName; //attribute.nameInLiterals
+					int literalIdentifier;
 				};
 				sequence<BooleanLiteralStruct> BooleanLiteralStructSeq;
 
 				struct HypothesisStruct {
 					AbstractQuantifierSetting quantifierSetting;
-					BooleanLiteralStructSeq boolenliterals;
+					BooleanLiteralStructSeq booleanLiterals;
 					LiteralStructSeq literals;
 				};
 				sequence<HypothesisStruct> HypothesisStructSeq;
