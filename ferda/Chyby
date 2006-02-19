@@ -21,5 +21,11 @@ Sasa, nicmene 1) a 3) jsou veci,ze kterych bychom se meli poucit vsichni:
 Pomalost result browseru pri praci s pouzitymi kvantifikatory, cim to je:
 1) pouzivas tento konstrukt: this.AllQuantifiers[i].functions.Value(hypothese.quantifierSetting)
 - to je hodne pomale - nejpomalejsi je na tom ".functions" (nebudu moc vysvetlovat hlubiny Ice, ale jde o to, ze ty pri kazdem pocitani kvantifikatoru si z instance krabky kvantifakatoru zjistujes jeho functions(i kdyz bys to mohl udelat jen jednou) - to je relativne draha operace, drazsi nez samotny vypocet kvantifikatoru (zavolani ".Value(...)"), jelikoz se musi udelat nova proxyna (tyrida ktera "dela",ze je vzdalenym objektem) na tve strane...) - proste zjisti si functions kvantifikatoru jen na zacatku jednou a pak pracuj s nimi (samotna krabka kvantifikatoru te uz nemusi vubec zajimat)
-(asi odvolavam, ale zamysli se: 2) zrejme tam budes zjistovat ty hodnoty kvantifikatoru nekolikrat - nebo nevim (uz asi vim - viz 3. bod) proc kdyz si tam dam jeden pouzity kvantifikator, sesortim to, oboje je jeste relativne pouzitelny pri nejakych 38000 hypotezach (myslim, ze tolik mi vyslo), ale jak tam reknu, ze chci dalsi kvantifikator videt, uz se nedockam (tedy i kdyz by to melo byt zhruba 2x tolik casu, bude to asi 2x38000x tolik casu))
+(asi odvolavam, ale zamysli se:
+-- udelal jsem to tak, ze jednou naplnim pole hodnotami quantifier[i].function a pak volam pole[i].Value, je to lepsi?
+
+2) zrejme tam budes zjistovat ty hodnoty kvantifikatoru nekolikrat - nebo nevim (uz asi vim - viz 3. bod) proc kdyz si tam dam jeden pouzity kvantifikator, sesortim to, oboje je jeste relativne pouzitelny pri nejakych 38000 hypotezach (myslim, ze tolik mi vyslo), ale jak tam reknu, ze chci dalsi kvantifikator videt, uz se nedockam (tedy i kdyz by to melo byt zhruba 2x tolik casu, bude to asi 2x38000x tolik casu))
+-- pri trideni nic nezjistuju, tridim listview. zjistuju, kdyz pridavam / odebiram sloupce.
+
 3) "pekna" a zasadni chyba (prisel jsem na to az ted): tvoje implementace compare v Sorter dela to, ze "zamerne" dochazi k vyjimkam - to je HODNE hnusne - vyjimky by se meli vyuzivat k "NECEKANYM" ale moznym stavum, ty to pouzivas k cekane veci! Ver mi odchytat .NETu 60000 vyjimek trva STRASNE DLOUHO! Proto to zrejme je takovy porod cekat na vysledek!
+ -- fixed, tak maly sotek a tak velky bordel :)
