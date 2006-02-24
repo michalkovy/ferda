@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32px"
+   height="32px"
+   id="svg1306"
+   sodipodi:version="0.32"
+   inkscape:version="0.43"
+   sodipodi:docbase="C:\Make\Projekt\svg\cf\AnyValue"
+   sodipodi:docname="boxDesign.svg"
+   inkscape:export-filename="C:\Make\Projekt\svg\cf\AverageValue\average.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs1308" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="18.21875"
+     inkscape:cx="15.890223"
+     inkscape:cy="17.707752"
+     inkscape:current-layer="layer2"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="1024"
+     inkscape:window-height="749"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4" />
+  <metadata
+     id="metadata1311">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Background"
+     inkscape:groupmode="layer"
+     sodipodi:insensitive="true">
+    <rect
+       style="opacity:1;fill:#006700;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.68031496;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2189"
+       width="8"
+       height="15.444254"
+       x="0"
+       y="16.555746"
+       inkscape:export-filename="C:\Make\Projekt\svg\cf\rect3947.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="opacity:1;fill:#009e00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.68031496;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3943"
+       width="8"
+       height="18"
+       x="8"
+       y="14"
+       inkscape:export-filename="C:\Make\Projekt\svg\cf\rect3947.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="opacity:1;fill:#00d300;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.68031496;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3945"
+       width="8"
+       height="21"
+       x="16"
+       y="11"
+       inkscape:export-filename="C:\Make\Projekt\svg\cf\rect3947.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="opacity:1;fill:#00ee69;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.68031496;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3947"
+       width="8"
+       height="24"
+       x="24"
+       y="8"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Name">
+    <text
+       xml:space="preserve"
+       style="font-size:26.74040031px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="-0.33947772"
+       y="19.441629"
+       id="text10119"
+       transform="scale(0.607551,1.645953)"><tspan
+         sodipodi:role="line"
+         id="tspan10121"
+         x="-0.33947772"
+         y="19.441629">ANY</tspan></text>
+  </g>
+</svg>
