@@ -47,10 +47,9 @@ namespace Ferda.FrontEnd.Menu
         private TabPage TPLocalization;
         private Button BOK;
         private Button BCancel;
-        private TabPage tabPage2;
+        //private TabPage tabPage2;
         private Label LLocalization;
         private ListBox LBLokalizace;
-        private Label LLocalization2;
 
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
@@ -138,7 +137,7 @@ namespace Ferda.FrontEnd.Menu
             BCancel.Text = ResManager.GetString("CancelButton");
             TPLocalization.Text = ResManager.GetString("LocalizationTab");
             LLocalization.Text = ResManager.GetString("LocalizationLabel");
-            LLocalization2.Text = ResManager.GetString("LocalizationLabel2");
+            //LLocalization2.Text = ResManager.GetString("LocalizationLabel2");
         }
 
         #endregion
@@ -168,10 +167,8 @@ namespace Ferda.FrontEnd.Menu
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TPLocalization = new System.Windows.Forms.TabPage();
-            this.LLocalization2 = new System.Windows.Forms.Label();
             this.LBLokalizace = new System.Windows.Forms.ListBox();
             this.LLocalization = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.BOK = new System.Windows.Forms.Button();
             this.BCancel = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
@@ -181,7 +178,6 @@ namespace Ferda.FrontEnd.Menu
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.TPLocalization);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(4, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -190,7 +186,6 @@ namespace Ferda.FrontEnd.Menu
             // 
             // TPLocalization
             // 
-            this.TPLocalization.Controls.Add(this.LLocalization2);
             this.TPLocalization.Controls.Add(this.LBLokalizace);
             this.TPLocalization.Controls.Add(this.LLocalization);
             this.TPLocalization.Location = new System.Drawing.Point(4, 22);
@@ -199,15 +194,6 @@ namespace Ferda.FrontEnd.Menu
             this.TPLocalization.Size = new System.Drawing.Size(363, 198);
             this.TPLocalization.TabIndex = 0;
             this.TPLocalization.Text = "tabPage1";
-            // 
-            // LLocalization2
-            // 
-            this.LLocalization2.AutoSize = true;
-            this.LLocalization2.Location = new System.Drawing.Point(9, 20);
-            this.LLocalization2.Name = "LLocalization2";
-            this.LLocalization2.Size = new System.Drawing.Size(35, 13);
-            this.LLocalization2.TabIndex = 2;
-            this.LLocalization2.Text = "label1";
             // 
             // LBLokalizace
             // 
@@ -225,15 +211,6 @@ namespace Ferda.FrontEnd.Menu
             this.LLocalization.Size = new System.Drawing.Size(35, 13);
             this.LLocalization.TabIndex = 0;
             this.LLocalization.Text = "label1";
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(309, 198);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
             // 
             // BOK
             // 

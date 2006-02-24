@@ -1097,6 +1097,10 @@ namespace Ferda.FrontEnd.Menu
             if (prefDialog.DialogResult == DialogResult.OK)
             {
                 localizationManager.LocalePrefs = prefDialog.LocalePrefs;
+
+                MessageBox.Show(ResManager.GetString("LocalizationLabel2"),
+                    ResManager.GetString("LocalizationTab"), MessageBoxButtons.OK, 
+                    MessageBoxIcon.Exclamation);
             }
         }
 
