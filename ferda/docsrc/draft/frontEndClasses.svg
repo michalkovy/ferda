@@ -14,7 +14,10 @@
    sodipodi:version="0.32"
    inkscape:version="0.43"
    sodipodi:docbase="C:\Make\Projekt\berlios\ferda\docsrc\draft"
-   sodipodi:docname="frontEndClasses.svg">
+   sodipodi:docname="frontEndClasses.svg"
+   inkscape:export-filename="C:\frontEndClasses.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs1308" />
   <sodipodi:namedview
@@ -26,8 +29,8 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.78350265"
      inkscape:cx="516.56545"
-     inkscape:cy="376.88115"
-     inkscape:current-layer="layer2"
+     inkscape:cy="315.61684"
+     inkscape:current-layer="layer4"
      id="namedview1310"
      fill="#dcdcdc"
      inkscape:window-width="1024"
@@ -171,7 +174,8 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Tridy"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <rect
        style="opacity:1;fill:#e0becf;fill-opacity:0.8;fill-rule:evenodd;stroke:#000000;stroke-width:4.36687231;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4872"
@@ -793,8 +797,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Interface"
-     style="display:inline"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <path
        sodipodi:type="arc"
        style="opacity:1;fill:#e0becf;fill-opacity:0.8;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -879,21 +882,21 @@
        sodipodi:rx="14.039518"
        sodipodi:ry="13.401359"
        d="M 405.86972 155.07286 A 14.039518 13.401359 0 1 1  377.79068,155.07286 A 14.039518 13.401359 0 1 1  405.86972 155.07286 z"
-       transform="translate(410.3384,472.1003)" />
+       transform="translate(411.6147,505.2846)" />
     <path
        style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-       d="M 900.64668,627.54651 L 816.76641,627.54651"
+       d="M 901.923,660.73083 L 818.04273,660.73083"
        id="path1466" />
     <text
        xml:space="preserve"
-       style="font-size:15.18092155px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
-       x="845.74133"
-       y="576.98486"
+       style="font-size:15.18092251px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
+       x="847.1969"
+       y="606.08289"
        id="text1468"
        transform="scale(0.87686,1.140433)"><tspan
          sodipodi:role="line"
-         x="845.74133"
-         y="576.98486"
+         x="847.1969"
+         y="606.08289"
          id="tspan1470">IUserNoteDisplayer</tspan></text>
     <path
        sodipodi:type="arc"
@@ -1140,5 +1143,30 @@
          x="716.53046"
          y="359.55291"
          id="tspan4270" /></text>
+    <path
+       sodipodi:type="arc"
+       style="opacity:1;fill:#e0becf;fill-opacity:0.8;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
+       id="path1505"
+       sodipodi:cx="391.8302"
+       sodipodi:cy="155.07286"
+       sodipodi:rx="14.039518"
+       sodipodi:ry="13.401359"
+       d="M 405.86972 155.07286 A 14.039518 13.401359 0 1 1  377.79068,155.07286 A 14.039518 13.401359 0 1 1  405.86972 155.07286 z"
+       transform="translate(441.1032,446.5738)" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.18092632px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
+       x="851.71545"
+       y="555.72107"
+       id="text1509"
+       transform="scale(0.87686,1.140433)"><tspan
+         sodipodi:role="line"
+         x="851.71545"
+         y="555.72107"
+         id="tspan1511">IViewDisplayer</tspan></text>
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:2.36183858px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="M 832.20593,586.93992 L 832.11517,563.02426"
+       id="path1517" />
   </g>
 </svg>
