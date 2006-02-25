@@ -26,6 +26,9 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.LiteralSetting
 			return LiteralSettingFunctionsI.ids__;
 		}
 
+        /// <summary>
+        /// Gets default value for box module user label.
+        /// </summary>
 		public override string GetDefaultUserLabel(BoxModuleI boxModule)
 		{
 			//get atom`s userLabel
@@ -58,12 +61,25 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.LiteralSetting
 			return gaceTypeShort + atomsUserLabel + shortLiteralType;
 		}
 
+        /// <summary>
+        /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as
+        /// options for property, whose options are dynamically variable.
+        /// </summary>
 		public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
 		{
             return null;
 		}
 
-		public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
+        /// <summary>
+        /// Gets the box modules asking for creation.
+        /// </summary>
+        /// <param name="localePrefs">The localization preferences.</param>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// Array of <see cref="T:Ferda.Modules.ModuleAskingForCreation">
+        /// Modules Asking For Creation</see>.
+        /// </returns>
+        public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
 		{
 			Dictionary<string, ModulesAskingForCreation> modulesAFC = this.getModulesAskingForCreationNonDynamic(localePrefs);
 			List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();

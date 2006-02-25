@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes
 {
-	public static class AbstractAttributeConstants
+	/// <summary>
+	/// Some constant for usage by attribute box modules.
+	/// </summary>
+    public static class AbstractAttributeConstants
 	{
 		private static int maxLengthOfCategoriesNamesSelectStringArray = 255;
 		/// <summary>

@@ -169,11 +169,6 @@ module Ferda {
 			RowsOnColumns,
 			ColumnsOnRows
 		};
-		enum CoreRelationEnum
-		{
-		    LessThanOrEqualCore,
-		    GreaterThanOrEqualCore
-		};
 		enum RelationEnum
 		{
 		    Equal,
@@ -181,11 +176,6 @@ module Ferda {
 		    LessThanOrEqual,
 		    GreaterThan,
 		    GreaterThanOrEqual
-		};
-		enum CoreUnitsEnum
-		{
-		    AbsoluteNumberCore,
-		    RelativeNumberCore
 		};
 		enum UnitsEnum
 		{

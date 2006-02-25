@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>DataMiningCommon.BooleanPartialCedentSetting</Identifier>
-  <Label>BooleanPCS (&amp;)</Label>
+  <Label>Bool. cedent</Label>
   <Hint>Boolean partial cedent setting i. e. setting for  boolean partial cedent and it`s parameters</Hint>
   <Categories>
     <Category>

@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Ferda.Modules.Boxes.LISpMinerTasks
 {
-	public class Service : Ferda.Modules.FerdaServiceI
+	/// <summary>
+	/// TODO Michal
+	/// </summary>
+    public class Service : Ferda.Modules.FerdaServiceI
 	{
 
 		/// <summary>

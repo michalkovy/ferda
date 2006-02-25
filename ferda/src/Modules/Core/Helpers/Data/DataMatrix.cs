@@ -64,9 +64,9 @@ namespace Ferda.Modules.Helpers.Data
                     subQuery = (string.IsNullOrEmpty(subQuery)) ? columnNameTmp : subQuery + ", " + columnNameTmp;
                 }
 
-                //create SQL query " ... GROUP BY PkColumns HAVING COUNT(*) > 1"
+                //create SQL query " ... GROUP BY PkColumns HAVING COUNT(1) > 1"
                 dataMatrixName = SqlSecurity.SafeSqlObjectName(dataMatrixName);
-                string mySelectQuery = "SELECT " + subQuery + " FROM `" + dataMatrixName + "` GROUP BY " + subQuery + " HAVING COUNT(*) > 1";
+                string mySelectQuery = "SELECT " + subQuery + " FROM `" + dataMatrixName + "` GROUP BY " + subQuery + " HAVING COUNT(1) > 1";
                 OdbcDataAdapter myDataAdapter = new OdbcDataAdapter(mySelectQuery, conn);
                 DataSet myDataSet = new DataSet();
 
@@ -104,10 +104,10 @@ namespace Ferda.Modules.Helpers.Data
             //throws exception if odbcConnectionString is wrong
             OdbcConnection conn = Ferda.Modules.Helpers.Data.OdbcConnections.GetConnection(odbcConnectionString, boxIdentity);
 
-            //execute query "SELECT COUNT(*) FROM dataMatrixName"
+            //execute query "SELECT COUNT(1) FROM dataMatrixName"
             dataMatrixName = SqlSecurity.SafeSqlObjectName(dataMatrixName);
             OdbcCommand command = new OdbcCommand(
-                    "SELECT COUNT(*) FROM `" + dataMatrixName + "`",
+                    "SELECT COUNT(1) FROM `" + dataMatrixName + "`",
                     conn);
             try
             {

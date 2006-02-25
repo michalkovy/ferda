@@ -11,8 +11,7 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Functional.ChiSq
 		{
 			get
 			{
-				//TODO
-				throw new Exception("The method or operation is not implemented.");
+                return TwoDimensionalContingencyTable.ChiSquare;
 			}
 		}
 	}

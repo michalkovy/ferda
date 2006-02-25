@@ -15,11 +15,13 @@
       <Hint>Relation</Hint>
       <SelectOptions>
         <SelectOption>
-          <Name>LessThanOrEqualCore</Name>
+          <Name>LessThanOrEqual</Name>
+          <!-- CoreRelation -->
           <Label>Less than or equal</Label>
         </SelectOption>
         <SelectOption>
-          <Name>GreaterThanOrEqualCore</Name>
+          <Name>GreaterThanOrEqual</Name>
+          <!-- CoreRelation -->
           <Label>Greater than or equal</Label>
         </SelectOption>
       </SelectOptions>
@@ -35,11 +37,13 @@
       <Hint>Unit for expression of treshold and actual value.</Hint>
       <SelectOptions>
         <SelectOption>
-          <Name>RelativeNumberCore</Name>
+          <Name>RelativeToActCondition</Name>
+          <!-- CoreUnits -->
           <Label>Relative number</Label>
         </SelectOption>
         <SelectOption>
-          <Name>AbsoluteNumberCore</Name>
+          <Name>AbsoluteNumber</Name>
+          <!-- CoreUnits -->
           <Label>Absolute number</Label>
         </SelectOption>
       </SelectOptions>

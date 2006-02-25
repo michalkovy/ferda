@@ -4,8 +4,8 @@
   <Hint>Maximal frequency from range.</Hint>
   <Categories>
     <Category>
-      <Name>CFMiner</Name>
-      <Label>CF-Miner</Label>
+      <Name>CFMiner.Quantifiers.Aggregation</Name>
+      <Label>CF-Miner.Quantifiers.Aggregation</Label>
     </Category>
   </Categories>
   <Sockets>

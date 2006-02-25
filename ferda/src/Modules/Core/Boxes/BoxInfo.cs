@@ -134,7 +134,7 @@ namespace Ferda.Modules.Boxes
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box">config file</see>
         /// (independent on localization).
         /// </summary>
-        protected Boxes.Serializer.Configuration.Helper box;
+        protected Boxes.Serializer.Configuration.IHelper box;
 
         /// <summary>
         /// Identifier of default localization.
@@ -150,10 +150,10 @@ namespace Ferda.Modules.Boxes
         /// <para>Key: localeId (something like: en-US, cs-CZ, ..., or <see cref="F:Ferda.Modules.Boxes.BoxInfo.defaultLanguageId"/>)</para>
         /// <para>Value: <see cref="T:Ferda.Modules.Boxes.Serializer.Localization.Helper">deserealized localization config file</see>.</para>
         /// </remarks>
-        protected Dictionary<string, Boxes.Serializer.Localization.Helper> boxLocalizations = new Dictionary<string, Ferda.Modules.Boxes.Serializer.Localization.Helper>();
+        protected Dictionary<string, Boxes.Serializer.Localization.IHelper> boxLocalizations = new Dictionary<string, Ferda.Modules.Boxes.Serializer.Localization.IHelper>();
         #endregion
 
-        #region Constructor
+        #region Constructors
         /// <summary>
         /// <para>Default constructor.</para>
         /// <para>Loads box config file (independent on localization) 
@@ -163,16 +163,12 @@ namespace Ferda.Modules.Boxes
         /// </summary>
         /// <remarks>
         /// Localization config files are loaded (deserealized and stored in
-        /// cache) as needed.
+        /// cache) as needed (lazy loading).
         /// </remarks>
         /// <seealso cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Helper"/>
         /// <exception cref="T:System.Exception">Thrown iff getting box config faild.</exception>
         protected BoxInfo()
         {
-#if !DEBUG
-			try
-			{
-#endif
             //Deserealize and store box config file
             this.box = new Boxes.Serializer.Configuration.Helper(
                 Boxes.Serializer.Reader.ReadBox(
@@ -187,26 +183,91 @@ namespace Ferda.Modules.Boxes
                 Debug.WriteLine(message);
                 throw new Exception(message);
             }
-#if !DEBUG
-            }
-            catch
-            {
-            }
-#endif
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BoxInfo"/> class.
+        /// </summary>
+        /// <param name="configurationHelper">The configuration helper.</param>
+        /// <remarks>
+        /// If this constructor is used no configuration file is loaded 
+        /// and localization config files are loaded (deserealized and stored in
+        /// cache) as needed (lazy loading).
+        /// </remarks>
+        public BoxInfo(Boxes.Serializer.Configuration.IHelper configurationHelper)
+        {
+            if (configurationHelper == null)
+            {
+                string message = "BoxInf17: Unable to get config for " + this.identifier;
+                Debug.WriteLine(message);
+                throw new ArgumentNullException(message);
+            }
+            this.box = configurationHelper;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BoxInfo"/> class.
+        /// </summary>
+        /// <param name="configurationHelper">The configuration helper.</param>
+        /// <param name="defaultLocalization">The default localization.</param>
+        /// <param name="localizations">The localizations.</param>
+        /// <remarks>
+        /// If this constructor is used no configuration file is loaded 
+        /// and localization config files are loaded (deserealized and stored in
+        /// cache) as needed (lazy loading) but only if specified 
+        /// <c>localizations</c> does not satisfy some localePrefs.
+        /// </remarks>
+        public BoxInfo(
+            Boxes.Serializer.Configuration.IHelper configurationHelper,
+            Boxes.Serializer.Localization.IHelper defaultLocalization,
+            Boxes.Serializer.Localization.IHelper[] localizations
+            )
+        {
+            if (configurationHelper == null)
+            {
+                string message = "BoxInf18: Unable to get config for " + this.identifier;
+                Debug.WriteLine(message);
+                throw new ArgumentNullException(message);
+            }
+            this.box = configurationHelper;
+
+            if (defaultLocalization == null)
+            {
+                string message = "BoxInf19: Unable to get default localization for " + this.identifier;
+                Debug.WriteLine(message);
+                throw new ArgumentNullException(message);
+            }
+            this.boxLocalizations.Add(defaultLanguageId, defaultLocalization);
+
+            if (localizations.Length > 0)
+            {
+                foreach (Boxes.Serializer.Localization.IHelper localization in localizations)
+                {
+                    this.boxLocalizations.Add(localization.LocaleId, localization);
+                }
+            }
+        }
         #endregion
 
         #region Localization files
 
         /// <summary>
-        /// Gets deserealized localization file according to <c>localePrefs</c>.
+        /// Gets <see cref="T:Ferda.Modules.Boxes.Serializer.Localization.IHelper">localization</see>.
+        /// according to specified <c>localePrefs</c>.
         /// </summary>
         /// <param name="localePrefs">The localization preferences.</param>
-        /// <returns>Deserealized localizaton file.</returns>
-        /// <exception cref="T:System.Exception">Thrown iff no localization 
+        /// <returns>Localization</returns>
+        /// <exception cref="T:System.Exception">Thrown iff no localization
         /// file corresponding to <c>localePrefs</c> was found.</exception>
-        private Boxes.Serializer.Localization.Helper getLocalization(string[] localePrefs)
+        /// <remarks>
+        /// Specified <c>localePrefs</c> are processed by following scenario:
+        /// if first localePref is already loaded then it is returned,
+        /// else if it is not loaded, than the function tries to load localization file;
+        /// otherwise, next localePref is processed.
+        /// If no localePref can be used (no ones is loaded no one can be loaded) than
+        /// default localePref is used.
+        /// </remarks>
+        private Boxes.Serializer.Localization.IHelper getLocalization(string[] localePrefs)
         {
             //I need to try use most forward localeId from localePrefs,
             //If no localeId can be used I have to use default locale (defaultLanguageId)
@@ -437,7 +498,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public virtual DynamicHelpItem[] GetDynamicHelpItems(string[] localePrefs, BoxModuleI boxModule)
         {
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             return boxLocalization.DynamicHelpItems;
         }
 
@@ -488,7 +549,7 @@ namespace Ferda.Modules.Boxes
         public HelpFileInfo[] GetHelpFileInfoSeq(string[] localePrefs)
         {
             List<HelpFileInfo> result = new List<HelpFileInfo>();
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             return boxLocalization.HelpFiles;
         }
 
@@ -502,7 +563,7 @@ namespace Ferda.Modules.Boxes
         public byte[] GetHelpFile(string identifier)
         {
             string helpFilePath;
-            foreach (Boxes.Serializer.Localization.Helper boxLocalization in this.boxLocalizations.Values)
+            foreach (Boxes.Serializer.Localization.IHelper boxLocalization in this.boxLocalizations.Values)
             {
                 if (boxLocalization.HelpFilesPaths.TryGetValue(identifier, out helpFilePath))
                     return BoxInfoHelper.TryGetBinaryFile(configFilesDirectoryPath, helpFilePath, false);
@@ -523,7 +584,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public SocketInfo[] GetSockets(string[] localePrefs)
         {
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             List<SocketInfo> result = new List<SocketInfo>();
             foreach (Boxes.Serializer.Configuration.Socket socket in this.box.Sockets.Values)
             {
@@ -755,7 +816,7 @@ namespace Ferda.Modules.Boxes
             List<PropertyInfo> result = new List<PropertyInfo>();
             List<SelectString> selectStrings = new List<SelectString>();
             Dictionary<string, string> selectStringsXL = new Dictionary<string, string>();
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             foreach (Boxes.Serializer.Configuration.Property property in this.box.Properties.Values)
             {
                 //gets name of category where the proprety belongs to
@@ -822,7 +883,7 @@ namespace Ferda.Modules.Boxes
         public string GetPropertyOptionShortLocalizedLabel(string propertyName, string optionName, string[] localePrefs)
         {
             //get localization
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
 
             //get SelectBoxParam according to propertyName and optionName
             Boxes.Serializer.Localization.SelectOption selectBoxParam = boxLocalization.GetSelectBoxOption(propertyName, optionName, false);
@@ -923,7 +984,7 @@ namespace Ferda.Modules.Boxes
         /// <returns>Localized label of the box module.</returns>
         public string GetLabel(string[] localePrefs)
         {
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             if (String.IsNullOrEmpty(boxLocalization.Label))
             {
 #if DEBUG
@@ -996,7 +1057,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public string GetHint(string[] localePrefs)
         {
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             if (!String.IsNullOrEmpty(boxLocalization.Hint))
                 return boxLocalization.Hint;
             else
@@ -1061,7 +1122,7 @@ namespace Ferda.Modules.Boxes
             if (String.IsNullOrEmpty(categoryName))
                 return String.Empty;
             string[] localePrefs = (String.IsNullOrEmpty(cultureName)) ? new string[0] : new string[] { cultureName };
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             string result;
             if (boxLocalization.Categories.TryGetValue(categoryName, out result))
             {
@@ -1088,7 +1149,7 @@ namespace Ferda.Modules.Boxes
         public ActionInfo[] GetActions(string[] localePrefs)
         {
             List<ActionInfo> result = new List<ActionInfo>();
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             foreach (Boxes.Serializer.Configuration.Action action in this.box.Actions.Values)
             {
                 ActionInfo resultItem = new ActionInfo(
@@ -1122,7 +1183,7 @@ namespace Ferda.Modules.Boxes
             }
             catch (KeyNotFoundException ex)
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(ex, null, "BoxInf10: Bad name of action. ("+ actionName + ")", actionName);
+                throw Ferda.Modules.Exceptions.NameNotExistError(ex, null, "BoxInf10: Bad name of action. (" + actionName + ")", actionName);
             }
         }
         #endregion
@@ -1140,7 +1201,7 @@ namespace Ferda.Modules.Boxes
         protected Dictionary<string, ModulesAskingForCreation> getModulesAskingForCreationNonDynamic(string[] localePrefs)
         {
             List<string> input = this.box.ModulesAskingForCreation;
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             Dictionary<string, ModulesAskingForCreation> result = new Dictionary<string, ModulesAskingForCreation>();
             foreach (string moduleAFCName in input)
             {
@@ -1164,13 +1225,44 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public bool TryGetPhrase(string phraseIdentifier, out string phraseLocalizedText, string[] localePrefs)
         {
-            Boxes.Serializer.Localization.Helper boxLocalization = getLocalization(localePrefs);
+            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             return boxLocalization.TryGetPhrase(phraseIdentifier, out phraseLocalizedText);
         }
 
         #region IBoxInfo Members
 
 
+        /// <summary>
+        /// Validates setting of this box module.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <remarks>
+        /// 	<para>
+        /// Some settings may cause to exceptions or some error states.
+        /// </para>
+        /// 	<para>
+        /// Validates the specified box module. (e.g. setting of some properties
+        /// is right (satisfies its restrictions) but box module can not work with
+        /// this setting e.g. property "OdbcConnectionString" is valid ODBC connection
+        /// string but the box module can not connect with given value to the
+        /// specified data source.)
+        /// </para>
+        /// 	<para>
+        /// E. g. if (current) box module provides OdbcConnectionString
+        /// and its value is bad (not valid ODBC connection string) then
+        /// if another box module wants to use the (bad) value of the
+        /// connection string, probably exception will be thrown but
+        /// the error occured because of bad param of current box and
+        /// its property OdbcConnectionString. So, the other box, where
+        /// the error occured, should call (job of ModulesManager) function
+        /// Validate on current box and current box should test validity
+        /// and usability of the OdbcConnectionString.
+        /// </para>
+        /// 	<para>
+        /// If setting of current box is bad (may leads to some errors
+        /// of exceptions) than some exception is thrown.
+        /// </para>
+        /// </remarks>
         public virtual void Validate(BoxModuleI boxModule)
         {
         }

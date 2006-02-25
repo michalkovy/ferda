@@ -154,7 +154,7 @@ namespace Ferda.Modules.Helpers.Data
             //get schema
             DataTable schema = conn.GetSchema("TABLES");
 
-            //prepare OdbcCommand for "SELECT COUNT(*) FROM ..." query
+            //prepare OdbcCommand for "SELECT COUNT(1) FROM ..." query
             OdbcCommand odbcCommand = new OdbcCommand();
             odbcCommand.Connection = conn;
 
@@ -172,7 +172,7 @@ namespace Ferda.Modules.Helpers.Data
                     dataMatrixSchemaInfo.remarks = row["REMARKS"].ToString();
 
                     //complete OdbcCommand and execute
-                    odbcCommand.CommandText = "SELECT COUNT(*) FROM " + "`" + dataMatrixSchemaInfo.name + "`";
+                    odbcCommand.CommandText = "SELECT COUNT(1) FROM " + "`" + dataMatrixSchemaInfo.name + "`";
                     dataMatrixSchemaInfo.rowCount = Convert.ToInt32(odbcCommand.ExecuteScalar());
 
                     result.Add(dataMatrixSchemaInfo);

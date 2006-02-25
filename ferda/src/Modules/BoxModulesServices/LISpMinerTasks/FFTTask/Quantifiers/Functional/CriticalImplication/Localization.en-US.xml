@@ -15,11 +15,13 @@
       <Hint>Relation</Hint>
       <SelectOptions>
         <SelectOption>
-          <Name>LessThanOrEqualCore</Name>
+          <Name>LessThanOrEqual</Name>
+          <!-- CoreRelation -->
           <Label>Dolní (menší nebo rovno)</Label>
         </SelectOption>
         <SelectOption>
-          <Name>GreaterThanOrEqualCore</Name>
+          <Name>GreaterThanOrEqual</Name>
+          <!-- CoreRelation -->
           <Label>Horní (větší nebo rovno)</Label>
         </SelectOption>
       </SelectOptions>

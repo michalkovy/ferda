@@ -8,6 +8,9 @@ using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAttribute
 {
+    /// <summary>
+    /// Algorithm for equidistant attribute.
+    /// </summary>
     public static class EquidistantAlgorithm
     {
         private static GeneratedAttribute generateFloating(float from, float to, SidesEnum closedFrom, float length, ColumnInfo column)
@@ -175,6 +178,17 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                 return Ferda.Modules.Exceptions.BadValueError(ex, boxIdentity, null, socketNames, restrictionTypeEnum.BadFormat);
         }
 
+        /// <summary>
+        /// Generates the attribute.
+        /// </summary>
+        /// <param name="domainType">Type of the domain.</param>
+        /// <param name="from">From.</param>
+        /// <param name="to">To.</param>
+        /// <param name="closedFrom">The closed from.</param>
+        /// <param name="length">The length.</param>
+        /// <param name="column">The column.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <returns>Generated attribute.</returns>
         public static GeneratedAttribute Generate(
             AttributeDomainEnum domainType,
             string from,
@@ -234,9 +248,9 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
             if (String.IsNullOrEmpty(to))
                 to = column.statistics.ValueMax;
 
-            switch (Ferda.Modules.Helpers.Data.Column.GetColumnSimpleSubTypeBySubType(column.columnSubType))
+            switch (Ferda.Modules.Helpers.Data.Column.GetColumnValueTypeByValueSubType(column.columnSubType))
             {
-                case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Floating:
+                case Ferda.Modules.Helpers.Data.Column.ValueType.Floating:
                     float fromTmpFl, toTmpFl;
                     try
                     {
@@ -249,7 +263,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                     }
                     catch (System.InvalidCastException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
                     return generateFloating(fromTmpFl, toTmpFl, closedFrom, (float)length, column);
-                case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Integral:
+                case Ferda.Modules.Helpers.Data.Column.ValueType.Integral:
                     long fromTmpLn, toTmpLn;
                     try
                     {
@@ -266,7 +280,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                     catch (System.OverflowException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
                     catch (System.FormatException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
                     return generateIntegral(fromTmpLn, toTmpLn, closedFrom, (long)length, column);
-                case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.DateTime:
+                case Ferda.Modules.Helpers.Data.Column.ValueType.DateTime:
                     throw Ferda.Modules.Exceptions.BadParamsError(null, boxIdentity, null, restrictionTypeEnum.DbColumnDataType);
                 //TODO
                 /*
@@ -283,20 +297,20 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquidistantIntervalsAt
                 catch (System.InvalidCastException ex) { throw badParamsError(boxIdentity, new string[] { "To" }, ex); }
                 return generateDateTime(fromTmpDt, toTmpDt, closedFrom, (long)length, column);
                  */
-                case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.String:
+                case Ferda.Modules.Helpers.Data.Column.ValueType.String:
                     if (distincts == null)
                         distincts = Ferda.Modules.Helpers.Data.Column.GetDistincts(column.dataMatrix.database.odbcConnectionString, column.dataMatrix.dataMatrixName, column.columnSelectExpression, boxIdentity);
                     //TODO lepe distincts (dle from a to)
                     return generateString(from, to, (long)length, distincts);
-                case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Boolean:
+                case Ferda.Modules.Helpers.Data.Column.ValueType.Boolean:
                     throw Ferda.Modules.Exceptions.BadParamsError(null, boxIdentity, null, restrictionTypeEnum.DbColumnDataType);
                 //TODO
                 //return generateBoolean(Convert.ToBoolean(from), Convert.ToBoolean(to), closedFrom, (long)length, column);
-                case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Unknown:
+                case Ferda.Modules.Helpers.Data.Column.ValueType.Unknown:
                     //TODO
                     throw Ferda.Modules.Exceptions.BadParamsError(null, boxIdentity, null, restrictionTypeEnum.DbColumnDataType);
                 default:
-                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(Ferda.Modules.Helpers.Data.Column.GetColumnSimpleSubTypeBySubType(column.columnSubType));
+                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(Ferda.Modules.Helpers.Data.Column.GetColumnValueTypeByValueSubType(column.columnSubType));
             }
         }
     }

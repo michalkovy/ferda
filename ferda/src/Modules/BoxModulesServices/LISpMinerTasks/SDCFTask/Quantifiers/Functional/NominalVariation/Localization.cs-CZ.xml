@@ -4,8 +4,8 @@
   <Hint>Nominal variation (norm) = suma(f(i)*(1-f(i))) * K/(K-1)</Hint>
   <Categories>
     <Category>
-      <Name>SDCFMiner</Name>
-      <Label>SDCF-Miner</Label>
+      <Name>SDCFMiner.Quantifiers.Aggregation</Name>
+      <Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
     </Category>
   </Categories>
   <Sockets>

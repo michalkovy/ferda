@@ -4,8 +4,8 @@
   <Hint>Asymetry coeficient of cardinal values</Hint>
   <Categories>
     <Category>
-      <Name>CFMiner</Name>
-      <Label>CF-Miner</Label>
+      <Name>CFMiner.Quantifiers.Functional</Name>
+      <Label>CF-Miner.Quantifiers.Functional</Label>
     </Category>
   </Categories>
   <Sockets>

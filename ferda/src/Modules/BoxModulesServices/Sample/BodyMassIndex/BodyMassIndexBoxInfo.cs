@@ -19,6 +19,9 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
             return BodyMassIndexFunctionsI.ids__;
         }
 
+        /// <summary>
+        /// Gets default value for box module user label.
+        /// </summary>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
             try
@@ -31,6 +34,15 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
             }
         }
 
+        /// <summary>
+        /// Gets the box modules asking for creation.
+        /// </summary>
+        /// <param name="localePrefs">The localization preferences.</param>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// Array of <see cref="T:Ferda.Modules.ModuleAskingForCreation">
+        /// Modules Asking For Creation</see>.
+        /// </returns>
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
         {
             Dictionary<string, ModulesAskingForCreation> modulesAFC = this.getModulesAskingForCreationNonDynamic(localePrefs);
@@ -71,6 +83,10 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as
+        /// options for property, whose options are dynamically variable.
+        /// </summary>
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
             return null;

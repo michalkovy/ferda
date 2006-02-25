@@ -5,33 +5,82 @@ using Ferda.Modules;
 
 namespace Ferda.Modules.Quantifiers
 {
-	public class OneDimensionalContingencyTable : ContingencyTable
+	/// <summary>
+    /// Represents specific kind of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>
+    /// which has only one dimension i. e. shape of the contingency is 
+    /// (one row) x (<c>n</c> columns).
+	/// </summary>
+    /// <remarks>
+    /// Please notice, that <see cref="P:Ferda.Modules.Quantifiers.OneDimensionalContingencyTable.NumericValues"/> property
+    /// is must be set for computation fo some one-dimensional quantifiers.
+    /// </remarks>
+    public class OneDimensionalContingencyTable : ContingencyTable
 	{
 		#region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OneDimensionalContingencyTable"/> class.
+        /// </summary>
 		public OneDimensionalContingencyTable()
 			: base()
 		{
 			if (!this.IsOneDimensional)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be onedimensional!", restrictionTypeEnum.BadFormat);
 		}
-		public OneDimensionalContingencyTable(int[][] contingencyTable)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OneDimensionalContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
+        public OneDimensionalContingencyTable(int[][] contingencyTable)
 			: base(contingencyTable)
 		{
 			if (!this.IsOneDimensional)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be onedimensional!", restrictionTypeEnum.BadFormat);
 		}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OneDimensionalContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
 		public OneDimensionalContingencyTable(long[][] contingencyTable)
 			: base(contingencyTable)
 		{
 			if (!this.IsOneDimensional)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be onedimensional!", restrictionTypeEnum.BadFormat);
 		}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OneDimensionalContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
 		public OneDimensionalContingencyTable(long[,] contingencyTable)
 			: base(contingencyTable)
 		{
 			if (!this.IsOneDimensional)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be onedimensional!", restrictionTypeEnum.BadFormat);
 		}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OneDimensionalContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <param name="denominator">The denominator.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
 		public OneDimensionalContingencyTable(long[,] contingencyTable, long denominator)
 			: base(contingencyTable, denominator)
 		{
@@ -41,6 +90,14 @@ namespace Ferda.Modules.Quantifiers
 		#endregion
 
 		private double[] numericValues;
+        /// <summary>
+        /// Gets or sets the numeric values. 
+        /// Numerical values are needed for computation of some 
+        /// specific quantifier values (e. g. average value needs 
+        /// numerical values (from this property) and its 
+        /// frequencies (from contingency table)).
+        /// </summary>
+        /// <value>The numeric values.</value>
 		public double[] NumericValues
 		{
 			get
@@ -72,9 +129,9 @@ namespace Ferda.Modules.Quantifiers
 				int lastColumnIndex = LastColumnIndex;
 				for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
 				{
-					result += table[rowIndex, columnIndex] * numericValues[columnIndex];
+                    result += Table[rowIndex, columnIndex] * numericValues[columnIndex];
 				}
-				return result / (double)denominator;
+                return result / (double)Denominator;
 			}
 		}
 
@@ -95,9 +152,9 @@ namespace Ferda.Modules.Quantifiers
 				int lastColumnIndex = LastColumnIndex;
 				for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
 				{
-					result += table[rowIndex, columnIndex] * Math.Pow(numericValues[columnIndex] - arithmeticAverage, 3);
+                    result += Table[rowIndex, columnIndex] * Math.Pow(numericValues[columnIndex] - arithmeticAverage, 3);
 				}
-				return result / Math.Pow(StandardDeviation, 3) * (double)denominator;
+                return result / Math.Pow(StandardDeviation, 3) * (double)Denominator;
 			}
 		}
 
@@ -120,14 +177,14 @@ namespace Ferda.Modules.Quantifiers
 				for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
 				{
                     if (numericValues[columnIndex] > arithmeticAverage)
-						numberOfValuesGreaterThanAverage += table[rowIndex, columnIndex];
+                        numberOfValuesGreaterThanAverage += Table[rowIndex, columnIndex];
 					else if (numericValues[columnIndex] < arithmeticAverage)
-						numberOfValuesLessThanAverage += table[rowIndex, columnIndex];
-					numberOfAllRecords += table[rowIndex, columnIndex];
+                        numberOfValuesLessThanAverage += Table[rowIndex, columnIndex];
+                    numberOfAllRecords += Table[rowIndex, columnIndex];
 				}
 				if (numberOfAllRecords == 0)
 					return 0;
-				return (numberOfValuesGreaterThanAverage - numberOfValuesLessThanAverage) / (numberOfAllRecords * (double)denominator);
+                return (numberOfValuesGreaterThanAverage - numberOfValuesLessThanAverage) / (numberOfAllRecords * (double)Denominator);
 			}
 		}
 
@@ -148,7 +205,7 @@ namespace Ferda.Modules.Quantifiers
 				double cumulativeFrequency = 0;
 				for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
 				{
-					cumulativeFrequency += table[rowIndex, columnIndex] / (double)denominator;
+                    cumulativeFrequency += Table[rowIndex, columnIndex] / (double)Denominator;
 					result += cumulativeFrequency * (1 - cumulativeFrequency);
 				}
 				return 2 * result;
@@ -174,7 +231,7 @@ namespace Ferda.Modules.Quantifiers
 				{
 					try
 					{
-						result += table[rowIndex, columnIndex] * Math.Log(numericValues[columnIndex]);
+                        result += Table[rowIndex, columnIndex] * Math.Log(numericValues[columnIndex]);
 					}
 					catch (Exception ex)
 					{
@@ -184,7 +241,7 @@ namespace Ferda.Modules.Quantifiers
 							throw ex;
 					}
 				}
-				return result / (double)denominator;
+                return result / (double)Denominator;
 			}
 		}
 
@@ -203,9 +260,9 @@ namespace Ferda.Modules.Quantifiers
 
 				for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
 				{
-					result += Math.Pow(table[rowIndex, columnIndex], 2);
+                    result += Math.Pow(Table[rowIndex, columnIndex], 2);
 				}
-				return 1 - (result / (double)denominator);
+                return 1 - (result / (double)Denominator);
 			}
 		}
 
@@ -234,9 +291,9 @@ namespace Ferda.Modules.Quantifiers
 				int lastColumnIndex = LastColumnIndex;
 				for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
 				{
-					result += table[rowIndex, columnIndex] * Math.Pow(numericValues[columnIndex], 2);
+                    result += Table[rowIndex, columnIndex] * Math.Pow(numericValues[columnIndex], 2);
 				}
-				return (result / (double)denominator) - (lastColumnIndex - firstColumnIndex + 1) * Math.Pow(ArithmeticAverage, 2);
+                return (result / (double)Denominator) - (lastColumnIndex - firstColumnIndex + 1) * Math.Pow(ArithmeticAverage, 2);
 			}
 		}
 
@@ -248,7 +305,7 @@ namespace Ferda.Modules.Quantifiers
 		{
 			get
 			{
-				return 1 - this.MaxValueAggregation;
+				return 1 - this.MaxValue;
 			}
 		}
 	}

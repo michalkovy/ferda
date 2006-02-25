@@ -31,10 +31,8 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
     /// <seealso cref="T:Ferda.Modules.Boxes.BoxInfo"/>
     /// <seealso cref="T:Ferda.Modules.Boxes.Serializer.Localization.BoxLocalization"/>
     [Serializable]
-    public class Helper
+    public class Helper : Ferda.Modules.Boxes.Serializer.Configuration.IHelper
     {
-        private Box box;
-
         /// <summary>
         /// <para>
         /// Initializes a new instance of the <see cref="Helper"/> class.
@@ -49,11 +47,15 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
                 System.Diagnostics.Debug.WriteLine("Ser06");
                 throw new ArgumentNullException("box");
             }
-            this.box = box;
+
+            this.identifier = box.Identifier;
+            this.iconPath = box.IconPath;
+            this.designPath = box.DesignPath;
+            this.categories = box.Categories;
 
             //prepare Dictionary of actions and Lists its needed connected sockets
-            if (this.box.Actions != null)
-                foreach (Action action in this.box.Actions)
+            if (box.Actions != null)
+                foreach (Action action in box.Actions)
                 {
                     //add action to Dictionary
                     this.actions.Add(action.Name, action);
@@ -70,8 +72,8 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
                 }
 
             //prepare Dictionary of sockets
-            if (this.box.Sockets != null)
-                foreach (Socket socket in this.box.Sockets)
+            if (box.Sockets != null)
+                foreach (Socket socket in box.Sockets)
                 {
                     this.sockets.Add(socket.Name, socket);
                 }
@@ -80,8 +82,8 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
             this.prepareSocketTypes();
 
             //prepare Dictionary of properties
-            if (this.box.Properties != null)
-                foreach (Property property in this.box.Properties)
+            if (box.Properties != null)
+                foreach (Property property in box.Properties)
                 {
                     this.properties.Add(property.Name, property);
                 }
@@ -90,8 +92,8 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
             this.preparePropertyRestrictions();
 
             //prepare modules asking for creation
-            if (this.box.ModulesAskingForCreationSeq != null)
-                foreach (ModulesAskingForCreation modulesAskingForCreation in this.box.ModulesAskingForCreationSeq)
+            if (box.ModulesAskingForCreationSeq != null)
+                foreach (ModulesAskingForCreation modulesAskingForCreation in box.ModulesAskingForCreationSeq)
                 {
                     this.modulesAskingForCreation.Add(modulesAskingForCreation.Name);
                 }
@@ -118,50 +120,55 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
 #endif
         }
 
+        private string identifier;
         /// <summary>
         /// Gets the box`s identifier.
         /// </summary>
         /// <value>The box`s identifier.</value>
         public string Identifier
-        { get { return this.box.Identifier; } }
+        { get { return identifier; } }
 
+        private string iconPath;
         /// <summary>
         /// Gets the path to box`s icon design i.e. the "ico" file.
         /// </summary>
+        /// <value>The path to the icon.</value>
         /// <remarks>
-        /// For further information about relative pathes please see remars in 
+        /// For further information about relative pathes please see remars in
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box"/>.
         /// </remarks>
-        /// <value>The path to the icon.</value>
         public string IconPath
-        { get { return this.box.IconPath; } }
+        { get { return iconPath; } }
 
+        private string designPath;
         /// <summary>
         /// Gets the path to the <see href="http://www.w3.org/tr/2000/cr-svg-20001102/index.html">
         /// Scalable Vector Graphics (SVG)</see> design file of the box.
         /// </summary>
+        /// <value>The path to the SVG design file.</value>
         /// <remarks>
-        /// For further information about relative pathes please see remars in 
+        /// For further information about relative pathes please see remars in
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box"/>.
         /// </remarks>
-        /// <value>The path to the SVG design file.</value>
         public string DesignPath
-        { get { return this.box.DesignPath; } }
+        { get { return designPath; } }
 
+        private string[] categories;
         /// <summary>
         /// Gets the categories i.e. names of categories where the box module belongs to.
         /// </summary>
         /// <value>The categories.</value>
         public string[] Categories
-        { get { return this.box.Categories; } }
+        { get { return categories; } }
 
         private Dictionary<string, Boxes.Serializer.Configuration.Socket> sockets = new Dictionary<string, Socket>();
         /// <summary>
         /// Gets the sockets.
         /// </summary>
-        /// <value>The sockets.
+        /// <value>
+        /// The sockets.
         /// <para><c>Key</c> is the socket`s name.</para>
-        /// <para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Socket"/>.</para>
+        /// 	<para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Socket"/>.</para>
         /// </value>
         public Dictionary<string, Boxes.Serializer.Configuration.Socket> Sockets
         {
@@ -172,9 +179,10 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <summary>
         /// Gets the properties.
         /// </summary>
-        /// <value>The properties.
+        /// <value>
+        /// The properties.
         /// <para><c>Key</c> is name of the property.</para>
-        /// <para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Property"/>.</para>
+        /// 	<para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Property"/>.</para>
         /// </value>
         public SortedList<string, Boxes.Serializer.Configuration.Property> Properties
         {
@@ -185,9 +193,10 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <summary>
         /// Gets the actions.
         /// </summary>
-        /// <value>The actions.
+        /// <value>
+        /// The actions.
         /// <para><c>Key</c> is the action`s name.</para>
-        /// <para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Action"/>.</para>
+        /// 	<para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Action"/>.</para>
         /// </value>
         public Dictionary<string, Boxes.Serializer.Configuration.Action> Actions
         {
@@ -198,9 +207,10 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <summary>
         /// Gets the action`s needed connected sockets.
         /// </summary>
-        /// <value>The action`s needed connected sockets.
+        /// <value>
+        /// The action`s needed connected sockets.
         /// <para><c>Key</c> is the action`s name.</para>
-        /// <para><c>Value</c> is the array of conditions on needed connected 
+        /// 	<para><c>Value</c> is the array of conditions on needed connected
         /// sockets. Box has to satisfy at least one of the conditions before
         /// the action can be executed. The condition is array of socket`s names
         /// in which other box(es) has to be connected.</para>
@@ -216,7 +226,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// </summary>
         /// <value>Names of the modules asking for creation.</value>
         /// <remarks>
-        /// <see cref="T:Ferda.Modules.ModulesAskingForCreation"/> structures are empty because all the
+        /// 	<see cref="T:Ferda.Modules.ModulesAskingForCreation"/> structures are empty because all the
         /// memebers in this structure depends on localization or dynamic (or runtime) factors.
         /// </remarks>
         public List<string> ModulesAskingForCreation
@@ -228,11 +238,12 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// Gets the socket.
         /// </summary>
         /// <param name="socketName">Name of the socket.</param>
-        /// <returns><see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket"/> if 
-        /// exists an element of specified <c>socketName</c>; otherwise, throws 
+        /// <returns>
+        /// 	<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket"/> if
+        /// exists an element of specified <c>socketName</c>; otherwise, throws
         /// <see cref="T:Ferda.Modules.NameNotExistError"/>.
         /// </returns>
-        /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with 
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with
         /// the specified name (<c>socketName</c>) in the box.</exception>
         public Socket GetSocket(string socketName)
         {
@@ -300,8 +311,10 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// Gets the socket`s types.
         /// </summary>
         /// <param name="socketName">Name of the socket.</param>
-        /// <returns>Array of <see cref="T:Ferda.Modules.BoxType"/>.</returns>
-        /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with 
+        /// <returns>
+        /// Array of <see cref="T:Ferda.Modules.BoxType"/>.
+        /// </returns>
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with
         /// specified <c>socketName</c> in the box.</exception>
         public Ferda.Modules.BoxType[] GetSocketTypes(string socketName)
         {
@@ -319,8 +332,9 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// Gets the property.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        /// <returns><see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Property"/> if 
-        /// exists an element of specified <c>propertyName</c>; otherwise, throws 
+        /// <returns>
+        /// 	<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Property"/> if
+        /// exists an element of specified <c>propertyName</c>; otherwise, throws
         /// <see cref="T:Ferda.Modules.NameNotExistError"/>.
         /// </returns>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">
@@ -388,7 +402,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>
-        /// <see cref="T:System.Collections.Generic.List"/> of 
+        /// 	<see cref="T:System.Collections.Generic.List"/> of
         /// <see cref="T:Ferda.Modules.Restriction">Restriction</see>.
         /// </returns>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">

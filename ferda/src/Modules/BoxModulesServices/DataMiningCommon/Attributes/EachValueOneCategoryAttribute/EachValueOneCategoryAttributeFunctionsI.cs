@@ -10,11 +10,20 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EachValueOneCategoryAt
 {
 	class EachValueOneCategoryAttributeFunctionsI : EachValueOneCategoryAttributeFunctionsDisp_, IFunctions, IAbstractDynamicAttribute, IAbstractAttribute
 	{
+        /// <summary>
+        /// The box module.
+        /// </summary>
 		protected BoxModuleI boxModule;
 		//protected IBoxInfo boxInfo;
 
 		#region IFunctions Members
-		public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
+        /// <summary>
+        /// Sets the <see cref="T:Ferda.Modules.BoxModuleI">box module</see>
+        /// and the <see cref="T:Ferda.Modules.Boxes.IBoxInfo">box info</see>.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="boxInfo">The box info.</param>
+        public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
 		{
 			this.boxModule = boxModule;
 			//this.boxInfo = boxInfo;
@@ -102,7 +111,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EachValueOneCategoryAt
 			result.countOfCategories = categoriesInfo.CategoriesCount;
 			result.includeNullCategory = categoriesInfo.IncludeNullCategoryName;
 			result.xCategory = XCategory;
-            Ferda.Modules.Helpers.Data.Attribute.TestXCategoryAndIncludeNullCategoryAreInCategories(result.categories, result.xCategory, result.includeNullCategory, boxModule.StringIceIdentity);
+            Ferda.Modules.Helpers.Data.Attribute.TestAreCategoriesInCategories(result.categories, new string[] { result.xCategory, result.includeNullCategory } , boxModule.StringIceIdentity);
 			result.nameInLiterals = NameInLiterals;
 
             return result;

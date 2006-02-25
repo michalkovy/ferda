@@ -7,9 +7,17 @@ using System.Threading;
 
 namespace Ferda.Modules
 {
-    //TODO Michal ... kompletne zdokumentovat
+    /// <summary>
+    /// TODO Michal ... kompletne zdokumentovat celou tridu
+    /// </summary>
     public abstract class FerdaServiceI : Ice.LocalObjectImpl, IceBox.Service 
     {
+        /// <summary>
+        /// TODO Michal
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="communicator"></param>
+        /// <param name="args"></param>
         public void start(string name, Ice.Communicator communicator, string[] args)
         {
             Debug.Listeners.Clear();
@@ -42,6 +50,9 @@ namespace Ferda.Modules
             }
         }
 
+        /// <summary>
+        /// TODO Michal
+        /// </summary>
         public void stop()
         {
             _adapter.deactivate();
@@ -56,6 +67,12 @@ namespace Ferda.Modules
             Debug.WriteLine("Service has stoped...");
         }
 
+        /// <summary>
+        /// TODO Michal
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="valFromPrx"></param>
         public void registerPropertyBox(string type, PropertyValue defaultValue, PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx)
         {
             PropertyBoxModuleFactoryCreatorI newCreator = new PropertyBoxModuleFactoryCreatorI("::Ferda::Modules::" + type,
@@ -67,8 +84,16 @@ namespace Ferda.Modules
                                                            _adapter);
         }
 
+        /// <summary>
+        /// TODO Michal
+        /// </summary>
         protected virtual void registerPropertyBoxes() { }
 
+        /// <summary>
+        /// TODO Michal
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <param name="boxInfo"></param>
         public void registerBox(string identity, Ferda.Modules.Boxes.IBoxInfo boxInfo)
         {
             Debug.WriteLine("Registering " + identity + "...");
@@ -118,6 +143,9 @@ namespace Ferda.Modules
 
         private Ice.ObjectAdapter _adapter;
 
+        /// <summary>
+        /// TODO Michal
+        /// </summary>
         protected virtual bool havePropertyBoxes
         {
             get { return false; }

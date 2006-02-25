@@ -3,7 +3,7 @@
   <IconPath>boxIcon.ico</IconPath>
   <DesignPath>boxDesign.svg</DesignPath>
   <Categories>
-    <string>SDCFMiner</string>
+    <string>SDCFMiner.Quantifiers.Functional</string>
   </Categories>
   <Sockets>
     <Socket>

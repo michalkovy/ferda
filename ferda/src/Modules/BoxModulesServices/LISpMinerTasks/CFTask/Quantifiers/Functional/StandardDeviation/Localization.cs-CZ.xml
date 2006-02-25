@@ -4,8 +4,8 @@
   <Hint>Standard deviation of cardinal values.</Hint>
   <Categories>
     <Category>
-      <Name>CFMiner</Name>
-      <Label>CF-Miner</Label>
+      <Name>CFMiner.Quantifiers.Functional</Name>
+      <Label>CF-Miner.Kvantifikátory.Funkční</Label>
     </Category>
   </Categories>
   <Sockets>

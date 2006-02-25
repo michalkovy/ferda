@@ -25,16 +25,32 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
             return DerivedColumnFunctionsI.ids__;
         }
 
+        /// <summary>
+        /// Gets default value for box module user label.
+        /// </summary>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
             return boxModule.GetPropertyString("Formula");
         }
 
+        /// <summary>
+        /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as
+        /// options for property, whose options are dynamically variable.
+        /// </summary>
         public override SelectString[] GetPropertyOptions(String propertyName, BoxModuleI boxModule)
         {
             return null;
         }
 
+        /// <summary>
+        /// Gets the box modules asking for creation.
+        /// </summary>
+        /// <param name="localePrefs">The localization preferences.</param>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// Array of <see cref="T:Ferda.Modules.ModuleAskingForCreation">
+        /// Modules Asking For Creation</see>.
+        /// </returns>
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
         {
             Dictionary<string, ModulesAskingForCreation> modulesAFC = this.getModulesAskingForCreationNonDynamic(localePrefs);
@@ -103,6 +119,15 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Gets value of readonly property value.
+        /// </summary>
+        /// <param name="propertyName">Name of readonly property.</param>
+        /// <param name="boxModule">Box module.</param>
+        /// <returns>
+        /// A <see cref="T:Ferda.Modules.PropertyValue"/> of
+        /// readonly property named <c>propertyName</c>.
+        /// </returns>
         public override PropertyValue GetReadOnlyPropertyValue(String propertyName, BoxModuleI boxModule)
         {
             DerivedColumnFunctionsI Func = (DerivedColumnFunctionsI)boxModule.FunctionsIObj;
@@ -124,6 +149,13 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(propertyName);
             }
         }
+        /// <summary>
+        /// Executes (runs) action specified by <c>actionName</c>.
+        /// </summary>
+        /// <param name="actionName">Name of the action.</param>
+        /// <param name="boxModule">The Box module.</param>
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">Thrown if action named <c>actionName</c> doesn`t exist.</exception>
+        /// <exception cref="T:Ferda.Modules.BoxRuntimeError">Thrown if any runtime error occured while executing the action.</exception>
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
             switch (actionName)

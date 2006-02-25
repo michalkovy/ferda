@@ -3,7 +3,7 @@
   <IconPath>boxIcon.ico</IconPath>
   <DesignPath>boxDesign.svg</DesignPath>
   <Categories>
-    <string>SDKLMiner</string>
+    <string>SDKLMiner.Quantifiers.Aggregation</string>
   </Categories>
   <Sockets>
     <Socket>

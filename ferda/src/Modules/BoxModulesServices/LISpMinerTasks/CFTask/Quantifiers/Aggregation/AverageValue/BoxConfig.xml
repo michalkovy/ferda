@@ -3,7 +3,7 @@
   <IconPath>boxIcon.ico</IconPath>
   <DesignPath>boxDesign.svg</DesignPath>
   <Categories>
-    <string>CFMiner</string>
+    <string>CFMiner.Quantifiers.Aggregation</string>
   </Categories>
   <Sockets>
     <Socket>

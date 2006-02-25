@@ -4,8 +4,8 @@
   <Hint>Sum of frequencies from range.</Hint>
   <Categories>
     <Category>
-      <Name>SDCFMiner</Name>
-      <Label>SDCF-Miner</Label>
+      <Name>SDCFMiner.Quantifiers.Aggregation</Name>
+      <Label>SDCF-Miner.Quantifiers.Aggregation</Label>
     </Category>
   </Categories>
   <Sockets>

@@ -15,11 +15,13 @@
       <Hint>Relation</Hint>
       <SelectOptions>
         <SelectOption>
-          <Name>LessThanOrEqualCore</Name>
+          <Name>LessThanOrEqual</Name>
+          <!-- CoreRelation -->
           <Label>Lower (less than or equal)</Label>
         </SelectOption>
         <SelectOption>
-          <Name>GreaterThanOrEqualCore</Name>
+          <Name>GreaterThanOrEqual</Name>
+          <!-- CoreRelation -->
           <Label>Upper (greater than or equal)</Label>
         </SelectOption>
       </SelectOptions>

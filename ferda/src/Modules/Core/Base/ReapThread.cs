@@ -116,6 +116,9 @@ namespace Ferda.Modules
             }
         }
 
+        /// <summary>
+        /// Terminates this instance.
+        /// </summary>
         public void Terminate()
         {
             lock (this)

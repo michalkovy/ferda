@@ -4,8 +4,8 @@
   <Hint>Geometric average of cardinal values.</Hint>
   <Categories>
     <Category>
-      <Name>SDCFMiner</Name>
-      <Label>SDCF-Miner</Label>
+      <Name>SDCFMiner.Quantifiers.Functional</Name>
+      <Label>SDCF-Miner.Quantifiers.Functional</Label>
     </Category>
   </Categories>
   <Sockets>

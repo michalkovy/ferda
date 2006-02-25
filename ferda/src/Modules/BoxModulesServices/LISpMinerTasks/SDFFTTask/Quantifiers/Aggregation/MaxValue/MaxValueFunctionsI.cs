@@ -12,7 +12,7 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Aggregation.M
 		{
 			get
 			{
-				return FourFoldContingencyTable.MaxValueAggregationValue;
+                return FourFoldContingencyTable.GetMaxValue;
 			}
 		}
 	}

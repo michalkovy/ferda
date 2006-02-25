@@ -18,6 +18,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Boxes.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,11 +43,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoxInfo.cs" />
-    <Compile Include="BoxInfoHelper.cs" />
+    <Compile Include="BoxInfoHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Serializer\Configuration\Box.cs" />
     <Compile Include="Serializer\Configuration\Helper.cs" />
+    <Compile Include="Serializer\Configuration\IHelper.cs" />
     <Compile Include="Serializer\Localization\BoxLocalization.cs" />
     <Compile Include="Serializer\Localization\Helper.cs" />
+    <Compile Include="Serializer\Localization\IHelper.cs" />
     <Compile Include="Serializer\Reader.cs" />
   </ItemGroup>
   <ItemGroup>

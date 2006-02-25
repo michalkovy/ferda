@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.CategorialPartialCedentSetting
 {
@@ -25,17 +26,39 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.CategorialPartialCedentSetting
 			return CategorialPartialCedentSettingFunctionsI.ids__;
 		}
 
+        /// <summary>
+        /// Gets default value for box module user label.
+        /// </summary>
 		public override string GetDefaultUserLabel(BoxModuleI boxModule)
 		{
-			return null;
+            string boxLabel = boxModule.BoxInfo.GetLabel(boxModule.LocalePrefs);
+            return boxLabel
+                + Constants.LeftEnum
+                + boxModule.GetPropertyLong("MinLen").ToString()
+                + Constants.RangeSeparator
+                + boxModule.GetPropertyLong("MaxLen").ToString()
+                + Constants.RightEnum;
 		}
 
+        /// <summary>
+        /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as
+        /// options for property, whose options are dynamically variable.
+        /// </summary>
 		public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
 		{
             return null;
 		}
 
-		public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
+        /// <summary>
+        /// Gets the box modules asking for creation.
+        /// </summary>
+        /// <param name="localePrefs">The localization preferences.</param>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// Array of <see cref="T:Ferda.Modules.ModuleAskingForCreation">
+        /// Modules Asking For Creation</see>.
+        /// </returns>
+        public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
 		{
 			return new ModulesAskingForCreation[0] { };
 		}

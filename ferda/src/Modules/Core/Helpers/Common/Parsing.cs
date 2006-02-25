@@ -5,15 +5,45 @@ using Ferda.Modules;
 
 namespace Ferda.Modules.Helpers.Common
 {
+    /// <summary>
+    /// Used as result of some parsing methods. See
+    /// <see cref="T:Ferda.Modules.Helpers.Common.Parsing"/>.
+    /// </summary>
     public enum ParsedResultType
     {
+        /// <summary>
+        /// Used when parsing wasn`t successful.
+        /// </summary>
         None,
+
+        /// <summary>
+        /// Used when result of parsing is one 
+        /// item of specified enumeration (enum).
+        /// </summary>
         Enum,
+
+        /// <summary>
+        /// Used when parsing didn`t lead to parse some item
+        /// of specified enumeration (enum) but to some number 
+        /// (usually long).
+        /// </summary>
         Value
     }
 
+    /// <summary>
+    /// This static class provides some static 
+    /// methods useful for parsing enums, ingrals, ...
+    /// </summary>
     public static class Parsing
     {
+        /// <summary>
+        /// Tries the parse enum or integral value.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="enumType">Type of the enum.</param>
+        /// <param name="enumValue">The out enum value.</param>
+        /// <param name="integralValue">The out integral value.</param>
+        /// <returns>Result type.</returns>
         public static ParsedResultType TryParseEnumOrIntegral(string input, Type enumType, out object enumValue, out long integralValue)
         {
             integralValue = 0;
@@ -37,6 +67,15 @@ namespace Ferda.Modules.Helpers.Common
             return ParsedResultType.None;
         }
 
+        /// <summary>
+        /// Parses the enum or integral value. If parsing is not successful
+        /// some exception is thrown.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="enumType">Type of the enum.</param>
+        /// <param name="enumValue">The out enum value.</param>
+        /// <param name="integralValue">The out integral value.</param>
+        /// <returns>Result type.</returns>
         public static ParsedResultType ParseEnumOrIntegral(string input, Type enumType, out object enumValue, out long integralValue)
         {
             integralValue = 0;

@@ -11,7 +11,7 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Aggregation.MaxV
 		{
 			get
 			{
-				return ContingencyTable.MaxValueAggregationValue;
+                return ContingencyTable.GetMaxValue;
 			}
 		}
 	}

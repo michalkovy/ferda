@@ -25,6 +25,15 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute
 			return AttributeFunctionsI.ids__;
 		}
 
+        /// <summary>
+        /// Gets the box modules asking for creation.
+        /// </summary>
+        /// <param name="localePrefs">The localization preferences.</param>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// Array of <see cref="T:Ferda.Modules.ModuleAskingForCreation">
+        /// Modules Asking For Creation</see>.
+        /// </returns>
 		public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
 		{
 			Dictionary<string, ModulesAskingForCreation> modulesAFC = this.getModulesAskingForCreationNonDynamic(localePrefs);
@@ -67,6 +76,15 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute
 			return result.ToArray();
 		}
 
+        /// <summary>
+        /// Gets value of readonly property value.
+        /// </summary>
+        /// <param name="propertyName">Name of readonly property.</param>
+        /// <param name="boxModule">Box module.</param>
+        /// <returns>
+        /// A <see cref="T:Ferda.Modules.PropertyValue"/> of
+        /// readonly property named <c>propertyName</c>.
+        /// </returns>
 		public override PropertyValue GetReadOnlyPropertyValue(String propertyName, BoxModuleI boxModule)
 		{
 			AttributeFunctionsI Func = (AttributeFunctionsI)boxModule.FunctionsIObj;

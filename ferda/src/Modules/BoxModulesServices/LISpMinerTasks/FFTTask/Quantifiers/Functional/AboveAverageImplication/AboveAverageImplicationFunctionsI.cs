@@ -15,13 +15,15 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.Abov
 	class AboveAverageImplicationFunctionsI : AbstractFFTTaskQuantifierFunctionsWithParamsK
 	{
 		#region Functions
-		/// <summary>
-		/// Returns <c>true</c> if the above average strength is greater than or equal to the strength parameter.
-		/// </summary>
-		/// <returns><c>true</c> if <c>a &gt; 0</c> and the strength defined as <c>(a / (a + b)) * ((a + b + c + d) / (a + c))</c> is greater than or equal to the strength parameter.</returns>
-		/// <remarks>
-		/// <para>If a = 0, returns false.</para>
-		/// </remarks>
+        /// <summary>
+        /// Returns <c>true</c> if the above average strength is greater than or equal to the strength parameter.
+        /// </summary>
+        /// <param name="setting">The setting.</param>
+        /// <param name="__current">The __current.</param>
+        /// <returns>
+        /// 	<c>true</c> if <c>a &gt; 0</c> and the strength defined as <c>(a / (a + b)) * ((a + b + c + d) / (a + c))</c> is greater than or equal to the strength parameter.
+        /// </returns>
+        /// <remarks>If a = 0, returns false.</remarks>
 		public override bool Validity(AbstractQuantifierSetting setting, Ice.Current __current)
 		{
 			FourFoldContingencyTable table = new FourFoldContingencyTable(setting.firstContingencyTableRows);

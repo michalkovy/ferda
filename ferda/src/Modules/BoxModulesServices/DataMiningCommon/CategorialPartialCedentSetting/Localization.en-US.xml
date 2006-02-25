@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>DataMiningCommon.CategorialPartialCedentSetting</Identifier>
-  <Label>CategorialPCS</Label>
+  <Label>Categorial cedent</Label>
   <Hint>Categorial partial cedent setting i. e. setting for categorial partial cedent and it`s parameters</Hint>
   <Categories>
     <Category>

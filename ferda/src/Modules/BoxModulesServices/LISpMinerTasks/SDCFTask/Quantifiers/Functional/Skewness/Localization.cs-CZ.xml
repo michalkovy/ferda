@@ -4,8 +4,8 @@
   <Hint>Skewness of cardinal values.</Hint>
   <Categories>
     <Category>
-      <Name>SDCFMiner</Name>
-      <Label>SDCF-Miner</Label>
+      <Name>SDCFMiner.Quantifiers.Aggregation</Name>
+      <Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
     </Category>
   </Categories>
   <Sockets>

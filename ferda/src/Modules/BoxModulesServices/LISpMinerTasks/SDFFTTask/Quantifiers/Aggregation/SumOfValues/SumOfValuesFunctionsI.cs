@@ -12,7 +12,7 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDFFTTask.Quantifiers.Aggregation.S
 		{
 			get
 			{
-				return FourFoldContingencyTable.SumOfValuesAggregationValue;
+				return FourFoldContingencyTable.GetSumOfValues;
 			}
 		}
 	}

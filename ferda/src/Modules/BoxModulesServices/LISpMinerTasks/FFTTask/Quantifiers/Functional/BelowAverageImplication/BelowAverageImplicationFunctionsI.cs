@@ -15,14 +15,18 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.Belo
 	class BelowAverageImplicationFunctionsI : AbstractFFTTaskQuantifierFunctionsWithParamsK
 	{
 		#region Functions
-		/// <summary>
-		/// Returns <c>true</c> if the below average strength is greater than or equal to the strength parameter.
-		/// </summary>
-		/// <returns><c>true</c> if the strength defined as <c>((a + b) / a) * ((a + c) / (a + b + c + d))</c> is greater than or equal to the strength parameter.</returns>
-		/// <remarks>
-		/// <para>If <c>(a + c) = 0</c>, return false.</para>
-		/// <para>If <c>a = 0</c>, returns true.</para>
-		/// </remarks>
+        /// <summary>
+        /// Returns <c>true</c> if the below average strength is greater than or equal to the strength parameter.
+        /// </summary>
+        /// <param name="setting">The setting.</param>
+        /// <param name="__current">The __current.</param>
+        /// <returns>
+        /// 	<c>true</c> if the strength defined as <c>((a + b) / a) * ((a + c) / (a + b + c + d))</c> is greater than or equal to the strength parameter.
+        /// </returns>
+        /// <remarks>
+        /// 	<para>If <c>(a + c) = 0</c>, return false.</para>
+        /// 	<para>If <c>a = 0</c>, returns true.</para>
+        /// </remarks>
 		public override bool Validity(AbstractQuantifierSetting setting, Ice.Current __current)
 		{
 			FourFoldContingencyTable table = new FourFoldContingencyTable(setting.firstContingencyTableRows);

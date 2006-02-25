@@ -4,18 +4,50 @@ using System.Text;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes
 {
+    /// <summary>
+    /// Interface which should be implemented by all dynamic attribute
+    /// functionsI objects.
+    /// </summary>
 	public interface IAbstractDynamicAttribute
 	{
-		BoxModulePrx GetColumnBoxModulePrx();
-		PropertySetting[] GetSettingForNewAttributeBox();
+
+        /// <summary>
+        /// Gets the column box module proxy.
+        /// </summary>
+        /// <returns>Proxy of Column box module.</returns>
+        BoxModulePrx GetColumnBoxModulePrx();
+
+        /// <summary>
+        /// Gets the setting for new attribute box.
+        /// </summary>
+        /// <returns>Setting for new attribute box.</returns>
+        PropertySetting[] GetSettingForNewAttributeBox();
 	}
 
+    /// <summary>
+    /// Abstract <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> 
+    /// class for all dynamic attribute box modules.
+    /// </summary>
 	public abstract class AbstractDynamicAttributeBoxInfo : AbstractAttributeBoxInfo
 	{
+        /// <summary>
+        /// Gets the function object of abstract attribute.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>FunctionsI object.</returns>
 		public abstract IAbstractDynamicAttribute getFuncIAbstractDynamicAttribute(BoxModuleI boxModule);
 		//EachValueOneCategoryAttributeFunctionsI Func = (EachValueOneCategoryAttributeFunctionsI)boxModule.FunctionsIObj;
 
-		public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
+        /// <summary>
+        /// Gets the box modules asking for creation.
+        /// </summary>
+        /// <param name="localePrefs">The localization preferences.</param>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// Array of <see cref="T:Ferda.Modules.ModuleAskingForCreation">
+        /// Modules Asking For Creation</see>.
+        /// </returns>
+        public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
 		{
 			Dictionary<string, ModulesAskingForCreation> modulesAFC = this.getModulesAskingForCreationNonDynamic(localePrefs);
 			List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();

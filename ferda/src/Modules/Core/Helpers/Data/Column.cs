@@ -41,40 +41,88 @@ namespace Ferda.Modules.Helpers.Data
         }
 
         #region Value Types Mischmasch (nominal/ordinal/cardinal, ...)
+        /// <summary>
+        /// Determines whether colum sub type is cardinal.
+        /// </summary>
+        /// <param name="columnValueSubType">Value sub type of the column.</param>
+        /// <returns>
+        /// <c>true</c> if colum sub type is cardinal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsColumSubTypeCardinal(ValueSubTypeEnum columnValueSubType)
         {
-            switch (GetColumnSimpleSubTypeBySubType(columnValueSubType))
+            switch (GetColumnValueTypeByValueSubType(columnValueSubType))
             {
-                case SimpleTypeEnum.Integral:
-                case SimpleTypeEnum.Floating:
-                case SimpleTypeEnum.DateTime:
-                    //case SimpleTypeEnum.Time:
+                case ValueType.Integral:
+                case ValueType.Floating:
+                case ValueType.DateTime:
+                    //case ValueType.Time:
                     return true;
                 default:
                     return false;
             }
         }
+        /// <summary>
+        /// Determines whether colum sub type is ordinal.
+        /// </summary>
+        /// <param name="columnValueSubType">Value sub type of the column.</param>
+        /// <returns>
+        /// <c>true</c> if colum value sub type is ordinal; otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsColumSubTypeOrdinal(ValueSubTypeEnum columnValueSubType)
         {
-            switch (GetColumnSimpleSubTypeBySubType(columnValueSubType))
+            switch (GetColumnValueTypeByValueSubType(columnValueSubType))
             {
-                case SimpleTypeEnum.Unknown:
+                case ValueType.Unknown:
                     return false;
                 default:
                     return true;
             }
         }
-        public enum SimpleTypeEnum
+        
+        /// <summary>
+        /// Value type as simplication of <see cref="T:Ferda.Modules.ValueSubTypeEnum"/>.
+        /// </summary>
+        public enum ValueType
         {
+            /// <summary>
+            /// Unknown value type
+            /// </summary>
             Unknown,
+
+            /// <summary>
+            /// [signed/unsigned]Short/Int/Long value type
+            /// </summary>
             Integral,
+            
+            /// <summary>
+            /// [signed/unsigned]Float/Double/Decimal value type
+            /// </summary>
             Floating,
+            
+            /// <summary>
+            /// Date/DateTime/Time value type
+            /// </summary>
             DateTime,
             //Time,
+            
+            /// <summary>
+            /// Boolean value type
+            /// </summary>
             Boolean,
+            
+            /// <summary>
+            /// String value type
+            /// </summary>
             String
         }
-        public static SimpleTypeEnum GetColumnSimpleSubTypeBySubType(ValueSubTypeEnum columnValueSubType)
+
+        /// <summary>
+        /// Gets the <see cref="T:Ferda.Modules.Helpers.Data.Column.ValueType">value type</see> 
+        /// of the column by <see cref="T:Ferda.Modules.ValueSubTypeEnum">value sub type</see>.
+        /// </summary>
+        /// <param name="columnValueSubType">Type of the column value sub.</param>
+        /// <returns></returns>
+        public static ValueType GetColumnValueTypeByValueSubType(ValueSubTypeEnum columnValueSubType)
         {
             switch (columnValueSubType)
             {
@@ -84,26 +132,32 @@ namespace Ferda.Modules.Helpers.Data
                 case ValueSubTypeEnum.UnsignedIntegerType:
                 case ValueSubTypeEnum.LongIntegerType:
                 case ValueSubTypeEnum.UnsignedLongIntegerType:
-                    return SimpleTypeEnum.Integral;
+                    return ValueType.Integral;
                 case ValueSubTypeEnum.FloatType:
                 case ValueSubTypeEnum.DoubleType:
                 case ValueSubTypeEnum.DecimalType:
-                    return SimpleTypeEnum.Floating;
+                    return ValueType.Floating;
                 case ValueSubTypeEnum.DateTimeType:
-                    return SimpleTypeEnum.DateTime;
+                    return ValueType.DateTime;
                 //case ValueSubTypeEnum.TimeType:
-                ////return SimpleTypeEnum.Time;
-                //return SimpleTypeEnum.DateTime;
+                ////return ValueType.Time;
+                //return ValueType.DateTime;
                 case ValueSubTypeEnum.BooleanType:
-                    return SimpleTypeEnum.Boolean;
+                    return ValueType.Boolean;
                 case ValueSubTypeEnum.StringType:
-                    return SimpleTypeEnum.String;
+                    return ValueType.String;
                 case ValueSubTypeEnum.Unknown:
-                    return SimpleTypeEnum.Unknown;
+                    return ValueType.Unknown;
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(columnValueSubType);
             }
         }
+
+        /// <summary>
+        /// Gets the value sub type of the column by data type.
+        /// </summary>
+        /// <param name="columnDbDataType">Column DB data type.</param>
+        /// <returns>Value sub type of the column.</returns>
         public static ValueSubTypeEnum GetColumnSubTypeByDataType(string columnDbDataType)
         {
             switch (columnDbDataType)
@@ -135,13 +189,13 @@ namespace Ferda.Modules.Helpers.Data
                 //return ValueSubTypeEnum.DateType;
                 case "System.TimeSpan":
                     return ValueSubTypeEnum.TimeType;
-                case UnknownDbColumnDataType:
+                case unknownDbColumnDataType:
                 default:
                     System.Diagnostics.Debug.WriteLine("Unknown column data type: " + columnDbDataType);
                     return ValueSubTypeEnum.Unknown;
             }
         }
-        public const string UnknownDbColumnDataType = "Unknown";
+        private const string unknownDbColumnDataType = "Unknown";
         #endregion
 
         /// <summary>
@@ -169,7 +223,7 @@ namespace Ferda.Modules.Helpers.Data
                         return myRow["DataType"].ToString();
                     }
                 }
-                return UnknownDbColumnDataType;
+                return unknownDbColumnDataType;
             }
             catch (Exception ex)
             {
@@ -181,7 +235,14 @@ namespace Ferda.Modules.Helpers.Data
             }
         }
 
+        /// <summary>
+        /// Name of column label in query to distinct values of the column.
+        /// </summary>
         public const string SelectDistincts = "DistinctsColumn";
+
+        /// <summary>
+        /// Name of column label in query to frequencies of the column.
+        /// </summary>
         public const string SelectFrequency = "DistinctsFrequency";
 
         /// <summary>
@@ -202,6 +263,8 @@ namespace Ferda.Modules.Helpers.Data
         /// selects the frequencies fo corresponding values.
         /// </returns>
         /// <exception cref="T:Ferda.Modules.BadParamsError">Thrown if <c>odbcConnectionString</c> or <c>dataMatrixName</c> or <c>columnSelectExpression</c> parameter is wrong.</exception>
+        /// <seealso cref="F:Ferda.Modules.Helpers.Data.Column.SelectDistincts"/>
+        /// <seealso cref="F:Ferda.Modules.Helpers.Data.Column.SelectFrequency"/>
         public static DataTable GetDistinctsAndFrequencies(string odbcConnectionString, string dataMatrixName, string columnSelectExpression, string whereCondition, string boxIdentity)
         {
             //throws exception if odbcConnectionString is wrong
@@ -214,18 +277,20 @@ namespace Ferda.Modules.Helpers.Data
             string query =
                 "SELECT "
                     + "`" + columnSelectExpression + "`" + " AS " + SelectDistincts
-                    + ", COUNT(" + "`" + columnSelectExpression +"`" + ") AS " + SelectFrequency
+                    + ", COUNT(1) AS " + SelectFrequency
                 + " FROM " + dataMatrixName
                     + where
                     + " GROUP BY " + "`" + columnSelectExpression + "`"
                     + " ORDER BY " + "`" + columnSelectExpression + "`";
+
             try
             {
 
                 OdbcDataAdapter odbcDataAdapter = new OdbcDataAdapter(query, conn);
                 DataSet dataSet = new DataSet();
                 odbcDataAdapter.Fill(dataSet);
-                return dataSet.Tables[0];
+                DataTable result = dataSet.Tables[0];
+                return result;
             }
             catch (Exception ex)
             {
@@ -290,7 +355,9 @@ namespace Ferda.Modules.Helpers.Data
 
             try
             {
-                OdbcDataAdapter myDataAdapter = new OdbcDataAdapter("SELECT DISTINCT " + "`" + columnSelectExpression + "`" + " FROM " + "`" + dataMatrixName + "`", conn);
+                OdbcDataAdapter myDataAdapter = new OdbcDataAdapter(
+                    "SELECT DISTINCT " + "`" + columnSelectExpression + "`" + " FROM " + "`" + dataMatrixName + "`",
+                    conn);
                 System.Data.DataSet myDataSet = new System.Data.DataSet();
                 myDataAdapter.Fill(myDataSet);
                 result.ValueDistincts = Convert.ToInt64(myDataSet.Tables[0].Rows.Count);
@@ -321,7 +388,7 @@ namespace Ferda.Modules.Helpers.Data
             odbcCommand.CommandText = "SELECT "
                 + selectMaxExpression + ","
                 + selectMinExpression + ","
-                + selectAvgExpression 
+                + selectAvgExpression
                 + " FROM " + "`" + dataMatrixName + "`";
 
             //System.Diagnostics.Debug.WriteLine("aggr_s:" + DateTime.Now.ToString());
@@ -345,7 +412,7 @@ namespace Ferda.Modules.Helpers.Data
                 //TODO optimize this
                 odbcCommand.CommandText =
                     "SELECT SUM( "
-                        + "(" + "`" + columnSelectExpression +"`" + " - '" + result.ValueAverage + "')"
+                        + "(" + "`" + columnSelectExpression + "`" + " - '" + result.ValueAverage + "')"
                         + " * (" + "`" + columnSelectExpression + "`" + " - '" + result.ValueAverage + "')"
                         + ") FROM " + "`" + dataMatrixName + "`";
 
@@ -422,6 +489,7 @@ namespace Ferda.Modules.Helpers.Data
         /// selects the "values" of the specified <c>columnSelectExpression</c>.
         /// </returns>
         /// <exception cref="T:Ferda.Modules.BadParamsError">Thrown if <c>odbcConnectionString</c> or <c>dataMatrixName</c> or <c>columnSelectExpression</c> parameter is wrong.</exception>
+        /// <seealso cref="F:Ferda.Modules.Helpers.Data.Column.SelectDistincts"/>
         public static DataTable GetDistincts(string odbcConnectionString, string dataMatrixName, string columnSelectExpression, string boxIdentity)
         {
             //throws exception if odbcConnectionString is wrong

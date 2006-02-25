@@ -13,6 +13,12 @@ namespace Ferda.Modules.Helpers.Data
     /// </summary>
     public static class OdbcConnections
     {
+        /// <summary>
+        /// Bads the connection string error (Exception).
+        /// </summary>
+        /// <param name="e">The e.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <returns>Exception <see cref="T:Ferda.Modules.BadParamsError"/>.</returns>
         public static Ferda.Modules.BadParamsError BadConnectionStringError(Exception e, string boxIdentity)
         {
             return Exceptions.BadParamsError(e, boxIdentity, "Bad ODBC connection string specified. Could not connect to database.", Ferda.Modules.restrictionTypeEnum.DbConnectionString);

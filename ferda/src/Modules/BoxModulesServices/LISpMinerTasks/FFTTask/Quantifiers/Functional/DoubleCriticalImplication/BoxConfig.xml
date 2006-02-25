@@ -40,15 +40,18 @@
       <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
       <SelectOptions>
         <SelectOption>
-          <Name>LessThanOrEqualCore</Name>
+          <Name>LessThanOrEqual</Name>
+          <!-- CoreRelation -->
         </SelectOption>
         <SelectOption>
-          <Name>GreaterThanOrEqualCore</Name>
+          <Name>GreaterThanOrEqual</Name>
+          <!-- CoreRelation -->
         </SelectOption>
       </SelectOptions>
       <Visible>true</Visible>
       <ReadOnly>false</ReadOnly>
-      <Default>GreaterThanOrEqualCore</Default>
+      <Default>GreaterThanOrEqual</Default>
+      <!-- CoreRelation -->
     </Property>
     <Property>
       <Name>ParamP</Name>
