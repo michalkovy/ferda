@@ -1,0 +1,905 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <firstname>Martin</firstname>
+        <surname>Ralbovský</surname>
+        <email>martin.ralbovsky@gmail.com</email>
+      </author>
+    </authorgroup>
+    <pubdate>
+      2006-02-20
+    </pubdate>
+    <title>
+      Ferda FrontEnd programmers documentation
+    </title>
+    <titleabbrev>
+      FrontEndProgrammersDocumentation
+    </titleabbrev>
+    <revhistory>
+    </revhistory>
+  </articleinfo>
+  <abstract>
+    <para>
+      This document provides a programmers documentation of Ferda FrontEnd. It
+      describes the program, tells about the platform, describes the main classes
+      and interfaces of the FrontEnd, it describes the connection to the other parts
+      of Ferda datamining system. The document also tells about the external libraries
+      used in the FrontEnd, some advanced programming techniques. Finally, it shows some
+      suggestions(plans) for future developement of Ferda FrontEnd.
+    </para>
+  </abstract>
+  <section>
+    <title>Description of the program</title>
+    <section>
+      <title>Ferda DataMiner</title>
+      <para>
+        Ferda is a user friendly data mining tool. It is a modular distributed multiplatform
+        framework based on Internet Communications Engine. Ferda is very powerful in 
+        working with association rules.
+      </para>
+    </section>
+    <section>
+      <title>Ferda FrontEnd</title>
+      <para>
+        The FrontEnd is the visual interface of the Ferda DataMiner program. It represents
+        all the abilities of the system to the user. The main building block of the Ferda
+        system - the box - can be edited or connected in the FrontEnd. Furthermore, user
+        can work with the archive, context help or box modules via FrontEnd. There is also
+        a complete user-documentation of the FrontEnd available.
+      </para>
+    </section>
+  </section>
+  <section>
+    <title>Platform, developing environment and naming conventions</title>
+    <section>
+      <title>Platform</title>
+      <para>
+        The whole Ferda DataMiner runs on Microsoft .NET Framework, version 2. The 
+        platform is used mainly on Windows computers and there is no problems running
+        Ferda on Windows(however user must have .NET Framework v.2 installed). There is
+        also an open .NET implementation on Linux called Mono. At the time of the
+        creation of this document, Mono was not fully compatible with the .NET Framework,
+        especially in the System.Windows.Forms namespace. Hopefully the situation
+        will get better. 
+        Therefore we have to wait
+        a little while to run the Ferda DataMiner also on Linux. 
+      </para>
+    </section>
+    <section>
+      <title>Developing environment</title>
+      <para>
+        The Ferda FrontEnd was developed in Microsoft Visual Studio 2005.
+      </para>
+    </section>
+    <section>
+      <title>Naming conventions</title>
+      <para>
+        The whole Ferda team tries to follow the standard C# naming conventions
+        from Microsoft - <ulink url="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconnamingguidelines.asp">
+        Naming guidelines</ulink>. For our source classname, we use UTF-8 encoding. 
+        In FrontEnd, each the classes are organized into following structure (by the
+        C# <classname>region</classname> keyword).
+        <programlisting>
+Class fields ...
+
+Properties ...
+
+Constructor ...
+
+Methods ...
+
+Events ...
+        </programlisting>
+      </para>
+    </section>
+  </section>
+  <section>
+    <title>FrontEnd "philosophy"</title>
+    <para>
+      Whole FrontEnd is divided into 8 logical subelements according to their
+      functionality. The namespaces in the <classname>Ferda.FrontEnd</classname> namespace
+      are divided the same way:
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <para>Ferda.FrontEnd</para>
+      </listitem>
+      <listitem>
+        <para>Ferda.FrontEnd.Archive</para>
+      </listitem>
+      <listitem>
+        <para>Ferda.FrontEnd.Menu</para>
+      </listitem>
+      <listitem>
+        <para>Ferda.FrontEnd.NewBox</para>
+      </listitem>
+      <listitem>
+        <para>Ferda.FrontEnd.UserNote</para>
+      </listitem>
+      <listitem>
+        <para>Ferda.FrontEnd.Properties</para>
+      </listitem>
+      <listitem>
+        <para>Ferda.FrontEnd.Desktop</para>
+      </listitem>
+      <listitem>
+        <para>Ferda.FrontEnd.External</para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      Each of these parts takes care of something individual in the application(its purpose
+      is hopefully visible from the name). These parts communicate with each other through
+      numerous interfaces. There are also some interfaces that provide functionality
+      for other parts of the Ferda DataMiner system - mainly modules for interaction.
+      The reason for having (quite many) interfaces is extensibility. If someone wants
+      to create for example another component representing archive, he can create another
+      control and as long as it provides the interface needed, it should work within
+      the application(I used the archive as an example because sometimes implementing
+      the interface is not enough, it should also be a child of Control - mainly for
+      docking reasons).
+    </para>
+  </section>
+  <section>
+    <title>Class and interface diagram</title>
+    <para>
+      The diagram below shows all the FrontEnd namespaces, classes and interfaces and
+      relations between them. 
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="frontEndClasses.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </para>    
+  </section>
+  <section>
+    <title>Class and interface description</title>
+    <section>
+      <title>Ferda.FrontEnd</title>
+      <para>
+        The <classname>Ferda.FrontEnd</classname> namespace is the basic namespace for the FrontEnd.
+      In addition to the main form of the application, it also contains classes that
+      are connected or provide functionality for the whole FrontEnd.
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <formalpara>
+          <title>BoxExceptionDialog</title>
+          <para>
+            A dialog that informs a user when exception is thrown by a box
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Constants</title>
+          <para>
+            Defines the constants needed for Ferda FrontEnd
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>FerdaPreScreen</title>
+          <para>
+            This form is viewed when the Ferda program starts. It has the ability to
+            show the user what is beeing initialized at the moment.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>FrontEndCommon</title>
+          <para>
+            Class that provides the functionality that is in common to more classes in
+            Ferda's FrontEnd
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>OutputI</title>
+          <para>
+            A class that writes different messages to the user
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>FrontEndConfig</title>
+          <para>
+            Structure, that holds information about the ICE configuration of the
+            Ferda application
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>FerdaToolBar</title>
+          <para>
+            Toolbar for Ferda application, icons of the most important actions
+            in the project. Consists of static part and dynamic part, that changes
+            with the selected box(es) on the desktop or in the archive.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>FerdaForm</title>
+          <para>
+            Main form for the Ferda application
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>IBoxSelector</title>
+          <para>
+            Control implementing this interface should be able to select a box
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>IControlsManager</title>
+          <para>
+            Interface to do global adapts, setting the caption of the application
+            or writing messages on the status bar
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>IFerdaClipboard</title>
+          <para>
+            Ferda's implementation of clipboart, it remembers list of nodes. It does not
+            cooperate with the normal system clipboard.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>IIconProvider</title>
+          <para>
+            This interface provides icons used in Ferda to other controls
+          </para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Ferda.FrontEnd.Archive</title>
+    <para>
+      The <classname>Ferda.FrontEnd.Archive</classname> namespace takes care of the archive
+      component of the environment.
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <formalpara>
+          <title>FerdaTreeNode</title>
+          <para>
+            The class is a classical TreeNode with a info about the IBoxModule that
+            this tree node represents
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>FerdaArchive</title>
+          <para>
+            Control class for Ferda archive
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>IArchiveDisplayer</title>
+          <para>
+            Each control that displays a Ferda archive should implement this
+            interface in order to cooperate with other controls.
+          </para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Ferda.FrontEnd.Menu</title>
+    <para>
+      The <classname>Ferda.FrontEnd.Menu</classname> namespace handles the main application
+        menu.
+      </para>
+      <itemizedlist mark="bullet">
+        <listitem>
+          <formalpara>
+            <title>AboutDialog</title>
+            <para>
+              Dialog that presents information about the Ferda DataMiner application
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>FerdaPreferencesDialog</title>
+            <para>
+              Dialog manipulating all the settings available in the project.
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>FerdaMenu</title>
+            <para>
+              The class represents a menu for the application. It is a <classname>MenuStrip
+              </classname>
+              class and some added functionality for the menu handling
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>IDockingManager</title>
+            <para>
+              Implements the docking functions of the application, shows
+              the controls
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>ILocalizationManager</title>
+            <para>
+              Interface presents functionality for all the controls to be able
+              to change their localizations
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>IMenuDisplayer</title>
+            <para>
+              Interface to communicate with the Ferda menu. A class wanting to
+              display the menu should implement this interface.
+            </para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Ferda.FrontEnd.NewBox</title>
+      <para>
+        The <classname>Ferda.FrontEnd.NewBox</classname> namespace takes care of the creation
+      of new boxes.
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <formalpara>
+          <title>NewBoxNode</title>
+          <para>
+            Class for the tree nodes in the NewBox control. It has additional
+            information about the type of the node (if it is a box type or a
+            category) for drag&amp;drop operations
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>NewBoxControl</title>
+          <para>
+            Control that allows the user to create new boxes by dragging
+            them to the desktop
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>NewBoxTreeView</title>
+          <para>
+            A NewBoxTreeView is tree view part of the NewBoxControl
+            class that is used for creating new boxes on the desktop. Class has functionality
+            to load complicated ProjectManager and ModulesManager structures and to display
+            the box creators in a tree structure.
+          </para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Ferda.FrontEnd.UserNote</title>
+    <para>
+      The <classname>Ferda.FrontEnd.UserNote</classname> namespace displays the notes that
+      user writes about the boxes.
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <formalpara>
+          <title>FerdaUserNote</title>
+          <para>
+            The control enables the user to edit the user note of
+            the box that is currently beeing selected(edited) either in the
+            archive or on the desktop
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>IUserNoteDisplayer</title>
+          <para>
+            Class implementing this interface should be able to edit a user note
+            of a selected box.
+          </para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Ferda.FrontEnd.Properties</title>
+    <para>
+      The <classname>Ferda.FrontEnd.Properties</classname> namespace takes care for displaying
+      the propeties of (not only) the boxes.
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <formalpara>
+          <title>StringSequence</title>
+          <para>
+            Class to represent sequence of strings. It is used in the
+            property grid to display a <classname>StringT</classname> type property
+            that allows selecting a string and editing it
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>OtherProperty</title>
+          <para>
+            This class is used to set and get other properties.
+            It contains the property name and the box which is changing the property
+            and a result for type converting. It is used to display setting modules
+            in the property grid.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>AsyncPropertyCatcher</title>
+          <para>
+            This class provides functionality for asynchronous property catching
+            (getting). Through the ice_response method it notifies the propertyGrid,
+            that a property has been changed.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>FerdaPropertyGrid</title>
+          <para>
+            Property Grid for the Ferda application
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>IPropertiesDisplayer</title>
+          <para>
+            Each control that displays a Ferda property grid should implement this
+            interface
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>IOtherObjectDisplayer</title>
+          <para>
+            An interface for the FerdaPropertyGrid to display properties other than
+            properties of boxes. It uses the <classname>Ferda.FrontEnd.External.PropertyTable</classname>
+            object to display its properties. There can be only one object displayed in
+            the PropertyGrid at one time.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>IAsyncPropertyManager</title>
+          <para>
+            The interface is implemented when a control wants asynchronous
+            changing of properties
+          </para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Ferda.FrontEnd.Desktop</title>
+    <para>
+      The <classname>Ferda.FrontEnd.Desktop</classname> namespace implements the functionality
+        of displaying views of the Ferda ProjectManager on the screen. It cooperates
+        with the Netron library.
+      </para>
+      <itemizedlist mark="bullet">
+        <listitem>
+          <formalpara>
+            <title>FerdaConnector</title>
+            <para>
+              Defines a special Netron connector that uses a different Paint
+              function, more suitable for the purposes of Ferda. This function
+              draws a bitmap onto canvas.
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>BoxNode</title>
+            <para>
+              Class that represents all Ferda nodes on the desktop. In addition to the
+              Netron graphical nodes, it contains information about the box behind the
+              node.
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>SVGManager</title>
+            <para>
+              Repository of all svg strings for all boxmodules in the system.
+              Class will provide additional functionality for extracting GDI+
+              classname from svg.
+            </para>
+            <para>
+              The recent implementation is without svg support, although the
+              classname that turns svg into gdi+ is already written. It is because
+              the external SVG library that we use does not support all the
+              SVG versions and moreover, it slows the program a lot.
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>RenameDialog</title>
+            <para>
+              Dialog to rename a caption of a box
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>FerdaDesktop</title>
+            <para>
+              One of the Graph controls for Ferda project, each control represents
+              one view of the archive
+            </para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>IViewDisplayer</title>
+            <para>
+              Each control that displays a Ferda view should implement this
+              interface
+            </para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Ferda.FrontEnd.External</title>
+      <para>
+        The <classname>Ferda.FrontEnd.External</classname> namespace contains property grid
+      functions that are taken from outside source. There are 2 classes - <classname>
+        PropertySpec
+      </classname> and <classname>PropertyTable</classname> used in Ferda FrontEnd.
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <formalpara>
+          <title>PropertySpec</title>
+          <para>
+            A description of one property
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>PropertyTable</title>
+          <para>
+            Class derived from <classname>PropertyBag</classname> contains properties that
+            user can easy manipulate.
+          </para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>
+<section>
+  <title>FrontEnd connections to the other parts of the Ferda DataMiner system</title>
+  <section>
+    <title>Ferda DataMiner architecture</title>
+    <para>
+      There is a documentation file overviewing the Ferda DataMiner architecture
+      - casti.xdb (unfortunatelly available only in czech). Important fact is that
+      there exists the Project Manager, which provides the functions of the Modules
+      Manager (manager of all the modules in the application) to the FrontEnd. The
+      Modules Manager communicates with all the modules through the ICE layer, asks
+      about their functionality and executes the actions of the modules. And finally,
+      there are modules, that can be box modules, modules for interaction (box
+      interacts with the user) and settings modules (setting complicated properties
+      of a box by a module).
+    </para>
+  </section>
+  <section>
+    <title>Connecting FrontEnd with Project Manager</title>
+    <para>
+      The Project Manager classes are linked to the FrontEnd as a dll file and the
+      FrontEnd communicates with the Project Manager this way. There are three important
+      classes in the ProjectManager namespace that FrontEnd uses. First is the
+      <classname>ProjectManager</classname> class, that provides information about the project,
+        loading and saving functionality and many more. FrontEnd runs the apropriate 
+        methods of the <classname>ProjectManager</classname> class when needed in its application.
+        The two other important classes are <classname>Archive</classname> and <classname>View</classname>.
+        <classname>Archive</classname> is the repository of all boxes in the project and
+        <classname>View</classname> stores information about the boxes on a desktop. There are
+        methods and properties of these two classes implemented that FrontEnd needs
+        and uses.
+      </para>
+      <para>
+        Another impotant interface to mention is the <classname>Ferda.ModulesManager.IBoxModule
+        </classname> interface. It is the one and only representation of a single box for 
+        FrontEnd. It has many functions concerning the sockets, properties, box creators
+        defined in this interface. When FrontEnd operates with selected box(es), it 
+        uses the functions of this interface. 
+      </para>
+    </section>
+    <section>
+      <title>Connecting FrontEnd with addins (modules for interaction and settings 
+        modules)
+      </title>
+      <para>
+        Module for interaction is a module, that displays information a box can provide
+        in some other way more feasible to the user. A good example is a frequency graph
+        of values of an attribute. There is a <classname>
+        IBoxModule.RunModuleForInteraction</classname> method that is called whenever user
+        wants to display the module for interaction.
+      </para>
+      <para>
+        Module for interaction (usually a dialog) can be written in any 
+        language that ICE supports. However, for now all the modules for interaction are
+        written in C#. The advantage is that the module in C# (some <classname>Control</classname>
+        child class) can be docked into the FrontEnd environment. For this to happen, 
+        the module needs to have some ICE interface implemented (of course, it is a module),
+        but also a <classname>IAddInMain</classname> interface. When the FrontEnd starts, it
+        loads all the modules for interaction it has in the AddIn directory. Each addin
+        there has the <classname>IAddInMain</classname> interface implemented. By this interface,
+        FrontEnd can set all the properties needed to the C# module for interaction, 
+        especially the <classname>OwnerOfAddIn</classname> property. That property is a <classname>
+        IOwnerOfAddIn</classname> type - interface that the <classname>FrontEnd.FerdaForm</classname>
+        class implements. This interface enables to show a dialog or to dock a dialog.
+        So then, when the ModulesManager asks the addin through ICE to show itself, 
+        the addin can execute the <classname>IOwnerOfAddIn</classname> function to display 
+        itself in the main form.
+      </para>
+      <para>
+        Settings modules are used when user wants to set a property of a box. The property
+        can either be too complicated to set in the propertyGrid (editing categories of 
+        a attribute) or it can simplify the users work (ODBC connections dialog). The
+        FrontEnd uses the <classname>IBoxModule.RunSetPropertyOther</classname> method in the 
+        <classname>OtherProperty</classname> class to run the module. The mechanism is then the
+        same as for module for interaction.
+      </para>
+      <para>
+        There is yet another way how a module can communicate in the FrontEnd. Sometimes
+        it can be useful for the module to use the property grid of the FrontEnd (the
+        ResultBrowser displays the hypotheses details and statistics in the property
+        grid). The <classname>Ferda.FrontEnd.Properties.FerdaPropertyGrid</classname> provides the
+        <classname>IOtherObjectDisplayer</classname> interface. When on the other hand, the
+        module implements the <classname>IPropertyProvider</classname>, they can cooperate and the
+        properties of the objects can be displayed in the property grid (it uses the
+        <classname>Ferda.FrontEnd.External.PropertyTable</classname> class to hold the property
+        information).
+      </para>
+    </section>
+  </section>
+  <section>
+    <title>External libraries</title>
+    <section>
+      <title>Netron Graph library</title>
+      <para>
+        <ulink url="http://netron.sourceforge.net">Netron Graph Library</ulink> is
+        probably the best graph solution in the open source community. There are many
+        successful projects that use this library and the library itself is still alive,
+        developing and improving. 
+      </para>
+      <para>
+        There are some features, that make the Ferda Dataminer specific in comparison to
+        other projects that use Netron as its graphical library. In these projects, all
+        the graph logic is done by Netron. However in Ferda, Netron is just a tool that
+        displays somehow the information that Project Manager provides about the boxes
+        (their position, connections...). Therefore, some changes had to be made to the library to
+        ensure proper drawing and proper event handling. Another difference is in the 
+        number of sockets (in Ferda terminology) or connectors (in Netron terminology).
+        There can be quite a few sockets for one box and there is always one outgoing
+        point in Ferda, where in other Netron projects the ratio is usually one to one.
+      </para>
+      <para>
+        To adress these problems, we have taken the basic Netron classes and overridden
+        them to get functionality that suits Ferda better. The 
+        <classname>Ferda.FrontEnd.Desktop.BoxNode</classname> is child of the <classname>Shape</classname>
+        class, which is a basic node class in Netron. The 
+        <classname>Ferda.FrontEnd.Desktop.FerdaConnector</classname> is a Netron <classname>Connector</classname>
+        class that displays a Ferda socket. Finally the 
+        <classname>Ferda.FrontEnd.Desktop.FerdaDesktop</classname> overrides the Netron <classname>
+        GraphControl</classname> class and adds a big amount of Ferda functionality including
+        the context menu handling and cooperation with the Project Manager. 
+      </para>
+      <para>
+        Moreover, the Netron library offers more functionality that Ferda could use
+        in future implementations, for example the zooming or the minimap ability 
+        of the Netron <classname>GraphControl</classname>class. However, the project team does not
+        see implementing features as a priority for Ferda. The current version of the
+        library on the web is 2.2 (and version 3 is comming), where the Ferda uses an 
+        older 2.1 version. There are some changes in the version, the biggest is the
+        use of some theory of graph logic for the control. Because the newer version is
+        better and much more optimalized (we will see what the version 3 brings), 
+        the Ferda team wants to connect switching to the new version with the
+        implementation of yet unused Netron features.
+      </para>
+    </section>
+    <section>
+      <title>DockDotNET docking library</title>
+      <para>
+        Many docking libraries for .NET exist in the commercial sphere. There are also
+        few in the open source community. The DockDotNET project is and old project
+        on <ulink url="http://www.sourceforge.net">SourceForge</ulink> and is one of
+        the first attempts to create docking in the Windows forms. It doesn't appear
+        to be alive anymore.
+      </para>
+      <para>
+        We chose DockDotNET, because it was a first open docking library for .NET and
+        we were quite happy that something like this even exists. There are some 
+        advantages to this library - it is small, compact and most importantly it 
+        runs only on .NET and does not include any "DLLImports"(you cannot do things
+        as sliding the panels on docking without them). It is an advantage
+        mainly because you can run the library also on Mono(when they fininsh their 
+        WinForms implementation). But there are also some disadvantages of the library:
+        it is not very well documented, it is no longer under development and sometimes
+        it is very hard to determine which piece of classname will cause what behaviour.
+        Yet another disadvantage is that you cannot serialize the positions of indivitual
+        docked elements and you have to always load the default docking setting on start
+        without implementing own serialization.
+      </para>
+      <para>
+        The only change the Ferda team did to the classname of the library was the replacing
+        the old <classname>MenuItem</classname> class by a new <classname>MenuStripItemClass</classname> to
+        have consistency with the rest of the project and to add a rename dialog on
+        individual desktops.
+      </para>
+      <para>
+        A new docking library appeared during the developement of the Ferda project. It
+        is the 
+        <ulink url="http://sourceforge.net/projects/dockpanelsuite/">DockPanel Suite</ulink>
+        or the WinFormsUI library by Weifen Luo with a public domain licence.
+        According to the forums on SourceForge, the library has improved a lot over
+        past year. Docking with this library now looks a lot better that with DockDotNET,
+        what is more you can also serialize the docking positions. However it depends
+        a lot on DLLImport, which means it would work only on Windows. It is a decision
+        to the future, wheather to change the docking library.
+      </para>
+    </section>
+    <section>
+      <title>SharpVectorGraphics library</title>
+      <para>
+        The last library we plan to use is the <ulink url="http://sourceforge.net/projects/svgdomcsharp/">
+        SharpVectorGraphics</ulink> library. The library is capable of displaying the
+        SVG files on GDI+. Each box in Ferda Dataminer can have its icon and its svg
+        design defined in a special files and when user wants to display the box on 
+        desktop, then the box design is used. 
+      </para>
+      <para>
+        For creating the box design, we use a great free svg editor 
+        <ulink url="http://inkspace.org">Inkspace</ulink>. The problem with
+        SharpVectorGraphics is that it does not support all the svg standarts that
+        Inkspace can create and thus it is not very usable (maybe I am wrong, but
+        it seems like that). Moreover, it takes a long time to load a bitmap from
+        svg for this library, which would slow Ferda even more (we are facing the
+        performance issues all the time). So that is why the team decided, that
+        for the march version of Ferda, we would not use svg and we would draw the
+        svg generated icons on the desktop instead. Solution for the future will be
+        load svg and generate all the bitmaps at program initialization and then 
+        only reuse them from memory. 
+      </para>
+    </section>
+  </section>
+  <section>
+    <title>Advanced programming techniques - property grid handling</title>
+    <para>
+      The <classname>PropertyGrid</classname> control is a very powerful .NET control that can
+      display properties of an object. Moreover, it is used in many programs, most
+      importantly the Microsoft Visual Studio, so the developers community knows this
+      component quite well. This is the reason why we decided use this control for
+      viewing properties of Ferda boxes.
+    </para>
+    <para>
+      The default usage of Property grid is nevertheless a little different from what
+      is demanded in Ferda. On default, programmer uses the PropertyGrid's 
+      <classname>SelectedObject(s)</classname> property to get the control know what has been
+      selected. Then it uses the C# properties of the object and displays them in the
+      grid. However if Ferda, the only object that can be used is the 
+      <classname>IBoxModule</classname> that does not have such properties, but only functions to
+      get individual properties. To overcome this difficulty we used a smart
+      <classname>PropertyTable</classname> class from Tony Allowatt that was published in a
+      classnameProject <ulink url="www.classnameproject.com/cs/miscctrl/bending_property.asp">
+      article</ulink>. The <classname>PropertyTable</classname> class can be 
+      dynamically filled with properties from <classname>IBoxModule</classname>
+      (more preciselly - the <classname>PropertySpec</classname> class).
+    </para>
+    <para>
+      Although the PropertyGrid can display and edit objects of basic types (such as
+      <classname>int</classname> or <classname>string</classname> or enums), it does
+      not know what to do with a random class. Moreover some basic type properties
+      can be in Ferda also set by a settings module (ODBC connection string for the
+      Database box). That is why some other advanced property grid techniques had to
+      be also implemented. There are two classes defined that represent these properties -
+      the <classname>OtherProperty</classname> class for representing all the other
+      properties that box can have and the <classname>StringSequence</classname> class
+      for displaying a set of string from which user can select a choice. There have to
+      be also two other classes overriden for the Property grid to display the
+      property correctly. It is the <classname>TypeConverter</classname> class that
+      takes care of converting one type to another - "What should be displayed in the
+      grid when there is a OtherProperty property". The conversion is usually done to
+      string, sometimes from string. Other clas is the <classname>UITypeEditor</classname>
+      class. This class determines if there is displayes something like a combobox
+      arrow or button with three dots at the property. Then it displays a dropdown
+      dialog or a alone standing dialog. All the details about this can be found in the
+      <classname>Ferda.FrontEnd.Properties</classname> namespace with explaining
+      comments.
+    </para>
+    <para>
+      Another crutial issue to solve was the performance of getting properties from
+      the boxes, because sometimes it took a long time for the individual properties
+      to be calculated (maximum, minimum and average column values). So the Ferda team
+      decided that the best solution will be to retrieve properties in separate thread.
+      In principle, there is a structure that in the <classname>FerdaPropertyGrid</classname>
+      that holds temporary values of the properties, in the beginning set to initial
+      type values. When a property value comes asynchronously from a thread, this
+      structure is locked, value is updated and the whole Property grid is refreshed.
+      A modified algorithm works when there are more boxes selected. 
+    </para>
+  </section>
+  <section>
+    <title>Future suggestions and plans</title>
+    <para>
+      After the Ferda Dataminer finishes as software project at MFF UK, there are some
+      chances that it will be used as primary tool LISp-Miner procedures tool. The
+      creators of Ferda will also continue to work for the environment in their master
+      theses(ontology support, star-scheme relational mining...). However it is not
+      yet decided if there will be some developement in FrontEnd other then bug fixing.
+      Here we present a list of posible improvements and suggestions to make and if
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <para>
+          Conversion to Netron 3 + using more Netron features
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Conversion to new docking library, or serialization of docking settings
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Implementing a better SVG support
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enabling more FrontEnd features to modules (now only PropertyGrid, in the
+          future user note, context help, menu or toolbar)
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</article>
