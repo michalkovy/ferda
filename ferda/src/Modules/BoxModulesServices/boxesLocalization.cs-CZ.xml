@@ -1087,7 +1087,7 @@
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>DataMiningCommon.BooleanPartialCedentSetting</Identifier>
-		<Label>Booleovský dílčí ced. (&amp;)</Label>
+		<Label>Bool. cedent</Label>
 		<Hint>Zadání booleovského dílčího cedentu a jeho parametrů</Hint>
 		<Categories>
 			<Category>
@@ -1120,7 +1120,7 @@
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>DataMiningCommon.CategorialPartialCedentSetting</Identifier>
-		<Label>Kategoriální dílčí ced.</Label>
+		<Label>Kategoriální cedent</Label>
 		<Hint>Zadání kategoriálního dílčího cedentu a jeho parametrů</Hint>
 		<Categories>
 			<Category>
@@ -1892,11 +1892,13 @@
 				<Hint>Relation</Hint>
 				<SelectOptions>
 					<SelectOption>
-						<Name>LessThanOrEqualCore</Name>
+						<Name>LessThanOrEqual</Name>
+						<!-- CoreRelation -->
 						<Label>Less than or equal</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>GreaterThanOrEqualCore</Name>
+						<Name>GreaterThanOrEqual</Name>
+						<!-- CoreRelation -->
 						<Label>Greater than or equal</Label>
 					</SelectOption>
 				</SelectOptions>
@@ -1912,11 +1914,13 @@
 				<Hint>Unit for expression of treshold and actual value.</Hint>
 				<SelectOptions>
 					<SelectOption>
-						<Name>RelativeNumberCore</Name>
+						<Name>RelativeToActCondition</Name>
+						<!-- CoreUnits -->
 						<Label>Relative number</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>AbsoluteNumberCore</Name>
+						<Name>AbsoluteNumber</Name>
+						<!-- CoreUnits -->
 						<Label>Absolute number</Label>
 					</SelectOption>
 				</SelectOptions>
@@ -1972,11 +1976,13 @@
 				<Hint>Relation</Hint>
 				<SelectOptions>
 					<SelectOption>
-						<Name>LessThanOrEqualCore</Name>
+						<Name>LessThanOrEqual</Name>
+						<!-- CoreRelation -->
 						<Label>Lower (less than or equal)</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>GreaterThanOrEqualCore</Name>
+						<Name>GreaterThanOrEqual</Name>
+						<!-- CoreRelation -->
 						<Label>Upper (greater than or equal)</Label>
 					</SelectOption>
 				</SelectOptions>
@@ -2092,11 +2098,13 @@
 				<Hint>Relation</Hint>
 				<SelectOptions>
 					<SelectOption>
-						<Name>LessThanOrEqualCore</Name>
+						<Name>LessThanOrEqual</Name>
+						<!-- CoreRelation -->
 						<Label>Lower (less than or equal)</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>GreaterThanOrEqualCore</Name>
+						<Name>GreaterThanOrEqual</Name>
+						<!-- CoreRelation -->
 						<Label>Upper (greater than or equal)</Label>
 					</SelectOption>
 				</SelectOptions>
@@ -2162,11 +2170,13 @@
 				<Hint>Relation</Hint>
 				<SelectOptions>
 					<SelectOption>
-						<Name>LessThanOrEqualCore</Name>
+						<Name>LessThanOrEqual</Name>
+						<!-- CoreRelation -->
 						<Label>Lower (less than or equal)</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>GreaterThanOrEqualCore</Name>
+						<Name>GreaterThanOrEqual</Name>
+						<!-- CoreRelation -->
 						<Label>Upper (greater than or equal)</Label>
 					</SelectOption>
 				</SelectOptions>
@@ -3052,8 +3062,8 @@
 		<Hint>Sum of frequencies from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Aggregation</Name>
+				<Label>CF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3171,8 +3181,8 @@
 		<Hint>Minimal frequency from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Aggregation</Name>
+				<Label>CF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3290,8 +3300,8 @@
 		<Hint>Maximal frequency from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Aggregation</Name>
+				<Label>CF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3409,8 +3419,8 @@
 		<Hint>Average frequency from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Aggregation</Name>
+				<Label>CF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3528,8 +3538,8 @@
 		<Hint>Any frequency from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Aggregation</Name>
+				<Label>CF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3647,8 +3657,8 @@
 		<Hint>Variation ratio = 1-f(modal)</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Functional</Name>
+				<Label>CF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3699,8 +3709,8 @@
 		<Hint>Nominal variation (norm) = suma(f(i)*(1-f(i))) * K/(K-1)</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Functional</Name>
+				<Label>CF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3748,11 +3758,11 @@
 	<BoxLocalization>
 		<Identifier>LISpMinerTasks.CFTask.Quantifiers.Functional.DiscreteOrdinaryVariation</Identifier>
 		<Label>Discrete ordinary variation (norm)</Label>
-		<Hint>Discrete Ordinal Variation (norm) = 2*suma(F(i)*(1-F(i))* 2/(K-1)</Hint>
+		<Hint>Discrete Ordinary Variation (norm) = 2*suma(F(i)*(1-F(i))* 2/(K-1)</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Functional</Name>
+				<Label>CF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3803,8 +3813,8 @@
 		<Hint>Arithmetic average of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Functional</Name>
+				<Label>CF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3855,8 +3865,8 @@
 		<Hint>Geometric average of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Functional</Name>
+				<Label>CF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3907,8 +3917,8 @@
 		<Hint>Variance of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Functional</Name>
+				<Label>CF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -3959,8 +3969,8 @@
 		<Hint>Standard deviation of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Functional</Name>
+				<Label>CF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -4011,8 +4021,8 @@
 		<Hint>Skewness of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Functional</Name>
+				<Label>CF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -4063,8 +4073,8 @@
 		<Hint>Asymetry coeficient of cardinal values</Hint>
 		<Categories>
 			<Category>
-				<Name>CFMiner</Name>
-				<Label>CF-Miner</Label>
+				<Name>CFMiner.Quantifiers.Functional</Name>
+				<Label>CF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -4115,8 +4125,8 @@
 		<Hint>Sum of frequencies from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -4265,8 +4275,8 @@
 		<Hint>Minimal frequency from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -4415,8 +4425,8 @@
 		<Hint>Maximal frequency from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -4565,8 +4575,8 @@
 		<Hint>Average frequency from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -4715,8 +4725,8 @@
 		<Hint>Any frequency from range.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -4865,8 +4875,8 @@
 		<Hint>Variation ratio = 1-f(modal)</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -4948,8 +4958,8 @@
 		<Hint>Nominal variation (norm) = suma(f(i)*(1-f(i))) * K/(K-1)</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -5028,11 +5038,11 @@
 	<BoxLocalization>
 		<Identifier>LISpMinerTasks.SDCFTask.Quantifiers.Functional.DiscreteOrdinaryVariation</Identifier>
 		<Label>Discrete ordinary variation (norm)</Label>
-		<Hint>Discrete Ordinal Variation (norm) = 2*suma(F(i)*(1-F(i))* 2/(K-1)</Hint>
+		<Hint>Discrete Ordinary Variation (norm) = 2*suma(F(i)*(1-F(i))* 2/(K-1)</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -5114,8 +5124,8 @@
 		<Hint>Arithmetic average of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -5197,8 +5207,8 @@
 		<Hint>Geometric average of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -5280,8 +5290,8 @@
 		<Hint>Variance of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -5363,8 +5373,8 @@
 		<Hint>Standard deviation of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -5446,8 +5456,8 @@
 		<Hint>Skewness of cardinal values.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -5529,8 +5539,8 @@
 		<Hint>Asymetry coeficient of cardinal values</Hint>
 		<Categories>
 			<Category>
-				<Name>SDCFMiner</Name>
-				<Label>SDCF-Miner</Label>
+				<Name>SDCFMiner.Quantifiers.Aggregation</Name>
+				<Label>SDCF-Miner.Kvantifikátory.Funkční</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -6825,8 +6835,8 @@
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>LISpMinerTasks.KLTask.Quantifiers.Functional.ConditionalEntropy</Identifier>
-		<Label>Conditional entropy H(C|R)</Label>
-		<Hint>Conditional entropy of columns given rows (the lower value the more dependant &lt;0;log2(L)&gt;)</Hint>
+		<Label>Conditional entropy</Label>
+		<Hint>Conditional entropy (H(R|C) or H(C|R))of columns given rows (the lower value the more dependant &lt;0;log2(L)&gt;)</Hint>
 		<Categories>
 			<Category>
 				<Name>KLMiner.Quantifiers.Functional</Name>
@@ -6974,8 +6984,8 @@
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>LISpMinerTasks.KLTask.Quantifiers.Functional.MutualInformationNormalized</Identifier>
-		<Label>Mutual information MI(R,C) normalized</Label>
-		<Hint>Mutual information between rows and columns (the greater value the more dependant &lt;0;1&gt;)</Hint>
+		<Label>Mutual information normalized</Label>
+		<Hint>Normalized mutual information (MI*(R,C)=MI*(C,R)) between rows and columns (the greater value the more dependant &lt;0;1&gt;)</Hint>
 		<Categories>
 			<Category>
 				<Name>KLMiner.Quantifiers.Functional</Name>
@@ -7108,8 +7118,8 @@
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>LISpMinerTasks.KLTask.Quantifiers.Functional.InformationDependency</Identifier>
-		<Label>Information dependency ID(R,C)</Label>
-		<Hint>Information dependency between rows and columns (the greater value the more dependant &lt;0;1&gt;)</Hint>
+		<Label>Information dependency</Label>
+		<Hint>Information dependency (ID(R|C) or ID(C|R)) between rows and columns (the greater value the more dependant &lt;0;1&gt;)</Hint>
 		<Categories>
 			<Category>
 				<Name>KLMiner.Quantifiers.Functional</Name>
@@ -7400,8 +7410,8 @@
 		<Hint>Sum of frequencies from range of source contingency table.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDKLMiner</Name>
-				<Label>SDKL-Miner</Label>
+				<Name>SDKLMiner.Quantifiers.Aggregation</Name>
+				<Label>SDKL-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -7588,8 +7598,8 @@
 		<Hint>Minimal frequency from range of source contingency table.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDKLMiner</Name>
-				<Label>SDKL-Miner</Label>
+				<Name>SDKLMiner.Quantifiers.Aggregation</Name>
+				<Label>SDKL-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -7776,8 +7786,8 @@
 		<Hint>Maximal frequency from range of source contingency table.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDKLMiner</Name>
-				<Label>SDKL-Miner</Label>
+				<Name>SDKLMiner.Quantifiers.Aggregation</Name>
+				<Label>SDKL-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -7964,8 +7974,8 @@
 		<Hint>Average frequency from range of source contingency table.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDKLMiner</Name>
-				<Label>SDKL-Miner</Label>
+				<Name>SDKLMiner.Quantifiers.Aggregation</Name>
+				<Label>SDKL-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -8152,8 +8162,8 @@
 		<Hint>Any frequency from range of source contingency table.</Hint>
 		<Categories>
 			<Category>
-				<Name>SDKLMiner</Name>
-				<Label>SDKL-Miner</Label>
+				<Name>SDKLMiner.Quantifiers.Aggregation</Name>
+				<Label>SDKL-Miner.Kvantifikátory.Agregační</Label>
 			</Category>
 		</Categories>
 		<Sockets>

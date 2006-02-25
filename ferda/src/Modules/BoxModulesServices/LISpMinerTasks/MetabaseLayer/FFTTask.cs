@@ -79,7 +79,7 @@ namespace Ferda.Modules.MetabaseLayer
 				setting = quantifier.setting;
 				propertySettingHelper = new PropertySettingHelper(setting);
 				properties.Clear();
-				CoreRelationEnum relation;
+    			RelationEnum relation;
 				//ParamP,ParamAlfa,ParamBeta,ParamDelta
 				switch (quantifier.typeIdentifier)
 				{
@@ -94,27 +94,27 @@ namespace Ferda.Modules.MetabaseLayer
 						//19  Ceiling                            ;;count;p;
 						//17  Support                            p;;;;
 						//Relation,Treshold,Units
-						relation = (CoreRelationEnum)Enum.Parse(typeof(CoreRelationEnum), propertySettingHelper.GetStringProperty("Relation"));
-						CoreUnitsEnum units = (CoreUnitsEnum)Enum.Parse(typeof(CoreUnitsEnum), propertySettingHelper.GetStringProperty("Units"));
+						relation = (RelationEnum)Enum.Parse(typeof(RelationEnum), propertySettingHelper.GetStringProperty("Relation"));
+						UnitsEnum units = (UnitsEnum)Enum.Parse(typeof(UnitsEnum), propertySettingHelper.GetStringProperty("Units"));
 						bool relative = false;
 						double treshold = propertySettingHelper.GetDoubleProperty("Treshold");
 						switch (units)
 						{
-							case CoreUnitsEnum.AbsoluteNumberCore:
+							case UnitsEnum.AbsoluteNumber:
 								properties.Add("ParamAlfa", treshold);
 								relative = false;
 								break;
-							case CoreUnitsEnum.RelativeNumberCore:
+                            case UnitsEnum.RelativeToActCondition:
 								properties.Add("ParamBeta", treshold);
 								relative = true;
 								break;
 						}
 						switch (relation)
 						{
-							case CoreRelationEnum.GreaterThanOrEqualCore:
+							case RelationEnum.GreaterThanOrEqual:
 								saveQuantifier(taskID, 18, properties, relative);
 								break;
-							case CoreRelationEnum.LessThanOrEqualCore:
+							case RelationEnum.LessThanOrEqual:
 								saveQuantifier(taskID, 19, properties, relative);
 								break;
 						}
@@ -135,15 +135,15 @@ namespace Ferda.Modules.MetabaseLayer
 						//5   Double Lower Critical Implication  p;;Alpha
 						//6   Double Upper Critical Implication  p;;Alpha
 						//ParamP,ParamAlpha
-						relation = (CoreRelationEnum)Enum.Parse(typeof(CoreRelationEnum), propertySettingHelper.GetStringProperty("Relation"));
+                        relation = (RelationEnum)Enum.Parse(typeof(RelationEnum), propertySettingHelper.GetStringProperty("Relation"));
 						properties.Add("ParamP", propertySettingHelper.GetDoubleProperty("ParamP"));
 						properties.Add("ParamAlfa", propertySettingHelper.GetDoubleProperty("ParamAlpha"));
 						switch (relation)
 						{
-							case CoreRelationEnum.GreaterThanOrEqualCore:
+                            case RelationEnum.GreaterThanOrEqual:
 								saveQuantifier(taskID, 6, properties, false);
 								break;
-							case CoreRelationEnum.LessThanOrEqualCore:
+                            case RelationEnum.LessThanOrEqual:
 								saveQuantifier(taskID, 5, properties, false);
 								break;
 						}
@@ -182,16 +182,16 @@ namespace Ferda.Modules.MetabaseLayer
 						//8   Lower Critical Equivalence         p;;Alpha
 						//9   Upper Critical Equivalence         p;;Alpha
 						//ParamP,ParamAlpha
-						relation = (CoreRelationEnum)Enum.Parse(typeof(CoreRelationEnum), propertySettingHelper.GetStringProperty("Relation"));
+                        relation = (RelationEnum)Enum.Parse(typeof(RelationEnum), propertySettingHelper.GetStringProperty("Relation"));
 						properties.Add("ParamP", propertySettingHelper.GetDoubleProperty("ParamP"));
 						properties.Add("ParamAlfa", propertySettingHelper.GetDoubleProperty("ParamAlpha"));
 						saveQuantifier(taskID, 8, properties, false);
 						switch (relation)
 						{
-							case CoreRelationEnum.GreaterThanOrEqualCore:
+                            case RelationEnum.GreaterThanOrEqual:
 								saveQuantifier(taskID, 9, properties, false);
 								break;
-							case CoreRelationEnum.LessThanOrEqualCore:
+                            case RelationEnum.LessThanOrEqual:
 								saveQuantifier(taskID, 8, properties, false);
 								break;
 						}
@@ -200,15 +200,15 @@ namespace Ferda.Modules.MetabaseLayer
 						//2   Lower Critical Implication         p;;Alpha
 						//3   Upper Critical Implication         p;;Alpha
 						//ParamP,ParamAlpha
-						relation = (CoreRelationEnum)Enum.Parse(typeof(CoreRelationEnum), propertySettingHelper.GetStringProperty("Relation"));
+                        relation = (RelationEnum)Enum.Parse(typeof(RelationEnum), propertySettingHelper.GetStringProperty("Relation"));
 						properties.Add("ParamP", propertySettingHelper.GetDoubleProperty("ParamP"));
 						properties.Add("ParamAlfa", propertySettingHelper.GetDoubleProperty("ParamAlpha"));
 						switch (relation)
 						{
-							case CoreRelationEnum.GreaterThanOrEqualCore:
+                            case RelationEnum.GreaterThanOrEqual:
 								saveQuantifier(taskID, 3, properties, false);
 								break;
-							case CoreRelationEnum.LessThanOrEqualCore:
+                            case RelationEnum.LessThanOrEqual:
 								saveQuantifier(taskID, 2, properties, false);
 								break;
 						}

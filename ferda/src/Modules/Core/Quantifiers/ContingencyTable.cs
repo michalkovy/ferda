@@ -5,15 +5,51 @@ using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Modules.Quantifiers
 {
+    /// <summary>
+    /// Represents contingency table.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This class provides basic functionality for working
+    /// with contingency tables, for further functionality, 
+    /// please see derived classes.
+    /// </para>
+    /// <para>
+    /// Please notice that sometimes you want to use only submatrix of 
+    /// the contingency table so you cen use properties:
+    /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.StartRowBound"/>,
+    /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.EndoRowBound"/>,
+    /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.StartColumnBound"/>,
+    /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.EndColumnBound"/>.
+    /// </para>
+    /// <para>
+    /// Sometimes you may to want to divide contingency table by some 
+    /// numeber, in that case please see 
+    /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Denominator"/>
+    /// (default value is 1).
+    /// </para>
+    /// </remarks>
     public class ContingencyTable
     {
         #region Core Functions
 
         #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContingencyTable"/> class.
+        /// </summary>
         public ContingencyTable()
         {
             PreparedSums = new PreparedSums(this);
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public ContingencyTable(int[][] contingencyTable)
         {
             PreparedSums = new PreparedSums(this);
@@ -39,6 +75,15 @@ namespace Ferda.Modules.Quantifiers
             Table = newTable;
             denominator = 1;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public ContingencyTable(long[][] contingencyTable)
         {
             PreparedSums = new PreparedSums(this);
@@ -63,11 +108,15 @@ namespace Ferda.Modules.Quantifiers
             }
             Table = newTable;
         }
+
         /// <summary>
-        /// Constructor (with default denominator=1).
+        /// Initializes a new instance of the <see cref="ContingencyTable"/> class.
         /// </summary>
-        /// <param name="contingencyTable">Array of contingency table rows. 
-        /// Value of table[0][0] is result of A.</param>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public ContingencyTable(long[,] contingencyTable)
         {
             PreparedSums = new PreparedSums(this);
@@ -75,6 +124,15 @@ namespace Ferda.Modules.Quantifiers
             Table = contingencyTable;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <param name="denominator">The denominator.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public ContingencyTable(long[,] contingencyTable, long denominator)
         {
             PreparedSums = new PreparedSums(this);
@@ -92,7 +150,7 @@ namespace Ferda.Modules.Quantifiers
         /// </summary>
         public PreparedSums PreparedSums;
 
-        protected long denominator = 1;
+        private long denominator = 1;
         /// <summary>
         /// Gets the denominator or (instead of set) multiples the 
         /// denominator by given <c>result</c> (default result of the
@@ -105,11 +163,19 @@ namespace Ferda.Modules.Quantifiers
             set { denominator *= value; }
         }
 
-        protected long[,] table;
+        private long[,] table;
         /// <summary>
+        /// <para>
         /// Table [r, c], <c>r</c> is index of row, <c>c</c> is index of column.
+        /// </para>
+        /// <para>
         /// At position [0, 0] is item at first row and first column, 
         /// if you like <b>a-frequency</b>.
+        /// </para>
+        /// <para>
+        /// Please notice that values of the contingecy table are not denominated
+        /// therefore, don`t forget to use <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Denominator"/>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// </remarks>
@@ -269,6 +335,12 @@ namespace Ferda.Modules.Quantifiers
             return !(a == b);
         }
 
+        /// <summary>
+        /// Serves as a hash function for a particular type. <see cref="M:System.Object.GetHashCode"/> is suitable for use in hashing algorithms and data structures like a hash table.
+        /// </summary>
+        /// <returns>
+        /// A hash code for the current <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.
+        /// </returns>
         public override int GetHashCode()
         {
             return firstColumnIndex
@@ -276,7 +348,7 @@ namespace Ferda.Modules.Quantifiers
                 + 7 * firstRowIndex
                 + 11 * lastRowIndex
                 + 13 * (int)denominator
-                + 17 * (int)SumOfValuesAggregation;
+                + 17 * (int)SumOfValues;
         }
 
         /// <summary>
@@ -557,7 +629,11 @@ namespace Ferda.Modules.Quantifiers
         #endregion
 
         #region Indexes (fist/last/max row/column item index)
-        int firstRowIndex = -1;
+        private int firstRowIndex = -1;
+        /// <summary>
+        /// Gets the index of the first row.
+        /// </summary>
+        /// <value>The index of the first row.</value>
         public int FirstRowIndex
         {
             get
@@ -569,7 +645,11 @@ namespace Ferda.Modules.Quantifiers
             }
         }
 
-        int lastRowIndex = -1;
+        private int lastRowIndex = -1;
+        /// <summary>
+        /// Gets the index of the last row.
+        /// </summary>
+        /// <value>The index of the last row.</value>
         public int LastRowIndex
         {
             get
@@ -580,6 +660,11 @@ namespace Ferda.Modules.Quantifiers
                     return MaxRowIndex;
             }
         }
+
+        /// <summary>
+        /// Gets the index of the max row.
+        /// </summary>
+        /// <value>The index of the max row.</value>
         public int MaxRowIndex
         {
             get
@@ -587,7 +672,12 @@ namespace Ferda.Modules.Quantifiers
                 return table.GetLength(0) - 1;
             }
         }
-        int firstColumnIndex = -1;
+        
+        private int firstColumnIndex = -1;
+        /// <summary>
+        /// Gets the index of the first column.
+        /// </summary>
+        /// <value>The index of the first column.</value>
         public int FirstColumnIndex
         {
             get
@@ -598,7 +688,12 @@ namespace Ferda.Modules.Quantifiers
                     return 0;
             }
         }
-        int lastColumnIndex = -1;
+        
+        private int lastColumnIndex = -1;
+        /// <summary>
+        /// Gets the index of the last column.
+        /// </summary>
+        /// <value>The index of the last column.</value>
         public int LastColumnIndex
         {
             get
@@ -609,6 +704,11 @@ namespace Ferda.Modules.Quantifiers
                     return MaxColumnIndex;
             }
         }
+
+        /// <summary>
+        /// Gets the index of the max column.
+        /// </summary>
+        /// <value>The index of the max column.</value>
         public int MaxColumnIndex
         {
             get
@@ -633,19 +733,14 @@ namespace Ferda.Modules.Quantifiers
 
         #endregion
 
-        #region Comparing (2 numbers, [Core]RelationEnum)
-        public static bool Compare(double leftSideNumber, CoreRelationEnum relation, double rightSideNumber)
-        {
-            switch (relation)
-            {
-                case CoreRelationEnum.GreaterThanOrEqualCore:
-                    return leftSideNumber >= rightSideNumber;
-                case CoreRelationEnum.LessThanOrEqualCore:
-                    return leftSideNumber <= rightSideNumber;
-                default:
-                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(relation);
-            }
-        }
+        #region Comparing (2 numbers, RelationEnum)
+        /// <summary>
+        /// Compares the two numbers by specifiec <c>relation</c>.
+        /// </summary>
+        /// <param name="leftSideNumber">The left side number.</param>
+        /// <param name="relation">The relation.</param>
+        /// <param name="rightSideNumber">The right side number.</param>
+        /// <returns>True iff both specified numbers are in specified <c>relation</c>.</returns>
         public static bool Compare(double leftSideNumber, RelationEnum relation, double rightSideNumber)
         {
             switch (relation)
@@ -667,53 +762,52 @@ namespace Ferda.Modules.Quantifiers
         #endregion
 
         #region Units converting (result, [Core]UnitsEnum, ...)
-        public double ConvertUnits(double value, CoreUnitsEnum units)
-        {
-            switch (units)
-            {
-                case CoreUnitsEnum.AbsoluteNumberCore:
-                    return value;
-                case CoreUnitsEnum.RelativeNumberCore:
-                    return value / this.SumOfValuesAggregation;
-                default:
-                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(units);
-            }
-        }
-        public static double ConvertUnits(double value, CoreUnitsEnum units, long sum)
-        {
-            switch (units)
-            {
-                case CoreUnitsEnum.AbsoluteNumberCore:
-                    return value;
-                case CoreUnitsEnum.RelativeNumberCore:
-                    return value / sum;
-                default:
-                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(units);
-            }
-        }
-        public static double ConvertUnits(ContingencyTable table, double value, UnitsEnum units, long allObjectsCount)
+
+        /// <summary>
+        /// Converts specified <c>value</c> by data in <c>table</c> 
+        /// and <c>allObjectsCount</c> according to specified 
+        /// <c>units</c>.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="units">The units.</param>
+        /// <param name="table">
+        /// The table (used to determine some denominator if 
+        /// specified <c>units</c> depends on values in the 
+        /// contingency table).
+        /// </param>
+        /// <param name="allObjectsCount">
+        /// All objects count (used iff specified <c>units</c> 
+        /// depends on count of all objects in data matrix 
+        /// (not the same as count of all objects in contingency 
+        /// table)).
+        /// </param>
+        /// <returns>Converted value.</returns>
+        public static double ConvertUnits(double value, UnitsEnum units, ContingencyTable table, long allObjectsCount)
         {
             switch (units)
             {
                 case UnitsEnum.AbsoluteNumber:
                     return value;
                 case UnitsEnum.RelativeToActCondition:
-                    return value / table.SumOfValuesAggregation;
+                    return value / table.SumOfValues;
                 case UnitsEnum.RelativeToAllObjects:
                     return value / allObjectsCount;
                 case UnitsEnum.RelativeToMaxFrequency:
-                    return value / table.MaxValueAggregation;
+                    return value / table.MaxValue;
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(units);
             }
         }
-        public double ConvertUnits(double value, UnitsEnum units, long allObjectsCount)
-        {
-            return ContingencyTable.ConvertUnits(this, value, units, allObjectsCount);
-        }
         #endregion
 
         #region Combining (Operation modes ... 1st set / 2nd set / diff of abs freq / diff of rel freq / diff of [abs] val)
+        /// <summary>
+        /// Difference of two contingency tables (A - B).
+        /// </summary>
+        /// <typeparam name="T">Subtype of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.</typeparam>
+        /// <param name="a">The contingency table A.</param>
+        /// <param name="b">The contingency table B.</param>
+        /// <returns>Contingency table as result of A - B expression.</returns>
         private static T Minus<T>(T a, T b)
             where T : ContingencyTable, new()
         {
@@ -724,6 +818,14 @@ namespace Ferda.Modules.Quantifiers
             return resultObject;
         }
 
+        /// <summary>
+        /// Combines specified contingency tables (A and B).
+        /// </summary>
+        /// <typeparam name="T">Subtype of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.</typeparam>
+        /// <param name="a">The contingency table A.</param>
+        /// <param name="b">The contingency table B.</param>
+        /// <param name="operationMode">The operation mode.</param>
+        /// <returns>One contingency table as result of combination two contingecy tables (A and B).</returns>
         public static T Combine<T>(T a, T b, OperationModeEnum operationMode)
             where T : ContingencyTable, new()
         {
@@ -736,33 +838,22 @@ namespace Ferda.Modules.Quantifiers
                 case OperationModeEnum.DifferencesOfAbsoluteFrequencies:
                     return ContingencyTable.Minus<T>(a, b);
                 case OperationModeEnum.DifferencesOfRelativeFrequencies:
-                    a.Div((long)a.SumOfValuesAggregation);
-                    b.Div((long)b.SumOfValuesAggregation);
+                    a.Div((long)a.SumOfValues);
+                    b.Div((long)b.SumOfValues);
                     return ContingencyTable.Minus<T>(a, b);
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(operationMode);
             }
         }
 
-        //public static ContingencyTable Combine(ContingencyTable a, ContingencyTable b, OperationModeEnum operationMode)
-        //{
-        //    switch (operationMode)
-        //    {
-        //        case OperationModeEnum.FirstSetFrequencies:
-        //            return a;
-        //        case OperationModeEnum.SecondSetFrequencies:
-        //            return b;
-        //        case OperationModeEnum.DifferencesOfAbsoluteFrequencies:
-        //            return a - b;
-        //        case OperationModeEnum.DifferencesOfRelativeFrequencies:
-        //            a.Div((long)a.SumOfValuesAggregation);
-        //            b.Div((long)b.SumOfValuesAggregation);
-        //            return a - b;
-        //        default:
-        //            throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(operationMode);
-        //    }
-        //}
-
+        /// <summary>
+        /// Combines the specified values of one quantifier 
+        /// evaluated over two (first and second) contingency tables.
+        /// </summary>
+        /// <param name="firstQuantifierValue">The first quantifier value.</param>
+        /// <param name="secondQuantifierValue">The second quantifier value.</param>
+        /// <param name="operationMode">The operation mode.</param>
+        /// <returns>Combined value of two quntifiered values.</returns>
         public static double Combine(double firstQuantifierValue, double secondQuantifierValue, OperationModeEnum operationMode)
         {
             switch (operationMode)
@@ -776,6 +867,17 @@ namespace Ferda.Modules.Quantifiers
             }
         }
 
+        /// <summary>
+        /// Determines whether the specified <c>operationMode</c>
+        /// leads to some operations before or after separated quantifier evaluation
+        /// over two contingency tables.
+        /// </summary>
+        /// <param name="operationMode">The operation mode.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specivied <c>operationMode</c> leads
+        /// to some computation with quangifier values (computed 
+        /// separately over two contingecy tables); otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsOperationModeOverQuantifierValues(OperationModeEnum operationMode)
         {
             return (operationMode == OperationModeEnum.AbsoluteDifferenceOfQuantifierValues
@@ -785,11 +887,11 @@ namespace Ferda.Modules.Quantifiers
         #endregion
 
         #region Aggregation Quantifiers
-        public static double MaxValueAggregationValue(ContingencyTable table)
-        {
-            return table.MaxValueAggregation;
-        }
-        public double MaxValueAggregation
+        /// <summary>
+        /// Gets the max value.
+        /// </summary>
+        /// <value>The max value.</value>
+        public double MaxValue
         {
             get
             {
@@ -805,11 +907,22 @@ namespace Ferda.Modules.Quantifiers
                 return result / (double)denominator;
             }
         }
-        public static double MinValueAggregationValue(ContingencyTable table)
+
+        /// <summary>
+        /// Gets the max value.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns></returns>
+        public static double GetMaxValue(ContingencyTable table)
         {
-            return table.MinValueAggregation;
+            return table.MaxValue;
         }
-        public double MinValueAggregation
+
+        /// <summary>
+        /// Gets the min value.
+        /// </summary>
+        /// <value>The min value.</value>
+        public double MinValue
         {
             get
             {
@@ -825,11 +938,22 @@ namespace Ferda.Modules.Quantifiers
                 return result / (double)denominator;
             }
         }
-        public static double SumOfValuesAggregationValue(ContingencyTable table)
+
+        /// <summary>
+        /// Gets the min value.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns></returns>
+        public static double GetMinValue(ContingencyTable table)
         {
-            return table.SumOfValuesAggregation;
+            return table.MinValue;
         }
-        public double SumOfValuesAggregation
+
+        /// <summary>
+        /// Gets the sum of values.
+        /// </summary>
+        /// <value>The sum of values.</value>
+        public double SumOfValues
         {
             get
             {
@@ -845,20 +969,54 @@ namespace Ferda.Modules.Quantifiers
                 return result / (double)denominator;
             }
         }
-        public static double AverageValueAggregationValue(ContingencyTable table)
+
+        /// <summary>
+        /// Gets the sum of values.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns></returns>
+        public static double GetSumOfValues(ContingencyTable table)
         {
-            return table.AverageValueAggregation;
+            return table.SumOfValues;
         }
-        public double AverageValueAggregation
+
+        /// <summary>
+        /// Gets the average value.
+        /// </summary>
+        /// <value>The average value.</value>
+        public double AverageValue
         {
             get
             {
-                return SumOfValuesAggregation / (double)CountOfUsedCells * (double)denominator;
+                return SumOfValues / (double)CountOfUsedCells * (double)denominator;
             }
+        }
+
+        /// <summary>
+        /// Gets the average value.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns></returns>
+        public static double GetAverageValue(ContingencyTable table)
+        {
+            return table.AverageValue;
         }
         #endregion
 
         #region AnyValue
+        /// <summary>
+        /// Test if any value of the contingency table 
+        /// (converted to specified <c>units</c>) is in 
+        /// specified <c>relation</c> to specified <c>treshold</c>.
+        /// If test succedd the (first) successfully found value is returned
+        /// in <c>out value</c>.
+        /// </summary>
+        /// <param name="relation">The relation.</param>
+        /// <param name="treshold">The treshold.</param>
+        /// <param name="units">The units.</param>
+        /// <param name="allObjectsCount">All objects count (needed and used if units are UnitsEnum.RelativeToAllObjects).</param>
+        /// <param name="value">The value.</param>
+        /// <returns>True if any value of the contingency table satisfies the specified condition.</returns>
         public bool AnyValue(RelationEnum relation, double treshold, UnitsEnum units, long? allObjectsCount, out double value)
         {
             value = 0;
@@ -868,10 +1026,10 @@ namespace Ferda.Modules.Quantifiers
                 case UnitsEnum.AbsoluteNumber:
                     break;
                 case UnitsEnum.RelativeToActCondition:
-                    multipledTreshold = multipledTreshold * this.SumOfValuesAggregation / 100;
+                    multipledTreshold = multipledTreshold * this.SumOfValues / 100;
                     break;
                 case UnitsEnum.RelativeToMaxFrequency:
-                    multipledTreshold = multipledTreshold * this.MaxValueAggregation / 100;
+                    multipledTreshold = multipledTreshold * this.MaxValue / 100;
                     break;
                 case UnitsEnum.RelativeToAllObjects:
                     if (allObjectsCount.HasValue)
@@ -894,10 +1052,23 @@ namespace Ferda.Modules.Quantifiers
 
         #region Generic "Value" functions with delegates
 
+        /// <summary>
+        /// Delegate of quantifier over a subtype of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.
+        /// </summary>
+        /// <typeparam name="T">Subtype of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.</typeparam>
+        /// <param name="table">Instance of subtype of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.</param>
+        /// <returns>Double value of the quantifier.</returns>
         public delegate double QuantifierValue<T>(T table);
 
-        public delegate double QuantifierValueWithDirection<T>(T table, DirectionEnum direction);
-
+        /// <summary>
+        /// Gets the specified quantifier value.
+        /// </summary>
+        /// <typeparam name="T">Subtype of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.</typeparam>
+        /// <param name="quantifierValue">The quantifier value.</param>
+        /// <param name="firstTable">The first table.</param>
+        /// <param name="secondTable">The second table.</param>
+        /// <param name="operationMode">The operation mode.</param>
+        /// <returns>The value of specified quantifier.</returns>
         public static double Value<T>(QuantifierValue<T> quantifierValue, T firstTable, T secondTable, OperationModeEnum operationMode)
             where T : ContingencyTable, new()
         {
@@ -916,26 +1087,53 @@ namespace Ferda.Modules.Quantifiers
             }
         }
 
+        /// <summary>
+        /// Gets the specified quantifier value.
+        /// </summary>
+        /// <typeparam name="T">Subtype of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.</typeparam>
+        /// <param name="quantifierValue">The quantifier value.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="units">The units.</param>
+        /// <param name="allObjectsCount">All objects count.</param>
+        /// <returns>The value of specified quantifier.</returns>
         public static double Value<T>(QuantifierValue<T> quantifierValue, T table, UnitsEnum units, long allObjectsCount)
             where T : ContingencyTable
         {
-            return ContingencyTable.ConvertUnits(table, quantifierValue(table), units, allObjectsCount);
+            return ContingencyTable.ConvertUnits(quantifierValue(table), units, table, allObjectsCount);
         }
 
+        /// <summary>
+        /// Gets the specified quantifier value.
+        /// </summary>
+        /// <typeparam name="T">Subtype of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.</typeparam>
+        /// <param name="quantifierValue">The quantifier value.</param>
+        /// <param name="table">The table.</param>
+        /// <returns>The value of specified quantifier.</returns>
         public static double Value<T>(QuantifierValue<T> quantifierValue, T table)
             where T : ContingencyTable
         {
             return quantifierValue(table);
         }
 
+        /// <summary>
+        /// Gets the specified quantifier value.
+        /// </summary>
+        /// <typeparam name="T">Subtype of <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>.</typeparam>
+        /// <param name="quantifierValue">The quantifier value.</param>
+        /// <param name="firstTable">The first table.</param>
+        /// <param name="secondTable">The second table.</param>
+        /// <param name="operationMode">The operation mode.</param>
+        /// <param name="units">The units.</param>
+        /// <param name="allObjectsCount">All objects count.</param>
+        /// <returns>The value of specified quantifier.</returns>
         public static double Value<T>(QuantifierValue<T> quantifierValue, T firstTable, T secondTable, OperationModeEnum operationMode, UnitsEnum units, long allObjectsCount)
             where T : ContingencyTable, new()
         {
             if (IsOperationModeOverQuantifierValues(operationMode))
             {
                 return Combine(
-                    ContingencyTable.ConvertUnits(firstTable, quantifierValue(firstTable), units, allObjectsCount),
-                    ContingencyTable.ConvertUnits(secondTable, quantifierValue(secondTable), units, allObjectsCount),
+                    ContingencyTable.ConvertUnits(quantifierValue(firstTable), units, firstTable, allObjectsCount),
+                    ContingencyTable.ConvertUnits(quantifierValue(secondTable), units, secondTable, allObjectsCount),
                     operationMode);
             }
             else
@@ -943,9 +1141,9 @@ namespace Ferda.Modules.Quantifiers
                 T combinedTable = ContingencyTable.Combine<T>(firstTable, secondTable, operationMode);
                 //Michale: tohle pretypovani spadne
                 return ContingencyTable.ConvertUnits(
-                    combinedTable,
-                    quantifierValue(combinedTable),
-                    units,
+                    quantifierValue(combinedTable), 
+                    units, 
+                    combinedTable, 
                     allObjectsCount);
             }
         }
@@ -959,7 +1157,7 @@ namespace Ferda.Modules.Quantifiers
     /// </summary>
     public class PreparedSums
     {
-        protected long[] rowSums;
+        private long[] rowSums;
         /// <summary>
         /// Sum of all values in row [r]. Denominator is not applied.
         /// </summary>
@@ -967,12 +1165,12 @@ namespace Ferda.Modules.Quantifiers
         {
             get
             {
-                Compute();
+                compute();
                 return rowSums;
             }
         }
 
-        protected long[] columnSums;
+        private long[] columnSums;
         /// <summary>
         /// Sum of all values in column [c]. Denominator is not applied.
         /// </summary>
@@ -980,12 +1178,12 @@ namespace Ferda.Modules.Quantifiers
         {
             get
             {
-                Compute();
+                compute();
                 return columnSums;
             }
         }
 
-        protected long totalSum;
+        private long totalSum;
         /// <summary>
         /// Sum of all values in table. Denominator is not applied
         /// </summary>
@@ -993,12 +1191,12 @@ namespace Ferda.Modules.Quantifiers
         {
             get
             {
-                Compute();
+                compute();
                 return totalSum;
             }
         }
 
-        protected ContingencyTable contingencyTable;
+        private ContingencyTable contingencyTable;
 
         /// <summary>
         /// Initializes a new instance of the 
@@ -1011,7 +1209,10 @@ namespace Ferda.Modules.Quantifiers
         }
 
         private bool computed = false;
-        protected void Compute()
+        /// <summary>
+        /// Computes (prepares) all sums if it is not yet.
+        /// </summary>
+        private void compute()
         {
             if (!computed)
                 Refresh();

@@ -7,11 +7,20 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.AtomSetting
 {
 	class AtomSettingFunctionsI : AtomSettingFunctionsDisp_, IFunctions
 	{
+        /// <summary>
+        /// The box module.
+        /// </summary>
 		protected BoxModuleI boxModule;
 		//protected IBoxInfo boxInfo;
 
 		#region IFunctions Members
-		public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
+        /// <summary>
+        /// Sets the <see cref="T:Ferda.Modules.BoxModuleI">box module</see>
+        /// and the <see cref="T:Ferda.Modules.Boxes.IBoxInfo">box info</see>.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="boxInfo">The box info.</param>
+        public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
 		{
 			this.boxModule = boxModule;
 			//this.boxInfo = boxInfo;
@@ -73,7 +82,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.AtomSetting
 				if (result.category.Length > 0)
 					category = result.category[0];
 				if ((String.IsNullOrEmpty(category))
-					|| !(Ferda.Modules.Helpers.Data.Attribute.TestIsCategoryInCategories(result.abstractAttribute.categories, category)))
+					|| !(Ferda.Modules.Helpers.Data.Attribute.TryIsCategoryInCategories(result.abstractAttribute.categories, category)))
 				{
                     throw Ferda.Modules.Exceptions.BadValueError(null, boxModule.StringIceIdentity, "Category must be selected when coefficient type is one particular rowValue!", new string[] { "Category" }, restrictionTypeEnum.NotInSelectOptions);
 				}
@@ -117,7 +126,13 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.AtomSetting
 					if (abstractAttributeStruct.countOfCategories >= Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeConstants.MaxLengthOfCategoriesNamesSelectStringArray)
 						value = new SelectString[0];
 					else
-						value = Ferda.Modules.Helpers.Data.Attribute.CategoriesNamesSelectString(abstractAttributeStruct.categories, Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeConstants.MaxLengthOfCategoriesNamesSelectStringArray);
+                        value = 
+                            Ferda.Modules.Boxes.BoxInfoHelper.StringArrayToSelectStringArray(
+                                Ferda.Modules.Helpers.Data.Attribute.GetCategoriesNames(
+                                    abstractAttributeStruct.categories, 
+                                    Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeConstants.MaxLengthOfCategoriesNamesSelectStringArray
+                                    )
+                                );
 				}
 				return value;
 			}

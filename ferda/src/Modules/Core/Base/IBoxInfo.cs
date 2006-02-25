@@ -782,13 +782,36 @@ namespace Ferda.Modules.Boxes
         bool TryGetPhrase(string phraseIdentifier, out string phraseLocalizedText, string[] localePrefs);
 
         /// <summary>
+        /// Validates setting of this box module.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <remarks>
+        /// <para>
+        /// Some settings may cause to exceptions or some error states.
+        /// </para>
+        /// <para>
         /// Validates the specified box module. (e.g. setting of some properties
         /// is right (satisfies its restrictions) but box module can not work with
         /// this setting e.g. property "OdbcConnectionString" is valid ODBC connection
         /// string but the box module can not connect with given value to the 
         /// specified data source.)
-        /// </summary>
-        /// <param name="boxModule">The box module.</param>
+        /// </para>
+        /// <para>
+        /// E. g. if (current) box module provides OdbcConnectionString 
+        /// and its value is bad (not valid ODBC connection string) then
+        /// if another box module wants to use the (bad) value of the 
+        /// connection string, probably exception will be thrown but 
+        /// the error occured because of bad param of current box and 
+        /// its property OdbcConnectionString. So, the other box, where
+        /// the error occured, should call (job of ModulesManager) function
+        /// Validate on current box and current box should test validity 
+        /// and usability of the OdbcConnectionString.
+        /// </para>
+        /// <para>
+        /// If setting of current box is bad (may leads to some errors 
+        /// of exceptions) than some exception is thrown.
+        /// </para>
+        /// </remarks>
         void Validate(BoxModuleI boxModule);
 	}
 }

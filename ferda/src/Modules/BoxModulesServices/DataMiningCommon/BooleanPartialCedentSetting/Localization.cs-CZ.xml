@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>DataMiningCommon.BooleanPartialCedentSetting</Identifier>
-  <Label>Booleovský dílčí ced. (&amp;)</Label>
+  <Label>Bool. cedent</Label>
   <Hint>Zadání booleovského dílčího cedentu a jeho parametrů</Hint>
   <Categories>
     <Category>

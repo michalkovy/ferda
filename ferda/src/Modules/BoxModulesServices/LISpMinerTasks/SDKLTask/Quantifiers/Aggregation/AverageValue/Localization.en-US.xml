@@ -4,8 +4,8 @@
   <Hint>Average frequency from range of source contingency table.</Hint>
   <Categories>
     <Category>
-      <Name>SDKLMiner</Name>
-      <Label>SDKL-Miner</Label>
+      <Name>SDKLMiner.Quantifiers.Aggregation</Name>
+      <Label>SDKL-Miner.Quantifiers.Aggregation</Label>
     </Category>
   </Categories>
   <Sockets>

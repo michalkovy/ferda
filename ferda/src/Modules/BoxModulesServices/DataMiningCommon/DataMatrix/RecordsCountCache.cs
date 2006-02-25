@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
 {
+    /// <summary>
+    /// Cache for count of all records in the data matrix.
+    /// </summary>
     public class RecordsCountCache : Ferda.Modules.Helpers.Caching.Cache
     {
         private long value;

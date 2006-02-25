@@ -7,8 +7,17 @@ using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 
 namespace Ferda.Modules.Boxes.LISpMinerTasks
 {
+    /// <summary>
+    /// Static class for working with all LISp-Miner tasks.
+    /// </summary>
     public static class LISpMinerAbstractTask
     {
+        /// <summary>
+        /// Gets the quantifiers setting.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="socketName">Name of the socket.</param>
+        /// <returns>Setting of quantifiers.</returns>
         public static QuantifierSettingStruct[] GetQuantifiersSetting(BoxModuleI boxModule, string socketName)
         {
             List<QuantifierSettingStruct> result = new List<QuantifierSettingStruct>();
@@ -33,6 +42,12 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Gets the quantifier providers.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="socketName">Name of the socket.</param>
+        /// <returns>Quantifier providers.</returns>
         public static QuantifierProvider[] GetQuantifierProviders(BoxModuleI boxModule, string socketName)
         {
             List<QuantifierProvider> result = new List<QuantifierProvider>();
@@ -48,6 +63,11 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Gets the generation info.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>Generation info.</returns>
         public static GeneratingStruct GetGenerationInfo(BoxModuleI boxModule)
         {
             GeneratingStruct result = ((GenerationInfoTI)boxModule.GetPropertyOther("GenerationInfo")).getGenerationInfo();
@@ -58,12 +78,22 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
             return result;
         }
 
+        /// <summary>
+        /// Sets the generation info.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="value">The value.</param>
         public static void SetGenerationInfo(BoxModuleI boxModule, GeneratingStruct value)
         {
             GenerationInfoTI newValue = new GenerationInfoTI(value);
             boxModule.setProperty("GenerationInfo", newValue);
         }
 
+        /// <summary>
+        /// Gets the hypotheses.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>Hypotheses.</returns>
         public static HypothesisStruct[] GetHypotheses(BoxModuleI boxModule)
         {
             HypothesisStruct[] result = ((HypothesesTI)boxModule.GetPropertyOther("Hypotheses")).getHypothesesValue();
@@ -73,12 +103,25 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
                 return result;
         }
 
+        /// <summary>
+        /// Sets the hypotheses.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="value">The value.</param>
         public static void SetHypotheses(BoxModuleI boxModule, HypothesisStruct[] value)
         {
             HypothesesTI newValue = new HypothesesTI(value);
             boxModule.setProperty("Hypotheses", newValue);
         }
 
+        /// <summary>
+        /// Gets the boolean partial cedent setting sequence (array).
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="socketName">Name of the socket.</param>
+        /// <param name="oneAtMinimum">if set to <c>true</c> one patial cedent has to be set at minimum.</param>
+        /// <returns>All boolean partial cedent settings from specified <c>socketName</c>.</returns>
+        /// <exception cref="T:Ferda.Modules.NoConnectionInSocketError">Thrown iff there is no BoxModule connected in socketName and oneAtMinimum is true.</exception>
         public static BooleanPartialCedentSettingStruct[] GetBooleanPartialCedentSettingSeq(BoxModuleI boxModule, string socketName, bool oneAtMinimum)
         {
             List<BooleanPartialCedentSettingStruct> result = new List<BooleanPartialCedentSettingStruct>();
@@ -90,6 +133,14 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Gets the categorial partial cedent setting sequence (array).
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="socketName">Name of the socket.</param>
+        /// <param name="oneAtMinimum">if set to <c>true</c> one patial cedent has to be set at minimum.</param>
+        /// <returns>All categorial partial cedent settings from specified <c>socketName</c>.</returns>
+        /// <exception cref="T:Ferda.Modules.NoConnectionInSocketError">Thrown iff there is no BoxModule connected in socketName and oneAtMinimum is true.</exception>
         public static CategorialPartialCedentSettingStruct[] GetCategorialPartialCedentSettingSeq(BoxModuleI boxModule, string socketName, bool oneAtMinimum)
         {
             List<CategorialPartialCedentSettingStruct> result = new List<CategorialPartialCedentSettingStruct>();
@@ -101,6 +152,10 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Sets the generation info state to running.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
         public static void SetGenerationInfoStateToRunning(BoxModuleI boxModule)
         {
             GeneratingStruct generationInfo = GetGenerationInfo(boxModule);
@@ -108,6 +163,10 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
             SetGenerationInfo(boxModule, generationInfo);
         }
 
+        /// <summary>
+        /// Sets the generation info state to failed.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
         public static void SetGenerationInfoStateToFailed(BoxModuleI boxModule)
         {
             GeneratingStruct generationInfo = GetGenerationInfo(boxModule);
@@ -115,6 +174,12 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
             SetGenerationInfo(boxModule, generationInfo);
         }
 
+        /// <summary>
+        /// Runs the task on metabase layer.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="taskStruct">The task struct.</param>
+        /// <param name="metabaseLayer">The metabase layer.</param>
         public static void RunTaskOnMetabaseLayer(BoxModuleI boxModule, object taskStruct, Ferda.Modules.MetabaseLayer.Task metabaseLayer)
         {
             //switch generation state to running

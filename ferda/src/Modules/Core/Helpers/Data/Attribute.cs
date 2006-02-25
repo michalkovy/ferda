@@ -5,58 +5,59 @@ using Ferda.Modules.Boxes.DataMiningCommon.Attributes;
 
 namespace Ferda.Modules.Helpers.Data
 {
-	public class Attribute
-	{
-		public static string[] CategoriesNames(CategoriesStruct categories, long maxCategoriesNames)
-		{
-			long count = CategoriesCount(categories);
-			if ((maxCategoriesNames > 0 && count > maxCategoriesNames) || (count == 0))
-				return new string[0];
-			int actualCount = 0;
-			string[] result = new string[count];
-			if (categories.dateTimeIntervals != null)
-			{
-				categories.dateTimeIntervals.Keys.CopyTo(result, actualCount);
-				actualCount += categories.dateTimeIntervals.Count;
-			}
-			if (categories.floatIntervals != null)
-			{
-				categories.floatIntervals.Keys.CopyTo(result, actualCount);
-				actualCount += categories.floatIntervals.Count;
-			}
-			if (categories.longIntervals != null)
-			{
-				categories.longIntervals.Keys.CopyTo(result, actualCount);
-				actualCount += categories.longIntervals.Count;
-			}
-			if (categories.enums != null)
-			{
-				categories.enums.Keys.CopyTo(result, actualCount);
-				actualCount += categories.enums.Count;
-			}
-			return result;
-		}
-		public static SelectString[] CategoriesNamesSelectString(CategoriesStruct categories, long maxCategoriesNames)
-		{
-			return StringArrayToSelectStringArray(CategoriesNames(categories, maxCategoriesNames));
-		}
-		public static SelectString[] StringArrayToSelectStringArray(string[] input)
-		{
-			if ((input == null) || (input.Length == 0))
-				return null;
-			List<SelectString> result = new List<SelectString>();
-			foreach (string item in input)
-			{
-				SelectString selectString = new SelectString();
-				selectString.name = item;
-				selectString.label = item;
-				result.Add(selectString);
-			}
-			return result.ToArray();
-		}
-		public static long CategoriesCount(CategoriesStruct categories)
-		{
-			long result = 0;
+    /// <summary>
+    /// This static class provides some methods for working with categories and attributes at all.
+    /// </summary>
+    public class Attribute
+    {
+        /// <summary>
+        /// Gets the categories names.
+        /// </summary>
+        /// <param name="categories">The categories.</param>
+        /// <param name="maxCategoriesNames">The max categories names.</param>
+        /// <returns>
+        /// Names of categories. (or empty array of strings if 
+        /// count of categories is greater than specified 
+        /// <c>maxCategoriesNames</c>)
+        /// </returns>
+        public static string[] GetCategoriesNames(CategoriesStruct categories, long maxCategoriesNames)
+        {
+            long count = GetCategoriesCount(categories);
+            if ((maxCategoriesNames > 0 && count > maxCategoriesNames) || (count == 0))
+                return new string[0];
+            int actualCount = 0;
+            string[] result = new string[count];
+            if (categories.dateTimeIntervals != null)
+            {
+                categories.dateTimeIntervals.Keys.CopyTo(result, actualCount);
+                actualCount += categories.dateTimeIntervals.Count;
+            }
+            if (categories.floatIntervals != null)
+            {
+                categories.floatIntervals.Keys.CopyTo(result, actualCount);
+                actualCount += categories.floatIntervals.Count;
+            }
+            if (categories.longIntervals != null)
+            {
+                categories.longIntervals.Keys.CopyTo(result, actualCount);
+                actualCount += categories.longIntervals.Count;
+            }
+            if (categories.enums != null)
+            {
+                categories.enums.Keys.CopyTo(result, actualCount);
+                actualCount += categories.enums.Count;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the categories count.
+        /// </summary>
+        /// <param name="categories">The categories.</param>
+        /// <returns>Categories count.</returns>
+        public static long GetCategoriesCount(CategoriesStruct categories)
+        {
+            long result = 0;
             if (categories != null)
             {
                 if (categories.enums != null)
@@ -68,95 +69,126 @@ namespace Ferda.Modules.Helpers.Data
                 if (categories.dateTimeIntervals != null)
                     result += categories.dateTimeIntervals.Count;
             }
-			return result;
-		}
-		public static void TestCategoriesCount(long countOfCategories, string myIdentity)
-		{
-			if (countOfCategories <= 0)
-			{
-				throw Ferda.Modules.Exceptions.BadValueError(null, myIdentity, "There is no categoryName in attribute!", new string[] { "Categories" }, restrictionTypeEnum.Other);
-			}
-		}
-		public static void TestCategoriesCount(CategoriesStruct categories, string boxIdentity)
-		{
-			if (categories.enums != null && categories.enums.Count > 0)
-				return;
-			if (categories.longIntervals != null && categories.longIntervals.Count > 0)
-				return;
-			if (categories.floatIntervals != null && categories.floatIntervals.Count > 0)
-				return;
-			if (categories.dateTimeIntervals != null && categories.dateTimeIntervals.Count > 0)
-				return;
-			TestCategoriesCount(-1, boxIdentity);
-		}
-		public static void TestCategoriesDisjunctivity(CategoriesStruct categories, string boxIdentity)
-		{//TODO testCategoriesDisjunctivity
-			bool allDisjunkt = true;
+            return result;
+        }
 
-			if (!allDisjunkt)
-			{
+        /// <summary>
+        /// Tests the categories count. If there is no category in specified
+        /// <c>categories</c> than <see cref="T:Ferda.Modules.BadValueError"/>
+        /// is thrown.
+        /// </summary>
+        /// <param name="categories">The categories.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <exception cref="T:Ferda.Modules.BadValueError">Thrown if there is no category in specified <c>categories</c>.</exception>
+        public static void TestCategoriesCount(CategoriesStruct categories, string boxIdentity)
+        {
+            if (categories.enums != null && categories.enums.Count > 0)
+                return;
+            if (categories.longIntervals != null && categories.longIntervals.Count > 0)
+                return;
+            if (categories.floatIntervals != null && categories.floatIntervals.Count > 0)
+                return;
+            if (categories.dateTimeIntervals != null && categories.dateTimeIntervals.Count > 0)
+                return;
+            throw Ferda.Modules.Exceptions.BadValueError(null, boxIdentity, "There is no categoryName in attribute!", new string[] { "Categories" }, restrictionTypeEnum.Other);
+        }
+
+        /// <summary>
+        /// Tests the categories disjunctivity.
+        /// </summary>
+        /// <param name="categories">The categories.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <exception cref="T:Ferda.Modules.BadValueError">Thrown iff categories are not disjunctive.</exception>
+        public static void TestCategoriesDisjunctivity(CategoriesStruct categories, string boxIdentity)
+        {//TODO testCategoriesDisjunctivity
+            bool allDisjunkt = true;
+
+            if (!allDisjunkt)
+            {
                 throw Ferda.Modules.Exceptions.BadValueError(null, boxIdentity, "Categories are not disjunktive!", null, Ferda.Modules.restrictionTypeEnum.Other);
-			}
-		}
-		public static bool TestIsCategoryInCategories(CategoriesStruct categories, string categoryName)
-		{
-			if (String.IsNullOrEmpty(categoryName))
-				return true;
-			if (categories.dateTimeIntervals != null && categories.dateTimeIntervals.Contains(categoryName))
-				return true;
-			if (categories.enums != null && categories.enums.Contains(categoryName))
-				return true;
-			if (categories.floatIntervals != null && categories.floatIntervals.Contains(categoryName))
-				return true;
-			if (categories.longIntervals != null && categories.longIntervals.Contains(categoryName))
-				return true;
-			return false;
-		}
-		public static void TestXCategoryAndIncludeNullCategoryAreInCategories(CategoriesStruct categories, string xCategory, string includeNullCategory, string myIdentity)
-		{
-			bool xCategoryFound = TestIsCategoryInCategories(categories, xCategory);
-			bool includeNullCategoryFound = TestIsCategoryInCategories(categories, includeNullCategory);
+            }
+        }
 
-			if (xCategoryFound && includeNullCategoryFound)
-				return;
-			else if (!xCategoryFound && !includeNullCategoryFound)
-			{
-				throw Ferda.Modules.Exceptions.BadValueError(null, myIdentity, "X-Category and Include null Category is not in categories!", new string[] { "XCategory", "IncludeNullCategory" }, restrictionTypeEnum.NotInSelectOptions);
-			}
-			else if (!xCategoryFound)
-			{
-				throw Ferda.Modules.Exceptions.BadValueError(null, myIdentity, "X-Category is not in categories!", new string[] { "XCategory" }, restrictionTypeEnum.NotInSelectOptions);
-			}
-			else// if (!includeNullCategoryFound)
-			{
-				throw Ferda.Modules.Exceptions.BadValueError(null, myIdentity, "Include null Category is not in categories!", new string[] { "IncludeNullCategory" }, restrictionTypeEnum.NotInSelectOptions);
-			}
-		}
-		public static PropertySetting[] GetSettingForNewAttributeBox(CategoriesStruct categoriesStruct, string xCategory, string includeNullCategory, string nameInLiterals)
-		{
-			PropertySetting categoriesProperty = new PropertySetting();
-			categoriesProperty.propertyName = "Categories";
-			categoriesProperty.value = new CategoriesTI(categoriesStruct);
+        /// <summary>
+        /// Tries if the <c>categoryName</c> is in categories.
+        /// </summary>
+        /// <param name="categories">The categories.</param>
+        /// <param name="categoryName">Name of the category.</param>
+        /// <returns>True iff <c>categoryName</c> is in categories; otherwise, false.</returns>
+        public static bool TryIsCategoryInCategories(CategoriesStruct categories, string categoryName)
+        {
+            if (String.IsNullOrEmpty(categoryName))
+                return true;
+            if (categories.dateTimeIntervals != null && categories.dateTimeIntervals.Contains(categoryName))
+                return true;
+            if (categories.enums != null && categories.enums.Contains(categoryName))
+                return true;
+            if (categories.floatIntervals != null && categories.floatIntervals.Contains(categoryName))
+                return true;
+            if (categories.longIntervals != null && categories.longIntervals.Contains(categoryName))
+                return true;
+            return false;
+        }
 
-			/*
-			PropertySetting countOfCategoriesProperty = new PropertySetting();
-			countOfCategoriesProperty.propertyName = "CountOfCategories";
-			countOfCategoriesProperty.result = new Ferda.Modules.LongTI(countOfCategories);
-			 */
+        /// <summary>
+        /// Tests if the categories names are in categories if not than
+        /// <see cref="T:Ferda.Modules.BadValueError"/> is thrown.
+        /// </summary>
+        /// <param name="categories">The categories.</param>
+        /// <param name="categoriesNames">The categories names.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <exception cref="T:Ferda.Modules.BadValueError">Thrown if specified names (<c>categoriesNames</c>) are not in <c>categories</c>.</exception>
+        public static void TestAreCategoriesInCategories(CategoriesStruct categories, string[] categoriesNames, string boxIdentity)
+        {
+            string notFound = String.Empty;
+            foreach (string categoryName in categoriesNames)
+            {
+                if (TryIsCategoryInCategories(categories, categoryName))
+                    continue;
+                else
+                {
+                    notFound = (String.IsNullOrEmpty(notFound)) ? categoryName : notFound + ", " + categoryName;
+                }
+            }
+            if (!String.IsNullOrEmpty(notFound))
+            {
+                throw Ferda.Modules.Exceptions.BadValueError(null, boxIdentity, "Categories: " + notFound + " is/are not in categories!", new string[0], restrictionTypeEnum.NotInSelectOptions);
+            }
+        }
 
-			PropertySetting xCategoryProperty = new PropertySetting();
-			xCategoryProperty.propertyName = "XCategory";
-			xCategoryProperty.value = new Ferda.Modules.StringTI(xCategory);
+        /// <summary>
+        /// Gets the setting for new attribute box.
+        /// </summary>
+        /// <param name="categoriesStruct">The categories struct.</param>
+        /// <param name="xCategory">The x category.</param>
+        /// <param name="includeNullCategory">The include null category.</param>
+        /// <param name="nameInLiterals">The name in literals.</param>
+        /// <returns>Property settings for new derived attribute box module.</returns>
+        public static PropertySetting[] GetSettingForNewAttributeBox(CategoriesStruct categoriesStruct, string xCategory, string includeNullCategory, string nameInLiterals)
+        {
+            PropertySetting categoriesProperty = new PropertySetting();
+            categoriesProperty.propertyName = "Categories";
+            categoriesProperty.value = new CategoriesTI(categoriesStruct);
 
-			PropertySetting includeNullProperty = new PropertySetting();
-			includeNullProperty.propertyName = "IncludeNullCategory";
-			includeNullProperty.value = new Ferda.Modules.StringTI(includeNullCategory);
+            /*
+            PropertySetting countOfCategoriesProperty = new PropertySetting();
+            countOfCategoriesProperty.propertyName = "CountOfCategories";
+            countOfCategoriesProperty.result = new Ferda.Modules.LongTI(countOfCategories);
+             */
 
-			PropertySetting nameInLiteralsProperty = new PropertySetting();
-			nameInLiteralsProperty.propertyName = "NameInLiterals";
-			nameInLiteralsProperty.value = new Ferda.Modules.StringTI(nameInLiterals);
+            PropertySetting xCategoryProperty = new PropertySetting();
+            xCategoryProperty.propertyName = "XCategory";
+            xCategoryProperty.value = new Ferda.Modules.StringTI(xCategory);
 
-			return new PropertySetting[] { categoriesProperty, xCategoryProperty, includeNullProperty, nameInLiteralsProperty };
-		}
-	}
+            PropertySetting includeNullProperty = new PropertySetting();
+            includeNullProperty.propertyName = "IncludeNullCategory";
+            includeNullProperty.value = new Ferda.Modules.StringTI(includeNullCategory);
+
+            PropertySetting nameInLiteralsProperty = new PropertySetting();
+            nameInLiteralsProperty.propertyName = "NameInLiterals";
+            nameInLiteralsProperty.value = new Ferda.Modules.StringTI(nameInLiterals);
+
+            return new PropertySetting[] { categoriesProperty, xCategoryProperty, includeNullProperty, nameInLiteralsProperty };
+        }
+    }
 }

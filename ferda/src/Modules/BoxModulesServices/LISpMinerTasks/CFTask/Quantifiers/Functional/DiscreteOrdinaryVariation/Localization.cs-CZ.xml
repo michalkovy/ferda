@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>LISpMinerTasks.CFTask.Quantifiers.Functional.DiscreteOrdinaryVariation</Identifier>
   <Label>Discrete ordinary variation (norm)</Label>
-  <Hint>Discrete Ordinal Variation (norm) = 2*suma(F(i)*(1-F(i))* 2/(K-1)</Hint>
+  <Hint>Discrete Ordinary Variation (norm) = 2*suma(F(i)*(1-F(i))* 2/(K-1)</Hint>
   <Categories>
     <Category>
-      <Name>CFMiner</Name>
-      <Label>CF-Miner</Label>
+      <Name>CFMiner.Quantifiers.Functional</Name>
+      <Label>CF-Miner.Kvantifikátory.Funkční</Label>
     </Category>
   </Categories>
   <Sockets>

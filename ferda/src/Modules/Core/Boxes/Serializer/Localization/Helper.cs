@@ -21,10 +21,8 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
     /// <seealso cref="T:Ferda.Modules.Boxes.BoxInfo"/>
     /// <seealso cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box"/>
     [Serializable]
-    public class Helper
+    public class Helper : Ferda.Modules.Boxes.Serializer.Localization.IHelper
     {
-        private BoxLocalization boxLocalization;
-
         private string localeId;
         /// <summary>
         /// Gets the locale id.
@@ -58,20 +56,23 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
                 System.Diagnostics.Debug.WriteLine("Ser05");
                 throw new ArgumentNullException("boxLocalizations");
             }
-            this.boxLocalization = boxLocalization;
+
             this.localeId = localeId;
+            this.identifier = boxLocalization.Identifier;
+            this.label = boxLocalization.Label;
+            this.hint = boxLocalization.Hint;
 
             //prepare categories where the box belongs to
-            if (this.boxLocalization.Categories != null)
-                foreach (Category category in this.boxLocalization.Categories)
+            if (boxLocalization.Categories != null)
+                foreach (Category category in boxLocalization.Categories)
                 {
                     this.categories.Add(category.Name, category.Label);
                 }
 
             //prepare help files and paths towards them
             List<HelpFileInfo> helpFiles = new List<HelpFileInfo>();
-            if (this.boxLocalization.HelpFiles != null)
-                foreach (HelpFile helpFile in this.boxLocalization.HelpFiles)
+            if (boxLocalization.HelpFiles != null)
+                foreach (HelpFile helpFile in boxLocalization.HelpFiles)
                 {
                     //help file identifier contains Id of the localization and help file`s identifier
                     string newHelpFileIdentifier = this.localeId + helpFile.Identifier;
@@ -89,15 +90,15 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
             this.helpFiles = helpFiles.ToArray();
 
             //prepare categories of box`s properties
-            if (this.boxLocalization.PropertyCategories != null)
-                foreach (PropertyCategory propertyCategory in this.boxLocalization.PropertyCategories)
+            if (boxLocalization.PropertyCategories != null)
+                foreach (PropertyCategory propertyCategory in boxLocalization.PropertyCategories)
                 {
                     this.propertyCategories.Add(propertyCategory.Name, propertyCategory.Label);
                 }
 
             //prepare sockets (i.e. also properties) and selectbox options
-            if (this.boxLocalization.Sockets != null)
-                foreach (Socket socket in this.boxLocalization.Sockets)
+            if (boxLocalization.Sockets != null)
+                foreach (Socket socket in boxLocalization.Sockets)
                 {
                     //prepare sockets (i.e. also properties)
                     this.sockets.Add(socket.Name, socket);
@@ -115,18 +116,18 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
                 }
 
             //prepare localization for actions
-            if (this.boxLocalization.Actions != null)
-                foreach (Action action in this.boxLocalization.Actions)
+            if (boxLocalization.Actions != null)
+                foreach (Action action in boxLocalization.Actions)
                 {
                     this.actions.Add(action.Name, action);
                 }
 
             //prepare box`s dynamic help items
-            this.dynamicHelpItems = this.getDynamicHelpItems(this.boxLocalization.DynamicHelpItems);
+            this.dynamicHelpItems = this.getDynamicHelpItems(boxLocalization.DynamicHelpItems);
 
             //prepare box`s modules asking for creation
-            if (this.boxLocalization.ModulesAskingForCreationSeq != null)
-                foreach (ModulesAskingForCreation modulesAskingForCreation in this.boxLocalization.ModulesAskingForCreationSeq)
+            if (boxLocalization.ModulesAskingForCreationSeq != null)
+                foreach (ModulesAskingForCreation modulesAskingForCreation in boxLocalization.ModulesAskingForCreationSeq)
                 {
                     Ferda.Modules.ModulesAskingForCreation modulesAfcItem = new Ferda.Modules.ModulesAskingForCreation();
                     modulesAfcItem.label = modulesAskingForCreation.Label;
@@ -137,8 +138,8 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
 
             //prepare box`s prases
             StringBuilder phrasesLoadError = new StringBuilder();
-            if (this.boxLocalization.Phrases != null)
-                foreach (Phrase phrase in this.boxLocalization.Phrases)
+            if (boxLocalization.Phrases != null)
+                foreach (Phrase phrase in boxLocalization.Phrases)
                 {
                     try
                     {
@@ -222,26 +223,29 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
             get { return actions; }
         }
 
+        private string identifier;
         /// <summary>
         /// Gets the box`s identifier.
         /// </summary>
         /// <value>The box`s identifier.</value>
         public string Identifier
-        { get { return this.boxLocalization.Identifier; } }
+        { get { return identifier; } }
 
+        private string label;
         /// <summary>
         /// Gets the box`s label.
         /// </summary>
         /// <value>The box`s label.</value>
         public string Label
-        { get { return this.boxLocalization.Label; } }
+        { get { return label; } }
 
+        private string hint;
         /// <summary>
         /// Gets the box`s hint i.e. short tip.
         /// </summary>
         /// <value>The box`s hint.</value>
         public string Hint
-        { get { return this.boxLocalization.Hint; } }
+        { get { return hint; } }
 
         private Dictionary<string, string> propertyCategories = new Dictionary<string, string>();
         /// <summary>
@@ -323,11 +327,12 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// <summary>
         /// Gets the localization of the sockets.
         /// </summary>
-        /// <remarks>Localization of properties is included.</remarks>
-        /// <value>The sockets.
+        /// <value>
+        /// The sockets.
         /// <para><c>Key</c> is socket`s name.</para>
-        /// <para><c>Value</c> is socket`s localization.</para>
+        /// 	<para><c>Value</c> is socket`s localization.</para>
         /// </value>
+        /// <remarks>Localization of properties is included.</remarks>
         public Dictionary<string, Socket> Sockets
         {
             get { return sockets; }
@@ -337,11 +342,12 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// Gets the localization of the socket of the specified name.
         /// </summary>
         /// <param name="socketName">Name of the socket.</param>
-        /// <returns><see cref="T:Ferda.Modules.Boxes.Serializer.Localization.Socket"/> if 
+        /// <returns>
+        /// 	<see cref="T:Ferda.Modules.Boxes.Serializer.Localization.Socket"/> if
         /// exists an element of specified <c>socketName</c>; otherwise, throws
         /// <see cref="T:Ferda.Modules.NameNotExistError"/>.
         /// </returns>
-        /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with 
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with
         /// specified <c>socketName</c> in the box.</exception>
         public Socket GetSocket(string socketName)
         {
@@ -361,9 +367,11 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="optionName">Name of the option.</param>
-        /// <param name="fallOnError">If set to <c>true</c> and there is no 
+        /// <param name="fallOnError">If set to <c>true</c> and there is no
         /// localization of specified option in the property <see cref="T:System.Exception"/> is thrown.</param>
-        /// <returns>Label and short label of the specified option of the property.</returns>
+        /// <returns>
+        /// Label and short label of the specified option of the property.
+        /// </returns>
         public SelectOption GetSelectBoxOption(string propertyName, string optionName, bool fallOnError)
         {
             try

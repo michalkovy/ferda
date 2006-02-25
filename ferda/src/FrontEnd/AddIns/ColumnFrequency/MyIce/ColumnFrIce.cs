@@ -195,7 +195,7 @@ namespace Ferda
                         MessageBox.Show(resManager.GetString("BadColumnSelectExpression"), resManager.GetString("Error"),
                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
-                    else
+                    //else
                     {
                         MessageBox.Show(resManager.GetString("InvalidParameters"), resManager.GetString("Error"),
                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -209,8 +209,6 @@ namespace Ferda
                 }
 
             }
-
-
 
             #endregion
 

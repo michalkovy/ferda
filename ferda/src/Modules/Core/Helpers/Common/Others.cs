@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Ferda.Modules.Helpers.Common
 {
+    /// <summary>
+    /// Provides some other minor functionality.
+    /// </summary>
     public static class Others
     {
         /// <summary>

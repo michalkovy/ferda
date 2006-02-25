@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>LISpMinerTasks.KLTask.Quantifiers.Functional.ConditionalEntropy</Identifier>
-  <Label>Conditional entropy H(C|R)</Label>
-  <Hint>Conditional entropy of columns given rows (the lower value the more dependant &lt;0;log2(L)&gt;)</Hint>
+  <Label>Conditional entropy</Label>
+  <Hint>Conditional entropy (H(R|C) or H(C|R))of columns given rows (the lower value the more dependant &lt;0;log2(L)&gt;)</Hint>
   <Categories>
     <Category>
       <Name>KLMiner.Quantifiers.Functional</Name>

@@ -9,32 +9,27 @@ namespace Ferda.Modules.MetabaseLayer
 {
 	public class Metabase : IDisposable
 	{
-        private const string metabaseLayerDir = "BoxModulesServices/LISpMinerTasks/MetabaseLayer";
-		private const string dbDir = "DB";
+        private static string metabaseDbDir =
+            "BoxModulesServices"
+            + System.IO.Path.DirectorySeparatorChar
+            + "LISpMinerTasks"
+            + System.IO.Path.DirectorySeparatorChar
+            + "MetabaseLayer"
+            + System.IO.Path.DirectorySeparatorChar
+            + "DB";
 
 		private const string uncompressedFileName = "LISpMinerMetabaseEmpty.mdb";
-		public static string UncompressedFileName
-		{
-			get { return uncompressedFileName; }
-		}
 
 		private const string compressedFileName = "LISpMinerMetabaseEmpty.mdb.gz";
-		public static string CompressedFileName
-		{
-			get { return compressedFileName; }
-		} 
 
-		public static string BaseDir
-		{
-			get { return Path.Combine(metabaseLayerDir, dbDir); }
-		}
-
-		private string NewGUID
+		private static string newGUID
 		{
 			get { return System.Guid.NewGuid().ToString(); }
 		}
 
-		private string LISpMinerMetabaseFile;
+        private static string[] mdbDrivers = new string[] { "Microsoft Access Driver (*.mdb)", "Driver do Microsoft Access (*.mdb)" };
+
+		private string lispMinerMetabaseFile;
 
 		private OdbcConnection connection;
 		public OdbcConnection Connection
@@ -44,10 +39,10 @@ namespace Ferda.Modules.MetabaseLayer
 
 		public Metabase()
 		{
-			LISpMinerMetabaseFile = Path.Combine(BaseDir, NewGUID + UncompressedFileName);
+            lispMinerMetabaseFile = Path.Combine(metabaseDbDir, newGUID + uncompressedFileName);
 			GZip.Decompress(
-				Path.Combine(BaseDir, Metabase.CompressedFileName),
-				LISpMinerMetabaseFile);
+                Path.Combine(metabaseDbDir, Metabase.compressedFileName),
+				lispMinerMetabaseFile);
 
 			/* www.connectionstrings.com
 			 * Access
@@ -59,10 +54,24 @@ namespace Ferda.Modules.MetabaseLayer
 			 * * * Exclusive:
 			 * * * * "Driver={Microsoft Access Driver (*.mdb)};Dbq=C:\mydatabase.mdb;Exclusive=1;Uid=admin;Pwd="
 			 */
-			string connectionString =
-				"Driver={Microsoft Access Driver (*.mdb)};Dbq=" + LISpMinerMetabaseFile + ";Exclusive=1;Uid=admin;Pwd=";
-			connection = new OdbcConnection(connectionString);
-			connection.Open();
+            Exception ex = null;
+            foreach (string mdbDriver in mdbDrivers)
+            {
+                try
+                {
+                    string connectionString =
+                        "Driver={" + mdbDriver + "};Dbq=" + lispMinerMetabaseFile + ";Exclusive=1;Uid=admin;Pwd=";
+                    connection = new OdbcConnection(connectionString);
+                    connection.Open();
+                    ex = null;
+                    break;
+                }
+                catch (System.Data.Odbc.OdbcException e) {
+                    ex = e;
+                }
+            }
+            if (ex != null)
+                throw ex;
 		}
 
 		~Metabase()
@@ -76,7 +85,7 @@ namespace Ferda.Modules.MetabaseLayer
             {
                 connection.Close();
 #if !DEBUG
-                System.IO.File.Delete(LISpMinerMetabaseFile);
+                System.IO.File.Delete(lispMinerMetabaseFile);
 #endif
             }
             catch (ArgumentNullException) { }

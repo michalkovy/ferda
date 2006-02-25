@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>LISpMinerTasks.KLTask.Quantifiers.Functional.InformationDependency</Identifier>
-  <Label>Information dependency ID(R,C)</Label>
-  <Hint>Information dependency between rows and columns (the greater value the more dependant &lt;0;1&gt;)</Hint>
+  <Label>Information dependency</Label>
+  <Hint>Information dependency (ID(R|C) or ID(C|R)) between rows and columns (the greater value the more dependant &lt;0;1&gt;)</Hint>
   <Categories>
     <Category>
       <Name>KLMiner.Quantifiers.Functional</Name>

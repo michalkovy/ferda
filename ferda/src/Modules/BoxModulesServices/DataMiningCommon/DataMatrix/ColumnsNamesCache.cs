@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
 {
+    /// <summary>
+    /// Cache for names of columns in the data matrix.
+    /// </summary>
     public class ColumnsNamesCache : Ferda.Modules.Helpers.Caching.Cache
     {
         private string[] value;

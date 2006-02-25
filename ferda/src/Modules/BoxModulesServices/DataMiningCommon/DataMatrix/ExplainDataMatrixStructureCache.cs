@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
 {
+    /// <summary>
+    /// Cache for structure of the data matrix (like EXPLAIN query).
+    /// </summary>
     public class ExplainDataMatrixStructureCache : Ferda.Modules.Helpers.Caching.Cache
     {
         private ColumnSchemaInfo[] value = new ColumnSchemaInfo[0];

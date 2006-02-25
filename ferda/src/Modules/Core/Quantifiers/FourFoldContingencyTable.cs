@@ -19,9 +19,21 @@ namespace Ferda.Modules.Quantifiers
     public class FourFoldContingencyTable : ContingencyTable
     {
         #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FourFoldContingencyTable"/> class.
+        /// </summary>
         public FourFoldContingencyTable()
             : base()
         { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FourFoldContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public FourFoldContingencyTable(int[][] contingencyTable)
             : base(contingencyTable)
         {
@@ -29,6 +41,14 @@ namespace Ferda.Modules.Quantifiers
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be four fold!", restrictionTypeEnum.BadFormat);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FourFoldContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public FourFoldContingencyTable(long[][] contingencyTable)
             : base(contingencyTable)
         {
@@ -36,6 +56,14 @@ namespace Ferda.Modules.Quantifiers
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be four fold!", restrictionTypeEnum.BadFormat);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FourFoldContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public FourFoldContingencyTable(long[,] contingencyTable)
             : base(contingencyTable)
         {
@@ -43,6 +71,15 @@ namespace Ferda.Modules.Quantifiers
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be four fold!", restrictionTypeEnum.BadFormat);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FourFoldContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <param name="denominator">The denominator.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public FourFoldContingencyTable(long[,] contingencyTable, long denominator)
             : base(contingencyTable, denominator)
         {
@@ -50,11 +87,26 @@ namespace Ferda.Modules.Quantifiers
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be four fold!", restrictionTypeEnum.BadFormat);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FourFoldContingencyTable"/> class.
+        /// </summary>
+        /// <param name="a">The a frequency.</param>
+        /// <param name="b">The b frequency.</param>
+        /// <param name="c">The c frequency.</param>
+        /// <param name="d">The d frequency.</param>
         public FourFoldContingencyTable(long a, long b, long c, long d)
             : base(new long[2, 2] { { a, b }, { c, d } })
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FourFoldContingencyTable"/> class.
+        /// </summary>
+        /// <param name="a">The a frequency.</param>
+        /// <param name="b">The b frequency.</param>
+        /// <param name="c">The c frequency.</param>
+        /// <param name="d">The d frequency.</param>
+        /// <param name="denominator">The denominator.</param>
         public FourFoldContingencyTable(long a, long b, long c, long d, long denominator)
             : base(new long[2, 2] { { a, b }, { c, d } }, denominator)
         {
@@ -69,7 +121,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>a</c> frequency of the 4f-table (four fold table).</result>
         private long a
         {
-            get { return table[0, 0]; }
+            get { return Table[0, 0]; }
         }
 
         /// <summary>
@@ -79,7 +131,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>a</c> frequency of the 4f-table (four fold table).</result>
         public double A
         {
-            get { return a / (double)denominator; }
+            get { return a / (double)Denominator; }
         }
 
         /// <summary>
@@ -88,7 +140,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>b</c> frequency of the 4f-table (four fold table).</result>
         private long b
         {
-            get { return table[0, 1]; }
+            get { return Table[0, 1]; }
         }
 
         /// <summary>
@@ -98,7 +150,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>b</c> frequency of the 4f-table (four fold table).</result>
         public double B
         {
-            get { return b / (double)denominator; }
+            get { return b / (double)Denominator; }
         }
 
         /// <summary>
@@ -107,7 +159,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>c</c> frequency of the 4f-table (four fold table).</result>
         private long c
         {
-            get { return table[1, 0]; }
+            get { return Table[1, 0]; }
         }
 
         /// <summary>
@@ -117,7 +169,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>c</c> frequency of the 4f-table (four fold table).</result>
         public double C
         {
-            get { return c / (double)denominator; }
+            get { return c / (double)Denominator; }
         }
 
         /// <summary>
@@ -126,7 +178,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>d</c> frequency of the 4f-table (four fold table).</result>
         private long d
         {
-            get { return table[1, 1]; }
+            get { return Table[1, 1]; }
         }
 
         /// <summary>
@@ -136,7 +188,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>d</c> frequency of the 4f-table (four fold table).</result>
         public double D
         {
-            get { return d / (double)denominator; }
+            get { return d / (double)Denominator; }
         }
 
         /// <summary>
@@ -155,7 +207,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>r = a + b</c> frequency of the 4f-table (four fold table).</result>
         public double R
         {
-            get { return r / (double)denominator; }
+            get { return r / (double)Denominator; }
         }
 
         /// <summary>
@@ -174,7 +226,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>s = c + d</c> frequency of the 4f-table (four fold table).</result>
         public double S
         {
-            get { return s / (double)denominator; }
+            get { return s / (double)Denominator; }
         }
 
         /// <summary>
@@ -193,7 +245,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>k = a + c</c> frequency of the 4f-table (four fold table).</result>
         public double K
         {
-            get { return k / (double)denominator; }
+            get { return k / (double)Denominator; }
         }
 
         /// <summary>
@@ -212,7 +264,7 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>l = b + d</c> frequency of the 4f-table (four fold table).</result>
         public double L
         {
-            get { return l / (double)denominator; }
+            get { return l / (double)Denominator; }
         }
 
         /// <summary>
@@ -231,33 +283,17 @@ namespace Ferda.Modules.Quantifiers
         /// <result>The <c>n = a + b + c + d</c> frequency of the 4f-table (four fold table).</result>
         public double N
         {
-            get { return n / (double)denominator; }
+            get { return n / (double)Denominator; }
         }
         #endregion
 
         #region BaseCeil
         /// <summary>
-        /// Returns the validity of Base/Ceil quantifier, e.g. true iff the <c>a</c> frequency in 4ft-table is greater than or equal to the specified <c>treshold</c>.
+        /// Returns the <c>a</c> frequency from 4ft-table.
+        /// Gets the <c>a</c> frequency of the 4f-table (four fold table). (divided by the 
+        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
         /// </summary>
-        /// <returns><c>true</c> iff the relative/absolute (<c>units</c>) frequency of <c>a</c> in 4ft-table is in <c>relation</c> to the specified <c>treshold</c>.</returns>
-        public bool BaseCeilValidity(double treshold, CoreUnitsEnum units, CoreRelationEnum relation)
-        {
-            return Compare(BaseCeilValue(units), relation, treshold);
-        }
-
-        /// <summary>
-        /// Returns the relative/absolute frequency <c>a</c> from 4ft-table.
-        /// </summary>
-        /// <returns>
-        /// If property <c>units</c> is set to absolute number
-        /// returns the <c>a</c> frequency from 4ft-table. 
-        /// Else if property <c>units</c> is set to relative number
-        /// returns the <c>a</c> frequency in percents from 4ft-table.
-        /// </returns>
-        public double BaseCeilValue(CoreUnitsEnum units)
-        {
-            return this.ConvertUnits(A, units);
-        }
+        /// <result>The <c>a</c> frequency of the 4f-table (four fold table).</result>
         public static double BaseCeilValue(FourFoldContingencyTable table)
         {
             return table.A;
@@ -327,6 +363,11 @@ namespace Ferda.Modules.Quantifiers
         #endregion
 
         #region ChiSquare
+        /// <summary>
+        /// Gets the critical value of Chi square.
+        /// </summary>
+        /// <param name="alpha">The alpha.</param>
+        /// <returns>Critical value for specified <c>alpha</c>.</returns>
         public static double ChiSquareCriticalValue(double alpha)
         {
             return Combinatorics.ChiSquareCdfInv(alpha, 1);
@@ -399,7 +440,7 @@ namespace Ferda.Modules.Quantifiers
         /// </summary>
         public double DoubleCriticalImplicationSumMinusAlpha(double p, params object[] parameters)
         {
-            if (denominator != 1)
+            if (Denominator != 1)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Denominator have to be equal to 1", restrictionTypeEnum.Other);
             double alpha = (double)parameters[0];
             if (p <= 0.0D)
@@ -439,10 +480,10 @@ namespace Ferda.Modules.Quantifiers
         /// <para>It computes the following condition:</para>
         /// <para><c>Sum[i = a..x] x! / (i! * (x - i)!) * p^i * (1 - p)^(x - i) &lt;= (or &gt;=) alpha</c>,
         /// where <c>x = (a + b + c)</c>.</para>
-        /// <para>lower ~ relation == LessThanOrEqualCore</para>
-        /// <para>upper ~ relation == GreaterThanOrEqualCore</para>
+        /// <para>lower ~ relation == LessThanOrEqual</para>
+        /// <para>upper ~ relation == GreaterThanOrEqual</para>
         /// </remarks>
-        public bool DoubleCriticalImplicationValidity(double p, double alpha, CoreRelationEnum relation)
+        public bool DoubleCriticalImplicationValidity(double p, double alpha, RelationEnum relation)
         {
             return Compare(DoubleCriticalImplicationSumMinusAlpha(p, alpha), relation, 0);
         }
@@ -472,7 +513,7 @@ namespace Ferda.Modules.Quantifiers
         #region Fisher
         private double fisherHelper()
         {
-            if (denominator != 1)
+            if (Denominator != 1)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Denominator have to be equal to 1", restrictionTypeEnum.Other);
             double sum = 0.0D;
             int r = (int)this.r;
@@ -587,7 +628,7 @@ namespace Ferda.Modules.Quantifiers
         /// </summary>
         public double CriticalEquivalenceSumMinusAlpha(double p, params object[] parameters)
         {
-            if (denominator != 1)
+            if (Denominator != 1)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Denominator have to be equal to 1", restrictionTypeEnum.Other);
             double alpha = (double)parameters[0];
             if (p <= 0.0f)
@@ -625,10 +666,10 @@ namespace Ferda.Modules.Quantifiers
         /// <remarks>
         /// <para>It computes the following condition:</para>
         /// <para><c>Sum[i = a..n] n! / (i! * (n - i)!) * p^i * (1 - p)^(n - i) &lt;= (or &gt;=) alpha</c>.</para>
-        /// <para>lower ~ relation == LessThanOrEqualCore</para>
-        /// <para>upper ~ relation == GreaterThanOrEqualCore</para>
+        /// <para>lower ~ relation == LessThanOrEqual</para>
+        /// <para>upper ~ relation == GreaterThanOrEqual</para>
         /// </remarks>
-        public bool CriticalEquivalenceValidity(double p, double alpha, CoreRelationEnum relation)
+        public bool CriticalEquivalenceValidity(double p, double alpha, RelationEnum relation)
         {
             return Compare(CriticalEquivalenceSumMinusAlpha(p, alpha), relation, 0);
         }
@@ -640,7 +681,7 @@ namespace Ferda.Modules.Quantifiers
         /// </summary>
         public double CriticalImplicationSumMinusAlpha(double p, params object[] parameters)
         {
-            if (denominator != 1)
+            if (Denominator != 1)
                 throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Denominator have to be equal to 1", restrictionTypeEnum.Other);
             double alpha = (double)parameters[0];
             if (p <= 0.0D)
@@ -678,10 +719,10 @@ namespace Ferda.Modules.Quantifiers
         /// <remarks>
         /// <para>It computes the following condition:</para>
         /// <para><c>Sum[i = a..r] r! / (i! * (r - i)!) * p^i * (1 - p)^(r - i) &lt;= (or &gt;=) alpha</c>.</para>
-        /// <para>lower ~ relation == LessThanOrEqualCore</para>
-        /// <para>upper ~ relation == GreaterThanOrEqualCore</para>
+        /// <para>lower ~ relation == LessThanOrEqual</para>
+        /// <para>upper ~ relation == GreaterThanOrEqual</para>
         /// </remarks>
-        public bool CriticalImplicationValidity(double p, double alpha, CoreRelationEnum relation)
+        public bool CriticalImplicationValidity(double p, double alpha, RelationEnum relation)
         {
             return Compare(CriticalImplicationSumMinusAlpha(p, alpha), relation, 0);
         }

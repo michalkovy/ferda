@@ -9,11 +9,20 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute
 {
 	class AttributeFunctionsI : AttributeFunctionsDisp_, IFunctions, IAbstractAttribute
 	{
-		protected BoxModuleI boxModule;
+        /// <summary>
+        /// The box module.
+        /// </summary>
+        protected BoxModuleI boxModule;
 		//protected IBoxInfo boxInfo;
 
 		#region IFunctions Members
-		public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
+        /// <summary>
+        /// Sets the <see cref="T:Ferda.Modules.BoxModuleI">box module</see>
+        /// and the <see cref="T:Ferda.Modules.Boxes.IBoxInfo">box info</see>.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="boxInfo">The box info.</param>
+        public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
 		{
 			this.boxModule = boxModule;
 			//this.boxInfo = boxInfo;
@@ -61,14 +70,14 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute
 			result.column = getColumnFunctionsPrx().getColumnInfo();
 			result.categories = Categories;
             Ferda.Modules.Helpers.Data.Attribute.TestCategoriesDisjunctivity(result.categories, boxModule.StringIceIdentity);
-			result.countOfCategories = Ferda.Modules.Helpers.Data.Attribute.CategoriesCount(result.categories);
+            result.countOfCategories = Ferda.Modules.Helpers.Data.Attribute.GetCategoriesCount(result.categories);
 
 			//Ferda.Modules.Helpers.Data.Attribute.TestCategoriesCount(result.countOfCategories, boxIdentity);
 
             result.identifier = boxModule.PersistentIdentity;
 			result.includeNullCategory = IncludeNullCategory;
 			result.xCategory = XCategory;
-            Ferda.Modules.Helpers.Data.Attribute.TestXCategoryAndIncludeNullCategoryAreInCategories(result.categories, result.xCategory, result.includeNullCategory, boxModule.StringIceIdentity);
+            Ferda.Modules.Helpers.Data.Attribute.TestAreCategoriesInCategories(result.categories, new string[] { result.xCategory, result.includeNullCategory } , boxModule.StringIceIdentity);
 			result.nameInLiterals = NameInLiterals;
 			return result;
 		}
@@ -89,7 +98,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute
 		#region BoxInfo
 		public long CountOfCategories()
 		{
-			return Ferda.Modules.Helpers.Data.Attribute.CategoriesCount(Categories);
+			return Ferda.Modules.Helpers.Data.Attribute.GetCategoriesCount(Categories);
 		}
 		#endregion
 
@@ -97,7 +106,12 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute
 
 		public SelectString[] GetPropertyCategoriesNames()
 		{
-			return Ferda.Modules.Helpers.Data.Attribute.CategoriesNamesSelectString(Categories, AbstractAttributeConstants.MaxLengthOfCategoriesNamesSelectStringArray);
+            return Ferda.Modules.Boxes.BoxInfoHelper.StringArrayToSelectStringArray(
+                Ferda.Modules.Helpers.Data.Attribute.GetCategoriesNames(
+                    Categories,
+                    Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeConstants.MaxLengthOfCategoriesNamesSelectStringArray
+                    )
+                );
 		}
 
 		#endregion

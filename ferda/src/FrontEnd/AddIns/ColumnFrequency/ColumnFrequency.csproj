@@ -95,10 +95,12 @@
   <ItemGroup>
     <EmbeddedResource Include="ColumnFrequency.resx">
       <DependentUpon>ColumnFrequency.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization_en-US.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Localization_en-US.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization_cs-CZ.resx">
       <Generator>ResXFileCodeGenerator</Generator>

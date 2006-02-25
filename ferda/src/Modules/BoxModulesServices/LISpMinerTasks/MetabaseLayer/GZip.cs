@@ -1,4 +1,4 @@
-//#define ZIP_MAIN
+//#define GZZIP_MAIN
 
 using System;
 using System.IO;
@@ -7,9 +7,12 @@ using System.Diagnostics;
 
 namespace Ferda.Modules.MetabaseLayer
 {
-	public static class GZip
+	/// <summary>
+	/// This class provides some basic functionality for working with gziped files.
+	/// </summary>
+    public static class GZip
 	{
-		private static int ReadAllBytesFromStream(Stream stream)
+		private static int readAllBytesFromStream(Stream stream)
 		{
 			// Use this method is used to read all bytes from a stream.
 			int bufferSize = 1024;
@@ -27,6 +30,12 @@ namespace Ferda.Modules.MetabaseLayer
 			return totalCount;
 		}
 
+        /// <summary>
+        /// Compresses the specified <c>inputFilePath</c> 
+        /// to specified <c>outputFilePath</c>.
+        /// </summary>
+        /// <param name="inputFilePath">The input file path.</param>
+        /// <param name="outputFilePath">The output file path.</param>
 		public static void Compress(string inputFilePath, string outputFilePath)
 		{
 			FileStream infile;
@@ -45,12 +54,19 @@ namespace Ferda.Modules.MetabaseLayer
 			outputFileStream.Close();
 			memoryStream.Close();
 		}
+
+        /// <summary>
+        /// Decompresses the specified <c>inputFilePath</c> 
+        /// to specified <c>outputFilePath</c>.
+        /// </summary>
+        /// <param name="inputFilePath">The input file path.</param>
+        /// <param name="outputFilePath">The output file path.</param>
 		public static void Decompress(string inputFilePath, string outputFilePath)
 		{
 			//"E:\\Saves\\Projekt\\svn\\bin\\MetabaseLayer\\DB\\LISpMinerMetabaseEmpty.mdb.zip"
 			FileStream inputFileStream = System.IO.File.Open(inputFilePath, FileMode.Open);
 			GZipStream compressedGZipStreamForGetLength = new GZipStream(inputFileStream, CompressionMode.Decompress, true);
-			byte[] decompressedBuffer = new byte[GZip.ReadAllBytesFromStream(compressedGZipStreamForGetLength)];
+			byte[] decompressedBuffer = new byte[GZip.readAllBytesFromStream(compressedGZipStreamForGetLength)];
 			compressedGZipStreamForGetLength.Close();
 			inputFileStream.Position = 0;
 			GZipStream compressedGZipStream = new GZipStream(inputFileStream, CompressionMode.Decompress, false);
@@ -61,7 +77,11 @@ namespace Ferda.Modules.MetabaseLayer
 			compressedGZipStream.Close();
 		}
 
-#if ZIP_MAIN
+#if GZZIP_MAIN
+        /// <summary>
+        /// Mains the specified args.
+        /// </summary>
+        /// <param name="args">The args.</param>
 		public static void Main(string[] args)
 		{
 			GZip.Compress(

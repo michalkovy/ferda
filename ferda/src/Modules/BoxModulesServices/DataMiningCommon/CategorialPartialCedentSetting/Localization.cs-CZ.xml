@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>DataMiningCommon.CategorialPartialCedentSetting</Identifier>
-  <Label>Kategoriální dílčí ced.</Label>
+  <Label>Kategoriální cedent</Label>
   <Hint>Zadání kategoriálního dílčího cedentu a jeho parametrů</Hint>
   <Categories>
     <Category>

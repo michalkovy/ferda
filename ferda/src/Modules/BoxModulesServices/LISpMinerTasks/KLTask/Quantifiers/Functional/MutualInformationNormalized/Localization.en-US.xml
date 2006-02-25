@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>LISpMinerTasks.KLTask.Quantifiers.Functional.MutualInformationNormalized</Identifier>
-  <Label>Mutual information MI(R,C) normalized</Label>
-  <Hint>Mutual information between rows and columns (the greater value the more dependant &lt;0;1&gt;)</Hint>
+  <Label>Mutual information normalized</Label>
+  <Hint>Normalized mutual information (MI*(R,C)=MI*(C,R)) between rows and columns (the greater value the more dependant &lt;0;1&gt;)</Hint>
   <Categories>
     <Category>
       <Name>KLMiner.Quantifiers.Functional</Name>

@@ -49,6 +49,12 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.Quantifiers.Aggregation.An
 				return combinedTable.AnyValue(Relation, Treshold, Units, setting.allObjectsCount, out value);
 			}
 		}
+        /// <summary>
+        /// Gets the validity of the quantifier.
+        /// </summary>
+        /// <param name="setting">The setting.</param>
+        /// <param name="__current">The __current.</param>
+        /// <returns></returns>
 		public override bool Validity(AbstractQuantifierSetting setting, Ice.Current __current)
 		{
 			double value;

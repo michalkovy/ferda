@@ -5,8 +5,19 @@ using System.Data;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EachValueOneCategoryAttribute
 {
-	public static class EachValueOneCategoryAlgorithm
+	/// <summary>
+	/// Algorithm for each value ~ one category attribute.
+	/// </summary>
+    public static class EachValueOneCategoryAlgorithm
 	{
+        /// <summary>
+        /// Generates the attribute.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
+        /// <param name="dataMatrixName">Name of the data matrix.</param>
+        /// <param name="columnSelectExpression">The column select expression.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <returns>Generated attribute.</returns>
 		public static GeneratedAttribute Generate(
 			string connectionString,
 			string dataMatrixName,

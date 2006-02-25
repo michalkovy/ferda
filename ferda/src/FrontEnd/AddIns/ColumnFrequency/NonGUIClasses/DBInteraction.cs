@@ -25,8 +25,6 @@ namespace Ferda
 
             private String dataMatrixName;
 
-            private OdbcConnection connection;
-
             private long rowCount;
 
             private ResourceManager rm;
@@ -45,78 +43,8 @@ namespace Ferda
                 this.rowCount = columnInfo.dataMatrix.recordsCount;
 
                 this.rm = rm;
-
-                this.connection = this.GetConnection();
-
             }
             #endregion
-
-
-            #region Initializing ODBC connection
-            public OdbcConnection GetConnection()
-            {
-                try
-                {
-                    return new System.Data.Odbc.OdbcConnection(this.connectionString);
-                }
-
-                catch (OdbcException e)
-                {
-                    throw Ferda.Modules.Exceptions.BadParamsError(e, null, "Bad ODBC connection string specified. Could not connect to database.", Ferda.Modules.restrictionTypeEnum.DbConnectionString);
-                }
-            }
-            #endregion
-
-
-            #region Private methods
-
-            /// <summary>
-            /// Method which composes the ODBC SQL query to get the table
-            /// with distinct values and their counts.
-            /// </summary>
-            /// <returns>Query string.</returns>
-            private string GetValueCountQuery()
-            {
-                return "SELECT "
-                + "`" + this.columnSelectExpression + "`" + " AS `Value`"
-                + ", COUNT(" + "`" + this.columnSelectExpression + "`" + ") AS `Cnt`"
-                + " FROM " + "`" + this.dataMatrixName + "`"
-                + " GROUP BY " + "`" + this.columnSelectExpression + "`"
-                + " ORDER BY " + "`" + this.columnSelectExpression + "`";
-            }
-
-            /// <summary>
-            /// Method which queries the ODBC connection for a given query.
-            /// </summary>
-            /// <param name="query"></param>
-            /// <returns>DataTable with result</returns>
-            private DataTable GetQueryResultTable(string query)
-            {
-                try
-                {
-                    OdbcDataAdapter odbcDataAdapter = new OdbcDataAdapter(query, this.connection);
-
-                    DataSet dataSet = new DataSet();
-                    odbcDataAdapter.Fill(dataSet);
-
-                    return dataSet.Tables[0];
-                }
-
-                catch (OdbcException)
-                {
-                    this.connection.Close();
-                    throw (new Ferda.Modules.BadParamsError());
-
-                }
-                catch
-                {
-                    this.connection.Close();
-                    throw (new Ferda.Modules.BadParamsError());
-                }
-            }
-
-            #endregion
-
 
             #region Public methods
             /// <summary>
@@ -131,9 +59,11 @@ namespace Ferda
                 }
                 else
                 {
-                    DataTable returnTable = new DataTable();
-                    returnTable = this.GetQueryResultTable(this.GetValueCountQuery());
-                    this.connection.Close();
+                    DataTable returnTable = Ferda.Modules.Helpers.Data.Column.GetDistinctsAndFrequencies(
+                        this.connectionString,
+                        this.dataMatrixName,
+                        this.columnSelectExpression,
+                        null);
                     return returnTable;
                 }
             }

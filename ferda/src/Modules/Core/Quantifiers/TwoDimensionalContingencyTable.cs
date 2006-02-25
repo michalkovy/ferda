@@ -4,86 +4,122 @@ using System.Text;
 
 namespace Ferda.Modules.Quantifiers
 {
+    /// <summary>
+    /// <para>
+    /// Represents two-dimensional contingency table.
+    /// </para>
+    /// <para>
+    /// Two-dimensional contingecy table is basic 
+    /// <see cref="T:Ferda.Modules.Quantifiers.ContingencyTable"/>
+    /// in truth, but there is some futher functionality defined.
+    /// </para>
+    /// </summary>
     public class TwoDimensionalContingencyTable : ContingencyTable
     {
         #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TwoDimensionalContingencyTable"/> class.
+        /// </summary>
         public TwoDimensionalContingencyTable()
             : base()
         { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TwoDimensionalContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public TwoDimensionalContingencyTable(int[][] contingencyTable)
             : base(contingencyTable)
         { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TwoDimensionalContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public TwoDimensionalContingencyTable(long[][] contingencyTable)
             : base(contingencyTable)
         { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TwoDimensionalContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public TwoDimensionalContingencyTable(long[,] contingencyTable)
             : base(contingencyTable)
         { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TwoDimensionalContingencyTable"/> class.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <param name="denominator">The denominator.</param>
+        /// <remarks>
+        /// For futher information about <c>contingencyTable</c> param please see
+        /// <see cref="P:Ferda.Modules.Quantifiers.ContingencyTable.Table"/>.
+        /// </remarks>
         public TwoDimensionalContingencyTable(long[,] contingencyTable, long denominator)
             : base(contingencyTable, denominator)
         { }
         #endregion
 
-        public static double SumOfRowMaximumsValue(TwoDimensionalContingencyTable table)
-        {
-            return table.SumOfRowMaximums;
-        }
         /// <summary>
         /// SumOfMaximumsOfRows (sometimes also FunctionSumOfRows)
         /// </summary>
         /// <remarks>See [032 Zadání pro KL-Miner.doc] chapter 4.1.1.</remarks>
-        public double SumOfRowMaximums
+        public static double SumOfRowMaximumsValue(TwoDimensionalContingencyTable table)
         {
-            get
+            long sumOfRowMax = 0;
+            long rowMax;
+            long sum = 0;
+            int firstColumnIndex = table.FirstColumnIndex;
+            int lastColumnIndex = table.LastColumnIndex;
+            for (int rowIndex = table.FirstRowIndex; rowIndex <= table.LastRowIndex; rowIndex++)
             {
-                long sumOfRowMax = 0;
-                long rowMax;
-                long sum = 0;
-                int firstColumnIndex = FirstColumnIndex;
-                int lastColumnIndex = LastColumnIndex;
-                for (int rowIndex = FirstRowIndex; rowIndex <= LastRowIndex; rowIndex++)
+                rowMax = long.MinValue;
+                for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
                 {
-                    rowMax = long.MinValue;
-                    for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
-                    {
-                        sum += table[rowIndex, columnIndex];
-                        rowMax = Math.Max(rowMax, table[rowIndex, columnIndex]);
-                    }
-                    sumOfRowMax += rowMax;
+                    sum += table.Table[rowIndex, columnIndex];
+                    rowMax = Math.Max(rowMax, table.Table[rowIndex, columnIndex]);
                 }
-                return sumOfRowMax / ((double)denominator * sum);
+                sumOfRowMax += rowMax;
             }
+            return sumOfRowMax / ((double)table.Denominator * sum);
         }
 
+        /// <summary>
+        /// MinOfRowMaximumsValue (sometimes also FunctionEachRow)
+        /// </summary>
+        /// <remarks>See [032 Zadání pro KL-Miner.doc] chapter 4.1.3.</remarks>
         public static double MinOfRowMaximumsValue(TwoDimensionalContingencyTable table)
         {
-            return table.MinOfRowMaximums;
-        }
-        /// <summary>
-        /// SumOfMaximumsOfRows (sometimes also FunctionEachRow)
-        /// </summary>
-        /// <remarks>See [032 Zadání pro KL-Miner.doc] chapter 4.1.1.</remarks>
-        public double MinOfRowMaximums
-        {
-            get
+            long minOfRowMax = long.MaxValue;
+            long rowMax;
+            long sum = 0;
+            int firstColumnIndex = table.FirstColumnIndex;
+            int lastColumnIndex = table.LastColumnIndex;
+            for (int rowIndex = table.FirstRowIndex; rowIndex <= table.LastRowIndex; rowIndex++)
             {
-                long minOfRowMax = long.MaxValue;
-                long rowMax;
-                long sum = 0;
-                int firstColumnIndex = FirstColumnIndex;
-                int lastColumnIndex = LastColumnIndex;
-                for (int rowIndex = FirstRowIndex; rowIndex <= LastRowIndex; rowIndex++)
+                rowMax = long.MinValue;
+                for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
                 {
-                    rowMax = long.MinValue;
-                    for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
-                    {
-                        sum += table[rowIndex, columnIndex];
-                        rowMax = Math.Max(rowMax, table[rowIndex, columnIndex]);
-                    }
-                    minOfRowMax = Math.Min(minOfRowMax, rowMax);
+                    sum += table.Table[rowIndex, columnIndex];
+                    rowMax = Math.Max(rowMax, table.Table[rowIndex, columnIndex]);
                 }
-                return minOfRowMax / ((double)denominator * sum);
+                minOfRowMax = Math.Min(minOfRowMax, rowMax);
             }
+            return minOfRowMax / ((double)table.Denominator * sum);
         }
 
         /// <summary>
@@ -96,7 +132,7 @@ namespace Ferda.Modules.Quantifiers
             {
                 double numerator, sumK, sumL, denominator;
                 numerator = sumK = sumL = 0;
-                denominator = this.denominator;
+                denominator = this.Denominator;
 
                 int firstRowIndex = FirstRowIndex;
                 int firstColumnIndex = FirstColumnIndex;
@@ -109,7 +145,7 @@ namespace Ferda.Modules.Quantifiers
                     for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
                     {
                         double columnSum = columnSums[columnIndex - firstColumnIndex] / denominator;
-                        numerator += Math.Pow((table[rowIndex, columnIndex] / denominator) - (rowSum * columnSum), 2) * (rowSum + columnSum / (rowSum * columnSum));
+                        numerator += Math.Pow((Table[rowIndex, columnIndex] / denominator) - (rowSum * columnSum), 2) * (rowSum + columnSum / (rowSum * columnSum));
                         sumK += Math.Pow(rowSum, 2);
                         sumL += Math.Pow(columnSum, 2);
                     }
@@ -119,125 +155,126 @@ namespace Ferda.Modules.Quantifiers
             }
         }
 
-        public static double KendalValue(TwoDimensionalContingencyTable table)
-        {
-            return table.Kendal;
-        }
         /// <summary>
         /// See [053 Definice KL-kvantifikátorů.pdf] chapter 5.4.
         /// </summary>
-        public double Kendal
+        public static double KendalValue(TwoDimensionalContingencyTable table)
         {
-            get
+            double denominator = table.Denominator;
+            double p, q, sum, sumOfSecondPowerOfRowSums, sumOfSecondPowerOfColumnSums;
+            p = q = sum = sumOfSecondPowerOfRowSums = sumOfSecondPowerOfColumnSums = 0;
+
+            int firstRowIndex = table.FirstRowIndex;
+            int lastRowIndex = table.LastRowIndex;
+            int firstColumnIndex = table.FirstColumnIndex;
+            int lastColumnIndex = table.LastColumnIndex;
+            long[] columnSums = new long[lastColumnIndex - firstColumnIndex + 1];
+            columnSums.Initialize();
+
+            #region Initialize qTmp (Q table, P table can be computed from qTmp)
+
+            // initializes Q table (qTmp) (P table can be computed from Q table)
+            long[,] qTmp = new long[lastRowIndex + 1, lastColumnIndex + 1];
+            qTmp.Initialize();
+            //Sum(i>=k,j<=l)Nij where 
+            // .. k is row index, 
+            // .. l is column index and 
+            // .. Nij is number in contingecy table on ij position
+            for (int rowIndex = lastRowIndex; rowIndex >= firstRowIndex; rowIndex--)
             {
-                double denominator = this.denominator;
-                double p, q, sum, sumOfSecondPowerOfRowSums, sumOfSecondPowerOfColumnSums;
-                p = q = sum = sumOfSecondPowerOfRowSums = sumOfSecondPowerOfColumnSums = 0;
-
-                int firstRowIndex = FirstRowIndex;
-                int lastRowIndex = LastRowIndex;
-                int firstColumnIndex = FirstColumnIndex;
-                int lastColumnIndex = LastColumnIndex;
-                long[] columnSums = new long[lastColumnIndex - firstColumnIndex + 1];
-                columnSums.Initialize();
-
-                #region Initialize qTmp (Q table, P table can be computed from qTmp)
-
-                // initializes Q table (qTmp) (P table can be computed from Q table)
-                long[,] qTmp = new long[lastRowIndex + 1, firstColumnIndex + 1];
-                qTmp.Initialize();
-                //Sum(i>=k,j<=l)Nij where 
-                // .. k is row index, 
-                // .. l is column index and 
-                // .. Nij is number in contingecy table on ij position
-                for (int rowIndex = lastRowIndex; rowIndex >= firstRowIndex; rowIndex--)
-                {
-                    for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
-                    {
-                        if (columnIndex > firstColumnIndex)
-                        {
-                            // gets left rectangle
-                            long leftRectangle = qTmp[rowIndex, columnIndex - 1];
-
-                            // gets lower rectangle
-                            long lowerRectangle = 0;
-                            // gets left lower rectangle
-                            long leftLowerRectangle = 0;
-                            if (rowIndex < lastRowIndex)
-                            {
-                                lowerRectangle = qTmp[rowIndex + 1, columnIndex];
-                                leftLowerRectangle = qTmp[rowIndex + 1, columnIndex - 1];
-                            }
-
-                            qTmp[rowIndex, columnIndex] =
-                                leftRectangle
-                                + lowerRectangle
-                                - leftLowerRectangle
-                                + table[rowIndex, columnIndex];
-                        }
-                        else // i.e. (columnIndex == firstColumnIndex)
-                        {
-                            if (rowIndex < lastRowIndex)
-                                qTmp[rowIndex, columnIndex] = qTmp[rowIndex + 1, columnIndex] + table[rowIndex, columnIndex];
-                            else // i.e.(rowIndex == lastRowIndex)
-                                qTmp[rowIndex, columnIndex] = table[rowIndex, columnIndex];
-                        }
-                    }
-                }
-                #endregion
-
-                for (int rowIndex = firstRowIndex; rowIndex <= LastRowIndex; rowIndex++)
-                {
-                    double rowSum = 0;
-                    for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
-                    {
-                        long item = table[rowIndex, columnIndex];
-                        rowSum += item;
-                        columnSums[columnIndex] += item;
-
-                        if (rowIndex < lastRowIndex)
-                        {
-                            //qSum = Sum(i>k,j<l)Nij where k is row index, l is column index and Nij is number in contingecy table on ij position
-                            long qSum = (columnIndex > firstColumnIndex) ? qTmp[rowIndex + 1, columnIndex - 1] : 0;
-                            q += item * qSum;
-
-                            //pSum = Sum(i>k,j>l)Nij where k is row index, l is column index and Nij is number in contingecy table on ij position
-                            long pSum = qTmp[rowIndex + 1, lastColumnIndex] - qTmp[rowIndex + 1, columnIndex];
-                            p += item * pSum;
-                        }
-                    }
-                    sumOfSecondPowerOfRowSums += Math.Pow(rowSum, 2);
-                    sum += rowSum;
-                }
                 for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
                 {
-                    sumOfSecondPowerOfColumnSums += Math.Pow(columnSums[columnIndex], 2);
+                    if (columnIndex > firstColumnIndex)
+                    {
+                        // gets left rectangle
+                        long leftRectangle = qTmp[rowIndex, columnIndex - 1];
+
+                        // gets lower rectangle
+                        long lowerRectangle = 0;
+                        // gets left lower rectangle
+                        long leftLowerRectangle = 0;
+                        if (rowIndex < lastRowIndex)
+                        {
+                            lowerRectangle = qTmp[rowIndex + 1, columnIndex];
+                            leftLowerRectangle = qTmp[rowIndex + 1, columnIndex - 1];
+                        }
+
+                        qTmp[rowIndex, columnIndex] =
+                            leftRectangle
+                            + lowerRectangle
+                            - leftLowerRectangle
+                            + table.Table[rowIndex, columnIndex];
+                    }
+                    else // i.e. (columnIndex == firstColumnIndex)
+                    {
+                        if (rowIndex < lastRowIndex)
+                            qTmp[rowIndex, columnIndex] = qTmp[rowIndex + 1, columnIndex] + table.Table[rowIndex, columnIndex];
+                        else // i.e.(rowIndex == lastRowIndex)
+                            qTmp[rowIndex, columnIndex] = table.Table[rowIndex, columnIndex];
+                    }
                 }
-                double secondPowerOfSum = Math.Pow(sum, 2);
-                double resultDenominator = Math.Sqrt(
-                    (secondPowerOfSum - sumOfSecondPowerOfRowSums) * (sum - sumOfSecondPowerOfColumnSums)
-                    );
-                double resultNumerator = 2 * (p - q);
-                double result = (resultNumerator / resultDenominator) / Math.Pow(denominator, 2);
-                return result;
             }
+            #endregion
+
+            for (int rowIndex = firstRowIndex; rowIndex <= lastRowIndex; rowIndex++)
+            {
+                double rowSum = 0;
+                for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
+                {
+                    long item = table.Table[rowIndex, columnIndex];
+                    rowSum += item;
+                    columnSums[columnIndex] += item;
+
+                    if (rowIndex < lastRowIndex)
+                    {
+                        //qSum = Sum(i>k,j<l)Nij where k is row index, l is column index and Nij is number in contingecy table on ij position
+                        long qSum = (columnIndex > firstColumnIndex) ? qTmp[rowIndex + 1, columnIndex - 1] : 0;
+                        q += item * qSum;
+
+                        //pSum = Sum(i>k,j>l)Nij where k is row index, l is column index and Nij is number in contingecy table on ij position
+                        long pSum = qTmp[rowIndex + 1, lastColumnIndex] - qTmp[rowIndex + 1, columnIndex];
+                        p += item * pSum;
+                    }
+                }
+                sumOfSecondPowerOfRowSums += Math.Pow(rowSum, 2);
+                sum += rowSum;
+            }
+            for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
+            {
+                sumOfSecondPowerOfColumnSums += Math.Pow(columnSums[columnIndex], 2);
+            }
+            double secondPowerOfSum = Math.Pow(sum, 2);
+            double resultDenominator = Math.Sqrt(
+                (secondPowerOfSum - sumOfSecondPowerOfRowSums) * (secondPowerOfSum - sumOfSecondPowerOfColumnSums)
+                );
+            double resultNumerator = 2 * (p - q);
+            double result = (resultNumerator / resultDenominator) / Math.Pow(denominator, 2);
+            return result;
         }
 
-        public float ChiSquareTest
-        {//TODO ChiSquareTest over KL 053, 055, dmw3.pdf
-            get { return 0; }
+        /// <summary>
+        /// Gets the chi-square value of the specified <c>table</c>.
+        /// See [053 Definice KL-kvantifikátorů.pdf] chapter 3.1.
+        /// See [055 Náměty pro další vývoj KL-Miner.doc] chapeter 2
+        /// See [dmw3.pdf]
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns>Chi-square</returns>
+        public static double ChiSquare(TwoDimensionalContingencyTable table)
+        {//TODO Implement this (KL ChiSquare)
+            return 0;
         }
 
         #region Entropies
         /// <summary>
         /// H(C)
         /// </summary>
-        /// <remarks>See [055 Náměty pro další vývoj KL-Miner.doc] or [080 Náměty pro další vývoj KL-Miner II.doc].</remarks>
+        /// <remarks>See [080 Náměty pro další vývoj KL-Miner II.doc] (maybe also [055 Náměty pro další vývoj KL-Miner.doc]).</remarks>
         public double MarginalColumnEntropy
         {
             get
             {
-                double denominator = this.denominator;
+                double denominator = this.Denominator;
                 double result = 0;
 
                 foreach (long number in PreparedSums.ColumnSums)
@@ -261,12 +298,12 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// H(R)
         /// </summary>
-        /// <remarks>See [055 Náměty pro další vývoj KL-Miner.doc] or [080 Náměty pro další vývoj KL-Miner II.doc].</remarks>
+        /// <remarks>See [080 Náměty pro další vývoj KL-Miner II.doc] (maybe also [055 Náměty pro další vývoj KL-Miner.doc]).</remarks>
         public double MarginalRowEntropy
         {
             get
             {
-                double denominator = this.denominator;
+                double denominator = this.Denominator;
                 double result = 0;
 
                 foreach (long number in PreparedSums.RowSums)
@@ -281,12 +318,12 @@ namespace Ferda.Modules.Quantifiers
         /// <summary>
         /// H(C,R) = H(R,C)
         /// </summary>
-        /// <remarks>See [055 Náměty pro další vývoj KL-Miner.doc] or [080 Náměty pro další vývoj KL-Miner II.doc].</remarks>
+        /// <remarks>See [080 Náměty pro další vývoj KL-Miner II.doc] (maybe also [055 Náměty pro další vývoj KL-Miner.doc]).</remarks>
         public double JointEntropy
         {
             get
             {
-                double denominator = this.denominator;
+                double denominator = this.Denominator;
                 double result = 0;
 
                 int firstColumnIndex = FirstColumnIndex;
@@ -295,7 +332,7 @@ namespace Ferda.Modules.Quantifiers
                 {
                     for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
                     {
-                        double item = table[rowIndex, columnIndex] / denominator;
+                        double item = Table[rowIndex, columnIndex] / denominator;
                         result += item * Math.Log(item, 2);
                     }
                 }
@@ -303,36 +340,22 @@ namespace Ferda.Modules.Quantifiers
             }
         }
 
-        public static double ConditionalCREntropyValue(TwoDimensionalContingencyTable table)
-        {
-            return table.ConditionalCREntropy;
-        }
         /// <summary>
         /// H(C|R) = H(C,R) - H(R)
         /// </summary>
         /// <remarks>See [055 Náměty pro další vývoj KL-Miner.doc] or [080 Náměty pro další vývoj KL-Miner II.doc].</remarks>
-        public double ConditionalCREntropy
+        public static double ConditionalCREntropyValue(TwoDimensionalContingencyTable table)
         {
-            get
-            {
-                return JointEntropy - MarginalRowEntropy;
-            }
+            return table.JointEntropy - table.MarginalRowEntropy;
         }
 
-        public static double ConditionalRCEntropyValue(TwoDimensionalContingencyTable table)
-        {
-            return table.ConditionalRCEntropy;
-        }
         /// <summary>
         /// H(R|C) = H(C,R) - H(C)
         /// </summary>
         /// <remarks>See [055 Náměty pro další vývoj KL-Miner.doc] or [080 Náměty pro další vývoj KL-Miner II.doc].</remarks>
-        public double ConditionalRCEntropy
+        public static double ConditionalRCEntropyValue(TwoDimensionalContingencyTable table)
         {
-            get
-            {
-                return JointEntropy - MarginalColumnEntropy;
-            }
+            return table.JointEntropy - table.MarginalColumnEntropy;
         }
 
         /// <summary>
@@ -348,57 +371,36 @@ namespace Ferda.Modules.Quantifiers
             }
         }
 
-        public static double MutualInformationNormalizedValue(TwoDimensionalContingencyTable table)
-        {
-            return table.MutualInformationNormalized;
-        }
         /// <summary>
         /// MI*(C,R) = MI(C,R) / min{ H(C), H(R) }
         /// </summary>
         /// <remarks>See [055 Náměty pro další vývoj KL-Miner.doc] or [080 Náměty pro další vývoj KL-Miner II.doc].</remarks>
-        public double MutualInformationNormalized
+        public static double MutualInformationNormalizedValue(TwoDimensionalContingencyTable table)
         {
-            get
-            {
-                double marginalColumnEntropy = MarginalColumnEntropy;
-                double marginalRowEntropy = MarginalRowEntropy;
-                return marginalColumnEntropy + marginalRowEntropy - JointEntropy
-                    / Math.Min(marginalColumnEntropy, marginalRowEntropy);
-            }
+            double marginalColumnEntropy = table.MarginalColumnEntropy;
+            double marginalRowEntropy = table.MarginalRowEntropy;
+            return marginalColumnEntropy + marginalRowEntropy - table.JointEntropy
+                / Math.Min(marginalColumnEntropy, marginalRowEntropy);
         }
 
-        public static double InformationDependenceCRValue(TwoDimensionalContingencyTable table)
-        {
-            return table.InformationDependenceCR;
-        }
         /// <summary>
         /// Information dependence of C on R
         /// ID(C|R) = 1 - ( H(C|R) / H(C) )
         /// </summary>
         /// <remarks>See [055 Náměty pro další vývoj KL-Miner.doc] or [080 Náměty pro další vývoj KL-Miner II.doc].</remarks>
-        public double InformationDependenceCR
+        public static double InformationDependenceCRValue(TwoDimensionalContingencyTable table)
         {
-            get
-            {
-                return 1 - (ConditionalCREntropy / MarginalColumnEntropy);
-            }
+            return 1 - (ConditionalCREntropyValue(table) / table.MarginalColumnEntropy);
         }
 
-        public static double InformationDependenceRCValue(TwoDimensionalContingencyTable table)
-        {
-            return table.InformationDependenceRC;
-        }
         /// <summary>
         /// Information dependence of R on C
         /// ID(R|C) = 1 - ( H(R|C) / H(R) ) = 1 - ( ( H(C,R) - H(C) ) / H(R))
         /// </summary>
         /// <remarks>See [055 Náměty pro další vývoj KL-Miner.doc] or [080 Náměty pro další vývoj KL-Miner II.doc].</remarks>
-        public double InformationDependenceRC
+        public static double InformationDependenceRCValue(TwoDimensionalContingencyTable table)
         {
-            get
-            {
-                return 1 - (ConditionalRCEntropy / MarginalRowEntropy);
-            }
+            return 1 - (ConditionalRCEntropyValue(table) / table.MarginalRowEntropy);
         }
 
         /* OBSOLETE *

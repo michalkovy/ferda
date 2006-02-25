@@ -6,11 +6,20 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.LiteralSetting
 {
 	class LiteralSettingFunctionsI : LiteralSettingFunctionsDisp_, IFunctions
 	{
+        /// <summary>
+        /// The box module.
+        /// </summary>
 		protected BoxModuleI boxModule;
 		//protected IBoxInfo boxInfo;
 
 		#region IFunctions Members
-		public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
+        /// <summary>
+        /// Sets the <see cref="T:Ferda.Modules.BoxModuleI">box module</see>
+        /// and the <see cref="T:Ferda.Modules.Boxes.IBoxInfo">box info</see>.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="boxInfo">The box info.</param>
+        public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
 		{
 			this.boxModule = boxModule;
 			//this.boxInfo = boxInfo;

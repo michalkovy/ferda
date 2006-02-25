@@ -16,11 +16,11 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.Base
 	class BaseCeilFunctionsI : AbstractFFTTaskQuantifierFunctions
 	{
 		#region Properties
-		protected CoreRelationEnum Relation
+		protected RelationEnum Relation
 		{
 			get
 			{
-				return (CoreRelationEnum)Enum.Parse(typeof(CoreRelationEnum), this.boxModule.GetPropertyString("Relation"));
+                return (RelationEnum)Enum.Parse(typeof(RelationEnum), this.boxModule.GetPropertyString("Relation"));
 			}
 		}
 
@@ -37,24 +37,27 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.Base
 			}
 		}
 
-		protected CoreUnitsEnum Units
+		protected UnitsEnum Units
 		{
 			get
 			{
-				return (CoreUnitsEnum)Enum.Parse(typeof(CoreUnitsEnum), this.boxModule.GetPropertyString("Units"));
+                return (UnitsEnum)Enum.Parse(typeof(UnitsEnum), this.boxModule.GetPropertyString("Units"));
 			}
 		}
 		#endregion
 
 		#region Functions
-		/// <summary>
-		/// Returns the validity of Base/Ceil quantifier, e.g. true iff the <c>a</c> frequency in 4ft-table is greater than or equal to the specified <c>treshold</c>.
-		/// </summary>
-		/// <returns><c>true</c> iff the relative/absolute (<c>units</c>) frequency of <c>a</c> in 4ft-table is in <c>relation</c> to the specified <c>treshold</c>.</returns>
+        /// <summary>
+        /// Returns the validity of Base/Ceil quantifier, e.g. true iff the <c>a</c> frequency in 4ft-table is greater than or equal to the specified <c>treshold</c>.
+        /// </summary>
+        /// <param name="setting">The setting.</param>
+        /// <param name="__current">The __current.</param>
+        /// <returns>
+        /// 	<c>true</c> iff the relative/absolute (<c>units</c>) frequency of <c>a</c> in 4ft-table is in <c>relation</c> to the specified <c>treshold</c>.
+        /// </returns>
 		public override bool Validity(AbstractQuantifierSetting setting, Ice.Current __current)
 		{
-			FourFoldContingencyTable table = new FourFoldContingencyTable(setting.firstContingencyTableRows);
-			return table.BaseCeilValidity(Treshold, Units, Relation);
+            return ContingencyTable.Compare(Value(setting), Relation, Treshold);
 		}
 
 		/// <summary>
@@ -68,8 +71,11 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.Base
 		/// </returns>
 		public override double Value(AbstractQuantifierSetting setting, Ice.Current __current)
 		{
-			FourFoldContingencyTable table = new FourFoldContingencyTable(setting.firstContingencyTableRows);
-			return table.BaseCeilValue(Units);
+            return ContingencyTable.Value<FourFoldContingencyTable>(
+                FourFoldContingencyTable.BaseCeilValue,
+                new FourFoldContingencyTable(setting.firstContingencyTableRows),
+                Units,
+                setting.allObjectsCount);            
 		}
 		#endregion
 	}

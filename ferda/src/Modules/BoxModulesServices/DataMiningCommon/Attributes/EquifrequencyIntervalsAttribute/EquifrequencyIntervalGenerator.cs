@@ -125,6 +125,12 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
             return resultObjects;
         }
 
+        /// <summary>
+        /// Generates the intervals.
+        /// </summary>
+        /// <param name="intervals">The count of required intervals.</param>
+        /// <param name="dataArray">The data array.</param>
+        /// <returns>Split points.</returns>
 		public static object[] GenerateIntervals(int intervals, ArrayList dataArray)
 		{
 			// assert that the number of intervals is less than or equal to the total number of different values
@@ -388,6 +394,12 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
         }
 
 
+        /// <summary>
+        /// Gets result`s penalty.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <param name="optimum">The optimum.</param>
+        /// <returns>The penalty of result.</returns>
         private static float ResultPenalty(int count, float optimum)
         {
             float penalty;
@@ -399,15 +411,29 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
         }
 
 
+        /// <summary>
+        /// Class representing data for 
+        /// <see cref="T:Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervalsAttribute.EquifrequencyIntervalGenerator">
+        /// interval generator</see>.
+        /// </summary>
         public class Data
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Data"/> class.
+            /// </summary>
+            /// <param name="value">The value.</param>
+            /// <param name="count">The count.</param>
             public Data(object value, int count)
             {
                 Value = value;
                 Count = count;
             }
-            
-            
+
+
+            /// <summary>
+            /// Gets or sets the value.
+            /// </summary>
+            /// <value>The value.</value>
             public object Value
             { 
                 get 
@@ -421,7 +447,11 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
             }
             private object _value;
 
-            
+
+            /// <summary>
+            /// Gets or sets the count.
+            /// </summary>
+            /// <value>The count.</value>
             public int Count 
             { 
                 get 

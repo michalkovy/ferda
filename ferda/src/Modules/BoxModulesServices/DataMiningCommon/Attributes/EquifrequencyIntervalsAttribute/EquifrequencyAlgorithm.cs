@@ -7,8 +7,21 @@ using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervalsAttribute
 {
-	public static class EquidistantAlgorithm
+	/// <summary>
+	/// Algorithm for equidistant attribute.
+	/// </summary>
+    public static class EquidistantAlgorithm
 	{
+        /// <summary>
+        /// Generates the the attribute.
+        /// </summary>
+        /// <param name="domainType">Type of the domain.</param>
+        /// <param name="from">From.</param>
+        /// <param name="to">To.</param>
+        /// <param name="countOfCategories">The count of categories.</param>
+        /// <param name="columnInfo">The column info.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <returns>Generated attribute.</returns>
 		public static GeneratedAttribute Generate(
 			AttributeDomainEnum domainType,
 			double from,
@@ -17,9 +30,9 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 			Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnInfo columnInfo,
 			string boxIdentity)
 		{
-			Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum simpleColumnType = Ferda.Modules.Helpers.Data.Column.GetColumnSimpleSubTypeBySubType(columnInfo.columnSubType);
-			if (simpleColumnType != Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Integral
-				&& simpleColumnType != Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Floating)
+			Ferda.Modules.Helpers.Data.Column.ValueType simpleColumnType = Ferda.Modules.Helpers.Data.Column.GetColumnValueTypeByValueSubType(columnInfo.columnSubType);
+			if (simpleColumnType != Ferda.Modules.Helpers.Data.Column.ValueType.Integral
+				&& simpleColumnType != Ferda.Modules.Helpers.Data.Column.ValueType.Floating)
 				throw Ferda.Modules.Exceptions.BadParamsError(null, boxIdentity, simpleColumnType.ToString(), restrictionTypeEnum.DbColumnDataType);
 
 			//dataArray.Add(new Data(currentValue, currentCount));
@@ -76,7 +89,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 
 			switch (simpleColumnType)
 			{
-				case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Floating:
+				case Ferda.Modules.Helpers.Data.Column.ValueType.Floating:
 					for (int i = fromUi; i < (frequenciesCount - toUi); i++)
 					{
 						item = frequencies.Rows[i][Ferda.Modules.Helpers.Data.Column.SelectDistincts];
@@ -85,7 +98,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
                         dataArray.Add(new EquifrequencyIntervalGenerator.Data(Convert.ToSingle(item), Convert.ToInt32(frequencies.Rows[i][Ferda.Modules.Helpers.Data.Column.SelectFrequency])));
 					}
 					break;
-				case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Integral:
+				case Ferda.Modules.Helpers.Data.Column.ValueType.Integral:
 					for (int i = fromUi; i < (frequenciesCount - toUi); i++)
 					{
                         item = frequencies.Rows[i][Ferda.Modules.Helpers.Data.Column.SelectDistincts];
@@ -122,7 +135,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 			bool computeCategoriesNames = (splitPoints.Length + 1 < Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeConstants.MaxLengthOfCategoriesNamesSelectStringArray);
 			switch (simpleColumnType)
 			{
-				case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Floating:
+				case Ferda.Modules.Helpers.Data.Column.ValueType.Floating:
 					categoriesStruct.floatIntervals = new FloatIntervalCategorySeq();
 					float beginValueFl = startValue;
 					float nextValueFl;
@@ -164,7 +177,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
 						null,
 						categoriesStruct.floatIntervals.Count,
 						categoriesNames.ToArray());
-				case Ferda.Modules.Helpers.Data.Column.SimpleTypeEnum.Integral:
+				case Ferda.Modules.Helpers.Data.Column.ValueType.Integral:
 					categoriesStruct.longIntervals = new LongIntervalCategorySeq();
 					long beginValueLn = (long)startValue;
 					long nextValueLn;

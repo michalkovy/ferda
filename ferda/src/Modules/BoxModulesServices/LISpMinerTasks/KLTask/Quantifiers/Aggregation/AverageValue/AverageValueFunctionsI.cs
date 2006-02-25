@@ -11,7 +11,7 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Aggregation.Aver
 		{
 			get
 			{
-				return TwoDimensionalContingencyTable.AverageValueAggregationValue;
+                return TwoDimensionalContingencyTable.GetAverageValue;
 			}
 		}
 	}

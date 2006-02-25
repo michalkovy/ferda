@@ -5,11 +5,20 @@ using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask
 {
     class KLTaskFunctionsI : KLTaskFunctionsDisp_, IFunctions, ILISpMinerAbstractTask
-	{
+    {
+        /// <summary>
+        /// The box module.
+        /// </summary>
         protected BoxModuleI boxModule;
         //protected IBoxInfo boxInfo;
 
         #region IFunctions Members
+        /// <summary>
+        /// Sets the <see cref="T:Ferda.Modules.BoxModuleI">box module</see>
+        /// and the <see cref="T:Ferda.Modules.Boxes.IBoxInfo">box info</see>.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="boxInfo">The box info.</param>
         public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
         {
             this.boxModule = boxModule;
@@ -17,18 +26,18 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask
         }
         #endregion
 
-		#region Functions
-		public override TaskStruct getTask(Ice.Current __current)
-		{
-			TaskStruct result = new TaskStruct();
-			result.succedentSetting = LISpMinerAbstractTask.GetCategorialPartialCedentSettingSeq(boxModule, "SuccedentSetting", true);
-			result.antecedentSetting = LISpMinerAbstractTask.GetCategorialPartialCedentSettingSeq(boxModule, "AntecedentSetting", true);
-			result.conditionSetting = LISpMinerAbstractTask.GetBooleanPartialCedentSettingSeq(boxModule, "ConditionSetting", false);
-			result.quantifiers = getQuantifiers();
-			return result;
-		}
+        #region Functions
+        public override TaskStruct getTask(Ice.Current __current)
+        {
+            TaskStruct result = new TaskStruct();
+            result.succedentSetting = LISpMinerAbstractTask.GetCategorialPartialCedentSettingSeq(boxModule, "SuccedentSetting", true);
+            result.antecedentSetting = LISpMinerAbstractTask.GetCategorialPartialCedentSettingSeq(boxModule, "AntecedentSetting", true);
+            result.conditionSetting = LISpMinerAbstractTask.GetBooleanPartialCedentSettingSeq(boxModule, "ConditionSetting", false);
+            result.quantifiers = getQuantifiers();
+            return result;
+        }
 
-                private QuantifierSettingStruct[] getQuantifiers()
+        private QuantifierSettingStruct[] getQuantifiers()
         {
             return LISpMinerAbstractTask.GetQuantifiersSetting(boxModule, "KLQuantifier");
         }
@@ -55,5 +64,5 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask
             LISpMinerAbstractTask.RunTaskOnMetabaseLayer(boxModule, getTask(), new MetabaseLayer.KLTask());
         }
         #endregion
-	}
+    }
 }

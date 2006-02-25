@@ -11,7 +11,7 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.KLTask.Quantifiers.Aggregation.SumO
 		{
 			get
 			{
-				return TwoDimensionalContingencyTable.SumOfValuesAggregationValue;
+				return TwoDimensionalContingencyTable.GetSumOfValues;
 			}
 		}
 	}
