@@ -5,12 +5,27 @@ module Ferda {
 	module Modules {
 		class PropertyValue {
 		};
-		
+
+		sequence<PropertyValue> PropertyValueSeq;
+
+		enum PropertyValueTypesEnum {
+			BoolPropertyValueType,
+			ShortPropertyValueType,
+			IntPropertyValueType,
+			LongPropertyValueType,
+			FloatPropertyValueType,
+			DoublePropertyValueType,
+			StringPropertyValueType,
+			DatePropertyValueType,
+			DateTimePropertyValueType,
+			TimePropertyValueType
+		};
+
 		/*  B A S I C  T Y P E S  */
 		interface BoolTInterface {
 			nonmutating bool getBoolValue();
 		};
-		
+
 		class BoolT extends PropertyValue implements BoolTInterface {
 			bool boolValue;
 		};
@@ -18,7 +33,7 @@ module Ferda {
 		interface ShortTInterface {
 			nonmutating short getShortValue();
 		};
-		
+
 		class ShortT extends PropertyValue implements ShortTInterface {
 			short shortValue;
 		};
@@ -79,7 +94,7 @@ module Ferda {
 			short second;
 		};
 		interface DateTimeTInterface {
-			nonmutating void getDateTimeValue(out int year, out short month, out short day, 
+			nonmutating void getDateTimeValue(out int year, out short month, out short day,
 				out short hour, out short minute, out short second);
 		};
 		class DateTimeT extends PropertyValue implements DateTimeTInterface {
@@ -88,10 +103,10 @@ module Ferda {
 			int year;
 			short hour;
 			short minute;
-			short second;			
+			short second;
 		};
 
-		/* SelectT a SelectOptT není třeba, protože se to dá zjistit na základě 
+		/* SelectT a SelectOptT není třeba, protože se to dá zjistit na základě
 		 * patřičných funkcí/hondot */
 	};
 };
