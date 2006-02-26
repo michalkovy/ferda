@@ -176,7 +176,7 @@ namespace Ferda
 
 
 
-                    returnString.Append("`" + columnSelectExpression + "`");
+                    returnString.Append(columnSelectExpression);
                     bool left = false;
                     if (longInterval.leftBoundType == BoundaryEnum.Round)
                     {
@@ -200,7 +200,7 @@ namespace Ferda
                         if (left)
                         {
 
-                            returnString.Append(" AND `" + columnSelectExpression + "`");
+                            returnString.Append(" AND " + columnSelectExpression);
                         }
 
                         returnString.Append(" < " + longInterval.rightBound);
@@ -212,7 +212,7 @@ namespace Ferda
                             if (left)
                             {
 
-                                returnString.Append(" AND `" + columnSelectExpression + "`");
+                                returnString.Append(" AND " + columnSelectExpression);
                             }
 
                             returnString.Append(" <= " + longInterval.rightBound);
@@ -252,7 +252,7 @@ namespace Ferda
 
 
 
-                    returnString.Append("`" + columnSelectExpression + "`");
+                    returnString.Append(columnSelectExpression);
                     bool left = false;
 
                     if (floatInterval.leftBoundType == BoundaryEnum.Round)
@@ -276,7 +276,7 @@ namespace Ferda
                         if (left)
                         {
 
-                            returnString.Append(" AND `" + columnSelectExpression + "`");
+                            returnString.Append(" AND " + columnSelectExpression);
                         }
 
                         returnString.Append(" < " + floatInterval.rightBound);
@@ -288,7 +288,7 @@ namespace Ferda
                             if (left)
                             {
 
-                                returnString.Append(" AND `" + columnSelectExpression + "`");
+                                returnString.Append(" AND " + columnSelectExpression);
                             }
 
 
@@ -333,7 +333,7 @@ namespace Ferda
 
 
 
-                    returnString.Append("`" + columnSelectExpression + "`");
+                    returnString.Append(columnSelectExpression);
                     bool left = false;
 
                     if (dateTimeInterval.leftBoundType == BoundaryEnum.Round)
@@ -358,7 +358,7 @@ namespace Ferda
                         if (left)
                         {
 
-                            returnString.Append(" AND `" + columnSelectExpression + "`");
+                            returnString.Append(" AND " + columnSelectExpression);
                         }
 
                         returnString.Append(" < " + dateTimeInterval.rightBound);
@@ -370,7 +370,7 @@ namespace Ferda
                             if (left)
                             {
 
-                                returnString.Append(" AND `" + columnSelectExpression + "`");
+                                returnString.Append(" AND " + columnSelectExpression);
                             }
 
                             returnString.Append(" <= " + dateTimeInterval.rightBound);
@@ -429,23 +429,16 @@ namespace Ferda
             /// <returns>Query string</returns>
             private string GetValueCountQuery(string where)
             {
-                if (!where.Equals(""))
-                {
-                    return "SELECT "
-                    + "COUNT(" + "`" + this.columnSelectExpression + "`" + ") AS `TmpCnt`"
-                    + " FROM " + this.dataMatrixName
-                    + " WHERE " + where
-                    + " GROUP BY " + "`" + this.columnSelectExpression + "`"
-                    + " ORDER BY " + "`" + this.columnSelectExpression + "`";
-                }
-                else
-                {
-                    return "SELECT "
-                   + "COUNT(" + "`" + this.columnSelectExpression + "`" + ") AS `TmpCnt`"
-                   + " FROM " + this.dataMatrixName
-                   + " GROUP BY " + "`" + this.columnSelectExpression + "`"
-                   + " ORDER BY " + "`" + this.columnSelectExpression + "`";
-                }
+                string whereCond = String.Empty;
+                if (!String.IsNullOrEmpty(where))
+                    whereCond = " WHERE " + where;
+
+                return "SELECT "
+                    + "COUNT(" + columnSelectExpression + ") AS `TmpCnt`"
+                    + " FROM " + "`" + dataMatrixName + "`"
+                    + whereCond
+                    + " GROUP BY " + columnSelectExpression
+                    + " ORDER BY " + columnSelectExpression;
             }
 
 

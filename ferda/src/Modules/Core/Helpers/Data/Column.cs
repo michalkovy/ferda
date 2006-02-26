@@ -10,6 +10,13 @@ namespace Ferda.Modules.Helpers.Data
     /// <summary>
     /// Provides a set of methods and properties that help work with (DB) column.
     /// </summary>
+    /// <remarks>
+    /// Please remember that frequent parameter <c>columnSelectExpression</c>
+    /// is not bounded by quotes (but parameter <c>dataMatrixName</c> is). It is 
+    /// because the <c>columnSelectExpression</c> can be quite difficult select expression
+    /// which uses some aggregational functions (e.g. "AVG(`myColumnName`)") of SQL 
+    /// or do some other transformations (e.g. "`myColumnName` + 30" or "LEN(`myColumnName`)").
+    /// </remarks>
     public static class Column
     {
         /// <summary>
@@ -27,7 +34,7 @@ namespace Ferda.Modules.Helpers.Data
 
             try
             {
-                OdbcCommand command = new OdbcCommand("SELECT " + "`" + columnSelectExpression + "`" + " FROM " + "`" + dataMatrixName + "`" + " WHERE 0", conn);
+                OdbcCommand command = new OdbcCommand("SELECT " + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + " FROM " + "`" + dataMatrixName + "`" + " WHERE 0", conn);
                 command.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -276,12 +283,12 @@ namespace Ferda.Modules.Helpers.Data
 
             string query =
                 "SELECT "
-                    + "`" + columnSelectExpression + "`" + " AS " + SelectDistincts
+                    + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + " AS " + SelectDistincts
                     + ", COUNT(1) AS " + SelectFrequency
                 + " FROM " + dataMatrixName
                     + where
-                    + " GROUP BY " + "`" + columnSelectExpression + "`"
-                    + " ORDER BY " + "`" + columnSelectExpression + "`";
+                    + " GROUP BY " + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote
+                    + " ORDER BY " + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote;
 
             try
             {
@@ -356,7 +363,7 @@ namespace Ferda.Modules.Helpers.Data
             try
             {
                 OdbcDataAdapter myDataAdapter = new OdbcDataAdapter(
-                    "SELECT DISTINCT " + "`" + columnSelectExpression + "`" + " FROM " + "`" + dataMatrixName + "`",
+                    "SELECT DISTINCT " + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + " FROM " + "`" + dataMatrixName + "`",
                     conn);
                 System.Data.DataSet myDataSet = new System.Data.DataSet();
                 myDataAdapter.Fill(myDataSet);
@@ -364,7 +371,7 @@ namespace Ferda.Modules.Helpers.Data
 
                 /* much more effective but unsupported 
                  * UNDONE tohle predelat
-                odbcCommand.CommandText = "SELECT COUNT(DISTINCT " + "`" + columnSelectExpression + "`" + ") FROM " + "`" + dataMatrixName + "`";
+                odbcCommand.CommandText = "SELECT COUNT(DISTINCT " + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + ") FROM " + "`" + dataMatrixName + "`";
                 result.ValueDistincts = Convert.ToInt64(odbcCommand.ExecuteScalar());
                  * */
 
@@ -379,11 +386,11 @@ namespace Ferda.Modules.Helpers.Data
                 throw Ferda.Modules.Exceptions.BadParamsUnexpectedReasonError(ex, boxIdentity);
             }
 
-            string selectMaxExpression = "MAX(" + "`" + columnSelectExpression + "`" + ") AS Maximum";
-            string selectMinExpression = "MIN(" + "`" + columnSelectExpression + "`" + ") AS Minimum";
+            string selectMaxExpression = "MAX(" + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + ") AS Maximum";
+            string selectMinExpression = "MIN(" + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + ") AS Minimum";
             string selectAvgExpression = (isCardinal)
-                ? "AVG(" + "`" + columnSelectExpression + "`" + ") AS Average"
-                : "AVG(LEN(" + "`" + columnSelectExpression + "`" + ")) AS Average";
+                ? "AVG(" + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + ") AS Average"
+                : "AVG(LEN(" + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + ")) AS Average";
 
             odbcCommand.CommandText = "SELECT "
                 + selectMaxExpression + ","
@@ -412,66 +419,14 @@ namespace Ferda.Modules.Helpers.Data
                 //TODO optimize this
                 odbcCommand.CommandText =
                     "SELECT SUM( "
-                        + "(" + "`" + columnSelectExpression + "`" + " - '" + result.ValueAverage + "')"
-                        + " * (" + "`" + columnSelectExpression + "`" + " - '" + result.ValueAverage + "')"
+                        + "(" + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + " - '" + result.ValueAverage + "')"
+                        + " * (" + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + " - '" + result.ValueAverage + "')"
                         + ") FROM " + "`" + dataMatrixName + "`";
 
                 result.ValueVariability = Convert.ToDouble(odbcCommand.ExecuteScalar()) / dataMatrixRowsCount;
                 result.ValueStandardDeviation = Math.Sqrt(result.ValueVariability);
             }
             //System.Diagnostics.Debug.WriteLine("card_e:" + DateTime.Now.ToString());
-
-            #region old implementation
-
-            /* /
-            //begin of old implementation
-            object commandResult;
-
-            odbcCommand.CommandText = "SELECT MAX(" + "`" + columnSelectExpression + "`" + ") AS Maximum FROM " + + "`" + dataMatrixName + "`";
-            commandResult = odbcCommand.ExecuteScalar();
-            result.ValueMax =
-                (commandResult != null) ? commandResult.ToString() : null;
-
-            odbcCommand.CommandText = "SELECT MIN(" + "`" + columnSelectExpression + "`" + ") AS Minimum FROM " + "`" + dataMatrixName + "`";
-            commandResult = odbcCommand.ExecuteScalar();
-            result.ValueMin =
-                (commandResult != null) ? commandResult.ToString() : null;
-
-            if (isCardinal)
-            {
-                odbcCommand.CommandText = "SELECT AVG(" + "`" + columnSelectExpression +"`" + ") AS Average FROM " + "`" + dataMatrixName + "`";
-                commandResult = odbcCommand.ExecuteScalar();
-                result.ValueAverage = (commandResult != null) ? commandResult.ToString() : null;
-
-                odbcCommand.CommandText = "SELECT COUNT(1) FROM " + "`" + dataMatrixName + "`";
-                long dataMatrixRowsCount = Convert.ToInt64(odbcCommand.ExecuteScalar());
-
-                odbcCommand.CommandText =
-                    "SELECT SUM( "
-                        + "(" + "`" + columnSelectExpression + "`" + " - '" + result.ValueAverage + "')"
-                        + "* (" + "`" + columnSelectExpression + "`" + " - '" + result.ValueAverage + "')"
-                        + ") AS Variability FROM " + "`" + dataMatrixName + "`";
-
-                result.ValueVariability =
-                    Convert.ToDouble(odbcCommand.ExecuteScalar()) / dataMatrixRowsCount;
-
-                result.ValueStandardDeviation = Math.Sqrt(result.ValueVariability);
-            }
-            else
-            {
-                odbcCommand.CommandText = "SELECT AVG(LEN(" + "`" + columnSelectExpression + "`" + ")) AS AverageLen FROM " + "`" + dataMatrixName + "`";
-                commandResult = odbcCommand.ExecuteScalar();
-                result.ValueAverage = (commandResult != null) ? commandResult.ToString() : null;
-
-                result.ValueVariability = 0;
-
-                result.ValueStandardDeviation = 0;
-            }
-
-            //end of old implementation
-            /* */
-            #endregion
-
             return result;
         }
 

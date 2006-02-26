@@ -8375,8 +8375,8 @@
 						<Label>Meter [m]</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>Cenimeter</Name>
-						<Label>Cenimeter [cm]</Label>
+						<Name>Centimeter</Name>
+						<Label>Centimeter [cm]</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Milimeter</Name>

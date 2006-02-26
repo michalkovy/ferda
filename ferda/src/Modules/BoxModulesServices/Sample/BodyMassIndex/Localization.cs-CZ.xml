@@ -29,8 +29,8 @@
           <Label>Metr [m]</Label>
         </SelectOption>
         <SelectOption>
-          <Name>Cenimeter</Name>
-          <Label>Cenimetr [cm]</Label>
+          <Name>Centimeter</Name>
+          <Label>Centimetr [cm]</Label>
         </SelectOption>
         <SelectOption>
           <Name>Milimeter</Name>

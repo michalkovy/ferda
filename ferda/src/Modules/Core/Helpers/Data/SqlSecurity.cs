@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Ferda.Modules.Helpers.Data
 {
-	/// <summary>
-	/// This class contains static methods for secured working with SQL queries.
-	/// </summary>
-	public static class SqlSecurity
-	{
+    /// <summary>
+    /// This class contains static methods for secured working with SQL queries.
+    /// </summary>
+    public static class SqlSecurity
+    {
         //TODO
         /*
          * SQL Injection - Continuing to Test
@@ -27,18 +27,18 @@ namespace Ferda.Modules.Helpers.Data
 
 
 
-		/// <summary>
-		/// Returns boolean result that indicates wheter <c>inputSql</c>
-		/// contains any bad word i.e. "UPDATE", "GRANT", etc.
-		/// </summary>
-		/// <param name="inputSql">Input SQL string.</param>
-		/// <returns>Returns true iff <c>inputSql</c> contains any bad word.</returns>
-		public static bool ContainsBadWord(string inputSql)
-		{
-			if (String.IsNullOrEmpty(inputSql))
-				return false;
+        /// <summary>
+        /// Returns boolean result that indicates wheter <c>inputSql</c>
+        /// contains any bad word i.e. "UPDATE", "GRANT", etc.
+        /// </summary>
+        /// <param name="inputSql">Input SQL string.</param>
+        /// <returns>Returns true iff <c>inputSql</c> contains any bad word.</returns>
+        public static bool ContainsBadWord(string inputSql)
+        {
+            if (String.IsNullOrEmpty(inputSql))
+                return false;
 
-			string[] badWords = new string[] { 
+            string[] badWords = new string[] { 
 				"ALLOCATE",
 				"ALTER",
 				"AUTHORIZATION",
@@ -90,21 +90,21 @@ namespace Ferda.Modules.Helpers.Data
 				"USER",
 				"WRITE"
 				};
-			foreach (string badWord in badWords)
-			{
-				if (inputSql.Contains(" " + badWord + " "))
-					return true;
-			}
-			return false;
-		}
+            foreach (string badWord in badWords)
+            {
+                if (inputSql.Contains(" " + badWord + " "))
+                    return true;
+            }
+            return false;
+        }
 
-		/// <summary>
-		/// Trims the specified string and escapes "`" character.
-		/// </summary>
-		/// <param name="inputSql">Input SQL text for process.</param>
-		/// <returns>Safe SQL literal witch duplexed "`".</returns>
-		public static string SafeSqlObjectName(string inputSql)
-		{
+        /// <summary>
+        /// Trims the specified string and escapes "`" character.
+        /// </summary>
+        /// <param name="inputSql">Input SQL text for process.</param>
+        /// <returns>Safe SQL literal witch duplexed "`".</returns>
+        public static string SafeSqlObjectName(string inputSql)
+        {
 
             if (String.IsNullOrEmpty(inputSql))
                 return String.Empty;
@@ -113,52 +113,71 @@ namespace Ferda.Modules.Helpers.Data
                 inputSql.Trim();
                 return inputSql.Replace("`", "``");
             }
-		}
+        }
 
-		/// <summary>
-		/// Escapes single quote character (').
-		/// </summary>
-		/// <param name="inputSql">Input SQL text for process.</param>
-		/// <returns>Safe SQL literal witch duplexed single quotes.</returns>
-		public static string SafeSqlLiteral(string inputSql)
-		{
-			if (String.IsNullOrEmpty(inputSql))
-				return "";
-			return inputSql.Replace("'", "''");
-		}
+        /// <summary>
+        /// Escapes single quote character (').
+        /// </summary>
+        /// <param name="inputSql">Input SQL text for process.</param>
+        /// <returns>Safe SQL literal witch duplexed single quotes.</returns>
+        public static string SafeSqlLiteral(string inputSql)
+        {
+            if (String.IsNullOrEmpty(inputSql))
+                return "";
+            return inputSql.Replace("'", "''");
+        }
 
-		/// <summary>
-		/// Make the following replacements:
-		/// <list type="bullet">
-		/// <listheader>
-		/// </listheader>
-		/// <item>
-		/// <description>' becomes '',</description>
-		/// </item>
-		/// <item>
-		/// <description>[ becomes [[],</description>
-		/// </item>
-		/// <item>
-		/// <description>% becomes [%],</description>
-		/// </item>
-		/// <item>
-		/// <description>_ becomes [_].</description>
-		/// </item>
-		/// </list>
-		/// </summary>
-		/// <param name="inputSql">Input SQL LIKE clause.</param>
-		/// <returns>Safe SQL LIKE clause.</returns>
-		public static string SafeSqlLikeClauseLiteral(string inputSql)
-		{
-			if (String.IsNullOrEmpty(inputSql))
-				return "";
+        /// <summary>
+        /// Make the following replacements:
+        /// <list type="bullet">
+        /// <listheader>
+        /// </listheader>
+        /// <item>
+        /// <description>' becomes '',</description>
+        /// </item>
+        /// <item>
+        /// <description>[ becomes [[],</description>
+        /// </item>
+        /// <item>
+        /// <description>% becomes [%],</description>
+        /// </item>
+        /// <item>
+        /// <description>_ becomes [_].</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="inputSql">Input SQL LIKE clause.</param>
+        /// <returns>Safe SQL LIKE clause.</returns>
+        public static string SafeSqlLikeClauseLiteral(string inputSql)
+        {
+            if (String.IsNullOrEmpty(inputSql))
+                return "";
 
-			string s = inputSql;
-			s = inputSql.Replace("'", "''");
-			s = s.Replace("[", "[[]");
-			s = s.Replace("%", "[%]");
-			s = s.Replace("_", "[_]");
-			return s;
-		}
-	}
+            string s = inputSql;
+            s = inputSql.Replace("'", "''");
+            s = s.Replace("[", "[[]");
+            s = s.Replace("%", "[%]");
+            s = s.Replace("_", "[_]");
+            return s;
+        }
+
+        /// <summary>
+        /// Gets the column quote i.e. String.Empty.
+        /// </summary>
+        /// <value>The column brackets.</value>
+        /// <remarks>
+        /// Sometimes is better to have column quoted by "`", but 
+        /// we should deal with quite difficult column select expressions
+        /// like "AVG(`myColumnName`) + LEN(`myOtherColumnName`) + 12" thats
+        /// why is column quote an empty string.
+        /// </remarks>
+        public static string ColumnQuote
+        {
+            get
+            {
+                //return "`";
+                return String.Empty;
+            }
+        }
+    }
 }
