@@ -27,8 +27,7 @@
 				<include name="Modules/Boxes/**/*.ice"/>
 			</sourcefiles>
 			<targetfiles>
-				<include name="${build.dir}/Modules/BoxModulesServices/**/generated/*.cs"/>
-			</targetfiles>
+				<include name="${build.dir}/Modules/BoxModulesServices/**/generated/*.cs"/>true</targetfiles>
 		</uptodate>
 		<if test="${not(actual1) or not(actual2)}">
 			<echo message="Generuji .cs z .ice souboru v adresari Modules..."/>
@@ -43,7 +42,7 @@
 				<arg file="Modules/BuiltinSequences.ice"/>
 				<arg file="Modules/BasicPropertyTypes.ice"/>
 				<arg file="Modules/OtherPropertyTypes.ice"/>
-				<arg file="Modules/Common.ice"/>
+				<!-- 	<arg file="Modules/Attribute.ice"/> -->
 			</exec>
 			<echo message="Generuji .cs z .ice souboru v adresari ModulesManager..."/>
 			<mkdir dir="${build.dir}/ModulesManager/generated"/>
