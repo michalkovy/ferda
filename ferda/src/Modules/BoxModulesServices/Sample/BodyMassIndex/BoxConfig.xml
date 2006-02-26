@@ -53,7 +53,7 @@
           <Name>Meter</Name>
         </SelectOption>
         <SelectOption>
-          <Name>Cenimeter</Name>
+          <Name>Centimeter</Name>
         </SelectOption>
         <SelectOption>
           <Name>Milimeter</Name>
@@ -73,7 +73,7 @@
       </SelectOptions>
       <Visible>true</Visible>
       <ReadOnly>false</ReadOnly>
-      <Default>Meter</Default>
+      <Default>Centimeter</Default>
     </Property>
     <Property>
       <Name>WeightUnits</Name>

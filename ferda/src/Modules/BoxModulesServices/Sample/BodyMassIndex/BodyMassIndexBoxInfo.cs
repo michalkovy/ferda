@@ -24,14 +24,8 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// </summary>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            try
-            {
-                return ((BodyMassIndexFunctionsI)boxModule.FunctionsIObj).getColumnInfo().columnSelectExpression;
-            }
-            catch
-            {
-                return string.Empty;
-            }
+            BodyMassIndexFunctionsI functionsObject = (BodyMassIndexFunctionsI)boxModule.FunctionsIObj;
+            return functionsObject.GetDefaultUserLabel();
         }
 
         /// <summary>
