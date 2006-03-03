@@ -793,7 +793,6 @@ namespace Ferda.FrontEnd.Desktop
             IBoxModule box;
             if (Hover == null)
             {
-                //TODO Martin ... sem to taky vlitlo pri prazdnym poly SelectedBoxes
                 box = SelectedBoxes[0];
             }
             else
@@ -835,7 +834,6 @@ namespace Ferda.FrontEnd.Desktop
             IBoxModule box;
             if (Hover == null)
             {
-                //TODO Martin ... sem mi to taky vlitlo s tim, ze Selected Boxes bylo prazdne
                 box = SelectedBoxes[0];
             }
             else
@@ -856,8 +854,6 @@ namespace Ferda.FrontEnd.Desktop
             IBoxModule box;
             if (Hover == null)
             {
-                //TODO Martin ... jednou mi to spadlo na nasledujicim radku s tim, ze to pole
-                //SelectedBoxes bylo prazdny tj. na indexu [0] nic nebylo.
                 box = SelectedBoxes[0];
             }
             else
@@ -1326,7 +1322,6 @@ namespace Ferda.FrontEnd.Desktop
 
             if (node == null)
             {
-                //TODO Martin, sem mi to taky skocilo
                 throw new ApplicationException("Node with selected box not found");
             }
 
@@ -1815,9 +1810,22 @@ namespace Ferda.FrontEnd.Desktop
 
                 IBoxModule box = bn.Box;
                 view.Remove(box);
+                //removing the box that was selected
+                SelectedBoxes.Remove(box);
 
                 //removing the node
                 Nodes.Remove(shape);
+
+                //adapting the menu and toolbar
+                menuDisplayer.ControlHasFocus = this;
+                menuDisplayer.Adapt();
+                toolBar.ControlHasFocus = this;
+                toolBar.Adapt();
+
+                //resetting the other properties
+                PropertiesDisplayer.Reset();
+                ContextHelpDisplayer.Reset();
+                UserNote.Reset();
             }
         }
 
