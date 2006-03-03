@@ -293,6 +293,11 @@ namespace Ferda.FrontEnd.Properties
         ///</summary>
         public void Adapt()
         {
+            if (IsDisposed)
+            {
+                return;
+            }
+
             temporaryValues = new Dictionary<string, object>();
             temporaryPropertyTypes = new Dictionary<string, string>();
             moreBoxesValuesState =
@@ -331,6 +336,11 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         public void Reset()
         {
+            if (IsDisposed)
+            {
+                return;
+            }
+
             propertyBag = new PropertyTable();
             this.SelectedObject = propertyBag;
         }
@@ -345,6 +355,10 @@ namespace Ferda.FrontEnd.Properties
         /// </param>
         public void OtherObjectAdapt(PropertyTable objectProperties)
         {
+            if (IsDisposed)
+            {
+                return;
+            }
             this.SelectedObject = objectProperties;
         }
 

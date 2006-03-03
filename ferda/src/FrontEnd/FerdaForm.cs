@@ -822,6 +822,10 @@ using Ferda.ModulesManager;
                 SetupArchive();
                 archive.Views = views;
                 archive.UserNote = userNote;
+                foreach (FerdaDesktop desktop in views)
+                {
+                    desktop.ArchiveDisplayer = archive;
+                }
 
                 if (newBoxContent.IsVisible)
                 {
@@ -851,6 +855,11 @@ using Ferda.ModulesManager;
             else
             {
                 SetupContextHelp();
+                foreach (FerdaDesktop desktop in views)
+                {
+                    desktop.ContextHelpDisplayer = contextHelp;
+                }
+                archive.ContextHelpDisplayer = contextHelp;
 
                 if (propertyGridContent.IsVisible)
                 {
@@ -885,7 +894,9 @@ using Ferda.ModulesManager;
                 {
                     //setting the IViewDisplayers of the property grid
                     propertyGrid.ViewDisplayers.Add(desktop);
+                    desktop.PropertiesDisplayer = propertyGrid;
                 }
+                archive.PropertiesDisplayer = propertyGrid;
 
                 if (contextHelpContent.IsVisible)
                 {
@@ -945,6 +956,13 @@ using Ferda.ModulesManager;
                 SetupUserNote();
                 dockingManager.AddForm(userNoteContent);
                 AddOwnedForm(userNoteContent);
+
+                //letting the views know about the change
+                foreach (FerdaDesktop desktop in views)
+                {
+                    desktop.UserNote = userNote;
+                }
+                archive.UserNote = userNote;
 
                 //tries to dock it to the archive
                 if (propertyGridContent.IsVisible)

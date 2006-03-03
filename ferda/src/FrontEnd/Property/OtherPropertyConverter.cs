@@ -68,9 +68,19 @@ namespace Ferda.FrontEnd.Properties
             if (destinationType == typeof(string))
             {
                 OtherProperty prop = value as OtherProperty;
-
                 //return prop.Box.GetPropertyOtherAbout(prop.PropertyName);
-                return prop.Result;
+                
+                //a situation can happen when there is still no result
+                //of the otherProperty (value is null) and then we
+                //have to return an empty string
+                if (prop != null)
+                {
+                    return prop.Result;
+                }
+                else
+                {
+                    return string.Empty;
+                }
             }
             else
             {

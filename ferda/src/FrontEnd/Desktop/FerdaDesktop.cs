@@ -66,7 +66,8 @@ namespace Ferda.FrontEnd.Desktop
 		/// <summary>
 		/// Archive of the application
 		/// </summary>
-        protected Archive.IArchiveDisplayer archiveDisplayer;
+        private Archive.IArchiveDisplayer archiveDisplayer;
+
         private Properties.IPropertiesDisplayer propertiesDisplayer;
         private ContextHelp.IContextHelpDisplayer contextHelpDisplayer;
         private SVGManager svgManager;
@@ -205,6 +206,15 @@ namespace Ferda.FrontEnd.Desktop
             {
                 return userNote;
             }
+        }
+
+        /// <summary>
+        /// ArchiveDisplayer of the control
+        /// </summary>
+        public Archive.IArchiveDisplayer ArchiveDisplayer
+        {
+            get { return archiveDisplayer; }
+            set { archiveDisplayer = value; }
         }
 
         #region IViewDisplayer implementation

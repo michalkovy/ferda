@@ -52,6 +52,10 @@ namespace Ferda.FrontEnd.UserNote
         /// </summary>
         public void Adapt()
         {
+            if (IsDisposed)
+            {
+                return;
+            }
             this.Enabled = true;
             this.Text = SelectedBox.UserHint;
         }
@@ -61,6 +65,10 @@ namespace Ferda.FrontEnd.UserNote
         /// </summary>
         public void Reset()
         {
+            if (IsDisposed)
+            {
+                return;
+            }
             this.Enabled = false;
             this.Text = string.Empty;
         }
