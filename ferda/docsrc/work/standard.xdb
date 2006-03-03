@@ -19,6 +19,15 @@
 			<surname>Ralbovský</surname>
 			<email>martin.ralbovsky@gmail.com</email>
 		</othercredit>
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2006-02-20</date>
+        <revremark>
+          Změna MagicLibrary -> DockDotNet
+        </revremark>
+      </revision>      
+    </revhistory>
 	</articleinfo>
 	<abstract>
 		<para>Tento text by měl shrnout všechny dohody, které jsme učinili či učiníme v našem týmu.</para>
@@ -133,10 +142,12 @@ else
 						<entry><ulink url="http://www.go-mono.com/docs/">nejen popis tříd a popis jazyka C#</ulink></entry>
 					</row>
 					<row>
-						<entry><ulink url="http://www.dotnetmagic.com">Magic Library</ulink></entry>
-						<entry>Používáme verzi 1.7.4, za kterou se ještě nemusí platit a může se volně modifikovat. Jediná 
-							omezující podmínka je, že musíme uvést jejich domovskou stránku někde v našem About boxu
+						<entry>DockDotNet</entry>
+						<entry>
+              Dokovací knihovna, projekt na <ulink url="http://www.sourceforge.net">SourceForge</ulink>,
+              používá výhradně .NET věci pro dokování, zdá se ale, že se dál nevyvíjí.
 						</entry>
+            <entry></entry>
 					</row>
 				</tbody>
 			</tgroup>
