@@ -730,37 +730,43 @@ namespace Ferda.FrontEnd.Archive
         ///<summary>
         ///Forces the control to refresh its state
         ///</summary>
+        ///<remarks>
+        /// It also adapts the menu and toolbar
+        ///</remarks>
         public void Adapt()
         {
-            mySelectedNode = null;
-
-            int i;
-            string oldText = CBCategories.SelectedItem.ToString();
-
-            FillBoxTypes();
-
-            //selecting the boxtype
-            for (i = 0; i < CBCategories.Items.Count; i++)
+            if (!IsDisposed)
             {
-                string item = (string)CBCategories.Items[i];
-                if (item == oldText)
+                mySelectedNode = null;
+
+                int i;
+                string oldText = CBCategories.SelectedItem.ToString();
+
+                FillBoxTypes();
+
+                //selecting the boxtype
+                for (i = 0; i < CBCategories.Items.Count; i++)
                 {
-                    break;
+                    string item = (string)CBCategories.Items[i];
+                    if (item == oldText)
+                    {
+                        break;
+                    }
                 }
-            }
 
-            if (i == CBCategories.Items.Count)
-            {
-                CBCategories.SelectedIndex = 0;
-                //resets the archive to an "initial position"
-                ResetArchive(ResManager.GetString("ArchiveAllText"),
-                    ResManager.GetString("ArchiveAllText"), true);
-            }
-            else
-            {
-                CBCategories.SelectedIndex = i;
-                //resets the archive to an "initial position"
-                ResetArchive(oldText, ResManager.GetString("ArchiveAllText"), true);
+                if (i == CBCategories.Items.Count)
+                {
+                    CBCategories.SelectedIndex = 0;
+                    //resets the archive to an "initial position"
+                    ResetArchive(ResManager.GetString("ArchiveAllText"),
+                        ResManager.GetString("ArchiveAllText"), true);
+                }
+                else
+                {
+                    CBCategories.SelectedIndex = i;
+                    //resets the archive to an "initial position"
+                    ResetArchive(oldText, ResManager.GetString("ArchiveAllText"), true);
+                }
             }
 
             menuDisplayer.Adapt();

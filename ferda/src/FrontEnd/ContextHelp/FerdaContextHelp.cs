@@ -157,6 +157,11 @@ namespace Ferda.FrontEnd.ContextHelp
         ///</summary>
         public void Adapt()
         {
+            if (IsDisposed)
+            {
+                return;
+            }
+
             //setting the static stuff
             LBoxName.Visible = true;
             LBoxName.Text = SelectedBox.UserName;
@@ -187,6 +192,11 @@ namespace Ferda.FrontEnd.ContextHelp
         /// </summary>
         public void Reset()
         {
+            if (IsDisposed)
+            {
+                return;
+            }
+
             LBoxName.Visible = false;
             LBoxType.Visible = false;
             RTBBoxTypeHint.Visible = false;
