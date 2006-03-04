@@ -49,7 +49,6 @@
     <Compile Include="BoxModuleFactoryCreatorI.cs" />
     <Compile Include="BoxModuleFactoryI.cs" />
     <Compile Include="BoxModuleI.cs" />
-    <None Include="ClassDiagram.cd" />
     <None Include="Exceptions.cs" />
     <Compile Include="FerdaServiceI.cs" />
     <Compile Include="IBoxInfo.cs" />
