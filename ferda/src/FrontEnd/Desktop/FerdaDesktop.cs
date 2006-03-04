@@ -424,7 +424,7 @@ namespace Ferda.FrontEnd.Desktop
             OnNewConnection -= new NewConnection(FerdaDesktop_OnNewConnection);
 
             //adding the boxes on the desktop
-            foreach (IBoxModule box in view.Boxes)
+            foreach ( IBoxModule box in view.Boxes)
             {
                 BoxNode boxNode = new BoxNode(this, box, SvgManager, view, ResManager);
                 boxNode.X = view.GetPosition(box).X;
@@ -686,7 +686,7 @@ namespace Ferda.FrontEnd.Desktop
 
             Adapt();
             archiveDisplayer.Adapt();
-            propertiesDisplayer.Reset();
+            //propertiesDisplayer.Reset();
         }
 
         /// <summary>
@@ -813,6 +813,7 @@ namespace Ferda.FrontEnd.Desktop
 
             view.PackAllSockets(box);
             Adapt();
+            SelectBox(box);
         }
 
         /// <summary>
@@ -834,6 +835,7 @@ namespace Ferda.FrontEnd.Desktop
 
             view.UnpackOneLayerAllSockets(box);
             Adapt();
+            SelectBox(box);
         }
 
         /// <summary>
@@ -854,6 +856,7 @@ namespace Ferda.FrontEnd.Desktop
 
             view.UnpackAllLayersAllSockets(box);
             Adapt();
+            SelectBox(box);
         }
 
         /// <summary>
@@ -897,6 +900,9 @@ namespace Ferda.FrontEnd.Desktop
 
                     //here we dont have to adapt the user note, the box 
                     //remains the same
+
+                    //selecting the box which name was changed
+                    SelectBox(box);
                 }
                 else
                 {
@@ -925,7 +931,7 @@ namespace Ferda.FrontEnd.Desktop
 
             //placing the IBoxModule on the current view
             projectManager.Archive.Add(box);
-            view.Add(box, new PointF(SelectedShapes[0].X + SelectedShapes[0].Width * 2, SelectedShapes[0].Y));
+            view.Add(box, new PointF(SelectedShapes[0].X, SelectedShapes[0].Y));
 
             //connecting the selected boxes into the new group box
             foreach (IBoxModule fromBox in SelectedBoxes)
@@ -964,7 +970,87 @@ namespace Ferda.FrontEnd.Desktop
             //if there is a box that all the selected boxes are connected
             //into, we should connect also the new group box into that
             //box
+            foreach (BoxNode boxNode in Nodes)
+            {
+                //cannot be connected into circle(at least I hope)
+                if (SelectedBoxes.Contains(boxNode.Box))
+                {
+                    continue;
+                }
 
+                //checking all the boxes that are making the group are connected
+                //to this box
+                bool allConnections = true;
+                foreach (IBoxModule toBox in SelectedBoxes)
+                {
+                    //if the boxNode (node that we are examining) does not contain
+                    //one of the boxes in SelectedBoxes(boxes we are making group from)
+                    if (!boxNode.Box.ConnectionsFrom().Contains(toBox))
+                    {
+                        allConnections = false;
+                    }
+                }
+
+                //this means that the boxNode.Box is a box where all the sockets
+                //are connected. It does not mean, that they are connected into
+                //one socket - that is what we would like
+                if (allConnections)
+                {
+                    //for each socket in the box
+                    foreach (SocketInfo socket in boxNode.Box.Sockets)
+                    {
+                        //getting the boxes connected to this socket
+                        List<IBoxModule> boxesConnectedToSocket =
+                            new List<IBoxModule>(boxNode.Box.GetConnections(socket.name));
+
+                        //testing if there are all the selected boxes connected
+                        //to this socket
+                        bool socketContainsAll = true;
+                        foreach (IBoxModule aBox in SelectedBoxes)
+                        {
+                            if (!boxesConnectedToSocket.Contains(aBox))
+                            {
+                                socketContainsAll = false;
+                                break;
+                            }
+                        }
+
+                        //this means that whe have the right box and the right socket
+                        if (socketContainsAll)
+                        {
+                            if (boxNode.Box.TryWriteEnter())
+                            {
+                                try
+                                {
+                                    //the group box has only 1 socket
+                                    boxNode.Box.SetConnection(socket.name, box);
+                                }
+                                catch (BadTypeError)
+                                {
+                                    //showing the messageBox
+                                    MessageBox.Show(ResManager.GetString("DesktopBadConnectionInvalidType"),
+                                        ResManager.GetString("DesktopBadConnectionCaption"));
+                                    boxNode.Box.WriteExit();
+                                    return;
+                                }
+                                catch (ConnectionExistsError)
+                                {
+                                    //showing the messageBox
+                                    MessageBox.Show(ResManager.GetString("DesktopMoreThanOneErrorText"),
+                                        ResManager.GetString("DesktopBadConnectionCaption"));
+                                    boxNode.Box.WriteExit();
+                                    return;
+                                }
+                                boxNode.Box.WriteExit();
+                            }
+                            else
+                            {
+                                FrontEndCommon.CannotWriteToBox(boxNode.Box, ResManager);
+                            }
+                        }
+                    }
+                }
+            }
 
             //after all is connected, we can hide the boxes from the view
             foreach (IBoxModule fromBox in SelectedBoxes)
@@ -987,6 +1073,7 @@ namespace Ferda.FrontEnd.Desktop
             //TODO - pri pridavani krabicky je to tady strasne neefektivni,
             //lepsi by bylo, kdyby se vytvoril rovnou aj node, ktery by se pridal
             Adapt();
+            SelectBox(box);
             archiveDisplayer.Adapt();
         }
 
@@ -1380,6 +1467,10 @@ namespace Ferda.FrontEnd.Desktop
             unpackOneLayerAllSockets.Image = provider.GetIcon("UnpackAllLayersOneSocketAllSockets").ToBitmap();
             localizeInArchive.Image = provider.GetIcon("LocalizeInArchive").ToBitmap();
 
+            ToolStripMenuItem layout = new ToolStripMenuItem(ResManager.GetString("DesktopLayout"));
+            layout.Click += new EventHandler(layout_Click);
+            layout.Image = provider.GetIcon("Layout").ToBitmap();
+            
             //addding the makegroup item (if there are more boxes selected)
             if (SelectedBoxes.Count > 1)
             {
@@ -1389,13 +1480,13 @@ namespace Ferda.FrontEnd.Desktop
                 makeGroup.Click += new EventHandler(makeGroup_Click);
 
                 //adding
-                cMenu.Items.AddRange(new ToolStripItem[] {
+                cMenu.Items.AddRange(new ToolStripItem[] { layout,
                 rename, copy, clone, sep, makeGroup, deleteFromDesktop,
                 deleteFromArchive, sep2, localizeInArchive });
             }
             else
             {
-                cMenu.Items.AddRange(new ToolStripItem[] {
+                cMenu.Items.AddRange(new ToolStripItem[] { layout,
                 rename, copy, clone, sep, deleteFromDesktop,
                 deleteFromArchive, sep2, localizeInArchive });
             }
