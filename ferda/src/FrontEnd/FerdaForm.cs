@@ -490,6 +490,8 @@ using Ferda.ModulesManager;
                 desktopContent.Controls.Add(desktop);
                 desktopContent.ResumeLayout(false);
 
+                desktopContent.GotFocus += new EventHandler(desktopContent_GotFocus);
+
                 //setting the IViewDisplayers of the property grid
                 propertyGrid.ViewDisplayers.Add(desktop);
             }
@@ -1116,6 +1118,7 @@ using Ferda.ModulesManager;
             desktopContent.Text = newView.Name;
             desktopContent.TextChanged += new EventHandler(desktopContent_TextChanged);
             desktopContent.Closed += new EventHandler(desktopContent_Closed);
+            desktopContent.GotFocus += new EventHandler(desktopContent_GotFocus);
             newDesktop.ResManager = this.ResManager;
             newDesktop.Clipboard = this;
             newDesktop.PropertiesDisplayer = propertyGrid;
@@ -1175,6 +1178,7 @@ using Ferda.ModulesManager;
             desktopContent.Text = newView.Name;
             desktopContent.TextChanged += new EventHandler(desktopContent_TextChanged);
             desktopContent.Closed += new EventHandler(desktopContent_Closed);
+            desktopContent.GotFocus += new EventHandler(desktopContent_GotFocus);
             newDesktop.ResManager = this.ResManager;
             newDesktop.Clipboard = this;
             newDesktop.PropertiesDisplayer = propertyGrid;
@@ -1475,7 +1479,7 @@ using Ferda.ModulesManager;
             ProjectManager.View v = projectManager.GetView(send.OldText);
             v.Name = newName;
 
-            //recreating the desektop part of the menu (a name of the desktop was changed)
+            //recreating the desktop part of the menu (a name of the desktop was changed)
             menu.SetupDesktop();
         }
 
@@ -1488,7 +1492,7 @@ using Ferda.ModulesManager;
         {
             DockWindow send = sender as DockWindow;
 
-            //because it would not when closing the whole application
+            //because it would not work when closing the whole application
             if (send.Controls.Count > 0)
             {
                 FerdaDesktop desktop = send.Controls[0].Controls[0] as FerdaDesktop;
@@ -1500,8 +1504,25 @@ using Ferda.ModulesManager;
             //removing the viewContents
             viewContents.Remove(send);
 
-            //recreating the desektop part of the menu (a desktop was closed)
+            //recreating the desktop part of the menu (a desktop was closed)
             menu.SetupDesktop();
+        }
+
+        /// <summary>
+        /// Reaction when a desktop recieves focus - the dynamic part of the main menu
+        /// and the toolbar should be redrawn
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void desktopContent_GotFocus(object sender, EventArgs e)
+        {
+            int i = 5;
+            //DockWindow send = sender as DockWindow;
+
+            //menu.ControlHasFocus = send;
+            //menu.Adapt();
+            //toolBar.ControlHasFocus = send;
+            //toolBar.Adapt();
         }
 
         #endregion
