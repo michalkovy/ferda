@@ -186,6 +186,9 @@
   <data name="NoRestriction" xml:space="preserve">
     <value>No restriction</value>
   </data>
+  <data name="PointsPerPage" xml:space="preserve">
+    <value>Per page</value>
+  </data>
   <data name="ResultBrowserControl" xml:space="preserve">
     <value>Result browser</value>
   </data>
