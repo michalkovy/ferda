@@ -1,32 +1,33 @@
-namespace Ferda.FrontEnd.AddIns.ResultBrowser
-{
-    partial class FerdaResultBrowserControl
-    {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        #region Component Designer generated code
-
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+namespace Ferda.FrontEnd.AddIns.ResultBrowser
+{
+    partial class FerdaResultBrowserControl
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.QuantifiersListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -36,6 +37,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ColumnAntecedent = new System.Windows.Forms.ColumnHeader();
             this.ColumnSuccedent = new System.Windows.Forms.ColumnHeader();
             this.ColumnCondition = new System.Windows.Forms.ColumnHeader();
+            this.ButtonForward = new System.Windows.Forms.Button();
+            this.ButtonBack = new System.Windows.Forms.Button();
+            this.LabelPointsPerPage = new System.Windows.Forms.Label();
+            this.TextBoxPointsPerPage = new System.Windows.Forms.TextBox();
             this.GroupBoxChangeGraph = new System.Windows.Forms.GroupBox();
             this.CheckBoxShowLabels = new System.Windows.Forms.CheckBox();
             this.LabelVOffset = new System.Windows.Forms.Label();
@@ -79,9 +84,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // ResultBrowserSplit.Panel2
             // 
+            this.ResultBrowserSplit.Panel2.Controls.Add(this.ButtonForward);
+            this.ResultBrowserSplit.Panel2.Controls.Add(this.ButtonBack);
+            this.ResultBrowserSplit.Panel2.Controls.Add(this.LabelPointsPerPage);
+            this.ResultBrowserSplit.Panel2.Controls.Add(this.TextBoxPointsPerPage);
             this.ResultBrowserSplit.Panel2.Controls.Add(this.GroupBoxChangeGraph);
             this.ResultBrowserSplit.Size = new System.Drawing.Size(1064, 517);
-            this.ResultBrowserSplit.SplitterDistance = 321;
+            this.ResultBrowserSplit.SplitterDistance = 287;
             this.ResultBrowserSplit.TabIndex = 1;
             this.ResultBrowserSplit.Text = "splitContainer1";
             // 
@@ -99,7 +108,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.HypothesesListView.Location = new System.Drawing.Point(0, 0);
             this.HypothesesListView.MultiSelect = false;
             this.HypothesesListView.Name = "HypothesesListView";
-            this.HypothesesListView.Size = new System.Drawing.Size(1064, 321);
+            this.HypothesesListView.Size = new System.Drawing.Size(1064, 287);
             this.HypothesesListView.TabIndex = 1;
             this.HypothesesListView.UseCompatibleStateImageBehavior = false;
             this.HypothesesListView.View = System.Windows.Forms.View.Details;
@@ -120,6 +129,47 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             this.ColumnCondition.Width = 180;
             // 
+            // ButtonForward
+            // 
+            this.ButtonForward.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonForward.Location = new System.Drawing.Point(124, 1);
+            this.ButtonForward.Name = "ButtonForward";
+            this.ButtonForward.Size = new System.Drawing.Size(15, 22);
+            this.ButtonForward.TabIndex = 4;
+            this.ButtonForward.Text = ">";
+            this.ButtonForward.UseVisualStyleBackColor = true;
+            this.ButtonForward.Click += new System.EventHandler(this.ButtonForward_Click);
+            // 
+            // ButtonBack
+            // 
+            this.ButtonBack.Enabled = false;
+            this.ButtonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonBack.Location = new System.Drawing.Point(103, 1);
+            this.ButtonBack.Name = "ButtonBack";
+            this.ButtonBack.Size = new System.Drawing.Size(15, 22);
+            this.ButtonBack.TabIndex = 3;
+            this.ButtonBack.Text = "<";
+            this.ButtonBack.UseVisualStyleBackColor = true;
+            this.ButtonBack.Click += new System.EventHandler(this.ButtonBack_Click);
+            // 
+            // LabelPointsPerPage
+            // 
+            this.LabelPointsPerPage.AutoSize = true;
+            this.LabelPointsPerPage.Location = new System.Drawing.Point(3, 6);
+            this.LabelPointsPerPage.Name = "LabelPointsPerPage";
+            this.LabelPointsPerPage.Size = new System.Drawing.Size(53, 13);
+            this.LabelPointsPerPage.TabIndex = 2;
+            this.LabelPointsPerPage.Text = "Per page:";
+            // 
+            // TextBoxPointsPerPage
+            // 
+            this.TextBoxPointsPerPage.Location = new System.Drawing.Point(62, 3);
+            this.TextBoxPointsPerPage.Name = "TextBoxPointsPerPage";
+            this.TextBoxPointsPerPage.Size = new System.Drawing.Size(35, 20);
+            this.TextBoxPointsPerPage.TabIndex = 2;
+            this.TextBoxPointsPerPage.Text = "8";
+            this.TextBoxPointsPerPage.LostFocus += new System.EventHandler(this.TextBoxPointsPerPage_LostFocus);
+            // 
             // GroupBoxChangeGraph
             // 
             this.GroupBoxChangeGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -132,9 +182,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.GroupBoxChangeGraph.Controls.Add(this.TrackBarZoom);
             this.GroupBoxChangeGraph.Controls.Add(this.Label3dpercent);
             this.GroupBoxChangeGraph.Controls.Add(this.TrackBar3d);
-            this.GroupBoxChangeGraph.Location = new System.Drawing.Point(708, 3);
+            this.GroupBoxChangeGraph.Location = new System.Drawing.Point(830, 57);
             this.GroupBoxChangeGraph.Name = "GroupBoxChangeGraph";
-            this.GroupBoxChangeGraph.Size = new System.Drawing.Size(355, 188);
+            this.GroupBoxChangeGraph.Size = new System.Drawing.Size(233, 168);
             this.GroupBoxChangeGraph.TabIndex = 0;
             this.GroupBoxChangeGraph.TabStop = false;
             this.GroupBoxChangeGraph.Text = "View options";
@@ -276,6 +326,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.Size = new System.Drawing.Size(1064, 517);
             this.ResultBrowserSplit.Panel1.ResumeLayout(false);
             this.ResultBrowserSplit.Panel2.ResumeLayout(false);
+            this.ResultBrowserSplit.Panel2.PerformLayout();
             this.ResultBrowserSplit.ResumeLayout(false);
             this.GroupBoxChangeGraph.ResumeLayout(false);
             this.GroupBoxChangeGraph.PerformLayout();
@@ -286,31 +337,36 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ContextMenuGraphRightClick.ResumeLayout(false);
             this.ResumeLayout(false);
 
-        }
-
-        #endregion
-
-        private System.Windows.Forms.ContextMenuStrip QuantifiersListContextMenu;
-        private System.Windows.Forms.SplitContainer ResultBrowserSplit;
-        private System.Windows.Forms.ListView HypothesesListView;
-        private System.Windows.Forms.ColumnHeader ColumnHypotheseName;
-        private System.Windows.Forms.ColumnHeader ColumnAntecedent;
-        private System.Windows.Forms.ColumnHeader ColumnSuccedent;
-        private System.Windows.Forms.ColumnHeader ColumnCondition;
-        private System.Windows.Forms.GroupBox GroupBoxChangeGraph;
-        private System.Windows.Forms.TrackBar TrackBar3d;
-        private System.Windows.Forms.ContextMenuStrip ContextMenuGraphRightClick;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripShowGraphEdit;
-        private System.Windows.Forms.Label Label3dpercent;
-        private System.Windows.Forms.Label LabelZoom;
-        private System.Windows.Forms.TrackBar TrackBarZoom;
-        private System.Windows.Forms.Label LabelVOffset;
-        private System.Windows.Forms.Label LabelHOffset;
-        private System.Windows.Forms.TrackBar TrackBarVOffset;
+        }
 
+
+        #endregion
+
+        private System.Windows.Forms.ContextMenuStrip QuantifiersListContextMenu;
+        private System.Windows.Forms.SplitContainer ResultBrowserSplit;
+        private System.Windows.Forms.ListView HypothesesListView;
+        private System.Windows.Forms.ColumnHeader ColumnHypotheseName;
+        private System.Windows.Forms.ColumnHeader ColumnAntecedent;
+        private System.Windows.Forms.ColumnHeader ColumnSuccedent;
+        private System.Windows.Forms.ColumnHeader ColumnCondition;
+        private System.Windows.Forms.GroupBox GroupBoxChangeGraph;
+        private System.Windows.Forms.TrackBar TrackBar3d;
+        private System.Windows.Forms.ContextMenuStrip ContextMenuGraphRightClick;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripShowGraphEdit;
+        private System.Windows.Forms.Label Label3dpercent;
+        private System.Windows.Forms.Label LabelZoom;
+        private System.Windows.Forms.TrackBar TrackBarZoom;
+        private System.Windows.Forms.Label LabelVOffset;
+        private System.Windows.Forms.Label LabelHOffset;
+        private System.Windows.Forms.TrackBar TrackBarVOffset;
         private System.Windows.Forms.TrackBar TrackBarHOffset;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ToolStripCopyChart;
-        private System.Windows.Forms.CheckBox CheckBoxShowLabels;
-    }
-}
+        private System.Windows.Forms.CheckBox CheckBoxShowLabels;
+        private System.Windows.Forms.Button ButtonForward;
+        private System.Windows.Forms.Button ButtonBack;
+        private System.Windows.Forms.Label LabelPointsPerPage;
+        private System.Windows.Forms.TextBox TextBoxPointsPerPage;
+    }
+}
+

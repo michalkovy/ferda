@@ -89,7 +89,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.displayer = Displayer;
             this.displayer.Reset();
             this.statisticsProxies = statisticsProxies;
-            
+
             this.Initialize();
         }
 
@@ -107,27 +107,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //disabling the column click handler (sorter)
             this.HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
 
-           
+
             //clearing all the items
             this.HypothesesListView.Items.Clear();
-            /*
-            //clearing all the columns
-            this.HypothesesListView.Columns.Clear();
 
-            //adding 4 main columns
-            this.HypothesesListView.Columns.Add(this.ColumnHypotheseName);
-            this.HypothesesListView.Columns.Add(this.ColumnAntecedent);
-            this.HypothesesListView.Columns.Add(this.ColumnSuccedent);
-            this.HypothesesListView.Columns.Add(this.ColumnCondition);
-            this.HypothesesListView.Columns[0].Width = 250;
-            this.HypothesesListView.Columns[1].Width = 250;
-            this.HypothesesListView.Columns[2].Width = 250;
-            this.HypothesesListView.Columns[3].Width = 250;
-            //setting locale
-            this.ChangeLocale(this.resManager);
-            */
-
-           while (this.HypothesesListView.Columns.Count > 4)
+            while (this.HypothesesListView.Columns.Count > 4)
             {
                 this.HypothesesListView.Columns.RemoveAt(4);
             }
@@ -139,7 +123,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             HypothesesListView.KeyDown += new KeyEventHandler(ItemSelectHandler);
             HypothesesListView.KeyUp += new KeyEventHandler(ItemSelectHandler);
 
-             //adding the sorter
+            //adding the sorter
             HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
 
             //adding the column names selected in the context menu
@@ -171,7 +155,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 //quantifiers
                 foreach (object value in resultBrowser.SelectedQuantifierValues(hypothese))
                 {
-                   item.SubItems.Add(value.ToString());
+                    item.SubItems.Add(value.ToString());
                 }
 
                 item.Tag = i;
@@ -297,7 +281,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClickOnColumn(object sender, System.Windows.Forms.ColumnClickEventArgs e)
-        {    
+        {
             columnSorter.column = e.Column;
             if ((columnSorter.bAscending = (HypothesesListView.Sorting == SortOrder.Ascending)))
                 HypothesesListView.Sorting = SortOrder.Descending;
@@ -515,7 +499,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="rm">Resource manager to handle new l10n resource</param>
         private void ChangeLocale(ResourceManager rm)
         {
-           this.ColumnAntecedent.Text = rm.GetString("ColumnAntecedent");
+            this.ColumnAntecedent.Text = rm.GetString("ColumnAntecedent");
             this.ColumnCondition.Text = rm.GetString("ColumnCondition");
             this.ColumnHypotheseName.Text = rm.GetString("ColumnHypothesisName");
             this.ColumnSuccedent.Text = rm.GetString("ColumnSuccedent");
@@ -526,12 +510,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelHOffset.Text = rm.GetString("LabelHOffset");
             this.LabelVOffset.Text = rm.GetString("LabelVOffset");
             this.LabelZoom.Text = rm.GetString("LabelZoom");
-    //        this.LabelRotation.Text = rm.GetString("LabelRotation");
+            //        this.LabelRotation.Text = rm.GetString("LabelRotation");
             this.ToolStripCopyChart.Text = rm.GetString("CopyChart");
             this.CheckBoxShowLabels.Text = rm.GetString("ShowLabels");
+            this.LabelPointsPerPage.Text = rm.GetString("PointsPerPage") + ":";
         }
 
-        #endregion
+        #endregion   
     }
 }
 

@@ -42,12 +42,18 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ContingencyTableChart.Header.Visible = true;
             this.ContingencyTableChart.Size = new System.Drawing.Size(466, 286);
             this.ContingencyTableChart.DoubleClick += new EventHandler(tChart1_DoubleClick);
+            this.ContingencyTableChart.GetAxisLabel += new Steema.TeeChart.GetAxisLabelEventHandler(ContingencyTableChart_GetAxisLabel);
+            this.ContingencyTableChart.Axes.Depth.Visible = true;
             this.ContingencyTableChart.ContextMenuStrip = this.ContextMenuGraphRightClick;
+            this.ContingencyTableChart.Page.MaxPointsPerPage = 8;
+            
             this.ResultBrowserSplit.Panel2.Controls.Add(ContingencyTableChart);
             this.ResultBrowserSplit.Panel2.ResumeLayout(false);
             this.ResultBrowserSplit.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+
+        
 
         #endregion
 
@@ -95,6 +101,70 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             ShowLabels(this.ContingencyTableChart);
         }
 
+        /// <summary>
+        /// Method which changes points per page displayed for chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBoxPointsPerPage_LostFocus(object sender, EventArgs e)
+        {
+            try
+            {
+                this.ContingencyTableChart.Page.MaxPointsPerPage = Convert.ToInt32(this.TextBoxPointsPerPage.Text);
+            }
+            catch
+            {
+                this.ContingencyTableChart.Page.MaxPointsPerPage = 8;
+            }
+        }
+
+        /// <summary>
+        /// Listing one page forward in chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonBack_Click(object sender, EventArgs e)
+        {
+            if (this.ContingencyTableChart.Page.Current > 0)
+            {
+                this.ContingencyTableChart.Page.Previous();
+            }
+
+            if (this.ContingencyTableChart.Page.Current == 0)
+            {
+                this.ButtonBack.Enabled = false;
+            }
+
+            if (this.ContingencyTableChart.Page.Current < this.ContingencyTableChart.Page.Count)
+            {
+                this.ButtonForward.Enabled = true;
+            }
+
+        }
+
+        /// <summary>
+        /// Listing one page backward in chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonForward_Click(object sender, EventArgs e)
+        {
+            if (this.ContingencyTableChart.Page.Current < this.ContingencyTableChart.Page.Count)
+            {
+                this.ContingencyTableChart.Page.Next();
+            }
+
+            if (this.ContingencyTableChart.Page.Current == this.ContingencyTableChart.Page.Count)
+            {
+                this.ButtonForward.Enabled = false;
+            }
+
+            if (this.ContingencyTableChart.Page.Current > 0)
+            {
+                this.ButtonBack.Enabled = true;
+            }
+        }
+
         #endregion
 
 
@@ -102,7 +172,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         void tChart1_DoubleClick(object sender, EventArgs e)
         {
-            ContingencyTableChart.ShowEditor();
+           // ContingencyTableChart.ShowEditor();
         }
 
         #endregion
@@ -118,6 +188,19 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         {
             chart.Series.Clear();
             Random random = new Random();
+            bool fft = false;
+
+            //for miners with boolean antecedents and succedents - for now only 4ft
+            foreach (BooleanLiteralStruct booleanLiteral in hypothese.booleanLiterals)
+            {
+                if ((booleanLiteral.cedentType == CedentEnum.Antecedent) || (booleanLiteral.cedentType == CedentEnum.Succedent))
+                {
+                    fft = true;
+                    break;
+                }
+            }
+            int i = 0;
+            int j = 0;
             foreach (int[] arr in hypothese.quantifierSetting.firstContingencyTableRows)
             {
                 Steema.TeeChart.Styles.Bar barSeries = new Steema.TeeChart.Styles.Bar();
@@ -126,7 +209,41 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
                 foreach (int number in arr)
                 {
-                    barSeries.Add(number);
+                    if ((fft) && (j == 0))
+                    {
+                        barSeries.Add(number, this.resManager.GetString("ColumnSuccedent"));
+                    }
+                    else
+                    {
+                        if ((fft) && (j == 1))
+                        {
+                            barSeries.Add(number, '\u00AC' + this.resManager.GetString("ColumnSuccedent"));
+                        }
+                        else
+                        {
+                            string seriesTitle = String.Empty;
+                            foreach (LiteralStruct literal in hypothese.literals)
+                            {
+                                if (literal.cedentType == CedentEnum.Succedent)
+                                {
+                                    seriesTitle = literal.categoriesNames[j];
+                                }
+                            }
+                            //no succedent, cf-miner-like
+                            if (seriesTitle == String.Empty)
+                            {
+                                foreach (LiteralStruct literal in hypothese.literals)
+                                {
+                                    if (literal.cedentType == CedentEnum.Antecedent)
+                                    {
+                                        seriesTitle = literal.categoriesNames[j];
+                                    }
+                                }
+                            }
+                            barSeries.Add(number, seriesTitle);
+                        }
+                    }
+                    j++;
                 }
 
                 if (this.CheckBoxShowLabels.Checked)
@@ -137,7 +254,38 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 {
                     barSeries.Marks.Visible = false;
                 }
+
+                barSeries.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
+
+                if (fft)
+                {
+                    if (i == 0)
+                    {
+                        barSeries.Title = this.resManager.GetString("ColumnAntecedent");
+                    }
+                    else
+                    {
+                        barSeries.Title = '\u00AC' + this.resManager.GetString("ColumnAntecedent");
+                    }
+                }
+
+                else
+                {
+                    string seriesTitle = String.Empty;
+                    foreach (LiteralStruct literal in hypothese.literals)
+                    {
+                        if (literal.cedentType == CedentEnum.Antecedent)
+                        {
+                            seriesTitle = literal.categoriesNames[i];
+                            break;
+                        }
+                    }
+                    barSeries.Title = seriesTitle;
+                }
+                
                 chart.Series.Add(barSeries);
+                i++;
+                j = 0;
             }
         }
 
@@ -169,6 +317,36 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                         this.ContingencyTableChart.Size.Height
                         );
             Clipboard.SetImage(bitMap);
+        }
+
+        void ContingencyTableChart_GetAxisLabel(object sender, Steema.TeeChart.GetAxisLabelEventArgs e)
+        {
+
+            Steema.TeeChart.Axis axis = (Steema.TeeChart.Axis)sender;
+            if (axis.Equals(ContingencyTableChart.Axes.Bottom))
+            {
+               // e.LabelText = "WOW" + e.ValueIndex + " " + e.LabelText;
+                
+                
+               // e.Series[0].Label = "1Wow";
+
+                /*
+                switch (e.LabelIndex)
+                { 
+                    case 0:
+                        e.LabelValue = 5;
+                        break;
+                    case 1:
+                        e.LabelValue = 13;
+                        break;
+                    case 2:
+                        e.LabelValue = 19;
+                        break;
+                    default:
+                        e.Stop = true;
+                        break; 
+                } */
+             }
         }
 
         #endregion
