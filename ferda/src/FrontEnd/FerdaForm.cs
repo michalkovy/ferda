@@ -490,7 +490,7 @@ using Ferda.ModulesManager;
                 desktopContent.Controls.Add(desktop);
                 desktopContent.ResumeLayout(false);
 
-                desktopContent.GotFocus += new EventHandler(desktopContent_GotFocus);
+                desktopContent.Activated += new EventHandler(desktopContent_Activated);
 
                 //setting the IViewDisplayers of the property grid
                 propertyGrid.ViewDisplayers.Add(desktop);
@@ -1143,7 +1143,7 @@ using Ferda.ModulesManager;
             desktopContent.Text = newView.Name;
             desktopContent.TextChanged += new EventHandler(desktopContent_TextChanged);
             desktopContent.Closed += new EventHandler(desktopContent_Closed);
-            desktopContent.GotFocus += new EventHandler(desktopContent_GotFocus);
+            desktopContent.Activated += new EventHandler(desktopContent_Activated);
             newDesktop.ResManager = this.ResManager;
             newDesktop.Clipboard = this;
             newDesktop.PropertiesDisplayer = propertyGrid;
@@ -1203,7 +1203,7 @@ using Ferda.ModulesManager;
             desktopContent.Text = newView.Name;
             desktopContent.TextChanged += new EventHandler(desktopContent_TextChanged);
             desktopContent.Closed += new EventHandler(desktopContent_Closed);
-            desktopContent.GotFocus += new EventHandler(desktopContent_GotFocus);
+            desktopContent.Activated += new EventHandler(desktopContent_Activated);
             newDesktop.ResManager = this.ResManager;
             newDesktop.Clipboard = this;
             newDesktop.PropertiesDisplayer = propertyGrid;
@@ -1539,15 +1539,14 @@ using Ferda.ModulesManager;
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event parameters</param>
-        void desktopContent_GotFocus(object sender, EventArgs e)
+        void desktopContent_Activated(object sender, EventArgs e)
         {
-            int i = 5;
-            //DockWindow send = sender as DockWindow;
+            DockWindow send = sender as DockWindow;
 
-            //menu.ControlHasFocus = send;
-            //menu.Adapt();
-            //toolBar.ControlHasFocus = send;
-            //toolBar.Adapt();
+            menu.ControlHasFocus = send;
+            menu.Adapt();
+            toolBar.ControlHasFocus = send;
+            toolBar.Adapt();
         }
 
         #endregion
