@@ -1482,10 +1482,6 @@ namespace Ferda.FrontEnd.Properties
                 //the string sequence is dealt separatelly in the string combo editor
                 //and stringcombo adding editor
                 case "System.Int32":
-                    //first setting the value into the temporary structures
-                    temporaryValues[propertyName] = e.Value;
-                    SelectedObject = propertyBag;
-
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
@@ -1562,9 +1558,6 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "System.String":
-                    //first setting the value into the temporary structures
-                    temporaryValues[propertyName] = e.Value;
-                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
@@ -1601,9 +1594,6 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "System.Boolean":
-                    //first setting the value into the temporary structures
-                    temporaryValues[propertyName] = e.Value;
-                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
@@ -1640,9 +1630,6 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "System.Int16":
-                    //first setting the value into the temporary structures
-                    temporaryValues[propertyName] = e.Value;
-                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
@@ -1679,9 +1666,6 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "System.Int64":
-                    //first setting the value into the temporary structures
-                    temporaryValues[propertyName] = e.Value;
-                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
@@ -1718,9 +1702,6 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "System.Double":
-                    //first setting the value into the temporary structures
-                    temporaryValues[propertyName] = e.Value;
-                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
@@ -1757,9 +1738,6 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "System.Single":
-                    //first setting the value into the temporary structures
-                    temporaryValues[propertyName] = e.Value;
-                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
@@ -1796,9 +1774,6 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "System.DateTime":
-                    //first setting the value into the temporary structures
-                    temporaryValues[propertyName] = e.Value;
-                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
@@ -1835,9 +1810,6 @@ namespace Ferda.FrontEnd.Properties
                     break;
 
                 case "System.TimeSpan":
-                    //first setting the value into the temporary structures
-                    temporaryValues[propertyName] = (TimeSpan)e.Value;
-                    SelectedObject = propertyBag;
                     if (IsOneBoxSelected)
                     {
                         if (SelectedBox.TryWriteEnter())
@@ -1876,6 +1848,10 @@ namespace Ferda.FrontEnd.Properties
                 default:
                     break;
             }
+            //then setting the value into the temporary structures and
+            //refreshing the propertygrid
+            temporaryValues[propertyName] = e.Value;
+            SelectedObject = propertyBag;
         }
 
         /// <summary>

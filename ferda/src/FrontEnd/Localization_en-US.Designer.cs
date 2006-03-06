@@ -795,7 +795,7 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New desktop.
+        ///   Looks up a localized string similar to New Desktop.
         /// </summary>
         internal static string MenuNewViewName {
             get {

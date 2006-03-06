@@ -1740,7 +1740,11 @@ namespace Ferda.FrontEnd.Desktop
             //a new context menu
             ContextMenuStrip cMenu;
 
-            if (typeof(Shape).IsInstanceOfType(Hover))
+            ///there is exactly one box selected
+            //there is number 2, because it can happen before there was no box
+            //selected and the event about selected box is processed later than
+            //the context menu event
+            if (typeof(Shape).IsInstanceOfType(Hover) && SelectedBoxes.Count < 2)
             {
                 //Creating context menu for the box underneath
                 BoxNode bn = Hover as BoxNode;
