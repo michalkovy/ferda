@@ -1722,6 +1722,7 @@ namespace Ferda.FrontEnd.Desktop
                 return false;
             }
 
+            RefreshBoxNames();
             archiveDisplayer.Adapt();
             return true;
 		}
@@ -1877,6 +1878,7 @@ namespace Ferda.FrontEnd.Desktop
                 SocketInfo toSocket = ((FerdaConnector)con.To).Socket;
 
                 toBox.RemoveConnection(toSocket.name, fromBox);
+                RefreshBoxNames();
                 archiveDisplayer.Adapt();
             }
             catch (NameNotExistError exc)
