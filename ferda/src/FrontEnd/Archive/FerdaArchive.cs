@@ -525,13 +525,13 @@ namespace Ferda.FrontEnd.Archive
         /// Resets the archive to the main position according to the
         /// selected box type and direction
         /// </summary>
-        /// <param name="BoxCategory">Type of the box</param>
-        /// <param name="BoxLabel">Boxes of which label (box type) should be
+        /// <param name="BoxCategory">Category of the box</param>
+        /// <param name="BoxType">Boxes of which label (box type) should be
         /// taken</param>
         /// <param name="AlongDirection">
         /// True if the direction is along, false if against direction
         /// </param>
-        public void ResetArchive(string BoxCategory, string BoxLabel, bool AlongDirection)
+        public void ResetArchive(string BoxCategory, string BoxType, bool AlongDirection)
         {
             FerdaTreeNode treeNode;
 
@@ -563,14 +563,14 @@ namespace Ferda.FrontEnd.Archive
             {
                 IBoxModule[] boxesList;
                 //all boxes in that category
-                if (BoxLabel == ResManager.GetString("ArchiveAllText"))
+                if (BoxType == ResManager.GetString("ArchiveAllText"))
                 {
                     boxesList = archive.ListBoxesWithType(BoxCategory, null);
                 }
                 //a specified box type
                 else
                 {
-                    boxesList = archive.ListBoxesWithType(BoxCategory, BoxLabel);
+                    boxesList = archive.ListBoxesWithType(BoxCategory, BoxType);
                 }
 
                 foreach (ModulesManager.IBoxModule b in boxesList)
@@ -740,15 +740,16 @@ namespace Ferda.FrontEnd.Archive
                 mySelectedNode = null;
 
                 int i;
-                string oldText = CBCategories.SelectedItem.ToString();
+                string oldCategory = CBCategories.SelectedItem.ToString();
+                string oldType = CBTypes.SelectedItem.ToString();
 
                 FillBoxTypes();
 
-                //selecting the boxtype
+                //selecting the box category
                 for (i = 0; i < CBCategories.Items.Count; i++)
                 {
-                    string item = (string)CBCategories.Items[i];
-                    if (item == oldText)
+                    string item = CBCategories.Items[i].ToString();
+                    if (item == oldCategory)
                     {
                         break;
                     }
@@ -765,7 +766,18 @@ namespace Ferda.FrontEnd.Archive
                 {
                     CBCategories.SelectedIndex = i;
                     //resets the archive to an "initial position"
-                    ResetArchive(oldText, ResManager.GetString("ArchiveAllText"), true);
+                    ResetArchive(oldCategory, oldType, true);
+                }
+
+                //selecting the box type
+                for (int j = 0; j < CBTypes.Items.Count; j++)
+                {
+                    string item = CBTypes.Items[j].ToString();
+                    if (item == oldType)
+                    {
+                        CBTypes.SelectedIndex = j;
+                        break;
+                    }
                 }
             }
 

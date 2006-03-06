@@ -1101,9 +1101,34 @@ using Ferda.ModulesManager;
         /// </summary>
         public void NewDesktop()
         {
+            string tmp = ResManager.GetString("MenuNewViewName");
+
+            //determining the name of the new desktop
+            int count = 1;
+            foreach (ProjectManager.View view in projectManager.Views)
+            {
+                if (view.Name.Contains(tmp))
+                {
+                    //getting the number
+                    int number = view.Name.IndexOfAny(new char[] {'0', '1',
+                        '2', '3', '4', '5', '6', '7', '8', '9'});
+                    if (number != -1)
+                    {
+                        string numberString = view.Name.Substring(number);
+                        number = System.Convert.ToInt32(numberString);
+
+                        if (number > count)
+                        {
+                            count = number;
+                        }
+                    }
+                }
+            }
+            string name = tmp + System.Convert.ToString(count + 1);
+
             //creating new view and its content
             ProjectManager.View newView =
-                projectManager.NewView(ResManager.GetString("MenuNewViewName"));
+                projectManager.NewView(name);
             FerdaDesktop newDesktop =
                 new FerdaDesktop(this, SvgManager, menu, newView, projectManager, 
                 archive, this, toolBar);
