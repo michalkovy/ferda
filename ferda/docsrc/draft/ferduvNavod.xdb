@@ -11,11 +11,17 @@
     <pubdate>2006-6-3</pubdate>
     <title>Ferdův návod k prvnímu projektu</title>
     <titleabbrev>FerduvNavod</titleabbrev>
-    <!--
     <revhistory>
-      
+      <revision>
+        <revnumber>0.1</revnumber>
+        <date>2006-8-3</date>
+        <revdescription>
+          <para>
+            Zanesené poznámky doc. Raucha
+          </para>
+        </revdescription>
+      </revision>      
     </revhistory>
-    -->
   </articleinfo>
   <abstract>
     <para>
@@ -103,12 +109,19 @@
       nezavedli jako datový zdroj, klikněte na <classname>Vytvořit datový zdroj
       </classname> na tlačítkové liště. V tomto dialogu můžete mimojiné testovat
       připojení k definovaným datovým zdrojům. Vyberte ze seznamu datový zdroj
-      odpovídající Barboře.
+      odpovídající Barboře. K tomu, abychom zjistili zda je datový zdroj platný, můžeme
+      použít tlačítko <classname>Test</classname> na dialogu.
     </para>
     <note>
       <para>
         Ferda podporuje pouze vytvoření Uživatelského a Systémového zdroje dat v prvním
-        kroku průvodce, který se spustí (nepodporuje Souborový zdroj dat)
+        kroku průvodce, který se spustí (nepodporuje Souborový zdroj dat).
+      </para>
+      <para>
+        Pro uživatele kteří pracovali se systémem LISp-Miner je ve Ferdovi jedna velká
+        změna - nikde se nenastavuje metabázi. Je to ale v pořádku, protože Ferda
+        používá dočasnou metabázi automaticky pro generování úloh a uživatel se o to
+        nemusí starat.
       </para>
     </note>
   </section>
