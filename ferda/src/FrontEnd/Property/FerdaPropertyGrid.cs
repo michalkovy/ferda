@@ -1848,10 +1848,10 @@ namespace Ferda.FrontEnd.Properties
                 default:
                     break;
             }
-            //then setting the value into the temporary structures and
-            //refreshing the propertygrid
-            temporaryValues[propertyName] = e.Value;
-            SelectedObject = propertyBag;
+
+            //the whole adapt has to be done, because setting some properties
+            //can change others
+            Adapt();
         }
 
         /// <summary>
