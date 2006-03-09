@@ -430,8 +430,6 @@ using Ferda.ModulesManager;
             menu.ArchiveDisplayer = archive;
 
             archiveContent.Controls.Add(archive);
-
-            //maybe more archive initializations
         }
 
         /// <summary>
@@ -787,27 +785,28 @@ using Ferda.ModulesManager;
                 dockingManager.DockWindow(viewContent, DockStyle.Fill);
             }
 
-            //docking the dynamic help
-            dockingManager.AddForm(contextHelpContent);
-            AddOwnedForm(contextHelpContent); //required process by the DockDotNET
-            dockingManager.DockWindow(contextHelpContent, DockStyle.Right);
-
-            //docking the propertygrid
+            //docking the property grid
             dockingManager.AddForm(propertyGridContent);
             AddOwnedForm(propertyGridContent);
-            DockContainer cont = contextHelpContent.HostContainer;
-            cont.DockWindow(propertyGridContent, DockStyle.Fill);
+            dockingManager.DockWindow(propertyGridContent, DockStyle.Right);
 
-            //docking the userNote
+            //docking the user note
             dockingManager.AddForm(userNoteContent);
             AddOwnedForm(userNoteContent);
+            DockContainer cont = propertyGridContent.HostContainer;
             cont.DockWindow(userNoteContent, DockStyle.Bottom);
+
+            //docking the context help
+            dockingManager.AddForm(contextHelpContent);
+            AddOwnedForm(contextHelpContent);
+            cont = userNoteContent.HostContainer;
+            cont.DockWindow(contextHelpContent, DockStyle.Fill);
 
             //docking the newBox
             dockingManager.AddForm(newBoxContent);
             AddOwnedForm(newBoxContent);
             cont = archiveContent.HostContainer;
-            cont.DockWindow(newBoxContent, DockStyle.Fill);
+            cont.DockWindow(newBoxContent, DockStyle.Bottom);
         }
 
         ///<summary>
@@ -829,18 +828,16 @@ using Ferda.ModulesManager;
                     desktop.ArchiveDisplayer = archive;
                 }
 
+                //docking the archive
+                dockingManager.AddForm(archiveContent);
+                AddOwnedForm(archiveContent); //required process by the DockDotNET
                 if (newBoxContent.IsVisible)
                 {
-                    dockingManager.AddForm(archiveContent);
-                    AddOwnedForm(archiveContent); //required process by the DockDotNET
                     DockContainer cont = newBoxContent.HostContainer;
-                    cont.DockWindow(archiveContent, DockStyle.Fill);
+                    cont.DockWindow(archiveContent, DockStyle.Top);
                 }
                 else
                 {
-                    //docking the archive
-                    dockingManager.AddForm(archiveContent);
-                    AddOwnedForm(archiveContent); //required process by the DockDotNET
                     dockingManager.DockWindow(archiveContent, DockStyle.Left);
                 }
             }
@@ -863,20 +860,27 @@ using Ferda.ModulesManager;
                 }
                 archive.ContextHelpDisplayer = contextHelp;
 
-                if (propertyGridContent.IsVisible)
+                //docking the control
+                dockingManager.AddForm(contextHelpContent);
+                AddOwnedForm(contextHelpContent);
+                if (userNoteContent.IsVisible)
                 {
-                    //docking according to the propertyGrid
-                    dockingManager.AddForm(contextHelpContent);
-                    AddOwnedForm(contextHelpContent);
-                    DockContainer cont = propertyGridContent.HostContainer;
+                    DockContainer cont = userNoteContent.HostContainer;
                     cont.DockWindow(contextHelpContent, DockStyle.Fill);
                 }
                 else
                 {
-                    //docking to the right side as a first control
-                    dockingManager.AddForm(contextHelpContent);
-                    AddOwnedForm(contextHelpContent);
-                    dockingManager.DockWindow(contextHelpContent, DockStyle.Right);
+                if (propertyGridContent.IsVisible)
+                {
+                    //docking according to the propertyGrid
+                    DockContainer cont = propertyGridContent.HostContainer;
+                    cont.DockWindow(contextHelpContent, DockStyle.Bottom);
+                }
+                    else
+                    {
+                        //docking to the right side as a first control
+                        dockingManager.DockWindow(contextHelpContent, DockStyle.Right);
+                    }
                 }
             }
         }
@@ -900,21 +904,27 @@ using Ferda.ModulesManager;
                 }
                 archive.PropertiesDisplayer = propertyGrid;
 
+                //docking
+                dockingManager.AddForm(propertyGridContent);
+                AddOwnedForm(propertyGridContent);
                 if (contextHelpContent.IsVisible)
                 {
-                    //docking according to the ContextHelp
-                    dockingManager.AddForm(propertyGridContent);
-                    AddOwnedForm(propertyGridContent);
+                    //docking above the ContextHelp
                     DockContainer cont = contextHelpContent.HostContainer;
-                    cont.DockWindow(propertyGridContent, DockStyle.Fill);
+                    cont.DockWindow(propertyGridContent, DockStyle.Top);
+                    return;
                 }
-                else
+
+                if (userNoteContent.IsVisible)
                 {
-                    //docking to the right side as a first control
-                    dockingManager.AddForm(propertyGridContent);
-                    AddOwnedForm(propertyGridContent);
-                    dockingManager.DockWindow(propertyGridContent, DockStyle.Right);
+                    //docking it above the user note
+                    DockContainer cont = userNoteContent.HostContainer;
+                    cont.DockWindow(propertyGridContent, DockStyle.Top);
+                    return;
                 }
+                
+                //docking to the right side as a first control
+                dockingManager.DockWindow(propertyGridContent, DockStyle.Right);
             }
         }
 
@@ -937,7 +947,7 @@ using Ferda.ModulesManager;
                 {
                     //docking according to the archive
                     DockContainer cont = archiveContent.HostContainer;
-                    cont.DockWindow(newBoxContent, DockStyle.Fill);
+                    cont.DockWindow(newBoxContent, DockStyle.Bottom);
                 }
                 else
                 {
@@ -954,11 +964,6 @@ using Ferda.ModulesManager;
         {
             if (!userNoteContent.IsVisible)
             {
-                //the nececcary docking initialization
-                SetupUserNote();
-                dockingManager.AddForm(userNoteContent);
-                AddOwnedForm(userNoteContent);
-
                 //letting the views know about the change
                 foreach (FerdaDesktop desktop in views)
                 {
@@ -966,23 +971,49 @@ using Ferda.ModulesManager;
                 }
                 archive.UserNote = userNote;
 
-                //tries to dock it to the archive
-                if (propertyGridContent.IsVisible)
-                {
-                    DockContainer cont = propertyGridContent.HostContainer;
-                    cont.DockWindow(userNoteContent, DockStyle.Bottom);
-                    return;
-                }
+                //the nececcary docking initialization
+                SetupUserNote();
+                dockingManager.AddForm(userNoteContent);
+                AddOwnedForm(userNoteContent);
 
-                //tries to dock it to the propertyGrid
+                ////tries to dock it to the property grid
+                //if (propertyGridContent.IsVisible)
+                //{
+                //    DockContainer cont = propertyGridContent.HostContainer;
+                //    cont.DockWindow(userNoteContent, DockStyle.Bottom);
+                //    return;
+                //}
+
+                ////tries to dock it to the propertyGrid
+                //if (contextHelpContent.IsVisible)
+                //{
+                //    DockContainer cont = contextHelpContent.HostContainer;
+                //    cont.DockWindow(userNoteContent, DockStyle.Bottom);
+                //}
+                //else //it has to make a new docking group
+                //{
+                //    dockingManager.DockWindow(userNoteContent, DockStyle.Right);
+                //}
+
+                //docking to the context help - nearest control
                 if (contextHelpContent.IsVisible)
                 {
                     DockContainer cont = contextHelpContent.HostContainer;
-                    cont.DockWindow(userNoteContent, DockStyle.Bottom);
+                    cont.DockWindow(userNoteContent, DockStyle.Fill);
                 }
-                else //it has to make a new docking group
+                else
                 {
-                    dockingManager.DockWindow(userNoteContent, DockStyle.Right);
+                    //docking to the propertry grid
+                    if (propertyGridContent.IsVisible)
+                    {
+                        DockContainer cont = propertyGridContent.HostContainer;
+                        cont.DockWindow(userNoteContent, DockStyle.Bottom);
+                    }
+                    else //docking to the main control
+                    {
+                        //docking to the right side as a first control
+                        dockingManager.DockWindow(userNoteContent, DockStyle.Right);
+                    }
                 }
             }
         }
