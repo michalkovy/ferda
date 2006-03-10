@@ -11,6 +11,7 @@
     <pubdate>2006-6-3</pubdate>
     <title>Ferdův návod k prvnímu projektu</title>
     <titleabbrev>FerduvNavod</titleabbrev>
+  <!--
     <revhistory>
       <revision>
         <revnumber>0.1</revnumber>
@@ -22,6 +23,7 @@
         </revdescription>
       </revision>      
     </revhistory>
+  -->
   </articleinfo>
   <abstract>
     <para>
@@ -118,10 +120,16 @@
         kroku průvodce, který se spustí (nepodporuje Souborový zdroj dat).
       </para>
       <para>
-        Pro uživatele kteří pracovali se systémem LISp-Miner je ve Ferdovi jedna velká
-        změna - nikde se nenastavuje metabázi. Je to ale v pořádku, protože Ferda
-        používá dočasnou metabázi automaticky pro generování úloh a uživatel se o to
-        nemusí starat.
+        Pro znalce LM (LISp-Mineru):
+        Při práci se systémem LISp-Miner bylo třeba definovat metabázi
+        (obvykle soubor databáze Microsoft Access (LM_Empty.mdb)) pro uložení
+        projektu a vzájemnou výměnu dat mezi jednotlivými moduly systému
+        LISp-Miner. Používání metabáze je v systému Ferda zcela transparentní
+        tj. uživatel o ní neví. Uživatel pracuje pouze se soubory projektu
+        (*.xfp). (Implementace: kdykoli krabičky Ferdy spouští moduly
+        LISp-Mineru (jeho *Gen.exe) dávají mu jako parametr metabázi, kterou
+        předtím přímo vygenerují. Jakmile *Gen.exe ukončí svou práci, je
+        výsledek přečten z metabáze a ta je smazána.)
       </para>
     </note>
   </section>
