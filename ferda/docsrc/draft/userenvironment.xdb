@@ -27,7 +27,17 @@
     <titleabbrev>
       UserEnvironment
     </titleabbrev>
+    <!--
     <revhistory>
+      <revision>
+        <revnumber>1.2</revnumber>
+        <date>2006-03-10</date>
+        <revdescription>
+          <simpara>
+            Changed new and localized pictures of archive and property grid
+          </simpara>
+        </revdescription>
+      </revision>      
       <revision>
         <revnumber>1.1</revnumber>
         <date>2006-01-28</date>
@@ -40,6 +50,7 @@
         </revremark>
       </revision>
     </revhistory>
+    -->
   </articleinfo>    
   <abstract>
     <para>
@@ -337,7 +348,7 @@
         Visual representation of the archive
         <mediaobject>
           <imageobject>
-            <imagedata fileref="archiv.png" format="PNG" />
+            <imagedata fileref="archiveEN.png" format="PNG" />
           </imageobject>
         </mediaobject>
       </para>
@@ -513,7 +524,7 @@
       <para>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="properties.png" format="PNG" />
+            <imagedata fileref="propertiesEN.png" format="PNG" />
           </imageobject>
         </mediaobject>
       </para>

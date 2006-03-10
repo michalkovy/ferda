@@ -129,6 +129,12 @@
   <data name="AboutDialogVersion" xml:space="preserve">
     <value>Verze: </value>
   </data>
+  <data name="AcrobatNotFoundCaption" xml:space="preserve">
+    <value>Adobe Acrobat Reader nebyl nalezen</value>
+  </data>
+  <data name="AcrobatNotFoundText" xml:space="preserve">
+    <value>Abyste mohli používat Ferdovu nápovědu, musíte mít na svém počítači nainstalován Adobe Acrobat Reader verze minimálně 6.0</value>
+  </data>
   <data name="ArchiveAgainstText" xml:space="preserve">
     <value>Proti směru zapojení</value>
   </data>
@@ -158,6 +164,9 @@
   </data>
   <data name="ContextHelpContentText" xml:space="preserve">
     <value>Kontextová nápověda</value>
+  </data>
+  <data name="ContextHelpStart" xml:space="preserve">
+    <value>Jak začít ve Ferdovi?</value>
   </data>
   <data name="DeleteFromArchiveCaption" xml:space="preserve">
     <value>Smazání z archivu</value>
@@ -194,6 +203,12 @@
   </data>
   <data name="DesktopMoreThanOneErrorText" xml:space="preserve">
     <value>Zásuvka nepovoluje zapojení více než jedné krabičky.</value>
+  </data>
+  <data name="FerdaTutorial" xml:space="preserve">
+    <value>ferduvNavod.pdf</value>
+  </data>
+  <data name="FerdaUserEnvironment" xml:space="preserve">
+    <value>uzivprostredi.pdf</value>
   </data>
   <data name="LoadingAddIns" xml:space="preserve">
     <value>Inicializace přídavných modulů... </value>
@@ -350,6 +365,9 @@
   </data>
   <data name="MenuHelpTheoreticalHelp" xml:space="preserve">
     <value>Teoretická nápověda</value>
+  </data>
+  <data name="MenuHelpTutorial" xml:space="preserve">
+    <value>Ferdův návod</value>
   </data>
   <data name="MenuModulesAskingCreation" xml:space="preserve">
     <value>Krabičky nabízené na vytvoření</value>
