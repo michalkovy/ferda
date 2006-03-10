@@ -150,6 +150,10 @@ namespace DockDotNET
 
             contextMenu.Items.AddRange(new ToolStripItem[] 
                 { rename, undock, sep, close });
+            
+            //trying to get the middle wheel button to work
+            this.MouseClick += new MouseEventHandler(DockContainer_MouseClick);
+
             //END OF CHANGE
 		}
 
@@ -1607,9 +1611,27 @@ namespace DockDotNET
 			base.OnMouseLeave(e);
 		}
 		#endregion
-		
-		#region Drag panel
-		/// <summary>
+
+        #region Ferda Added middle mouse button handler
+
+        /// <summary>
+        /// The mouse click event, that reacts on the middle mouse
+        /// button to close the window
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A MouseEventArgs that contains the mouse data.</param>
+        void DockContainer_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                CloseClick(sender, e);
+            }
+        }
+
+        #endregion
+
+        #region Drag panel
+        /// <summary>
 		/// The MouseDown event handler of the drag panel.
 		/// Used to handle resizing of the container.
 		/// </summary>
