@@ -339,8 +339,9 @@ namespace Ferda {
 			/// of <see cref="T:Ferda.ModulesManager.IBoxModule"/>.
 			/// </remarks>
 			/// <param name="info">A  ModulesAskingForCreation</param>
+            /// <returns>Created boxes</returns>
 			/// <seealso cref="P:Ferda.ModulesManager.IBoxModule.ModulesAskingForCreation"/>
-			public void CreateBoxesAskingForCreation(ModulesAskingForCreation info)
+            public IBoxModule[] CreateBoxesAskingForCreation(ModulesAskingForCreation info)
 			{
 				IBoxModule[] boxes = modulesManager.CreateBoxesAskingForCreation(info);
 				foreach (IBoxModule box in boxes)
@@ -348,6 +349,7 @@ namespace Ferda {
 					archive.Add(box);
 					this.Add(box);
 				}
+                return boxes;
 			}
 			
 			/// <summary>
