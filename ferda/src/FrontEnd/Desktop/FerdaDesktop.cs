@@ -2139,11 +2139,21 @@ namespace Ferda.FrontEnd.Desktop
             {
                 //adding the box
                 BoxNode node = AddBox(b);
-                //adding also the connections from the "mother box" to
-                //this box
-                Connector from = bn.OutputConnector;
-                Connector to = node.InputConnectors[0];
-                //TODO proper to connector selection...
+
+                Connector from = null;
+                string socketName = string.Empty;
+
+                foreach (ProjectManager.Connection con in view.Connections)
+                {
+                    //this is the right box (assuming there is only one box
+                    //connected to the created box
+                    if (con.ToBox == b)
+                    {
+                        from = FromConnector(con.FromBox);
+                        socketName = con.ToSocket;
+                    }
+                }
+                Connector to = ToConnector(b, socketName);
 
                 //We have to remove the handler because it would create a connection
                 //that is already there
