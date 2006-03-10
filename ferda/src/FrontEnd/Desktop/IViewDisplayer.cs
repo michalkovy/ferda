@@ -100,7 +100,7 @@ namespace Ferda.FrontEnd.Desktop
         /// Adds a box to the desktop
         /// </summary>
         /// <param name="box">Box to be added</param>
-        void AddBox(IBoxModule box);
+        BoxNode AddBox(IBoxModule box);
 
 		///<summary>
 		///This function is called when the localization

@@ -236,6 +236,9 @@ namespace Ferda.FrontEnd.Desktop
 
             Resizable = false;
             this.Text = box.UserName;
+
+            //using a smaller font - we have big labels
+            mFont = new Font(mFontFamily, 7, FontStyle.Regular, GraphicsUnit.Point);
 		}
 
 		#endregion

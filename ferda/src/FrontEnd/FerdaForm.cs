@@ -976,25 +976,6 @@ using Ferda.ModulesManager;
                 dockingManager.AddForm(userNoteContent);
                 AddOwnedForm(userNoteContent);
 
-                ////tries to dock it to the property grid
-                //if (propertyGridContent.IsVisible)
-                //{
-                //    DockContainer cont = propertyGridContent.HostContainer;
-                //    cont.DockWindow(userNoteContent, DockStyle.Bottom);
-                //    return;
-                //}
-
-                ////tries to dock it to the propertyGrid
-                //if (contextHelpContent.IsVisible)
-                //{
-                //    DockContainer cont = contextHelpContent.HostContainer;
-                //    cont.DockWindow(userNoteContent, DockStyle.Bottom);
-                //}
-                //else //it has to make a new docking group
-                //{
-                //    dockingManager.DockWindow(userNoteContent, DockStyle.Right);
-                //}
-
                 //docking to the context help - nearest control
                 if (contextHelpContent.IsVisible)
                 {

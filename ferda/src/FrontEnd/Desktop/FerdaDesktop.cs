@@ -631,7 +631,8 @@ namespace Ferda.FrontEnd.Desktop
         /// Adds a box to the desktop
         /// </summary>
         /// <param name="box">Box to be added</param>
-        public void AddBox(IBoxModule box)
+        /// <returns>BoxNode that was created</returns>
+        public BoxNode AddBox(IBoxModule box)
         {
             //Adapt();
             BoxNode boxNode = new BoxNode(this, box, SvgManager, view, ResManager);
@@ -640,6 +641,7 @@ namespace Ferda.FrontEnd.Desktop
 
             //adding the box
             Nodes.Add(boxNode);
+            return boxNode;
         }
 
         #endregion
@@ -700,7 +702,9 @@ namespace Ferda.FrontEnd.Desktop
                 view.Remove(box);
             }
 
-            Adapt();
+            RemoveBoxes(SelectedShapes);
+
+            //Adapt();
             archiveDisplayer.Adapt();
             propertiesDisplayer.Reset();
         }
@@ -2108,6 +2112,8 @@ namespace Ferda.FrontEnd.Desktop
         /// <param name="e">Event parameters</param>
         void Creation_Click(object sender, EventArgs e)
         {
+            IBoxModule[] newBoxes = null;
+
             //this prevents executing anything when the event is not called from the
             //desktop (but from the main menu)
             if (Hover == null)
@@ -2122,12 +2128,33 @@ namespace Ferda.FrontEnd.Desktop
             {
                 if (info.label == sender.ToString())
                 {
-                    view.CreateBoxesAskingForCreation(info);
+                    newBoxes = view.CreateBoxesAskingForCreation(info);
                     break;
                 }
             }
 
-            Adapt();
+            //adding the individual boxes so we dont have to adapt the whole
+            //desktop
+            foreach (IBoxModule b in newBoxes)
+            {
+                //adding the box
+                BoxNode node = AddBox(b);
+                //adding also the connections from the "mother box" to
+                //this box
+                Connector from = bn.OutputConnector;
+                Connector to = node.InputConnectors[0];
+                //TODO proper to connector selection...
+
+                //We have to remove the handler because it would create a connection
+                //that is already there
+                OnNewConnection -= new NewConnection(FerdaDesktop_OnNewConnection);
+
+                //adding the connector
+                AddEdge(from, to);
+
+                //recreating the handler
+                OnNewConnection += new NewConnection(FerdaDesktop_OnNewConnection);
+            }
             archiveDisplayer.Adapt();
         }
 
