@@ -71,6 +71,10 @@ namespace Ferda.FrontEnd.ContextHelp
 
         //the box we are working with
         private IBoxModule selectedBox;
+        /// <summary>
+        /// A link label that shows the tutorial for Ferda
+        /// </summary>
+        protected LinkLabel LLTutorial;
 
         /// <summary>
         /// the distance between the first
@@ -131,6 +135,9 @@ namespace Ferda.FrontEnd.ContextHelp
 
             //reseting the component
             Reset();
+
+            //setting the text of the tutorial link label
+            LLTutorial.Text = ResManager.GetString("ContextHelpStart");
         }
 
         #endregion
@@ -220,13 +227,14 @@ namespace Ferda.FrontEnd.ContextHelp
             this.LBoxName = new System.Windows.Forms.Label();
             this.LBoxType = new System.Windows.Forms.Label();
             this.RTBBoxTypeHint = new System.Windows.Forms.RichTextBox();
+            this.LLTutorial = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // LBoxName
             // 
             this.LBoxName.AutoSize = true;
             this.LBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.LBoxName.Location = new System.Drawing.Point(4, 0);
+            this.LBoxName.Location = new System.Drawing.Point(3, 22);
             this.LBoxName.Name = "LBoxName";
             this.LBoxName.Size = new System.Drawing.Size(32, 16);
             this.LBoxName.TabIndex = 0;
@@ -236,7 +244,7 @@ namespace Ferda.FrontEnd.ContextHelp
             // 
             this.LBoxType.AutoSize = true;
             this.LBoxType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.LBoxType.Location = new System.Drawing.Point(4, 20);
+            this.LBoxType.Location = new System.Drawing.Point(3, 38);
             this.LBoxType.Name = "LBoxType";
             this.LBoxType.Size = new System.Drawing.Size(62, 16);
             this.LBoxType.TabIndex = 1;
@@ -245,15 +253,28 @@ namespace Ferda.FrontEnd.ContextHelp
             // RTBBoxTypeHint
             // 
             this.RTBBoxTypeHint.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.RTBBoxTypeHint.Location = new System.Drawing.Point(4, 40);
+            this.RTBBoxTypeHint.Location = new System.Drawing.Point(3, 57);
             this.RTBBoxTypeHint.Name = "RTBBoxTypeHint";
             this.RTBBoxTypeHint.Size = new System.Drawing.Size(137, 96);
             this.RTBBoxTypeHint.TabIndex = 2;
             this.RTBBoxTypeHint.Text = "box type hint";
             // 
+            // LLTutorial
+            // 
+            this.LLTutorial.AutoSize = true;
+            this.LLTutorial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.LLTutorial.Location = new System.Drawing.Point(4, 4);
+            this.LLTutorial.Name = "LLTutorial";
+            this.LLTutorial.Size = new System.Drawing.Size(69, 16);
+            this.LLTutorial.TabIndex = 3;
+            this.LLTutorial.TabStop = true;
+            this.LLTutorial.Text = "linkLabel1";
+            this.LLTutorial.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LLTutorial_LinkClicked);
+            // 
             // FerdaContextHelp
             // 
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Controls.Add(this.LLTutorial);
             this.Controls.Add(this.RTBBoxTypeHint);
             this.Controls.Add(this.LBoxType);
             this.Controls.Add(this.LBoxName);
@@ -296,6 +317,19 @@ namespace Ferda.FrontEnd.ContextHelp
             menuDisplayer.Adapt();
             toolBar.ControlHasFocus = this;
             toolBar.Adapt();
+        }
+
+        /// <summary>
+        /// This event should show the pdf help with Ferda tutorial
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void LLTutorial_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string path = FrontEndCommon.GetBinPath();
+            path += "\\Help\\" + ResManager.GetString("FerdaTutorial");
+
+            FrontEndCommon.OpenPdf(path, ResManager);
         }
 
         #endregion

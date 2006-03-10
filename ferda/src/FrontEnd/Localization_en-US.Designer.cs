@@ -97,6 +97,24 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adobe Acrobat Reader was not found.
+        /// </summary>
+        internal static string AcrobatNotFoundCaption {
+            get {
+                return ResourceManager.GetString("AcrobatNotFoundCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must have a Adobe Acrobat Reader version 6.0 or higher installed on your computer to correctly view Ferda help..
+        /// </summary>
+        internal static string AcrobatNotFoundText {
+            get {
+                return ResourceManager.GetString("AcrobatNotFoundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Against connections.
         /// </summary>
         internal static string ArchiveAgainstText {
@@ -190,6 +208,15 @@ namespace Ferda.FrontEnd {
         internal static string ContextHelpContentText {
             get {
                 return ResourceManager.GetString("ContextHelpContentText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to start in Ferda?.
+        /// </summary>
+        internal static string ContextHelpStart {
+            get {
+                return ResourceManager.GetString("ContextHelpStart", resourceCulture);
             }
         }
         
@@ -305,6 +332,24 @@ namespace Ferda.FrontEnd {
             get {
                 object obj = ResourceManager.GetObject("ferda64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ferduvNavod.pdf.
+        /// </summary>
+        internal static string FerdaTutorial {
+            get {
+                return ResourceManager.GetString("FerdaTutorial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to userenvironment.pdf.
+        /// </summary>
+        internal static string FerdaUserEnvironment {
+            get {
+                return ResourceManager.GetString("FerdaUserEnvironment", resourceCulture);
             }
         }
         
@@ -773,6 +818,15 @@ namespace Ferda.FrontEnd {
         internal static string MenuHelpTheoreticalHelp {
             get {
                 return ResourceManager.GetString("MenuHelpTheoreticalHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ferda&apos;s tutorial.
+        /// </summary>
+        internal static string MenuHelpTutorial {
+            get {
+                return ResourceManager.GetString("MenuHelpTutorial", resourceCulture);
             }
         }
         

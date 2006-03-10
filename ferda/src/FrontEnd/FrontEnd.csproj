@@ -263,10 +263,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FerdaFrontEnd.ico" />
-    <Content Include="Help\archiv.png" />
-    <Content Include="Help\casti.png" />
-    <Content Include="Help\properties.png" />
-    <Content Include="Help\uzivnapoveda.html" />
     <Content Include="Icons\Category.ico" />
     <Content Include="Icons\Clone.ico" />
     <Content Include="Icons\Copy.ico" />
@@ -295,6 +291,7 @@
     <None Include="Resources\ferda64.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Help\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

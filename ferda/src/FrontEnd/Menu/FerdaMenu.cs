@@ -89,6 +89,7 @@ namespace Ferda.FrontEnd.Menu
         /// Group Help
         private ToolStripMenuItem applicationHelp;
         private ToolStripMenuItem theoreticalHelp;
+        private ToolStripMenuItem tutorial;
         private ToolStripMenuItem about;
 
         //Resource manager from the FerdaForm
@@ -435,16 +436,19 @@ namespace Ferda.FrontEnd.Menu
         private void SetupHelp()
         {
             //adding the help group of the menu
+            tutorial = new ToolStripMenuItem(ResManager.GetString("MenuHelpTutorial"));
             applicationHelp = new ToolStripMenuItem(ResManager.GetString("MenuHelpApplicationHelp"));
             theoreticalHelp = new ToolStripMenuItem(ResManager.GetString("MenuHelpTheoreticalHelp"));
             about = new ToolStripMenuItem(ResManager.GetString("MenuHelpAbout"));
             this.help.DropDownItems.AddRange(new ToolStripItem[]
             {
+                tutorial,
                 applicationHelp,
                 theoreticalHelp,
                 about
             });
 
+            tutorial.Click += new EventHandler(tutorial_Click);
             about.Click += new EventHandler(about_Click);
             applicationHelp.Click += new EventHandler(applicationHelp_Click);
         }
@@ -1127,8 +1131,23 @@ namespace Ferda.FrontEnd.Menu
         void applicationHelp_Click(object sender, EventArgs e)
         {
             string path = FrontEndCommon.GetBinPath();
-            path += "\\Help\\uzivnapoveda.html";
-            System.Diagnostics.Process.Start(path);
+            path += "\\Help\\" + ResManager.GetString("FerdaUserEnvironment");
+
+            FrontEndCommon.OpenPdf(path, ResManager);
+        }
+
+        /// <summary>
+        /// Event handles the Help->Turorial click
+        /// and displays the tutorial
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void tutorial_Click(object sender, EventArgs e)
+        {
+            string path = FrontEndCommon.GetBinPath();
+            path += "\\Help\\" + ResManager.GetString("FerdaTutorial");
+
+            FrontEndCommon.OpenPdf(path, ResManager);
         }
 
         #endregion

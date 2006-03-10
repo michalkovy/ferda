@@ -129,6 +129,12 @@
   <data name="AboutDialogVersion" xml:space="preserve">
     <value>Version: </value>
   </data>
+  <data name="AcrobatNotFoundCaption" xml:space="preserve">
+    <value>Adobe Acrobat Reader was not found</value>
+  </data>
+  <data name="AcrobatNotFoundText" xml:space="preserve">
+    <value>You must have a Adobe Acrobat Reader version 6.0 or higher installed on your computer to correctly view Ferda help.</value>
+  </data>
   <data name="ArchiveAgainstText" xml:space="preserve">
     <value>Against connections</value>
   </data>
@@ -162,6 +168,9 @@
   </data>
   <data name="ContextHelpContentText" xml:space="preserve">
     <value>Context Help</value>
+  </data>
+  <data name="ContextHelpStart" xml:space="preserve">
+    <value>How to start in Ferda?</value>
   </data>
   <data name="DeleteFromArchiveCaption" xml:space="preserve">
     <value>Deleting from archive</value>
@@ -201,6 +210,12 @@
   </data>
   <data name="ferda64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ferda64.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FerdaTutorial" xml:space="preserve">
+    <value>ferduvNavod.pdf</value>
+  </data>
+  <data name="FerdaUserEnvironment" xml:space="preserve">
+    <value>userenvironment.pdf</value>
   </data>
   <data name="LoadingAddIns" xml:space="preserve">
     <value>Loadins add-ins ...</value>
@@ -357,6 +372,9 @@
   </data>
   <data name="MenuHelpTheoreticalHelp" xml:space="preserve">
     <value>Theoretical Help</value>
+  </data>
+  <data name="MenuHelpTutorial" xml:space="preserve">
+    <value>Ferda's tutorial</value>
   </data>
   <data name="MenuModulesAskingCreation" xml:space="preserve">
     <value>Boxes asking for creation</value>

@@ -23,7 +23,17 @@
 		<pubdate>2005-03-10</pubdate>
 		<title>Ferda FrontEnd - Uživatelské rozhraní pro dataminingový systém Ferda DataMiner</title>
 		<titleabbrev>UzivatelskeRozhrani</titleabbrev>
+    <!--
     <revhistory>
+      <revision>
+        <revnumber>3.5</revnumber>
+        <date>2006-03-10</date>
+        <revdescription>
+          <simpara>
+            Upravil jsem nové a lokalizované obrázky archivu a panelu vlastnosti
+          </simpara>
+        </revdescription>
+      </revision>
       <revision>
         <revnumber>3.4</revnumber>
         <date>2006-01-28</date>
@@ -231,6 +241,7 @@
 				</revdescription>  
       </revision>
     </revhistory>
+    -->
 	</articleinfo>
 	<abstract>
 		<para>
@@ -555,7 +566,7 @@
 				Vizuální reprezentace archivu
 				<mediaobject>
 					<imageobject>
-						<imagedata fileref="archiv.png" format="PNG" />
+						<imagedata fileref="archiveCZ.png" format="PNG" />
 					</imageobject>			
 				</mediaobject>
 			</para>
@@ -725,7 +736,7 @@
 			<para>
 				<mediaobject>
 					<imageobject>
-						<imagedata fileref="properties.png" format="PNG" />
+						<imagedata fileref="propertiesCZ.png" format="PNG" />
 					</imageobject>
 				</mediaobject>
 			</para>

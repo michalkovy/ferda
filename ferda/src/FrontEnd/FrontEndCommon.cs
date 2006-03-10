@@ -27,6 +27,7 @@ using System.Windows.Forms;
 using System.IO;
 using Ferda.ProjectManager;
 using System.Reflection;
+using Microsoft.Win32;
 
 namespace Ferda.FrontEnd
 {
@@ -149,6 +150,107 @@ namespace Ferda.FrontEnd
             assemblyDir = assemblyDir.Remove(lastDash);
 
             return assemblyDir;
+        }
+
+        /// <summary>
+        /// Opens a pdf that is located in the path in the parameter
+        /// </summary>
+        /// <param name="path">Path to the pdf file</param>
+        /// <param name="resManager">Manager that holds resources</param>
+        public static void OpenPdf(string path, ResourceManager resManager)
+        {
+            string AcroPath = FindAcroReaderPath(resManager);
+
+            if (AcroPath != string.Empty)
+            {
+                System.Diagnostics.Process.Start(AcroPath, path);
+            }
+        }
+
+        /// <summary>
+        /// Opens a pdf that is located in the path in the parameter
+        /// and jumps to 
+        /// </summary>
+        /// <param name="path">Path to the pdf file</param>
+        /// <param name="destination">named destination in the pdf where
+        /// the Acrobat reader should jump</param>
+        /// <param name="resManager">Manager that holds resources</param>
+        public static void OpenPdfAndDestination(string path, string destination,
+            ResourceManager resManager)
+        {
+            string AcroPath = FindAcroReaderPath(resManager);
+            string parameter = "/A \"namedest=" + destination +
+                "\"" + path + "\"";
+
+            if (AcroPath != string.Empty)
+            {
+                System.Diagnostics.Process.Start(AcroPath, parameter);
+            }
+        }
+
+        /// <summary>
+        /// Finds a path to Acrobat Reader (must be version 6 or higher)
+        /// </summary>
+        /// <param name="resManager"></param>
+        /// <returns></returns>
+        protected static string FindAcroReaderPath(ResourceManager resManager)
+        {
+            //getting the root registry of the local machine
+            RegistryKey rk = Registry.LocalMachine;
+            //getting the software key
+            RegistryKey software = rk.OpenSubKey("Software");
+            if (software == null)
+            {
+                throw new ApplicationException(
+                    "Software registry key not provided - something is wrong");
+            }
+
+            //opening the Adobe folder
+            RegistryKey adobe = software.OpenSubKey("Adobe");
+            if (adobe == null)
+            {
+                MessageBox.Show(resManager.GetString("AcrobatNotFoundText"),
+                    resManager.GetString("AcrobatNotFoundCaption"));
+                return string.Empty;
+            }
+
+            //opening the acrobat
+            RegistryKey acrobat = adobe.OpenSubKey("Acrobat Reader");
+            if (acrobat == null)
+            {
+                MessageBox.Show(resManager.GetString("AcrobatNotFoundText"),
+                    resManager.GetString("AcrobatNotFoundCaption"));
+                return string.Empty;
+            }
+
+            //checking the available versions there has to be version at least 6.0
+            List<string> versions = new List<string>(acrobat.GetSubKeyNames());
+            if (!versions.Contains("6.0") && !versions.Contains("7.0"))
+            {
+                MessageBox.Show(resManager.GetString("AcrobatNotFoundText"),
+                    resManager.GetString("AcrobatNotFoundCaption"));
+                return string.Empty;
+            }
+
+            //getting the version
+            RegistryKey version = acrobat.OpenSubKey("6.0");
+            if (version == null)
+            {
+                version = acrobat.OpenSubKey("7.0");
+            }
+            //checking if everything is all right
+            if (version == null)
+            {
+                throw new ApplicationException("The Acrobat version is not right");
+            }
+
+            //getting the InstallPath value
+            RegistryKey installPath = version.OpenSubKey("InstallPath");
+            string acrobatPath = installPath.GetValue(null).ToString();
+
+            acrobatPath += "\\Acrord32.exe";
+
+            return acrobatPath;
         }
     }
 }
