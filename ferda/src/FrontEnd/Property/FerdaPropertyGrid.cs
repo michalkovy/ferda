@@ -796,8 +796,19 @@ namespace Ferda.FrontEnd.Properties
                     else //it is a DateTimeT thing
                     {
                         DateTimeT v = (DateTimeT)value;
-                        DateTime dtValue = new DateTime(v.year,
-                                v.month, v.day, v.hour, v.minute, v.second);
+                        
+                        //the value does not have to be correct
+                        DateTime dtValue = new DateTime();
+                        try
+                        {
+
+                            dtValue = new DateTime(v.year,
+                                    v.month, v.day, v.hour, v.minute, v.second);
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                        }
+
                         lock (tempLocker)
                         {
                             if (moreBoxes)
