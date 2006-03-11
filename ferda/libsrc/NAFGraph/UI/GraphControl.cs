@@ -1244,6 +1244,7 @@ namespace Netron.GraphLib.UI
 					return;
 				}
 
+                //TADY JE MOZNA DALSI PROBLEM
 				p=new PointF(e.X,e.Y);
 				selector = new Selector(p, this);
 			
@@ -1382,8 +1383,13 @@ namespace Netron.GraphLib.UI
 				}
 				//are we dragging a marquee to select shapes?
 				if (selector != null)
-				{					
+                {
 					RectangleF r = selector.Rectangle;
+
+                    //CHANGED BY FERDA - the scrolling is not taken into acount
+                    r.Offset(-AutoScrollPosition.X, -AutoScrollPosition.Y);
+                    //END OF CHANGE
+
 					r = this.UnzoomRectangle(r);
 					//if ((Hover == null) || (Hover.IsSelected == false))
 					if (ModifierKeys != Keys.Shift) Deselect();
