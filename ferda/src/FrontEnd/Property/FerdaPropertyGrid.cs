@@ -759,7 +759,15 @@ namespace Ferda.FrontEnd.Properties
                     if (value is DateT)
                     {
                         DateT v = (DateT)value;
-                        DateTime dateTimeValue = new DateTime(v.year, v.month, v.day);
+                        DateTime dateTimeValue = new DateTime();
+                        try
+                        {
+                            dateTimeValue = new DateTime(v.year, v.month, v.day);
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                        }
+
                         lock (tempLocker)
                         {
                             if (moreBoxes)
