@@ -1810,6 +1810,8 @@ namespace Ferda.FrontEnd.Desktop
             //adjusting the coordinates
             PointF clientPoint =
                 this.PointToClient(new Point(drgevent.X, drgevent.Y));
+            clientPoint.X -= AutoScrollPosition.X;
+            clientPoint.Y -= AutoScrollPosition.Y;
 
             if (o is NewBoxNode)
             {
