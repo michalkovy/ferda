@@ -73,26 +73,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\icecs.dll</HintPath>
     </Reference>
-    <Reference Include="SharpVectorCss, Version=0.3.0.24798, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\SharpVectorCss.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectorObjectModel, Version=0.3.0.24889, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\SharpVectorObjectModel.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectorRenderingEngine, Version=0.3.0.24890, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\SharpVectorRenderingEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectorScripting, Version=0.3.0.39436, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\SharpVectorScripting.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectorXml, Version=1.0.2197.39435, Culture=neutral, PublicKeyToken=a8855419d33ac940, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\SharpVectorXml.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
