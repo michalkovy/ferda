@@ -14,6 +14,10 @@ SectionGroup "$(Basefiles)" BaseFiles
 	  
 	SetOutPath "$INSTDIR\FrontEnd"
 	File ..\bin\FrontEnd\*.*
+	
+	SetOutPath "$INSTDIR\FrontEnd\Help"
+	File ..\bin\FrontEnd\Help\*.*
+	
 	SetOutPath "$INSTDIR\FrontEnd\Icons"
 	File ..\bin\FrontEnd\Icons\*.*
 	
