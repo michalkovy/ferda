@@ -27,8 +27,8 @@ using System.IO;
 
 using Ferda.ModulesManager;
 using Ferda.Modules;
-using SharpVectors.Dom.Svg;
-using SharpVectors.Renderer.Gdi;
+//using SharpVectors.Dom.Svg;
+//using SharpVectors.Renderer.Gdi;
 
 
 namespace Ferda.FrontEnd.Desktop 

@@ -1471,32 +1471,14 @@ using Ferda.ModulesManager;
 
             if (result == DialogResult.Yes) //saving the current project
             {
-                SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Title = ResManager.GetString("MenuFileSaveProject");
-                saveDialog.Filter = ResManager.GetString("MenuFileFerdaProjectFiles")
-                    + "|*.xfp|" + ResManager.GetString("MenuFileAllFiles")
-                    + "|*.*";
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
+                if (ProjectName != string.Empty) //we have already a project
+                //name
                 {
-                    if (saveDialog.FileName != "")
-                    {
-                        //saving the project to the location
-                        System.IO.FileStream fs =
-                            new System.IO.FileStream(saveDialog.FileName, System.IO.FileMode.Create);
-                        try
-                        {
-                            projectManager.SaveProject(fs);
-                        }
-                        finally
-                        {
-                            fs.Close();
-                        }
-                    }
+                    menu.SaveProjectCore(ProjectName);
                 }
-                else
+                else //we are using the save dialog
                 {
-                    e.Cancel = true;
+                    menu.SaveProjectAsCore();
                 }
             }
         }

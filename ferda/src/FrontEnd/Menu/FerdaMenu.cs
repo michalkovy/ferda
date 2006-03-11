@@ -646,7 +646,7 @@ namespace Ferda.FrontEnd.Menu
         /// </summary>
         /// <param name="fileName">Name of the file where the project should be
         /// saved</param>
-        protected void SaveProjectCore(string fileName)
+        public void SaveProjectCore(string fileName)
         {
             //saving the project to the location
             System.IO.FileStream fs =
@@ -668,8 +668,8 @@ namespace Ferda.FrontEnd.Menu
         /// <summary>
         /// Saves the project as
         /// </summary>
-        /// <returns>True if uer clicked Ok in the SaveFile dialog, false otherwise</returns>
-        protected bool SaveProjectAsCore()
+        /// <returns>True if true clicked Ok in the SaveFile dialog, false otherwise</returns>
+        public bool SaveProjectAsCore()
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Title = ResManager.GetString("MenuFileSaveProject");
@@ -865,9 +865,16 @@ namespace Ferda.FrontEnd.Menu
 
                 if (result == DialogResult.Yes) //saving the current project
                 {
-                    if (!SaveProjectAsCore())
+                    if (controlsManager.ProjectName != string.Empty)
                     {
-                        return;
+                        SaveProjectCore(controlsManager.ProjectName);
+                    }
+                    else
+                    {
+                        if (!SaveProjectAsCore())
+                        {
+                            return;
+                        }
                     }
                 }
             }
