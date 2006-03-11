@@ -510,10 +510,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelHOffset.Text = rm.GetString("LabelHOffset");
             this.LabelVOffset.Text = rm.GetString("LabelVOffset");
             this.LabelZoom.Text = rm.GetString("LabelZoom");
-            //        this.LabelRotation.Text = rm.GetString("LabelRotation");
             this.ToolStripCopyChart.Text = rm.GetString("CopyChart");
             this.CheckBoxShowLabels.Text = rm.GetString("ShowLabels");
-            this.LabelPointsPerPage.Text = rm.GetString("PointsPerPage") + ":";
         }
 
         #endregion   
