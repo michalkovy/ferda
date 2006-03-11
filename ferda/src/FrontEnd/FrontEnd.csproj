@@ -267,11 +267,14 @@
     <Content Include="Icons\Unpack socket all layers.ico" />
     <Content Include="Icons\Unpack socket one layer.ico" />
     <Content Include="Icons\UserNote.ico" />
+    <None Include="Help\ferdasTutorial.pdf" />
+    <None Include="Help\ferduvNavod.pdf" />
+    <None Include="Help\userenvironment.pdf" />
+    <None Include="Help\uzivprostredi.pdf" />
     <None Include="Resources\Box.png" />
     <None Include="Resources\ferda64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Help\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

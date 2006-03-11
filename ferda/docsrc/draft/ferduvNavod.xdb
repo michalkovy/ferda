@@ -8,7 +8,7 @@
       <surname>Ralbovský</surname>
       <email>martin.ralbovsky@gmail.com</email>
     </author>
-    <pubdate>2006-6-3</pubdate>
+    <pubdate>2006-03-06</pubdate>
     <title>Ferdův návod k prvnímu projektu</title>
     <titleabbrev>FerduvNavod</titleabbrev>
   <!--
@@ -67,7 +67,7 @@
       Ferda je systém, který používá pro tvorbu svých úloh tzv. vizuální programování,
       tj. úlohy se tvoří na ploše propojováním jednotlivých vizuálních prvků a
       nastavování vlastností těchto prvků. Ve Ferdovi se vizuální prvek nazývá krabička.
-      Panel se všemi krabičkami, které máme k dispozici, je na levé straně dokovacího
+      Panel se všemi krabičkami, které máme k dispozici, je na levé dolní straně dokovacího
       prostředí a obsahuje několik složek. Proces dobývání obvykle začíná identifikací
       datového zdroje. K tomu slouží krabička <classname>Databáze</classname> ve složce
       <classname>Zdroj dat</classname>. Kliknutím na krabičku a jejím přetažením na
@@ -93,7 +93,7 @@
       <classname>ODBC připojovací řetězec</classname>.
       Když klikneme levým tlačítkem na krabičku na ploše,
       zobrazí se nám všechny její vlastnosti v <classname>Panelu Vlastostí</classname>.
-      v levé horní části dokovacího prostředí.
+      v pravé horní části dokovacího prostředí.
       Jesliže na vlastnost <classname>ODBC připojovací řetězec</classname> klikneme, 
       můžeme buď vepsat
       připojovací řetězec rovnou do políčka, nebo kliknout na tlačítko se třema tečkama
@@ -124,8 +124,8 @@
         Při práci se systémem LISp-Miner bylo třeba definovat metabázi
         (obvykle soubor databáze Microsoft Access (LM_Empty.mdb)) pro uložení
         projektu a vzájemnou výměnu dat mezi jednotlivými moduly systému
-        LISp-Miner. Používání metabáze je v systému Ferda zcela transparentní
-        tj. uživatel o ní neví. Uživatel pracuje pouze se soubory projektu
+        LISp-Miner. Používání metabáze je v systému Ferda pro uživatele
+        zcela nepostřehnutelné. Uživatel pracuje pouze se soubory projektu
         (*.xfp). (Implementace: kdykoli krabičky Ferdy spouští moduly
         LISp-Mineru (jeho *Gen.exe) dávají mu jako parametr metabázi, kterou
         předtím přímo vygenerují. Jakmile *Gen.exe ukončí svou práci, je

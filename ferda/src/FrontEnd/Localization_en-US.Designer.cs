@@ -336,7 +336,7 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ferduvNavod.pdf.
+        ///   Looks up a localized string similar to ferdasTutorial.pdf.
         /// </summary>
         internal static string FerdaTutorial {
             get {
