@@ -49,15 +49,6 @@
       <MoreThanOne>true</MoreThanOne>
     </Socket>
     <Socket>
-      <Name>SDKLQuantifier</Name>
-      <SocketTypes>
-        <BoxType>
-          <FunctionIceId>::Ferda::Modules::Boxes::LISpMinerTasks::SDKLTask::Quantifiers::AbstractSDKLQuantifier::AbstractSDKLQuantifierFunctions</FunctionIceId>
-        </BoxType>
-      </SocketTypes>
-      <MoreThanOne>true</MoreThanOne>
-    </Socket>
-    <Socket>
       <Name>Cedent1</Name>
       <SocketTypes>
         <BoxType>
@@ -71,6 +62,15 @@
       <SocketTypes>
         <BoxType>
           <FunctionIceId>::Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingFunctions</FunctionIceId>
+        </BoxType>
+      </SocketTypes>
+      <MoreThanOne>true</MoreThanOne>
+    </Socket>
+    <Socket>
+      <Name>SDKLQuantifier</Name>
+      <SocketTypes>
+        <BoxType>
+          <FunctionIceId>::Ferda::Modules::Boxes::LISpMinerTasks::SDKLTask::Quantifiers::AbstractSDKLQuantifier::AbstractSDKLQuantifierFunctions</FunctionIceId>
         </BoxType>
       </SocketTypes>
       <MoreThanOne>true</MoreThanOne>

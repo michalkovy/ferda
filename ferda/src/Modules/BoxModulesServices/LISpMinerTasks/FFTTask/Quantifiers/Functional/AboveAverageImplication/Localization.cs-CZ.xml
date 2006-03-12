@@ -11,8 +11,8 @@
   <Sockets>
     <Socket>
       <Name>ParamK</Name>
-      <Label>K</Label>
-      <Hint>Parameter k</Hint>
+      <Label>P</Label>
+      <Hint>Parameter p</Hint>
     </Socket>
   </Sockets>
   <ModulesAskingForCreationSeq>

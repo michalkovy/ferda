@@ -1311,11 +1311,6 @@
 				<Hint>Defines set of relevant conditions.</Hint>
 			</Socket>
 			<Socket>
-				<Name>SDFFTQuantifier</Name>
-				<Label>SD4ft Quantifier</Label>
-				<Hint>Defines SD4ft quantifier for task</Hint>
-			</Socket>
-			<Socket>
 				<Name>Cedent1</Name>
 				<Label>Cedent 1</Label>
 				<Hint>?Cedent1</Hint>
@@ -1324,6 +1319,11 @@
 				<Name>Cedent2</Name>
 				<Label>Cedent 2</Label>
 				<Hint>?Cedent2</Hint>
+			</Socket>
+			<Socket>
+				<Name>SDFFTQuantifier</Name>
+				<Label>SD4ft Quantifier</Label>
+				<Hint>Defines SD4ft quantifier for task</Hint>
 			</Socket>
 			<Socket>
 				<Name>FirstSet</Name>
@@ -1550,11 +1550,6 @@
 				<Hint>Defines set of relevant conditions.</Hint>
 			</Socket>
 			<Socket>
-				<Name>SDCFQuantifier</Name>
-				<Label>SDCF Quantifier</Label>
-				<Hint>Defines SDCF quantifier for task</Hint>
-			</Socket>
-			<Socket>
 				<Name>Cedent1</Name>
 				<Label>Cedent 1</Label>
 				<Hint>?Cedent1</Hint>
@@ -1563,6 +1558,11 @@
 				<Name>Cedent2</Name>
 				<Label>Cedent 2</Label>
 				<Hint>?Cedent2</Hint>
+			</Socket>
+			<Socket>
+				<Name>SDCFQuantifier</Name>
+				<Label>SDCF Quantifier</Label>
+				<Hint>Defines SDCF quantifier for task</Hint>
 			</Socket>
 			<Socket>
 				<Name>FirstSet</Name>
@@ -1776,11 +1776,6 @@
 				<Hint>Defines set of relevant conditions.</Hint>
 			</Socket>
 			<Socket>
-				<Name>SDKLQuantifier</Name>
-				<Label>SDKL Quantifier</Label>
-				<Hint>Defines SDKL quantifier for task</Hint>
-			</Socket>
-			<Socket>
 				<Name>Cedent1</Name>
 				<Label>Cedent 1</Label>
 				<Hint>?Cedent1</Hint>
@@ -1789,6 +1784,11 @@
 				<Name>Cedent2</Name>
 				<Label>Cedent 2</Label>
 				<Hint>?Cedent2</Hint>
+			</Socket>
+			<Socket>
+				<Name>SDKLQuantifier</Name>
+				<Label>SDKL Quantifier</Label>
+				<Hint>Defines SDKL quantifier for task</Hint>
 			</Socket>
 			<Socket>
 				<Name>FirstSet</Name>
@@ -2019,8 +2019,8 @@
 		<Sockets>
 			<Socket>
 				<Name>ParamK</Name>
-				<Label>K</Label>
-				<Hint>Parameter k</Hint>
+				<Label>P</Label>
+				<Hint>Parameter p</Hint>
 			</Socket>
 		</Sockets>
 		<ModulesAskingForCreationSeq>
