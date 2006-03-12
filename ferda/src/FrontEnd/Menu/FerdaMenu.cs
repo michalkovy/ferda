@@ -682,6 +682,7 @@ namespace Ferda.FrontEnd.Menu
                 if (dialog.FileName != "")
                 {
                     SaveProjectCore(dialog.FileName);
+                    controlsManager.ProjectName = dialog.FileName;
                 }
                 return true;
             }

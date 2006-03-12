@@ -191,6 +191,15 @@ using Ferda.ModulesManager;
             set
             {
                 projectName = value;
+                if (projectName != string.Empty)
+                {
+                    //setting the Text of the form - we know what project
+                    //we are working on
+                    string tmp = 
+                        projectName.Substring(projectName.LastIndexOf('\\') + 1);
+                    tmp = tmp.Substring(0, tmp.LastIndexOf('.'));
+                    Text = tmp + " - Ferda DataMiner";
+                }
             }
             get
             {
@@ -281,7 +290,7 @@ using Ferda.ModulesManager;
 
             //Name and title of the application
             Name = "FerdaForm";
-            Text = "Ferda";
+            Text = "Ferda DataMiner";
 
             //this command should be the last one, otherwise the window is not
             //maximized correctly
