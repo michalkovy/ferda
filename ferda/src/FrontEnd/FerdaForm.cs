@@ -1538,6 +1538,11 @@ using Ferda.ModulesManager;
 
             //recreating the desktop part of the menu (a desktop was closed)
             menu.SetupDesktop();
+
+            //reseting all the stuff
+            propertyGrid.Reset();
+            userNote.Reset();
+            contextHelp.Reset();
         }
 
         /// <summary>
