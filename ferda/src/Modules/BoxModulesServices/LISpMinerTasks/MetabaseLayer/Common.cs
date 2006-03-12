@@ -844,7 +844,7 @@ namespace Ferda.Modules.MetabaseLayer
                 + "(" + autoIncrementValue + ","
                 + constants.ValueSubTypeEnumDictionary[ValueSubTypeEnum.DoubleType] + ","
                 + constants.InfinityTypeEnumDictionary[InfinityTypeEnum.None] + ","
-                + value
+                + "'" + value + "'"
                 + ")";
             ExecuteInsertQuery(query, tableName);
             return autoIncrementValue;
@@ -859,7 +859,7 @@ namespace Ferda.Modules.MetabaseLayer
                 + "(" + autoIncrementValue + ","
                 + constants.ValueSubTypeEnumDictionary[ValueSubTypeEnum.DoubleType] + ","
                 + constants.InfinityTypeEnumDictionary[InfinityTypeEnum.None] + ","
-                + constants.DateTimeToString(value)
+                + "'" + constants.DateTimeToString(value) + "'"
                 + ")";
             ExecuteInsertQuery(query, tableName);
             return autoIncrementValue;
@@ -894,7 +894,7 @@ namespace Ferda.Modules.MetabaseLayer
                 + "(" + autoIncrementValue + ","
                 + constants.ValueSubTypeEnumDictionary[ValueSubTypeEnum.BooleanType] + ","
                 + constants.InfinityTypeEnumDictionary[InfinityTypeEnum.None] + ","
-                + constants.GetBool(value)
+                + "'" + constants.GetBool(value) + "'"
                 + ")";
             ExecuteInsertQuery(query, tableName);
             return autoIncrementValue;
@@ -909,7 +909,7 @@ namespace Ferda.Modules.MetabaseLayer
                 + "(" + autoIncrementValue + ","
                 + constants.ValueSubTypeEnumDictionary[ValueSubTypeEnum.DateTimeType] + ","
                 + constants.InfinityTypeEnumDictionary[InfinityTypeEnum.None] + ","
-                + constants.DateTimeStructToString(value)
+                + "'" + constants.DateTimeStructToString(value) + "'"
                 + ")";
             ExecuteInsertQuery(query, tableName);
             return autoIncrementValue;

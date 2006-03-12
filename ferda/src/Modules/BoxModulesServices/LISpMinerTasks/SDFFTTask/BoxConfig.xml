@@ -48,15 +48,6 @@
       <MoreThanOne>true</MoreThanOne>
     </Socket>
     <Socket>
-      <Name>SDFFTQuantifier</Name>
-      <SocketTypes>
-        <BoxType>
-          <FunctionIceId>::Ferda::Modules::Boxes::LISpMinerTasks::SDFFTTask::Quantifiers::AbstractSDFFTQuantifier::AbstractSDFFTQuantifierFunctions</FunctionIceId>
-        </BoxType>
-      </SocketTypes>
-      <MoreThanOne>true</MoreThanOne>
-    </Socket>
-    <Socket>
       <Name>Cedent1</Name>
       <SocketTypes>
         <BoxType>
@@ -70,6 +61,15 @@
       <SocketTypes>
         <BoxType>
           <FunctionIceId>::Ferda::Modules::Boxes::DataMiningCommon::BooleanPartialCedentSetting::BooleanPartialCedentSettingFunctions</FunctionIceId>
+        </BoxType>
+      </SocketTypes>
+      <MoreThanOne>true</MoreThanOne>
+    </Socket>
+    <Socket>
+      <Name>SDFFTQuantifier</Name>
+      <SocketTypes>
+        <BoxType>
+          <FunctionIceId>::Ferda::Modules::Boxes::LISpMinerTasks::SDFFTTask::Quantifiers::AbstractSDFFTQuantifier::AbstractSDFFTQuantifierFunctions</FunctionIceId>
         </BoxType>
       </SocketTypes>
       <MoreThanOne>true</MoreThanOne>

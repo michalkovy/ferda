@@ -67,7 +67,7 @@
     </Phrase>
     <Phrase>
       <PhraseIdentifier>ActionTestTestPrimaryKeySucceed</PhraseIdentifier>
-      <PhraseText>Nebyly nalezeny žádné duplicity v primárním klíči.</PhraseText>
+      <PhraseText>Nebyli nalezeny žádné duplicity v primárním klíči.</PhraseText>
     </Phrase>
     <Phrase>
       <PhraseIdentifier>ActionTestTestPrimaryKeyFailed</PhraseIdentifier>

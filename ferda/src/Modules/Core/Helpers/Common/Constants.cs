@@ -65,7 +65,7 @@ namespace Ferda.Modules.Helpers.Common
 			get { return rightOpenedInterval; }
 		} 
 
-		private const char separatorInterval = ',';
+		private const char separatorInterval = ';';
         /// <summary>
         /// Gets the separator interval char.
         /// </summary>

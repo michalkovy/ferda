@@ -66,7 +66,7 @@
       </SelectOptions>
       <Visible>true</Visible>
       <ReadOnly>false</ReadOnly>
-      <Default>Both</Default>
+      <Default>Positive</Default>
     </Property>
   </Properties>
   <ModulesAskingForCreationSeq>
