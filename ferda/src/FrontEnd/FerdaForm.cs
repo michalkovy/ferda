@@ -195,10 +195,14 @@ using Ferda.ModulesManager;
                 {
                     //setting the Text of the form - we know what project
                     //we are working on
-                    string tmp = 
+                    string tmp =
                         projectName.Substring(projectName.LastIndexOf('\\') + 1);
                     tmp = tmp.Substring(0, tmp.LastIndexOf('.'));
                     Text = tmp + " - Ferda DataMiner";
+                }
+                else
+                {
+                    Text = "Ferda DataMiner";
                 }
             }
             get

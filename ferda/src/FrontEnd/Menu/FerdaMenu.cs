@@ -743,6 +743,8 @@ namespace Ferda.FrontEnd.Menu
                 }
             }
 
+            controlsManager.ProjectName = string.Empty;
+
             //creating a new project
             projectManager.NewProject();
             controlsManager.ClearDocking();
