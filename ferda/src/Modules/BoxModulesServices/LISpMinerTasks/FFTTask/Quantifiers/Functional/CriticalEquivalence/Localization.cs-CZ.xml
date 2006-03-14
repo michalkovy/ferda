@@ -17,12 +17,12 @@
         <SelectOption>
           <Name>LessThanOrEqual</Name>
           <!-- CoreRelation -->
-          <Label>Lower (less than or equal)</Label>
+          <Label>Dolní (menší nebo rovno)</Label>
         </SelectOption>
         <SelectOption>
           <Name>GreaterThanOrEqual</Name>
           <!-- CoreRelation -->
-          <Label>Upper (greater than or equal)</Label>
+          <Label>Horní (větší nebo rovno)</Label>
         </SelectOption>
       </SelectOptions>
     </Socket>

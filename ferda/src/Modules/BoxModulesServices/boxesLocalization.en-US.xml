@@ -528,7 +528,7 @@
 		<Categories>
 			<Category>
 				<Name>Attribute</Name>
-				<Label>Attributes</Label>
+				<Label>Attribute</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -599,7 +599,7 @@
 		<Categories>
 			<Category>
 				<Name>Attribute</Name>
-				<Label>Attributes</Label>
+				<Label>Attribute</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -737,7 +737,7 @@
 		<Categories>
 			<Category>
 				<Name>Attribute</Name>
-				<Label>Attributes</Label>
+				<Label>Attribute</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -851,7 +851,7 @@
 		<Categories>
 			<Category>
 				<Name>Attribute</Name>
-				<Label>Attributes</Label>
+				<Label>Attribute</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -1978,12 +1978,12 @@
 					<SelectOption>
 						<Name>LessThanOrEqual</Name>
 						<!-- CoreRelation -->
-						<Label>Dolní (menší nebo rovno)</Label>
+						<Label>Lower (less or equal)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>GreaterThanOrEqual</Name>
 						<!-- CoreRelation -->
-						<Label>Horní (větší nebo rovno)</Label>
+						<Label>Upper (greater or equal)</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
@@ -2100,12 +2100,12 @@
 					<SelectOption>
 						<Name>LessThanOrEqual</Name>
 						<!-- CoreRelation -->
-						<Label>Dolní (menší nebo rovno)</Label>
+						<Label>Lower (less or equal)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>GreaterThanOrEqual</Name>
 						<!-- CoreRelation -->
-						<Label>Horní (větší nebo rovno)</Label>
+						<Label>Upper (greater or equal)</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
@@ -2172,12 +2172,12 @@
 					<SelectOption>
 						<Name>LessThanOrEqual</Name>
 						<!-- CoreRelation -->
-						<Label>Dolní (menší nebo rovno)</Label>
+						<Label>Lower (less or equal)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>GreaterThanOrEqual</Name>
 						<!-- CoreRelation -->
-						<Label>Horní (větší nebo rovno)</Label>
+						<Label>Upper (greater or equal)</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>

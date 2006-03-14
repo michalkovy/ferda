@@ -5,8 +5,37 @@ using Ferda.Modules;
 
 namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
 {
+    /// <summary>
+    /// Implementation of <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>
+    /// using inheritence of abstract class <see cref="T:Ferda.Modules.Boxes.BoxInfo"/>.
+    /// This class has to be registered in <see cref="T:Ferda.Modules.FerdaServiceI"/> class ... 
+    /// please see <see cref="T:Ferda.Modules.Boxes.Sample.Service"/> and its
+    /// method <see cref="M:Ferda.Modules.Boxes.Sample.Service.registerBoxes()"/>.
+    /// </summary>
     public class BodyMassIndexBoxInfo : Ferda.Modules.Boxes.BoxInfo
     {
+        /// <summary>
+        /// Creates <see cref="T:Ice.Object"/> implementing Ice interface of
+        /// the box module i.e. box`s functions declared in slice design.
+        /// </summary>
+        /// <param name="boxModule">Box module, to which created functions
+        /// will belong to.</param>
+        /// <param name="iceObject">An out parameter returning <see cref="T:Ice.Object"/>
+        /// implementing box`s "ice" functions. This value is same as value
+        /// of <c>functions</c>.</param>
+        /// <param name="functions">An out parameter returning <see cref="T:Ice.Object"/>
+        /// implementing box`s "ice" functions. This value is same as value
+        /// of <c>iceObject</c>.</param>
+        /// <example>
+        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see>
+        /// 	<see cref="M:Ferda.Modules.Boxes.IBoxInfo.CreateFunctions(Ferda.Modules.BoxModuleI,Ice.Object,Ferda.Modules.IFunctions)"/>.
+        /// </example>
+        /// <remarks>
+        /// Each instance of the box module has its own functions object but
+        /// class implementing <see cref="T:Ferda.Modules.Boxes.IBoxInfo">
+        /// this interface</see> is shared by all instances of the box modules
+        /// of the same type <see cref="P:Ferda.Modules.Boxes.IBoxInfo.Identifier"/>
+        /// </remarks>
         public override void CreateFunctions(BoxModuleI boxModule, out Ice.Object iceObject, out IFunctions functions)
         {
             BodyMassIndexFunctionsI result = new BodyMassIndexFunctionsI();
@@ -14,6 +43,17 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
             functions = (IFunctions)result;
         }
 
+        /// <summary>
+        /// Gets function`s Ice identifiers of the box module.
+        /// </summary>
+        /// <returns>
+        /// An array of strings representing Ice identifiers
+        /// of the box module`s functions.
+        /// </returns>
+        /// <example>
+        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see>
+        /// 	<see cref="M:Ferda.Modules.Boxes.IBoxInfo.GetBoxModuleFunctionsIceIds()"/>.
+        /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
             return BodyMassIndexFunctionsI.ids__;
@@ -86,8 +126,25 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
             return null;
         }
 
+        
+        /// <summary>
+        /// This is recomended (not required) to have <c>public const string</c> 
+        /// field in the BoxInfo implementation which holds the identifier 
+        /// of type of the box module.
+        /// </summary>
         public const string typeIdentifier = "Sample.BodyMassIndex";
 
+        /// <summary>
+        /// Unique identifier of type of Box module
+        /// </summary>
+        /// <value></value>
+        /// <remarks>
+        /// This string identifier is parsed i.e. dots (".") are
+        /// replaced by <see cref="P:System.IO.Path.DirectorySeparatorChar"/>.
+        /// Returned path is combined with application directory`s
+        /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.configFilesFolderName">subdirectory</see>
+        /// and final path is used for getting stored configuration [localization] XML files.
+        /// </remarks>
         protected override string identifier
         {
             get { return typeIdentifier; }

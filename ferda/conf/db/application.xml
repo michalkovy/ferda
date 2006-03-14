@@ -41,6 +41,7 @@
       <object identity="SimpleDeviationFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
       <object identity="CriticalEquivalenceFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
       <object identity="CriticalImplicationFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+      <object identity="EFunctionalQuantifiersFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 
       <object identity="SDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
       <object identity="AboveAverageImplicationFunctionalQuantifiersSDFFTTaskFactoryCreator" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
@@ -114,9 +115,9 @@
 
       <!--
       4ft statistics
-      -->     
+      -->
       <object identity="FFTTSupport" type="::Ferda::Statistics::StatisticsProvider"/>
-      <object identity="FFTTA" type="::Ferda::Statistics::StatisticsProvider"/> 
+      <object identity="FFTTA" type="::Ferda::Statistics::StatisticsProvider"/>
       <object identity="FFTTAvgDf" type="::Ferda::Statistics::StatisticsProvider"/>
       <object identity="FFTTB" type="::Ferda::Statistics::StatisticsProvider"/>
       <object identity="FFTTC" type="::Ferda::Statistics::StatisticsProvider"/>
@@ -171,7 +172,7 @@
 			<icebox id="${index}" exe="iceboxnet" activation="on-demand" pwd="${pwd}">
 				<service-instance template="FerdaServiceTemplate"
 					name="FerdaDataMiningCommonBoxes"
-					entry="FerdaDataMiningCommonBoxes.dll:Ferda.Modules.Boxes.DataMiningCommon.Service"                                 
+					entry="FerdaDataMiningCommonBoxes.dll:Ferda.Modules.Boxes.DataMiningCommon.Service"
 					endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate"
 					name="FerdaLMTasksBoxes"

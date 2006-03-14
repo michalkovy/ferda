@@ -33,6 +33,7 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
 			this.registerBox("SimpleDeviationFunctionalQuantifiersFFTTaskFactoryCreator", new Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.SimpleDeviation.SimpleDeviationBoxInfo());
 			this.registerBox("CriticalEquivalenceFunctionalQuantifiersFFTTaskFactoryCreator", new Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.CriticalEquivalence.CriticalEquivalenceBoxInfo());
 			this.registerBox("CriticalImplicationFunctionalQuantifiersFFTTaskFactoryCreator", new Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.CriticalImplication.CriticalImplicationBoxInfo());
+            this.registerBox("EFunctionalQuantifiersFFTTaskFactoryCreator", new Boxes.LISpMinerTasks.FFTTask.Quantifiers.Functional.E.EBoxInfo());
 
 			//SDFFT
 			this.registerBox("SDFFTTaskFactoryCreator", new Boxes.LISpMinerTasks.SDFFTTask.SDFFTTaskBoxInfo());

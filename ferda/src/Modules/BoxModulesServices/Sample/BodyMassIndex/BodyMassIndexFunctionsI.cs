@@ -6,9 +6,36 @@ using Ferda.Modules.Boxes.DataMiningCommon.Attributes;
 
 namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
 {
+    /// <summary>
+    /// This is an implementation of slice design of Body Mass Indes box module.
+    /// </summary>
+    /// <remarks>
+    /// To implement the BMI slice design you have to inherit the abstract class
+    /// <see cref="T:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsDisp_"/>
+    /// which was generated from slice design.
+    /// To implement the functions object you has to implement 
+    /// the <see cref="T:Ferda.Modules.IFunctions"/> interface.
+    /// Now the implementation of box module`s functios is complete.
+    /// </remarks>
     public class BodyMassIndexFunctionsI : BodyMassIndexFunctionsDisp_, Ferda.Modules.IFunctions
     {
+        /// <summary>
+        /// The <see cref="T:Ferda.Modules.BoxModuleI"/> class. This
+        /// represents current instance of the BMI box module. I.e. all
+        /// box module settings like sockets connections or properties values
+        /// are holded by the boxModule.
+        /// </summary>
         protected Ferda.Modules.BoxModuleI boxModule;
+
+        /// <summary>
+        /// The <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// Please note that all instances of the Body Mass Index 
+        /// box module (all BMI box instances) share one instance 
+        /// of the BoxInfo.
+        /// </remarks>
         protected Ferda.Modules.Boxes.IBoxInfo boxInfo;
 
         #region IFunctions Members
@@ -129,6 +156,11 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                     );
         }
 
+        /// <summary>
+        /// Gets the column info.
+        /// </summary>
+        /// <param name="current__">The current__.</param>
+        /// <returns>Basic information about the column.</returns>
         public override Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnInfo getColumnInfo(Ice.Current current__)
         {
             ColumnInfo result = new ColumnInfo();

@@ -32,11 +32,6 @@
       <Hint>Určení množiny relevantních podmínek.</Hint>
     </Socket>
     <Socket>
-      <Name>SDKLQuantifier</Name>
-      <Label>SDKL Kvantifikátor</Label>
-      <Hint>Určení SDKL kvantifikátoru pro úlohu</Hint>
-    </Socket>
-    <Socket>
       <Name>Cedent1</Name>
       <Label>Cedent 1</Label>
       <Hint>?Cedent1</Hint>
@@ -45,6 +40,11 @@
       <Name>Cedent2</Name>
       <Label>Cedent 2</Label>
       <Hint>?Cedent2</Hint>
+    </Socket>
+    <Socket>
+      <Name>SDKLQuantifier</Name>
+      <Label>SDKL Kvantifikátor</Label>
+      <Hint>Určení SDKL kvantifikátoru pro úlohu</Hint>
     </Socket>
     <Socket>
       <Name>FirstSet</Name>
