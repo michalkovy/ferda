@@ -32,11 +32,6 @@
       <Hint>Defines set of relevant conditions.</Hint>
     </Socket>
     <Socket>
-      <Name>SDFFTQuantifier</Name>
-      <Label>SD4ft Quantifier</Label>
-      <Hint>Defines SD4ft quantifier for task</Hint>
-    </Socket>
-    <Socket>
       <Name>Cedent1</Name>
       <Label>Cedent 1</Label>
       <Hint>?Cedent1</Hint>
@@ -45,6 +40,11 @@
       <Name>Cedent2</Name>
       <Label>Cedent 2</Label>
       <Hint>?Cedent2</Hint>
+    </Socket>
+    <Socket>
+      <Name>SDFFTQuantifier</Name>
+      <Label>SD4ft Quantifier</Label>
+      <Hint>Defines SD4ft quantifier for task</Hint>
     </Socket>
     <Socket>
       <Name>FirstSet</Name>

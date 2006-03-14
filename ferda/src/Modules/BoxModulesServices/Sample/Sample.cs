@@ -4,8 +4,14 @@ using System.Text;
 
 namespace Ferda.Modules.Boxes.Sample
 {
+    /// <summary>
+    /// TODO Michal
+    /// </summary>
     public class Service : Ferda.Modules.FerdaServiceI
     {
+        /// <summary>
+        /// TODO Michal
+        /// </summary>
         protected override void registerBoxes()
         {
             this.registerBox("BodyMassIndexSampleFactoryCreator", new Sample.BodyMassIndex.BodyMassIndexBoxInfo());
