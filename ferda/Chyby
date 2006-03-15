@@ -1,41 +1,11 @@
 Tomas:
-Kdyz udelam zapojeni Barbory databaze, tabulka, sloupce, ale pak zmenim databazi na stulong a kliknu na tabulku, dojde k vyjimce
-ME TO NENASTALO -> ASI OPRAVENO
-
-Martin:
-Pokud v dialogu pro nastavovani Ferdy zmenim locale, nerekne mi to ani, ze k tomu, aby to zapusobilo, musim restartovat program
-
-Tomas+Sasa:
-Databaze Stulong, tabulka Entry sloupec VINO - distinct values=2, minimum=11, maximum=11 - divne, ne? Mozna to jeste chapu, pokud ta druha hodnota je null, co je ale divne - modul pro interakci frekvenci tam ukazuje neco s zadnou hodnotou a frekvenci 0 - to je urcite spatne - pokud tam neco je (i null), tak by to melo mit nejakou frekvenci
-OPRAVENO U OBOU (Ja is Sasa jsme to meli oba stejne blbe (samozrejme Sasa hur :-) ))
-
-Databaze Seat(predam), tabulka Alhambra, sloupec seriova_vybava - blbne jak modul pro interakci tak se neukazuji statistiky (jedna se o sloupec typu Memo/Text(nebo,jak to nazyvate - proste "neomezena" delka textu))
-PADAT BY TO NEMELO, nicmene statistiky nad timto typem sloupce proste fungovat nebudou, protoze ODBC driver pro MS Access drskuje:
-- pro SELECT DISTINCT column From dataMatrix (z toho duvodu nefunguje treba ni EachValOneCat atribut) : ERROR [22001] [Microsoft][Ovladaè ODBC pro Microsoft Access] Pole je pro pøidávaná data pøíliš malé. Zkuste vložit ménì dat.
-- pro ziskani jakychkoli statistik: ERROR [42000] [Microsoft][Ovladaè ODBC pro Microsoft Access] Pole objektù Memo, OLE nebo Hyperlink nemohou být v agregaèním argumentu (`seriova_vybava`).
-No myslim, ze to je problem MS Accessu, nicmene se domnivam ze dobyvani nad takovymi daty stejne nehrozi ... zrejme by na takova data (typ dat) analytik nejdriv stejne nasadil nejaky preprocesing
-
+Kdyz udelam zapojeni Barbory databaze, tabulka, sloupce, ale pak zmenim databazi na stulong a kliknu na sloupec, ukazuje to stare statistiky, to by asi nemelo, ne?
 
 Sasa:
 Area chart bych vazne vyhodil, pouze zavadi - mrkni se napriklad na Databaze Stulong, tabulka Entry sloupec STAV - to, co tam ma nejvetsi frekvenci tam neni vubec videt...
+Kdyz udelam zapojeni Barbory databaze, tabulka, sloupce, ale pak zmenim databazi na stulong a nad sloupcem spustim modul pro interakci, haze to pekne blbe hlasky
 
 Myslim, ze Pie chart by mel byt kulaty (ne sisaty) ... kdyz to nekdo bude chtit vykopirovavat treba do wordu, tak predtimi nebude chtit zvetsovat/zmensovat velikost podokna, aby se dobral pozadovaneho tvaru
 
-Tomas:
-Chyba pri kliku na "each value one category" z Databaze "Xtreme Sample Database 2005" (soucasti Crystal Reports z Visual Studia), tabulka Orders, sloupec Ship Via
-
-Chyba pri kliknuti na derived column hned po vytvoreni pomoci "krabicek navrhovanych na vytvoreni"
-OPRAVENO
-
-Sasa, nicmene 1) a 3) jsou veci,ze kterych bychom se meli poucit vsichni:
-Pomalost result browseru pri praci s pouzitymi kvantifikatory, cim to je:
-1) pouzivas tento konstrukt: this.AllQuantifiers[i].functions.Value(hypothese.quantifierSetting)
-- to je hodne pomale - nejpomalejsi je na tom ".functions" (nebudu moc vysvetlovat hlubiny Ice, ale jde o to, ze ty pri kazdem pocitani kvantifikatoru si z instance krabky kvantifakatoru zjistujes jeho functions(i kdyz bys to mohl udelat jen jednou) - to je relativne draha operace, drazsi nez samotny vypocet kvantifikatoru (zavolani ".Value(...)"), jelikoz se musi udelat nova proxyna (tyrida ktera "dela",ze je vzdalenym objektem) na tve strane...) - proste zjisti si functions kvantifikatoru jen na zacatku jednou a pak pracuj s nimi (samotna krabka kvantifikatoru te uz nemusi vubec zajimat)
-(asi odvolavam, ale zamysli se:
--- udelal jsem to tak, ze jednou naplnim pole hodnotami quantifier[i].function a pak volam pole[i].Value, je to lepsi?
-
-2) zrejme tam budes zjistovat ty hodnoty kvantifikatoru nekolikrat - nebo nevim (uz asi vim - viz 3. bod) proc kdyz si tam dam jeden pouzity kvantifikator, sesortim to, oboje je jeste relativne pouzitelny pri nejakych 38000 hypotezach (myslim, ze tolik mi vyslo), ale jak tam reknu, ze chci dalsi kvantifikator videt, uz se nedockam (tedy i kdyz by to melo byt zhruba 2x tolik casu, bude to asi 2x38000x tolik casu))
--- pri trideni nic nezjistuju, tridim listview. zjistuju, kdyz pridavam / odebiram sloupce.
-
-3) "pekna" a zasadni chyba (prisel jsem na to az ted): tvoje implementace compare v Sorter dela to, ze "zamerne" dochazi k vyjimkam - to je HODNE hnusne - vyjimky by se meli vyuzivat k "NECEKANYM" ale moznym stavum, ty to pouzivas k cekane veci! Ver mi odchytat .NETu 60000 vyjimek trva STRASNE DLOUHO! Proto to zrejme je takovy porod cekat na vysledek!
- -- fixed, tak maly sotek a tak velky bordel :)
+Tomas + Sasa:
+Chyba pri kliku na "each value one category" z Databaze "Xtreme Sample Database 2005" (soucasti Crystal Reports z Visual Studia), tabulka Orders, sloupec Ship Via (neukazi se statistiky a blbne modul pro interakci)
