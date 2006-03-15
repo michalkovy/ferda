@@ -9,3 +9,12 @@ Myslim, ze Pie chart by mel byt kulaty (ne sisaty) ... kdyz to nekdo bude chtit 
 
 Tomas + Sasa:
 Chyba pri kliku na "each value one category" z Databaze "Xtreme Sample Database 2005" (soucasti Crystal Reports z Visual Studia), tabulka Orders, sloupec Ship Via (neukazi se statistiky a blbne modul pro interakci)
+
+GPL hlavicky + utf-8 kodovani
+
+Martin:
+po spusteni akce neni treba refreshovat cely desktop
+
+Zda se mi, ze pri ruznych akcich (pridani krabicky, vyber v combo boxu,...) se archiv refreshuje 2x az 3x! To strasne zdrzuje (a zda se mi, ze pri prvnich dvou to jeste dela snad na vsech krabickach, jako by byly spatne vybrany comba)
+
+OtherPropertyEditor.cs, IUserNoteDisplayer.cs a FerdaUserNote.cs nema GPL hlavicku
