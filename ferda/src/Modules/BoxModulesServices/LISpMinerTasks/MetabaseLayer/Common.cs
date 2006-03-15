@@ -163,37 +163,64 @@ namespace Ferda.Modules.MetabaseLayer
             return result;
         }
 
+        private DataTable _tmCategoryBooleanCache = null;
         public string[] GetBooleanLiteralCategoriesNames(int taskID, int literalInterpretationDbID)
         {
-            ArrayList res = new ArrayList();
+            if (_tmCategoryBooleanCache == null)
+            {
+                _tmCategoryBooleanCache = ExecuteSelectQuery("SELECT tmCategory.Name, tiCoefficient.LiteralIID FROM tiCoefficient, tmCategory WHERE tiCoefficient.TaskID=" + taskID + " AND tiCoefficient.CategoryID=tmCategory.CategoryID");
+            }
+            DataRow[] categories = _tmCategoryBooleanCache.Select("LiteralIID=" + literalInterpretationDbID);
+            //"SELECT tmCategory.* FROM tiCoefficient, tmCategory WHERE tiCoefficient.TaskID=" + taskID + " AND tiCoefficient.LiteralIID=" + literalInterpretationDbID + " AND tiCoefficient.CategoryID=tmCategory.CategoryID"
+
             List<string> result = new List<string>();
-            DataTable categories = ExecuteSelectQuery("SELECT tmCategory.* FROM tiCoefficient, tmCategory WHERE tiCoefficient.TaskID=" + taskID + " AND tiCoefficient.LiteralIID=" + literalInterpretationDbID + " AND tiCoefficient.CategoryID=tmCategory.CategoryID");
-            foreach (DataRow category in categories.Rows)
+            foreach (DataRow category in categories)
             {
                 result.Add(category["Name"].ToString());
             }
             return result.ToArray();
         }
 
+        private Dictionary<int, string[]> _tmCategoryCategorialCache = null;
+        private DataTable _tmCategoryCache = null;
         public string[] GetCategorialLiteralCategoriesNames(int QuantityID)
         {
-            ArrayList res = new ArrayList();
-            List<string> result = new List<string>();
-            DataTable categories = ExecuteSelectQuery("SELECT Name FROM tmCategory WHERE QuantityID=" + QuantityID + " order by Ord");
-            foreach (DataRow category in categories.Rows)
+            if (_tmCategoryCategorialCache == null)
             {
-                result.Add(category["Name"].ToString());
+                _tmCategoryCategorialCache = new Dictionary<int, string[]>();
             }
-            return result.ToArray();
-        } 
+            string[] result;
+            if (_tmCategoryCategorialCache.TryGetValue(QuantityID, out result))
+                return result;
+            else
+            {
+                if (_tmCategoryCache == null)
+                    _tmCategoryCache = ExecuteSelectQuery("SELECT Name, QuantityID, Ord FROM tmCategory");
+                DataRow[] categories = _tmCategoryCache.Select("QuantityID=" + QuantityID, "Ord");
+                List<string> resultList = new List<string>();
+                foreach (DataRow category in categories)
+                {
+                    resultList.Add(category["Name"].ToString());
+                }
+                result = resultList.ToArray();
+                _tmCategoryCategorialCache.Add(QuantityID, result);
+                return result;
+            }
+        }
 
+        private DataTable _tiLiteralsCache = null;
         //tiLiteralI
         public BooleanLiteralStruct[] GetBooleanLiterals(int taskID, int hypothesisID)
         {
+            if (_tiLiteralsCache == null)
+            {
+                _tiLiteralsCache = ExecuteSelectQuery("SELECT * FROM tiLiteralI WHERE TaskID=" + taskID);
+            }
+            DataRow[] literals = _tiLiteralsCache.Select("HypothesisID=" + hypothesisID);
+
             List<BooleanLiteralStruct> result = new List<BooleanLiteralStruct>();
             BooleanLiteralStruct booleanLiteralStruct;
-            DataTable literals = ExecuteSelectQuery("SELECT * FROM tiLiteralI WHERE TaskID=" + taskID + " AND HypothesisID=" + hypothesisID);
-            foreach (DataRow literal in literals.Rows)
+            foreach (DataRow literal in literals)
             {
                 booleanLiteralStruct = new BooleanLiteralStruct();
                 booleanLiteralStruct.cedentType =
@@ -215,7 +242,7 @@ namespace Ferda.Modules.MetabaseLayer
         {
             string tdLiteralTableName = String.Empty;
             string tdLiteralIDColumn = String.Empty;
-            
+
             string tdCedentDTableName = String.Empty;
             string tdCedentDIDColumn = String.Empty;
             switch (taskType)
@@ -246,16 +273,16 @@ namespace Ferda.Modules.MetabaseLayer
             List<LiteralStruct> result = new List<LiteralStruct>();
             LiteralStruct literalStruct;
             DataTable literals = ExecuteSelectQuery(
-                "SELECT " + 
+                "SELECT " +
                 tdLiteralTableName + "." + tdLiteralIDColumn + ", " +
                 tdCedentDTableName + "." + tdCedentDIDColumn + ", " +
-                tdLiteralTableName + ".QuantityID, "  +
+                tdLiteralTableName + ".QuantityID, " +
                 "tmQuantity.Name, CedentTypeID" +
                 " FROM `"
                 + tdCedentDTableName + "`, `" + tdLiteralTableName + "`, `tmQuantity` " +
                 "WHERE TaskID=" + taskID + " AND " +
                 tdCedentDTableName + "." + tdCedentDIDColumn + "=" +
-                tdLiteralTableName + "." + tdCedentDIDColumn + 
+                tdLiteralTableName + "." + tdCedentDIDColumn +
                 " AND tmQuantity.QuantityID=" +
                 tdLiteralTableName + "." + "QuantityID"
                 );
@@ -344,7 +371,7 @@ namespace Ferda.Modules.MetabaseLayer
             switch (taskType)
             {
                 case TaskTypeEnum.KL:
-                    return new int [0][];
+                    return new int[0][];
 
                 case TaskTypeEnum.SDKL:
                     tableName = "tiDKFrequencyI";
@@ -364,7 +391,7 @@ namespace Ferda.Modules.MetabaseLayer
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(taskType);
             }
             DataTable table = ExecuteSelectQuery("SELECT * FROM " + tableName + " WHERE TaskID=" + taskID + " AND " + hypothesisColumnName + "=" + hypothesisID + " AND CedentTypeID=" + constants.CedentEnumDictionary[CedentEnum.FirstSet]);
-            
+
             AbstractAttributeStruct rowAttribute;
             AbstractAttributeStruct columnAttribute = GetAttributeStruct(columnAttributeIdentifier);
             List<int[]> resultList = new List<int[]>();
@@ -378,7 +405,7 @@ namespace Ferda.Modules.MetabaseLayer
             {
                 resultList.Add(new int[columnAttribute.countOfCategories]);
             }
-            
+
             int[][] result = resultList.ToArray();
             foreach (DataRow row in table.Rows)
             {
