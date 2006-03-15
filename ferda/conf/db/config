@@ -44,6 +44,3 @@ IceGrid.Node.Trace.Adapter=2
 IceGrid.Node.Trace.Server=3
 
 #Ice.Trace.Location=2
-
-FerdaDataMiningCommonAdapter.ThreadPool.Size=10
-FerdaLMTasksAdapter.ThreadPool.Size=10
