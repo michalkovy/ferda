@@ -136,7 +136,7 @@ namespace Ferda {
 				boxesWithLabel[label].Remove(box);
 				if(boxesWithLabel[label].Count == 0)
 				{
-					boxCategories.Remove(label);
+                    boxLabels.Remove(label);
                     foreach (StringCollection labels in labelsInCategory.Values)
                     {
                         if (labels.Contains(label)) labels.Remove(label);
@@ -254,21 +254,31 @@ namespace Ferda {
             /// </summary>
             /// <param name="boxCategory">A string representation
             /// of category of box. If null or empty then returns all.</param>
-            /// <returns>Collaction of labels of boxes</returns>
-            public StringCollection ListBoxLabelsInCategory(string boxCategory)
+            /// <returns>An array of labels of boxes</returns>
+            public string[] ListBoxLabelsInCategory(string boxCategory)
             {
+                StringCollection result;
                 if (String.IsNullOrEmpty(boxCategory))
                 {
-                    return this.boxLabels;
-                }
-                if (labelsInCategory.ContainsKey(boxCategory))
-                {
-                    return labelsInCategory[boxCategory];
+                    result = this.boxLabels;
                 }
                 else
                 {
-                    return new StringCollection();
+                    if (labelsInCategory.ContainsKey(boxCategory))
+                    {
+                        result = labelsInCategory[boxCategory];
+                    }
+                    else
+                    {
+                        result = new StringCollection();
+                    }
                 }
+                int size = result.Count;
+                if (size == 0) return new string[0];
+                string[] returnValue = new string[size];
+                result.CopyTo(returnValue, 0);
+                Array.Sort<string>(returnValue);
+                return returnValue;
             }
 
 

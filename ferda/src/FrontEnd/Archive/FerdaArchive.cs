@@ -502,7 +502,7 @@ namespace Ferda.FrontEnd.Archive
         /// which the types of the boxes should be changed</param>
         public void FillBoxLabels(string boxCategory)
         {
-            StringCollection types;
+            string[] types;
             CBTypes.Items.Clear();
 
             CBTypes.Items.Add(ResManager.GetString("ArchiveAllText"));
@@ -961,7 +961,8 @@ namespace Ferda.FrontEnd.Archive
                 string[] categories = archive.ArchiveBoxTypes;
                 foreach (string category in categories)
                 {
-                    StringCollection types = archive.ListBoxLabelsInCategory(category);
+                    StringCollection types = new StringCollection();
+                    types.AddRange(archive.ListBoxLabelsInCategory(category));
                     if (types.Contains(CBTypes.Items[typeIndex].ToString()))
                     {
                         ResetArchive(category, CBTypes.Items[typeIndex].ToString(),
