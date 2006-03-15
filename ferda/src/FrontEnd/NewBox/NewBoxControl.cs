@@ -1,8 +1,8 @@
 // NewBoxContro.cs - user can drop new boxes from this class
 //
-// Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
+// Author: Martin RalbovskÃ½ <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Martin Ralbovský
+// Copyright (c) 2005 Martin RalbovskÃ½
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
