@@ -61,9 +61,12 @@ SectionGroup "$(Basefiles)" BaseFiles
 	SetOutPath "$INSTDIR"
 	File ice-install.bat
 	
+	;CreateDirectory "$INSTDIR\ThirdParty\ice\bin"
+	
 	;adding ice to path
+	Push "PATH"
 	Push "$INSTDIR\ThirdParty\ice\bin"
-    Call AddToPath
+    Call AddToEnvVar
     
     ;editing path in application.xml file
     Push "pwd=$\"bin/Server$\""
