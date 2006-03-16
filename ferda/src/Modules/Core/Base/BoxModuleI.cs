@@ -1,4 +1,4 @@
-// BoxModuleI.cs - representation of box on Ferda modules side
+// BoxModuleI.cs - box on Ferda modules side
 //
 // Authors: 
 //   Michal Kováč <michal.kovac.develop@centrum.cz>
@@ -29,7 +29,7 @@ using System.Diagnostics;
 namespace Ferda.Modules
 {
     /// <summary>
-    /// representation of box on Ferda modules side
+    /// Representation of box on Ferda modules side
     /// </summary>
     public class BoxModuleI : BoxModuleDisp_
     {

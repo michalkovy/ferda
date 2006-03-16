@@ -5,12 +5,12 @@ using System.Text;
 namespace Ferda.Modules.Boxes.Sample
 {
     /// <summary>
-    /// TODO Michal
+    /// Sample IceBox service with BodyMassIndex box 
     /// </summary>
     public class Service : Ferda.Modules.FerdaServiceI
     {
         /// <summary>
-        /// TODO Michal
+        /// Registers box to ice object adapter
         /// </summary>
         protected override void registerBoxes()
         {
