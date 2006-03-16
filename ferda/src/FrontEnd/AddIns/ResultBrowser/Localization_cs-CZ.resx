@@ -171,6 +171,9 @@
   <data name="LabelHOffset" xml:space="preserve">
     <value>Hor. posun</value>
   </data>
+  <data name="LabelNumeric" xml:space="preserve">
+    <value>Přesnost:</value>
+  </data>
   <data name="LabelPerspective" xml:space="preserve">
     <value>Perspektiva</value>
   </data>

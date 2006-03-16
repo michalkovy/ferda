@@ -528,7 +528,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
                 try
                 {
-                    temp = Math.Round(proxy.getStatistics(hypothesis.quantifierSetting).ToString();
+                    double dtemp = Math.Round(proxy.getStatistics(hypothesis.quantifierSetting),Convert.ToInt32(this.NumericUpDownDecimals.Value)) ;
+                    temp = dtemp.ToString();
                 }
                 catch
                 {
@@ -617,6 +618,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelSortedBy.Text = rm.GetString("SortedBy");
 
             this.LabelCurrentlySorted.Text = rm.GetString("SortedByNone");
+            this.LabelNumeric.Text = rm.GetString("LabelNumeric");
         }
 
         #endregion   
