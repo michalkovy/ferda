@@ -153,7 +153,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 item.SubItems.Add(FerdaResult.GetCondition(hypothese));
 
                 //quantifiers
-                foreach (object value in resultBrowser.SelectedQuantifierValues(hypothese))
+                foreach (object value in resultBrowser.SelectedQuantifierValues(hypothese, Convert.ToInt32(this.NumericUpDownDecimals.Value)))
                 {
                     item.SubItems.Add(value.ToString());
                 }
@@ -162,6 +162,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 HypothesesListView.Items.Add(item);
                 i++;
             }
+            this.LabelCurrentlySorted.Text = resManager.GetString("SortedByNone");
         }
 
         /// <summary>
@@ -186,6 +187,24 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 tempitem = (ToolStripMenuItem)this.QuantifiersListContextMenu.Items.Add(item);
                 tempitem.Click += new EventHandler(ItemClick);
                 tempitem.CheckOnClick = true;
+            }
+
+            //filling the listbox for sorting by statistics
+            foreach (Ferda.Statistics.StatisticsProviderPrx proxy in this.statisticsProxies)
+            {
+                string temp = String.Empty;
+                string temp1 = proxy.getStatisticsName();
+
+                try
+                {
+                    // temp = proxy.getStatistics(hypothesis.quantifierSetting).ToString();
+                }
+                catch
+                {
+                    temp = this.resManager.GetString("StatisticsUnimplemented");
+                }
+
+                this.ComboBoxSortStatistics.Items.Add(temp1);
             }
 
             this.RefreshBrowser();
@@ -217,6 +236,77 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 this.GroupBoxChangeGraph.Visible = false;
                 this.ToolStripShowGraphEdit.Checked = false;
             }
+        }
+
+        /// <summary>
+        /// Method which handles selection change in the combobox and re-sorts the listview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBoxSortStatistics_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            int index = 0;
+            try
+            {
+                index = Convert.ToInt32(this.ComboBoxSortStatistics.SelectedIndex);
+            }
+            catch
+            {
+                return;
+            }
+            string statisticsName = String.Empty;
+
+            try
+            {
+                statisticsName = this.statisticsProxies[index].getStatisticsName();
+            }
+            catch
+            {
+                return;
+            }
+            List<Tuple> tuples = new List<Tuple>();
+            HypothesisStruct[] hypotheses = resultBrowser.GetAllHypotheses();
+            for (int k = 0; k < hypotheses.Length; k++)
+            {
+                Tuple tempTuple = new Tuple();
+                tempTuple.HypId = k;
+                try
+                {
+                    tempTuple.Value = this.statisticsProxies[index].getStatistics(hypotheses[k].quantifierSetting);
+                }
+                catch
+                {
+                    MessageBox.Show(this.resManager.GetString("StatisticsUnimplemented"), this.resManager.GetString("StatisticsUnimplemented"),
+                          MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                tuples.Add(tempTuple);
+            }
+            tuples.Sort();
+            this.HypothesesListView.Items.Clear();
+            for (int i = 0; i < tuples.Count; i++)
+            {
+                HypothesisStruct hypothese = resultBrowser.GetHypothese(tuples[i].HypId);
+                ListViewItem item = new ListViewItem(FerdaResult.GetHypothesisName(hypothese));
+
+                //antecedent
+                item.SubItems.Add(FerdaResult.GetAntecedent(hypothese));
+
+                //succedent
+                item.SubItems.Add(FerdaResult.GetSuccedent(hypothese));
+
+                //Condition
+                item.SubItems.Add(FerdaResult.GetCondition(hypothese));
+
+                //quantifiers
+                foreach (object value in resultBrowser.SelectedQuantifierValues(hypothese, Convert.ToInt32(this.NumericUpDownDecimals.Value)))
+                {
+                    item.SubItems.Add(value.ToString());
+                }
+                item.Tag = i;
+                HypothesesListView.Items.Add(item);
+            }
+            this.LabelCurrentlySorted.Text = statisticsName;
         }
 
         /// <summary>
@@ -357,7 +447,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             //used quantifiers and their values
             List<string> quantifierNames = this.resultBrowser.GetAllQuantifierNames();
-            List<double> quantifierValues = this.resultBrowser.AllQuantifierValues(hypothesis);
+            List<double> quantifierValues = this.resultBrowser.AllQuantifierValues(hypothesis, Convert.ToInt32(this.NumericUpDownDecimals.Value));
 
             //if the count is not the same, something must be very wrong...
             if (quantifierNames.Count == quantifierValues.Count)
@@ -438,7 +528,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
                 try
                 {
-                    temp = proxy.getStatistics(hypothesis.quantifierSetting).ToString();
+                    temp = Math.Round(proxy.getStatistics(hypothesis.quantifierSetting).ToString();
                 }
                 catch
                 {
@@ -462,6 +552,16 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             this.displayer.Reset();
             this.displayer.OtherObjectAdapt(table);
+        }
+
+        /// <summary>
+        /// Handler for changing numeric precision for quantifiers values
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NumericUpDownDecimals_ValueChanged(object sender, EventArgs e)
+        {
+            this.RefreshBrowser();
         }
 
         #endregion
@@ -512,6 +612,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelZoom.Text = rm.GetString("LabelZoom");
             this.ToolStripCopyChart.Text = rm.GetString("CopyChart");
             this.CheckBoxShowLabels.Text = rm.GetString("ShowLabels");
+
+            this.LabelSortHypotheses.Text = rm.GetString("SortBy");
+            this.LabelSortedBy.Text = rm.GetString("SortedBy");
+
+            this.LabelCurrentlySorted.Text = rm.GetString("SortedByNone");
         }
 
         #endregion   

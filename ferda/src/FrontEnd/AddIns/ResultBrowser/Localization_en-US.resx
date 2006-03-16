@@ -150,6 +150,9 @@
   <data name="CopyChart" xml:space="preserve">
     <value>Copy chart to clipboard</value>
   </data>
+  <data name="DecimalForQuantifier" xml:space="preserve">
+    <value>Quantifier's value precision (decimal places):</value>
+  </data>
   <data name="Empty" xml:space="preserve">
     <value>Empty</value>
   </data>
@@ -198,11 +201,20 @@
   <data name="ShowLabels" xml:space="preserve">
     <value>Show labels</value>
   </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Sort by:</value>
+  </data>
+  <data name="SortedBy" xml:space="preserve">
+    <value>Sorted by:</value>
+  </data>
+  <data name="SortedByNone" xml:space="preserve">
+    <value>(none)</value>
+  </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
   </data>
   <data name="StatisticsUnimplemented" xml:space="preserve">
-    <value>Function not implemented</value>
+    <value>Statistics not implemented</value>
   </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>

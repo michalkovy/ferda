@@ -13,6 +13,51 @@ using System.Reflection;
 
 namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 {
+    public struct Tuple : IComparable
+    {
+        int HypothesisId;
+        float CountedStatistics;
+
+        public int HypId
+        {
+            get
+            {
+                return HypothesisId;
+            }
+            set
+            {
+                HypothesisId = value;
+            }
+        }
+
+        public float Value
+        {
+            get
+            {
+                return CountedStatistics;
+            }
+
+            set
+            {
+                CountedStatistics = value;
+            }
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is Tuple)
+            {
+                Tuple tuple = (Tuple)obj;
+                return CountedStatistics.CompareTo(tuple.CountedStatistics);
+            }
+            else
+            {
+                throw new ArgumentException("NotTuple");
+            }
+        }
+    };
+
+
     /// <summary>
     /// Class for storing and proceeding the results
     /// </summary>
@@ -532,14 +577,14 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="hypothese">Hypothese to take tables from</param>
         /// <returns>List of values for each quantifier</returns>
-        protected List<double> ApplySelectedQuantifiers(HypothesisStruct hypothese)
+        protected List<double> ApplySelectedQuantifiers(HypothesisStruct hypothese, int precision)
         {
             List<double> returnList = new List<double>();
             for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
                 if (this.SelectedQuantifiers[i] == 1)
                 {
-                    returnList.Add(this.proxy[i].Value(hypothese.quantifierSetting));
+                    returnList.Add(Math.Round(this.proxy[i].Value(hypothese.quantifierSetting), precision));
                 }
             }
             return returnList;
@@ -550,16 +595,15 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="hypothese">Hypothese to take tables from</param>
         /// <returns>List of values for each quantifier</returns>
-        protected List<double> ApplyAllQuantifiers(HypothesisStruct hypothese)
+        protected List<double> ApplyAllQuantifiers(HypothesisStruct hypothese, int precision)
         {
             List<double> returnList = new List<double>();
             for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
-                returnList.Add(this.proxy[i].Value(hypothese.quantifierSetting));
+                returnList.Add(Math.Round(this.proxy[i].Value(hypothese.quantifierSetting), precision));
             }
             return returnList;
         }
-
 
 
         /// <summary>
@@ -567,9 +611,9 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="hypothese"></param>
         /// <returns>Arraylist of values</returns>
-        public List<double> SelectedQuantifierValues(HypothesisStruct hypothese)
+        public List<double> SelectedQuantifierValues(HypothesisStruct hypothese, int precision)
         {
-            return this.ApplySelectedQuantifiers(hypothese);
+            return this.ApplySelectedQuantifiers(hypothese, precision);
         }
 
         /// <summary>
@@ -577,9 +621,9 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="hypothese"></param>
         /// <returns>Arraylist of values</returns>
-        public List<double> AllQuantifierValues(HypothesisStruct hypothese)
+        public List<double> AllQuantifierValues(HypothesisStruct hypothese,int precision)
         {
-            return this.ApplyAllQuantifiers(hypothese);
+            return this.ApplyAllQuantifiers(hypothese, precision);
         }
 
 
@@ -587,7 +631,6 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
 
         #region Hypotheses methods
-
 
         /// <summary>
         /// Method which gets all the hypotheses in the result
@@ -598,11 +641,15 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             return this.Hypotheses;
         }
 
+        /// <summary>
+        /// Gets hypothesis at the required index
+        /// </summary>
+        /// <param name="index">Index of the hypothesis to get</param>
+        /// <returns></returns>
         public HypothesisStruct GetHypothese(int index)
         {
             return this.Hypotheses[index];
         }
-
 
         #endregion
 
@@ -611,12 +658,8 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         public void ChangeRm(ResourceManager rm)
         {
-
             this.resManager = rm;
-
         }
-
-
 
         #endregion
     }
