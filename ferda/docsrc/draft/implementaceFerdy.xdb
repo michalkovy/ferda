@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <title>Implementace Ferdy</title>
+
+    <author>
+      <firstname>Michal</firstname>
+
+      <surname>Kováč</surname>
+
+      <email>michal.kovac.develop@centrum.cz</email>
+    </author>
+  </articleinfo>
+
+  <abstract>
+    <para>Tento text podrobně rozebírá architekturu Ferdy a zabívá se tím, proč byl navržen právě tak.</para>
+  </abstract>
+
+  <section>
+    <title>Volba programovacího jazyka, knihoven, nástrojů a licence</title>
+
+    <para>Rozhodli jsme se programovat Ferdu v jazyce C# verze 2.0. Oproti C++ nám jazyk nabídl bezpečnější a rychlejší vývoj. Také jsme přemýšleli o jazyku Java. Sice jsou programy v něm napsané stále ještě přenositelnější, ale zdálo se nám, že nenabízí pro v současné době nejrozšířenější uživatelský operační systém možnost programovat takové prostředí, na které je uživatel tohoto systému zvyklý a zároveň které je pěkné a dle nejnovějších trendů. Také se nám zdál jazyk C# trochu hezčí a i platforma CLI má jistě pro náš program své výhody (například možnost psaní dalších částí v jiných jazycích). Druhou verzi jazyka C# místo první jsme zvolili právě pro vzhled programovaného prostředí, nicméně hojně jsme využívali i ostatních novinek této verze.</para>
+
+    <para>S jazykem C# se automaticky nabízely utilitky NAnt (program na kompilaci CLI programů), NUnit (nástroj na testy jednotek) a NDoc (program na generování dokumentace z CLI assembly), které jsme rádi využili. Sice Visual Studio 2005 má také obdobné nástroje, nicméně výhodou těchto nástrojů je jejich možnost spuštění nejen na .NET Frameworku, ale také na Monu (jiná implementace CLI).</para>
+
+    <para>Jak z předminulého odstavce vyplývá, rozhodli jsme se pro System.Windows.Forms uživatelské prostředí ve verzi dva. Přemýšleli jsme ještě o knihovně GTK#, nicméně nevybrali jsme tak, protože jsme mírně upřednostňovali, aby se program líbil uživatelům majoritního operačního systému nad aktuální přenositelností mezi operačními systémy. Na druhou stranu věříme v to, že bude brzy System.Windows.Forms v druhé verzi také implementován v Monu.</para>
+
+    <para>Při návrhu se ukázalo, že je vhodné použít nějaký middleware. Nejvíce do úvahy padaly .NET Remoting, Corba a Ice. Vybrali jsme Ice pro jeho jednoduchost (oproti Corbě), rychlost, přenositelnost (oproti .NET Remotingu) a možnost programovat ve více jazycích (oproti .NET Remoting).</para>
+
+    <para>Dívali jsme se, zda neexistuje nějaká knihovna, která umí pěkně kreslit grafy s krabičkami. Zdálo se nám, že ideální pro to je knivovna Netron Graph Library, která byla v době volby ve verzi 2.1. Bohužel se však ukázalo, že v ní bylo třeba udělat nněkolik netriviálních zásahů, že není úplně nejrychlejší a má několik. Ve verzi 2.2 bylo uděláno v této knihovně ze strany Netronu poměrně dost změn a oprav, nicméně přechod na tuto verzi nebyl ještě učiněn z důvodu netriviality tohoto úkonu.</para>
+
+    <para>Zdálo se nám, že by bylo hodně vhodné, aby mělo naše výsledné uživatelské prostředí možnosti dokování. Vybírali jsme mezi několika knihovnami, které toto umožňovali, a rozhodli jsme se pro DockDotNet. Líbilo se nám na ní, že je napsána čistě v C# (ostatní používali WinAPI), tedy je přenositelná i na jiné operační systémy. Také byla v době našeho výběru vývoji, takže jsme doufali, že případné chyby se brzy odstraní. Bohužel zrovna v tu dobu vývoj DockDotNetu skončil a ukázalo se, že je knihovna v několika směrech nedokonalá a způsobuje ve Ferdovi několik chyb.</para>
+
+    <para>Při výběru licence padla volba na GPL v2, protože umožňuje otevřenost při zaručení, že nebude Ferda zneužit pro komerční účely.</para>
+  </section>
+
+  <section>
+    <title>Jaké jsme si dali předsevzedí pro implementaci</title>
+  </section>
+
+  <section>
+    <title>proč ne metabaze,... proč distribuované,... </title>
+  </section>
+
+  <section>
+    <title>Rozdělení Ferdy na jednotlivé části</title>
+
+    <para>Níže ukázaný obrázek je základní programátorské rozdělení částí
+    Ferdy</para>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="casti.png" format="PNG" />
+      </imageobject>
+
+      <imageobject>
+        <imagedata fileref="casti.svg" format="SVG" />
+      </imageobject>
+    </mediaobject>
+
+    <section>
+      <title>Uživatelské rozhraní</title>
+
+      <para>Uživatelské rozhraní má za úkol zprostředkovávat funkce manažeru
+      projektů uživatelovi. Návrh uživatelského rozhraní lze najít v dokumentu
+      Navrh_UI.xml.</para>
+    </section>
+
+    <section>
+      <title>Manažer projektů</title>
+
+      <para>Manažer projektů má tyto úkoly</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Zprostředkovat funkce, které poskytuje manažeru modulů</para>
+        </listitem>
+
+        <listitem>
+          <para>Přidat nad moduly funkce důležité pro projekt</para>
+        </listitem>
+
+        <listitem>
+          <para>Uchovávat vlastnosti krabiček</para>
+        </listitem>
+
+        <listitem>
+          <para>Funkce archivu</para>
+        </listitem>
+
+        <listitem>
+          <para>Funkce pohledů</para>
+        </listitem>
+
+        <listitem>
+          <para>Ukládání a načítání do XML</para>
+        </listitem>
+        
+		  <listitem>
+          <para>Stará se o přidělení správného uživatelského jména krabičkám</para>
+        </listitem>
+		  
+		  <listitem>
+          <para>Místo referencí již používá u objektů určeným k serializaci identifikaci uživatelským jménem, aby to šlo uložit do XML</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Manažer modulů</title>
+
+      <para>Manažer modulů má tyto úkoly</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Načítání seznamu modulů z IcePacku</para>
+        </listitem>
+
+        <listitem>
+          <para>Udržuje seznam modulů, s kterými může pracovat a přitom nejsou v IcePacku</para>
+        </listitem>
+
+        <listitem>
+          <para>Vytváření nových instancí modulů</para>
+        </listitem>
+
+        <listitem>
+          <para>Zprostředkování funkcí jednotlivých modulů</para>
+        </listitem>
+
+        <listitem>
+          <para>Dynamické i statické spouštění akcí modulů</para>
+        </listitem>
+
+        <listitem>
+          <para>Zajištění spolehlivosti modulů</para>
+        </listitem>
+
+        <listitem>
+          <para>Skrytí všech dynamických volání pod statické funkce</para>
+        </listitem>
+
+        <listitem>
+          <para>Předávání nastavení lokalizace modulům</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Moduly</title>
+
+      <para>Moduly jsou několika typů</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Krabičky – moduly, které mají reprezentaci na uživatelské
+          ploše</para>
+        </listitem>
+
+        <listitem>
+          <para>Moduly pro nastavování nestandardních vlastností
+          krabiček</para>
+        </listitem>
+
+        <listitem>
+          <para>Jiné moduly pro komunikaci s uživatelem</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Více informací o modulech lze najít v dokumentu moduly.xml.</para>
+    </section>
+  </section>
+
+  <section>
+    <title>Funkce middleware ve Ferdovi</title>
+  </section>
+
+  <section>
+    <title>Implementace krabiček</title>
+  </section>
+</article>
