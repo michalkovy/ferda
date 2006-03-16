@@ -198,11 +198,20 @@
   <data name="ShowLabels" xml:space="preserve">
     <value>Zobrazit popisky</value>
   </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Třídit dle:</value>
+  </data>
+  <data name="SortedBy" xml:space="preserve">
+    <value>Setřízeno dle:</value>
+  </data>
+  <data name="SortedByNone" xml:space="preserve">
+    <value>(žádné)</value>
+  </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistika</value>
   </data>
   <data name="StatisticsUnimplemented" xml:space="preserve">
-    <value>Funkce není implementována</value>
+    <value>Statistika není implementována</value>
   </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
