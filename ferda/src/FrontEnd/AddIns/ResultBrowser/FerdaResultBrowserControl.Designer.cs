@@ -37,6 +37,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ColumnAntecedent = new System.Windows.Forms.ColumnHeader();
             this.ColumnSuccedent = new System.Windows.Forms.ColumnHeader();
             this.ColumnCondition = new System.Windows.Forms.ColumnHeader();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.LabelNumeric = new System.Windows.Forms.Label();
+            this.NumericUpDownDecimals = new System.Windows.Forms.NumericUpDown();
+            this.LabelCurrentlySorted = new System.Windows.Forms.Label();
+            this.LabelSortedBy = new System.Windows.Forms.Label();
+            this.ComboBoxSortStatistics = new System.Windows.Forms.ComboBox();
+            this.LabelSortHypotheses = new System.Windows.Forms.Label();
             this.GroupBoxChangeGraph = new System.Windows.Forms.GroupBox();
             this.CheckBoxShowLabels = new System.Windows.Forms.CheckBox();
             this.LabelVOffset = new System.Windows.Forms.Label();
@@ -54,6 +61,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.Panel1.SuspendLayout();
             this.ResultBrowserSplit.Panel2.SuspendLayout();
             this.ResultBrowserSplit.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDecimals)).BeginInit();
             this.GroupBoxChangeGraph.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarVOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarHOffset)).BeginInit();
@@ -77,6 +86,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // ResultBrowserSplit.Panel1
             // 
             this.ResultBrowserSplit.Panel1.Controls.Add(this.HypothesesListView);
+            this.ResultBrowserSplit.Panel1.Controls.Add(this.panel1);
             // 
             // ResultBrowserSplit.Panel2
             // 
@@ -97,11 +107,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.HypothesesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HypothesesListView.FullRowSelect = true;
             this.HypothesesListView.GridLines = true;
-            this.HypothesesListView.Location = new System.Drawing.Point(0, 0);
+            this.HypothesesListView.Location = new System.Drawing.Point(0, 29);
             this.HypothesesListView.MultiSelect = false;
             this.HypothesesListView.Name = "HypothesesListView";
-            this.HypothesesListView.Size = new System.Drawing.Size(1064, 287);
-            this.HypothesesListView.TabIndex = 1;
+            this.HypothesesListView.Size = new System.Drawing.Size(1064, 258);
+            this.HypothesesListView.TabIndex = 3;
             this.HypothesesListView.UseCompatibleStateImageBehavior = false;
             this.HypothesesListView.View = System.Windows.Forms.View.Details;
             // 
@@ -120,6 +130,91 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // ColumnCondition
             // 
             this.ColumnCondition.Width = 180;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.LabelNumeric);
+            this.panel1.Controls.Add(this.NumericUpDownDecimals);
+            this.panel1.Controls.Add(this.LabelCurrentlySorted);
+            this.panel1.Controls.Add(this.LabelSortedBy);
+            this.panel1.Controls.Add(this.ComboBoxSortStatistics);
+            this.panel1.Controls.Add(this.LabelSortHypotheses);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1064, 29);
+            this.panel1.TabIndex = 2;
+            // 
+            // LabelNumeric
+            // 
+            this.LabelNumeric.AutoSize = true;
+            this.LabelNumeric.Dock = System.Windows.Forms.DockStyle.Right;
+            this.LabelNumeric.Location = new System.Drawing.Point(894, 0);
+            this.LabelNumeric.Name = "LabelNumeric";
+            this.LabelNumeric.Size = new System.Drawing.Size(50, 13);
+            this.LabelNumeric.TabIndex = 5;
+            this.LabelNumeric.Text = "Precision";
+            // 
+            // NumericUpDownDecimals
+            // 
+            this.NumericUpDownDecimals.Dock = System.Windows.Forms.DockStyle.Right;
+            this.NumericUpDownDecimals.Location = new System.Drawing.Point(944, 0);
+            this.NumericUpDownDecimals.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NumericUpDownDecimals.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NumericUpDownDecimals.Name = "NumericUpDownDecimals";
+            this.NumericUpDownDecimals.Size = new System.Drawing.Size(120, 20);
+            this.NumericUpDownDecimals.TabIndex = 2;
+            this.NumericUpDownDecimals.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.NumericUpDownDecimals.ValueChanged += new System.EventHandler(this.NumericUpDownDecimals_ValueChanged);
+            // 
+            // LabelCurrentlySorted
+            // 
+            this.LabelCurrentlySorted.AutoSize = true;
+            this.LabelCurrentlySorted.Location = new System.Drawing.Point(300, 7);
+            this.LabelCurrentlySorted.Name = "LabelCurrentlySorted";
+            this.LabelCurrentlySorted.Size = new System.Drawing.Size(37, 13);
+            this.LabelCurrentlySorted.TabIndex = 3;
+            this.LabelCurrentlySorted.Text = "(none)";
+            // 
+            // LabelSortedBy
+            // 
+            this.LabelSortedBy.AutoSize = true;
+            this.LabelSortedBy.Location = new System.Drawing.Point(239, 7);
+            this.LabelSortedBy.Name = "LabelSortedBy";
+            this.LabelSortedBy.Size = new System.Drawing.Size(55, 13);
+            this.LabelSortedBy.TabIndex = 2;
+            this.LabelSortedBy.Text = "Sorted by:";
+            // 
+            // ComboBoxSortStatistics
+            // 
+            this.ComboBoxSortStatistics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBoxSortStatistics.FormattingEnabled = true;
+            this.ComboBoxSortStatistics.Location = new System.Drawing.Point(61, 3);
+            this.ComboBoxSortStatistics.Name = "ComboBoxSortStatistics";
+            this.ComboBoxSortStatistics.Size = new System.Drawing.Size(141, 21);
+            this.ComboBoxSortStatistics.TabIndex = 1;
+            this.ComboBoxSortStatistics.SelectionChangeCommitted += new System.EventHandler(this.ComboBoxSortStatistics_SelectionChangeCommitted);
+            // 
+            // LabelSortHypotheses
+            // 
+            this.LabelSortHypotheses.AutoSize = true;
+            this.LabelSortHypotheses.Location = new System.Drawing.Point(3, 7);
+            this.LabelSortHypotheses.Name = "LabelSortHypotheses";
+            this.LabelSortHypotheses.Size = new System.Drawing.Size(43, 13);
+            this.LabelSortHypotheses.TabIndex = 0;
+            this.LabelSortHypotheses.Text = "Sort by:";
             // 
             // GroupBoxChangeGraph
             // 
@@ -147,7 +242,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.CheckBoxShowLabels.Location = new System.Drawing.Point(9, 145);
             this.CheckBoxShowLabels.Name = "CheckBoxShowLabels";
             this.CheckBoxShowLabels.Size = new System.Drawing.Size(83, 17);
-            this.CheckBoxShowLabels.TabIndex = 9;
+            this.CheckBoxShowLabels.TabIndex = 8;
             this.CheckBoxShowLabels.Text = "Show labels";
             this.CheckBoxShowLabels.UseVisualStyleBackColor = true;
             this.CheckBoxShowLabels.CheckedChanged += new System.EventHandler(this.CheckBoxShowLabels_CheckedChanged);
@@ -179,7 +274,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarVOffset.Name = "TrackBarVOffset";
             this.TrackBarVOffset.Size = new System.Drawing.Size(173, 42);
             this.TrackBarVOffset.SmallChange = 100;
-            this.TrackBarVOffset.TabIndex = 5;
+            this.TrackBarVOffset.TabIndex = 7;
             this.TrackBarVOffset.TickFrequency = 100;
             this.TrackBarVOffset.Scroll += new System.EventHandler(this.TrackBarVOffset_Scroll);
             // 
@@ -192,7 +287,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarHOffset.Name = "TrackBarHOffset";
             this.TrackBarHOffset.Size = new System.Drawing.Size(173, 42);
             this.TrackBarHOffset.SmallChange = 100;
-            this.TrackBarHOffset.TabIndex = 4;
+            this.TrackBarHOffset.TabIndex = 6;
             this.TrackBarHOffset.TickFrequency = 100;
             this.TrackBarHOffset.Scroll += new System.EventHandler(this.TrackBarHOffset_Scroll);
             // 
@@ -214,7 +309,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarZoom.Name = "TrackBarZoom";
             this.TrackBarZoom.Size = new System.Drawing.Size(173, 42);
             this.TrackBarZoom.SmallChange = 50;
-            this.TrackBarZoom.TabIndex = 2;
+            this.TrackBarZoom.TabIndex = 5;
             this.TrackBarZoom.TickFrequency = 50;
             this.TrackBarZoom.Value = 100;
             this.TrackBarZoom.Scroll += new System.EventHandler(this.TrackBarZoom_Scroll);
@@ -236,7 +331,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBar3d.Name = "TrackBar3d";
             this.TrackBar3d.Size = new System.Drawing.Size(173, 42);
             this.TrackBar3d.SmallChange = 10;
-            this.TrackBar3d.TabIndex = 0;
+            this.TrackBar3d.TabIndex = 4;
             this.TrackBar3d.TickFrequency = 5;
             this.TrackBar3d.Value = 15;
             this.TrackBar3d.Scroll += new System.EventHandler(this.TrackBar3d_Scroll);
@@ -278,6 +373,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.Panel1.ResumeLayout(false);
             this.ResultBrowserSplit.Panel2.ResumeLayout(false);
             this.ResultBrowserSplit.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDecimals)).EndInit();
             this.GroupBoxChangeGraph.ResumeLayout(false);
             this.GroupBoxChangeGraph.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarVOffset)).EndInit();
@@ -313,6 +411,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ToolStripCopyChart;
         private System.Windows.Forms.CheckBox CheckBoxShowLabels;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox ComboBoxSortStatistics;
+        private System.Windows.Forms.Label LabelSortHypotheses;
+        private System.Windows.Forms.Label LabelCurrentlySorted;
+        private System.Windows.Forms.Label LabelSortedBy;
+        private System.Windows.Forms.NumericUpDown NumericUpDownDecimals;
+        private System.Windows.Forms.Label LabelNumeric;
     }
 }
 
