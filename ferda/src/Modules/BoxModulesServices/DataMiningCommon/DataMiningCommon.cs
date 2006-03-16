@@ -6,12 +6,12 @@ using System.Text;
 namespace Ferda.Modules.Boxes.DataMiningCommon
 {
     /// <summary>
-    /// TODO Michal
+    /// Represents a IceBox service for common boxes for data mining
     /// </summary>
     public class Service : Ferda.Modules.FerdaServiceI
     {
         /// <summary>
-        /// TODO Michal
+        /// method register basic property boxes
         /// </summary>
         protected override void registerPropertyBoxes()
         {
@@ -74,7 +74,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon
         }
 
         /// <summary>
-        /// TODO Michal
+        /// Says that this service has property boxes
         /// </summary>
         protected override bool havePropertyBoxes
         {

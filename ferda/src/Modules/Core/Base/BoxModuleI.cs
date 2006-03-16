@@ -1,3 +1,25 @@
+// BoxModuleI.cs - representation of box on Ferda modules side
+//
+// Authors: 
+//   Michal Kováč <michal.kovac.develop@centrum.cz>
+//   Tomáš Kuchař <tomas.kuchar@gmail.com>
+//
+// Copyright (c) 2005 Michal Kováč, Tomáš Kuchař 
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +29,7 @@ using System.Diagnostics;
 namespace Ferda.Modules
 {
     /// <summary>
-    /// TODO Michal
+    /// representation of box on Ferda modules side
     /// </summary>
     public class BoxModuleI : BoxModuleDisp_
     {
@@ -249,7 +271,7 @@ namespace Ferda.Modules
 
         /// <summary>
         /// Properties which are set by <see cref="T:Ferda.Modules.PropertyValue"/>
-        /// (Tthere are not properties, which are set by PropertyBoxes 
+        /// (There are not properties, which are set by PropertyBoxes 
         /// which implements interfacesof property values.)
         /// </summary>
         private Dictionary<string, PropertyValue> properties;
@@ -872,9 +894,8 @@ namespace Ferda.Modules
             System.Diagnostics.Debug.WriteLine("BoxModuleI Constructor (leaving): " + this.boxInfo.Identifier);
         }
 
-        //TODO DOC Michal
         /// <summary>
-        /// Gets the additional sockets.
+        /// Gets the additional sockets. Some boxes can create sockets dynamicaly from user input, for example "lambda box".
         /// </summary>
         /// <param name="__current">The Ice.Current.</param>
         /// <returns>
