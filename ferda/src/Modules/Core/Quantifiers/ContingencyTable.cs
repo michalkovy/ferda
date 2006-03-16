@@ -1139,7 +1139,6 @@ namespace Ferda.Modules.Quantifiers
             else
             {
                 T combinedTable = ContingencyTable.Combine<T>(firstTable, secondTable, operationMode);
-                //Michale: tohle pretypovani spadne
                 return ContingencyTable.ConvertUnits(
                     quantifierValue(combinedTable), 
                     units, 

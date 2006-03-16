@@ -49,7 +49,7 @@ namespace Ferda.Modules.Boxes.Sample
     /// <para>
     /// Mimo jiné obsahuje třídu <see cref="T:Ferda.Modules.BoxModuleI"/>, která je 
     /// nezbytná pro implementaci krabičky ... implementuje totiž rozhraní pro komunikaci
-    /// s ModulesManagerem a ProjectManagerem (viz. dokumentace k Architekture Ferdy).
+    /// s ModulesManagerem a ProjectManagerem (viz. dokumentace k Architektuře Ferdy).
     /// Pro implementaci nových krabiček je proto nezbytná implementace interface 
     /// <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>. Tato knihovna obsahuje řadu pomocných 
     /// tříd o kterých budeme hovořit později.
@@ -212,20 +212,20 @@ namespace Ferda.Modules.Boxes.Sample
     /// funkcionalita krabičky). V tuto chvíli je vhodné se podívat na dokumentaci 
     /// k formalizmu principu zapojování krabiček do zásuvek (TODO Michal). Na tomto místě uvedu jen 
     /// velmi stručné a nepřesné (avšak v tuto chvili snad postačující) vysvětlení:
-    /// každá krabička implementuje určitý interface (tj funkci/množinu funkcí) resp. 
-    /// několik intefacu. Tyto interface jsou (vnitřním mechanismem Ice) pojmenovány 
+    /// každá krabička implementuje určité rozhraní (tj funkci/množinu funkcí) resp. 
+    /// několik rozhraní. Tyto rozhraní jsou (vnitřním mechanismem Ice) pojmenovány 
     /// a zásuvky (sokety) pak uvedou 
     /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.BoxType.FunctionIceId">
-    /// seznam jmen interfacu</see>, které akceptují.
+    /// seznam jmen rozhraní</see>, které akceptují.
     /// </para>
     /// <para>
     /// Uveďme na tomto místě jednoduchý příklad toho, jak implementovat 
     /// funkcionalitu krabičky z pohledu ostatních krabiček. Nejprve je třeba 
-    /// vytvořit slice návrh (interface) a definovat tak funkci/množinu funkcí, 
-    /// které krabička implementuje. V následujícím příkladu definujeme dva interfacei.
-    /// Naše krabička, která pak bude implementovat intervace 
+    /// vytvořit slice návrh (rozhraní) a definovat tak funkci/množinu funkcí, 
+    /// které krabička implementuje. V následujícím příkladu definujeme dvě rozhaní.
+    /// Naše krabička, která pak bude implementovat rozhraní 
     /// <c>MyBoxModule.MyBoxModuleFunctions</c> bude moci být zasunuta do zásuvek 
-    /// akceptujících alespoň jeden z následujícíh (pojmenovanych) interfacu: 
+    /// akceptujících alespoň jeden z následujícíh (pojmenovanych) rozhraní: 
     /// <c>::MyBoxModule::MyBoxModuleFunctionsCore</c>
     /// nebo <c>::MyBoxModule::MyBoxModuleFunctions</c>. 
     /// </para>
@@ -276,17 +276,17 @@ namespace Ferda.Modules.Boxes.Sample
     /// </code>
     /// </para>
     /// <para>
-    /// Jak již bylo uvedeno výše naše krabička bude implementovat inferface 
+    /// Jak již bylo uvedeno výše naše krabička bude implementovat rozhraní 
     /// <c>MyBoxModule.MyBoxModuleFunctions</c> (chcete-li 
     /// <c>::MyBoxModule::MyBoxModuleFunctions</c>), toho dosáhneme tak, že 
     /// vytvoříme novu třídu, která bude implementovat abstraktní (vygenerovanou 
     /// třídu) <c>MyBoxModuleFunctionsDisp_</c> (jmenuje se stejne jako námi 
-    /// definovaný interface ve slice návrhu + řetězec "<c>Disp_</c>").
+    /// definované rozhraní ve slice návrhu + řetězec "<c>Disp_</c>").
     /// Povšimněte si prosím, že třída implementující funkce krabičky musí 
-    /// rovněž implementovat interface <see cref="T:Ferda.Modules.IFunctions"/>
+    /// rovněž implementovat rozhraní <see cref="T:Ferda.Modules.IFunctions"/>
     /// (implementuje se vždy stejně). Zde jen naokraj uvedu, že z modulu 
     /// (ve slice návrhu) <c>MyBoxModule</c> byl vygenerován stejnojmenný 
-    /// <c>namespace</c> (více v dokumentaci k Ice).
+    /// jmenný prostor (více v dokumentaci k Ice).
     /// </para>
     /// <code>
     /// namespace MyBoxModule

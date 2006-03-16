@@ -5,7 +5,7 @@ using System.Text;
 namespace Ferda.Modules.Boxes.LISpMinerTasks
 {
 	/// <summary>
-	/// TODO Michal
+    /// Represents a IceBox service for LISp-Miner boxes
 	/// </summary>
     public class Service : Ferda.Modules.FerdaServiceI
 	{
