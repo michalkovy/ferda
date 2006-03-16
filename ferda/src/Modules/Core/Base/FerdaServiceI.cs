@@ -1,3 +1,25 @@
+// FerdaServiceI.cs - half implementation of IceBox service
+//
+// Authors: 
+//   Michal Kováč <michal.kovac.develop@centrum.cz>
+//   Tomáš Kuchař <tomas.kuchar@gmail.com>
+//
+// Copyright (c) 2005 Michal Kováč, Tomáš Kuchař 
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,16 +30,16 @@ using System.Threading;
 namespace Ferda.Modules
 {
     /// <summary>
-    /// TODO Michal ... kompletne zdokumentovat celou tridu
+    /// Represents a IceBox service, is created for inheriting
     /// </summary>
     public abstract class FerdaServiceI : Ice.LocalObjectImpl, IceBox.Service 
     {
         /// <summary>
-        /// TODO Michal
+        /// Service execution method
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="communicator"></param>
-        /// <param name="args"></param>
+        /// <param name="name">Name of service</param>
+        /// <param name="communicator">Ice communicator</param>
+        /// <param name="args">Arguments from command line</param>
         public void start(string name, Ice.Communicator communicator, string[] args)
         {
             Debug.Listeners.Clear();
@@ -51,7 +73,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// TODO Michal
+        /// This will be executed for stopping the service
         /// </summary>
         public void stop()
         {
@@ -68,11 +90,11 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// TODO Michal
+        /// Helper method for registering property box to Ice Object Adapter
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="defaultValue"></param>
-        /// <param name="valFromPrx"></param>
+        /// <param name="type">Name of box</param>
+        /// <param name="defaultValue">Default value of box</param>
+        /// <param name="valFromPrx">Method which converts property value proxy to property value object</param>
         public void registerPropertyBox(string type, PropertyValue defaultValue, PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx)
         {
             PropertyBoxModuleFactoryCreatorI newCreator = new PropertyBoxModuleFactoryCreatorI("::Ferda::Modules::" + type,
@@ -85,15 +107,17 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// TODO Michal
+        /// You have to implement there registering of property boxes <
         /// </summary>
+        /// <seealso cref="M:Ferda.Modules.FerdaServiceI.registerPropertyBox(System.String,Ferda.Modules.PropertyValue,Ferda.Modules.PropertyBoxModuleFactoryCreatorI.ValueFromPrx)"/>
+        /// <seealso cref="M:Ferda.Modules.FerdaServiceI.havePropertyBoxes()"/>
         protected virtual void registerPropertyBoxes() { }
 
         /// <summary>
-        /// TODO Michal
+        /// Helper method for registering standard box to Ice Object Adapter
         /// </summary>
-        /// <param name="identity"></param>
-        /// <param name="boxInfo"></param>
+        /// <param name="identity">Name of box</param>
+        /// <param name="boxInfo">An <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> implementation for this box</param>
         public void registerBox(string identity, Ferda.Modules.Boxes.IBoxInfo boxInfo)
         {
             Debug.WriteLine("Registering " + identity + "...");
@@ -144,7 +168,7 @@ namespace Ferda.Modules
         private Ice.ObjectAdapter _adapter;
 
         /// <summary>
-        /// TODO Michal
+        /// Method saying if this service have registered some property boxes
         /// </summary>
         protected virtual bool havePropertyBoxes
         {
