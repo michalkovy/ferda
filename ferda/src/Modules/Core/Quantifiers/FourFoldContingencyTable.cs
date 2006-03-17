@@ -11,7 +11,7 @@ using System.Text;
 namespace Ferda.Modules.Quantifiers
 {
     /// <summary>
-    /// 
+    /// The 4ft i.e. four fold table representation.
     /// </summary>
     /// <remarks>
     /// Notice that only some 4ft-quantifiers support denominator.

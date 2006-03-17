@@ -220,7 +220,7 @@ namespace Ferda.Modules.Helpers.Data
             OdbcConnection conn = Ferda.Modules.Helpers.Data.OdbcConnections.GetConnection(odbcConnectionString, boxIdentity);
             try
             {
-                OdbcCommand myCommand = new OdbcCommand("SELECT * FROM " + dataMatrixName + " WHERE 0", conn);
+                OdbcCommand myCommand = new OdbcCommand("SELECT * FROM " + "`" + dataMatrixName + "`" + " WHERE 0", conn);
                 OdbcDataReader myReader = myCommand.ExecuteReader();
                 DataTable schemaTable = myReader.GetSchemaTable();
                 foreach (DataRow myRow in schemaTable.Rows)
@@ -285,7 +285,7 @@ namespace Ferda.Modules.Helpers.Data
                 "SELECT "
                     + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote + " AS " + SelectDistincts
                     + ", COUNT(1) AS " + SelectFrequency
-                + " FROM " + dataMatrixName
+                + " FROM " + "`" + dataMatrixName + "`"
                     + where
                     + " GROUP BY " + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote
                     + " ORDER BY " + SqlSecurity.ColumnQuote + columnSelectExpression + SqlSecurity.ColumnQuote;

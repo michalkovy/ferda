@@ -77,6 +77,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
                     cacheSetting.Add(Column.ColumnBoxInfo.typeIdentifier + Column.ColumnBoxInfo.ColumnSelectExpressionPropertyName, columnSelectExpression);
                     if (IsObsolete(lastReloadTime, cacheSetting))
                     {
+                        value = new StatisticsInfo();
                         value = Ferda.Modules.Helpers.Data.Column.GetStatistics(connectionString, dataMatrixName, columnSelectExpression, columnValueSubType, boxIdentity);
                     }
                     if (value == null)
@@ -111,9 +112,11 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Column
                     cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrix.DataMatrixBoxInfo.DataMatrixNamePropertyName, dataMatrixName);
                     cacheSetting.Add(Column.ColumnBoxInfo.typeIdentifier + Column.ColumnBoxInfo.ColumnSelectExpressionPropertyName, columnSelectExpression);
                     if (IsObsolete(lastReloadTime, cacheSetting))
-                        value =
-                            Ferda.Modules.Helpers.Data.Column.GetColumnSubTypeByDataType(
-                                Ferda.Modules.Helpers.Data.Column.GetDataType(connectionString, dataMatrixName, columnSelectExpression, boxIdentity));
+                    {
+                        value = ValueSubTypeEnum.Unknown;
+                        value = Ferda.Modules.Helpers.Data.Column.GetColumnSubTypeByDataType(
+                                    Ferda.Modules.Helpers.Data.Column.GetDataType(connectionString, dataMatrixName, columnSelectExpression, boxIdentity));
+                    }
                     return value;
                 }
             }

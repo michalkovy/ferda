@@ -17,8 +17,6 @@
 			<sources>
 				<include name="**/generated/**.cs"/>
 				<exclude name="Core/Base/generated/*.cs"/>
-				<include name="Core/Helpers/**.cs"/>
-				<include name="Core/Quantifiers/**.cs"/>
 			</sources>
 			<references>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
@@ -31,6 +29,28 @@
 		<copy todir="${frontendbin.dir}">
 			<fileset basedir="${build.dir}">
 				<include name="FerdaBoxInterfaces.*"/>
+			</fileset>
+		</copy>
+		<csc target="library" output="${path::combine(build.dir,'FerdaHelpers.dll')}" doc="${path::combine(build.dir,'FerdaHelpers.xml')}" debug="${debug}" optimize="${optimize}">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="Core/Helpers/**.cs"/>
+				<include name="Core/Quantifiers/**.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+		<copy todir="${frontendbin.dir}">
+			<fileset basedir="${build.dir}">
+				<include name="FerdaHelpers.*"/>
 			</fileset>
 		</copy>
 		<csc target="library" output="${path::combine(build.dir,'FerdaServerBase.dll')}" doc="${path::combine(build.dir,'FerdaServerBase.xml')}" debug="${debug}" optimize="${optimize}">
@@ -62,6 +82,7 @@
 			</sources>
 			<references>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
@@ -83,6 +104,7 @@
 				</sources>
 				<references>
 					<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+					<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 					<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 					<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
 					<include name="${path::combine(lib.dir,'icecs.dll')}"/>
@@ -104,6 +126,7 @@
 				</sources>
 				<references>
 					<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+					<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 					<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 					<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
 					<include name="${path::combine(lib.dir,'icecs.dll')}"/>

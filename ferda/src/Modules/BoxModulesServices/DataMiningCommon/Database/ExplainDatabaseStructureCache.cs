@@ -33,8 +33,10 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
                 cacheSetting.Add(Database.DatabaseBoxInfo.typeIdentifier + DatabaseBoxInfo.AcceptableTypesOfTablesPropertyName, comparableAcceptableTypesOfTables);
 
                 if (IsObsolete(lastReloadTime, cacheSetting))
+                {
+                    value = new DataMatrixSchemaInfo[0];
                     value = Ferda.Modules.Helpers.Data.Database.Explain(connectionString, acceptableTypesOfTables, boxIdentity);
-
+                }
                 if (value == null)
                     value = new DataMatrixSchemaInfo[0];
                 return value;

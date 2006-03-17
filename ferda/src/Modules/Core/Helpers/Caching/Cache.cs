@@ -143,7 +143,6 @@ namespace Ferda.Modules.Helpers.Caching
         /// </returns>
         private bool settingIsEqual(Dictionary<string, IComparable> currentSettingForEqualTest)
         {
-            bool result = true;
             IComparable value;
 
             // for each item of current setting
@@ -159,9 +158,9 @@ namespace Ferda.Modules.Helpers.Caching
                         continue;
                 }
                 // if values are not equal (false will be returned)
-                result = false;
+                return false;
             }
-            return result;
+            return true;
         }
     }
 }

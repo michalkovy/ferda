@@ -68,6 +68,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EachValueOneCategoryAt
                     cacheSetting.Add(Column.ColumnBoxInfo.typeIdentifier + Column.ColumnBoxInfo.ColumnSelectExpressionPropertyName, columnInfo.columnSelectExpression);
                     if (IsObsolete(columnInfo.dataMatrix.database.lastReloadInfo, cacheSetting))
                     {
+                        value = new GeneratedAttribute();
                         value = EachValueOneCategoryAlgorithm.Generate(
                             columnInfo.dataMatrix.database.odbcConnectionString,
                             columnInfo.dataMatrix.dataMatrixName,

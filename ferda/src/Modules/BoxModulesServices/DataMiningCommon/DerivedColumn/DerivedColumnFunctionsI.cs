@@ -52,6 +52,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DerivedColumn
                     cacheSetting.Add(Column.ColumnBoxInfo.typeIdentifier + Column.ColumnBoxInfo.ColumnSelectExpressionPropertyName, columnSelectExpression);
                     if (IsObsolete(lastReloadTime, cacheSetting))
                     {
+                        value = new StatisticsInfo();
                         value = Ferda.Modules.Helpers.Data.Column.GetStatistics(connectionString, dataMatrixName, columnSelectExpression, columnValueSubType, boxIdentity);
                     }
                     if (value == null)

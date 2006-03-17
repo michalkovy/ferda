@@ -112,7 +112,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.AtomSetting
 
 		#region BoxInfo
 		#region Cache: CategoriesNames
-		/* */
+        private categoriesNamesCache categoriesNamesCached = new categoriesNamesCache(new TimeSpan(0, 0, 10));
 		private class categoriesNamesCache : Ferda.Modules.Helpers.Caching.TimeOut
 		{
 			public categoriesNamesCache(TimeSpan timeout)
@@ -123,40 +123,24 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.AtomSetting
 				if (IsObsolete())
 				{
 					AbstractAttributeStruct abstractAttributeStruct = abstractAttributeFunctionsPrx.getAbstractAttribute();
-					if (abstractAttributeStruct.countOfCategories >= Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeConstants.MaxLengthOfCategoriesNamesSelectStringArray)
-						value = new SelectString[0];
-					else
-                        value = 
+                    if (abstractAttributeStruct.countOfCategories >= Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeConstants.MaxLengthOfCategoriesNamesSelectStringArray)
+                        value = new SelectString[0];
+                    else
+                    {
+                        value = new SelectString[0];
+                        value =
                             Ferda.Modules.Boxes.BoxInfoHelper.StringArrayToSelectStringArray(
                                 Ferda.Modules.Helpers.Data.Attribute.GetCategoriesNames(
-                                    abstractAttributeStruct.categories, 
+                                    abstractAttributeStruct.categories,
                                     Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeConstants.MaxLengthOfCategoriesNamesSelectStringArray
                                     )
                                 );
+                    }
 				}
 				return value;
 			}
 		}
-		private categoriesNamesCache categoriesNamesCached = new categoriesNamesCache(new TimeSpan(0, 0, 10));
-		/* */
-		/* *
-		private class categoriesNamesCache : Ferda.Modules.Helpers.Caching.Cache
-		{
-			private SelectString[] value;
-			public SelectString[] Value(string boxIdentity, AbstractAttributeFunctionsPrx abstractAttributeFunctionsPrx, long maxCategoriesNames)
-			{
-				Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-				CategoriesStruct categoriesStruct = abstractAttributeFunctionsPrx.getAbstractAttribute().categories;
-				cacheSetting.Add("Categories", categoriesStruct);
-				if (IsObsolete(cacheSetting))
-				{
-					value = Ferda.Modules.Helpers.Data.Attribute.CategoriesNamesSelectString(categoriesStruct, maxCategoriesNames);
-				}
-				return value;
-			}
-		}
-		private categoriesNamesCache categoriesNamesCached = new categoriesNamesCache();
-		/* */
+
 		#endregion
 		public SelectString[] GetPropertyCategoriesNames()
 		{
