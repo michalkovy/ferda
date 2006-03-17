@@ -1,6 +1,3 @@
-Tomas:
-Kdyz udelam zapojeni Barbory databaze, tabulka, sloupce, ale pak zmenim databazi na stulong a kliknu na sloupec, ukazuje to stare statistiky, to by asi nemelo, ne?
-
 Sasa:
 Area chart bych vazne vyhodil, pouze zavadi - mrkni se napriklad na Databaze Stulong, tabulka Entry sloupec STAV - to, co tam ma nejvetsi frekvenci tam neni vubec videt...
 Kdyz udelam zapojeni Barbory databaze, tabulka, sloupce, ale pak zmenim databazi na stulong a nad sloupcem spustim modul pro interakci, haze to pekne blbe hlasky

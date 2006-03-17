@@ -116,13 +116,13 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Attributes.EquifrequencyIntervals
                         }
                         catch (Ferda.Modules.BadParamsError ex)
                         {
+                            value = new GeneratedAttribute();
                             if (ex.restrictionType == restrictionTypeEnum.DbColumnDataType)
                             {
                                 boxModule.OutputMessage(
                                     Ferda.ModulesManager.MsgType.Info,
                                     "UnsupportedColumnDatatype",
                                     "NumericDatatypesSupportedOnly");
-                                value = new GeneratedAttribute();
                             }
                             else
                                 throw Ferda.Modules.Exceptions.BoxRuntimeError(ex, boxModule.StringIceIdentity, null);

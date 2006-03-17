@@ -28,6 +28,7 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
                 cacheSetting.Add(Database.DatabaseBoxInfo.typeIdentifier + DatabaseBoxInfo.OdbcConnectionStringPropertyName, connectionString);
                 if (IsObsolete(lastReloadTime, cacheSetting))
                 {
+                    value = new ConnectionInfo();
                     value = Ferda.Modules.Helpers.Data.Database.GetConnectionInfo(connectionString, boxIdentity);
                 }
                 if (value == null)

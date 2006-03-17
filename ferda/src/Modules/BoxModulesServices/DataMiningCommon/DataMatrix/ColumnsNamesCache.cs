@@ -27,7 +27,10 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.DataMatrix
                 cacheSetting.Add(Database.DatabaseBoxInfo.typeIdentifier + Database.DatabaseBoxInfo.OdbcConnectionStringPropertyName, connectionString);
                 cacheSetting.Add(DataMatrix.DataMatrixBoxInfo.typeIdentifier + DataMatrixBoxInfo.DataMatrixNamePropertyName, dataMatrixName);
                 if (IsObsolete(lastReloadTime, cacheSetting))
+                {
+                    value = new string[0];
                     value = Ferda.Modules.Helpers.Data.DataMatrix.GetColumns(connectionString, dataMatrixName, boxIdentity);
+                }
                 if (value == null)
                     value = new string[0];
                 return value;

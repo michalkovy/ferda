@@ -35,7 +35,10 @@ namespace Ferda.Modules.Boxes.DataMiningCommon.Database
                 cacheSetting.Add(Database.DatabaseBoxInfo.typeIdentifier + DatabaseBoxInfo.AcceptableTypesOfTablesPropertyName, comparableAcceptableTypesOfTables);
 
                 if (IsObsolete(lastReloadTime, cacheSetting))
+                {
+                    value = new string[0];
                     value = Ferda.Modules.Helpers.Data.Database.GetTables(connectionString, null, boxIdentity);
+                }
                 if (value == null)
                     value = new string[0];
                 return value;
