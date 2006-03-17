@@ -1660,8 +1660,8 @@ namespace Ferda.FrontEnd.Desktop
             if (e.From is FerdaConnector)
             {
                 //a message is throw to the user
-                MessageBox.Show(ResManager.GetString("DesktopBadConnectionDescription"),
-                    ResManager.GetString("DesktopBadConnectionCaption"));
+                //MessageBox.Show(ResManager.GetString("DesktopBadConnectionDescription"),
+                //    ResManager.GetString("DesktopBadConnectionCaption"));
                 return false;
             }
             if (!(e.To is FerdaConnector))
