@@ -749,7 +749,12 @@ namespace Ferda.FrontEnd.Desktop
                     }
                 }
 
-                RemoveBoxes(SelectedShapes);
+                Adapt();
+                //TODO - tady by se to mohlo jeste zoptimalizovat, museli ale
+                //bychom udelat jiny handler na OnShapeRemoved, protoze tenhle
+                //vlastne dela 2 veci naraz a nemuselo by to sedet. Zatim nechavam
+                //Adapt.
+                //RemoveBoxes(SelectedShapes);
 
                 //adapts the archive displayer
                 archiveDisplayer.Adapt();
