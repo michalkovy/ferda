@@ -2108,7 +2108,6 @@ namespace Ferda.FrontEnd.Desktop
             }
 
             //archiveDisplayer.Adapt(); myslim ze to tady nemusi byt
-            Adapt();
         }
 
         /// <summary>
