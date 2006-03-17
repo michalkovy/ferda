@@ -107,7 +107,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// You have to implement there registering of property boxes <
+        /// You have to implement there registering of property boxes
         /// </summary>
         /// <seealso cref="M:Ferda.Modules.FerdaServiceI.registerPropertyBox(System.String,Ferda.Modules.PropertyValue,Ferda.Modules.PropertyBoxModuleFactoryCreatorI.ValueFromPrx)"/>
         /// <seealso cref="M:Ferda.Modules.FerdaServiceI.havePropertyBoxes()"/>
