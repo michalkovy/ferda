@@ -21,23 +21,119 @@
   <section>
     <title>Volba programovacího jazyka, knihoven, nástrojů a licence</title>
 
-    <para>Rozhodli jsme se programovat Ferdu v jazyce C# verze 2.0. Oproti C++ nám jazyk nabídl bezpečnější a rychlejší vývoj. Také jsme přemýšleli o jazyku Java. Sice jsou programy v něm napsané stále ještě přenositelnější, ale zdálo se nám, že nenabízí pro v současné době nejrozšířenější uživatelský operační systém možnost programovat takové prostředí, na které je uživatel tohoto systému zvyklý a zároveň které je pěkné a dle nejnovějších trendů. Také se nám zdál jazyk C# trochu hezčí a i platforma CLI má jistě pro náš program své výhody (například možnost psaní dalších částí v jiných jazycích). Druhou verzi jazyka C# místo první jsme zvolili právě pro vzhled programovaného prostředí, nicméně hojně jsme využívali i ostatních novinek této verze.</para>
+    <para>Rozhodli jsme se programovat Ferdu v jazyce C# verze 2.0. Oproti C++
+    nám jazyk nabídl bezpečnější a rychlejší vývoj. Také jsme přemýšleli o
+    jazyku Java. Sice jsou programy v něm napsané stále ještě přenositelnější,
+    ale zdálo se nám, že nenabízí pro v současné době nejrozšířenější
+    uživatelský operační systém možnost programovat takové prostředí, na které
+    je uživatel tohoto systému zvyklý a zároveň které je pěkné a dle
+    nejnovějších trendů. Také se nám zdál jazyk C# trochu hezčí a i platforma
+    CLI má jistě pro náš program své výhody (například možnost psaní dalších
+    částí v jiných jazycích). Druhou verzi jazyka C# místo první jsme zvolili
+    právě pro vzhled programovaného prostředí, nicméně hojně jsme využívali i
+    ostatních novinek této verze.</para>
 
-    <para>S jazykem C# se automaticky nabízely utilitky NAnt (program na kompilaci CLI programů), NUnit (nástroj na testy jednotek) a NDoc (program na generování dokumentace z CLI assembly), které jsme rádi využili. Sice Visual Studio 2005 má také obdobné nástroje, nicméně výhodou těchto nástrojů je jejich možnost spuštění nejen na .NET Frameworku, ale také na Monu (jiná implementace CLI).</para>
+    <para>S jazykem C# se automaticky nabízely utilitky NAnt (program na
+    kompilaci CLI programů), NUnit (nástroj na testy jednotek) a NDoc (program
+    na generování dokumentace z CLI assembly), které jsme rádi využili. Sice
+    Visual Studio 2005 má také obdobné nástroje, nicméně výhodou těchto
+    nástrojů je jejich možnost spuštění nejen na .NET Frameworku, ale také na
+    Monu (jiná implementace CLI).</para>
 
-    <para>Jak z předminulého odstavce vyplývá, rozhodli jsme se pro System.Windows.Forms uživatelské prostředí ve verzi dva. Přemýšleli jsme ještě o knihovně GTK#, nicméně nevybrali jsme tak, protože jsme mírně upřednostňovali, aby se program líbil uživatelům majoritního operačního systému nad aktuální přenositelností mezi operačními systémy. Na druhou stranu věříme v to, že bude brzy System.Windows.Forms v druhé verzi také implementován v Monu.</para>
+    <para>Jak z předminulého odstavce vyplývá, rozhodli jsme se pro
+    System.Windows.Forms uživatelské prostředí ve verzi dva. Přemýšleli jsme
+    ještě o knihovně GTK#, nicméně nevybrali jsme tak, protože jsme mírně
+    upřednostňovali, aby se program líbil uživatelům majoritního operačního
+    systému nad aktuální přenositelností mezi operačními systémy. Na druhou
+    stranu věříme v to, že bude brzy System.Windows.Forms v druhé verzi také
+    implementován v Monu.</para>
 
-    <para>Při návrhu se ukázalo, že je vhodné použít nějaký middleware. Nejvíce do úvahy padaly .NET Remoting, Corba a Ice. Vybrali jsme Ice pro jeho jednoduchost (oproti Corbě), rychlost, přenositelnost (oproti .NET Remotingu) a možnost programovat ve více jazycích (oproti .NET Remoting).</para>
+    <para>Při návrhu se ukázalo, že je vhodné použít nějaký middleware. Nejvíce
+    do úvahy padaly .NET Remoting, Corba a Ice. Vybrali jsme Ice pro jeho
+    jednoduchost (oproti Corbě), rychlost, přenositelnost (oproti .NET
+    Remotingu) a možnost programovat ve více jazycích (oproti .NET Remoting).
+    Dále se ukázalo, že Ice má jisté programy, které se ve Ferdovi dobře
+    uplatnili, či uplatní.</para>
 
-    <para>Dívali jsme se, zda neexistuje nějaká knihovna, která umí pěkně kreslit grafy s krabičkami. Zdálo se nám, že ideální pro to je knivovna Netron Graph Library, která byla v době volby ve verzi 2.1. Bohužel se však ukázalo, že v ní bylo třeba udělat nněkolik netriviálních zásahů, že není úplně nejrychlejší a má několik. Ve verzi 2.2 bylo uděláno v této knihovně ze strany Netronu poměrně dost změn a oprav, nicméně přechod na tuto verzi nebyl ještě učiněn z důvodu netriviality tohoto úkonu.</para>
+    <para>Dívali jsme se, zda neexistuje nějaká knihovna, která umí pěkně
+    kreslit grafy s krabičkami. Zdálo se nám, že ideální pro to je knivovna
+    Netron Graph Library, která byla v době volby ve verzi 2.1. Bohužel se však
+    ukázalo, že v ní bylo třeba udělat nněkolik netriviálních zásahů, že není
+    úplně nejrychlejší a má několik. Ve verzi 2.2 bylo uděláno v této knihovně
+    ze strany Netronu poměrně dost změn a oprav, nicméně přechod na tuto verzi
+    nebyl ještě učiněn z důvodu netriviality tohoto úkonu.</para>
 
-    <para>Zdálo se nám, že by bylo hodně vhodné, aby mělo naše výsledné uživatelské prostředí možnosti dokování. Vybírali jsme mezi několika knihovnami, které toto umožňovali, a rozhodli jsme se pro DockDotNet. Líbilo se nám na ní, že je napsána čistě v C# (ostatní používali WinAPI), tedy je přenositelná i na jiné operační systémy. Také byla v době našeho výběru vývoji, takže jsme doufali, že případné chyby se brzy odstraní. Bohužel zrovna v tu dobu vývoj DockDotNetu skončil a ukázalo se, že je knihovna v několika směrech nedokonalá a způsobuje ve Ferdovi několik chyb.</para>
+    <para>Zdálo se nám, že by bylo hodně vhodné, aby mělo naše výsledné
+    uživatelské prostředí možnosti dokování. Vybírali jsme mezi několika
+    knihovnami, které toto umožňovali, a rozhodli jsme se pro DockDotNet.
+    Líbilo se nám na ní, že je napsána čistě v C# (ostatní používali WinAPI),
+    tedy je přenositelná i na jiné operační systémy. Také byla v době našeho
+    výběru vývoji, takže jsme doufali, že případné chyby se brzy odstraní.
+    Bohužel zrovna v tu dobu vývoj DockDotNetu skončil a ukázalo se, že je
+    knihovna v několika směrech nedokonalá a způsobuje ve Ferdovi několik
+    chyb.</para>
 
-    <para>Při výběru licence padla volba na GPL v2, protože umožňuje otevřenost při zaručení, že nebude Ferda zneužit pro komerční účely.</para>
+    <para>Při výběru licence padla volba na GPL v2, protože umožňuje otevřenost
+    při zaručení, že nebude Ferda zneužit pro komerční účely.</para>
   </section>
 
   <section>
-    <title>Jaké jsme si dali předsevzedí pro implementaci</title>
+    <title>Jaká předsevzedí jsme si dali pro implementaci</title>
+
+    <para>Jednotlivé komponenty systému LISp-Miner, nad kterým jsme Ferdu
+    budovali, vytvářeli různí lidé. Protože jsme viděli Ferdu nejen jako obal
+    starého systému, ale jako jeho nástupce, bylo naším cílem umožnit
+    jednoduchou rozšiřitelnost Ferdy.</para>
+
+    <para>Systém LISp-Miner používá pro propojení jednotlivých částí systému
+    tzv. metabázi. Je to databáze, která má jistý formát. Při vytváření nové
+    komponenty systému bylo často nutné formát metabáze změnit, což muselo být
+    buď přímo či sprostředkovaně uděláno za pomoci správce verzí metabáze (Ing.
+    Milana Šimůnka, Ph.D.). Tím, že byla metabáze takto nabalována, došlo k
+    tomu, že její formát je daleko horší, než kdyby byla od začátku vytvářena
+    se znalostí všech budoucích komponent. Propojení na úrovni metabáze je také
+    relativně vysoko, tedy o modularitě se dá hovořit jen jako o propojení
+    hodně velikých celků. Například nelze přiimplementovat nový kvantifikátor
+    do 4FT bez nutnosti překompilovávání celého 4FT. Protože však není
+    LISp-Miner otevřený systém, je to vlastně skoro nemožné. Také dokumentace k
+    metabázi sice je, avšak pro hlubší pochopení toho, co je na co, je potřeba
+    zkoušet spouštět různé moduly a dívat se, co tam na základě čeho
+    dávají.</para>
+
+    <para>To vše nás vedlo k tomu, že jsme nenapsali Ferdu nad metabází, ale
+    pro modularitu jsme vybrali Ice. S metabází pouze pracují jisté krabičky
+    (krabičky jednotlivých úloh), aby se tak propojili se systémem LISp-Miner,
+    nicméně počítá se s tím, že se později Ferda odváže od systému LISp-Miner a
+    bude vše implementováno v jednotlivých krabičkách, tedy nebude třeba vůbec
+    používat metabázi.</para>
+
+    <para>Ze zadání úkolu relativně přímočaře vyplynulo, že bude dobré
+    programovat něco jako jsou naše krabičky, tedy, že to musí mít nějaké
+    vlastnosti a zásuvky a musí se to dát mezi sebou propojovat. Na první
+    pohled vypadají i podobné systémy. Porovnáme-li pohled na úlohu dobývání
+    znalostí ve Ferdovi a v konkurenčních aplikacích - za všechny jmenujme
+    například komerční produkty Clementine od SPSS a SAS Enterprise Miner, a
+    nekomerční program Weka - ve všech těchto aplikacích se pracuje s podobnými
+    objekty jako jsou krabičky. Zatímco ve Ferdovi krabička reprezentuje
+    funkce, v ostatních aplikacích je to spíše část procesu dobývání znalostí,
+    proto pojem zásuvka jak jej o známe z Ferdy nemá v těchto aplikacích smysl.
+    Jejich krabičky mají pouze jeden vstupní bod a veliké množství parametrů se
+    nastavuje pomocí různých dialogů, to má za následek menší opakovatelnost
+    použití a větší složitost aplikace z hlediska uživatele. Na druhou stranu
+    zpracování úlohy ve Ferdovi vede k většímu množství typů krabiček, kterým
+    by měl uživatel rozumět, i k většímu množství krabiček na pracovní ploše,
+    které může vést k obtížnější orientaci uživatele. Tomu však byla věnována
+    pozornost a byla vyvinuta řada mechanismů, jenž by měla tyto problémy
+    řešit.</para>
+
+    <para>To, co jsme také udělali narozdíl od konkurence, je, že krabičky mezi
+    soubou a s vyššími vrstvami komunikují přes middleware (Ice). To umožňuje,
+    že každá krabička může teoreticky běžet na jiném počítači (zároveň uživatel
+    může sedět jinde, než probíhá výpočet). Dále nám to také umožňuje, že je
+    možné psát krabičky v různých programovacích jazycích. Na druhou stranu to
+    přináší nutnost alespoň malé znalosti Ice pro vytvářní nové krabičky. Ice
+    je však velice dobře zdokumentované, a lidé od ZeroC (firma, která vyvýjí
+    Ice) dobře a rychle odpovídají na jejich support fóru na dotazy.</para>
   </section>
 
   <section>
