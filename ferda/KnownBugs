@@ -1,1 +1,1 @@
-
+Ferda does not work with installed both .NET Framework 1.x and 2.0, only 2.0 have to be installed. This bug is there because Ice is compilled with .NET Framework 1.x and if you have installed .NET 1.x, IceBox will be started with this version of framework, but it have to load .NET 2.0 assemblies dynamicaly, but it is not possible. This bug will be repaired with new version of Ice, which will be done for .NET Framework 2.0. 

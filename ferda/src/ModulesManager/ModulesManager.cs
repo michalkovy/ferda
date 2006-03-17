@@ -1,4 +1,4 @@
-// 
+// ModulesManager.cs - Main file of Modules Manager
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -27,6 +27,7 @@ using Ferda.Modules;
 
 namespace Ferda {
     namespace ModulesManager {
+
         /// <summary>
         /// Main class of Modules Manager
         /// </summary>

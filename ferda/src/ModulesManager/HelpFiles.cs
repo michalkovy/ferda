@@ -1,4 +1,4 @@
-// 
+// HelpFiles.cs - saving, loading and working with help files
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -24,14 +24,24 @@ using System.Xml.Serialization;
 
 namespace Ferda.ModulesManager
 {
+    /// <summary>
+    /// Works with files with help for boxes. Is made for savig and loading files with help
+    /// from modules depending on help files version information.
+    /// </summary>
 	public class HelpFiles
 	{
+        /// <summary>
+        /// Creates new class and loads information about old saved help files from config file
+        /// </summary>
         public HelpFiles()
         {
             if (File.Exists(System.IO.Path.Combine(savePath, helpFilesConfigFileName)))
                 this.LoadHelpFilesConfig();
         }
 
+        /// <summary>
+        /// Struct with information about version of help file loaded to local disk
+        /// </summary>
 		public struct HelpFileManagersInfo
 		{
 			private string identifier;
@@ -41,9 +51,9 @@ namespace Ferda.ModulesManager
 			///<summary>
 			/// Constructor
 			/// </summary>
-			/// <param name="identifier">A string</param>
-			/// <param name="version">An int</param>
-			/// <param name="path">A string</param>
+			/// <param name="identifier">An identifier of help file</param>
+			/// <param name="version">Version of help file</param>
+			/// <param name="path">Path where is file saved</param>
 			public HelpFileManagersInfo(string identifier, int version, string path)
 			{
 				this.identifier = identifier;
@@ -51,6 +61,9 @@ namespace Ferda.ModulesManager
 				this.path = path;
 			}
 			
+            /// <summary>
+            /// An identifier of help file
+            /// </summary>
 			public string Identifier
 			{
 				set {
@@ -62,6 +75,9 @@ namespace Ferda.ModulesManager
 				}
 			}
 			
+            /// <summary>
+            /// Version of help file
+            /// </summary>
 			public int Version
 			{
 				set {
@@ -73,6 +89,9 @@ namespace Ferda.ModulesManager
 				}
 			}
 			
+            /// <summary>
+            /// Path where is file saved
+            /// </summary>
 			public string Path
 			{
 				set {
@@ -85,18 +104,39 @@ namespace Ferda.ModulesManager
 			}
 		}
 
+        /// <summary>
+        /// Special struct created because of xml serialization problem with generic dictionary
+        /// </summary>
         public struct HelpKeyValue
         {
+            /// <summary>
+            /// Constructor
+            /// </summary>
+            /// <param name="key">Key</param>
+            /// <param name="value">Value</param>
             public HelpKeyValue(string key, HelpFileManagersInfo value)
             {
                 Key = key;
                 Value = value;
             }
 
+            /// <summary>
+            /// Key
+            /// </summary>
             public string Key;
+
+            /// <summary>
+            /// Value
+            /// </summary>
             public HelpFileManagersInfo Value;
         }
 		
+        /// <summary>
+        /// Gets path of help with identifier <paramref name="identifier"/>
+        /// </summary>
+        /// <param name="identifier">An identifier of help file</param>
+        /// <returns>String representing path. If string is null, there is no
+        /// saved help file with identifier <paramref name="identifier"/></returns>
 		public string GetHelpFilePath(string identifier)
 		{
 			HelpFileManagersInfo fileNfo;
@@ -106,7 +146,13 @@ namespace Ferda.ModulesManager
 			}
 			return null;
 		}
-		
+
+        /// <summary>
+        /// Gets version of saved help with identifier <paramref name="identifier"/>
+        /// </summary>
+        /// <param name="identifier">An identifier of help file</param>
+        /// <returns>Int representign version.. If return value is null, there is no
+        /// saved help file with identifier <paramref name="identifier"/></returns>
 		public int? GetHelpFileVersion(string identifier)
 		{
 			HelpFileManagersInfo fileNfo;
@@ -117,6 +163,12 @@ namespace Ferda.ModulesManager
 			return null;
 		}
 		
+        /// <summary>
+        /// Saves help file
+        /// </summary>
+        /// <param name="identifier">An identifier of help file</param>
+        /// <param name="version">Version of help file</param>
+        /// <param name="file">Data with help file</param>
 		public void SaveHelpFile(string identifier, int version ,byte[] file)
 		{
 			string path = GetHelpFilePath(identifier);
@@ -136,6 +188,9 @@ namespace Ferda.ModulesManager
 															 path);
 		}
 
+        /// <summary>
+        /// Loads information about saved help files from config file.
+        /// </summary>
         public void LoadHelpFilesConfig()
         {
 
@@ -147,8 +202,13 @@ namespace Ferda.ModulesManager
             r.Close();
         }
 
+        /// <summary>
+        /// Saves information about saved help files to config file.
+        /// </summary>
         public void SaveHelpFilesConfig()
         {
+            // TODO uncomment
+
             //List<HelpKeyValue> helpFilesCopy =
             //    new List<HelpKeyValue>(helpFiles.Count);
             //foreach(KeyValuePair<string, HelpFileManagersInfo> pair in helpFiles)
