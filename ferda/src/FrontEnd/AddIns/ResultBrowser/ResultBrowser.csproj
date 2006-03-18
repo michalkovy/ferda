@@ -96,6 +96,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="MyIce\ResultBrowserIce.cs" />
     <Compile Include="NonGUIClasses\FerdaResult.cs" />
+    <Compile Include="NonGUIClasses\IceTick.cs" />
     <Compile Include="NonGUIClasses\Sorter.cs" />
   </ItemGroup>
   <ItemGroup>

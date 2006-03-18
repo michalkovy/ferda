@@ -9,7 +9,7 @@ namespace Ferda.Statistics.FFTTask
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
             return quantifierSetting.firstContingencyTableRows[0][0];
-         //   throw new Exception("The method or operation is not implemented.");
+         //   return float.NaN;
         }
 
         public override string getTaskType(Ice.Current current__)

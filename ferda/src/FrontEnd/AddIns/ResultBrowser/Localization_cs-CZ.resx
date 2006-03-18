@@ -162,6 +162,9 @@
   <data name="GraphViewOptions" xml:space="preserve">
     <value>Volby prohlížení</value>
   </data>
+  <data name="HypothesesLoading" xml:space="preserve">
+    <value>Nahrávání hypotéz:</value>
+  </data>
   <data name="HypothesisData" xml:space="preserve">
     <value>Údaje o hypotéze</value>
   </data>

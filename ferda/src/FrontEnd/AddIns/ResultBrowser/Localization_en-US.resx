@@ -165,6 +165,9 @@
   <data name="GraphViewOptions" xml:space="preserve">
     <value>View options</value>
   </data>
+  <data name="HypothesesLoading" xml:space="preserve">
+    <value>Hypotheses loading:</value>
+  </data>
   <data name="HypothesisData" xml:space="preserve">
     <value>Hypothesis data</value>
   </data>

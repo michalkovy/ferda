@@ -16,7 +16,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
     public struct Tuple : IComparable
     {
         int HypothesisId;
-        float CountedStatistics;
+        double CountedStatistics;
 
         public int HypId
         {
@@ -30,7 +30,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
         }
 
-        public float Value
+        public double Value
         {
             get
             {
@@ -56,6 +56,48 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
         }
     };
+
+    /// <summary>
+    /// Struct for saving counted statistics
+    /// </summary>
+    public struct CountedValues
+    {
+        private string ValueName;
+        private Double ValueValue;
+
+        public string Name
+        {
+            get
+            {
+                return ValueName;
+            }
+            set
+            {
+                ValueName = value;
+            }
+        }
+        public Double Value
+        {
+            get
+            {
+                return ValueValue;
+            }
+
+            set
+            {
+                ValueValue = value;
+            }
+        }
+    };
+
+    /// <summary>
+    /// Structure for storing cached quantifiers and statistics
+    /// </summary>
+    public struct CachedHypothesis
+    {
+        public CountedValues[] StatisticsList;
+        public CountedValues[] QuantifiersList;
+    }
 
 
     /// <summary>
@@ -93,7 +135,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <summary>
         /// Array of all quantifiers.
         /// </summary>
-      //  private QuantifierProvider[] AllQuantifiers;
+        //  private QuantifierProvider[] AllQuantifiers;
 
 
         /// <summary>
@@ -108,7 +150,27 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         private int[] SelectedQuantifiers;
 
-        private Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier.AbstractQuantifierFunctionsPrx [] proxy;
+
+        /// <summary>
+        /// Array for cached hypotheses
+        /// </summary>
+        private CachedHypothesis[] cachedHypotheses;
+
+        /// <summary>
+        /// List of statistics function proxies
+        /// </summary>
+        List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies;
+
+
+        /// <summary>
+        /// Cached statistics names
+        /// </summary>
+        List<string> cachedStatisticsNames;
+
+        /// <summary>
+        /// List of quantifiers proxies
+        /// </summary>
+        private Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier.AbstractQuantifierFunctionsPrx[] proxy;
 
         #endregion
 
@@ -128,22 +190,37 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Method to initialize the ResultBrowser structure
         /// </summary>
         /// <param name="hypotheses"></param>
-        public void IceRun(HypothesisStruct[] hypotheses, QuantifierProvider[] used_quantifiers)
+        public void Initialize(HypothesisStruct[] hypotheses, QuantifierProvider[] used_quantifiers, List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies)
         {
             this.Hypotheses = hypotheses;
+            this.statisticsProxies = statisticsProxies;
 
             //working with quantifiers - need to obtain all quantifier, for now working only with used ones
-
             this.UsedQuantifiers = used_quantifiers;
-          //  this.AllQuantifiers = this.UsedQuantifiers;
             this.SelectedQuantifiers = new int[this.UsedQuantifiers.Length];
-
             proxy = new AbstractQuantifierFunctionsPrx[this.UsedQuantifiers.Length];
-
             for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
                 this.proxy[i] = this.UsedQuantifiers[i].functions;
             }
+
+            #region Caching
+
+            //caching statistics names
+            this.cachedStatisticsNames = this.GetStatisticsNames();
+
+            //initializing hypotheses cache
+            this.cachedHypotheses = new CachedHypothesis[this.Hypotheses.Length];
+
+            //caching hypotheses quantifiers and statistics values
+            for (int i = 0; i < this.Hypotheses.Length; i++)
+            {
+                this.cachedHypotheses[i].QuantifiersList = this.GetQuantifiers(i);
+                this.cachedHypotheses[i].StatisticsList = this.GetStatistics(i);
+                this.OnIceTick();
+            }
+
+            #endregion
         }
 
         #endregion
@@ -260,7 +337,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                     {
                         returnString.Append(literal.literalName);
                     }
-                }   
+                }
             }
             else
             {
@@ -287,7 +364,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                         }
                         firstRun = false;
                     }
-                }  
+                }
             }
             if (returnString.Length == 0)
             {
@@ -295,7 +372,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             else
             {
-                if(boolCedent)
+                if (boolCedent)
                     returnString.Append(")");
 
                 return returnString.ToString();
@@ -321,7 +398,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                     {
                         returnString.Append(literal.literalName);
                     }
-                }   
+                }
             }
             else
             {
@@ -348,7 +425,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                         }
                         firstRun = false;
                     }
-                }    
+                }
             }
 
             if (returnString.Length == 0)
@@ -358,7 +435,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
             else
             {
-                if(boolCedent)
+                if (boolCedent)
                     returnString.Append(")");
                 return returnString.ToString();
             }
@@ -409,7 +486,6 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
         }
 
-
         /// <summary>
         /// Method to compose hypothesis name
         /// </summary>
@@ -445,9 +521,8 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                     {
                         returnString.Append(String.Empty);
                     }
-                } 
+                }
             }
-
             else
             {
                 returnString.Append(FerdaResult.GetAntecedent(hypothesis) +
@@ -529,6 +604,19 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         #endregion
 
 
+        #region Events
+
+        public event IceTick IceTicked;
+        public void OnIceTick()
+        {
+            if (IceTicked != null)
+            {
+                IceTicked();
+            }
+        }
+
+        #endregion
+
         #region Quantifier functions
 
         /// <summary>
@@ -563,31 +651,83 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             {
                 if (quantifier == this.UsedQuantifiers[i])
                 {
-
                     return true;
                 }
             }
             return false;
         }
 
-
-
+        /*
         /// <summary>
         /// Method which applies selected quantifiers on the contingency table data.
         /// </summary>
         /// <param name="hypothese">Hypothese to take tables from</param>
         /// <returns>List of values for each quantifier</returns>
-        protected List<double> ApplySelectedQuantifiers(HypothesisStruct hypothese, int precision)
+        protected List<double> CountSelectedQuantifiers(HypothesisStruct hypothese)
         {
             List<double> returnList = new List<double>();
             for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
                 if (this.SelectedQuantifiers[i] == 1)
                 {
-                    returnList.Add(Math.Round(this.proxy[i].Value(hypothese.quantifierSetting), precision));
+                    returnList.Add(this.proxy[i].Value(hypothese.quantifierSetting));
                 }
             }
             return returnList;
+        }*/
+
+        /// <summary>
+        /// Method for reading the pre-counted quantifier from cache
+        /// </summary>
+        /// <param name="hypid">Id of the hypothesis to get values for</param>
+        /// <param name="precision">Number of decimal places of precision</param>
+        /// <returns>List of counted values</returns>
+        public double[] ReadSelectedQuantifiersFromCache(int hypid, int precision)
+        {
+            double[] quantifiers = new double[cachedHypotheses[hypid].QuantifiersList.Length];
+            for (int i = 0; i < cachedHypotheses[hypid].QuantifiersList.Length; i++)
+            {
+                if (this.GetUsedQuantifiersNames().IndexOf(cachedHypotheses[hypid].QuantifiersList[i].Name) != -1)
+                {
+                    quantifiers[i] = Math.Round(cachedHypotheses[hypid].QuantifiersList[i].Value, precision);
+                }
+            }
+            return quantifiers;
+        }
+
+        /// <summary>
+        /// Method for reading the pre-counted quantifier from cache
+        /// </summary>
+        /// <param name="hypid">Id of the hypothesis to get values for</param>
+        /// <param name="precision">Number of decimal places of precision</param>
+        /// <returns>List of counted values</returns>
+        public double[] ReadAllQuantifiersFromCache(int hypid, int precision)
+        {
+            double[] quantifiers = new double[cachedHypotheses[hypid].QuantifiersList.Length];
+            for (int i = 0; i < cachedHypotheses[hypid].QuantifiersList.Length; i++)
+            {
+                quantifiers[i] = Math.Round(cachedHypotheses[hypid].QuantifiersList[i].Value, precision);
+            }
+            return quantifiers;
+        }
+
+        /// <summary>
+        /// Method for reading statistics from cache
+        /// </summary>
+        /// <param name="hypid">Hypothesis id to read statistics for</param>
+        /// <param name="precision">Number of decimal places of precision</param>
+        /// <returns>List of counted values</returns>
+        public List<CountedValues> ReadStatisticsFromCache(int hypid, int precision)
+        {
+            List<CountedValues> statistics = new List<CountedValues>();
+            for (int i = 0; i < cachedHypotheses[hypid].StatisticsList.Length; i++)
+            {
+                CountedValues temp = new CountedValues();
+                temp.Name = cachedHypotheses[hypid].StatisticsList[i].Name;
+                temp.Value = Math.Round(cachedHypotheses[hypid].StatisticsList[i].Value, precision);
+                statistics.Add(temp);
+            }
+            return statistics;
         }
 
         /// <summary>
@@ -595,17 +735,19 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="hypothese">Hypothese to take tables from</param>
         /// <returns>List of values for each quantifier</returns>
-        protected List<double> ApplyAllQuantifiers(HypothesisStruct hypothese, int precision)
+        private List<double> CountAllQuantifiers(HypothesisStruct hypothese)
         {
             List<double> returnList = new List<double>();
             for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
-                returnList.Add(Math.Round(this.proxy[i].Value(hypothese.quantifierSetting), precision));
+                returnList.Add(this.proxy[i].Value(hypothese.quantifierSetting));
             }
             return returnList;
         }
 
 
+
+        /*
         /// <summary>
         /// Method which applies selected quantifiers on the hypothese fourpole table
         /// </summary>
@@ -613,19 +755,18 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <returns>Arraylist of values</returns>
         public List<double> SelectedQuantifierValues(HypothesisStruct hypothese, int precision)
         {
-            return this.ApplySelectedQuantifiers(hypothese, precision);
-        }
+            return this.CountSelectedQuantifiers(hypothese, precision);
+        }*/
 
         /// <summary>
         /// Method which applies all quantifiers on the hypothese fourpole table
         /// </summary>
         /// <param name="hypothese"></param>
         /// <returns>Arraylist of values</returns>
-        public List<double> AllQuantifierValues(HypothesisStruct hypothese,int precision)
+        public List<double> AllQuantifierValues(HypothesisStruct hypothese)
         {
-            return this.ApplyAllQuantifiers(hypothese, precision);
+            return this.CountAllQuantifiers(hypothese);
         }
-
 
         #endregion
 
@@ -649,6 +790,70 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         public HypothesisStruct GetHypothese(int index)
         {
             return this.Hypotheses[index];
+        }
+
+        #endregion
+
+
+        #region Caching methods
+
+        /// <summary>
+        /// Method for counting quantifiers values for hypothese
+        /// </summary>
+        /// <param name="HypId">Hypothesis id to count values for</param>
+        /// <returns>Counted quantifiers values</returns>
+        private CountedValues[] GetQuantifiers(int HypId)
+        {
+            
+            List<string> names = this.GetAllQuantifierNames();
+            List<double> values = this.CountAllQuantifiers(this.Hypotheses[HypId]);
+            CountedValues[] quantifiers = new CountedValues[values.Count];
+
+            for (int i = 0; i < values.Count; i++)
+            {
+                quantifiers[i].Name = names[i];
+                quantifiers[i].Value = values[i];
+            }
+            return quantifiers;
+        }
+
+        /// <summary>
+        /// Method for counting statistics values for hypothese
+        /// </summary>
+        /// <param name="HypId">Hypothesis id to count values for</param>
+        /// <returns>Counted statistics values</returns>
+        private CountedValues[] GetStatistics(int HypId)
+        {
+            CountedValues[] returnList = new CountedValues[this.statisticsProxies.Count];
+            for (int i = 0; i < this.statisticsProxies.Count; i++)
+            {
+                returnList[i].Name = this.cachedStatisticsNames[i];
+                returnList[i].Value = this.statisticsProxies[i].getStatistics(this.Hypotheses[HypId].quantifierSetting);
+            }
+            return returnList;
+        }
+
+        /// <summary>
+        /// Method for getting statistics names
+        /// </summary>
+        /// <returns>List of statistics names</returns>
+        private List<string> GetStatisticsNames()
+        {
+            List<string> names = new List<string>();
+            foreach (Ferda.Statistics.StatisticsProviderPrx prx in this.statisticsProxies)
+            {
+                names.Add(prx.getStatisticsName());
+            }
+            return names;
+        }
+
+        /// <summary>
+        /// Method for getting statistics name from cache
+        /// </summary>
+        /// <returns>List of strings with statistics names</returns>
+        public List<string> ReadStatisticsNamesFromCache()
+        {
+            return this.cachedStatisticsNames;
         }
 
         #endregion
