@@ -17,9 +17,9 @@ Tomas
  - ChiSquare quantifier ... bug reported to Karby
 Sasa
  - overit a dodelat poradne funkcnost vsech tasku
- - KL, CF, SDKL, SDCF - psat v result browseru nazvy hypotez (antecedent, succedent,...)
+ - KL, CF, SDKL, SDCF - psat v result browseru nazvy hypotez (antecedent, succedent,...) (done)
  - CF, SDCF kvantifikatory ... doimplementovat vypocty (??)
- - grafy v resultu s popiskami - potrebuju, aby na tom neco jeste udelal Tom - nevidim to realne do obhajoby
+ - grafy v resultu s popiskami - potrebuju, aby na tom neco jeste udelal Tom - nevidim to realne do obhajoby (done)
 Vsichni
  - programatorska dokumentace
  - udelat GPL hlavicky .cs souborum
