@@ -109,7 +109,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.columnSorter.column = 0;
             //disabling the column click handler (sorter)
             this.HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
-            //columnSorter.
+            HypothesesListView.Sorting = SortOrder.None;
             HypothesesListView.ListViewItemSorter = null;
 
             //clearing all the items
@@ -284,6 +284,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //disabling the column click handler (sorter)
             //this.HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
             HypothesesListView.ListViewItemSorter = null;
+            HypothesesListView.Sorting = SortOrder.None;
             this.HypothesesListView.Items.Clear();
             for (int i = 0; i < tuples.Length; i++)
             {
