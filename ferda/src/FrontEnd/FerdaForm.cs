@@ -526,7 +526,7 @@ using Ferda.ModulesManager;
             propertyGridContent.Resize += new EventHandler(propertyGridContent_Resize);
             propertyGrid.Name = "PropertyGrid";
 
-            //synchronizing the sizes of content and propertyGrid
+            //synchronizing the sizes of content and propertiesDisplayer
             propertyGridContent.ClientSize = propertyGrid.Size;
 
             //Settings required by the DockDotNET library to dock anything
@@ -885,7 +885,7 @@ using Ferda.ModulesManager;
                 {
                 if (propertyGridContent.IsVisible)
                 {
-                    //docking according to the propertyGrid
+                    //docking according to the propertiesDisplayer
                     DockContainer cont = propertyGridContent.HostContainer;
                     cont.DockWindow(contextHelpContent, DockStyle.Bottom);
                 }
@@ -916,6 +916,7 @@ using Ferda.ModulesManager;
                     desktop.PropertiesDisplayer = propertyGrid;
                 }
                 archive.PropertiesDisplayer = propertyGrid;
+                menu.PropertiesDisplayer = propertyGrid;
 
                 //docking
                 dockingManager.AddForm(propertyGridContent);

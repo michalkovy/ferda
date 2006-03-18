@@ -46,6 +46,10 @@ namespace Ferda.FrontEnd
         /// Control to select the box
         /// </summary>
         protected IBoxSelector selector;
+        /// <summary>
+        /// Property grid to be refreshed after the action is carried out
+        /// </summary>
+        protected Properties.IPropertiesDisplayer propertiesDisplayer;
 
         #endregion
 
@@ -62,11 +66,13 @@ namespace Ferda.FrontEnd
         /// a box that has thrown the exception, it can be also passed
         /// as a parameter</param>
         public ActionExceptionCatcher(ProjectManager.ProjectManager projManager,
-            ResourceManager resManager, IBoxSelector selector)
+            ResourceManager resManager, IBoxSelector selector, 
+            Properties.IPropertiesDisplayer propGrid)
         {
             this.projectManager = projManager;
             this.resourceManager = resManager;
             this.selector = selector;
+            this.propertiesDisplayer = propGrid;
         }
 
         #endregion
@@ -98,11 +104,12 @@ namespace Ferda.FrontEnd
         }
 
         /// <summary>
-        /// Method ice_response
+        /// Method ice_response - refreshes the property grid after the action
+        /// is done
         /// </summary>
         public override void ice_response()
         {
-            //TODO: refresh property grid
+            propertiesDisplayer.AsyncAdapt();
         }
 
         #endregion

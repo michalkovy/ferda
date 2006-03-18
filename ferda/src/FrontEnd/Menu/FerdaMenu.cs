@@ -30,6 +30,7 @@ using Ferda.FrontEnd.Archive;
 using Ferda.ProjectManager;
 using Ferda.ModulesManager;
 using Ferda.Modules;
+using Ferda.FrontEnd.Properties;
 
 namespace Ferda.FrontEnd.Menu
 {
@@ -53,6 +54,7 @@ namespace Ferda.FrontEnd.Menu
         private IControlsManager controlsManager;
         private IArchiveDisplayer archiveDisplayer;
         private IIconProvider iconProvider;
+        private IPropertiesDisplayer propertiesDisplayer;
 
 		/// Main menus - 1.st level
         private ToolStripMenuItem file;
@@ -157,6 +159,15 @@ namespace Ferda.FrontEnd.Menu
             {
                 return archiveDisplayer;
             }
+        }
+
+        /// <summary>
+        /// PropertyGrid of the application
+        /// </summary>
+        public IPropertiesDisplayer PropertiesDisplayer
+        {
+            get { return propertiesDisplayer; }
+            set { propertiesDisplayer = value; }
         }
 
         #endregion
@@ -916,7 +927,8 @@ namespace Ferda.FrontEnd.Menu
                 if (info.label == sender.ToString())
                 {
                     ActionExceptionCatcher catcher =
-                        new ActionExceptionCatcher(projectManager, ResManager, selector);
+                        new ActionExceptionCatcher(projectManager, ResManager, 
+                        selector, propertiesDisplayer);
 					box.RunAction_async(catcher, info.name);
                     break;
                 }

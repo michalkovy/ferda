@@ -2101,7 +2101,7 @@ namespace Ferda.FrontEnd.Desktop
                 if (info.label == sender.ToString())
                 {
                     ActionExceptionCatcher catcher = 
-                        new ActionExceptionCatcher(projectManager, ResManager, this);
+                        new ActionExceptionCatcher(projectManager, ResManager, this, PropertiesDisplayer);
 					box.RunAction_async(catcher, info.name);
                     break;
                 }
