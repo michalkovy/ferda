@@ -104,5 +104,10 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.FFTTask
             LISpMinerAbstractTask.RunTaskOnMetabaseLayer(boxModule, getTask(), new MetabaseLayer.FFTTask());
         }
         #endregion
-	}
+
+        public override void runAction(Ice.Current current__)
+        {
+            RunActionRun();
+        }
+    }
 }

@@ -68,5 +68,9 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask
             LISpMinerAbstractTask.RunTaskOnMetabaseLayer(boxModule, getTask(), new MetabaseLayer.SDCFTask());
         }
         #endregion
+        public override void runAction(Ice.Current current__)
+        {
+            RunActionRun();
+        }
     }
 }

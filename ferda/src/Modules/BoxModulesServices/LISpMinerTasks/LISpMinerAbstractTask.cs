@@ -198,6 +198,18 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks
                 SetGenerationInfo(boxModule, generationInfo);
                 SetHypotheses(boxModule, hypotheses);
             }
+            catch (Ferda.Modules.BadValueError e)
+            {
+                throw e;
+            }
+            catch (Ferda.Modules.BadParamsError e)
+            {
+                throw e;
+            }
+            catch (Ferda.Modules.BoxRuntimeError e)
+            {
+                throw e;
+            }
             catch (Exception e)
             {
                 SetGenerationInfoStateToFailed(boxModule);

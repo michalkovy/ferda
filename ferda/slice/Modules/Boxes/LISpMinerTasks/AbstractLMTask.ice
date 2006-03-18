@@ -27,6 +27,12 @@ module Ferda {
 					sequence<QuantifierProvider> QuantifierProviderSeq;
 
 					interface AbstractLMTaskFunctions {
+						void runAction()
+								throws
+									Ferda::Modules::BoxRuntimeError,
+									Ferda::Modules::BadValueError,
+									Ferda::Modules::BadParamsError,
+									Ferda::Modules::NoConnectionInSocketError;
 						nonmutating HypothesisStructSeq getResult()
 								throws
 									Ferda::Modules::BoxRuntimeError,
