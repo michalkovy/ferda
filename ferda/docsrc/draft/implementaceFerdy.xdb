@@ -129,17 +129,13 @@
     <para>To, co jsme také udělali narozdíl od konkurence, je, že krabičky mezi
     soubou a s vyššími vrstvami komunikují přes middleware (Ice). To umožňuje,
     že každá krabička může teoreticky běžet na jiném počítači (zároveň uživatel
-    může sedět jinde, než probíhá výpočet). Dále nám to také umožňuje, že je
-    možné psát krabičky v různých programovacích jazycích. Na druhou stranu to
-    přináší nutnost alespoň malé znalosti Ice pro vytvářní nové krabičky. Ice
-    je však velice dobře zdokumentované, a lidé od ZeroC (firma, která vyvýjí
-    Ice) dobře a rychle odpovídají na jejich support fóru na dotazy.</para>
+    může sedět jinde, než probíhá výpočet) a že je možné psát krabičky ve
+    větším počtu programovacích jazyků. Na druhou stranu to přináší nutnost
+    alespoň malé znalosti Ice pro vytvářní nové krabičky. Ice je však velice
+    dobře zdokumentované, a lidé od ZeroC (firma, která vyvýjí Ice) dobře a
+    rychle odpovídají na jejich support fóru na dotazy.</para>
   </section>
-
-  <section>
-    <title>proč ne metabaze,... proč distribuované,... </title>
-  </section>
-
+  
   <section>
     <title>Rozdělení Ferdy na jednotlivé části</title>
 
@@ -179,27 +175,15 @@
         </listitem>
 
         <listitem>
-          <para>Uchovávat vlastnosti krabiček</para>
-        </listitem>
-
-        <listitem>
           <para>Funkce archivu</para>
         </listitem>
 
         <listitem>
-          <para>Funkce pohledů</para>
+          <para>Funkce pohledů (desktopu)</para>
         </listitem>
 
         <listitem>
           <para>Ukládání a načítání do XML</para>
-        </listitem>
-        
-		  <listitem>
-          <para>Stará se o přidělení správného uživatelského jména krabičkám</para>
-        </listitem>
-		  
-		  <listitem>
-          <para>Místo referencí již používá u objektů určeným k serializaci identifikaci uživatelským jménem, aby to šlo uložit do XML</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -211,11 +195,11 @@
 
       <itemizedlist>
         <listitem>
-          <para>Načítání seznamu modulů z IcePacku</para>
+          <para>Načítání seznamu modulů z IceGridu</para>
         </listitem>
 
         <listitem>
-          <para>Udržuje seznam modulů, s kterými může pracovat a přitom nejsou v IcePacku</para>
+          <para>Udržuje seznam modulů, s kterými může pracovat a přitom nejsou v IceGridu</para>
         </listitem>
 
         <listitem>
@@ -226,21 +210,9 @@
           <para>Zprostředkování funkcí jednotlivých modulů</para>
         </listitem>
 
-        <listitem>
-          <para>Dynamické i statické spouštění akcí modulů</para>
-        </listitem>
-
-        <listitem>
-          <para>Zajištění spolehlivosti modulů</para>
-        </listitem>
-
-        <listitem>
-          <para>Skrytí všech dynamických volání pod statické funkce</para>
-        </listitem>
-
-        <listitem>
-          <para>Předávání nastavení lokalizace modulům</para>
-        </listitem>
+	<listitem>
+	  <para>Nabízení jistých funkcí modulům</para>
+	</listitem>
       </itemizedlist>
     </section>
 
@@ -261,7 +233,7 @@
         </listitem>
 
         <listitem>
-          <para>Jiné moduly pro komunikaci s uživatelem</para>
+          <para>Jiné moduly pro komunikaci s uživatelem (tzv. moduly pro interakci)</para>
         </listitem>
       </itemizedlist>
 
@@ -271,6 +243,27 @@
 
   <section>
     <title>Funkce middleware ve Ferdovi</title>
+
+    <para>Manažer modulů kominukuje s moduly přes Ice, moduly mezi sebou také.</para>
+
+    <para>Manažeru modulů je při startu řečeno, kde má hledat IceGrid registry,
+    který informuje o tom, jaké moduly jsou k dispozici a jak se k nim dostat.
+    Také manažer modulů dostává při spuštění informace o modulech, které nejsou
+    registrované v IceGrid registry, ale s kterými by měl pracovat (nejčastěji
+    jde o moduly pro interakci, protože narozdíl od krabiček je skoro vždy
+    vhodné, aby běželi na straně klienta).</para>
+
+    <para>Je možné, že IceGrid vrátí, že se daný modul vyskytuje na více
+    místech. V současné implementaci manažeru modulů se použije pouze jedno
+    umístění, nicméně v pozdějších verzích by měl mít možnost pracovat dle
+    výběru se všemi umístěěními. Důvod, proč se s tím nepočítalo od začátku,
+    je, že v době napsání velké části manažeru modulů ještě Ice nemělo IceGrid,
+    ale pouze IcePack, jenž uměl pracovat také vždy jen s jedním umístěním
+    modulů.</para>
+
+    <para>Více o tom jak funguje Ice můžete nalézt v <ulink
+    url="http://www.zeroc.com/download.html">dokumentaci Ice</ulink>
+    </para>
   </section>
 
   <section>
