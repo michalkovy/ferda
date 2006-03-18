@@ -44,6 +44,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelSortedBy = new System.Windows.Forms.Label();
             this.ComboBoxSortStatistics = new System.Windows.Forms.ComboBox();
             this.LabelSortHypotheses = new System.Windows.Forms.Label();
+            this.StatusStrip = new System.Windows.Forms.StatusStrip();
+            this.LabelProgressBar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ProgressBarIceTicks = new System.Windows.Forms.ToolStripProgressBar();
             this.GroupBoxChangeGraph = new System.Windows.Forms.GroupBox();
             this.CheckBoxShowLabels = new System.Windows.Forms.CheckBox();
             this.LabelVOffset = new System.Windows.Forms.Label();
@@ -63,6 +66,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDecimals)).BeginInit();
+            this.StatusStrip.SuspendLayout();
             this.GroupBoxChangeGraph.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarVOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarHOffset)).BeginInit();
@@ -90,6 +94,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // ResultBrowserSplit.Panel2
             // 
+            this.ResultBrowserSplit.Panel2.Controls.Add(this.StatusStrip);
             this.ResultBrowserSplit.Panel2.Controls.Add(this.GroupBoxChangeGraph);
             this.ResultBrowserSplit.Size = new System.Drawing.Size(1064, 517);
             this.ResultBrowserSplit.SplitterDistance = 287;
@@ -215,6 +220,33 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelSortHypotheses.Size = new System.Drawing.Size(43, 13);
             this.LabelSortHypotheses.TabIndex = 0;
             this.LabelSortHypotheses.Text = "Sort by:";
+            // 
+            // StatusStrip
+            // 
+            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LabelProgressBar,
+            this.ProgressBarIceTicks});
+            this.StatusStrip.Location = new System.Drawing.Point(0, 204);
+            this.StatusStrip.Name = "StatusStrip";
+            this.StatusStrip.Size = new System.Drawing.Size(1064, 22);
+            this.StatusStrip.TabIndex = 1;
+            this.StatusStrip.Text = "statusStrip1";
+            this.StatusStrip.Visible = false;
+            // 
+            // LabelProgressBar
+            // 
+            this.LabelProgressBar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.LabelProgressBar.Name = "LabelProgressBar";
+            this.LabelProgressBar.Size = new System.Drawing.Size(105, 17);
+            this.LabelProgressBar.Text = "Hypotheses loading:";
+            this.LabelProgressBar.Visible = false;
+            // 
+            // ProgressBarIceTicks
+            // 
+            this.ProgressBarIceTicks.Name = "ProgressBarIceTicks";
+            this.ProgressBarIceTicks.Size = new System.Drawing.Size(300, 16);
+            this.ProgressBarIceTicks.Step = 1;
+            this.ProgressBarIceTicks.Visible = false;
             // 
             // GroupBoxChangeGraph
             // 
@@ -372,10 +404,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.Size = new System.Drawing.Size(1064, 517);
             this.ResultBrowserSplit.Panel1.ResumeLayout(false);
             this.ResultBrowserSplit.Panel2.ResumeLayout(false);
+            this.ResultBrowserSplit.Panel2.PerformLayout();
             this.ResultBrowserSplit.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDecimals)).EndInit();
+            this.StatusStrip.ResumeLayout(false);
+            this.StatusStrip.PerformLayout();
             this.GroupBoxChangeGraph.ResumeLayout(false);
             this.GroupBoxChangeGraph.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarVOffset)).EndInit();
@@ -418,6 +453,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.Label LabelSortedBy;
         private System.Windows.Forms.NumericUpDown NumericUpDownDecimals;
         private System.Windows.Forms.Label LabelNumeric;
+        private System.Windows.Forms.StatusStrip StatusStrip;
+        private System.Windows.Forms.ToolStripProgressBar ProgressBarIceTicks;
+        private System.Windows.Forms.ToolStripStatusLabel LabelProgressBar;
     }
 }
 

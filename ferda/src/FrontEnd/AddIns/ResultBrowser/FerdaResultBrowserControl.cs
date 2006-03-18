@@ -50,17 +50,21 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private int previousIndex = -1;
 
         /// <summary>
-        /// List of statistics function proxies
-        /// </summary>
-        List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies;
-
-        /// <summary>
         /// Sorter for the listview
         /// </summary>
         Sorter columnSorter = new Sorter();
 
-        #endregion
+        /// <summary>
+        /// Counter for loading hypotheses
+        /// </summary>
+        private int loadingCounter = 0;
 
+        /// <summary>
+        /// Count of hypotheses
+        /// </summary>
+        private int hypothesesCount = 0;
+
+        #endregion
 
         #region Constructor
 
@@ -81,15 +85,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
-
             InitializeComponent();
             InitializeGraph();
+            this.hypothesesCount = hypotheses.Length;
             resultBrowser = new FerdaResult(resManager);
-            resultBrowser.IceRun(hypotheses, used_quantifiers);
+            resultBrowser.IceTicked += new IceTick(resultBrowser_IceTicked);
+            resultBrowser.Initialize(hypotheses, used_quantifiers, statisticsProxies);
             this.displayer = Displayer;
             this.displayer.Reset();
-            this.statisticsProxies = statisticsProxies;
-
             this.Initialize();
         }
 
@@ -106,7 +109,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.columnSorter.column = 0;
             //disabling the column click handler (sorter)
             this.HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
-
+            //columnSorter.
+            HypothesesListView.ListViewItemSorter = null;
 
             //clearing all the items
             this.HypothesesListView.Items.Clear();
@@ -123,9 +127,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             HypothesesListView.KeyDown += new KeyEventHandler(ItemSelectHandler);
             HypothesesListView.KeyUp += new KeyEventHandler(ItemSelectHandler);
 
-            //adding the sorter
-            HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
-
             //adding the column names selected in the context menu
             foreach (String name in resultBrowser.GetSelectedColumnNames())
             {
@@ -136,7 +137,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 header.TextAlign = HorizontalAlignment.Right;
                 this.HypothesesListView.Columns.Add(header);
             }
-
+            int precision = Convert.ToInt32(this.NumericUpDownDecimals.Value);
+           
             //adding hypotheses
             int i = 0;
             foreach (HypothesisStruct hypothese in resultBrowser.GetAllHypotheses())
@@ -153,9 +155,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 item.SubItems.Add(FerdaResult.GetCondition(hypothese));
 
                 //quantifiers
-                foreach (object value in resultBrowser.SelectedQuantifierValues(hypothese, Convert.ToInt32(this.NumericUpDownDecimals.Value)))
+                foreach (double value in resultBrowser.ReadSelectedQuantifiersFromCache(i, precision))
                 {
-                    item.SubItems.Add(value.ToString());
+                    item.SubItems.Add(value.ToString("N" + precision.ToString()));
                 }
 
                 item.Tag = i;
@@ -163,6 +165,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 i++;
             }
             this.LabelCurrentlySorted.Text = resManager.GetString("SortedByNone");
+            //adding the sorter
+            HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
         }
 
         /// <summary>
@@ -190,21 +194,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
 
             //filling the listbox for sorting by statistics
-            foreach (Ferda.Statistics.StatisticsProviderPrx proxy in this.statisticsProxies)
+            foreach (string name in resultBrowser.ReadStatisticsNamesFromCache())
             {
-                string temp = String.Empty;
-                string temp1 = proxy.getStatisticsName();
-
-                try
-                {
-                    // temp = proxy.getStatistics(hypothesis.quantifierSetting).ToString();
-                }
-                catch
-                {
-                    temp = this.resManager.GetString("StatisticsUnimplemented");
-                }
-
-                this.ComboBoxSortStatistics.Items.Add(temp1);
+                this.ComboBoxSortStatistics.Items.Add(name);
             }
 
             this.RefreshBrowser();
@@ -216,6 +208,17 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
 
         #region Handlers
+
+        /// <summary>
+        /// Method for handling one IceTick, refreshes the progress bar
+        /// </summary>
+        void resultBrowser_IceTicked()
+        {
+            if (hypothesesCount > 0)
+            {
+                this.ProgressBarIceTicks.Value = (int)(((float)loadingCounter / (float)hypothesesCount) * 100);
+            }
+        }
 
         /// <summary>
         /// Right-click on chart handler
@@ -258,33 +261,31 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             try
             {
-                statisticsName = this.statisticsProxies[index].getStatisticsName();
+                statisticsName = this.resultBrowser.ReadStatisticsNamesFromCache()[index];
             }
             catch
             {
                 return;
             }
-            List<Tuple> tuples = new List<Tuple>();
-            HypothesisStruct[] hypotheses = resultBrowser.GetAllHypotheses();
-            for (int k = 0; k < hypotheses.Length; k++)
+            Tuple[] tuples = new Tuple[this.hypothesesCount];
+            int precision = Convert.ToInt32(this.NumericUpDownDecimals.Value);
+            
+            for (int k = 0; k < this.hypothesesCount; k++)
             {
-                Tuple tempTuple = new Tuple();
-                tempTuple.HypId = k;
-                try
-                {
-                    tempTuple.Value = this.statisticsProxies[index].getStatistics(hypotheses[k].quantifierSetting);
-                }
-                catch
-                {
-                    MessageBox.Show(this.resManager.GetString("StatisticsUnimplemented"), this.resManager.GetString("StatisticsUnimplemented"),
-                          MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-                tuples.Add(tempTuple);
+              //  Tuple tempTuple = new Tuple();
+                tuples[k].HypId = k;
+                tuples[k].Value = this.resultBrowser.ReadStatisticsFromCache(k, precision)[index].Value;
             }
-            tuples.Sort();
+            List<Tuple> tuples1 = new List<Tuple>();
+            tuples1.AddRange(tuples);
+            tuples1.Sort();
+            tuples = tuples1.ToArray();
+            this.columnSorter.column = -1;
+            //disabling the column click handler (sorter)
+            //this.HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
+            HypothesesListView.ListViewItemSorter = null;
             this.HypothesesListView.Items.Clear();
-            for (int i = 0; i < tuples.Count; i++)
+            for (int i = 0; i < tuples.Length; i++)
             {
                 HypothesisStruct hypothese = resultBrowser.GetHypothese(tuples[i].HypId);
                 ListViewItem item = new ListViewItem(FerdaResult.GetHypothesisName(hypothese));
@@ -299,14 +300,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 item.SubItems.Add(FerdaResult.GetCondition(hypothese));
 
                 //quantifiers
-                foreach (object value in resultBrowser.SelectedQuantifierValues(hypothese, Convert.ToInt32(this.NumericUpDownDecimals.Value)))
+                foreach (double value in resultBrowser.ReadSelectedQuantifiersFromCache(tuples[i].HypId, precision))
                 {
-                    item.SubItems.Add(value.ToString());
+                    item.SubItems.Add(value.ToString("N" + precision.ToString()));
                 }
-                item.Tag = i;
+                item.Tag = tuples[i].HypId;
                 HypothesesListView.Items.Add(item);
             }
             this.LabelCurrentlySorted.Text = statisticsName;
+        //    this.HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
         }
 
         /// <summary>
@@ -317,12 +319,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private void ItemClick(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
-
             if (item.Checked)
             {
                 this.resultBrowser.AddColumn(item.Text);
             }
-
             else
             {
                 this.resultBrowser.RemoveColumn(item.Text);
@@ -361,7 +361,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 return;
             }
-            this.FillPropertyGrid(hypothesis);
+            this.FillPropertyGrid(index);
             this.DrawBarsFromFirstTable(hypothesis, this.ContingencyTableChart);
         }
 
@@ -384,9 +384,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Fills propertgrid with the data of the selected hypothesis
         /// </summary>
-        /// <param name="hypotheseId">Id of the hypothesis to take data from</param>
-        private void FillPropertyGrid(HypothesisStruct hypothesis)
+        /// <param name="hypothesisId">Id of the hypothesis to take data from</param>
+        private void FillPropertyGrid(int hypothesisId)
         {
+            HypothesisStruct hypothesis = this.resultBrowser.GetHypothese(hypothesisId);
             PropertyTable table = new PropertyTable();
 
 
@@ -446,25 +447,21 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             #region Used quantifiers and their values
 
             //used quantifiers and their values
-            List<string> quantifierNames = this.resultBrowser.GetAllQuantifierNames();
-            List<double> quantifierValues = this.resultBrowser.AllQuantifierValues(hypothesis, Convert.ToInt32(this.NumericUpDownDecimals.Value));
+            List<string> names = this.resultBrowser.GetAllQuantifierNames();
+            double[] quantifiers = this.resultBrowser.ReadAllQuantifiersFromCache(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
 
-            //if the count is not the same, something must be very wrong...
-            if (quantifierNames.Count == quantifierValues.Count)
+            for (int i = 0; i < quantifiers.Length; i++)
             {
-                for (int i = 0; i < quantifierValues.Count; i++)
-                {
-                    PropertySpec hQuantifier = new PropertySpec(
-                    quantifierNames[i].ToString(),
-                    typeof(double),
-                    resManager.GetString("AppliedQuantifiers"),
-                    resManager.GetString("AppliedQuantifiers"),
-                    quantifierValues[i]
-                    );
-                    hQuantifier.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                    table.Properties.Add(hQuantifier);
-                    table[quantifierNames[i].ToString()] = quantifierValues[i];
-                }
+                PropertySpec hQuantifier = new PropertySpec(
+                names[i],
+                typeof(double),
+                resManager.GetString("AppliedQuantifiers"),
+                resManager.GetString("AppliedQuantifiers"),
+                quantifiers[i]
+                );
+                hQuantifier.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(hQuantifier);
+                table[names[i]] = quantifiers[i];
             }
 
             #endregion
@@ -521,23 +518,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             #region Statistics functions
 
-            foreach (Ferda.Statistics.StatisticsProviderPrx proxy in this.statisticsProxies)
+            foreach (CountedValues value in this.resultBrowser.ReadStatisticsFromCache(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value)))
             {
-                string temp = "";
-                string temp1 = proxy.getStatisticsName();
-
-                try
-                {
-                    double dtemp = Math.Round(proxy.getStatistics(hypothesis.quantifierSetting),Convert.ToInt32(this.NumericUpDownDecimals.Value)) ;
-                    temp = dtemp.ToString();
-                }
-                catch
-                {
-                    temp = this.resManager.GetString("StatisticsUnimplemented");
-                }
-
+                string temp = String.Empty;
+                temp = value.Value.ToString();
                 PropertySpec statistics = new PropertySpec(
-                    temp1,
+                    value.Name,
                     typeof(string),
                     this.resManager.GetString("Statistics"),
                     this.resManager.GetString("Statistics"),
@@ -545,11 +531,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     );
                 statistics.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                 table.Properties.Add(statistics);
-                table[temp1] = temp;
+                table[value.Name] = temp;
             }
 
             #endregion
-
 
             this.displayer.Reset();
             this.displayer.OtherObjectAdapt(table);
@@ -619,9 +604,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             this.LabelCurrentlySorted.Text = rm.GetString("SortedByNone");
             this.LabelNumeric.Text = rm.GetString("LabelNumeric");
+            this.LabelProgressBar.Text = rm.GetString("HypothesesLoading");
         }
 
-        #endregion   
+        #endregion
     }
 }
 

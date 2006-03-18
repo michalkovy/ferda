@@ -23,6 +23,11 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             double lvi1Int = 0;
             double lvi2Int = 0;
 
+            if (column == -1)
+            {
+                return 0;
+            }
+
             if (column > 3)
             {
                 lvi1Int = Convert.ToDouble(lvi1.SubItems[column].Text.ToString());
