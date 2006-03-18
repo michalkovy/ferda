@@ -27,7 +27,7 @@ namespace Ferda.FrontEnd.Properties
 {
     /// <summary>
     /// This class provides functionality for asynchronous property catching
-    /// (getting). Through the ice_response method it notifies the propertyGrid, 
+    /// (getting). Through the ice_response method it notifies the propertiesDisplayer, 
     /// that a property has been changed.
     /// </summary>
     public class AsyncPropertyCatcher : AMI_BoxModule_getProperty
@@ -54,7 +54,7 @@ namespace Ferda.FrontEnd.Properties
 
         /// <summary>
         /// Type of the property (for good type conversion in the 
-        /// propertyGrid.Temporary values
+        /// propertiesDisplayer.Temporary values
         /// </summary>
         public string PropertyType
         {

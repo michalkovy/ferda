@@ -37,6 +37,12 @@ namespace Ferda.FrontEnd.Properties
 		///</summary>
         void Adapt();
 
+        /// <summary>
+        /// This function is able to adapt the property grid from
+        /// another thread
+        /// </summary>
+        void AsyncAdapt();
+
 		///<summary>
 		///This function is called when the localization
 		///of the application is changed - the whole menu needs to be redrawn

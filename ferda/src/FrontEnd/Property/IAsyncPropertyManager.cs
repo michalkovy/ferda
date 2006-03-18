@@ -31,7 +31,7 @@ namespace Ferda.FrontEnd.Properties
     public interface IAsyncPropertyManager
     {
         /// <summary>
-        /// The property value is changed, so the the propertyGrid should be
+        /// The property value is changed, so the the propertiesDisplayer should be
         /// refilled with new values
         /// </summary>
         /// <param name="catcher">Catcher of the connection</param>

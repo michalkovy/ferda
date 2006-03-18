@@ -71,6 +71,7 @@ namespace Ferda.FrontEnd.Properties
         private IArchiveDisplayer archiveDisplayer;
 
         delegate void RefreshDelegate(PropertyTable bag);
+        delegate void AdaptDelegate();
 
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
@@ -362,6 +363,26 @@ namespace Ferda.FrontEnd.Properties
             this.SelectedObject = objectProperties;
         }
 
+        /// <summary>
+        /// This function is able to adapt the property grid from
+        /// another thread
+        /// </summary>
+        public void AsyncAdapt()
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.InvokeRequired)
+            {
+                AdaptDelegate d = new AdaptDelegate(AsyncAdapt);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.Adapt();
+            }
+        }
+
         #endregion
 
         #region IAsyncPropertyManager implementation + related functions
@@ -462,7 +483,7 @@ namespace Ferda.FrontEnd.Properties
         }
 
         /// <summary>
-        /// The property value is changed, so the the propertyGrid should be
+        /// The property value is changed, so the the propertiesDisplayer should be
         /// refilled with new values
         /// </summary>
         /// <param name="catcher">Catcher of the connection</param>
@@ -893,7 +914,7 @@ namespace Ferda.FrontEnd.Properties
                     break;
             }
 
-            //refilling the propertyGrid
+            //refilling the propertiesDisplayer
             SetPropertyGrid(propertyBag);
         }
 
