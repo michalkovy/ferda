@@ -755,6 +755,8 @@ namespace Ferda.FrontEnd.Archive
                     }
                 }
 
+                CBCategories.SelectedIndexChanged -= new EventHandler(CBArchive_SelectedIndexChanged);
+
                 if (i == CBCategories.Items.Count)
                 {
                     CBCategories.SelectedIndex = 0;
@@ -768,6 +770,8 @@ namespace Ferda.FrontEnd.Archive
                     //resets the archive to an "initial position"
                     ResetArchive(oldCategory, oldType, true);
                 }
+
+                CBCategories.SelectedIndexChanged += new EventHandler(CBArchive_SelectedIndexChanged);
 
                 //selecting the box type
                 for (int j = 0; j < CBTypes.Items.Count; j++)
@@ -928,15 +932,15 @@ namespace Ferda.FrontEnd.Archive
         /// <param name="e">Event parameters</param>
         void CBArchive_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //getting the index
+            //getting the categoriesIndex
             int index = CBCategories.SelectedIndex;
             //filling the labels in the second combo-box
             FillBoxLabels(CBCategories.Items[index].ToString());
             //selecting the first item in the combo-box
             CBTypes.SelectedIndex = 0;
-            //resetting the archive
-            ResetArchive(CBCategories.Items[index].ToString(),
-                ResManager.GetString("ArchiveAllText"), RBAlong.Checked);
+
+            //we dont have to reset the archive, because the 
+            //second combo-box handler takes care about this
         }
 
         /// <summary>
@@ -985,16 +989,17 @@ namespace Ferda.FrontEnd.Archive
         /// <param name="e">Event parameters</param>
         void RBAlong_CheckedChanged(object sender, EventArgs e)
         {
-            int index = CBCategories.SelectedIndex;
-            if (index == -1)
+            int typesIndex = CBTypes.SelectedIndex;
+            int categoriesIndex = CBCategories.SelectedIndex;
+            if (categoriesIndex == -1)
             {
                 ResetArchive(CBCategories.Items[0].ToString(),
-                    ResManager.GetString("ArchiveAllText"), RBAlong.Checked);
+                    CBTypes.Items[typesIndex].ToString(), RBAlong.Checked);
             }
             else
             {
-                ResetArchive(CBCategories.Items[index].ToString(),
-                    ResManager.GetString("ArchiveAllText"), RBAlong.Checked);
+                ResetArchive(CBCategories.Items[categoriesIndex].ToString(),
+                    CBTypes.Items[typesIndex].ToString(), RBAlong.Checked);
             }
         }
 

@@ -498,12 +498,12 @@ namespace Ferda.FrontEnd.External
 			}
 
 			/// <summary>
-			/// Gets or sets the element at the specified index.
+			/// Gets or sets the element at the specified categoriesIndex.
 			/// In C#, this property is the indexer for the PropertySpecCollection class.
 			/// </summary>
-			/// <param name="index">The zero-based index of the element to get or set.</param>
+			/// <param name="categoriesIndex">The zero-based categoriesIndex of the element to get or set.</param>
 			/// <value>
-			/// The element at the specified index.
+			/// The element at the specified categoriesIndex.
 			/// </value>
 			public PropertySpec this[int index]
 			{
@@ -515,7 +515,7 @@ namespace Ferda.FrontEnd.External
 			/// Adds a PropertySpec to the end of the PropertySpecCollection.
 			/// </summary>
 			/// <param name="value">The PropertySpec to be added to the end of the PropertySpecCollection.</param>
-			/// <returns>The PropertySpecCollection index at which the value has been added.</returns>
+			/// <returns>The PropertySpecCollection categoriesIndex at which the value has been added.</returns>
 			public int Add(PropertySpec value)
 			{
 				int index = innerArray.Add(value);
@@ -582,7 +582,7 @@ namespace Ferda.FrontEnd.External
 			/// </summary>
 			/// <param name="array">The one-dimensional Array that is the destination of the elements copied
 			/// from the collection.</param>
-			/// <param name="index">The zero-based index in array at which copying begins.</param>
+			/// <param name="categoriesIndex">The zero-based categoriesIndex in array at which copying begins.</param>
 			public void CopyTo(PropertySpec[] array, int index)
 			{
 				innerArray.CopyTo(array, index);
@@ -598,11 +598,11 @@ namespace Ferda.FrontEnd.External
 			}
 
 			/// <summary>
-			/// Searches for the specified PropertySpec and returns the zero-based index of the first
+			/// Searches for the specified PropertySpec and returns the zero-based categoriesIndex of the first
 			/// occurrence within the entire PropertySpecCollection.
 			/// </summary>
 			/// <param name="value">The PropertySpec to locate in the PropertySpecCollection.</param>
-			/// <returns>The zero-based index of the first occurrence of value within the entire PropertySpecCollection,
+			/// <returns>The zero-based categoriesIndex of the first occurrence of value within the entire PropertySpecCollection,
 			/// if found; otherwise, -1.</returns>
 			public int IndexOf(PropertySpec value)
 			{
@@ -610,11 +610,11 @@ namespace Ferda.FrontEnd.External
 			}
 
 			/// <summary>
-			/// Searches for the PropertySpec with the specified name and returns the zero-based index of
+			/// Searches for the PropertySpec with the specified name and returns the zero-based categoriesIndex of
 			/// the first occurrence within the entire PropertySpecCollection.
 			/// </summary>
 			/// <param name="name">The name of the PropertySpec to locate in the PropertySpecCollection.</param>
-			/// <returns>The zero-based index of the first occurrence of value within the entire PropertySpecCollection,
+			/// <returns>The zero-based categoriesIndex of the first occurrence of value within the entire PropertySpecCollection,
 			/// if found; otherwise, -1.</returns>
 			public int IndexOf(string name)
 			{
@@ -632,9 +632,9 @@ namespace Ferda.FrontEnd.External
 			}
 
 			/// <summary>
-			/// Inserts a PropertySpec object into the PropertySpecCollection at the specified index.
+			/// Inserts a PropertySpec object into the PropertySpecCollection at the specified categoriesIndex.
 			/// </summary>
-			/// <param name="index">The zero-based index at which value should be inserted.</param>
+			/// <param name="categoriesIndex">The zero-based categoriesIndex at which value should be inserted.</param>
 			/// <param name="value">The PropertySpec to insert.</param>
 			public void Insert(int index, PropertySpec value)
 			{
@@ -661,9 +661,9 @@ namespace Ferda.FrontEnd.External
 			}
 
 			/// <summary>
-			/// Removes the object at the specified index of the PropertySpecCollection.
+			/// Removes the object at the specified categoriesIndex of the PropertySpecCollection.
 			/// </summary>
-			/// <param name="index">The zero-based index of the element to remove.</param>
+			/// <param name="categoriesIndex">The zero-based categoriesIndex of the element to remove.</param>
 			public void RemoveAt(int index)
 			{
 				innerArray.RemoveAt(index);

@@ -1330,6 +1330,18 @@ using Ferda.ModulesManager;
             AddOwnedForm(dockWindow);
             dockingManager.DockWindow(dockWindow, DockStyle.Fill);
         }
+
+        /// <summary>
+        /// Forces to adapt the property grid from another thread
+        /// </summary>
+        public void AsyncAdapt()
+        {
+            if (propertyGrid.IsDisposed)
+            {
+                propertyGrid.AsyncAdapt();
+            }
+        }
+
         #endregion
 
         #region IIconProvider implementation

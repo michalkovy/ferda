@@ -180,7 +180,7 @@ namespace Ferda.FrontEnd
             //we have to retrieve the number of items before, because Items.Count
             //counts it dynamically
             int count = Items.Count;
-            int j = i; //removing always one index
+            int j = i; //removing always one categoriesIndex
             for (; i < count; i++)
             {
                 Items.RemoveAt(j);
