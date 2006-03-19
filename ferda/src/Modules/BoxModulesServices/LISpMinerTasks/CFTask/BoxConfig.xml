@@ -6,6 +6,7 @@
     <string>CFMiner</string>
   </Categories>
   <Actions>
+<!--
     <Action>
       <Name>Run</Name>
       <IconPath>runActionIcon.ico</IconPath>
@@ -17,6 +18,7 @@
         </NeededConnectedSocketsOption>
       </NeededConnectedSocketsOptions>
     </Action>
+-->
   </Actions>
   <Sockets>
     <Socket>
