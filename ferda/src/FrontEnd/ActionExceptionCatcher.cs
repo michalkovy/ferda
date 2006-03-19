@@ -65,6 +65,8 @@ namespace Ferda.FrontEnd
         /// <param name="selector">If a control has the ability to select
         /// a box that has thrown the exception, it can be also passed
         /// as a parameter</param>
+        /// <param name="propGrid">
+        /// Property grid of the application</param>
         public ActionExceptionCatcher(ProjectManager.ProjectManager projManager,
             ResourceManager resManager, IBoxSelector selector, 
             Properties.IPropertiesDisplayer propGrid)
@@ -100,7 +102,19 @@ namespace Ferda.FrontEnd
                 Thread th = new Thread(new ThreadStart(c.ThreadStart));
                 th.Start();
             }
-            //TODO: other exceptions from IBoxModule.RunAction()
+            if (ex is Ferda.Modules.BadParamsError)
+            {
+                Ferda.Modules.BadParamsError error =
+                    (Ferda.Modules.BadParamsError)ex;
+
+                //getting info about the box that has created the exception
+                IBoxModule box =
+                    projectManager.ModulesManager.GetIBoxModuleByIdentity(error.boxIdentity);
+
+                BoxExceptionThreadClass c = new BoxExceptionThreadClass(projectManager.ModulesManager, resourceManager, box, error.userMessage);
+                Thread th = new Thread(new ThreadStart(c.ThreadStart));
+                th.Start();
+            }
         }
 
         /// <summary>

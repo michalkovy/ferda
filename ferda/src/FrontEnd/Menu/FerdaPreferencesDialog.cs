@@ -66,7 +66,7 @@ namespace Ferda.FrontEnd.Menu
                 if (LBLokalizace.SelectedIndex != 0)
                 {
                     int j = 0;
-                    //rearanging the localePrefs - the new localization is the 0th index,
+                    //rearanging the localePrefs - the new localization is the 0th categoriesIndex,
                     //others stay the same
                     string[] result = new string[LBLokalizace.Items.Count];
                     result[j] = LBLokalizace.Items[LBLokalizace.SelectedIndex].ToString();
