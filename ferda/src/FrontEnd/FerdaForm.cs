@@ -32,6 +32,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Xml.Serialization;
 
 using Ferda.FrontEnd.Desktop;
 using Ferda.ModulesManager;
@@ -99,6 +100,8 @@ using Ferda.ModulesManager;
 
         private static List<IAddInMain> addIns = new List<IAddInMain>();
 
+        private static string recentProjectsPath = "recent.xml";
+
         /// <summary>
         /// Dictionary that contains all the icons for the application, ]
         /// that are keyed by string values. See 
@@ -110,6 +113,11 @@ using Ferda.ModulesManager;
         /// Prescreen 
         /// </summary>
         protected static FerdaPrescreen prescreen;
+
+        /// <summary>
+        /// Contains list of projects recently opened
+        /// </summary>
+        protected List<string> recentProjects;
 
         //the name of the project
         private string projectName = string.Empty;
@@ -291,6 +299,9 @@ using Ferda.ModulesManager;
 
             prescreen.DisplayText(ResManager.GetString("LoadingDocking"));
             SetupDocking();
+
+            //loading the recent projects
+            LoadRecentProjects();
 
             //Name and title of the application
             Name = "FerdaForm";
@@ -736,6 +747,8 @@ using Ferda.ModulesManager;
                 pm.DestroyProjectManager();
             }
 
+            form.SaveRecentProjects();
+
             //tries to save the config
             try
             {
@@ -1082,7 +1095,7 @@ using Ferda.ModulesManager;
 
         #endregion
 
-        #region IControlsManager implementation
+        #region IControlsManager implementation + related
 
         /// <summary>
         /// Forces all the relevant controls to adapt
@@ -1291,6 +1304,87 @@ using Ferda.ModulesManager;
             }
         }
 
+        /// <summary>
+        /// Loads the information about the recent projects from a file and
+        /// loads it to its temporary structures
+        /// </summary>
+        /// <returns>A list containing recent projects</returns>
+        public IList<string> GetRecentProjects()
+        {
+            return recentProjects;
+        }
+
+        /// <summary>
+        /// Adds the new project path to the recent project and
+        /// returns the modified project paths
+        /// </summary>
+        /// <param name="newProject">New path of the opened project</param>
+        /// <returns>Modified list containg the recent project paths</returns>
+        public void AddToRecentProjects(string newProject)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Saves recent projects to a file
+        /// </summary>
+        protected void SaveRecentProjects()
+        {
+            //getting the right path
+            string path = FrontEndCommon.GetBinPath();
+            path += "\\" + recentProjectsPath;
+
+            FileStream fs = null;
+            try
+            {
+                fs = new FileStream(path, FileMode.Create);
+                XmlSerializer s = new XmlSerializer(typeof(List<string>));
+                TextWriter w = new StreamWriter(fs);
+                s.Serialize(w, recentProjects);
+                w.Close();
+            }
+            finally
+            {
+                fs.Close();
+            }
+        }
+
+        /// <summary>
+        /// Loads recent projects from a file
+        /// </summary>
+        protected void LoadRecentProjects()
+        {
+            //getting the right path
+            string path = FrontEndCommon.GetBinPath();
+            path += "\\" + recentProjectsPath;
+
+            recentProjects = new List<string>();
+
+            FileStream fs;
+            try
+            {
+                fs = new FileStream(path, FileMode.Open);
+            }
+            catch (Exception)
+            {
+                //for some reason, the file could not be opened
+                //we take it as there is no file there
+                return;
+            }
+
+            try
+            {
+                XmlSerializer s = new XmlSerializer(typeof(List<string>));
+                TextReader r = new StreamReader(fs);
+                recentProjects = (List<string>)s.Deserialize(r);
+                r.Close();
+            }
+            finally
+            {
+                fs.Close();
+            }
+        }
+
         #endregion
 
         #region OwnerOfAddIn implementation
@@ -1340,6 +1434,18 @@ using Ferda.ModulesManager;
             {
                 propertyGrid.AsyncAdapt();
             }
+        }
+
+        /// <summary>
+        /// Shows the exception with the box to the user
+        /// </summary>
+        /// <param name="boxUserName">Name of the box that has thrown the exception</param>
+        /// <param name="userMessage">User message to be displayed</param>
+        public void ShowBoxException(string boxUserName, string userMessage)
+        {
+            BoxExceptionDialog dialog = new BoxExceptionDialog(ResManager,
+                boxUserName, userMessage);
+            dialog.ShowDialog();
         }
 
         #endregion

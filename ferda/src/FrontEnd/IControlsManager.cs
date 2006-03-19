@@ -80,5 +80,20 @@ namespace Ferda.FrontEnd
         /// </summary>
         /// <param name="name">name of the view</param>
         void CloseView(string name);
+
+        /// <summary>
+        /// Loads the information about the recent projects from a file and
+        /// loads it to its temporary structures
+        /// </summary>
+        /// <returns>A list containing recent projects</returns>
+        IList <string> GetRecentProjects();
+
+        /// <summary>
+        /// Adds the new project path to the recent project and
+        /// returns the modified project paths
+        /// </summary>
+        /// <param name="newProject">New path of the opened project</param>
+        /// <returns>Modified list containg the recent project paths</returns>
+        void AddToRecentProjects(string newProject);
     }
 }
