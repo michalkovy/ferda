@@ -6,6 +6,8 @@
 ;use modern ui
 !include "MUI.nsh"
 
+!include "Registry.nsh"
+
 ;include constants
 !include "constants.nsi" 
 

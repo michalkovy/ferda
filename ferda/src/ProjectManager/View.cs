@@ -43,7 +43,7 @@ namespace Ferda {
 			//private const int minLenghtFromBox = 20;
 			private const int defaultPositionX = 40;
 			private const int defaultPositionY = 20;
-			private const int defaultShiftPositionX = 110;
+			private const int defaultShiftPositionX = 140;
             private const int defaultShiftPositionY = 70;
             private const int boxShiftHeight = 60;
             private const int boxShiftWidth = 60;
