@@ -1123,7 +1123,7 @@ namespace Ferda.FrontEnd.Properties
                         pinfo.typeClassIceId == "::Ferda::Modules::CategoriesT")
                     {
                         //CreateOtherProperty(pinfo, box, bag);
-                        //continue;
+                        continue;
                     }
 
                     //strings are also dealt with separatelly
