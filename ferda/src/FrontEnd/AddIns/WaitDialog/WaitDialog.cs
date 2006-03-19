@@ -57,13 +57,12 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
-            
             this.KeyDown += new KeyEventHandler(WaitDialog_KeyDown);
             this.tprx = tprx;
             this.ownerOfAddIn = ownerOfAddIn;
             InitializeComponent();
             this.ChangeLocale(this.resManager);
-            ExceptionCatcher catcher = new ExceptionCatcher(this.ownerOfAddIn,this);
+            ExceptionCatcher catcher = new ExceptionCatcher(this.ownerOfAddIn);
             catcher.Completed += new ThreadCompleted(catcher_Completed);
             this.tprx.runAction_async(catcher);
 
