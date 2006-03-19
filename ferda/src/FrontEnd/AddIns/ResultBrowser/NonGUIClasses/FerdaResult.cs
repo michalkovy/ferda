@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using FrontEnd.AddIns.ResultBrowser;
+using Ferda.FrontEnd.AddIns.ResultBrowser;
 using Ferda.Modules;
 using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
@@ -11,12 +11,21 @@ using System.Resources;
 using System.Reflection;
 using System.Threading;
 
-
-namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
+namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 {
+    /// <summary>
+    /// Struct for sorting items
+    /// </summary>
     public struct Tuple : IComparable
     {
+        /// <summary>
+        /// Hypothesis id
+        /// </summary>
         int HypothesisId;
+
+        /// <summary>
+        /// Counted statistics
+        /// </summary>
         double CountedStatistics;
 
         public int HypId
@@ -91,6 +100,9 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
     };
 
+    /// <summary>
+    /// Struct for literal filters
+    /// </summary>
     public struct LiteralFilter
     {
         private GaceTypeEnum gace;

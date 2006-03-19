@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Ferda.Modules;
 using System.Resources;
 using System.Reflection;
 using System.Windows.Forms;
+using Ferda.Modules;
+using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 
-namespace Ferda.FrontEnd.AddIns.ResultBrowser
+namespace Ferda.FrontEnd.AddIns.WaitDialog
 {
-    class ResultBrowserIce : Ferda.Modules.ModuleForInteractionDisp_
+    class WaitDialogIce : Ferda.Modules.ModuleForInteractionDisp_
     {
-
         #region Private variables
 
         Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
@@ -25,25 +25,22 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private string localizationString;
 
-        private Ferda.FrontEnd.Properties.IOtherObjectDisplayer Displayer;
-
         #endregion
 
 
         #region Constructor
 
-        public ResultBrowserIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn, Ferda.FrontEnd.Properties.IOtherObjectDisplayer Displayer)
+        public WaitDialogIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
         {
             this.ownerOfAddIn = ownerOfAddIn;
             //setting the ResManager resource manager and localization string
-            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ResultBrowser.Localization_en-US",
+            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.WaitDialog.Localization_en-US",
             Assembly.GetExecutingAssembly());
             localizationString = "en-US";
-            this.Displayer = Displayer;
+          //  this.Displayer = Displayer;
         }
 
         #endregion
-
 
         #region Other ice
 
@@ -77,13 +74,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ResultBrowser.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.WaitDialog.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
             catch
             {
             }
-            return resManager.GetString("ResultBrowserModule");
+            return resManager.GetString("WaitDialogModule");
         }
         public override byte[] getIcon(Ice.Current __current)
         {
@@ -97,14 +94,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ResultBrowser.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.WaitDialog.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
             catch
             {
-
             }
-            return resManager.GetString("ResultBrowserModule");
+            return resManager.GetString("WaitDialogModule");
         }
 
         public override string[] getNeededConnectedSockets(Ice.Current __current)
@@ -115,9 +111,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         #endregion
 
 
-        #region Run
-
-        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, Ferda.ModulesManager.ManagersEnginePrx manager, Ice.Current __current)
+        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, Ferda.ModulesManager.ManagersEnginePrx manager, Ice.Current current__)
         {
             string locale;
             try
@@ -130,59 +124,22 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             catch
             {
             }
+
             //getting proxy for task identifier
             Ice.ObjectPrx prx2 = boxModuleParam.getMyFactory();
 
             Modules.BoxModuleFactoryPrx tprx2 =
             Modules.BoxModuleFactoryPrxHelper.checkedCast(prx2);
 
-            string taskType = tprx2.getMyFactoryCreator().getIdentifier();
 
             //getting proxy for hypotheses and quantifiers
             Ice.ObjectPrx prx = boxModuleParam.getFunctions();
+            //manager.getProjectInformation().getUserLabel
 
-            Modules.Boxes.LISpMinerTasks.AbstractLMTask.AbstractLMTaskFunctionsPrx tprx =
-                Modules.Boxes.LISpMinerTasks.AbstractLMTask.AbstractLMTaskFunctionsPrxHelper.checkedCast(prx);
-            Modules.HypothesisStruct[] hypotheses = tprx.getResult();
+            AbstractLMTaskFunctionsPrx tprx = AbstractLMTaskFunctionsPrxHelper.checkedCast(prx);
 
-            Modules.Boxes.LISpMinerTasks.AbstractLMTask.QuantifierProvider[] used_quantifiers =
-                tprx.getQuantifierProviders();
-
-
-            Ice.ObjectPrx[] prxs =
-                manager.getManagersLocator().findAllObjectsWithType("::Ferda::Statistics::StatisticsProvider");
-
-            //get from task box
-            // string taskType = "LISpMinerTasks.FFTask";
-            string temp = "";
-
-            List<Ferda.Statistics.StatisticsProviderPrx> proxies = new List<Ferda.Statistics.StatisticsProviderPrx>();
-
-            foreach (Ice.ObjectPrx proxy in prxs)
-            {
-                Ferda.Statistics.StatisticsProviderPrx checkedProxy =
-                Ferda.Statistics.StatisticsProviderPrxHelper.checkedCast(proxy);
-
-                temp = checkedProxy.getTaskType();
-
-                if (temp.CompareTo(taskType) == 0)
-                {
-                    proxies.Add(checkedProxy);
-                }
-            }
-
-            try
-            {
-                FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(localePrefs, hypotheses, used_quantifiers, this.Displayer, proxies);
-                this.ownerOfAddIn.ShowDockableControl(control, resManager.GetString("ResultBrowserControl"));
-            }
-            catch (Ferda.Modules.NoConnectionInSocketError)
-            {
-                MessageBox.Show(resManager.GetString("BoxNotConnected"), resManager.GetString("Error"),
-                           MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            Ferda.FrontEnd.AddIns.WaitDialog.WaitDialog control = new Ferda.FrontEnd.AddIns.WaitDialog.WaitDialog(localePrefs, tprx, this.ownerOfAddIn);
+            this.ownerOfAddIn.ShowForm(control);    
         }
-
-        #endregion
     }
 }

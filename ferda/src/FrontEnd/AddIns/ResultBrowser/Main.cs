@@ -4,49 +4,40 @@ using System.Text;
 using Ferda.FrontEnd.External;
 using Ferda.FrontEnd.Properties;
 
-namespace Ferda
+namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
-    namespace FrontEnd.AddIns.ResultBrowser
+    public class Main : Ferda.FrontEnd.AddIns.AbstractMain, IPropertyProvider
     {
-        public class Main : Ferda.FrontEnd.AddIns.AbstractMain, IPropertyProvider
+        IOtherObjectDisplayer displayer;
+        public override string NameOfObject
         {
-            IOtherObjectDisplayer displayer;
-
-            public override string NameOfObject
+            get
             {
-                get
-                {
-                    return "ResultBrowser";
-                }
+                return "ResultBrowser";
             }
-
-            public override Ice.Object IceObject
+        }
+        public override Ice.Object IceObject
+        {
+            get
             {
-                get
-                {
-                    return new Ferda.FrontEnd.AddIns.ResultBrowser.ResultBrowserIce(this.OwnerOfAddIn, this.displayer);
-                }
+                return new Ferda.FrontEnd.AddIns.ResultBrowser.ResultBrowserIce(this.OwnerOfAddIn, this.displayer);
             }
+        }
 
+        #region IPropertyProvider Members
 
-            #region IPropertyProvider Members
-
-            public IOtherObjectDisplayer Displayer
+        public IOtherObjectDisplayer Displayer
+        {
+            set
             {
-                set
-                {
-                    displayer = value;
-                }
-                get
-                {
-                    return displayer;
-                }
+                displayer = value;
             }
+            get
+            {
+                return displayer;
+            }
+        }
 
-            #endregion
-
-
-        } 
+        #endregion
     }
-
 }

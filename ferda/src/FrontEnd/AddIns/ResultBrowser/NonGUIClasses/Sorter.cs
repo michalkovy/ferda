@@ -3,7 +3,7 @@ using System.Collections;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
+namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 {
     public class Sorter : IComparer
     {
