@@ -256,7 +256,7 @@
     <para>Je možné, že IceGrid vrátí, že se daný modul vyskytuje na více
     místech. V současné implementaci manažeru modulů se použije pouze jedno
     umístění, nicméně v pozdějších verzích by měl mít možnost pracovat dle
-    výběru se všemi umístěěními. Důvod, proč se s tím nepočítalo od začátku,
+    výběru se všemi umístěními. Důvod, proč se s tím nepočítalo od začátku,
     je, že v době napsání velké části manažeru modulů ještě Ice nemělo IceGrid,
     ale pouze IcePack, jenž uměl pracovat také vždy jen s jedním umístěním
     modulů.</para>

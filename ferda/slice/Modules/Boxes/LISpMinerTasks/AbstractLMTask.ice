@@ -27,7 +27,7 @@ module Ferda {
 					sequence<QuantifierProvider> QuantifierProviderSeq;
 
 					interface AbstractLMTaskFunctions {
-						void runAction()
+						["ami"] void runAction()
 								throws
 									Ferda::Modules::BoxRuntimeError,
 									Ferda::Modules::BadValueError,
