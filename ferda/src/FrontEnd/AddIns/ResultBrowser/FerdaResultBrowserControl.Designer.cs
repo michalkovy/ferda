@@ -38,6 +38,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ColumnSuccedent = new System.Windows.Forms.ColumnHeader();
             this.ColumnCondition = new System.Windows.Forms.ColumnHeader();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.LabelCount = new System.Windows.Forms.Label();
+            this.LabelHypothesesTotal = new System.Windows.Forms.Label();
+            this.ButtonSubmitFilter = new System.Windows.Forms.Button();
+            this.LabelConditionFilter = new System.Windows.Forms.Label();
+            this.LabelSuccedentFilter = new System.Windows.Forms.Label();
+            this.LabelAntecedentFilter = new System.Windows.Forms.Label();
+            this.CheckedListBoxConditions = new System.Windows.Forms.CheckedListBox();
+            this.CheckedListBoxSuccedents = new System.Windows.Forms.CheckedListBox();
+            this.CheckedListBoxAntecedents = new System.Windows.Forms.CheckedListBox();
             this.LabelNumeric = new System.Windows.Forms.Label();
             this.NumericUpDownDecimals = new System.Windows.Forms.NumericUpDown();
             this.LabelCurrentlySorted = new System.Windows.Forms.Label();
@@ -112,10 +121,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.HypothesesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HypothesesListView.FullRowSelect = true;
             this.HypothesesListView.GridLines = true;
-            this.HypothesesListView.Location = new System.Drawing.Point(0, 29);
+            this.HypothesesListView.Location = new System.Drawing.Point(0, 99);
             this.HypothesesListView.MultiSelect = false;
             this.HypothesesListView.Name = "HypothesesListView";
-            this.HypothesesListView.Size = new System.Drawing.Size(1064, 258);
+            this.HypothesesListView.Size = new System.Drawing.Size(1064, 188);
             this.HypothesesListView.TabIndex = 3;
             this.HypothesesListView.UseCompatibleStateImageBehavior = false;
             this.HypothesesListView.View = System.Windows.Forms.View.Details;
@@ -138,6 +147,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.LabelCount);
+            this.panel1.Controls.Add(this.LabelHypothesesTotal);
+            this.panel1.Controls.Add(this.ButtonSubmitFilter);
+            this.panel1.Controls.Add(this.LabelConditionFilter);
+            this.panel1.Controls.Add(this.LabelSuccedentFilter);
+            this.panel1.Controls.Add(this.LabelAntecedentFilter);
+            this.panel1.Controls.Add(this.CheckedListBoxConditions);
+            this.panel1.Controls.Add(this.CheckedListBoxSuccedents);
+            this.panel1.Controls.Add(this.CheckedListBoxAntecedents);
             this.panel1.Controls.Add(this.LabelNumeric);
             this.panel1.Controls.Add(this.NumericUpDownDecimals);
             this.panel1.Controls.Add(this.LabelCurrentlySorted);
@@ -147,14 +165,97 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1064, 29);
+            this.panel1.Size = new System.Drawing.Size(1064, 99);
             this.panel1.TabIndex = 2;
+            // 
+            // LabelCount
+            // 
+            this.LabelCount.AutoSize = true;
+            this.LabelCount.Location = new System.Drawing.Point(189, 74);
+            this.LabelCount.Name = "LabelCount";
+            this.LabelCount.Size = new System.Drawing.Size(30, 13);
+            this.LabelCount.TabIndex = 14;
+            this.LabelCount.Text = "(0/0)";
+            this.LabelCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // LabelHypothesesTotal
+            // 
+            this.LabelHypothesesTotal.AutoSize = true;
+            this.LabelHypothesesTotal.Location = new System.Drawing.Point(3, 74);
+            this.LabelHypothesesTotal.Name = "LabelHypothesesTotal";
+            this.LabelHypothesesTotal.Size = new System.Drawing.Size(174, 13);
+            this.LabelHypothesesTotal.TabIndex = 13;
+            this.LabelHypothesesTotal.Text = "Hypotheses count (displayed/total):";
+            // 
+            // ButtonSubmitFilter
+            // 
+            this.ButtonSubmitFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonSubmitFilter.Location = new System.Drawing.Point(412, 74);
+            this.ButtonSubmitFilter.Name = "ButtonSubmitFilter";
+            this.ButtonSubmitFilter.Size = new System.Drawing.Size(75, 22);
+            this.ButtonSubmitFilter.TabIndex = 12;
+            this.ButtonSubmitFilter.Text = "Re-filter";
+            this.ButtonSubmitFilter.UseVisualStyleBackColor = true;
+            this.ButtonSubmitFilter.Click += new System.EventHandler(this.ButtonSubmitFilter_Click);
+            // 
+            // LabelConditionFilter
+            // 
+            this.LabelConditionFilter.AutoSize = true;
+            this.LabelConditionFilter.Location = new System.Drawing.Point(525, 5);
+            this.LabelConditionFilter.Name = "LabelConditionFilter";
+            this.LabelConditionFilter.Size = new System.Drawing.Size(73, 13);
+            this.LabelConditionFilter.TabIndex = 11;
+            this.LabelConditionFilter.Text = "Condition filter";
+            // 
+            // LabelSuccedentFilter
+            // 
+            this.LabelSuccedentFilter.AutoSize = true;
+            this.LabelSuccedentFilter.Location = new System.Drawing.Point(389, 5);
+            this.LabelSuccedentFilter.Name = "LabelSuccedentFilter";
+            this.LabelSuccedentFilter.Size = new System.Drawing.Size(81, 13);
+            this.LabelSuccedentFilter.TabIndex = 10;
+            this.LabelSuccedentFilter.Text = "Succedent filter";
+            // 
+            // LabelAntecedentFilter
+            // 
+            this.LabelAntecedentFilter.AutoSize = true;
+            this.LabelAntecedentFilter.Location = new System.Drawing.Point(244, 5);
+            this.LabelAntecedentFilter.Name = "LabelAntecedentFilter";
+            this.LabelAntecedentFilter.Size = new System.Drawing.Size(84, 13);
+            this.LabelAntecedentFilter.TabIndex = 9;
+            this.LabelAntecedentFilter.Text = "Antecedent filter";
+            // 
+            // CheckedListBoxConditions
+            // 
+            this.CheckedListBoxConditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CheckedListBoxConditions.FormattingEnabled = true;
+            this.CheckedListBoxConditions.Location = new System.Drawing.Point(528, 22);
+            this.CheckedListBoxConditions.Name = "CheckedListBoxConditions";
+            this.CheckedListBoxConditions.Size = new System.Drawing.Size(120, 47);
+            this.CheckedListBoxConditions.TabIndex = 8;
+            // 
+            // CheckedListBoxSuccedents
+            // 
+            this.CheckedListBoxSuccedents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CheckedListBoxSuccedents.FormattingEnabled = true;
+            this.CheckedListBoxSuccedents.Location = new System.Drawing.Point(392, 22);
+            this.CheckedListBoxSuccedents.Name = "CheckedListBoxSuccedents";
+            this.CheckedListBoxSuccedents.Size = new System.Drawing.Size(120, 47);
+            this.CheckedListBoxSuccedents.TabIndex = 7;
+            // 
+            // CheckedListBoxAntecedents
+            // 
+            this.CheckedListBoxAntecedents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CheckedListBoxAntecedents.FormattingEnabled = true;
+            this.CheckedListBoxAntecedents.Location = new System.Drawing.Point(247, 22);
+            this.CheckedListBoxAntecedents.Name = "CheckedListBoxAntecedents";
+            this.CheckedListBoxAntecedents.Size = new System.Drawing.Size(120, 47);
+            this.CheckedListBoxAntecedents.TabIndex = 6;
             // 
             // LabelNumeric
             // 
             this.LabelNumeric.AutoSize = true;
-            this.LabelNumeric.Dock = System.Windows.Forms.DockStyle.Right;
-            this.LabelNumeric.Location = new System.Drawing.Point(894, 0);
+            this.LabelNumeric.Location = new System.Drawing.Point(3, 51);
             this.LabelNumeric.Name = "LabelNumeric";
             this.LabelNumeric.Size = new System.Drawing.Size(50, 13);
             this.LabelNumeric.TabIndex = 5;
@@ -162,8 +263,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // NumericUpDownDecimals
             // 
-            this.NumericUpDownDecimals.Dock = System.Windows.Forms.DockStyle.Right;
-            this.NumericUpDownDecimals.Location = new System.Drawing.Point(944, 0);
+            this.NumericUpDownDecimals.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NumericUpDownDecimals.Location = new System.Drawing.Point(99, 49);
             this.NumericUpDownDecimals.Maximum = new decimal(new int[] {
             10,
             0,
@@ -187,7 +288,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LabelCurrentlySorted
             // 
             this.LabelCurrentlySorted.AutoSize = true;
-            this.LabelCurrentlySorted.Location = new System.Drawing.Point(300, 7);
+            this.LabelCurrentlySorted.Location = new System.Drawing.Point(75, 28);
             this.LabelCurrentlySorted.Name = "LabelCurrentlySorted";
             this.LabelCurrentlySorted.Size = new System.Drawing.Size(37, 13);
             this.LabelCurrentlySorted.TabIndex = 3;
@@ -196,7 +297,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LabelSortedBy
             // 
             this.LabelSortedBy.AutoSize = true;
-            this.LabelSortedBy.Location = new System.Drawing.Point(239, 7);
+            this.LabelSortedBy.Location = new System.Drawing.Point(3, 28);
             this.LabelSortedBy.Name = "LabelSortedBy";
             this.LabelSortedBy.Size = new System.Drawing.Size(55, 13);
             this.LabelSortedBy.TabIndex = 2;
@@ -205,8 +306,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // ComboBoxSortStatistics
             // 
             this.ComboBoxSortStatistics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBoxSortStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComboBoxSortStatistics.FormattingEnabled = true;
-            this.ComboBoxSortStatistics.Location = new System.Drawing.Point(61, 3);
+            this.ComboBoxSortStatistics.Location = new System.Drawing.Point(78, 2);
             this.ComboBoxSortStatistics.Name = "ComboBoxSortStatistics";
             this.ComboBoxSortStatistics.Size = new System.Drawing.Size(141, 21);
             this.ComboBoxSortStatistics.TabIndex = 1;
@@ -215,7 +317,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LabelSortHypotheses
             // 
             this.LabelSortHypotheses.AutoSize = true;
-            this.LabelSortHypotheses.Location = new System.Drawing.Point(3, 7);
+            this.LabelSortHypotheses.Location = new System.Drawing.Point(3, 5);
             this.LabelSortHypotheses.Name = "LabelSortHypotheses";
             this.LabelSortHypotheses.Size = new System.Drawing.Size(43, 13);
             this.LabelSortHypotheses.TabIndex = 0;
@@ -231,7 +333,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.StatusStrip.Size = new System.Drawing.Size(1064, 22);
             this.StatusStrip.TabIndex = 1;
             this.StatusStrip.Text = "statusStrip1";
-            this.StatusStrip.Visible = false;
             // 
             // LabelProgressBar
             // 
@@ -239,14 +340,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelProgressBar.Name = "LabelProgressBar";
             this.LabelProgressBar.Size = new System.Drawing.Size(105, 17);
             this.LabelProgressBar.Text = "Hypotheses loading:";
-            this.LabelProgressBar.Visible = false;
             // 
             // ProgressBarIceTicks
             // 
             this.ProgressBarIceTicks.Name = "ProgressBarIceTicks";
             this.ProgressBarIceTicks.Size = new System.Drawing.Size(300, 16);
             this.ProgressBarIceTicks.Step = 1;
-            this.ProgressBarIceTicks.Visible = false;
             // 
             // GroupBoxChangeGraph
             // 
@@ -456,6 +555,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ToolStripProgressBar ProgressBarIceTicks;
         private System.Windows.Forms.ToolStripStatusLabel LabelProgressBar;
+        private System.Windows.Forms.CheckedListBox CheckedListBoxAntecedents;
+        private System.Windows.Forms.Label LabelSuccedentFilter;
+        private System.Windows.Forms.Label LabelAntecedentFilter;
+        private System.Windows.Forms.CheckedListBox CheckedListBoxConditions;
+        private System.Windows.Forms.CheckedListBox CheckedListBoxSuccedents;
+        private System.Windows.Forms.Label LabelConditionFilter;
+        private System.Windows.Forms.Button ButtonSubmitFilter;
+        private System.Windows.Forms.Label LabelHypothesesTotal;
+        private System.Windows.Forms.Label LabelCount;
     }
 }
 

@@ -120,6 +120,9 @@
   <data name="3dpercent" xml:space="preserve">
     <value>3D %</value>
   </data>
+  <data name="AntecedentFilter" xml:space="preserve">
+    <value>Filtr pro antecedent</value>
+  </data>
   <data name="AppliedQuantifiers" xml:space="preserve">
     <value>Použité kvantifikátory</value>
   </data>
@@ -132,6 +135,9 @@
   <data name="BoxNotConnected" xml:space="preserve">
     <value>Krabička není zapojena</value>
   </data>
+  <data name="ButtonFilter" xml:space="preserve">
+    <value>Filtrovat</value>
+  </data>
   <data name="ColumnAntecedent" xml:space="preserve">
     <value>Antecedent</value>
   </data>
@@ -143,6 +149,9 @@
   </data>
   <data name="ColumnSuccedent" xml:space="preserve">
     <value>Sukcedent</value>
+  </data>
+  <data name="ConditionFilter" xml:space="preserve">
+    <value>Filtr pro podmínku</value>
   </data>
   <data name="ContingencyTable" xml:space="preserve">
     <value>Kontingenční tabulka</value>
@@ -161,6 +170,9 @@
   </data>
   <data name="GraphViewOptions" xml:space="preserve">
     <value>Volby prohlížení</value>
+  </data>
+  <data name="HypothesesCount" xml:space="preserve">
+    <value>Počet hypotéz (zobrazeno/celkem):</value>
   </data>
   <data name="HypothesesLoading" xml:space="preserve">
     <value>Nahrávání hypotéz:</value>
@@ -218,6 +230,9 @@
   </data>
   <data name="StatisticsUnimplemented" xml:space="preserve">
     <value>Statistika není implementována</value>
+  </data>
+  <data name="SuccedentFilter" xml:space="preserve">
+    <value>Filtr pro succedent</value>
   </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>

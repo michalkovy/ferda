@@ -120,6 +120,9 @@
   <data name="3dpercent" xml:space="preserve">
     <value>3D %</value>
   </data>
+  <data name="AntecedentFilter" xml:space="preserve">
+    <value>Antecedent filter</value>
+  </data>
   <data name="AppliedQuantifiers" xml:space="preserve">
     <value>Applied quantifiers</value>
   </data>
@@ -132,6 +135,9 @@
   <data name="BoxNotConnected" xml:space="preserve">
     <value>Box not connected</value>
   </data>
+  <data name="ButtonFilter" xml:space="preserve">
+    <value>Re-filter</value>
+  </data>
   <data name="ColumnAntecedent" xml:space="preserve">
     <value>Antecedent</value>
   </data>
@@ -143,6 +149,9 @@
   </data>
   <data name="ColumnSuccedent" xml:space="preserve">
     <value>Succedent</value>
+  </data>
+  <data name="ConditionFilter" xml:space="preserve">
+    <value>Condition filter</value>
   </data>
   <data name="ContingencyTable" xml:space="preserve">
     <value>Contingency table</value>
@@ -164,6 +173,9 @@
   </data>
   <data name="GraphViewOptions" xml:space="preserve">
     <value>View options</value>
+  </data>
+  <data name="HypothesesCount" xml:space="preserve">
+    <value>Hypotheses count (displayed/total):</value>
   </data>
   <data name="HypothesesLoading" xml:space="preserve">
     <value>Hypotheses loading:</value>
@@ -221,6 +233,9 @@
   </data>
   <data name="StatisticsUnimplemented" xml:space="preserve">
     <value>Statistics not implemented</value>
+  </data>
+  <data name="SuccedentFilter" xml:space="preserve">
+    <value>Succedent filter</value>
   </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
