@@ -44,6 +44,11 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
         /// </summary>
         Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
 
+        /// <summary>
+        /// The dialog of the parent
+        /// </summary>
+        protected WaitDialog parentDialog;
+
         #endregion
 
         #region Constructor
@@ -53,10 +58,12 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
         /// </summary>
         /// <param name="ownerOfAddIn">OwnerofAddIn</param>
         /// <param name="form">Parent form</param>
-        public ExceptionCatcher(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
+        public ExceptionCatcher(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn, 
+            WaitDialog parent)
         {
             this.projectManager = ownerOfAddIn.ProjectManager;
             this.ownerOfAddIn = ownerOfAddIn;
+            this.parentDialog = parent;
         }
 
         #endregion
@@ -77,9 +84,6 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
                 IBoxModule box =
                     projectManager.ModulesManager.GetIBoxModuleByIdentity(error.boxIdentity);
 
-                //selecting the box that has thrown the exception
-                //selector.SelectBox(box);
-
                 BoxExceptionClass c = new BoxExceptionClass(box, error.userMessage, ownerOfAddIn);
                 Thread th = new Thread(new ThreadStart(c.ThreadStart));
                 th.Start();
@@ -94,18 +98,8 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
         public override void ice_response()
         {
             ownerOfAddIn.AsyncAdapt();
-            OnThreadCompleted();
+            parentDialog.AsyncClose();
         }
-
-        public event ThreadCompleted Completed;
-        public void OnThreadCompleted()
-        {
-            if (Completed != null)
-            {
-                Completed();
-            }
-        }
-
 
         #endregion
     }
