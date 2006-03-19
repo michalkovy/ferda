@@ -109,7 +109,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private void PreloadDisable()
         {
-            this.HypothesesListView.Enabled = false;
+           // this.HypothesesListView.Visible = false;
             this.CheckedListBoxAntecedents.Enabled = false;
             this.CheckedListBoxConditions.Enabled = false;
             this.CheckedListBoxSuccedents.Enabled = false;
@@ -124,6 +124,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private void AfterLoadEnable()
         {
             this.HypothesesListView.Enabled = true;
+            this.HypothesesListView.Visible = true;
             this.CheckedListBoxAntecedents.Enabled = true;
             this.CheckedListBoxConditions.Enabled = true;
             this.CheckedListBoxSuccedents.Enabled = true;
@@ -231,6 +232,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.RefreshBrowser();
             this.ToolStripShowGraphEdit.Click += new EventHandler(ToolStripShowGraphEdit_Click);
             this.ToolStripCopyChart.Click += new EventHandler(ToolStripCopyChart_Click);
+            this.HypothesesListView.Visible = true;
+            this.HypothesesListView.Enabled = true;
         }
 
         /// <summary>
