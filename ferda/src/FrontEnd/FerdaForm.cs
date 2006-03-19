@@ -1448,6 +1448,17 @@ using Ferda.ModulesManager;
             dialog.ShowDialog();
         }
 
+        /// <summary>
+        /// Project manager of the Ferda system
+        /// </summary>
+        public ProjectManager.ProjectManager ProjectManager
+        {
+            get
+            {
+                return projectManager;
+            }
+        }
+
         #endregion
 
         #region IIconProvider implementation

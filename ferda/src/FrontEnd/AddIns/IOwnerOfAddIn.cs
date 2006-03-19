@@ -11,5 +11,10 @@ namespace Ferda.FrontEnd.AddIns
         void AsyncAdapt();
 
         void ShowBoxException(string boxUserName, string userMessage);
+
+        Ferda.ProjectManager.ProjectManager ProjectManager
+        {
+            get;
+        }
 	}
 }
