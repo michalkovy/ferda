@@ -345,6 +345,9 @@
   <data name="MenuFileOpenProject" xml:space="preserve">
     <value>Otevřít projekt</value>
   </data>
+  <data name="MenuFileRecentProjects" xml:space="preserve">
+    <value>Poslední projekty</value>
+  </data>
   <data name="MenuFileSaveChanges" xml:space="preserve">
     <value>Chcete uložit stávající projekt?</value>
   </data>
