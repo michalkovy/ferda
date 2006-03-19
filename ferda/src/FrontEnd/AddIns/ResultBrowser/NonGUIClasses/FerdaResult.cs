@@ -9,6 +9,7 @@ using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
 using Ferda.ModulesManager;
 using System.Resources;
 using System.Reflection;
+using System.Threading;
 
 
 namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
@@ -90,6 +91,63 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
     };
 
+    public struct LiteralFilter
+    {
+        private GaceTypeEnum gace;
+        private int lowLength;
+        private int highLength;
+        private bool selected;
+
+        public GaceTypeEnum Gace
+        {
+            get
+            {
+                return gace;
+            }
+            set
+            {
+                gace = value;
+            }
+        }
+
+        public int LowLength
+        {
+            get
+            {
+                return lowLength;
+            }
+            set
+            {
+                lowLength = value;
+            }
+        }
+
+        public int HighLength
+        {
+            get
+            {
+                return highLength;
+            }
+            set
+            {
+                highLength = value;
+            }
+        }
+
+        public bool Selected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                selected = value;
+            }
+        }
+    }
+
+
     /// <summary>
     /// Structure for storing cached quantifiers and statistics
     /// </summary>
@@ -99,14 +157,12 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         public CountedValues[] QuantifiersList;
     }
 
-
     /// <summary>
     /// Class for storing and proceeding the results
     /// </summary>
     public class FerdaResult
     {
         #region Private class variables
-
 
         /// <summary>
         /// Resource manager
@@ -123,33 +179,23 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         private HypothesisStruct[] Hypotheses;
 
-
         /// <summary>
         /// Quantifier is a function which takes in an integer array and returns an integer
         /// </summary>
-        /// <param name="i">Integer array (4-pole table)</param>
-        /// <returns>A return value.</returns>
+        /// <param name="i">Integer array</param>
+        /// <returns>Value of applied quantifier</returns>
         private delegate int Quantifier(int[][] i);
-
-
-        /// <summary>
-        /// Array of all quantifiers.
-        /// </summary>
-        //  private QuantifierProvider[] AllQuantifiers;
-
 
         /// <summary>
         /// Array of used quantifiers.
         /// </summary>
         private QuantifierProvider[] UsedQuantifiers;
 
-
         /// <summary>
         /// Array of actual quantifiers - user can choose to use more quantifiers that were used in the beginning.
         /// Represented by the array of boolean flags.
         /// </summary>
         private int[] SelectedQuantifiers;
-
 
         /// <summary>
         /// Array for cached hypotheses
@@ -161,7 +207,6 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies;
 
-
         /// <summary>
         /// Cached statistics names
         /// </summary>
@@ -171,6 +216,103 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// List of quantifiers proxies
         /// </summary>
         private Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier.AbstractQuantifierFunctionsPrx[] proxy;
+
+        /// <summary>
+        /// Dictionary determining which antecedent values to display
+        /// </summary>
+        private Dictionary<string, LiteralFilter> antecedentFilter = new Dictionary<string, LiteralFilter>();
+
+        /// <summary>
+        /// Dictionary determining which succedent values to display
+        /// </summary>
+        private Dictionary<string, LiteralFilter> succedentFilter = new Dictionary<string, LiteralFilter>();
+
+        /// <summary>
+        /// Dictionary determining which condition values to display
+        /// </summary>
+        private Dictionary<string, LiteralFilter> conditionFilter = new Dictionary<string, LiteralFilter>();
+
+        #endregion
+
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets antecedent filter
+        /// </summary>
+        public Dictionary<string, LiteralFilter> AntecedentFilter
+        {
+            get
+            {
+                return antecedentFilter;
+            }
+            set
+            {
+                antecedentFilter = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets succedent filter
+        /// </summary>
+        public Dictionary<string, LiteralFilter> SuccedentFilter
+        {
+            get
+            {
+                return succedentFilter;
+            }
+            set
+            {
+                succedentFilter = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets condition filter
+        /// </summary>
+        public Dictionary<string, LiteralFilter> ConditionFilter
+        {
+            get
+            {
+                return conditionFilter;
+            }
+            set
+            {
+                conditionFilter = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets all filtered hypotheses in the result
+        /// </summary>
+        /// <returns>Dictionary with all filtered hypotheses</returns>
+        public Dictionary<int, HypothesisStruct> AllFilteredHypotheses
+        {
+            get
+            {
+                Dictionary<int, HypothesisStruct> returnDict = new Dictionary<int, HypothesisStruct>();
+                for (int i = 0; i < Hypotheses.Length; i++)
+                {
+                    if (HypothesisIsValid(Hypotheses[i]))
+                    {
+                        returnDict.Add(i, Hypotheses[i]);
+                    }
+                }
+                return returnDict;
+            }
+        }
+
+        /// <summary>
+        /// Gets all hypotheses
+        /// </summary>
+        /// <returns>Array with all hypotheses</returns>
+        public HypothesisStruct[] AllHypotheses
+        {
+            get
+            {
+                return this.Hypotheses;
+            }
+        }
 
         #endregion
 
@@ -186,6 +328,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
 
         #region Initialization methods
+
         /// <summary>
         /// Method to initialize the ResultBrowser structure
         /// </summary>
@@ -212,6 +355,17 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             //initializing hypotheses cache
             this.cachedHypotheses = new CachedHypothesis[this.Hypotheses.Length];
 
+            Thread IceCommunicationThread = new Thread(new ThreadStart(IceCommunication));
+            IceCommunicationThread.Start();         
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Method to be launched in separate thread, takes long time to complete
+        /// </summary>
+        private void IceCommunication()
+        {
             //caching hypotheses quantifiers and statistics values
             for (int i = 0; i < this.Hypotheses.Length; i++)
             {
@@ -219,8 +373,8 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                 this.cachedHypotheses[i].StatisticsList = this.GetStatistics(i);
                 this.OnIceTick();
             }
-
-            #endregion
+            this.InitFilters();
+            this.OnIceComplete();
         }
 
         #endregion
@@ -320,11 +474,29 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
 
         /// <summary>
+        /// Method to decide whether the hypothesis is of 4-ft miner
+        /// </summary>
+        /// <param name="hypothesis">Hypothesis to check</param>
+        /// <returns>True if hypothesis is from 4ft</returns>
+        public static bool IsFFT(HypothesisStruct hypothesis)
+        {
+            foreach (BooleanLiteralStruct booleanLiteral in hypothesis.booleanLiterals)
+            {
+                if ((booleanLiteral.cedentType == CedentEnum.Antecedent) || (booleanLiteral.cedentType == CedentEnum.Succedent))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        /// <summary>
         /// Function to get a string value for antecedent
         /// </summary>
         /// <param name="hypothese">Hypothese to extract value from</param>
         /// <returns>String value with antecedent</returns>
-        public static String GetAntecedent(HypothesisStruct hypothesis)
+        public static String GetAntecedentString(HypothesisStruct hypothesis)
         {
             StringBuilder returnString = new StringBuilder();
             bool firstRun = true;
@@ -384,7 +556,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="hypothese">Hypothese to extract value from</param>
         /// <returns>String value with succedent</returns>
-        public static String GetSuccedent(HypothesisStruct hypothese)
+        public static String GetSuccedentString(HypothesisStruct hypothese)
         {
             StringBuilder returnString = new StringBuilder();
             bool firstRun = true;
@@ -447,7 +619,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="hypothese">Hypothese to extract value from</param>
         /// <returns>String value with condition</returns>
-        public static String GetCondition(HypothesisStruct hypothese)
+        public static String GetConditionString(HypothesisStruct hypothese)
         {
             StringBuilder returnString = new StringBuilder();
             bool firstRun = true;
@@ -498,8 +670,8 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             {
                 string temp, temp1;
                 temp = temp1 = String.Empty;
-                temp = FerdaResult.GetAntecedent(hypothesis);
-                temp1 = FerdaResult.GetSuccedent(hypothesis);
+                temp = FerdaResult.GetAntecedentString(hypothesis);
+                temp1 = FerdaResult.GetSuccedentString(hypothesis);
                 if (temp != String.Empty)
                 {
                     if (temp1 != String.Empty)
@@ -525,13 +697,13 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             else
             {
-                returnString.Append(FerdaResult.GetAntecedent(hypothesis) +
-                   '\u2022' + '\u2022' + FerdaResult.GetSuccedent(hypothesis));
+                returnString.Append(FerdaResult.GetAntecedentString(hypothesis) +
+                   '\u2022' + '\u2022' + FerdaResult.GetSuccedentString(hypothesis));
             }
 
-            if (!FerdaResult.GetCondition(hypothesis).Equals(""))
+            if (!FerdaResult.GetConditionString(hypothesis).Equals(""))
             {
-                returnString.Append(" \\ " + FerdaResult.GetCondition(hypothesis));
+                returnString.Append(" \\ " + FerdaResult.GetConditionString(hypothesis));
             }
             return returnString.ToString();
         }
@@ -606,7 +778,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         #region Events
 
-        public event IceTick IceTicked;
+        public event LongRunTick IceTicked;
         public void OnIceTick()
         {
             if (IceTicked != null)
@@ -615,7 +787,17 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
         }
 
+        public event LongRunCompleted IceComplete;
+        public void OnIceComplete()
+        {
+            if (IceComplete != null)
+            {
+                IceComplete();
+            }
+        }
+
         #endregion
+
 
         #region Quantifier functions
 
@@ -656,25 +838,6 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             return false;
         }
-
-        /*
-        /// <summary>
-        /// Method which applies selected quantifiers on the contingency table data.
-        /// </summary>
-        /// <param name="hypothese">Hypothese to take tables from</param>
-        /// <returns>List of values for each quantifier</returns>
-        protected List<double> CountSelectedQuantifiers(HypothesisStruct hypothese)
-        {
-            List<double> returnList = new List<double>();
-            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
-            {
-                if (this.SelectedQuantifiers[i] == 1)
-                {
-                    returnList.Add(this.proxy[i].Value(hypothese.quantifierSetting));
-                }
-            }
-            return returnList;
-        }*/
 
         /// <summary>
         /// Method for reading the pre-counted quantifier from cache
@@ -745,21 +908,8 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             return returnList;
         }
 
-
-
-        /*
         /// <summary>
-        /// Method which applies selected quantifiers on the hypothese fourpole table
-        /// </summary>
-        /// <param name="hypothese"></param>
-        /// <returns>Arraylist of values</returns>
-        public List<double> SelectedQuantifierValues(HypothesisStruct hypothese, int precision)
-        {
-            return this.CountSelectedQuantifiers(hypothese, precision);
-        }*/
-
-        /// <summary>
-        /// Method which applies all quantifiers on the hypothese fourpole table
+        /// Method which applies all quantifiers on the hypothese contingency table
         /// </summary>
         /// <param name="hypothese"></param>
         /// <returns>Arraylist of values</returns>
@@ -773,14 +923,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         #region Hypotheses methods
 
-        /// <summary>
-        /// Method which gets all the hypotheses in the result
-        /// </summary>
-        /// <returns>Arraylist with all hypotheses</returns>
-        public HypothesisStruct[] GetAllHypotheses()
-        {
-            return this.Hypotheses;
-        }
+        
 
         /// <summary>
         /// Gets hypothesis at the required index
@@ -804,7 +947,7 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <returns>Counted quantifiers values</returns>
         private CountedValues[] GetQuantifiers(int HypId)
         {
-            
+
             List<string> names = this.GetAllQuantifierNames();
             List<double> values = this.CountAllQuantifiers(this.Hypotheses[HypId]);
             CountedValues[] quantifiers = new CountedValues[values.Count];
@@ -855,6 +998,203 @@ namespace FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         {
             return this.cachedStatisticsNames;
         }
+
+        #endregion
+
+
+        #region Filtering methods
+
+        /// <summary>
+        /// Method which initializes the filters
+        /// </summary>
+        private void InitFilters()
+        {
+            foreach (HypothesisStruct hypothese in Hypotheses)
+            {
+                foreach (BooleanLiteralStruct booleanLiteral in hypothese.booleanLiterals)
+                {
+                    LiteralFilter temp = new LiteralFilter();
+                    temp.Gace = GaceTypeEnum.Both;
+                    temp.LowLength = 0;
+                    temp.HighLength = 99;
+                    temp.Selected = true;
+                    switch (booleanLiteral.cedentType)
+                    {
+                        case CedentEnum.Antecedent:
+                            if (!this.antecedentFilter.ContainsKey(booleanLiteral.literalName))
+                            {
+                                this.antecedentFilter.Add(booleanLiteral.literalName, temp);
+                            }
+                            break;
+
+                        case CedentEnum.Succedent:
+                            if (!this.succedentFilter.ContainsKey(booleanLiteral.literalName))
+                            {
+                                this.succedentFilter.Add(booleanLiteral.literalName, temp);
+                            }
+                            break;
+
+                        case CedentEnum.Condition:
+                            if (!this.conditionFilter.ContainsKey(booleanLiteral.literalName))
+                            {
+                                this.conditionFilter.Add(booleanLiteral.literalName, temp);
+                            }
+                            break;
+
+                        default:
+                            throw new Exception("SwitchBranchNotImplemented");
+                    }
+                }
+
+                foreach (LiteralStruct literal in hypothese.literals)
+                {
+                    LiteralFilter temp = new LiteralFilter();
+                    temp.Gace = GaceTypeEnum.Both;
+                    temp.LowLength = 0;
+                    temp.HighLength = 99;
+                    temp.Selected = true;
+                    switch (literal.cedentType)
+                    {
+                        case CedentEnum.Antecedent:
+                            if (!this.antecedentFilter.ContainsKey(literal.literalName))
+                            {
+                                this.antecedentFilter.Add(literal.literalName, temp);
+                            }
+                            break;
+
+                        case CedentEnum.Succedent:
+                            if (!this.succedentFilter.ContainsKey(literal.literalName))
+                            {
+                                this.succedentFilter.Add(literal.literalName, temp);
+                            }
+                            break;
+
+                        case CedentEnum.Condition:
+                            if (!this.conditionFilter.ContainsKey(literal.literalName))
+                            {
+                                this.conditionFilter.Add(literal.literalName, temp);
+                            }
+                            break;
+
+                        default:
+                            throw new Exception("SwitchBranchNotImplemented");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method which check whether the given hypothesis matches current filter settings
+        /// </summary>
+        /// <param name="hypothesis">Hypothesis to check</param>
+        /// <returns>True if hypothesis matches</returns>
+        private bool HypothesisIsValid(HypothesisStruct hypothesis)
+        {
+            LiteralFilter filter;
+
+            //initialize structure
+            List<string> antecedentLiteralsList = new List<string>();
+            List<string> succedentLiteralsList = new List<string>();
+            List<string> conditionLiteralsList = new List<string>();
+            foreach (BooleanLiteralStruct booleanLiteral in hypothesis.booleanLiterals)
+            {
+                switch (booleanLiteral.cedentType)
+                {
+                    case CedentEnum.Antecedent:
+                        if (!antecedentLiteralsList.Contains(booleanLiteral.literalName))
+                        {
+                            antecedentLiteralsList.Add(booleanLiteral.literalName);
+                        }
+                        break;
+
+                    case CedentEnum.Succedent:
+                        if (!succedentLiteralsList.Contains(booleanLiteral.literalName))
+                        {
+                            succedentLiteralsList.Add(booleanLiteral.literalName);
+                        }
+                        break;
+
+                    case CedentEnum.Condition:
+                        if (!conditionLiteralsList.Contains(booleanLiteral.literalName))
+                        {
+                            conditionLiteralsList.Add(booleanLiteral.literalName);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            foreach (LiteralStruct literal in hypothesis.literals)
+            {
+                switch (literal.cedentType)
+                {
+                    case CedentEnum.Antecedent:
+                        if (!antecedentLiteralsList.Contains(literal.literalName))
+                        {
+                            antecedentLiteralsList.Add(literal.literalName);
+                        }
+                        break;
+
+                    case CedentEnum.Succedent:
+                        if (!succedentLiteralsList.Contains(literal.literalName))
+                        {
+                            succedentLiteralsList.Add(literal.literalName);
+                        }
+                        break;
+
+                    case CedentEnum.Condition:
+                        if (!conditionLiteralsList.Contains(literal.literalName))
+                        {
+                            conditionLiteralsList.Add(literal.literalName);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            //check antecedent
+            foreach (string literal in antecedentLiteralsList)
+            {
+                if (antecedentFilter.TryGetValue(literal, out filter))
+                {
+                    if (!filter.Selected)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            //check succedent
+            foreach (string literal in succedentLiteralsList)
+            {
+                if (succedentFilter.TryGetValue(literal, out filter))
+                {
+                    if (!filter.Selected)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            //check condition
+            foreach (string literal in conditionLiteralsList)
+            {
+                if (conditionFilter.TryGetValue(literal, out filter))
+                {
+                    if (!filter.Selected)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
 
         #endregion
 

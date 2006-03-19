@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-public delegate void LongRunTick();
+public delegate void LongRunCompleted();
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 {
     /// <summary>
     /// Event signalizing communication through Ice is running
     /// </summary>
-    interface LongRunTicked
+    interface LongRunComplete
     {
-        event LongRunTick LongRunTicked;
-        void OnLongRunTick();
+        event LongRunCompleted LongRunComplete;
+        void OnLongRunComplete();
     }
 }
