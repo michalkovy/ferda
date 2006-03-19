@@ -433,6 +433,9 @@
   <data name="ProjectLoadFileNotFound" xml:space="preserve">
     <value>File not fount</value>
   </data>
+  <data name="ProjectLoadInvalidFormat" xml:space="preserve">
+    <value>Invalid XML format</value>
+  </data>
   <data name="PropertiesCannotWriteCaption" xml:space="preserve">
     <value>Input error</value>
   </data>

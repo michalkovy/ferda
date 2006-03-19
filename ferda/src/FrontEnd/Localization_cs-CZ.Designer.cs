@@ -988,6 +988,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Neplatný formát XML.
+        /// </summary>
+        internal static string ProjectLoadInvalidFormat {
+            get {
+                return ResourceManager.GetString("ProjectLoadInvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chyba záznamu.
         /// </summary>
         internal static string PropertiesCannotWriteCaption {

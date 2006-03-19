@@ -1002,6 +1002,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid XML format.
+        /// </summary>
+        internal static string ProjectLoadInvalidFormat {
+            get {
+                return ResourceManager.GetString("ProjectLoadInvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input error.
         /// </summary>
         internal static string PropertiesCannotWriteCaption {

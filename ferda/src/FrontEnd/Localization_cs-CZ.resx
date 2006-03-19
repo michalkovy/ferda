@@ -426,6 +426,9 @@
   <data name="ProjectLoadFileNotFound" xml:space="preserve">
     <value>Nebyl nalezen cílový soubor</value>
   </data>
+  <data name="ProjectLoadInvalidFormat" xml:space="preserve">
+    <value>Neplatný formát XML</value>
+  </data>
   <data name="PropertiesCannotWriteCaption" xml:space="preserve">
     <value>Chyba záznamu</value>
   </data>

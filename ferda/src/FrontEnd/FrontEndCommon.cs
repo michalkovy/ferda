@@ -96,6 +96,13 @@ namespace Ferda.FrontEnd
                     controlsManager.GlobalAdapt();
                     parent.Cursor = previosCursor;
                 }
+                catch (InvalidOperationException)
+                {
+                    MessageBox.Show(resManager.GetString("ProjectLoadInvalidFormat"),
+                        resManager.GetString("ProjectLoadErrorCaption"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 finally
                 {
                     fs.Close();
