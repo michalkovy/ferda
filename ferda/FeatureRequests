@@ -14,3 +14,7 @@ box, then moves it and all the boxes connected to this boxes are moving with
 the box and their distances are increasing.
 
 A list of recently opened projects should be available.
+
+Better dynamic help - now the help displays only the hint and the type of the
+selected box. In the future, it should contain hint also for the sockets and
+properties of the box. 
