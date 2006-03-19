@@ -44,11 +44,6 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
         /// </summary>
         Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
 
-        /// <summary>
-        /// Parent form
-        /// </summary>
-        protected System.Windows.Forms.Form form;
-
         #endregion
 
         #region Constructor
@@ -58,10 +53,9 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
         /// </summary>
         /// <param name="ownerOfAddIn">OwnerofAddIn</param>
         /// <param name="form">Parent form</param>
-        public ExceptionCatcher(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn, System.Windows.Forms.Form form)
+        public ExceptionCatcher(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
         {
             this.projectManager = ownerOfAddIn.ProjectManager;
-            this.form = form;
             this.ownerOfAddIn = ownerOfAddIn;
         }
 

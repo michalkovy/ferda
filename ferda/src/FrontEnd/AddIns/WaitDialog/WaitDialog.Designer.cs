@@ -53,7 +53,10 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WaitDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Running task...";
+            this.TopMost = true;
             this.UseWaitCursor = true;
             this.ResumeLayout(false);
             this.PerformLayout();
