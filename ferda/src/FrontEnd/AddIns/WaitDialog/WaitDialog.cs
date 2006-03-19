@@ -35,6 +35,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
 
         Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
 
+        delegate void CloseDelegate();
 
         #endregion
 
@@ -62,8 +63,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
             this.ownerOfAddIn = ownerOfAddIn;
             InitializeComponent();
             this.ChangeLocale(this.resManager);
-            ExceptionCatcher catcher = new ExceptionCatcher(this.ownerOfAddIn);
-            catcher.Completed += new ThreadCompleted(catcher_Completed);
+            ExceptionCatcher catcher = new ExceptionCatcher(this.ownerOfAddIn, this);
             this.tprx.runAction_async(catcher);
 
         }    
@@ -84,11 +84,22 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
         #endregion
 
 
-        #region Private methods
+        #region Public methods
 
-        void catcher_Completed()
+        public void AsyncClose()
         {
-            this.Close();
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.InvokeRequired)
+            {
+                CloseDelegate d = new CloseDelegate(AsyncClose);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         #endregion
