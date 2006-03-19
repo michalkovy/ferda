@@ -229,6 +229,32 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+
+		<csc target="library" output="${path::combine(addInsBuild.dir,'WaitDialog.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="WaitDialog/**.cs"/>
+				<include name="WaitDialog/MyIce/**.cs"/>
+				<exclude name="WaitDialog/bin/**.*"/>
+				<exclude name="WaitDialog/obj/**.*"/>
+			</sources>
+			<resources prefix="Ferda.FrontEnd.AddIns.WaitDialog">
+				<include name="WaitDialog/**.resx"/>
+				<exclude name="WaitDialog/WaitDialog.resx"/>
+			</resources>
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'FerdaProjectManager.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+			</references>
+		</csc>
 	</target>
 	<target name="clean">
 		<delete failonerror="false">

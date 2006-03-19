@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
-using FrontEnd.AddIns.ResultBrowser.NonGUIClasses;
+using Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses;
 using Ferda;
 using Ferda.Modules;
 using Ferda.FrontEnd.AddIns;
@@ -893,6 +893,28 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelConditionFilter.Text = rm.GetString("ConditionFilter");
             this.ButtonSubmitFilter.Text = rm.GetString("ButtonFilter");
             this.LabelHypothesesTotal.Text = rm.GetString("HypothesesCount");
+        }
+
+        #endregion
+
+        #region Events
+
+        public event LongRunTick IceTicked;
+        public void OnIceTick()
+        {
+            if (IceTicked != null)
+            {
+                IceTicked();
+            }
+        }
+
+        public event LongRunCompleted IceComplete;
+        public void OnIceComplete()
+        {
+            if (IceComplete != null)
+            {
+                IceComplete();
+            }
         }
 
         #endregion
