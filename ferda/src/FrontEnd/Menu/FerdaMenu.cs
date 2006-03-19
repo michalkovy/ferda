@@ -712,6 +712,13 @@ namespace Ferda.FrontEnd.Menu
             return (projectManager.Archive.Boxes.Length != 0);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        protected void RecreateRecentProjects()
+        {
+        }
+
         #endregion
 
         #region Event handlers
@@ -810,11 +817,15 @@ namespace Ferda.FrontEnd.Menu
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                //the action of opening a document
                 string fileName = dialog.FileName;
 
                 controlsManager.ClearDocking();
                 FrontEndCommon.LoadProject(fileName, this, resManager, 
                     ref projectManager, controlsManager);
+
+                controlsManager.AddToRecentProjects(fileName);
+                RecreateRecentProjects();
             }
         }
 

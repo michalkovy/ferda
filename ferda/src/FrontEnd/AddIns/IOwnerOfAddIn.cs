@@ -9,5 +9,7 @@ namespace Ferda.FrontEnd.AddIns
 		void ShowDockableControl(System.Windows.Forms.UserControl userControl, string name);
 
         void AsyncAdapt();
+
+        void ShowBoxException(string boxUserName, string userMessage);
 	}
 }
