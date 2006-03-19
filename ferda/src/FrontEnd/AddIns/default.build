@@ -14,6 +14,7 @@
 				<include name="System.Data.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaProjectManager.dll')}"/>
 			</references>
 		</csc>
 	</target>

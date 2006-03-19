@@ -694,6 +694,9 @@ namespace Ferda.FrontEnd.Menu
                 {
                     SaveProjectCore(dialog.FileName);
                     controlsManager.ProjectName = dialog.FileName;
+
+                    controlsManager.AddToRecentProjects(dialog.FileName);
+                    RecreateRecentProjects();
                 }
                 return true;
             }
@@ -713,7 +716,8 @@ namespace Ferda.FrontEnd.Menu
         }
 
         /// <summary>
-        /// 
+        /// Recreates the part of menu, that has contains recent
+        /// projects
         /// </summary>
         protected void RecreateRecentProjects()
         {
