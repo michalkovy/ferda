@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="MyIce\WaitDialogIce.cs" />
+    <Compile Include="ThreadCompleted.cs" />
     <Compile Include="WaitDialog.cs">
       <SubType>Form</SubType>
     </Compile>

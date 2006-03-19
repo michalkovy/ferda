@@ -56,13 +56,8 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
         /// <summary>
         /// Default constructor for the class
         /// </summary>
-        /// <param name="projManager">Project manager needs to be there for 
-        /// displaying which box has thrown an exception
-        /// </param>
-        /// <param name="resManager">Manager of the resources</param>
-        /// <param name="selector">If a control has the ability to select
-        /// a box that has thrown the exception, it can be also passed
-        /// as a parameter</param>
+        /// <param name="ownerOfAddIn">OwnerofAddIn</param>
+        /// <param name="form">Parent form</param>
         public ExceptionCatcher(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn, System.Windows.Forms.Form form)
         {
             this.projectManager = ownerOfAddIn.ProjectManager;
@@ -105,8 +100,18 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
         public override void ice_response()
         {
             ownerOfAddIn.AsyncAdapt();
-            form.Close();
+            OnThreadCompleted();
         }
+
+        public event ThreadCompleted Completed;
+        public void OnThreadCompleted()
+        {
+            if (Completed != null)
+            {
+                Completed();
+            }
+        }
+
 
         #endregion
     }
