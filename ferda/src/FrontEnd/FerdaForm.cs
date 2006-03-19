@@ -1445,6 +1445,7 @@ using Ferda.ModulesManager;
         {
             BoxExceptionDialog dialog = new BoxExceptionDialog(ResManager,
                 boxUserName, userMessage);
+            dialog.TopMost = true;
             dialog.ShowDialog();
         }
 
