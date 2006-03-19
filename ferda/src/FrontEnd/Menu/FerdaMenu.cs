@@ -950,6 +950,7 @@ namespace Ferda.FrontEnd.Menu
         /// <param name="e">Event parameters</param>
         void recentProjects_Click(object sender, EventArgs e)
         {
+            controlsManager.ClearDocking();
             FrontEndCommon.LoadProject(sender.ToString(), this, resManager,
                 ref projectManager, controlsManager);
         }
