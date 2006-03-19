@@ -34,12 +34,13 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
             // LabelDescription
             // 
             this.LabelDescription.AutoSize = true;
-            this.LabelDescription.Location = new System.Drawing.Point(37, 22);
+            this.LabelDescription.Location = new System.Drawing.Point(92, 22);
             this.LabelDescription.Name = "LabelDescription";
-            this.LabelDescription.Size = new System.Drawing.Size(190, 13);
+            this.LabelDescription.Size = new System.Drawing.Size(97, 13);
             this.LabelDescription.TabIndex = 0;
-            this.LabelDescription.Text = "Task is being saved to the metabase...";
+            this.LabelDescription.Text = "Task is being run...";
             this.LabelDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LabelDescription.UseWaitCursor = true;
             // 
             // WaitDialog
             // 
@@ -52,7 +53,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WaitDialog";
-            this.Text = "Preparing to run task...";
+            this.Text = "Running task...";
             this.UseWaitCursor = true;
             this.ResumeLayout(false);
             this.PerformLayout();
