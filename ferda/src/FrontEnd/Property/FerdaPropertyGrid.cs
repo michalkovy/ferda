@@ -369,6 +369,15 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         public void AsyncAdapt()
         {
+            //this is a check if there is a box selected
+            //if it is not, we should not do anything, because it
+            //would throw a weird exception and I dont know how to
+            //solve it...
+            if (propertyBag.Properties.Count == 0)
+            {
+                return;
+            }
+
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
