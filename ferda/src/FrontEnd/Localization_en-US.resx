@@ -352,6 +352,9 @@
   <data name="MenuFileOpenProject" xml:space="preserve">
     <value>Open Project</value>
   </data>
+  <data name="MenuFileRecentProjects" xml:space="preserve">
+    <value>Recent projects</value>
+  </data>
   <data name="MenuFileSaveChanges" xml:space="preserve">
     <value>Do you want to save the current project?</value>
   </data>

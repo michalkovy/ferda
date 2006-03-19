@@ -67,6 +67,7 @@ namespace Ferda.FrontEnd.Menu
 		/// Group File
         private ToolStripMenuItem newProject;
         private ToolStripMenuItem openProject;
+        private ToolStripMenuItem recentProjects;
         private ToolStripMenuItem saveProject;
         private ToolStripMenuItem saveProjectAs;
         private ToolStripMenuItem exit;
@@ -250,9 +251,12 @@ namespace Ferda.FrontEnd.Menu
         {
             newProject = new ToolStripMenuItem(ResManager.GetString("MenuFileNewProject"));
             openProject = new ToolStripMenuItem(ResManager.GetString("MenuFileOpenProject"));
+            recentProjects = new ToolStripMenuItem(ResManager.GetString("MenuFileRecentProjects"));
             saveProject = new ToolStripMenuItem(ResManager.GetString("MenuFileSaveProject"));
             saveProjectAs = new ToolStripMenuItem(ResManager.GetString("MenuFileSaveProjectAs"));
             exit = new ToolStripMenuItem(ResManager.GetString("MenuFileExit"));
+            ToolStripSeparator sep1 = new ToolStripSeparator();
+            ToolStripSeparator sep2 = new ToolStripSeparator();
 
             newProject.ShortcutKeys = (Keys)Shortcut.CtrlN;
             openProject.ShortcutKeys = (Keys)Shortcut.CtrlO;
@@ -269,10 +273,16 @@ namespace Ferda.FrontEnd.Menu
                 {
                     newProject,
                     openProject,
+                    recentProjects,
+                    sep1,
                     saveProject,
                     saveProjectAs,
+                    sep2,
                     exit
                 });
+
+            //creates the menu with recent projects
+            RecreateRecentProjects();
 
             newProject.Click += new EventHandler(newProject_Click);
             openProject.Click += new EventHandler(openProject_Click);
@@ -721,6 +731,27 @@ namespace Ferda.FrontEnd.Menu
         /// </summary>
         protected void RecreateRecentProjects()
         {
+            recentProjects.DropDownItems.Clear();
+
+            IList<string> projects = controlsManager.GetRecentProjects();
+            ToolStripMenuItem item;
+
+            if (projects.Count == 0)
+            {
+                recentProjects.Enabled = false;
+                return;
+            }
+            else
+            {
+                recentProjects.Enabled = true;
+            }
+
+            foreach (string project in projects)
+            {
+                item = new ToolStripMenuItem(project);
+                item.Click += new EventHandler(recentProjects_Click);
+                recentProjects.DropDownItems.Add(item);
+            }
         }
 
         #endregion
@@ -909,6 +940,18 @@ namespace Ferda.FrontEnd.Menu
             }
 
             Application.Exit();
+        }
+
+        /// <summary>
+        /// Reacts to one of the recent project of the file subgroup,
+        /// opens a project
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void recentProjects_Click(object sender, EventArgs e)
+        {
+            FrontEndCommon.LoadProject(sender.ToString(), this, resManager,
+                ref projectManager, controlsManager);
         }
 
         #endregion

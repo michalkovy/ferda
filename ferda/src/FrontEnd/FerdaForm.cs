@@ -269,6 +269,9 @@ using Ferda.ModulesManager;
             SizeChanged += new EventHandler(FormSizeChanged);
             Closing += new CancelEventHandler(FerdaForm_Closing);
 
+            //loading the recent projects
+            LoadRecentProjects();
+
             prescreen.DisplayText(ResManager.GetString("LoadingIcons"));
             LoadIcons();
             this.Icon = iconProvider["FerdaIcon"];
@@ -299,9 +302,6 @@ using Ferda.ModulesManager;
 
             prescreen.DisplayText(ResManager.GetString("LoadingDocking"));
             SetupDocking();
-
-            //loading the recent projects
-            LoadRecentProjects();
 
             //Name and title of the application
             Name = "FerdaForm";
@@ -1322,7 +1322,10 @@ using Ferda.ModulesManager;
         /// <returns>Modified list containg the recent project paths</returns>
         public void AddToRecentProjects(string newProject)
         {
-            return;
+            if (!recentProjects.Contains(newProject))
+            {
+                recentProjects.Add(newProject);
+            }
         }
 
         /// <summary>

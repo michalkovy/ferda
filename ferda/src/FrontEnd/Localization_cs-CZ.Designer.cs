@@ -745,6 +745,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Poslední projekty.
+        /// </summary>
+        internal static string MenuFileRecentProjects {
+            get {
+                return ResourceManager.GetString("MenuFileRecentProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chcete uložit stávající projekt?.
         /// </summary>
         internal static string MenuFileSaveChanges {
