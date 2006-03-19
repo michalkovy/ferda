@@ -1433,10 +1433,7 @@ using Ferda.ModulesManager;
         /// </summary>
         public void AsyncAdapt()
         {
-            if (propertyGrid.IsDisposed)
-            {
-                propertyGrid.AsyncAdapt();
-            }
+            propertyGrid.AsyncAdapt();
         }
 
         /// <summary>
