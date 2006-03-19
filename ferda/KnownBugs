@@ -5,3 +5,22 @@ Ferda does not show progress while executes tasks over (old) LISp-Miner tasks an
 Ferda does not support databases with only one exclusive access connections. It is caused by performance reasons because due working with this kind of databases (often ODBC drivers for text databases) all box modules (boxes) should get the ODBC connection when needed and than immediately close the connection. Opening and closing ODBC connection is very slow operation (about 1-3 sec.). Holding one shared connection for all box moduels is not possible because box modules can be installed and launching on other PCs.
 
 This is not bug but rather answer to frequently asked question: Statistics for some columns are not shown. This is caused by the datatype of the column because many DB systems does not support aggregation functions over columns of some datatypes (e.g. BLOB, MEMO, ...). Computing of statistics without aggregation functions would be very, very slow and not effective and using this kind of columns for datamining is not very common, so we were not trying to slove this problem by own simulation of this functions.
+
+Performance bug - slow redrawing of connecting lines on the desktop. This is caused
+by the slow performance of the graphics library we use (Netron Graph Library) or
+its former version. In order to make the library friendly to Ferda, we had to make
+some changes to the library. The newer versions of the library show better performance
+results - so this (and other problems) can be fixed by switching to a newer version
+of Netron. 
+
+Localization problem with the Czech and English names - some choices in the property
+grid with the czech localization can be selected in czech, but then they are 
+displayed again in English.
+
+Docking bugs - sometimes when the user tries to make the docking area smaller, then
+scrollbars appear (they are not needed there). Also sometimes the docking behaviour
+is little weird, user wants to dock it somewhere, but the environment does not
+allow it. These problem are caused by the docking imperfection of the docking 
+library we use - DockDotNET. Switching to another library that has these
+problems solved or fixing them in the DockDotNET(the library is no longer under
+development) would fix these bugs.

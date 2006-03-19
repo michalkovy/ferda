@@ -1,1 +1,16 @@
+When selecting more boxes of the same type on the desktop, Ferda should enable
+more actions that are common to the boxes (for instance creating the same 
+modules for interaction).
 
+In the Attribute frequency module, the categories for intervals should be sorted
+not only alphabetically, but also accorting to the boundaries of the intervals.
+
+Functionallity for creating copy of a desktop should be added.
+
+Ferda should have icons for all the boxes.
+
+Better layout - for example a method of anchoring boxes. The user selects one
+box, then moves it and all the boxes connected to this boxes are moving with
+the box and their distances are increasing.
+
+A list of recently opened projects should be available.
