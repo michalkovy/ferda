@@ -61,7 +61,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Úloha se ukládá do metabáze....
+        ///   Looks up a localized string similar to Úloha běží....
         /// </summary>
         internal static string WaitDescription {
             get {
@@ -70,7 +70,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Run.
+        ///   Looks up a localized string similar to Spustit.
         /// </summary>
         internal static string WaitDialogModule {
             get {
@@ -79,7 +79,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Připravuje se běh úlohy....
+        ///   Looks up a localized string similar to Běh úlohy....
         /// </summary>
         internal static string WaitDialogModuleTitle {
             get {

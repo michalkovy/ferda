@@ -61,7 +61,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Task is being saved to the metabase....
+        ///   Looks up a localized string similar to Task is being run....
         /// </summary>
         internal static string WaitDescription {
             get {
@@ -79,7 +79,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preparing to run task....
+        ///   Looks up a localized string similar to Running task....
         /// </summary>
         internal static string WaitDialogModuleTitle {
             get {

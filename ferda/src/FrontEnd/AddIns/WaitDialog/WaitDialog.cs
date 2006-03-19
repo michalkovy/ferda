@@ -64,9 +64,10 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
             InitializeComponent();
             this.ChangeLocale(this.resManager);
             ExceptionCatcher catcher = new ExceptionCatcher(this.ownerOfAddIn,this);
+            catcher.Completed += new ThreadCompleted(catcher_Completed);
             this.tprx.runAction_async(catcher);
 
-        }
+        }    
 
         /// <summary>
         /// Disabling Alt+F4 
@@ -86,7 +87,10 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
 
         #region Private methods
 
-
+        void catcher_Completed()
+        {
+            this.Close();
+        }
 
         #endregion
 
