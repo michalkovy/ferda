@@ -180,7 +180,7 @@ namespace Ferda.Modules.MetabaseLayer
 				hypothesisStruct.booleanLiterals = common.GetBooleanLiterals(taskID, hypothesisID);
 				LiteralStruct rowLiteral = new LiteralStruct();
 				rowLiteral.cedentType = CedentEnum.Antecedent;
-                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.KL, taskID, hypothesisID);
+                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.KL, taskID, hypothesisID, taskDescription);
 				rowLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["KLLiteralDRowID"])];
 				LiteralStruct columnLiteral = new LiteralStruct();
                 columnLiteral.cedentType = CedentEnum.Succedent;

@@ -217,6 +217,7 @@ module Ferda {
 				struct LiteralStruct {
 					CedentEnum cedentType;
 					StringSeq categoriesNames;
+					DoubleSeq numericValues;
 					string literalName;
 					double categoriesValues;
 					int literalIdentifier;

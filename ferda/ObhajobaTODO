@@ -7,10 +7,6 @@ Michal
 Martin
  - opravit problem vyberu krabicek na plose hodne dole (nejspis je to moje chyba, jestli je to
 chyba Netronu, tak na to seru)
- - property grid
- - dynamic (kontext) help (at to Tom udela pro DB, tabulka a sloupec, potom se to bude dat testovat)
- - help - uzivatelska napoveda k prostredi
- - AddIn zobrazujici pomoci AcrobatReadru ten PDF help
 Tomas
  - PDF help ke krabickam databaze, tabulka a sloupec (Martin mi musi rict co presne jak ma vypadat)
  - dokumentace pridavani novych krabicek (za sebe: mam to hotovy, Michal to musi dopsat a treba Alex prelozit)
