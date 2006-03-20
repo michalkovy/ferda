@@ -250,6 +250,8 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
         {
             StringBuilder returnString = new StringBuilder();
             bool first = true;
+            //replacing comma with dot
+            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex("[,]");
             foreach (FloatIntervalStruct floatInterval in floatIntervalSeq)
             {
                 if (first)
@@ -266,23 +268,19 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
                 if ((floatInterval.leftBoundType == BoundaryEnum.Infinity) && (floatInterval.rightBoundType == BoundaryEnum.Infinity))
                     return "";
 
-
-
                 returnString.Append(columnSelectExpression);
                 bool left = false;
 
                 if (floatInterval.leftBoundType == BoundaryEnum.Round)
                 {
-
-                    returnString.Append(" > " + floatInterval.leftBound);
+                    returnString.Append(" > " + r.Replace(floatInterval.leftBound.ToString(), "."));
                     left = true;
                 }
                 else
                 {
                     if (floatInterval.leftBoundType == BoundaryEnum.Sharp)
                     {
-
-                        returnString.Append(" >= " + floatInterval.leftBound);
+                        returnString.Append(" >= " + r.Replace(floatInterval.leftBound.ToString(), "."));
                         left = true;
                     }
                     //Infinity is left, no restriction needed
@@ -291,11 +289,10 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
                 {
                     if (left)
                     {
-
                         returnString.Append(" AND " + columnSelectExpression);
                     }
 
-                    returnString.Append(" < " + floatInterval.rightBound);
+                    returnString.Append(" < " + r.Replace(floatInterval.rightBound.ToString(), "."));
                 }
                 else
                 {
@@ -303,12 +300,8 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
                     {
                         if (left)
                         {
-
                             returnString.Append(" AND " + columnSelectExpression);
                         }
-
-
-
                         returnString.Append(" <= " + floatInterval.rightBound);
                     }
                     //Infinity is left, no restriction needed
@@ -413,21 +406,35 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
             bool first = true;
             foreach (String enumValue in categoryEnum)
             {
-                if (first)
+                if (enumValue != String.Empty)
                 {
-                    first = false;
-                }
-                else
-                {
-                    returnString.Append(" OR ");
-                }
+                    if (first)
+                    {
+                        first = false;
+                    }
+                    else
+                    {
+                        returnString.Append(" OR ");
+                    }
 
-                returnString.Append("`" + columnSelectExpression + "` = ");
-                if ((this.columnType == ValueSubTypeEnum.StringType) || (this.columnType == ValueSubTypeEnum.Unknown))
-                    returnString.Append("'");
-                returnString.Append(enumValue);
-                if ((this.columnType == ValueSubTypeEnum.StringType) || (this.columnType == ValueSubTypeEnum.Unknown))
-                    returnString.Append("'");
+                    returnString.Append("`" + columnSelectExpression + "` = ");
+                    if ((this.columnType == ValueSubTypeEnum.StringType) || (this.columnType == ValueSubTypeEnum.Unknown))
+                        returnString.Append("'");
+
+                    if ((this.columnType == ValueSubTypeEnum.DoubleType) || (this.columnType == ValueSubTypeEnum.FloatType) || (this.columnType == ValueSubTypeEnum.DecimalType))
+                    {
+                        //replacing comma with dot
+                        System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex("[,]");
+                        returnString.Append(r.Replace(enumValue, "."));
+                    }
+                    else
+                    {
+                        returnString.Append(enumValue);
+                    }
+
+                    if ((this.columnType == ValueSubTypeEnum.StringType) || (this.columnType == ValueSubTypeEnum.Unknown))
+                        returnString.Append("'");
+                }
             }
             return returnString.ToString();
         }
@@ -450,7 +457,7 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
                 whereCond = " WHERE " + where;
 
             return "SELECT `" + columnSelectExpression
-                + "` COUNT(1) AS `TmpCnt`"
+                + "`, COUNT(1) AS `TmpCnt`"
                 + " FROM " + "`" + dataMatrixName + "`"
                 + whereCond
                 + " GROUP BY " + columnSelectExpression

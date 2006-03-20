@@ -142,6 +142,18 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
         }
 
         /// <summary>
+        /// Toggling labels for chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripMenuItem_OnCheckChanged(object sender, EventArgs e)
+        {
+            this.DrawBarsFromDataTable(this.tempTable, this.AttributeFrequencyBarChart);
+            this.DrawAreaFromDataTable(this.tempTable, this.AttributeFrequencyAreaChart);
+            this.DrawPieFromDataTable(this.tempTable, this.AttributeFrequencyPieChart);
+        }
+
+        /// <summary>
         /// Copy all to clipboard
         /// </summary>
         /// <param name="sender"></param>
@@ -318,9 +330,9 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
             this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
             this.ToolStripMenuItemCopyChart.Text = rm.GetString("CopyChart");
+            this.ToolStripMenuItemToggleMarks.Text = rm.GetString("ToggleMarks");
         }
 
         #endregion
-
     }
 }

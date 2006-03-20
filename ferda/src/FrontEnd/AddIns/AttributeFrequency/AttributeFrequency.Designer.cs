@@ -61,10 +61,11 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             this.TabPageAreaChart = new System.Windows.Forms.TabPage();
             this.ContextMenuGraph = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemAbsolute = new System.Windows.Forms.ToolStripMenuItem();
-            this.TabPageBarChart = new System.Windows.Forms.TabPage();
-            this.TabPagePieChart = new System.Windows.Forms.TabPage();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItemCopyChart = new System.Windows.Forms.ToolStripMenuItem();
+            this.TabPageBarChart = new System.Windows.Forms.TabPage();
+            this.TabPagePieChart = new System.Windows.Forms.TabPage();
+            this.ToolStripMenuItemToggleMarks = new System.Windows.Forms.ToolStripMenuItem();
             this.TabControlAttributeFrequency.SuspendLayout();
             this.TabPageText.SuspendLayout();
             this.ContextMenuData.SuspendLayout();
@@ -161,16 +162,28 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             this.ContextMenuGraph.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemAbsolute,
             this.toolStripSeparator1,
+            this.ToolStripMenuItemToggleMarks,
             this.ToolStripMenuItemCopyChart});
             this.ContextMenuGraph.Name = "ContextMenuGraphParams";
-            this.ContextMenuGraph.Size = new System.Drawing.Size(180, 76);
+            this.ContextMenuGraph.Size = new System.Drawing.Size(236, 98);
             // 
             // ToolStripMenuItemAbsolute
             // 
             this.ToolStripMenuItemAbsolute.CheckOnClick = true;
             this.ToolStripMenuItemAbsolute.Name = "ToolStripMenuItemAbsolute";
-            this.ToolStripMenuItemAbsolute.Size = new System.Drawing.Size(179, 22);
+            this.ToolStripMenuItemAbsolute.Size = new System.Drawing.Size(235, 22);
             this.ToolStripMenuItemAbsolute.Text = "Absolute";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(232, 6);
+            // 
+            // ToolStripMenuItemCopyChart
+            // 
+            this.ToolStripMenuItemCopyChart.Name = "ToolStripMenuItemCopyChart";
+            this.ToolStripMenuItemCopyChart.Size = new System.Drawing.Size(235, 22);
+            this.ToolStripMenuItemCopyChart.Text = "toolStripMenuItem1";
             // 
             // TabPageBarChart
             // 
@@ -193,16 +206,13 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             this.TabPagePieChart.Text = "tabPage1";
             this.TabPagePieChart.UseVisualStyleBackColor = true;
             // 
-            // toolStripSeparator1
+            // ToolStripMenuItemToggleMarks
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
-            // 
-            // ToolStripMenuItemCopyChart
-            // 
-            this.ToolStripMenuItemCopyChart.Name = "ToolStripMenuItemCopyChart";
-            this.ToolStripMenuItemCopyChart.Size = new System.Drawing.Size(179, 22);
-            this.ToolStripMenuItemCopyChart.Text = "toolStripMenuItem1";
+            this.ToolStripMenuItemToggleMarks.CheckOnClick = true;
+            this.ToolStripMenuItemToggleMarks.Name = "ToolStripMenuItemToggleMarks";
+            this.ToolStripMenuItemToggleMarks.Size = new System.Drawing.Size(235, 22);
+            this.ToolStripMenuItemToggleMarks.Text = "ToolStripMenuItemToggleMarks";
+            this.ToolStripMenuItemToggleMarks.CheckedChanged += new System.EventHandler(this.ToolStripMenuItem_OnCheckChanged);
             // 
             // AttributeFrequency
             // 
@@ -237,5 +247,6 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopySelected;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopyChart;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemToggleMarks;
     }
 }

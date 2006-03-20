@@ -111,7 +111,15 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             Steema.TeeChart.Styles.Area areaSeries = new Steema.TeeChart.Styles.Area();
             areaSeries.ColorEach = true;
             areaSeries.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
-            areaSeries.Marks.Visible = true;
+            if (this.ToolStripMenuToggleMarks.Checked)
+            {
+                areaSeries.Marks.Visible = true;
+            }
+            else
+            {
+                areaSeries.Marks.Visible = false;
+            }
+            
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 double temp;
@@ -156,7 +164,15 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             barSeriesBar.MultiBar = Steema.TeeChart.Styles.MultiBars.SideAll;
             barSeriesBar.ColorEach = true;
             barSeriesBar.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
-            barSeriesBar.Marks.Visible = true;
+            if (this.ToolStripMenuToggleMarks.Checked)
+            {
+                barSeriesBar.Marks.Visible = true;
+            }
+            else
+            {
+                barSeriesBar.Marks.Visible = false;
+            }
+            
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 double temp;
@@ -200,7 +216,14 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
 
             pieSeries.ColorEach = true;
             pieSeries.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
-            pieSeries.Marks.Visible = true;
+            if (this.ToolStripMenuToggleMarks.Checked)
+            {
+                pieSeries.Marks.Visible = true;
+            }
+            else
+            {
+                pieSeries.Marks.Visible = false;
+            }
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 double temp;
