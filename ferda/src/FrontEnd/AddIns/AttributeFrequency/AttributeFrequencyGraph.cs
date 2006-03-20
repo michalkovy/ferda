@@ -116,7 +116,15 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             barSeriesBar.MultiBar = Steema.TeeChart.Styles.MultiBars.SideAll;
             barSeriesBar.ColorEach = true;
             barSeriesBar.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
-            barSeriesBar.Marks.Visible = true;
+            if (this.ToolStripMenuItemToggleMarks.Checked)
+            {
+                barSeriesBar.Marks.Visible = true;
+            }
+            else
+            {
+                barSeriesBar.Marks.Visible = false;
+            }  
+            
             foreach (CategoryFrequency catFrequency in categoriesFrequency)
             {
                 double temp;
@@ -160,7 +168,14 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             areaSeries = new Steema.TeeChart.Styles.Area();
             areaSeries.ColorEach = true;
             areaSeries.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
-            areaSeries.Marks.Visible = true;
+            if (this.ToolStripMenuItemToggleMarks.Checked)
+            {
+                areaSeries.Marks.Visible = true;
+            }
+            else
+            {
+                areaSeries.Marks.Visible = false;
+            }           
             foreach (CategoryFrequency catFrequency in categoriesFrequency)
             {
                 double temp;
@@ -205,7 +220,15 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             pieSeries = new Steema.TeeChart.Styles.Pie();
             pieSeries.ColorEach = true;
             pieSeries.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
-            pieSeries.Marks.Visible = true;
+
+            if (this.ToolStripMenuItemToggleMarks.Checked)
+            {
+                pieSeries.Marks.Visible = true;
+            }
+            else
+            {
+                pieSeries.Marks.Visible = false;
+            }
             foreach (CategoryFrequency catFrequency in categoriesFrequency)
             {
                 double temp;

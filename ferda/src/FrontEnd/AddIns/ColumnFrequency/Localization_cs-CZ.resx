@@ -183,6 +183,9 @@
   <data name="TabPageText" xml:space="preserve">
     <value>Data</value>
   </data>
+  <data name="ToggleMarks" xml:space="preserve">
+    <value>Zobrazit popisky</value>
+  </data>
   <data name="ToolStripMenuItemAbsolute" xml:space="preserve">
     <value>Absolutní</value>
   </data>

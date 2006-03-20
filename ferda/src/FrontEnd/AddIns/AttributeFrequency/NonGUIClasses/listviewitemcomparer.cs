@@ -37,6 +37,7 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
         // Using the Compare function of IComparer
         public int Compare(object x, object y)
         {
+
             // Cast the objects to ListViewItems
             ListViewItem lvi1 = (ListViewItem)x;
             ListViewItem lvi2 = (ListViewItem)y;
@@ -44,15 +45,48 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
             // If the column is string
             if (column < 1)
             {
-                string lvi1String = lvi1.SubItems[column].ToString();
-                string lvi2String = lvi2.SubItems[column].ToString();
+                //try to convert to doubles first
+                double first;
+                double second;
+                System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex("(^[<(]\\d+[;]\\d+[>)]$)");
+                System.Text.RegularExpressions.Regex r1 = new System.Text.RegularExpressions.Regex("[<>();]");
 
-                // Return the normal Compare
-                if (bAscending)
-                    return String.Compare(lvi1String, lvi2String);
+                if ((Double.TryParse(lvi1.SubItems[column].Text, out first)) && (Double.TryParse(lvi2.SubItems[column].Text, out second)))
+                {
+                    //it is double then
+                    if (bAscending)
+                        return first > second ? 1 : (first < second ? -1 : 0);
 
-                // Return the negated Compare
-                return -String.Compare(lvi1String, lvi2String);
+                    // Return the negated Compare
+                    return first > second ? -1 : (first < second ? 1 : 0);
+                }
+                else if ((r.IsMatch(lvi1.SubItems[column].Text)) && (r.IsMatch(lvi2.SubItems[column].Text)))
+                {
+                    //hooray, an interval
+                    string[] numbers = r1.Split(lvi1.SubItems[column].Text);
+                    string[] numbers1 = r1.Split(lvi2.SubItems[column].Text);
+                    if ((numbers.Length > 1) && (numbers1.Length > 1) && (Double.TryParse(numbers[1], out first)) && (Double.TryParse(numbers1[1], out second)))
+                    {
+                        if (bAscending)
+                            return first > second ? 1 : (first < second ? -1 : 0);
+
+                        // Return the negated Compare
+                        return first > second ? -1 : (first < second ? 1 : 0);
+                    }
+                }
+                else
+                {
+                    //if nothing works, it is a string
+                    string lvi1String = lvi1.SubItems[column].ToString();
+                    string lvi2String = lvi2.SubItems[column].ToString();
+
+                    // Return the normal Compare
+                    if (bAscending)
+                        return String.Compare(lvi1String, lvi2String);
+
+                    // Return the negated Compare
+                    return -String.Compare(lvi1String, lvi2String);
+                }
             }
 
             // The column is double
