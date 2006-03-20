@@ -573,12 +573,14 @@ namespace Ferda.FrontEnd.Archive
                     boxesList = archive.ListBoxesWithType(BoxCategory, BoxType);
                 }
 
+                List<FerdaTreeNode> nodes = new List<FerdaTreeNode>(boxesList.Length);
                 foreach (ModulesManager.IBoxModule b in boxesList)
                 {
                     treeNode = new FerdaTreeNode(b, AlongDirection,
                         Archive, this, iconDictionary, list, iconProvider, projectManager);
-                    TVArchive.Nodes.Add(treeNode);
+                    nodes.Add(treeNode);
                 }
+                TVArchive.Nodes.AddRange(nodes.ToArray());
             }
 
             TVArchive.ImageList = list;
