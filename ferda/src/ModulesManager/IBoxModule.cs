@@ -558,6 +558,14 @@ namespace Ferda.ModulesManager
 		/// <exception cref="T:Ferda.Modules.NameNotExistError">module for interaction
 		/// with ide identity
 		/// <paramref name="moduleIceIdentity"/> was not found</exception>
+        /// <exception cref="T:Ferda.Modules.BoxRuntimeError">
+        /// it is not possible to run module for interaction due to problem in some box. You can read it
+        /// in <see cref="F:Ferda.Modules.BoxRuntimeError.userMessage"/>.
+        /// In <see cref="F:Ferda.Modules.BoxRuntimeError.boxIdentity"/>
+        /// you can read string representation of idenity of box.
+        /// Use <see cref="M:Ferda.ModulesManager.ModulesManager.GetIBoxModuleByIdentity(System.String)"/>
+        /// for getting box by its identity.
+        /// </exception>
 		void RunModuleForInteraction(string moduleIceIdentity);
 		
 		/// <summary>
