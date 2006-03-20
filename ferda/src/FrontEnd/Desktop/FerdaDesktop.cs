@@ -416,6 +416,7 @@ namespace Ferda.FrontEnd.Desktop
         ///</remarks>
         public void Adapt()
         {
+            this.Hide();
             Nodes.Clear();
             selectedBoxes.Clear();
 
@@ -443,6 +444,7 @@ namespace Ferda.FrontEnd.Desktop
                 //adding the connector
                 AddEdge(from, to);
             }
+            this.Show();
 
             OnNewConnection += new NewConnection(FerdaDesktop_OnNewConnection);
         }
