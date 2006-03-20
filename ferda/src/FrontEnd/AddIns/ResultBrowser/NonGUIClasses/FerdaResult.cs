@@ -1,3 +1,23 @@
+// FerdaResult.cs - class for working with results of the taskrun
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2005 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +33,8 @@ using System.Threading;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 {
+    #region Data structures
+
     /// <summary>
     /// Struct for sorting items
     /// </summary>
@@ -168,6 +190,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         public CountedValues[] StatisticsList;
         public CountedValues[] QuantifiersList;
     }
+
+    #endregion
 
     /// <summary>
     /// Class for storing and proceeding the results
@@ -331,6 +355,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         #region Constructor
 
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="rm">Resource manager</param>
         public FerdaResult(ResourceManager rm)
         {
             this.resManager = rm;
@@ -460,7 +488,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
         }
 
-
         /// <summary>
         /// Method which gets column names which are selected to be displayed.
         /// </summary>
@@ -483,25 +510,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
 
         #region Methods for composing various strings
-
-
-        /// <summary>
-        /// Method to decide whether the hypothesis is of 4-ft miner
-        /// </summary>
-        /// <param name="hypothesis">Hypothesis to check</param>
-        /// <returns>True if hypothesis is from 4ft</returns>
-        public static bool IsFFT(HypothesisStruct hypothesis)
-        {
-            foreach (BooleanLiteralStruct booleanLiteral in hypothesis.booleanLiterals)
-            {
-                if ((booleanLiteral.cedentType == CedentEnum.Antecedent) || (booleanLiteral.cedentType == CedentEnum.Succedent))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
 
         /// <summary>
         /// Function to get a string value for antecedent
@@ -833,7 +841,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             return false;
         }
 
-
         /// <summary>
         /// Method which finds out whether the quantifier is used.
         /// </summary>
@@ -933,9 +940,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         #endregion
 
 
-        #region Hypotheses methods
-
-        
+        #region Hypotheses methods      
 
         /// <summary>
         /// Gets hypothesis at the required index
@@ -1009,6 +1014,28 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         public List<string> ReadStatisticsNamesFromCache()
         {
             return this.cachedStatisticsNames;
+        }
+
+        #endregion
+
+
+        #region Other methods
+
+        /// <summary>
+        /// Method to decide whether the hypothesis is of 4-ft miner
+        /// </summary>
+        /// <param name="hypothesis">Hypothesis to check</param>
+        /// <returns>True if hypothesis is from 4ft</returns>
+        public static bool IsFFT(HypothesisStruct hypothesis)
+        {
+            foreach (BooleanLiteralStruct booleanLiteral in hypothesis.booleanLiterals)
+            {
+                if ((booleanLiteral.cedentType == CedentEnum.Antecedent) || (booleanLiteral.cedentType == CedentEnum.Succedent))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         #endregion
@@ -1205,8 +1232,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             return true;
         }
-
-
 
         #endregion
 

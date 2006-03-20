@@ -1,3 +1,23 @@
+// ODBCConnectionStringControl.cs - UserControl for composing the connection string
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2005 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +32,9 @@ using System.Reflection;
 
 namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
 {
-
+    /// <summary>
+    /// User conttrol for composing the connection string
+    /// </summary>
     public partial class ODBCConnectionStringControl : Form, Ferda.FrontEnd.IIconProvider
     {
         #region Private variables
@@ -66,11 +88,13 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
 
         #region Contructor
 
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="localePrefs">localeprefs</param>
+        /// <param name="currentDSN">Current DSN</param>
         public ODBCConnectionStringControl(string[] localePrefs, string currentDSN)
         {
-            //needed for groups to work
-            Application.EnableVisualStyles();
-
             //setting the ResManager resource manager and localization string
             string locale;
             try
@@ -80,14 +104,12 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
                 locale = "Ferda.FrontEnd.AddIns.ODBCConnectionString.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
-
             catch
             {
                 resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ODBCConnectionString.Localization_en-US",
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
-
             this.path = Assembly.GetExecutingAssembly().Location;
             InitializeComponent();
             this.ChangeLocale(resManager);
@@ -101,6 +123,9 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
 
         #region Initialization
 
+        /// <summary>
+        /// Initializing the GUI elements
+        /// </summary>
         private void MyInit()
         {
             FillStatusBar();
@@ -109,7 +134,6 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.ComboboxExistingSources.SelectionChangeCommitted += new EventHandler(ComboboxExistingSources_SelectionChangeCommitted);
             this.TextBoxUsername.LostFocus += new EventHandler(TextBoxUsername_LostFocus);
             this.TextBoxPassword.LostFocus += new EventHandler(TextBoxPassword_LostFocus);
-
             this.LoadIcons();
             this.InitIcons();
         }

@@ -40,6 +40,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaFrontEnd.exe</HintPath>
     </Reference>
+    <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
+    </Reference>
     <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FrontEndAddInHelper.dll</HintPath>
@@ -63,17 +67,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3rdParty\dsn.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="3rdParty\ODBCCP32.cs" />
     <Compile Include="3rdParty\Reg.cs" />
     <Compile Include="3rdParty\registry.cs" />
-    <Compile Include="Localization_cs-CZ.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Localization_cs-CZ.resx</DependentUpon>
-    </Compile>
     <Compile Include="ODBCConnectionStringControl.cs">
       <SubType>Form</SubType>
     </Compile>

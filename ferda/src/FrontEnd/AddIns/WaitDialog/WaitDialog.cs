@@ -1,3 +1,23 @@
+// WaitDialog.cs - Form for displaying task in progress message
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2005 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +36,9 @@ using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 
 namespace Ferda.FrontEnd.AddIns.WaitDialog
 {
+    /// <summary>
+    /// Form for displaying task in progress message
+    /// </summary>
     public partial class WaitDialog : Form
     {
         #region Private variables
@@ -39,8 +62,15 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
 
         #endregion
 
+
         #region Constructor
 
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="localePrefs">localeprefs</param>
+        /// <param name="tprx">Proxy</param>
+        /// <param name="ownerOfAddIn">Owner of addin</param>
         public WaitDialog(string[] localePrefs, AbstractLMTaskFunctionsPrx tprx, Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string

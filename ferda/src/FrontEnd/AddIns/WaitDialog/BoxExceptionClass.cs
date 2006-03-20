@@ -1,8 +1,8 @@
 // BoxExceptionClass.cs - Class for displaying the BoxExceptionDialog to the user in another thread
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>, Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,3 +1,23 @@
+// ShowTableControl.cs - UserControl class for displaying database table
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2005 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +32,9 @@ using Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses;
 
 namespace Ferda.FrontEnd.AddIns.ShowTable
 {
+    /// <summary>
+    /// Usercontrol class for displaying database table
+    /// </summary>
     public partial class ShowTableControl : UserControl
     {
         #region Private variables
@@ -40,6 +63,13 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
 
 
         #region Constructor
+
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="localePrefs">localeprefs</param>
+        /// <param name="columns">Columns</param>
+        /// <param name="dataMatrix">Datamatrix to display</param>
         public ShowTableControl(string[] localePrefs, string[] columns, DataMatrixInfo dataMatrix)
         {
             //setting the ResManager resource manager and localization string
@@ -73,6 +103,11 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
 
         #region Context menu handlers
 
+        /// <summary>
+        /// Copy selected to clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ToolStripMenuItemCopySelected_Click(object sender, EventArgs e)
         {
             StringBuilder copyString = new StringBuilder();
@@ -98,6 +133,11 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
             Clipboard.SetDataObject(copyString.ToString(), true);
         }
 
+        /// <summary>
+        /// Copy all to clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ToolStripMenuItemCopyAll_Click(object sender, EventArgs e)
         {
             StringBuilder copyString = new StringBuilder();

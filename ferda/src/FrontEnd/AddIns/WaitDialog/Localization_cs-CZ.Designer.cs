@@ -61,7 +61,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Úloha běží....
+        ///   Looks up a localized string similar to Úloha běží, prosím vyčkejte na dokončení....
         /// </summary>
         internal static string WaitDescription {
             get {
