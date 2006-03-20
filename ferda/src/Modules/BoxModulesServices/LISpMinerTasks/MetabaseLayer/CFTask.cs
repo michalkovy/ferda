@@ -39,6 +39,7 @@ namespace Ferda.Modules.MetabaseLayer
         protected override CategorialCedent[] getCategorialCedents(object taskDescription)
         {
             Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct input = (TaskStruct)taskDescription;
+
             List<CategorialCedent> result = new List<CategorialCedent>();
             addCategorialCedent(input.antecedentSetting, CedentEnum.Antecedent, ref result);
             return result.ToArray();
@@ -56,7 +57,7 @@ namespace Ferda.Modules.MetabaseLayer
                 int hypothesisID = Convert.ToInt32(hypothese["HypothesisID"]);
                 hypothesisStruct = new HypothesisStruct();
                 hypothesisStruct.booleanLiterals = common.GetBooleanLiterals(taskID, hypothesisID);
-                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.CF, taskID, hypothesisID);
+                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.CF, taskID, hypothesisID, taskDescription);
            //     hypothesisStruct.literals = common.Get
                 //  hypothesisStruct.literals = common.Get
                 LiteralStruct columnLiteral = new LiteralStruct();

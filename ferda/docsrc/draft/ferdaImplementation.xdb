@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <title>Ferda implementation</title>
+    <author>
+      <firstname>Michal</firstname>
+      <surname>Kováč</surname>
+      <email>michal.kovac.develop@centrum.cz</email>
+    </author>
+    <othercredit>
+      <firstname>Martin</firstname>
+      <surname>Ralbovský</surname>
+      <email>martin.ralbovsky@gmail.com</email>
+    </othercredit>
+  </articleinfo>
+  <abstract>
+    <para>
+      This text handles the architecture of the Ferda system in depth and explains,
+      why it was design this way.
+    </para>
+  </abstract>
+  <section>
+    <title>Choice of the programming language, libraries, tools and licence</title>
+    <para>
+      We chose to develop Ferda in C# version 2.0. In comparison to C++,
+      the C# is a language that provides much safer and faster developement.
+      We also thought about Java. Although the programs in Java can easily 
+      be used on more platforms then C#, we found that the language does not
+      offer (for the most common operating system) the choice to program an
+      environment, that the user is used to and that is nice and done according
+      to the newest trends. Moreover, we found the C# language better then
+      Java and also the CLI platform has some advantages for our program
+      (for instance the ability to write parts also in other languages). 
+      We chose the second version of C# because there have been some improvements
+      in the appearance of the programming envrironment we found useful. We 
+      also used plentiful of the new C# features.
+    </para>
+    <para>
+      There are some utilities that automatically come with the C# language. It
+      is the NAnt (for CLI programs compilation), the NUnit (for unit testing), 
+      the NDoc (for generating documentation from CLI assemblies). We used
+      all these utilities. Although the new Visual Studio 2005 has similar 
+      tools, we used the utilities previously mentioned, because there is 
+      a chance to run them not only on .NET Framework, but also on Mono
+      (other CLI implementation).
+    </para>
+    <para>
+      It may be clear to the reader from the previous paragraphs, that we used
+      for our user environment the System.Windows.Forms version 2.0. We aslo
+      thought about the GTK# library, but we didn't choose it. The reason is
+      that we wanted the program to look better for the users of the most common
+      operating system. On the other hand we hope that soon the System.Windows.Forms
+      will be also implemented in Mono (thus user can run Ferda also on Linux).
+    </para>
+    <para>
+      During the design phase, the neccesity to use some middleware appeared. 
+      There were several products we could choose from : .NET Remoting, Corba
+      or ICE. We chose ICE because of ICE because of the simplicity (against
+      Corba), the speed and interoperability (against .NET Remoting) and the
+      ability to develop in more languages (against .NET Remoting). Furthermore
+      it turned out that Ice has several program that could or can be used
+      in a suitable way in Ferda.
+    </para>
+    <para>
+      We looked for a library that can draw graphs (visual elements - nodes connected
+      with edges). We found the Netron Graph Library (version 2.1) ideal for this purpose.
+      Unfortunatelly there had to be some not trivial changes made to the 
+      library in order to suite Ferda just fine. The library itself is also 
+      not very fast and it contains few important bugs that cannot be fixed
+      easilly. In the 2.2 version of this library the problems mentioned above
+      were successfully issued but we haven't yet switch to the new version, because
+      it is a very demanding task.
+    </para>
+    <para>
+      We chose the GPL v2 licence, because it enables to keep the open solution
+      and ensures that Ferda will not be misused for commertial purposes.
+    </para>
+  </section>
+  <section>
+    <title>Commitments for implementation</title>
+    <para>
+      Individual parts of the LISp-Miner system (the system we built Ferda upon)
+      were created by different people. Because we saw Ferda not only as a
+      new suit for the old system, but as its successor, we wanted to provide
+      strong extensibility and modularity of the system.
+    </para>
+    <para>
+      The LISp-Miner system uses a so-called metabase to connect different components
+      of the system. It is a database with a specific structure. When creating a
+      new component for the LISp-Miner, it used to be often necessary to change
+      the metabase format. This had to be done directly, or with the aid of the
+      metabase version supervisor (Ing Milan Šimůnek, Ph.D.). So after many changes
+      the structure of the metabase was designed much worse that it would have been
+      at the beginning knowing all the future components. The connection on the 
+      metabase level is also relativelly high, and when we speak about modularity,
+      we have to speak only about the connectivity of quite big parts of the system.
+      For example, implementing a new 4FT quantifier cannot be done without the
+      recompilation of the whole 4FT. The fact that LISp-Miner is not a open source
+      system makes our task almost impossible. There exists some documentation
+      for the metabase, but for a higher level of understanding, it is needed to
+      run different modules and see what actually is what is stored in the 
+      metabase. 
+    </para>
+    <para>
+      All these problems lead us to a decision not to use the metabase for
+      Ferda. We chose the modularity provided by ICE instead. There are only
+      some boxes working with the metabase (the tasks boxes) in order to
+      connect with the LISp-Miner system. Ferda is designed so that in the
+      future there will be no need to use the metabase at all, everything
+      will be implemented in individual boxes. 
+    </para>
+    <para>
+      We wanted to use visual programming for Ferda (connecting visual
+      elements) so it was clear that we had to have visual objects
+      (we call them boxes), that can
+      be connected with each other via some connection points (we
+      call them sockets).
+      When we compare the the data-mining task in Ferda and in other
+      similar applications - we can mention the commertional Clementine
+      by SPSS or SAS Enterprise Miner or the free Weka - we can see
+      that we are working with similar objects as the boxes. But
+      there is a difference - the box in Ferda represents a function,
+      when in the other systems it represents a part of the datamining
+      process. Therefore the socket as we know it in Ferda does not
+      make sense in other programs. There the boxes have only one input
+      point and a lot of paramaters to set up. That leads to smaller
+      repeatability of the task and bigger complexity for the user.
+      On the other hand the task setup in Ferda leads to bigger amount
+      of boxes for the user to comprehend, and also to a bigger amount
+      of boxes on the desktop. However several mechanisms were developed to
+      handle these issues in Ferda.
+    </para>
+    <para>
+      What we did in comparison to other systems is the communication
+      of boxes with each other and also with the higher levels of the
+      system through middleware (ICE). That enables for each box to 
+      theoretically run on different machine, computation can be done
+      on different than the user machine and also to write the boxes
+      in different languages. On the other hand there is the neccesity
+      to have at least basic ICE knowledge for the creation of new
+      boxes. ICE is very well documented and the ZeroC people (the ICE
+      developing company) answer swiftly in the support forums.
+    </para>
+  </section>
+  <section>
+    <title>Components of the Ferda system</title>
+    <para>
+      The image below shows the basic division of the Ferda system for the
+      programmer.
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="casti.png" format="PNG" />
+      </imageobject>
+      <imageobject>
+        <imagedata fileref="casti.svg" format="SVG" />
+      </imageobject>
+    </mediaobject>
+    <section>
+      <title>User environment</title>
+      <para>
+        User environment is used to show the functionality of the
+        project manager to the user. There is a complete description
+        of the user environtment in the userenvironment.xdb document.
+      </para>
+    </section>
+    <section>
+      <title>Project manager</title>
+      <para>The project manager has these tasks</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Provide functions of the modules manager</para>
+        </listitem>
+
+        <listitem>
+          <para>Add functionality important to the project above the modules</para>
+        </listitem>
+
+        <listitem>
+          <para>Archive functions</para>
+        </listitem>
+
+        <listitem>
+          <para>Desktop functions</para>
+        </listitem>
+
+        <listitem>
+          <para>XML loading and saving</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Modules manager</title>
+
+      <para>Modules manager has these tasks</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Loading the list of the modules from the IceGrid</para>
+        </listitem>
+
+        <listitem>
+          <para>Holds the list of the modules it can work with and are not in IceGrid</para>
+        </listitem>
+
+        <listitem>
+          <para>Creating new module instances</para>
+        </listitem>
+
+        <listitem>
+          <para>Providing the modules functionality</para>
+        </listitem>
+
+        <listitem>
+          <para>Offering some functionality to the modules</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Modules</title>
+
+      <para>There are several types of modules</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>
+            Boxes - modules that have visual representation on
+            the desktop
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            Modules for setting properties of the boxes
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>Other modules for communicating with the user
+          (Modules for Interaction)
+            </para>
+        </listitem>
+      </itemizedlist>
+
+      <para>More information on modules can be found in moduly.xml.</para>
+    </section>
+  </section>
+  <section>
+    <title>The function of middleware in Ferda</title>
+    <para>
+      The modules manager communicates with the modules through ICE. The
+      modules communicate with each other also through ICE.
+    </para>
+    <para>
+      The modules manager is during the start of the application said where
+      to find the IceGrid registry that informs about the modules available
+      and how to get to them. The modules manager also gets information
+      about modules that are not registered in IceGrid registry, but that
+      will be used in the application (most usually the modules for interaction,
+      for them it is always better to run at the client side).
+    </para>
+    <para>
+      It is also possible that the IceGrid finds the module occuring in 
+      different locations. In the recent implementation the modules
+      manager uses only one of the location, but in the future it
+      should have the ability to work with all the locations. The reason
+      we don't have it is that when the major part of modules manager
+      was implemented, the IceGrid did not exist. There was only IcePack
+      that could work only with one modules location.
+    </para>
+    <para>
+      More information on ICE can be found at
+      <ulink
+    url="http://www.zeroc.com/download.html">ICE documentation</ulink>
+    </para>
+  </section>
+</article>

@@ -7,6 +7,7 @@ module Ferda {
 		sequence<string> StringSeq;
 		sequence<StringSeq> StringSeqSeq;
 		sequence<int> IntSeq;
+		sequence<double> DoubleSeq;
 		sequence<IntSeq> IntSeqSeq;
 
 		sequence<bool> BoolOpt;

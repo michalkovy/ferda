@@ -238,7 +238,43 @@ namespace Ferda.Modules.MetabaseLayer
             return result.ToArray();
         }
 
-        public LiteralStruct[] GetCategorialLiterals(TaskTypeEnum taskType, int taskID, int hypothesisID)
+        private AbstractAttributeStruct GetAttribute(TaskTypeEnum taskType, object taskDescription, string attributeName)
+        {
+            //+ cedent type
+            //TODO
+            switch (taskType)
+            {
+                case TaskTypeEnum.FFT:
+                    break;
+                case TaskTypeEnum.KL:
+                    //TODO
+                    break;
+                case TaskTypeEnum.CF:
+                    Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct input = (Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct)taskDescription;
+                    foreach (CategorialPartialCedentSettingStruct cedent in input.antecedentSetting)
+                    {
+                        foreach (AbstractAttributeStruct attribute in cedent.attributes)
+                        {
+                            if (attribute.nameInLiterals == attributeName)
+                                return attribute;
+                        }
+                    }
+                    break;
+                case TaskTypeEnum.SDFFT:
+                    break;
+                case TaskTypeEnum.SDKL:
+                    //TODO
+                    break;
+                case TaskTypeEnum.SDCF:
+                    //TODO
+                    break;
+                default:
+                    break;
+            }
+            return null;
+        }
+
+        public LiteralStruct[] GetCategorialLiterals(TaskTypeEnum taskType, int taskID, int hypothesisID, object taskDescription)
         {
             string tdLiteralTableName = String.Empty;
             string tdLiteralIDColumn = String.Empty;
@@ -290,12 +326,15 @@ namespace Ferda.Modules.MetabaseLayer
             foreach (DataRow literal in literals.Rows)
             {
                 literalStruct = new LiteralStruct();
-                literalStruct.cedentType =
+                literalStruct.cedentType = // tenhle cedent type
                     Constants.CedentEnumDictionaryBackward[
                         Convert.ToInt32(literal["CedentTypeID"])];
 
                 literalStruct.literalIdentifier = Convert.ToInt32(literal[tdLiteralIDColumn]);
                 literalStruct.literalName = literal["Name"].ToString();
+                AbstractAttributeStruct attribute = this.GetAttribute(taskType, taskDescription, literalStruct.literalName);
+                //TODO jen kdyz jsou jednoprvkove enumy cisel
+                literalStruct.numericValues = null; // sen hod pole
                 literalStruct.categoriesNames = GetCategorialLiteralCategoriesNames(Convert.ToInt32(literal["QuantityID"]));
                 result.Add(literalStruct);
             }
