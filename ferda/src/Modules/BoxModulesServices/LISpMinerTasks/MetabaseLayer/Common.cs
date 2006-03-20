@@ -238,20 +238,40 @@ namespace Ferda.Modules.MetabaseLayer
             return result.ToArray();
         }
 
-        private AbstractAttributeStruct GetAttribute(TaskTypeEnum taskType, object taskDescription, string attributeName)
+        private AbstractAttributeStruct GetAttribute(TaskTypeEnum taskType, object taskDescription, string attributeName, CedentEnum cedentType)
         {
-            //+ cedent type
-            //TODO
             switch (taskType)
             {
                 case TaskTypeEnum.FFT:
                     break;
                 case TaskTypeEnum.KL:
-                    //TODO
+                    Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct input = (Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct)taskDescription;
+                    if (cedentType == CedentEnum.Antecedent)
+                    {                        
+                        foreach (CategorialPartialCedentSettingStruct cedent in input.antecedentSetting)
+                        {
+                            foreach (AbstractAttributeStruct attribute in cedent.attributes)
+                            {
+                                if (attribute.nameInLiterals == attributeName)
+                                    return attribute;
+                            }
+                        }                        
+                    }
+                    else if (cedentType == CedentEnum.Succedent)
+                    {
+                        foreach (CategorialPartialCedentSettingStruct cedent in input.succedentSetting)
+                        {
+                            foreach (AbstractAttributeStruct attribute in cedent.attributes)
+                            {
+                                if (attribute.nameInLiterals == attributeName)
+                                    return attribute;
+                            }
+                        }
+                    }
                     break;
                 case TaskTypeEnum.CF:
-                    Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct input = (Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct)taskDescription;
-                    foreach (CategorialPartialCedentSettingStruct cedent in input.antecedentSetting)
+                    Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct input1 = (Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct)taskDescription;
+                    foreach (CategorialPartialCedentSettingStruct cedent in input1.antecedentSetting)
                     {
                         foreach (AbstractAttributeStruct attribute in cedent.attributes)
                         {
@@ -263,10 +283,40 @@ namespace Ferda.Modules.MetabaseLayer
                 case TaskTypeEnum.SDFFT:
                     break;
                 case TaskTypeEnum.SDKL:
-                    //TODO
+                    Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.TaskStruct input2 = (Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.TaskStruct)taskDescription;
+                    if (cedentType == CedentEnum.Antecedent)
+                    {
+                        foreach (CategorialPartialCedentSettingStruct cedent in input2.antecedentSetting)
+                        {
+                            foreach (AbstractAttributeStruct attribute in cedent.attributes)
+                            {
+                                if (attribute.nameInLiterals == attributeName)
+                                    return attribute;
+                            }
+                        }
+                    }
+                    else if (cedentType == CedentEnum.Succedent)
+                    {
+                        foreach (CategorialPartialCedentSettingStruct cedent in input2.succedentSetting)
+                        {
+                            foreach (AbstractAttributeStruct attribute in cedent.attributes)
+                            {
+                                if (attribute.nameInLiterals == attributeName)
+                                    return attribute;
+                            }
+                        }
+                    }
                     break;
                 case TaskTypeEnum.SDCF:
-                    //TODO
+                    Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.TaskStruct input3 = (Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.TaskStruct)taskDescription;
+                    foreach (CategorialPartialCedentSettingStruct cedent in input3.antecedentSetting)
+                    {
+                        foreach (AbstractAttributeStruct attribute in cedent.attributes)
+                        {
+                            if (attribute.nameInLiterals == attributeName)
+                                return attribute;
+                        }
+                    }
                     break;
                 default:
                     break;
@@ -332,9 +382,45 @@ namespace Ferda.Modules.MetabaseLayer
 
                 literalStruct.literalIdentifier = Convert.ToInt32(literal[tdLiteralIDColumn]);
                 literalStruct.literalName = literal["Name"].ToString();
-                AbstractAttributeStruct attribute = this.GetAttribute(taskType, taskDescription, literalStruct.literalName);
-                //TODO jen kdyz jsou jednoprvkove enumy cisel
-                literalStruct.numericValues = null; // sen hod pole
+                AbstractAttributeStruct attribute = this.GetAttribute(taskType, taskDescription, literalStruct.literalName, literalStruct.cedentType);
+                bool canPass = true;
+                List<double> valueList = new List<double>();
+                if (attribute.categories.enums.Count > 0)
+                {                    
+                    foreach (DictionaryEntry value in attribute.categories.enums)
+                    {
+                        String[] StringSeq = (String[])value.Value;
+                        if (StringSeq.Length == 1)
+                        {
+                            double doubleResult;
+                            if (Double.TryParse(StringSeq[0], out doubleResult))
+                            {
+                                valueList.Add(doubleResult);
+                            }
+                            else
+                            {
+                                canPass = false;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            canPass = false;
+                        }
+                    }
+                }
+                else
+                {
+                    canPass = false;
+                }
+                if (canPass)
+                {
+                    literalStruct.numericValues = valueList.ToArray(); ;
+                }
+                else
+                {
+                    literalStruct.numericValues = null;
+                }
                 literalStruct.categoriesNames = GetCategorialLiteralCategoriesNames(Convert.ToInt32(literal["QuantityID"]));
                 result.Add(literalStruct);
             }
@@ -705,8 +791,8 @@ namespace Ferda.Modules.MetabaseLayer
         /// </summary>
         /// <returns>ID of new row inserted to database.</returns>
         private int SetLiteralSetting(long minLength, long maxLength, CoefficientTypeEnum coefficientType,
-			int equivalenceClassDBID, GaceTypeEnum gaceType, LiteralTypeEnum literalType,
-			int oneParticularCategoryDBID, int booleanPartialCedentDBID, int attributeDBID)
+            int equivalenceClassDBID, GaceTypeEnum gaceType, LiteralTypeEnum literalType,
+            int oneParticularCategoryDBID, int booleanPartialCedentDBID, int attributeDBID)
         {
             string equivalenceClassColumn = "EquivalenceClassID,";
             string equivalenceClassValue = "NULL,";
@@ -1183,10 +1269,10 @@ namespace Ferda.Modules.MetabaseLayer
         public void Remap(
             BooleanCedent[] booleanCedents,
             CategorialCedent[] categorialCedents,
-			int taskID,
-			TaskTypeEnum taskType,
-			string boxIdentity,
-			out long allRowsInTaskDataMatrixCount)
+            int taskID,
+            TaskTypeEnum taskType,
+            string boxIdentity,
+            out long allRowsInTaskDataMatrixCount)
         {
             List<AbstractAttributeStruct> abstractAttributes = new List<AbstractAttributeStruct>();
             string categoryName;
