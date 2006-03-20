@@ -1,3 +1,23 @@
+// DBInteraction.cs - class interacts with ODBC database
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2005 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections;
 using System.Text;
@@ -5,197 +25,205 @@ using Ferda.Modules.Boxes.DataMiningCommon.Column;
 using Ferda.Modules;
 using System.Data.Odbc;
 using System.Data;
-using System.Resources;
 using System.Reflection;
 
-namespace Ferda
+namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
 {
-    namespace FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
+
+    #region CategoryFrequency struct
+
+    /// <summary>
+    /// Struct containing count for a frequency
+    /// </summary>
+    public struct CategoryFrequency
     {
-        #region CategoryFrequency struct
-        public struct CategoryFrequency
-        {
-            public String key;
-            public long count;
-        };
-        #endregion
+        public String key;
+        public long count;
+    };
+
+    #endregion
+
+    /// <summary>
+    /// Class for interaction with ODBC connection
+    /// </summary>
+    public class DBInteraction
+    {
+        #region Private variables
 
         /// <summary>
-        /// Class for interaction with ODBC connection
+        /// Connection string for a database
         /// </summary>
-        public class DBInteraction
+        private String connectionString;
+
+        /// <summary>
+        /// Expression for column selection
+        /// </summary>
+        private String columnSelectExpression;
+
+        /// <summary>
+        /// Datamatrix name fo query
+        /// </summary>
+        private String dataMatrixName;
+
+        /// <summary>
+        /// ODBC connection to use in queries
+        /// </summary>
+        private OdbcConnection connection;
+
+        /// <summary>
+        /// Row count in datamatrix
+        /// </summary>
+        private long rowCount;
+
+        /// <summary>
+        /// CategoriesStruct to count frequencies on
+        /// </summary>
+        private CategoriesStruct categoriesStruct;
+
+        /// <summary>
+        /// Type of column to coutn frequency on
+        /// </summary>
+        private ValueSubTypeEnum columnType;
+
+        #endregion
+
+
+        #region Contructor
+
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="columnInfo">ColumnInfo</param>
+        /// <param name="categoriesStruct">CategoriesStruct</param>
+        public DBInteraction(ColumnInfo columnInfo, CategoriesStruct categoriesStruct)
         {
-            #region Private variables
+            this.connectionString = columnInfo.dataMatrix.database.odbcConnectionString;
+            this.columnSelectExpression = columnInfo.columnSelectExpression;
+            this.dataMatrixName = columnInfo.dataMatrix.dataMatrixName;
+            this.rowCount = columnInfo.dataMatrix.recordsCount;
+            this.categoriesStruct = categoriesStruct;
+            this.columnType = columnInfo.columnSubType;
+            this.connection = this.GetConnection();
+        }
 
-            /// <summary>
-            /// Connection string for a database
-            /// </summary>
-            private String connectionString;
-
-            /// <summary>
-            /// Expression for column selection
-            /// </summary>
-            private String columnSelectExpression;
-
-            /// <summary>
-            /// Datamatrix name fo query
-            /// </summary>
-            private String dataMatrixName;
-
-            /// <summary>
-            /// ODBC connection to use in queries
-            /// </summary>
-            private OdbcConnection connection;
-
-            /// <summary>
-            /// Row count in datamatrix
-            /// </summary>
-            private long rowCount;
-
-            /// <summary>
-            /// Resource manager for l10n
-            /// </summary>
-            private ResourceManager rm;
-
-            /// <summary>
-            /// CategoriesStruct to count frequencies on
-            /// </summary>
-            private CategoriesStruct categoriesStruct;
-
-            /// <summary>
-            /// Type of column to coutn frequency on
-            /// </summary>
-            private ValueSubTypeEnum columnType;
-            #endregion
+        #endregion
 
 
-            #region Contructor
-            public DBInteraction(ColumnInfo columnInfo, CategoriesStruct categoriesStruct, ResourceManager rm)
+        #region Working with ODBC
+
+        /// <summary>
+        /// Method for getting odbc connection
+        /// </summary>
+        /// <returns></returns>
+        public OdbcConnection GetConnection()
+        {
+            try
             {
-                this.connectionString = columnInfo.dataMatrix.database.odbcConnectionString;
-
-                this.columnSelectExpression = columnInfo.columnSelectExpression;
-
-                this.dataMatrixName = columnInfo.dataMatrix.dataMatrixName;
-
-                this.rowCount = columnInfo.dataMatrix.recordsCount;
-
-                this.rm = rm;
-
-                this.categoriesStruct = categoriesStruct;
-
-                this.columnType = columnInfo.columnSubType;
-
-                this.connection = this.GetConnection();
-
-            }
-            #endregion
-
-
-            #region Working with ODBC
-
-            /// <summary>
-            /// Method for getting odbc connection
-            /// </summary>
-            /// <returns></returns>
-            public OdbcConnection GetConnection()
-            {
-                try
-                {
-                    return new System.Data.Odbc.OdbcConnection(this.connectionString);
-                }
-
-                catch (OdbcException e)
-                {
-                    throw Ferda.Modules.Exceptions.BadParamsError(e, null, "Bad ODBC connection string specified. Could not connect to database.", Ferda.Modules.restrictionTypeEnum.DbConnectionString);
-                }
+                return new System.Data.Odbc.OdbcConnection(this.connectionString);
             }
 
-            //TODO: Catch all the ODBC expections here
-
-            /// <summary>
-            /// Method which queries the ODBC connection for a given query.
-            /// </summary>
-            /// <param name="query"></param>
-            /// <returns>DataTable with result</returns>
-            private DataTable GetQueryResultTable(string query)
+            catch (OdbcException e)
             {
-                try
-                {
-                    OdbcDataAdapter odbcDataAdapter = new OdbcDataAdapter(query, this.connection);
-
-                    DataSet dataSet = new DataSet();
-                    odbcDataAdapter.Fill(dataSet);
-
-                    return dataSet.Tables[0];
-                }
-
-                catch (OdbcException)
-                {
-                    this.connection.Close();
-                    throw (new Ferda.Modules.BadParamsError());
-
-                }
-                catch
-                {
-                    this.connection.Close();
-                    throw (new Ferda.Modules.BadParamsError());
-                }
+                throw Ferda.Modules.Exceptions.BadParamsError(e, null, "Bad ODBC connection string specified. Could not connect to database.", Ferda.Modules.restrictionTypeEnum.DbConnectionString);
             }
-            #endregion
+        }
 
-
-            #region Composing WHERE clauses
-
-            /// <summary>
-            /// Method which composes WHERE clause for a categoryseq of the LongInterval type.
-            /// </summary>
-            /// <param name="longInterval">Category of long interval type</param>
-            /// <param name="columnSelectExpression">Column select expression</param>
-            /// <returns>WHERE clause</returns>
-            private String GetWhereClauseLong(LongIntervalStruct[] longIntervalSeq, String columnSelectExpression)
+        /// <summary>
+        /// Method which queries the ODBC connection for a given query.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns>DataTable with result</returns>
+        private DataTable GetQueryResultTable(string query)
+        {
+            try
             {
-                StringBuilder returnString = new StringBuilder();
+                OdbcDataAdapter odbcDataAdapter = new OdbcDataAdapter(query, this.connection);
 
-                bool first = true;
+                DataSet dataSet = new DataSet();
+                odbcDataAdapter.Fill(dataSet);
 
-                foreach (LongIntervalStruct longInterval in longIntervalSeq)
+                return dataSet.Tables[0];
+            }
+
+            catch (OdbcException)
+            {
+                this.connection.Close();
+                throw (new Ferda.Modules.BadParamsError());
+
+            }
+            catch
+            {
+                this.connection.Close();
+                throw (new Ferda.Modules.BadParamsError());
+            }
+        }
+
+        #endregion
+
+
+        #region Composing WHERE clauses
+
+        /// <summary>
+        /// Method which composes WHERE clause for a categoryseq of the LongInterval type.
+        /// </summary>
+        /// <param name="longInterval">Category of long interval type</param>
+        /// <param name="columnSelectExpression">Column select expression</param>
+        /// <returns>WHERE clause</returns>
+        private String GetWhereClauseLong(LongIntervalStruct[] longIntervalSeq, String columnSelectExpression)
+        {
+            StringBuilder returnString = new StringBuilder();
+
+            bool first = true;
+
+            foreach (LongIntervalStruct longInterval in longIntervalSeq)
+            {
+                if (first)
                 {
-                    if (first)
+                    first = false;
+                    returnString.Append("(");
+                }
+                else
+                {
+                    returnString.Append(" OR(");
+                }
+                //if both bounds of current interval are infinity, no restriction is needed
+                if ((longInterval.leftBoundType == BoundaryEnum.Infinity) && (longInterval.rightBoundType == BoundaryEnum.Infinity))
+                    return "";
+
+
+
+                returnString.Append(columnSelectExpression);
+                bool left = false;
+                if (longInterval.leftBoundType == BoundaryEnum.Round)
+                {
+
+                    returnString.Append(" > " + longInterval.leftBound);
+                    left = true;
+                }
+                else
+                {
+                    if (longInterval.leftBoundType == BoundaryEnum.Sharp)
                     {
-                        first = false;
-                        returnString.Append("(");
-                    }
-                    else
-                    {
-                        returnString.Append(" OR(");
-                    }
-                    //if both bounds of current interval are infinity, no restriction is needed
-                    if ((longInterval.leftBoundType == BoundaryEnum.Infinity) && (longInterval.rightBoundType == BoundaryEnum.Infinity))
-                        return "";
 
-
-
-                    returnString.Append(columnSelectExpression);
-                    bool left = false;
-                    if (longInterval.leftBoundType == BoundaryEnum.Round)
-                    {
-
-                        returnString.Append(" > " + longInterval.leftBound);
+                        returnString.Append(" >= " + longInterval.leftBound);
                         left = true;
                     }
-                    else
-                    {
-                        if (longInterval.leftBoundType == BoundaryEnum.Sharp)
-                        {
+                    //Infinity is left, no restriction needed
+                }
 
-                            returnString.Append(" >= " + longInterval.leftBound);
-                            left = true;
-                        }
-                        //Infinity is left, no restriction needed
+                if (longInterval.rightBoundType == BoundaryEnum.Round)
+                {
+                    if (left)
+                    {
+
+                        returnString.Append(" AND " + columnSelectExpression);
                     }
 
-                    if (longInterval.rightBoundType == BoundaryEnum.Round)
+                    returnString.Append(" < " + longInterval.rightBound);
+                }
+                else
+                {
+                    if (longInterval.rightBoundType == BoundaryEnum.Sharp)
                     {
                         if (left)
                         {
@@ -203,75 +231,75 @@ namespace Ferda
                             returnString.Append(" AND " + columnSelectExpression);
                         }
 
-                        returnString.Append(" < " + longInterval.rightBound);
+                        returnString.Append(" <= " + longInterval.rightBound);
                     }
-                    else
-                    {
-                        if (longInterval.rightBoundType == BoundaryEnum.Sharp)
-                        {
-                            if (left)
-                            {
-
-                                returnString.Append(" AND " + columnSelectExpression);
-                            }
-
-                            returnString.Append(" <= " + longInterval.rightBound);
-                        }
-                        //Infinity is left, no restriction needed
-                    }
-                    returnString.Append(")");
+                    //Infinity is left, no restriction needed
                 }
-                return returnString.ToString();
+                returnString.Append(")");
             }
+            return returnString.ToString();
+        }
 
-            /// <summary>
-            /// Method which composes WHERE clause for a category of the FloatInterval type.
-            /// </summary>
-            /// <param name="floatInterval">Category of float interval type</param>
-            /// <param name="columnSelectExpression">Column select expression</param>
-            /// <returns>WHERE clause</returns>
-            private String GetWhereClauseFloat(FloatIntervalStruct[] floatIntervalSeq, String columnSelectExpression)
+        /// <summary>
+        /// Method which composes WHERE clause for a category of the FloatInterval type.
+        /// </summary>
+        /// <param name="floatInterval">Category of float interval type</param>
+        /// <param name="columnSelectExpression">Column select expression</param>
+        /// <returns>WHERE clause</returns>
+        private String GetWhereClauseFloat(FloatIntervalStruct[] floatIntervalSeq, String columnSelectExpression)
+        {
+            StringBuilder returnString = new StringBuilder();
+            bool first = true;
+            foreach (FloatIntervalStruct floatInterval in floatIntervalSeq)
             {
-                StringBuilder returnString = new StringBuilder();
-                bool first = true;
-                foreach (FloatIntervalStruct floatInterval in floatIntervalSeq)
+                if (first)
                 {
-                    if (first)
+                    first = false;
+                    returnString.Append("(");
+                }
+                else
+                {
+                    returnString.Append(" OR(");
+                }
+
+                //if both bounds are infinity, no restriction is needed
+                if ((floatInterval.leftBoundType == BoundaryEnum.Infinity) && (floatInterval.rightBoundType == BoundaryEnum.Infinity))
+                    return "";
+
+
+
+                returnString.Append(columnSelectExpression);
+                bool left = false;
+
+                if (floatInterval.leftBoundType == BoundaryEnum.Round)
+                {
+
+                    returnString.Append(" > " + floatInterval.leftBound);
+                    left = true;
+                }
+                else
+                {
+                    if (floatInterval.leftBoundType == BoundaryEnum.Sharp)
                     {
-                        first = false;
-                        returnString.Append("(");
-                    }
-                    else
-                    {
-                        returnString.Append(" OR(");
-                    }
 
-                    //if both bounds are infinity, no restriction is needed
-                    if ((floatInterval.leftBoundType == BoundaryEnum.Infinity) && (floatInterval.rightBoundType == BoundaryEnum.Infinity))
-                        return "";
-
-
-
-                    returnString.Append(columnSelectExpression);
-                    bool left = false;
-
-                    if (floatInterval.leftBoundType == BoundaryEnum.Round)
-                    {
-
-                        returnString.Append(" > " + floatInterval.leftBound);
+                        returnString.Append(" >= " + floatInterval.leftBound);
                         left = true;
                     }
-                    else
+                    //Infinity is left, no restriction needed
+                }
+                if (floatInterval.rightBoundType == BoundaryEnum.Round)
+                {
+                    if (left)
                     {
-                        if (floatInterval.leftBoundType == BoundaryEnum.Sharp)
-                        {
 
-                            returnString.Append(" >= " + floatInterval.leftBound);
-                            left = true;
-                        }
-                        //Infinity is left, no restriction needed
+                        returnString.Append(" AND " + columnSelectExpression);
                     }
-                    if (floatInterval.rightBoundType == BoundaryEnum.Round)
+
+                    returnString.Append(" < " + floatInterval.rightBound);
+                }
+                else
+                {
+                    if (floatInterval.rightBoundType == BoundaryEnum.Sharp)
                     {
                         if (left)
                         {
@@ -279,81 +307,81 @@ namespace Ferda
                             returnString.Append(" AND " + columnSelectExpression);
                         }
 
-                        returnString.Append(" < " + floatInterval.rightBound);
+
+
+                        returnString.Append(" <= " + floatInterval.rightBound);
                     }
-                    else
-                    {
-                        if (floatInterval.rightBoundType == BoundaryEnum.Sharp)
-                        {
-                            if (left)
-                            {
-
-                                returnString.Append(" AND " + columnSelectExpression);
-                            }
-
-
-
-                            returnString.Append(" <= " + floatInterval.rightBound);
-                        }
-                        //Infinity is left, no restriction needed
-                    }
-                    returnString.Append(")");
+                    //Infinity is left, no restriction needed
                 }
-                return returnString.ToString();
+                returnString.Append(")");
             }
+            return returnString.ToString();
+        }
 
 
-            /// <summary>
-            /// Method which composes WHERE clause for a category of the DateTimeInterval type.
-            /// </summary>
-            /// <param name="dateTimeInterval">Category of dateTime interval type</param>
-            /// <param name="columnSelectExpression">Column select expression</param>
-            /// <returns>WHERE clause</returns>
-            private String GetWhereClauseDateTime(DateTimeIntervalStruct[] dateTimeIntervalSeq, String columnSelectExpression)
+        /// <summary>
+        /// Method which composes WHERE clause for a category of the DateTimeInterval type.
+        /// </summary>
+        /// <param name="dateTimeInterval">Category of dateTime interval type</param>
+        /// <param name="columnSelectExpression">Column select expression</param>
+        /// <returns>WHERE clause</returns>
+        private String GetWhereClauseDateTime(DateTimeIntervalStruct[] dateTimeIntervalSeq, String columnSelectExpression)
+        {
+            StringBuilder returnString = new StringBuilder();
+
+            bool first = true;
+
+            foreach (DateTimeIntervalStruct dateTimeInterval in dateTimeIntervalSeq)
             {
-                StringBuilder returnString = new StringBuilder();
-
-                bool first = true;
-
-                foreach (DateTimeIntervalStruct dateTimeInterval in dateTimeIntervalSeq)
+                if (first)
                 {
-                    if (first)
+                    first = false;
+                    returnString.Append("(");
+                }
+                else
+                {
+                    returnString.Append(" OR(");
+                }
+
+                //if both bounds are infinity, no restriction is needed
+                if ((dateTimeInterval.leftBoundType == BoundaryEnum.Infinity) && (dateTimeInterval.rightBoundType == BoundaryEnum.Infinity))
+                    return "";
+
+
+
+                returnString.Append(columnSelectExpression);
+                bool left = false;
+
+                if (dateTimeInterval.leftBoundType == BoundaryEnum.Round)
+                {
+
+                    returnString.Append(" > " + dateTimeInterval.leftBound);
+                    left = true;
+                }
+                else
+                {
+                    if (dateTimeInterval.leftBoundType == BoundaryEnum.Sharp)
                     {
-                        first = false;
-                        returnString.Append("(");
-                    }
-                    else
-                    {
-                        returnString.Append(" OR(");
-                    }
 
-                    //if both bounds are infinity, no restriction is needed
-                    if ((dateTimeInterval.leftBoundType == BoundaryEnum.Infinity) && (dateTimeInterval.rightBoundType == BoundaryEnum.Infinity))
-                        return "";
-
-
-
-                    returnString.Append(columnSelectExpression);
-                    bool left = false;
-
-                    if (dateTimeInterval.leftBoundType == BoundaryEnum.Round)
-                    {
-
-                        returnString.Append(" > " + dateTimeInterval.leftBound);
+                        returnString.Append(" >= " + dateTimeInterval.leftBound);
                         left = true;
                     }
-                    else
-                    {
-                        if (dateTimeInterval.leftBoundType == BoundaryEnum.Sharp)
-                        {
+                    //Infinity is left, no restriction needed
+                }
 
-                            returnString.Append(" >= " + dateTimeInterval.leftBound);
-                            left = true;
-                        }
-                        //Infinity is left, no restriction needed
+                if (dateTimeInterval.rightBoundType == BoundaryEnum.Round)
+                {
+                    if (left)
+                    {
+
+                        returnString.Append(" AND " + columnSelectExpression);
                     }
 
-                    if (dateTimeInterval.rightBoundType == BoundaryEnum.Round)
+                    returnString.Append(" < " + dateTimeInterval.rightBound);
+                }
+                else
+                {
+                    if (dateTimeInterval.rightBoundType == BoundaryEnum.Sharp)
                     {
                         if (left)
                         {
@@ -361,117 +389,134 @@ namespace Ferda
                             returnString.Append(" AND " + columnSelectExpression);
                         }
 
-                        returnString.Append(" < " + dateTimeInterval.rightBound);
+                        returnString.Append(" <= " + dateTimeInterval.rightBound);
                     }
-                    else
+                    //Infinity is left, no restriction needed
+                }
+
+                returnString.Append(")");
+            }
+            return returnString.ToString();
+        }
+
+
+        /// <summary>
+        /// Method which composes WHERE clause for a category of the enum type.
+        /// </summary>
+        /// <param name="categoryEnum">Category of enum type</param>
+        /// <param name="columnSelectExpression">Column select expression</param>
+        /// <returns>WHERE clause</returns>
+        private String GetWhereClauseForEnum(String[] categoryEnum, String columnSelectExpression)
+        {
+            StringBuilder returnString = new StringBuilder();
+
+            bool first = true;
+            foreach (String enumValue in categoryEnum)
+            {
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    returnString.Append(" OR ");
+                }
+
+                returnString.Append("`" + columnSelectExpression + "` = ");
+                if ((this.columnType == ValueSubTypeEnum.StringType) || (this.columnType == ValueSubTypeEnum.Unknown))
+                    returnString.Append("'");
+                returnString.Append(enumValue);
+                if ((this.columnType == ValueSubTypeEnum.StringType) || (this.columnType == ValueSubTypeEnum.Unknown))
+                    returnString.Append("'");
+            }
+            return returnString.ToString();
+        }
+
+        #endregion
+
+
+        #region Other private methods
+
+        /// <summary>
+        /// Method which composes the ODBC SQL query to get the table
+        /// with the count restrcited by WHERE clause
+        /// </summary>
+        /// <param name="where">Where clause</param>
+        /// <returns>Query string</returns>
+        private string GetValueCountQuery(string where)
+        {
+            string whereCond = String.Empty;
+            if (!String.IsNullOrEmpty(where))
+                whereCond = " WHERE " + where;
+
+            return "SELECT `" + columnSelectExpression
+                + "` COUNT(1) AS `TmpCnt`"
+                + " FROM " + "`" + dataMatrixName + "`"
+                + whereCond
+                + " GROUP BY " + columnSelectExpression
+                + " ORDER BY " + columnSelectExpression;
+        }
+
+        #endregion
+
+
+        #region Public methods
+
+        /// <summary>
+        /// Method for counting categories frequences
+        /// </summary>
+        /// <returns></returns>
+        public ArrayList GetCategoriesFrequences(CategoriesStruct categories)
+        {
+            ArrayList returnList = new ArrayList();
+
+            bool everything = false;
+
+            foreach (DictionaryEntry singleEnum in categories.enums)
+            {
+                String[] stringSeq = (String[])singleEnum.Value;
+                CategoryFrequency newEntry = new CategoryFrequency();
+                if (!everything)
+                {
+                    String whereQuery = this.GetWhereClauseForEnum(stringSeq, this.columnSelectExpression);
+                    DataTable tempTable = this.GetQueryResultTable(this.GetValueCountQuery(whereQuery));
+                    newEntry.key = singleEnum.Key.ToString();
+                    try
                     {
-                        if (dateTimeInterval.rightBoundType == BoundaryEnum.Sharp)
+                        foreach (DataRow row in tempTable.Rows)
                         {
-                            if (left)
-                            {
-
-                                returnString.Append(" AND " + columnSelectExpression);
-                            }
-
-                            returnString.Append(" <= " + dateTimeInterval.rightBound);
+                            newEntry.count += Convert.ToInt64(row[1]);
                         }
-                        //Infinity is left, no restriction needed
                     }
-
-                    returnString.Append(")");
+                    catch
+                    {
+                        newEntry.count = 0;
+                    }
                 }
-                return returnString.ToString();
-            }
-
-
-            /// <summary>
-            /// Method which composes WHERE clause for a category of the enum type.
-            /// </summary>
-            /// <param name="categoryEnum">Category of enum type</param>
-            /// <param name="columnSelectExpression">Column select expression</param>
-            /// <returns>WHERE clause</returns>
-            private String GetWhereClauseForEnum(String[] categoryEnum, String columnSelectExpression)
-            {
-                StringBuilder returnString = new StringBuilder();
-
-                bool first = true;
-                foreach (String enumValue in categoryEnum)
+                else
                 {
-                    if (first)
-                    {
-                        first = false;
-                    }
-                    else
-                    {
-                        returnString.Append(" OR ");
-                    }
-
-                    returnString.Append("`" + columnSelectExpression + "` = ");
-                    if ((this.columnType == ValueSubTypeEnum.StringType) || (this.columnType == ValueSubTypeEnum.Unknown))
-                        returnString.Append("'");
-                    returnString.Append(enumValue);
-                    if ((this.columnType == ValueSubTypeEnum.StringType) || (this.columnType == ValueSubTypeEnum.Unknown))
-                        returnString.Append("'");
+                    newEntry.key = singleEnum.Key.ToString();
+                    newEntry.count = 0;
                 }
-                return returnString.ToString();
+                returnList.Add(newEntry);
             }
 
-            #endregion
-
-
-            #region Other private methods
-
-            /// <summary>
-            /// Method which composes the ODBC SQL query to get the table
-            /// with the count restrcited by WHERE clause
-            /// </summary>
-            /// <param name="where">Where clause</param>
-            /// <returns>Query string</returns>
-            private string GetValueCountQuery(string where)
+            foreach (DictionaryEntry singleLong in categories.longIntervals)
             {
-                string whereCond = String.Empty;
-                if (!String.IsNullOrEmpty(where))
-                    whereCond = " WHERE " + where;
-
-                return "SELECT "
-                    + "COUNT(" + columnSelectExpression + ") AS `TmpCnt`"
-                    + " FROM " + "`" + dataMatrixName + "`"
-                    + whereCond
-                    + " GROUP BY " + columnSelectExpression
-                    + " ORDER BY " + columnSelectExpression;
-            }
-
-
-            #endregion
-
-
-            #region Public methods
-
-            /// <summary>
-            /// Method for counting categories' frequences
-            /// </summary>
-            /// <returns></returns>
-
-            public ArrayList GetCategoriesFrequences(CategoriesStruct categories)
-            {
-                ArrayList returnList = new ArrayList();
-
-                bool everything = false;
-
-                foreach (DictionaryEntry singleEnum in categories.enums)
+                LongIntervalStruct[] longSeq = (LongIntervalStruct[])singleLong.Value;
+                CategoryFrequency newEntry = new CategoryFrequency();
+                if (!everything)
                 {
-                    String[] stringSeq = (String[])singleEnum.Value;
-                    CategoryFrequency newEntry = new CategoryFrequency();
-                    if (!everything)
+                    String whereQuery = this.GetWhereClauseLong(longSeq, this.columnSelectExpression);
+                    if (!whereQuery.Equals(""))
                     {
-                        String whereQuery = this.GetWhereClauseForEnum(stringSeq, this.columnSelectExpression);
                         DataTable tempTable = this.GetQueryResultTable(this.GetValueCountQuery(whereQuery));
-                        newEntry.key = singleEnum.Key.ToString();
+                        newEntry.key = singleLong.Key.ToString();
                         try
                         {
                             foreach (DataRow row in tempTable.Rows)
                             {
-                                newEntry.count += Convert.ToInt64(row[0]);
+                                newEntry.count += Convert.ToInt64(row[1]);
                             }
                         }
                         catch
@@ -481,145 +526,97 @@ namespace Ferda
                     }
                     else
                     {
-                        newEntry.key = singleEnum.Key.ToString();
-                        newEntry.count = 0;
-                    }
-                    returnList.Add(newEntry);
-                }
-
-
-
-                foreach (DictionaryEntry singleLong in categories.longIntervals)
-                {
-                    LongIntervalStruct[] longSeq = (LongIntervalStruct[])singleLong.Value;
-                    CategoryFrequency newEntry = new CategoryFrequency();
-                    if (!everything)
-                    {
-                        String whereQuery = this.GetWhereClauseLong(longSeq, this.columnSelectExpression);
-                        if (!whereQuery.Equals(""))
-                        {
-                            DataTable tempTable = this.GetQueryResultTable(this.GetValueCountQuery(whereQuery));
-                            newEntry.key = singleLong.Key.ToString();
-                            try
-                            {
-                                foreach (DataRow row in tempTable.Rows)
-                                {
-                                    newEntry.count += Convert.ToInt64(row[0]);
-                                }
-                            }
-                            catch
-                            {
-                                newEntry.count = 0;
-                            }
-                        }
-                        else
-                        {
-                            newEntry.key = singleLong.Key.ToString();
-                            newEntry.count = this.rowCount;
-                            everything = true;
-                        }
-                    }
-                    else
-                    {
                         newEntry.key = singleLong.Key.ToString();
-                        newEntry.count = 0;
+                        newEntry.count = this.rowCount;
+                        everything = true;
                     }
-                    returnList.Add(newEntry);
                 }
-
-
-
-                foreach (DictionaryEntry singleFloat in categories.floatIntervals)
+                else
                 {
-                    FloatIntervalStruct[] floatSeq = (FloatIntervalStruct[])singleFloat.Value;
-                    CategoryFrequency newEntry = new CategoryFrequency();
-                    if (!everything)
+                    newEntry.key = singleLong.Key.ToString();
+                    newEntry.count = 0;
+                }
+                returnList.Add(newEntry);
+            }
+
+            foreach (DictionaryEntry singleFloat in categories.floatIntervals)
+            {
+                FloatIntervalStruct[] floatSeq = (FloatIntervalStruct[])singleFloat.Value;
+                CategoryFrequency newEntry = new CategoryFrequency();
+                if (!everything)
+                {
+                    String whereQuery = this.GetWhereClauseFloat(floatSeq, this.columnSelectExpression);
+                    if (!whereQuery.Equals(""))
                     {
-                        String whereQuery = this.GetWhereClauseFloat(floatSeq, this.columnSelectExpression);
-                        if (!whereQuery.Equals(""))
+                        DataTable tempTable = this.GetQueryResultTable(this.GetValueCountQuery(whereQuery));
+                        newEntry.key = singleFloat.Key.ToString();
+                        try
                         {
-                            DataTable tempTable = this.GetQueryResultTable(this.GetValueCountQuery(whereQuery));
-                            newEntry.key = singleFloat.Key.ToString();
-                            try
+                            foreach (DataRow row in tempTable.Rows)
                             {
-                                foreach (DataRow row in tempTable.Rows)
-                                {
-                                    newEntry.count += Convert.ToInt64(row[0]);
-                                }
-                            }
-                            catch
-                            {
-                                newEntry.count = 0;
+                                newEntry.count += Convert.ToInt64(row[1]);
                             }
                         }
-                        else
+                        catch
                         {
-                            newEntry.key = singleFloat.Key.ToString();
-                            newEntry.count = this.rowCount;
-                            everything = true;
+                            newEntry.count = 0;
                         }
                     }
                     else
                     {
                         newEntry.key = singleFloat.Key.ToString();
-                        newEntry.count = 0;
+                        newEntry.count = this.rowCount;
+                        everything = true;
                     }
-                    returnList.Add(newEntry);
                 }
-
-
-
-                foreach (DictionaryEntry singleDateTime in categories.dateTimeIntervals)
+                else
                 {
-                    DateTimeIntervalStruct[] dateTimeSeq = (DateTimeIntervalStruct[])singleDateTime.Value;
-                    CategoryFrequency newEntry = new CategoryFrequency();
-                    if (!everything)
+                    newEntry.key = singleFloat.Key.ToString();
+                    newEntry.count = 0;
+                }
+                returnList.Add(newEntry);
+            }
+
+            foreach (DictionaryEntry singleDateTime in categories.dateTimeIntervals)
+            {
+                DateTimeIntervalStruct[] dateTimeSeq = (DateTimeIntervalStruct[])singleDateTime.Value;
+                CategoryFrequency newEntry = new CategoryFrequency();
+                if (!everything)
+                {
+                    String whereQuery = this.GetWhereClauseDateTime(dateTimeSeq, this.columnSelectExpression);
+                    if (!whereQuery.Equals(""))
                     {
-                        String whereQuery = this.GetWhereClauseDateTime(dateTimeSeq, this.columnSelectExpression);
-                        if (!whereQuery.Equals(""))
+                        DataTable tempTable = this.GetQueryResultTable(this.GetValueCountQuery(whereQuery));
+                        newEntry.key = singleDateTime.Key.ToString();
+                        try
                         {
-                            DataTable tempTable = this.GetQueryResultTable(this.GetValueCountQuery(whereQuery));
-                            newEntry.key = singleDateTime.Key.ToString();
-                            try
+                            foreach (DataRow row in tempTable.Rows)
                             {
-                                foreach (DataRow row in tempTable.Rows)
-                                {
-                                    newEntry.count += Convert.ToInt64(row[0]);
-                                }
-                            }
-                            catch
-                            {
-                                newEntry.count = 0;
+                                newEntry.count += Convert.ToInt64(row[1]);
                             }
                         }
-                        else
+                        catch
                         {
-                            newEntry.key = singleDateTime.Key.ToString();
-                            newEntry.count = this.rowCount;
-                            everything = true;
+                            newEntry.count = 0;
                         }
                     }
                     else
                     {
                         newEntry.key = singleDateTime.Key.ToString();
-                        newEntry.count = 0;
+                        newEntry.count = this.rowCount;
+                        everything = true;
                     }
-                    returnList.Add(newEntry);
                 }
-                return returnList;
+                else
+                {
+                    newEntry.key = singleDateTime.Key.ToString();
+                    newEntry.count = 0;
+                }
+                returnList.Add(newEntry);
             }
-
-
-            /// <summary>
-            /// Method for changing the localization manager.
-            /// </summary>
-            /// <param name="rm"></param>
-            public void ChangeRm(ResourceManager rm)
-            {
-                this.rm = rm;
-            }
-
-            #endregion
+            return returnList;
         }
+
+        #endregion
     }
 }

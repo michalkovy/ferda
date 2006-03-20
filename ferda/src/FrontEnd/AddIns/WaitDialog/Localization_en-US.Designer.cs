@@ -61,7 +61,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Task is being run....
+        ///   Looks up a localized string similar to Task is being run, please wait till completed....
         /// </summary>
         internal static string WaitDescription {
             get {

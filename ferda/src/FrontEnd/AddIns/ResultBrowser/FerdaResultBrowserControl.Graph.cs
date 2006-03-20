@@ -1,3 +1,23 @@
+// FerdaResultBrowserControl.Graph.cs - Displaying charts part
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2005 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +30,9 @@ using Ferda.Modules;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
+    /// <summary>
+    /// User Control - charts
+    /// </summary>
     partial class FerdaResultBrowserControl
     {
         #region Private variables
@@ -41,7 +64,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ContingencyTableChart.Name = "tChart1";
             this.ContingencyTableChart.Header.Visible = true;
             this.ContingencyTableChart.Size = new System.Drawing.Size(466, 286);
-            this.ContingencyTableChart.DoubleClick += new EventHandler(tChart1_DoubleClick);
             this.ContingencyTableChart.GetAxisLabel += new Steema.TeeChart.GetAxisLabelEventHandler(ContingencyTableChart_GetAxisLabel);
             this.ContingencyTableChart.Axes.Depth.Visible = true;
             this.ContingencyTableChart.ContextMenuStrip = this.ContextMenuGraphRightClick;
@@ -81,34 +103,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ContingencyTableChart.Aspect.VertOffset = this.TrackBarVOffset.Value;
         }
 
-        /*  private void TrackBarRotation_Scroll(object sender, EventArgs e)
-          {
-              this.ContingencyTableChart.Aspect.Rotation = this.TrackBarRotation.Value;
-          }
-
-          private void TrackBarPerspective_Scroll(object sender, EventArgs e)
-          {
-              this.ContingencyTableChart.Aspect.Perspective = this.TrackBarPerspective.Value;
-          }
-
-          private void TrackBarElevation_Scroll(object sender, EventArgs e)
-          {
-              this.ContingencyTableChart.Aspect.Elevation = this.TrackBarElevation.Value;
-          }*/
-
         private void CheckBoxShowLabels_CheckedChanged(object sender, EventArgs e)
         {
             ShowLabels(this.ContingencyTableChart);
-        }
-
-        #endregion
-
-
-        #region Debugging
-
-        void tChart1_DoubleClick(object sender, EventArgs e)
-        {
-            // ContingencyTableChart.ShowEditor();
         }
 
         #endregion

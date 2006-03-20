@@ -36,6 +36,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
+    </Reference>
     <Reference Include="FerdaModulesManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
@@ -87,7 +91,7 @@
       <DependentUpon>Localization_cs-CZ.resx</DependentUpon>
     </Compile>
     <Compile Include="Main.cs" />
-    <Compile Include="MyIce\ColumnFrIce.cs" />
+    <Compile Include="MyIce\ColumnFrequencyIce.cs" />
     <Compile Include="NonGUIClasses\DBInteraction.cs" />
     <Compile Include="NonGUIClasses\listviewitemcomparer.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />

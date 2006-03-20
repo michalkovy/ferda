@@ -14,6 +14,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Collections;
 using System.Windows;
 using System.Data.OleDb;
+
 namespace SA
 {
 	/// <summary>
@@ -36,6 +37,7 @@ namespace SA
             IntPtr parent, int request, string driver, string attributes);
 
 		#endregion
+
 
 		#region Error Code
 		public enum SQLError

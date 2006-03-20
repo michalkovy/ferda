@@ -1,3 +1,23 @@
+// WaitDialogIce.cs - class for ice communication
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2005 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +29,16 @@ using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 
 namespace Ferda.FrontEnd.AddIns.WaitDialog
 {
+    /// <summary>
+    /// Class for communication with ice
+    /// </summary>
     class WaitDialogIce : Ferda.Modules.ModuleForInteractionDisp_
     {
         #region Private variables
 
+        /// <summary>
+        /// Owner of addin
+        /// </summary>
         Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
 
         /// <summary>
@@ -30,6 +56,10 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
 
         #region Constructor
 
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="ownerOfAddIn">Owner of addin</param>
         public WaitDialogIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
         {
             this.ownerOfAddIn = ownerOfAddIn;
@@ -37,10 +67,10 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
             resManager = new ResourceManager("Ferda.FrontEnd.AddIns.WaitDialog.Localization_en-US",
             Assembly.GetExecutingAssembly());
             localizationString = "en-US";
-          //  this.Displayer = Displayer;
         }
 
         #endregion
+
 
         #region Other ice
 
@@ -111,6 +141,15 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
         #endregion
 
 
+        #region IceRun
+
+        /// <summary>
+        /// Ice run
+        /// </summary>
+        /// <param name="boxModuleParam"></param>
+        /// <param name="localePrefs"></param>
+        /// <param name="manager"></param>
+        /// <param name="current__"></param>
         public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, Ferda.ModulesManager.ManagersEnginePrx manager, Ice.Current current__)
         {
             string locale;
@@ -139,7 +178,9 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
             AbstractLMTaskFunctionsPrx tprx = AbstractLMTaskFunctionsPrxHelper.checkedCast(prx);
 
             Ferda.FrontEnd.AddIns.WaitDialog.WaitDialog control = new Ferda.FrontEnd.AddIns.WaitDialog.WaitDialog(localePrefs, tprx, this.ownerOfAddIn);
-            this.ownerOfAddIn.ShowForm(control);    
+            this.ownerOfAddIn.ShowForm(control);
         }
+
+        #endregion
     }
 }

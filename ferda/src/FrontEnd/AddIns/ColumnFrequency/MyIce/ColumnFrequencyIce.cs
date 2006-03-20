@@ -1,4 +1,4 @@
-// AttributeFrequencyIce.cs - class for ice communication
+// ColumnFrequencyIce.cs - class for ice communication
 //
 // Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
 //
@@ -18,6 +18,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,17 +26,17 @@ using System.Windows.Forms;
 using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns;
 using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
-using Ferda.FrontEnd.AddIns.AttributeFrequency;
+using Ferda.Modules.Boxes.DataMiningCommon.Column;
+using Ferda.FrontEnd.AddIns.ColumnFrequency;
 using System.Resources;
 using System.Reflection;
 
-
-namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
+namespace Ferda.FrontEnd.AddIns.ColumnFrequency.MyIce
 {
     /// <summary>
     /// Class for communication with ice
     /// </summary>
-    public class AttributeFrequencyIce : Ferda.Modules.ModuleForInteractionDisp_
+    public class ColumnFrequencyIce : Ferda.Modules.ModuleForInteractionDisp_
     {
         #region Private variables
 
@@ -63,14 +64,14 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
         /// Class constructor
         /// </summary>
         /// <param name="ownerOfAddIn">Owner of addin</param>
-        public AttributeFrequencyIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
+        public ColumnFrequencyIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
         {
             this.ownerOfAddIn = ownerOfAddIn;
-            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.AttributeFr.Localization_en-US",
+            //setting the ResManager resource manager and localization string
+            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ColumnFr.Localization_en-US",
             Assembly.GetExecutingAssembly());
             localizationString = "en-US";
         }
-
         #endregion
 
 
@@ -85,7 +86,7 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
         {
             Modules.BoxType boxType = new Modules.BoxType();
             boxType.neededSockets = new Modules.NeededSocket[0];
-            boxType.functionIceId = "::Ferda::Modules::Boxes::DataMiningCommon::Attributes::AbstractAttributeFunctions";
+            boxType.functionIceId = "::Ferda::Modules::Boxes::DataMiningCommon::Column::ColumnFunctions";
 
             return new Modules.BoxType[] { boxType };
         }
@@ -112,13 +113,13 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.AttributeFrequency.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.ColumnFr.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
             catch
             {
             }
-            return resManager.GetString("AttributeFrequency");
+            return resManager.GetString("ColumnFrequency");
         }
 
         public override byte[] getIcon(Ice.Current __current)
@@ -133,24 +134,26 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.AttributeFrequency.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.ColumnFr.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
+
             catch
             {
             }
-            return resManager.GetString("AttributeFrequencyModule");
+            return resManager.GetString("ColumnFrequencyModule");
         }
 
         public override string[] getNeededConnectedSockets(Ice.Current __current)
         {
             return new string[0];
+
         }
 
         #endregion
 
 
-        #region Run
+        #region IceRun
 
         /// <summary>
         /// Run method
@@ -166,19 +169,25 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
             {
                 locale = localePrefs[0];
                 localizationString = locale;
+                locale = "Ferda.FrontEnd.AddIns.ColumnFr.Localization_" + locale;
+                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
             catch
             {
             }
 
-            Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeFunctionsPrx prx =
-                Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+            Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnFunctionsPrx prx =
+               Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+
+            Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute.AttributeFunctionsPrx prx1 =
+                Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute.AttributeFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
             try
             {
+                ColumnInfo columnInfo = prx.getColumnInfo();
                 string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                Ferda.FrontEnd.AddIns.AttributeFrequency.AttributeFrequency control = new AttributeFrequency(prx.getAbstractAttribute(), localePrefs);
-                this.ownerOfAddIn.ShowDockableControl(control, label + " " + resManager.GetString("AttributeFrequency"));
+                Ferda.FrontEnd.AddIns.ColumnFrequency.ColumnFrequency control = new ColumnFrequency(localePrefs, columnInfo);
+                this.ownerOfAddIn.ShowDockableControl(control, label + " " + resManager.GetString("ColumnFrequency"));
             }
 
             catch (Ferda.Modules.BadParamsError ex)
@@ -198,7 +207,7 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
                     MessageBox.Show(resManager.GetString("BadColumnSelectExpression"), resManager.GetString("Error"),
                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else
+                //else
                 {
                     MessageBox.Show(resManager.GetString("InvalidParameters"), resManager.GetString("Error"),
                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -210,8 +219,8 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
                 MessageBox.Show(resManager.GetString("BoxNotConnected"), resManager.GetString("Error"),
                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
         }
+
         #endregion
     }
 }

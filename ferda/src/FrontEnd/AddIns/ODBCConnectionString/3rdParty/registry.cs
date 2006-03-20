@@ -1,4 +1,13 @@
-// created on 1/13/2003 at 9:32 AM
+/*
+ * 
+ * Created on 5/10/2004 at 2:37 PM
+ *
+ * REVISION HISTORY
+ *
+ * Author		Date		changes
+ * GBaseke		5/10/2004 	Initial Revision
+ */
+
 using System;
 using Microsoft.Win32;
 
@@ -6,8 +15,7 @@ namespace Guy.Utilities.Reg
 {
 	enum HKEY{ LocalMachine, CurrentUser}
 	public class HKCU
-	{
-			
+	{			
 		public static object ReadOption(string subkey, string key, object defaultValue ) {
 			RegistryKey Key = null;
 
@@ -49,8 +57,7 @@ namespace Guy.Utilities.Reg
 			return key.ValueCount;	
 		}
 
-	}
-	
+	}	
 	public class HKLM
 	{
 		public static object ReadOption(string subkey, string key, object defaultValue ) {
@@ -64,7 +71,7 @@ namespace Guy.Utilities.Reg
 				return defaultValue;
 			}
 		}
-		
+	
 		public static void WriteOption(string subkey, string key, object Value ) {
 			RegistryKey Key = null;
 			try
@@ -196,8 +203,7 @@ namespace Guy.Utilities.Reg
 			}
 			
 			return database;
-		}
-		
+		}		
 		public static string provider(string dsn, HKEY hkey)
 		{
 			string source;
