@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article lang="cs-CZ">
+  <articleinfo>
+    <title>Implementace krabiček</title>
+
+    <author>
+      <firstname>Tomáš</firstname>
+
+      <surname>Kuchař</surname>
+
+      <email>tomas.kuchar@gmail.com</email>
+    </author>
+  </articleinfo>
+
+  <abstract>
+    <para>Tento text popisuje způsob implementace krabiček. Předpokládám znalost dokumentu „implementace Ferdy“, zejména sekce „Implementace modulů krabiček“ a „Funkce middleware ve Ferdovi“a dokumentu „Analýza vzhledu modulů a práce s nimi“.</para>
+  </abstract>
+  <section>
+  <title>évod</title>
+<para>Krabičky jsou ve Ferdovi implementovány v jazyce .NET C# 2.0.</para>
+<para>Funkcionalitu krabiček lze obecně rozdělit do několika kategorií</para>
+<orderedlist>
+<listitem>
+<para>funkcionalitu vyžadovanou manažerem modulů</para>
+<orderedlist>
+<listitem>
+<para>například: krabička vrací své jméno, ikonu, identifikátor, seznam a hodnoty vlastností, seznam zásuvek a příslušných zapojení, seznam krabiček navrhovaných na vytvoření, akcí atp.</para>
+</listitem>
+</orderedlist>
+</listitem>
+<listitem>
+<para>funkcionalitu poskytovanou ostatním krabičkám (tj. vlastní funkce, které vykonávají skutečnou „práci krabiček“)</para>
+<orderedlist>
+<listitem>
+<para>například: krabička reprezentující databázi bude poskytovat funkci vracející (ODBC) připojovací řetězec.</para>
+</listitem>
+</orderedlist>
+</listitem>
+</orderedlist>
+</section>
+  <section>
+<title>Funkcionalita z pohledu manažeru modulů</title>
+<para>Jde o funkcionalitu popsanou ve slice (viz.<ulink url="http://www.zeroc.com/download.html">dokumentace Ice</ulink>) návrzích</para>
+<orderedlist>
+<listitem>
+<para>Ferda.Modules.BoxModule,</para>
+</listitem>
+<listitem>
+<para>Ferda.Modules.BoxModuleFactory,</para>
+</listitem>
+<listitem>
+<para>Ferda.Modules.BoxModuleFactoryCreator</para>
+</listitem>
+</orderedlist>
+<para>viz dokument „Analýza vzhledu modulů a práce s nimi“.</para>
+<para>Tuto funkcionalitu lze opět rozdělit:</para>
+<orderedlist>
+<listitem>
+<para>Zjišťování informací o krabičce, které je třeba znát ještě před tím, než je vytvořena první instance krabičky tohoto typu. (jméno, ikona, identifikátor, …) viz. Ferda.Modules.BoxModuleFactoryCreator</para>
+</listitem>
+<listitem>
+<para>Zjišťování informací o krabičce, které nezávisí na konkrétní instanci krabičky (jejím stavu) ale je třeba je znát až při práci s instancemi krabičky (seznam vlastností, zásuvek, akcí, …) viz. Ferda.Modules.BoxModuleFactory</para>
+</listitem>
+<listitem>
+<para>Získávání informací závislých na konkrétní instanci krabičky, nastavování a práce s konkrétní instancí krabičky. (vytváření a odebírání zapojení zásuvky, práce s hodnotami vlastností, spouštění akcí krabiček, získávání seznamu krabiček navrhovaných na vytvoření, získávání dynamické nápovědy, …) Ferda.Modules.BoxModule.</para>
+</listitem>
+</orderedlist>
+<para>Jak je patrné, značná část funkcionality požadované manažerem modulů je v zásadě o vyzvedávání jistých statických dat (první dva body seznamu výše), další funkce mají za úkol měnit stav krabičky nebo získávat naopak získat nastavení krabičky, ale i tato funkcionalita může být zpracována na základě statických informací o krabičce (např. nastavení dané vlastnosti, vytvoření spojení … tyto akce závisí pouze na jméně vlastnosti/zásuvky a akceptovaném typu či dalších integritních omezeních, která jsou známa rovněž staticky) a nakonec třetí skupinou jsou funkce, které závisí na aktuálním stavu krabičky a nemohou být zpracována na základě statických informací tj. nezbývá, než tyto funkce u každé krabičky implementovat dle potřeby (např. seznam krabiček navrhovaných na vytvoření, výchozí nastavení jména krabičky dle hodnot jejich vlastností či zapojených vstupních krabiček, apod.).</para>
+<para>Jelikož jedním ze základních úkolů projektu bylo navrhnout systém tak, aby bylo co nesnazší přidávat do něho nové moduly/krabičky, nabízelo se oprostit takového uživatele-programátora (dále jen uživatel) od co největšího počtu úkolů, které by musel řešit. Aby uživatel nemusel zjišťovat detaily spojené s rozdělením funkcionality poskytované manažeru modulů, byly tyto funkce implementovány s tím, že po tvůrci nové krabičky bude vyžadována implementace jednoho rozhraní (interface), které bude touto „výchozí implementací“ vyžadováno. Jde o interface Ferda.Modules.Boxes.IBoxInfo. Implementace tohoto rozhraní ale opět není příliš jednoduchá, neboť se zde musí řešit takové věci jako je lokalizace apod. Proto byla vytvořena jeho implementace Ferda.Modules.Boxes.BoxInfo (abstraktní třída), která sama řeší řadu detailů (jako výše zmíněnou lokalizaci). Touto třídou je zcela implementována funkcionalita (dle rozdělení výše) poskytující statická data a data závislá pouze na statických informacích. Zbylá funkcionalita (závislá na aktuálním stavu instance krabičky) je ponechána k implementaci uživateli ve třídě, kterou bude implementovat tuto abstraktní třídu (Ferda.Modules.Boxes.BoxInfo). Jde asi o 6 abstraktních funkcí (většinou triviálních) a asi stejný počet virtuálních (které není třeba vždy implementovat). Třída Ferda.Modules.Boxes.BoxInfo k tomu, aby mohla implementovat funkcionalitu závislou na statických datech potřebuje tato data. Tato data jí lze poskytnout pomocí implementace rozhraní Ferda.Modules.Boxes.Serializer.Configuration.IHelper a (několika) Ferda.Modules.Boxes.Serializer.Localization.IHelper. Uživatel buď může implementovat tato rozhraní přímo a nebo (jako my, z důvodu snadné údržby) vytvoří konfigurační XML soubory a příslušný konstruktor třídy Ferda.Modules.Boxes.BoxInfo, je deserealizuje do podoby *.IHelperů. Tímto je implementace funkcionality vyžadované manažerem modulů hotova. Zbývá jen poznamenat, že vytváření příslušných factory (tj. práce Ferda.Modules.BoxModuleFactoryCreator a Ferda.Modules.BoxModuleFactory) a konkrétních instancí krabiček (tj. Ferda.Modules.BoxModule) je popsána v dokumentu „Implementace modulů krabiček“ a pro každý typ krabičky se vytváří se pouze jedna instance třídy implementující Ferda.Modules.Boxes.BoxInfo a to ještě před vytvořením příslušného factory creatoru (Ferda.Modules.BoxModuleFactoryCreator). Všechny zmíněné třídy jsou v programátorské dokumentaci důkladně zdokumentovány, stejně jako třídy ve Ferda.Modules.Serializer, které reflektují strukturu XSD schémat (box.xsd a boxLocalization.xsd) konfiguračních souborů.</para>
+	</section>
+  <section>
+<title>Funkcionalita poskytovaná ostatním krabičkám</title>
+<para>Implementace této části je u všech krabiček různá. Spočívá v definování rozhraní, které bude krabička poskytovat tj. vytvoření slice návrhu a jeho následné implementace. Třída implementující tento slice návrh musí rovněž implementovat rozhraní Ferda.Modules.IFunctions, které zaručí přístup k objektu Ferda.Modules.BoxModule představující instanci konkrétní krabičky. Ke každé instanci BoxModule potom bude vytvořena jedna instance třídy implementující její rozhraní (ve smyslu k ostatním krabičkám).</para>
+	</section>
+</article>

@@ -61,23 +61,31 @@ namespace Ferda.Modules.Boxes
         /// <seealso cref="P:Ferda.Modules.Boxes.BoxInfo.configFilesDirectoryPath"/>
         private const string configFilesFolderName = "BoxModulesServices";
 
+        private string _configFilesDirectoryPath = String.Empty;
         /// <summary>
-        /// Directory for config files is in ApplicationDomainDirectory + 
+        /// Default directory for config files is in ApplicationDomainDirectory + 
         /// <see cref="P:Ferda.Modules.Boxes.BoxInfo.configFilesFolderName"/> + 
         /// name of directory of current box i.e. 
         /// <see cref="P:Ferda.Modules.Boxes.BoxInfo.identifier"/> when you replace 
         /// pluses "+" by <see cref="F:System.IO.Path.DirectorySeparatorChar"/>.
         /// </summary>
-        protected string configFilesDirectoryPath
+        public string ConfigFilesDirectoryPath
         {
             get
             {
-                return Path.Combine(
-                        configFilesFolderName,
-                    identifier.Replace(
-                        '.',
-                        System.IO.Path.DirectorySeparatorChar)
-                    );
+                if (String.IsNullOrEmpty(_configFilesDirectoryPath))
+                {
+                    return Path.Combine(
+                            configFilesFolderName,
+                        identifier.Replace(
+                            '.',
+                            System.IO.Path.DirectorySeparatorChar)
+                        );
+                }
+                else
+                {
+                    return _configFilesDirectoryPath;
+                }
             }
         }
 
@@ -160,6 +168,7 @@ namespace Ferda.Modules.Boxes
         /// i.e. stores box config file deserealization to 
         /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.box">cache</see>.
         /// </para>
+        /// <para>Config files are loaded from <see cref="F:Ferda.Modules.Boxes.BoxInfo.ConfigFilesDirectoryPath"/>.</para>
         /// </summary>
         /// <remarks>
         /// Localization config files are loaded (deserealized and stored in
@@ -172,7 +181,41 @@ namespace Ferda.Modules.Boxes
             //Deserealize and store box config file
             this.box = new Boxes.Serializer.Configuration.Helper(
                 Boxes.Serializer.Reader.ReadBox(
-                    Path.Combine(this.configFilesDirectoryPath, boxCofigFileName)
+                    Path.Combine(this.ConfigFilesDirectoryPath, boxCofigFileName)
+                    )
+                );
+
+            //Deserealization has to be sucessful
+            if (this.box == null)
+            {
+                string message = "BoxInf01: Unable to get config for " + this.identifier;
+                Debug.WriteLine(message);
+                throw new Exception(message);
+            }
+        }
+
+        /// <summary>
+        /// 	<para>Default constructor.</para>
+        /// 	<para>Loads box config file (independent on localization)
+        /// i.e. stores box config file deserealization to
+        /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.box">cache</see>.
+        /// </para>
+        /// 	<para>Config files are loaded from specified <c>pathToConfigFiles</c>.</para>
+        /// </summary>
+        /// <param name="pathToConfigFiles">The path to config files.</param>
+        /// <remarks>
+        /// Localization config files are loaded (deserealized and stored in
+        /// cache) as needed (lazy loading).
+        /// </remarks>
+        /// <seealso cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Helper"/>
+        /// <exception cref="T:System.Exception">Thrown iff getting box config faild.</exception>
+        public BoxInfo(string pathToConfigFiles)
+        {
+            _configFilesDirectoryPath = pathToConfigFiles;
+            //Deserealize and store box config file
+            this.box = new Boxes.Serializer.Configuration.Helper(
+                Boxes.Serializer.Reader.ReadBox(
+                    Path.Combine(this.ConfigFilesDirectoryPath, boxCofigFileName)
                     )
                 );
 
@@ -300,7 +343,7 @@ namespace Ferda.Modules.Boxes
                     Boxes.Serializer.Localization.BoxLocalization boxLoc =
                         Boxes.Serializer.Reader.ReadBoxLocalization(
                             Path.Combine(
-                                configFilesDirectoryPath,
+                                ConfigFilesDirectoryPath,
                                 getLocalizationFileName(localeId)
                                 )
                             );
@@ -566,7 +609,7 @@ namespace Ferda.Modules.Boxes
             foreach (Boxes.Serializer.Localization.IHelper boxLocalization in this.boxLocalizations.Values)
             {
                 if (boxLocalization.HelpFilesPaths.TryGetValue(identifier, out helpFilePath))
-                    return BoxInfoHelper.TryGetBinaryFile(configFilesDirectoryPath, helpFilePath, false);
+                    return BoxInfoHelper.TryGetBinaryFile(ConfigFilesDirectoryPath, helpFilePath, false);
             }
             return null;
         }
@@ -603,7 +646,7 @@ namespace Ferda.Modules.Boxes
                     socket.Name,
                     (localizedSocket == null) ? "" : localizedSocket.Label,
                     (localizedSocket == null) ? "" : localizedSocket.Hint,
-                    BoxInfoHelper.TryGetStringFile(configFilesDirectoryPath, socket.DesignPath, false),
+                    BoxInfoHelper.TryGetStringFile(ConfigFilesDirectoryPath, socket.DesignPath, false),
                     this.box.GetSocketTypes(socket.Name),
                     socket.SettingProperties,
                     socket.MoreThanOne
@@ -1044,7 +1087,7 @@ namespace Ferda.Modules.Boxes
         {
             get
             {
-                return BoxInfoHelper.TryGetBinaryFile(configFilesDirectoryPath, this.box.IconPath, false);
+                return BoxInfoHelper.TryGetBinaryFile(ConfigFilesDirectoryPath, this.box.IconPath, false);
             }
         }
 
@@ -1074,7 +1117,7 @@ namespace Ferda.Modules.Boxes
             get
             {
                 return System.Convert.ToString(
-                    BoxInfoHelper.TryGetStringFile(configFilesDirectoryPath, this.box.DesignPath, false)
+                    BoxInfoHelper.TryGetStringFile(ConfigFilesDirectoryPath, this.box.DesignPath, false)
                     );
             }
         }
@@ -1156,7 +1199,7 @@ namespace Ferda.Modules.Boxes
                     action.Name,
                     boxLocalization.Actions[action.Name].Label,
                     boxLocalization.Actions[action.Name].Hint,
-                    BoxInfoHelper.TryGetBinaryFile(configFilesDirectoryPath, action.IconPath, false),
+                    BoxInfoHelper.TryGetBinaryFile(ConfigFilesDirectoryPath, action.IconPath, false),
                     this.GetActionInfoNeededConnectedSockets(action.Name)
                     );
                 result.Add(resultItem);
