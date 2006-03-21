@@ -14,8 +14,17 @@
   <!--
     <revhistory>
       <revision>
+        <revnumber>0.2</revnumber>
+        <date>2006-3-15</date>
+        <revdescription>
+          <para>
+            Spouštění akcí krabiček přes modul pro interakci
+          </para>
+        </revdescription>
+      </revision> 
+      <revision>
         <revnumber>0.1</revnumber>
-        <date>2006-8-3</date>
+        <date>2006-3-8</date>
         <revdescription>
           <para>
             Zanesené poznámky doc. Raucha
@@ -276,14 +285,14 @@
     </mediaobject>
   </section>
   <section>
-    <title>8. Spuštění 4ft úlohy a Akce krabiček</title>
+    <title>8. Spuštění 4ft úlohy a Moduly pro interakci</title>
     <para>
       Spouštění akcí krabiček je další možné využití krabičky. Akce definované pro
       krabičku jsou přístupné z položky <classname>Akce</classname> kontextového
-      menu nad krabičkou. Jak vidíme krabička <classname>4ft Úloha</classname> má
-      pouze jednu akci nazvanou <classname>Spusť</classname>. Tato akce spustí
-      generování hypotéz pro příslušnou úlohu. Můžete si všimnout že i jiné 
-      krabičky mají své akce.
+      menu nad krabičkou. Bohužel v součastné implementaci Ferdy je třeba z 
+      historických důvodů spouštět LISp-Miner úlohy pomocí modulů pro interakci
+      (jejich přirozenější použití se dozvíte v následujícím bodě). Vyberme tedy
+      položku <classname>Spusť</classname> z podmenu <classname>Moduly pro interakci</classname>.
     </para>
     <para>
       Když tedy klikneme na spuštění generování hypotéz, spustí se dialog, ve
@@ -303,7 +312,7 @@
     </mediaobject>
   </section>
   <section>
-    <title>9. Zobrazení výsledků a Moduly pro interakci</title>
+    <title>9. Zobrazení výsledků</title>
     <para>
       Pomocí <classname>Modulů pro interakci</classname> krabičky zobrazují svůj
       obsah uživateli. Takže abychom zobrazili naše hypotézy, použijeme k tomu

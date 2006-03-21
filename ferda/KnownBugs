@@ -6,13 +6,6 @@ Ferda does not support databases with only one exclusive access connections. It 
 
 This is not bug but rather answer to frequently asked question: Statistics for some columns are not shown. This is caused by the datatype of the column because many DB systems does not support aggregation functions over columns of some datatypes (e.g. BLOB, MEMO, ...). Computing of statistics without aggregation functions would be very, very slow and not effective and using this kind of columns for datamining is not very common, so we were not trying to slove this problem by own simulation of this functions.
 
-Performance bug - slow redrawing of connecting lines on the desktop. This is caused
-by the slow performance of the graphics library we use (Netron Graph Library) or
-its former version. In order to make the library friendly to Ferda, we had to make
-some changes to the library. The newer versions of the library show better performance
-results - so this (and other problems) can be fixed by switching to a newer version
-of Netron. 
-
 Localization problem with the Czech and English names - some choices in the property
 grid with the czech localization can be selected in czech, but then they are 
 displayed again in English.
@@ -24,3 +17,10 @@ allow it. These problem are caused by the docking imperfection of the docking
 library we use - DockDotNET. Switching to another library that has these
 problems solved or fixing them in the DockDotNET(the library is no longer under
 development) would fix these bugs.
+
+Performance bug - slow redrawing of the archive. In projects with hunderts of  boxes,
+each action that needs the archive to be reconstructed is quite slow (the more
+boxes to be displayed, the slower the archive). We think that the problem is in
+the slow implementation of the TreeView class in the .NET Framework. Although we
+tried to use the whole list to be displayed in the archive at once, it performed
+the same behaviour as in a adding the item in cycle.
