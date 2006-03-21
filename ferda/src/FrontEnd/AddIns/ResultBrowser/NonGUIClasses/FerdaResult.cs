@@ -572,6 +572,126 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
 
         /// <summary>
+        /// Function to get a string value for first set
+        /// </summary>
+        /// <param name="hypothese">Hypothese to extract value from</param>
+        /// <returns>String value with antecedent</returns>
+        public static String GetFirstSetString(HypothesisStruct hypothesis)
+        {
+            StringBuilder returnString = new StringBuilder();
+            bool firstRun = true;
+            bool boolCedent = false;
+            if (hypothesis.literals.Length > 0)
+            {
+                foreach (LiteralStruct literal in hypothesis.literals)
+                {
+                    if (literal.cedentType == CedentEnum.FirstSet)
+                    {
+                        returnString.Append(literal.literalName);
+                    }
+                }
+            }
+            else
+            {
+                boolCedent = true;
+                foreach (BooleanLiteralStruct literal in hypothesis.booleanLiterals)
+                {
+                    if (literal.cedentType == CedentEnum.FirstSet)
+                    {
+                        if (!firstRun)
+                        {
+                            returnString.Append(") & ");
+                        }
+                        if (literal.negation)
+                        {
+                            returnString.Append('\u00AC' + literal.literalName + "(");
+                        }
+                        else
+                        {
+                            returnString.Append(literal.literalName + "(");
+                        }
+                        foreach (String category in literal.categoriesNames)
+                        {
+                            returnString.Append(category.ToString());
+                        }
+                        firstRun = false;
+                    }
+                }
+            }
+            if (returnString.Length == 0)
+            {
+                return String.Empty;
+            }
+            else
+            {
+                if (boolCedent)
+                    returnString.Append(")");
+
+                return returnString.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Function to get a string value for second set
+        /// </summary>
+        /// <param name="hypothese">Hypothese to extract value from</param>
+        /// <returns>String value with antecedent</returns>
+        public static String GetSecondSetString(HypothesisStruct hypothesis)
+        {
+            StringBuilder returnString = new StringBuilder();
+            bool firstRun = true;
+            bool boolCedent = false;
+            if (hypothesis.literals.Length > 0)
+            {
+                foreach (LiteralStruct literal in hypothesis.literals)
+                {
+                    if (literal.cedentType == CedentEnum.SecondSet)
+                    {
+                        returnString.Append(literal.literalName);
+                    }
+                }
+            }
+            else
+            {
+                boolCedent = true;
+                foreach (BooleanLiteralStruct literal in hypothesis.booleanLiterals)
+                {
+                    if (literal.cedentType == CedentEnum.SecondSet)
+                    {
+                        if (!firstRun)
+                        {
+                            returnString.Append(") & ");
+                        }
+                        if (literal.negation)
+                        {
+                            returnString.Append('\u00AC' + literal.literalName + "(");
+                        }
+                        else
+                        {
+                            returnString.Append(literal.literalName + "(");
+                        }
+                        foreach (String category in literal.categoriesNames)
+                        {
+                            returnString.Append(category.ToString());
+                        }
+                        firstRun = false;
+                    }
+                }
+            }
+            if (returnString.Length == 0)
+            {
+                return String.Empty;
+            }
+            else
+            {
+                if (boolCedent)
+                    returnString.Append(")");
+
+                return returnString.ToString();
+            }
+        }
+
+        /// <summary>
         /// Function to get a string value for succedent
         /// </summary>
         /// <param name="hypothese">Hypothese to extract value from</param>

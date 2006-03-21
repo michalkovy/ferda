@@ -165,6 +165,9 @@
   <data name="Error" xml:space="preserve">
     <value>Chyba</value>
   </data>
+  <data name="First set" xml:space="preserve">
+    <value>První set</value>
+  </data>
   <data name="FirstContingencyTable" xml:space="preserve">
     <value>První kontingenční tabulka</value>
   </data>
@@ -224,6 +227,9 @@
   </data>
   <data name="SecondContingencyTable" xml:space="preserve">
     <value>Druhá kontingenční tabulka</value>
+  </data>
+  <data name="SecondSet" xml:space="preserve">
+    <value>Druhý set</value>
   </data>
   <data name="ShowLabels" xml:space="preserve">
     <value>Zobrazit popisky</value>
