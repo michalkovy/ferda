@@ -168,6 +168,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="FirstContingencyTable" xml:space="preserve">
+    <value>First contingency table</value>
+  </data>
   <data name="Graph" xml:space="preserve">
     <value>Graph</value>
   </data>
@@ -221,6 +224,9 @@
   </data>
   <data name="ResultBrowserModule" xml:space="preserve">
     <value>Result browser module</value>
+  </data>
+  <data name="SecondContingencyTable" xml:space="preserve">
+    <value>Second contingency table</value>
   </data>
   <data name="ShowLabels" xml:space="preserve">
     <value>Show labels</value>
