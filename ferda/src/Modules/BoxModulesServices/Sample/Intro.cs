@@ -10,7 +10,10 @@ namespace Ferda.Modules.Boxes.Sample
     /// vlastní krabičku do systému „Ferda“. Tento článek popisuje postup 
     /// práce ve vývojovém prostředí Microsoft Visual Studia 2005 za použití
     /// jazyka C# verze 2.0. Analogicky lze použít i jiná prostředí a jazyky
-    /// podporované platformou .NET nebo ICE.
+    /// podporované platformou .NET, v případě pokud chcete použít jiný jazyk
+    /// podporovaný middlewarem <see href="http://www.zeroc.com">Ice</see>,
+    /// bude třeba mnohem více - k tomu doporučuji přečíst si dokumenty 
+    /// „implementaceKrabicek.xdb“ a „implementaceFerdy.xdb“.
     /// </para>
     /// </summary>
     /// <remarks>
@@ -176,9 +179,16 @@ namespace Ferda.Modules.Boxes.Sample
     /// K abstraktním i výše uvedeným virtuálním funkcím jsou v programátorské nápovědě 
     /// uvedeny příklady, jak je implementovat, proto je zde nebudu dále komentovat.
     /// Nezbytným krokem při implementaci interfacu <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>
-    /// s pomocí abstraktní třídy <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> je vytvoření
-    /// konfiguračních a lokalizačních XML souborů a jejich správné umístění v adresářové
-    /// struktuře Ferdy (TODO zdokumentovat).
+    /// s pomocí abstraktní třídy <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> je dodání kofiguračních
+    /// a lokalizačních dat pro. To lze provést více způsoby 
+    /// (viz. konstruktory třídy <see cref="T:Ferda.Modules.Boxes.BoxInfo"/>).
+    /// Buď implementujete <see cref="T:Boxes.Serializer.Configuration.IHelper"/> a 
+    /// lokalizační <see cref="T:Boxes.Serializer.Localization.IHelper"/> 
+    /// (případně několik těchto lokalizací) a nebo vytvoříte 
+    /// konfigurační a lokalizační XML soubory dle následujícího návodu a 
+    /// konstruktoru se předá cesta k těmto souborům nebo se použije defaultní
+    /// konstruktor a v tompřípadě musí být soubory správně umístěny v adresářové
+    /// struktuře Ferdy (viz. <see cref="F:Ferda.Modules.Boxes.BoxInfo.ConfigFilesDirectoryPath"/>).
     /// </para>
     /// <b>Konfigurační a lokalizační XML soubory</b>
     /// <para>
@@ -186,7 +196,7 @@ namespace Ferda.Modules.Boxes.Sample
     /// a nápovědy:
     /// <list type="bullet">
     /// <listheader>
-    /// <term>dokumentace</term>
+        /// <term>dokumentace</term>
     /// <description>XSD schémata</description>
     /// </listheader>
     /// <item>
@@ -210,8 +220,8 @@ namespace Ferda.Modules.Boxes.Sample
     /// <para>
     /// Krabička z poledu ostatních krabiček poskytuje určitou funkci resp. funkce (vlastní 
     /// funkcionalita krabičky). V tuto chvíli je vhodné se podívat na dokumentaci 
-    /// k formalizmu principu zapojování krabiček do zásuvek (TODO Michal). Na tomto místě uvedu jen 
-    /// velmi stručné a nepřesné (avšak v tuto chvili snad postačující) vysvětlení:
+    /// k formalizmu principu zapojování krabiček do zásuvek - dokument „implementace Ferdy“. 
+    /// Na tomto místě uvedu jen velmi stručné a nepřesné (avšak v tuto chvili snad postačující) vysvětlení:
     /// každá krabička implementuje určité rozhraní (tj funkci/množinu funkcí) resp. 
     /// několik rozhraní. Tyto rozhraní jsou (vnitřním mechanismem Ice) pojmenovány 
     /// a zásuvky (sokety) pak uvedou 

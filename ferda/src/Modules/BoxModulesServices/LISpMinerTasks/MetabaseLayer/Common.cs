@@ -1464,7 +1464,7 @@ namespace Ferda.Modules.MetabaseLayer
             if (categorialCedents != null)
                 foreach (CategorialCedent categorialCedent in categorialCedents)
                 {
-                    savedCedents.Add(categorialCedent.CedentType, true);
+                    savedCedents[categorialCedent.CedentType] = true;
                     abstractAttributes.AddRange(categorialCedent.Cedent.attributes);
                 }
             #endregion
