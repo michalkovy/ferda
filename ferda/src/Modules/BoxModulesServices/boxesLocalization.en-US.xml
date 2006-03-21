@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Tomas Kuchar (Ru-Board) -->
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Martin (Ru-Board) -->
 <BoxesLocalization xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ferda.is-a-geek.net
 ../Core/Boxes/boxesLocalization.xsd">
 	<BoxLocalization>
@@ -16,19 +16,19 @@
 			<Action>
 				<Name>TestConnectionString</Name>
 				<Label>Test connection string</Label>
-				<Hint>This will test connection to database with entered connection string.</Hint>
+				<Hint>This will test the connection to the database with entered connection string.</Hint>
 			</Action>
 			<Action>
 				<Name>ReloadInfo</Name>
 				<Label>Reload info</Label>
-				<Hint>This will reload structure and statisticts information abou database, datamatrix and columns.</Hint>
+				<Hint>This will reload the structure and statisticts information about the database, datamatrix and columns.</Hint>
 			</Action>
 		</Actions>
 		<Sockets>
 			<Socket>
 				<Name>OdbcConnectionString</Name>
 				<Label>ODBC connection string</Label>
-				<Hint>Connection string for ODBC data source that defines database for analyzing.</Hint>
+				<Hint>Connection string for ODBC data source that defines database to be analyzed.</Hint>
 			</Socket>
 			<Socket>
 				<Name>DatabaseName</Name>
@@ -70,11 +70,11 @@
 			</Phrase>
 			<Phrase>
 				<PhraseIdentifier>ActionTestConnectionStringSucceed</PhraseIdentifier>
-				<PhraseText>Connecting to database with specified connection string succeeded.</PhraseText>
+				<PhraseText>Connecting to the database with specified connection string succeeded.</PhraseText>
 			</Phrase>
 			<Phrase>
 				<PhraseIdentifier>ActionTestConnectionStringFailed</PhraseIdentifier>
-				<PhraseText>Connecting to database with specified connection string failed!</PhraseText>
+				<PhraseText>Connecting to the database with specified connection string failed!</PhraseText>
 			</Phrase>
 		</Phrases>
 	</BoxLocalization>
@@ -99,17 +99,17 @@
 			<Socket>
 				<Name>Database</Name>
 				<Label>Database</Label>
-				<Hint>Defines data source for data matrix</Hint>
+				<Hint>Defines data source for the data matrix</Hint>
 			</Socket>
 			<Socket>
 				<Name>Name</Name>
 				<Label>Name</Label>
-				<Hint>Name of table.</Hint>
+				<Hint>Name of the table. The name will enclosed in aphostrophes in SQL query.</Hint>
 			</Socket>
 			<Socket>
 				<Name>PrimaryKeyColumns</Name>
 				<Label>Primary key</Label>
-				<Hint>List of columns that define the primary key of table.</Hint>
+				<Hint>List of columns that define the primary key of the table. The value is either a value of one column or CSV (comma separated values). It will be not enclosed in apostrophes.</Hint>
 			</Socket>
 			<Socket>
 				<Name>RecordCount</Name>
@@ -147,11 +147,11 @@
 			</Phrase>
 			<Phrase>
 				<PhraseIdentifier>ActionTestTestPrimaryKeySucceed</PhraseIdentifier>
-				<PhraseText>No duplicates found in specified primary key.</PhraseText>
+				<PhraseText>No duplicates found in the specified primary key.</PhraseText>
 			</Phrase>
 			<Phrase>
 				<PhraseIdentifier>ActionTestTestPrimaryKeyFailed</PhraseIdentifier>
-				<PhraseText>Duplicit values found in specified primary key!</PhraseText>
+				<PhraseText>Duplicit values found in the specified primary key!</PhraseText>
 			</Phrase>
 		</Phrases>
 	</BoxLocalization>
@@ -174,7 +174,7 @@
 			<Socket>
 				<Name>Name</Name>
 				<Label>Name</Label>
-				<Hint>Name of column.</Hint>
+				<Hint>Name of column. The name will not be enclosed in apostrophes in the SQL query.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ValueSubType</Name>
@@ -334,7 +334,7 @@
 			<Socket>
 				<Name>Formula</Name>
 				<Label>Formula</Label>
-				<Hint>Formula to calculate column values.</Hint>
+				<Hint>Formula of the column. The name will not be enclosed in apostrophes in the SQL query.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ValueSubType</Name>
@@ -656,7 +656,7 @@
 			<Socket>
 				<Name>Domain</Name>
 				<Label>Domain</Label>
-				<Hint>Decide if whole domain of column will be categoriezed or only some subdomain.</Hint>
+				<Hint>Decide if whole domain of column will be categoriezed or only some subdomains.</Hint>
 				<SelectOptions>
 					<SelectOption>
 						<Name>WholeDomain</Name>
@@ -722,7 +722,7 @@
 		<Phrases>
 			<Phrase>
 				<PhraseIdentifier>UnsupportedColumnDatatype</PhraseIdentifier>
-				<PhraseText>Nopodporovaný datový typ sloupce</PhraseText>
+				<PhraseText>Unsupported columnd datatype.</PhraseText>
 			</Phrase>
 			<Phrase>
 				<PhraseIdentifier>NumericOrStringDatatypesSupportedOnly</PhraseIdentifier>
@@ -774,7 +774,7 @@
 			<Socket>
 				<Name>Domain</Name>
 				<Label>Domain</Label>
-				<Hint>Decide if whole domain of column will be categoriezed or only some subdomain.</Hint>
+				<Hint>Decide if whole domain of column will be categoriezed or only some subdomainss.</Hint>
 				<SelectOptions>
 					<SelectOption>
 						<Name>WholeDomain</Name>
@@ -786,7 +786,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>SubDomainNumberOfValuesBounds</Name>
-						<Label>Except frist (From) and last (To) values of actual Domain</Label>
+						<Label>Except first (From) and last (To) values of actual Domain</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
@@ -847,7 +847,7 @@
 	<BoxLocalization>
 		<Identifier>DataMiningCommon.Attributes.Attribute</Identifier>
 		<Label>Attribute</Label>
-		<Hint>You will Defines attribute (categorized column) and its parameters</Hint>
+		<Hint>You will Defines attribute (categorized column) and its parameters by editing the Categories property.</Hint>
 		<Categories>
 			<Category>
 				<Name>Attribute</Name>
@@ -994,7 +994,7 @@
 	<BoxLocalization>
 		<Identifier>DataMiningCommon.LiteralSetting</Identifier>
 		<Label>Literal setting</Label>
-		<Hint>empty</Hint>
+		<Hint>A setting of basic attribute or its negation</Hint>
 		<Categories>
 			<Category>
 				<Name>BooleanAttribute</Name>
@@ -1088,7 +1088,7 @@
 	<BoxLocalization>
 		<Identifier>DataMiningCommon.BooleanPartialCedentSetting</Identifier>
 		<Label>Bool. cedent</Label>
-		<Hint>Boolean partial cedent setting i. e. setting for  boolean partial cedent and it`s parameters</Hint>
+		<Hint>Boolean partial cedent is a simple setting of set of literals conjunction</Hint>
 		<Categories>
 			<Category>
 				<Name>BooleanAttribute</Name>
@@ -1149,7 +1149,7 @@
 	<BoxLocalization>
 		<Identifier>LISpMinerTasks.FFTTask</Identifier>
 		<Label>4ft Task</Label>
-		<Hint>Data mining procedure 4ft-Miner mines for various types of association rules. Rules based on statistical hypothesis test and conditional association rules are also included.</Hint>
+		<Hint>Data mining procedure 4ft-Miner mines for various types of association rules above four-fold contingency table. Rules based on statistical hypothesis test and conditional association rules are also included. </Hint>
 		<Categories>
 			<Category>
 				<Name>FFTMiner</Name>

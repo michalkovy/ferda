@@ -861,6 +861,7 @@ namespace Ferda.FrontEnd.Menu
 
                 controlsManager.AddToRecentProjects(fileName);
                 RecreateRecentProjects();
+                SetupDesktop();
             }
         }
 
@@ -953,6 +954,7 @@ namespace Ferda.FrontEnd.Menu
             controlsManager.ClearDocking();
             FrontEndCommon.LoadProject(sender.ToString(), this, resManager,
                 ref projectManager, controlsManager);
+            SetupDesktop();
         }
 
         #endregion
