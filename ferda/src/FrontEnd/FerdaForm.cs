@@ -731,6 +731,7 @@ using Ferda.ModulesManager;
             {
                 FrontEndCommon.LoadProject(args[0], form, form.ResManager, ref pm,
                     form);
+                form.menu.SetupDesktop();
                 form.WindowState = FormWindowState.Maximized;
             }
 
