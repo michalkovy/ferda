@@ -470,4 +470,30 @@
     se využilo naplno možností IceGridu, původní návrh využíval pouze IcePack)
     a také za uváženou stojí vylepšení rozhraní Output.</para>
   </section>
+
+  <section>
+    <title>Implementace manažeru projektů</title>
+
+    <para>Manažer projektů má mimo hlavní třídy ProjectManager především třídy
+    odpovídající archivu (Archive) a desktopu (View). Dále pak má třídu
+    odpovídající xml reprezantaci projektu (Project) a pomocné třídy Connection
+    (informace o zapojení krabičky do zásuvky) a ProjectManagerOptions
+    (informace o tom, jak se má inicializovat a destruovat ProjectManager - zda
+    má spouštět a jak IceGrid a podobně).</para>
+
+    <para>Manažer projektů ukládá a načítá projekty z xml souborů. To má tu
+    výhodu, že se lze v souboru dobře vyznat a protože struktura souboru je
+    velice jednoduchá, lze psát jednoduše programy, které nějakým způsobem
+    upravují, generují či čtou tento dokument.</para>
+
+    <para>Jelikož jsou xml soubory schopné se značně zmeněit při kompresi a
+    ukazuje se, že projektové soubory můžou být při reálném použití i hodně
+    veliké, uvažuje se o zavedení práce manažeru projektů nad komprimovanými
+    projektovými soubory.</para>
+
+    <para>V manažeru projektů ve třídě View je implementováno uspořádávání
+    krabiček. Toto uspořádávání má v současné implementaci pár nedokonalostí,
+    nicméně pro běžnou práci se zdá být dostatečné. V příštích verzích Ferdy
+    bude zřejmě ještě trochu vylepšeno.</para>
+  </section>
 </article>
