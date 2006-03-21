@@ -1312,7 +1312,9 @@ using Ferda.ModulesManager;
         /// <returns>A list containing recent projects</returns>
         public IList<string> GetRecentProjects()
         {
-            return recentProjects;
+            List<string> temp = new List<string>(recentProjects);
+            temp.Reverse();
+            return temp;
         }
 
         /// <summary>
@@ -1323,9 +1325,23 @@ using Ferda.ModulesManager;
         /// <returns>Modified list containg the recent project paths</returns>
         public void AddToRecentProjects(string newProject)
         {
+            Constants c = new Constants();
+
             if (!recentProjects.Contains(newProject))
             {
-                recentProjects.Add(newProject);
+                //this means we shift the positions
+                if (recentProjects.Count == c.RecentProjectsLength)
+                {
+                    for (int i = 0; i < recentProjects.Count - 1; i++)
+                    {
+                        recentProjects[i] = recentProjects[i + 1];
+                    }
+                    recentProjects[recentProjects.Count - 1] = newProject;
+                }
+                else
+                {
+                    recentProjects.Add(newProject);
+                }
             }
         }
 

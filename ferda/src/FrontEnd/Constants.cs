@@ -144,6 +144,17 @@ namespace Ferda
                     return new Size(129, 183);
                 }
             }
+
+            /// <summary>
+            /// The lenght of the recent project list
+            /// </summary>
+            public int RecentProjectsLength
+            {
+                get
+                {
+                    return 6;
+                }
+            }
         }
     }
 }
