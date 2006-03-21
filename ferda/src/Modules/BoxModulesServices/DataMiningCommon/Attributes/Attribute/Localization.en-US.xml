@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>DataMiningCommon.Attributes.Attribute</Identifier>
   <Label>Attribute</Label>
-  <Hint>You will Defines attribute (categorized column) and its parameters</Hint>
+  <Hint>You will Defines attribute (categorized column) and its parameters by editing the Categories property.</Hint>
   <Categories>
     <Category>
       <Name>Attribute</Name>

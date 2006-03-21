@@ -12,19 +12,19 @@
     <Action>
       <Name>TestConnectionString</Name>
       <Label>Test connection string</Label>
-      <Hint>This will test connection to database with entered connection string.</Hint>
+      <Hint>This will test the connection to the database with entered connection string.</Hint>
     </Action>
     <Action>
       <Name>ReloadInfo</Name>
       <Label>Reload info</Label>
-      <Hint>This will reload structure and statisticts information abou database, datamatrix and columns.</Hint>
+      <Hint>This will reload the structure and statisticts information about the database, datamatrix and columns.</Hint>
     </Action>
   </Actions>
   <Sockets>
     <Socket>
       <Name>OdbcConnectionString</Name>
       <Label>ODBC connection string</Label>
-      <Hint>Connection string for ODBC data source that defines database for analyzing.</Hint>
+      <Hint>Connection string for ODBC data source that defines database to be analyzed.</Hint>
     </Socket>
     <Socket>
       <Name>DatabaseName</Name>
@@ -66,11 +66,11 @@
     </Phrase>
     <Phrase>
       <PhraseIdentifier>ActionTestConnectionStringSucceed</PhraseIdentifier>
-      <PhraseText>Connecting to database with specified connection string succeeded.</PhraseText>
+      <PhraseText>Connecting to the database with specified connection string succeeded.</PhraseText>
     </Phrase>
     <Phrase>
       <PhraseIdentifier>ActionTestConnectionStringFailed</PhraseIdentifier>
-      <PhraseText>Connecting to database with specified connection string failed!</PhraseText>
+      <PhraseText>Connecting to the database with specified connection string failed!</PhraseText>
     </Phrase>
   </Phrases>
 </BoxLocalization>

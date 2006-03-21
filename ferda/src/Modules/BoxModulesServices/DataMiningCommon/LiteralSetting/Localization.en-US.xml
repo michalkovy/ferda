@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>DataMiningCommon.LiteralSetting</Identifier>
   <Label>Literal setting</Label>
-  <Hint>empty</Hint>
+  <Hint>A setting of basic attribute or its negation</Hint>
   <Categories>
     <Category>
       <Name>BooleanAttribute</Name>

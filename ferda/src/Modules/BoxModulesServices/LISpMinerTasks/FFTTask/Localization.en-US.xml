@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><BoxLocalization xmlns="http://ferda.is-a-geek.net">
   <Identifier>LISpMinerTasks.FFTTask</Identifier>
   <Label>4ft Task</Label>
-  <Hint>Data mining procedure 4ft-Miner mines for various types of association rules. Rules based on statistical hypothesis test and conditional association rules are also included.</Hint>
+  <Hint>Data mining procedure 4ft-Miner mines for various types of association rules above four-fold contingency table. Rules based on statistical hypothesis test and conditional association rules are also included. </Hint>
   <Categories>
     <Category>
       <Name>FFTMiner</Name>

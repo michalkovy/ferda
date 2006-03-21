@@ -24,7 +24,7 @@
     <Socket>
       <Name>Formula</Name>
       <Label>Formula</Label>
-      <Hint>Formula to calculate column values.</Hint>
+      <Hint>Formula of the column. The name will not be enclosed in apostrophes in the SQL query.</Hint>
     </Socket>
     <Socket>
       <Name>ValueSubType</Name>
