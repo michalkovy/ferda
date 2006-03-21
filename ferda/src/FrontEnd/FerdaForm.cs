@@ -1409,7 +1409,7 @@ using Ferda.ModulesManager;
 
         #region OwnerOfAddIn implementation
         /// <summary>
-        /// Method ShowForm
+        /// Method ShowForm, shows a form 
         /// </summary>
         /// <param name="form">A  System.Windows.Forms.Form</param>
         public void ShowForm(Form form)
@@ -1418,7 +1418,7 @@ using Ferda.ModulesManager;
         }
 
         /// <summary>
-        /// Method ShowDialog
+        /// Method ShowDialog, shows a dialog
         /// </summary>
         /// <param name="form">A  System.Windows.Forms.Form</param>
         public System.Windows.Forms.DialogResult ShowDialog(Form form)
@@ -1427,7 +1427,7 @@ using Ferda.ModulesManager;
         }
 
         /// <summary>
-        /// Method ShowDockableControl
+        /// The method shows a control and docks it into the FrontEnd environment
         /// </summary>
         /// <param name="userControl">A  System.Windows.Forms.UserControl</param>
         /// <param name="name">Text of the control</param>
@@ -1475,6 +1475,37 @@ using Ferda.ModulesManager;
             {
                 return projectManager;
             }
+        }
+
+        /// <summary>
+        /// Opens a pdf that is located in the path in the parameter
+        /// and jumps to 
+        /// </summary>
+        /// <param name="path">Path to the pdf file</param>
+        /// <param name="destination">named destination in the pdf where
+        /// the Acrobat reader should jump</param>
+        public void OpenPdfAndDestination(string path, string destination)
+        {
+            FrontEndCommon.OpenPdfAndDestination(path, destination, ResManager);
+        }
+
+        /// <summary>
+        /// Opens a pdf that is located in the path in the parameter
+        /// </summary>
+        /// <param name="path">Path to the pdf file</param>
+        public void OpenPdf(string path)
+        {
+            FrontEndCommon.OpenPdf(path, ResManager);
+        }
+
+        /// <summary>
+        /// Function returns the directory where the FerdaFrontEnd.exe file
+        /// (current assembly) is located
+        /// </summary>
+        /// <returns>The path where the assembly is located</returns>
+        public string GetBinPath()
+        {
+            return FrontEndCommon.GetBinPath();
         }
 
         #endregion
