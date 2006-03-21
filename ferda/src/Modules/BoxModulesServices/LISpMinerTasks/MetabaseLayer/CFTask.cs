@@ -58,14 +58,15 @@ namespace Ferda.Modules.MetabaseLayer
                 hypothesisStruct = new HypothesisStruct();
                 hypothesisStruct.booleanLiterals = common.GetBooleanLiterals(taskID, hypothesisID);
                 hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.CF, taskID, hypothesisID, taskDescription);
-           //     hypothesisStruct.literals = common.Get
+                //  hypothesisStruct.literals = common.Get
                 //  hypothesisStruct.literals = common.Get
                 LiteralStruct columnLiteral = new LiteralStruct();
                 columnLiteral.cedentType = CedentEnum.Antecedent;
                 columnLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["CFLiteralDID"])];
-               // hypothesisStruct.literals = new LiteralStruct[] { rowLiteral, columnLiteral };
+                //  hypothesisStruct.literals = new LiteralStruct[] { rowLiteral, columnLiteral };
 
                 quantifierSetting = new AbstractQuantifierSetting();
+                quantifierSetting.numericValues = common.GetNumericValues(common.GetAttributeStruct(columnLiteral.literalIdentifier));
                 quantifierSetting.firstContingencyTableRows = common.GetContingecyTable(this.taskType, taskID, hypothesisID, 0, columnLiteral.literalIdentifier);
                 quantifierSetting.secondContingencyTableRows = new int[0][];
                 quantifierSetting.allObjectsCount = allObjectsCount;

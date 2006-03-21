@@ -8,13 +8,13 @@
       <Label>SD4ft-Miner</Label>
     </Category>
   </Categories>
-  <Actions>
-    <Action>
-      <Name>Run</Name>
-      <Label>Run</Label>
-      <Hint>This will run SD4ftMiner procedure (it means run generation of hypotheses)</Hint>
-    </Action>
-  </Actions>
+  <!--<Actions>
+			<Action>
+				<Name>Run</Name>
+				<Label>Run</Label>
+				<Hint>This will run SD4ftMiner procedure (it means run generation of hypotheses)</Hint>
+			</Action>
+		</Actions>-->
   <Sockets>
     <Socket>
       <Name>AntecedentSetting</Name>

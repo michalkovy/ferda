@@ -7,5 +7,14 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers.Functional.Varia
 {
 	class VariationRatioFunctionsI : AbstractCFTaskQuantifierFunctionsFunctional
 	{
-	}
+        protected override bool useNumericValues
+        {
+            get { return false; }
+        }
+
+        protected override ContingencyTable.QuantifierValue<OneDimensionalContingencyTable> valueFunctionDelegate
+        {
+            get { return OneDimensionalContingencyTable.GetVariationRatio; }
+        }
+    }
 }

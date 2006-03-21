@@ -7,5 +7,14 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.Geo
 {
 	class GeometricAverageFunctionsI : AbstractSDCFTaskQuantifierFunctionsFunctional
 	{
+        protected override bool useNumericValues
+        {
+            get { return true; }
+        }
+
+        protected override ContingencyTable.QuantifierValue<OneDimensionalContingencyTable> valueFunctionDelegate
+        {
+            get { return OneDimensionalContingencyTable.GetGeometricAverage; }
+        }
 	}
 }

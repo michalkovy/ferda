@@ -206,6 +206,7 @@ module Ferda {
 				{
 					IntSeqSeq firstContingencyTableRows;
 					IntSeqSeq secondContingencyTableRows;
+					DoubleSeq numericValues; // for CF&SDCF quantifeirs over numeric values of the attribute
 					long allObjectsCount;
 				};
 
@@ -217,7 +218,6 @@ module Ferda {
 				struct LiteralStruct {
 					CedentEnum cedentType;
 					StringSeq categoriesNames;
-					DoubleSeq numericValues;
 					string literalName;
 					double categoriesValues;
 					int literalIdentifier;

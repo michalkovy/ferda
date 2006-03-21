@@ -60,16 +60,14 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers
 		}
 		#endregion
 
-        /* TODO uncoment 
         /// <summary>
         /// Gets the value function delegate.
         /// </summary>
         /// <value>The value function delegate.</value>
-		protected abstract ContingencyTable.QuantifierValue<TwoDimensionalContingencyTable> valueFunctionDelegate
+		protected abstract ContingencyTable.QuantifierValue<OneDimensionalContingencyTable> valueFunctionDelegate
 		{
 			get;
 		}
-		 */
 
         #region Functions
         /// <summary>
@@ -149,21 +147,15 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers
         /// <returns></returns>
 		public override double Value(AbstractQuantifierSetting setting, Ice.Current __current)
 		{
-            //TODO CF Quantifiers
-			return 0;
-			/*
-			TwoDimensionalContingencyTable table = new TwoDimensionalContingencyTable(setting.firstContingencyTableRows);
-			table.StartColumnBound = ColumnFrom;
-			table.StartRowBound = RowFrom;
-			table.EndColumnBound = ColumnTo;
-			table.EndRowBound = RowTo;
+            OneDimensionalContingencyTable table = new OneDimensionalContingencyTable(setting.firstContingencyTableRows);
+            table.StartColumnBound = CategoryRangeFrom;
+            table.EndColumnBound = CategoryRangeTo;
 
-			return ContingencyTable.Value<TwoDimensionalContingencyTable>(
-				valueFunctionDelegate,
-				table,
-				Units,
-				setting.allObjectsCount);
-			 */
+            return OneDimensionalContingencyTable.Value<OneDimensionalContingencyTable>(
+                valueFunctionDelegate,
+                table,
+                Units,
+                setting.allObjectsCount);
 		}
 	}
 
@@ -179,6 +171,12 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers
 		#endregion
 
         /// <summary>
+        /// Gets a value indicating whether the quenatifier uses numeric values.
+        /// </summary>
+        /// <value><c>true</c> if the quenatifier uses numeric values; otherwise, <c>false</c>.</value>
+        protected abstract bool useNumericValues { get; }
+
+        /// <summary>
         /// Gets the value of the quantifier above specified <c>setting</c>.
         /// </summary>
         /// <param name="setting">The setting.</param>
@@ -186,19 +184,33 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers
         /// <returns></returns>
 		public override double Value(AbstractQuantifierSetting setting, Ice.Current __current)
 		{
-            //TODO CF Quantifiers
-			return 0;
-			/*
-			TwoDimensionalContingencyTable table = new TwoDimensionalContingencyTable(setting.firstContingencyTableRows);
-			table.StartColumnBound = ColumnFrom;
-			table.StartRowBound = RowFrom;
-			table.EndColumnBound = ColumnTo;
-			table.EndRowBound = RowTo;
+            OneDimensionalContingencyTable table = new OneDimensionalContingencyTable(setting.firstContingencyTableRows);
 
-			return ContingencyTable.Value<TwoDimensionalContingencyTable>(
-				valueFunctionDelegate,
-				table);
-			 */
+            if (!useNumericValues)
+            {
+                return OneDimensionalContingencyTable.Value<OneDimensionalContingencyTable>(
+                    valueFunctionDelegate,
+                    table,
+                    UnitsEnum.AbsoluteNumber,
+                    0);
+            }
+            else
+            {
+                if (
+                    setting.numericValues == null
+                    || setting.firstContingencyTableRows[0] == null //this should never happend
+                    || setting.numericValues.Length != setting.firstContingencyTableRows[0].Length
+                    )
+                    return 0;
+
+                table.NumericValues = setting.numericValues;
+
+                return OneDimensionalContingencyTable.Value<OneDimensionalContingencyTable>(
+				    valueFunctionDelegate,
+				    table,
+                    UnitsEnum.AbsoluteNumber,
+                    0);
+            }
 		}
 	}
 }

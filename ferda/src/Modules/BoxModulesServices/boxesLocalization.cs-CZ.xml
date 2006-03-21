@@ -1156,13 +1156,13 @@
 				<Label>4ft-Miner</Label>
 			</Category>
 		</Categories>
-		<Actions>
+		<!--<Actions>
 			<Action>
 				<Name>Run</Name>
 				<Label>Spusť</Label>
 				<Hint>Spustí 4ft-Miner proceduru (tj. spustí generování hypotéz)</Hint>
 			</Action>
-		</Actions>
+		</Actions>-->
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
@@ -1287,13 +1287,13 @@
 				<Label>SD4ft-Miner</Label>
 			</Category>
 		</Categories>
-		<Actions>
+		<!--<Actions>
 			<Action>
 				<Name>Run</Name>
 				<Label>Spusť</Label>
 				<Hint>Spustí SD4ft-Miner proceduru (tj. spustí generování hypotéz)</Hint>
 			</Action>
-		</Actions>
+		</Actions>-->
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
@@ -1443,13 +1443,13 @@
 				<Label>CF-Miner</Label>
 			</Category>
 		</Categories>
-		<Actions>
+		<!--<Actions>
 			<Action>
 				<Name>Run</Name>
 				<Label>Spusť</Label>
 				<Hint>Spustí CF-Miner proceduru (tj. spustí generování hypotéz)</Hint>
 			</Action>
-		</Actions>
+		</Actions>-->
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
@@ -1531,13 +1531,13 @@
 				<Label>SDCF-Miner</Label>
 			</Category>
 		</Categories>
-		<Actions>
+		<!--<Actions>
 			<Action>
 				<Name>Run</Name>
 				<Label>Spusť</Label>
 				<Hint>Spustí SDCF-Miner proceduru (tj. spustí generování hypotéz)</Hint>
 			</Action>
-		</Actions>
+		</Actions>-->
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
@@ -1659,13 +1659,13 @@
 				<Label>KL-Miner</Label>
 			</Category>
 		</Categories>
-		<Actions>
+		<!--<Actions>
 			<Action>
 				<Name>Run</Name>
 				<Label>Spusť</Label>
 				<Hint>Spustí KL-Miner proceduru (tj. spustí generování hypotéz)</Hint>
 			</Action>
-		</Actions>
+		</Actions>-->
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
@@ -1752,13 +1752,13 @@
 				<Label>SDKL-Miner</Label>
 			</Category>
 		</Categories>
-		<Actions>
+		<!--<Actions>
 			<Action>
 				<Name>Run</Name>
 				<Label>Spusť</Label>
 				<Hint>Spustí SDKL-Miner proceduru (tj. spustí generování hypotéz)</Hint>
 			</Action>
-		</Actions>
+		</Actions>-->
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
