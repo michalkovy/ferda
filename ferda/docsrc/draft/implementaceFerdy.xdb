@@ -370,13 +370,13 @@
       <title>Formalismus krabiček</title>
       
       <para> Zjednodušme nyní na chvíli krabičku pro menší formalismus.
-      Krabička je dvojice &lt;S,F&gt;, kde S je množina zásuvek a F je množina
-      funkcí.	Zásuvka je dvojice &lt;n,T&gt;, kde  n je identifikátor zásuvky
-      a T je množina typů krabiček.  Dále máme predikát has(f,i), který říká,
+      Krabička je dvojice &lt;S, F&gt;, kde S je množina zásuvek a F je množina
+      funkcí.	Zásuvka je dvojice &lt;n, T&gt;, kde  n je identifikátor zásuvky
+      a T je množina typů krabiček.  Dále máme predikát has(f, i), který říká,
       zda má funkce f Ice identifikátor i.</para>
       
-      <para> Typ krabičky je dvojice &lt;i,S&gt;, kde i je Ice identifikátor a
-      S je množina dvojic &lt;n,i&gt;, kde n je identifikátor zásuvky a i je
+      <para> Typ krabičky je dvojice &lt;i, S&gt;, kde i je Ice identifikátor a
+      S je množina dvojic &lt;n, i&gt;, kde n je identifikátor zásuvky a i je
       Ice identifikátor.</para>
       
       <para>
@@ -434,12 +434,13 @@
 
     <para>Manažer modulů zprostředkovává metody, které odpovídají rozhraním
     BoxModuleFactoryCreator a BoxModuleFactory u modulů rozhraním
-    IBoxModuleFactoryCreator. Neobsahuje však metody potřebné pro vzdálený
-    garbage collection, protože o ten se stará sám manažer modulů. Proto
-    také dvoum rozhraní na straně modulů odpovídá jedno na straně manažeru
-    modulů. Rozhraní IBoxModuleFactoryCreator pak vytváří instance implementace
-    rozhraní IBoxModule, které odpovídá rozhraní BoxModule na straně
-    modulů.</para>
+    IBoxModuleFactoryCreator. Toto rozhraní však neobsahuje metody potřebné pro
+    vzdálený garbage collection, protože sám manažer modulů obsluhuje u modulů
+    tyto metody (například periodicky volá metodu refresh, aby tím dal na
+    vědomí, že stále žije). Proto také dvoum rozhraní na straně modulů
+    odpovídá jedno na straně manažeru modulů. Rozhraní IBoxModuleFactoryCreator
+    pak vytváří instance implementace rozhraní IBoxModule, které odpovídá
+    rozhraní BoxModule na straně modulů.</para>
 
     <para>Jak IBoxModule tak IBoxModuleFactoryCreator má v manažeru modulů dvě
     implementace. První komunikuje přes Ice právě s implementacemi rozhraní
@@ -450,6 +451,23 @@
     krabyčky B, C a D, ve skutečnosti z pohledu modulů jsou krabičky B, C a D
     zapojeny přímo do krabičky A.</para>
 
-    <para></para>
+    <para>Manažer modulů přidává krabičkám uživatelský popisek, poznámku a
+    identifikátor projektu, který využívá manažer projektů k identifikaci
+    krabičky v rámci projektu.</para>
+
+    <para>Manažer modulů nabízí modulům k dispozici čtyři rozhraní - Output,
+    umožňující vypisovat hlášky na pracovní plochu,
+    BoxModuleProjectInformation, pomocí kterého lze zjistit uživatelský
+    popisek, poznámku či identifikaci v rámci projektu, BoxModuleLocker, který
+    umožňuje říct, že uživatel nemůže měnit vlastnosti jistých krabiček (to se
+    hodí například při běhu akce krabičky, kdy krabička může přistupovat k
+    vlastnostem a neměly by se tedy po dobu běhu akce měnit) a nakonec
+    ManagersLocator, který umožňuje vyhledat moduly.</para>
+   
+    <para>Zřejmě bude v budoucnosti manažer modulů modulům nabízet více
+    rozhraní.  Například se uvažuje o rozhraních na ukázání progress baru, na
+    validování stavu krabiček, vylepší se rozhraní na vyhledávání modulů (aby
+    se využilo naplno možností IceGridu, původní návrh využíval pouze IcePack)
+    a také za uváženou stojí vylepšení rozhraní Output.</para>
   </section>
 </article>
