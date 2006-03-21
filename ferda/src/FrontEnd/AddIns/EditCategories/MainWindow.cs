@@ -272,6 +272,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     this.ButtonDelete.Enabled = false;
                     this.ButtonEdit.Enabled = false;
                     this.MenuItemRename.Enabled = false;
+                    this.MenuItemDelete.Enabled = false;
+                    this.MenuItemEdit.Enabled = false;
                     int[] indexes = new int[view.SelectedItems.Count];
                     for (int i = 0; i < view.SelectedItems.Count; i++)
                     {
@@ -546,7 +548,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <returns>FerdaSmartDataList with categories</returns>
         private FerdaSmartDataList MyIceRun(Modules.CategoriesStruct existingCategories)
         {
-            //here we need to fill our data structure with Tomas data
+            //here we need to fill our data structure with data from ice
             ArrayList allValues = new ArrayList();
             if (this.distinctValues != null)
             {

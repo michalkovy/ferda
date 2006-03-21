@@ -13,7 +13,7 @@
       </author>
     </authorgroup>
 
-    <pubdate>2006-03-13</pubdate>
+    <pubdate>2006-03-21</pubdate>
 
     <title>EditCategories module - Module for editing categories</title>
 
@@ -23,7 +23,7 @@
     <revhistory>
       <revision>
         <revnumber>1.0</revnumber>
-        <date>2006-01-24</date>
+        <date>2006-03-21</date>
         <revremark>Initial version of the document
         </revremark>
       </revision>

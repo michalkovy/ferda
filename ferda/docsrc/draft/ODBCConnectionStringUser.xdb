@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <firstname>Alexander</firstname>
+
+        <surname>Kuzmin</surname>
+
+        <email>alexander.kuzmin@gmail.com</email>
+      </author>
+    </authorgroup>
+
+    <pubdate>2006-03-21</pubdate>
+
+    <title>ODBCConnectionString module - Module for setting the ODBC
+    connection string</title>
+
+    <titleabbrev>ODBCConnectionString</titleabbrev>
+
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2006-03-21</date>
+        <revremark>Initial version of the document
+        </revremark>
+      </revision>
+    </revhistory>
+    -->
+  </articleinfo>
+
+  <abstract>
+    <para>This document describes the user interface for ODBCConnectionString
+    module. It contains some simple examples and screenshots for the users to
+    make using of this module easier.</para>
+  </abstract>
+
+  <section>
+    <title>Introduction</title>
+
+    <para>Welcome to ODBC Connection String module. This is a module designed
+    for setting up your ODBC connection in order to run Ferda.</para>
+  </section>
+
+  <section>
+    <title>Parts of the user interface</title>
+
+    <section>
+      <title>Main dialog window</title>
+
+      <para>Main dialog window contains elements necessary to set up a
+      connection string. Those are:</para>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="ODBCConnectionStringMain.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+
+      <itemizedlist>
+        <listitem>
+          <formalpara>
+            <title>Datasource selection combobox</title>
+
+            <para>Combobox lists all of the available datasources for your
+            system. You can easily create new ones by using the Create ODBC
+            source... button on the toolbar.</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Refresh button</title>
+
+            <para>In case you have created a new datasource while having ODBC
+            Connection string dialog opened, you have to click on Refresh
+            button in order to see the newly created datasource in the
+            available datasources combobox. If you have created a new
+            datasource using Create ODBC Source... button on the toolbar, the
+            listbox will refresh itself automatically.</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Custom connection string textbox</title>
+
+            <para>You have the possibility to use your own connection string.
+            You should enter it here in this case.</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Username</title>
+
+            <para>Input your username for the ODBC datasource here</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Password</title>
+
+            <para>Input your password for the ODBC datasource here</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Empty password</title>
+
+            <para>Allows to use empty password</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Allow to save password</title>
+
+            <para>Allows the password to be saved</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Resulting connection string</title>
+
+            <para>The resulting connection string based on the selected
+            options is displayed here</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Status bar</title>
+
+            <para>Current connection string is displayed in the status bar on
+            the bottom of the dialog</para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Toolbar</title>
+
+      <para>Toolbar contains some tools to help you to set up the ODBC
+      connection. It contains the following buttons:</para>
+
+      <itemizedlist>
+        <listitem>
+          <formalpara>
+            <title>OK</title>
+
+            <para>When you have finished setting up the connection string, you
+            should click this button to save and use the connection string you
+            have set up. This will also close the ODBC Connection string
+            module.</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Cancel</title>
+
+            <para>When you have finished setting up the connection string but
+            do not want to save the changes, click on this button to leave
+            current connection string unchanged. This will also close the ODBC
+            Connection String module.</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Test</title>
+
+            <para>Clicking on this button will test a new ODBC connection you
+            have created. The module will report whether the connection using
+            the tested connection string has succeded or failed. The button
+            will be activated after you have selected enough parameters for
+            the connection string.</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Create ODBC Source...</title>
+
+            <para>Clicking on this button will open a Windows dialog for
+            creating a new ODBC datasource. Please refer to appropriate
+            documentation. After creating a new ODBC datasource you can use it
+            when creating a connection string.</para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+</article>
