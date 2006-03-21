@@ -585,13 +585,17 @@ namespace Ferda.Modules.MetabaseLayer
             return (commandResult == System.DBNull.Value || commandResult == null) ? 0 : Convert.ToInt32(commandResult);
         }
 
+        public static long TimeOfInserts = 0;
+
         public void ExecuteInsertQuery(string query, string tableName)
         {
 #if TRACE_SQL_QUERIES
             System.Diagnostics.Debug.WriteLine(tableName + ": " + query);
 #endif
             OdbcCommand command = new OdbcCommand(query, connection);
+            DateTime timeBefore = System.DateTime.Now;
             int affectedRowsCount = command.ExecuteNonQuery();
+            TimeOfInserts += (System.DateTime.Now - timeBefore).Ticks;
             //if (affectedRowsCount == 0) //maybe bug
             if (affectedRowsCount != 1)
                 System.Diagnostics.Debug.WriteLine("WARNING!: MetabaseLayer.Common.ExecuteInsertQuery(" + query + ") : " + affectedRowsCount.ToString());
