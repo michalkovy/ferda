@@ -15,7 +15,7 @@
   </articleinfo>
 
   <abstract>
-    <para>Tento text podrobně rozebírá architekturu Ferdy a zabívá se tím, proč
+    <para>Tento text podrobně rozebírá architekturu Ferdy a zabývá se tím, proč
     byl navržen právě tak.</para>
   </abstract>
 
@@ -57,7 +57,7 @@
     uplatnili, či uplatní.</para>
 
     <para>Dívali jsme se, zda neexistuje nějaká knihovna, která umí pěkně
-    kreslit grafy s krabičkami. Zdálo se nám, že ideální pro to je knivovna
+    kreslit grafy s krabičkami. Zdálo se nám, že ideální pro to je knihovna
     Netron Graph Library, která byla v době volby ve verzi 2.1. Bohužel se však
     ukázalo, že v ní bylo třeba udělat několik netriviálních zásahů, že není
     úplně nejrychlejší a má několik chyb. Ve verzi 2.2 bylo uděláno v této
@@ -79,7 +79,7 @@
   </section>
 
   <section>
-    <title>Jaká předsevzedí jsme si dali pro implementaci</title>
+    <title>Jaká předsevzetí jsme si dali pro implementaci</title>
 
     <para>Jednotlivé komponenty systému LISp-Miner, nad kterým jsme Ferdu
     budovali, vytvářeli různí lidé. Protože jsme viděli Ferdu nejen jako obal
@@ -89,7 +89,7 @@
     <para>Systém LISp-Miner používá pro propojení jednotlivých částí systému
     tzv. metabázi. Je to databáze, která má jistý formát. Při vytváření nové
     komponenty systému bylo často nutné formát metabáze změnit, což muselo být
-    buď přímo či sprostředkovaně uděláno za pomoci správce verzí metabáze (Ing.
+    buď přímo či zprostředkovaně uděláno za pomoci správce verzí metabáze (Ing.
     Milana Šimůnka, Ph.D.). Tím, že byla metabáze takto nabalována, došlo k
     tomu, že její formát je daleko horší, než kdyby byla od začátku vytvářena
     se znalostí všech budoucích komponent. Propojení na úrovni metabáze je také
@@ -127,12 +127,12 @@
     pozornost a byla vyvinuta řada mechanismů, jenž by měla tyto problémy
     řešit.</para>
 
-    <para>To, co jsme také udělali narozdíl od konkurence, je, že krabičky mezi
-    soubou a s vyššími vrstvami komunikují přes middleware (Ice). To umožňuje,
+    <para>To, co jsme také udělali na rozdíl od konkurence, je, že krabičky mezi
+    sebou a s vyššími vrstvami komunikují přes middleware (Ice). To umožňuje,
     že každá krabička může teoreticky běžet na jiném počítači (zároveň uživatel
     může sedět jinde, než probíhá výpočet) a že je možné psát krabičky ve
     větším počtu programovacích jazyků. Na druhou stranu to přináší nutnost
-    alespoň malé znalosti Ice pro vytvářní nové krabičky. Ice je však velice
+    alespoň malé znalosti Ice pro vytváření nové krabičky. Ice je však velice
     dobře zdokumentované, a lidé od ZeroC (firma, která vyvýjí Ice) dobře a
     rychle odpovídají na jejich support fóru na dotazy.</para>
   </section>
@@ -380,16 +380,16 @@
       Ice identifikátor.</para>
       
       <para>
-        Řekneme, že krabička &lt;S,F&gt; je typu &lt;i,Z&gt; právě tehdy když
+        Řekneme, že krabička &lt;S, F&gt; je typu &lt;i, Z&gt; právě tehdy když
         <itemizedlist>
           <listitem>
-	    <para>Pro každou dvojici &lt;n,j&gt; v Z existuje dvojice
-	    &lt;m,T&gt; v S, že existuje dvojice &lt;y,W&gt; v T taková, že m=n
-	    a j=y.</para>
+	    <para>Pro každou dvojici &lt;n, j&gt; v Z existuje dvojice
+	    &lt;m, T&gt; v S, že existuje dvojice &lt;y, W&gt; v T taková, že m = n
+	    a j = y.</para>
           </listitem>
   
           <listitem>
-            <para>Existuje f v F taková, že platí predikát has(f,i).</para>
+            <para>Existuje f v F taková, že platí predikát has(f, i).</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -432,8 +432,24 @@
   <section>
     <title>Implementace manažeru modulů</title>
 
-    <para></para>
+    <para>Manažer modulů zprostředkovává metody, které odpovídají rozhraním
+    BoxModuleFactoryCreator a BoxModuleFactory u modulů rozhraním
+    IBoxModuleFactoryCreator. Neobsahuje však metody potřebné pro vzdálený
+    garbage collection, protože o ten se stará sám manažer modulů. Proto
+    také dvoum rozhraní na straně modulů odpovídá jedno na straně manažeru
+    modulů. Rozhraní IBoxModuleFactoryCreator pak vytváří instance implementace
+    rozhraní IBoxModule, které odpovídá rozhraní BoxModule na straně
+    modulů.</para>
 
-    <para>Krabička skupina</para>
+    <para>Jak IBoxModule tak IBoxModuleFactoryCreator má v manažeru modulů dvě
+    implementace. První komunikuje přes Ice právě s implementacemi rozhraní
+    BoxModuleFactory, BoxModuleFactoryCreator a BoxModule.  Druhá pak pro
+    uživatelské prostředí vytváří speciální krabičku Skupina. Tato krabička se
+    na první pohled pro uživatele tváří jako obyčejná krabička. Má jednu
+    zásuvku a pokud je zapojena do jisté krabičky A a jsou do ní zapojeny
+    krabyčky B, C a D, ve skutečnosti z pohledu modulů jsou krabičky B, C a D
+    zapojeny přímo do krabičky A.</para>
+
+    <para></para>
   </section>
 </article>
