@@ -422,6 +422,10 @@ namespace Ferda {
 				this.lnkHelper.ManagersEngineI.ManagersLocatorI.AddIceObjectProxies(proxies);
             }
 
+            /// <summary>
+            /// Unlocks all boxes
+            /// </summary>
+            /// <seealso cref="M:Ferda.ModulesManager.BoxModule.Lock()"/>
             public void UnlockAllBoxes()
             {
                 foreach (Ferda.ModulesManager.BoxModule box in boxModuleByProxyIdentity.Values)

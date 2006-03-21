@@ -1928,6 +1928,7 @@ namespace Ferda.FrontEnd.Properties
                 if (SelectedBox.TryWriteEnter())
                 {
                     SelectedBox.SetPropertySocking(propertyName, (bool)e.Value);
+                    SelectedBox.WriteExit();
                 }
                 else
                 {

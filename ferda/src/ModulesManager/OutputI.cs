@@ -1,4 +1,4 @@
-// 
+// OutputI.cs - basic implementation of output interface for modules
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -25,17 +25,16 @@ namespace Ferda {
     namespace ModulesManager {
 
         /// <summary>
-        /// Summary description for the class.
+        /// Basic implementation of output interface for modules
         /// </summary>
-
         public class OutputI : OutputDisp_ {
 
             /// <summary>
-            /// Method writeMsg
+            /// Method writeMsg writes message to console
             /// </summary>
-            /// <param name="type">A  Ferda.ModulesManager.MsgType</param>
-            /// <param name="name">A string</param>
-            /// <param name="message">A string</param>
+            /// <param name="type">A Ferda.ModulesManager.MsgType saying type of message</param>
+            /// <param name="name">Name of message</param>
+            /// <param name="message">Text of message</param>
             /// <param name="__current">An Ice.Current</param>
             public override void writeMsg(MsgType type, String name, String message, Current __current) {
                 string msg = name + ": " + message;

@@ -87,7 +87,8 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
                 BoxExceptionClass c = new BoxExceptionClass(box, error.userMessage, ownerOfAddIn);
                 Thread th = new Thread(new ThreadStart(c.ThreadStart));
                 th.Start();
-                th.Join();
+                //Do not do this there:
+                //th.Join();
                 parentDialog.AsyncClose();
             }
             //TODO: other exceptions from IBoxModule.RunAction()

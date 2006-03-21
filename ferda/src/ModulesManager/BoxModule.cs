@@ -1,4 +1,4 @@
-// 
+// BoxModule.cs - class for normal boxes
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
