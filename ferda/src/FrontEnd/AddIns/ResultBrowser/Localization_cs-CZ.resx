@@ -141,11 +141,14 @@
   <data name="ColumnAntecedent" xml:space="preserve">
     <value>Antecedent</value>
   </data>
+  <data name="ColumnAttribute" xml:space="preserve">
+    <value>Sloupcový atribut</value>
+  </data>
   <data name="ColumnCondition" xml:space="preserve">
     <value>Podmínka</value>
   </data>
   <data name="ColumnHypothesisName" xml:space="preserve">
-    <value>Jméno hypotézy</value>
+    <value>Hypotéza</value>
   </data>
   <data name="ColumnSuccedent" xml:space="preserve">
     <value>Sukcedent</value>
@@ -224,6 +227,9 @@
   </data>
   <data name="ResultBrowserModule" xml:space="preserve">
     <value>Modul pro prohlížení výsledků</value>
+  </data>
+  <data name="RowAttribute" xml:space="preserve">
+    <value>Řádkový atribut</value>
   </data>
   <data name="SecondContingencyTable" xml:space="preserve">
     <value>Druhá kontingenční tabulka</value>

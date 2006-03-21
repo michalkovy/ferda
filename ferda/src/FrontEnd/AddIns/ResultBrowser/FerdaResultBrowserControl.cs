@@ -87,6 +87,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// Count of hypotheses
         /// </summary>
         private int hypothesesCount = 0;
+        
+        /// <summary>
+        /// TaskType
+        /// </summary>
+        private string taskType = String.Empty;
 
         #endregion
 
@@ -101,7 +106,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="used_quantifiers">Used quantifiers</param>
         /// <param name="Displayer">Propertygrid</param>
         /// <param name="statisticsProxies">Statistics proxies</param>
-        public FerdaResultBrowserControl(string[] localePrefs, HypothesisStruct[] hypotheses, QuantifierProvider[] used_quantifiers, IOtherObjectDisplayer Displayer, List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies)
+        public FerdaResultBrowserControl(string[] localePrefs, HypothesisStruct[] hypotheses, QuantifierProvider[] used_quantifiers, IOtherObjectDisplayer Displayer, List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies, string taskType)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -206,7 +211,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             //adding hypotheses
             int i = 0;
-            foreach (KeyValuePair<int, HypothesisStruct> hypothesis in resultBrowser.AllFilteredHypotheses)
+            Dictionary<int,HypothesisStruct> hypoTemp = resultBrowser.AllFilteredHypotheses;
+            foreach (KeyValuePair<int, HypothesisStruct> hypothesis in hypoTemp)
             {
                 ListViewItem item = new ListViewItem(FerdaResult.GetHypothesisName(hypothesis.Value));
 
@@ -220,7 +226,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 item.SubItems.Add(FerdaResult.GetConditionString(hypothesis.Value));
 
                 //quantifiers
-                foreach (double value in resultBrowser.ReadSelectedQuantifiersFromCache(i, precision))
+                double [] doubleTemp = resultBrowser.ReadSelectedQuantifiersFromCache(i, precision);
+                foreach (double value in doubleTemp)
                 {
                     item.SubItems.Add(value.ToString("N" + precision.ToString()));
                 }
@@ -240,6 +247,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private void Initialize()
         {
+            //renaming columns in case of cf and kl miners
             //adding unused quantifiers in the context menu
             ToolStripMenuItem tempitem;
             foreach (String item in resultBrowser.GetUsedColumnNames())
@@ -343,7 +351,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         #region Handlers
 
         /// <summary>
-        /// Method to complete initialization after ice communication has benn completed
+        /// Method to complete initialization after ice communication has been completed
         /// </summary>
         void resultBrowser_IceComplete()
         {
@@ -862,7 +870,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
                 antFilter.Add(literalName.ToString(), filter);
             }
-
             //succedent
             Dictionary<string, LiteralFilter> sucFilter = new Dictionary<string, LiteralFilter>();
             foreach (object literalName in this.CheckedListBoxSuccedents.Items)
@@ -881,7 +888,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
                 sucFilter.Add(literalName.ToString(), filter);
             }
-
             //condition
             Dictionary<string, LiteralFilter> condFilter = new Dictionary<string, LiteralFilter>();
             foreach (object literalName in this.CheckedListBoxConditions.Items)
@@ -900,7 +906,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
                 condFilter.Add(literalName.ToString(), filter);
             }
-
             this.resultBrowser.AntecedentFilter = antFilter;
             this.resultBrowser.SuccedentFilter = sucFilter;
             this.resultBrowser.ConditionFilter = condFilter;
@@ -942,7 +947,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="rm">Resource manager to handle new l10n resource</param>
         private void ChangeLocale(ResourceManager rm)
         {
-            this.ColumnAntecedent.Text = rm.GetString("ColumnAntecedent");
+            if ((this.taskType == "LISpMinerTasks.SDCKLask") || (this.taskType == "LISpMinerTasks.CFTask") || (this.taskType == "LISpMinerTasks.SDCFTask") || (this.taskType == "LISpMinerTasks.KLTask"))
+            {
+                this.ColumnAntecedent.Text = rm.GetString("RowAttribute");
+            }
+            else
+            {
+                this.ColumnAntecedent.Text = rm.GetString("ColumnAntecedent");
+            }
             this.ColumnCondition.Text = rm.GetString("ColumnCondition");
             this.ColumnHypotheseName.Text = rm.GetString("ColumnHypothesisName");
             this.ColumnSuccedent.Text = rm.GetString("ColumnSuccedent");
@@ -997,4 +1009,3 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         #endregion
     }
 }
-
