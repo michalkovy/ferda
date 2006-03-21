@@ -60,7 +60,7 @@ namespace Ferda.Modules.MetabaseLayer
                 try
                 {
                     string connectionString =
-                        "Driver={" + mdbDriver + "};Dbq=" + lispMinerMetabaseFile + ";Exclusive=1;Uid=admin;Pwd=";
+                        "Driver={" + mdbDriver + "};Dbq=" + lispMinerMetabaseFile + ";Uid=admin;Pwd=";
                     connection = new OdbcConnection(connectionString);
                     connection.Open();
                     ex = null;

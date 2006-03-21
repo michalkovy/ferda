@@ -7,5 +7,14 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.Dis
 {
 	class DiscreteOrdinaryVariationFunctionsI : AbstractSDCFTaskQuantifierFunctionsFunctional
 	{
+        protected override bool useNumericValues
+        {
+            get { return false; }
+        }
+
+        protected override ContingencyTable.QuantifierValue<OneDimensionalContingencyTable> valueFunctionDelegate
+        {
+            get { return OneDimensionalContingencyTable.GetDiscreteOrdinaryVariation; }
+        }
 	}
 }

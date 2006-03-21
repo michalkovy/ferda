@@ -238,91 +238,95 @@ namespace Ferda.Modules.MetabaseLayer
             return result.ToArray();
         }
 
-        private AbstractAttributeStruct GetAttribute(TaskTypeEnum taskType, object taskDescription, string attributeName, CedentEnum cedentType)
-        {
-            switch (taskType)
-            {
-                case TaskTypeEnum.FFT:
-                    break;
-                case TaskTypeEnum.KL:
-                    Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct input = (Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct)taskDescription;
-                    if (cedentType == CedentEnum.Antecedent)
-                    {                        
-                        foreach (CategorialPartialCedentSettingStruct cedent in input.antecedentSetting)
-                        {
-                            foreach (AbstractAttributeStruct attribute in cedent.attributes)
-                            {
-                                if (attribute.nameInLiterals == attributeName)
-                                    return attribute;
-                            }
-                        }                        
-                    }
-                    else if (cedentType == CedentEnum.Succedent)
-                    {
-                        foreach (CategorialPartialCedentSettingStruct cedent in input.succedentSetting)
-                        {
-                            foreach (AbstractAttributeStruct attribute in cedent.attributes)
-                            {
-                                if (attribute.nameInLiterals == attributeName)
-                                    return attribute;
-                            }
-                        }
-                    }
-                    break;
-                case TaskTypeEnum.CF:
-                    Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct input1 = (Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct)taskDescription;
-                    foreach (CategorialPartialCedentSettingStruct cedent in input1.antecedentSetting)
-                    {
-                        foreach (AbstractAttributeStruct attribute in cedent.attributes)
-                        {
-                            if (attribute.nameInLiterals == attributeName)
-                                return attribute;
-                        }
-                    }
-                    break;
-                case TaskTypeEnum.SDFFT:
-                    break;
-                case TaskTypeEnum.SDKL:
-                    Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.TaskStruct input2 = (Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.TaskStruct)taskDescription;
-                    if (cedentType == CedentEnum.Antecedent)
-                    {
-                        foreach (CategorialPartialCedentSettingStruct cedent in input2.antecedentSetting)
-                        {
-                            foreach (AbstractAttributeStruct attribute in cedent.attributes)
-                            {
-                                if (attribute.nameInLiterals == attributeName)
-                                    return attribute;
-                            }
-                        }
-                    }
-                    else if (cedentType == CedentEnum.Succedent)
-                    {
-                        foreach (CategorialPartialCedentSettingStruct cedent in input2.succedentSetting)
-                        {
-                            foreach (AbstractAttributeStruct attribute in cedent.attributes)
-                            {
-                                if (attribute.nameInLiterals == attributeName)
-                                    return attribute;
-                            }
-                        }
-                    }
-                    break;
-                case TaskTypeEnum.SDCF:
-                    Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.TaskStruct input3 = (Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.TaskStruct)taskDescription;
-                    foreach (CategorialPartialCedentSettingStruct cedent in input3.antecedentSetting)
-                    {
-                        foreach (AbstractAttributeStruct attribute in cedent.attributes)
-                        {
-                            if (attribute.nameInLiterals == attributeName)
-                                return attribute;
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-            return null;
-        }
+        //private AbstractAttributeStruct GetAttribute(TaskTypeEnum taskType, object taskDescription, string attributeName, CedentEnum cedentType)
+        //{
+        //    switch (taskType)
+        //    {
+        //        case TaskTypeEnum.FFT:
+        //            break;
+        //        case TaskTypeEnum.KL:
+        //            /*
+        //            Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct input = (Ferda.Modules.Boxes.LISpMinerTasks.KLTask.TaskStruct)taskDescription;
+        //            if (cedentType == CedentEnum.Antecedent)
+        //            {                        
+        //                foreach (CategorialPartialCedentSettingStruct cedent in input.antecedentSetting)
+        //                {
+        //                    foreach (AbstractAttributeStruct attribute in cedent.attributes)
+        //                    {
+        //                        if (attribute.nameInLiterals == attributeName)
+        //                            return attribute;
+        //                    }
+        //                }                        
+        //            }
+        //            else if (cedentType == CedentEnum.Succedent)
+        //            {
+        //                foreach (CategorialPartialCedentSettingStruct cedent in input.succedentSetting)
+        //                {
+        //                    foreach (AbstractAttributeStruct attribute in cedent.attributes)
+        //                    {
+        //                        if (attribute.nameInLiterals == attributeName)
+        //                            return attribute;
+        //                    }
+        //                }
+        //            }
+        //             */
+        //            break;
+        //        case TaskTypeEnum.CF:
+        //            Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct input1 = (Ferda.Modules.Boxes.LISpMinerTasks.CFTask.TaskStruct)taskDescription;
+        //            foreach (CategorialPartialCedentSettingStruct cedent in input1.antecedentSetting)
+        //            {
+        //                foreach (AbstractAttributeStruct attribute in cedent.attributes)
+        //                {
+        //                    if (attribute.nameInLiterals == attributeName)
+        //                        return attribute;
+        //                }
+        //            }
+        //            break;
+        //        case TaskTypeEnum.SDFFT:
+        //            break;
+        //        case TaskTypeEnum.SDKL:
+        //            /*
+        //            Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.TaskStruct input2 = (Ferda.Modules.Boxes.LISpMinerTasks.SDKLTask.TaskStruct)taskDescription;
+        //            if (cedentType == CedentEnum.Antecedent)
+        //            {
+        //                foreach (CategorialPartialCedentSettingStruct cedent in input2.antecedentSetting)
+        //                {
+        //                    foreach (AbstractAttributeStruct attribute in cedent.attributes)
+        //                    {
+        //                        if (attribute.nameInLiterals == attributeName)
+        //                            return attribute;
+        //                    }
+        //                }
+        //            }
+        //            else if (cedentType == CedentEnum.Succedent)
+        //            {
+        //                foreach (CategorialPartialCedentSettingStruct cedent in input2.succedentSetting)
+        //                {
+        //                    foreach (AbstractAttributeStruct attribute in cedent.attributes)
+        //                    {
+        //                        if (attribute.nameInLiterals == attributeName)
+        //                            return attribute;
+        //                    }
+        //                }
+        //            }
+        //             */
+        //            break;
+        //        case TaskTypeEnum.SDCF:
+        //            Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.TaskStruct input3 = (Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.TaskStruct)taskDescription;
+        //            foreach (CategorialPartialCedentSettingStruct cedent in input3.antecedentSetting)
+        //            {
+        //                foreach (AbstractAttributeStruct attribute in cedent.attributes)
+        //                {
+        //                    if (attribute.nameInLiterals == attributeName)
+        //                        return attribute;
+        //                }
+        //            }
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    return null;
+        //}
 
         public LiteralStruct[] GetCategorialLiterals(TaskTypeEnum taskType, int taskID, int hypothesisID, object taskDescription)
         {
@@ -376,55 +380,70 @@ namespace Ferda.Modules.MetabaseLayer
             foreach (DataRow literal in literals.Rows)
             {
                 literalStruct = new LiteralStruct();
-                literalStruct.cedentType = // tenhle cedent type
+                literalStruct.cedentType = 
                     Constants.CedentEnumDictionaryBackward[
                         Convert.ToInt32(literal["CedentTypeID"])];
 
                 literalStruct.literalIdentifier = Convert.ToInt32(literal[tdLiteralIDColumn]);
                 literalStruct.literalName = literal["Name"].ToString();
-                AbstractAttributeStruct attribute = this.GetAttribute(taskType, taskDescription, literalStruct.literalName, literalStruct.cedentType);
-                bool canPass = true;
-                List<double> valueList = new List<double>();
-                if (attribute.categories.enums.Count > 0)
-                {                    
-                    foreach (DictionaryEntry value in attribute.categories.enums)
-                    {
-                        String[] StringSeq = (String[])value.Value;
-                        if (StringSeq.Length == 1)
-                        {
-                            double doubleResult;
-                            if (Double.TryParse(StringSeq[0], out doubleResult))
-                            {
-                                valueList.Add(doubleResult);
-                            }
-                            else
-                            {
-                                canPass = false;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            canPass = false;
-                        }
-                    }
-                }
-                else
-                {
-                    canPass = false;
-                }
-                if (canPass)
-                {
-                    literalStruct.numericValues = valueList.ToArray(); ;
-                }
-                else
-                {
-                    literalStruct.numericValues = null;
-                }
                 literalStruct.categoriesNames = GetCategorialLiteralCategoriesNames(Convert.ToInt32(literal["QuantityID"]));
                 result.Add(literalStruct);
             }
             return result.ToArray();
+        }
+
+        private Dictionary<AbstractAttributeStruct, double[]> numericValuesCache = new Dictionary<AbstractAttributeStruct, double[]>();
+        public double[] GetNumericValues(AbstractAttributeStruct attribute)
+        {
+            if (numericValuesCache.ContainsKey(attribute))
+                return numericValuesCache[attribute];
+            double[] result;
+            bool canPass = true;
+            List<double> valueList = new List<double>();
+            if (
+                attribute != null
+                && attribute.categories.enums.Count > 0
+                && attribute.categories.dateTimeIntervals.Count == 0
+                && attribute.categories.floatIntervals.Count == 0
+                && attribute.categories.longIntervals.Count == 0
+                )
+            {
+                foreach (DictionaryEntry value in attribute.categories.enums)
+                {
+                    String[] StringSeq = (String[])value.Value;
+                    if (StringSeq.Length == 1)
+                    {
+                        double doubleResult;
+                        if (Double.TryParse(StringSeq[0], out doubleResult))
+                        {
+                            valueList.Add(doubleResult);
+                        }
+                        else
+                        {
+                            canPass = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        canPass = false;
+                    }
+                }
+            }
+            else
+            {
+                canPass = false;
+            }
+            if (canPass)
+            {
+                result = valueList.ToArray();
+            }
+            else
+            {
+                result = null;
+            }
+            numericValuesCache.Add(attribute, result);
+            return result;
         }
 
         public int[][] GetContingecyTable(TaskTypeEnum taskType, int taskID, int hypothesisID, int rowAttributeIdentifier, int columnAttributeIdentifier)

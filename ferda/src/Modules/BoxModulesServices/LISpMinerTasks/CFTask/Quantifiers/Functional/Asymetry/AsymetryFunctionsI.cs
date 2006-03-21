@@ -7,5 +7,14 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers.Functional.Asyme
 {
 	class AsymetryFunctionsI : AbstractCFTaskQuantifierFunctionsFunctional
 	{
-	}
+        protected override bool useNumericValues
+        {
+            get { return true; }
+        }
+
+        protected override ContingencyTable.QuantifierValue<OneDimensionalContingencyTable> valueFunctionDelegate
+        {
+            get { return OneDimensionalContingencyTable.GetAsymentry; }
+        }
+    }
 }

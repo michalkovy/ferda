@@ -123,6 +123,7 @@ namespace Ferda.Modules.Quantifiers
 			get
 			{
 				double result = 0;
+                double all = 0;
 
 				int rowIndex = FirstRowIndex;
 				int firstColumnIndex = FirstColumnIndex;
@@ -130,10 +131,15 @@ namespace Ferda.Modules.Quantifiers
 				for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++)
 				{
                     result += Table[rowIndex, columnIndex] * numericValues[columnIndex];
+                    all += Table[rowIndex, columnIndex];
 				}
-                return result / (double)Denominator;
+                return result / (double)Denominator * all;
 			}
 		}
+        public static double GetArithmeticAverage(OneDimensionalContingencyTable table)
+        {
+            return table.ArithmeticAverage;
+        }
 
 		/// <summary>
 		/// See document 093 CF a SDCF Kvantifikátory.doc
@@ -157,6 +163,10 @@ namespace Ferda.Modules.Quantifiers
                 return result / Math.Pow(StandardDeviation, 3) * (double)Denominator;
 			}
 		}
+        public static double GetSkewness(OneDimensionalContingencyTable table)
+        {
+            return table.Skewness;
+        }
 
 		/// <summary>
 		/// See document 093 CF a SDCF Kvantifikátory.doc
@@ -187,6 +197,10 @@ namespace Ferda.Modules.Quantifiers
                 return (numberOfValuesGreaterThanAverage - numberOfValuesLessThanAverage) / (numberOfAllRecords * (double)Denominator);
 			}
 		}
+        public static double GetAsymentry(OneDimensionalContingencyTable table)
+        {
+            return table.Asymentry;
+        }
 
 		/// <summary>
 		/// See document 093 CF a SDCF Kvantifikátory.doc
@@ -211,6 +225,10 @@ namespace Ferda.Modules.Quantifiers
 				return 2 * result;
 			}
 		}
+        public static double GetDiscreteOrdinaryVariation(OneDimensionalContingencyTable table)
+        {
+            return table.DiscreteOrdinaryVariation;
+        }
 
 		/// <summary>
 		/// See document 093 CF a SDCF Kvantifikátory.doc
@@ -241,9 +259,13 @@ namespace Ferda.Modules.Quantifiers
 							throw ex;
 					}
 				}
-                return result / (double)Denominator;
+                return Math.Exp(result / (double)Denominator);
 			}
 		}
+        public static double GetGeometricAverage(OneDimensionalContingencyTable table)
+        {
+            return table.GeometricAverage;
+        }
 
 		/// <summary>
 		/// See document 093 CF a SDCF Kvantifikátory.doc
@@ -265,6 +287,10 @@ namespace Ferda.Modules.Quantifiers
                 return 1 - (result / (double)Denominator);
 			}
 		}
+        public static double GetNominalVariation(OneDimensionalContingencyTable table)
+        {
+            return table.NominalVariation;
+        }
 
 		/// <summary>
 		/// See document 093 CF a SDCF Kvantifikátory.doc
@@ -276,6 +302,10 @@ namespace Ferda.Modules.Quantifiers
 				return Math.Sqrt(Variance);
 			}
 		}
+        public static double GetStandardDeviation(OneDimensionalContingencyTable table)
+        {
+            return table.StandardDeviation;
+        }
 
 		/// <summary>
 		/// See document 093 CF a SDCF Kvantifikátory.doc
@@ -296,6 +326,10 @@ namespace Ferda.Modules.Quantifiers
                 return (result / (double)Denominator) - (lastColumnIndex - firstColumnIndex + 1) * Math.Pow(ArithmeticAverage, 2);
 			}
 		}
+        public static double GetVariance(OneDimensionalContingencyTable table)
+        {
+            return table.Variance;
+        }
 
 		/// <summary>
 		/// See document 093 CF a SDCF Kvantifikátory.doc
@@ -308,5 +342,9 @@ namespace Ferda.Modules.Quantifiers
 				return 1 - this.MaxValue;
 			}
 		}
+        public static double GetVariationRatio(OneDimensionalContingencyTable table)
+        {
+            return table.VariationRatio;
+        }
 	}
 }

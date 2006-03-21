@@ -8,13 +8,13 @@
       <Label>SDCF-Miner</Label>
     </Category>
   </Categories>
-  <Actions>
-    <Action>
-      <Name>Run</Name>
-      <Label>Spusť</Label>
-      <Hint>Spustí SDCF-Miner proceduru (tj. spustí generování hypotéz)</Hint>
-    </Action>
-  </Actions>
+  <!--<Actions>
+			<Action>
+				<Name>Run</Name>
+				<Label>Spusť</Label>
+				<Hint>Spustí SDCF-Miner proceduru (tj. spustí generování hypotéz)</Hint>
+			</Action>
+		</Actions>-->
   <Sockets>
     <Socket>
       <Name>AntecedentSetting</Name>

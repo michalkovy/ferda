@@ -7,5 +7,9 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers.Aggregation.Aver
 {
 	class AverageValueFunctionsI : AbstractCFTaskQuantifierFunctionsAggregation
 	{
-	}
+        protected override ContingencyTable.QuantifierValue<OneDimensionalContingencyTable> valueFunctionDelegate
+        {
+            get { return OneDimensionalContingencyTable.GetAverageValue; }
+        }
+    }
 }

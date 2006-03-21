@@ -5,22 +5,22 @@
   <Categories>
     <string>FFTMiner</string>
   </Categories>
-  <Actions>
-<!--
-    <Action>
-      <Name>Run</Name>
-      <IconPath>runActionIcon.ico</IconPath>
-      <NeededConnectedSocketsOptions>
-        <NeededConnectedSocketsOption>
-          <NeededConnectedSockets>
-            <string>AntecedentSetting</string>
-            <string>SuccedentSetting</string>
-          </NeededConnectedSockets>
-        </NeededConnectedSocketsOption>
-      </NeededConnectedSocketsOptions>
-    </Action>
--->
-  </Actions>
+  <!--
+		<Actions>
+			<Action>
+				<Name>Run</Name>
+				<IconPath>runActionIcon.ico</IconPath>
+				<NeededConnectedSocketsOptions>
+					<NeededConnectedSocketsOption>
+						<NeededConnectedSockets>
+							<string>AntecedentSetting</string>
+							<string>SuccedentSetting</string>
+						</NeededConnectedSockets>
+					</NeededConnectedSocketsOption>
+				</NeededConnectedSocketsOptions>
+			</Action>
+		</Actions>
+		-->
   <Sockets>
     <Socket>
       <Name>AntecedentSetting</Name>

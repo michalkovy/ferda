@@ -7,5 +7,14 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers.Functional.Sta
 {
 	class StandardDeviationFunctionsI : AbstractSDCFTaskQuantifierFunctionsFunctional
 	{
+        protected override bool useNumericValues
+        {
+            get { return true; }
+        }
+
+        protected override ContingencyTable.QuantifierValue<OneDimensionalContingencyTable> valueFunctionDelegate
+        {
+            get { return OneDimensionalContingencyTable.GetStandardDeviation; }
+        }
 	}
 }

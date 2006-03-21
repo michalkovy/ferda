@@ -7,5 +7,9 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers.Aggregation.MinV
 {
 	class MinValueFunctionsI : AbstractCFTaskQuantifierFunctionsAggregation
 	{
-	}
+        protected override ContingencyTable.QuantifierValue<OneDimensionalContingencyTable> valueFunctionDelegate
+        {
+            get { return OneDimensionalContingencyTable.GetMinValue; }
+        }
+    }
 }

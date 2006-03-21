@@ -7,5 +7,9 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.CFTask.Quantifiers.Aggregation.MaxV
 {
 	class MaxValueFunctionsI : AbstractCFTaskQuantifierFunctionsAggregation
 	{
-	}
+        protected override ContingencyTable.QuantifierValue<OneDimensionalContingencyTable> valueFunctionDelegate
+        {
+            get { return OneDimensionalContingencyTable.GetMaxValue; }
+        }
+    }
 }

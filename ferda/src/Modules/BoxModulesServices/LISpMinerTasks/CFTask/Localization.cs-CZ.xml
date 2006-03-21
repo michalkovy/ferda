@@ -8,13 +8,13 @@
       <Label>CF-Miner</Label>
     </Category>
   </Categories>
-  <Actions>
-    <Action>
-      <Name>Run</Name>
-      <Label>Spusť</Label>
-      <Hint>Spustí CF-Miner proceduru (tj. spustí generování hypotéz)</Hint>
-    </Action>
-  </Actions>
+  <!--<Actions>
+			<Action>
+				<Name>Run</Name>
+				<Label>Spusť</Label>
+				<Hint>Spustí CF-Miner proceduru (tj. spustí generování hypotéz)</Hint>
+			</Action>
+		</Actions>-->
   <Sockets>
     <Socket>
       <Name>AntecedentSetting</Name>
