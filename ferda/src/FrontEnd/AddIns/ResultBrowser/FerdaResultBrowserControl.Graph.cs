@@ -63,6 +63,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ContingencyTableChart.Location = new System.Drawing.Point(0, 0);
             this.ContingencyTableChart.Name = "tChart1";
             this.ContingencyTableChart.Header.Visible = true;
+            
             this.ContingencyTableChart.Size = new System.Drawing.Size(466, 286);
             this.ContingencyTableChart.GetAxisLabel += new Steema.TeeChart.GetAxisLabelEventHandler(ContingencyTableChart_GetAxisLabel);
             this.ContingencyTableChart.Axes.Depth.Visible = true;
@@ -157,6 +158,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             chart.Series.Clear();
             Random random = new Random();
             bool fft = false;
+
+            this.ContingencyTableChart.Header.Text = this.resManager.GetString("SecondContingencyTable");
 
             //for miners with boolean antecedents and succedents - for now only 4ft
             foreach (BooleanLiteralStruct booleanLiteral in hypothese.booleanLiterals)
@@ -266,6 +269,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             chart.Series.Clear();
             Random random = new Random();
             bool fft = false;
+            this.ContingencyTableChart.Header.Text = this.resManager.GetString("FirstContingencyTable");
 
             //for miners with boolean antecedents and succedents - for now only 4ft
             foreach (BooleanLiteralStruct booleanLiteral in hypothese.booleanLiterals)

@@ -395,7 +395,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // RadioSecondTable
             // 
             this.RadioSecondTable.AutoSize = true;
-            this.RadioSecondTable.Enabled = false;
             this.RadioSecondTable.Location = new System.Drawing.Point(107, 168);
             this.RadioSecondTable.Name = "RadioSecondTable";
             this.RadioSecondTable.Size = new System.Drawing.Size(85, 17);
@@ -407,7 +406,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             this.RadioFirstTable.AutoSize = true;
             this.RadioFirstTable.Checked = true;
-            this.RadioFirstTable.Enabled = false;
             this.RadioFirstTable.Location = new System.Drawing.Point(107, 145);
             this.RadioFirstTable.Name = "RadioFirstTable";
             this.RadioFirstTable.Size = new System.Drawing.Size(85, 17);

@@ -510,7 +510,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 return;
             }
             this.FillPropertyGrid(index);
-            this.DrawBarsFromFirstTable(hypothesis, this.ContingencyTableChart);
+            if (this.RadioFirstTable.Checked)
+            {
+                this.DrawBarsFromFirstTable(hypothesis, this.ContingencyTableChart);
+            }
+            else
+            {
+                this.DrawBarsFromSecondTable(hypothesis, this.ContingencyTableChart);
+            }
         }
 
         /// <summary>
