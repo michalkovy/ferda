@@ -152,7 +152,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         /// <param name="hypothese">Hypothese to take contingency table from</param>
         /// <param name="chart">Chart to draw bars into</param>
-        private void DrawBarsFromFirstTable(HypothesisStruct hypothese, Steema.TeeChart.TChart chart)
+        private void DrawBarsFromSecondTable(HypothesisStruct hypothese, Steema.TeeChart.TChart chart)
         {
             chart.Series.Clear();
             Random random = new Random();
@@ -170,7 +170,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
            // int i = 0;
             int j = 0;
 
-            int[][] transpondedTable = FerdaResultBrowserControl.Transpose(hypothese.quantifierSetting.firstContingencyTableRows);
+            int[][] transpondedTable = FerdaResultBrowserControl.Transpose(hypothese.quantifierSetting.secondContingencyTableRows);
 
             for (int k = transpondedTable.GetUpperBound(0); k >=0; k--)
             {
@@ -252,6 +252,115 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
                 chart.Series.Add(barSeries);
              //   i++;
+                j = 0;
+            }
+        }
+
+        /// <summary>
+        /// Drawing first contingency table to chart
+        /// </summary>
+        /// <param name="hypothese">Hypothese to take contingency table from</param>
+        /// <param name="chart">Chart to draw bars into</param>
+        private void DrawBarsFromFirstTable(HypothesisStruct hypothese, Steema.TeeChart.TChart chart)
+        {
+            chart.Series.Clear();
+            Random random = new Random();
+            bool fft = false;
+
+            //for miners with boolean antecedents and succedents - for now only 4ft
+            foreach (BooleanLiteralStruct booleanLiteral in hypothese.booleanLiterals)
+            {
+                if ((booleanLiteral.cedentType == CedentEnum.Antecedent) || (booleanLiteral.cedentType == CedentEnum.Succedent))
+                {
+                    fft = true;
+                    break;
+                }
+            }
+            // int i = 0;
+            int j = 0;
+
+            int[][] transpondedTable = FerdaResultBrowserControl.Transpose(hypothese.quantifierSetting.firstContingencyTableRows);
+
+            for (int k = transpondedTable.GetUpperBound(0); k >= 0; k--)
+            {
+                Steema.TeeChart.Styles.Bar barSeries = new Steema.TeeChart.Styles.Bar();
+                barSeries.Color = System.Drawing.Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
+                barSeries.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
+
+                foreach (int number in transpondedTable[k])
+                {
+                    if ((fft) && (j == 0))
+                    {
+                        barSeries.Add(number, this.resManager.GetString("ColumnAntecedent"));
+                    }
+                    else
+                    {
+                        if ((fft) && (j == 1))
+                        {
+                            barSeries.Add(number, '\u00AC' + this.resManager.GetString("ColumnAntecedent"));
+                        }
+                        else
+                        {
+                            string seriesTitle = String.Empty;
+                            foreach (LiteralStruct literal in hypothese.literals)
+                            {
+                                if (literal.cedentType == CedentEnum.Antecedent)
+                                {
+                                    seriesTitle = literal.categoriesNames[j];
+                                }
+                            }
+                            barSeries.Add(number, seriesTitle);
+                        }
+                    }
+                    j++;
+                }
+
+                if (this.CheckBoxShowLabels.Checked)
+                {
+                    barSeries.Marks.Visible = true;
+                }
+                else
+                {
+                    barSeries.Marks.Visible = false;
+                }
+                barSeries.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
+                if (fft)
+                {
+                    if (k == 0)
+                    {
+                        barSeries.Title = this.resManager.GetString("ColumnSuccedent");
+                    }
+                    else
+                    {
+                        barSeries.Title = '\u00AC' + this.resManager.GetString("ColumnSuccedent");
+                    }
+                }
+                else
+                {
+                    string seriesTitle = String.Empty;
+                    foreach (LiteralStruct literal in hypothese.literals)
+                    {
+                        if (literal.cedentType == CedentEnum.Succedent)
+                        {
+                            seriesTitle = literal.categoriesNames[k];
+                            break;
+                        }
+                    }
+                    if (seriesTitle == String.Empty)
+                    {
+                        foreach (LiteralStruct literal in hypothese.literals)
+                        {
+                            if (literal.cedentType == CedentEnum.Antecedent)
+                            {
+                                seriesTitle = literal.categoriesNames[k];
+                            }
+                        }
+                    }
+
+                    barSeries.Title = seriesTitle;
+                }
+                chart.Series.Add(barSeries);
+                //   i++;
                 j = 0;
             }
         }

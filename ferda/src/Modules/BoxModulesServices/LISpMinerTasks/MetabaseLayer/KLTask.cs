@@ -157,7 +157,7 @@ namespace Ferda.Modules.MetabaseLayer
 					+ fromColumn + ","
 					+ toColumn + ","
 					+ unitsColumnValue
-					+ treshold.ToString() + ","
+					+ "'" +treshold.ToString() + "'" + ","
 					+ kendalColumnValue
 					+ common.Constants.RelationEnumDictionary[relation]
 					+ ")";

@@ -91,6 +91,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ToolStripShowGraphEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripCopyChart = new System.Windows.Forms.ToolStripMenuItem();
+            this.RadioFirstTable = new System.Windows.Forms.RadioButton();
+            this.RadioSecondTable = new System.Windows.Forms.RadioButton();
             this.ResultBrowserSplit.Panel1.SuspendLayout();
             this.ResultBrowserSplit.Panel2.SuspendLayout();
             this.ResultBrowserSplit.SuspendLayout();
@@ -371,6 +373,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // GroupBoxChangeGraph
             // 
             this.GroupBoxChangeGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupBoxChangeGraph.Controls.Add(this.RadioSecondTable);
+            this.GroupBoxChangeGraph.Controls.Add(this.RadioFirstTable);
             this.GroupBoxChangeGraph.Controls.Add(this.CheckBoxShowLabels);
             this.GroupBoxChangeGraph.Controls.Add(this.LabelVOffset);
             this.GroupBoxChangeGraph.Controls.Add(this.LabelHOffset);
@@ -380,9 +384,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.GroupBoxChangeGraph.Controls.Add(this.TrackBarZoom);
             this.GroupBoxChangeGraph.Controls.Add(this.Label3dpercent);
             this.GroupBoxChangeGraph.Controls.Add(this.TrackBar3d);
-            this.GroupBoxChangeGraph.Location = new System.Drawing.Point(830, 57);
+            this.GroupBoxChangeGraph.Location = new System.Drawing.Point(830, 3);
             this.GroupBoxChangeGraph.Name = "GroupBoxChangeGraph";
-            this.GroupBoxChangeGraph.Size = new System.Drawing.Size(233, 168);
+            this.GroupBoxChangeGraph.Size = new System.Drawing.Size(233, 194);
             this.GroupBoxChangeGraph.TabIndex = 0;
             this.GroupBoxChangeGraph.TabStop = false;
             this.GroupBoxChangeGraph.Text = "View options";
@@ -514,6 +518,28 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ToolStripCopyChart.Size = new System.Drawing.Size(179, 22);
             this.ToolStripCopyChart.Text = "toolStripMenuItem1";
             // 
+            // RadioFirstTable
+            // 
+            this.RadioFirstTable.AutoSize = true;
+            this.RadioFirstTable.Location = new System.Drawing.Point(107, 145);
+            this.RadioFirstTable.Name = "RadioFirstTable";
+            this.RadioFirstTable.Size = new System.Drawing.Size(85, 17);
+            this.RadioFirstTable.TabIndex = 9;
+            this.RadioFirstTable.TabStop = true;
+            this.RadioFirstTable.Text = "radioButton1";
+            this.RadioFirstTable.UseVisualStyleBackColor = true;
+            // 
+            // RadioSecondTable
+            // 
+            this.RadioSecondTable.AutoSize = true;
+            this.RadioSecondTable.Location = new System.Drawing.Point(107, 168);
+            this.RadioSecondTable.Name = "RadioSecondTable";
+            this.RadioSecondTable.Size = new System.Drawing.Size(85, 17);
+            this.RadioSecondTable.TabIndex = 10;
+            this.RadioSecondTable.TabStop = true;
+            this.RadioSecondTable.Text = "radioButton1";
+            this.RadioSecondTable.UseVisualStyleBackColor = true;
+            // 
             // FerdaResultBrowserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -585,6 +611,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.Button ButtonSubmitFilter;
         private System.Windows.Forms.Label LabelHypothesesTotal;
         private System.Windows.Forms.Label LabelCount;
+        private System.Windows.Forms.RadioButton RadioSecondTable;
+        private System.Windows.Forms.RadioButton RadioFirstTable;
     }
 }
 

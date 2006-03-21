@@ -207,6 +207,12 @@
   <data name="PointsPerPage" xml:space="preserve">
     <value>Na stránku</value>
   </data>
+  <data name="RadioFirst" xml:space="preserve">
+    <value>První kontingenční tabulka</value>
+  </data>
+  <data name="RadioSecond" xml:space="preserve">
+    <value>Druhá kontingenční tabulka</value>
+  </data>
   <data name="ResultBrowserControl" xml:space="preserve">
     <value>Prohlížení výsledků</value>
   </data>
