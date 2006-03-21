@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <author>
+      <firstname>Martin</firstname>
+      <surname>Ralbovský</surname>
+      <email>martin.ralbovsky@gmail.com</email>
+    </author>
+    <pubdate>2006-03-21</pubdate>
+    <title>Úpravy specifikace po podrobné analýze</title>
+    <titleabbrev>UpravySpecifikace</titleabbrev>
+  </articleinfo>
+  <abstract>
+    <para>
+      Tento dokument pojednává o úpravách specifikace, které se projektovému
+      teamu zdály vhodné po podrobné analýze problému.
+    </para>
+  </abstract>
+  <section>
+    <title>Úpravy specifikace</title>
+    <para>
+      I když se projektový team snažil co nejvíce držet specifikace, některé její body
+      byly po podrobné analýze problému modifikovány. Tyto modifikace byly podrobně
+      konzultovány s vedoucím projektu. Vedoucí projektu souhlasil s těmito modifikacemi
+      a Ferda byl dále vyvíjen s ohledem na ně. 
+    </para>
+    <para>
+      //TODO Tomáš - vysvětlit proč jsme neimplementovali KEX a TimeTransf - ja to
+      opravdu netuším.
+    </para>
+    <para>
+      Vedoucí projektu Doc. RNDr. Jan Rauch, CSc pracuje již délší dobu na kompletní 
+      teoretické nápovědě pro systém LISp-Miner. Na začátku projektu jsme se dohodli,
+      že naše kontextová nápověda LISp krabiček bude silně navázaná právě na tuto
+      nápovědu. Nápověda má být ve formě pdf souborů a odkazů do nich pro jednotlivé
+      části procesu dobývání znalostí. Bohužel do této chvíle doc. Rauch nedokončil
+      tuto nápovědu a proto na ni nemůžeme odkazovat v krabičkách Ferdy. Prostředí pro
+      integraci této nápovědy je však připraveno, například můžeme vidět nápovědu 
+      pro uživatelské prostředí nebo pro moduly pro interakci ve formátu pdf. Z tohoto
+      důvodu nemůžeme plně dostát závazkům, které jsme dali ve specifikaci na
+      komplexní kontextovou nápovědu. 
+    </para>
+  </section>
+</article>
