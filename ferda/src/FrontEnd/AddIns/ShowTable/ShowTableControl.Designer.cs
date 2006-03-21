@@ -60,9 +60,9 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
             // 
             this.ListViewShowTable.ContextMenuStrip = this.ContextMenuData;
             this.ListViewShowTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListViewShowTable.FullRowSelect = true;
             this.ListViewShowTable.GridLines = true;
             this.ListViewShowTable.Location = new System.Drawing.Point(0, 0);
-            this.ListViewShowTable.MultiSelect = false;
             this.ListViewShowTable.Name = "ListViewShowTable";
             this.ListViewShowTable.ShowGroups = false;
             this.ListViewShowTable.Size = new System.Drawing.Size(558, 324);

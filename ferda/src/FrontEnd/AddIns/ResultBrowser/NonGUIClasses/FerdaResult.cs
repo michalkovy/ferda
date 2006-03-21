@@ -1081,7 +1081,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                             break;
 
                         default:
-                            throw new Exception("SwitchBranchNotImplemented");
+                            break;
+                            //throw new Exception("SwitchBranchNotImplemented");
                     }
                 }
 
@@ -1116,6 +1117,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                             break;
 
                         default:
+                            //break;
                             throw new Exception("SwitchBranchNotImplemented");
                     }
                 }
