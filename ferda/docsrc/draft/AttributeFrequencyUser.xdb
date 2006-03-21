@@ -42,7 +42,9 @@
     <title>Introduction</title>
 
     <para>Welcome to AttributeFrequency module. This is a module designed for
-    displaying the frequency of categories in the attribute.</para>
+    displaying the frequency of categories in the attribute. You can sort the
+    displayed attribute frequencies, view the charts based on their values and
+    copy data and charts to clipboard.</para>
   </section>
 
   <section>
@@ -52,11 +54,13 @@
       <title>Main window</title>
 
       <para>Main dialog window contains a list of items in three columns.
-      Items correspond with the categories.</para>
+      Items correspond with the categories. You can sort the list view by
+      clicking on the column header. Interval categories are sorted by their
+      lower bounds.</para>
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="ColumnFrequencyMain.png" format="PNG" />
+          <imagedata fileref="AttributeFrequencyMain.png" format="PNG" />
         </imageobject>
       </mediaobject>
 
@@ -83,8 +87,8 @@
                 <title>Frequency</title>
 
                 <para>This view column contains the frequency for the given
-                value. For example, the above screenshot indicates that value
-                "Beroun" appears in the column for 63 times.</para>
+                value. For example, the above screenshot indicates that 610
+                values belong to interval category &lt;10124; 12541).</para>
               </formalpara>
             </listitem>
 
@@ -94,8 +98,8 @@
 
                 <para>This view column contains the percentage frequency for
                 the given value. For example, the above screenshot indicates
-                that value "Beroun" appears in the column for 63 times and it
-                is 1.02% of all the values.</para>
+                that 610 values belong to interval category &lt;10124; 12541)
+                and it is 9,87% of the given values.</para>
               </formalpara>
             </listitem>
           </itemizedlist>
@@ -148,7 +152,43 @@
       <title>Right-click menu for charts</title>
 
       <para>Right-click menu lists the options and actions available for
-      charts. Those are:</para>
+      charts.</para>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="attributeFrequencyChartRightClick.png"
+                     format="PNG" />
+        </imageobject>
+      </mediaobject>
+
+      <itemizedlist>
+        <listitem>
+          <formalpara>
+            <title>Absolute</title>
+
+            <para>When Absolute option is toggled on, absolute values instead
+            of percentage are displayed</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Show labels</title>
+
+            <para>When Show labels is toggled on, labels for chart are
+            displayed</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Copy chart to clipboard</title>
+
+            <para>This option allows copying the chart to clipboard as a
+            bitmap.</para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
     </section>
 
     <section>
@@ -159,7 +199,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="columnFrequencyRightClick.png" format="PNG" />
+          <imagedata fileref="attributeFrequencyRightClick.png" format="PNG" />
         </imageobject>
       </mediaobject>
 

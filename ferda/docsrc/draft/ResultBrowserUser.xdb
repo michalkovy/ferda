@@ -15,10 +15,10 @@
 
     <pubdate>2006-03-21</pubdate>
 
-    <title>ColumnFrequency module - Module for displaying the frequency of the
-    values in table column</title>
+    <title>ResultBrowser module - Module for displaying the results of the gen
+    run</title>
 
-    <titleabbrev>ColumnFrequency</titleabbrev>
+    <titleabbrev>AttributeFrequency</titleabbrev>
 
     <!--
     <revhistory>
@@ -33,7 +33,7 @@
   </articleinfo>
 
   <abstract>
-    <para>This document describes the user interface for the ColumnFrequency
+    <para>This document describes the user interface for the ResultBrowser
     module. It contains some simple examples and screenshots for the users to
     make using of this module easier.</para>
   </abstract>
@@ -41,10 +41,10 @@
   <section>
     <title>Introduction</title>
 
-    <para>Welcome to ColumnFrequency module. This is a module designed for
-    displaying the frequency of column values in the table column. You can
-    sort the displayed column values frequencies, view the charts based on
-    their values and copy data and charts to clipboard.</para>
+    <para>Welcome to ResultBrowser module. This is a module designed for
+    displaying the hypotheses obtained by launching the gen on the prepared
+    task. ResultBrowser enables you to view all the hypotheses data, sort and
+    filter hypotheses and view charts for contingency tables.</para>
   </section>
 
   <section>
@@ -53,13 +53,15 @@
     <section>
       <title>Main window</title>
 
-      <para>Main dialog window contains a list of items in three columns.
-      Items correspond with the values in the column. You can sort the list
-      view by clicking on the column header.</para>
+      <para>Main dialog window contains a list of generated hypotheses. When
+      starting the module, ResultBrowser loads all the hypotheses, quantifiers
+      values and statistics in cache to make further work with the hypotheses
+      quicker. Preloading could take same time, so please be patient until the
+      module starts.</para>
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="ColumnFrequencyMain.png" format="PNG" />
+          <imagedata fileref="ResultBrowserMainWindow.png" format="PNG" />
         </imageobject>
       </mediaobject>
 
@@ -76,8 +78,8 @@
               <formalpara>
                 <title>Value</title>
 
-                <para>This view column contains the value from the
-                column</para>
+                <para>This view column contains the categories from the
+                attribute.</para>
               </formalpara>
             </listitem>
 
@@ -86,8 +88,8 @@
                 <title>Frequency</title>
 
                 <para>This view column contains the frequency for the given
-                value. For example, the above screenshot indicates that value
-                "Beroun" appears in the column for 63 times.</para>
+                value. For example, the above screenshot indicates that 610
+                values belong to interval category &lt;10124; 12541).</para>
               </formalpara>
             </listitem>
 
@@ -97,8 +99,8 @@
 
                 <para>This view column contains the percentage frequency for
                 the given value. For example, the above screenshot indicates
-                that value "Beroun" appears in the column for 63 times and it
-                is 1.02% of all the values.</para>
+                that 610 values belong to interval category &lt;10124; 12541)
+                and it is 9,87% of the given values.</para>
               </formalpara>
             </listitem>
           </itemizedlist>
@@ -109,10 +111,10 @@
     <section>
       <title>Charts</title>
 
-      <para>ColumnFrequency module displays three different types of charts
-      for better visual representation of the values frequences for column.
-      Charts can be switched by clicking on corresponding tabs. The chart
-      types are:</para>
+      <para>AttributeFrequency module displays three different types of charts
+      for better visual representation of the categories frequences for the
+      attribute. Charts can be switched by clicking on corresponding tabs. The
+      chart types are:</para>
 
       <itemizedlist>
         <listitem>
@@ -155,7 +157,8 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="columnFrequencyChartRightClick.png" format="PNG" />
+          <imagedata fileref="attributeFrequencyChartRightClick.png"
+                     format="PNG" />
         </imageobject>
       </mediaobject>
 
@@ -197,7 +200,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="columnFrequencyRightClick.png" format="PNG" />
+          <imagedata fileref="attributeFrequencyRightClick.png" format="PNG" />
         </imageobject>
       </mediaobject>
 
@@ -207,8 +210,8 @@
             <title>Copy all items to clipboard</title>
 
             <para>When this option is selected, all items from the
-            ColumnFrequency list are copied to the clipboard as tab separated
-            values.</para>
+            AttributeFrequency list are copied to the clipboard as tab
+            separated values.</para>
           </formalpara>
         </listitem>
 
@@ -217,8 +220,8 @@
             <title>Copy selected items to clipboard</title>
 
             <para>When this option is selected, the currently items from the
-            ColumnFrequency list are copied to the clipboard as tab separated
-            values.</para>
+            AttributeFrequency list are copied to the clipboard as tab
+            separated values.</para>
           </formalpara>
         </listitem>
       </itemizedlist>
