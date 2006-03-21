@@ -1132,6 +1132,7 @@ namespace Ferda.Modules
                             propertiesOther[socketName] = objPrx;
                             break;
                     }
+                    properties.Remove(socketName);
                 }
                 else
                 {

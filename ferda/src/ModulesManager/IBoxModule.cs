@@ -1,4 +1,4 @@
-// 
+// IBoxModule.cs - interface of boxes for upper layers
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //

@@ -161,7 +161,7 @@ using Ice;namespace Ferda.Modules
                 throw new Ferda.Modules.BadTypeError();
             }
 
-			if(propertyValue != null && propertySetByValue)
+			if(propertyValue != null && !propertySetByValue)
 				adapter.remove(propertyValue.ice_getIdentity());
 			this.propertySetByValue = true;
 			propertyValue = this.adapter.addWithUUID(value);
