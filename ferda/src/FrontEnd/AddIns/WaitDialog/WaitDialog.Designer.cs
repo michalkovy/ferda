@@ -54,7 +54,7 @@ namespace Ferda.FrontEnd.AddIns.WaitDialog
             // LabelDescription
             // 
             this.LabelDescription.AutoSize = true;
-            this.LabelDescription.Location = new System.Drawing.Point(92, 22);
+            this.LabelDescription.Location = new System.Drawing.Point(12, 22);
             this.LabelDescription.Name = "LabelDescription";
             this.LabelDescription.Size = new System.Drawing.Size(97, 13);
             this.LabelDescription.TabIndex = 0;
