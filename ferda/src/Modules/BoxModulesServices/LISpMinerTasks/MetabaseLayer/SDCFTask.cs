@@ -78,7 +78,7 @@ namespace Ferda.Modules.MetabaseLayer
                 LiteralStruct rowLiteral = new LiteralStruct();
                 columnLiteral.cedentType = CedentEnum.Antecedent;
                 columnLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["CFLiteralDID"])];
-                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.SDCF, taskID, hypothesisID, taskDescription);
+                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.SDCF, taskID, taskDescription);
 
                 quantifierSetting = new AbstractQuantifierSetting();
                 quantifierSetting.numericValues = common.GetNumericValues(common.GetAttributeStruct(columnLiteral.literalIdentifier));

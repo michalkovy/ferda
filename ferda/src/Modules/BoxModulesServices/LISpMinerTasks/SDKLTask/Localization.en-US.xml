@@ -23,8 +23,8 @@
     </Socket>
     <Socket>
       <Name>SuccedentSetting</Name>
-      <Label>Succedent setting</Label>
-      <Hint>Defines set of relevant succedents.</Hint>
+      <Label>Column attribute</Label>
+      <Hint>Defines set of column attributes.</Hint>
     </Socket>
     <Socket>
       <Name>ConditionSetting</Name>

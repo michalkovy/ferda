@@ -19,17 +19,17 @@
     <Socket>
       <Name>Database</Name>
       <Label>Database</Label>
-      <Hint>Defines data source for data matrix</Hint>
+      <Hint>Defines data source for the data matrix</Hint>
     </Socket>
     <Socket>
       <Name>Name</Name>
       <Label>Name</Label>
-      <Hint>Name of table.</Hint>
+      <Hint>Name of the table. The name will enclosed in aphostrophes in SQL query.</Hint>
     </Socket>
     <Socket>
       <Name>PrimaryKeyColumns</Name>
       <Label>Primary key</Label>
-      <Hint>List of columns that define the primary key of table.</Hint>
+      <Hint>List of columns that define the primary key of the table. The value is either a value of one column or CSV (comma separated values). It will be not enclosed in apostrophes.</Hint>
     </Socket>
     <Socket>
       <Name>RecordCount</Name>
@@ -67,11 +67,11 @@
     </Phrase>
     <Phrase>
       <PhraseIdentifier>ActionTestTestPrimaryKeySucceed</PhraseIdentifier>
-      <PhraseText>No duplicates found in specified primary key.</PhraseText>
+      <PhraseText>No duplicates found in the specified primary key.</PhraseText>
     </Phrase>
     <Phrase>
       <PhraseIdentifier>ActionTestTestPrimaryKeyFailed</PhraseIdentifier>
-      <PhraseText>Duplicit values found in specified primary key!</PhraseText>
+      <PhraseText>Duplicit values found in the specified primary key!</PhraseText>
     </Phrase>
   </Phrases>
 </BoxLocalization>

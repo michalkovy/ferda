@@ -62,7 +62,7 @@
     <Socket>
       <Name>Domain</Name>
       <Label>Domain</Label>
-      <Hint>Decide if whole domain of column will be categoriezed or only some subdomain.</Hint>
+      <Hint>Decide if whole domain of column will be categoriezed or only some subdomains.</Hint>
       <SelectOptions>
         <SelectOption>
           <Name>WholeDomain</Name>
@@ -128,7 +128,7 @@
   <Phrases>
     <Phrase>
       <PhraseIdentifier>UnsupportedColumnDatatype</PhraseIdentifier>
-      <PhraseText>Nopodporovaný datový typ sloupce</PhraseText>
+      <PhraseText>Unsupported columnd datatype.</PhraseText>
     </Phrase>
     <Phrase>
       <PhraseIdentifier>NumericOrStringDatatypesSupportedOnly</PhraseIdentifier>

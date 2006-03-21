@@ -328,7 +328,7 @@ namespace Ferda.Modules.MetabaseLayer
         //    return null;
         //}
 
-        public LiteralStruct[] GetCategorialLiterals(TaskTypeEnum taskType, int taskID, int hypothesisID, object taskDescription)
+        public LiteralStruct[] GetCategorialLiterals(TaskTypeEnum taskType, int taskID, object taskDescription)
         {
             string tdLiteralTableName = String.Empty;
             string tdLiteralIDColumn = String.Empty;
@@ -383,8 +383,8 @@ namespace Ferda.Modules.MetabaseLayer
                 literalStruct.cedentType = 
                     Constants.CedentEnumDictionaryBackward[
                         Convert.ToInt32(literal["CedentTypeID"])];
-
-                literalStruct.literalIdentifier = Convert.ToInt32(literal[tdLiteralIDColumn]);
+                literalStruct.literalIdentifier = CategorialLiteral[Convert.ToInt32(literal[tdLiteralIDColumn])];
+                //literalStruct.literalIdentifier = Convert.ToInt32(literal[tdLiteralIDColumn]);
                 literalStruct.literalName = literal["Name"].ToString();
                 literalStruct.categoriesNames = GetCategorialLiteralCategoriesNames(Convert.ToInt32(literal["QuantityID"]));
                 result.Add(literalStruct);

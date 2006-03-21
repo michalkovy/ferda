@@ -57,7 +57,7 @@ namespace Ferda.Modules.MetabaseLayer
                 hypothesisStruct = new HypothesisStruct();
                 hypothesisStruct.booleanLiterals = common.GetBooleanLiterals(taskID, hypothesisID);
                 
-                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.SDKL, taskID, hypothesisID, taskDescription);
+                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.SDKL, taskID, taskDescription);
                 LiteralStruct rowLiteral = new LiteralStruct();
                 rowLiteral.cedentType = CedentEnum.Antecedent;
                 rowLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["KLLiteralDRowID"])];

@@ -18,8 +18,8 @@
   <Sockets>
     <Socket>
       <Name>AntecedentSetting</Name>
-      <Label>Antecedent setting</Label>
-      <Hint>Defines set of relevant antecedents.</Hint>
+      <Label>Row attribute</Label>
+      <Hint>Defines set of row attributes.</Hint>
     </Socket>
     <Socket>
       <Name>ConditionSetting</Name>

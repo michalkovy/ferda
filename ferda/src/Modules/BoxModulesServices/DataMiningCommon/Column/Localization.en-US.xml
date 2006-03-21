@@ -17,7 +17,7 @@
     <Socket>
       <Name>Name</Name>
       <Label>Name</Label>
-      <Hint>Name of column.</Hint>
+      <Hint>Name of column. The name will not be enclosed in apostrophes in the SQL query.</Hint>
     </Socket>
     <Socket>
       <Name>ValueSubType</Name>

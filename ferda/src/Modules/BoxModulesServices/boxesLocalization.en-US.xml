@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Martin (Ru-Board) -->
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Tomas Kuchar (Ru-Board) -->
 <BoxesLocalization xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ferda.is-a-geek.net
 ../Core/Boxes/boxesLocalization.xsd">
 	<BoxLocalization>
@@ -1453,8 +1453,8 @@
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
-				<Label>Antecedent setting</Label>
-				<Hint>Defines set of relevant antecedents.</Hint>
+				<Label>Row attribute</Label>
+				<Hint>Defines set of row attributes.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ConditionSetting</Name>
@@ -1541,8 +1541,8 @@
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
-				<Label>Antecedent setting</Label>
-				<Hint>Defines set of relevant antecedents.</Hint>
+				<Label>Row attribute</Label>
+				<Hint>Defines set of row attributes.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ConditionSetting</Name>
@@ -1669,13 +1669,13 @@
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
-				<Label>Antecedent setting</Label>
-				<Hint>Defines set of relevant antecedents.</Hint>
+				<Label>Row attribute</Label>
+				<Hint>Defines set of row attributes.</Hint>
 			</Socket>
 			<Socket>
 				<Name>SuccedentSetting</Name>
-				<Label>Succedent setting</Label>
-				<Hint>Defines set of relevant succedents.</Hint>
+				<Label>Column attribute</Label>
+				<Hint>Defines set of column attributes.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ConditionSetting</Name>
@@ -1767,8 +1767,8 @@
 			</Socket>
 			<Socket>
 				<Name>SuccedentSetting</Name>
-				<Label>Succedent setting</Label>
-				<Hint>Defines set of relevant succedents.</Hint>
+				<Label>Column attribute</Label>
+				<Hint>Defines set of column attributes.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ConditionSetting</Name>

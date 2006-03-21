@@ -42,7 +42,7 @@
     <Socket>
       <Name>Domain</Name>
       <Label>Domain</Label>
-      <Hint>Decide if whole domain of column will be categoriezed or only some subdomain.</Hint>
+      <Hint>Decide if whole domain of column will be categoriezed or only some subdomainss.</Hint>
       <SelectOptions>
         <SelectOption>
           <Name>WholeDomain</Name>
@@ -54,7 +54,7 @@
         </SelectOption>
         <SelectOption>
           <Name>SubDomainNumberOfValuesBounds</Name>
-          <Label>Except frist (From) and last (To) values of actual Domain</Label>
+          <Label>Except first (From) and last (To) values of actual Domain</Label>
         </SelectOption>
       </SelectOptions>
     </Socket>
