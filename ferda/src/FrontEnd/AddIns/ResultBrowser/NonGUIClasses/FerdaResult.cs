@@ -381,6 +381,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             //working with quantifiers - need to obtain all quantifier, for now working only with used ones
             this.UsedQuantifiers = used_quantifiers;
             this.SelectedQuantifiers = new int[this.UsedQuantifiers.Length];
+
+            for (int i = 0; i < this.SelectedQuantifiers.Length; i++)
+            {
+                this.SelectedQuantifiers[i] = 0;
+            }
             proxy = new AbstractQuantifierFunctionsPrx[this.UsedQuantifiers.Length];
             for (int i = 0; i < this.UsedQuantifiers.Length; i++)
             {
@@ -528,6 +533,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                     if (literal.cedentType == CedentEnum.Antecedent)
                     {
                         returnString.Append(literal.literalName);
+                     //   hypothesis.literals[0].
                     }
                 }
             }
@@ -880,7 +886,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Method which gets used quantifiers names
         /// </summary>
         /// <returns>List of used quantifiers names</returns>
-        public List<string> GetUsedQuantifiersNames()
+        public List<string> GetSelectedQuantifiersNames()
         {
             List<string> returnList = new List<string>();
             foreach (QuantifierProvider quantifier in this.UsedQuantifiers)
@@ -986,15 +992,16 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <returns>List of counted values</returns>
         public double[] ReadSelectedQuantifiersFromCache(int hypid, int precision)
         {
-            double[] quantifiers = new double[cachedHypotheses[hypid].QuantifiersList.Length];
+            List<double> returnQuantifiers = new List<double>();
+       //     double[] quantifiers = new double[cachedHypotheses[hypid].QuantifiersList.Length];
             for (int i = 0; i < cachedHypotheses[hypid].QuantifiersList.Length; i++)
             {
-                if (this.GetUsedQuantifiersNames().IndexOf(cachedHypotheses[hypid].QuantifiersList[i].Name) != -1)
+                if (this.SelectedQuantifiers[i] != 0)
                 {
-                    quantifiers[i] = Math.Round(cachedHypotheses[hypid].QuantifiersList[i].Value, precision);
+                    returnQuantifiers.Add(Math.Round(cachedHypotheses[hypid].QuantifiersList[i].Value, precision));
                 }
             }
-            return quantifiers;
+            return returnQuantifiers.ToArray();
         }
 
         /// <summary>

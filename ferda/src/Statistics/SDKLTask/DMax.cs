@@ -13,7 +13,7 @@ namespace Ferda.Statistics.SDKLTask
 
         public override string getTaskType(Ice.Current current__)
         {
-            return "LISpMinerTasks.SDCKLask";
+            return "LISpMinerTasks.SDKLTask";
         }
 
         public override string getStatisticsName(Ice.Current current__)

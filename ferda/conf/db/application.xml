@@ -144,6 +144,69 @@
       <object identity="CFMin" type="::Ferda::Statistics::StatisticsProvider"/>
       <object identity="CFMax" type="::Ferda::Statistics::StatisticsProvider"/>
 
+      <!--
+      sdcft statistics
+      -->
+      <object identity="SDCFOneSum" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SDCFOneMin" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SDCFOneMax" type="::Ferda::Statistics::StatisticsProvider"/>
+
+      <object identity="SDCFTwoSum" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SDCFTwoMin" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SDCFTwoMax" type="::Ferda::Statistics::StatisticsProvider"/>
+      
+      <!--
+      klt statistics
+      -->
+      <object identity="KLSum" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="KLMin" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="KLMax" type="::Ferda::Statistics::StatisticsProvider"/>
+
+      <!--
+      sdklt statistics
+      -->
+      <object identity="SDKLOneSum" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SDKLOneMin" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SDKLOneMax" type="::Ferda::Statistics::StatisticsProvider"/>
+
+      <object identity="SDKLTwoSum" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SDKLTwoMin" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SDKLTwoMax" type="::Ferda::Statistics::StatisticsProvider"/>
+
+
+      <!--
+      sd4ft statistics
+      -->
+      <object identity="SFFTDfAvg" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTDfConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTDfDFUI" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTDfFUE" type="::Ferda::Statistics::StatisticsProvider"/>
+      
+      <object identity="SFFTOneA" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTOneAvgDf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTOneB" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTOneC" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTOneD" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTOneCmplt" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTOneConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTOneDConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTOneEConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTOneSupp" type="::Ferda::Statistics::StatisticsProvider"/>
+
+      <object identity="SFFTTwoA" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTTwoAvgDf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTTwoB" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTTwoC" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTTwoD" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTTwoCmplt" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTTwoConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTTwoDConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTTwoEConf" type="::Ferda::Statistics::StatisticsProvider"/>
+      <object identity="SFFTTwoSupp" type="::Ferda::Statistics::StatisticsProvider"/>
+
+      
+
+
     </replica-group>
 
 		<!-- Sample Box Modules DEMO -->

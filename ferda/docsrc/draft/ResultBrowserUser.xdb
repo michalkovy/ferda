@@ -70,42 +70,155 @@
           <formalpara>
             <title>Columns</title>
 
-            <para>Columns of this list are the following:</para>
+            <para>You can sort the hypotheses list by clicking on one of the
+            columns. This is not the only way you can sort this list - see
+            also <link linkend="sortingbystatistics">sorting by
+            statististics</link>. Columns of this list are the
+            following:</para>
           </formalpara>
 
           <itemizedlist>
             <listitem>
               <formalpara>
-                <title>Value</title>
+                <title>Hypothesis name</title>
 
-                <para>This view column contains the categories from the
-                attribute.</para>
+                <para>This view column contains the hypothesis name composed
+                on the basis of the antecedent, succedent and
+                condition.</para>
               </formalpara>
             </listitem>
 
             <listitem>
               <formalpara>
-                <title>Frequency</title>
+                <title>Antecedent</title>
 
-                <para>This view column contains the frequency for the given
-                value. For example, the above screenshot indicates that 610
-                values belong to interval category &lt;10124; 12541).</para>
+                <para>This view column contains the antecedent of the given
+                hypothesis.</para>
               </formalpara>
             </listitem>
 
             <listitem>
               <formalpara>
-                <title>Percentage</title>
+                <title>Succedent</title>
 
-                <para>This view column contains the percentage frequency for
-                the given value. For example, the above screenshot indicates
-                that 610 values belong to interval category &lt;10124; 12541)
-                and it is 9,87% of the given values.</para>
+                <para>This view column contains the succedent of the given
+                hypothesis.</para>
+              </formalpara>
+            </listitem>
+
+            <listitem>
+              <formalpara>
+                <title>Condition</title>
+
+                <para>This view column contains the condition of the given
+                hypothesis.</para>
+              </formalpara>
+            </listitem>
+
+            <listitem>
+              <formalpara id="quantifiercolumns">
+                <title>Quantifiers columns</title>
+
+                <para>These view columns contain counted quantifier values for
+                the hypothesis. The columns for used quantifiers are optional
+                and can be added to hypotheses listview using the <link
+                linkend="mainrightclick">right-click menu</link> on the
+                hypotheses list.</para>
               </formalpara>
             </listitem>
           </itemizedlist>
         </listitem>
       </itemizedlist>
+    </section>
+
+    <section>
+      <title>Tools panel</title>
+
+      <para>This panel contains the following tools for working with
+      hypotheses list:</para>
+
+      <section>
+        <title>Sorting by statistics</title>
+
+        <para>This dropdown menu is designed for sorting hypotheses list by
+        the statistics counted on the hypotheses contingency tables. The list
+        is sorted every time you select the desired statistics from the
+        dropdown menu. ResultBrowser will then display by which statistics the
+        list is sorted.</para>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="resultBrowserSortingStatistics.png"
+                       format="PNG" />
+          </imageobject>
+        </mediaobject>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="resultBrowserPrecision2.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </section>
+
+      <section>
+        <title>Precision</title>
+
+        <para>This element allows you to choose the number of decimal places
+        for displaying the counted quantifiers values in the columns and also
+        counted quantifiers and statistics values in the <link
+        linkend="propertygrid">property grid</link>. Hypotheses list will
+        automatically update itself when the precision is changed.</para>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="resultBrowserPrecision.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </section>
+
+      <section>
+        <title id="hypothesescount">Hypotheses count</title>
+
+        <para>Here the hypotheses count is displayed. Value shows total count
+        of generated hypotheses and displayed number of the generated
+        hypotheses. You can limit the displayed hypotheses using <link
+        linkend="filter">filter</link>.</para>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="resultBrowserHypothesesCount.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </section>
+
+      <section id="filter">
+        <title>Filter</title>
+
+        <para>Filter allows you to limit the displayed hypotheses by the
+        literals in antecedent, succedent and condition. By default, all the
+        hypotheses are displayed - every literal is checked. By unchecking
+        literals from the antecedent, succedent and condition you can limit
+        the displayed hypotheses to only those that contain only the selected
+        literals. For submitting the changed filter condition you should click
+        on Re-filter button. The hypotheses list will be refilled according to
+        filter and displayed <link linkend="hypothesescount">hypotheses count
+        </link>will be updated accordingly.</para>
+      </section>
+    </section>
+
+    <section id="mainrightclick">
+      <title>Right-click menu on the hypotheses list</title>
+
+      <para>This right-click menu is designed for adding and removing columns
+      from the hypotheses list. You can add and remove <link
+      linkend="quantifiercolumns">quantifier colums</link>.</para>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="resultBrowserMainWindowRightClick.png"
+                     format="PNG" />
+        </imageobject>
+      </mediaobject>
     </section>
 
     <section>
