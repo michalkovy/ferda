@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <title>Kompilace Ferdy na operačním systému Windows</title>
+
+    <author>
+      <firstname>Michal</firstname>
+
+      <surname>Kováč</surname>
+
+      <email>michal.kovac.develop@centrum.cz</email>
+    </author>
+  </articleinfo>
+
+  <abstract>
+    <para>Tento text se snaží podrobně popsat jak získat a zkompilovat Ferdu.</para>
+  </abstract>
+
+  <section>
+    <title>Získání zdrojových souborů Ferdy</title>
+
+    <para>Buď lze stáhnout zdrojové soubory ze <ulink url="http://sourceforge.net/project/showfiles.php?group_id=142109">sourceforge</ulink> či lze stáhnout zdrojové soubory ze subversion repository například příkazem <code>svn checkout svn://svn.berlios.de/ferdadataminer/ferda</code></para>
+  </section>
+
+  <section>
+    <title>Potřebné nástroje a nastavení</title>
+
+    <para>Pro kompilaci Ferdy je potřeba nainstalovat .NET Framework 2.0, .NET
+    Framework 2.0 SDK, poslední verzi <ulink
+    url="http://nant.sourceforge.net">NAntu</ulink> a <ulink
+    url="http://www.zeroc.com">Ice</ulink>. Po nainstalování NAntu a Ice je třeba dát
+    Ice a NAnt bin adresář do proměnné prostředí PATH. Dále je třeba v souboru
+    ferda.build nastavit proměnnou ice.dir na adresář Ice.</para>
+  </section>
+
+  <section>
+    <title>Kompilace Fedy</title>
+
+    <para>Pro první zkompilování Ferdy je třeba v hlavním adresáři Ferda zadat příkaz <code>nant fullinstall</code>.</para>
+
+    <para>Dále jsou k dispozici příkazy <code>nant clean</code> (vyčistí zkomilované soubory), <code>nant src</code> (zkomiluje znovu Ferdu a <code>nant refresh</code> (udělá clean a fullinstall).</para>
+  </section>
+</article>
