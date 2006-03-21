@@ -929,6 +929,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelConditionFilter.Text = rm.GetString("ConditionFilter");
             this.ButtonSubmitFilter.Text = rm.GetString("ButtonFilter");
             this.LabelHypothesesTotal.Text = rm.GetString("HypothesesCount");
+            this.RadioFirstTable.Text = rm.GetString("RadioFirst");
+            this.RadioSecondTable.Text = rm.GetString("RadioSecond");
         }
 
         #endregion
