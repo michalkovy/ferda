@@ -727,10 +727,11 @@ using Ferda.ModulesManager;
             FrontEndCommon.SwitchToPreviousDirectory(previousDir);
 
             //loading the associated file (if there is one)
-            if (args.Length > 0)
+            if (args.Length > 0 && !(args[0].StartsWith("--")))
             {
                 FrontEndCommon.LoadProject(args[0], form, form.ResManager, ref pm,
                     form);
+                form.AddToRecentProjects(args[0]);
                 form.menu.SetupDesktop();
                 form.WindowState = FormWindowState.Maximized;
             }
