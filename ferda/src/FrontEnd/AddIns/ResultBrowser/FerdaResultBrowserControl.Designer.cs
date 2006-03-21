@@ -78,6 +78,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelProgressBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressBarIceTicks = new System.Windows.Forms.ToolStripProgressBar();
             this.GroupBoxChangeGraph = new System.Windows.Forms.GroupBox();
+            this.RadioSecondTable = new System.Windows.Forms.RadioButton();
+            this.RadioFirstTable = new System.Windows.Forms.RadioButton();
             this.CheckBoxShowLabels = new System.Windows.Forms.CheckBox();
             this.LabelVOffset = new System.Windows.Forms.Label();
             this.LabelHOffset = new System.Windows.Forms.Label();
@@ -91,8 +93,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ToolStripShowGraphEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripCopyChart = new System.Windows.Forms.ToolStripMenuItem();
-            this.RadioFirstTable = new System.Windows.Forms.RadioButton();
-            this.RadioSecondTable = new System.Windows.Forms.RadioButton();
             this.ResultBrowserSplit.Panel1.SuspendLayout();
             this.ResultBrowserSplit.Panel2.SuspendLayout();
             this.ResultBrowserSplit.SuspendLayout();
@@ -392,6 +392,30 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.GroupBoxChangeGraph.Text = "View options";
             this.GroupBoxChangeGraph.Visible = false;
             // 
+            // RadioSecondTable
+            // 
+            this.RadioSecondTable.AutoSize = true;
+            this.RadioSecondTable.Enabled = false;
+            this.RadioSecondTable.Location = new System.Drawing.Point(107, 168);
+            this.RadioSecondTable.Name = "RadioSecondTable";
+            this.RadioSecondTable.Size = new System.Drawing.Size(85, 17);
+            this.RadioSecondTable.TabIndex = 10;
+            this.RadioSecondTable.Text = "radioButton1";
+            this.RadioSecondTable.UseVisualStyleBackColor = true;
+            // 
+            // RadioFirstTable
+            // 
+            this.RadioFirstTable.AutoSize = true;
+            this.RadioFirstTable.Checked = true;
+            this.RadioFirstTable.Enabled = false;
+            this.RadioFirstTable.Location = new System.Drawing.Point(107, 145);
+            this.RadioFirstTable.Name = "RadioFirstTable";
+            this.RadioFirstTable.Size = new System.Drawing.Size(85, 17);
+            this.RadioFirstTable.TabIndex = 9;
+            this.RadioFirstTable.TabStop = true;
+            this.RadioFirstTable.Text = "radioButton1";
+            this.RadioFirstTable.UseVisualStyleBackColor = true;
+            // 
             // CheckBoxShowLabels
             // 
             this.CheckBoxShowLabels.AutoSize = true;
@@ -517,28 +541,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ToolStripCopyChart.Name = "ToolStripCopyChart";
             this.ToolStripCopyChart.Size = new System.Drawing.Size(179, 22);
             this.ToolStripCopyChart.Text = "toolStripMenuItem1";
-            // 
-            // RadioFirstTable
-            // 
-            this.RadioFirstTable.AutoSize = true;
-            this.RadioFirstTable.Location = new System.Drawing.Point(107, 145);
-            this.RadioFirstTable.Name = "RadioFirstTable";
-            this.RadioFirstTable.Size = new System.Drawing.Size(85, 17);
-            this.RadioFirstTable.TabIndex = 9;
-            this.RadioFirstTable.TabStop = true;
-            this.RadioFirstTable.Text = "radioButton1";
-            this.RadioFirstTable.UseVisualStyleBackColor = true;
-            // 
-            // RadioSecondTable
-            // 
-            this.RadioSecondTable.AutoSize = true;
-            this.RadioSecondTable.Location = new System.Drawing.Point(107, 168);
-            this.RadioSecondTable.Name = "RadioSecondTable";
-            this.RadioSecondTable.Size = new System.Drawing.Size(85, 17);
-            this.RadioSecondTable.TabIndex = 10;
-            this.RadioSecondTable.TabStop = true;
-            this.RadioSecondTable.Text = "radioButton1";
-            this.RadioSecondTable.UseVisualStyleBackColor = true;
             // 
             // FerdaResultBrowserControl
             // 
