@@ -545,7 +545,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             HypothesisStruct hypothesis = this.resultBrowser.GetHypothese(hypothesisId);
             PropertyTable table = new PropertyTable();
 
-            #region Filling in name, antecedent, succedent, condition
+            #region Filling in name, antecedent, succedent, condition, first set, second set
 
             //name
             PropertySpec hName = new PropertySpec(
@@ -595,6 +595,37 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             table.Properties.Add(hCondition);
             table[resManager.GetString("ColumnCondition")] = FerdaResult.GetConditionString(hypothesis);
 
+            //first set
+            string temp1 = FerdaResult.GetFirstSetString(hypothesis);
+            if(!(temp1.CompareTo(String.Empty) == 0))
+            {
+                PropertySpec hFirstSet = new PropertySpec(
+                "1" + resManager.GetString("FirstSet"),
+                typeof(string),
+                resManager.GetString("HypothesisData"),
+                resManager.GetString("HypothesisData"),
+                temp1
+                );
+            hFirstSet.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+            table.Properties.Add(hFirstSet);
+            table["1" + resManager.GetString("FirstSet")] = temp1;
+            }
+            
+            //second set
+            temp1 = FerdaResult.GetSecondSetString(hypothesis);
+            if (!(temp1.CompareTo(String.Empty) == 0))
+            {
+                PropertySpec hSecondSet = new PropertySpec(
+                "2" + resManager.GetString("SecondSet"),
+                typeof(string),
+                resManager.GetString("HypothesisData"),
+                resManager.GetString("HypothesisData"),
+                temp1
+                );
+                hSecondSet.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(hSecondSet);
+                table["2" + resManager.GetString("SecondSet")] = temp1;
+            }
             #endregion
 
 
@@ -702,7 +733,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                                 }
                                 else
                                 {
-                                    temp = "c";
+                                    temp = "d";
                                 }
 
                                 break;

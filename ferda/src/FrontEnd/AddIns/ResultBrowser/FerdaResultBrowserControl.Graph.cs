@@ -200,7 +200,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                             {
                                 if (literal.cedentType == CedentEnum.Antecedent)
                                 {
-                                    seriesTitle = literal.categoriesNames[j];
+                                    if (literal.categoriesNames.Length > j)
+                                    {
+                                        seriesTitle = literal.categoriesNames[j];
+                                    }
                                 }
                             }
                             barSeries.Add(number, seriesTitle);
@@ -236,7 +239,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     {
                         if (literal.cedentType == CedentEnum.Succedent)
                         {
-                            seriesTitle = literal.categoriesNames[k];
+                            if (literal.categoriesNames.Length > k)
+                            {
+                                seriesTitle = literal.categoriesNames[k];
+                            }
                             break;
                         }
                     }
@@ -246,7 +252,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                         {
                             if (literal.cedentType == CedentEnum.Antecedent)
                             {
-                                seriesTitle = literal.categoriesNames[k];
+                                if (literal.categoriesNames.Length > k)
+                                {
+                                    seriesTitle = literal.categoriesNames[k];
+                                }
                             }
                         }
                     }
@@ -310,7 +319,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                             {
                                 if (literal.cedentType == CedentEnum.Antecedent)
                                 {
-                                    seriesTitle = literal.categoriesNames[j];
+                                    if (literal.categoriesNames.Length > j)
+                                    {
+                                        seriesTitle = literal.categoriesNames[j];
+                                    }
                                 }
                             }
                             barSeries.Add(number, seriesTitle);
@@ -346,7 +358,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     {
                         if (literal.cedentType == CedentEnum.Succedent)
                         {
-                            seriesTitle = literal.categoriesNames[k];
+                            if (literal.categoriesNames.Length > k)
+                            {
+                                seriesTitle = literal.categoriesNames[k];
+                            }
                             break;
                         }
                     }
@@ -356,7 +371,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                         {
                             if (literal.cedentType == CedentEnum.Antecedent)
                             {
-                                seriesTitle = literal.categoriesNames[k];
+                                if (literal.categoriesNames.Length > k)
+                                {
+                                    seriesTitle = literal.categoriesNames[k];
+                                }
                             }
                         }
                     }
