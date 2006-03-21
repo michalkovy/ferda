@@ -151,7 +151,7 @@ namespace Ferda.FrontEnd.Properties
                     {
                         view.RefreshBoxNames();
                     }
-                    //propertiesDisplayer.Adapt();
+                    propertiesDisplayer.AsyncAdapt();
                 }
                 else
                 {
