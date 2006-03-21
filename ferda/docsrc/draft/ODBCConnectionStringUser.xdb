@@ -195,6 +195,22 @@
             documentation. After creating a new ODBC datasource you can use it
             when creating a connection string.</para>
           </formalpara>
+          <para>
+            Ferda supports only creation of the User and System data source in the 
+            first step of tutorial that emerges when you click on 
+            <classname>Create ODBC source</classname> - it does not support the
+            File data source.
+          </para>
+          <para>
+            For the LISp-Miner experts: While working in Ferda, you do not need to
+            define a metabase (usually a Microsoft Access file - LM_Empty.mdb) for
+            saving a project and mutual data exchange between different modules
+            of the system. User in Ferda does not notice metabase usage, he works
+            only with the project files (*.xfp). (Implementation: whenever the
+            Ferda boxes execute LISp-Miner modules, they give metabase as a 
+            parameter to the modules generated before. After the LISp module
+            finishes its work, the metabase is deleted.)
+          </para>
         </listitem>
       </itemizedlist>
     </section>
