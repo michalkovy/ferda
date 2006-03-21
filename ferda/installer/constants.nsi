@@ -3,4 +3,4 @@
 !define DOT_MINOR_MINOR "50727";
 
 !define DOT_BAD_MAJOR "1";
-!define FERDA_VERSION "0.8";
+!define FERDA_VERSION "0.7";
