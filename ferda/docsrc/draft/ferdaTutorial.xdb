@@ -13,7 +13,15 @@
     <titleabbrev>FerdasTutorial</titleabbrev>
     <!--
     <revhistory>
-      
+      <revision>
+        <revnumber>0.1</revnumber>
+        <date>2006-3-15</date>
+        <revdescription>
+          <para>
+            The actions run through the Module for interaction
+          </para>
+        </revdescription>
+      </revision>       
     </revhistory>
     -->
   </articleinfo>
@@ -283,15 +291,16 @@
     </mediaobject>    
   </section>
   <section>
-    <title>8. Running the 4ft and Actions of the boxes</title>
+    <title>8. Running the 4ft and Modules for interaction</title>
     <para>
       Executing the action of boxes is yet another usage of the box.
       Actions of the box are accessible from the <classname>Actions</classname>
-      item of the box context menu. As we see, the
-      <classname>4ft Task</classname> box contains one action named
-      <classname>Run</classname>. This action executes hypotheses generation
-      for the corresponding task. As you can see the other boxes 
-      have also their actions.
+      item of the box context menu. Unfortunatellz, in recent Ferda implementation
+      it is needed to run the boxes actions through 
+      <classname>Modules for interaction</classname> (more natural usage of these
+      modules will be explained in the next point of the tutorial). Let us
+      choose the <classname>Run</classname> item from the
+      <classname>Modules for Interaction</classname> submenu.
     </para>
     <para>
       When we run the task, a dialog with generating information
@@ -310,7 +319,7 @@
     </mediaobject>    
   </section>
   <section>
-    <title>9. Displaying the results and Modules for interaction</title>
+    <title>9. Displaying the results</title>
     <para>
       With the aid of <classname>Modules for interaction</classname> the 
       boxes show their content to the user. Therefore, in order to display 
