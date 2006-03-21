@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <title>Řešitelé projektu</title>
+    <author>
+      <firstname>Martin</firstname>
+      <surname>Ralbovský</surname>
+      <email>martin.ralbovsky@gmail.com</email>
+    </author>
+  </articleinfo>
+
+  <abstract>
+    <para>Tento dokument popisuje rozdělení práce mezi jednotlivé
+    členy projektu Ferda</para>
+  </abstract>
+  <section>
+    <title>Michal Kováč</title>
+    <para>
+      Michal Kováč navrhoval větší část architektury Ferdy. Naprogramoval manažer
+      modulů a manažer projektů.
+    </para>
+  </section>
+  <section>
+    <title>Tomáš Kuchař</title>
+    <para>
+      Tomáš Kuchař měl na starosti návrh modulů pro Ferdu. Rozhodoval, které moduly 
+      budou krabičky a jaké krabičky budeme v systému mít. Implementoval větší část
+      krabiček a komunikaci s vrstvou metabáze.
+    </para>
+  </section>
+  <section>
+    <title>Alexander Kuzmin</title>
+    <para>
+      Alexander Kuzmin navrhoval vzhled modulů pro interakci a modulů pro nastavení. 
+      Naprogramoval všechny tyto moduly a SD procedury.
+    </para>
+  </section>
+  <section>
+    <title>Martin Ralbovský</title>
+    <para>
+      Martin Ralbovský navrhl vzhled a architekturu FrontEndu a napojení FrontEndu
+      na ostatní části Ferdy. Naprogramoval FrontEnd.
+    </para>
+  </section>
+</article>
+
