@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <firstname>Alexander</firstname>
+
+        <surname>Kuzmin</surname>
+
+        <email>alexander.kuzmin@gmail.com</email>
+      </author>
+    </authorgroup>
+
+    <pubdate>2006-03-21</pubdate>
+
+    <title>ExplainTable module - Module for displaying the results of SQL
+    explain table query</title>
+
+    <titleabbrev>ExplainTable</titleabbrev>
+
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2006-03-21</date>
+        <revremark>Initial version of the document
+        </revremark>
+      </revision>
+    </revhistory>
+    -->
+  </articleinfo>
+
+  <abstract>
+    <para>This document describes the user interface for the ExplainTable
+    module. It contains some simple examples and screenshots for the users to
+    make using of this module easier.</para>
+  </abstract>
+
+  <section>
+    <title>Introduction</title>
+
+    <para>Welcome to ExplainTable module. This is a module designed for
+    displaying the results of SQL explain table query.</para>
+  </section>
+
+  <section>
+    <title>Parts of the user interface</title>
+
+    <section>
+      <title>Main window</title>
+
+      <para>Main dialog window contains a list of the datacolumns in the
+      table. Columns of this list contain further information about the data
+      columns.</para>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="explainTableMain.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+
+      <itemizedlist>
+        <listitem>
+          <formalpara>
+            <title>Columns</title>
+
+            <para>Columns in the list view correspond with SQL explain table
+            query columns. Please refer to SQL documentation for further
+            details. Values in the list can be sorted by clicking on the
+            column header, either in ascending or descending order.</para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Right-click menu</title>
+
+      <para>Right-click menu contains options to copy the information to
+      clipboard.</para>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="explainTableRightClick.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+
+      <itemizedlist>
+        <listitem>
+          <formalpara>
+            <title>Copy all items to clipboard</title>
+
+            <para>When this option is selected, all items from the
+            ExplainTable list are copied to the clipboard as tab separated
+            values.</para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Copy selected items to clipboard</title>
+
+            <para>When this option is selected, the currently items from the
+            ExplainTable list are copied to the clipboard as tab separated
+            values.</para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+</article>
