@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <author>
+      <firstname>Martin</firstname>
+      <surname>Ralbovský</surname>
+      <email>martin.ralbovsky@gmail.com</email>
+    </author>
+    <pubdate>2006-03-21</pubdate>
+    <title>Harmonogram projektu Ferda</title>
+    <titleabbrev>HarmonogramProjektu</titleabbrev>
+  </articleinfo>
+  <section>
+    <title>Rok 2003 a 2004</title>
+    <para>
+      Na sklonku roku 2003 se zformoval projektový team a vybrali jsme si pro náš projekt
+      právě prezentaci <classname>Vizuální programování se systémem LISp-Miner</classname>
+      kterou odpřednášel pan Karban v rámci prezentace projektů. Jinak se první rok trvání
+      projektu moc nedělo, seznamovali jsme se se systémem LISp-Miner, zkoušeli jsme
+      našemu projektu dát první črty, schválila se specifikace.
+    </para>
+    <table>
+      <title>Přehled aktivit za rok 2003 a 2004</title>
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>
+              11.12.2003
+            </entry>
+            <entry>
+              První schůze, prodiskutování základních parametrů projektu. Ukázka komerčních systému -
+              Clementine. Předání existujících modulů, dokumentace.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              9.1.2004
+            </entry>
+            <entry>
+              První návrh specifikace.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              7.4.2004
+            </entry>
+            <entry>
+              Schůze, prezentace prvních návrhu, rozvržení týmu, oprava specifikace.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              22.4.2004
+            </entry>
+            <entry>
+              Schůze, návrh GUI, předběžný návrh modularity.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              18.11.2004
+            </entry>
+            <entry>
+              Schůze s Rauchem ohledně upřesnění finální verze specifikace
+            </entry>
+          </row>
+          <row>
+            <entry>
+              2.12.2004
+            </entry>
+            <entry>
+              Schůze s doc. Rauchem, Ing. Šimůnkem, (zatím neúspěšný) návrh na předělání metabáze, ujasnění
+              některých technických aspektů. Předvedení zajímavých vizuálních řešení z jiných produktů. Náš
+              první návrh GUI - Martin naprogramoval okno s dokovatelnými prvky.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              8.12.2004
+            </entry>
+            <entry>
+              Schůze s doc. Rauchem, první návrh řetízku, upřesnění základních pojmů DM. Rauch nám poskytl
+              prezentace podrobně vysvětlující účel všech existujících modulů LISp-mineru.
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </section>
+  <section>
+    <title>Rok 2005</title>
+    <para>
+      Na jaře roku 2005 si team začal uvědomit, že když chce studium ukončit v řádném termínu,
+      měl by začít na projektu intenzivněji pracovat. Byly proto učiněny kritické rozhodnutí
+      pro vývoj projetku. Rozhodli jsme se že budeme používat pro Ferdu middleware ICE a jiné
+      externí knihovny. Team pracoval celé jaro zejména na návrhu architektury Ferdy, návrhu
+      jednotlivých částí systému a komunikaci mezi nimi. Byly učiněna rozhodnutí o konkrétní
+      podobě krabiček a dalších modulů.
+    </para>
+    <para>
+      V létě začala intenzivní práce na jednotlivých částech Ferdy. Vyvíjen byl manažer projektů,
+      manažer modulů i uživatelské prostředí FrontEnd. Začali práce na implementaci prvních
+      krabiček. Zároveň jsme zvolili termín obhajoby na přelom roku 2005 a 2006. Na konci léta
+      již bylo možné jednotlivé části systému spojit a pracovat s nimi jako s jedním celkem. Dále
+      nám přišla nabídka od vedoucího projektu doc. Raucha na prezentaci Ferdy na vědecké
+      konferenci Znalosti 2006. Napsali jsme tedy článek popisující Ferdu jako nový prostředek
+      pro dobývání znalostí postavený na starším systému LISp-Miner.
+    </para>
+    <para>
+      Na podzim již byl Ferda z části funkční, bylo na něm možné například spouštět 4ft a KL úlohy.
+      Bohužel to byl systém značně nestabilní, pomalý a po uživatelské stránce jalový. Bylo potřeba
+      dokončit jednak všechny požadavky plynoucí ze specifikace na rozsah systému, dále pak systém
+      vyladit. Ze uživatelské strany byl například zprovozněn panel nástrojů, kontextová nápověda,
+      dále pak byly implementovány krabičky pro SD procedury. Celý program prošel řadou optimalizací
+      na všech vrstvách. Úspěšně jsme prezentovali systém Ferda na interní vědeckém semináři KEG
+      pořádaným na VŠE. K naší velké radosti byl náš článek o Ferdovi přijat na konferenci Znalosti
+      2006 jako dlouhý příspěvek.
+    </para>
+    <para>
+      Na sklonku roku 2006 pokračovaly práce na Ferdovi z hlediska kompletace závazků specifikace
+      a zlepšení stability a výkonu. Dále se všichni členové projektu rozhodli pokračovat na Ferdovi
+      i ve svých diplomových pracích. Uvědomovali jsme si však, že nestíháme Ferdu odevzdav v termínu
+      v prosinci, protože zejména z hlediska dokumentace by Ferda určitě jako projekt neobstál.
+      Termín obhajoby byl tedy přesunut na začátek roku 2006 po konferenci Znalosti 2006.
+    </para>
+    <table>
+      <title>Přehled aktivit za rok 2005</title>
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>
+              20.1.2005
+            </entry>
+            <entry>
+              Schůzka s doc. Rauchem o dalším postupu projektu
+            </entry>
+          </row>
+          <row>
+            <entry>
+              únor 2005
+            </entry>
+            <entry>
+              Souborná zkouška všech členů projektu
+            </entry>
+          </row>
+          <row>
+            <entry>
+              23.3.2005
+            </entry>
+            <entry>
+              Schůzka s doc. Rauchem, diskuse o vzhledu uživatelského prosředí, které už
+              vypadalo mnohem konkrétněji. Dále prezentace řetízků a diskuse o tom,
+              co má a nemá být řetízek.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              6.4.2003
+            </entry>
+            <entry>
+              Schůzka s doc. Rauchem a Ing. Šimůnkem a diskuse zejména na téma nejastnosti v metabázi; současná a
+              budoucí implementace modulů v LISp-Mineru a ICE. Později se sešel celý projektový team s Doc.
+              Rauchem, kde bylo hlavním tématem uživatelské prostředí Ferdy.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              27.4.2005
+            </entry>
+            <entry>
+              Tomáš Kuchař a Michal Kováč se sešli s Tomášem Karbanem a bavili se na mnohá témata,
+              mezi nimiž se skvělo téma začlenění Rel-Mineru do Ferdy.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              11.5.2005
+            </entry>
+            <entry>
+              Schůzka s doc. Rauchem. Probírala se potřeba nové krabičky "Zadání základního
+              boolského cedentu", lambda abstrakce pro krabičky, možné témata diplomových prací
+            </entry>
+          </row>
+          <row>
+            <entry>
+              18.5.2005
+            </entry>
+            <entry>
+              Schůzka s členy projektu ARALM o spolupráci našich projektů.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              22.6.2005
+            </entry>
+            <entry>
+              Schůzka s doc. Rauchem, diskutovalo se o časovém harmonogramu Ferdy, o termínech
+              jeho dokončení a o postupu dalších prací přes nadcházející prázdniny.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              22.8.2005
+            </entry>
+            <entry>
+              Schůzka s doc. Rauchem především na téma příspěvku na Znalosti 2006.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              5.9.2005
+            </entry>
+            <entry>
+              Odevzdání abstraktu na Znalosti 2006
+            </entry>
+          </row>
+          <row>
+            <entry>
+              9.9.2005
+            </entry>
+            <entry>
+              Schůzka s doc. Rauchem o kompletním článku na Znalosti 2006, první instalace Ferdy
+              na počítač doc. Raucha a první skušenosti s ním.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              12.9.2005
+            </entry>
+            <entry>
+              Debata o plném článku s doc. Rauchem.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              23.9.2005
+            </entry>
+            <entry>
+              První veřejná alfa Ferdy na <ulink url="www.sourceforge.net">Sourceforge</ulink>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              24.10.2005
+            </entry>
+            <entry>
+              Rozhodnutí o přijetí článku na Znalosti 2006 jako dlouhého příspěvku.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              1.11.2005
+            </entry>
+            <entry>
+              Schůzka s teamem projetku ARALM, diskuse o spolupráci projektů a možné
+              propojenosti systémů
+            </entry>
+          </row>
+          <row>
+            <entry>
+              10.11.2005
+            </entry>
+            <entry>
+              Prezentace Ferdy na semináři KEG.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              22.11.2005
+            </entry>
+            <entry>
+              Schůzka s doc. Rauchem, diskuse o možnosti prezentace Ferdy na univerzitě v Lyonu, nutnost návodu pro
+              přidání nové krabičky.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              9.12.2005
+            </entry>
+            <entry>
+              Výuka DBI022 na MFF, prezentace Ferdy
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </section>
+  <section>
+    <title>Rok 2006</title>
+    <para>
+      V roce 2006 se zatím udála jedna významná událost a to konference Znalosti 2006. Členové
+      teamu úspěně prezentovali Ferdu na této konferenci a tím se dostal Ferda do podvědomí
+      široké vědecké veřejnosti. Ferda se dále ladí a zlepšuje, z několikaměsíčního používání
+      programu se zjistilo, že některé dříve navržené postupy nejsou vhodné a je dobré je
+      nahradit jinými. Ferda už je mnohem stabilnější a rychlejší. V posledních chvílích se
+      Ferda připravuje na obhajobu.
+    </para>
+    <table>
+      <title>Přehled aktivit za rok 2006</title>
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>
+              16.1.2006
+            </entry>
+            <entry>
+              Schůzka s doc. Rauchem, diskuse na různá témata
+            </entry>
+          </row>
+          <row>
+            <entry>
+              2.2.2006
+            </entry>
+            <entry>
+              Prezentace Ferdy na konferenci Znalosti 2006.
+            </entry>
+          </row>
+          <row>
+            <entry>
+              23.3.2006
+            </entry>
+            <entry>
+              Odevzdání projektu
+            </entry>
+          </row>
+          <row>
+            <entry>
+              7.4.2006
+            </entry>
+            <entry>
+              Obhajoba projektu
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </section>
+</article>
