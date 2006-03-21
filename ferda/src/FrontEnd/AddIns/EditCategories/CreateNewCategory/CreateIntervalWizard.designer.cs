@@ -53,7 +53,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.ButtonSubmit = new System.Windows.Forms.Button();
             this.LabelLeftBoundType = new System.Windows.Forms.Label();
             this.LabelLeftBoundValue = new System.Windows.Forms.Label();
-            this.RadioLeftBoundSharp = new System.Windows.Forms.RadioButton(); 
+            this.RadioLeftBoundSharp = new System.Windows.Forms.RadioButton();
             this.RadioLeftBoundRound = new System.Windows.Forms.RadioButton();
             this.TextBoxLeftBound = new System.Windows.Forms.TextBox();
             this.LabelRightBoundType = new System.Windows.Forms.Label();
@@ -92,7 +92,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.ButtonCancel.Location = new System.Drawing.Point(133, 470);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(63, 23);
-            this.ButtonCancel.TabIndex = 11;
+            this.ButtonCancel.TabIndex = 15;
             this.ButtonCancel.Text = "Cancel";
             this.ButtonCancel.Click += new System.EventHandler(this.CancelButton_Click);
             // 
@@ -101,7 +101,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.ButtonSubmit.Location = new System.Drawing.Point(16, 470);
             this.ButtonSubmit.Name = "ButtonSubmit";
             this.ButtonSubmit.Size = new System.Drawing.Size(63, 23);
-            this.ButtonSubmit.TabIndex = 10;
+            this.ButtonSubmit.TabIndex = 14;
             this.ButtonSubmit.Text = "Submit";
             this.ButtonSubmit.Click += new System.EventHandler(this.SubmitButton_Click);
             // 
@@ -117,7 +117,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // LabelLeftBoundValue
             // 
             this.LabelLeftBoundValue.AutoSize = true;
-            this.LabelLeftBoundValue.Location = new System.Drawing.Point(3, 67);
+            this.LabelLeftBoundValue.Location = new System.Drawing.Point(3, 66);
             this.LabelLeftBoundValue.Name = "LabelLeftBoundValue";
             this.LabelLeftBoundValue.Size = new System.Drawing.Size(90, 13);
             this.LabelLeftBoundValue.TabIndex = 30;
@@ -129,7 +129,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.RadioLeftBoundSharp.Location = new System.Drawing.Point(3, 77);
             this.RadioLeftBoundSharp.Name = "RadioLeftBoundSharp";
             this.RadioLeftBoundSharp.Size = new System.Drawing.Size(31, 17);
-            this.RadioLeftBoundSharp.TabIndex = 6;
+            this.RadioLeftBoundSharp.TabIndex = 8;
             this.RadioLeftBoundSharp.Text = "<";
             // 
             // RadioLeftBoundRound
@@ -139,7 +139,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.RadioLeftBoundRound.Location = new System.Drawing.Point(3, 38);
             this.RadioLeftBoundRound.Name = "RadioLeftBoundRound";
             this.RadioLeftBoundRound.Size = new System.Drawing.Size(28, 17);
-            this.RadioLeftBoundRound.TabIndex = 5;
+            this.RadioLeftBoundRound.TabIndex = 7;
             this.RadioLeftBoundRound.TabStop = true;
             this.RadioLeftBoundRound.Text = "(";
             // 
@@ -162,7 +162,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // LabelRightBoundValue
             // 
             this.LabelRightBoundValue.AutoSize = true;
-            this.LabelRightBoundValue.Location = new System.Drawing.Point(125, 67);
+            this.LabelRightBoundValue.Location = new System.Drawing.Point(125, 66);
             this.LabelRightBoundValue.Name = "LabelRightBoundValue";
             this.LabelRightBoundValue.Size = new System.Drawing.Size(97, 13);
             this.LabelRightBoundValue.TabIndex = 23;
@@ -174,7 +174,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.RadioRightBoundSharp.Location = new System.Drawing.Point(3, 77);
             this.RadioRightBoundSharp.Name = "RadioRightBoundSharp";
             this.RadioRightBoundSharp.Size = new System.Drawing.Size(31, 17);
-            this.RadioRightBoundSharp.TabIndex = 9;
+            this.RadioRightBoundSharp.TabIndex = 11;
             this.RadioRightBoundSharp.Text = ">";
             // 
             // RadioRightBoundRound
@@ -184,7 +184,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.RadioRightBoundRound.Location = new System.Drawing.Point(3, 38);
             this.RadioRightBoundRound.Name = "RadioRightBoundRound";
             this.RadioRightBoundRound.Size = new System.Drawing.Size(28, 17);
-            this.RadioRightBoundRound.TabIndex = 8;
+            this.RadioRightBoundRound.TabIndex = 10;
             this.RadioRightBoundRound.TabStop = true;
             this.RadioRightBoundRound.Text = ")";
             // 
@@ -206,7 +206,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // LabelNewName
             // 
             this.LabelNewName.AutoSize = true;
-            this.LabelNewName.Location = new System.Drawing.Point(3, 12);
+            this.LabelNewName.Location = new System.Drawing.Point(3, 11);
             this.LabelNewName.Name = "LabelNewName";
             this.LabelNewName.Size = new System.Drawing.Size(102, 13);
             this.LabelNewName.TabIndex = 34;
@@ -218,7 +218,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.RadioMinusInfinity.Location = new System.Drawing.Point(3, 3);
             this.RadioMinusInfinity.Name = "RadioMinusInfinity";
             this.RadioMinusInfinity.Size = new System.Drawing.Size(60, 17);
-            this.RadioMinusInfinity.TabIndex = 4;
+            this.RadioMinusInfinity.TabIndex = 6;
             this.RadioMinusInfinity.Text = "- infinity";
             this.RadioMinusInfinity.CheckedChanged += new System.EventHandler(this.MinusInfinity_CheckedChanged);
             // 
@@ -228,7 +228,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.RadioPlusInfinity.Location = new System.Drawing.Point(3, 3);
             this.RadioPlusInfinity.Name = "RadioPlusInfinity";
             this.RadioPlusInfinity.Size = new System.Drawing.Size(63, 17);
-            this.RadioPlusInfinity.TabIndex = 7;
+            this.RadioPlusInfinity.TabIndex = 9;
             this.RadioPlusInfinity.Text = "+ infinity";
             this.RadioPlusInfinity.CheckedChanged += new System.EventHandler(this.PlusInfinity_CheckedChanged);
             // 
@@ -258,14 +258,14 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.ListBoxIntervals.Location = new System.Drawing.Point(16, 374);
             this.ListBoxIntervals.Name = "ListBoxIntervals";
             this.ListBoxIntervals.Size = new System.Drawing.Size(180, 82);
-            this.ListBoxIntervals.TabIndex = 37;
+            this.ListBoxIntervals.TabIndex = 13;
             this.ListBoxIntervals.DoubleClick += new System.EventHandler(this.ListBoxIntervals_DoubleClick);
             this.ListBoxIntervals.SelectedIndexChanged += new System.EventHandler(this.ListBoxIntervals_SelectedIndexChanged);
             // 
             // LabelIntervals
             // 
             this.LabelIntervals.AutoSize = true;
-            this.LabelIntervals.Location = new System.Drawing.Point(16, 358);
+            this.LabelIntervals.Location = new System.Drawing.Point(16, 357);
             this.LabelIntervals.Name = "LabelIntervals";
             this.LabelIntervals.Size = new System.Drawing.Size(120, 13);
             this.LabelIntervals.TabIndex = 38;
@@ -286,7 +286,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.RadioFloat.Location = new System.Drawing.Point(125, 3);
             this.RadioFloat.Name = "RadioFloat";
             this.RadioFloat.Size = new System.Drawing.Size(48, 17);
-            this.RadioFloat.TabIndex = 1;
+            this.RadioFloat.TabIndex = 5;
             this.RadioFloat.Text = "Float";
             this.RadioFloat.UseVisualStyleBackColor = true;
             // 
@@ -297,7 +297,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.RadioLong.Location = new System.Drawing.Point(3, 3);
             this.RadioLong.Name = "RadioLong";
             this.RadioLong.Size = new System.Drawing.Size(49, 17);
-            this.RadioLong.TabIndex = 0;
+            this.RadioLong.TabIndex = 4;
             this.RadioLong.TabStop = true;
             this.RadioLong.Text = "Long";
             this.RadioLong.UseVisualStyleBackColor = true;
@@ -343,6 +343,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

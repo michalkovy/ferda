@@ -64,9 +64,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // LabelNewName
             // 
             this.LabelNewName.AutoSize = true;
-            this.LabelNewName.Location = new System.Drawing.Point(3, 12);
+            this.LabelNewName.Location = new System.Drawing.Point(3, 11);
             this.LabelNewName.Name = "LabelNewName";
-            this.LabelNewName.Size = new System.Drawing.Size(54, 13);
+            this.LabelNewName.Size = new System.Drawing.Size(58, 13);
             this.LabelNewName.TabIndex = 53;
             this.LabelNewName.Text = "New name";
             // 
@@ -99,18 +99,18 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // LabelExistingValues
             // 
             this.LabelExistingValues.AutoSize = true;
-            this.LabelExistingValues.Location = new System.Drawing.Point(125, 67);
+            this.LabelExistingValues.Location = new System.Drawing.Point(125, 66);
             this.LabelExistingValues.Name = "LabelExistingValues";
-            this.LabelExistingValues.Size = new System.Drawing.Size(73, 13);
+            this.LabelExistingValues.Size = new System.Drawing.Size(77, 13);
             this.LabelExistingValues.TabIndex = 49;
             this.LabelExistingValues.Text = "Existing values";
             // 
             // LabelAvailableValues
             // 
             this.LabelAvailableValues.AutoSize = true;
-            this.LabelAvailableValues.Location = new System.Drawing.Point(3, 67);
+            this.LabelAvailableValues.Location = new System.Drawing.Point(3, 66);
             this.LabelAvailableValues.Name = "LabelAvailableValues";
-            this.LabelAvailableValues.Size = new System.Drawing.Size(80, 13);
+            this.LabelAvailableValues.Size = new System.Drawing.Size(84, 13);
             this.LabelAvailableValues.TabIndex = 48;
             this.LabelAvailableValues.Text = "Available values";
             // 
@@ -166,6 +166,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.Size = new System.Drawing.Size(228, 370);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
