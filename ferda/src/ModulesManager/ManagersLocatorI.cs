@@ -1,4 +1,4 @@
-// 
+// ManagersLocatorI.cs - Locator of modules
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -28,16 +28,23 @@ namespace Ferda {
     namespace ModulesManager {
 
         /// <summary>
-        /// Summary description for the class.
+        /// Locator of modules
         /// </summary>
-
         public class ManagersLocatorI : ManagersLocatorDisp_
 		{
+            /// <summary>
+            /// Says that it was not possible to connect to IceGrid
+            /// </summary>
 			public class LocatorNotFoundException : System.Exception
 			{
 				
 			}
 			
+            /// <summary>
+            /// Creates new managers locator
+            /// </summary>
+            /// <param name="adapter">An Ice object adapter</param>
+            /// <param name="helper">Helper class</param>
 			public ManagersLocatorI(Ice.ObjectAdapter adapter, Helper helper)
 			{
 				this.adapter = adapter;
@@ -45,6 +52,9 @@ namespace Ferda {
 				this.Refresh();
 			}
 			
+            /// <summary>
+            /// If there is new connection to IceGrid, it is needed to do this refresh
+            /// </summary>
 			public void Refresh()
 			{
 				Debug.WriteLine("Starting Refresh in ManagersLocatorI...");
@@ -132,6 +142,9 @@ namespace Ferda {
 				Debug.WriteLine("Refresh in ManagersLocatorI ended");
 			}
 
+            /// <summary>
+            /// Refresh information about available modules
+            /// </summary>
             private void refreshModules()
             {
                 Debug.WriteLine("Adding SettingModules...");
@@ -175,6 +188,12 @@ namespace Ferda {
                 }
             }
 			
+            /// <summary>
+            /// Says if some creator has function with specified ice identifier
+            /// </summary>
+            /// <param name="iceId">Ice identifier</param>
+            /// <param name="creator">Proxy of box module factory creator</param>
+            /// <returns></returns>
 			public bool IsWithIceId(string iceId, BoxModuleFactoryCreatorPrx creator)
 			{
 				System.Collections.Specialized.StringCollection _functionsIceIds =
@@ -216,12 +235,22 @@ namespace Ferda {
 				return true;
 			}
 			
+            /// <summary>
+            /// Says if boxes created by factory created by creator <paramref name="creator"/>
+            /// has boxType <paramref name="boxType"/>.
+            /// </summary>
+            /// <param name="boxType">type of box</param>
+            /// <param name="creator">creator of factory of box</param>
+            /// <returns>true if <paramref name="creator"/> creates factory for box with box type <paramref name="boxType"/></returns>
 			public bool HasBoxType(BoxType boxType, BoxModuleFactoryCreatorPrx creator)
 			{
 				return this.IsWithIceId(boxType.functionIceId, creator) &&
 				this.hasSockets(boxType.neededSockets, creator);
 			}
 			
+            /// <summary>
+            /// Dictionary of fbox module factory creators with key identifier of creator
+            /// </summary>
 			public Dictionary<string, BoxModuleFactoryCreatorPrx> BoxModuleFactoryCreatorsByIdentifier
 			{
 				get {
@@ -230,10 +259,10 @@ namespace Ferda {
 			}
 
             /// <summary>
-            /// Method findBoxModuleCreatorByIdentifier
+            /// Try to find box module factory creator identifier of creator
             /// </summary>
             /// <returns>A Ferda.Modules.BoxModuleFactoryCreatorPrx</returns>
-            /// <param name="identifier">A string</param>
+            /// <param name="identifier">An identifier of creator</param>
             /// <param name="__current">An Ice.Current</param>
             public override BoxModuleFactoryCreatorPrx findBoxModuleCreatorByIdentifier(String identifier, Current __current) {
 				BoxModuleFactoryCreatorPrx result;
@@ -359,6 +388,10 @@ namespace Ferda {
 				}
             }
 			
+            /// <summary>
+            /// Adds ice object proxies (modules) to information about available modules
+            /// </summary>
+            /// <param name="objectPrxies">A list of ice object proxies</param>
 			public void AddIceObjectProxies(List<ObjectPrx> objectPrxies)
 			{
 				foreach(ObjectPrx objectPrx in objectPrxies)

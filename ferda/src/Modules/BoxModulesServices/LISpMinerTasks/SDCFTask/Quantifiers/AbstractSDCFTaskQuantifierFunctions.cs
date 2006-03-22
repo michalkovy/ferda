@@ -159,21 +159,28 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers
         /// <returns></returns>
         public override double Value(AbstractQuantifierSetting setting, Ice.Current __current)
         {
-            OneDimensionalContingencyTable tableA = new OneDimensionalContingencyTable(setting.firstContingencyTableRows);
-            tableA.StartColumnBound = CategoryRangeFrom;
-            tableA.EndColumnBound = CategoryRangeTo;
+            try
+            {
+                OneDimensionalContingencyTable tableA = new OneDimensionalContingencyTable(setting.firstContingencyTableRows);
+                tableA.StartColumnBound = CategoryRangeFrom;
+                tableA.EndColumnBound = CategoryRangeTo;
 
-            OneDimensionalContingencyTable tableB = new OneDimensionalContingencyTable(setting.secondContingencyTableRows);
-            tableB.StartColumnBound = CategoryRangeFrom;
-            tableB.EndColumnBound = CategoryRangeTo;
+                OneDimensionalContingencyTable tableB = new OneDimensionalContingencyTable(setting.secondContingencyTableRows);
+                tableB.StartColumnBound = CategoryRangeFrom;
+                tableB.EndColumnBound = CategoryRangeTo;
 
-            return ContingencyTable.Value<OneDimensionalContingencyTable>(
-                valueFunctionDelegate,
-                tableA,
-                tableB,
-                OperationMode,
-                Units,
-                setting.allObjectsCount);
+                return ContingencyTable.Value<OneDimensionalContingencyTable>(
+                    valueFunctionDelegate,
+                    tableA,
+                    tableB,
+                    OperationMode,
+                    Units,
+                    setting.allObjectsCount);
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
         }
     }
 
@@ -202,39 +209,46 @@ namespace Ferda.Modules.Boxes.LISpMinerTasks.SDCFTask.Quantifiers
         /// <returns></returns>
         public override double Value(AbstractQuantifierSetting setting, Ice.Current __current)
         {
-            OneDimensionalContingencyTable tableA = new OneDimensionalContingencyTable(setting.firstContingencyTableRows);
-
-            OneDimensionalContingencyTable tableB = new OneDimensionalContingencyTable(setting.secondContingencyTableRows);
-
-            if (!useNumericValues)
+            try
             {
-                return OneDimensionalContingencyTable.Value<OneDimensionalContingencyTable>(
-                    valueFunctionDelegate,
-                    tableA,
-                    tableB,
-                    OperationMode,
-                    UnitsEnum.AbsoluteNumber,
-                    0);
+                OneDimensionalContingencyTable tableA = new OneDimensionalContingencyTable(setting.firstContingencyTableRows);
+
+                OneDimensionalContingencyTable tableB = new OneDimensionalContingencyTable(setting.secondContingencyTableRows);
+
+                if (!useNumericValues)
+                {
+                    return OneDimensionalContingencyTable.Value<OneDimensionalContingencyTable>(
+                        valueFunctionDelegate,
+                        tableA,
+                        tableB,
+                        OperationMode,
+                        UnitsEnum.AbsoluteNumber,
+                        0);
+                }
+                else
+                {
+                    if (
+                        setting.numericValues == null
+                        || setting.firstContingencyTableRows[0] == null //this should never happend
+                        || setting.numericValues.Length != setting.firstContingencyTableRows[0].Length
+                        )
+                        return 0;
+
+                    tableA.NumericValues = setting.numericValues;
+                    tableB.NumericValues = setting.numericValues;
+
+                    return ContingencyTable.Value<OneDimensionalContingencyTable>(
+                        valueFunctionDelegate,
+                        tableA,
+                        tableB,
+                        OperationMode,
+                        UnitsEnum.AbsoluteNumber,
+                        0);
+                }
             }
-            else
+            catch (Exception e)
             {
-                if (
-                    setting.numericValues == null
-                    || setting.firstContingencyTableRows[0] == null //this should never happend
-                    || setting.numericValues.Length != setting.firstContingencyTableRows[0].Length
-                    )
-                    return 0;
-
-                tableA.NumericValues = setting.numericValues;
-                tableB.NumericValues = setting.numericValues;
-
-                return ContingencyTable.Value<OneDimensionalContingencyTable>(
-                    valueFunctionDelegate,
-                    tableA,
-                    tableB,
-                    OperationMode,
-                    UnitsEnum.AbsoluteNumber,
-                    0);
+                return 0;
             }
         }
     }

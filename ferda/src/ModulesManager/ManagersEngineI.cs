@@ -1,4 +1,4 @@
-// 
+// ManagersEngineI.cs - Managers engine for modules
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -25,7 +25,7 @@ using System.Diagnostics;
 namespace Ferda {
     namespace ModulesManager {
         /// <summary>
-        /// Summary description for the class.
+        /// Managers engine for modules
         /// </summary>
         public class ManagersEngineI : ManagersEngineDisp_
 		{
@@ -113,23 +113,18 @@ namespace Ferda {
 				return this.boxModuleProjectInformationPrx;
 			}
 
-///
-///<directed></directed>
             private BoxModuleLockerI lnkBoxModuleLockerI;
 			
 			private BoxModuleLockerPrx boxModuleLockerPrx;
-///
-///<directed></directed>
+
             private BoxModuleProjectInformationI lnkBoxModuleProjectInformationI;
 			
 			private BoxModuleProjectInformationPrx boxModuleProjectInformationPrx;
-///
-///<directed></directed>
+
             private ManagersLocatorI lnkManagersLocatorI;
 			
 			private ManagersLocatorPrx managersLocatorPrx;
-///
-///<directed></directed>
+
             private OutputI lnkOutputI = new OutputI();
 			
 			private OutputPrx outputPrx;

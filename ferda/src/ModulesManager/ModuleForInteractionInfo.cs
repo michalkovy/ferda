@@ -1,4 +1,4 @@
-// 
+// ModuleForInteractionInfo.cs - Information about module for interaction
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -24,6 +24,10 @@ using Ferda.Modules;
 
 namespace Ferda {
     namespace ModulesManager {
+
+        /// <summary>
+        /// Information about module for interaction
+        /// </summary>
 		public class ModuleForInteractionInfo {
 
 			public ModuleForInteractionInfo(ModuleForInteractionPrx prx, Helper helper)
@@ -47,6 +51,10 @@ namespace Ferda {
 			private byte[] icon;
             private string iceIdentity;
 			
+            /// <summary>
+            /// Sockets of box on which this module has to run that are needed to have
+            /// something inside before executing
+            /// </summary>
 			public string[] NeededConectedSockets
 			{
 				get {
@@ -54,6 +62,9 @@ namespace Ferda {
 				}
 			}
 			
+            /// <summary>
+            /// Accepted types of box on whit this module can be run
+            /// </summary>
 			public BoxType[] AcceptedBoxTypes
 			{
 				get {
@@ -61,6 +72,9 @@ namespace Ferda {
 				}
 			}
 			
+            /// <summary>
+            /// Label of this module
+            /// </summary>
 			public string Label
 			{
 				get {
@@ -68,6 +82,9 @@ namespace Ferda {
 				}
 			}
 			
+            /// <summary>
+            /// Something more about this module
+            /// </summary>
 			public string Hint
 			{
 				get {
@@ -75,6 +92,9 @@ namespace Ferda {
 				}
 			}
 			
+            /// <summary>
+            /// Informations about helps of this module
+            /// </summary>
 			public HelpFileInfo[] HelpInfo
 			{
 				get {
@@ -82,6 +102,9 @@ namespace Ferda {
 				}
 			}
 			
+            /// <summary>
+            /// Dynamic help structure
+            /// </summary>
 			public DynamicHelpItem[] DynamicHelp
 			{
 				get {
@@ -89,6 +112,9 @@ namespace Ferda {
 				}
 			}
 			
+            /// <summary>
+            /// Icon of this module
+            /// </summary>
 			public byte[] Icon
 			{
 				get {
@@ -96,6 +122,9 @@ namespace Ferda {
 				}
 			}
 			
+            /// <summary>
+            /// Ice identity of this module
+            /// </summary>
 			public string IceIdentity
 			{
 				get {
