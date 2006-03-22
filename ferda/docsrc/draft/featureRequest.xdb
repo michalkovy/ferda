@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <title>Feature requests for Ferda Dataminer</title>
+    <author>
+      <firstname>Martin</firstname>
+      <surname>Ralbovský</surname>
+      <email>martin.ralbovsky@gmail.com</email>
+    </author>
+  </articleinfo>
+
+  <abstract>
+    <para>
+      This documents describes the request for adding some features for Ferda
+      in the future. The document is divided in to 2 parts, the first part explains
+      requests that can be done in the near future. The second part is devoted
+      to the further future, the creators of Ferda represent some of their
+      visions and suggestions.
+    </para>
+  </abstract>
+  <section>
+    <title>Feature requests for the near future</title>
+    <para>
+      There is some functionality that can be done in the near future and will enhance
+      the Ferda program in some ways. However, the Ferda team has now other priorities
+      then implementing these little changes. Yet is is still improtant to keep them
+      in mind for the future.
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <para>
+          When selecting more boxes of the same type on the desktop, Ferda should enable
+          more actions that are common to the boxes (for instance creating the same 
+          modules for interaction). 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Functionallity for creating copy of a desktop should be added.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Ferda should have icons for all the boxes.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Better layout - for example a method of anchoring boxes. The user selects one
+          box, then moves it and all the boxes connected to this boxes are moving with
+          the box and their distances are increasing. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Better dynamic help - now the help displays only the hint and the type of the
+          selected box. In the future, it should contain hint also for the sockets and
+          properties of the box.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Ferda does not now implement the Undo and Redo actions. It would be nice to
+          have them. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Ferda has the <classname>DateTime</classname> and 
+          <classname>Date</classname> property of a box but the property grid converts 
+          them both to the <classname>System.DateTime</classname> class. A new converter
+          could be created also for the <classname>DateTime</classname> type. It should 
+          be a calendary with digits setting for hours, minutes and seconds.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Ferda project file now contain all the information about the project (i.e
+          all the hypotheses information). When user constructs big projects with
+          thousands of hypotheses, the project files can grow quite big. That is why
+          we want to compress the project files. 
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Requests for the further future</title>
+    <para>
+      While developing Ferda, the creators found many possibilities how to improve the
+      system in the future. 
+    </para>
+    <section>
+      <title>FrontEnd requests</title>
+      <itemizedlist mark="bullet">
+        <listitem>
+          <para>
+            Conversion to Netron 3 + using more Netron features. We use the 2.2 version
+            but we found some bugs there and also some performance issues that should be
+            dealt with. Netron 3 solves these problems, introduces new functionality.
+            Converting to a new graphical library is one of the main tasks for FrontEnd
+            in the future.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Converting to a new docking library. The DockDotNET docking library we use
+            is simple and easy to use. However, the modern docking environments offer
+            much more (most important - docking serialization). If we switched to a new
+            docking library, FrontEnd could look much better. 
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the beginning we thought that all the boxes desing will be kept in vector
+            graphics, so it can easily be scaled and zoomed. However we did not find
+            a proper and fast library to do it. In the future, it would be possible to
+            incorporate the SVG support into Ferda.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Enabling more FrontEnd features to modules (now only PropertyGrid, in the
+            future user note, context help, menu or toolbar) would make modules
+            much stronger in communicating with the user. 
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Now we have a FrontEnd that works only with .NET Framework. It would be
+            also nice to have a web based FrontEnd or a GTK# FrontEnd.
+          </para>
+        </listitem>
+      </itemizedlist>      
+    </section>
+    <section>
+      <title>Modules and project manager requests</title>
+      <itemizedlist mark="bullet" >
+        <listitem>
+          <para>
+            Now the archive can be situated only on one machine over the network.
+            We would like to make a network archive, where users can share their
+            boxes over the network and work in cooperation.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the state of art in Ferda, grid computing (distributed computing
+            over the network)
+            is theoretically enabled when we set ICE layer correctly. However,
+            we should really examine this possibility, improve Ferda in this way
+            and make some performance test that would prove Ferda as reliable
+            distributed computing environment. 
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Modules manager should provide more interfaces to the boxes to enable them 
+            to work better. We think about interfaces to show progress bar, box state
+            validation, better module searching interface (IceGrid that we uses has 
+            more functions than former IcePack and we can use some of them). Also the 
+            Output interface can be improved.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Modules and boxes requests</title>
+      <itemizedlist mark="bullet">
+        <listitem>
+          <para>
+            The recent Ferda version still relies on the LISp-Miner metabase. The 
+            setting of the task is mapped into a temporary metabase, the task
+            is run and then the results (hypotheses) are regained from the metabase.
+            We would like to implement LISp procedures independent on the metabase,
+            that means all the computing would be done just above the initial
+            database. This is a part of one of the Ferda team members master thesis.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Sometimes the setting of the task can be quite demanding for a user
+            especially right attribute and cedent settings. Adding an expert
+            system that would help with the task setting would be also helpful. 
+            This is again contained in the master thesis of one of the Ferda team
+            members.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Data mining is not only about association rules, but also about other methods.
+            The modularity of Ferda enables to add other data mining methods such as
+            neural networks or genetic algorithms.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Ontologies is a nowadays a hot science topic. Implementing domain 
+            ontologies in Ferda would in many ways help the user and enable him
+            to mine more effectivelly. Implementing domain knowledge in Ferda is
+            a master thesis of one Ferda team members.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Connecting tasks in Ferda is in many ways similar to a programming
+            language because of the strong formal box and socket abstraction.
+            Other boxes such as the lambda box can be implemented to improve
+            the programming abilities and to ease the task setting in Ferda.
+            This is also a master thesis of one Ferda team members.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The LISp procedures discover knowledge only above one table. Recently, 
+            a program Rel-Miner has been implemented, it is a 4FT Miner working
+            above a star database schema. Impelenting the Rel-Miner in Ferda and
+            also the other LISp procedures above a star database schema is a master
+            thesis of one of the Ferda team members.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            There are many academical data mining applicitions each of which is 
+            suitable for a slightly different purpose. Cooperation between Ferda and
+            these systems (Sumatra or Weka) would enable better task setting and data mining in general.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+</article>

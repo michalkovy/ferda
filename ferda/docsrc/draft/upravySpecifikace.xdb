@@ -27,8 +27,44 @@
       a Ferda byl dále vyvíjen s ohledem na ně. 
     </para>
     <para>
-      //TODO Tomáš - vysvětlit proč jsme neimplementovali KEX a TimeTransf - ja to
-      opravdu netuším.
+      Procedura KEX, která je určena pro symbolické strojové učení z
+      příkladů a jejím výsledkem jsou vážená rozhodovací pravidla, která
+      mohou být použita ke klasifikaci, nebyla v projektu implementována.
+      Důvodem je, že by splnění tohoto úkolu bylo neúměrně náročná či
+      dokonce nemožná. Jednotlivé procedury LISp-Mineru (4ft, SD4ft, KL,
+      SDKL, CF a SDCF) jsou implementovány a byly nám dodány jako trojice
+      spustitelných souborů (např 4ftTask, 4ftGen, a 4ftResult), které spolu
+      komunikují prostřednictvím metabáze - společného úložiště dat
+      generovaných všemi moduly systému. Zde se hodí stručně vysvětlit úlohy
+      těchto souborů: *Task.exe slouží uživateli k formulaci úlohy pro
+      příslušný miner, *Gen.exe slouží pro vlastní generování a verifikaci
+      hypotéz a nakonec *Result.exe slouží pro prohlížení výsledků
+      (hypotéz). Jelikož ve Ferdovi jsou úlohy formulovány pomocí principu
+      visuálního programování, nebyly pro nás *Task.exe soubory nikterak
+      důležité, navíc jsme ve Ferdovi implementovali vlastní ResultBrowser,
+      tedy ani *-esult.exe soubory pro nás nebyly podstatné a vůbec je
+      nepoužíváme. Rozhodující byly pro nás *Gen.exe soubory, jimž se jako
+      parametr předá ODBC připojovací řetězec k metabázi (kterou Ferda sám
+      dočasně vytvoří a vyplní tj. Ferda simuluje *Task.exe) a číslo úlohy,
+      která se má vykonat. Bohužel k proceduře KEX neexistuje soubor
+      KexGen.exe. Tato neexistence je způsobena historickými důvody z období
+      vzniku prvních procedur LISp-Mineru. KEX má pouze programy KexTask.exe
+      a KexResult.exe. Úloha se zde spouští pouze přímo z grafického
+      prostředí programu KexTask.exe, proto by zahrnutí KEXu do Ferdy, při
+      nemožnosti obdržení zdrojových kódů KEXu a jeho úprav či přímé
+      integrace do Ferdy bylo neúměrně složité.
+    </para>
+    <para>
+      Procedura TimeTransf se zabývá předzpracováním a vizuální analýzou
+      časových řad.  Tato procedura se od ostatních procedur LISp-Mineru v
+      mnohých směrech odlišuje, především tím, že svoje výsledky zapisuje
+      přímo do primární – analyzované – databáze. Metabázi nepoužívá pro
+      výměnu dat s ostatními moduly, ale pouze jako úložiště svého
+      nastavení. V průběhu analýzy projektu se ukázalo, že přímá spolupráce
+      mezi TimeTransfem a ostatními procedurami LISp-Mineru není možná a
+      tedy by nebylo přínosem vytvářet krabičky, které by práci TimeTransfu
+      ve Ferdovi zastoupili, navíc by zřejmě, co do funkcionality, šlo o
+      kopii současné implementace TimeTransfu.
     </para>
     <para>
       Vedoucí projektu Doc. RNDr. Jan Rauch, CSc pracuje již délší dobu na kompletní 

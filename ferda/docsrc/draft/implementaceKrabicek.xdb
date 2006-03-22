@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article lang="cs-CZ">
   <articleinfo>
@@ -17,7 +17,7 @@
     <para>Tento text popisuje způsob implementace krabiček. Předpokládám znalost dokumentu „implementace Ferdy“, zejména sekce „Implementace modulů krabiček“ a „Funkce middleware ve Ferdovi“a dokumentu „Analýza vzhledu modulů a práce s nimi“.</para>
   </abstract>
   <section>
-  <title>évod</title>
+  <title>Úvod</title>
 <para>Krabičky jsou ve Ferdovi implementovány v jazyce .NET C# 2.0.</para>
 <para>Funkcionalitu krabiček lze obecně rozdělit do několika kategorií</para>
 <orderedlist>
