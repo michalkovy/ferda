@@ -1453,8 +1453,8 @@
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
-				<Label>Řádkový atribut</Label>
-				<Hint>Určení množiny řádkových atributů.</Hint>
+				<Label>Atributy</Label>
+				<Hint>Určení množiny atributů.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ConditionSetting</Name>
@@ -1541,8 +1541,8 @@
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
-				<Label>Řádkový atribut</Label>
-				<Hint>Určení množiny řádkových atributů.</Hint>
+				<Label>Atributy</Label>
+				<Hint>Určení množiny atributů.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ConditionSetting</Name>
@@ -1669,12 +1669,12 @@
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
-				<Label>Řádkový atribut</Label>
+				<Label>Řádkové atributy</Label>
 				<Hint>Určení množiny řádkových atributů.</Hint>
 			</Socket>
 			<Socket>
 				<Name>SuccedentSetting</Name>
-				<Label>Sloupcový atribut</Label>
+				<Label>Sloupcové atributy</Label>
 				<Hint>Určení množiny sloupcových atributů.</Hint>
 			</Socket>
 			<Socket>
@@ -1762,12 +1762,12 @@
 		<Sockets>
 			<Socket>
 				<Name>AntecedentSetting</Name>
-				<Label>Řádkový atribut</Label>
+				<Label>Řádkové atributy</Label>
 				<Hint>Určení množiny řádkových atributů.</Hint>
 			</Socket>
 			<Socket>
 				<Name>SuccedentSetting</Name>
-				<Label>Sloupcový atribut</Label>
+				<Label>Sloupcové atributy</Label>
 				<Hint>Určení množiny sloupcových atributů.</Hint>
 			</Socket>
 			<Socket>

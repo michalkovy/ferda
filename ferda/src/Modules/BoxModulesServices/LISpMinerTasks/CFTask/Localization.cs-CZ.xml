@@ -18,8 +18,8 @@
   <Sockets>
     <Socket>
       <Name>AntecedentSetting</Name>
-      <Label>Řádkový atribut</Label>
-      <Hint>Určení množiny řádkových atributů.</Hint>
+      <Label>Atributy</Label>
+      <Hint>Určení množiny atributů.</Hint>
     </Socket>
     <Socket>
       <Name>ConditionSetting</Name>

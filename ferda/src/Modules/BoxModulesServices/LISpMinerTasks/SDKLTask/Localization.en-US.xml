@@ -18,12 +18,12 @@
   <Sockets>
     <Socket>
       <Name>AntecedentSetting</Name>
-      <Label>Antecedent setting</Label>
-      <Hint>Defines set of relevant antecedents.</Hint>
+      <Label>Row attributes</Label>
+      <Hint>Defines set of row attributes.</Hint>
     </Socket>
     <Socket>
       <Name>SuccedentSetting</Name>
-      <Label>Column attribute</Label>
+      <Label>Column attributes</Label>
       <Hint>Defines set of column attributes.</Hint>
     </Socket>
     <Socket>

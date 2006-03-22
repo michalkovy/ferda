@@ -18,12 +18,12 @@
   <Sockets>
     <Socket>
       <Name>AntecedentSetting</Name>
-      <Label>Řádkový atribut</Label>
+      <Label>Řádkové atributy</Label>
       <Hint>Určení množiny řádkových atributů.</Hint>
     </Socket>
     <Socket>
       <Name>SuccedentSetting</Name>
-      <Label>Sloupcový atribut</Label>
+      <Label>Sloupcové atributy</Label>
       <Hint>Určení množiny sloupcových atributů.</Hint>
     </Socket>
     <Socket>
