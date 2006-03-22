@@ -86,7 +86,6 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
             Modules.BoxType boxType = new Modules.BoxType();
             boxType.neededSockets = new Modules.NeededSocket[0];
             boxType.functionIceId = "::Ferda::Modules::Boxes::DataMiningCommon::Attributes::AbstractAttributeFunctions";
-
             return new Modules.BoxType[] { boxType };
         }
 

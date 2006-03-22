@@ -367,6 +367,210 @@
             </itemizedlist></para>
         </formalpara>
       </section>
+
+      <section>
+        <title>Module for interaction from the Frontend angle</title>
+
+        <para>Every module for interaction has to implement several methods
+        which will enable the FrontEnd to make several methods and data
+        structures available for your module of interaction. The examples of
+        such methods are e.g. updating the property grid of the frontend,
+        opening the helpfiles in frontend, showing box exceptions and actually
+        creating an application window of several types . </para>
+
+        <para>Here I will describe the way how to implement the above
+        mentioned functionality.</para>
+
+        <formalpara>
+          <title>Implementation</title>
+
+          <para>Every module for interaction must inherit from the abstract
+          class <emphasis>Ferda.FrontEnd.AddIns.AbstractMain</emphasis> from
+          the <emphasis>FrontEndAddInHelper.dll</emphasis>. The class which
+          inherits from <emphasis>AbstractMain</emphasis> MUST be called Main.
+          The description of the required methods is as follows.</para>
+        </formalpara>
+
+        <table>
+          <title>Methods from Ferda.FrontEnd.AddIns.AbstractMain to
+          implement</title>
+
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry>property <literal>string NameOfObject</literal></entry>
+
+                <entry>This should return the unique string identifier of your
+                module to FrontEnd</entry>
+              </row>
+
+              <row>
+                <entry>property <literal>Ice.Object
+                IceObject</literal></entry>
+
+                <entry>This should return your class inheriting from
+                <emphasis>Ferda.Modules.SettingModuleDisp_</emphasis> or from
+                <emphasis>Ferda.Modules.ModuleForInteractionDisp_</emphasis>
+                depending on which type of module for interaction you need to
+                implement - see <link linkend="???">interaction</link> or
+                <link linkend="???">parameter setting</link>.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <para>Functionality for manipulating with FrontEnd is passed by
+        <emphasis>Ferda.FrontEnd.AddIns.IOwnerOfAddIn</emphasis> interface.
+        Brief recap of the accessible methods from
+        <emphasis>IOwnerOfAddIn</emphasis> interface will follow. For detailed
+        information please refer to FrontEnd documentation. Please note that
+        this list of methods is not final and will most probably grow in the
+        near future as the tendence is to give modules for interaction the
+        possibility to access as much of the user interface as
+        possible.</para>
+
+        <table>
+          <title>Methods of Ferda.FrontEnd.AddIns.IOwnerOfAddIn</title>
+
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><literal>void ShowForm(System.Windows.Forms.Form
+                form)</literal></entry>
+
+                <entry>Use this method to show a form for your module of
+                interaction.</entry>
+              </row>
+
+              <row>
+                <entry><literal>System.Windows.Forms.DialogResult
+                ShowDialog(System.Windows.Forms.Form form)</literal></entry>
+
+                <entry>Use this method to show a form which will return the
+                result - useful for modules for parameters setting.</entry>
+              </row>
+
+              <row>
+                <entry><literal>void
+                ShowDockableControl(System.Windows.Forms.UserControl
+                userControl, string name)</literal></entry>
+
+                <entry>Use this method to show your form as a dockable control
+                in FrontEnd.</entry>
+              </row>
+
+              <row>
+                <entry><literal>void AsyncAdapt()</literal></entry>
+
+                <entry>Use this method for the propertygrid to be
+                updated.</entry>
+              </row>
+
+              <row>
+                <entry><literal>void ShowBoxException(string boxUserName,
+                string userMessage)</literal></entry>
+
+                <entry>Use this method for displaying the exception thrown by
+                the box.</entry>
+              </row>
+
+              <row>
+                <entry>property <literal>Ferda.ProjectManager.ProjectManager
+                ProjectManager</literal></entry>
+
+                <entry>Use this to acces the project manager for
+                Ferda.</entry>
+              </row>
+
+              <row>
+                <entry><literal>void OpenPdfAndDestination(string path, string
+                destination)</literal></entry>
+
+                <entry>Use this to open a pdf file and jump to the required
+                destination - typically used for displaying help.</entry>
+              </row>
+
+              <row>
+                <entry><literal>void OpenPdf(string path)</literal></entry>
+
+                <entry>Use this to open a pdf file - typically used for
+                displaying help.</entry>
+              </row>
+
+              <row>
+                <entry><literal>string GetBinPath()</literal></entry>
+
+                <entry>Use this for getting the current bin path of the
+                assembly</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </section>
+
+      <section>
+        <title>Steps to create a module for interaction</title>
+
+        <para>Here I will describe brief steps based on the above information
+        on how to create a module for interaction.</para>
+
+        <itemizedlist>
+          <listitem>
+            <formalpara>
+              <title>Main class</title>
+
+              <para>Create a class called <emphasis>Main.cs</emphasis> which
+              will inherit from
+              <emphasis>Ferda.FrontEnd.AddIns.IOwnerOfAddIn</emphasis>. In the
+              <emphasis>IceObject</emphasis> property of this class you should
+              return a class which will be inherited from one of the below
+              classes. It is a good idea to pass
+              <emphasis>ownerOfAddIn</emphasis> class property to the class
+              constructor in order to have access to FrontEnd elements.
+              FrontEnd will set <emphasis>ownerOfAddIn</emphasis> property
+              prior to retrieving <emphasis>IceObject</emphasis>
+              property.</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>Ferda.Modules.SettingModuleDisp_</title>
+
+              <para>Use this for module for parameters setting.</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>Ferda.Modules.ModuleForInteractionDisp_ </title>
+
+              <para>Use this for module for interaction only.</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>Run method of the above two classes</title>
+
+              <para>The main tasks here are to read data from the boxes and to
+              use one of the <emphasis>ownerOfAddIn</emphasis> (that you could
+              have passed in the <emphasis>Main.cs</emphasis> - see above)
+              methods to display a form for your module for interaction - see
+              the sections above for details.</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>Compilation and run</title>
+
+              <para>For information on how to build Ferda please refer to
+              appropriate documentation.</para>
+            </formalpara>
+          </listitem>
+        </itemizedlist>
+      </section>
     </section>
   </section>
 </article>
