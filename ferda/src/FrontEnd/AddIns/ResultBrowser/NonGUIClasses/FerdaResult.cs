@@ -533,7 +533,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                     if (literal.cedentType == CedentEnum.Antecedent)
                     {
                         returnString.Append(literal.literalName);
-                     //   hypothesis.literals[0].
                     }
                 }
             }

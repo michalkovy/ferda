@@ -69,21 +69,24 @@ namespace Ferda.Modules.MetabaseLayer
             HypothesisStruct hypothesisStruct;
             AbstractQuantifierSetting quantifierSetting;
             DataTable hypothesis = common.ExecuteSelectQuery("SELECT * FROM tiHypothesisDC WHERE TaskID=" + taskID);
+            LiteralStruct[] literals = common.GetCategorialLiterals(TaskTypeEnum.SDCF, taskID, taskDescription);
             foreach (DataRow hypothese in hypothesis.Rows)
             {
                 int hypothesisID = Convert.ToInt32(hypothese["HypothesisID"]);
                 hypothesisStruct = new HypothesisStruct();
                 hypothesisStruct.booleanLiterals = common.GetBooleanLiterals(taskID, hypothesisID);
-                LiteralStruct columnLiteral = new LiteralStruct();
+                int rowLiteralId = common.CategorialLiteral[Convert.ToInt32(hypothese["CFLiteralDID"])];
                 LiteralStruct rowLiteral = new LiteralStruct();
-                columnLiteral.cedentType = CedentEnum.Antecedent;
-                columnLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["CFLiteralDID"])];
-                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.SDCF, taskID, taskDescription);
+                foreach (LiteralStruct literal in literals)
+                {
+                    if (literal.cedentType == CedentEnum.Antecedent && literal.literalIdentifier == rowLiteralId)
+                        rowLiteral = literal;
+                }
 
+                hypothesisStruct.literals = new LiteralStruct[] { rowLiteral };
                 quantifierSetting = new AbstractQuantifierSetting();
-                quantifierSetting.numericValues = common.GetNumericValues(common.GetAttributeStruct(columnLiteral.literalIdentifier));
-                quantifierSetting.firstContingencyTableRows = common.GetContingecyTable(this.taskType, taskID, hypothesisID, rowLiteral.literalIdentifier, columnLiteral.literalIdentifier);
-                quantifierSetting.secondContingencyTableRows = common.GetSecondContingecyTable(this.taskType, taskID, hypothesisID, rowLiteral.literalIdentifier, columnLiteral.literalIdentifier);
+                quantifierSetting.firstContingencyTableRows = common.GetContingecyTable(this.taskType, taskID, hypothesisID, rowLiteral.literalIdentifier, rowLiteral.literalIdentifier);
+                quantifierSetting.secondContingencyTableRows = common.GetSecondContingecyTable(this.taskType, taskID, hypothesisID, rowLiteral.literalIdentifier, rowLiteral.literalIdentifier);
                 quantifierSetting.allObjectsCount = allObjectsCount;
                 hypothesisStruct.quantifierSetting = quantifierSetting;
                 hypothesesResult.Add(hypothesisStruct);

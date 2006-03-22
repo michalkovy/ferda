@@ -183,14 +183,14 @@ namespace Ferda.Modules.MetabaseLayer
                 LiteralStruct rowLiteral = new LiteralStruct();
                 foreach(LiteralStruct literal in literals)
                 {
-                    if (literal.literalIdentifier == rowLiteralId)
+                    if (literal.cedentType == CedentEnum.Antecedent && literal.literalIdentifier == rowLiteralId)
                         rowLiteral = literal;
                 }
                 int columnLiteralId = common.CategorialLiteral[Convert.ToInt32(hypothese["KLLiteralDColID"])];
 				LiteralStruct columnLiteral = new LiteralStruct();
                 foreach(LiteralStruct literal in literals)
                 {
-                    if (literal.literalIdentifier == columnLiteralId)
+                    if (literal.cedentType == CedentEnum.Succedent && literal.literalIdentifier == columnLiteralId)
                         columnLiteral = literal;
                 }
                 hypothesisStruct.literals = new LiteralStruct[] { rowLiteral, columnLiteral};

@@ -384,9 +384,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.GroupBoxChangeGraph.Controls.Add(this.TrackBarZoom);
             this.GroupBoxChangeGraph.Controls.Add(this.Label3dpercent);
             this.GroupBoxChangeGraph.Controls.Add(this.TrackBar3d);
-            this.GroupBoxChangeGraph.Location = new System.Drawing.Point(830, 3);
+            this.GroupBoxChangeGraph.Location = new System.Drawing.Point(752, 3);
             this.GroupBoxChangeGraph.Name = "GroupBoxChangeGraph";
-            this.GroupBoxChangeGraph.Size = new System.Drawing.Size(233, 194);
+            this.GroupBoxChangeGraph.Size = new System.Drawing.Size(311, 194);
             this.GroupBoxChangeGraph.TabIndex = 0;
             this.GroupBoxChangeGraph.TabStop = false;
             this.GroupBoxChangeGraph.Text = "View options";
@@ -450,7 +450,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarVOffset.Maximum = 1500;
             this.TrackBarVOffset.Minimum = -1500;
             this.TrackBarVOffset.Name = "TrackBarVOffset";
-            this.TrackBarVOffset.Size = new System.Drawing.Size(173, 42);
+            this.TrackBarVOffset.Size = new System.Drawing.Size(216, 42);
             this.TrackBarVOffset.SmallChange = 100;
             this.TrackBarVOffset.TabIndex = 7;
             this.TrackBarVOffset.TickFrequency = 100;
@@ -463,7 +463,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarHOffset.Maximum = 1500;
             this.TrackBarHOffset.Minimum = -1500;
             this.TrackBarHOffset.Name = "TrackBarHOffset";
-            this.TrackBarHOffset.Size = new System.Drawing.Size(173, 42);
+            this.TrackBarHOffset.Size = new System.Drawing.Size(216, 42);
             this.TrackBarHOffset.SmallChange = 100;
             this.TrackBarHOffset.TabIndex = 6;
             this.TrackBarHOffset.TickFrequency = 100;
@@ -485,7 +485,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarZoom.Maximum = 1000;
             this.TrackBarZoom.Minimum = 5;
             this.TrackBarZoom.Name = "TrackBarZoom";
-            this.TrackBarZoom.Size = new System.Drawing.Size(173, 42);
+            this.TrackBarZoom.Size = new System.Drawing.Size(216, 42);
             this.TrackBarZoom.SmallChange = 50;
             this.TrackBarZoom.TabIndex = 5;
             this.TrackBarZoom.TickFrequency = 50;
@@ -507,7 +507,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBar3d.Location = new System.Drawing.Point(63, 16);
             this.TrackBar3d.Maximum = 100;
             this.TrackBar3d.Name = "TrackBar3d";
-            this.TrackBar3d.Size = new System.Drawing.Size(173, 42);
+            this.TrackBar3d.Size = new System.Drawing.Size(216, 42);
             this.TrackBar3d.SmallChange = 10;
             this.TrackBar3d.TabIndex = 4;
             this.TrackBar3d.TickFrequency = 5;
