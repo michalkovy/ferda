@@ -23,8 +23,8 @@ namespace Ferda.Modules.Quantifiers
 		public OneDimensionalContingencyTable()
 			: base()
 		{
-			if (!this.IsOneDimensional)
-                throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be onedimensional!", restrictionTypeEnum.BadFormat);
+            //if (!this.IsOneDimensional)
+            //    throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Contingecy table has to be onedimensional!", restrictionTypeEnum.BadFormat);
 		}
 
         /// <summary>
