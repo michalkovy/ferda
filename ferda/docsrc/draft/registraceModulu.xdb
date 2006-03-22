@@ -20,9 +20,6 @@
     pracuje.</para>
   </abstract>
 
-  <section>
-    <title></title>
-
     <para>Manažer modulů získává seznam modulů ze dvou zdrojů. Prvním je
     IceGrid registry, druhým pak FrontEnd.  První se využívá pro moduly, které
     může použít více FrontEndů zároveň, jedná se tedy převážně o krabičky.
@@ -57,5 +54,4 @@
       <para>Předávat informace o Ice objektech přes konfigurační soubor je umožněno proto, aby mohly být i ne .NET
       moduly pro interakci a moduly pro nastavování parametrů. My sami jsme ještě této možnosti nevyužili.</para>
     </section>
-  </section>
 </article>

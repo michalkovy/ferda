@@ -21,7 +21,7 @@
   <section>
     <title>Získání zdrojových souborů Ferdy</title>
 
-    <para>Buď lze stáhnout zdrojové soubory ze <ulink url="http://sourceforge.net/project/showfiles.php?group_id=142109">sourceforge</ulink> či lze stáhnout zdrojové soubory ze subversion repository například příkazem <code>svn checkout svn://svn.berlios.de/ferdadataminer/ferda</code></para>
+    <para>Buď lze stáhnout zdrojové soubory ze Sourceforge (<ulink url="http://ferda.sourceforge.net">http://ferda.sourceforge.net</ulink>) či lze stáhnout zdrojové soubory ze subversion repository například příkazem <code>svn checkout svn://svn.berlios.de/ferdadataminer/ferda</code></para>
   </section>
 
   <section>
@@ -40,6 +40,6 @@
 
     <para>Pro první zkompilování Ferdy je třeba v hlavním adresáři Ferda zadat příkaz <code>nant fullinstall</code>.</para>
 
-    <para>Dále jsou k dispozici příkazy <code>nant clean</code> (vyčistí zkomilované soubory), <code>nant src</code> (zkomiluje znovu Ferdu a <code>nant refresh</code> (udělá clean a fullinstall).</para>
+    <para>Dále jsou k dispozici příkazy <code>nant clean</code> (vyčistí zkomilované soubory), <code>nant src</code> (zkomiluje znovu Ferdu) a <code>nant refresh</code> (udělá clean a fullinstall).</para>
   </section>
 </article>

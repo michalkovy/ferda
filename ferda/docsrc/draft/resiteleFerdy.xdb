@@ -25,8 +25,7 @@
   <section>
     <title>Tomáš Kuchař</title>
     <para>
-      Tomáš Kuchař měl na starosti návrh modulů pro Ferdu. Rozhodoval, které moduly 
-      budou krabičky a jaké krabičky budeme v systému mít. Implementoval větší část
+      Tomáš Kuchař měl na starosti návrh implementace krabiček Ferdy. Implementoval větší část
       krabiček a komunikaci s vrstvou metabáze.
     </para>
   </section>
