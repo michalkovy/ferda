@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <firstname>Martin</firstname>
+        <surname>Ralbovský</surname>
+        <email>martin.ralbovsky@gmail.com</email>
+      </author>
+      <author>
+        <firstname>Tomáš</firstname>
+        <surname>Kuchař</surname>
+        <email>tomas.kuchar@gmail.com</email>
+      </author>
+      <author>
+        <firstname>Michal</firstname>
+        <surname>Kováč</surname>
+        <email>michal.kovac.develop@centrum.cz</email>
+      </author>
+    </authorgroup>
+    <title>
+      Úvod do systému Ferda DataMiner
+    </title>
+  </articleinfo>
+  <abstract>
+    <para>
+      Jedním z cílů návrhu programu Ferda bylo vytvořit aplikaci, která nahradí stávající
+      uživatelské prostředí systému na dobývání znalostí <ulink url="http://lispminer.vse.cz">LISp-Miner</ulink>
+      novým, vizuálně a uživatelsky přívětivějším pracovním
+      prostředím. Ferda přináší pohled na zadání úlohy dobývání znalostí jako na zapsání funkce pomocí vizuálních objektů - krabiček.
+      Krabičky mají parametry a vyhodnocují své funkce nad hodnotami těchto parametrů. Program je navržen
+      modulárně tak, aby jej bylo možné snadno rozšiřovat o další krabičky. Podařilo
+      se vytvořit prostředí, které zpřehledňuje a zjednodušuje uživatelskou práci se systémem LISp-Miner a nabízí další možnosti výzkumu a rozšiřování.
+    </para>
+  </abstract>
+  <section>
+    <title>Historie</title>
+    <para>
+      Historie systému LISp-Miner sahá do roku 1996, kdy byl navržen. Jde o akademický softwarový systém pro výuku (zejména FIS VŠE a MFF UK) a výzkum v oblasti dobývání znalostí z databází. Systém obsahuje řadu modulů, které umožňují potřebným způsobem transformovat prvotní data, provádět vlastní analýzy a vhodným způsobem prezentovat výsledky. Systém je stále ve vývoji, který pokrývá jak implementaci nových modulů - v posledních dvou letech byl rozšířen o nové procedury - tak i prohlubování a rozšiřování modulů již implementovaných. Vedlejším důsledkem tohoto vývoje jsou stále větší nároky na uživatele systému, pokud chce využít všech možností systému LISp-Miner. Pro snadné porozumění jistým částem článku předpokládáme, že je čtenář již seznámen se systémem  LISp-Miner.
+    </para>
+  </section>
+  <section>
+    <title>Projekt</title>
+    <para>Ferda vzniká jako softwarový projekt na Matematicko-fyzikální fakultě Univerzity Karlovy v Praze pod vedením doc. RNDr. Jana Raucha, CSc. (Vysoká škola ekonomická v Praze). Projekt má za úkol zpřehlednit a zjednodušit postup používání existujících a pokud možno i budoucích modulů systému LISp-Miner při dobývání znalostí. Stávající postup se skládá z postupného spouštění různých aplikací a nastavování parametrů, mezi nimiž nejsou na první pohled vidět souvislosti. V důsledku toho se proces získávání dat stává pro běžné uživatele nejasným a nepřehledným.</para>
+  </section>
+  <section>
+    <title>Popis</title>
+    <para>
+      Ferda představuje společné vizuální prostředí pro následující procedury systému
+      LISp-Miner: <classname>4ft-Miner</classname>, <classname>SD4ft-Miner</classname>, <classname>KL-Miner</classname>,
+      <classname>SDKL-Miner</classname>, <classname>CF-Miner</classname> a <classname>SDCF-Miner</classname>.
+    </para>
+    <para>
+      Ferda přináší vizuální model postupu dobývání znalostí podobný svou zásadou
+      <emphasis>plocha jako pracovní nástroj dobývání znalostí</emphasis>
+      systémům <ulink url="http://www.spss.com/es/noticias/npclementine.htm">SPSS Clementine</ulink>,
+      <ulink url="http://www.sas.com/technologies/analytics/datamining/miner/">SAS Enterprise Miner</ulink>
+      a <ulink url="http://www.cs.waikato.ac.nz/~weka">Weka</ulink>.
+    </para>
+  </section>
+</article>
