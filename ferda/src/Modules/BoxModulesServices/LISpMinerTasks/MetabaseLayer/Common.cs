@@ -534,7 +534,7 @@ namespace Ferda.Modules.MetabaseLayer
                 default:
                     throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(taskType);
             }
-            DataTable table = ExecuteSelectQuery("SELECT * FROM " + tableName + " WHERE TaskID=" + taskID + " AND " + hypothesisColumnName + "=" + hypothesisID + " AND CedentTypeID=" + constants.CedentEnumDictionary[CedentEnum.FirstSet]);
+            DataTable table = ExecuteSelectQuery("SELECT * FROM " + tableName + " WHERE TaskID=" + taskID + " AND " + hypothesisColumnName + "=" + hypothesisID + " AND CedentTypeID=" + constants.CedentEnumDictionary[CedentEnum.SecondSet]);
 
             AbstractAttributeStruct rowAttribute;
             AbstractAttributeStruct columnAttribute = GetAttributeStruct(columnAttributeIdentifier);

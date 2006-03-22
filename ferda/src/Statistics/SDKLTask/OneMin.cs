@@ -8,7 +8,7 @@ namespace Ferda.Statistics.SDKLTask
     {
         public override float getStatistics(Ferda.Modules.AbstractQuantifierSetting quantifierSetting, Ice.Current current__)
         {
-            return float.NaN;
+            return (float)Common.Functions.Min(quantifierSetting.firstContingencyTableRows);
         }
 
         public override string getTaskType(Ice.Current current__)
