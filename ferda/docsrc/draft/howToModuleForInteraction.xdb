@@ -43,8 +43,8 @@
     Ferda. In this description we will use examples written in C# 2.0 using
     Microsoft Visual Studio 2005. You can use other languages supported by
     .NET in the same fashion. If you want to use some other languages
-    supported by middleware <link linkend="www.zeroc.com">Ice</link>, you will
-    need to do more - for detailed information please read
+    supported by middleware <ulink url="http://www.zeroc.com">Ice</ulink>, you
+    will need to do more - for detailed information please read
     „implementaceKrabicek.xdb“ and „implementaceFerdy.xdb“.</para>
   </section>
 
@@ -57,7 +57,7 @@
     <itemizedlist>
       <listitem>
         <formalpara>
-          <title><link linkend="www.zeroc.com">Ice</link></title>
+          <title><ulink url="http://www.zeroc.com">Ice</ulink></title>
 
           <para>Ice must be installed on the machine where the Ferda is
           launched. You will also need some Ice libraries in order to build
@@ -185,7 +185,7 @@
                 <para>You will need to inherit from abstract class <emphasis>
                 Ferda.Modules.SettingModuleDisp_</emphasis> from
                 <emphasis>FerdaBase.dll</emphasis>. The description of the
-                required methods is as follows. </para>
+                required methods is as follows.</para>
 
                 <para></para>
 
@@ -244,7 +244,7 @@
                         parameter. In this method you will probably also
                         launch a user interface module which will modify the
                         given parameters which will be in turn returned as a
-                        <emphasis>PropertyValue</emphasis>. </entry>
+                        <emphasis>PropertyValue</emphasis>.</entry>
                       </row>
                     </tbody>
                   </tgroup>
@@ -253,12 +253,14 @@
 
               <listitem>
                 <formalpara>
-                  <title>Module for interaction - interaction</title>
+                  <title id="interaction">Module for interaction -
+                  interaction</title>
 
                   <para>Such type of module is typically designed for
                   operation on data the result of which is not returned back
-                  to boxes - see <link linkend="???">parameters setting type
-                  of module</link> setting if you need such functionality.
+                  to boxes - see <link
+                  linkend="parameterssettingmodule">parameters setting type of
+                  module</link> setting if you need such functionality.
                   Modified data are typically displayed in FrontEnd. Some
                   examples of such modules are ResultBrowser,
                   AttributeFrequency, ExplainTable etc.</para>
@@ -267,7 +269,7 @@
                 <para>You will need to inherit from abstract class
                 <emphasis>Ferda.Modules.ModuleForInteractionDisp_</emphasis>
                 from <emphasis>FerdaBase.dll</emphasis>. The description of
-                the required methods is as follows. </para>
+                the required methods is as follows.</para>
 
                 <table>
                   <title>Methods from Ferda.Modules.ModuleForInteractionDisp_
@@ -324,7 +326,7 @@
                         Ice.Current __current)</literal></entry>
 
                         <entry>This method should return hint with brief
-                        description of your module for interaction. </entry>
+                        description of your module for interaction.</entry>
                       </row>
 
                       <row>
@@ -376,7 +378,7 @@
         structures available for your module of interaction. The examples of
         such methods are e.g. updating the property grid of the frontend,
         opening the helpfiles in frontend, showing box exceptions and actually
-        creating an application window of several types . </para>
+        creating an application window of several types .</para>
 
         <para>Here I will describe the way how to implement the above
         mentioned functionality.</para>
@@ -412,8 +414,9 @@
                 <emphasis>Ferda.Modules.SettingModuleDisp_</emphasis> or from
                 <emphasis>Ferda.Modules.ModuleForInteractionDisp_</emphasis>
                 depending on which type of module for interaction you need to
-                implement - see <link linkend="???">interaction</link> or
-                <link linkend="???">parameter setting</link>.</entry>
+                implement - see <link linkend="interaction">interaction</link>
+                or <link linkend="parameterssettingmodule">parameter
+                setting</link>.</entry>
               </row>
             </tbody>
           </tgroup>
@@ -543,7 +546,7 @@
 
           <listitem>
             <formalpara>
-              <title>Ferda.Modules.ModuleForInteractionDisp_ </title>
+              <title>Ferda.Modules.ModuleForInteractionDisp_</title>
 
               <para>Use this for module for interaction only.</para>
             </formalpara>
