@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <author>
+      <firstname>Tomáš</firstname>
+      <surname>Kuchař</surname>
+      <email>tomas.kuchar@gmail.com</email>
+    </author>
+    <title>Seznam použité literatury</title>
+  </articleinfo>
+  <abstract>
+    <para>
+      Tento dokument slouží jako seznam literatury
+      a zdrojů použitích při implementaci Ferdy.
+    </para>
+  </abstract>
+  <section>
+    <title>Teorie k systému LISp-Miner</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Jan Rauch, Milan Šimůnek. Systém LISp-Miner <emphasis>ZNALOSTI 2003, 2. ročník konference</emphasis> Ostrava 2003. ISBN 80-248-0229-5.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Seznam publikací týkajících se systému LISp-Miner. http://lispminer.vse.cz/references.html.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Jan Rauch, Milan Šimůnek. <emphasis>GUHA Method and Granular Computing</emphasis>. Beijing 25.07.2005 - 27.07.2005. In: HU, Xiaohua, LIU, Qing, SKOWRON, Andrzej, LIN, Tsau Young, YAGER, Ronald R., ZANG, Bo (ed.). IEEE 2005. Piscataway: IEEE, 2005, s. 630-635.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Jan Rauch, Milan Šimůnek. <emphasis>An Alternative Approach to Mining Association Rules</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Jan Rauch, Milan Šimůnek, Václav Lín. <emphasis>Mining for Partters Based on Contingency Tables by KL-Miner - First Experience</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Petr Strossa, Zdeněk Černý, Jan Rauch. <emphasis>Reporting Data Mining Results in a Natural Language</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Šimůnek Milan: <emphasis>Academic KDD Project LISp-Miner. Tulsa.08.2003. In: ABRAHAM, A., FRANKE, K., KOPPEN, K. (ed.). Advances in Soft Computing – Intelligent Systems Desing and Applications. Heidelberg: Springer-Verlag, 2003, s. 263–272. ISBN 3-540-40426-0.</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          P. Aubrecht, M. Kejkula, P. Křemen, L. Nováková, Jan Rauch, M. Simunek, O. Stepankova. \emph{Mining in Hepatitis Data by LISp-Miner and SumatraTT}. Accepted for publication in proceedings of Discovery Challenge 2005 see
+          http://lisp.vse.cz/challenge/ecmlpkdd2005/chall2005.htm.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Martin Ducháček. Diplomová práce 2005 <emphasis>Nástroj pro správu databází s využitím pro multi-relační DataMining</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Konkurenční programy</title>
+    <itemizedlist>
+      <listitem>
+        <para>Clementine. http://www.spss.com/es/noticias/npclementine.htm. Clementine Data Mining System.</para>
+      </listitem>
+      <listitem>
+        <para>Weka. http://www.cs.waikato.ac.nz/~weka. Weka - Java Programs for Machine Learning, University of Waikato.</para>
+      </listitem>
+      <listitem>
+        <para>SAS Enterprise Miner. http://www.sas.com/technologies/analytics/datamining/miner/</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Použité technologie</title>
+    <itemizedlist>
+      <listitem>
+        <para>ZeroC. http://www.zeroc.com, Internet Communications Engine (Ice).</para>
+      </listitem>
+      <listitem>
+        <para></para>
+      </listitem>
+      <listitem>
+        <para></para>
+      </listitem>
+      <listitem>
+        <para></para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Dokumentace k systému LISp-Miner</title>
+    <para>
+      Většina této dokumentace je v nepřístupné sekci na <ulink url="http://lispminer.vse.cz">http://lispminer.vse.cz</ulink>
+    </para>
+    <para>Nahlíželi jsme do všech dokumentů, ale zajímavé byly zejména ty vyjmenované níže, přičemž klíčovým byl dokument s číslem 008.</para>
+    <itemizedlist>
+      <listitem>
+        <para>008 Metabase structure.doc</para>
+      </listitem>
+      <listitem>
+        <para>030 Návrh na binární atributy a 4ft-Miner.doc</para>
+      </listitem>
+      <listitem>
+        <para>032 Zadání pro KL-Miner.doc</para>
+      </listitem>
+      <listitem>
+        <para>045 Zadání pro SDS-Miner.doc</para>
+      </listitem>
+      <listitem>
+        <para>046 Procedura SDS-Miner.doc</para>
+      </listitem>
+      <listitem>
+        <para>052 Two-dimensional Contingency Tables.pdf</para>
+      </listitem>
+      <listitem>
+        <para>053 Definice KL-kvantifikatorů.pdf</para>
+      </listitem>
+      <listitem>
+        <para>055 Náměty pro další vývoj KL-Miner.doc</para>
+      </listitem>
+      <listitem>
+        <para>081 SD4ft-Miner.doc</para>
+      </listitem>
+      <listitem>
+        <para>082 SDKL Miner.doc</para>
+      </listitem>
+      <listitem>
+        <para>086 SD-prace s mnozinami.doc</para>
+      </listitem>
+      <listitem>
+        <para>087 SD4ft kvantifikatory.doc</para>
+      </listitem>
+      <listitem>
+        <para>088 SDKL Poznámky z implementace.doc</para>
+      </listitem>
+      <listitem>
+        <para>092 SDCF-Miner.doc</para>
+      </listitem>
+      <listitem>
+        <para>093 CF a SDCF Kvantifikátory.doc</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</article>
