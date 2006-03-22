@@ -82,23 +82,6 @@
     </itemizedlist>
   </section>
   <section>
-    <title>Použité technologie</title>
-    <itemizedlist>
-      <listitem>
-        <para>ZeroC. http://www.zeroc.com, Internet Communications Engine (Ice).</para>
-      </listitem>
-      <listitem>
-        <para></para>
-      </listitem>
-      <listitem>
-        <para></para>
-      </listitem>
-      <listitem>
-        <para></para>
-      </listitem>
-    </itemizedlist>
-  </section>
-  <section>
     <title>Dokumentace k systému LISp-Miner</title>
     <para>
       Většina této dokumentace je v nepřístupné sekci na <ulink url="http://lispminer.vse.cz">http://lispminer.vse.cz</ulink>
