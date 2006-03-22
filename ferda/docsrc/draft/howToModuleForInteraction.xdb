@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <firstname>Alexander</firstname>
+
+        <surname>Kuzmin</surname>
+
+        <email>alexander.kuzmin@gmail.com</email>
+      </author>
+    </authorgroup>
+
+    <pubdate>2006-03-22</pubdate>
+
+    <title>How to add new module for interaction for Ferda</title>
+
+    <titleabbrev>HowTo module for interaction</titleabbrev>
+
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2006-03-22</date>
+        <revremark>Initial version of the document
+        </revremark>
+      </revision>
+    </revhistory>
+    -->
+  </articleinfo>
+
+  <abstract>
+    <para>This document describes steps necessary to add a new module for
+    interaction to Ferda.</para>
+  </abstract>
+
+  <section>
+    <title>Introduction</title>
+
+    <para>This document describes how to add a new module for interaction to
+    Ferda. In this description we will use examples written in C# 2.0 using
+    Microsoft Visual Studio 2005. You can use other languages supported by
+    .NET in the same fashion. If you want to use some other languages
+    supported by middleware <link linkend="www.zeroc.com">Ice</link>, you will
+    need to do more - for detailed information please read
+    „implementaceKrabicek.xdb“ and „implementaceFerdy.xdb“.</para>
+  </section>
+
+  <section>
+    <title>Necessary tools</title>
+
+    <para>You will need the following to implement module for
+    interaction:</para>
+
+    <itemizedlist>
+      <listitem>
+        <formalpara>
+          <title><link linkend="www.zeroc.com">Ice</link></title>
+
+          <para>Ice must be installed on the machine where the Ferda is
+          launched. You will also need some Ice libraries in order to build
+          your module.</para>
+        </formalpara>
+      </listitem>
+
+      <listitem>
+        <formalpara>
+          <title>Needed libraries</title>
+
+          <para><itemizedlist>
+              <listitem>
+                <formalpara>
+                  <title>FerdaBase.dll</title>
+
+                  <para>This library contains the necessary data structures
+                  and data types which Ferda works with. It also contains
+                  abstract classes
+                  <emphasis>Ferda.Modules.ModuleForInteractionDisp_</emphasis>
+                  and <emphasis>Ferda.Modules.SettingModuleDisp_</emphasis>.
+                  You will need to inherit one of them in order to create your
+                  module for interaction.</para>
+                </formalpara>
+              </listitem>
+
+              <listitem>
+                <formalpara>
+                  <title>FerdaBoxInterfaces.dll</title>
+
+                  <para>This library contains code generated from slice design
+                  of boxes distributed with Ferda, so if you want to call
+                  boxes functions (e.g. some basic functions as detecting the
+                  name of the box), you will need this library.</para>
+                </formalpara>
+              </listitem>
+
+              <listitem>
+                <formalpara>
+                  <title>FrontEndAddInHelper.dll</title>
+
+                  <para>This library contains the class
+                  <emphasis>AbstractMain.cs</emphasis> which you need to
+                  inherit from in order to create an AddIn which will be
+                  called by FrontEnd</para>
+                </formalpara>
+              </listitem>
+
+              <listitem>
+                <formalpara>
+                  <title>icecs.dll</title>
+
+                  <para>Library for working with ice in C#. This library is
+                  contained in Ice distribution.</para>
+                </formalpara>
+              </listitem>
+            </itemizedlist></para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>Module for interaction implementation</title>
+
+    <para></para>
+
+    <section>
+      <title>Overview</title>
+
+      <para>You can view a module for interaction (or an AddIn) from two
+      angles.</para>
+
+      <section>
+        <title>Module for interaction from the Project and Module manager
+        angle</title>
+
+        <formalpara>
+          <title>Overview</title>
+
+          <para>Every module for interaction has to implement several methods
+          which will enable the Modules Manager to make the functionality and
+          data from boxes available for your module for interaction. The
+          examples of such functions are getting the box label, reading data
+          from the box, calling box methods etc. More information can be found
+          in slice design of <emphasis>Ferda.Modules.BoxModule</emphasis>,
+          <emphasis>Ferda.Modules.BoxModuleFactory</emphasis> and
+          <emphasis>Ferda.Modules.BoxModuleFactoryCreator</emphasis>, and also
+          documentation for implementation of this design
+          (FerdaServerBase.dll) <emphasis>BoxModuleI</emphasis>,
+          <emphasis>BoxModuleFactoryI</emphasis> and
+          <emphasis>BoxModuleFactoryCreatorI</emphasis>.</para>
+        </formalpara>
+
+        <para>Furthermore, implementation of these methods will make the
+        functionality of the module for interaction also accessible for
+        FrontEnd. Examples of the funcionality required by FrontEnd are
+        getting the name of the box, on which the module for interaction will
+        be launched, getting hints, icons, help files for the module for
+        interaction etc. and last but not least, the method which will
+        actually run your module for interaction.</para>
+
+        <para>Here I will describe the way how to implement the above
+        mentioned functionality.</para>
+
+        <formalpara>
+          <title>Implementation</title>
+
+          <para><itemizedlist>
+              <listitem>
+                <formalpara>
+                  <title id="parameterssettingmodule">Module for interaction -
+                  parameters setting type of module</title>
+
+                  <para>Such type of module is designed for user-side
+                  operations on the data received from the boxes and saving
+                  the modified data. Examples of such modules are
+                  <emphasis>ODBCConnectionString</emphasis>, where user sets
+                  up ODBC connection string and
+                  <emphasis>EditCategories,</emphasis> where user edits the
+                  categories prepared by the <emphasis>Attribute</emphasis>
+                  box.</para>
+                </formalpara>
+
+                <para>You will need to inherit from abstract class <emphasis>
+                Ferda.Modules.SettingModuleDisp_</emphasis> from
+                <emphasis>FerdaBase.dll</emphasis>. The description of the
+                required methods is as follows. </para>
+
+                <para></para>
+
+                <table>
+                  <title>Methods from Ferda.Modules.SettingModuleDisp_ to
+                  implement</title>
+
+                  <tgroup cols="2">
+                    <tbody>
+                      <row>
+                        <entry><literal>string getLabel(string[] localePrefs,
+                        Ice.Current __current)</literal></entry>
+
+                        <entry>This method should return label caption for
+                        your module for interaction. Parameter
+                        <emphasis>localePrefs</emphasis> contains strings
+                        which indicate the desired localization order - e.g.
+                        array of two strings "cs-CZ" and "en-US" means that
+                        localization to cs-CZ should be preferred, with a
+                        possible fallback to en-US if not available.</entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>string getPropertyAbout(PropertyValue
+                        value, Ice.Current __current)</literal></entry>
+
+                        <entry>This method should return the description of
+                        the value which can be based on the
+                        <emphasis>value</emphasis> parameter</entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>string getIdentifier(Ice.Current
+                        current__)</literal></entry>
+
+                        <entry>This method should return the box identifier on
+                        which your module for interaction can be launched.
+                        Please refer to slice design of a particular box to
+                        get detailed information including the box
+                        identifier.</entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>PropertyValue run(PropertyValue
+                        valueBefore, BoxModulePrx boxModuleParam, string[]
+                        localePrefs, ManagersEnginePrx manager, out string
+                        about, Ice.Current __current)</literal></entry>
+
+                        <entry>Override this method in order to run your
+                        module for interaction. This method is called by
+                        FrontEnd when it runs the module for interaction. You
+                        will get data to be modified in your module for
+                        interaction in <emphasis>valueBefore</emphasis>
+                        parameter. You can call box methods and read data from
+                        the box using <emphasis>boxModuleParam</emphasis>
+                        parameter. In this method you will probably also
+                        launch a user interface module which will modify the
+                        given parameters which will be in turn returned as a
+                        <emphasis>PropertyValue</emphasis>. </entry>
+                      </row>
+                    </tbody>
+                  </tgroup>
+                </table>
+              </listitem>
+
+              <listitem>
+                <formalpara>
+                  <title>Module for interaction - interaction</title>
+
+                  <para>Such type of module is typically designed for
+                  operation on data the result of which is not returned back
+                  to boxes - see <link linkend="???">parameters setting type
+                  of module</link> setting if you need such functionality.
+                  Modified data are typically displayed in FrontEnd. Some
+                  examples of such modules are ResultBrowser,
+                  AttributeFrequency, ExplainTable etc.</para>
+                </formalpara>
+
+                <para>You will need to inherit from abstract class
+                <emphasis>Ferda.Modules.ModuleForInteractionDisp_</emphasis>
+                from <emphasis>FerdaBase.dll</emphasis>. The description of
+                the required methods is as follows. </para>
+
+                <table>
+                  <title>Methods from Ferda.Modules.ModuleForInteractionDisp_
+                  to implement</title>
+
+                  <tgroup cols="2">
+                    <tbody>
+                      <row>
+                        <entry><literal>Ferda.Modules.BoxType[]
+                        getAcceptedBoxTypes(Ice.Current
+                        __current)</literal></entry>
+
+                        <entry>This method should return accepted box types on
+                        which your module for interaction could be launched.
+                        Please refer to slice design of the particular box to
+                        get the needed information including boxType
+                        identifier.</entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>Ferda.Modules.DynamicHelpItem[]
+                        getDynamicHelpItems(string[] localePrefs, Ice.Current
+                        __current)</literal></entry>
+
+                        <entry>This method should return dynamic help items
+                        for your module for interaction. Please refer to
+                        <emphasis>Ferda.Modules</emphasis> documentation for
+                        detailed information about the dynamic help
+                        items.</entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>byte[] getHelpFile(string identifier,
+                        Ice.Current __current)</literal></entry>
+
+                        <entry>This method should return help file for your
+                        module for interaction.</entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>Ferda.Modules.HelpFileInfo[]
+                        getHelpFileInfoSeq(string[] localePrefs, Ice.Current
+                        __current)</literal></entry>
+
+                        <entry>This method should return the information about
+                        help files used in your module for interaction. Please
+                        refer to <emphasis>Ferda.Modules</emphasis>
+                        documentation for detailed information about the help
+                        files.</entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>string getHint(string[] localePrefs,
+                        Ice.Current __current)</literal></entry>
+
+                        <entry>This method should return hint with brief
+                        description of your module for interaction. </entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>string getLabel(string[] localePrefs,
+                        Ice.Current __current)</literal></entry>
+
+                        <entry>This method should return the label for your
+                        module for interaction which will be e.g. displayed in
+                        the right-click menu on the desired box in modules for
+                        interaction submenu</entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>string[]
+                        getNeededConnectedSockets(Ice.Current
+                        __current)</literal></entry>
+
+                        <entry>This module should return the sockets needed to
+                        be connected to box.</entry>
+                      </row>
+
+                      <row>
+                        <entry><literal>void run(Ferda.Modules.BoxModulePrx
+                        boxModuleParam, string[] localePrefs,
+                        ManagersEnginePrx manager, Ice.Current
+                        __current)</literal></entry>
+
+                        <entry>Override this method in order to run your
+                        module for interaction. This method is called by
+                        FrontEnd when it runs the module for interaction. You
+                        can call box methods and read data from the box using
+                        <emphasis>boxModuleParam</emphasis> parameter. In this
+                        method you will probably also launch a user interface
+                        module which will display the data.</entry>
+                      </row>
+                    </tbody>
+                  </tgroup>
+                </table>
+              </listitem>
+            </itemizedlist></para>
+        </formalpara>
+      </section>
+    </section>
+  </section>
+</article>
