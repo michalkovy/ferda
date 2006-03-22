@@ -33,7 +33,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
     /// <summary>
     /// Class for ice communication
     /// </summary>
-    class EditCategoriesIce : SettingModuleDisp_
+    class EditCategoriesIce : Ferda.Modules.SettingModuleDisp_
     {
         #region Private variables
 
@@ -82,9 +82,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
         public override string getLabel(string[] localePrefs, Ice.Current __current)
         {
-
             string locale;
-
             try
             {
                 locale = localePrefs[0];
