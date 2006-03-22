@@ -14,6 +14,15 @@
   <!--
     <revhistory>
       <revision>
+        <revnumber>0.3</revnumber>
+        <date>2006-03-22</date>
+        <revdescription>
+          <para>
+            Aktualizace dokumentu a oprava gramatických chyb
+          </para>
+        </revdescription>
+      </revision>
+      <revision>
         <revnumber>0.2</revnumber>
         <date>2006-3-15</date>
         <revdescription>
@@ -46,7 +55,7 @@
     <para>
       Vítejte ve Ferdovi ;) Jestliže jste program Ferda spustili a nevíte si s ním rady,
       nebo jestli se potřebujete doučit některou ze základních dovedností Ferdy, čtěte
-      pozorně tento návod a doufáme že po jeho přečtení vám bude vše jasnější.
+      pozorně tento návod a doufáme, že po jeho přečtení vám bude vše jasnější.
     </para>
   </section>
   <section>
@@ -64,10 +73,11 @@
     <title>Náš příklad</title>
     <para>
       V tomto návodu se pokusíme získat znalosti z údajů fiktivní banky Barbora
-      o výhodnosti jejich půjček. Použijeme k tomu nejznámější z LISp procedur,
+      o výhodnosti jejich půjček. Použijeme k tomu nejznámější z GUHA procedur
+      implementovanou v LISp-Mineru,
       proceduru 4ft. Tato procedura počítá čtyřpolní kontingenční tabulky jednotlivých
       hypotéz a porovnává je vzhledem ke kvantifikátorům. Více o proceduře a jejích
-      parametrech se dozvíme v průbehu tohoto návodu.
+      parametrech se dozvíme v průběhu tohoto návodu.
     </para>
   </section>
   <section>
@@ -101,12 +111,12 @@
       ji připojit k datovému zdroji. K tomu slouží vlastnost 
       <classname>ODBC připojovací řetězec</classname>.
       Když klikneme levým tlačítkem na krabičku na ploše,
-      zobrazí se nám všechny její vlastnosti v <classname>Panelu Vlastostí</classname>.
+      zobrazí se nám všechny její vlastnosti v <classname>Panelu vlastostí</classname>.
       v pravé horní části dokovacího prostředí.
-      Jesliže na vlastnost <classname>ODBC připojovací řetězec</classname> klikneme, 
+      Jestliže na vlastnost <classname>ODBC připojovací řetězec</classname> klikneme, 
       můžeme buď vepsat
-      připojovací řetězec rovnou do políčka, nebo kliknout na tlačítko se třema tečkama
-      a použít pro nastavení vlastnosti modul. Modulů pro nastavení se výužívá,
+      připojovací řetězec rovnou do políčka, nebo kliknout na tlačítko se třemi tečkami
+      a použít pro nastavení vlastnosti modul. Modulů pro nastavení se využívá,
       jestliže je nastavování nějakým způsobem složité. Po kliknutí na tečky se zobrazí
       dialog pro nastavení ODBC připojení.
     </para>
@@ -118,9 +128,9 @@
     <para>
       V dialogu se zobrazí všechny definované ODBC zdroje. Jestliže jste ještě Barboru
       nezavedli jako datový zdroj, klikněte na <classname>Vytvořit datový zdroj
-      </classname> na tlačítkové liště. V tomto dialogu můžete mimojiné testovat
+      </classname> na tlačítkové liště. V tomto dialogu můžete mimo jiné testovat
       připojení k definovaným datovým zdrojům. Vyberte ze seznamu datový zdroj
-      odpovídající Barboře. K tomu, abychom zjistili zda je datový zdroj platný, můžeme
+      odpovídající Barboře. K tomu, abychom zjistili, zda je datový zdroj platný, můžeme
       použít tlačítko <classname>Test</classname> na dialogu.
     </para>
     <note>
@@ -196,7 +206,7 @@
       <classname>Salary</classname> udávající plat klienta a <classname>status</classname>
       pro výhodnost úroku. Poté z nich vytvoříme atributy. Atribut znamená vhodná
       kategorizace hodnot domény (sloupce). Jestliže si zobrazíme vlastnosti sloupce
-      <classname>Salary</classname>, vidíme například že ve sloupci je 76 různých
+      <classname>Salary</classname>, vidíme například, že ve sloupci je 76 různých
       hodnot. Není zřejmě vhodné, abychom počítali se všemi hodnotami, mnohem lepší
       by bylo vytvořit jen pár intervalů, které by všechny možné hodnoty
       pokrývali. K tomuto slouží krabička nabízená na vytvoření 
@@ -222,7 +232,7 @@
   <section>
     <title>6. Tvorba úlohy až po zadání dílčích booleovských cedentů</title>
     <para>
-      Pokračujme tedy v úloze a zadávejme pomocí krabiček všechny parametry
+      Pokračujme tedy v úloze a zadávejme pomocí krabiček všechny parametry,
       které jsou potřebné pro zadání cedentu, který je už vstup pro 4ft proceduru.
       Budeme opět pokračovat pomocí krabiček nabízených na vytvoření. Nejdříve
       vytvoříme <classname>Zadání atomu</classname>. Tato krabička vyjadřuje, 
@@ -230,11 +240,8 @@
       příklad ponecháme všechny implicitní vlastnosti. Dále pokračujeme
       <classname>Zadaním literálu</classname>. Literál je tvořen z atomů a je
       základním prvkem při konstrukci cedentů. U této krabičky se dá nastavit buď
-      jeho typ, nebo znaménko. Zde nastavíme vlastnost 
-      <classname>Znaménko literálu</classname> na pozitivní, protože je lepší
-      zajímat se o pozitivní literály (například je pro nás cennější informace
-      o zákaznících se statutem A než o těch kteří mají jiný status).
-      Nakonec vytvoříme ze <classname>zadání literálu</classname> krabičku 
+      jeho typ, nebo znaménko. 
+      Nakonec vytvoříme ze <classname>Zadání literálu</classname> krabičku 
       <classname>Booleovský (dílčí) cedent</classname>. Cedent je konjunkce literálů
       a vstupuje do 4ft procedury jako jeden z parametrů. Ve vlastnostech krabičky
       se nastavuje délka dílčího cedentu, opět můžeme nechat výchozí hodnoty.
@@ -258,11 +265,11 @@
       Tento kvantifikátor má jeden vstupní parametr <classname>p</classname> a testuje
       se, jestli alespoň <classname>p</classname> procent objektů splňující antecedent
       splňuje také sukcedent. Neboli jinými slovy jestli to že objekt splňuje antecedent,
-      znamená že splňuje také sukcedent alespoň v <classname>p</classname> procentech
+      znamená, že splňuje také sukcedent alespoň v <classname>p</classname> procentech
       případů.
     </para>
     <para>
-      Nyní už máme připravené vše abychom mohli dokončit naši úlohu. Z panelu
+      Nyní už máme připravené vše, abychom mohli dokončit naši úlohu. Z panelu
       <classname>Nové krabičky</classname> ze složky <classname>4ft-Miner</classname>
       přetáhneme za dílčí cedenty krabičku <classname>4ft Úloha</classname>.
       Tato krabička má 4 vstupní zásuvky - 
@@ -290,16 +297,16 @@
       Spouštění akcí krabiček je další možné využití krabičky. Akce definované pro
       krabičku jsou přístupné z položky <classname>Akce</classname> kontextového
       menu nad krabičkou. Bohužel v součastné implementaci Ferdy je třeba z 
-      historických důvodů spouštět LISp-Miner úlohy pomocí modulů pro interakci
+      historických důvodů spouštět LISp-Miner úlohy pomocí Modulů pro interakci
       (jejich přirozenější použití se dozvíte v následujícím bodě). Vyberme tedy
       položku <classname>Spusť</classname> z podmenu <classname>Moduly pro interakci</classname>.
     </para>
     <para>
       Když tedy klikneme na spuštění generování hypotéz, spustí se dialog, ve
       kterém je znázorněný průběh generování. Poté znovu označíme na ploše krabičku
-      4ft úlohy. Pozorný uživatel si všimne, že se krabičče změnili vlastnosti. 
+      4ft úlohy. Pozorný uživatel si všimne, že se krabičce změnili vlastnosti. 
       Vlastnost <classname>Stav</classname> ukazuje hodnotu 
-      <classname>Completed</classname>, to znamená že generování doběhlo. Bohužel se
+      <classname>Completed</classname>, to znamená, že generování doběhlo. Bohužel se
       nám z 16 verifikací nepodařilo vybrat žádnou, která by vyhovovala podmínkám
       kvantifikátoru. Nastavíme tedy vlastnost <classname>p</classname> v
       kvantifikátoru z 0,9 na 0,8 a zkusíme spustit úlohu znovu. Výborně, nyní už jedna
@@ -344,7 +351,7 @@
       modul pro interakci <classname>Modul frekvence sloupců</classname> u atributu
       s platem, zjistíme velmi nerovnoměrné rozložení hodnot. Nabízí se nám možnost
       například použít ekvifrekvenčního atributu, modifikace kvantifikátorů....
-      Doufáme, že nyní už víte, jak s Ferdou pracovat aby ste dosáhli co
+      Doufáme, že nyní už víte, jak s Ferdou pracovat abyste dosáhli co
       nejlepších výsledků. Hodně štěstí.
     </para>
   </section>
