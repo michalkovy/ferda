@@ -34,7 +34,7 @@
     Dynamic Attributes has to (if it is not done yet) generate attribute setting 
     (often according to actual data in analyzed database). After that all this 
     configuration is stored in new LISp-Miner Empty Metabase (Microsoft Access 
-    database connected by ODBC driver) point is that it can be often more than 
+    database connected by ODBC driver). Point is that it can be often more than 
     thousands of records i.e. thousands of queries. (This step is naturally slower 
     than working with LISp-Miner implementation becase there is all configuration 
     saved immediately after setting ... this is not possible in Ferda because 

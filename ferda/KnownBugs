@@ -24,3 +24,7 @@ boxes to be displayed, the slower the archive). We think that the problem is in
 the slow implementation of the TreeView class in the .NET Framework. Although we
 tried to use the whole list to be displayed in the archive at once, it performed
 the same behaviour as in a adding the item in cycle.
+
+Alphabecital sorting in property grid
+
+CF problem s Simunkovyma genama, haze to divne hlasky
