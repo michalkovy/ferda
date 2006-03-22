@@ -39,46 +39,13 @@ SectionGroup "$(Basefiles)" BaseFiles
 	;Hidden section for installing all of the other necessary files
 	Section
 	
-	;StrCpy $0 0
-	;StrCpy $1 0
-	;IntOp $0 $0 + 1
-	;StrCpy $1 '$1.$0'
-	;StrLen $2 $1
-	;IntCmp $2 1022 0 -3
-
-	
-	;		${registry::Open} "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\windows\CurrentVersion\InstallerUserData" "/K=0 /V=1 /S=0 /B=1 /N='URLInfoAbout'" $0
-;	StrCmp $0 -1 0 loop
-;	MessageBox MB_OK "Error" IDOK close
-
-;	loop:
-	;${registry::Find} $1 $2 $3 $4
-
-	;MessageBox MB_OKCANCEL '$$1    "path"   =[$1]$\n\
-	;			$$2    "value" =[$2]$\n\
-	;			$$3    "string" =[$3]$\n\
-	;			$$4    "type"   =[$4]$\n\
-								$\n\
-	;			Find next?' IDOK loop
-	;close:
-	;${registry::Close}
-	;${registry::Unload}
-
-
-
-
-	
-	;${registry::Find} "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\windows\CurrentVersion\InstallerUserData" "http://www.zeroc.com" $var $TYPE
-	;MessageBox MB_OK "registry::Find$\n$\n\ var je $var type je $TYPE"
-
-
 	CreateDirectory "$INSTDIR\db"
 	CreateDirectory "$INSTDIR\db\node"
 	CreateDirectory "$INSTDIR\db\registry"
 
 	SectionEnd
 
-;hidden one
+;hidden section with task progress addin
 Section
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
   File ..\bin\FrontEnd\AddIns\WaitDialog.*
@@ -104,9 +71,13 @@ SectionEnd
 	;CreateDirectory "$INSTDIR\ThirdParty\ice\bin"
 	
 	;adding ice to path
+	StrCpy $R1 $IcePath
+	;MessageBox MB_OK|MB_ICONEXCLAMATION "IcePath is $R1"
 	Push "PATH"
-	Push "c:\Ice-3.0.1\bin"
+	Push "$R1\bin"
     Call AddToEnvVar
+    
+    WriteRegStr HKCU "Software\Ferda DataMiner\" "IcePath" "$R1\bin"
     
     ;editing path in application.xml file
     Push "pwd=$\"bin/Server$\""
@@ -126,7 +97,7 @@ SectionEnd
     ;editing path in IceConfig.xml file
 
     Push "<IceBinPath />"
-    Push "<IceBinPath>$INSTDIR\ThirdParty\ice\bin\</IceBinPath>"
+    Push "<IceBinPath>$R1\bin\</IceBinPath>"
     Push all
     Push all
     Push $INSTDIR\FrontEnd\FrontEndConfig.xml

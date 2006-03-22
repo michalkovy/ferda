@@ -12,6 +12,7 @@ FunctionEnd
   
 ;What to do in the beginning
 Function .onInit
+
    call testVar
 
 	!insertmacro MUI_LANGDLL_DISPLAY

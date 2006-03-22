@@ -57,3 +57,6 @@
   LangString Uninstall_Old_Ferda ${LANG_ENGLISH} "Uninstall old version prior to continuing installation?"
   LangString Old_Ferda ${LANG_ENGLISH} "Another version of Ferda DataMiner is installed. Version number: "
   LangString Uninstall_Ferda ${LANG_ENGLISH} "This will uninstall Ferda. Continue?"
+  LangString MUI_DIRECTORYPAGE_TEXT_TOP_B ${LANG_ENGLISH} "You need to have Ice installed prior to Ferda installation. Please select folder where Ice is installed. \
+  Please refer to installation instructions for further information."
+   LangString MUI_DIRECTORYPAGE_TEXT_TOP_A ${LANG_ENGLISH} "Please select folder where Ferda will be installed"
