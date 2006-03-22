@@ -14,6 +14,15 @@
     <!--
     <revhistory>
       <revision>
+        <revnumber>0.2<revnumber>
+        <date>2006-3-22</date>
+        <revdescription>
+          <para>
+            Some little changes and gramatical mistakes corrected
+          </para>
+        </revdescription>
+      </revision>
+      <revision>
         <revnumber>0.1</revnumber>
         <date>2006-3-15</date>
         <revdescription>
@@ -35,7 +44,7 @@
   <section>
     <title>Introduction</title>
     <para>
-      Welcome in Ferda :) If you just lauchned the Ferda program and don't know
+      Welcome in Ferda :) If you just launched the Ferda program and don't know
       what to do with it, or if you need to learn some of the Ferda basic
       operations, then read carefully this document. We hope that in the end 
       thing will become clearer.
@@ -46,9 +55,9 @@
     <para>
       Ferda is system for mining knowledge from data. It is a successor of
       an older <ulink url="http://lispminer.vse.cz">LISp-Miner</ulink> system.
-      The LISp-Miner system has been successfully under developement for many 
-      year in VŠE (economics university) in Prague. Ferda as well as LISp-Miner
-      use asociation rule based datamining and they use improved GUHA style
+      The LISp-Miner system has been successfully under development for many 
+      years at VŠE (economics university) in Prague. Ferda as well as LISp-Miner
+      uses association rule based data mining with improved GUHA style
       procedures. For more theoretical information about the procedures, see the
       <ulink url="http://lispminer.vse.cz">LISp-Miner web pages.</ulink>
     </para>
@@ -58,9 +67,9 @@
     <para>
       In this tutorial we try to mine some knowledge from a fictional Barbora bank
       data containing information about loan profitability. We use the most known
-      LISp-Miner procedure, 4ft. This procedure uses a fourfold contingency table
-      of individual hypotheses verifies its value agains defined quantifiers.
-      You will find more about the procedure and its parameteres later in this 
+      GUHA procedure implemented in LISp-Miner, the 4ft. This procedure uses a fourfold contingency table
+      of individual hypotheses verifies its value against defined quantifiers.
+      You will find more about the procedure and its parameters later in this 
       tutorial.
     </para>
   </section>
@@ -68,11 +77,11 @@
     <title>1. Creation of a first box</title>
     <para>
       Ferda is a system that uses so called visual programming for creation of
-      its tasks. Visual programing means connecting visual elements on the desktop
+      its tasks. Visual programming means connecting visual elements on the desktop
       and setting properties of the elements. In Ferda the visual element is called
       a <classname>box</classname>. The panel with all different boxes we can create
       is located on the left bottom edge of the docking environment. It contains
-      folders and in the folders, there are boxes that we can create. The datamining
+      folders and in the folders, there are boxes that we can create. The data mining
       process usually starts with identification of the data source. For this, 
       we use the <classname>Database</classname> box in the 
       <classname>Datasource</classname> folder. We create our first box by
@@ -95,7 +104,7 @@
       <ulink url="http://ferda.sourceforge.net/">Ferda home page</ulink>.
     </para>
     <para>
-      In order for the <classname>Database</classname> box to work propertly, 
+      In order for the <classname>Database</classname> box to work properly, 
       we need to connect it to a data source. The 
       <classname>ODBC connection string</classname> property of the box is designed
       for this purpose. When we click with the left mouse button on the box at
@@ -104,8 +113,8 @@
       part of the docking environment. When we click on the property
       <classname>ODBC connection string</classname>, we can write the connection
       string in there right away, or we can click on the button with three dots
-      and use a <classname>Settings module</classname> instead. Ferda uses the
-      setting modules, when the property setting is somehow complicated. Then a
+      and use a <classname>Settings module</classname> instead. Ferda uses
+      setting modules, when the property setting is somehow complicated. Then an
       ODBC connection dialog appears.
     </para>
     <mediaobject>
@@ -144,10 +153,10 @@
     <title>3. Data matrix creation and Boxes asking for creation</title>
     <para>
       We have already a database created and correctly connected to a data
-      source. Now we can create other boxes out of this boxes. To do this, 
+      source. Now we can create other boxes out of these boxes. To do this, 
       we use a mechanism called <classname>Boxes asking for creation</classname>.
       For example the <classname>Database</classname> box represents a data
-      source, that can contain several tables. In this case, the Barbora 
+      source that can contain several tables. In this case, the Barbora 
       database contains one table named <classname>Loans</classname>.
       Therefore, we can create a box <classname>Data matrix</classname>
       out of the <classname>Database</classname> box. We do it by clicking
@@ -171,7 +180,7 @@
       <classname>Loans</classname>.
     </para>
     <para>
-      For the Ferda datamining procedures to work properly, we have to select the
+      For the Ferda data mining procedures to work properly, we have to select the
       primary key of the data matrix we are working with. Therefore we select
       the <classname>loan_id</classname> value of the <classname>Primary key</classname>
       property.
@@ -181,11 +190,11 @@
     <title>5. Attributes creation</title>
     <para>
       The boxes asking for creation principle can be applied also to other boxes
-      then <classname>Database</classname>. For examplen the
+      then <classname>Database</classname>. For example the
       <classname>Data matrix</classname> table offers all the containing columns
       to be created. The table <classname>Loans</classname> contains information
       about the profitability of loans to clients with several characteristics.
-      A manager of our fictional bank could be interested for example in the 
+      A manager of our fictional bank could be interested for instance in the 
       relationship of income height and the profitability of the loan. We can 
       help him to solve this task in Ferda.
     </para>
@@ -193,10 +202,10 @@
       At first we create the <classname>Column</classname> boxes for the 
       columns <classname>Salary</classname> providing the income facts
       and <classname>status</classname> for the loan profitability. 
-      The we create attributes out of the columns. Attribute is a suitable
-      categoriaztion of the domain values. In the <classname>Salary</classname>
-      column properites, we can see that there are 76 differnt values in the
-      column. Apparently it is not suitable to take all the differnt values
+      Then we create attributes out of the columns. Attribute is a suitable
+      categorization of the domain values. In the <classname>Salary</classname>
+      column properties, we can see that there are 76 different values in the
+      column. Apparently it is not suitable to take all the different values
       into account. Instead we could create only some intervals that would cover
       all the possible values. The <classname>Equidistant intervals attribute</classname>
       box asking for creation from a <classname>Column</classname> box serves
@@ -220,20 +229,16 @@
     </mediaobject>
   </section>
   <section>
-    <title>6. The task creation up to the boolean partial cedent setting</title>
+    <title>6. The task creation up to the Boolean partial cedent setting</title>
     <para>
       Let us continue creating our task. We will now create more boxes needed
       for the partial cedent setting, which is input of the 4ft procedure. 
-      We will again relly on the Boxes asking for creation. Firstly, we create
+      We will again rely on the Boxes asking for creation. Firstly, we create
       an <classname>Atom setting</classname>. This box expresses how categories
       will group in the latter literal. We can leave all the implicit values for 
       our task. Then we create a <classname>Literal setting</classname>. Literal
       consists of atoms and it is a basic building block in cedent creation.
-      We can set the literal type of sign. We change the 
-      <classname>Literal sign (gace)</classname> property to positive, because
-      it is better to be interested in positive literals (for instance it is
-      more valuable to know information about the customers with status C than
-      about those who have a different status). Finally we create a
+      We can set the literal type of sign. Finally we create a
       <classname>Boolean partial cedent setting</classname> from the
       <classname>Literal setting</classname>. Cedent is a literal conjunction
       and it is one of the 4ft parameters. The length of the cedent could be 
@@ -249,7 +254,7 @@
     <title>7. The 4ft task completion</title>
     <para>
       The 4ft procedure is the most widely used and the most intuitive procedure
-      out of all th LISp-Miner procedures. There are 3 cedents named
+      out of all the LISp-Miner procedures. There are 3 cedents named
       <classname>antecedent</classname>, <classname>succedent</classname> and
       <classname>condition</classname> coming into the procedure as parameters.
       The procedure examines the relation between antecedent and succedent under
@@ -279,7 +284,7 @@
       partial cedent setting created from the <classname>status</classname>
       column. We won't use the condition in our task. Finally we connect a
       quantifier into the last socket. We connect there the 
-      <classname>Founded implication</classname> quantifier, that can be
+      <classname>Founded implication</classname> quantifier that can be
       found in the <classname>Quantifiers</classname> folder of the
       <classname>4ft-Miner</classname> folder. The task is ready to
       run.
@@ -295,7 +300,7 @@
     <para>
       Executing the action of boxes is yet another usage of the box.
       Actions of the box are accessible from the <classname>Actions</classname>
-      item of the box context menu. Unfortunatellz, in recent Ferda implementation
+      item of the box context menu. Unfortunately, in recent Ferda implementation
       it is needed to run the boxes actions through 
       <classname>Modules for interaction</classname> (more natural usage of these
       modules will be explained in the next point of the tutorial). Let us
@@ -308,7 +313,7 @@
       box on the desktop once again.
       As one can notice, the property values of the box have changed. The
       <classname>State</classname> property shows the <classname>Completed</classname>
-      value. Unfortunatelly, none of the 16 verifications passed the quantifier
+      value. Unfortunately, none of the 16 verifications passed the quantifier
       conditions. We change the quantifier parameter <classname>p</classname>
       little from 0,9 to 0,8 and run the task again. Great we got a hypothesis.
     </para>
@@ -327,7 +332,7 @@
       of the <classname>4ft Task</classname> box. In the boxes context menu,
       we choose it in the <classname>Modules for interaction</classname>
       submenu. Afterwards, a table with hypotheses is shown and underneath
-      a place for graph. If we choose our (only) hypothesis, the graf showing
+      a place for graph. If we choose our (only) hypothesis, the graph showing
       the contingency table emerges in the lower part and hypothesis details
       are displayed in the Property grid. 
     </para>
@@ -345,8 +350,8 @@
       on 80%. Which means if a client has this salary, it is a quite high
       probability that his final status will be C. On the first sight, this may
       seem as a good result. But when we look closer at the contingency table, 
-      we see that the support of thi hypotheses is very small - only 45 out of 
-      (about) 6000 objects satisfies the antecedent (even less then 1 percent).
+      we see that the support of the hypotheses is very small - only 45 out of 
+      (about) 6000 objects satisfy the antecedent (even less then 1 percent).
       When we display the the <classname>Attribute frequency module</classname>
       of the salary attribute we see unequal distribution of values. One
       thing to do is to use equifrequency attribute or we can modify the 

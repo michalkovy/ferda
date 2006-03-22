@@ -26,6 +26,15 @@
     <!--
     <revhistory>
       <revision>
+        <revnumber>4.0</revnumber>
+        <date>2006-03-22</date>
+        <revdescription>
+          <para>
+            Úprava dokumentace pro verzi na odevzdání
+          </para>
+        </revdescription>
+      </revision>
+      <revision>
         <revnumber>3.5</revnumber>
         <date>2006-03-10</date>
         <revdescription>
@@ -258,7 +267,7 @@
 			mechanizmu dokování oken. Program má přednastavené rozložení
 			jednotlivých částí (Archiv krabiček a Nová krabička vlevo, Kontextová nápověda a Panel
 			vlastností vpravo), uživatel si však může libovolně nastavit rozložení komponent.
-			Mechanizmus dokování je standard používaný uživatelském prostředí
+			Mechanizmus dokování je standard používaný v uživatelském prostředí
 			vývojových nástrojů (MS Visual Studio a jiné). 
 		</para>
 	</section>
@@ -276,7 +285,7 @@
 		<para>
 			V krabičkové terminologii rozlišujeme čtyři termíny: kategorie
 			krabičky, typ krabičky, jméno krabičky a krabička. Rozdíly budou
-			zřejmé když terminologii vysvětlíme na příkladu krabičky typu 4ft
+			zřejmé, když terminologii vysvětlíme na příkladu krabičky typu 4ft
 			úloha. Krabička je jedna konkrétní instance typu 4ft úloha, tj. jedna
 			konkrétně zadaná úloha pro 4ft-Miner definovaná svými parametry jako
 			jsou konkrétní antecedenty, sukcedenty, podmínky, kvantifikátory a
@@ -337,7 +346,7 @@
 		<section>
 			<title>Menu</title>
 			 <simpara>
-				Aplikace má menu, ze kterého se budou volat její nejdůležitější
+				Aplikace má menu, ze kterého volají její nejdůležitější
 				funkce. V součastné době má menu statickou část, ze které se dají volat
         akce obsluhující aplikaci stále stejně. Dále menu obsahuje dynamickou část,
         která se mění v závislosti na krabičce (krabičkách) označených v archivu, 
@@ -367,6 +376,15 @@
                 <para>
                   Otevře projekt na určeném místě, používá k tomu
                   standardní OpenFileDialog v .NET.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Poslední projekty</title>
+                <para>
+                  V podmenu této položky je seznam deseti projektů, které uživatel
+                  naposledy otevřel.
                 </para>
               </formalpara>
             </listitem>
@@ -440,6 +458,11 @@
                 Panel vlastností
               </para>
             </listitem>
+            <listitem>
+              <para>
+                Uživatelská poznámka
+              </para>
+            </listitem>
 					</itemizedlist>
 				</section>
 				<section>
@@ -447,7 +470,7 @@
 					<para>
 						Skupina příkazů <emphasis>Pracovní plocha</emphasis> slouží k pohodlnější práci s
 						pracovními plochami. 
-						Umožňovat základní funkčnost pracovních ploch:
+						Umožňuje základní funkčnost pracovních ploch:
 					</para>
 					<itemizedlist mark="bullet">
 						<listitem>
@@ -474,7 +497,7 @@
                   Odstranit pracovní plochu
                 </title>
                 <para>
-                  Kliknutím na jednu z pracovních ploch v podmenu této akce ostraní uživatel
+                  Kliknutím na jednu z pracovních ploch v podmenu této akce odstraní uživatel
                   příslušnou pracovní plochu z projektu. Krabičky, které byli na této pracovní
                   ploše však zůstávají v archivu. 
                 </para>
@@ -492,15 +515,25 @@
 						nebo dynamické načítání modulů do aplikace. 
             Skupina příkazů Nástroje obsahuje nástroje na konfiguraci aplikace. Prozatím obsahuje
             příkaz <emphasis>Možnosti</emphasis>, který zobrazuje dialog <emphasis>Možnosti</emphasis>,
-            zatím ze značné části nedokončený.
+            kde si může uživatel vybírat například lokalizaci programu.
 					</para>
 				</section>
 				<section>
 					<title>Nápověda</title>
 					<para>
-            Tato skupina příkazů obashuje nápovědu o systému
+            Tato skupina příkazů obsahuje nápovědu o systému
 					</para>
           <itemizedlist mark="bullet">
+            <listitem>
+              <formalpara>
+                <title>Ferdův tutorial</title>
+                <para>
+                  Spustí dokument ve formátu pdf, ve kterém se uživatel
+                  začátečník dozví, jak pracovat s Ferdou a sestrojí
+                  v něm první úlohu na dobývání znalostí.
+                </para>
+              </formalpara>
+            </listitem>
             <listitem>
               <formalpara>
                 <title>Nápověda aplikace Ferda</title>
@@ -535,7 +568,7 @@
 		<section>
 			<title>Panely nástrojů</title>
 			<para>
-        Panel nástrojů je alternativa k hlavnímu menu aplikace a kontextovému menu nad krabičkama
+        Panel nástrojů je alternativa k hlavnímu menu aplikace a kontextovému menu nad krabičkami
         v archivu či na pracovní ploše. Každá položka má svoji ikonu a jestliže nad ní uživatel
         podrží myš, zobrazí se název této akce. Kliknutí na ikonu vyvolá stejnou akci jak 
         kliknutí na korespondující příkaz v menu. 
@@ -553,12 +586,14 @@
 			</para>
 
 			<para>
-				Komponenta archivu se skládá ze tří částí. První část tvoří rolovací nabídka,
-				ve kterém je seznam všech typů krabiček, které má uživatel v projektu
-				použil. Druhá část je tvořena .NET komponentou TreeView pro 
+				Komponenta archivu se skládá ze čtyř částí. První část tvoří rolovací nabídka,
+				ve které je seznam všech kategorií krabiček, které má uživatel v projektu
+				použil. Druhá část je opět rolovací nabídka, tentokrát však obsahuje všechny
+        typy krabiček, které uživatel v projektu zatím vytvořil.
+        Třetí část je tvořena .NET komponentou TreeView pro 
 				zobrazování archivu. Každá položka v archivu je reprezentovaná ikonou
 				a názvem.
-				Třetí část obsahuje dvě tlačítka pro interpretaci rozbalování archivu -
+				Čtvrtá část obsahuje dvě tlačítka pro interpretaci rozbalování archivu -
 				po směru nebo proti směru zapojení.
 			</para>
 			
@@ -588,8 +623,10 @@
 							<para>
 								Vertikální prohlížení: uživatel přepíná mezi typy krabiček, které
 								má v archivu. Dělá to pomocí první části tak, že v combo-boxu 
-								vybere typ krabičky. Systém potom do TreeView zobrazí pod sebou
-								všechny krabičky v archivu, které jsou stejného typu.
+								vybere kategorii krabičky a v druhé části vybere v 
+                combo-boxu typ krabičky. Systém potom do TreeView zobrazí pod sebou
+								všechny krabičky v archivu, které jsou stejného typu a (nebo)
+                kategorie.
 							</para>
 						</formalpara>
 					</listitem>
@@ -648,18 +685,6 @@
               </para>
             </formalpara>
 					</listitem>
-          <listitem>
-            <formalpara>
-              <title>Uživatelská poznámka</title>
-              <para>
-                Ke každé krabičče v archivu má uživatel k dispozici uživatelskou poznámku -
-                text, který si může uživatel ke krabičce přidat. Jestliže uživatel vybere
-                položku <emphasis>Uživatelská poznámka</emphasis> v kontextovém menu,
-                zobrazí se dialog, ve kterém zadá poznámku. Akce se dá provádět i klávesou
-                <emphasis>F3</emphasis>.
-              </para>
-            </formalpara>
-          </listitem>
 					<listitem>
             <formalpara>
               <title>Kopírování krabičky do schránky</title>
@@ -694,7 +719,7 @@
                 <emphasis>Odstranit z archivu</emphasis> v kontextovém menu. Systém se
                 uživatele zeptá, jestli chce opravdu odstranit krabičku a na kladnou
                 odpověď krabičku vymaže. Akce se dá provádět i
-                klávesovým příkazem <emphasis>Del</emphasis>.
+                klávesovým příkazem <emphasis>Shift+Del</emphasis>.
               </para>
             </formalpara>
 					</listitem>
@@ -725,6 +750,17 @@
 			</section>
 		
 		</section>
+    <section>
+      <title>Uživatelská poznámka</title>
+      <para>
+        Uživatel si může poznamenat poznámku ke každé krabičce, kterou má v projektu.
+        Uživatelská poznámka je komponenta, která se implicitně nachází v pravé
+        dolní části dokovacího prostředí a je schovaná za kontextovou nápovědou.
+        Jestliže uživatel označí krabičku v archivu nebo na pracovní ploše, může
+        si u ní zapsat poznámku právě pomocí Uživatelské poznámky tak, že do ní
+        jednoduše vepíše text.
+      </para>
+    </section>
 		<section>
 			<title>Panel vlastností</title>
 			<para>
@@ -748,19 +784,20 @@
       <para>
         Jestliže uživatel označí na pracovní ploše víc krabiček, zobrazí se v panelu
         vlastností ty vlastnosti krabiček, které jsou stejné. Pokud tyto vlastnosti
-        mají stejnou hodnotu, zobrazí se v panelu i tato hodnota. Jestliže uživatel
+        mají stejnou hodnotu, zobrazí se v panelu i tato hodnota(jinak se zobrazí 
+        implicitní hodnota pro daný datový typ). Jestliže uživatel
         nastaví některou vlastnost, hodnota se automaticky zapíše
         do všech označených krabiček.
       </para>
       <para>
         Zvláštní skupinou vlastností je skupina <emphasis>Viditelné zásuvky</emphasis>. 
         Pro každou 
-        normálni vlastnost krabičky, do které se dá zapisovat, je zde jedna boolská
+        normální vlastnost krabičky, do které se dá zapisovat, je zde jedna boolská
         hodnota, implicitně nastavená na <emphasis>false</emphasis> 
         Jestliže se vlastnost nastaví na <emphasis>true</emphasis>, objeví se u označené
-        ktabičky na ploše nová zásuvka, která representuje tuto vlastnost. Poté už
+        krabičky na ploše nová zásuvka, která representuje tuto vlastnost. Poté už
         se dá daná vlastnost nastavovat pouze pomocí krabiček na ploše, v panelu 
-        vlastností bude vlastnost jenom pro čtení. Zásuvka se dá odbrat po zpětném 
+        vlastností bude vlastnost jenom pro čtení. Zásuvka se dá odebrat po zpětném 
         nastavení hodnoty vlastnosti ve <emphasis>Viditelné zásuvky</emphasis> na 
         <emphasis>false</emphasis>.
       </para>
@@ -785,13 +822,10 @@
 			<title>Kontextová nápověda</title>
 			<para>
 				Kontextová nápověda má za úkol jednoduše seznámit uživatele s
-				funkčností krabičky právě označené na pracovní ploše. Bude
-				obsahovat základní informace o funkci krabičky, jejích vlastnostech
-				a možnostech připojení. Stránka může obsahovat odkazy na jiné
-				relevantní stránky.
-			</para>
-			<para>
-				Na konkrétní podobě kontextové nápovědy se stále ještě pracuje.
+				funkčností krabičky právě označené na pracovní ploše. Zatím obsahuje
+        název krabičky, typ krabičky a stručnou nápovědu ke krabičče.
+				V budoucnu bude také obsahovat nápovědu pro jednotlivé zásuvky
+        a vlastnosti a odkazy do patřičných souborů s teoretickou nápovědou. 
 			</para>
 		</section>
 		<section>
@@ -816,8 +850,8 @@
              </listitem>
 						<listitem>
               <para>
-                Zobrazení krabičky v Panelu vlastností
-                a Kontextové nápovědě
+                Zobrazení krabičky v Panelu vlastností,
+                Kontextové nápovědě a v Uživatelské poznámce
               </para>
              </listitem>						
 						<listitem>
@@ -852,9 +886,6 @@
 					<itemizedlist mark="bullet">
             <listitem>
               <para>Přejmenování krabičky</para>
-            </listitem>
-            <listitem>
-              <para>Uživatelská poznámka</para>
             </listitem>
 						<listitem>
               <para>Klonování krabičky</para>
@@ -920,18 +951,6 @@
 						</formalpara>
 					</listitem>
           <listitem>
-            <formalpara>
-              <title>Uživatelská poznámka</title>
-              <para>
-                Ke každé krabičče v archivu má uživatel k dispozici uživatelskou poznámku -
-                text, který si může uživatel ke krabičce přidat. Jestliže uživatel vybere
-                položku <emphasis>Uživatelská poznámka</emphasis> v kontextovém menu,
-                zobrazí se dialog, ve kterém zadá poznámku. Akce se dá provádět i klávesou
-                <emphasis>F3</emphasis>.
-              </para>
-            </formalpara>
-          </listitem>
-          <listitem>
 						<formalpara>
 							<title>Nová krabička</title>
 							<para>
@@ -942,13 +961,13 @@
 					</listitem>
 					<listitem>	
 						<formalpara>
-							<title>Zobrazení krabiček v Panelu vlastností
-						a kontextové nápovědě</title>
+							<title>Zobrazení krabiček v Panelu vlastností,
+						    Kontextové nápovědě a Uživatelské poznámce</title>
 							<para>
 								Jestliže uživatel klikne levým tlačítkem na krabičku na pracovní 
 								ploše, nebo označí více krabiček levým nebo pravým tlačítkem, 
 								zobrazí se mu vlastnosti krabičky v Panelu vlastností
-								a kontextová nápověda ke krabičce. jestliže je označených více krabiček,
+								a kontextová nápověda ke krabičce. Jestliže je označených více krabiček,
 								potom se v Panelu vlastností zobrazí jenom ty vlastnosti, které jsou
 								u všech krabiček stejné. 
 							</para>							
@@ -959,7 +978,7 @@
 							<title>Přesouvání krabiček</title>
 							<para>
 								Uživatel přesunuje krabičky tak, že označí jednu nebo více krabiček na
-								pracovní ploše. Potom se stisklým levým tlačítkem přesune krabičky na
+								pracovní ploše. Potom se stisknutým levým tlačítkem přesune krabičky na
 								požadované místo.
 							</para>
 						</formalpara>
@@ -1030,7 +1049,7 @@
               <para>
                 Uživatel může přejmenovat libovolnou krabičku pomocí příkazu
                 <emphasis>Přejmenovat</emphasis> kontextového menu, nebo pomocí
-                standarní klávesové zkratky <emphasis>F2</emphasis>
+                standardní klávesové zkratky <emphasis>F2</emphasis>
               </para>
             </formalpara>
           </listitem>
@@ -1112,7 +1131,8 @@
                 spojené. Uživatel odstraní krabičky kliknutím na
                 <emphasis>Odstranit z archivu</emphasis> v kontextovém menu. Systém se
                 uživatele zeptá, jestli chce opravdu odstranit krabičky a na kladnou
-                odpověď krabičky vymaže. Může také použít klávesovou zkratku<emphasis>Del</emphasis>
+                odpověď krabičky vymaže. Může také použít klávesovou zkratku 
+                <emphasis>Shift+Del</emphasis>
               </para>
             </formalpara>
           </listitem>
@@ -1140,7 +1160,7 @@
             <formalpara>
               <title>Zabalení všech zapojení krabičky</title>
               <para>
-                Jestliže chce uživatel zabalit všechna připojení, které
+                Jestliže chce uživatel zabalit všechna připojení, která
                 vedou do všech zásuvek krabičky, použije položku kontextového 
                 menu <emphasis>Zabalení všech připojení krabičky</emphasis>, nebo
                 klávesovou zkratku <emphasis>Ctrl+P</emphasis>
@@ -1174,9 +1194,8 @@
 								Každý typ krabičky může mít akce, které se dají v pracovním
 								prostředí pouštět. Všechny akce se v pracovní ploše dají pouštět
 								pomocí kontextového menu, každá akce tam má svoji položku, která
-								je pojmenovaná stejně (krabička může mít ještě i hlavní metodu, která
-								se dá pouštět i dvojklikem).
-							</para>
+								je pojmenovaná stejně.
+                </para>
 						</formalpara>
 					</listitem>
 				</itemizedlist>
@@ -1195,7 +1214,7 @@
 					</listitem>
 					<listitem>
             <para>
-              Klávesa <emphasis>F8</emphasis> vyvolaná nad připojením,
+              Klávesa <emphasis>Del</emphasis> vyvolaná nad připojením,
               zruší toto připojení.
             </para>
 					</listitem>
