@@ -37,7 +37,7 @@
   LangString AddIns ${LANG_ENGLISH} "AddIns"
   LangString FerdaBaseFiles ${LANG_ENGLISH} "Ferda basefiles"
   LangString DataMiningCommon ${LANG_ENGLISH} "Datamining common boxes"
-  LangString IcePack ${LANG_ENGLISH} "IceGrid"
+ ; LangString IcePack ${LANG_ENGLISH} "IceGrid"
   
   LangString AttributeFrequency ${LANG_ENGLISH} "Attribute frequencies"
   LangString ColumnFrequency ${LANG_ENGLISH} "Column frequencies"

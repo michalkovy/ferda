@@ -17,7 +17,7 @@
 ; AddToPath - Adds the given dir to the search path.
 ;        Input - head of the stack
 ;        Note - Win9x systems requires reboot
- 
+ /*
 Function AddToPath
   Exch $0
   Push $1
@@ -178,7 +178,7 @@ Function un.RemoveFromPath
     Pop $0
 FunctionEnd
  
- 
+ */
  
 ; AddToEnvVar - Adds the given value to the given environment var
 ;        Input - head of the stack $0 environement variable $1=value to add
