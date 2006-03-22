@@ -52,7 +52,7 @@ Section
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "WaitDialog" "" 
 SectionEnd
 	
-	Section "$(IcePack)" Ice
+	Section
 	SectionIn RO ;section is read-only, must be checked
 	;SetOutPath "$INSTDIR\ThirdParty\ice"
 	;File /r ..\ThirdParty\ice\*.*

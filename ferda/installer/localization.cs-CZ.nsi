@@ -33,7 +33,7 @@
   LangString AddIns ${LANG_CZECH} "Pøídavné moduly"
   LangString FerdaBaseFiles ${LANG_CZECH} "Základní soubory Ferda"
   LangString DataMiningCommon ${LANG_CZECH} "Obecné krabièky"
-  LangString IcePack ${LANG_CZECH} "IceGrid"
+ ; LangString IcePack ${LANG_CZECH} "IceGrid"
   
   LangString AttributeFrequency ${LANG_CZECH} "Frekvence atributù"
   LangString ColumnFrequency ${LANG_CZECH} "Frekvence sloupcù"

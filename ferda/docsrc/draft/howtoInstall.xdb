@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <firstname>Alexander</firstname>
+
+        <surname>Kuzmin</surname>
+
+        <email>alexander.kuzmin@gmail.com</email>
+      </author>
+    </authorgroup>
+
+    <pubdate>2006-03-22</pubdate>
+
+    <title>Installation - how to install Ferda Dataminer</title>
+
+    <titleabbrev>Installation</titleabbrev>
+
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2006-03-22</date>
+        <revremark>Initial version of the document
+        </revremark>
+      </revision>
+    </revhistory>
+    -->
+  </articleinfo>
+
+  <abstract>
+    <para>This document describes the installation requirements and procedure
+    for Ferda Dataminer.</para>
+  </abstract>
+
+  <section>
+    <title>Installation requirements</title>
+
+    <para></para>
+
+    <section>
+      <title>Hardware requirements</title>
+
+      <para>Ferda runs on x86 platform. The required hardware configuration is
+      similar to one required for Microsoft .NET Framework 2.0 and Ice 3.0, as
+      Ferda utilizes both of these frameworks. Minimal hardware configuration
+      is 600 megahertz (MHz) Pentium processor, or an AMD Opteron, AMD
+      Athlon64 or AMD Athlon XP processor. The recommended configuration is
+      800 MHz Pentium processor, or an AMD Opteron, AMD Athlon64 or AMD Athlon
+      XP processor. Minimal memory requirements are 128 MB of memory. Having
+      at least 256 MB of memory is highly recommended for comfortable
+      work.</para>
+    </section>
+
+    <section>
+      <title>Software requirements</title>
+
+      <para></para>
+
+      <section>
+        <title>Operating system</title>
+
+        <para>All components of Ferda run on Windows 2000 and XP.</para>
+      </section>
+
+      <section>
+        <title>Required frameworks</title>
+
+        <para>Both of the frameworks must be installed prior to Ferda
+        installation to ensure correct functionality.</para>
+
+        <itemizedlist>
+          <listitem>
+            <formalpara>
+              <title>Microsoft .NET 2.0 Framework</title>
+
+              <para>Ferda is programmed using Microsoft .NET 2.0 Framework.
+              Installer is available at <ulink
+              url="http://msdn.microsoft.com/netframework/downloads/updates/default.aspx">http://msdn.microsoft.com/netframework/downloads/updates/default.aspx</ulink>.
+              Select .NET Framework Version 2.0 Redistributable Package for
+              your platform. For installing the framework, Windows Installer
+              3.0 is required. Windows Installer 3.1 or later is recommended.
+              Those can be downloaded when downloading the framework, links
+              are enclosed in the .NET Framework software requirements on the
+              download page.</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>Ice framework</title>
+
+              <para>Ferda is programmed using Ice (Internet Communication
+              Engine) Framework which is programmed by ZeroC. Framework
+              installer for Windows is downloadable at <ulink
+              url="http://www.zeroc.com/download.html#win32_msi">http://www.zeroc.com/download.html#win32_msi</ulink>.
+              Currently Ferda runs on version 3.0.1of Ice framework. You will
+              need to download Windows Installer for Visual Studio .NET 2003
+              in order to run Ferda. Please note the directory where Ice is
+              installed, you will need it in further steps.</para>
+            </formalpara>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+  </section>
+
+  <section>
+    <title>Installation procedure</title>
+
+    <para></para>
+
+    <section>
+      <title>Uninstall .NET Framework prior to 2.0 if applicable</title>
+
+      <para>If there is Microsoft .NET Framework 1.1 or less installed on your
+      machine, please uninstall it prior to installing 2.0 version. Ferda WILL
+      NOT work when Microsoft .NET Framework 1.1 is installed.</para>
+    </section>
+
+    <section>
+      <title>Install .NET Framework 2.0</title>
+
+      <para>Launch the downloaded framework installer and follow the
+      instructions on the screen. After .NET Framework has been successfully
+      installed, proceed to 2.2.</para>
+    </section>
+
+    <section>
+      <title>Install Ice Framework</title>
+
+      <para>Please make sure that you have the Windows Installer for Visual
+      Studio .NET 2003 downloaded (do NOT install using Windows Installer for
+      Visual Studio 2005) . Launch the downloaded framework installer. Install
+      the Ice framework with the default options. Changing of the default
+      options is not recommended, Ferda could behave unexpectedly as a
+      result.</para>
+    </section>
+
+    <section>
+      <title>Install Ferda Dataminer</title>
+
+      <para>After installing both frameworks launch Ferda Dataminer
+      installer.</para>
+
+      <itemizedlist>
+        <listitem>
+          <formalpara>
+            <title>Choose the installation language</title>
+
+            <para>For now, Ferda installer is available in Czech and
+            English.<mediaobject>
+                <imageobject>
+                  <imagedata fileref="installerLanguage.png" format="PNG" />
+                </imageobject>
+              </mediaobject></para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Accept the License agreement</title>
+
+            <para>After clicking on Next, read the GNU license agreement. In
+            order to continue with Ferda installation, you have to accept the
+            license agreement.<mediaobject>
+                <imageobject>
+                  <imagedata fileref="installerLicense.png" format="PNG" />
+                </imageobject>
+              </mediaobject></para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Choose components to install</title>
+
+            <para>Ferda offers several modules to install. If you do not
+            require the functionality of all modules included with Ferda, you
+            may choose not to install some of them. After selecting the
+            desired options, click on Next button to proceed.<mediaobject>
+                <imageobject>
+                  <imagedata fileref="installerComponents.png" format="PNG" />
+                </imageobject>
+              </mediaobject><itemizedlist>
+                <listitem>
+                  <formalpara>
+                    <title>Basefiles</title>
+
+                    <para>These are core files required for Ferda
+                    functionality. You have to install them in order to launch
+                    Ferda</para>
+                  </formalpara>
+                </listitem>
+
+                <listitem>
+                  <formalpara>
+                    <title>AddIns</title>
+
+                    <para>Addins extend Ferda Dataminer functionality. It is
+                    recommended that you install all of them in order to have
+                    necessary tools available in Ferda Dataminer.</para>
+                  </formalpara>
+                </listitem>
+
+                <listitem>
+                  <formalpara>
+                    <title>Boxes</title>
+
+                    <para>Here you can select boxes which you would like to
+                    use when working with Ferda Dataminer.</para>
+                  </formalpara>
+                </listitem>
+
+                <listitem>
+                  <formalpara>
+                    <title>Gens</title>
+
+                    <para>Here you can select which Lisp gens are to be
+                    installed with Ferda. Please note that if you select a
+                    taskbox, you have to select the corresponding gen in order
+                    to be able to run tasks on Ferda.</para>
+                  </formalpara>
+                </listitem>
+
+                <listitem>
+                  <formalpara>
+                    <title>Integration</title>
+
+                    <para>Here you can choose whether you would like to have
+                    Ferda Dataminer integrated in the Start menu, have a
+                    shortcut icon on the desktop and have .xfp files (which is
+                    the default extension for Ferda projects) associated with
+                    Ferda Dataminer.</para>
+                  </formalpara>
+                </listitem>
+              </itemizedlist></para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Specify Ice installation folder</title>
+
+            <para>If you have followed the installation instructions
+            correctly, you have previously installed Ice on your machine. In
+            this window please enter the directory where you have installed
+            Ice. Click on Next button to continue.<mediaobject>
+                <imageobject>
+                  <imagedata fileref="installerIce.png" format="PNG" />
+                </imageobject>
+              </mediaobject></para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Specify installation folder for Ferda Dataminer</title>
+
+            <para>Specify the installation folder for Ferda Dataminer. Please
+            note that installing Ferda into the directory which contains
+            spaces is not allowed. This is the limitation due to the known bug
+            in Ice framewowrk which cannot start components from the
+            directories containing space in the name. Click on install button
+            to continue.<mediaobject>
+                <imageobject>
+                  <imagedata fileref="installerFerda.png" format="PNG" />
+                </imageobject>
+              </mediaobject></para>
+          </formalpara>
+        </listitem>
+
+        <listitem>
+          <formalpara>
+            <title>Finishing installation</title>
+
+            <para>After clicking on Install button, the installation process
+            will start. Wait until it finishes. After that you can launch
+            Ferda Dataminer from the Launch menu or the Desktop, if you have
+            chosen those options. If not, go to the directory where Ferda
+            Dataminer is installer, go to FrontEnd directory and launch the
+            file FerdaFrontEnd.exe.</para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+</article>
