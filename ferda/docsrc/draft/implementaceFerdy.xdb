@@ -15,8 +15,8 @@
   </articleinfo>
 
   <abstract>
-    <para>Tento text podrobně rozebírá architekturu Ferdy a zabývá se tím, proč
-    byl navržen právě tak.</para>
+    <para>Tento text podrobně rozebírá architekturu Ferdy a zabývá se tím,
+    proč byl navržen právě tak.</para>
   </abstract>
 
   <section>
@@ -27,12 +27,12 @@
     jazyku Java. Sice jsou programy v něm napsané stále ještě přenositelnější,
     ale zdálo se nám, že nenabízí pro v současné době nejrozšířenější
     uživatelský operační systém možnost programovat takové prostředí, na které
-    je uživatel tohoto systému zvyklý a zároveň které je pěkné a dle
-    nejnovějších trendů. Také se nám zdál jazyk C# trochu hezčí a i platforma
-    CLI má jistě pro náš program své výhody (například možnost psaní dalších
-    částí v jiných jazycích). Druhou verzi jazyka C# místo první jsme zvolili
-    právě pro vzhled programovaného prostředí, nicméně hojně jsme využívali i
-    ostatních novinek této verze.</para>
+    je uživatel tohoto systému zvyklý a zároveň které je pěkné a odpovídá
+    nejnovějším trendům návrhu GUI. Také se nám zdál jazyk C# trochu hezčí a i
+    platforma CLI má jistě pro náš program své výhody (například možnost psaní
+    dalších částí v jiných jazycích). Druhou verzi jazyka C# místo první jsme
+    zvolili právě pro vzhled programovaného prostředí, nicméně hojně jsme
+    využívali i ostatních novinek této verze.</para>
 
     <para>S jazykem C# se automaticky nabízely utilitky NAnt (program na
     kompilaci CLI programů), NUnit (nástroj na testy jednotek) a NDoc (program
@@ -49,20 +49,21 @@
     stranu věříme v to, že bude brzy System.Windows.Forms v druhé verzi také
     implementován v Monu.</para>
 
-    <para>Při návrhu se ukázalo, že je vhodné použít nějaký middleware. Nejvíce
-    do úvahy padaly .NET Remoting, Corba a Ice. Vybrali jsme Ice pro jeho
-    jednoduchost (oproti Corbě), rychlost, přenositelnost (oproti .NET
+    <para>Při návrhu se ukázalo, že je vhodné použít nějaký middleware.
+    Nejvíce do úvahy padaly .NET Remoting, Corba a Ice. Vybrali jsme Ice pro
+    jeho jednoduchost (oproti Corbě), rychlost, přenositelnost (oproti .NET
     Remotingu) a možnost programovat ve více jazycích (oproti .NET Remoting).
     Dále se ukázalo, že Ice má jisté programy, které se ve Ferdovi dobře
     uplatnili, či uplatní.</para>
 
     <para>Dívali jsme se, zda neexistuje nějaká knihovna, která umí pěkně
-    kreslit grafy s krabičkami. Zdálo se nám, že ideální pro to je knihovna
-    Netron Graph Library, která byla v době volby ve verzi 2.1. Bohužel se však
-    ukázalo, že v ní bylo třeba udělat několik netriviálních zásahů, že není
-    úplně nejrychlejší a má několik chyb. Ve verzi 2.2 bylo uděláno v této
-    knihovně ze strany Netronu poměrně dost změn a oprav, nicméně přechod na
-    tuto verzi nebyl ještě učiněn z důvodu netriviality tohoto úkonu.</para>
+    kreslit grafy s krabičkami. Zdálo se nám, že pro tento účel je ideální
+    knihovna Netron Graph Library, která byla v době volby ve verzi 2.1.
+    Bohužel se však ukázalo, že v ní bylo třeba udělat několik netriviálních
+    zásahů, že není úplně nejrychlejší a má několik chyb. Ve verzi 2.2 bylo
+    uděláno v této knihovně ze strany Netronu poměrně dost změn a oprav,
+    nicméně přechod na tuto verzi nebyl ještě učiněn z důvodu poměrně velké
+    náročnosti tohoto úkonu.</para>
 
     <para>Zdálo se nám, že by bylo hodně vhodné, aby mělo naše výsledné
     uživatelské prostředí možnosti dokování. Vybírali jsme mezi několika
@@ -74,8 +75,24 @@
     knihovna v několika směrech nedokonalá a způsobuje ve Ferdovi několik
     chyb.</para>
 
-    <para>Při výběru licence padla volba na GPL v2, protože umožňuje otevřenost
-    při zaručení, že nebude Ferda zneužit pro komerční účely.</para>
+    <para>Chtěli jsme, aby náše výsledné uživatelské prostředí umělo
+    znázorňovat zobrazovaná data pomocí grafů. Vybrali jsme si knihovnu
+    TeeChart ve verzi Lite, protože jako jediná z vybíraných kandidátů umí
+    zobrazit 3D sloupcové grafy, které jsou klíčové pro přehledné zobrazení
+    hodnot kontingenčních tabulek. Rovněž její použití ve verzi Lite je
+    zdarma. Jedinou nevýhodou této knihovny je, že není pod GPLv2
+    licenci.</para>
+
+    <para>Při volbě způsobu, jak udělt instalátor, jsme se zastavili na
+    produktu NSIS. Jeho výhodou je velmi dobrá dokumentace a podpora, otevřený
+    zdrojový kód, rychlost a stabilita vytvořených instalátorů. Menší
+    nevýhodou je samotný skriptovací jazyk, který spíše připomíná assembler,
+    proto porozumění zdrojovým skriptům instalátoru může být někdy
+    náročnější.</para>
+
+    <para>Při výběru licence padla volba na GPL v2, protože umožňuje
+    otevřenost při zaručení, že nebude Ferda zneužit pro komerční
+    účely.</para>
   </section>
 
   <section>
@@ -89,54 +106,55 @@
     <para>Systém LISp-Miner používá pro propojení jednotlivých částí systému
     tzv. metabázi. Je to databáze, která má jistý formát. Při vytváření nové
     komponenty systému bylo často nutné formát metabáze změnit, což muselo být
-    buď přímo či zprostředkovaně uděláno za pomoci správce verzí metabáze (Ing.
-    Milana Šimůnka, Ph.D.). Tím, že byla metabáze takto nabalována, došlo k
-    tomu, že její formát je daleko horší, než kdyby byla od začátku vytvářena
-    se znalostí všech budoucích komponent. Propojení na úrovni metabáze je také
-    relativně vysoko, tedy o modularitě se dá hovořit jen jako o propojení
-    hodně velikých celků. Například nelze přiimplementovat nový kvantifikátor
-    do 4FT bez nutnosti překompilovávání celého 4FT. Protože však není
-    LISp-Miner otevřený systém, je to vlastně skoro nemožné. Také dokumentace k
-    metabázi sice je, avšak pro hlubší pochopení toho, co je na co, je potřeba
-    zkoušet spouštět různé moduly a dívat se, co tam na základě čeho
-    dávají.</para>
+    buď přímo či zprostředkovaně uděláno za pomoci správce verzí metabáze
+    (Ing. Milana Šimůnka, Ph.D.). Tím, že byla metabáze takto nabalována,
+    došlo k tomu, že její formát je daleko horší, než kdyby byla od začátku
+    vytvářena se znalostí všech budoucích komponent. Propojení na úrovni
+    metabáze je také relativně vysoko, tedy o modularitě se dá hovořit jen
+    jako o propojení hodně velikých celků. Například nelze přiimplementovat
+    nový kvantifikátor do 4FT bez nutnosti překompilovávání celého 4FT.
+    Protože však není LISp-Miner otevřený systém, je to vlastně skoro nemožné.
+    Také dokumentace k metabázi sice existuje, avšak pro hlubší pochopení
+    principu fungování metabáze je potřeba zkoušet spouštět různé moduly a
+    dívat se přímo do tabulek, co přesně se tam ukládá.</para>
 
     <para>To vše nás vedlo k tomu, že jsme nenapsali Ferdu nad metabází, ale
     pro modularitu jsme vybrali Ice. S metabází pouze pracují jisté krabičky
-    (krabičky jednotlivých úloh), aby se tak propojili se systémem LISp-Miner,
-    nicméně počítá se s tím, že se později Ferda odváže od systému LISp-Miner a
-    bude vše implementováno v jednotlivých krabičkách, tedy nebude třeba vůbec
-    používat metabázi.</para>
+    (krabičky jednotlivých úloh), aby se tak propojily se systémem LISp-Miner,
+    nicméně se počítá s tím, že se později Ferda odváže od systému LISp-Miner
+    a bude vše implementováno v jednotlivých krabičkách, tedy nebude třeba
+    vůbec používat metabázi.</para>
 
     <para>Ze zadání úkolu relativně přímočaře vyplynulo, že bude dobré
     programovat něco jako jsou naše krabičky, tedy, že to musí mít nějaké
     vlastnosti a zásuvky a musí se to dát mezi sebou propojovat. Na první
-    pohled vypadají i podobné systémy. Porovnáme-li pohled na úlohu dobývání
-    znalostí ve Ferdovi a v konkurenčních aplikacích - za všechny jmenujme
-    například komerční produkty Clementine od SPSS a SAS Enterprise Miner, a
-    nekomerční program Weka - ve všech těchto aplikacích se pracuje s podobnými
-    objekty jako jsou krabičky. Zatímco ve Ferdovi krabička reprezentuje
-    funkce, v ostatních aplikacích je to spíše část procesu dobývání znalostí,
-    proto pojem zásuvka jak jej o známe z Ferdy nemá v těchto aplikacích smysl.
-    Jejich krabičky mají pouze jeden vstupní bod a veliké množství parametrů se
-    nastavuje pomocí různých dialogů, to má za následek menší opakovatelnost
-    použití a větší složitost aplikace z hlediska uživatele. Na druhou stranu
-    zpracování úlohy ve Ferdovi vede k většímu množství typů krabiček, kterým
-    by měl uživatel rozumět, i k většímu množství krabiček na pracovní ploše,
-    které může vést k obtížnější orientaci uživatele. Tomu však byla věnována
-    pozornost a byla vyvinuta řada mechanismů, jenž by měla tyto problémy
-    řešit.</para>
+    pohled stejně vypadají i podobné systémy. Porovnáme-li pohled na úlohu
+    dobývání znalostí ve Ferdovi a v konkurenčních aplikacích - za všechny
+    jmenujme například komerční produkty Clementine od SPSS a SAS Enterprise
+    Miner, a nekomerční program Weka - ve všech těchto aplikacích se pracuje s
+    podobnými objekty, jako jsou krabičky. Zatímco ve Ferdovi krabička
+    reprezentuje funkce, v ostatních aplikacích je to spíše část procesu
+    dobývání znalostí, proto pojem zásuvka, jak jej o známe z Ferdy, nemá v
+    těchto aplikacích smysl. Jejich krabičky mají pouze jeden vstupní bod a
+    veliké množství parametrů se nastavuje pomocí různých dialogů. To má za
+    následek menší opakovatelnost použití a větší složitost aplikace z
+    hlediska uživatele. Na druhou stranu zpracování úlohy ve Ferdovi vede k
+    většímu množství typů krabiček, kterým by měl uživatel rozumět, i k
+    většímu množství krabiček na pracovní ploše, které může vést k obtížnější
+    orientaci uživatele. Tomu však byla věnována pozornost a byla vyvinuta
+    řada mechanismů, jenž by měla tyto problémy řešit.</para>
 
-    <para>To, co jsme také udělali na rozdíl od konkurence, je, že krabičky mezi
-    sebou a s vyššími vrstvami komunikují přes middleware (Ice). To umožňuje,
-    že každá krabička může teoreticky běžet na jiném počítači (zároveň uživatel
-    může sedět jinde, než probíhá výpočet) a že je možné psát krabičky ve
-    větším počtu programovacích jazyků. Na druhou stranu to přináší nutnost
-    alespoň malé znalosti Ice pro vytváření nové krabičky. Ice je však velice
-    dobře zdokumentované, a lidé od ZeroC (firma, která vyvýjí Ice) dobře a
-    rychle odpovídají na jejich support fóru na dotazy.</para>
+    <para>To, co jsme také udělali na rozdíl od konkurence, je, že krabičky
+    mezi sebou a s vyššími vrstvami komunikují přes middleware (Ice). To
+    umožňuje, že každá krabička může teoreticky běžet na jiném počítači
+    (zároveň uživatel může sedět jinde, než probíhá výpočet) a že je možné
+    psát krabičky ve větším počtu programovacích jazyků. Na druhou stranu to
+    přináší nutnost alespoň malé znalosti Ice pro vytváření nové krabičky. Ice
+    je však velice dobře zdokumentované, a zaměstnanci ZeroC (firma, která
+    vyvíjí Ice) dobře a rychle odpovídají na svém support fóru na případné
+    dotazy.</para>
   </section>
-  
+
   <section>
     <title>Rozdělení Ferdy na jednotlivé části</title>
 
@@ -157,7 +175,8 @@
       <title>Uživatelské rozhraní (FrontEnd)</title>
 
       <para>Uživatelské rozhraní má za úkol zprostředkovávat funkce manažeru
-      projektů uživatelovi a postarat se o pohodlnou a přívětivou práci s moduly.</para>
+      projektů uživatelovi a postarat se o pohodlnou a přívětivou práci s
+      moduly.</para>
     </section>
 
     <section>
@@ -199,20 +218,22 @@
         </listitem>
 
         <listitem>
-          <para>Udržování seznamu modulů, se kterými může pracovat a přitom nejsou v IceGridu.</para>
+          <para>Udržování seznamu modulů, se kterými může pracovat a přitom
+          nejsou v IceGridu.</para>
         </listitem>
 
         <listitem>
-          <para>Vytváření nových instancí krabiček za pomocí modulů krabiček.</para>
+          <para>Vytváření nových instancí krabiček za pomocí modulů
+          krabiček.</para>
         </listitem>
 
         <listitem>
           <para>Zprostředkování funkcí jednotlivých modulů.</para>
         </listitem>
 
-	<listitem>
-	  <para>Nabízení jistých funkcí modulům.</para>
-	</listitem>
+        <listitem>
+          <para>Nabízení jistých funkcí modulům.</para>
+        </listitem>
       </itemizedlist>
     </section>
 
@@ -223,29 +244,30 @@
 
       <itemizedlist>
         <listitem>
-          <para>Moduly krabiček – moduly, které vytvářejí instance krabiček.</para>
+          <para>Moduly krabiček – moduly, které vytvářejí instance
+          krabiček.</para>
         </listitem>
 
         <listitem>
-          <para>Moduly pro nastavování nestandardních vlastností krabiček.</para>
+          <para>Moduly pro nastavování nestandardních vlastností
+          krabiček.</para>
         </listitem>
 
         <listitem>
-	  <para>Jiné moduly pro komunikaci s uživatelem (tzv. moduly pro
-	  interakci). Jedná se především o různé pomocné dialogy pracující vždy
-	  nad určitými typy krabiček.</para>
+          <para>Jiné moduly pro komunikaci s uživatelem (tzv. moduly pro
+          interakci). Jedná se především o různé pomocné dialogy pracující
+          vždy nad určitými typy krabiček.</para>
         </listitem>
       </itemizedlist>
     </section>
 
     <section>
-    	<title>Add Ins</title>
+      <title>Add Ins</title>
 
-	<para>Add Ins jsou přídavné části FrontEndu, které s ním komunikují
-	přímo přes CLI.  Nejčastěji obsahuje moduly pro interakci či moduly pro
-	nastavování nestandardních vlastností.  Není však nutné, aby například
-	modul pro interakci byl součástí nějakého Add Inu.</para>
-	
+      <para>Add Ins jsou přídavné části FrontEndu, které s ním komunikují
+      přímo přes CLI. Nejčastěji obsahuje moduly pro interakci či moduly pro
+      nastavování nestandardních vlastností. Není však nutné, aby například
+      modul pro interakci byl součástí nějakého Add Inu.</para>
     </section>
   </section>
 
@@ -255,152 +277,148 @@
     <para>Manažer modulů kominukuje s moduly přes Ice, moduly mezi sebou
     také.</para>
 
-    <para>Manažeru modulů je při startu řečeno, kde má hledat IceGrid registry,
-    který informuje o tom, jaké moduly jsou k dispozici a jak se k nim dostat.
-    Také manažer modulů dostává při spuštění informace o modulech, které nejsou
-    registrované v IceGrid registry, ale s kterými by měl pracovat (nejčastěji
-    jde o moduly pro interakci, protože narozdíl od krabiček je skoro vždy
-    vhodné, aby běželi na straně klienta).</para>
+    <para>Manažeru modulů je při startu řečeno, kde má hledat IceGrid
+    registry, který informuje o tom, jaké moduly jsou k dispozici a jak se k
+    nim dostat. Také manažer modulů dostává při spuštění informace o modulech,
+    které nejsou registrované v IceGrid registry, ale s kterými by měl
+    pracovat (nejčastěji jde o moduly pro interakci, protože narozdíl od
+    krabiček je skoro vždy vhodné, aby běželi na straně klienta).</para>
 
     <para>Je možné, že IceGrid vrátí, že se daný modul vyskytuje na více
     místech. V současné implementaci manažeru modulů se použije pouze jedno
     umístění, nicméně v pozdějších verzích by měl mít možnost pracovat dle
-    výběru se všemi umístěními. Důvod, proč se s tím nepočítalo od začátku, je,
-    že v době napsání velké části manažeru modulů ještě Ice nemělo IceGrid, ale
-    pouze IcePack, jenž uměl pracovat také vždy jen s jedním umístěním
-    modulů.</para>
+    výběru se všemi umístěními. Důvod, proč se s tím nepočítalo od začátku,
+    je, že v době napsání velké části manažeru modulů ještě Ice nemělo
+    IceGrid, ale pouze IcePack, jenž uměl pracovat také vždy jen s jedním
+    umístěním modulů.</para>
 
     <para>Více o tom jak funguje Ice můžete nalézt v <ulink
-    url="http://www.zeroc.com/download.html">dokumentaci Ice</ulink>
-    </para>
+    url="http://www.zeroc.com/download.html">dokumentaci Ice</ulink></para>
   </section>
 
   <section>
     <title>Implementace modulů krabiček</title>
-    
+
     <section>
       <title>Co to je krabička</title>
-      
+
       <para>Ferda přináší pohled na zadání úlohy dobývání znalostí jako na
       zapsání funkce pomocí jistých vizuálních objektů – tzv. krabiček. Každá
       krabička zastává také roli funkce nebo několika funkcí. Krabičky mají
       parametry a vyhodnocují své funkce nad hodnotami těchto parametrů.
-      Parametrům se u krabiček říká zásuvky.  Do zásuvek se zapojují jiné
+      Parametrům se u krabiček říká zásuvky. Do zásuvek se zapojují jiné
       krabičky. Krabičky jsou rozděleny podle typů a do každé zásuvky lze
       zapojit pouze některé typy krabiček.</para>
-      
-      <para> Krabičky kromě zásuvek mohou mít vlastnosti. Vlastnosti jsou,
+
+      <para>Krabičky kromě zásuvek mohou mít vlastnosti. Vlastnosti jsou,
       stejně jako zásuvky, ruzných typů, například řetězec, čísla (ta jsou v
       programu rozdělena podle velikostí a toho, zda jsou s desetinou čárkou)
       či datum.</para>
-      
-      <para> Vlastnosti a zásuvky představují vstupní parametry pro funkce,
+
+      <para>Vlastnosti a zásuvky představují vstupní parametry pro funkce,
       které krabička reprezentuje. Hodnoty zásuvek se nastavují vždy pomocí
       připojení jiné krabičky, zatím co hodnoty vlastností se mohou nastavovat
-      pomocí speciální komponenty v pracovním prostředím – panelu vlastností. U
-      vlastností lze přepínat mezi nastavováním hodnoty pomocí krabiček a
-      pomocí panelu vlastností.  Vlastnostem totiž odpovídají zásuvky stejného
-      názvu a typu, které jsou však ve výchozím nastavení uživateli skryty, ale
-      je možné si je nechat zobrazit.</para>
-      
+      pomocí speciální komponenty v pracovním prostředím – panelu vlastností.
+      U vlastností lze přepínat mezi nastavováním hodnoty pomocí krabiček a
+      pomocí panelu vlastností. Vlastnostem totiž odpovídají zásuvky stejného
+      názvu a typu, které jsou však ve výchozím nastavení uživateli skryty,
+      ale je možné si je nechat zobrazit.</para>
+
       <para>Pomocí řady jednoduchých krabiček je uživateli umožněno sestavovat
       vlastní algoritmy. Ferda tedy rovnež představuje něco jako uživatelský
-      programovací jazyk. Na krabičky se lze však také dívat jako na konstrukce
-      logiky ci sémantiky, ke které existuje lambda-kategoriální gramatika.
-      </para>
-      
-      <para> Mimo jiné má pak krabička také akce, navrhuje krabičky na
+      programovací jazyk. Na krabičky se lze však také dívat jako na
+      konstrukce logiky ci sémantiky, ke které existuje lambda-kategoriální
+      gramatika.</para>
+
+      <para>Mimo jiné má pak krabička také akce, navrhuje krabičky na
       vytvoření, vrací nápovědu, kategorii, ve které je, a spoustu dalších
       informací o sobě.</para>
-
     </section>
-    
+
     <section>
       <title>Rozhraní krabiček</title>
-    
-      <para>Krabičky můžou implementovány v samostatných aplikacích či službách
-      aplikace IceBox. Všechny námi implementované krabičky využívají druhé
-      možnosti.</para>
-      
+
+      <para>Krabičky můžou implementovány v samostatných aplikacích či
+      službách aplikace IceBox. Všechny námi implementované krabičky využívají
+      druhé možnosti.</para>
+
       <para>Každému typu krabičky odpovídá instace implementace rozhraní
-      BoxModuleFactoryCreator.  Toto rozhraní má metodu na vytváření instance
-      implementace rozhraní BoxModuleFactory (createBoxModuleFactory), která má
-      zas metodu na vytváření instance implementace třídy BoxModule, jež
+      BoxModuleFactoryCreator. Toto rozhraní má metodu na vytváření instance
+      implementace rozhraní BoxModuleFactory (createBoxModuleFactory), která
+      má metodu na vytváření instance implementace třídy BoxModule, a ta
       reprezentuje krabičku. Důvod nutnosti prostředního rozhraní je způsoben
-      nutností řešit vzdálenou garbage collection.  Rozhraní BoxModuleFactory
-      má mimo jiné metodu refresh, která musí být jednou za určitý čas klientem
-      zavolána, a pokud není, měla by se implementace modulu krabičky postarat
-      o zahození dané instance tohoto rozhraní a všech krabiček, které
-      bytvořila.</para>
-    
+      nutností řešit vzdálenou garbage collection. Rozhraní BoxModuleFactory
+      má mimo jiné metodu refresh, která musí být jednou za určitý čas
+      klientem zavolána, a pokud není, měla by se implementace modulu krabičky
+      postarat o zahození dané instance tohoto rozhraní a všech krabiček,
+      které vytvořila.</para>
+
       <mediaobject>
         <imageobject>
-	  <imagedata fileref="creatorFactory.png" format="PNG" />
+          <imagedata fileref="creatorFactory.png" format="PNG" />
         </imageobject>
 
         <imageobject>
-	  <imagedata fileref="creatorFactory.svg" format="SVG" />
+          <imagedata fileref="creatorFactory.svg" format="SVG" />
         </imageobject>
       </mediaobject>
-      
+
       <para>Rozhraní BoxModuleFactoryCreator obsahuje také metody o obecných
-      informacích o krabičce, které nejsou závislé ani na instanci krabičky ani
-      na klientovi, který je připojen (například identifikátor krabičky).
+      informacích o krabičce, které nejsou závislé ani na instanci krabičky
+      ani na klientovi, který je připojen (například identifikátor krabičky).
       Metodě createBoxModuleFactory se předává informace o lokalizacích, které
       chce klient používat, a předává se ManagersEngine, což je rozhraní
       manažeru modulů, které umožňuje například zamykat krabičky, zjišťovat
-      informace o jiných krabičkách či vyhledávat jiné moduly. BoxModuleFactory
-      pak má metody s informacema o krabičce, které můžou být závislé na těchto
-      informacích (například informace o zásuvkách a vlastnostech
-      krabičky).</para>
-      
+      informace o jiných krabičkách či vyhledávat jiné moduly.
+      BoxModuleFactory pak má metody s informacema o krabičce, které můžou být
+      závislé na těchto informacích (například informace o zásuvkách a
+      vlastnostech krabičky).</para>
+
       <para>Samotná krabička má pak metodu pro zapojení/vypojení jiných
-      krabiček do/ze zásuvky, metody na práci s vlastnostmi, metodu na spuštění
-      nějaké akce krabičky, metodu vracející krabičky nabízené na vytvoření a
-      pak metodu, která vrací objekt reprezentující funkce krabičky.</para>
+      krabiček do/ze zásuvky, metody na práci s vlastnostmi, metodu na
+      spuštění nějaké akce krabičky, metodu vracející krabičky nabízené na
+      vytvoření a pak metodu, která vrací objekt reprezentující funkce
+      krabičky.</para>
 
       <para>Speciálním případem krabiček jsou krabičky vlastností, které
       obsahují pouze jednu vlastnost jistého typu a hodotu této vlastnosti
-      vrací. Tuto krabičku lze pak zapojit do zásuvky stejného typu. To se hodí
-      například k přepoužití jedné hodnoty jako hodnotu vlastností různých
-      krabiček.</para>
+      vrací. Tuto krabičku lze pak zapojit do zásuvky stejného typu. To se
+      hodí například k přepoužití jedné hodnoty jako hodnotu vlastností
+      různých krabiček.</para>
     </section>
-    
+
     <section>
       <title>Formalismus krabiček</title>
-      
-      <para> Zjednodušme nyní na chvíli krabičku pro menší formalismus.
-      Krabička je dvojice &lt;S, F&gt;, kde S je množina zásuvek a F je množina
-      funkcí.	Zásuvka je dvojice &lt;n, T&gt;, kde  n je identifikátor zásuvky
-      a T je množina typů krabiček.  Dále máme predikát has(f, i), který říká,
-      zda má funkce f Ice identifikátor i.</para>
-      
-      <para> Typ krabičky je dvojice &lt;i, S&gt;, kde i je Ice identifikátor a
+
+      <para>Zjednodušme nyní na chvíli krabičku pro menší formalismus.
+      Krabička je dvojice &lt;S, F&gt;, kde S je množina zásuvek a F je
+      množina funkcí. Zásuvka je dvojice &lt;n, T&gt;, kde n je identifikátor
+      zásuvky a T je množina typů krabiček. Dále máme predikát has(f, i),
+      který říká, zda má funkce f Ice identifikátor i.</para>
+
+      <para>Typ krabičky je dvojice &lt;i, S&gt;, kde i je Ice identifikátor a
       S je množina dvojic &lt;n, i&gt;, kde n je identifikátor zásuvky a i je
       Ice identifikátor.</para>
-      
-      <para>
-        Řekneme, že krabička &lt;S, F&gt; je typu &lt;i, Z&gt; právě tehdy když
-        <itemizedlist>
+
+      <para>Řekneme, že krabička &lt;S, F&gt; je typu &lt;i, Z&gt; právě tehdy
+      když <itemizedlist>
           <listitem>
-	    <para>Pro každou dvojici &lt;n, j&gt; v Z existuje dvojice
-	    &lt;m, T&gt; v S, že existuje dvojice &lt;y, W&gt; v T taková, že m = n
-	    a j = y.</para>
+            <para>Pro každou dvojici &lt;n, j&gt; v Z existuje dvojice &lt;m,
+            T&gt; v S, že existuje dvojice &lt;y, W&gt; v T taková, že m = n a
+            j = y.</para>
           </listitem>
-  
+
           <listitem>
             <para>Existuje f v F taková, že platí predikát has(f, i).</para>
           </listitem>
-        </itemizedlist>
-      </para>
-
+        </itemizedlist></para>
     </section>
 
     <section>
       <title>Slabiny návrhu krabiček</title>
 
       <para>Při implementaci krabiček je třeba myslet na to, že krabičky
-      komunikují s ostatníma krabičkama a s manažerem modulů přes Ice. Je tedy
+      komunikují s ostatními krabičkami a s manažerem modulů přes Ice. Je tedy
       nutné dát si pozor na veliké množství volání vzdálených metod a na možné
       veliké množství přenášených dat.</para>
 
@@ -410,7 +428,7 @@
       čas nějaká vlastnost, uživatel se může o tom dozvědět pouze tehdy, pokud
       znovu klikne na krabičku a tím řekne manažeru modulů, aby si zjistil
       znovu vlastnosti krabičky. V budoucnosti je možné, že přibude metoda na
-      straně manažeru modulů, kterou budou moci volat krabičky, aby tím řekli,
+      straně manažeru modulů, kterou budou moci volat krabičky, aby tím řekly,
       že se změnila nějaká jejich vlastnost.</para>
 
       <para>Typ krabiček by mohl být ještě konkrétnější v tom, jaké přesně
@@ -421,11 +439,11 @@
       v pozdějších verzích Ferdy.</para>
 
       <para>Pomocí krabiček nabízených na vytvoření nelze vytvořit krabičku,
-      která je zapojena do zásuvek jiných krabiček. Jelikož naše filosofie byla
-      nechat uživatele vytvářet zapojení krabiček zespoda nahoru (v pohledu
-      uživatelského prostředí zleva doprava), nebylo to potřeba. Je však možné
-      zapojení do zásuvek jiných krabiček u krabiček nabízených na vytvoření
-      umožnit.</para>
+      která je zapojena do zásuvek jiných krabiček. Jelikož naše filosofie
+      byla nechat uživatele vytvářet zapojení krabiček zespoda nahoru (v
+      pohledu uživatelského prostředí zleva doprava), nebylo to potřeba. Je
+      však možné zapojení do zásuvek jiných krabiček u krabiček nabízených na
+      vytvoření umožnit.</para>
     </section>
   </section>
 
@@ -434,17 +452,17 @@
 
     <para>Manažer modulů zprostředkovává metody, které odpovídají rozhraním
     BoxModuleFactoryCreator a BoxModuleFactory u modulů rozhraním
-    IBoxModuleFactoryCreator. Toto rozhraní však neobsahuje metody potřebné pro
-    vzdálený garbage collection, protože sám manažer modulů obsluhuje u modulů
-    tyto metody (například periodicky volá metodu refresh, aby tím dal na
-    vědomí, že stále žije). Proto také dvoum rozhraní na straně modulů
-    odpovídá jedno na straně manažeru modulů. Rozhraní IBoxModuleFactoryCreator
-    pak vytváří instance implementace rozhraní IBoxModule, které odpovídá
-    rozhraní BoxModule na straně modulů.</para>
+    IBoxModuleFactoryCreator. Toto rozhraní však neobsahuje metody potřebné
+    pro vzdálený garbage collection, protože sám manažer modulů obsluhuje u
+    modulů tyto metody (například periodicky volá metodu refresh, aby tím dal
+    na vědomí, že stále žije). Proto také dvojicí rozhraní na straně modulů
+    odpovídá jedno na straně manažeru modulů. Rozhraní
+    IBoxModuleFactoryCreator pak vytváří instance implementace rozhraní
+    IBoxModule, které odpovídá rozhraní BoxModule na straně modulů.</para>
 
     <para>Jak IBoxModule tak IBoxModuleFactoryCreator má v manažeru modulů dvě
     implementace. První komunikuje přes Ice právě s implementacemi rozhraní
-    BoxModuleFactory, BoxModuleFactoryCreator a BoxModule.  Druhá pak pro
+    BoxModuleFactory, BoxModuleFactoryCreator a BoxModule. Druhá pak pro
     uživatelské prostředí vytváří speciální krabičku Skupina. Tato krabička se
     na první pohled pro uživatele tváří jako obyčejná krabička. Má jednu
     zásuvku a pokud je zapojena do jisté krabičky A a jsou do ní zapojeny
@@ -463,9 +481,9 @@
     hodí například při běhu akce krabičky, kdy krabička může přistupovat k
     vlastnostem a neměly by se tedy po dobu běhu akce měnit) a nakonec
     ManagersLocator, který umožňuje vyhledat moduly.</para>
-   
+
     <para>Zřejmě bude v budoucnosti manažer modulů modulům nabízet více
-    rozhraní.  Například se uvažuje o rozhraních na ukázání progress baru, na
+    rozhraní. Například se uvažuje o rozhraních na ukázání progress baru, na
     validování stavu krabiček, vylepší se rozhraní na vyhledávání modulů (aby
     se využilo naplno možností IceGridu, původní návrh využíval pouze IcePack)
     a také za uváženou stojí vylepšení rozhraní Output.</para>
@@ -476,24 +494,25 @@
 
     <para>Manažer projektů má mimo hlavní třídy ProjectManager především třídy
     odpovídající archivu (Archive) a desktopu (View). Dále pak má třídu
-    odpovídající xml reprezantaci projektu (Project) a pomocné třídy Connection
-    (informace o zapojení krabičky do zásuvky) a ProjectManagerOptions
-    (informace o tom, jak se má inicializovat a destruovat ProjectManager - zda
-    má spouštět a jak IceGrid a podobně).</para>
+    odpovídající xml reprezantaci projektu (Project) a pomocné třídy
+    Connection (informace o zapojení krabičky do zásuvky) a
+    ProjectManagerOptions (informace o tom, jak se má inicializovat a
+    destruovat ProjectManager - zda má spouštět a jak IceGrid a
+    podobně).</para>
 
     <para>Manažer projektů ukládá a načítá projekty z xml souborů. To má tu
     výhodu, že se lze v souboru dobře vyznat a protože struktura souboru je
     velice jednoduchá, lze psát jednoduše programy, které nějakým způsobem
     upravují, generují či čtou tento dokument.</para>
 
-    <para>Jelikož jsou xml soubory schopné se značně zmeněit při kompresi a
+    <para>Jelikož jsou xml soubory schopné se značně zmenšit při kompresi a
     ukazuje se, že projektové soubory můžou být při reálném použití i hodně
     veliké, uvažuje se o zavedení práce manažeru projektů nad komprimovanými
     projektovými soubory.</para>
 
     <para>V manažeru projektů ve třídě View je implementováno uspořádávání
-    krabiček. Toto uspořádávání má v současné implementaci pár nedokonalostí,
-    nicméně pro běžnou práci se zdá být dostatečné. V příštích verzích Ferdy
-    bude zřejmě ještě trochu vylepšeno.</para>
+    krabiček. Toto uspořádávání má v současné implementaci několik
+    nedokonalostí, nicméně pro běžnou práci se zdá být dostatečné. V příštích
+    verzích Ferdy bude zřejmě ještě trochu vylepšeno.</para>
   </section>
 </article>
