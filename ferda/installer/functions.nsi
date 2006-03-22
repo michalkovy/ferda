@@ -598,7 +598,27 @@ Function IsDotNetInstalledAdv
      Exch $0
  FunctionEnd
  
+ Function SaveIceDirectory
+ Var /GLOBAL IcePath
+
+
+ StrCpy $IcePath $INSTDIR
+ ;Push $R2
  
+ FunctionEnd
+
+ Function InsDirectoryPre
+ 
+ StrCpy $INSTDIR "c:\FerdaDataminer"
+ 
+ FunctionEnd
+ 
+ Function IceDirectoryPre
+ 
+ StrCpy $INSTDIR "c:\Ice-3.0.1"
+ 
+ FunctionEnd
+  
  Function IsExactDotNetInstalled
    Push $0
    Push $1

@@ -10,7 +10,8 @@
 
 ;include constants
 !include "constants.nsi" 
-
+;!define MUI_PRODUCT "FerdaDataminer"
+;!define MUI_VERSION "1.0"
 ;mainly 3-rd part functions
 !include "functions.nsi"
 
@@ -18,13 +19,22 @@
 !include "uninstall_functions.nsi"
 
 
+
 XPStyle on
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "..\LICENSE"
 !insertmacro MUI_PAGE_COMPONENTS
-!define MUI_PAGE_CUSTOMFUNCTION_LEAVE "CheckForSpaces"
+!define MUI_DIRECTORYPAGE_TEXT_TOP "$(MUI_DIRECTORYPAGE_TEXT_TOP_B)"
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE "SaveIceDirectory"
+!define MUI_PAGE_CUSTOMFUNCTION_PRE "IceDirectoryPre"
 !insertmacro MUI_PAGE_DIRECTORY
+
+!define MUI_PAGE_CUSTOMFUNCTION_PRE "InsDirectoryPre"
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE "CheckForSpaces"
+!define MUI_DIRECTORYPAGE_TEXT_TOP "$(MUI_DIRECTORYPAGE_TEXT_TOP_A)"
+!insertmacro MUI_PAGE_DIRECTORY
+
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 
@@ -35,7 +45,7 @@ XPStyle on
 
 
 ;Default installation folder
-InstallDir "C:\FerdaDataminer"
+;InstallDir "c:\FerdaDataminer"
 Name "Ferda DataMiner"
 OutFile "ferda_install.exe"
 

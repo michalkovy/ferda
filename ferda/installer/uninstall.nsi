@@ -19,10 +19,7 @@ Section "Uninstall"
 "${Index}-NoOwn:"
 !undef Index
 
-  ;cleaning registry
-  DeleteRegKey HKCU "Software\Ferda DataMiner"
-
-  ;stopping FerdaIceGridNode
+ ;stopping FerdaIceGridNode
   ;nsSCM::Stop /NOUNLOAD "FerdaIceGridNode" "FerdaIceGridNode"
  
   ;removing FerdaIceGridNode
@@ -37,7 +34,11 @@ Section "Uninstall"
   ;Delete "$INSTDIR\LMGens\*.*"
   ;Delete "$INSTDIR\MetabaseLayer\*.*"
   ;Delete "$INSTDIR\ThirdParty\ice\*.*"
-  
+  ;removing ice from path
+  ReadRegStr $R2 HKCU "Software\Ferda DataMiner\"  "IcePath"
+  Push "PATH"
+  Push $R2
+  Call un.RemoveFromEnvVar
  
   Delete "$SMPROGRAMS\Ferda DataMiner\Uninstall.lnk"
   Delete "$SMPROGRAMS\Ferda DataMiner\Ferda DataMiner.lnk"
@@ -46,10 +47,7 @@ Section "Uninstall"
   Delete "$INSTDIR\Uninstall.exe"
   RMDir /r "$INSTDIR"
   
-  ;removing ice from path
-  Push "$INSTDIR\ThirdParty\ice\bin"
-  Call un.RemoveFromPath
-
-  
+  ;cleaning registry
+  DeleteRegKey HKCU "Software\Ferda DataMiner"
 
 SectionEnd
