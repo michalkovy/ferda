@@ -47,5 +47,11 @@ Section "$(ODBCConnectionString)" ODBCConnectionString
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ODBCConnectionString" "" 
 SectionEnd
 
+;addins help
+Section
+	SetOutPath "$INSTDIR\FrontEnd\AddIns\Help"
+	File ..\bin\FrontEnd\AddIns\Help\*.*
+SectionEnd
+
 
 SectionGroupEnd

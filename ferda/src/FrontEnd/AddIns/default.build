@@ -60,6 +60,12 @@
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
 			</references>
 		</csc>
+
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ResultBrowser/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ExplainTable.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ExplainTable/**.cs"/>
@@ -83,6 +89,11 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ExplainTable/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
 		<csc target="library" output="${path::combine(addInsBuild.dir,'DatabaseInfo.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="DatabaseInfo/**.cs"/>
@@ -132,6 +143,11 @@
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
 			</references>
 		</csc>
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ColumnFrequency/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
 		<csc target="library" output="${path::combine(addInsBuild.dir,'AttributeFrequency.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="AttributeFrequency/**.cs"/>
@@ -157,6 +173,11 @@
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
 			</references>
 		</csc>
+<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="AttributeFrequency/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
 		<csc target="library" output="${path::combine(addInsBuild.dir,'EditCategories.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="EditCategories/**.cs"/>
@@ -183,6 +204,11 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="EditCategories/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ODBCConnectionString.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ODBCConnectionString/**.cs"/>
@@ -207,6 +233,11 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ODBCConnectionString/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ShowTable.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ShowTable/**.cs"/>
@@ -229,6 +260,11 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ShowTable/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
 
 		<csc target="library" output="${path::combine(addInsBuild.dir,'WaitDialog.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
