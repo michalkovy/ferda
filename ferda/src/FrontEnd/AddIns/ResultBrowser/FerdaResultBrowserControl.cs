@@ -769,13 +769,55 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
             else
             {
-
                 foreach (int[] row in hypothesis.quantifierSetting.firstContingencyTableRows)
                 {
                     foreach (int value in row)
                     {
+                        string antName = i1.ToString();
+                        string sucName = j1.ToString();
+                        if ((this.taskType == "LISpMinerTasks.SDKLTask") || (this.taskType == "LISpMinerTasks.KLTask"))
+                        {
+                            foreach (LiteralStruct literal in hypothesis.literals)
+                            {
+                                if (literal.cedentType == CedentEnum.Antecedent)
+                                {
+                                    if (literal.categoriesNames.Length > (i1-1))
+                                    {
+                                        antName = literal.categoriesNames[(i1-1)];
+                                    }
+                                    break;
+                                }
+                            }
+
+                            foreach (LiteralStruct literal in hypothesis.literals)
+                            {
+                                if (literal.cedentType == CedentEnum.Succedent)
+                                {
+                                    if (literal.categoriesNames.Length > (j1-1))
+                                    {
+                                        sucName = literal.categoriesNames[(j1-1)];
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        else if ((this.taskType == "LISpMinerTasks.SDCFTask") || (this.taskType == "LISpMinerTasks.CFTask"))
+                        {
+                            foreach (LiteralStruct literal in hypothesis.literals)
+                            {
+                                if (literal.cedentType == CedentEnum.Antecedent)
+                                {
+                                    if (literal.categoriesNames.Length > (j1-1))
+                                    {
+                                        antName = literal.categoriesNames[(j1-1)];
+                                    }
+                                    break;
+                                }
+                            }
+                            sucName = String.Empty;
+                        }
                         PropertySpec hValue = new PropertySpec(
-                        i1.ToString() + "-" + j1.ToString(),
+                        antName.ToString() + "-" + sucName.ToString(),
                         typeof(int),
                         "1. " + resManager.GetString("ContingencyTable"),
                         "1. " + resManager.GetString("ContingencyTable"),
@@ -783,7 +825,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                         );
                         hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(hValue);
-                        table[i1.ToString() + "-" + j1.ToString()] = value;
+                        table[antName.ToString() + "-" + sucName.ToString()] = value;
                         j1++;
                     }
                     j1 = 1;
@@ -796,8 +838,51 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 {
                     foreach (int value in row)
                     {
+                        string antName = i1.ToString();
+                        string sucName = j1.ToString();
+                        if ((this.taskType == "LISpMinerTasks.SDKLTask") || (this.taskType == "LISpMinerTasks.KLTask"))
+                        {
+                            foreach (LiteralStruct literal in hypothesis.literals)
+                            {
+                                if (literal.cedentType == CedentEnum.Antecedent)
+                                {
+                                    if (literal.categoriesNames.Length > (i1 - 1))
+                                    {
+                                        antName = literal.categoriesNames[(i1 - 1)];
+                                    }
+                                    break;
+                                }
+                            }
+
+                            foreach (LiteralStruct literal in hypothesis.literals)
+                            {
+                                if (literal.cedentType == CedentEnum.Succedent)
+                                {
+                                    if (literal.categoriesNames.Length > (j1 - 1))
+                                    {
+                                        sucName = literal.categoriesNames[(j1 - 1)];
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        else if ((this.taskType == "LISpMinerTasks.SDCFTask") || (this.taskType == "LISpMinerTasks.CFTask"))
+                        {
+                            foreach (LiteralStruct literal in hypothesis.literals)
+                            {
+                                if (literal.cedentType == CedentEnum.Antecedent)
+                                {
+                                    if (literal.categoriesNames.Length > (j1 - 1))
+                                    {
+                                        antName = literal.categoriesNames[(j1 - 1)];
+                                    }
+                                    break;
+                                }
+                            }
+                            sucName = String.Empty;
+                        }
                         PropertySpec hValue = new PropertySpec(
-                        i1.ToString() + "-" + j1.ToString(),
+                        antName.ToString() + "-" + sucName.ToString(),
                         typeof(int),
                         "2. " + resManager.GetString("ContingencyTable"),
                         "2. " + resManager.GetString("ContingencyTable"),
@@ -805,7 +890,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                         );
                         hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(hValue);
-                        table[i1.ToString() + "-" + j1.ToString()] = value;
+                        table[antName.ToString() + "-" + sucName.ToString()] = value;
                         j1++;
                     }
                     j1 = 1;
