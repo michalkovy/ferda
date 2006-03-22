@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <title>Zakladni informace o projektu Ferda</title>
+    <author>
+      <firstname>Martin</firstname>
+      <surname>Ralbovský</surname>
+      <email>martin.ralbovsky@gmail.com</email>
+    </author>
+  </articleinfo>
+  <abstract>
+    <para>Tento dokument popisuje základní informace o projektu Ferda</para>
+  </abstract>
+  <section>
+    <title>Co to je Ferda?</title>
+    <para>
+      Ferda je program na dobývání znalostí z dat. Jedná se o aplikaci, která nahrazuje stávající uživatelské prostředí systému na dobývání znalostí
+      LISp-Miner novým, vizuálně a uživatelsky přívětivějším pracovním
+      prostředím. Ferda přináší pohled na zadání úlohy dobývání znalostí jako na zapsání funkce pomocí vizuálních objektů - krabiček.
+      Krabičky mají parametry a vyhodnocují své funkce nad hodnotami těchto parametrů. Program je navržen
+      modulárně tak, aby jej bylo možné snadno rozšiřovat o další krabičky.
+      Do budoucnosti nabízí Ferda další možnosti výzkumu a rozšiřování.
+    </para>
+  </section>
+  <section>
+    <title>Vedoucí projektu</title>
+    <section>
+      <title>doc. RNDr. Jana Rauch, CSc.</title>
+      <para>Děkujeme doc. RNDr. Janu Rauchovi, CSc. za skvělé vedení našeho projektu.</para>
+    </section>
+  </section>
+  <section>
+    <title>Řešitelé projektu</title>
+    <section>
+      <title>Michal Kováč (michal.kovac.develop&lt;zavinac&gt;centrum.cz)</title>
+      <para>
+        Michal Kováč navrhoval větší část architektury Ferdy. Naprogramoval manažer
+        modulů a manažer projektů.
+      </para>
+    </section>
+    <section>
+      <title>Tomáš Kuchař (tomas.kuchar&lt;zavinac&gt;gmail.com)</title>
+      <para>
+        Tomáš Kuchař měl na starosti návrh implementace krabiček Ferdy. Implementoval větší část
+        krabiček a komunikaci s vrstvou metabáze.
+      </para>
+    </section>
+    <section>
+      <title>Alexander Kuzmin (alexander.kuzmin&lt;zavinac&gt;gmail.com)</title>
+      <para>
+        Alexander Kuzmin navrhoval vzhled modulů pro interakci a modulů pro nastavení.
+        Naprogramoval všechny tyto moduly, CF a SD procedury.
+      </para>
+    </section>
+    <section>
+      <title>Martin Ralbovský (martin.ralbovsky&lt;zavinac&gt;gmail.com)</title>
+      <para>
+        Martin Ralbovský navrhl vzhled a architekturu FrontEndu a napojení FrontEndu
+        na ostatní části Ferdy. Naprogramoval FrontEnd.
+      </para>
+    </section>
+  </section>
+  <section>
+    <title>Kde hledat data?</title>
+    <para>Všechny dokumenty by měly být dostupné z internetových stránek projektu <ulink url="http://ferda.sourceforge.net">http://ferda.sourceforge.net</ulink>.</para>
+  </section>
+</article>
+
