@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <title>Registrace nových modulů</title>
+
+    <author>
+      <firstname>Michal</firstname>
+
+      <surname>Kováč</surname>
+
+      <email>michal.kovac.develop@centrum.cz</email>
+    </author>
+  </articleinfo>
+
+  <abstract>
+    <para>Manažer modulů pracuje přes Ice s různými moduly, v tomto textu bude
+    pospáno, jak lze přidat modul do seznamu modulů, se kterými manažer modulů
+    pracuje.</para>
+  </abstract>
+
+  <section>
+    <title></title>
+
+    <para>Manažer modulů získává seznam modulů ze dvou zdrojů. Prvním je
+    IceGrid registry, druhým pak FrontEnd.  První se využívá pro moduly, které
+    může použít více FrontEndů zároveň, jedná se tedy převážně o krabičky.
+    Protože moduly pro interakci a nastavování parametrů můsí běžet na stejném
+    stroji jako FrontEnd a naše implementace těchto modulů je přímo nahrávána
+    do FrontEndu jako AddIn, FrontEnd sám předává informace o těchto modulech
+    manažeru modulů.</para>
+
+    <section>
+      <title>Seznam modulů z IceGrid registy</title>
+
+      <para>IceGrid registry je jistá služba, která říká, na kterém počítači je
+      jaký Ice objekt. Do této registry si můžou aplikace přidávat Ice objekty
+      dynamicky v době běhu nebo pomocí konfiguračních souborů. První varianty
+      se ve Ferdovi nyní nevyužívá, druhé ano. IceGrid se umí nejen starat o
+      Ice objekty, ale i o samotné aplikace. Pokud se nějaký Ice objekt přes
+      IceGrid zeptá, kde je na jiném počítači jiný objekt, služba IceGrid node
+      může být nastavena tak, aby teprve v tuto chvíli spustila aplikaci, která
+      zprostředkovává daný Ice objekt.</para>
+
+      <para>Konfiguraci aplikací a Ice objektů lze nalést v souboru
+      application.xml.</para>
+
+    </section>
+
+    <section>
+      <title>Seznam modulů, které předává FrontEnd</title>
+
+      <para>Jsou dvě místa, odkud FrontEnd získává informace o Ice objektech. První místo je konfigurační soubor
+      FrontEndConfig.xml, druhé je pak reprezentováno pomocí rozhraní pro AddIny.</para>
+
+      <para>Předávat informace o Ice objektech přes konfigurační soubor je umožněno proto, aby mohly být i ne .NET
+      moduly pro interakci a moduly pro nastavování parametrů. My sami jsme ještě této možnosti nevyužili.</para>
+    </section>
+  </section>
+</article>
