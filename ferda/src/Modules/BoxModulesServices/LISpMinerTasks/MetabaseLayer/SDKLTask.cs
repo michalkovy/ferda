@@ -51,22 +51,29 @@ namespace Ferda.Modules.MetabaseLayer
             AbstractQuantifierSetting quantifierSetting;
             generation = common.GetGeneratingStruct(taskID);
             DataTable hypothesis = common.ExecuteSelectQuery("SELECT * FROM tiHypothesisDK WHERE TaskID=" + taskID);
+            LiteralStruct[] literals = common.GetCategorialLiterals(TaskTypeEnum.SDKL, taskID, taskDescription);
             foreach (DataRow hypothese in hypothesis.Rows)
             {
                 int hypothesisID = Convert.ToInt32(hypothese["HypothesisID"]);
                 hypothesisStruct = new HypothesisStruct();
                 hypothesisStruct.booleanLiterals = common.GetBooleanLiterals(taskID, hypothesisID);
-                
-                hypothesisStruct.literals = common.GetCategorialLiterals(TaskTypeEnum.SDKL, taskID, taskDescription);
+                int rowLiteralId = common.CategorialLiteral[Convert.ToInt32(hypothese["KLLiteralDRowID"])];
                 LiteralStruct rowLiteral = new LiteralStruct();
-                rowLiteral.cedentType = CedentEnum.Antecedent;
-                rowLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["KLLiteralDRowID"])];
+                foreach (LiteralStruct literal in literals)
+                {
+                    if (literal.cedentType == CedentEnum.Antecedent && literal.literalIdentifier == rowLiteralId)
+                        rowLiteral = literal;
+                }
+                int columnLiteralId = common.CategorialLiteral[Convert.ToInt32(hypothese["KLLiteralDColID"])];
                 LiteralStruct columnLiteral = new LiteralStruct();
-                columnLiteral.cedentType = CedentEnum.Succedent;
-                columnLiteral.literalIdentifier = common.CategorialLiteral[Convert.ToInt32(hypothese["KLLiteralDColID"])];
+                foreach (LiteralStruct literal in literals)
+                {
+                    if (literal.cedentType == CedentEnum.Succedent && literal.literalIdentifier == columnLiteralId)
+                        columnLiteral = literal;
+                }
+                hypothesisStruct.literals = new LiteralStruct[] { rowLiteral, columnLiteral };
                 quantifierSetting = new AbstractQuantifierSetting();
                 quantifierSetting.firstContingencyTableRows = common.GetContingecyTable(this.taskType, taskID, hypothesisID, rowLiteral.literalIdentifier, columnLiteral.literalIdentifier);
-
                 quantifierSetting.secondContingencyTableRows = common.GetSecondContingecyTable(this.taskType, taskID, hypothesisID, rowLiteral.literalIdentifier, columnLiteral.literalIdentifier);
                 quantifierSetting.allObjectsCount = allObjectsCount;
                 hypothesisStruct.quantifierSetting = quantifierSetting;

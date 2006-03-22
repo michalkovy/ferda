@@ -80,29 +80,31 @@
           <itemizedlist>
             <listitem>
               <formalpara>
-                <title>Hypothesis name</title>
+                <title>Hypothesis</title>
 
-                <para>This view column contains the hypothesis name composed
-                on the basis of the antecedent, succedent and
-                condition.</para>
+                <para>This view column contains the hypothesis composed on the
+                basis of the antecedent, succedent and condition or on the
+                basis of row and column attributes.</para>
               </formalpara>
             </listitem>
 
             <listitem>
               <formalpara>
-                <title>Antecedent</title>
+                <title>Antecedent / Row attribute</title>
 
-                <para>This view column contains the antecedent of the given
+                <para>This view column contains the antecedent or the row
+                attribute for corresponding task types for the
                 hypothesis.</para>
               </formalpara>
             </listitem>
 
             <listitem>
               <formalpara>
-                <title>Succedent</title>
+                <title>Succedent / Column attribute</title>
 
-                <para>This view column contains the succedent of the given
-                hypothesis.</para>
+                <para>This view column contains the succedent or the column
+                attribute for corresponding task types for the hypothesis.
+                This column is empty for CF and SDCF hypotheses</para>
               </formalpara>
             </listitem>
 
@@ -143,15 +145,13 @@
         <para>This dropdown menu is designed for sorting hypotheses list by
         the statistics counted on the hypotheses contingency tables. The list
         is sorted every time you select the desired statistics from the
-        dropdown menu. ResultBrowser will then display by which statistics the
-        list is sorted.</para>
-
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="resultBrowserSortingStatistics.png"
-                       format="PNG" />
-          </imageobject>
-        </mediaobject>
+        dropdown menu. <mediaobject>
+            <imageobject>
+              <imagedata fileref="resultBrowserSortingStatistics.png"
+                         format="PNG" />
+            </imageobject>
+          </mediaobject>ResultBrowser will then display by which statistics
+        the list is sorted.</para>
 
         <mediaobject>
           <imageobject>
@@ -222,122 +222,110 @@
     </section>
 
     <section>
-      <title>Charts</title>
+      <title id="propertygrid">Property grid</title>
 
-      <para>AttributeFrequency module displays three different types of charts
-      for better visual representation of the categories frequences for the
-      attribute. Charts can be switched by clicking on corresponding tabs. The
-      chart types are:</para>
-
-      <itemizedlist>
-        <listitem>
-          <formalpara>
-            <title>Area chart</title>
-
-            <para>Displays the area chart for the categories. Possible actions
-            are enlisted in the chart <link
-            linkend="chart-right-click">right-click menu</link>.</para>
-          </formalpara>
-        </listitem>
-
-        <listitem>
-          <formalpara>
-            <title>Bar chart</title>
-
-            <para>Displays the bar chart for the categories. Possible actions
-            are enlisted in the chart <link
-            linkend="chart-right-click">right-click menu</link>.</para>
-          </formalpara>
-        </listitem>
-
-        <listitem>
-          <formalpara>
-            <title>Pie chart</title>
-
-            <para>Displays the pie chart for the categories. Possible actions
-            are enlisted in the chart <link
-            linkend="chart-right-click">right-click menu</link>.</para>
-          </formalpara>
-        </listitem>
-      </itemizedlist>
-    </section>
-
-    <section id="chart-right-click">
-      <title>Right-click menu for charts</title>
-
-      <para>Right-click menu lists the options and actions available for
-      charts.</para>
+      <para>Property grid is designed to display all of the hypothesis data.
+      It includes contingency tables, quantifiers values, hypothesis data and
+      statistics values, grouped by appropriate categories. Data for
+      hypothesis is displayed in the property grid when the hypothesis is
+      selected. You can adjust view parameters of the property grid such as
+      width. Separate values can be copied to clipboard from the property
+      grid.</para>
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="attributeFrequencyChartRightClick.png"
-                     format="PNG" />
+          <imagedata fileref="resultBrowserPropertyGrid.png" format="PNG" />
         </imageobject>
       </mediaobject>
-
-      <itemizedlist>
-        <listitem>
-          <formalpara>
-            <title>Absolute</title>
-
-            <para>When Absolute option is toggled on, absolute values instead
-            of percentage are displayed</para>
-          </formalpara>
-        </listitem>
-
-        <listitem>
-          <formalpara>
-            <title>Show labels</title>
-
-            <para>When Show labels is toggled on, labels for chart are
-            displayed</para>
-          </formalpara>
-        </listitem>
-
-        <listitem>
-          <formalpara>
-            <title>Copy chart to clipboard</title>
-
-            <para>This option allows copying the chart to clipboard as a
-            bitmap.</para>
-          </formalpara>
-        </listitem>
-      </itemizedlist>
     </section>
 
     <section>
-      <title>Right-click menu for list</title>
+      <title>Charts</title>
 
-      <para>Right-click menu contains options to copy the information to
-      clipboard.</para>
+      <para>Result browser displays charts representing contingency table
+      data. It is a 3d bar chart. You can adjust the chart by setting up
+      parameters in the chart options menu which is available on the
+      right-click on the chart. You can also copy the chart to the clipboard
+      as a bitmap using Copy to clipboard option in the right-click
+      menu.</para>
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="attributeFrequencyRightClick.png" format="PNG" />
+          <imagedata fileref="resultBrowserChart.png" format="PNG" />
         </imageobject>
       </mediaobject>
 
-      <itemizedlist>
-        <listitem>
-          <formalpara>
-            <title>Copy all items to clipboard</title>
+      <section>
+        <title>View options</title>
 
-            <para>When this option is selected, all items from the
-            AttributeFrequency list are copied to the clipboard as tab
-            separated values.</para>
-          </formalpara>
-        </listitem>
+        <para>After toggling the View options in the right-click menu, there
+        appears the following set of options which you can set to adjust the
+        chart view.</para>
 
-        <listitem>
-          <formalpara>
-            <title>Copy selected items to clipboard</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="resultBrowserChartOptions.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
 
-            <para>When this option is selected, the currently items from the
-            AttributeFrequency list are copied to the clipboard as tab
-            separated values.</para>
-          </formalpara>
-        </listitem>
-      </itemizedlist>
+        <itemizedlist>
+          <listitem>
+            <formalpara>
+              <title>3D %</title>
+
+              <para>Sets "3D proportion" for viewing the chart. Change this
+              value if there are too many bars on the chart which overlap each
+              other</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>Zoom</title>
+
+              <para>Zooms the chart view in and out</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>Horizontal offset</title>
+
+              <para>Moves the chart horizontally</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>Vertical offset</title>
+
+              <para>Moves the chart vertically</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>Show labels</title>
+
+              <para>Toggles showing labels with values on each bar</para>
+            </formalpara>
+          </listitem>
+
+          <listitem>
+            <formalpara>
+              <title>First vs second contingency table</title>
+
+              <para>This switch toggles displaying the chart between the first
+              and the second contingency tables. After changing this option
+              you should reload the hypothesis (simply click on the desired
+              one). Please note that second contingency table is available
+              only for SD type tasks. If you select second contingency table
+              for tasks which do not generate it, an empty chart will be
+              displayed.</para>
+            </formalpara>
+          </listitem>
+        </itemizedlist>
+      </section>
     </section>
   </section>
 </article>

@@ -126,6 +126,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             InitializeComponent();
             InitializeGraph();
             this.hypothesesCount = hypotheses.Length;
+            this.taskType = taskType;
             resultBrowser = new FerdaResult(resManager);
             resultBrowser.IceTicked += new LongRunTick(resultBrowser_IceTicked);
             resultBrowser.IceComplete += new LongRunCompleted(resultBrowser_IceComplete);
@@ -247,7 +248,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private void Initialize()
         {
-            //renaming columns in case of cf and kl miners
+            //no succedent for cf or sdcf
+            if ((this.taskType == "LISpMinerTasks.CFTask") || (this.taskType == "LISpMinerTasks.SDCFTask"))
+            {
+                this.HypothesesListView.Columns[2].Width = 0;
+            }
             //adding unused quantifiers in the context menu
             ToolStripMenuItem tempitem;
             foreach (String item in resultBrowser.GetUsedColumnNames())
@@ -947,7 +952,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="rm">Resource manager to handle new l10n resource</param>
         private void ChangeLocale(ResourceManager rm)
         {
-            if ((this.taskType == "LISpMinerTasks.SDCKLask") || (this.taskType == "LISpMinerTasks.CFTask") || (this.taskType == "LISpMinerTasks.SDCFTask") || (this.taskType == "LISpMinerTasks.KLTask"))
+            if ((this.taskType == "LISpMinerTasks.SDKLTask") || (this.taskType == "LISpMinerTasks.CFTask") || (this.taskType == "LISpMinerTasks.SDCFTask") || (this.taskType == "LISpMinerTasks.KLTask"))
             {
                 this.ColumnAntecedent.Text = rm.GetString("RowAttribute");
             }
@@ -955,9 +960,24 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 this.ColumnAntecedent.Text = rm.GetString("ColumnAntecedent");
             }
+            if ((this.taskType == "LISpMinerTasks.SDKLTask") || (this.taskType == "LISpMinerTasks.KLTask"))
+            {
+                this.ColumnSuccedent.Text = rm.GetString("ColumnAttribute");
+            }
+            else
+            {
+                if ((this.taskType == "LISpMinerTasks.CFTask") || (this.taskType == "LISpMinerTasks.SDCFTask"))
+                {
+                    this.ColumnSuccedent.Text = "";
+                }
+                else
+                {
+                    this.ColumnSuccedent.Text = rm.GetString("ColumnSuccedent");
+                }
+            }
             this.ColumnCondition.Text = rm.GetString("ColumnCondition");
             this.ColumnHypotheseName.Text = rm.GetString("ColumnHypothesisName");
-            this.ColumnSuccedent.Text = rm.GetString("ColumnSuccedent");
+            
             this.GroupBoxChangeGraph.Text = rm.GetString("GraphViewOptions");
             this.ToolStripShowGraphEdit.Text = rm.GetString("GraphViewOptions");
             this.Label3dpercent.Text = rm.GetString("3dpercent");
