@@ -557,8 +557,34 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         {
             HypothesisStruct hypothesis = this.resultBrowser.GetHypothese(hypothesisId);
             PropertyTable table = new PropertyTable();
+            string antecedentText = string.Empty;
+            string succedentText = string.Empty;
 
             #region Filling in name, antecedent, succedent, condition, first set, second set
+
+            if ((this.taskType == "LISpMinerTasks.SDKLTask") || (this.taskType == "LISpMinerTasks.CFTask") || (this.taskType == "LISpMinerTasks.SDCFTask") || (this.taskType == "LISpMinerTasks.KLTask"))
+            {
+                antecedentText = resManager.GetString("RowAttribute");
+            }
+            else
+            {
+                antecedentText = resManager.GetString("ColumnAntecedent");
+            }
+            if ((this.taskType == "LISpMinerTasks.SDKLTask") || (this.taskType == "LISpMinerTasks.KLTask"))
+            {
+                succedentText = resManager.GetString("ColumnAttribute");
+            }
+            else
+            {
+                if ((this.taskType == "LISpMinerTasks.CFTask") || (this.taskType == "LISpMinerTasks.SDCFTask"))
+                {
+                    succedentText = "";
+                }
+                else
+                {
+                    succedentText = resManager.GetString("ColumnSuccedent");
+                }
+            }
 
             //name
             PropertySpec hName = new PropertySpec(
@@ -574,7 +600,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             //antecedent
             PropertySpec hAntecedent = new PropertySpec(
-                resManager.GetString("ColumnAntecedent"),
+                antecedentText,
                 typeof(string),
                 resManager.GetString("HypothesisData"),
                 resManager.GetString("HypothesisData"),
@@ -582,19 +608,22 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 );
             hAntecedent.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
             table.Properties.Add(hAntecedent);
-            table[resManager.GetString("ColumnAntecedent")] = FerdaResult.GetAntecedentString(hypothesis);
+            table[antecedentText] = FerdaResult.GetAntecedentString(hypothesis);
 
             //succedent
-            PropertySpec hSuccedent = new PropertySpec(
-                resManager.GetString("ColumnSuccedent"),
-                typeof(string),
-                resManager.GetString("HypothesisData"),
-                resManager.GetString("HypothesisData"),
-                FerdaResult.GetSuccedentString(hypothesis)
-                );
-            hSuccedent.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-            table.Properties.Add(hSuccedent);
-            table[resManager.GetString("ColumnSuccedent")] = FerdaResult.GetSuccedentString(hypothesis);
+            if (succedentText != String.Empty)
+            {
+                PropertySpec hSuccedent = new PropertySpec(
+                    succedentText,
+                    typeof(string),
+                    resManager.GetString("HypothesisData"),
+                    resManager.GetString("HypothesisData"),
+                    FerdaResult.GetSuccedentString(hypothesis)
+                    );
+                hSuccedent.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(hSuccedent);
+                table[succedentText] = FerdaResult.GetSuccedentString(hypothesis);
+            }
 
             //condition
             PropertySpec hCondition = new PropertySpec(
@@ -816,16 +845,32 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                             }
                             sucName = String.Empty;
                         }
-                        PropertySpec hValue = new PropertySpec(
-                        antName.ToString() + "-" + sucName.ToString(),
-                        typeof(int),
-                        "1. " + resManager.GetString("ContingencyTable"),
-                        "1. " + resManager.GetString("ContingencyTable"),
-                        value
-                        );
-                        hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                        table.Properties.Add(hValue);
-                        table[antName.ToString() + "-" + sucName.ToString()] = value;
+                        if (sucName != String.Empty)
+                        {
+                            PropertySpec hValue = new PropertySpec(
+                            antName.ToString() + "-" + sucName.ToString(),
+                            typeof(int),
+                            "1. " + resManager.GetString("ContingencyTable"),
+                            "1. " + resManager.GetString("ContingencyTable"),
+                            value
+                            );
+                            hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                            table.Properties.Add(hValue);
+                            table[antName.ToString() + "-" + sucName.ToString()] = value;
+                        }
+                        else
+                        {
+                            PropertySpec hValue = new PropertySpec(
+                            antName.ToString(),
+                            typeof(int),
+                            "1. " + resManager.GetString("ContingencyTable"),
+                            "1. " + resManager.GetString("ContingencyTable"),
+                            value
+                            );
+                            hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                            table.Properties.Add(hValue);
+                            table[antName.ToString()] = value;
+                        }
                         j1++;
                     }
                     j1 = 1;
@@ -881,16 +926,32 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                             }
                             sucName = String.Empty;
                         }
-                        PropertySpec hValue = new PropertySpec(
-                        antName.ToString() + "-" + sucName.ToString(),
-                        typeof(int),
-                        "2. " + resManager.GetString("ContingencyTable"),
-                        "2. " + resManager.GetString("ContingencyTable"),
-                        value
-                        );
-                        hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                        table.Properties.Add(hValue);
-                        table[antName.ToString() + "-" + sucName.ToString()] = value;
+                        if (sucName != String.Empty)
+                        {
+                            PropertySpec hValue = new PropertySpec(
+                            antName.ToString() + "-" + sucName.ToString(),
+                            typeof(int),
+                            "1. " + resManager.GetString("ContingencyTable"),
+                            "1. " + resManager.GetString("ContingencyTable"),
+                            value
+                            );
+                            hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                            table.Properties.Add(hValue);
+                            table[antName.ToString() + "-" + sucName.ToString()] = value;
+                        }
+                        else
+                        {
+                            PropertySpec hValue = new PropertySpec(
+                            antName.ToString(),
+                            typeof(int),
+                            "2. " + resManager.GetString("ContingencyTable"),
+                            "2. " + resManager.GetString("ContingencyTable"),
+                            value
+                            );
+                            hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                            table.Properties.Add(hValue);
+                            table[antName.ToString()] = value;
+                        }
                         j1++;
                     }
                     j1 = 1;
