@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="cs">
+  <articleinfo>
+    <title>Srovnání Ferda a LISp-Miner</title>
+    <author>
+      <firstname>Martin</firstname>
+      <surname>Ralbovský</surname>
+      <email>martin.ralbovsky@gmail.com</email>
+    </author>
+    <author>
+      <firstname>Tomáš</firstname>
+      <surname>Kuchař</surname>
+      <email>tomas.kuchar@gmail.com</email>
+    </author>
+  </articleinfo>
+
+  <abstract>
+    <para>
+      Tento dokument srovnává systém Ferda a původní systém LISp-Miner a snaží
+      se objektivně pojmenovat výhody a nevýhody jednotlivých systémů.
+    </para>
+  </abstract>
+  <section>
+    <title>Práce s metabází</title>
+    <para>
+      Při práci se systémem LISp-Miner bylo třeba definovat metabázi
+      (obvykle soubor databáze Microsoft Access (LM_Empty.mdb)) pro uložení
+      projektu a vzájemnou výměnu dat mezi jednotlivými moduly systému
+      LISp-Miner. Používání metabáze je v systému Ferda pro uživatele
+      zcela nepostřehnutelné. Uživatel pracuje pouze se soubory projektu
+      (*.xfp). (Implementace: kdykoli krabičky Ferdy spouští moduly
+      LISp-Mineru (jeho *Gen.exe) dávají mu jako parametr metabázi, kterou
+      předtím přímo vygenerují. Jakmile *Gen.exe ukončí svou práci, je
+      výsledek přečten z metabáze a ta je smazána.) Absenci práce s metabází
+      vnímáme jako výhodu Ferdy, porotže zejména pro začátečníky je obtížné 
+      pochopit, co vlastně metabáze znamená a k čemu slouží.
+    </para>
+  </section>
+  <section>
+    <title>Úroveň integrace</title>
+    <para>
+      Zatímco v systému LISp-Miner, bylo k zadání celé úlohy a k procházení jejích výsledků
+      zapotřebí použití několika různých programů (například pro úlohu pro 4ft-Miner to jsou programy
+      <classname>LMAdmin</classname>,
+      <classname>LMDataSource</classname>, <classname>4ftTask</classname> a 
+      <classname>4ftResult</classname>), 
+      ve Ferdovi je vše integrováno do
+      jednoho nástroje. Pro každou ze šesti procedur na dobývání znalostí 
+      (4ft, SD4ft, KL, SDKL, CF, SDCF) je třeba spouštět samostatný modul *Task a
+      *Result. Myslíme si, že integrace systému ve Ferdovi zlepšila úroveň uživatelské
+      práce. Integrací systému Ferda lépe podporuje metodologii 
+      <ulink url="http://www.crisp-dm.org">CRISP-DM</ulink>, neboť podporuje
+      modifikaci předchozích kroků úlohy na základě dosažených výsledků.
+    </para>
+  </section>
+  <section>
+    <title>Archiv</title>
+    <para>
+      Některé části zadání úlohy pro LISp se dají znovu použít v jiných úlohách (např. 
+      zadání cedentů, literálu, kvantifikátorů). V systému LISp-Miner neexistuje centrální
+      uložiště pro všechny části, které lze sdílet mezi úlohami. Například je velmi vhodné
+      přepoužít zadání cedentu pro úlohu CF v úloze SDCF. Ačkoli je možné přepoužít cedenty
+      v rámci jedné procedury pomocí postupu "úlohy matka", který spočíval ve vytvoření úlohy,
+      jejího klonování a následného upravování parametrů u těchto klonů, přepoužití mezi 
+      různými procedurami neexistuje žádné. Naproti tomu Ferda nabízí archiv, centrální
+      úložiště všeho co uživatel kdy v projektu vytvořil. Jestliže se vrátíme k našemu 
+      příkladu s CF a SDCF úlohou, uživatel Ferdy vytvoří zadání cedentů a pouhým přepojením
+      těchto cedentů do obou úloh dosáhne kýženého stavu. Tento princip dramaticky zefektivňuje
+      práci analytika.
+    </para> 
+  </section>
+  <section>
+    <title>Velké množství krabiček</title>
+    <para>
+      Postup zadání úlohy dobývání znalostí ve Ferdovi je poměrně rozmělněn, a vede k použítí
+      velkého množství krabiček. Toto má dva důsledky: velké množství typů krabiček a práce s
+      velkým množstvím krabiček na ploše. 
+    </para>
+    <para>
+      První důsledek může uživatele začátečníka zmást, protože má si musí vybrat z velkého
+      množství krabiček a není na první pohled jasné, k jakému účelu která krabička slouží. Tomuto
+      se snažíme čelit mechanizmem krabiček navrhovaných na vytvoření, který i nezkušenému
+      uživateli radí, které krabičky se mají dále vytvořit. V uživatelské dokumentaci ke FrontEndu
+      nebo v Ferdově návodu se můžete dozvědět více o tomto mechanizmu. 
+    </para>
+    <para>
+      Druhý důsledek v praxi znamená to, že uživatelská plocha je zaneřáděná krabičkami a stává
+      se nepřehlednou. Snažili jsme se i tomuto problému  čelit a vyvinuli několik metod, které
+      ho řeší například zabalování a rozbalování zásuvek, více pracovních ploch, použití archivu,
+      krabička skupina. Více se o těchto metodách dozvíte v uživatelské dokumentaci ke
+      FrontEndu a článku Ferda, nové vizuální prostředí pro dobývání znalostí z konference
+      Znalosti 2006.
+    </para>
+    <para>
+      Systém LISp-Miner nemá krabičky, tudíž tyto nevýhody Ferdy nemusí řešit. Nastavování
+      úloh se děje pomocí dialogů, přičemž se může stát že jeden dialog obsahuje nastavení
+      pro dvě krabičky Ferdy. Na druhou stranu je v LISp-Mineru velké množství různých dialogů.
+    </para>
+  </section>
+  <section>
+    <title>
+      Jednotný způsob zadávání vlastností
+    </title>
+    <para>
+      Jak už jsme zmínili v předchozím odstavci, systém LISp-Miner používá k nastavování
+      úlohy různé dialogy, pro uživatele často nepřehledné a neintuitivní. Ve Ferdovi se
+      všechny vlastnosti nastavují stejným způsobem, a to pomocí panelu vlastností, přičemž
+      se může stát že pro nastavování složitějších vlastností se volá modul. Toto vnímáme 
+      jako výhodu Ferdy, neboť uživatel jasně vnímá, co jsou vlastnosti krabiček a které
+      vlastnosti se mají nastavit.
+    </para>
+  </section>
+  <section>
+    <title>Pomalé spouštění tasků ve Ferdovi</title>
+    <para>
+      Ferda nezobrazuje postup generování když pouští úlohu nad LISp-Miner genem a 
+      spouštění je pomalé. Čas strávený před spuštěním samotného *Gen (uživatel
+      vidí pouze dialog že se jeho úloha zpracovává) vyplývá z nekonzistence architektur
+      Ferdy a LISp-Miner. Tento čas je stráven získáváním konfigurace ze všech zapojených
+      krabiček a transformací těchto informací na formát srozumitelný pro LISp-Miner
+      geny (krabičky Ferdy poskytují více funkčnosti). Některé z těchto transformací
+      nejsou triviální, napřiklad všechny dynamické atributy musí vygenerovat zadání 
+      atributů (často podle aktuálních dat v analyzované databázi). Po všech těchto 
+      transformacích se vše ukládá do nové LISp-Miner metabáze Microsoft Access, která
+      je připojená pomocí ODBC rozhraní. Toto často vyžaduje provedení tisíců dotazů - tento
+      krok je přirozeně pomalejší než v LISp-Mineru, protože tam se ukládá do metabáze
+      průběžne vždy hned po zadání jednotlivých parametrů. Po skončení LISp-Miner *Genu
+      se opět musí všechny informace načíst zpátky do Ferdy (tento proces je optimalizován,
+      protože většina dotazů je vykonána v operační paměti počítače) a tento proces také
+      nějaký čas zabere. Tvůrci Ferdy vykonali několik testů se záměrem odhalit příčinu
+      těchto prodlev a zjistili, že naprostou většinu času zabírají samotné dotazy. Zdá se,
+      že rychlost provedení dotazů se různí na jednotlivých počítačích, závisí zřejmě také 
+      na verzi ovladače ODBC. 
+    </para>
+  </section>
+  <section>
+    <title>Modularita systému</title>
+    <para>
+      Velkou výhodou Ferdy oproti LISp-Mineru je jeho modulárnost. V LISp-Mineru je 
+      modularita řešena pouze na velmi vysoké úrovni, jednotlivé moduly spolu komunikují
+      přes metabázi. Kdokoli chce nějakým způsobem rozšířít LISp-Miner, musí požádat o
+      změnu metabáze a na struktuře metabáze jsou již vidět časté zásahy. Navíc LISp-Miner
+      není open source řešení(například není přístup ke zdrojovým kódům). Naproti tomu Ferda
+      svou architekturou přímo vyzývá k přidání nových modulů ať už jsou to krabičky nebo
+      jiné moduly. Zejména krabičky Ferdy jsou malé části systému, které můžou být přepoužity
+      a lehce se dají vyvíjet nové. Jádro Ferdy kominuje s moduly pouze pomocí middleware
+      rozhraní. Ferda je navíc open source řešení pod druhou verzí GPL, což bude mít 
+      také příznivý vliv na přilákání dalšich řozšiřitelů Ferdy.
+      Tvůrci Ferdy budou pracovat na jeho rozšíření ve svých diplomových pracích.
+    </para>
+  </section>
+  <section>
+    <title>Stabilita</title>
+    <para>
+      Přestože se domníváme, že Ferda je stabilní, jsme si vědomi toho, že LISp-Miner prověřen
+      několikaletým provozem a vývojem bude stabilnější.
+    </para>
+  </section>
+  <section>
+    <title>
+      Využití systému pro pedagogické účely
+    </title>
+    <para>Myslíme si, že Ferda je vhodnější nástroj pro vysvětlení a naučení se LISp procedur
+    a vztahů mezi nimi než LISp-Miner. Ve Ferdovi uživatel vidí všechny kroky které jsou zapotřebí
+    k úspěšnému zadání úlohy, může ji lehce modifikovat nebo rozšiřovat. 
+    </para>
+  </section>
+  <section>
+    <title>Rozšíření možností LISp-Mineru</title>
+    <para>
+      Některé krabičky ve Ferdovi rozšiřují možnosti LISp-Mineru. Jsou to například krabičky
+      dynamických atributů, které reflektují aktuální data v databázi. Dále je to krabička
+      Třída ekvivalence, která umožňuje definovat třídy ekvivalence nejen na literálech, ale
+      už na atributech. Více se o těchto krabičkách dočtete v článku Ferda, nové vizuální prostředí 
+      pro dobývání znalostí z konference Znalosti 2006.
+    </para>
+  </section>
+  <section>
+    <title>Rychlost</title>
+    <para>
+      Spouštění Ferdy i uživatelské prostředí je pomalejší než LISp-Miner. Vzhledem k tomu 
+      že Ferda je modulární, načítají se dynamické služby krabiček při startu aplickace, což
+      si jistě nějakou režii vyžádá (v LISp-Miner se vždy spustí jenom jeden jeho "modul", 
+      což je rychlé). Co se týče uživatelského prostředí, musíme si uvědomit složitost aplikace:
+      zatímco v LISp-Mineru uživatel pouze spouští jednotlivé dialogy a uživá k tomu standardní
+      ovládací prvky, ve Ferdovi existuje plnohodnotné vizuální prostředí umožňující vizuální programování, 
+      kde uživatel může pomocí myši přesouvat, propojovat a jinak manipulovat s prvky, které jsou na ploše. 
+    </para>
+  </section>
+</article>
