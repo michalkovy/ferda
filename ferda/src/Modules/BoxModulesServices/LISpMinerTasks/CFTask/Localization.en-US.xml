@@ -18,8 +18,8 @@
   <Sockets>
     <Socket>
       <Name>AntecedentSetting</Name>
-      <Label>Row attribute</Label>
-      <Hint>Defines set of row attributes.</Hint>
+      <Label>Attributes</Label>
+      <Hint>Defines set of attributes.</Hint>
     </Socket>
     <Socket>
       <Name>ConditionSetting</Name>
