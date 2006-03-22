@@ -189,4 +189,11 @@
       kde uživatel může pomocí myši přesouvat, propojovat a jinak manipulovat s prvky, které jsou na ploše. 
     </para>
   </section>
+  <section>
+    <title>Distribuce výpočtů</title>
+    <para>
+      Používání middleware ve Ferdovi umožňuje, že výpočet úlohy může běžet na jiném počítači,
+      než za kterým sedí uživatel. Toto není v LISp-Mineru možné. 
+    </para>
+  </section>
 </article>
