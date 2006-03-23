@@ -704,9 +704,9 @@ namespace Ferda.FrontEnd.Desktop
                 view.Remove(box);
             }
 
-            RemoveBoxes(SelectedShapes);
+            //RemoveBoxes(SelectedShapes);
 
-            //Adapt();
+            Adapt();
             archiveDisplayer.Adapt();
             propertiesDisplayer.Reset();
         }
