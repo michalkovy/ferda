@@ -83,7 +83,7 @@ namespace Ferda.Modules.Helpers.Data
         public static bool IsTableTypePublishable(string tableType, string[] publishableTypesOfTables)
         {
             //Iff publishableTypesOfTables == null than system and temporary tables are not publishable.
-            if (publishableTypesOfTables == null)
+            if (publishableTypesOfTables == null || publishableTypesOfTables.Length == 0)
                 publishableTypesOfTables =
                     new string[] { "TABLE", "VIEW", "ALIAS", "SYNONYM", "EXTERNAL TABLE" };
 
