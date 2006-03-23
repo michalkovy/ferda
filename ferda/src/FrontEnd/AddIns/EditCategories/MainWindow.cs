@@ -32,6 +32,7 @@ using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory;
 using Ferda;
 using Ferda.Modules;
+using Ferda.FrontEnd.AddIns;
 using Ferda.FrontEnd.AddIns.EditCategories.EditExisting;
 using System.Resources;
 using System.Reflection;
@@ -89,6 +90,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// </summary>
         private Dictionary<string, Icon> iconProvider;
 
+        /// <summary>
+        /// Owner of addin
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAdd;
+
 
         #endregion
 
@@ -101,7 +107,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="localePrefs">Current locale</param>
         /// <param name="categories">Categories to edit</param>
         /// <param name="distinctValues">Distinct values for enum categories</param>
-        public MainListView(string[] localePrefs, CategoriesStruct categories, string[] distinctValues)
+        public MainListView(string[] localePrefs, CategoriesStruct categories, string[] distinctValues, IOwnerOfAddIn ownerOfAddin)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -119,6 +125,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 localizationString = "en-US";
             }
             this.distinctValues = distinctValues;
+            this.ownerOfAdd = ownerOfAddin;
             this.path = Assembly.GetExecutingAssembly().Location;
             InitializeComponent();
             this.ChangeLocale(this.resManager);
@@ -536,6 +543,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.ResumeLayout();
         }
 
+        private void ToolStripButtonHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAdd.OpenPdf(ownerOfAdd.GetBinPath() + "\\AddIns\\Help\\EditCategories.pdf");
+        }
+
         #endregion
 
 
@@ -878,6 +890,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.MenuItemDelete.Text = rm.GetString("ButtonDelete");
             this.MenuItemEdit.Text = rm.GetString("ButtonEdit");
             this.MenuItemRename.Text = rm.GetString("ButtonRename");
+            this.ToolStripButtonHelp.Text = rm.GetString("Help");
         }
 
         #endregion

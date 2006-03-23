@@ -70,6 +70,16 @@
     <Compile Include="3rdParty\ODBCCP32.cs" />
     <Compile Include="3rdParty\Reg.cs" />
     <Compile Include="3rdParty\registry.cs" />
+    <Compile Include="Localization_cs-CZ.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization_cs-CZ.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization_en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization_en-US.resx</DependentUpon>
+    </Compile>
     <Compile Include="ODBCConnectionStringControl.cs">
       <SubType>Form</SubType>
     </Compile>

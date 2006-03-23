@@ -79,6 +79,11 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
         /// </summary>
         private ArrayList tempTable;
 
+        /// <summary>
+        /// Owner of addin
+        /// </summary>
+        IOwnerOfAddIn ownerOfAddIn;
+
         #endregion
 
 
@@ -89,7 +94,7 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
         /// </summary>
         /// <param name="attributeStruct">AttributeStruct to display</param>
         /// <param name="localePrefs">Localeprefs</param>
-        public AttributeFrequency(AbstractAttributeStruct attributeStruct, string[] localePrefs)
+        public AttributeFrequency(AbstractAttributeStruct attributeStruct, string[] localePrefs, IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string
             resManager = new ResourceManager("Ferda.FrontEnd.AddIns.AttributeFrequency.Localization_en-US",
@@ -106,6 +111,7 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             {
                 localizationString = "en-US";
             }
+            this.ownerOfAddIn = ownerOfAddIn;
             this.rowCount = attributeStruct.column.dataMatrix.recordsCount;
             this.columnInfo = attributeStruct.column;
             this.categoriesStruct = attributeStruct.categories;
@@ -205,6 +211,17 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
                 copyString.AppendLine();
             }
             Clipboard.SetDataObject(copyString.ToString(), true);
+        }
+
+        private void ToolStripChartHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\AttributeFrequency.pdf");
+
+        }
+
+        private void ToolStripHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\AttributeFrequency.pdf");
         }
 
 
@@ -331,6 +348,8 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
             this.ToolStripMenuItemCopyChart.Text = rm.GetString("CopyChart");
             this.ToolStripMenuItemToggleMarks.Text = rm.GetString("ToggleMarks");
+            this.ToolStripHelp.Text = rm.GetString("Help");
+            this.ToolStripChartHelp.Text = rm.GetString("Help");
         }
 
         #endregion

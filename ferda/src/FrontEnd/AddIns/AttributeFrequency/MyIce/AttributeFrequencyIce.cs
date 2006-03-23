@@ -176,7 +176,7 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency.MyIce
             try
             {
                 string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                Ferda.FrontEnd.AddIns.AttributeFrequency.AttributeFrequency control = new AttributeFrequency(prx.getAbstractAttribute(), localePrefs);
+                Ferda.FrontEnd.AddIns.AttributeFrequency.AttributeFrequency control = new AttributeFrequency(prx.getAbstractAttribute(), localePrefs, ownerOfAddIn);
                 this.ownerOfAddIn.ShowDockableControl(control, label + " " + resManager.GetString("AttributeFrequency"));
             }
 

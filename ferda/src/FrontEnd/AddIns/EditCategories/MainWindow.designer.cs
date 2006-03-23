@@ -81,6 +81,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.ButtonJoin = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.ButtonDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripButtonHelp = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.CategoriesContextMenu.SuspendLayout();
@@ -249,7 +251,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.toolStripSeparator6,
             this.ButtonJoin,
             this.toolStripSeparator7,
-            this.ButtonDelete});
+            this.ButtonDelete,
+            this.toolStripSeparator2,
+            this.ToolStripButtonHelp});
             this.CategoriesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.CategoriesToolStrip.Name = "CategoriesToolStrip";
             this.CategoriesToolStrip.Size = new System.Drawing.Size(846, 25);
@@ -338,6 +342,20 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.ButtonDelete.Size = new System.Drawing.Size(74, 22);
             this.ButtonDelete.Text = "ButtonDelete";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // ToolStripButtonHelp
+            // 
+            this.ToolStripButtonHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ToolStripButtonHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ToolStripButtonHelp.Name = "ToolStripButtonHelp";
+            this.ToolStripButtonHelp.Size = new System.Drawing.Size(89, 22);
+            this.ToolStripButtonHelp.Text = "toolStripButton1";
+            this.ToolStripButtonHelp.Click += new System.EventHandler(this.ToolStripButtonHelp_Click);
+            // 
             // MainListView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -353,6 +371,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.CategoriesToolStrip.ResumeLayout(false);
             this.CategoriesToolStrip.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -389,5 +408,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         internal System.Windows.Forms.ToolStripMenuItem MenuItemEdit;
         internal System.Windows.Forms.ToolStripButton ButtonEdit;
         private System.Windows.Forms.ToolStripMenuItem MenuItemRename;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton ToolStripButtonHelp;
     }
 }

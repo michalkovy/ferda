@@ -66,6 +66,11 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         /// </summary>
         private Dictionary<string, Icon> iconProvider;
 
+        /// <summary>
+        /// Owner of addin
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAddIn;
+
 
         #endregion
 
@@ -93,7 +98,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         /// </summary>
         /// <param name="localePrefs">localeprefs</param>
         /// <param name="currentDSN">Current DSN</param>
-        public ODBCConnectionStringControl(string[] localePrefs, string currentDSN)
+        public ODBCConnectionStringControl(string[] localePrefs, string currentDSN, IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -110,6 +115,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
+            this.ownerOfAddIn = ownerOfAddIn;
             this.path = Assembly.GetExecutingAssembly().Location;
             InitializeComponent();
             this.ChangeLocale(resManager);
@@ -308,6 +314,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.RadioUseDSN.Text = rm.GetString("InputDataSource");
             this.CheckBoxAllowPasswordSave.Text = rm.GetString("SavePassword");
             this.CheckBoxEmptyPassword.Text = rm.GetString("EmptyPassword");
+            this.ToolStripHelp.Text = rm.GetString("Help");
         }
 
         #endregion
@@ -601,6 +608,11 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         {
             this.ComboboxExistingSources.Items.Clear();
             this.FillList();
+        }
+
+        private void ToolStripHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ODBCConnectionString.pdf");
         }
 
         #endregion

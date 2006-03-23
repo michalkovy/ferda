@@ -66,6 +66,10 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             this.ToolStripMenuItemCopyChart = new System.Windows.Forms.ToolStripMenuItem();
             this.TabPageBarChart = new System.Windows.Forms.TabPage();
             this.TabPagePieChart = new System.Windows.Forms.TabPage();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripChartHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.TabControlColumnFrequency.SuspendLayout();
             this.TabPageText.SuspendLayout();
             this.ContextMenuDataTab.SuspendLayout();
@@ -131,9 +135,11 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             // 
             this.ContextMenuDataTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemCopyAll,
-            this.ToolStripMenuItemCopySelected});
+            this.ToolStripMenuItemCopySelected,
+            this.toolStripSeparator3,
+            this.ToolStripHelp});
             this.ContextMenuDataTab.Name = "ContextMenuDataTab";
-            this.ContextMenuDataTab.Size = new System.Drawing.Size(180, 48);
+            this.ContextMenuDataTab.Size = new System.Drawing.Size(180, 76);
             // 
             // ToolStripMenuItemCopyAll
             // 
@@ -163,9 +169,11 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             this.ToolStripMenuItemAbsolute,
             this.toolStripSeparator1,
             this.ToolStripMenuToggleMarks,
-            this.ToolStripMenuItemCopyChart});
+            this.ToolStripMenuItemCopyChart,
+            this.toolStripSeparator2,
+            this.ToolStripChartHelp});
             this.ContextMenuGraph.Name = "ContextMenuGraphParams";
-            this.ContextMenuGraph.Size = new System.Drawing.Size(214, 98);
+            this.ContextMenuGraph.Size = new System.Drawing.Size(214, 126);
             // 
             // ToolStripMenuItemAbsolute
             // 
@@ -215,6 +223,30 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             this.TabPagePieChart.Text = "tabPage1";
             this.TabPagePieChart.UseVisualStyleBackColor = true;
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(210, 6);
+            // 
+            // ToolStripChartHelp
+            // 
+            this.ToolStripChartHelp.Name = "ToolStripChartHelp";
+            this.ToolStripChartHelp.Size = new System.Drawing.Size(213, 22);
+            this.ToolStripChartHelp.Text = "toolStripMenuItem1";
+            this.ToolStripChartHelp.Click += new System.EventHandler(this.ToolStripChartHelp_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(176, 6);
+            // 
+            // ToolStripHelp
+            // 
+            this.ToolStripHelp.Name = "ToolStripHelp";
+            this.ToolStripHelp.Size = new System.Drawing.Size(179, 22);
+            this.ToolStripHelp.Text = "toolStripMenuItem1";
+            this.ToolStripHelp.Click += new System.EventHandler(this.ToolStripHelp_Click);
+            // 
             // ColumnFrequency
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,5 +281,9 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopyChart;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuToggleMarks;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripHelp;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripChartHelp;
     }
 }

@@ -198,7 +198,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             try
             {
-                FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(localePrefs, hypotheses, used_quantifiers, this.Displayer, proxies, taskType);
+                FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(localePrefs, hypotheses, used_quantifiers, this.Displayer, proxies, taskType, ownerOfAddIn);
                 this.ownerOfAddIn.ShowDockableControl(control, resManager.GetString("ResultBrowserControl"));
             }
             catch (Ferda.Modules.NoConnectionInSocketError)

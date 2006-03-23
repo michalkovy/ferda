@@ -172,7 +172,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable.MyIce
             try
             {
                 string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                Ferda.FrontEnd.AddIns.ShowTable.ShowTableControl control = new ShowTableControl(localePrefs, prx.getColumnsNames(), prx.getDataMatrixInfo());
+                Ferda.FrontEnd.AddIns.ShowTable.ShowTableControl control = new ShowTableControl(localePrefs, prx.getColumnsNames(), prx.getDataMatrixInfo(),ownerOfAddIn);
                 this.ownerOfAddIn.ShowDockableControl(control, resManager.GetString("Show") + " " + label);
             }
             catch (Ferda.Modules.NoConnectionInSocketError)

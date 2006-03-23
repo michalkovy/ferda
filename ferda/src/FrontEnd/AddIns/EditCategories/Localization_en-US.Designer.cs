@@ -79,6 +79,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Intervals in one category must have the same type.
+        /// </summary>
+        internal static string BadIntervalType {
+            get {
+                return ResourceManager.GetString("BadIntervalType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Box not connected.
         /// </summary>
         internal static string BoxNotConnected {
@@ -106,7 +115,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check.
+        ///   Looks up a localized string similar to Add to category.
         /// </summary>
         internal static string ButtonCheck {
             get {
@@ -286,6 +295,24 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Float.
+        /// </summary>
+        internal static string Float {
+            get {
+                return ResourceManager.GetString("Float", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        internal static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input correct interval parameters.
         /// </summary>
         internal static string InsufficientIntervalParameters {
@@ -349,6 +376,24 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Intervals (double-click to delete).
+        /// </summary>
+        internal static string LabelIntervals {
+            get {
+                return ResourceManager.GetString("LabelIntervals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interval type.
+        /// </summary>
+        internal static string LabelIntervalType {
+            get {
+                return ResourceManager.GetString("LabelIntervalType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Left bound type.
         /// </summary>
         internal static string LabelLeftBoundType {
@@ -394,6 +439,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Long.
+        /// </summary>
+        internal static string Long {
+            get {
+                return ResourceManager.GetString("Long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New enumeration.
         /// </summary>
         internal static string NewEnumeration {
@@ -421,6 +475,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category cannot be empty.
+        /// </summary>
+        internal static string NoEmptyCategoryAllowed {
+            get {
+                return ResourceManager.GetString("NoEmptyCategoryAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to - inf.
         /// </summary>
         internal static string RadioMinusInfinity {
@@ -444,6 +507,24 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         internal static string SameCategoryNames {
             get {
                 return ResourceManager.GetString("SameCategoryNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interval.
+        /// </summary>
+        internal static string TypeInterval {
+            get {
+                return ResourceManager.GetString("TypeInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enumeration.
+        /// </summary>
+        internal static string TypeSet {
+            get {
+                return ResourceManager.GetString("TypeSet", resourceCulture);
             }
         }
     }

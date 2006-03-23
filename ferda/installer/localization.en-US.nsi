@@ -14,6 +14,7 @@
   LangString DESC_ColumnFrequency ${LANG_ENGLISH} "Module for counting columns frequencies"
   LangString DESC_DatabaseInfo ${LANG_ENGLISH} "Module for displaying information about database"
   LangString DESC_ExplainTable ${LANG_ENGLISH} "Module for displaying information about tables"
+  LangString DESC_ShowTable ${LANG_ENGLISH} "Module for displaying the whole table"
   LangString DESC_EditCategories ${LANG_ENGLISH} "Module for editing categories"
   LangString DESC_ResultBrowser ${LANG_ENGLISH} "Module for browsing and filtering results"
   LangString DESC_ODBCConnectionString ${LANG_ENGLISH} "Module for composing ODBC connection string"
@@ -44,6 +45,7 @@
   LangString DataBaseInfo ${LANG_ENGLISH} "Database info"
   LangString EditCategories ${LANG_ENGLISH} "Edit categories"
   LangString ExplainTable ${LANG_ENGLISH} "Table info"
+  LangString ShowTable ${LANG_ENGLISH} "Show whole table"
   LangString ResultBrowser ${LANG_ENGLISH} "Result browser"
   LangString ODBCConnectionString ${LANG_ENGLISH} "ODBC Connection string"
   

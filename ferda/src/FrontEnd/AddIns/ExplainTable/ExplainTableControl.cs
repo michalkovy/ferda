@@ -61,6 +61,11 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// </summary>
         private DataMatrixInfo dataMatrixInfo;
 
+        /// <summary>
+        /// Owner of addin
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAddIn;
+
         #endregion
 
 
@@ -72,7 +77,7 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// <param name="localePrefs">Localeprefs</param>
         /// <param name="dataMatrix">Datamatrix</param>
         /// <param name="dataMatrixInfo">Datamatrix info</param>
-        public ExplainTable(string[] localePrefs, ColumnSchemaInfo[] dataMatrix, DataMatrixInfo dataMatrixInfo)
+        public ExplainTable(string[] localePrefs, ColumnSchemaInfo[] dataMatrix, DataMatrixInfo dataMatrixInfo, IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -89,6 +94,7 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
+            this.ownerOfAddIn = ownerOfAddIn;
             this.dataMatrix = dataMatrix;
             this.dataMatrixInfo = dataMatrixInfo;
             InitializeComponent();
@@ -96,6 +102,11 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
             this.MakeListView();
             this.ToolStripMenuItemCopyAll.Click += new EventHandler(ToolStripMenuItemCopyAll_Click);
             this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
+        }
+
+        private void ToolStripHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ExplainTable.pdf");
         }
 
         #endregion
@@ -289,6 +300,7 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
             this.ColumnSize.Text = rm.GetString("ColumnSize");
             this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
             this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
+            this.ToolStripHelp.Text = rm.GetString("Help");
         }
 
         #endregion

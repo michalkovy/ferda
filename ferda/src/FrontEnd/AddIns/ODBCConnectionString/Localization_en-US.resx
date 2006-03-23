@@ -153,6 +153,9 @@
   <data name="EmptyPassword" xml:space="preserve">
     <value>Empty password</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="InputAuth" xml:space="preserve">
     <value>Input server authentification information:</value>
   </data>

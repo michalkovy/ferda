@@ -60,6 +60,11 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         /// </summary>
         private DataTable tempTable;
 
+        /// <summary>
+        /// Owner of addin
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAddIn;
+
 
         #endregion
 
@@ -71,7 +76,7 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         /// </summary>
         /// <param name="localePrefs">Localeprefs</param>
         /// <param name="columnInfo">Columninfo</param>
-        public ColumnFrequency(string[] localePrefs, ColumnInfo columnInfo)
+        public ColumnFrequency(string[] localePrefs, ColumnInfo columnInfo, IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -87,6 +92,7 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
                 resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ColumnFr.Localization_en-US", Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
+            this.ownerOfAddIn = ownerOfAddIn;
             this.rowCount = columnInfo.dataMatrix.recordsCount;
             InitializeComponent();
             DBInteraction myDb = new DBInteraction(columnInfo);
@@ -264,6 +270,16 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             Clipboard.SetDataObject(copyString.ToString(), true);
         }
 
+        private void ToolStripHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ColumnFrequency.pdf");
+        }
+
+        private void ToolStripChartHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ColumnFrequency.pdf");
+        }
+
         #endregion
 
 
@@ -309,7 +325,11 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
             this.ToolStripMenuItemCopyChart.Text = rm.GetString("CopyChart");
             this.ToolStripMenuToggleMarks.Text = rm.GetString("ToggleMarks");
+            this.ToolStripHelp.Text = rm.GetString("Help");
+            this.ToolStripChartHelp.Text = rm.GetString("Help");
         }
         #endregion
+
+        
     }
 }

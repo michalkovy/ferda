@@ -186,6 +186,9 @@
   <data name="ExplainTableModule" xml:space="preserve">
     <value>Explain table module</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="NoDataMatrix" xml:space="preserve">
     <value>No datamatrix</value>
   </data>

@@ -59,6 +59,11 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         /// </summary>
         private DataMatrixInfo dataMatrix;
 
+        /// <summary>
+        /// Owner of addin
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAddIn;
+
         #endregion
 
 
@@ -70,7 +75,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         /// <param name="localePrefs">localeprefs</param>
         /// <param name="columns">Columns</param>
         /// <param name="dataMatrix">Datamatrix to display</param>
-        public ShowTableControl(string[] localePrefs, string[] columns, DataMatrixInfo dataMatrix)
+        public ShowTableControl(string[] localePrefs, string[] columns, DataMatrixInfo dataMatrix, IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -87,6 +92,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
+            this.ownerOfAddIn = ownerOfAddIn;
             this.columns = columns;
             this.dataMatrix = dataMatrix;
             InitializeComponent();
@@ -163,6 +169,11 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
             Clipboard.SetDataObject(copyString.ToString(), true);
         }
 
+        private void ToolStripHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ShowTable.pdf");
+        }
+
         #endregion
 
 
@@ -236,6 +247,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         {
             this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
             this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
+            this.ToolStripHelp.Text = rm.GetString("Help");
         }
 
         #endregion

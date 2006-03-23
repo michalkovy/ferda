@@ -85,6 +85,7 @@ OutFile "ferda_install.exe"
 !insertmacro MUI_DESCRIPTION_TEXT ${ColumnFrequency} $(DESC_ColumnFrequency)
 !insertmacro MUI_DESCRIPTION_TEXT ${DatabaseInfo} $(DESC_DatabaseInfo)
 !insertmacro MUI_DESCRIPTION_TEXT ${ExplainTable} $(DESC_ExplainTable)
+!insertmacro MUI_DESCRIPTION_TEXT ${ShowTable} $(DESC_ShowTable)
 !insertmacro MUI_DESCRIPTION_TEXT ${EditCategories} $(DESC_EditCategories)
 !insertmacro MUI_DESCRIPTION_TEXT ${ResultBrowser} $(DESC_ResultBrowser)
 !insertmacro MUI_DESCRIPTION_TEXT ${ODBCConnectionString} $(DESC_ODBCConnectionString)
