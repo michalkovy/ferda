@@ -162,6 +162,9 @@
   <data name="FrequencyColumn" xml:space="preserve">
     <value>Frekvence</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Nápověda</value>
+  </data>
   <data name="InvalidParameters" xml:space="preserve">
     <value>Neplatné parametry</value>
   </data>

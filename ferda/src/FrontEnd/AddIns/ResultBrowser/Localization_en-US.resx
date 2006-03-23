@@ -183,6 +183,9 @@
   <data name="GraphViewOptions" xml:space="preserve">
     <value>View options</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="HypothesesCount" xml:space="preserve">
     <value>Hypotheses count (displayed/total):</value>
   </data>

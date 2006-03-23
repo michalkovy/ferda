@@ -153,6 +153,9 @@
   <data name="EmptyPassword" xml:space="preserve">
     <value>Prázdné heslo</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Nápověda</value>
+  </data>
   <data name="InputAuth" xml:space="preserve">
     <value>Zadejte autentifikaci pro server:</value>
   </data>

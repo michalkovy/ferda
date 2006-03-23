@@ -154,7 +154,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 {
                     distinctValues = null;
                 }
-                Ferda.FrontEnd.AddIns.EditCategories.MainListView listView = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(localePrefs, categories.categoriesValue, distinctValues);
+                Ferda.FrontEnd.AddIns.EditCategories.MainListView listView = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(localePrefs, categories.categoriesValue, distinctValues, ownerOfAddIn);
                 listView.ShowInTaskbar = false;
                 listView.Disposed += new EventHandler(SetCategories);
                 System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);

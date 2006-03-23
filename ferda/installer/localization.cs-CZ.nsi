@@ -11,6 +11,7 @@
   LangString DESC_ColumnFrequency ${LANG_CZECH} "Module pro poèítání frekvence sloupcù"
   LangString DESC_DatabaseInfo ${LANG_CZECH} "Modul pro zobrazení informací o databázi"
   LangString DESC_ExplainTable ${LANG_CZECH} "Modul pro zobrazení informací o tabulce"
+  LangString DESC_ShowTable ${LANG_CZECH} "Modul pro zobrazení celé tabulky"
   LangString DESC_EditCategories ${LANG_CZECH} "Modul pro úpravu kategorii"
   LangString DESC_ResultBrowser ${LANG_CZECH} "Modul pro prohlížení a tøídìní výsledkù"
   LangString DESC_DataMiningCommon ${LANG_CZECH} "Obecné krabièky pro dataminingové procedury"
@@ -40,6 +41,7 @@
   LangString DataBaseInfo ${LANG_CZECH} "Informace o databázi"
   LangString EditCategories ${LANG_CZECHH} "Úprava kategorii"
   LangString ExplainTable ${LANG_CZECH} "Informace o tabulce"
+  LangString ShowTable ${LANG_CZECH} "Zobrazit celou tabulku"
   LangString ResultBrowser ${LANG_CZECH} "Prohlížení výsledkù"
   LangString ODBCConnectionString ${LANG_CZECH} "Pøipojovací øetìzec ODBC"
   

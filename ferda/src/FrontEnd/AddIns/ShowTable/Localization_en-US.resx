@@ -132,6 +132,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="NoDataMatrix" xml:space="preserve">
     <value>No data matrix</value>
   </data>

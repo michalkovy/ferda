@@ -159,6 +159,9 @@
   <data name="FrequencyColumn" xml:space="preserve">
     <value>Frequency</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="InvalidParameters" xml:space="preserve">
     <value>Invalid parameters input</value>
   </data>

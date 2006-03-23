@@ -50,8 +50,11 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         {
             this.ToolBar = new System.Windows.Forms.ToolStrip();
             this.ToolStripButtonOk = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripButtonTest = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripButtonOdbc = new System.Windows.Forms.ToolStripButton();
             this.CurrentDSNName = new System.Windows.Forms.StatusStrip();
             this.StatusBarCurrent = new System.Windows.Forms.ToolStripStatusLabel();
@@ -71,9 +74,8 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.TextBoxNewConnectionString = new System.Windows.Forms.TextBox();
             this.LabelResultingString = new System.Windows.Forms.Label();
             this.ButtonRefresh = new System.Windows.Forms.Button();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripHelp = new System.Windows.Forms.ToolStripButton();
             this.ToolBar.SuspendLayout();
             this.CurrentDSNName.SuspendLayout();
             this.SuspendLayout();
@@ -87,7 +89,9 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.toolStripSeparator2,
             this.ToolStripButtonTest,
             this.toolStripSeparator3,
-            this.ToolStripButtonOdbc});
+            this.ToolStripButtonOdbc,
+            this.toolStripSeparator4,
+            this.ToolStripHelp});
             this.ToolBar.Location = new System.Drawing.Point(0, 0);
             this.ToolBar.Name = "ToolBar";
             this.ToolBar.Size = new System.Drawing.Size(358, 25);
@@ -103,6 +107,11 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.ToolStripButtonOk.Text = "OK";
             this.ToolStripButtonOk.Click += new System.EventHandler(this.ToolStripButtonOk_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // ToolStripButtonCancel
             // 
             this.ToolStripButtonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -110,6 +119,11 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.ToolStripButtonCancel.Size = new System.Drawing.Size(43, 22);
             this.ToolStripButtonCancel.Text = "Cancel";
             this.ToolStripButtonCancel.Click += new System.EventHandler(this.ToolStripButtonCancel_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // ToolStripButtonTest
             // 
@@ -119,6 +133,11 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.ToolStripButtonTest.Size = new System.Drawing.Size(32, 22);
             this.ToolStripButtonTest.Text = "Test";
             this.ToolStripButtonTest.Click += new System.EventHandler(this.ToolStripButtonTest_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // ToolStripButtonOdbc
             // 
@@ -298,20 +317,19 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.ButtonRefresh.UseVisualStyleBackColor = true;
             this.ButtonRefresh.Click += new System.EventHandler(this.ButtonRefresh_Click);
             // 
-            // toolStripSeparator1
+            // toolStripSeparator4
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripSeparator2
+            // ToolStripHelp
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.ToolStripHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ToolStripHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ToolStripHelp.Name = "ToolStripHelp";
+            this.ToolStripHelp.Size = new System.Drawing.Size(89, 22);
+            this.ToolStripHelp.Text = "toolStripButton1";
+            this.ToolStripHelp.Click += new System.EventHandler(this.ToolStripHelp_Click);
             // 
             // ODBCConnectionStringControl
             // 
@@ -346,6 +364,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.CurrentDSNName.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -376,5 +395,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton ToolStripHelp;
     }
 }

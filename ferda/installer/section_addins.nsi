@@ -35,6 +35,12 @@ Section "$(ExplainTable)" ExplainTable
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ExplainTable" ""
 SectionEnd
 
+Section "$(ShowTable)" ShowTable
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\ShowTable.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ShowTable" ""
+SectionEnd
+
 Section "$(ResultBrowser)" ResultBrowser
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
   File ..\bin\FrontEnd\AddIns\ResultBrowser.* 

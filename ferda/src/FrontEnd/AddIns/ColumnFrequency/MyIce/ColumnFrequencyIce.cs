@@ -186,7 +186,7 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency.MyIce
             {
                 ColumnInfo columnInfo = prx.getColumnInfo();
                 string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                Ferda.FrontEnd.AddIns.ColumnFrequency.ColumnFrequency control = new ColumnFrequency(localePrefs, columnInfo);
+                Ferda.FrontEnd.AddIns.ColumnFrequency.ColumnFrequency control = new ColumnFrequency(localePrefs, columnInfo, ownerOfAddIn);
                 this.ownerOfAddIn.ShowDockableControl(control, label + " " + resManager.GetString("ColumnFrequency"));
             }
 

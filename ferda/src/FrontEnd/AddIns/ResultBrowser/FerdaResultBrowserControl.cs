@@ -93,6 +93,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private string taskType = String.Empty;
 
+        /// <summary>
+        /// Owner of addin
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAddIn;
+
         #endregion
 
 
@@ -106,7 +111,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="used_quantifiers">Used quantifiers</param>
         /// <param name="Displayer">Propertygrid</param>
         /// <param name="statisticsProxies">Statistics proxies</param>
-        public FerdaResultBrowserControl(string[] localePrefs, HypothesisStruct[] hypotheses, QuantifierProvider[] used_quantifiers, IOtherObjectDisplayer Displayer, List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies, string taskType)
+        public FerdaResultBrowserControl(string[] localePrefs, HypothesisStruct[] hypotheses, QuantifierProvider[] used_quantifiers, IOtherObjectDisplayer Displayer, List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies, string taskType, IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -123,6 +128,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
+            this.ownerOfAddIn = ownerOfAddIn;
             InitializeComponent();
             InitializeGraph();
             this.hypothesesCount = hypotheses.Length;
@@ -1063,6 +1069,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ReReadItems();
         }
 
+        private void ButtonHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ResultBrowser.pdf");
+        }
+
         #endregion
 
 
@@ -1147,6 +1158,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelHypothesesTotal.Text = rm.GetString("HypothesesCount");
             this.RadioFirstTable.Text = rm.GetString("RadioFirst");
             this.RadioSecondTable.Text = rm.GetString("RadioSecond");
+            this.ButtonHelp.Text = rm.GetString("Help");
         }
 
         #endregion

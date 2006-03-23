@@ -132,6 +132,9 @@
   <data name="Error" xml:space="preserve">
     <value>Chyba</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Nápověda</value>
+  </data>
   <data name="NoDataMatrix" xml:space="preserve">
     <value>Chybí matice dat</value>
   </data>

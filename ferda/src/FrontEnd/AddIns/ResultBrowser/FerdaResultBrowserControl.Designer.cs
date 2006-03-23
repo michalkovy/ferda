@@ -59,6 +59,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ColumnSuccedent = new System.Windows.Forms.ColumnHeader();
             this.ColumnCondition = new System.Windows.Forms.ColumnHeader();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ButtonHelp = new System.Windows.Forms.Button();
             this.LabelCount = new System.Windows.Forms.Label();
             this.LabelHypothesesTotal = new System.Windows.Forms.Label();
             this.ButtonSubmitFilter = new System.Windows.Forms.Button();
@@ -170,6 +171,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.ButtonHelp);
             this.panel1.Controls.Add(this.LabelCount);
             this.panel1.Controls.Add(this.LabelHypothesesTotal);
             this.panel1.Controls.Add(this.ButtonSubmitFilter);
@@ -190,6 +192,17 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1064, 99);
             this.panel1.TabIndex = 2;
+            // 
+            // ButtonHelp
+            // 
+            this.ButtonHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonHelp.Location = new System.Drawing.Point(420, 74);
+            this.ButtonHelp.Name = "ButtonHelp";
+            this.ButtonHelp.Size = new System.Drawing.Size(75, 22);
+            this.ButtonHelp.TabIndex = 15;
+            this.ButtonHelp.Text = "button1";
+            this.ButtonHelp.UseVisualStyleBackColor = true;
+            this.ButtonHelp.Click += new System.EventHandler(this.ButtonHelp_Click);
             // 
             // LabelCount
             // 
@@ -213,7 +226,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // ButtonSubmitFilter
             // 
             this.ButtonSubmitFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonSubmitFilter.Location = new System.Drawing.Point(412, 74);
+            this.ButtonSubmitFilter.Location = new System.Drawing.Point(330, 74);
             this.ButtonSubmitFilter.Name = "ButtonSubmitFilter";
             this.ButtonSubmitFilter.Size = new System.Drawing.Size(75, 22);
             this.ButtonSubmitFilter.TabIndex = 12;
@@ -613,6 +626,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.Label LabelCount;
         private System.Windows.Forms.RadioButton RadioSecondTable;
         private System.Windows.Forms.RadioButton RadioFirstTable;
+        private System.Windows.Forms.Button ButtonHelp;
     }
 }
 

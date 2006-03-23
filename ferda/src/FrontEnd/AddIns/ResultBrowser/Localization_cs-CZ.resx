@@ -180,6 +180,9 @@
   <data name="GraphViewOptions" xml:space="preserve">
     <value>Volby prohlížení</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Nápověda</value>
+  </data>
   <data name="HypothesesCount" xml:space="preserve">
     <value>Počet hypotéz (zobrazeno/celkem):</value>
   </data>
