@@ -54,7 +54,7 @@
       <title>Main window</title>
 
       <para>Main dialog window contains a list of generated hypotheses. When
-      starting the module, ResultBrowser loads all the hypotheses, quantifiers
+      starting the module, ResultBrowser loads all the hypotheses, quantifiers'
       values and statistics in cache to make further work with the hypotheses
       quicker. Preloading could take same time, so please be patient until the
       module starts.</para>
@@ -73,7 +73,7 @@
             <para>You can sort the hypotheses list by clicking on one of the
             columns. This is not the only way you can sort this list - see
             also <link linkend="sortingbystatistics">sorting by
-            statististics</link>. Columns of this list are the
+            statistics</link>. Columns of this list are the
             following:</para>
           </formalpara>
 
@@ -313,7 +313,7 @@
 
           <listitem>
             <formalpara>
-              <title>First vs second contingency table</title>
+              <title>First vs. second contingency table</title>
 
               <para>This switch toggles displaying the chart between the first
               and the second contingency tables. After changing this option

@@ -51,7 +51,7 @@
     <section>
       <title>Main window</title>
 
-      <para>Main dialog window contains a list of the datacolumns in the
+      <para>Main dialog window contains a list of the data columns in the
       table. Columns of this list contain further information about the data
       columns.</para>
 

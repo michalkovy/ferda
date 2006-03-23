@@ -13,7 +13,7 @@
 
   <abstract>
     <para>
-      This documents describes the request for adding some features for Ferda
+      This document describes the request for adding some features for Ferda
       in the future. The document is divided in to 2 parts, the first part explains
       requests that can be done in the near future. The second part is devoted
       to the further future, the creators of Ferda represent some of their
@@ -25,7 +25,7 @@
     <para>
       There is some functionality that can be done in the near future and will enhance
       the Ferda program in some ways. However, the Ferda team has now other priorities
-      then implementing these little changes. Yet is is still improtant to keep them
+      then implementing these little changes. Yet it is still important to keep them
       in mind for the future.
     </para>
     <itemizedlist mark="bullet">
@@ -38,7 +38,7 @@
       </listitem>
       <listitem>
         <para>
-          Functionallity for creating copy of a desktop should be added.
+          Functionality for creating copy of a desktop should be added.
         </para>
       </listitem>
       <listitem>
@@ -62,7 +62,7 @@
       </listitem>
       <listitem>
         <para>
-          Ferda does not now implement the Undo and Redo actions. It would be nice to
+          Ferda now doesn't implement the Undo and Redo actions. It would be nice to
           have them. 
         </para>
       </listitem>
@@ -72,12 +72,12 @@
           <classname>Date</classname> property of a box but the property grid converts 
           them both to the <classname>System.DateTime</classname> class. A new converter
           could be created also for the <classname>DateTime</classname> type. It should 
-          be a calendary with digits setting for hours, minutes and seconds.
+          be a calendar with digits setting for hours, minutes and seconds.
         </para>
       </listitem>
       <listitem>
         <para>
-          The Ferda project file now contain all the information about the project (i.e
+          The Ferda project file now contains all the information about the project (i.e.
           all the hypotheses information). When user constructs big projects with
           thousands of hypotheses, the project files can grow quite big. That is why
           we want to compress the project files. 
@@ -113,7 +113,7 @@
         </listitem>
         <listitem>
           <para>
-            In the beginning we thought that all the boxes desing will be kept in vector
+            In the beginning we thought that all the boxes design will be kept in vector
             graphics, so it can easily be scaled and zoomed. However we did not find
             a proper and fast library to do it. In the future, it would be possible to
             incorporate the SVG support into Ferda.
@@ -148,7 +148,7 @@
           <para>
             In the state of art in Ferda, grid computing (distributed computing
             over the network)
-            is theoretically enabled when we set ICE layer correctly. However,
+            is theoretically enabled when we set the ICE layer correctly. However,
             we should really examine this possibility, improve Ferda in this way
             and make some performance test that would prove Ferda as reliable
             distributed computing environment. 
@@ -173,9 +173,9 @@
             The recent Ferda version still relies on the LISp-Miner metabase. The 
             setting of the task is mapped into a temporary metabase, the task
             is run and then the results (hypotheses) are regained from the metabase.
-            We would like to implement LISp procedures independent on the metabase,
+            We would like to implement LISp procedures independent on the metabase
             that means all the computing would be done just above the initial
-            database. This is a part of one of the Ferda team members master thesis.
+            database. This is a part of one of the Ferda team member's master thesis.
           </para>
         </listitem>
         <listitem>
@@ -196,9 +196,9 @@
         </listitem>
         <listitem>
           <para>
-            Ontologies is a nowadays a hot science topic. Implementing domain 
+            Ontologies are nowadays a hot science topic. Implementing domain 
             ontologies in Ferda would in many ways help the user and enable him
-            to mine more effectivelly. Implementing domain knowledge in Ferda is
+            to mine more effectively. Implementing domain knowledge in Ferda is
             a master thesis of one Ferda team members.
           </para>
         </listitem>
@@ -215,14 +215,14 @@
           <para>
             The LISp procedures discover knowledge only above one table. Recently, 
             a program Rel-Miner has been implemented, it is a 4FT Miner working
-            above a star database schema. Impelenting the Rel-Miner in Ferda and
+            above a star database schema. Implementing the Rel-Miner in Ferda and
             also the other LISp procedures above a star database schema is a master
             thesis of one of the Ferda team members.
           </para>
         </listitem>
         <listitem>
           <para>
-            There are many academical data mining applicitions each of which is 
+            There are many academic data mining applications, each of which is 
             suitable for a slightly different purpose. Cooperation between Ferda and
             these systems (Sumatra or Weka) would enable better task setting and data mining in general.
           </para>

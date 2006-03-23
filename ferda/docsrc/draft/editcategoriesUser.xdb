@@ -203,9 +203,9 @@
               lower and upper bound values, lower and upper bound type (sharp,
               round or infinity) and an interval type (long or float). After
               selecting all of the parameters click on Add to category button.
-              New interval will be added only if it is disjunct with all of
+              New interval will be added only if it is disjoint with all of
               the intervals in the current category and also in the other
-              categories.Note that if there is at least one interval already
+              categories. Note that if there is at least one interval already
               present in the category, you cannot select interval type when
               adding a new one. All the intervals in one category must be of
               the same type. You can finish editing of the category by
@@ -246,9 +246,9 @@
               <title>Adding and deleting values</title>
 
               <para>By using the buttons for adding values to the current
-              enumeration and deleting them form the current enumeration you
+              enumeration and deleting them from the current enumeration you
               can edit the category. All of the enumeration categories must be
-              disjunct, so to make it easier for you, there is a list of
+              disjoint, so to make it easier for you, there is a list of
               available values which has not been yet used in any of the
               categories, so they can be added to the current enumeration
               category. Available values are displayed in the available values

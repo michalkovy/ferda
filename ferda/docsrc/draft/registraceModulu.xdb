@@ -23,7 +23,7 @@
     <para>Manažer modulů získává seznam modulů ze dvou zdrojů. Prvním je
     IceGrid registry, druhým pak FrontEnd.  První se využívá pro moduly, které
     může použít více FrontEndů zároveň, jedná se tedy převážně o krabičky.
-    Protože moduly pro interakci a nastavování parametrů můsí běžet na stejném
+    Protože moduly pro interakci a nastavování parametrů musí běžet na stejném
     stroji jako FrontEnd a naše implementace těchto modulů je přímo nahrávána
     do FrontEndu jako AddIn, FrontEnd sám předává informace o těchto modulech
     manažeru modulů.</para>
@@ -40,7 +40,7 @@
       může být nastavena tak, aby teprve v tuto chvíli spustila aplikaci, která
       zprostředkovává daný Ice objekt.</para>
 
-      <para>Konfiguraci aplikací a Ice objektů lze nalést v souboru
+      <para>Konfiguraci aplikací a Ice objektů lze nalézt v souboru
       application.xml.</para>
 
     </section>
