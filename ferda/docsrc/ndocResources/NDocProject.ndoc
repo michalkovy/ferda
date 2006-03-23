@@ -41,10 +41,7 @@
             <property name="RootPageFileName" value="Default.htm" />
             <property name="RootPageContainsNamespaces" value="True" />
             <property name="AdditionalContentResourceDirectory" value="." />
-            <property name="ShowMissingSummaries" value="True" />
-            <property name="ShowMissingParams" value="True" />
-            <property name="ShowMissingReturns" value="True" />
-            <property name="ShowMissingValues" value="True" />
+            <property name="LangID" value="1029" />
             <property name="DocumentInheritedMembers" value="InstanceAndStatic" />
             <property name="DocumentExplicitInterfaceImplementations" value="True" />
             <property name="DocumentProtected" value="False" />
