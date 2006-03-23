@@ -1931,10 +1931,11 @@ namespace Ferda.FrontEnd.Desktop
                 IBoxModule box = bn.Box;
                 view.Remove(box);
                 //removing the box that was selected
-                SelectedBoxes.Remove(box);
+                //SelectedBoxes.Remove(box);
 
                 //removing the node
-                Nodes.Remove(shape);
+                //Nodes.Remove(shape);
+                Adapt();
 
                 //adapting the menu and toolbar
                 menuDisplayer.ControlHasFocus = this;
