@@ -1,9 +1,14 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <article lang="cs">
   <articleinfo>
     <title>Zakladni informace o projektu Ferda</title>
+    <author>
+      <firstname>Michal</firstname>
+      <surname>Kováč</surname>
+      <email>michal.kovac.develop@centrum.cz</email>
+    </author>
     <author>
       <firstname>Martin</firstname>
       <surname>Ralbovský</surname>
