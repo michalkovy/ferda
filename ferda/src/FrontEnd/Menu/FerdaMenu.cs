@@ -951,6 +951,40 @@ namespace Ferda.FrontEnd.Menu
         /// <param name="e">Event parameters</param>
         void recentProjects_Click(object sender, EventArgs e)
         {
+            //asks if the user wants to save the current project
+            string caption = ResManager.GetString("MenuFileOpenProject");
+            string message = ResManager.GetString("MenuFileSaveChanges");
+
+            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+            DialogResult result;
+
+            if (ProjectContainsBoxes())
+            {
+                // Displays the MessageBox.
+                result = MessageBox.Show(this, message, caption, buttons,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+                if (result == DialogResult.Cancel) //does nothing
+                {
+                    return;
+                }
+
+                if (result == DialogResult.Yes) //saving the current project
+                {
+                    if (controlsManager.ProjectName != string.Empty)
+                    {
+                        SaveProjectCore(controlsManager.ProjectName);
+                    }
+                    else
+                    {
+                        if (!SaveProjectAsCore())
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+
             controlsManager.ClearDocking();
             FrontEndCommon.LoadProject(sender.ToString(), this, resManager,
                 ref projectManager, controlsManager);
