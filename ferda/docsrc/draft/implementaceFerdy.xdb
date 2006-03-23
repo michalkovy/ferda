@@ -75,7 +75,7 @@
     knihovna v několika směrech nedokonalá a způsobuje ve Ferdovi několik
     chyb.</para>
 
-    <para>Chtěli jsme, aby náše výsledné uživatelské prostředí umělo
+    <para>Chtěli jsme, aby naše výsledné uživatelské prostředí umělo
     znázorňovat zobrazovaná data pomocí grafů. Vybrali jsme si knihovnu
     TeeChart ve verzi Lite, protože jako jediná z vybíraných kandidátů umí
     zobrazit 3D sloupcové grafy, které jsou klíčové pro přehledné zobrazení
@@ -83,7 +83,7 @@
     zdarma. Jedinou nevýhodou této knihovny je, že není pod GPLv2
     licenci.</para>
 
-    <para>Při volbě způsobu, jak udělt instalátor, jsme se zastavili na
+    <para>Při volbě způsobu, jak udělat instalátor, jsme se zastavili na
     produktu NSIS. Jeho výhodou je velmi dobrá dokumentace a podpora, otevřený
     zdrojový kód, rychlost a stabilita vytvořených instalátorů. Menší
     nevýhodou je samotný skriptovací jazyk, který spíše připomíná assembler,
@@ -126,7 +126,7 @@
     vůbec používat metabázi.</para>
 
     <para>Ze zadání úkolu relativně přímočaře vyplynulo, že bude dobré
-    programovat něco jako jsou naše krabičky, tedy, že to musí mít nějaké
+    programovat něco, jako jsou naše krabičky, tedy, že to musí mít nějaké
     vlastnosti a zásuvky a musí se to dát mezi sebou propojovat. Na první
     pohled stejně vypadají i podobné systémy. Porovnáme-li pohled na úlohu
     dobývání znalostí ve Ferdovi a v konkurenčních aplikacích - za všechny
@@ -134,7 +134,7 @@
     Miner, a nekomerční program Weka - ve všech těchto aplikacích se pracuje s
     podobnými objekty, jako jsou krabičky. Zatímco ve Ferdovi krabička
     reprezentuje funkce, v ostatních aplikacích je to spíše část procesu
-    dobývání znalostí, proto pojem zásuvka, jak jej o známe z Ferdy, nemá v
+    dobývání znalostí, proto pojem zásuvka, jak jej známe z Ferdy, nemá v
     těchto aplikacích smysl. Jejich krabičky mají pouze jeden vstupní bod a
     veliké množství parametrů se nastavuje pomocí různých dialogů. To má za
     následek menší opakovatelnost použití a větší složitost aplikace z
@@ -142,7 +142,7 @@
     většímu množství typů krabiček, kterým by měl uživatel rozumět, i k
     většímu množství krabiček na pracovní ploše, které může vést k obtížnější
     orientaci uživatele. Tomu však byla věnována pozornost a byla vyvinuta
-    řada mechanismů, jenž by měla tyto problémy řešit.</para>
+    řada mechanismů, jenž by měly tyto problémy řešit.</para>
 
     <para>To, co jsme také udělali na rozdíl od konkurence, je, že krabičky
     mezi sebou a s vyššími vrstvami komunikují přes middleware (Ice). To
@@ -274,7 +274,7 @@
   <section>
     <title>Funkce middleware ve Ferdovi</title>
 
-    <para>Manažer modulů kominukuje s moduly přes Ice, moduly mezi sebou
+    <para>Manažer modulů komunikuje s moduly přes Ice, moduly mezi sebou
     také.</para>
 
     <para>Manažeru modulů je při startu řečeno, kde má hledat IceGrid
@@ -325,9 +325,9 @@
       ale je možné si je nechat zobrazit.</para>
 
       <para>Pomocí řady jednoduchých krabiček je uživateli umožněno sestavovat
-      vlastní algoritmy. Ferda tedy rovnež představuje něco jako uživatelský
+      vlastní algoritmy. Ferda tedy rovněž představuje něco jako uživatelský
       programovací jazyk. Na krabičky se lze však také dívat jako na
-      konstrukce logiky ci sémantiky, ke které existuje lambda-kategoriální
+      konstrukce logiky či sémantiky, ke které existuje lambda-kategoriální
       gramatika.</para>
 
       <para>Mimo jiné má pak krabička také akce, navrhuje krabičky na
@@ -342,7 +342,7 @@
       službách aplikace IceBox. Všechny námi implementované krabičky využívají
       druhé možnosti.</para>
 
-      <para>Každému typu krabičky odpovídá instace implementace rozhraní
+      <para>Každému typu krabičky odpovídá instance implementace rozhraní
       BoxModuleFactoryCreator. Toto rozhraní má metodu na vytváření instance
       implementace rozhraní BoxModuleFactory (createBoxModuleFactory), která
       má metodu na vytváření instance implementace třídy BoxModule, a ta
@@ -370,7 +370,7 @@
       chce klient používat, a předává se ManagersEngine, což je rozhraní
       manažeru modulů, které umožňuje například zamykat krabičky, zjišťovat
       informace o jiných krabičkách či vyhledávat jiné moduly.
-      BoxModuleFactory pak má metody s informacema o krabičce, které můžou být
+      BoxModuleFactory pak má metody s informacemi o krabičce, které můžou být
       závislé na těchto informacích (například informace o zásuvkách a
       vlastnostech krabičky).</para>
 
@@ -381,7 +381,7 @@
       krabičky.</para>
 
       <para>Speciálním případem krabiček jsou krabičky vlastností, které
-      obsahují pouze jednu vlastnost jistého typu a hodotu této vlastnosti
+      obsahují pouze jednu vlastnost jistého typu a hodnotu této vlastnosti
       vrací. Tuto krabičku lze pak zapojit do zásuvky stejného typu. To se
       hodí například k přepoužití jedné hodnoty jako hodnotu vlastností
       různých krabiček.</para>
@@ -466,7 +466,7 @@
     uživatelské prostředí vytváří speciální krabičku Skupina. Tato krabička se
     na první pohled pro uživatele tváří jako obyčejná krabička. Má jednu
     zásuvku a pokud je zapojena do jisté krabičky A a jsou do ní zapojeny
-    krabyčky B, C a D, ve skutečnosti z pohledu modulů jsou krabičky B, C a D
+    krabičky B, C a D, ve skutečnosti z pohledu modulů jsou krabičky B, C a D
     zapojeny přímo do krabičky A.</para>
 
     <para>Manažer modulů přidává krabičkám uživatelský popisek, poznámku a

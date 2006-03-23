@@ -154,7 +154,7 @@
 
         <para>Furthermore, implementation of these methods will make the
         functionality of the module for interaction also accessible for
-        FrontEnd. Examples of the funcionality required by FrontEnd are
+        FrontEnd. Examples of the functionality required by FrontEnd are
         getting the name of the box, on which the module for interaction will
         be launched, getting hints, icons, help files for the module for
         interaction etc. and last but not least, the method which will
@@ -371,7 +371,7 @@
       </section>
 
       <section>
-        <title>Module for interaction from the Frontend angle</title>
+        <title>Module for interaction from the FrontEnd angle</title>
 
         <para>Every module for interaction has to implement several methods
         which will enable the FrontEnd to make several methods and data
@@ -428,7 +428,7 @@
         <emphasis>IOwnerOfAddIn</emphasis> interface will follow. For detailed
         information please refer to FrontEnd documentation. Please note that
         this list of methods is not final and will most probably grow in the
-        near future as the tendence is to give modules for interaction the
+        near future as the tendency is to give modules for interaction the
         possibility to access as much of the user interface as
         possible.</para>
 

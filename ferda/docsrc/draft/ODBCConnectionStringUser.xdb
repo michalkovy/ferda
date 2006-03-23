@@ -180,7 +180,7 @@
 
             <para>Clicking on this button will test a new ODBC connection you
             have created. The module will report whether the connection using
-            the tested connection string has succeded or failed. The button
+            the tested connection string has succeeded or failed. The button
             will be activated after you have selected enough parameters for
             the connection string.</para>
           </formalpara>

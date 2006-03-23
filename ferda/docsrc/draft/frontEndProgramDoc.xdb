@@ -24,12 +24,12 @@
   </articleinfo>
   <abstract>
     <para>
-      This document provides a programmers documentation of Ferda FrontEnd. It
+      This document provides programmers documentation of Ferda FrontEnd. It
       describes the program, tells about the platform, describes the main classes
       and interfaces of the FrontEnd, it describes the connection to the other parts
-      of Ferda datamining system. The document also tells about the external libraries
+      of Ferda data mining system. The document also tells about the external libraries
       used in the FrontEnd, some advanced programming techniques. Finally, it shows some
-      suggestions(plans) for future developement of Ferda FrontEnd.
+      suggestions (plans) for future development of Ferda FrontEnd.
     </para>
   </abstract>
   <section>
@@ -188,7 +188,7 @@ Events ...
           <title>FerdaPreScreen</title>
           <para>
             This form is viewed when the Ferda program starts. It has the ability to
-            show the user what is beeing initialized at the moment.
+            show the user what is being initialized at the moment.
           </para>
         </formalpara>
       </listitem>
@@ -257,7 +257,7 @@ Events ...
         <formalpara>
           <title>IFerdaClipboard</title>
           <para>
-            Ferda's implementation of clipboart, it remembers list of nodes. It does not
+            Ferda's implementation of clipboard, it remembers list of nodes. It does not
             cooperate with the normal system clipboard.
           </para>
         </formalpara>
@@ -619,8 +619,8 @@ Events ...
   <section>
     <title>Ferda DataMiner architecture</title>
     <para>
-      There is a documentation file overviewing the Ferda DataMiner architecture
-      - casti.xdb (unfortunatelly available only in czech). Important fact is that
+      There is a documentation file over viewing the Ferda DataMiner architecture
+      - implementaceFerdy.xdb (unfortunatelly available only in Czech). Important fact is that
       there exists the Project Manager, which provides the functions of the Modules
       Manager (manager of all the modules in the application) to the FrontEnd. The
       Modules Manager communicates with all the modules through the ICE layer, asks
@@ -637,7 +637,7 @@ Events ...
       FrontEnd communicates with the Project Manager this way. There are three important
       classes in the ProjectManager namespace that FrontEnd uses. First is the
       <classname>ProjectManager</classname> class, that provides information about the project,
-        loading and saving functionality and many more. FrontEnd runs the apropriate 
+        loading and saving functionality and many more. FrontEnd runs the appropriate 
         methods of the <classname>ProjectManager</classname> class when needed in its application.
         The two other important classes are <classname>Archive</classname> and <classname>View</classname>.
         <classname>Archive</classname> is the repository of all boxes in the project and
@@ -658,7 +658,7 @@ Events ...
         modules)
       </title>
       <para>
-        Module for interaction is a module, that displays information a box can provide
+        Module for interaction is a module that displays information a box can provide
         in some other way more feasible to the user. A good example is a frequency graph
         of values of an attribute. There is a <classname>
         IBoxModule.RunModuleForInteraction</classname> method that is called whenever user
@@ -684,7 +684,7 @@ Events ...
       <para>
         Settings modules are used when user wants to set a property of a box. The property
         can either be too complicated to set in the propertyGrid (editing categories of 
-        a attribute) or it can simplify the users work (ODBC connections dialog). The
+        an attribute) or it can simplify the users work (ODBC connections dialog). The
         FrontEnd uses the <classname>IBoxModule.RunSetPropertyOther</classname> method in the 
         <classname>OtherProperty</classname> class to run the module. The mechanism is then the
         same as for module for interaction.
@@ -713,7 +713,7 @@ Events ...
         developing and improving. 
       </para>
       <para>
-        There are some features, that make the Ferda Dataminer specific in comparison to
+        There are some features that make the Ferda Dataminer specific in comparison to
         other projects that use Netron as its graphical library. In these projects, all
         the graph logic is done by Netron. However in Ferda, Netron is just a tool that
         displays somehow the information that Project Manager provides about the boxes
@@ -739,7 +739,7 @@ Events ...
         in future implementations, for example the zooming or the minimap ability 
         of the Netron <classname>GraphControl</classname>class. However, the project team does not
         see implementing features as a priority for Ferda. The current version of the
-        library on the web is 2.2 (and version 3 is comming), where the Ferda uses an 
+        library on the web is 2.2 (and version 3 is coming), where the Ferda uses an 
         older 2.1 version. There are some changes in the version, the biggest is the
         use of some theory of graph logic for the control. Because the newer version is
         better and much more optimalized (we will see what the version 3 brings), 
@@ -765,8 +765,8 @@ Events ...
         mainly because you can run the library also on Mono(when they fininsh their 
         WinForms implementation). But there are also some disadvantages of the library:
         it is not very well documented, it is no longer under development and sometimes
-        it is very hard to determine which piece of classname will cause what behaviour.
-        Yet another disadvantage is that you cannot serialize the positions of indivitual
+        it is very hard to determine which piece of classname will cause what behavior.
+        Yet another disadvantage is that you cannot serialize the positions of individual
         docked elements and you have to always load the default docking setting on start
         without implementing own serialization.
       </para>
@@ -777,15 +777,15 @@ Events ...
         individual desktops.
       </para>
       <para>
-        A new docking library appeared during the developement of the Ferda project. It
+        A new docking library appeared during the development of the Ferda project. It
         is the 
         <ulink url="http://sourceforge.net/projects/dockpanelsuite/">DockPanel Suite</ulink>
-        or the WinFormsUI library by Weifen Luo with a public domain licence.
+        or the WinFormsUI library by Weifen Luo with a public domain license.
         According to the forums on SourceForge, the library has improved a lot over
         past year. Docking with this library now looks a lot better that with DockDotNET,
         what is more you can also serialize the docking positions. However it depends
         a lot on DLLImport, which means it would work only on Windows. It is a decision
-        to the future, wheather to change the docking library.
+        to the future, weather to change the docking library.
       </para>
     </section>
     <section>
@@ -805,7 +805,7 @@ Events ...
         it seems like that). Moreover, it takes a long time to load a bitmap from
         svg for this library, which would slow Ferda even more (we are facing the
         performance issues all the time). So that is why the team decided, that
-        for the march version of Ferda, we would not use svg and we would draw the
+        for the March version of Ferda, we would not use svg and we would draw the
         svg generated icons on the desktop instead. Solution for the future will be
         load svg and generate all the bitmaps at program initialization and then 
         only reuse them from memory. 
@@ -845,12 +845,12 @@ Events ...
       the <classname>OtherProperty</classname> class for representing all the other
       properties that box can have and the <classname>StringSequence</classname> class
       for displaying a set of string from which user can select a choice. There have to
-      be also two other classes overriden for the Property grid to display the
+      be also two other classes overridden for the Property grid to display the
       property correctly. It is the <classname>TypeConverter</classname> class that
       takes care of converting one type to another - "What should be displayed in the
       grid when there is a OtherProperty property". The conversion is usually done to
       string, sometimes from string. Other clas is the <classname>UITypeEditor</classname>
-      class. This class determines if there is displayes something like a combobox
+      class. This class determines if there is displays something like a combo-box
       arrow or button with three dots at the property. Then it displays a dropdown
       dialog or a alone standing dialog. All the details about this can be found in the
       <classname>Ferda.FrontEnd.Properties</classname> namespace with explaining
@@ -875,8 +875,8 @@ Events ...
       chances that it will be used as primary tool LISp-Miner procedures tool. The
       creators of Ferda will also continue to work for the environment in their master
       theses(ontology support, star-scheme relational mining...). However it is not
-      yet decided if there will be some developement in FrontEnd other then bug fixing.
-      Here we present a list of posible improvements and suggestions to make and if
+      yet decided if there will be some development in FrontEnd other then bug fixing.
+      Here we present a list of possible improvements and suggestions to make and if
     </para>
     <itemizedlist mark="bullet">
       <listitem>

@@ -21,7 +21,7 @@
     Ferda does not work with installed both .NET Framework version 1.x and 2.0, only 2.0 
     has to be installed. This problem is there because Ice is compilled with .NET 
     Framework 1.x and if you have installed .NET 1.x, IceBox will be started with 
-    this version of framework, but it have to load .NET 2.0 assemblies dynamicaly, 
+    this version of framework, but it have to load .NET 2.0 assemblies dynamically, 
     but it is not possible. This problem will be repaired with new version of Ice, which 
     will be done for .NET Framework 2.0.
   </para>
@@ -30,13 +30,13 @@
     executing is quite slow. The time before showing *Gen progress dialog is spent by 
     geting all configurations form all connected boxes, conversion of this setting to 
     setting understandable for LISp-Miners Gens (because boxes of Ferda are providing 
-    exteneded functionality), but some configurations are not so trivial e.g. all 
+    extended functionality), but some configurations are not so trivial e.g. all 
     Dynamic Attributes has to (if it is not done yet) generate attribute setting 
-    (often according to actual data in analyzed database). After that all this 
+    (often according to actual data in analyzed database). After that this entire
     configuration is stored in new LISp-Miner Empty Metabase (Microsoft Access 
     database connected by ODBC driver). Point is that it can be often more than 
     thousands of records i.e. thousands of queries. (This step is naturally slower 
-    than working with LISp-Miner implementation becase there is all configuration 
+    than working with LISp-Miner implementation because there is all configuration 
     saved immediately after setting ... this is not possible in Ferda because 
     replication (copying) of data would be very difficult because of many differences 
     (for all we can mention "shared archive of partial cedent settings")). The time 
@@ -49,13 +49,13 @@
     columns are not shown. This is caused by the datatype of the column because many DB
     systems does not support aggregation functions over columns of some datatypes (e.g.
     BLOB, MEMO, ...). Computing of statistics without aggregation functions would be 
-    very, very slow and not effective and using this kind of columns for datamining is 
+    very, very slow and not effective and using this kind of columns for data mining is 
     not very common, so we were not trying to slove this problem by own simulation of 
     this functions.
   </para>
   <para>
     Docking problems - sometimes when the user tries to make the docking area smaller, then
-    scrollbars appear (they are not needed there). Also sometimes the docking behaviour
+    scrollbars appear (they are not needed there). Also sometimes the docking behavior
     is little weird, user wants to dock it somewhere, but the environment does not
     allow it. These problem are caused by the imperfection of the docking 
     library we use - DockDotNET. Switching to another library that has these
@@ -63,16 +63,16 @@
     development) would fix these problems.     
   </para>
   <para>
-    Performance problem - slow redrawing of the archive. In projects with hunderts of  boxes,
+    Performance problem - slow redrawing of the archive. In projects with hunderds of  boxes,
     each action that needs the archive to be reconstructed is quite slow (the more
     boxes to be displayed, the slower the archive). We think that the problem is in
     the slow implementation of the TreeView class in the .NET Framework. Although we
     tried to use the whole list to be displayed in the archive at once, it performed
-    the same behaviour as in a adding the item in cycle.     
+    the same behavior as in a adding the item in cycle.     
   </para>
   <para>
     We use the <classname>PropertyGrid</classname> class for a unified showing of
-    boxe's properties. Using this component has many advantages, but also some
+    box's properties. Using this component has many advantages, but also some
     disadvantages (in general there are far more advantages). One of the disadvantages
     of the PropertyGrid is forced alphabetical sorting inside property categories. 
     This means (and this is a common problem with all the applications that use
