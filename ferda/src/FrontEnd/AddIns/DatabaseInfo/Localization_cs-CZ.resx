@@ -147,6 +147,9 @@
   <data name="ExplainTableDataGrid" xml:space="preserve">
     <value>Explain table datagrid</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Nápověda</value>
+  </data>
   <data name="Percentage" xml:space="preserve">
     <value>Procent</value>
   </data>

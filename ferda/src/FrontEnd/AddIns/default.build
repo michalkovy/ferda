@@ -117,6 +117,11 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="DatabaseInfo/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ColumnFrequency.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ColumnFrequency/**.cs"/>

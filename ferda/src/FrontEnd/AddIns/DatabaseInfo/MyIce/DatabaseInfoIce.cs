@@ -166,7 +166,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
             {
 
                 string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                Ferda.FrontEnd.AddIns.DatabaseInfo.DataBaseInfo control = new DataBaseInfo(localePrefs, prx.explain());
+                Ferda.FrontEnd.AddIns.DatabaseInfo.DataBaseInfo control = new DataBaseInfo(localePrefs, prx.explain(),ownerOfAddIn);
                 this.ownerOfAddIn.ShowDockableControl(control, label + " " + resManager.GetString("DataBaseInfo"));
             }
 

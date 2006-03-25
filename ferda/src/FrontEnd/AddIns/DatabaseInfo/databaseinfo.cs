@@ -29,6 +29,7 @@ using Ferda.Modules.Boxes.DataMiningCommon.Database;
 using Ferda.FrontEnd.AddIns.DatabaseInfo.NonGUIClasses;
 using System.Resources;
 using System.Reflection;
+using Ferda.FrontEnd.AddIns;
 
 namespace Ferda.FrontEnd.AddIns.DatabaseInfo
 {
@@ -51,6 +52,11 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         /// </summary>
         private DataMatrixSchemaInfo[] dataMatrix;
 
+        /// <summary>
+        /// Owner of addin
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAddIn;
+
         #endregion
 
 
@@ -61,7 +67,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         /// </summary>
         /// <param name="localePrefs">localeprefs</param>
         /// <param name="dataMatrix">Datamatrix</param>
-        public DataBaseInfo(string[] localePrefs, DataMatrixSchemaInfo[] dataMatrix)
+        public DataBaseInfo(string[] localePrefs, DataMatrixSchemaInfo[] dataMatrix, IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -78,6 +84,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
+            this.ownerOfAddIn = ownerOfAddIn;
             this.dataMatrix = dataMatrix;
             InitializeComponent();
             this.ListViewInit();
@@ -145,6 +152,16 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
                 copyString.AppendLine();
             }
             Clipboard.SetDataObject(copyString.ToString(), true);
+        }
+
+        /// <summary>
+        /// Method for opening help
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripHelp_Click(object sender, EventArgs e)
+        {
+            this.ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\DatabaseInfo.pdf");
         }
 
         #endregion
@@ -239,6 +256,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
             this.TableType.Text = rm.GetString("Type");
             this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
             this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
+            this.ToolStripHelp.Text = rm.GetString("Help");
         }
 
         #endregion
