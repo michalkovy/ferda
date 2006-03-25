@@ -57,6 +57,8 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
             this.ContextMenuData = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCopySelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuData.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,9 +100,11 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
             // 
             this.ContextMenuData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemCopyAll,
-            this.ToolStripMenuItemCopySelected});
+            this.ToolStripMenuItemCopySelected,
+            this.toolStripSeparator1,
+            this.ToolStripHelp});
             this.ContextMenuData.Name = "ContextMenuData";
-            this.ContextMenuData.Size = new System.Drawing.Size(180, 48);
+            this.ContextMenuData.Size = new System.Drawing.Size(180, 98);
             // 
             // ToolStripMenuItemCopyAll
             // 
@@ -113,6 +117,18 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
             this.ToolStripMenuItemCopySelected.Name = "ToolStripMenuItemCopySelected";
             this.ToolStripMenuItemCopySelected.Size = new System.Drawing.Size(179, 22);
             this.ToolStripMenuItemCopySelected.Text = "toolStripMenuItem1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
+            // 
+            // ToolStripHelp
+            // 
+            this.ToolStripHelp.Name = "ToolStripHelp";
+            this.ToolStripHelp.Size = new System.Drawing.Size(179, 22);
+            this.ToolStripHelp.Text = "toolStripMenuItem1";
+            this.ToolStripHelp.Click += new System.EventHandler(this.ToolStripHelp_Click);
             // 
             // DataBaseInfo
             // 
@@ -136,5 +152,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         private System.Windows.Forms.ContextMenuStrip ContextMenuData;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopyAll;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCopySelected;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripHelp;
     }
 }
