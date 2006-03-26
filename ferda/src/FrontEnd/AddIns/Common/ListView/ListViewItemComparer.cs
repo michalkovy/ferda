@@ -2,7 +2,7 @@
 //
 // Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2006 Alexander Kuzmin
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@ using System.Collections;
 using System.Text;
 using System.Windows.Forms;
 using Ferda;
-namespace Ferda.FrontEnd.AddIns.ColumnFrequency.NonGUIClasses
+namespace Ferda.FrontEnd.AddIns.Common.ListView
 {
     /// <summary>
     /// Class for comparing listview items
     /// </summary>
-    class ListViewItemComparer : IComparer
+    public class ListViewItemComparer : IComparer
     {
         // Initialize the variables to default
         public int column = 0;
@@ -40,15 +40,19 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency.NonGUIClasses
             // Cast the objects to ListViewItems
             ListViewItem lvi1 = (ListViewItem)x;
             ListViewItem lvi2 = (ListViewItem)y;
-            if (column < 1)
-            {
-                //try to convert to doubles first
-                double first;
-                double second;
 
-                if ((Double.TryParse(lvi1.SubItems[column].Text, out first)) && (Double.TryParse(lvi2.SubItems[column].Text, out second)))
+            //try to convert to intervals first
+            double first;
+            double second;
+            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex("(^[<(]\\d+[;]\\d+[>)]$)");
+            System.Text.RegularExpressions.Regex r1 = new System.Text.RegularExpressions.Regex("[<>();]");
+            if ((r.IsMatch(lvi1.SubItems[column].Text)) && (r.IsMatch(lvi2.SubItems[column].Text)))
+            {
+                //hooray, an interval
+                string[] numbers = r1.Split(lvi1.SubItems[column].Text);
+                string[] numbers1 = r1.Split(lvi2.SubItems[column].Text);
+                if ((numbers.Length > 1) && (numbers1.Length > 1) && (Double.TryParse(numbers[1], out first)) && (Double.TryParse(numbers1[1], out second)))
                 {
-                    //it is double then
                     if (bAscending)
                         return first > second ? 1 : (first < second ? -1 : 0);
 
@@ -57,6 +61,7 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency.NonGUIClasses
                 }
                 else
                 {
+                    //some strange string, this should not happen
                     //if nothing works, it is a string
                     string lvi1String = lvi1.SubItems[column].ToString();
                     string lvi2String = lvi2.SubItems[column].ToString();
@@ -69,29 +74,29 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency.NonGUIClasses
                     return -String.Compare(lvi1String, lvi2String);
                 }
             }
-
-            // The column is double
-            double lvi1Int = Convert.ToDouble(lvi1.SubItems[column].Text.ToString());
-            double lvi2Int = Convert.ToDouble(lvi2.SubItems[column].Text.ToString());
-
-            // Return the normal compare.. if x < y then return -1
-            if (bAscending)
+            else if ((Double.TryParse(lvi1.SubItems[column].Text, out first)) && (Double.TryParse(lvi2.SubItems[column].Text, out second)))
             {
-                if (lvi1Int < lvi2Int)
-                    return -1;
-                else if (lvi1Int == lvi2Int)
-                    return 0;
+                //it is double
+                if (bAscending)
+                    return first > second ? 1 : (first < second ? -1 : 0);
 
-                return 1;
+                // Return the negated Compare
+                return first > second ? -1 : (first < second ? 1 : 0);                
             }
+            else
+            {
+                //if nothing works, it is a string
+                string lvi1String = lvi1.SubItems[column].ToString();
+                string lvi2String = lvi2.SubItems[column].ToString();
 
-            // Return the opposites for descending
-            if (lvi1Int > lvi2Int)
-                return -1;
-            else if (lvi1Int == lvi2Int)
-                return 0;
+                // Return the normal Compare
+                if (bAscending)
+                    return String.Compare(lvi1String, lvi2String);
 
-            return 1;
+                // Return the negated Compare
+                return -String.Compare(lvi1String, lvi2String);
+            }
+          //  return 1;
         }
     }
 }

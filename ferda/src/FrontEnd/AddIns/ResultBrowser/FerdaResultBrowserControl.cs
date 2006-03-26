@@ -35,6 +35,7 @@ using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 using System.Resources;
 using System.Reflection;
 using Ferda.ModulesManager;
+using Ferda.FrontEnd.AddIns.Common.ListView;
 
 #endregion
 
@@ -76,7 +77,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Sorter for the listview
         /// </summary>
-        Sorter columnSorter = new Sorter();
+        ListViewItemComparer columnSorter = new ListViewItemComparer();
 
         /// <summary>
         /// Counter for loading hypotheses
@@ -129,6 +130,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 localizationString = "en-US";
             }
             this.ownerOfAddIn = ownerOfAddIn;
+            columnSorter.column = 0;
             InitializeComponent();
             InitializeGraph();
             this.hypothesesCount = hypotheses.Length;
@@ -547,11 +549,16 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private void ClickOnColumn(object sender, System.Windows.Forms.ColumnClickEventArgs e)
         {
             columnSorter.column = e.Column;
-            if ((columnSorter.bAscending = (HypothesesListView.Sorting == SortOrder.Ascending)))
+            if (HypothesesListView.Sorting == SortOrder.Ascending)
+            {
+                columnSorter.bAscending = false;
                 HypothesesListView.Sorting = SortOrder.Descending;
+            }
             else
+            {
+                columnSorter.bAscending = true;
                 HypothesesListView.Sorting = SortOrder.Ascending;
-
+            }
             HypothesesListView.ListViewItemSorter = columnSorter;
         }
 

@@ -25,6 +25,7 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using Ferda.FrontEnd.AddIns.Common.ListView;
 using Ferda.Modules.Boxes.DataMiningCommon.Column;
 using Ferda.FrontEnd.AddIns.ColumnFrequency.NonGUIClasses;
 using System.Resources;
@@ -65,6 +66,10 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         /// </summary>
         private IOwnerOfAddIn ownerOfAddIn;
 
+        /// <summary>
+        /// Comparer for the listview items
+        /// </summary>
+        private ListViewItemComparer comparer = new ListViewItemComparer();
 
         #endregion
 
@@ -93,6 +98,8 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
                 localizationString = "en-US";
             }
             this.ownerOfAddIn = ownerOfAddIn;
+            //implicitly sorting by the first column
+            comparer.column = 0;
             this.rowCount = columnInfo.dataMatrix.recordsCount;
             InitializeComponent();
             DBInteraction myDb = new DBInteraction(columnInfo);
@@ -176,14 +183,18 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         /// <param name="e"></param>
         private void ColumnFrListView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
         {
-            ListViewItemComparer columnSorter = new ListViewItemComparer();
-            columnSorter.column = e.Column;
-            if ((columnSorter.bAscending = (ColumnFrListView.Sorting == SortOrder.Ascending)))
+            comparer.column = e.Column;
+            if (ColumnFrListView.Sorting == SortOrder.Ascending)
+            {
+                comparer.bAscending = false;
                 ColumnFrListView.Sorting = SortOrder.Descending;
+            }
             else
+            {
+                comparer.bAscending = true;
                 ColumnFrListView.Sorting = SortOrder.Ascending;
-
-            ColumnFrListView.ListViewItemSorter = columnSorter;
+            }
+            ColumnFrListView.ListViewItemSorter = comparer;
         }
 
 
@@ -329,7 +340,5 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             this.ToolStripChartHelp.Text = rm.GetString("Help");
         }
         #endregion
-
-        
     }
 }

@@ -29,6 +29,7 @@ using Ferda.FrontEnd.AddIns.DatabaseInfo;
 using System.Resources;
 using System.Reflection;
 
+
 namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
 {
     /// <summary>
@@ -36,6 +37,8 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
     /// </summary>
     public class DatabaseInfoIce : Ferda.Modules.ModuleForInteractionDisp_
     {
+        #region Private variables
+
         /// <summary>
         /// Owner of addin
         /// </summary>
@@ -51,6 +54,11 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
         /// </summary>
         private string localizationString;
 
+        #endregion
+
+
+        #region Constructor
+
         /// <summary>
         /// Class constructor
         /// </summary>
@@ -64,6 +72,11 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
             Assembly.GetExecutingAssembly());
             localizationString = "en-US";
         }
+
+        #endregion
+
+
+        #region Other ice
 
         /// <summary>
         /// Gets accepted box types
@@ -138,6 +151,11 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
             return new string[0];
         }
 
+        #endregion
+
+
+        #region Run
+
         /// <summary>
         /// Run method
         /// </summary>
@@ -185,5 +203,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
+
+        #endregion
     }
 }
