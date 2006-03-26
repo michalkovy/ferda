@@ -27,7 +27,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
-using Ferda.FrontEnd.AddIns.ExplainTable.NonGUIClasses;
+using Ferda.FrontEnd.AddIns.Common.ListView;
 using System.Resources;
 using System.Reflection;
 
@@ -66,6 +66,11 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// </summary>
         private IOwnerOfAddIn ownerOfAddIn;
 
+        /// <summary>
+        /// Comparer for the listview items
+        /// </summary>
+        private ListViewItemComparer comparer = new ListViewItemComparer();
+
         #endregion
 
 
@@ -95,6 +100,7 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
                 localizationString = "en-US";
             }
             this.ownerOfAddIn = ownerOfAddIn;
+            comparer.column = 0;
             this.dataMatrix = dataMatrix;
             this.dataMatrixInfo = dataMatrixInfo;
             InitializeComponent();
@@ -239,16 +245,18 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// <param name="e"></param>
         private void ExplainTableListView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
         {
-
-            ListViewItemComparer columnSorter = new ListViewItemComparer(e.Column);
-
-            if ((columnSorter.bAscending = (ExplainTableListView.Sorting == SortOrder.Ascending)))
+            comparer.column = e.Column;
+            if (ExplainTableListView.Sorting == SortOrder.Ascending)
+            {
+                comparer.bAscending = false;
                 ExplainTableListView.Sorting = SortOrder.Descending;
+            }
             else
+            {
+                comparer.bAscending = true;
                 ExplainTableListView.Sorting = SortOrder.Ascending;
-
-            ExplainTableListView.ListViewItemSorter = columnSorter;
-
+            }
+            ExplainTableListView.ListViewItemSorter = comparer;
         }
 
         #endregion

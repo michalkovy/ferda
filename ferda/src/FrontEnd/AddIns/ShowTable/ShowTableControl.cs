@@ -28,7 +28,9 @@ using System.Windows.Forms;
 using System.Resources;
 using System.Reflection;
 using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
+using Ferda.FrontEnd.AddIns.Common.ListView;
 using Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses;
+
 
 namespace Ferda.FrontEnd.AddIns.ShowTable
 {
@@ -64,6 +66,11 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         /// </summary>
         private IOwnerOfAddIn ownerOfAddIn;
 
+        /// <summary>
+        /// Listview items comparer
+        /// </summary>
+        private ListViewItemComparer comparer = new ListViewItemComparer();
+
         #endregion
 
 
@@ -93,6 +100,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
                 localizationString = "en-US";
             }
             this.ownerOfAddIn = ownerOfAddIn;
+            comparer.column = 0;
             this.columns = columns;
             this.dataMatrix = dataMatrix;
             InitializeComponent();
@@ -169,9 +177,32 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
             Clipboard.SetDataObject(copyString.ToString(), true);
         }
 
+        /// <summary>
+        /// Showing pdf file with help
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripHelp_Click(object sender, EventArgs e)
         {
             ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ShowTable.pdf");
+        }
+
+
+        void ListViewShowTable_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            comparer.column = e.Column;
+            if (ListViewShowTable.Sorting == SortOrder.Ascending)
+            {
+                comparer.bAscending = false;
+                ListViewShowTable.Sorting = SortOrder.Descending;
+            }
+            else
+            {
+                comparer.bAscending = true;
+                ListViewShowTable.Sorting = SortOrder.Ascending;
+            }
+
+            ListViewShowTable.ListViewItemSorter = comparer;
         }
 
         #endregion
@@ -190,8 +221,8 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
                 header.Text = headerText;
                 this.ListViewShowTable.Columns.Add(header);
             }
+            this.ListViewShowTable.ColumnClick += new ColumnClickEventHandler(ListViewShowTable_ColumnClick);
         }
-
        
         /// <summary>
         /// Method to fill listview with DataTable data

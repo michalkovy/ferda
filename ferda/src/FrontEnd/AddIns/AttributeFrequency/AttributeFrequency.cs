@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using Ferda.Modules.Boxes.DataMiningCommon.Attributes;
 using Ferda.Modules.Boxes.DataMiningCommon.Column;
 using Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses;
+using Ferda.FrontEnd.AddIns.Common.ListView;
 using System.Resources;
 using Ferda.Modules;
 using System.Reflection;
@@ -84,6 +85,11 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
         /// </summary>
         IOwnerOfAddIn ownerOfAddIn;
 
+        /// <summary>
+        /// Comparer for listview sorting
+        /// </summary>
+        private ListViewItemComparer comparer = new ListViewItemComparer();
+
         #endregion
 
 
@@ -112,6 +118,7 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
                 localizationString = "en-US";
             }
             this.ownerOfAddIn = ownerOfAddIn;
+            comparer.column = 0;
             this.rowCount = attributeStruct.column.dataMatrix.recordsCount;
             this.columnInfo = attributeStruct.column;
             this.categoriesStruct = attributeStruct.categories;
@@ -213,12 +220,22 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
             Clipboard.SetDataObject(copyString.ToString(), true);
         }
 
+        /// <summary>
+        /// Opening pdf file with help
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripChartHelp_Click(object sender, EventArgs e)
         {
             ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\AttributeFrequency.pdf");
 
         }
 
+        /// <summary>
+        /// Opening pdf file with help
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripHelp_Click(object sender, EventArgs e)
         {
             ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\AttributeFrequency.pdf");
@@ -291,16 +308,18 @@ namespace Ferda.FrontEnd.AddIns.AttributeFrequency
         /// <param name="e"></param>
         private void ColumnFrListView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
         {
-
-            ListViewItemComparer columnSorter = new ListViewItemComparer();
-            columnSorter.column = e.Column;
-
-            if ((columnSorter.bAscending = (AttributeFrListView.Sorting == SortOrder.Ascending)))
+            comparer.column = e.Column;
+            if (AttributeFrListView.Sorting == SortOrder.Ascending)
+            {
+                comparer.bAscending = false;
                 AttributeFrListView.Sorting = SortOrder.Descending;
+            }
             else
+            {
+                comparer.bAscending = true;
                 AttributeFrListView.Sorting = SortOrder.Ascending;
-
-            AttributeFrListView.ListViewItemSorter = columnSorter;
+            }
+            AttributeFrListView.ListViewItemSorter = comparer;
         }
 
         #endregion

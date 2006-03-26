@@ -23,7 +23,10 @@ using System.Collections;
 using System.Text;
 using System.Windows.Forms;
 using Ferda;
-namespace Ferda.FrontEnd.AddIns.AttributeFrequency.NonGUIClasses
+using Ferda.FrontEnd.AddIns.Common.ListView;
+
+
+namespace Ferda.FrontEnd.AddIns.AttributeFrequency.DONOTUSE
 {
     /// <summary>
     /// Class for comparing listview items

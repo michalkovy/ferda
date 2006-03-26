@@ -24,6 +24,10 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AddInsCommon, Version=1.0.2276.26988, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\AddInsCommon.dll</HintPath>
+    </Reference>
     <Reference Include="DockDotNET, Version=1.0.2177.34787, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\DockDotNET.dll</HintPath>
@@ -96,9 +100,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="MyIce\ResultBrowserIce.cs" />
     <Compile Include="NonGUIClasses\FerdaResult.cs" />
-    <Compile Include="NonGUIClasses\IceCompleted.cs" />
-    <Compile Include="NonGUIClasses\IceTick.cs" />
-    <Compile Include="NonGUIClasses\Sorter.cs" />
+    <Compile Include="NonGUIClasses\LongRunCompleted.cs" />
+    <Compile Include="NonGUIClasses\LongRunTick.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FerdaResultBrowserControl.resx">

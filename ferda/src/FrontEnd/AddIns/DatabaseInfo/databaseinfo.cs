@@ -26,10 +26,10 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using Ferda.Modules.Boxes.DataMiningCommon.Database;
-using Ferda.FrontEnd.AddIns.DatabaseInfo.NonGUIClasses;
 using System.Resources;
 using System.Reflection;
 using Ferda.FrontEnd.AddIns;
+using Ferda.FrontEnd.AddIns.Common.ListView;
 
 namespace Ferda.FrontEnd.AddIns.DatabaseInfo
 {
@@ -56,6 +56,11 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         /// Owner of addin
         /// </summary>
         private IOwnerOfAddIn ownerOfAddIn;
+
+        /// <summary>
+        /// Listview items comparer
+        /// </summary>
+        private ListViewItemComparer comparer = new ListViewItemComparer();
 
         #endregion
 
@@ -85,6 +90,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
                 localizationString = "en-US";
             }
             this.ownerOfAddIn = ownerOfAddIn;
+            comparer.column = 0;
             this.dataMatrix = dataMatrix;
             InitializeComponent();
             this.ListViewInit();
@@ -202,17 +208,19 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         /// <param name="e"></param>
         private void DataBaseInfoListView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
         {
-
-            ListViewItemComparer columnSorter = new ListViewItemComparer();
-            columnSorter.column = e.Column;
-
-            if ((columnSorter.bAscending = (DataBaseInfoListView.Sorting == SortOrder.Ascending)))
+            comparer.column = e.Column;
+            if (DataBaseInfoListView.Sorting == SortOrder.Ascending)
+            {
+                comparer.bAscending = false;
                 DataBaseInfoListView.Sorting = SortOrder.Descending;
+            }
             else
+            {
+                comparer.bAscending = true;
                 DataBaseInfoListView.Sorting = SortOrder.Ascending;
+            }
 
-            DataBaseInfoListView.ListViewItemSorter = columnSorter;
-
+            DataBaseInfoListView.ListViewItemSorter = comparer;
         }
 
 

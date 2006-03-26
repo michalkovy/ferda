@@ -19,6 +19,8 @@
 		</csc>
 	</target>
 	<target name="buildaddins">
+			<!--<mkdir dir="${addInsBuild.dir}/Common"/>-->
+
 		<csc target="library" output="${path::combine(addInsBuild.dir,'StringSeqSettingModule.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="StringSeqSettingModule/**.cs"/>
@@ -30,6 +32,25 @@
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+			</references>
+		</csc>
+
+		<csc target="library" output="${path::combine(build.dir,'AddInsCommon.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="Common/**.cs"/>
+				<include name="Common/ListView/**.cs"/>
+				<exclude name="Common/bin/**.*"/>
+				<exclude name="Common/obj/**.*"/>
+			</sources>
+			<resources prefix="Ferda.FrontEnd.AddIns.Common">
+				<include name="Common/**.resx"/>
+				<exclude name="Common/ResultBrowser.resx"/>
+			</resources>
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
 			</references>
 		</csc>
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ResultBrowser.dll')}" debug="${debug}" optimize="${optimize}">
@@ -50,6 +71,7 @@
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
@@ -84,6 +106,7 @@
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
@@ -111,6 +134,7 @@
 				<include name="System.Data.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
@@ -139,6 +163,7 @@
 				<include name="System.Data.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
@@ -171,6 +196,7 @@
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
@@ -203,6 +229,7 @@
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
@@ -259,6 +286,7 @@
 				<include name="System.Data.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
@@ -288,6 +316,7 @@
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
