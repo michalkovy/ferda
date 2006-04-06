@@ -11,7 +11,7 @@
 		</nant>
 	</target>
 	<target name="FrontEndBuild">
-		<if test="${platform::is-win32()}">
+		<if test="${framework::get-target-framework()!='mono-2.0'}">
 			<nant buildfile="FrontEnd/default.build" target="build">
 				<properties>
 					<property name="build.dir" value="${frontendbin.dir}"/>
@@ -20,7 +20,7 @@
 		</if>
 	</target>
 	<target name="FrontEndClean">
-		<if test="${platform::is-win32()}">
+		<if test="${framework::get-target-framework()!='mono-2.0'}">
 			<nant buildfile="FrontEnd/default.build" target="clean">
 				<properties>
 					<property name="build.dir" value="${frontendbin.dir}"/>
