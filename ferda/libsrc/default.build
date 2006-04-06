@@ -6,7 +6,7 @@
 	<target name="clean" description="Cleans libsrc" 
 		depends="DockDotNETClean, NetronClean" />
 	<target name ="DockDotNET">
-		<if test="${platform::is-win32()}">
+		<if test="${framework::get-target-framework()!='mono-2.0'}">
 			<nant buildfile="DockDotNET/default.build" target="build" />
 		</if>
 	</target>
