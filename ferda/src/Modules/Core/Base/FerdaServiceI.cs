@@ -32,7 +32,7 @@ namespace Ferda.Modules
     /// <summary>
     /// Represents a IceBox service, is created for inheriting
     /// </summary>
-    public abstract class FerdaServiceI : Ice.LocalObjectImpl, IceBox.Service 
+    public abstract class FerdaServiceI : Ice.LocalObjectImpl, IceBox.Service
     {
         /// <summary>
         /// Service execution method
@@ -83,8 +83,8 @@ namespace Ferda.Modules
             reaperThread.Join();
             if (havePropertyBoxes)
             {
-            	propertyReaper.Terminate();
-            	propertyReaperThread.Join();
+                propertyReaper.Terminate();
+                propertyReaperThread.Join();
             }
             Debug.WriteLine("Service has stoped...");
         }
