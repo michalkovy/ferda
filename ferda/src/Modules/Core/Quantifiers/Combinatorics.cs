@@ -1,8 +1,25 @@
-/*
- * 
- * Author: Tomáš Karban <karby@matfyz.cz>
- * 
- */
+// Combinatorics.cs - some combinatoric functions
+//
+// Authors: 
+//   Tomáš Karban <tomas.karban@centrum.cz>
+//   Tomáš Kuchař <tomas.kuchar@gmail.com>
+//
+// Copyright (c) 2004 Tomáš Karban, Tomáš Kuchař
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 
 using System;
 using System.Collections;
@@ -35,7 +52,7 @@ namespace Ferda.Modules.Quantifiers
                 _factorials[i] = factorial;
             }
             #endregion
-            
+
             #region Initialization of factorials (double)
             double factorialDouble = 1.0;  // result for 0!
             _factorialsDouble[0] = factorialDouble;
@@ -61,7 +78,7 @@ namespace Ferda.Modules.Quantifiers
             const int initColumns = 32;
             _pascalTriangle = new long[initRows][];  // jagged array
             _pascalTriangleFilled = new int[initRows];
-            
+
             // fill the first row
             _pascalTriangle[0] = new long[initColumns];
             for (int j = 0; j < initColumns; j++)
@@ -92,7 +109,7 @@ namespace Ferda.Modules.Quantifiers
         private static double[] _factorialsDouble = new double[_factorialsDoubleMax];
         private const int _logFactorialsMax = 1000;
         private static double[] _logFactorials = new double[_logFactorialsMax];
-        
+
         // pascal triangle for small binnomial coefficients
         private static long[][] _pascalTriangle;  // jagged array
         private static int[] _pascalTriangleFilled;
@@ -203,7 +220,7 @@ namespace Ferda.Modules.Quantifiers
 
             lock (typeof(Combinatorics))
             {
-            
+
                 // resize the array in the first dimension (k) if necessary
                 if (k >= _pascalTriangle.GetLength(0))
                 {
@@ -211,15 +228,15 @@ namespace Ferda.Modules.Quantifiers
                     int newK = _pascalTriangle.GetLength(0);
                     while (newK <= k)
                         newK *= 2;
-                
+
                     // allocate new arrays
-                    long [][] newTriangle = new long[newK][];
-                    int [] newTriangleFilled = new int[newK];
-                
+                    long[][] newTriangle = new long[newK][];
+                    int[] newTriangleFilled = new int[newK];
+
                     // copy existing elements
                     Array.Copy(_pascalTriangle, newTriangle, _pascalTriangle.GetLength(0));
                     Array.Copy(_pascalTriangleFilled, newTriangleFilled, _pascalTriangle.GetLength(0));
-                
+
                     // initialize new elements
                     for (int i = _pascalTriangle.GetLength(0); i < newK; i++)
                     {
@@ -250,7 +267,7 @@ namespace Ferda.Modules.Quantifiers
                         else if (_pascalTriangle[i].GetLength(0) < newN)
                         {
                             // the row is too short at the moment
-                            long [] newRow = new long[newN];
+                            long[] newRow = new long[newN];
                             Array.Copy(_pascalTriangle[i], newRow, _pascalTriangleFilled[i] + 1);
                             _pascalTriangle[i] = newRow;
                         }
@@ -282,7 +299,7 @@ namespace Ferda.Modules.Quantifiers
             }
         }
 
-        
+
         /// <summary>
         /// Computes a greatest common divisor (GCD) using Euclidean algorithm.
         /// </summary>
@@ -426,7 +443,7 @@ namespace Ferda.Modules.Quantifiers
             x -= ((value + 0.5) * Math.Log(x));
 
             y = value;
-            for(int j=0; j<=5; j++)
+            for (int j = 0; j <= 5; j++)
                 z += (_gammaHelper[j] / ++y);
 
             return -x + Math.Log(2.50662827463100005 * z / value);
@@ -473,7 +490,7 @@ namespace Ferda.Modules.Quantifiers
             int currentIndex = 0;
             while (subsetSize > 0)
             {
-                for ( ; ; )
+                for (; ; )
                 {
                     long nextSubsets = Combinatorics.BinomialCoefficient(wholeSet.Count - currentIndex - 1, subsetSize - 1);
                     if (subsetIndex >= nextSubsets)
@@ -495,7 +512,7 @@ namespace Ferda.Modules.Quantifiers
         }
 
 
-        
+
         /// <summary>
         /// Generate a cyclic interval by its index.
         /// </summary>
@@ -538,11 +555,11 @@ namespace Ferda.Modules.Quantifiers
                 cyclicIntervalIndex = (cyclicIntervalIndex + 1) % wholeSet.Count;
                 cyclicIntervalSize--;
             } while (cyclicIntervalSize > 0);
-            
+
             return result;
         }
 
-    
+
         /// <summary>
         /// Generate an interval by its index.
         /// </summary>
@@ -590,7 +607,7 @@ namespace Ferda.Modules.Quantifiers
                 intervalIndex++;
                 intervalSize--;
             } while (intervalSize > 0);
-            
+
             return result;
         }
 
@@ -604,7 +621,7 @@ namespace Ferda.Modules.Quantifiers
         /// </remarks>
         public delegate float ExaminedFloatFunction(float point, params object[] hiddenParams);
 
-        
+
         /// <summary>
         /// Delegate for a double-type function for binary search solution of equation f(x) = 0.
         /// </summary>
@@ -614,7 +631,7 @@ namespace Ferda.Modules.Quantifiers
         /// </remarks>
         public delegate double ExaminedDoubleFunction(double point, params object[] hiddenParams);
 
-        
+
         /// <summary>
         /// Binary search algorithm to search for solution of f(x) = 0.
         /// </summary>
@@ -628,7 +645,7 @@ namespace Ferda.Modules.Quantifiers
             // check arguments
             if (left >= right)
                 throw new ArgumentException("The left point must be less than the right point.");
-            
+
             // verify the left and right points
             float leftValue = function(left, hiddenParams);
             float rightValue = function(right, hiddenParams);
@@ -654,7 +671,7 @@ namespace Ferda.Modules.Quantifiers
             // check arguments
             if (left >= right)
                 throw new ArgumentException("The left point must be less than the right point.");
-            
+
             // verify the left and right points
             double leftValue = function(left, hiddenParams);
             double rightValue = function(right, hiddenParams);
@@ -669,7 +686,7 @@ namespace Ferda.Modules.Quantifiers
 
         private static float BinarySearchInternal(float left, float right, ExaminedFloatFunction function, bool ascendingFunction, params object[] hiddenParams)
         {
-            for ( ; ; )
+            for (; ; )
             {
                 float middlePoint = (left + right) / 2.0f;
                 if ((middlePoint <= left) || (middlePoint >= right))
@@ -696,7 +713,7 @@ namespace Ferda.Modules.Quantifiers
 
         private static double BinarySearchInternal(double left, double right, ExaminedDoubleFunction function, bool ascendingFunction, params object[] hiddenParams)
         {
-            for ( ; ; )
+            for (; ; )
             {
                 double middlePoint = (left + right) / 2.0f;
                 if ((middlePoint <= left) || (middlePoint >= right))
@@ -746,26 +763,26 @@ namespace Ferda.Modules.Quantifiers
                 throw new ArgumentOutOfRangeException("x", x, "Parameter x must be greater than or equal to 0.");
 
             // choose faster convergence strategy
-            if (x < (a + 1.0)) 
+            if (x < (a + 1.0))
                 return IncompleteGammaInternal1(a, x);
-            else 
+            else
                 return 1.0 - IncompleteGammaInternal2(a, x);
         }
 
 
         private const double relativePrecision = 1.0e-12;
         private const double smallPositive = 1.0e-100;
-        
+
 
         private static double IncompleteGammaInternal1(double a, double x)
         {
-            if (x <= 0.0) 
+            if (x <= 0.0)
                 return 0.0;
 
             double ap = a;
             double sum = 1.0 / a;
             double del = sum;
-            for (int n = 1; n <= 1000; n++) 
+            for (int n = 1; n <= 1000; n++)
             {
                 ap += 1.0;
                 del *= x / ap;
@@ -773,7 +790,7 @@ namespace Ferda.Modules.Quantifiers
                 if (Math.Abs(del) < Math.Abs(sum) * relativePrecision)
                     break;
             }
-            return sum * Math.Exp(-x + a * Math.Log(x) - LogGamma(a)); 
+            return sum * Math.Exp(-x + a * Math.Log(x) - LogGamma(a));
         }
 
 
@@ -782,9 +799,9 @@ namespace Ferda.Modules.Quantifiers
             double an, b, c, d, del, h;
             b = x + 1.0 - a;
             c = 1.0 / smallPositive;
-            d= 1.0 / b;
+            d = 1.0 / b;
             h = d;
-            for (int i=1; i <= 1000; i++)
+            for (int i = 1; i <= 1000; i++)
             {
                 an = -i * (i - a);
                 b += 2.0;
@@ -799,7 +816,7 @@ namespace Ferda.Modules.Quantifiers
                 h *= del;
                 if (Math.Abs(del - 1.0) < relativePrecision) break;
             }
-            
+
             return Math.Exp(-x + a * Math.Log(x) - LogGamma(a)) * h;
         }
 
@@ -821,8 +838,8 @@ namespace Ferda.Modules.Quantifiers
             if (x <= 0.0)
                 return 0.0;
 
-            double k2 = ((double) k) / 2.0;
-            
+            double k2 = ((double)k) / 2.0;
+
             // user precise values for small k instead of calling LogGamma
             double gamma;
             if (k <= 8)
@@ -847,7 +864,7 @@ namespace Ferda.Modules.Quantifiers
             6.0 
         };
 
-        
+
         /// <summary>
         /// Computes the result of chi-square cummulative distribution function with k degrees of freedom.
         /// </summary>
@@ -865,7 +882,7 @@ namespace Ferda.Modules.Quantifiers
             if (x <= 0.0)
                 return 0.0;
 
-            return IncompleteGamma(((double) k) / 2.0, x / 2.0);
+            return IncompleteGamma(((double)k) / 2.0, x / 2.0);
         }
 
 
@@ -889,12 +906,9 @@ namespace Ferda.Modules.Quantifiers
         // wrapper for ChiSquareCdf to be a "single-variable" function for binary search
         private static double ChiSquareCdfInvHelper(double x, params object[] hiddenParams)
         {
-            double alpha = (double) hiddenParams[0];
-            int k = (int) hiddenParams[1];
+            double alpha = (double)hiddenParams[0];
+            int k = (int)hiddenParams[1];
             return ChiSquareCdf(x, k) - alpha;
         }
-
-
-
     }
 }
