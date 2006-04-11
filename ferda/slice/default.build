@@ -76,14 +76,14 @@
 					<!-- <echo message="Folder name: ${path::get-full-path(foldername)}" /> -->
 					<!-- <echo message="***: ${foldername}" />  -->
 					<if test="${not(string::ends-with(foldername, 'Boxes'))}">
-						<!-- <echo message="foldername          : ${foldername}" /> -->
-						<!-- <echo message="parentDirectoryName : ${parentDirectoryName}" /> -->
-						<if test="${platform::is-win32()}">
+						<!-- <echo message="foldername          : ${foldername}" />
+						<echo message="parentDirectoryName : ${parentDirectoryName}" /> -->
+<!--						<if test="${platform::is-win32()}"> -->
 							<property name="directoryName" value="${string::substring(foldername, string::get-length(parentDirectoryName), string::get-length(path::get-full-path(foldername)) - string::get-length(parentDirectoryName))}"/>
-						</if>
+						<!-- </if>
 						<if test="${not(platform::is-win32())}">
-							<property name="directoryName" value="${string::substring(foldername, string::get-length(parentDirectoryName) + 1, string::get-length(path::get-full-path(foldername)) - string::get-length(parentDirectoryName) - 1)}"/>
-						</if>
+							<property name="directoryName" value="${string::substring(foldername, string::get-length(parentDirectoryName), string::get-length(path::get-full-path(foldername)) - string::get-length(parentDirectoryName))}"/>
+						</if>-->
 						<!-- <echo message="Directory name: ${directoryName}" /> -->
 						<property name="dirPath" value="${path::combine(path::combine(path::combine(build.dir,'Modules/BoxModulesServices/'), directoryName), 'generated')}"/>
 					</if>
