@@ -46,6 +46,16 @@ namespace Ferda.ProjectManager
         /// </summary>
         public bool IceGridAsService;
 
+	/// <summary>
+	/// Path to Ferda ice grid working directory (db directory)
+	/// </summary>
+	public string IceGridWorkingDirectory;
+
+	/// <summary>
+	/// Path to xml file with application to deploy on IceGrid.
+	/// </summary>
+	public string IceGridApplicationXmlFilePath;
+
         /// <summary>
         /// Sentence on which to wait when IceGrid is starting up on Project Manager init
         /// not as Windows service

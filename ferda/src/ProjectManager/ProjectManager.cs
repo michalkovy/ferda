@@ -173,7 +173,7 @@ namespace Ferda.ProjectManager {
         /// <param name="icePath">A <see cref="T:System.String"/> representing
         /// path where IceGridnode.exe is</param>
         /// <param name="iceGridAsService">If true, will try to start IceGrid as Windows service</param>
-        public void StartIceGrid(string icePath, bool iceGridAsService)
+        public void StartIceGrid(string icePath, bool iceGridAsService, string iceGridWorkingDirectory, string iceGridApplicationXmlFilePath)
         {
             if (iceGridAsService) {
                 process = new Process();
@@ -207,12 +207,12 @@ namespace Ferda.ProjectManager {
                 waitForStart = true;
 	            process = new Process();
 	            process.StartInfo.FileName = "icegridnode";
-                process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy application.xml";
+                process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy """ + iceGridApplicationXmlFilePath + """";
 	            process.StartInfo.RedirectStandardOutput = true;
 	            process.StartInfo.RedirectStandardError = true;
 	            process.StartInfo.UseShellExecute = false;
 	            process.StartInfo.CreateNoWindow = true;
-	            process.StartInfo.WorkingDirectory = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(),"../db");
+	            process.StartInfo.WorkingDirectory = iceGridWorkingDirectory;
 	            process.Start();
 	            outputThread = new Thread(new ThreadStart(StreamReaderThread_Output));
 	            errorThread = new Thread(new ThreadStart(StreamReaderThread_Error));
