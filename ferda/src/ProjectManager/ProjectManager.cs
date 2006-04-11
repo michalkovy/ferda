@@ -67,7 +67,7 @@ namespace Ferda.ProjectManager {
         public ProjectManager(string[] args, ProjectManagerOptions options)
         {
             this.options = options;
-            if(options.StartIceGridLocaly) StartIceGrid(options.IceBinPath, options.IceGridAsService);
+            if(options.StartIceGridLocaly) StartIceGrid(options.IceBinPath, options.IceGridAsService, options.IceGridWorkingDirectory, options.IceGridApplicationXmlFilePath);
             modulesManager = new Ferda.ModulesManager.ModulesManager(args, options.LocalePrefs);
             archive = new Archive(views);
         }
@@ -83,7 +83,7 @@ namespace Ferda.ProjectManager {
         public ProjectManager(string[] args, ProjectManagerOptions options, Ferda.ModulesManager.Output output)
         {
             this.options = options;
-            if (options.StartIceGridLocaly) StartIceGrid(options.IceBinPath, options.IceGridAsService);
+            if (options.StartIceGridLocaly) StartIceGrid(options.IceBinPath, options.IceGridAsService, options.IceGridWorkingDirectory, options.IceGridApplicationXmlFilePath);
             modulesManager = new Ferda.ModulesManager.ModulesManager(args, options.LocalePrefs, output);
             archive = new Archive(views);
         }
@@ -207,7 +207,7 @@ namespace Ferda.ProjectManager {
                 waitForStart = true;
 	            process = new Process();
 	            process.StartInfo.FileName = "icegridnode";
-                process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy """ + iceGridApplicationXmlFilePath + """";
+                process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy \"" + iceGridApplicationXmlFilePath + "\"";
 	            process.StartInfo.RedirectStandardOutput = true;
 	            process.StartInfo.RedirectStandardError = true;
 	            process.StartInfo.UseShellExecute = false;
