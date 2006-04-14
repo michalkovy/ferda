@@ -9,7 +9,8 @@ using Ice;namespace Ferda.Modules
 		private string propertyClassIceId;
 		private string[] propertyFunctionsIceIds;
 		private BoxModulePrx myProxy;
-		private Ice.ObjectPrx propertyValue;
+		private Ice.ObjectPrx propertyValuePrx;
+        private PropertyValue propertyValue;
 		private Ferda.Modules.BoxModulePrx connectedBox;
 		private bool propertySetByValue = false;
 		private Ice.ObjectAdapter adapter;
@@ -50,8 +51,8 @@ using Ice;namespace Ferda.Modules
 		/// <param name="adapter">An ObjectAdapter</param>
 		public void destroy(ObjectAdapter adapter)
 		{
-			if(propertyValue != null && propertySetByValue)
-				adapter.remove(propertyValue.ice_getIdentity());
+			if(propertyValuePrx != null && propertySetByValue)
+				adapter.remove(propertyValuePrx.ice_getIdentity());
 		}
 
 		/// <summary>
@@ -96,16 +97,16 @@ using Ice;namespace Ferda.Modules
             {
                 throw new Ferda.Modules.NameNotExistError();
             }
-			if(propertyValue!= null && !propertySetByValue)
+			if(propertyValuePrx!= null && !propertySetByValue)
 			{
 				throw new Modules.ConnectionExistsError();
 			}
 			Ice.ObjectPrx prx = otherModule.getFunctions();
 			if(!prx.ice_isA(this.propertyFunctionsIceIds[0]))
 				throw new Ferda.Modules.BadTypeError();
-			if(propertyValue != null && propertySetByValue)
-				adapter.remove(propertyValue.ice_getIdentity());
-			this.propertyValue = prx;
+			if(propertyValuePrx != null && propertySetByValue)
+				adapter.remove(propertyValuePrx.ice_getIdentity());
+			this.propertyValuePrx = prx;
 			connectedBox = otherModule;
 			this.propertySetByValue = false;
 		}
@@ -137,10 +138,11 @@ using Ice;namespace Ferda.Modules
             {
                 throw new Ferda.Modules.NameNotExistError();
             }
-			if(propertyValue == null || propertySetByValue)
+            if (propertyValuePrx == null || propertySetByValue || Ice.Util.identityToString(connectedBox.ice_getIdentity()) != boxModuleIceIdentity )
 			{
 				throw new Modules.ConnectionNotExistError();
 			}
+            connectedBox = null;
 			this.setProperty("value",defaultValue);
 		}
 
@@ -161,10 +163,11 @@ using Ice;namespace Ferda.Modules
                 throw new Ferda.Modules.BadTypeError();
             }
 
-			if(propertyValue != null && !propertySetByValue)
-				adapter.remove(propertyValue.ice_getIdentity());
+			if(propertyValuePrx != null && propertySetByValue)
+				adapter.remove(propertyValuePrx.ice_getIdentity());
 			this.propertySetByValue = true;
-			propertyValue = this.adapter.addWithUUID(value);
+            propertyValue = value;
+			propertyValuePrx = this.adapter.addWithUUID(value);
 		}
 
 		/// <summary>
@@ -179,7 +182,14 @@ using Ice;namespace Ferda.Modules
             {
                 throw new Ferda.Modules.NameNotExistError();
             }
-			return valueFromPrx(this.propertyValue);
+            if (propertySetByValue)
+            {
+                return propertyValue;
+            }
+            else
+            {
+                return valueFromPrx(connectedBox.getFunctions());
+            }
 		}
 
 		/// <summary>
@@ -231,7 +241,14 @@ using Ice;namespace Ferda.Modules
 		/// <param name="__current">An Ice.Current</param>
 		public override ObjectPrx getFunctions(Current __current)
 		{
-			return this.propertyValue;
+            if (this.propertySetByValue)
+            {
+                return this.propertyValuePrx;
+            }
+            else
+            {
+                return connectedBox.getFunctions();
+            }
 		}
 
 		/// <summary>

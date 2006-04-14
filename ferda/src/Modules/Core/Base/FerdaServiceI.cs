@@ -98,7 +98,7 @@ namespace Ferda.Modules
         public void registerPropertyBox(string type, PropertyValue defaultValue, PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx)
         {
             PropertyBoxModuleFactoryCreatorI newCreator = new PropertyBoxModuleFactoryCreatorI("::Ferda::Modules::" + type,
-                                                           new string[] { "::Ferda::Modules::" + type + "Interface" },
+                                                           defaultValue.ice_ids(),
                                                            type,
                                                            defaultValue,
                                                            valFromPrx,

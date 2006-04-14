@@ -1,5 +1,7 @@
+using Ice;
+using System;
 
-using Ice;namespace Ferda.Modules
+namespace Ferda.Modules
 {
 	public class DateTI : DateT, IValue
 	{
@@ -9,6 +11,19 @@ using Ice;namespace Ferda.Modules
 			result.Value = this;
 			return result;
 		}
+
+        public bool TryGetDateTime(out DateTime dateTime)
+        {
+            try
+            {
+                dateTime = new DateTime(this.year, this.month, this.day);
+                return true;
+            }
+            catch (ArgumentOutOfRangeException) { }
+            catch (ArgumentException) { }
+            dateTime = new DateTime();
+            return false;
+        }
 
 		public DateTI()
 		{}
@@ -45,6 +60,23 @@ using Ice;namespace Ferda.Modules
 			month = this.month;
 			day = this.day;
 		}
+
+        public override void getDateTimeValue(out int year, out short month, out short day, out short hour, out short minute, out short second, Current __current)
+        {
+            year = this.year;
+            month = this.month;
+            day = this.day;
+            hour = 0;
+            minute = 0;
+            second = 0;
+        }
+
+        public override String getStringValue(Current __current)
+        {
+            DateTime dateTime = new DateTime();
+            this.TryGetDateTime(out dateTime);
+            return dateTime.ToString();
+        }
 
 	}
 }

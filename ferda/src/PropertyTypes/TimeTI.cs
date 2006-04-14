@@ -1,4 +1,5 @@
 using Ice;
+using System;
 
 namespace Ferda.Modules
 {
@@ -10,6 +11,19 @@ namespace Ferda.Modules
 			result.Value = this;
 			return result;
 		}
+
+        public bool TryGetTimeSpan(out TimeSpan timeSpan)
+        {
+            try
+            {
+                timeSpan = new TimeSpan(this.hour, this.minute, this.second);
+                return true;
+            }
+            catch (ArgumentOutOfRangeException) { }
+            catch (ArgumentException) { }
+            timeSpan = new TimeSpan();
+            return false;
+        }
 
 		public TimeTI()
 		{}
@@ -53,5 +67,12 @@ namespace Ferda.Modules
 			minute = this.minute;
 			second = this.second;
 		}
+
+        public override String getStringValue(Current __current)
+        {
+            TimeSpan timeSpan = new TimeSpan();
+            this.TryGetTimeSpan(out timeSpan);
+            return timeSpan.ToString();
+        }
 	}
 }

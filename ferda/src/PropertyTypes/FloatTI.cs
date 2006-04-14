@@ -1,4 +1,4 @@
-
+using System;
 using Ice;
 
 namespace Ferda.Modules
@@ -34,6 +34,15 @@ namespace Ferda.Modules
 		{
 			return this.floatValue;
 		}
-		
+
+        public override double getDoubleValue(Current __current)
+        {
+            return this.floatValue;
+        }
+
+        public override String getStringValue(Current __current)
+        {
+            return this.floatValue.ToString();
+        }
 	}
 }

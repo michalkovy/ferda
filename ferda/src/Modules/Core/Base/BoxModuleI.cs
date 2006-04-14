@@ -70,7 +70,7 @@ namespace Ferda.Modules
         {
             try
             {
-                lock (connections)
+                lock (this)
                 {
                     BoxModulePrx[] result = new BoxModulePrx[connections[socketName].Values.Count];
                     connections[socketName].Values.CopyTo(result, 0);
@@ -132,7 +132,6 @@ namespace Ferda.Modules
                 try
                 {
                     this.connections[socketName].Remove(boxModuleIceIdentity);
-                    this.functions[socketName].Remove(boxModuleIceIdentity);
                 }
                 catch
                 {
@@ -141,75 +140,6 @@ namespace Ferda.Modules
                 }
                 if (boxInfo.TestPropertyNameExistence(socketName))
                 {
-                    switch (boxInfo.GetPropertyDataType(socketName))
-                    {
-                        case "::Ferda::Modules::BoolT":
-                            lock (propertiesBool)
-                            {
-                                propertiesBool.Remove(socketName);
-                            }
-                            break;
-                        case "::Ferda::Modules::ShortT":
-                            lock (propertiesShort)
-                            {
-                                propertiesShort.Remove(socketName);
-                            }
-                            break;
-                        case "::Ferda::Modules::IntT":
-                            lock (propertiesInt)
-                            {
-                                propertiesInt.Remove(socketName);
-                            }
-                            break;
-                        case "::Ferda::Modules::LongT":
-                            lock (propertiesLong)
-                            {
-                                propertiesLong.Remove(socketName);
-                            }
-                            break;
-                        case "::Ferda::Modules::FloatT":
-                            lock (propertiesFloat)
-                            {
-                                propertiesFloat.Remove(socketName);
-                            }
-                            break;
-                        case "::Ferda::Modules::DoubleT":
-                            lock (propertiesDouble)
-                            {
-                                propertiesDouble.Remove(socketName);
-                            }
-                            break;
-                        case "::Ferda::Modules::StringT":
-                            lock (propertiesString)
-                            {
-                                propertiesString.Remove(socketName);
-                            }
-                            break;
-                        case "::Ferda::Modules::DateTimeT":
-                            lock (propertiesDateTime)
-                            {
-                                propertiesDateTime.Remove(socketName);
-                            }
-                            break;
-                        case "::Ferda::Modules::DateT":
-                            lock (propertiesDate)
-                            {
-                                propertiesDate.Remove(socketName);
-                            }
-                            break;
-                        case "::Ferda::Modules::TimeT":
-                            lock (propertiesTime)
-                            {
-                                propertiesTime.Remove(socketName);
-                            }
-                            break;
-                        default:
-                            lock (propertiesOther)
-                            {
-                                propertiesOther.Remove(socketName);
-                            }
-                            break;
-                    }
                     this.setProperty(socketName, boxInfo.GetPropertyDefaultValue(socketName));
                 }
             }
@@ -217,18 +147,6 @@ namespace Ferda.Modules
         #endregion
 
         #region Functions i.e. functions in sockets
-        /// <summary>
-        /// <para><c>Key</c> is the socket`s name.</para>
-        /// <para><c>Value</c> is next Dictionary.</para>
-        /// <para>
-        /// Inner <c>Key</c> is <see cref="M:Ice.Util.identityToString(Ice.Identity)">string</see>
-        /// representation of the box module`s ice identifier.
-        /// </para>
-        /// <para>
-        /// Inner <c>Value</c> is the proxy of the connected box module`s functions object.
-        /// </para>
-        /// </summary>
-        private Dictionary<string, Dictionary<string, Ice.ObjectPrx>> functions;
         /// <summary>
         /// <para>
         /// Gets the functions objects (more precisely its proxies) 
@@ -253,11 +171,16 @@ namespace Ferda.Modules
         {
             try
             {
-                lock (functions)
+                lock (this)
                 {
-                    Ice.ObjectPrx[] result = new Ice.ObjectPrx[functions[socketName].Values.Count];
-                    functions[socketName].Values.CopyTo(result, 0);
-                    return result;
+                    List<Ice.ObjectPrx> result = new List<Ice.ObjectPrx>();
+                    foreach (BoxModulePrx boxModule in this.connections[socketName].Values)
+                    {
+                        Ice.ObjectPrx functions = boxModule.getFunctions();
+                        if (functions != null)
+                            result.Add(functions);
+                    }
+                    return result.ToArray();
                 }
             }
             catch (KeyNotFoundException ex)
@@ -272,17 +195,12 @@ namespace Ferda.Modules
         /// <summary>
         /// Properties which are set by <see cref="T:Ferda.Modules.PropertyValue"/>
         /// (There are not properties, which are set by PropertyBoxes 
-        /// which implements interfacesof property values.)
+        /// which implements interfaces of property values.)
         /// </summary>
         private Dictionary<string, PropertyValue> properties;
 
         #region Properties providers by their type (short, bool, int, long, float, double, string, datetime, date, time and other)
 
-        /// <summary>
-        /// The short integer properties.
-        /// </summary>
-        private Dictionary<string, ShortTInterfacePrx> propertiesShort =
-            new Dictionary<string, ShortTInterfacePrx>();
         /// <summary>
         /// Gets the short integer property of the specified name.
         /// </summary>
@@ -294,25 +212,25 @@ namespace Ferda.Modules
         /// </exception>
         public short GetPropertyShort(string propertyName)
         {
-            try
+            lock (this)
             {
-                lock (propertiesShort)
+                PropertyValue value;
+                if (properties.TryGetValue(propertyName, out value))
+                    return ((ShortT)value).getShortValue();
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
                 {
-                    return propertiesShort[propertyName].getShortValue();
+                    return ShortTInterfacePrxHelper.checkedCast(functions[0]).getShortValue();
                 }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI08");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+                else
+                {
+                    Debug.WriteLine("BMI08");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The boolean properties.
-        /// </summary>
-        private Dictionary<string, BoolTInterfacePrx> propertiesBool =
-            new Dictionary<string, BoolTInterfacePrx>();
         /// <summary>
         /// Gets the boolean property of the specified name.
         /// </summary>
@@ -324,25 +242,25 @@ namespace Ferda.Modules
         /// </exception>
         public bool GetPropertyBool(string propertyName)
         {
-            try
+            lock (this)
             {
-                lock (propertiesBool)
+                PropertyValue value;
+                if (properties.TryGetValue(propertyName, out value))
+                    return ((BoolT)value).getBoolValue();
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
                 {
-                    return propertiesBool[propertyName].getBoolValue();
+                    return BoolTInterfacePrxHelper.checkedCast(functions[0]).getBoolValue();
                 }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI09");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+                else
+                {
+                    Debug.WriteLine("BMI09");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The integer properties.
-        /// </summary>   
-        private Dictionary<string, IntTInterfacePrx> propertiesInt =
-            new Dictionary<string, IntTInterfacePrx>();
         /// <summary>
         /// Gets the integer property of the specified name.
         /// </summary>
@@ -354,25 +272,25 @@ namespace Ferda.Modules
         /// </exception>
         public int GetPropertyInt(string propertyName)
         {
-            try
+            lock (this)
             {
-                lock (propertiesInt)
+                PropertyValue value;
+                if (properties.TryGetValue(propertyName, out value))
+                    return ((IntT)value).getIntValue();
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
                 {
-                    return propertiesInt[propertyName].getIntValue();
+                    return IntTInterfacePrxHelper.checkedCast(functions[0]).getIntValue();
                 }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI10");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+                else
+                {
+                    Debug.WriteLine("BMI10");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The long integer properties.
-        /// </summary>
-        private Dictionary<string, LongTInterfacePrx> propertiesLong =
-            new Dictionary<string, LongTInterfacePrx>();
         /// <summary>
         /// Gets the long integer property of the specified name.
         /// </summary>
@@ -384,25 +302,25 @@ namespace Ferda.Modules
         /// </exception>
         public long GetPropertyLong(string propertyName)
         {
-            try
+            lock (this)
             {
-                lock (propertiesLong)
+                PropertyValue value;
+                if (properties.TryGetValue(propertyName, out value))
+                    return ((LongT)value).getLongValue();
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
                 {
-                    return propertiesLong[propertyName].getLongValue();
+                    return LongTInterfacePrxHelper.checkedCast(functions[0]).getLongValue();
                 }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI11");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+                else
+                {
+                    Debug.WriteLine("BMI11");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The float properties.
-        /// </summary>
-        private Dictionary<string, FloatTInterfacePrx> propertiesFloat =
-            new Dictionary<string, FloatTInterfacePrx>();
         /// <summary>
         /// Gets the float property of the specified name.
         /// </summary>
@@ -414,25 +332,25 @@ namespace Ferda.Modules
         /// </exception>
         public float GetPropertyFloat(string propertyName)
         {
-            try
+            lock (this)
             {
-                lock (propertiesFloat)
+                PropertyValue value;
+                if (properties.TryGetValue(propertyName, out value))
+                    return ((FloatT)value).getFloatValue();
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
                 {
-                    return propertiesFloat[propertyName].getFloatValue();
+                    return FloatTInterfacePrxHelper.checkedCast(functions[0]).getFloatValue();
                 }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI12");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+                else
+                {
+                    Debug.WriteLine("BMI12");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The double properties.
-        /// </summary>
-        private Dictionary<string, DoubleTInterfacePrx> propertiesDouble =
-            new Dictionary<string, DoubleTInterfacePrx>();
         /// <summary>
         /// Gets the double property of the specified name.
         /// </summary>
@@ -444,25 +362,25 @@ namespace Ferda.Modules
         /// </exception>
         public double GetPropertyDouble(string propertyName)
         {
-            try
+            lock (this)
             {
-                lock (propertiesDouble)
+                PropertyValue value;
+                if (properties.TryGetValue(propertyName, out value))
+                    return ((DoubleT)value).getDoubleValue();
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
                 {
-                    return propertiesDouble[propertyName].getDoubleValue();
+                    return DoubleTInterfacePrxHelper.checkedCast(functions[0]).getDoubleValue();
                 }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI13");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+                else
+                {
+                    Debug.WriteLine("BMI13");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The string properties.
-        /// </summary>
-        private Dictionary<string, StringTInterfacePrx> propertiesString =
-            new Dictionary<string, StringTInterfacePrx>();
         /// <summary>
         /// Gets the string property of the specified name.
         /// </summary>
@@ -474,25 +392,25 @@ namespace Ferda.Modules
         /// </exception>
         public string GetPropertyString(string propertyName)
         {
-            try
+            lock (this)
             {
-                lock (propertiesString)
+                PropertyValue value;
+                if(properties.TryGetValue(propertyName, out value))
+                    return ((StringT)value).getStringValue();
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if(functions.Length > 0)
                 {
-                    return propertiesString[propertyName].getStringValue();
+                    return StringTInterfacePrxHelper.checkedCast(functions[0]).getStringValue();
                 }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI14");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+                else
+                {
+                    Debug.WriteLine("BMI14");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The datetime properties.
-        /// </summary>
-        private Dictionary<string, DateTimeTInterfacePrx> propertiesDateTime =
-            new Dictionary<string, DateTimeTInterfacePrx>();
         /// <summary>
         /// Gets the datetime property of the specified name.
         /// </summary>
@@ -504,28 +422,30 @@ namespace Ferda.Modules
         /// </exception>
         public DateTime GetPropertyDateTime(string propertyName)
         {
-            try
+            lock (this)
             {
-                int year;
-                short month, day, hour, minute, second;
-                lock (propertiesDateTime)
+                PropertyValue value;
+                DateTime returnValue;
+                if (properties.TryGetValue(propertyName, out value))
                 {
-                    propertiesDateTime[propertyName].getDateTimeValue(out year, out month, out day, out hour, out minute, out second);
+                    ((DateTimeTI)value).TryGetDateTime(out returnValue);
+                    return returnValue;
                 }
-                return new DateTime(year, month, day, hour, minute, second);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI15");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
+                {
+                    (new DateTimeTI(DateTimeTInterfacePrxHelper.checkedCast(functions[0]))).TryGetDateTime(out returnValue);
+                    return returnValue;
+                }
+                else
+                {
+                    Debug.WriteLine("BMI15");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The date properties.
-        /// </summary>
-        private Dictionary<string, DateTInterfacePrx> propertiesDate =
-            new Dictionary<string, DateTInterfacePrx>();
         /// <summary>
         /// Gets the date property of the specified name.
         /// </summary>
@@ -537,28 +457,30 @@ namespace Ferda.Modules
         /// </exception>
         public DateTime GetPropertyDate(string propertyName)
         {
-            try
+            lock (this)
             {
-                int year;
-                short month, day;
-                lock (propertiesDate)
+                PropertyValue value;
+                DateTime returnValue;
+                if (properties.TryGetValue(propertyName, out value))
                 {
-                    propertiesDate[propertyName].getDateValue(out year, out month, out day);
+                    ((DateTI)value).TryGetDateTime(out returnValue);
+                    return returnValue;
                 }
-                return new DateTime(year, month, day);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI16");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
+                {
+                    (new DateTI(DateTInterfacePrxHelper.checkedCast(functions[0]))).TryGetDateTime(out returnValue);
+                    return returnValue;
+                }
+                else
+                {
+                    Debug.WriteLine("BMI16");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The time properties.
-        /// </summary>
-        private Dictionary<string, TimeTInterfacePrx> propertiesTime =
-            new Dictionary<string, TimeTInterfacePrx>();
         /// <summary>
         /// Gets the time property of the specified name.
         /// </summary>
@@ -570,27 +492,30 @@ namespace Ferda.Modules
         /// </exception>
         public TimeSpan GetPropertyTime(string propertyName)
         {
-            try
+            lock (this)
             {
-                short hour, minute, second;
-                lock (propertiesTime)
+                PropertyValue value;
+                TimeSpan returnValue;
+                if (properties.TryGetValue(propertyName, out value))
                 {
-                    propertiesTime[propertyName].getTimeValue(out hour, out minute, out second);
+                    ((TimeTI)value).TryGetTimeSpan(out returnValue);
+                    return returnValue;
                 }
-                return new TimeSpan(hour, minute, second);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI17");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
+                {
+                    (new TimeTI(TimeTInterfacePrxHelper.checkedCast(functions[0]))).TryGetTimeSpan(out returnValue);
+                    return returnValue;
+                }
+                else
+                {
+                    Debug.WriteLine("BMI17");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
-        /// <summary>
-        /// The other properties.
-        /// </summary>
-        private Dictionary<string, Ice.ObjectPrx> propertiesOther =
-            new Dictionary<string, Ice.ObjectPrx>();
         /// <summary>
         /// Gets the "other type" property of the specified name.
         /// </summary>
@@ -602,17 +527,22 @@ namespace Ferda.Modules
         /// </exception>
         public PropertyValue GetPropertyOther(string propertyName)
         {
-            try
+            lock (this)
             {
-                lock (propertiesOther)
+                PropertyValue value;
+                if (properties.TryGetValue(propertyName, out value))
+                    return value;
+
+                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                if (functions.Length > 0)
                 {
-                    return boxInfo.GetPropertyObjectFromInterface(propertyName, propertiesOther[propertyName]);
+                    return boxInfo.GetPropertyObjectFromInterface(propertyName, functions[0]);
                 }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("BMI18");
-                throw new ArgumentOutOfRangeException("propertyName", propertyName, ex.Message);
+                else
+                {
+                    Debug.WriteLine("BMI18");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
             }
         }
 
@@ -884,11 +814,9 @@ namespace Ferda.Modules
 
             // initializes sockets (connections and functions)
             this.connections = new Dictionary<string, Dictionary<string, BoxModulePrx>>();
-            this.functions = new Dictionary<string, Dictionary<string, Ice.ObjectPrx>>();
             foreach (string socketName in boxInfo.GetSocketNames())
             {
                 connections[socketName] = new Dictionary<string, BoxModulePrx>();
-                functions[socketName] = new Dictionary<string, Ice.ObjectPrx>();
             }
 
             System.Diagnostics.Debug.WriteLine("BoxModuleI Constructor (leaving): " + this.boxInfo.Identifier);
@@ -1096,42 +1024,6 @@ namespace Ferda.Modules
                 // the socket is actually property (i.e. value of the property is set by its socket)
                 if (boxInfo.TestPropertyNameExistence(socketName))
                 {
-                    switch (boxInfo.GetPropertyDataType(socketName))
-                    {
-                        case "::Ferda::Modules::BoolT":
-                            propertiesBool[socketName] = BoolTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        case "::Ferda::Modules::ShortT":
-                            propertiesShort[socketName] = ShortTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        case "::Ferda::Modules::IntT":
-                            propertiesInt[socketName] = IntTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        case "::Ferda::Modules::LongT":
-                            propertiesLong[socketName] = LongTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        case "::Ferda::Modules::FloatT":
-                            propertiesFloat[socketName] = FloatTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        case "::Ferda::Modules::DoubleT":
-                            propertiesDouble[socketName] = DoubleTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        case "::Ferda::Modules::StringT":
-                            propertiesString[socketName] = StringTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        case "::Ferda::Modules::DateTimeT":
-                            propertiesDateTime[socketName] = DateTimeTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        case "::Ferda::Modules::DateT":
-                            propertiesDate[socketName] = DateTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        case "::Ferda::Modules::TimeT":
-                            propertiesTime[socketName] = TimeTInterfacePrxHelper.checkedCast(objPrx);
-                            break;
-                        default:
-                            propertiesOther[socketName] = objPrx;
-                            break;
-                    }
                     properties.Remove(socketName);
                 }
                 else
@@ -1146,7 +1038,6 @@ namespace Ferda.Modules
                     }
                 }
                 this.connections[socketName][identity] = otherModule;
-                this.functions[socketName][identity] = objPrx;
             }
         }
 
@@ -1172,7 +1063,7 @@ namespace Ferda.Modules
         /// </exception>
         public override void runAction(string actionName, Ice.Current __current)
         {
-            lock (connections)
+            lock (this)
             {
                 bool neededSocketsConnected = true;
                 foreach (string[] neededSockets in this.boxInfo.GetActionInfoNeededConnectedSockets(actionName))
@@ -1257,105 +1148,57 @@ namespace Ferda.Modules
             {
                 switch (boxInfo.GetPropertyDataType(propertyName))
                 {
-                    case "::Ferda::Modules::BoolT":
-                        BoolTInterfacePrx oldPrxBool = null;
-                        if (propertiesBool.TryGetValue(propertyName, out oldPrxBool))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxBool, this.adapter);
-                        propertiesBool[propertyName] = BoolTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
-                        break;
                     case "::Ferda::Modules::ShortT":
                         PropertyValueRestrictionsHelper.TryIsIntegralPropertyCorrect(
                             this.boxInfo,
                             propertyName,
                             ((ShortT)propertyValue).getShortValue());
-                        ShortTInterfacePrx oldPrxShort = null;
-                        if (propertiesShort.TryGetValue(propertyName, out oldPrxShort))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxShort, this.adapter);
-                        propertiesShort[propertyName] = ShortTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
                         break;
                     case "::Ferda::Modules::IntT":
                         PropertyValueRestrictionsHelper.TryIsIntegralPropertyCorrect(
                             this.boxInfo,
                             propertyName,
                             ((IntT)propertyValue).getIntValue());
-                        IntTInterfacePrx oldPrxInt = null;
-                        if (propertiesInt.TryGetValue(propertyName, out oldPrxInt))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxInt, this.adapter);
-                        propertiesInt[propertyName] = IntTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
                         break;
                     case "::Ferda::Modules::LongT":
                         PropertyValueRestrictionsHelper.TryIsIntegralPropertyCorrect(
                             this.boxInfo,
                             propertyName,
                             ((LongT)propertyValue).getLongValue());
-                        LongTInterfacePrx oldPrxLong = null;
-                        if (propertiesLong.TryGetValue(propertyName, out oldPrxLong))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxLong, this.adapter);
-                        propertiesLong[propertyName] = LongTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
                         break;
                     case "::Ferda::Modules::FloatT":
                         PropertyValueRestrictionsHelper.TryIsFloatingPropertyCorrect(
                             this.boxInfo,
                             propertyName,
                             ((FloatT)propertyValue).getFloatValue());
-                        FloatTInterfacePrx oldPrxFloat = null;
-                        if (propertiesFloat.TryGetValue(propertyName, out oldPrxFloat))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxFloat, this.adapter);
-                        propertiesFloat[propertyName] = FloatTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
                         break;
                     case "::Ferda::Modules::DoubleT":
                         PropertyValueRestrictionsHelper.TryIsFloatingPropertyCorrect(
                             this.boxInfo,
                             propertyName,
                             ((DoubleT)propertyValue).getDoubleValue());
-                        DoubleTInterfacePrx oldPrxDouble = null;
-                        if (propertiesDouble.TryGetValue(propertyName, out oldPrxDouble))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxDouble, this.adapter);
-                        propertiesDouble[propertyName] = DoubleTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
                         break;
                     case "::Ferda::Modules::StringT":
                         PropertyValueRestrictionsHelper.TryIsStringPropertyCorrect(
                             this.boxInfo,
                             propertyName,
                             ((StringT)propertyValue).getStringValue());
-                        StringTInterfacePrx oldPrxString = null;
-                        if (propertiesString.TryGetValue(propertyName, out oldPrxString))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxString, this.adapter);
-                        propertiesString[propertyName] = StringTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
                         break;
                     case "::Ferda::Modules::DateTimeT":
                         PropertyValueRestrictionsHelper.TryIsDateTimePropertyCorrect(
                             this.boxInfo, propertyName, (DateTimeT)propertyValue);
-                        DateTimeTInterfacePrx oldPrxDateTime = null;
-                        if (propertiesDateTime.TryGetValue(propertyName, out oldPrxDateTime))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxDateTime, this.adapter);
-                        propertiesDateTime[propertyName] = DateTimeTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
                         break;
                     case "::Ferda::Modules::DateT":
                         DateT date = new DateTI();
                         ((DateT)propertyValue).getDateValue(out date.year, out date.month, out date.day);
                         PropertyValueRestrictionsHelper.TryIsDatePropertyCorrect(
                             this.boxInfo, propertyName, date);
-                        DateTInterfacePrx oldPrxDate = null;
-                        if (propertiesDate.TryGetValue(propertyName, out oldPrxDate))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxDate, this.adapter);
-                        propertiesDate[propertyName] = DateTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
                         break;
                     case "::Ferda::Modules::TimeT":
                         TimeT time = new TimeTI();
                         ((TimeT)propertyValue).getTimeValue(out time.hour, out time.minute, out time.second);
                         PropertyValueRestrictionsHelper.TryIsTimePropertyCorrect(
                             this.boxInfo, propertyName, time);
-                        TimeTInterfacePrx oldPrxTime = null;
-                        if (propertiesTime.TryGetValue(propertyName, out oldPrxTime))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxTime, this.adapter);
-                        propertiesTime[propertyName] = TimeTInterfacePrxHelper.checkedCast(this.adapter.addWithUUID(propertyValue));
-                        break;
-                    default:
-                        Ice.ObjectPrx oldPrxOtherType = null;
-                        if (propertiesOther.TryGetValue(propertyName, out oldPrxOtherType))
-                            destroyPrxIfSetAsProperty(propertyName, oldPrxOtherType, this.adapter);
-                        propertiesOther[propertyName] = this.adapter.addWithUUID(propertyValue);
                         break;
                 }
                 // proxy of new propertyValue is already saved
@@ -1457,67 +1300,37 @@ namespace Ferda.Modules
                     }
                 }
             }
-            if (properties.ContainsKey(propertyName))
+            lock (this)
             {
-                lock (properties)
+                if (properties.ContainsKey(propertyName))
                 {
                     return properties[propertyName];
                 }
-            }
-            switch (boxInfo.GetPropertyDataType(propertyName))
-            {
-                case "::Ferda::Modules::BoolT":
-                    lock (propertiesBool)
-                    {
-                        return new BoolTI(propertiesBool[propertyName]);
-                    }
-                case "::Ferda::Modules::ShortT":
-                    lock (propertiesShort)
-                    {
-                        return new ShortTI(propertiesShort[propertyName]);
-                    }
-                case "::Ferda::Modules::IntT":
-                    lock (propertiesInt)
-                    {
-                        return new IntTI(propertiesInt[propertyName]);
-                    }
-                case "::Ferda::Modules::LongT":
-                    lock (propertiesLong)
-                    {
-                        return new LongTI(propertiesLong[propertyName]);
-                    }
-                case "::Ferda::Modules::FloatT":
-                    lock (propertiesFloat)
-                    {
-                        return new FloatTI(propertiesFloat[propertyName]);
-                    }
-                case "::Ferda::Modules::DoubleT":
-                    lock (propertiesDouble)
-                    {
-                        return new DoubleTI(propertiesDouble[propertyName]);
-                    }
-                case "::Ferda::Modules::StringT":
-                    lock (propertiesString)
-                    {
-                        return new StringTI(propertiesString[propertyName]);
-                    }
-                case "::Ferda::Modules::DateTimeT":
-                    lock (propertiesDateTime)
-                    {
-                        return new DateTimeTI(propertiesDateTime[propertyName]);
-                    }
-                case "::Ferda::Modules::DateT":
-                    lock (propertiesDate)
-                    {
-                        return new DateTI(propertiesDate[propertyName]);
-                    }
-                case "::Ferda::Modules::TimeT":
-                    lock (propertiesTime)
-                    {
-                        return new TimeTI(propertiesTime[propertyName]);
-                    }
-                default:
-                    return this.GetPropertyOther(propertyName);
+                switch (boxInfo.GetPropertyDataType(propertyName))
+                {
+                    case "::Ferda::Modules::BoolT":
+                        return new BoolTI(GetPropertyBool(propertyName));
+                    case "::Ferda::Modules::ShortT":
+                        return new ShortTI(GetPropertyShort(propertyName));
+                    case "::Ferda::Modules::IntT":
+                        return new IntTI(GetPropertyInt(propertyName));
+                    case "::Ferda::Modules::LongT":
+                        return new LongTI(GetPropertyLong(propertyName));
+                    case "::Ferda::Modules::FloatT":
+                        return new FloatTI(GetPropertyFloat(propertyName));
+                    case "::Ferda::Modules::DoubleT":
+                        return new DoubleTI(GetPropertyDouble(propertyName));
+                    case "::Ferda::Modules::StringT":
+                        return new StringTI(GetPropertyString(propertyName));
+                    case "::Ferda::Modules::DateTimeT":
+                        return new DateTimeTI(GetPropertyDateTime(propertyName));
+                    case "::Ferda::Modules::DateT":
+                        return new DateTI(GetPropertyDate(propertyName));
+                    case "::Ferda::Modules::TimeT":
+                        return new TimeTI(GetPropertyTime(propertyName));
+                    default:
+                        return this.GetPropertyOther(propertyName);
+                }
             }
         }
 
@@ -1600,19 +1413,6 @@ namespace Ferda.Modules
         #region Destroying
 
         /// <summary>
-        /// Removes the specified propertyValue object`s proxy (<c>prx</c>) of 
-        /// specified property (<c>propertyName</c>) from the specified <c>adapter</c>.
-        /// </summary>
-        /// <param name="propertyName">The name of the property.</param>
-        /// <param name="prx">The object`s proxy.</param>
-        /// <param name="adapter">The adapter.</param>
-        private void destroyPrxIfSetAsProperty(string propertyName, Ice.ObjectPrx prx, Ice.ObjectAdapter adapter)
-        {
-            if (properties.ContainsKey(propertyName))
-                adapter.remove(prx.ice_getIdentity());
-        }
-
-        /// <summary>
         /// Destroys all Ice objects inherent to the box module 
         /// (e.g. <see cref="T:Ferda.Modules.PropertyValue">property values</see>)
         /// i.e. remove their proxies from the specified <c>adapter</c>.
@@ -1620,28 +1420,6 @@ namespace Ferda.Modules
         /// <param name="adapter">The adapter.</param>
         public void destroy(Ice.ObjectAdapter adapter)
         {
-            foreach (KeyValuePair<string, BoolTInterfacePrx> pair in propertiesBool)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, ShortTInterfacePrx> pair in propertiesShort)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, IntTInterfacePrx> pair in propertiesInt)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, LongTInterfacePrx> pair in propertiesLong)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, FloatTInterfacePrx> pair in propertiesFloat)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, DoubleTInterfacePrx> pair in propertiesDouble)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, StringTInterfacePrx> pair in propertiesString)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, DateTimeTInterfacePrx> pair in propertiesDateTime)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, DateTInterfacePrx> pair in propertiesDate)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, TimeTInterfacePrx> pair in propertiesTime)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
-            foreach (KeyValuePair<string, Ice.ObjectPrx> pair in propertiesOther)
-                destroyPrxIfSetAsProperty(pair.Key, pair.Value, adapter);
         }
 
         #endregion
