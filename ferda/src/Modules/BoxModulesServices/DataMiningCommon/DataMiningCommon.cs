@@ -39,34 +39,48 @@ namespace Ferda.Modules.Boxes.DataMiningCommon
             //Basic property types
             registerPropertyBox("BoolT",
                                 new BoolTI(true),
-                                delegate(Ice.ObjectPrx prx) { return new BoolTI(BoolTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new BoolTI(BoolTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
             registerPropertyBox("ShortT",
                                 new ShortTI(0),
-                                delegate(Ice.ObjectPrx prx) { return new ShortTI(ShortTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new ShortTI(ShortTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
             registerPropertyBox("IntT",
                                 new IntTI(0),
-                                delegate(Ice.ObjectPrx prx) { return new IntTI(IntTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new IntTI(IntTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
             registerPropertyBox("LongT",
                                 new LongTI(0),
-                                delegate(Ice.ObjectPrx prx) { return new LongTI(LongTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new LongTI(LongTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
             registerPropertyBox("FloatT",
                                 new FloatTI(0),
-                                delegate(Ice.ObjectPrx prx) { return new FloatTI(FloatTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new FloatTI(FloatTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
             registerPropertyBox("DoubleT",
                                 new DoubleTI(0),
-                                delegate(Ice.ObjectPrx prx) { return new DoubleTI(DoubleTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new DoubleTI(DoubleTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
             registerPropertyBox("StringT",
                                 new StringTI(""),
-                                delegate(Ice.ObjectPrx prx) { return new StringTI(StringTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new StringTI(StringTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
             registerPropertyBox("TimeT",
                                 new TimeTI(0, 0, 0),
-                                delegate(Ice.ObjectPrx prx) { return new TimeTI(TimeTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new TimeTI(TimeTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
             registerPropertyBox("DateT",
                                 new DateTI(0, 0, 0),
-                                delegate(Ice.ObjectPrx prx) { return new DateTI(DateTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new DateTI(DateTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
             registerPropertyBox("DateTimeT",
                                 new DateTimeTI(0, 0, 0, 0, 0, 0),
-                                delegate(Ice.ObjectPrx prx) { return new DateTimeTI(DateTimeTInterfacePrxHelper.checkedCast(prx)); });
+                                delegate(Ice.ObjectPrx prx) { return new DateTimeTI(DateTimeTInterfacePrxHelper.checkedCast(prx)); },
+                                "");
+            registerPropertyBox("CategoriesT",
+                                new CategoriesTI(),
+                                delegate(Ice.ObjectPrx prx) { return new CategoriesTI(CategoriesTInterfacePrxHelper.checkedCast(prx)); },
+                                "CategoriesT");
         }
 
         /// <summary>

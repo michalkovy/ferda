@@ -25,6 +25,7 @@
 			<object identity="TimeT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
 			<object identity="DateT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
 			<object identity="DateTimeT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
+			<object identity="CategoriesT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
 		</replica-group>
 
     <replica-group id="FerdaLMTasksBoxesReplicaAdapter" >
