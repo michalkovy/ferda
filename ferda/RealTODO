@@ -1,0 +1,19 @@
+Michal
+ - lepsi buildeni verzi a AssemblyInfo ke vsemu
+ - se Sasou a Ice tymem odstranit bug s adresari s mezerou
+Martin
+ - chyba v property gridu (rychle prekliknuti)
+ - chyba vlastnosti nastavovane pres socket (delani, aby byly read only)
+Tomas
+ - udelat GPL hlavicky ke vsem .cs souborum
+ - ChiSquare quantifier ... bug reported to Karby - je to uz opraveno?
+Sasa
+ - poradny installer
+ - chyba modulu kategorii
+Vsichni
+ - poradny web Ferdy, ktery prezentuje Ferdu jako super nastroj
+ - procistit adresarovy strom
+ - dokumentace pridavani novych krabicek
+ - nasadit teoretickou dokumentaci (az bude)
+ - schuzka s Rauchem
+
