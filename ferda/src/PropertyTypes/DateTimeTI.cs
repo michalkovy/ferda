@@ -111,5 +111,12 @@ namespace Ferda.Modules
 		}
 
 		#endregion
+
+        public override String getStringValue(Current __current)
+        {
+            DateTime dateTime = new DateTime();
+            this.TryGetDateTime(out dateTime);
+            return dateTime.ToString();
+        }
 	}
 }

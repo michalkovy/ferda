@@ -15,7 +15,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\Server\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -27,10 +27,7 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Server\FerdaBase.dll</HintPath>
-    </Reference>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="icecs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\icecs.dll</HintPath>
