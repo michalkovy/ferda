@@ -95,7 +95,7 @@ namespace Ferda.Modules
         /// <param name="type">Name of box</param>
         /// <param name="defaultValue">Default value of box</param>
         /// <param name="valFromPrx">Method which converts property value proxy to property value object</param>
-        public void registerPropertyBox(string type, PropertyValue defaultValue, PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx)
+        public void registerPropertyBox(string type, PropertyValue defaultValue, PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx, string settingModuleIdentifier)
         {
             PropertyBoxModuleFactoryCreatorI newCreator = new PropertyBoxModuleFactoryCreatorI("::Ferda::Modules::" + type,
                                                            defaultValue.ice_ids(),
@@ -103,7 +103,8 @@ namespace Ferda.Modules
                                                            defaultValue,
                                                            valFromPrx,
                                                            propertyReaper,
-                                                           _adapter);
+                                                           _adapter,
+                                                           settingModuleIdentifier);
         }
 
         /// <summary>

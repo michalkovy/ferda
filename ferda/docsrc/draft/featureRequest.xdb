@@ -10,11 +10,10 @@
       <email>martin.ralbovsky@gmail.com</email>
     </author>
   </articleinfo>
-
   <abstract>
     <para>
       This document describes the request for adding some features for Ferda
-      in the future. The document is divided in to 2 parts, the first part explains
+      in the future. The document is divided in to two parts, the first part explains
       requests that can be done in the near future. The second part is devoted
       to the further future, the creators of Ferda represent some of their
       visions and suggestions.
@@ -58,12 +57,6 @@
           Better dynamic help - now the help displays only the hint and the type of the
           selected box. In the future, it should contain hint also for the sockets and
           properties of the box.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Ferda now doesn't implement the Undo and Redo actions. It would be nice to
-          have them. 
         </para>
       </listitem>
       <listitem>
@@ -142,6 +135,12 @@
             Now the archive can be situated only on one machine over the network.
             We would like to make a network archive, where users can share their
             boxes over the network and work in cooperation.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Ferda now doesn't implement the Undo and Redo actions. It would be nice to
+            have them. 
           </para>
         </listitem>
         <listitem>

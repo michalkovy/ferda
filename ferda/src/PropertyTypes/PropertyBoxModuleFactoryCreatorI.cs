@@ -14,6 +14,7 @@ namespace Ferda.Modules
 		private PropertyReapThread reaper;
 		private PropertyValue defaultValue;
 		private BoxModuleFactoryCreatorPrx myProxy;
+        private string settingModuleIdentifier;
 		
 		public delegate PropertyValue ValueFromPrx(Ice.ObjectPrx value);
 		
@@ -31,7 +32,8 @@ namespace Ferda.Modules
 												PropertyValue defaultValue,
 												ValueFromPrx valueFromPrx,
 												PropertyReapThread reaper,
-												Ice.ObjectAdapter adapter)
+												Ice.ObjectAdapter adapter,
+                                                string settingModuleIdentifier)
 		{
 			this.propertyClassIceId = propertyClassIceId;
 			this.propertyFunctionsIceIds = propertyFunctionsIceIds;
@@ -41,6 +43,7 @@ namespace Ferda.Modules
 			this.defaultValue = defaultValue;
 			this.myProxy =
 				PropertyBoxModuleFactoryCreatorPrxHelper.uncheckedCast(adapter.add(this,Ice.Util.stringToIdentity(identifier)));
+            this.settingModuleIdentifier = settingModuleIdentifier;
 		}
 		
 		public BoxModuleFactoryCreatorPrx MyProxy
@@ -76,7 +79,8 @@ namespace Ferda.Modules
 																					   localePrefs,
 																					   defaultValue,
 																					   valueFromPrx,
-																					   __current.adapter);
+																					   __current.adapter,
+                                                                                       settingModuleIdentifier);
 			this.reaper.Add(boxModuleFactory.MyProxy, boxModuleFactory);
 			return boxModuleFactory.MyProxy;
 		}

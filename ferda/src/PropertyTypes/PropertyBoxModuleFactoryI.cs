@@ -9,6 +9,7 @@ namespace Ferda.Modules
 		private string propertyClassIceId;
 		private string[] propertyFunctionsIceIds;
 		private BoxModuleFactoryCreatorPrx myFactoryCreatorProxy;
+        private string settingModuleIdentifier;
 
 		private Dictionary<string, PropertyBoxModuleI> boxModules =
 		new Dictionary<string, PropertyBoxModuleI>();
@@ -27,7 +28,8 @@ namespace Ferda.Modules
 										 string[] localePrefs,
 										 PropertyValue defaultValue,
 										 PropertyBoxModuleFactoryCreatorI.ValueFromPrx valueFromPrx,
-										 Ice.ObjectAdapter adapter)
+										 Ice.ObjectAdapter adapter,
+                                         string settingModuleIdentifier)
 		{
 			this.propertyClassIceId = propertyClassIceId;
 			this.propertyFunctionsIceIds = propertyFunctionsIceIds;
@@ -36,6 +38,7 @@ namespace Ferda.Modules
 			this.defaultValue = defaultValue;
 			this.valueFromPrx = valueFromPrx;
 			this.myProxy = BoxModuleFactoryPrxHelper.uncheckedCast(adapter.addWithUUID(this));
+            this.settingModuleIdentifier = settingModuleIdentifier;
 		}
 
 		public BoxModuleFactoryPrx MyProxy
@@ -200,6 +203,7 @@ namespace Ferda.Modules
 			result.selectBoxParams = null;
 			result.typeClassIceId = this.propertyClassIceId;
 			result.visible = true;
+            result.settingModuleIdentifier = this.settingModuleIdentifier;
 			return new PropertyInfo[] { result };
 		}
 
