@@ -1935,6 +1935,7 @@ namespace Ferda.FrontEnd.Properties
                     FrontEndCommon.CannotWriteToBox(SelectedBox, ResManager);
                 }
 
+                Adapt();
                 return true;
             }
         }
