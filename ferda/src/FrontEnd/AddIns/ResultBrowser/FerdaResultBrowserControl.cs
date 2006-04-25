@@ -144,6 +144,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.displayer.Reset();
             this.PreloadDisable();
             resultBrowser.Initialize(hypotheses, used_quantifiers, statisticsProxies);
+
+            if ((this.taskType == "LISpMinerTasks.KLTask") || (this.taskType == "LISpMinerTasks.CFTask") || (this.taskType == "LISpMinerTasks.FFTTask"))
+            {
+                RadioFirstTable.Visible = false;
+                RadioSecondTable.Visible = false;
+            }
         }
       
         #endregion
@@ -501,6 +507,64 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.RefreshBrowser();
         }
 
+        /// <summary>
+        /// Method to check the chart displaying
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RadioFirstTable_CheckedChanged(object sender, EventArgs e)
+        {
+            int index = 0;
+            HypothesisStruct hypothesis;
+            try
+            {
+                index = (int)HypothesesListView.SelectedItems[0].Tag;
+                hypothesis = this.resultBrowser.GetHypothese(index);
+            }
+
+            catch
+            {
+                return;
+            }
+            if (this.RadioFirstTable.Checked)
+            {
+                this.DrawBarsFromFirstTable(hypothesis, this.ContingencyTableChart);
+            }
+            else
+            {
+                this.DrawBarsFromSecondTable(hypothesis, this.ContingencyTableChart);
+            }
+        }
+
+        /// <summary>
+        /// Method to check the chart displaying
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RadioSecondTable_CheckedChanged(object sender, EventArgs e)
+        {
+            int index = 0;
+            HypothesisStruct hypothesis;
+            try
+            {
+                
+                index = (int)HypothesesListView.SelectedItems[0].Tag;
+                hypothesis = this.resultBrowser.GetHypothese(index);
+            }
+
+            catch
+            {
+                return;
+            }
+            if (this.RadioFirstTable.Checked)
+            {
+                this.DrawBarsFromFirstTable(hypothesis, this.ContingencyTableChart);
+            }
+            else
+            {
+                this.DrawBarsFromSecondTable(hypothesis, this.ContingencyTableChart);
+            }
+        }
 
         /// <summary>
         /// Method for filling the chart and propertygrid with the hypothese data.
