@@ -414,6 +414,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.RadioSecondTable.TabIndex = 10;
             this.RadioSecondTable.Text = "radioButton1";
             this.RadioSecondTable.UseVisualStyleBackColor = true;
+            this.RadioSecondTable.CheckedChanged += new System.EventHandler(this.RadioSecondTable_CheckedChanged);
             // 
             // RadioFirstTable
             // 
@@ -426,6 +427,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.RadioFirstTable.TabStop = true;
             this.RadioFirstTable.Text = "radioButton1";
             this.RadioFirstTable.UseVisualStyleBackColor = true;
+            this.RadioFirstTable.CheckedChanged += new System.EventHandler(this.RadioFirstTable_CheckedChanged);
             // 
             // CheckBoxShowLabels
             // 

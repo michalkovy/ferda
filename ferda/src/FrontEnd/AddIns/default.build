@@ -51,6 +51,12 @@
 				<include name="System.Data.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaDataMiningCommonBoxes.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaLMTasksBoxes.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ResultBrowser.dll')}" debug="${debug}" optimize="${optimize}">
