@@ -297,13 +297,13 @@ namespace Ferda.FrontEnd.Menu
         private void SetupEdit()
         {
             /*
-            ToolStripSeparator sep, sep2;
+            ToolStripSeparator sep2, sep2;
 
             newBox = new ToolStripMenuItem(ResManager.GetString("MenuEditNewBox"));
             copy = new ToolStripMenuItem(ResManager.GetString("MenuEditCopy"));
             clone = new ToolStripMenuItem(ResManager.GetString("MenuEditClone"));
             paste = new ToolStripMenuItem(ResManager.GetString("MenuEditPaste"));
-            sep = new ToolStripSeparator();
+            sep2 = new ToolStripSeparator();
             deleteFromDesktop = new ToolStripMenuItem(ResManager.GetString("MenuEditDeleteFromDesktop"));
             deleteFromArchive = new ToolStripMenuItem(ResManager.GetString("MenuEditDeleteFromArchive"));
             sep2 = new ToolStripSeparator();
@@ -315,7 +315,7 @@ namespace Ferda.FrontEnd.Menu
                     copy,
                     clone,
                     paste,
-                    sep,
+                    sep2,
                     deleteFromDesktop,
                     deleteFromArchive,
                     sep2,

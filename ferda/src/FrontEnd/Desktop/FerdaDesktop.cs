@@ -1185,6 +1185,23 @@ namespace Ferda.FrontEnd.Desktop
         {
             ContextMenuStrip cMenu = new ContextMenuStrip();
 
+            //first the boxes asking for creation
+            if (IsBoxSelected)
+            {
+                //handling the boxes asking for creation submenu for more selected
+                //boxes
+                if (SelectedBoxesOfTheSameType())
+                {
+                    ToolStripMenuItem creation = new
+                        ToolStripMenuItem(resManager.GetString("MenuModulesAskingCreation"));
+                    CreateModulesForCreationMoreBoxes(creation);
+                    ToolStripSeparator sep = new ToolStripSeparator();
+
+                    cMenu.Items.Add(creation);
+                    cMenu.Items.Add(sep);
+                }
+            }
+
             ToolStripMenuItem layout = new ToolStripMenuItem(ResManager.GetString("DesktopLayout"));
             layout.Click += new EventHandler(layout_Click);
             layout.Image = provider.GetIcon("Layout").ToBitmap();
@@ -1208,10 +1225,10 @@ namespace Ferda.FrontEnd.Desktop
                 makeGroup.Image = provider.GetIcon("MakeGroup").ToBitmap();
                 makeGroup.Click += new EventHandler(makeGroup_Click);
 
-                ToolStripSeparator sep = new ToolStripSeparator();
+                ToolStripSeparator sep2 = new ToolStripSeparator();
                 cMenu.Items.Add(copy);
                 cMenu.Items.Add(clone);
-                cMenu.Items.Add(sep);
+                cMenu.Items.Add(sep2);
                 cMenu.Items.Add(makeGroup);
 
                 ToolStripMenuItem deleteFromDesktop =
@@ -1246,6 +1263,32 @@ namespace Ferda.FrontEnd.Desktop
             }
 
             return cMenu;
+        }
+
+        /// <summary>
+        /// The function determines if the selected boxes (boxes in the SelectedNodes
+        /// property are of the same type
+        /// </summary>
+        /// <returns>True if yes, false if not :)</returns>
+        protected bool SelectedBoxesOfTheSameType()
+        {
+            //getting the first identifier
+            string identifier = ((BoxNode)SelectedShapes[0]).Box.MadeInCreator.Identifier;
+
+            //iterating through the rest of selected boxes
+            for (int i = 1; i < SelectedShapes.Count; i++)
+            {
+                BoxNode node = SelectedShapes[i] as BoxNode;
+                if (node != null)
+                {
+                    if (node.Box.MadeInCreator.Identifier != identifier)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -1285,7 +1328,10 @@ namespace Ferda.FrontEnd.Desktop
         /// <summary>
         /// Creates actions submenu for a selected box
         /// </summary>
-        protected void CreateActionsMenu(ToolStripMenuItem act, IBoxModule box)
+        /// <param name="box">box, which actions menu should be created</param>
+        /// <param name="menuItem">The menu Item, where all the subitems should be added
+        /// </param>
+        protected void CreateActionsMenu(ToolStripMenuItem menuItem, IBoxModule box)
         {
             ToolStripMenuItem item;
 
@@ -1301,14 +1347,17 @@ namespace Ferda.FrontEnd.Desktop
 
             foreach (ToolStripMenuItem i in actions)
             {
-                act.DropDownItems.Add(i);
+                menuItem.DropDownItems.Add(i);
             }
         }
 
         /// <summary>
         /// Creates ModulesForInteraction submenu for a selected box
         /// </summary>
-        protected void CreateModulesForInteractionMenu(ToolStripMenuItem mod, IBoxModule box)
+        /// <param name="box">box, which modules for interaction submenu should be created</param>
+        /// <param name="menuItem">The menu Item, where all the subitems should be added
+        /// </param>
+        protected void CreateModulesForInteractionMenu(ToolStripMenuItem menuItem, IBoxModule box)
         {
             ToolStripMenuItem item;
 
@@ -1324,14 +1373,19 @@ namespace Ferda.FrontEnd.Desktop
 
             foreach (ToolStripMenuItem it in modules)
             {
-                mod.DropDownItems.Add(it);
+                menuItem.DropDownItems.Add(it);
             }
         }
 
         /// <summary>
         /// Creates ModulesForCreationSubmenu for a selected box
         /// </summary>
-        protected void CreateModulesForCreationMenu(ToolStripMenuItem mod, IBoxModule box)
+        /// <param name="box">Boxes asking ofr creation of this box should be
+        /// created
+        /// </param>
+        /// <param name="menuItem">The menu Item, where all the subitems should be added
+        /// </param>
+        protected void CreateModulesForCreationMenu(ToolStripMenuItem menuItem, IBoxModule box)
         {
             ToolStripMenuItem it;
 
@@ -1347,13 +1401,76 @@ namespace Ferda.FrontEnd.Desktop
 
             foreach (ToolStripMenuItem item in modules)
             {
-                mod.DropDownItems.Add(item);
+                menuItem.DropDownItems.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Creates the boxes asking for creation submenu for more boxes selected. 
+        /// The boxes should be of the same type and only the items that have the
+        /// same name go to the submenu.
+        /// </summary>
+        /// <param name="menuItem"></param>
+        protected void CreateModulesForCreationMoreBoxes(ToolStripMenuItem menuItem)
+        {
+            ToolStripMenuItem it;
+
+            List<ToolStripMenuItem> modules = new List<ToolStripMenuItem>();
+
+            //getting the first modules
+            ModulesAskingForCreation[] firstModules = 
+                ((BoxNode)SelectedShapes[0]).Box.ModulesAskingForCreation;
+
+            //iterating through the other modules - getting the names of the
+            //modules asking for creation, the modules must be the same
+            foreach (ModulesAskingForCreation module in firstModules)
+            {
+                bool allBoxesContainModule = true;
+
+                for (int i = 1; i < SelectedShapes.Count; i++)
+                {
+                    bool boxContainsModule = false;
+
+                    BoxNode bn = SelectedShapes[i] as BoxNode;
+                    if (bn == null)
+                    {
+                        throw new ApplicationException("Box node cannot be null");
+                    }
+
+                    ModulesAskingForCreation[] nextModules = bn.Box.ModulesAskingForCreation;
+
+                    //getting the name of the module
+                    foreach (ModulesAskingForCreation mod in nextModules)
+                    {
+                        if (module.label == mod.label)
+                        {
+                            //there is the name
+                            boxContainsModule = true;
+                        }
+                    }
+
+                    if (!boxContainsModule)
+                    {
+                        allBoxesContainModule = false;
+                        break;
+                    }
+                }
+
+                if (allBoxesContainModule)
+                {
+                    //creating the module
+                    it = new ToolStripMenuItem(module.label);
+                    it.Click += new EventHandler(Creation_MoreBoxesClick);
+
+                    menuItem.DropDownItems.Add(it);
+                }
             }
         }
 
         /// <summary>
         /// Creates a context menu when a box is selected
         /// </summary>
+        /// <param name="box">box which context menu should be created</param>
         protected ContextMenuStrip CreateBoxContextMenu(IBoxModule box)
         {
             bool canPack = false;
@@ -2123,15 +2240,20 @@ namespace Ferda.FrontEnd.Desktop
         {
             IBoxModule[] newBoxes = null;
 
+            BoxNode bn;
+            IBoxModule box;
             //this prevents executing anything when the event is not called from the
             //desktop (but from the main menu)
             if (Hover == null)
             {
-                return;
+                bn = SelectedShapes[0] as BoxNode;
+                box = bn.Box;
             }
-
-            BoxNode bn = Hover as BoxNode;
-            IBoxModule box = bn.Box;
+            else
+            {
+                bn = Hover as BoxNode;
+                box = bn.Box;
+            }
 
             foreach (ModulesAskingForCreation info in box.ModulesAskingForCreation)
             {
@@ -2174,6 +2296,65 @@ namespace Ferda.FrontEnd.Desktop
                 //recreating the handler
                 OnNewConnection += new NewConnection(FerdaDesktop_OnNewConnection);
             }
+            archiveDisplayer.Adapt();
+        }
+
+        /// <summary>
+        /// Reacts to a click for adding a module asking for creation of more
+        /// boxes - creates the module asking for creation for each of the boxes
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void Creation_MoreBoxesClick(object sender, EventArgs e)
+        {
+
+            List<IBoxModule> newBoxes = new List<IBoxModule>();
+
+            foreach (BoxNode bn in SelectedShapes)
+            {
+                foreach (ModulesAskingForCreation info in 
+                    bn.Box.ModulesAskingForCreation)
+                {
+                    if (info.label == sender.ToString())
+                    {
+                        newBoxes.AddRange(view.CreateBoxesAskingForCreation(info));
+                    }
+                }
+            }
+
+            //adding the individual boxes so we dont have to adapt the whole
+            //desktop
+            //foreach (IBoxModule b in newBoxes)
+            //{
+            //    //adding the box
+            //    BoxNode node = AddBox(b);
+
+            //    Connector from = null;
+            //    string socketName = string.Empty;
+
+            //    foreach (ProjectManager.Connection con in view.Connections)
+            //    {
+            //        //this is the right box (assuming there is only one box
+            //        //connected to the created box
+            //        if (con.ToBox == b)
+            //        {
+            //            from = FromConnector(con.FromBox);
+            //            socketName = con.ToSocket;
+            //        }
+            //    }
+            //    Connector to = ToConnector(b, socketName);
+
+            //    //We have to remove the handler because it would create a connection
+            //    //that is already there
+            //    OnNewConnection -= new NewConnection(FerdaDesktop_OnNewConnection);
+
+            //    //adding the connector
+            //    AddEdge(from, to);
+
+            //    //recreating the handler
+            //    OnNewConnection += new NewConnection(FerdaDesktop_OnNewConnection);
+            //}
+            Adapt();
             archiveDisplayer.Adapt();
         }
 
