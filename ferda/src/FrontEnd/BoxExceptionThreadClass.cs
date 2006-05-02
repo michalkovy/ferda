@@ -51,7 +51,7 @@ namespace Ferda.FrontEnd
         /// <summary>
         /// Default constructor of the class
         /// </summary>
-        /// <param name="mod">Modules manager of the application</param>
+        /// <param name="menuItem">Modules manager of the application</param>
         /// <param name="resManager">Resource manager</param>
         /// <param name="box">Box that has thrown the exception</param>
         /// <param name="userMessage">Message to be displayed to the user</param>

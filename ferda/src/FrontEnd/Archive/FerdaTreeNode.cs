@@ -365,7 +365,7 @@ namespace Ferda.FrontEnd.Archive
         /// <summary>
         /// Creates ModulesForCreationSubmenu for a selected box
         /// </summary>
-        protected void CreateModulesForCreationMenu(ToolStripMenuItem mod)
+        protected void CreateModulesForCreationMenu(ToolStripMenuItem menuItem)
         {
             ToolStripMenuItem it;
 
@@ -381,7 +381,7 @@ namespace Ferda.FrontEnd.Archive
 
             foreach (ToolStripMenuItem item in modules)
             {
-                mod.DropDownItems.Add(item);
+                menuItem.DropDownItems.Add(item);
             }
         }*/
 
