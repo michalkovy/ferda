@@ -51,6 +51,7 @@
     <Compile Include="BoxModuleIceFactories.cs" />
     <Compile Include="BoxModuleLockerI.cs" />
     <Compile Include="BoxModuleProjectInformationI.cs" />
+    <Compile Include="BoxModuleValidatorI.cs" />
     <Compile Include="GroupBox.cs" />
     <Compile Include="GroupBoxFactoryCreator.cs" />
     <Compile Include="Helper.cs" />

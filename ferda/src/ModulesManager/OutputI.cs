@@ -58,6 +58,11 @@ namespace Ferda {
 				}
             }
 
+
+            public override ProgressBarPrx startProgress(ProgressTaskPrx task, string name, string hint, Current current__)
+            {
+                return null;
+            }
         }
 
     }

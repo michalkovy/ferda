@@ -964,6 +964,11 @@ namespace Ferda
 			
 			private string iceIdentity;
 			#endregion
+
+            public override void Validate()
+            {
+                this.iceBoxModulePrx.validate();
+            }
 			
 			private Helper helper;
 			private ModulesManager modulesManager;

@@ -43,6 +43,10 @@ namespace Ferda {
 				lnkBoxModuleLockerI = new BoxModuleLockerI(manager);
 				boxModuleLockerPrx = BoxModuleLockerPrxHelper.uncheckedCast(
 					adapter.addWithUUID(this.lnkBoxModuleLockerI));
+                Debug.WriteLine("Creating BoxModuleValidator...");
+                lnkBoxModuleValidatorI = new BoxModuleValidatorI(manager);
+                boxModuleValidatorPrx = BoxModuleValidatorPrxHelper.uncheckedCast(
+                    adapter.addWithUUID(this.lnkBoxModuleValidatorI));
 				Debug.WriteLine("Creating BoxModuleProjectInformation...");
 				lnkBoxModuleProjectInformationI = new BoxModuleProjectInformationI(manager);
 				boxModuleProjectInformationPrx =
@@ -81,6 +85,16 @@ namespace Ferda {
 			{
 				return this.boxModuleLockerPrx;
 			}
+
+            /// <summary>
+            /// Method getBoxModuleValidator
+            /// </summary>
+            /// <param name="__current">An Ice.Current</param>
+            /// <returns>A Ferda.ModulesManager.BoxModuleValidatorPrx</returns>
+            public override BoxModuleValidatorPrx getBoxModuleValidator(Current __current)
+            {
+                return this.boxModuleValidatorPrx;
+            }
 			
 			
 			/// <summary>
@@ -124,6 +138,10 @@ namespace Ferda {
             private ManagersLocatorI lnkManagersLocatorI;
 			
 			private ManagersLocatorPrx managersLocatorPrx;
+
+            private BoxModuleValidatorI lnkBoxModuleValidatorI; 
+
+            private BoxModuleValidatorPrx boxModuleValidatorPrx; 
 
             private OutputI lnkOutputI = new OutputI();
 			
