@@ -356,5 +356,26 @@ namespace Ferda.ModulesManager
 		public abstract void SetUnvisibleConnection(string socketName, IBoxModule otherModule);
 		
 		public abstract void RemoveUnvisibleConnection(string socketName, IBoxModule otherModule);
+
+        public void ValidateRecursive(List<IBoxModule> validated)
+        {
+            validated.Add(this);
+            foreach (IBoxModule otherBox in this.ConnectionsFrom())
+            {
+                if (!validated.Contains(otherBox))
+                    otherBox.ValidateRecursive(validated);
+            }
+            this.Validate();
+        }
+
+        public void ValidateRecursive()
+        {
+            this.ValidateRecursive(new List<IBoxModule>());
+        }
+
+        public virtual void Validate()
+        {
+
+        }
     }
 }

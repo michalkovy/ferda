@@ -3,6 +3,7 @@
 
 #include <Modules/BoxType.ice>
 #include <Modules/Modules.ice>
+#include <Modules/Exceptions.ice>
 
 
 module Ferda {
@@ -18,9 +19,20 @@ module Ferda {
 		enum MsgType { Debug, Info, Warning, Error };
 		
 		exception BoxModuleNotExistError{};
+		
+		interface ProgressTask {
+		  nonmutating float getValue();
+		  void stop();
+    };
+    
+    interface ProgressBar {
+      idempotent void setValue(float value);
+      void done();
+    };
 
 		interface Output {
 			void writeMsg(MsgType type, string name, string message);
+			ProgressBar* startProgress(ProgressTask* task, string name, string hint);
 		};
 		
 		interface BoxModuleProjectInformation {
@@ -38,6 +50,16 @@ module Ferda {
 			idempotent void unlockBoxModule(string boxModuleIceIdentity)
 				throws BoxModuleNotExistError;
 		};
+		
+		interface BoxModuleValidator {
+		  nonmutating void validate(string boxModuleIceIdentity)
+  		  throws
+  					Ferda::Modules::BoxRuntimeError,
+  					Ferda::Modules::BadValueError,
+  					Ferda::Modules::BadParamsError,
+  					Ferda::Modules::NoConnectionInSocketError,
+            BoxModuleNotExistError;
+    };
 		
 		
 		sequence<Ferda::Modules::BoxModuleFactoryCreator*> BoxModuleFactoryCreatorSeq;
@@ -64,6 +86,7 @@ module Ferda {
 			nonmutating Output* getOutputInterface();
 			nonmutating BoxModuleProjectInformation* getProjectInformation();
 			nonmutating BoxModuleLocker* getBoxModuleLocker();
+			nonmutating BoxModuleValidator* getBoxModuleValidator();
 			nonmutating ManagersLocator* getManagersLocator();
 		};
 	};

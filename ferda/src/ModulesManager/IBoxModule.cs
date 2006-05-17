@@ -723,5 +723,11 @@ namespace Ferda.ModulesManager
         /// Use before comparing this box with other
         /// </summary>
         void RefreshOrder();
+
+        void Validate();
+
+        void ValidateRecursive(List<IBoxModule> validated);
+
+        void ValidateRecursive();
 	}
 }
