@@ -105,7 +105,7 @@ namespace Ferda.Modules.MetabaseLayer
 								relative = false;
 								break;
                             case UnitsEnum.RelativeToActCondition:
-								properties.Add("ParamBeta", treshold);
+								properties.Add("ParamBeta", treshold*100);
 								relative = true;
 								break;
 						}
