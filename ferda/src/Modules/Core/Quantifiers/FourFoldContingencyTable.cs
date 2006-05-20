@@ -607,7 +607,7 @@ namespace Ferda.Modules.Quantifiers
         public bool FoundedEquivalenceValidity(double p)
         {
             double n = this.N;
-            return (n > 0) && ((this.A + table.D) >= p * n);
+            return (n > 0) && ((this.A + this.D) >= p * n);
         }
         #endregion
 
