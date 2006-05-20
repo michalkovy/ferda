@@ -594,7 +594,7 @@ namespace Ferda.Modules.Quantifiers
         public static double FoundedEquivalenceValue(FourFoldContingencyTable table)
         {
             double n = table.N;
-            return (n > 0) ? (table.A) / n : 0.0D;
+            return (n > 0) ? (table.A + table.D) / n : 0.0D;
         }
 
         /// <summary>
@@ -607,7 +607,7 @@ namespace Ferda.Modules.Quantifiers
         public bool FoundedEquivalenceValidity(double p)
         {
             double n = this.N;
-            return (n > 0) && (this.A >= p * n);
+            return (n > 0) && ((this.A + table.D) >= p * n);
         }
         #endregion
 
