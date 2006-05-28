@@ -18,6 +18,8 @@
 ;funcitons for uninstaller
 !include "uninstall_functions.nsi"
 
+!include "FileFunc.nsh"
+
 
 
 XPStyle on
