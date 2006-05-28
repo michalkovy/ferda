@@ -62,3 +62,6 @@
   LangString MUI_DIRECTORYPAGE_TEXT_TOP_B ${LANG_ENGLISH} "You need to have Ice installed prior to Ferda installation. Please select folder where Ice is installed. \
   Please refer to installation instructions for further information."
    LangString MUI_DIRECTORYPAGE_TEXT_TOP_A ${LANG_ENGLISH} "Please select folder where Ferda will be installed"
+   
+   LangString IceNotFound ${LANG_ENGLISH} "Ice has not been found in the given directory. Ice has to be installed prior to Ferda installation. \
+   Please refer to installation instructions for further information."

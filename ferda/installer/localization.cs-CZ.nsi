@@ -59,3 +59,6 @@
    LangString MUI_DIRECTORYPAGE_TEXT_TOP_B ${LANG_CZECH} "Pøed instalaci Ferdy musíte mít nainstalované Ice. Prosím zadejte složku s instalaci Ice.\
    Pro další informace prostudujte prosím pokyny k instalaci."
    LangString MUI_DIRECTORYPAGE_TEXT_TOP_A ${LANG_CZECH} "Zvolte složku pro instalaci Ferda."
+   
+   LangString IceNotFound ${LANG_CZECH} "Ice nebyl nalezen v zadané složce. Pøed instalaci Ferdy musíte mít nainstalované Ice. \
+   Pro další informace prostudujte prosím pokyny k instalaci."

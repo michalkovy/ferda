@@ -53,9 +53,7 @@ Section
 SectionEnd
 	
 	Section
-	SectionIn RO ;section is read-only, must be checked
-	;SetOutPath "$INSTDIR\ThirdParty\ice"
-	;File /r ..\ThirdParty\ice\*.*
+	SectionIn RO ;section is read-only
 	
 	SetOutPath "$INSTDIR\db"
 	File ..\conf\db\application.xml
@@ -68,10 +66,13 @@ SectionEnd
 	SetOutPath "$INSTDIR"
 	File ice-install.bat
 	
-	;CreateDirectory "$INSTDIR\ThirdParty\ice\bin"
+	;adding ice to path, checking whether ice is installed
+	;checking for icebox.exe, iceboxadmin.exe - kind of heuristic check, do not know yet how to make it clean
 	
-	;adding ice to path
 	StrCpy $R1 $IcePath
+	
+	;Call IceCheck
+	
 	;MessageBox MB_OK|MB_ICONEXCLAMATION "IcePath is $R1"
 	Push "PATH"
 	Push "$R1\bin"

@@ -597,16 +597,31 @@ Function IsDotNetInstalledAdv
      Pop $1
      Exch $0
  FunctionEnd
+
  
- Function SaveIceDirectory
+  
+Function SaveIceDirectory
  Var /GLOBAL IcePath
 
 
  StrCpy $IcePath $INSTDIR
- ;Push $R2
  
- FunctionEnd
+ IfFileExists "$IcePath\bin\icebox.exe" IceOk IceFail
 
+ IceOk:
+ IfFileExists "$IcePath\bin\iceboxadmin.exe" Done IceFail
+
+
+ IceFail:
+ MessageBox MB_OK "$(IceNotFound)"
+ Abort
+
+ Done:
+ 
+FunctionEnd
+
+ 
+ 
  Function InsDirectoryPre
  
  StrCpy $INSTDIR "c:\FerdaDataminer"
