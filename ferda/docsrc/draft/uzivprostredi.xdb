@@ -26,6 +26,15 @@
     <!--
     <revhistory>
       <revision>
+        <revnumber>4.1</revnumber>
+        <date>2006-06-07</date>
+        <revdescription>
+          <para>
+            Přidání validace krabičky
+          </para>
+        </revdescription>
+      </revision>
+      <revision>
         <revnumber>4.0</revnumber>
         <date>2006-03-22</date>
         <revdescription>
@@ -723,6 +732,19 @@
               </para>
             </formalpara>
 					</listitem>
+          <listitem>
+            <formalpara>
+              <title>Validace krabičky</title>
+              <para>
+                Validace krabičky znamená zkontrolování všeho, co může vyznačená krabička s
+                aktuálním nastavením v aktuálním kontextu dělat. Jestliže jsou do této krabičky
+                zapojeny další krabičky, znamená to i kontrolu sémantických omezení těchto 
+                krabiček. Uživatel validuje krabičku kliknutím na položku<emphasis>Validovat</emphasis>
+                v kontextovém menu u krabičky. Může akci provést i pomocí klávesové zkratky
+                <emphasis>Ctrl+Q</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
 					<listitem>
             <formalpara>
               <title>Moduly pro interakci</title>
@@ -901,6 +923,9 @@
             </listitem>
 						<listitem>
               <para>Odstranění krabiček z archivu</para>
+            </listitem>
+            <listitem>
+              <para>Validace krabičky</para>
             </listitem>
 						<listitem>
               <para>Moduly pro interakci</para>
@@ -1136,6 +1161,19 @@
               </para>
             </formalpara>
           </listitem>
+          <listitem>
+            <formalpara>
+              <title>Validace krabičky</title>
+              <para>
+                Validace krabičky znamená zkontrolování všeho, co může vyznačená krabička s
+                aktuálním nastavením v aktuálním kontextu dělat. Jestliže jsou do této krabičky
+                zapojeny další krabičky, znamená to i kontrolu sémantických omezení těchto
+                krabiček. Uživatel validuje krabičku kliknutím na položku<emphasis>Validovat</emphasis>
+                v kontextovém menu u krabičky. Může akci provést i pomocí klávesové zkratky
+                <emphasis>Ctrl+Q</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>          
           <listitem>
             <formalpara>
               <title>Moduly pro interakci</title>
