@@ -30,6 +30,15 @@
     <!--
     <revhistory>
       <revision>
+        <revnumber>2.1</revnumber>
+        <date>2006-06-07</date>
+        <revdescription>
+          <simpara>
+            Added box validation functionality
+          </simpara>
+        </revdescription>
+      </revision>
+      <revision>
         <revnumber>2.0</revnumber>
         <date>2006-3-22</date>
         <revdescription>
@@ -513,6 +522,19 @@
           </listitem>
           <listitem>
             <formalpara>
+              <title>Box validation</title>
+              <para>
+                Validation of a box means checking the availability of all the actions
+                that a box can do with its current settings in a current context. If 
+                there are other boxes connected into this box, it also means checking
+                of semantic constraints of these boxes. User validates the box by clicking
+                on the <emphasis>Validate</emphasis> item of the context menu. The action
+                can be done also by the <emphasis>Ctrl+Q</emphasis> shortcut.
+              </para>
+            </formalpara>
+          </listitem>          
+          <listitem>
+            <formalpara>
               <title>Modules for interaction</title>
               <para>
                 The <emphasis>Modules for interaction</emphasis> submenu
@@ -687,6 +709,9 @@
               <para>Deleting the boxes from the archive</para>
             </listitem>
             <listitem>
+              <para>Validating a box</para>
+            </listitem>
+            <listitem>
               <para>Modules for interaction</para>
             </listitem>
             <listitem>
@@ -732,7 +757,7 @@
               <para>
                 User can select boxes on the desktop by clicking the left mouse
                 button and creating a rectangle around the boxes. Selecting boxes
-                can be used for moving the boxes, deleting the boxes or setting 
+                can be used for moving the boxes, deleting the boxes or setting
                 the common properties.
               </para>
             </formalpara>
@@ -752,8 +777,10 @@
               <para>
                 If the user left-clicks on the box on the desktop or selectes more
                 boxes on the desktop, properties of the box(es) are showed in the Property
-                grid and context help. More information in the <emphasis>Property 
-                grid</emphasis> section.
+                grid and context help. More information in the <emphasis>
+                  Property
+                  grid
+                </emphasis> section.
               </para>
             </formalpara>
           </listitem>
@@ -762,7 +789,7 @@
               <title>Moving the boxes</title>
               <para>
                 User moves the boxes around when he selects one or more boxes
-                on the desktop. The by pressing the left mouse button and 
+                on the desktop. The by pressing the left mouse button and
                 moving the mouse user can move the boxes into the desired location.
                 The connections to the box also move with the box.
               </para>
@@ -776,7 +803,7 @@
                 box components. For placing a box existing in the archive user
                 can use drag&amp;drop. User selects the box in the archive by
                 left clicking on it and the drags it into the desktop. System
-                checks if there is not already this box somewhere on the desktop. 
+                checks if there is not already this box somewhere on the desktop.
                 Afterwards, it shows the box on the desktop and connects it
                 correctly into the remaining boxes on the desktop.
               </para>
@@ -795,9 +822,9 @@
                 common way to crate connection between the boxes. First of
                 all, user places the mouse on the output connector of the
                 box he wishes to connect. Than the system shows him the handle
-                on the socket and then the user left clicks on the handle, 
+                on the socket and then the user left clicks on the handle,
                 with the left mouse button clicked he moves with the mouse
-                onto the socket of the box, he wishes to connect. System 
+                onto the socket of the box, he wishes to connect. System
                 checks the type consistency of the connection. If it is not
                 correct, it generates an error message, otherwise it creates
                 a new connection.
@@ -808,9 +835,10 @@
             <formalpara>
               <title>Pasting a box</title>
               <para>
-                User can paste a box into the desktop by clicking on the <emphasis>Paste
+                User can paste a box into the desktop by clicking on the <emphasis>
+                  Paste
                 </emphasis> item of the context menu. In comparison with cloning the box,
-                no new instance of the box is created while pasting. So it is the same 
+                no new instance of the box is created while pasting. So it is the same
                 practice as using drag&amp;drop from the archive. System again checks,
                 if there is already that box in the desktop and adds the box to the desktop,
                 if not. This can be done also
@@ -822,7 +850,8 @@
             <formalpara>
               <title>Graph layout</title>
               <para>
-                A layout algorithm is being initiated after the <emphasis>Graph layout
+                A layout algorithm is being initiated after the <emphasis>
+                  Graph layout
                 </emphasis> context menu item click. This algorithm will redistribute
                 the boxes on the desktop. It can be useful, when the boxes overlay
                 each other.
@@ -854,7 +883,7 @@
                 new box in the archive. This can be done also
                 by pressing <emphasis>Ctrl+E</emphasis> key.
               </para>
-            </formalpara>            
+            </formalpara>
           </listitem>
           <listitem>
             <formalpara>
@@ -864,7 +893,7 @@
                 menu, the box is copied into the clipboard. This can be done also
                 by pressing <emphasis>Ctrl+C</emphasis> key.
               </para>
-            </formalpara>            
+            </formalpara>
           </listitem>
           <listitem>
             <formalpara>
@@ -872,9 +901,9 @@
               <para>
                 Sometimes it is important for the user to get a quick overview
                 of the box and its neighborhood, that cannot be gotten from the
-                desktop or property grid. For these purposes, there is a 
+                desktop or property grid. For these purposes, there is a
                 <emphasis>Localize in archive</emphasis> context menu action.
-                System reacts by setting the TreeView archive part into the 
+                System reacts by setting the TreeView archive part into the
                 basic position that corresponds to the box type of the selected
                 box. (see Archive, Vertical Archive browsing). The system also
                 selects the box in the archive. User can evoke this action also
@@ -890,8 +919,21 @@
                 them into a <emphasis>group</emphasis> box by clicking on
                 the <emphasis>Make a group box</emphasis> context menu item.
                 System then creates a group box, connects all the selected
-                boxes into the group box and hides the selected boxes. The 
+                boxes into the group box and hides the selected boxes. The
                 keyboard shortcut for this action is <emphasis>Ctrl+G</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Box validation</title>
+              <para>
+                Validation of a box means checking the availability of all the actions
+                that a box can do with its current settings in a current context. If
+                there are other boxes connected into this box, it also means checking
+                of semantic constraints of these boxes. User validates the box by clicking
+                on the <emphasis>Validate</emphasis> item of the context menu. The action
+                can be done also by the <emphasis>Ctrl+Q</emphasis> shortcut.
               </para>
             </formalpara>
           </listitem>
