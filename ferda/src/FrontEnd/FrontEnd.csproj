@@ -267,6 +267,7 @@
     <Content Include="Icons\Unpack socket all layers.ico" />
     <Content Include="Icons\Unpack socket one layer.ico" />
     <Content Include="Icons\UserNote.ico" />
+    <Content Include="Icons\Validate.ico" />
     <None Include="Help\ferdasTutorial.pdf" />
     <None Include="Help\ferduvNavod.pdf" />
     <None Include="Help\userenvironment.pdf" />

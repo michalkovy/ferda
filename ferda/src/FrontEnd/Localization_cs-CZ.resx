@@ -327,6 +327,9 @@
   <data name="MenuEditUnpackOneLayerAllSockets" xml:space="preserve">
     <value>Rozbal jednu vrstvu všech zapojení</value>
   </data>
+  <data name="MenuEditValidate" xml:space="preserve">
+    <value>Validovat</value>
+  </data>
   <data name="MenuFile" xml:space="preserve">
     <value>Soubor</value>
   </data>
@@ -476,5 +479,11 @@
   </data>
   <data name="UserNoteCaption" xml:space="preserve">
     <value>Uživatelská poznámka: </value>
+  </data>
+  <data name="ValidateICEException" xml:space="preserve">
+    <value>Nastala neznámá ICE výjimka.</value>
+  </data>
+  <data name="ValidateOK" xml:space="preserve">
+    <value>Validace krabičky se zdařila</value>
   </data>
 </root>

@@ -644,6 +644,13 @@ namespace Ferda.FrontEnd.Archive
             if (bn.ToolTipText == ResManager.GetString("MenuEditPaste"))
             {
                 Paste();
+                return;
+            }
+
+            if (bn.ToolTipText == ResManager.GetString("MenuEditValidate"))
+            {
+                Validate(activeNode.Box);
+                return;
             }
         }
 
@@ -898,6 +905,14 @@ namespace Ferda.FrontEnd.Archive
 
             Adapt();
             PropertiesDisplayer.Reset();
+        }
+
+        /// <summary>
+        /// Validates the selected box
+        /// </summary>
+        public void Validate(ModulesManager.IBoxModule box)
+        {
+            FrontEndCommon.ValidateBox(box, ResManager, projectManager);
         }
 
         #endregion

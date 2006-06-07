@@ -279,22 +279,27 @@ namespace Ferda.FrontEnd.Archive
                 new ToolStripMenuItem(ParentTreeView.ResManager.GetString("MenuEditCopy"));
             ToolStripMenuItem clone =
                 new ToolStripMenuItem(ParentTreeView.ResManager.GetString("MenuEditClone"));
+            ToolStripMenuItem validate =
+                new ToolStripMenuItem(ParentTreeView.ResManager.GetString("MenuEditValidate"));
 
             copy.Click += new EventHandler(copy_Click);
             rename.Click += new EventHandler(rename_Click);
             clone.Click += new EventHandler(clone_Click);
+            validate.Click += new EventHandler(validate_Click);
 
             //shortcuts
             rename.ShortcutKeys = Keys.F2;
             copy.ShortcutKeys = (Keys)Shortcut.CtrlC;
             clone.ShortcutKeys = (Keys)Shortcut.CtrlE;
+            validate.ShortcutKeys = (Keys)Shortcut.CtrlQ;
 
             //icons
             rename.Image = provider.GetIcon("Rename").ToBitmap();
             copy.Image = provider.GetIcon("Copy").ToBitmap();
             clone.Image = provider.GetIcon("Clone").ToBitmap();
+            validate.Image = provider.GetIcon("Validate").ToBitmap();
 
-            cMenu.Items.AddRange(new ToolStripItem[] {rename, copy, clone });
+            cMenu.Items.AddRange(new ToolStripItem[] {rename, copy, clone, validate });
 
             if (!ParentTreeView.Clipboard.IsEmpty)
             {
@@ -460,6 +465,16 @@ namespace Ferda.FrontEnd.Archive
         void paste_Click(object sender, EventArgs e)
         {
             ParentTreeView.Paste();
+        }
+
+        /// <summary>
+        /// Validates the selected box
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void validate_Click(object sender, EventArgs e)
+        {
+            ParentTreeView.Validate(Box);
         }
 
         /// <summary>

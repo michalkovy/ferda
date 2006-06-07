@@ -705,6 +705,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Validate.
+        /// </summary>
+        internal static string MenuEditValidate {
+            get {
+                return ResourceManager.GetString("MenuEditValidate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         internal static string MenuFile {
@@ -1151,6 +1160,24 @@ namespace Ferda.FrontEnd {
         internal static string UserNoteCaption {
             get {
                 return ResourceManager.GetString("UserNoteCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unknown ICE exception has occured..
+        /// </summary>
+        internal static string ValidateICEException {
+            get {
+                return ResourceManager.GetString("ValidateICEException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation successful..
+        /// </summary>
+        internal static string ValidateOK {
+            get {
+                return ResourceManager.GetString("ValidateOK", resourceCulture);
             }
         }
     }
