@@ -604,6 +604,12 @@ namespace Ferda.FrontEnd.Desktop
                 UnpackAllLayersAllSocketsCore();
                 return;
             }
+
+            if (bn.ToolTipText == ResManager.GetString("MenuEditValidate"))
+            {
+                ValidateCore();
+                return;
+            }
         }
 
         /// <summary>
@@ -1088,6 +1094,18 @@ namespace Ferda.FrontEnd.Desktop
             archiveDisplayer.Adapt();
         }
 
+        /// <summary>
+        /// Validates the selected box on the desktop
+        /// </summary>
+        protected void ValidateCore()
+        {
+            foreach (BoxNode bn in SelectedShapes)
+            {
+                IBoxModule box = bn.Box;
+                FrontEndCommon.ValidateBox(box, ResManager, projectManager);
+            }
+        }
+
         #endregion
 
         #region Other methods
@@ -1533,6 +1551,8 @@ namespace Ferda.FrontEnd.Desktop
                 new ToolStripMenuItem(ResManager.GetString("MenuEditUnpackOneLayerAllSockets"));
             ToolStripMenuItem unpackAllLayersAllSockets =
                 new ToolStripMenuItem(ResManager.GetString("MenuEditUnpackAllLayersAllSockets"));
+            ToolStripMenuItem validate =
+                new ToolStripMenuItem(ResManager.GetString("MenuEditValidate"));
             
             //determines if there is anything to pack unpack
             BoxNode node = null;
@@ -1572,6 +1592,7 @@ namespace Ferda.FrontEnd.Desktop
             unpackOneLayerAllSockets.Click += new EventHandler(unpackOneLayerAllSockets_Click);
             unpackAllLayersAllSockets.Click += new EventHandler(unpackAllLayersAllSockets_Click);
             localizeInArchive.Click += new EventHandler(localizeInArchive_Click);
+            validate.Click += new EventHandler(validate_Click);
 
             //shortcuts
             rename.ShortcutKeys = Keys.F2;
@@ -1583,6 +1604,7 @@ namespace Ferda.FrontEnd.Desktop
             unpackAllLayersAllSockets.ShortcutKeys = (Keys)Shortcut.CtrlU;
             unpackOneLayerAllSockets.ShortcutKeys = (Keys)Shortcut.CtrlS;
             localizeInArchive.ShortcutKeys = (Keys)Shortcut.CtrlL;
+            validate.ShortcutKeys = (Keys)Shortcut.CtrlQ;
 
             //icons
             rename.Image = provider.GetIcon("Rename").ToBitmap();
@@ -1594,6 +1616,7 @@ namespace Ferda.FrontEnd.Desktop
             unpackAllLayersAllSockets.Image = provider.GetIcon("UnpackAllLayersAllSockets").ToBitmap();
             unpackOneLayerAllSockets.Image = provider.GetIcon("UnpackAllLayersOneSocketAllSockets").ToBitmap();
             localizeInArchive.Image = provider.GetIcon("LocalizeInArchive").ToBitmap();
+            validate.Image = provider.GetIcon("Validate").ToBitmap();
 
             ToolStripMenuItem layout = new ToolStripMenuItem(ResManager.GetString("DesktopLayout"));
             layout.Click += new EventHandler(layout_Click);
@@ -1609,13 +1632,13 @@ namespace Ferda.FrontEnd.Desktop
 
                 //adding
                 cMenu.Items.AddRange(new ToolStripItem[] { layout,
-                rename, copy, clone, sep, makeGroup, deleteFromDesktop,
+                rename, copy, clone, validate,sep, makeGroup, deleteFromDesktop,
                 deleteFromArchive, sep2, localizeInArchive });
             }
             else
             {
                 cMenu.Items.AddRange(new ToolStripItem[] { layout,
-                rename, copy, clone, sep, deleteFromDesktop,
+                rename, copy, clone, validate, sep, deleteFromDesktop,
                 deleteFromArchive, sep2, localizeInArchive });
             }
 
@@ -2448,6 +2471,16 @@ namespace Ferda.FrontEnd.Desktop
         void makeGroup_Click(object sender, EventArgs e)
         {
             MakeGroupCore();
+        }
+
+        /// <summary>
+        /// Validates the selected box
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void validate_Click(object sender, EventArgs e)
+        {
+            ValidateCore();
         }
 
         #endregion

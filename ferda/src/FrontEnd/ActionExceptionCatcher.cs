@@ -95,9 +95,6 @@ namespace Ferda.FrontEnd
                 IBoxModule box =
                     projectManager.ModulesManager.GetIBoxModuleByIdentity(error.boxIdentity);
                 
-                //selecting the box that has thrown the exception
-                //selector.SelectBox(box);
-
                 BoxExceptionThreadClass c = new BoxExceptionThreadClass(projectManager.ModulesManager, resourceManager, box, error.userMessage);
                 Thread th = new Thread(new ThreadStart(c.ThreadStart));
                 th.Start();

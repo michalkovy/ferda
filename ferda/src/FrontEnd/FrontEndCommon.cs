@@ -28,6 +28,7 @@ using System.IO;
 using Ferda.ProjectManager;
 using System.Reflection;
 using Microsoft.Win32;
+using Ferda.Modules;
 
 namespace Ferda.FrontEnd
 {
@@ -258,6 +259,44 @@ namespace Ferda.FrontEnd
             acrobatPath += "\\Acrord32.exe";
 
             return acrobatPath;
+        }
+
+        /// <summary>
+        /// Validates a box
+        /// </summary>
+        /// <param name="box">Box to be validated</param>
+        /// <param name="resManager">Manager for the localized resources</param>
+        /// <param name="projManager">Project manager to identify boxes by identity</param>
+        public static void ValidateBox(IBoxModule box, ResourceManager resManager, 
+            ProjectManager.ProjectManager projManager)
+        {
+            IBoxModule faultBox;
+
+            //trying to validate the box and catching the exceptions
+            try
+            {
+                box.Validate();
+            }
+            //the Ferda exceptions
+            catch (BoxRuntimeError e)
+            {
+                faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
+                    e.boxIdentity);
+                BoxExceptionDialog d = new BoxExceptionDialog(resManager,
+                    faultBox.UserName, e.userMessage);
+                d.ShowDialog();
+                return;
+            }
+            // other unwanted exceptions
+            catch (Ice.UnknownUserException)
+            {
+                BoxExceptionDialog d = new BoxExceptionDialog(resManager,
+                    box.UserName, resManager.GetString("ValidateICEException"));
+                return;
+            }
+
+            //showing to the user that the validation went right
+            MessageBox.Show(resManager.GetString("ValidateOK"));
         }
     }
 }

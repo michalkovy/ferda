@@ -334,6 +334,9 @@
   <data name="MenuEditUnpackOneLayerAllSockets" xml:space="preserve">
     <value>Unpack one layer of all Sockets</value>
   </data>
+  <data name="MenuEditValidate" xml:space="preserve">
+    <value>Validate</value>
+  </data>
   <data name="MenuFile" xml:space="preserve">
     <value>File</value>
   </data>
@@ -483,5 +486,11 @@
   </data>
   <data name="UserNoteCaption" xml:space="preserve">
     <value>User note: </value>
+  </data>
+  <data name="ValidateICEException" xml:space="preserve">
+    <value>An unknown ICE exception has occured.</value>
+  </data>
+  <data name="ValidateOK" xml:space="preserve">
+    <value>Validation successful.</value>
   </data>
 </root>

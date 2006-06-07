@@ -408,6 +408,8 @@ using Ferda.ModulesManager;
             iconProvider.Add("LocalizeInArchive", i);
             i = new Icon("Icons\\MakeGroup.ico");
             iconProvider.Add("MakeGroup", i);
+            i = new Icon("Icons\\Validate.ico");
+            iconProvider.Add("Validate", i);
         }
 
         /// <summary>
