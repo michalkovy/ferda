@@ -278,6 +278,33 @@ namespace Ferda.FrontEnd
                 box.Validate();
             }
             //the Ferda exceptions
+            catch (BadValueError e)
+            {
+                faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
+                    e.boxIdentity);
+                BoxExceptionDialog d = new BoxExceptionDialog(resManager,
+                    faultBox.UserName, e.userMessage);
+                d.ShowDialog();
+                return;
+            }
+            catch (BadParamsError e)
+            {
+                faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
+                    e.boxIdentity);
+                BoxExceptionDialog d = new BoxExceptionDialog(resManager,
+                    faultBox.UserName, e.userMessage);
+                d.ShowDialog();
+                return;
+            }
+            catch (NoConnectionInSocketError e)
+            {
+                faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
+                    e.boxIdentity);
+                BoxExceptionDialog d = new BoxExceptionDialog(resManager,
+                    faultBox.UserName, e.userMessage);
+                d.ShowDialog();
+                return;
+            }
             catch (BoxRuntimeError e)
             {
                 faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(

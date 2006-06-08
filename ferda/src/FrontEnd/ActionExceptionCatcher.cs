@@ -98,6 +98,7 @@ namespace Ferda.FrontEnd
                 BoxExceptionThreadClass c = new BoxExceptionThreadClass(projectManager.ModulesManager, resourceManager, box, error.userMessage);
                 Thread th = new Thread(new ThreadStart(c.ThreadStart));
                 th.Start();
+                return;
             }
             if (ex is Ferda.Modules.BadParamsError)
             {
