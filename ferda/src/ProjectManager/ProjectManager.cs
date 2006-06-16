@@ -173,6 +173,8 @@ namespace Ferda.ProjectManager {
         /// <param name="icePath">A <see cref="T:System.String"/> representing
         /// path where IceGridnode.exe is</param>
         /// <param name="iceGridAsService">If true, will try to start IceGrid as Windows service</param>
+        /// <param name="iceGridWorkingDirectory">The ice grid working directory.</param>
+        /// <param name="iceGridApplicationXmlFilePath">The ice grid application XML file path.</param>
         public void StartIceGrid(string icePath, bool iceGridAsService, string iceGridWorkingDirectory, string iceGridApplicationXmlFilePath)
         {
             if (iceGridAsService) {
