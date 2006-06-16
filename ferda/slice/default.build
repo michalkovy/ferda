@@ -44,7 +44,12 @@
 				<arg file="Modules/BasicPropertyTypes.ice"/>
 				<arg file="Modules/OtherPropertyTypes.ice"/>
 				<arg file="Modules/Common.ice"/>
-				<!-- 	<arg file="Modules/Attribute.ice"/> -->
+				<arg file="Modules/Guha.Attribute.ice"/>
+				<arg file="Modules/Guha.Data.ice"/>
+				<arg file="Modules/Guha.Math.ice"/>
+				<arg file="Modules/Guha.Math.Quantifiers.ice"/>
+				<arg file="Modules/Guha.MiningProcessor.ice"/>
+				<arg file="Modules/Guha.Hypothesis.ice"/>
 			</exec>
 			<echo message="Generuji .cs z .ice souboru v adresari ModulesManager..."/>
 			<mkdir dir="${build.dir}/ModulesManager/generated"/>

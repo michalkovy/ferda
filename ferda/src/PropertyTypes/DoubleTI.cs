@@ -24,6 +24,16 @@ namespace Ferda.Modules
 		{
 			this.doubleValue = iface.getDoubleValue();
 		}
+
+        public static implicit operator double(DoubleTI v)
+        {
+            return v.doubleValue;
+        }
+
+        public static implicit operator DoubleTI(double v)
+        {
+            return new DoubleTI(v);
+        }
 		
 		/// <summary>
 		/// Method getDoubleValue

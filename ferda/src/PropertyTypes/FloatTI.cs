@@ -24,6 +24,16 @@ namespace Ferda.Modules
 		{
 			this.floatValue = iface.getFloatValue();
 		}
+
+        public static implicit operator float(FloatTI v)
+        {
+            return v.floatValue;
+        }
+
+        public static implicit operator FloatTI(float v)
+        {
+            return new FloatTI(v);
+        }
 		
 		/// <summary>
 		/// Method getFloatValue

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="Ferda.Guha.Data.DatabaseConnectionSettingHelper" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>DatabaseConnectionSettingHelper.cs</FileName>
+      <HashCode>AAAAAAAAAAIAAIAAgAAAAABAAAAAAIAAACAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ferda.Guha.Data.DataProviderHelper" Collapsed="true">
+    <Position X="3.75" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>DataProvider.cs</FileName>
+      <HashCode>AAAAAAQAAAAAACAAAAAAIQAAAEAAAAEAAAAAAAIBAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ferda.Guha.Data.Exceptions" Collapsed="true">
+    <Position X="3.75" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Exceptions.cs</FileName>
+      <HashCode>AAAgAAAAIAAAAAAAAAAAAAAAAAQCIAEAAAAAAAAIAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ferda.Guha.Data.GenericColumn" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>GenericColumn.cs</FileName>
+      <HashCode>AAAAAABACAAGAAAkAAAAAVAABAAAAAAAEAkgAAAgAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ferda.Guha.Data.GenericDatabase" Collapsed="true">
+    <Position X="0.5" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>GenericDatabase.cs</FileName>
+      <HashCode>ECIAECAAAg4AARBACAAAAAAQgARQEAAIACAAABAQEBA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Ferda.Guha.Data.GenericDatabaseCache" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>GenericDatabaseCache.cs</FileName>
+      <HashCode>AAAAACAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ferda.Guha.Data.GenericDataTable" Collapsed="true">
+    <Position X="0.5" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>GenericDataTable.cs</FileName>
+      <HashCode>ACAASQAAAAgAABAACEAABAAABAAAAAAACAARAAAgACA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+</ClassDiagram>

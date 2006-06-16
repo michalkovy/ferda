@@ -148,8 +148,8 @@ namespace Ferda.Utils.ConfigGenerator
 					consoleSubString = "localization";
 				}
 
-				//try
-				{
+                //try
+                //{
 					//Try xsd
 
 					XPathDocument document = new XPathDocument(InputFileName);
@@ -209,13 +209,13 @@ namespace Ferda.Utils.ConfigGenerator
 					}
 					Console.WriteLine(filesGenerated + " files generated.");
 					return;
-				}
-				//catch (Exception ex)
-				{
-					//Console.WriteLine("_Error: Config Generation FAILED! " + Args);
-					//Console.WriteLine(ex.Message);
-					//Environment.Exit(1);
-				}
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine("_Error: Config Generation FAILED! " + Args);
+                //    Console.WriteLine(ex.Message);
+                //    Environment.Exit(1);
+                //}
 			}
 		}
 

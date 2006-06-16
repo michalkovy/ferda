@@ -1,0 +1,75 @@
+<VSPerformanceSession Version="1.00">
+  <Options>
+    <Solution>Core.sln</Solution>
+    <CollectionMethod>Instrumentation</CollectionMethod>
+    <AllocationMethod>None</AllocationMethod>
+    <AddReport>true</AddReport>
+    <UniqueReport>Timestamp</UniqueReport>
+    <SamplingMethod>Cycles</SamplingMethod>
+    <CycleCount>10000000</CycleCount>
+    <PageFaultCount>10</PageFaultCount>
+    <SysCallCount>10</SysCallCount>
+    <SamplingCounter PlatformID="00000000" CounterID="0000000000000000" ReloadValue="00000000000f4240" />
+    <RelocateBinaries>false</RelocateBinaries>
+    <HardwareCounters EnableHWCounters="false" />
+    <EtwSettings />
+  </Options>
+  <PreinstrumentEvent>
+    <InstrEventExclude>false</InstrEventExclude>
+  </PreinstrumentEvent>
+  <PostinstrumentEvent>
+    <InstrEventExclude>false</InstrEventExclude>
+  </PostinstrumentEvent>
+  <Binaries>
+    <TestBinary>
+      <Path>AttributeTest\obj\Debug\AttributeTest.dll</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <LaunchProject>true</LaunchProject>
+      <LaunchMethod>Test</LaunchMethod>
+      <StartupDirectory>AttributeTest\bin\Debug\</StartupDirectory>
+      <Arguments />
+      <NetAppHost>IIS</NetAppHost>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+      <ProjRef>{E9DE4B17-9EA6-455D-9380-92F2301DF678}|AttributeTest\AttributeTest.csproj</ProjRef>
+      <ProjPath>AttributeTest\AttributeTest.csproj</ProjPath>
+      <ProjName>AttributeTest.AttributeTest.CompareTest</ProjName>
+      <TestId>{2cd3eef5-96d1-456e-292b-ac88b8f2893a}</TestId>
+      <TestName>AttributeTest.AttributeTest.CompareTest</TestName>
+    </TestBinary>
+    <ProjBinary>
+      <Path>Attribute\obj\Debug\Attribute.dll</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <LaunchProject>true</LaunchProject>
+      <LaunchMethod>Executable</LaunchMethod>
+      <StartupDirectory>Attribute\bin\Debug\</StartupDirectory>
+      <Arguments />
+      <NetAppHost>IIS</NetAppHost>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+      <ProjRef>{B59997EA-0F48-4025-8F1D-B36239897AFC}|Attribute\Attribute.csproj</ProjRef>
+      <ProjPath>Attribute\Attribute.csproj</ProjPath>
+      <ProjName>Attribute</ProjName>
+    </ProjBinary>
+  </Binaries>
+  <Reports>
+    <Report>
+      <Path>AttributeTest060419.vsp</Path>
+    </Report>
+  </Reports>
+  <Launches>
+    <TestBinary>
+      <Path>:TB:{2cd3eef5-96d1-456e-292b-ac88b8f2893a}:AttributeTest.AttributeTest.CompareTest:{E9DE4B17-9EA6-455D-9380-92F2301DF678}|AttributeTest\AttributeTest.csproj</Path>
+    </TestBinary>
+  </Launches>
+</VSPerformanceSession>

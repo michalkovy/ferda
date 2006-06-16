@@ -1,10 +1,10 @@
 // BoxModuleI.cs - box on Ferda modules side
 //
 // Authors: 
-//   Michal Kováč <michal.kovac.develop@centrum.cz>
-//   Tomáš Kuchař <tomas.kuchar@gmail.com>
+//   Michal KovĂˇÄŤ <michal.kovac.develop@centrum.cz>
+//   TomĂˇĹˇ KuchaĹ™ <tomas.kuchar@gmail.com>
 //
-// Copyright (c) 2005 Michal Kováč, Tomáš Kuchař 
+// Copyright (c) 2005 Michal KovĂˇÄŤ, TomĂˇĹˇ KuchaĹ™ 
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,9 +22,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Ferda.Modules.Boxes;
 using System.Diagnostics;
+using Ferda.Modules.Boxes;
+using Ferda.ModulesManager;
+using Ice;
+using Exception=System.Exception;
+using Object=Ice.Object;
 
 namespace Ferda.Modules
 {
@@ -34,6 +37,7 @@ namespace Ferda.Modules
     public class BoxModuleI : BoxModuleDisp_
     {
         #region Connections i.e. boxes in sockets
+
         /// <summary>
         /// <para><c>Key</c> is the socket`s name.</para>
         /// <para><c>Value</c> is next Dictionary.</para>
@@ -46,6 +50,7 @@ namespace Ferda.Modules
         /// </para>
         /// </summary>
         private Dictionary<string, Dictionary<string, BoxModulePrx>> connections;
+
         /// <summary>
         /// <para>
         /// Gets the boxes (proxies of the box modules) connected 
@@ -84,6 +89,7 @@ namespace Ferda.Modules
                 throw new ArgumentOutOfRangeException("socketName", socketName, message);
             }
         }
+
         /// <summary>
         /// Gets the boxes (proxies of the box modules) connected 
         /// to the socket of the specified name.
@@ -98,11 +104,11 @@ namespace Ferda.Modules
         /// Thrown iff specified <c>socketName</c> doesn`t match any
         /// socket in the box module.
         /// </exception>
-        public override BoxModulePrx[] getConnections(string socketName, Ice.Current __current)
+        public override BoxModulePrx[] getConnections(string socketName, Current __current)
         {
-            if (!this.boxInfo.TestSocketNameExistence(socketName))
+            if (!boxInfo.TestSocketNameExistence(socketName))
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "BMI05", socketName);
+                throw Exceptions.NameNotExistError(null, null, "BMI05", socketName);
             }
             return GetConnections(socketName);
         }
@@ -121,32 +127,34 @@ namespace Ferda.Modules
         /// <exception cref="Ferda.Modules.ConnectionNotExistError">
         /// Thrown if specified box module is not connected to specified socket.
         /// </exception>
-        public override void removeConnection(string socketName, string boxModuleIceIdentity, Ice.Current __current)
+        public override void removeConnection(string socketName, string boxModuleIceIdentity, Current __current)
         {
-            if (!this.boxInfo.TestSocketNameExistence(socketName))
+            if (!boxInfo.TestSocketNameExistence(socketName))
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "BMI06", socketName);
+                throw Exceptions.NameNotExistError(null, null, "BMI06", socketName);
             }
             lock (this)
             {
                 try
                 {
-                    this.connections[socketName].Remove(boxModuleIceIdentity);
+                    connections[socketName].Remove(boxModuleIceIdentity);
                 }
                 catch
                 {
                     Debug.WriteLine("BMI04");
-                    throw new Ferda.Modules.ConnectionNotExistError();
+                    throw new ConnectionNotExistError();
                 }
                 if (boxInfo.TestPropertyNameExistence(socketName))
                 {
-                    this.setProperty(socketName, boxInfo.GetPropertyDefaultValue(socketName));
+                    setProperty(socketName, boxInfo.GetPropertyDefaultValue(socketName));
                 }
             }
         }
+
         #endregion
 
         #region Functions i.e. functions in sockets
+
         /// <summary>
         /// <para>
         /// Gets the functions objects (more precisely its proxies) 
@@ -167,16 +175,16 @@ namespace Ferda.Modules
         /// socket in the box module.
         /// </exception>
         /// <seealso cref="T:Ferda.Modules.Boxes.SocketConnections"/>
-        public Ice.ObjectPrx[] GetFunctions(string socketName)
+        public ObjectPrx[] GetFunctions(string socketName)
         {
             try
             {
                 lock (this)
                 {
-                    List<Ice.ObjectPrx> result = new List<Ice.ObjectPrx>();
-                    foreach (BoxModulePrx boxModule in this.connections[socketName].Values)
+                    List<ObjectPrx> result = new List<ObjectPrx>();
+                    foreach (BoxModulePrx boxModule in connections[socketName].Values)
                     {
-                        Ice.ObjectPrx functions = boxModule.getFunctions();
+                        ObjectPrx functions = boxModule.getFunctions();
                         if (functions != null)
                             result.Add(functions);
                     }
@@ -190,6 +198,7 @@ namespace Ferda.Modules
                 throw new ArgumentOutOfRangeException("socketName", socketName, message);
             }
         }
+
         #endregion
 
         /// <summary>
@@ -216,9 +225,9 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((ShortT)value).getShortValue();
+                    return ((ShortT) value).getShortValue();
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
                     return ShortTInterfacePrxHelper.checkedCast(functions[0]).getShortValue();
@@ -246,9 +255,9 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((BoolT)value).getBoolValue();
+                    return ((BoolT) value).getBoolValue();
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
                     return BoolTInterfacePrxHelper.checkedCast(functions[0]).getBoolValue();
@@ -276,9 +285,9 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((IntT)value).getIntValue();
+                    return ((IntT) value).getIntValue();
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
                     return IntTInterfacePrxHelper.checkedCast(functions[0]).getIntValue();
@@ -306,9 +315,9 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((LongT)value).getLongValue();
+                    return ((LongT) value).getLongValue();
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
                     return LongTInterfacePrxHelper.checkedCast(functions[0]).getLongValue();
@@ -336,9 +345,9 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((FloatT)value).getFloatValue();
+                    return ((FloatT) value).getFloatValue();
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
                     return FloatTInterfacePrxHelper.checkedCast(functions[0]).getFloatValue();
@@ -366,9 +375,9 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((DoubleT)value).getDoubleValue();
+                    return ((DoubleT) value).getDoubleValue();
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
                     return DoubleTInterfacePrxHelper.checkedCast(functions[0]).getDoubleValue();
@@ -395,17 +404,47 @@ namespace Ferda.Modules
             lock (this)
             {
                 PropertyValue value;
-                if(properties.TryGetValue(propertyName, out value))
-                    return ((StringT)value).getStringValue();
+                if (properties.TryGetValue(propertyName, out value))
+                    return ((StringT) value).getStringValue();
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
-                if(functions.Length > 0)
+                ObjectPrx[] functions = GetFunctions(propertyName);
+                if (functions.Length > 0)
                 {
                     return StringTInterfacePrxHelper.checkedCast(functions[0]).getStringValue();
                 }
                 else
                 {
                     Debug.WriteLine("BMI14");
+                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the string[] property of the specified name.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>The <see cref="System.String">String</see>[] value of the specified property.</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        /// Thrown iff specified <c>propertyName</c> doesn`t match any
+        /// StringSeq property.
+        /// </exception>
+        public string[] GetPropertyStringSeq(string propertyName)
+        {
+            lock (this)
+            {
+                PropertyValue value;
+                if (properties.TryGetValue(propertyName, out value))
+                    return ((StringSeqT) value).getStringSeq();
+
+                ObjectPrx[] functions = GetFunctions(propertyName);
+                if (functions.Length > 0)
+                {
+                    return StringSeqTInterfacePrxHelper.checkedCast(functions[0]).getStringSeq();
+                }
+                else
+                {
+                    Debug.WriteLine("BMI144");
                     throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
                 }
             }
@@ -428,14 +467,15 @@ namespace Ferda.Modules
                 DateTime returnValue;
                 if (properties.TryGetValue(propertyName, out value))
                 {
-                    ((DateTimeTI)value).TryGetDateTime(out returnValue);
+                    ((DateTimeTI) value).TryGetDateTime(out returnValue);
                     return returnValue;
                 }
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
-                    (new DateTimeTI(DateTimeTInterfacePrxHelper.checkedCast(functions[0]))).TryGetDateTime(out returnValue);
+                    (new DateTimeTI(DateTimeTInterfacePrxHelper.checkedCast(functions[0]))).TryGetDateTime(
+                        out returnValue);
                     return returnValue;
                 }
                 else
@@ -463,11 +503,11 @@ namespace Ferda.Modules
                 DateTime returnValue;
                 if (properties.TryGetValue(propertyName, out value))
                 {
-                    ((DateTI)value).TryGetDateTime(out returnValue);
+                    ((DateTI) value).TryGetDateTime(out returnValue);
                     return returnValue;
                 }
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
                     (new DateTI(DateTInterfacePrxHelper.checkedCast(functions[0]))).TryGetDateTime(out returnValue);
@@ -498,11 +538,11 @@ namespace Ferda.Modules
                 TimeSpan returnValue;
                 if (properties.TryGetValue(propertyName, out value))
                 {
-                    ((TimeTI)value).TryGetTimeSpan(out returnValue);
+                    ((TimeTI) value).TryGetTimeSpan(out returnValue);
                     return returnValue;
                 }
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
                     (new TimeTI(TimeTInterfacePrxHelper.checkedCast(functions[0]))).TryGetTimeSpan(out returnValue);
@@ -533,7 +573,7 @@ namespace Ferda.Modules
                 if (properties.TryGetValue(propertyName, out value))
                     return value;
 
-                Ice.ObjectPrx[] functions = this.GetFunctions(propertyName);
+                ObjectPrx[] functions = GetFunctions(propertyName);
                 if (functions.Length > 0)
                 {
                     return boxInfo.GetPropertyObjectFromInterface(propertyName, functions[0]);
@@ -559,12 +599,12 @@ namespace Ferda.Modules
         /// Gets the box info.
         /// </summary>
         /// <remarks>
-        /// The <see cref="T:Ferda.Modules.Boxex.IBoxInfo"/> provides 
+        /// The <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> provides 
         /// some fundamental functionality so if you are developing 
         /// new box module you don`t have to bother about implementing the 
         /// <b>Factory Creator</b> moreover if you are using e.g. 
-        /// <see cref="T:Ferda.Modules.Boxex.BoxInfo"/> implementatiion of
-        /// the <see cref="T:Ferda.Modules.Boxex.IBoxInfo"/> interface you
+        /// <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> implementatiion of
+        /// the <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> interface you
         /// don`t need to understand the theory about <b>Factory Creators</b>
         /// and <b>Factories</b> in practice.
         /// </remarks>
@@ -577,7 +617,7 @@ namespace Ferda.Modules
         /// <summary>
         /// Ice identity of the box module.
         /// </summary>
-        private Ice.Identity iceIdentity;
+        private Identity iceIdentity;
 
         /// <summary>
         /// Gets Ice identity i.e. identity of the Ice object (box module).
@@ -589,7 +629,7 @@ namespace Ferda.Modules
         /// identity (i.e. persistent identifier of current box module)
         /// please use <see cref="P:Ferda.Modules.BoxModuleI.PersistentIdentity"/>.
         /// </remarks>
-        public Ice.Identity IceIdentity
+        public Identity IceIdentity
         {
             get { return iceIdentity; }
         }
@@ -600,6 +640,7 @@ namespace Ferda.Modules
         /// of current box module..
         /// </summary>
         private string stringIceIdentity;
+
         /// <summary>
         /// Gets a string representation of the 
         /// <see cref="P:Ferda.Modules.BoxModuleI.IceIdentity">ice identity</see>
@@ -624,10 +665,7 @@ namespace Ferda.Modules
         /// <value>The persistent identity of the box module.</value>
         public int PersistentIdentity
         {
-            get
-            {
-                return Manager.getProjectInformation().getProjectIdentifier(StringIceIdentity);
-            }
+            get { return Manager.getProjectInformation().getProjectIdentifier(StringIceIdentity); }
         }
 
         /// <summary>
@@ -640,9 +678,9 @@ namespace Ferda.Modules
         /// recomended to use this output. Please use it only
         /// if you are certain of your are going to do.
         /// </remarks>
-        public ModulesManager.OutputPrx Output
+        public OutputPrx Output
         {
-            get { return this.manager.getOutputInterface(); }
+            get { return manager.getOutputInterface(); }
         }
 
         /// <summary>
@@ -656,7 +694,7 @@ namespace Ferda.Modules
         /// <value>Box module`s proxy.</value>
         public BoxModulePrx MyProxy
         {
-            get { return this.myProxy; }
+            get { return myProxy; }
         }
 
         /// <summary>
@@ -671,22 +709,23 @@ namespace Ferda.Modules
         /// <returns>
         /// The <see cref="Ferda.Modules.BoxModuleFactoryPrx"/>.
         /// </returns>
-        public override BoxModuleFactoryPrx getMyFactory(Ice.Current __current)
+        public override BoxModuleFactoryPrx getMyFactory(Current __current)
         {
-            return this.myFactoryProxy;
+            return myFactoryProxy;
         }
 
-        private Ferda.ModulesManager.ManagersEnginePrx manager;
+        private ManagersEnginePrx manager;
+
         /// <summary>
         /// Gets the manager.
         /// </summary>
         /// <value>The manager.</value>
-        public Ferda.ModulesManager.ManagersEnginePrx Manager
+        public ManagersEnginePrx Manager
         {
             get { return manager; }
         }
 
-        private Ice.ObjectAdapter adapter;
+        private ObjectAdapter adapter;
 
         /// <summary>
         /// The localization preferences.
@@ -709,7 +748,7 @@ namespace Ferda.Modules
         /// <summary>
         /// The box module`s functions <see cref="T:Ice.Object"/>.
         /// </summary>
-        private Ice.Object functionsIceObj;
+        private Object functionsIceObj;
 
         /// <summary>
         /// The box module`s functions object.
@@ -728,7 +767,7 @@ namespace Ferda.Modules
         /// <summary>
         /// The proxy of box module`s functions object.
         /// </summary>
-        private Ice.ObjectPrx functionsObjPrx;
+        private ObjectPrx functionsObjPrx;
 
         /// <summary>
         /// <para>Gets the functions object proxy.</para>
@@ -744,9 +783,9 @@ namespace Ferda.Modules
         /// The <see cref="Ice.ObjectPrx">proxy </see> of the box module`s 
         /// functions object.
         /// </returns>
-        public override Ice.ObjectPrx getFunctions(Ice.Current __current)
+        public override ObjectPrx getFunctions(Current __current)
         {
-            return this.functionsObjPrx;
+            return functionsObjPrx;
         }
 
         /// <summary>
@@ -757,9 +796,9 @@ namespace Ferda.Modules
         /// Array of <see cref="T:System.String"/> as ids 
         /// of all provided functions (i.e. implemented intefaces).
         /// </returns>
-        public override string[] getFunctionsIceIds(Ice.Current __current)
+        public override string[] getFunctionsIceIds(Current __current)
         {
-            return this.functionsObjPrx.ice_ids();
+            return functionsObjPrx.ice_ids();
         }
 
         #endregion
@@ -775,51 +814,51 @@ namespace Ferda.Modules
         /// <param name="adapter">The adapter.</param>
         /// <param name="localePrefs">The localization preferences.</param>
         public BoxModuleI(IBoxInfo boxInfo,
-            Ice.Identity myIdentity,
-            BoxModuleFactoryPrx myFactoryProxy,
-            Ferda.ModulesManager.ManagersEnginePrx manager,
-            Ice.ObjectAdapter adapter,
-            string[] localePrefs)
+                          Identity myIdentity,
+                          BoxModuleFactoryPrx myFactoryProxy,
+                          ManagersEnginePrx manager,
+                          ObjectAdapter adapter,
+                          string[] localePrefs)
         {
-            System.Diagnostics.Debug.WriteLine("BoxModuleI Constructor (entering): " + boxInfo.Identifier);
+            Debug.WriteLine("BoxModuleI Constructor (entering): " + boxInfo.Identifier);
 
             // initializes inner fields by specified parameters
             this.boxInfo = boxInfo;
-            this.iceIdentity = myIdentity;
-            this.stringIceIdentity = Ice.Util.identityToString(IceIdentity);
+            iceIdentity = myIdentity;
+            stringIceIdentity = Util.identityToString(IceIdentity);
             this.myFactoryProxy = myFactoryProxy;
             this.manager = manager;
             this.adapter = adapter;
             this.localePrefs = localePrefs;
 
             // add the new box module to the specified adapter
-            adapter.add(this, this.iceIdentity);
+            adapter.add(this, iceIdentity);
             // get my proxy
-            this.myProxy = BoxModulePrxHelper.uncheckedCast(adapter.createProxy(myIdentity));
+            myProxy = BoxModulePrxHelper.uncheckedCast(adapter.createProxy(myIdentity));
 
             // initializes box module`s functions object
-            this.boxInfo.CreateFunctions(this, out this.functionsIceObj, out this.functionsIObj);
-            this.functionsIObj.setBoxModuleInfo(this, this.boxInfo);
-            this.functionsObjPrx = Ice.ObjectPrxHelper.uncheckedCast(adapter.addWithUUID(this.functionsIceObj));
+            this.boxInfo.CreateFunctions(this, out functionsIceObj, out functionsIObj);
+            functionsIObj.setBoxModuleInfo(this, this.boxInfo);
+            functionsObjPrx = ObjectPrxHelper.uncheckedCast(adapter.addWithUUID(functionsIceObj));
 
             // initializes properties
-            this.properties = new Dictionary<string, PropertyValue>();
+            properties = new Dictionary<string, PropertyValue>();
             foreach (string propertyName in boxInfo.GetPropertiesNames())
             {
                 if (!boxInfo.IsPropertyReadOnly(propertyName))
                 {
-                    this.setProperty(propertyName, boxInfo.GetPropertyDefaultValue(propertyName));
+                    setProperty(propertyName, boxInfo.GetPropertyDefaultValue(propertyName));
                 }
             }
 
             // initializes sockets (connections and functions)
-            this.connections = new Dictionary<string, Dictionary<string, BoxModulePrx>>();
+            connections = new Dictionary<string, Dictionary<string, BoxModulePrx>>();
             foreach (string socketName in boxInfo.GetSocketNames())
             {
                 connections[socketName] = new Dictionary<string, BoxModulePrx>();
             }
 
-            System.Diagnostics.Debug.WriteLine("BoxModuleI Constructor (leaving): " + this.boxInfo.Identifier);
+            Debug.WriteLine("BoxModuleI Constructor (leaving): " + this.boxInfo.Identifier);
         }
 
         /// <summary>
@@ -831,7 +870,7 @@ namespace Ferda.Modules
         /// possible additional sockets.
         /// </returns>
         /// <remarks>For lamda-like boxes.</remarks>
-        public override SocketInfo[] getAdditionalSockets(Ice.Current __current)
+        public override SocketInfo[] getAdditionalSockets(Current __current)
         {
             return new SocketInfo[0];
         }
@@ -848,9 +887,9 @@ namespace Ferda.Modules
         /// Modules asking for creation dynamically depends on actual
         /// inner state of the box module.
         /// </remarks>
-        public override ModulesAskingForCreation[] getModulesAskingForCreation(Ice.Current __current)
+        public override ModulesAskingForCreation[] getModulesAskingForCreation(Current __current)
         {
-            return this.boxInfo.GetModulesAskingForCreation(this.localePrefs, this);
+            return boxInfo.GetModulesAskingForCreation(localePrefs, this);
         }
 
         /// <summary>
@@ -866,13 +905,13 @@ namespace Ferda.Modules
         /// <exception cref="T:Ferda.Modules.NameNotExistError">
         /// Thrown if property named <c>propertyName</c> doesn`t exist in the box module.
         /// </exception>
-        public override SelectString[] getPropertyOptions(string propertyName, Ice.Current __current)
+        public override SelectString[] getPropertyOptions(string propertyName, Current __current)
         {
             // tests if there is the specified property exists
-            if (!this.boxInfo.TestPropertyNameExistence(propertyName))
-                throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "BMI19", propertyName);
+            if (!boxInfo.TestPropertyNameExistence(propertyName))
+                throw Exceptions.NameNotExistError(null, null, "BMI19", propertyName);
             // gets and returns the options
-            return this.boxInfo.GetPropertyOptions(propertyName, this);
+            return boxInfo.GetPropertyOptions(propertyName, this);
         }
 
         /// <summary>
@@ -887,22 +926,22 @@ namespace Ferda.Modules
         /// <exception cref="T:Ferda.Modules.NameNotExistError">
         /// Thrown if property named <c>propertyName</c> doesn`t exist in the box module.
         /// </exception>
-        public override bool isPropertySet(string propertyName, Ice.Current __current)
+        public override bool isPropertySet(string propertyName, Current __current)
         {
             // tests property existence
-            if (!this.boxInfo.TestPropertyNameExistence(propertyName))
+            if (!boxInfo.TestPropertyNameExistence(propertyName))
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "BMI20", propertyName);
+                throw Exceptions.NameNotExistError(null, null, "BMI20", propertyName);
             }
             // tests property value if it is set
-            return boxInfo.IsPropertySet(propertyName, this.getProperty(propertyName));
+            return boxInfo.IsPropertySet(propertyName, getProperty(propertyName));
         }
 
         /// <summary>
         /// Determines whether the specified <c>sockets</c> satisfy 
         /// the condition on required sockets (<c>neededSockets</c>) 
         /// i.e. if there are sockets of the same name and the same type 
-        /// (<see cref="F:Ferda.Modules.Serializer.BoxSerializer.NeededSocket.FunctionIceId"/>)
+        /// (<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.NeededSocket.FunctionIceId"/>)
         /// as required.
         /// </summary>
         /// <param name="neededSockets">The needed sockets.</param>
@@ -964,10 +1003,10 @@ namespace Ferda.Modules
         /// <see cref="M:Ferda.Modules.BoxModuleI.hasSockets(Ferda.Modules.NeededSocket[],Ferda.Modules.SocketInfo[])">
         /// has required sockets</see>.
         /// </returns>
-        private static bool hasBoxType(BoxType boxType, Ice.ObjectPrx functionsPrx, SocketInfo[] sockets)
+        private static bool hasBoxType(BoxType boxType, ObjectPrx functionsPrx, SocketInfo[] sockets)
         {
             return functionsPrx.ice_isA(boxType.functionIceId) &&
-                hasSockets(boxType.neededSockets, sockets);
+                   hasSockets(boxType.neededSockets, sockets);
         }
 
         /// <summary>
@@ -987,20 +1026,20 @@ namespace Ferda.Modules
         /// <exception cref="T:Ferda.Modules.ConnectionExistsError">
         /// Thrown if the socket accept only one connection and it is already used.
         /// </exception>
-        public override void setConnection(string socketName, BoxModulePrx otherModule, Ice.Current __current)
+        public override void setConnection(string socketName, BoxModulePrx otherModule, Current __current)
         {
             // tests specified socketName existence
-            if (!this.boxInfo.TestSocketNameExistence(socketName))
+            if (!boxInfo.TestSocketNameExistence(socketName))
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "BMI21", socketName);
+                throw Exceptions.NameNotExistError(null, null, "BMI21", socketName);
             }
 
             // tests Ferda.Modules.BoxType of otherModule
             bool badTypeError = true;
-            Ice.ObjectPrx objPrx = otherModule.getFunctions();
+            ObjectPrx objPrx = otherModule.getFunctions();
             SocketInfo[] otherModuleSocketInfos = otherModule.getMyFactory().getSockets();
             foreach (BoxType socketBoxType in
-                this.boxInfo.GetSocketTypes(socketName))
+                boxInfo.GetSocketTypes(socketName))
             {
                 // tests otherModule`s functions type (functionsPrx.ice_isA)
                 // tests if otherModule has needed sockets
@@ -1014,10 +1053,10 @@ namespace Ferda.Modules
             {
                 // type of otherModule`s functions is bad
                 Debug.WriteLine("BMI22");
-                throw new Ferda.Modules.BadTypeError();
+                throw new BadTypeError();
             }
 
-            string identity = Ice.Util.identityToString(otherModule.ice_getIdentity());
+            string identity = Util.identityToString(otherModule.ice_getIdentity());
 
             lock (this)
             {
@@ -1029,15 +1068,15 @@ namespace Ferda.Modules
                 else
                 {
                     // tests if socket (accepting only one connection) is already full
-                    if ((!this.boxInfo.IsSocketMoreThanOne(socketName)) &&
-                        this.connections[socketName].Count != 0)
+                    if ((!boxInfo.IsSocketMoreThanOne(socketName)) &&
+                        connections[socketName].Count != 0)
                     {
                         // the socket is already used -> exception is thrown
                         Debug.WriteLine("BMI23");
                         throw new ConnectionExistsError();
                     }
                 }
-                this.connections[socketName][identity] = otherModule;
+                connections[socketName][identity] = otherModule;
             }
         }
 
@@ -1061,18 +1100,18 @@ namespace Ferda.Modules
         /// <exception cref="T:Ferda.Modules.BoxRuntimeError">
         /// Thrown if any runtime error or exception occured during execution of the action.
         /// </exception>
-        public override void runAction(string actionName, Ice.Current __current)
+        public override void runAction(string actionName, Current __current)
         {
             lock (this)
             {
                 bool neededSocketsConnected = true;
-                foreach (string[] neededSockets in this.boxInfo.GetActionInfoNeededConnectedSockets(actionName))
+                foreach (string[] neededSockets in boxInfo.GetActionInfoNeededConnectedSockets(actionName))
                 {
                     neededSocketsConnected = true;
                     foreach (string neededSocket in neededSockets)
                     {
-                        if (!this.connections.ContainsKey(neededSocket)
-                            || !(this.connections[neededSocket].Count > 0))
+                        if (!connections.ContainsKey(neededSocket)
+                            || !(connections[neededSocket].Count > 0))
                         {
                             neededSocketsConnected = false;
                             break;
@@ -1084,21 +1123,21 @@ namespace Ferda.Modules
                 if (!neededSocketsConnected)
                 {
                     Debug.WriteLine("BMI24");
-                    throw new Ferda.Modules.NeedConnectedSocketError();
+                    throw new NeedConnectedSocketError();
                 }
 
                 // lock the box module
-                this.manager.getBoxModuleLocker().lockBoxModule(StringIceIdentity);
+                manager.getBoxModuleLocker().lockBoxModule(StringIceIdentity);
 
                 try
                 {
-                    this.boxInfo.RunAction(actionName, this);
+                    boxInfo.RunAction(actionName, this);
                     //throws BoxRuntimeError, NameNotExistError
                 }
                 finally
                 {
                     // unlock the box module
-                    this.manager.getBoxModuleLocker().unlockBoxModule(StringIceIdentity);
+                    manager.getBoxModuleLocker().unlockBoxModule(StringIceIdentity);
                 }
             }
         }
@@ -1115,29 +1154,29 @@ namespace Ferda.Modules
         /// </exception>
         /// <exception cref="T:Ferda.Modules.BadTypeError">
         /// Thrown iff specified <c>propertyValue</c> is not of the
-        /// specified property data type. See <see cref="T:Ferda.Modules.Serialier.BoxSerializer.Property.TypeClassIceId"/>.
+        /// specified property data type. See <code>Ferda.Modules.Boxes.Serializer.Configuration.Property.TypeClassIceId</code>.
         /// </exception>
         /// <exception cref="T:Ferda.Modules.ReadOnlyError">
         /// Thrown iff specified property is read only.
         /// </exception>
-        public override void setProperty(string propertyName, PropertyValue propertyValue, Ice.Current __current)
+        public override void setProperty(string propertyName, PropertyValue propertyValue, Current __current)
         {
-            if (!this.boxInfo.TestPropertyNameExistence(propertyName))
+            if (!boxInfo.TestPropertyNameExistence(propertyName))
             {
                 // there is no property of the specified propertyName
-                throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "BMI25", propertyName);
+                throw Exceptions.NameNotExistError(null, null, "BMI25", propertyName);
             }
-            if (propertyValue != null && !propertyValue.ice_isA(this.boxInfo.GetPropertyDataType(propertyName)))
+            if (propertyValue != null && !propertyValue.ice_isA(boxInfo.GetPropertyDataType(propertyName)))
             {
                 // bad type of the specified propertyValue
                 Debug.WriteLine("BMI26");
-                throw new Ferda.Modules.BadTypeError();
+                throw new BadTypeError();
             }
-            if (this.boxInfo.IsPropertyReadOnly(propertyName))
+            if (boxInfo.IsPropertyReadOnly(propertyName))
             {
                 // the specified property is readonly
                 Debug.WriteLine("BMI27");
-                throw new Ferda.Modules.ReadOnlyError();
+                throw new ReadOnlyError();
             }
             // switch data type of the property
             // check if new propertyValue satisfy restrictions of the property
@@ -1150,60 +1189,60 @@ namespace Ferda.Modules
                 {
                     case "::Ferda::Modules::ShortT":
                         PropertyValueRestrictionsHelper.TryIsIntegralPropertyCorrect(
-                            this.boxInfo,
+                            boxInfo,
                             propertyName,
-                            ((ShortT)propertyValue).getShortValue());
+                            ((ShortT) propertyValue).getShortValue());
                         break;
                     case "::Ferda::Modules::IntT":
                         PropertyValueRestrictionsHelper.TryIsIntegralPropertyCorrect(
-                            this.boxInfo,
+                            boxInfo,
                             propertyName,
-                            ((IntT)propertyValue).getIntValue());
+                            ((IntT) propertyValue).getIntValue());
                         break;
                     case "::Ferda::Modules::LongT":
                         PropertyValueRestrictionsHelper.TryIsIntegralPropertyCorrect(
-                            this.boxInfo,
+                            boxInfo,
                             propertyName,
-                            ((LongT)propertyValue).getLongValue());
+                            ((LongT) propertyValue).getLongValue());
                         break;
                     case "::Ferda::Modules::FloatT":
                         PropertyValueRestrictionsHelper.TryIsFloatingPropertyCorrect(
-                            this.boxInfo,
+                            boxInfo,
                             propertyName,
-                            ((FloatT)propertyValue).getFloatValue());
+                            ((FloatT) propertyValue).getFloatValue());
                         break;
                     case "::Ferda::Modules::DoubleT":
                         PropertyValueRestrictionsHelper.TryIsFloatingPropertyCorrect(
-                            this.boxInfo,
+                            boxInfo,
                             propertyName,
-                            ((DoubleT)propertyValue).getDoubleValue());
+                            ((DoubleT) propertyValue).getDoubleValue());
                         break;
                     case "::Ferda::Modules::StringT":
                         PropertyValueRestrictionsHelper.TryIsStringPropertyCorrect(
-                            this.boxInfo,
+                            boxInfo,
                             propertyName,
-                            ((StringT)propertyValue).getStringValue());
+                            ((StringT) propertyValue).getStringValue());
                         break;
                     case "::Ferda::Modules::DateTimeT":
                         PropertyValueRestrictionsHelper.TryIsDateTimePropertyCorrect(
-                            this.boxInfo, propertyName, (DateTimeT)propertyValue);
+                            boxInfo, propertyName, (DateTimeT) propertyValue);
                         break;
                     case "::Ferda::Modules::DateT":
                         DateT date = new DateTI();
-                        ((DateT)propertyValue).getDateValue(out date.year, out date.month, out date.day);
+                        ((DateT) propertyValue).getDateValue(out date.year, out date.month, out date.day);
                         PropertyValueRestrictionsHelper.TryIsDatePropertyCorrect(
-                            this.boxInfo, propertyName, date);
+                            boxInfo, propertyName, date);
                         break;
                     case "::Ferda::Modules::TimeT":
                         TimeT time = new TimeTI();
-                        ((TimeT)propertyValue).getTimeValue(out time.hour, out time.minute, out time.second);
+                        ((TimeT) propertyValue).getTimeValue(out time.hour, out time.minute, out time.second);
                         PropertyValueRestrictionsHelper.TryIsTimePropertyCorrect(
-                            this.boxInfo, propertyName, time);
+                            boxInfo, propertyName, time);
                         break;
                 }
                 // proxy of new propertyValue is already saved
                 // save the propertyValue
-                this.properties[propertyName] = propertyValue;
+                properties[propertyName] = propertyValue;
             }
         }
 
@@ -1233,15 +1272,15 @@ namespace Ferda.Modules
         /// </returns>
         private PropertyValue getReadOnlyPropertyValue(string propertyName)
         {
-            if (!this.boxInfo.TestPropertyNameExistence(propertyName))
-                throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "BMI28", propertyName);
-            if (!this.boxInfo.IsPropertyReadOnly(propertyName))
+            if (!boxInfo.TestPropertyNameExistence(propertyName))
+                throw Exceptions.NameNotExistError(null, null, "BMI28", propertyName);
+            if (!boxInfo.IsPropertyReadOnly(propertyName))
             {
                 string message = "BMI01: Property " + propertyName + " is not readonly as expected";
                 Debug.WriteLine(message);
                 throw new Exception(message);
             }
-            return this.boxInfo.GetReadOnlyPropertyValue(propertyName, this);
+            return boxInfo.GetReadOnlyPropertyValue(propertyName, this);
         }
 
         /// <summary>
@@ -1255,18 +1294,18 @@ namespace Ferda.Modules
         /// <exception cref="T:Ferda.Modules.NameNotExistError">
         /// Thrown iff there is no property of specified <c>propertyName</c>.
         /// </exception>
-        public override PropertyValue getProperty(string propertyName, Ice.Current __current)
+        public override PropertyValue getProperty(string propertyName, Current __current)
         {
             // tests if property of specified name exists
-            if (!this.boxInfo.TestPropertyNameExistence(propertyName))
+            if (!boxInfo.TestPropertyNameExistence(propertyName))
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "DBI29", propertyName);
+                throw Exceptions.NameNotExistError(null, null, "DBI29", propertyName);
             }
 
             // readonly properties
-            if (this.boxInfo.IsPropertyReadOnly(propertyName))
+            if (boxInfo.IsPropertyReadOnly(propertyName))
             {
-                PropertyValue result = this.getReadOnlyPropertyValue(propertyName);
+                PropertyValue result = getReadOnlyPropertyValue(propertyName);
                 if (result != null)
                     return result;
                 else // returns "empty" PropertyValue
@@ -1296,7 +1335,8 @@ namespace Ferda.Modules
                         default:
                             string message = "BMI02";
                             Debug.WriteLine(message);
-                            throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(boxInfo.GetPropertyDataType(propertyName), message);
+                            throw Exceptions.SwitchCaseNotImplementedError(boxInfo.GetPropertyDataType(propertyName),
+                                                                           message);
                     }
                 }
             }
@@ -1329,7 +1369,7 @@ namespace Ferda.Modules
                     case "::Ferda::Modules::TimeT":
                         return new TimeTI(GetPropertyTime(propertyName));
                     default:
-                        return this.GetPropertyOther(propertyName);
+                        return GetPropertyOther(propertyName);
                 }
             }
         }
@@ -1341,9 +1381,9 @@ namespace Ferda.Modules
         /// <returns>
         /// Array of <seealso cref="T:Ferda.Modules.DynamicHelpItem">DynamicHelpItems</seealso>.
         /// </returns>
-        public override DynamicHelpItem[] getDynamicHelpItems(Ice.Current __current)
+        public override DynamicHelpItem[] getDynamicHelpItems(Current __current)
         {
-            return this.boxInfo.GetDynamicHelpItems(this.localePrefs, this);
+            return boxInfo.GetDynamicHelpItems(localePrefs, this);
         }
 
         /// <summary>
@@ -1363,13 +1403,13 @@ namespace Ferda.Modules
         /// array; otherwise, string array with one member.
         /// </para>
         /// </returns>
-        public override string[] getDefaultUserLabel(Ice.Current __current)
+        public override string[] getDefaultUserLabel(Current __current)
         {
-            string result = this.boxInfo.GetDefaultUserLabel(this);
+            string result = boxInfo.GetDefaultUserLabel(this);
             if (String.IsNullOrEmpty(result))
                 return new string[0];
             else
-                return new string[1] { result };
+                return new string[1] {result};
         }
 
         /// <summary>
@@ -1387,7 +1427,7 @@ namespace Ferda.Modules
         public string GetPhrase(string phraseIdentifier, out bool isLocalized)
         {
             string result;
-            isLocalized = this.boxInfo.TryGetPhrase(phraseIdentifier, out result, this.localePrefs);
+            isLocalized = boxInfo.TryGetPhrase(phraseIdentifier, out result, localePrefs);
             return result;
         }
 
@@ -1397,17 +1437,21 @@ namespace Ferda.Modules
         /// <param name="messageType">Type of the message.</param>
         /// <param name="messageTitle">The message title (phrase identifier).</param>
         /// <param name="messageText">The message text (phrase identifier).</param>
-        public void OutputMessage(Ferda.ModulesManager.MsgType messageType, string messageTitle, string messageText)
+        public void OutputMessage(MsgType messageType, string messageTitle, string messageText)
         {
             bool titleLocalized;
             bool textLocalized;
-            this.Output.writeMsg(
+            Output.writeMsg(
                 messageType,
                 GetPhrase(messageTitle, out titleLocalized),
                 GetPhrase(messageText, out textLocalized)
                 );
-            Debug.WriteLineIf(!titleLocalized, "BMI28: box module `" + boxInfo.Identifier + "` has not localized phrase `" + messageTitle + "`");
-            Debug.WriteLineIf(!textLocalized, "BMI29: box module `" + boxInfo.Identifier + "` has not localized phrase `" + messageText + "`");
+            Debug.WriteLineIf(!titleLocalized,
+                              "BMI28: box module `" + boxInfo.Identifier + "` has not localized phrase `" + messageTitle +
+                              "`");
+            Debug.WriteLineIf(!textLocalized,
+                              "BMI29: box module `" + boxInfo.Identifier + "` has not localized phrase `" + messageText +
+                              "`");
         }
 
         #region Destroying
@@ -1418,7 +1462,7 @@ namespace Ferda.Modules
         /// i.e. remove their proxies from the specified <c>adapter</c>.
         /// </summary>
         /// <param name="adapter">The adapter.</param>
-        public void destroy(Ice.ObjectAdapter adapter)
+        public void destroy(ObjectAdapter adapter)
         {
         }
 
@@ -1455,9 +1499,20 @@ namespace Ferda.Modules
         /// of exceptions) than some exception is thrown.
         /// </para>
         /// </remarks>
-        public override void validate(Ice.Current __current)
+        public override void validate(Current __current)
         {
-            boxInfo.Validate(this);
+            try
+            {
+                boxInfo.Validate(this);
+            }
+            catch (BadParamsError)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new BadParamsError(e);
+            }
         }
     }
 }

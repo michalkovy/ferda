@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Ferda.Modules.Boxes
 {
@@ -15,7 +15,7 @@ namespace Ferda.Modules.Boxes
         /// <summary>
         /// Tests if <c>propertyValue</c> of property named <c>propertyName</c>
         /// meets the requirements. Requirements are given by
-        /// <see cref="T:Ferda.Modules.Serializer.BoxSerializer.Restriction">restrictions</see>.
+        /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Restriction">restrictions</see>.
         /// Iff <c>propertyValue</c> doesn`t meet the requirements than 
         /// <see cref="T:Ferda.Modules.BadValueError"/> is thrown.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Ferda.Modules.Boxes
         /// <summary>
         /// Tests if <c>propertyValue</c> of property named <c>propertyName</c>
         /// meets the requirements. Requirements are given by
-        /// <see cref="T:Ferda.Modules.Serializer.BoxSerializer.Restriction">restrictions</see>.
+        /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Restriction">restrictions</see>.
         /// Iff <c>propertyValue</c> doesn`t meet the requirements than 
         /// <see cref="T:Ferda.Modules.BadValueError"/> is thrown.
         /// </summary>
@@ -139,7 +139,7 @@ namespace Ferda.Modules.Boxes
         /// <summary>
         /// Tests if <c>propertyValue</c> of property named <c>propertyName</c>
         /// meets the requirements. Requirements are given by
-        /// <see cref="T:Ferda.Modules.Serializer.BoxSerializer.Restriction">restrictions</see>.
+        /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Restriction">restrictions</see>.
         /// Iff <c>propertyValue</c> doesn`t meet the requirements than 
         /// <see cref="T:Ferda.Modules.BadValueError"/> is thrown.
         /// </summary>
@@ -155,8 +155,8 @@ namespace Ferda.Modules.Boxes
             if (!String.IsNullOrEmpty(regexp))
             {
                 if (!
-                    System.Text.RegularExpressions.Regex.IsMatch(propertyValue,
-                                                                regexp))
+                    Regex.IsMatch(propertyValue,
+                                  regexp))
                 {
                     BadValueError possibleException = new BadValueError();
                     possibleException.restrictionType = restrictionTypeEnum.Regexp;
@@ -187,7 +187,7 @@ namespace Ferda.Modules.Boxes
         /// <summary>
         /// Tests if <c>propertyValue</c> of property named <c>propertyName</c>
         /// meets the requirements. Requirements are given by
-        /// <see cref="T:Ferda.Modules.Serializer.BoxSerializer.Restriction">restrictions</see>.
+        /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Restriction">restrictions</see>.
         /// Iff <c>propertyValue</c> doesn`t meet the requirements than 
         /// <see cref="T:Ferda.Modules.BadValueError"/> is thrown.
         /// </summary>
@@ -205,7 +205,7 @@ namespace Ferda.Modules.Boxes
         /// <summary>
         /// Tests if <c>propertyValue</c> of property named <c>propertyName</c>
         /// meets the requirements. Requirements are given by
-        /// <see cref="T:Ferda.Modules.Serializer.BoxSerializer.Restriction">restrictions</see>.
+        /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Restriction">restrictions</see>.
         /// Iff <c>propertyValue</c> doesn`t meet the requirements than 
         /// <see cref="T:Ferda.Modules.BadValueError"/> is thrown.
         /// </summary>
@@ -223,7 +223,7 @@ namespace Ferda.Modules.Boxes
         /// <summary>
         /// Tests if <c>propertyValue</c> of property named <c>propertyName</c>
         /// meets the requirements. Requirements are given by
-        /// <see cref="T:Ferda.Modules.Serializer.BoxSerializer.Restriction">restrictions</see>.
+        /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Restriction">restrictions</see>.
         /// Iff <c>propertyValue</c> doesn`t meet the requirements than 
         /// <see cref="T:Ferda.Modules.BadValueError"/> is thrown.
         /// </summary>

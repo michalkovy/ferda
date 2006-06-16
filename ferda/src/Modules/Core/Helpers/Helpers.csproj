@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Caching\Cache.cs" />
+    <Compile Include="Caching\CacheFlag.cs" />
     <Compile Include="Caching\TimeOut.cs" />
     <Compile Include="Common\CallStack.cs" />
     <Compile Include="Common\Constants.cs">
@@ -56,12 +57,6 @@
     <Compile Include="Common\Csv.cs" />
     <Compile Include="Common\Others.cs" />
     <Compile Include="Common\Parsing.cs" />
-    <Compile Include="Data\Attribute.cs" />
-    <Compile Include="Data\Column.cs" />
-    <Compile Include="Data\Database.cs" />
-    <Compile Include="Data\DataMatrix.cs" />
-    <Compile Include="Data\OdbcConnections.cs" />
-    <Compile Include="Data\SqlSecurity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.csproj">

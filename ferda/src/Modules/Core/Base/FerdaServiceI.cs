@@ -1,10 +1,10 @@
 // FerdaServiceI.cs - half implementation of IceBox service
 //
 // Authors: 
-//   Michal Kováč <michal.kovac.develop@centrum.cz>
-//   Tomáš Kuchař <tomas.kuchar@gmail.com>
+//   Michal KovĂˇÄŤ <michal.kovac.develop@centrum.cz>
+//   TomĂˇĹˇ KuchaĹ™ <tomas.kuchar@gmail.com>
 //
-// Copyright (c) 2005 Michal Kováč, Tomáš Kuchař 
+// Copyright (c) 2005 Michal KovĂˇÄŤ, TomĂˇĹˇ KuchaĹ™ 
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,19 +20,18 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using IceBox;
 using System.Diagnostics;
 using System.Threading;
+using Ferda.Modules.Boxes;
+using Ice;
+using IceBox;
 
 namespace Ferda.Modules
 {
     /// <summary>
     /// Represents a IceBox service, is created for inheriting
     /// </summary>
-    public abstract class FerdaServiceI : Ice.LocalObjectImpl, IceBox.Service
+    public abstract class FerdaServiceI : LocalObjectImpl, Service
     {
         /// <summary>
         /// Service execution method
@@ -40,7 +39,7 @@ namespace Ferda.Modules
         /// <param name="name">Name of service</param>
         /// <param name="communicator">Ice communicator</param>
         /// <param name="args">Arguments from command line</param>
-        public void start(string name, Ice.Communicator communicator, string[] args)
+        public void start(string name, Communicator communicator, string[] args)
         {
             Debug.Listeners.Clear();
             Debug.Listeners.Add(new TextWriterTraceListener(name + ".log"));
@@ -95,35 +94,40 @@ namespace Ferda.Modules
         /// <param name="type">Name of box</param>
         /// <param name="defaultValue">Default value of box</param>
         /// <param name="valFromPrx">Method which converts property value proxy to property value object</param>
-        public void registerPropertyBox(string type, PropertyValue defaultValue, PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx, string settingModuleIdentifier)
+        /// <param name="settingModuleIdentifier">Identifier of setting module the only property of the property box</param>
+        public void registerPropertyBox(string type, PropertyValue defaultValue,
+                                        PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx,
+                                        string settingModuleIdentifier)
         {
-            PropertyBoxModuleFactoryCreatorI newCreator = new PropertyBoxModuleFactoryCreatorI("::Ferda::Modules::" + type,
-                                                           defaultValue.ice_ids(),
-                                                           type,
-                                                           defaultValue,
-                                                           valFromPrx,
-                                                           propertyReaper,
-                                                           _adapter,
-                                                           settingModuleIdentifier);
+            new PropertyBoxModuleFactoryCreatorI("::Ferda::Modules::" + type,
+                                                 defaultValue.ice_ids(),
+                                                 type,
+                                                 defaultValue,
+                                                 valFromPrx,
+                                                 propertyReaper,
+                                                 _adapter,
+                                                 settingModuleIdentifier);
         }
 
         /// <summary>
         /// You have to implement there registering of property boxes 
         /// </summary>
-        /// <seealso cref="M:Ferda.Modules.FerdaServiceI.registerPropertyBox(System.String,Ferda.Modules.PropertyValue,Ferda.Modules.PropertyBoxModuleFactoryCreatorI.ValueFromPrx)"/>
+        /// <seealso cref="M:Ferda.Modules.FerdaServiceI.registerPropertyBox(System.String,Ferda.Modules.PropertyValue,Ferda.Modules.PropertyBoxModuleFactoryCreatorI.ValueFromPrx,System.String)"/>
         /// <seealso cref="M:Ferda.Modules.FerdaServiceI.havePropertyBoxes()"/>
-        protected virtual void registerPropertyBoxes() { }
+        protected virtual void registerPropertyBoxes()
+        {
+        }
 
         /// <summary>
         /// Helper method for registering standard box to Ice Object Adapter
         /// </summary>
         /// <param name="identity">Name of box</param>
         /// <param name="boxInfo">An <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> implementation for this box</param>
-        public void registerBox(string identity, Ferda.Modules.Boxes.IBoxInfo boxInfo)
+        public void registerBox(string identity, IBoxInfo boxInfo)
         {
             Debug.WriteLine("Registering " + identity + "...");
             BoxModuleFactoryCreatorI boxModuleFactoryCreator = new BoxModuleFactoryCreatorI(boxInfo, reaper);
-            Ice.ObjectPrx newPrx = _adapter.add(boxModuleFactoryCreator, Ice.Util.stringToIdentity(identity));
+            _adapter.add(boxModuleFactoryCreator, Util.stringToIdentity(identity));
         }
 
         /// <summary>
@@ -166,7 +170,7 @@ namespace Ferda.Modules
         /// </example>
         protected abstract void registerBoxes();
 
-        private Ice.ObjectAdapter _adapter;
+        private ObjectAdapter _adapter;
 
         /// <summary>
         /// Method saying if this service have registered some property boxes

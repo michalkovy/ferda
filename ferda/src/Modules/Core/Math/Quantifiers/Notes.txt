@@ -1,0 +1,62 @@
+Four Fold Quantifiers (9)
+-------------------------
+Base treshold
+	Base (a-freq) *
+Implicational
+	FoundedImplication *
+	LowerCriticalImplication
+	UpperCriticalImplcation
+Double Implicational
+	DoubleFoundedImplication *
+	DoubleLowerCriticalImplcation
+	DoubleUpperCriticalImplcation
+Equivalence
+	FoundedEquivalence *
+	LowerCriticalEquivalence
+	UpperCriticalEquivalence
+Distribution Significance
+	ChiSquare
+	SimpleDeviation
+	Fisher
+Above Below Outside Average
+	AboveBelowAverageImplication *
+Next
+	E *
+
+Single-Dimension (jen relativni) *
+----------------------------------
+Characteristics of nominal variable distribution
+	NominalVariationNormalized *
+	VariationRatio *
+Characteristics of ordinal variable distribution
+	DiscreteOrdinaryVariationNormalized * 
+Characteristics of cardinal variable distribution (N)
+	AritmeticAverage *
+	GeometricAverage *
+	Variance *
+	StandardDeviation *
+	Asymetry * ... koeficient asymetrie kolem støedu rozložení
+	Skewness * ... šikmost
+
+Two-Dimensional Quantifiers (1)
+-------------------------------
+Aggregation
+	AnyValue * 
+	Minimum *
+	Maximum *
+	Average *
+	Sum *
+Information Theory (TODO: UNITS jen k reltaivni k contingencyTable.Sum)
+	InformationDependence *
+	ConditionalEntropy *
+	MutualInformationNormalized *
+Distribution
+	ChiSquare
+
+Strict Two-Dimensional Quantifiers *
+------------------------------------
+Functional Dependence
+	FunctionOfRow(FunctionSumOfRows) *
+	FunctionOfRowEachRow(FunctionEachRow) *
+Ordinal Dependence
+	Kendall *

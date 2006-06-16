@@ -25,6 +25,16 @@ namespace Ferda.Modules
 		{
 			this.stringValue = iface.getStringValue();
 		}
+
+        public static implicit operator string(StringTI v)
+        {
+            return v.stringValue;
+        }
+
+        public static implicit operator StringTI(string v)
+        {
+            return new StringTI(v);
+        }
 		
 		/// <summary>
 		/// Method getStringValue

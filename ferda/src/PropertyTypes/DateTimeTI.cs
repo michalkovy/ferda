@@ -53,6 +53,21 @@ namespace Ferda.Modules
 								   out hour, out minute, out second);
 		}
 
+        public static implicit operator DateTime(DateTimeTI v)
+        {
+            DateTime result;
+            if (v.TryGetDateTime(out result))
+                return result;
+            else
+                return DateTime.MinValue;
+
+        }
+
+        public static implicit operator DateTimeTI(DateTime v)
+        {
+            return new DateTimeTI(v);
+        }
+
 		/// <summary>
 		/// Method getdateValue
 		/// </summary>

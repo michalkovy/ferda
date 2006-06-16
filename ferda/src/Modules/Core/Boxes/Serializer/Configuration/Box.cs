@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using System.Xml.Serialization;
 
 namespace Ferda.Modules.Boxes.Serializer.Configuration
@@ -35,7 +32,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
     /// <seealso cref="T:Ferda.Modules.Boxes.IBoxInfo"/>
     /// <seealso cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Helper"/>
     [Serializable]
-    [XmlRootAttribute("Box", Namespace = "http://ferda.is-a-geek.net", IsNullable = false)]
+    [XmlRoot("Box", Namespace = "http://ferda.is-a-geek.net", IsNullable = false)]
     public class Box
     {
         /// <summary>
@@ -48,7 +45,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// If you are using <see cref="T:Ferda.Modules.Boxes.BoxInfo"/>
         /// (recommended) please note that there is another meaning of the 
         /// identifier. Please see 
-        /// <see cref="P:Ferda.Modules.Boxes.BoxInfo.configFilesDirectoryPath"/>.
+        /// <see cref="P:Ferda.Modules.Boxes.BoxInfo._configFilesDirectoryPath"/>.
         /// </para>
         /// </remarks>
         public string Identifier;
@@ -82,14 +79,12 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <remarks>
         /// Each box should belong to at least one category.
         /// </remarks>
-        [XmlArray]
-        public string[] Categories;
+        [XmlArray] public string[] Categories;
 
         /// <summary>
         /// Actions of box.
         /// </summary>
-        [XmlArray]
-        public Action[] Actions;
+        [XmlArray] public Action[] Actions;
 
         /// <summary>
         /// Box`s sockets.
@@ -98,7 +93,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para>
         /// Properties are included i.e. each property has to have
         /// corresponding socket 
-        /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property.Name">Name</see>) 
+        /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Property.Name">Name</see>) 
         /// because each property should be adjustable by its socket.
         /// </para>
         /// <para>
@@ -109,11 +104,10 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para>
         /// Sockets which should be defautly used as properties has 
         /// to have corresponding property definition i.e.
-        /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property.Name">Name</see>)
+        /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Property.Name">Name</see>)
         /// </para>
         /// </remarks>
-        [XmlArray]
-        public Socket[] Sockets;
+        [XmlArray] public Socket[] Sockets;
 
         /// <summary>
         /// Box`s properties.
@@ -121,15 +115,14 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <remarks>
         /// <para>
         /// All defined properties has to have corresponding socket 
-        /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property.Name">Name</see>).
+        /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Property.Name">Name</see>).
         /// </para>
         /// <para>
         /// All defined properties (i.e. sockets) are used as properties
         /// by default.
         /// </para>
         /// </remarks>
-        [XmlArray]
-        public Property[] Properties;
+        [XmlArray] public Property[] Properties;
 
         /// <summary>
         /// Box`s modules asking for creation.
@@ -137,8 +130,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <remarks>
         /// Each box module can advise creation of some new box modules.
         /// </remarks>
-        [XmlArray]
-        public ModulesAskingForCreation[] ModulesAskingForCreationSeq;
+        [XmlArray] public ModulesAskingForCreation[] ModulesAskingForCreationSeq;
     }
 
     /// <summary>
@@ -172,7 +164,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
     /// <remarks>
     /// <para>
     /// Properties are included i.e. each property has to have corresponding socket 
-    /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property.Name">Name</see>)
+    /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Property.Name">Name</see>)
     /// because each property should be adjustable by its socket.
     /// </para>
     /// <para>
@@ -183,7 +175,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
     /// <para>
     /// Sockets which should be defautly used as properties has 
     /// to have corresponding property definition i.e.
-    /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property.Name">Name</see>).
+    /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Property.Name">Name</see>).
     /// </para>
     /// </remarks>
     /// <seealso cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Property"/>.
@@ -211,8 +203,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <summary>
         /// Defines acceptable types of box(es), which can be connected to this socket.
         /// </summary>
-        [XmlArray]
-        public BoxType[] SocketTypes;
+        [XmlArray] public BoxType[] SocketTypes;
 
         /// <summary>
         /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Property.Name">
@@ -220,8 +211,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// This is useful iff some property`s value depends on value of the
         /// socket.
         /// </summary>
-        [XmlArray]
-        public string[] SettingProperties;
+        [XmlArray] public string[] SettingProperties;
 
         /// <summary>
         /// <c>true</c> if more than one box can be connected in this socket;
@@ -236,7 +226,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
     /// <remarks>
     /// <para>
     /// All defined properties has to have corresponding socket 
-    /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Property.Name">Name</see>).
+    /// (<see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">Name</see> == <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Property">Socket</see>.<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Property.Name">Name</see>).
     /// </para>
     /// <para>
     /// All defined properties (i.e. sockets) are used as properties
@@ -316,6 +306,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// </item>        
         /// </list>
         /// </remarks>
+        /// <seealso cref="T:Ferda.Modules.BasicPropertyValueTypes">Some ice IDs const strings.</seealso>
         public string TypeClassIceId;
 
         /// <summary>
@@ -343,8 +334,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// defined options.
         /// </para>
         /// </remarks>
-        [XmlArray]
-        public SelectOption[] SelectOptions;
+        [XmlArray] public SelectOption[] SelectOptions;
 
         /// <summary>
         /// <c>true</c> iff the property is visible for user 
@@ -380,8 +370,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <summary>
         /// Array of numerical restrictions.
         /// </summary>
-        [XmlArray]
-        public Restriction[] NumericalRestrictions;
+        [XmlArray] public Restriction[] NumericalRestrictions;
 
         /// <summary>
         /// Regular expression restiction for value of the property.
@@ -483,8 +472,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// Array of <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Property.Name">
         /// names of properties</see> which will be disabled by selecting this option.
         /// </summary>
-        [XmlArray]
-        public string[] DisableProperties;
+        [XmlArray] public string[] DisableProperties;
     }
 
     /// <summary>
@@ -587,8 +575,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// which are required on the box, which can be connected to the 
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket"/>.
         /// </summary>
-        [XmlArray]
-        public NeededSocket[] NeededSockets;
+        [XmlArray] public NeededSocket[] NeededSockets;
     }
 
     /// <summary>
@@ -623,29 +610,27 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <summary>
         /// Array of conditions on the box, where at least one has to be satisfied
         /// before action is executed. Condition is array of 
-        /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">
+        /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">
         /// names of sockets</see> which has to be occupated.
         /// </summary>
-        [XmlArray]
-        public NeededConnectedSocketsOption[] NeededConnectedSocketsOptions;
+        [XmlArray] public NeededConnectedSocketsOption[] NeededConnectedSocketsOptions;
     }
 
     /// <summary>
     /// Defines the condition on occupation of the 
-    /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket">sockets</see> as array of 
-    /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">socket`s names</see>
+    /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket">sockets</see> as array of 
+    /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">socket`s names</see>
     /// which has to be occupated.
     /// </summary>
     [Serializable]
     public class NeededConnectedSocketsOption
     {
         /// <summary>
-        /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">Names</see>
-        /// of the <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket">sockets</see>
+        /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">Names</see>
+        /// of the <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Socket">sockets</see>
         /// which has to be occupated.
         /// </summary>
-        [XmlArray]
-        public string[] NeededConnectedSockets;
+        [XmlArray] public string[] NeededConnectedSockets;
     }
 
     /// <summary>
@@ -657,7 +642,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
     public class NeededSocket
     {
         /// <summary>
-        /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Box.Socket.Name">Name</see>
+        /// <see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.Socket.Name">Name</see>
         /// of the socket.
         /// </summary>
         public string SocketName;

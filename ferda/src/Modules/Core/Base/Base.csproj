@@ -55,6 +55,7 @@
     <Compile Include="IFunctions.cs" />
     <Compile Include="PropertyValueRestrictionsHelper.cs" />
     <Compile Include="ReapThread.cs" />
+    <Compile Include="Resources.cs" />
     <Compile Include="SocketConnections.cs" />
   </ItemGroup>
   <ItemGroup>
