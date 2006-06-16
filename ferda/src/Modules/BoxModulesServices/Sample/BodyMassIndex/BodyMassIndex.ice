@@ -31,8 +31,7 @@ HOW TO GENERATE *.cs FROM *.ice
 #include <Modules/Common.ice> //some common enumerations and structures
 #include <Modules/Exceptions.ice> //some exceptions defined
 #include <Modules/BuiltinSequences.ice> //sequences of basic types
-#include <Modules/Boxes/DataMiningCommon/Column/Column.ice> //sequences of basic types
-#include <Modules/Boxes/DataMiningCommon/Attributes/AbstractAttribute.ice> //sequences of basic types
+#include <Modules/Boxes/Guha/DataPreparation.ice>
 
 module Ferda {
 	module Modules {
@@ -41,9 +40,9 @@ module Ferda {
 			{
 				module BodyMassIndex
 				{
+					//Ferda::Modules::Boxes::DataPreparation::AttributeFunctions
 					interface BodyMassIndexFunctions extends
-						Ferda::Modules::Boxes::DataMiningCommon::Column::ColumnFunctions,
-						Ferda::Modules::Boxes::DataMiningCommon::Attributes::AbstractAttributeFunctions
+						Ferda::Modules::Boxes::DataPreparation::ColumnFunctions						
 					{ };
 				};
 			};

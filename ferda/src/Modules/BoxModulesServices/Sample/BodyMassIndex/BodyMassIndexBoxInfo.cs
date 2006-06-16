@@ -1,8 +1,8 @@
 // BodyMassIndexBoxInfo.cs - box info for body mass index box module
 //
-// Author: Tomáš Kuchař <tomas.kuchar@gmail.com>
+// Author: TomĂˇĹˇ KuchaĹ™ <tomas.kuchar@gmail.com>
 //
-// Copyright (c) 2005 Tomáš Kuchař
+// Copyright (c) 2005 TomĂˇĹˇ KuchaĹ™
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,10 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Ferda.Modules;
+using Ice;
 
 namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
 {
@@ -33,7 +31,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
     /// please see <see cref="T:Ferda.Modules.Boxes.Sample.Service"/> and its
     /// method <see cref="M:Ferda.Modules.Boxes.Sample.Service.registerBoxes()"/>.
     /// </summary>
-    public class BodyMassIndexBoxInfo : Ferda.Modules.Boxes.BoxInfo
+    public class BodyMassIndexBoxInfo : BoxInfo
     {
         /// <summary>
         /// Creates <see cref="T:Ice.Object"/> implementing Ice interface of
@@ -57,11 +55,11 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// this interface</see> is shared by all instances of the box modules
         /// of the same type <see cref="P:Ferda.Modules.Boxes.IBoxInfo.Identifier"/>
         /// </remarks>
-        public override void CreateFunctions(BoxModuleI boxModule, out Ice.Object iceObject, out IFunctions functions)
+        public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
         {
             BodyMassIndexFunctionsI result = new BodyMassIndexFunctionsI();
-            iceObject = (Ice.Object)result;
-            functions = (IFunctions)result;
+            iceObject = (Object) result;
+            functions = (IFunctions) result;
         }
 
         /// <summary>
@@ -85,8 +83,8 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// </summary>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            BodyMassIndexFunctionsI functionsObject = (BodyMassIndexFunctionsI)boxModule.FunctionsIObj;
-            return functionsObject.GetDefaultUserLabel();
+            BodyMassIndexFunctionsI functionsObject = (BodyMassIndexFunctionsI) boxModule.FunctionsIObj;
+            return functionsObject.GetDefaultUserLabel(false);
         }
 
         /// <summary>
@@ -98,9 +96,10 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// Array of <see cref="T:Ferda.Modules.ModuleAskingForCreation">
         /// Modules Asking For Creation</see>.
         /// </returns>
-        public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
+        public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
+                                                                               BoxModuleI boxModule)
         {
-            Dictionary<string, ModulesAskingForCreation> modulesAFC = this.getModulesAskingForCreationNonDynamic(localePrefs);
+            Dictionary<string, ModulesAskingForCreation> modulesAFC = getModulesAskingForCreationNonDynamic(localePrefs);
             List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();
             ModulesAskingForCreation moduleAFC;
             ModulesConnection moduleConnection;
@@ -117,22 +116,12 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                         singleModuleAFC.newBoxModuleIdentifier = "DataMiningCommon.Attributes.Attribute";
                         // == Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute.AttributeBoxInfo.typeIdentifier;
                         break;
-                    case "AtomSetting":
-                        moduleConnection.socketName = "Attribute";
-                        singleModuleAFC.newBoxModuleIdentifier = "DataMiningCommon.AtomSetting";
-                        // == Ferda.Modules.Boxes.DataMiningCommon.AtomSetting.AtomSettingBoxInfo.typeIdentifier;
-                        break;
-                    case "CategorialPartialCedentSetting":
-                        moduleConnection.socketName = "Attribute";
-                        singleModuleAFC.newBoxModuleIdentifier = "DataMiningCommon.CategorialPartialCedentSetting";
-                        // == Ferda.Modules.Boxes.DataMiningCommon.CategorialPartialCedentSetting.CategorialPartialCedentSettingBoxInfo.typeIdentifier;
-                        break;
                     default:
-                        throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(moduleAFCName);
+                        throw Exceptions.SwitchCaseNotImplementedError(moduleAFCName);
                 }
                 moduleConnection.boxModuleParam = boxModule.MyProxy;
-                singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
-                moduleAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
+                singleModuleAFC.modulesConnection = new ModulesConnection[] {moduleConnection};
+                moduleAFC.newModules = new ModuleAskingForCreation[] {singleModuleAFC};
                 result.Add(moduleAFC);
             }
             return result.ToArray();
@@ -147,7 +136,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
             return null;
         }
 
-        
+
         /// <summary>
         /// This is recomended (not required) to have <c>public const string</c> 
         /// field in the BoxInfo implementation which holds the identifier 
