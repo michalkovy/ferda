@@ -39,14 +39,9 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="DataMiningCommon\DataMiningCommon.csproj">
-      <Project>{DF228977-8A10-49B5-A896-1B07A179E450}</Project>
-      <Name>DataMiningCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="LISpMinerTasks\LISpMinerTasks.csproj">
-      <Project>{C2CB7B04-923E-44D0-B989-A8CAEB23B06C}</Project>
-      <Name>LISpMinerTasks</Name>
-    </ProjectReference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

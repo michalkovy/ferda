@@ -1,8 +1,8 @@
 // BodyMassIndexFunctionsI.cs - functions object for body mass index box module
 //
-// Author: Tomáš Kuchař <tomas.kuchar@gmail.com>
+// Author: TomĂˇĹˇ KuchaĹ™ <tomas.kuchar@gmail.com>
 //
-// Copyright (c) 2005 Tomáš Kuchař
+// Copyright (c) 2005 TomĂˇĹˇ KuchaĹ™
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Ferda.Modules.Boxes.DataMiningCommon.Column;
-using Ferda.Modules.Boxes.DataMiningCommon.Attributes;
+using Ferda.Guha.Data;
+using Ferda.Modules.Boxes.DataPreparation;
+using Ice;
+using Exception=System.Exception;
 
 namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
 {
@@ -38,15 +38,15 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
     /// the <see cref="T:Ferda.Modules.IFunctions"/> interface.
     /// Now the implementation of box module`s functios is complete.
     /// </remarks>
-    public class BodyMassIndexFunctionsI : BodyMassIndexFunctionsDisp_, Ferda.Modules.IFunctions
+    public class BodyMassIndexFunctionsI : BodyMassIndexFunctionsDisp_, IFunctions
     {
         /// <summary>
         /// The <see cref="T:Ferda.Modules.BoxModuleI"/> class. This
         /// represents current instance of the BMI box module. I.e. all
         /// box module settings like sockets connections or properties values
-        /// are holded by the boxModule.
+        /// are holded by the _boxModule.
         /// </summary>
-        protected Ferda.Modules.BoxModuleI boxModule;
+        protected BoxModuleI _boxModule;
 
         /// <summary>
         /// The <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>
@@ -57,18 +57,17 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// box module (all BMI box instances) share one instance 
         /// of the BoxInfo.
         /// </remarks>
-        protected Ferda.Modules.Boxes.IBoxInfo boxInfo;
+        protected IBoxInfo boxInfo;
 
         #region IFunctions Members
 
-        void Ferda.Modules.IFunctions.setBoxModuleInfo(Ferda.Modules.BoxModuleI boxModule, Ferda.Modules.Boxes.IBoxInfo boxInfo)
+        void IFunctions.setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
         {
-            this.boxModule = boxModule;
+            _boxModule = boxModule;
             this.boxInfo = boxInfo;
         }
 
         #endregion
-
 
         /// <summary>
         /// Gets the height units.
@@ -76,10 +75,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// <value>The height units.</value>
         public string HeightUnits
         {
-            get
-            {
-                return boxModule.GetPropertyString("HeightUnits");
-            }
+            get { return _boxModule.GetPropertyString("HeightUnits"); }
         }
 
         /// <summary>
@@ -88,168 +84,126 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// <value>The weight units.</value>
         public string WeightUnits
         {
-            get
-            {
-                return boxModule.GetPropertyString("WeightUnits");
-            }
-        }
-
-        /// <summary>
-        /// Gets the height column.
-        /// </summary>
-        /// <value>The height column.</value>
-        public ColumnFunctionsPrx HeightColumn
-        {
-            get
-            {
-                return getColumnFunctionsPrx("Height");
-            }
-        }
-
-        /// <summary>
-        /// Gets the weight column.
-        /// </summary>
-        /// <value>The weight column.</value>
-        public ColumnFunctionsPrx WeightColumn
-        {
-            get
-            {
-                return getColumnFunctionsPrx("Weight");
-            }
+            get { return _boxModule.GetPropertyString("WeightUnits"); }
         }
 
         /// <summary>
         /// Gets the column functions proxy from specified <c>socketName</c>.
         /// </summary>
+        /// <param name="fallOnError">if set to <c>true</c> exception is thrown on error otherwise null is returned.</param>
         /// <param name="socketName">Name of the socket.</param>
         /// <returns>
-        /// Proxy of box module providing column functions connected 
+        /// Proxy of box module providing column functions connected
         /// to the specified <c>socketName</c>.
         /// </returns>
-        private ColumnFunctionsPrx getColumnFunctionsPrx(string socketName)
+        private ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError, string socketName)
         {
-            //gets column functionsObjectI if any connected; otherwise, throws Ferda.Modules.NoConnectionInSocketError
-            Ice.ObjectPrx otherObjectPrx = Ferda.Modules.Boxes.SocketConnections.GetObjectPrx(boxModule, socketName);
-            return ColumnFunctionsPrxHelper.checkedCast(otherObjectPrx);
+            // gets column functionsObjectI if any connected; 
+            // otherwise, null or throws Ferda.Modules.NoConnectionInSocketError
+            return SocketConnections.GetPrx<ColumnFunctionsPrx>(
+                _boxModule,
+                socketName,
+                ColumnFunctionsPrxHelper.checkedCast,
+                fallOnError);
+        }
+
+        private void getColumnSelectExpression(bool fallOnError, out string weightInKg, out string heightInM)
+        {
+            string heightInMeters = null;
+            string weightInKilograms = null;
+            ExceptionsHandler.GetResult<int>(
+                fallOnError,
+                delegate
+                    {
+                        ColumnFunctionsPrx heightColumnPrx = GetColumnFunctionsPrx(fallOnError, "Height");
+                        ColumnFunctionsPrx weightColumnPrx = GetColumnFunctionsPrx(fallOnError, "Weight");
+                        if (heightColumnPrx != null && weightColumnPrx != null)
+                        {
+                            ColumnInfo weightColumn = weightColumnPrx.getColumnInfo();
+                            ColumnInfo heightColumn = heightColumnPrx.getColumnInfo();
+
+                            // test if both columns come from the same datamatrix
+                            if (
+                                testColumnsAreFromSameDataMatrix(fallOnError, heightColumn, weightColumn)
+                                )
+                            {
+                                // build the select expression
+                                // BMI equals a person's weight in kilograms divided by height in meters squared (BMI=kg/m^2).
+
+                                heightInMeters = convertToMeters(heightColumn.columnSelectExpression, HeightUnits);
+                                weightInKilograms = convertToKilograms(weightColumn.columnSelectExpression, WeightUnits);
+                            }
+                        }
+                        return 0;
+                    },
+                delegate
+                    {
+                        return 0;
+                    },
+                _boxModule.StringIceIdentity
+                );
+            heightInM = heightInMeters;
+            weightInKg = weightInKilograms;
+            return;
         }
 
         /// <summary>
         /// Gets the default user label.
         /// </summary>
         /// <returns>Pseudoformula introducing BMI theorem.</returns>
-        public string GetDefaultUserLabel()
+        public string GetDefaultUserLabel(bool fallOnError)
         {
-            try
-            {
-                ColumnInfo heightColumn = HeightColumn.getColumnInfo();
-                ColumnInfo weightColumn = WeightColumn.getColumnInfo();
-
-                // test if both columns come from the same datamatrix
-                testColumnsAreFromSameDataMatrix(heightColumn, weightColumn);
-
-                // build the select expression
-                // BMI equals a person's weight in kilograms divided by height in meters squared (BMI=kg/m^2).
-
-                string heightInMeters = convertToMeters(heightColumn.columnSelectExpression, HeightUnits);
-                string weightInKilograms = convertToKilograms(weightColumn.columnSelectExpression, WeightUnits);
-
-                return "(" + weightInKilograms + ") / (" + heightInMeters + ")^2";
-            }
-            catch { }
-            return String.Empty;
+            return ExceptionsHandler.GetResult<string>(
+                fallOnError,
+                delegate
+                    {
+                        string weightInKilograms;
+                        string heightInMeters;
+                        getColumnSelectExpression(fallOnError, out weightInKilograms, out heightInMeters);
+                        if (weightInKilograms != null && heightInMeters != null)
+                            return "(" + weightInKilograms + ") / (" + heightInMeters + ")^2";
+                        return String.Empty;
+                    },
+                delegate
+                    {
+                        return String.Empty;
+                    },
+                _boxModule.StringIceIdentity
+                );
         }
 
         /// <summary>
         /// Tests if the columns are from the same data matrix.
         /// </summary>
+        /// <param name="fallOnError">if set to <c>true</c> exception is thrown on error otherwise null is returned.</param>
         /// <param name="firstColumn">The first column.</param>
         /// <param name="secondColumn">The second column.</param>
-        private void testColumnsAreFromSameDataMatrix(ColumnInfo firstColumn, ColumnInfo secondColumn)
+        /// <returns></returns>
+        private bool testColumnsAreFromSameDataMatrix(bool fallOnError, ColumnInfo firstColumn, ColumnInfo secondColumn)
         {
-            if (firstColumn.dataMatrix.database.odbcConnectionString != secondColumn.dataMatrix.database.odbcConnectionString
-                || firstColumn.dataMatrix.dataMatrixName != secondColumn.dataMatrix.dataMatrixName)
-                throw Ferda.Modules.Exceptions.BadValueError(
-                    null,
-                    boxModule.StringIceIdentity,
-                    "both input columns has to come from the same datamatrix",
-                    new string[] { "HeightColumn", "WeightColumn" },
-                    Ferda.Modules.restrictionTypeEnum.Other
-                    );
+            DatabaseConnectionSettingHelper tmp1 =
+                new DatabaseConnectionSettingHelper(firstColumn.dataTable.databaseConnectionSetting);
+            DatabaseConnectionSettingHelper tmp2 =
+                new DatabaseConnectionSettingHelper(secondColumn.dataTable.databaseConnectionSetting);
+            if (
+                !tmp1.Equals(tmp2)
+                || firstColumn.dataTable.dataTableName != secondColumn.dataTable.dataTableName
+                )
+                if (fallOnError)
+                    throw Exceptions.BadValueError(
+                        null,
+                        _boxModule.StringIceIdentity,
+                        "Both input columns has to come from the same datamatrix",
+                        new string[] {"HeightColumn", "WeightColumn"},
+                        restrictionTypeEnum.Other
+                        );
+                else
+                    return false;
+            return true;
         }
 
         /// <summary>
-        /// Gets the column info.
-        /// </summary>
-        /// <param name="current__">The current__.</param>
-        /// <returns>Basic information about the column.</returns>
-        public override Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnInfo getColumnInfo(Ice.Current current__)
-        {
-            ColumnInfo result = new ColumnInfo();
-            Exception e = null;
-
-            // locks all sockets and properties of current and (recursively) all souce boxes
-            boxModule.Manager.getBoxModuleLocker().lockBoxModule(boxModule.StringIceIdentity);
-
-            try
-            {
-
-                ColumnInfo heightColumn = HeightColumn.getColumnInfo();
-                ColumnInfo weightColumn = WeightColumn.getColumnInfo();
-
-                // test if both columns come from the same datamatrix
-                testColumnsAreFromSameDataMatrix(heightColumn, weightColumn);
-
-                // build the select expression
-                // BMI equals a person's weight in kilograms divided by height in meters squared (BMI=kg/m^2).
-
-                string heightInMeters = convertToMeters(heightColumn.columnSelectExpression, HeightUnits);
-                string weightInKilograms = convertToKilograms(weightColumn.columnSelectExpression, WeightUnits);
-
-                result.columnSelectExpression = "(" + weightInKilograms + ") / ((" + heightInMeters + ") * (" + heightInMeters + "))";
-                result.columnSubType = Ferda.Modules.ValueSubTypeEnum.FloatType;
-                result.columnType = ColumnTypeEnum.Derived;
-                result.dataMatrix = heightColumn.dataMatrix; // or equivalent weightColumn.dataMatrix
-                
-                //for fully implementation there should be full intialization of statistics
-                /*
-                result.statistics = Ferda.Modules.Helpers.Data.Column.GetStatistics(
-                    result.dataMatrix.database.odbcConnectionString, 
-                    result.dataMatrix.dataMatrixName, 
-                    result.columnSelectExpression, 
-                    ValueSubTypeEnum.FloatType, 
-                    boxModule.StringIceIdentity
-                    );
-                 */
-                //but getting this information is quite slow, so it should be cached
-                //please see: Ferda.Modules.Helpers.Caching.Cache
-                result.statistics = new StatisticsInfo();
-            }
-            catch (Ferda.Modules.NoConnectionInSocketError ex)
-            {
-                e = ex;
-            }
-            catch (Ferda.Modules.BoxRuntimeError ex)
-            {
-                e = ex;
-            }
-            catch (Exception ex)
-            {
-                e = Ferda.Modules.Exceptions.BoxRuntimeError(ex, this.boxModule.StringIceIdentity, null);
-            }
-            finally
-            {
-                // unlock (recursively) locked boxes
-                boxModule.Manager.getBoxModuleLocker().unlockBoxModule(boxModule.StringIceIdentity);
-            }
-
-            if (e != null)
-                throw e;
-
-            return result;
-        }
-
-        /// <summary>
-        /// Converts <see cref="P:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsI.HeightColumn"/> 
+        /// Converts <see cref="P:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsI.GetHeightColumn"/> 
         /// <see cref="P:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsI.HeightUnits">units</see> to meters.
         /// </summary>
         /// <param name="columnSelectExpression">The column select expression.</param>
@@ -286,7 +240,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                         return columnSelectExpression + "*" + multiplicator.ToString();
                     }
                 default:
-                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(columnUnits);
+                    throw Exceptions.SwitchCaseNotImplementedError(columnUnits);
             }
         }
 
@@ -316,25 +270,11 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                         return columnSelectExpression + "*" + multiplicator.ToString();
                     }
                 default:
-                    throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(columnUnits);
+                    throw Exceptions.SwitchCaseNotImplementedError(columnUnits);
             }
         }
 
-        /// <summary>
-        /// Gets distinct values of the BMI column.
-        /// </summary>
-        /// <param name="current__">The ICE current.</param>
-        /// <returns>Distinct values of the BMI column.</returns>
-        public override string[] getDistinctValues(Ice.Current current__)
-        {
-            ColumnInfo bmiColumn = this.getColumnInfo();
-            return Ferda.Modules.Helpers.Data.Column.GetDistinctsStringSeq(
-                bmiColumn.dataMatrix.database.odbcConnectionString,
-                bmiColumn.dataMatrix.dataMatrixName,
-                bmiColumn.columnSelectExpression,
-                boxModule.StringIceIdentity);
-        }
-
+        /*
         /// <summary>
         /// Provides functionality of manually prepared attribute box, where is connected
         /// BMI column. There are created basic BMI categories (see below) in the result.
@@ -348,92 +288,151 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// </listheader>
         /// <item>
         /// <term>&lt; 15 </term>
-        /// <description><b>Extremely underweight</b>; vyzáblá postava</description>
+        /// <description><b>Extremely underweight</b>; vyzĂˇblĂˇ postava</description>
         /// </item>
         /// <item>
         /// <term>15 - 20</term>
-        /// <description><b>Underweight</b>; hubená postava</description>
+        /// <description><b>Underweight</b>; hubenĂˇ postava</description>
         /// </item>
         /// <item>
         /// <term>20 - 25</term>
-        /// <description><b>Normal</b>; normální postava</description>
+        /// <description><b>Normal</b>; normĂˇlnĂ­ postava</description>
         /// </item>
         /// <item>
         /// <term>25 - 30</term>
-        /// <description><b>Overweight</b>; postava s nadváhou</description>
+        /// <description><b>Overweight</b>; postava s nadvĂˇhou</description>
         /// </item>
         /// <item>
         /// <term>&gt; 30</term>
-        /// <description><b>Obese</b>; obézní postava</description>
+        /// <description><b>Obese</b>; obĂ©znĂ­ postava</description>
         /// </item>
         /// </list>
         /// </remarks>
-        public override Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeStruct getAbstractAttribute(Ice.Current current__)
+        public override string getAttribute(Current current__)
         {
             AbstractAttributeStruct result = new AbstractAttributeStruct();
 
-            Ferda.Modules.CategoriesStruct categories = new Ferda.Modules.CategoriesStruct();
-            categories.floatIntervals = new Ferda.Modules.FloatIntervalCategorySeq();
+            CategoriesStruct categories = new CategoriesStruct();
+            categories.floatIntervals = new FloatIntervalCategorySeq();
             bool isLocalized;
             categories.floatIntervals.Add(
-                boxModule.GetPhrase("ExtremelyUnderweight", out isLocalized),
-                new Ferda.Modules.FloatIntervalStruct[] {
-                    new Ferda.Modules.FloatIntervalStruct(
-                        Ferda.Modules.BoundaryEnum.Infinity, 
-                        Ferda.Modules.BoundaryEnum.Round, 
-                        0, 
-                        15)
+                _boxModule.GetPhrase("ExtremelyUnderweight", out isLocalized),
+                new FloatIntervalStruct[]
+                    {
+                        new FloatIntervalStruct(
+                            BoundaryEnum.Infinity,
+                            BoundaryEnum.Round,
+                            0,
+                            15)
                     }
                 );
             categories.floatIntervals.Add(
-                boxModule.GetPhrase("Underweight", out isLocalized),
-                new Ferda.Modules.FloatIntervalStruct[] {
-                    new Ferda.Modules.FloatIntervalStruct(
-                        Ferda.Modules.BoundaryEnum.Sharp, 
-                        Ferda.Modules.BoundaryEnum.Round, 
-                        15, 
-                        20)
+                _boxModule.GetPhrase("Underweight", out isLocalized),
+                new FloatIntervalStruct[]
+                    {
+                        new FloatIntervalStruct(
+                            BoundaryEnum.Sharp,
+                            BoundaryEnum.Round,
+                            15,
+                            20)
                     }
                 );
             categories.floatIntervals.Add(
-                boxModule.GetPhrase("Normal", out isLocalized),
-                new Ferda.Modules.FloatIntervalStruct[] {
-                    new Ferda.Modules.FloatIntervalStruct(
-                        Ferda.Modules.BoundaryEnum.Sharp, 
-                        Ferda.Modules.BoundaryEnum.Round, 
-                        20, 
-                        25)
+                _boxModule.GetPhrase("Normal", out isLocalized),
+                new FloatIntervalStruct[]
+                    {
+                        new FloatIntervalStruct(
+                            BoundaryEnum.Sharp,
+                            BoundaryEnum.Round,
+                            20,
+                            25)
                     }
                 );
             categories.floatIntervals.Add(
-                boxModule.GetPhrase("Overweight", out isLocalized),
-                new Ferda.Modules.FloatIntervalStruct[] {
-                    new Ferda.Modules.FloatIntervalStruct(
-                        Ferda.Modules.BoundaryEnum.Sharp, 
-                        Ferda.Modules.BoundaryEnum.Round, 
-                        25, 
-                        30)
+                _boxModule.GetPhrase("Overweight", out isLocalized),
+                new FloatIntervalStruct[]
+                    {
+                        new FloatIntervalStruct(
+                            BoundaryEnum.Sharp,
+                            BoundaryEnum.Round,
+                            25,
+                            30)
                     }
                 );
             categories.floatIntervals.Add(
-                boxModule.GetPhrase("Obese", out isLocalized),
-                new Ferda.Modules.FloatIntervalStruct[] {
-                    new Ferda.Modules.FloatIntervalStruct(
-                        Ferda.Modules.BoundaryEnum.Sharp, 
-                        Ferda.Modules.BoundaryEnum.Infinity, 
-                        30, 
-                        float.MaxValue)
+                _boxModule.GetPhrase("Obese", out isLocalized),
+                new FloatIntervalStruct[]
+                    {
+                        new FloatIntervalStruct(
+                            BoundaryEnum.Sharp,
+                            BoundaryEnum.Infinity,
+                            30,
+                            float.MaxValue)
                     }
                 );
 
             result.categories = categories;
-            result.column = this.getColumnInfo();
+            result.column = getColumnInfo();
             result.countOfCategories = result.categories.floatIntervals.Count;
-            result.identifier = boxModule.PersistentIdentity;
+            result.identifier = _boxModule.PersistentIdentity;
             result.includeNullCategory = "";
             result.nameInLiterals = "BodyMassIndex";
             result.xCategory = "";
             return result;
+        }
+        */
+
+        /// <summary>
+        /// Gets the column info.
+        /// </summary>
+        /// <param name="current__">The current__.</param>
+        /// <returns>Basic information about the column.</returns>
+        public override ColumnInfo getColumnInfo(Current current__)
+        {
+            ColumnInfo result = new ColumnInfo();
+
+            // locks all sockets and properties of current and (recursively) all souce boxes
+            _boxModule.Manager.getBoxModuleLocker().lockBoxModule(_boxModule.StringIceIdentity);
+
+            try
+            {
+                string weightInKilograms;
+                string heightInMeters;
+                getColumnSelectExpression(true, out weightInKilograms, out heightInMeters);
+                return new ColumnInfo(
+                    GetColumnFunctionsPrx(true, "Height").getColumnInfo().dataTable,
+                    "(" + weightInKilograms + ") / (" + heightInMeters + " * " + heightInMeters + ")",
+                    DbDataTypeEnum.DoubleType,
+                    Guha.Data.CardinalityEnum.Cardinal
+                    );
+            }
+            finally
+            {
+                // unlock (recursively) locked boxes
+                _boxModule.Manager.getBoxModuleLocker().unlockBoxModule(_boxModule.StringIceIdentity);
+            }
+        }
+
+        /// <summary>
+        /// Gets the column statistics.
+        /// </summary>
+        /// <param name="current__">The current__.</param>
+        /// <returns></returns>
+        public override ColumnStatistics getColumnStatistics(Current current__)
+        {
+            //TODO
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        /// <summary>
+        /// Gets distinct values of the BMI column.
+        /// </summary>
+        /// <param name="current__">The ICE current.</param>
+        /// <returns>Distinct values of the BMI column.</returns>
+        public override ValuesAndFrequencies getDistinctsAndFrequencies(Current current__)
+        {
+            //TODO
+            throw new Exception("The method or operation is not implemented.");
         }
     }
 }
