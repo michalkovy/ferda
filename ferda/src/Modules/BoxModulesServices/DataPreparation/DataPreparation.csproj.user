@@ -1,0 +1,5 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <StartWorkingDirectory>E:\Saves\Projekt\svn\ferda\bin\Server\</StartWorkingDirectory>
+  </PropertyGroup>
+</Project>
