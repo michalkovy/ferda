@@ -19,23 +19,21 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Ferda.Modules.Boxes.Sample.BodyMassIndex;
 
 namespace Ferda.Modules.Boxes.Sample
 {
     /// <summary>
     /// Sample IceBox service with BodyMassIndex box 
     /// </summary>
-    public class Service : Ferda.Modules.FerdaServiceI
+    public class Service : FerdaServiceI
     {
         /// <summary>
         /// Registers box to ice object adapter
         /// </summary>
         protected override void registerBoxes()
         {
-            this.registerBox("BodyMassIndexSampleFactoryCreator", new Sample.BodyMassIndex.BodyMassIndexBoxInfo());
+            registerBox(BodyMassIndexBoxInfo.typeIdentifier, new BodyMassIndexBoxInfo());
             // if more boxes should be provided by this service, register them here ...
         }
     }
