@@ -100,32 +100,26 @@ namespace Ferda.Modules.Boxes
             }
         }
     }
-
+#if DEBUG
     /// <summary>
     /// An example of usage.
     /// </summary>
     internal class A
     {
-        public int I;
-        public int J;
-        public string S;
-
-        public static String MyMethod(A AClass)
-        {
-            return AClass.I.ToString() + AClass.J.ToString() + AClass.S;
-        }
+        public string I = "Charles";
+        public int J = 4;
+        public string S = "Emperor by the grace of God";
 
         public String MyMethod()
         {
-            return I.ToString() + J.ToString() + S;
+            return I + " " + J.ToString() + " " + S;
         }
 
         public String GetResult_NamedMethod(bool fallOnError)
         {
-            ExceptionsHandler.MethodDelegate<String> methodDelegate = MyMethod;
             return ExceptionsHandler.GetResult<String>(
                 fallOnError,
-                methodDelegate,
+                MyMethod,
                 delegate
                     {
                         return String.Empty;
@@ -134,4 +128,5 @@ namespace Ferda.Modules.Boxes
                 );
         }
     }
+#endif
 }

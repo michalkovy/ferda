@@ -203,7 +203,7 @@ namespace Ferda {
 			/// <see cref="P:Ferda.ModulesManager.IBoxModule.ModulesAskingForCreation"/>
 			/// of <see cref="T:Ferda.ModulesManager.IBoxModule"/>.
 			/// </remarks>
-			/// <param name="newModule">A  ModulesAskingForCreation</param>
+			/// <param name="info">A  ModulesAskingForCreation</param>
 			/// <seealso cref="P:Ferda.ModulesManager.IBoxModule.ModulesAskingForCreation"/>
 			public IBoxModule[] CreateBoxesAskingForCreation(ModulesAskingForCreation info)
 			{
