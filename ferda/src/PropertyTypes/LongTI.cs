@@ -24,7 +24,17 @@ namespace Ferda.Modules
 		{
 			this.longValue = iface.getLongValue();
 		}
-		
+
+        public static implicit operator long(LongTI v)
+        {
+            return v.longValue;
+        }
+
+        public static implicit operator LongTI(long v)
+        {
+            return new LongTI(v);
+        }
+	    
 		/// <summary>
 		/// Method getLongValue
 		/// </summary>

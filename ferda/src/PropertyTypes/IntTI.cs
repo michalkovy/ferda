@@ -24,7 +24,17 @@ namespace Ferda.Modules
 		{
 			this.intValue = iface.getIntValue();
 		}
-		
+
+        public static implicit operator int(IntTI v)
+        {
+            return v.intValue;
+        }
+
+        public static implicit operator IntTI(int v)
+        {
+            return new IntTI(v);
+        }
+	    
 		/// <summary>
 		/// Method getIntValue
 		/// </summary>

@@ -22,10 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Ferda;
-using System.Diagnostics;
 using Ferda.Modules.Boxes;
+using Ferda.ModulesManager;
+using Ice;
 
 namespace Ferda.Modules
 {
@@ -39,12 +38,12 @@ namespace Ferda.Modules
         /// of the box module required by <b>Modules Manager</b>.
         /// </summary>
         /// <remarks>
-        /// The <see cref="T:Ferda.Modules.Boxex.IBoxInfo"/> provides 
+        /// The <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> provides 
         /// some fundamental functionality so if you are developing 
         /// new box module you don`t have to bother about implementing the 
         /// <b>Factory Creator</b> moreover if you are using e.g. 
-        /// <see cref="T:Ferda.Modules.Boxex.BoxInfo"/> implementatiion of
-        /// the <see cref="T:Ferda.Modules.Boxex.IBoxInfo"/> interface you
+        /// <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> implementatiion of
+        /// the <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> interface you
         /// don`t need to understand the theory about <b>Factory Creators</b>
         /// and <b>Factories</b> in practice.
         /// </remarks>
@@ -68,10 +67,10 @@ namespace Ferda.Modules
 
         /// <summary>
         /// The <see cref="Ferda.ModulesManager.ManagersEnginePrx">proxy</see> of the 
-        /// <see cref="T:Ferda.ModulesManager.ManagersEngineI">
+        /// <see cref="T:Ferda.ModulesManager.ManagersEngine">
         /// modules manager engine</see>.
         /// </summary>
-        private ModulesManager.ManagersEnginePrx manager;
+        private ManagersEnginePrx manager;
 
         /// <summary>
         /// Box modules created in the factory.
@@ -93,9 +92,9 @@ namespace Ferda.Modules
         /// <param name="localePrefs">The localization preferences.</param>
         /// <param name="manager">The modules manager engine.</param>
         public BoxModuleFactoryI(IBoxInfo boxInfo,
-            BoxModuleFactoryCreatorPrx myFactoryCreatorProxy,
-            string[] localePrefs,
-            ModulesManager.ManagersEnginePrx manager)
+                                 BoxModuleFactoryCreatorPrx myFactoryCreatorProxy,
+                                 string[] localePrefs,
+                                 ManagersEnginePrx manager)
         {
             this.boxInfo = boxInfo;
             this.localePrefs = localePrefs;
@@ -108,7 +107,7 @@ namespace Ferda.Modules
         /// <summary>
         /// The last time when the session was refreshed.
         /// </summary>
-        private System.DateTime lastRefresh;
+        private DateTime lastRefresh;
 
         /// <summary>
         /// Gets time of the session`s last refresh.
@@ -117,13 +116,13 @@ namespace Ferda.Modules
         /// <exception cref="T:Ice.ObjectNotExistException">
         /// Thrown iff factory is destroying or destroyed.
         /// </exception>
-        public System.DateTime LastRefresh
+        public DateTime LastRefresh
         {
             get
             {
                 if (_destroy)
                 {
-                    throw new Ice.ObjectNotExistException();
+                    throw new ObjectNotExistException();
                 }
                 return lastRefresh;
             }
@@ -146,18 +145,19 @@ namespace Ferda.Modules
         /// <exception cref="T:Ice.ObjectNotExistException">
         /// Thrown iff factory is destroying or destroyed.
         /// </exception>
-        public override BoxModulePrx createBoxModule(Ice.Current __current)
+        public override BoxModulePrx createBoxModule(Current __current)
         {
             if (_destroy)
             {
-                throw new Ice.ObjectNotExistException();
+                throw new ObjectNotExistException();
             }
-            Ice.Identity boxModuleIdentity = Ice.Util.stringToIdentity(Ice.Util.generateUUID());
+            Identity boxModuleIdentity = Util.stringToIdentity(Util.generateUUID());
             BoxModuleFactoryPrx myProxy = BoxModuleFactoryPrxHelper.uncheckedCast(__current.adapter.addWithUUID(this));
-            BoxModuleI boxModule = new BoxModuleI(this.boxInfo, boxModuleIdentity, myProxy, this.manager, __current.adapter, this.localePrefs);
+            BoxModuleI boxModule =
+                new BoxModuleI(boxInfo, boxModuleIdentity, myProxy, manager, __current.adapter, localePrefs);
             BoxModulePrx boxModulePrx = boxModule.MyProxy;
-            string boxIdentity = Ice.Util.identityToString(boxModulePrx.ice_getIdentity());
-            this.boxModules[boxIdentity] = boxModule;
+            string boxIdentity = Util.identityToString(boxModulePrx.ice_getIdentity());
+            boxModules[boxIdentity] = boxModule;
             return boxModulePrx;
         }
 
@@ -166,13 +166,13 @@ namespace Ferda.Modules
         /// </summary>
         /// <param name="boxIdentity">The identity of the box.</param>
         /// <param name="__current">The Ice.Current.</param>
-        public override void destroyBoxModule(string boxIdentity, Ice.Current __current)
+        public override void destroyBoxModule(string boxIdentity, Current __current)
         {
-            lock (this.boxModules)
+            lock (boxModules)
             {
-                this.boxModules[boxIdentity].destroy(__current.adapter);
-                this.boxModules.Remove(boxIdentity);
-                __current.adapter.remove(Ice.Util.stringToIdentity(boxIdentity));
+                boxModules[boxIdentity].destroy(__current.adapter);
+                boxModules.Remove(boxIdentity);
+                __current.adapter.remove(Util.stringToIdentity(boxIdentity));
             }
         }
 
@@ -185,26 +185,26 @@ namespace Ferda.Modules
         /// <exception cref="T:Ice.ObjectNotExistException">
         /// Thrown iff factory is destroying or destroyed.
         /// </exception>
-        public override void destroy(Ice.Current __current)
+        public override void destroy(Current __current)
         {
             if (_destroy)
             {
-                throw new Ice.ObjectNotExistException();
+                throw new ObjectNotExistException();
             }
 
             _destroy = true;
 
-            lock (this.boxModules)
+            lock (boxModules)
             {
                 try
                 {
                     __current.adapter.remove(__current.id);
                     foreach (string boxIdentity in boxModules.Keys)
                     {
-                        __current.adapter.remove(Ice.Util.stringToIdentity(boxIdentity));
+                        __current.adapter.remove(Util.stringToIdentity(boxIdentity));
                     }
                 }
-                catch (Ice.ObjectAdapterDeactivatedException)
+                catch (ObjectAdapterDeactivatedException)
                 {
                     // This method is called on shutdown of the server, in which
                     // case this exception is expected.
@@ -217,9 +217,9 @@ namespace Ferda.Modules
         /// </summary>
         /// <param name="__current">The Ice.Current.</param>
         /// <returns>Array of <see cref="T:Ferda.Modules.ActionInfo"/>.</returns>
-        public override ActionInfo[] getActions(Ice.Current __current)
+        public override ActionInfo[] getActions(Current __current)
         {
-            return this.boxInfo.GetActions(this.localePrefs);
+            return boxInfo.GetActions(localePrefs);
         }
 
         /// <summary>
@@ -229,9 +229,9 @@ namespace Ferda.Modules
         /// <returns>
         /// Array of <seealso cref="T:Ferda.Modules.PropertyInfo">PropertyInfos</seealso>.
         /// </returns>
-        public override PropertyInfo[] getProperties(Ice.Current __current)
+        public override PropertyInfo[] getProperties(Current __current)
         {
-            return this.boxInfo.GetProperties(this.localePrefs);
+            return boxInfo.GetProperties(localePrefs);
         }
 
         /// <summary>
@@ -241,9 +241,9 @@ namespace Ferda.Modules
         /// <returns>
         /// Array of <seealso cref="T:Ferda.Modules.SocketInfo">SocketInfos</seealso>.
         /// </returns>
-        public override SocketInfo[] getSockets(Ice.Current __current)
+        public override SocketInfo[] getSockets(Current __current)
         {
-            SocketInfo[] s = this.boxInfo.GetSockets(this.localePrefs);
+            SocketInfo[] s = boxInfo.GetSockets(localePrefs);
             return s;
         }
 
@@ -256,13 +256,13 @@ namespace Ferda.Modules
         /// <exception cref="T:Ice.ObjectNotExistException">
         /// Thrown iff factory is destroying or destroyed.
         /// </exception>
-        public override void refresh(Ice.Current __current)
+        public override void refresh(Current __current)
         {
             if (_destroy)
             {
-                throw new Ice.ObjectNotExistException();
+                throw new ObjectNotExistException();
             }
-            lastRefresh = System.DateTime.Now;
+            lastRefresh = DateTime.Now;
         }
 
         /// <summary>
@@ -272,13 +272,13 @@ namespace Ferda.Modules
         /// <returns>True iff the factory is empty (i.e. there
         /// is no box module in within) and therefore the factory
         /// can be and is destroyed.</returns>
-        public override bool destroyIfEmpty(Ice.Current __current)
+        public override bool destroyIfEmpty(Current __current)
         {
-            lock (this.boxModules)
+            lock (boxModules)
             {
-                if (this.boxModules.Count == 0)
+                if (boxModules.Count == 0)
                 {
-                    this.destroy(__current);
+                    destroy(__current);
                     return true;
                 }
                 else
@@ -295,9 +295,9 @@ namespace Ferda.Modules
         /// <returns>
         /// Array of <seealso cref="T:Ferda.Modules.HelpFileInfo">HelpFileInfos</seealso>.
         /// </returns>
-        public override HelpFileInfo[] getHelpFileInfoSeq(Ice.Current __current)
+        public override HelpFileInfo[] getHelpFileInfoSeq(Current __current)
         {
-            return this.boxInfo.GetHelpFileInfoSeq(this.localePrefs);
+            return boxInfo.GetHelpFileInfoSeq(localePrefs);
         }
 
         /// <summary>
@@ -309,9 +309,9 @@ namespace Ferda.Modules
         /// <see cref="T:Ferda.Modules.BoxModuleFactoryCreatorI">
         /// box module factory`s creator</see>.
         /// </returns>
-        public override BoxModuleFactoryCreatorPrx getMyFactoryCreator(Ice.Current __current)
+        public override BoxModuleFactoryCreatorPrx getMyFactoryCreator(Current __current)
         {
-            return this.myFactoryCreatorProxy;
+            return myFactoryCreatorProxy;
         }
     }
 }

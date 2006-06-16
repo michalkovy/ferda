@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
+
 namespace Ferda.Modules.Boxes.Serializer.Localization
 {
     /// <summary>
@@ -17,7 +18,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// Gets the actions of the box.
         /// </summary>
         /// <value>The actions of the box.</value>
-        System.Collections.Generic.Dictionary<string, Ferda.Modules.Boxes.Serializer.Localization.Action> Actions { get; }
+        Dictionary<string, Action> Actions { get; }
 
         /// <summary>
         /// Gets (localized) names of the categories of the box.
@@ -26,13 +27,13 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// <para><c>Key</c> is name the category where the box belongs to.</para>
         /// <para><c>Value</c> is localized name of the category.</para>
         /// </value>
-        System.Collections.Generic.Dictionary<string, string> Categories { get; }
+        Dictionary<string, string> Categories { get; }
 
         /// <summary>
         /// Gets the localizec dynamic help items of the box.
         /// </summary>
         /// <value>The dynamic help items of the box.</value>
-        Ferda.Modules.DynamicHelpItem[] DynamicHelpItems { get; }
+        Modules.DynamicHelpItem[] DynamicHelpItems { get; }
 
         /// <summary>
         /// Gets the the selectbox`s option of specified name of the property.
@@ -42,7 +43,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// <param name="fallOnError">If set to <c>true</c> and there is no 
         /// localization of specified option in the property <see cref="T:System.Exception"/> is thrown.</param>
         /// <returns>Label and short label of the specified option of the property.</returns>
-        Ferda.Modules.Boxes.Serializer.Localization.SelectOption GetSelectBoxOption(string propertyName, string optionName, bool fallOnError);
+        SelectOption GetSelectBoxOption(string propertyName, string optionName, bool fallOnError);
 
         /// <summary>
         /// Gets the localization of the socket of the specified name.
@@ -54,13 +55,13 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// </returns>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with 
         /// specified <c>socketName</c> in the box.</exception>
-        Ferda.Modules.Boxes.Serializer.Localization.Socket GetSocket(string socketName);
+        Socket GetSocket(string socketName);
 
         /// <summary>
         /// Gets the help files.
         /// </summary>
         /// <value>The help files.</value>
-        Ferda.Modules.HelpFileInfo[] HelpFiles { get; }
+        HelpFileInfo[] HelpFiles { get; }
 
         /// <summary>
         /// Gets the help files paths.
@@ -70,7 +71,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// <para><c>Key</c> is localeId + helpFileIdentifier.</para>
         /// <para><c>Value</c> is path to the help file.</para>
         /// </value>
-        System.Collections.Generic.Dictionary<string, string> HelpFilesPaths { get; }
+        Dictionary<string, string> HelpFilesPaths { get; }
 
         /// <summary>
         /// Gets the box`s hint i.e. short tip.
@@ -113,7 +114,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// <para><c>Key</c> is name of modules asking for creation.</para>
         /// <para><c>Value</c> is the array of <see cref="T:Ferda.Modules.DynamicHelpItem"/> i.e. dynamic help items. (label, hint and dynamic help items are specified)</para>
         /// </value>
-        System.Collections.Generic.Dictionary<string, Ferda.Modules.ModulesAskingForCreation> ModulesAskingForCreation { get; }
+        Dictionary<string, Modules.ModulesAskingForCreation> ModulesAskingForCreation { get; }
 
         /// <summary>
         /// Gets (localized) names of the categories of the property.
@@ -122,7 +123,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// <para><c>Key</c> is name the category where the property belongs to.</para>
         /// <para><c>Value</c> is localized name of the category.</para>
         /// </value>
-        System.Collections.Generic.Dictionary<string, string> PropertyCategories { get; }
+        Dictionary<string, string> PropertyCategories { get; }
 
         /// <summary>
         /// Gets the localization of the sockets.
@@ -133,7 +134,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// 	<para><c>Value</c> is socket`s localization.</para>
         /// </value>
         /// <remarks>Localization of properties is included.</remarks>
-        System.Collections.Generic.Dictionary<string, Ferda.Modules.Boxes.Serializer.Localization.Socket> Sockets { get; }
+        Dictionary<string, Socket> Sockets { get; }
 
         /// <summary>
         /// Tries to the get specified phrase (<c>phraseIdentifier</c>).

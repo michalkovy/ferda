@@ -54,6 +54,21 @@ namespace Ferda.Modules
 			iface.getTimeValue(out hour, out minute, out second);
 		}
 
+        public static implicit operator TimeSpan(TimeTI v)
+        {
+            TimeSpan result;
+            if (v.TryGetTimeSpan(out result))
+                return result;
+            else
+                return TimeSpan.MinValue;
+
+        }
+
+        public static implicit operator TimeTI(TimeSpan v)
+        {
+            return new TimeTI(v);
+        }
+
 		/// <summary>
 		/// Method getdateValue
 		/// </summary>

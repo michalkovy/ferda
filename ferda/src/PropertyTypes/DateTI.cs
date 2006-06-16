@@ -47,6 +47,21 @@ namespace Ferda.Modules
 			iface.getDateValue(out year, out month, out day);
 		}
 
+        public static implicit operator DateTime(DateTI v)
+        {
+            DateTime result;
+            if (v.TryGetDateTime(out result))
+                return result;
+            else
+                return DateTime.MinValue;
+                
+        }
+
+        public static implicit operator DateTI(DateTime v)
+        {
+            return new DateTI(v);
+        }
+
 		/// <summary>
 		/// Method getdateValue
 		/// </summary>

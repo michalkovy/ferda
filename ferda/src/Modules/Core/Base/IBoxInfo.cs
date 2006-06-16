@@ -1,19 +1,21 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Ice;
+
 namespace Ferda.Modules.Boxes
 {
-	/// <summary>
-	/// <para>
-	/// This interface provides fundamental funcionality and lot of 
-	/// basic features (including localizaton) of the box module. This 
+    /// <summary>
+    /// <para>
+    /// This interface provides fundamental funcionality and lot of 
+    /// basic features (including localizaton) of the box module. This 
     /// interface is required by <see cref="T:Ferda.Modules.BoxModuleI"/>,
-	/// <see cref="T:Ferda.Modules.BoxModuleFactoryI"/> and 
-	/// <see cref="T:Ferda.Modules.BoxModuleFactoryCreatorI"/> which
+    /// <see cref="T:Ferda.Modules.BoxModuleFactoryI"/> and 
+    /// <see cref="T:Ferda.Modules.BoxModuleFactoryCreatorI"/> which
     /// are used by <b>ModulesManager</b> and <b>ProjectManager</b>.
     /// Therefore if you wants to implement your own box module
     /// you only needs to implement this interface and your own functions
     /// specified by your slice design of the box module`s functions.
-	/// </para>
-	/// </summary>
+    /// </para>
+    /// </summary>
     /// <remarks>
     /// <para>
     /// Lot of methods has parameter <c>localePrefs</c> 
@@ -37,21 +39,21 @@ namespace Ferda.Modules.Boxes
     /// be used than default culture name (basicly "en-US") is used.
     /// </para>
     /// </remarks>
-	/// <seealso cref="T:Ferda.Modules.Boxes.BoxInfo"/>
-	/// <seealso cref="T:Ferda.Modules.BoxModuleI"/>
-	/// <seealso cref="T:Ferda.Modules.BoxModuleFactoryI"/>
-	/// <seealso cref="T:Ferda.Modules.BoxModuleFactoryCreatorI"/>
-	public interface IBoxInfo
-	{
-		/// <summary>
-		/// Array of <see cref="T:System.String">Strings</see> 
-		/// as list of names of categories, in which this 
-		/// box module belongs to.
-		/// </summary>
+    /// <seealso cref="T:Ferda.Modules.Boxes.BoxInfo"/>
+    /// <seealso cref="T:Ferda.Modules.BoxModuleI"/>
+    /// <seealso cref="T:Ferda.Modules.BoxModuleFactoryI"/>
+    /// <seealso cref="T:Ferda.Modules.BoxModuleFactoryCreatorI"/>
+    public interface IBoxInfo
+    {
+        /// <summary>
+        /// Array of <see cref="T:System.String">Strings</see> 
+        /// as list of names of categories, in which this 
+        /// box module belongs to.
+        /// </summary>
         /// <value>
         /// Names of categories, in which the box module belongs to.
         /// </value>
-		/// <remarks>
+        /// <remarks>
         /// <para>
         /// Box module can be in any number of categories.
         /// </para>
@@ -65,34 +67,34 @@ namespace Ferda.Modules.Boxes
         /// </para>
         /// </remarks>
         /// <seealso cref="M:Ferda.Modules.Boxes.IBoxInfo.GetBoxCategoryLocalizedName(System.String,System.String)"/>
-		string[] Categories { get; }
+        string[] Categories { get; }
 
-		/// <summary>
-		/// Creates <see cref="T:Ice.Object"/> implementing Ice interface of 
-		/// the box module i.e. box`s functions declared in slice design.
-		/// </summary>
-		/// <example>
-		/// <para>Following examples shows how to implement this function.</para>
+        /// <summary>
+        /// Creates <see cref="T:Ice.Object"/> implementing Ice interface of 
+        /// the box module i.e. box`s functions declared in slice design.
+        /// </summary>
+        /// <example>
+        /// <para>Following examples shows how to implement this function.</para>
         /// <para>This is an example of slice design. As you can see <c>MyBoxModule</c> 
         /// has one interface for implementation named <c>MyBoxModuleFunctions</c>.</para>
-		/// <code>
-		/// module MyBoxModule
-		/// {
-		/// 	interface MyBoxModuleFunctions
-		/// 	{
+        /// <code>
+        /// module MyBoxModule
+        /// {
+        /// 	interface MyBoxModuleFunctions
+        /// 	{
         ///         nonmutating string HelloWorld();
-		/// 		/* ... */
-		/// 	};
-		/// };
-		/// </code>
+        /// 		/* ... */
+        /// 	};
+        /// };
+        /// </code>
         /// <para>This is a sample C# class implementing <c>MyBoxModuleFunctions</c> interface.
         /// Please notice that class implementing the slice design of any box module has 
         /// to implement <see cref="T:Ferda.Modules.IFunctions"/>.</para>
-		/// <code>
-		/// namespace MyBoxModule
-		/// {
-		///		class MyBoxModuleFunctionsI : MyBoxModuleFunctionsDisp_, IFunctions
-		///		{
+        /// <code>
+        /// namespace MyBoxModule
+        /// {
+        ///		class MyBoxModuleFunctionsI : MyBoxModuleFunctionsDisp_, IFunctions
+        ///		{
         ///		    protected Ferda.Modules.BoxModuleI boxModule;
         ///		    protected Ferda.Modules.Boxes.IBoxInfo boxInfo;
         /// 
@@ -106,49 +108,49 @@ namespace Ferda.Modules.Boxes
         /// 
         /// 		//this implements HelloWorld() method specified in slice design
         ///         public override string HelloWorld(Ice.Current __current)
-		/// 		{
-		/// 			return "Hello World!";
+        /// 		{
+        /// 			return "Hello World!";
         /// 		}
         /// 
-		///			/* ... */
-		///		}
-		/// }
-		/// </code>
-		/// <para>Finally, this is sample implementation of this function.</para>
-		/// <code>
-		/// namespace MyBoxModule
-		/// {
-		///		class MyBoxModuleBoxInfo : Ferda.Modules.Boxes.BoxInfo
-		///		{
-		///			/* ... */
+        ///			/* ... */
+        ///		}
+        /// }
+        /// </code>
+        /// <para>Finally, this is sample implementation of this function.</para>
+        /// <code>
+        /// namespace MyBoxModule
+        /// {
+        ///		class MyBoxModuleBoxInfo : Ferda.Modules.Boxes.BoxInfo
+        ///		{
+        ///			/* ... */
         /// 
-		///			public override void CreateFunctions(BoxModuleI boxModule, out Ice.Object iceObject, out IFunctions functions)
-		///			{
-		///				MyBoxModuleFunctionsI result = new MyBoxModuleFunctionsI();
-		///				iceObject = (Ice.Object)result;
-		/// 			functions = (IFunctions)result;
-		///			}
+        ///			public override void CreateFunctions(BoxModuleI boxModule, out Ice.Object iceObject, out IFunctions functions)
+        ///			{
+        ///				MyBoxModuleFunctionsI result = new MyBoxModuleFunctionsI();
+        ///				iceObject = (Ice.Object)result;
+        /// 			functions = (IFunctions)result;
+        ///			}
         /// 
         ///         /* ... */
-		///		}
-		/// }
-		/// </code>
-		/// </example>
-		/// <param name="boxModule">Box module, to which created functions 
-		/// will belong to.</param>
+        ///		}
+        /// }
+        /// </code>
+        /// </example>
+        /// <param name="boxModule">Box module, to which created functions 
+        /// will belong to.</param>
         /// <param name="iceObject">An out parameter returning <see cref="T:Ice.Object"/> 
-		/// implementing box`s "ice" functions. This value is same as value 
-		/// of <c>functions</c>.</param>
+        /// implementing box`s "ice" functions. This value is same as value 
+        /// of <c>functions</c>.</param>
         /// <param name="functions">An out parameter returning <see cref="T:Ice.Object"/> 
-		/// implementing box`s "ice" functions. This value is same as value 
-		/// of <c>iceObject</c>.</param>
+        /// implementing box`s "ice" functions. This value is same as value 
+        /// of <c>iceObject</c>.</param>
         /// <remarks>
         /// Each instance of the box module has its own functions object but 
         /// class implementing <see cref="T:Ferda.Modules.Boxes.IBoxInfo">
         /// this interface</see> is shared by all instances of the box modules
         /// of the same type <see cref="P:Ferda.Modules.Boxes.IBoxInfo.Identifier"/>
         /// </remarks>
-		void CreateFunctions(BoxModuleI boxModule, out Ice.Object iceObject, out IFunctions functions);
+        void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions);
 
         /// <summary>
         /// Gets the <see href="http://www.w3.org/tr/2000/cr-svg-20001102/index.html">
@@ -165,15 +167,15 @@ namespace Ferda.Modules.Boxes
         /// <remarks>Returned value is array of conditions on connections in
         /// sockets. At least one of returned conditions has to be realized before
         /// execution of the action is allowed.</remarks>
-        /// <exception cref="T:Ferda.Modules.NameNotExistsError">Iff <c>actionName</c> is bad.</exception>
-		string[][] GetActionInfoNeededConnectedSockets(string actionName);
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">Iff <c>actionName</c> is bad.</exception>
+        string[][] GetActionInfoNeededConnectedSockets(string actionName);
 
         /// <summary>
         /// Gets actions of the box module.
         /// </summary>
         /// <param name="localePrefs">The localization preferences.</param>
         /// <returns>Array of <see cref="T:Ferda.Modules.ActionInfo"/>.</returns>
-		ActionInfo[] GetActions(string[] localePrefs);
+        ActionInfo[] GetActions(string[] localePrefs);
 
         /// <summary>
         /// Gets the localized name of the box`s category.
@@ -183,7 +185,7 @@ namespace Ferda.Modules.Boxes
         /// <returns>
         /// Localized name of the category named <c>categoryName</c>.
         /// </returns>
-		string GetBoxCategoryLocalizedName(string cultureName, string categoryName);
+        string GetBoxCategoryLocalizedName(string cultureName, string categoryName);
 
         /// <summary>
         /// Gets function`s Ice identifiers of the box module.
@@ -232,7 +234,7 @@ namespace Ferda.Modules.Boxes
         /// An array of strings representing Ice identifiers 
         /// of the box module`s functions.
         /// </returns>
-		string[] GetBoxModuleFunctionsIceIds();
+        string[] GetBoxModuleFunctionsIceIds();
 
         /// <summary>
         /// Gets items of the dynamic help.
@@ -242,14 +244,14 @@ namespace Ferda.Modules.Boxes
         /// <returns>
         /// Array of <seealso cref="T:Ferda.Modules.DynamicHelpItem">DynamicHelpItems</seealso>.
         /// </returns>
-		DynamicHelpItem[] GetDynamicHelpItems(string[] localePrefs, BoxModuleI boxModule);
+        DynamicHelpItem[] GetDynamicHelpItems(string[] localePrefs, BoxModuleI boxModule);
 
         /// <summary>
         /// Gets help file as aray of <see cref="T:System.Byte">Bytes</see>.
         /// </summary>
         /// <param name="identifier">The identifier of the help file.</param>
         /// <returns>Content of the help file as array of <see cref="T:System.Byte">Bytes</see>.</returns>
-		byte[] GetHelpFile(string identifier);
+        byte[] GetHelpFile(string identifier);
 
         /// <summary>
         /// Gets information about the help files.
@@ -265,14 +267,14 @@ namespace Ferda.Modules.Boxes
         /// </summary>
         /// <param name="localePrefs">The localization preferences.</param>
         /// <returns>Localized hint (short suggestion) of the box module.</returns>
-		string GetHint(string[] localePrefs);
+        string GetHint(string[] localePrefs);
 
         /// <summary>
         /// Gets localized label of the box module.
         /// </summary>
         /// <param name="localePrefs">The localization preferences.</param>
         /// <returns>Localized label of the box module.</returns>
-		string GetLabel(string[] localePrefs);
+        string GetLabel(string[] localePrefs);
 
         /// <summary>
         /// Gets the box modules asking for creation.
@@ -287,7 +289,7 @@ namespace Ferda.Modules.Boxes
         /// Modules asking for creation dynamically depends on actual
         /// inner state of the box module.
         /// </remarks>
-		ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule);
+        ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule);
 
         /// <summary>
         /// Gets the properties of the box module.
@@ -296,7 +298,7 @@ namespace Ferda.Modules.Boxes
         /// <returns>
         /// Array of <seealso cref="T:Ferda.Modules.PropertyInfo">PropertyInfos</seealso>.
         /// </returns>
-		PropertyInfo[] GetProperties(string[] localePrefs);
+        PropertyInfo[] GetProperties(string[] localePrefs);
 
         /// <summary>
         /// Gets names of the properties.
@@ -308,7 +310,7 @@ namespace Ferda.Modules.Boxes
         /// <remarks>
         /// The name of the property is its unique identifier.
         /// </remarks>
-		string[] GetPropertiesNames();
+        string[] GetPropertiesNames();
 
         /// <summary>
         /// Gets default value of the property.
@@ -318,7 +320,7 @@ namespace Ferda.Modules.Boxes
         /// Returns default <see cref="T:Ferda.Modules.PropertyValue">value</see>
         /// of the property named <c>propertyName</c>.
         /// </returns>
-		PropertyValue GetPropertyDefaultValue(string propertyName);
+        PropertyValue GetPropertyDefaultValue(string propertyName);
 
         /// <summary>
         /// Gets TypeClassIceId of the data type of the property.
@@ -433,7 +435,7 @@ namespace Ferda.Modules.Boxes
         /// <returns>The <see cref="T:Ferda.Modules.PropertyValue"/>.</returns>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">Iff 
         /// there is no property named <c>propertyName</c></exception>
-		PropertyValue GetPropertyObjectFromInterface(string propertyName, Ice.ObjectPrx objectPrx);
+        PropertyValue GetPropertyObjectFromInterface(string propertyName, ObjectPrx objectPrx);
 
         /// <summary>
         /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as 
@@ -509,7 +511,7 @@ namespace Ferda.Modules.Boxes
         /// This function doesn`t make any test iff the property of 
         /// specified name <c>propertyName</c> exists.
         /// </remarks>
-		SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule);
+        SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule);
 
         /// <summary>
         /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as list
@@ -597,7 +599,7 @@ namespace Ferda.Modules.Boxes
         /// <returns>
         /// Returns <c>short label</c> or <c>label</c> or <c>optionName</c> of the option.
         /// </returns>
-		string GetPropertyOptionShortLocalizedLabel(string propertyName, string optionName, string[] localePrefs);
+        string GetPropertyOptionShortLocalizedLabel(string propertyName, string optionName, string[] localePrefs);
 
         /// <summary>
         /// Gets array of <see cref="T:Ferda.Modules.BoxType"/> as list 
@@ -609,10 +611,10 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         /// <remarks>
         /// <b>Box type</b> is given by the functions, which the box is providing, and array of its
-        /// <see cref="T:Ferda.Modules.Serializer.BoxSerializer.NeededSocket">needed sockets</see>.
+        /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.NeededSocket">needed sockets</see>.
         /// Needed socket is given by its name and the functions accepted by this socket.
         /// </remarks>
-		BoxType[] GetSocketTypes(string socketName);
+        BoxType[] GetSocketTypes(string socketName);
 
         /// <summary>
         /// Gets names of the sockets.
@@ -624,7 +626,7 @@ namespace Ferda.Modules.Boxes
         /// <remarks>
         /// The name of the socket is its unique identifier.
         /// </remarks>
-		string[] GetSocketNames();
+        string[] GetSocketNames();
 
         /// <summary>
         /// Gets the sockets of the box module.
@@ -633,7 +635,7 @@ namespace Ferda.Modules.Boxes
         /// <returns>
         /// Array of <seealso cref="T:Ferda.Modules.SocketInfo">SocketInfos</seealso>.
         /// </returns>
-		SocketInfo[] GetSockets(string[] localePrefs);
+        SocketInfo[] GetSockets(string[] localePrefs);
 
         /// <summary>
         /// Gets the box module`s icon.
@@ -657,7 +659,7 @@ namespace Ferda.Modules.Boxes
         /// <see cref="M:Ferda.Modules.BoxModuleFactoryCreatorI.getIdentifier(Ice.Current)">identifier</see> 
         /// i.e. type is used.
         /// </value>
-		string Identifier { get; }
+        string Identifier { get; }
 
         /// <summary>
         /// Returns boolean value that indicates wheter the property 
@@ -667,7 +669,7 @@ namespace Ferda.Modules.Boxes
         /// <returns>Returns true iff the property is readonly.</returns>
         /// <exception cref="T:Ferda.Modules.Exceptions.NameNotExistError">There 
         /// is no property named <c>propertyName</c> in the box module</exception>
-		bool IsPropertyReadOnly(string propertyName);
+        bool IsPropertyReadOnly(string propertyName);
 
         /// <summary>
         /// Useful for property of "OtherT" type of the property. 
@@ -677,7 +679,7 @@ namespace Ferda.Modules.Boxes
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="propertyValue">Value of the property.</param>
         /// <returns>True iff property value is purposeful/entered.</returns>
-		bool IsPropertySet(string propertyName, PropertyValue propertyValue);
+        bool IsPropertySet(string propertyName, PropertyValue propertyValue);
 
         /// <summary>
         /// Returns boolean value that indicates wheter more than 
@@ -688,7 +690,7 @@ namespace Ferda.Modules.Boxes
         /// the socket named <c>socketName</c>; otherwise, returns false.</returns>
         /// <exception cref="T:Ferda.Modules.Exceptions.NameNotExistError">There 
         /// is no <c>socketName</c> in Box module</exception>
-		bool IsSocketMoreThanOne(string socketName);
+        bool IsSocketMoreThanOne(string socketName);
 
         /// <summary>
         /// Gets default value for box module`s user label. This label
@@ -718,7 +720,7 @@ namespace Ferda.Modules.Boxes
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>Returns true iff the box module has property 
         /// named <c>propertyName</c>.</returns>
-		bool TestPropertyNameExistence(string propertyName);
+        bool TestPropertyNameExistence(string propertyName);
 
         /// <summary>
         /// <para>
@@ -731,7 +733,7 @@ namespace Ferda.Modules.Boxes
         /// <param name="socketName">Name of the socket.</param>
         /// <returns>Returns true iff the box module has socket 
         /// named <c>socketName</c>.</returns>
-		bool TestSocketNameExistence(string socketName);
+        bool TestSocketNameExistence(string socketName);
 
         /// <summary>
         /// Executes (runs) action specified by <c>actionName</c>.
@@ -766,7 +768,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         /// <exception cref="T:Ferda.Modules.Exceptions.NameNotExistError">There 
         /// is no property named <c>propertyName</c> in the box module</exception>
-        System.Collections.Generic.List<Restriction> GetPropertyRestrictions(string propertyName);
+        List<Restriction> GetPropertyRestrictions(string propertyName);
 
 
         /// <summary>
@@ -813,5 +815,5 @@ namespace Ferda.Modules.Boxes
         /// </para>
         /// </remarks>
         void Validate(BoxModuleI boxModule);
-	}
+    }
 }

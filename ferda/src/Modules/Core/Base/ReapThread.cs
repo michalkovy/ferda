@@ -1,8 +1,7 @@
 using System;
-using System.Threading;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading;
+using Ice;
 
 namespace Ferda.Modules
 {
@@ -34,28 +33,30 @@ namespace Ferda.Modules
             /// <summary>
             /// The proxy of the <b>box module factory</b>.
             /// </summary>
-			private BoxModuleFactoryPrx factoryProxy;
+            private BoxModuleFactoryPrx factoryProxy;
+
             /// <summary>
             /// Gets the proxy of the <b>box module factory</b>.
             /// </summary>
             /// <value>The proxy of the <b>box module factory</b>.</value>
-			public BoxModuleFactoryPrx FactoryProxy
-			{
-				get { return factoryProxy; }
-			}
+            public BoxModuleFactoryPrx FactoryProxy
+            {
+                get { return factoryProxy; }
+            }
 
-			/// <summary>
+            /// <summary>
             /// The <b>box module factory</b>.
-			/// </summary>
+            /// </summary>
             private BoxModuleFactoryI factory;
+
             /// <summary>
             /// Gets the <b>box module factory</b>.
             /// </summary>
             /// <value>The factory.</value>
-			public BoxModuleFactoryI Factory
-			{
-				get { return factory; }
-			}
+            public BoxModuleFactoryI Factory
+            {
+                get { return factory; }
+            }
         }
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace Ferda.Modules
         /// </remarks>
         public ReapThread()
         {
-            _timeout = Ferda.Modules.factoryRefreshedTestTime.value;
+            _timeout = factoryRefreshedTestTime.value;
             _factories = new ArrayList();
         }
 
@@ -84,7 +85,7 @@ namespace Ferda.Modules
             {
                 while (!_terminated)
                 {
-                    System.Threading.Monitor.Wait(this, _timeout);
+                    Monitor.Wait(this, _timeout);
                     if (!_terminated)
                     {
                         ArrayList tmp = new ArrayList();
@@ -95,7 +96,7 @@ namespace Ferda.Modules
                                 // Factory destruction may take time in a
                                 // real-world example. Therefore the current time
                                 // is computed for each iteration.
-                                System.TimeSpan ts = System.DateTime.Now - p.Factory.LastRefresh;
+                                TimeSpan ts = DateTime.Now - p.Factory.LastRefresh;
                                 if (ts.Milliseconds > _timeout)
                                 {
                                     p.FactoryProxy.destroy();
@@ -105,7 +106,7 @@ namespace Ferda.Modules
                                     tmp.Add(p);
                                 }
                             }
-                            catch (Ice.ObjectNotExistException)
+                            catch (ObjectNotExistException)
                             {
                                 // Ignore.
                             }
@@ -124,7 +125,7 @@ namespace Ferda.Modules
             lock (this)
             {
                 _terminated = true;
-                System.Threading.Monitor.Pulse(this);
+                Monitor.Pulse(this);
 
                 //TODO Michal ma tohle byt skutecne zakomentovane?
 /*

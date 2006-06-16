@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Ferda.Modules.Boxes.Serializer.Localization
@@ -12,8 +13,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
     /// <para>
     /// Instance of the <see cref="BoxLocalization"/> is actually deserealized XML localization
     /// file. The <see cref="T:Ferda.Modules.Boxes.Serializer.Localization.Helper"/> creates 
-    /// more efficient structures for futher working with the localization (e. g. 
-    /// <see cref="T:System.Collections.Generic.Dictionary"> Dictionaries</see>).
+    /// more efficient structures for futher working with the localization (e. g. Dictionaries).
     /// </para>
     /// </summary>
     /// <seealso cref="T:Ferda.Modules.Boxes.Serializer.Localization.BoxLocalization"/>
@@ -21,9 +21,10 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
     /// <seealso cref="T:Ferda.Modules.Boxes.BoxInfo"/>
     /// <seealso cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box"/>
     [Serializable]
-    public class Helper : Ferda.Modules.Boxes.Serializer.Localization.IHelper
+    public class Helper : IHelper
     {
         private string localeId;
+
         /// <summary>
         /// Gets the locale id.
         /// </summary>
@@ -53,20 +54,20 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         {
             if (boxLocalization == null)
             {
-                System.Diagnostics.Debug.WriteLine("Ser05");
+                Debug.WriteLine("Ser05");
                 throw new ArgumentNullException("boxLocalizations");
             }
 
             this.localeId = localeId;
-            this.identifier = boxLocalization.Identifier;
-            this.label = boxLocalization.Label;
-            this.hint = boxLocalization.Hint;
+            identifier = boxLocalization.Identifier;
+            label = boxLocalization.Label;
+            hint = boxLocalization.Hint;
 
             //prepare categories where the box belongs to
             if (boxLocalization.Categories != null)
                 foreach (Category category in boxLocalization.Categories)
                 {
-                    this.categories.Add(category.Name, category.Label);
+                    categories.Add(category.Name, category.Label);
                 }
 
             //prepare help files and paths towards them
@@ -78,7 +79,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
                     string newHelpFileIdentifier = this.localeId + helpFile.Identifier;
 
                     //prepare path to the help file
-                    this.helpFilesPaths.Add(newHelpFileIdentifier, helpFile.Path);
+                    helpFilesPaths.Add(newHelpFileIdentifier, helpFile.Path);
 
                     //prepare help files
                     HelpFileInfo item = new HelpFileInfo();
@@ -93,7 +94,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
             if (boxLocalization.PropertyCategories != null)
                 foreach (PropertyCategory propertyCategory in boxLocalization.PropertyCategories)
                 {
-                    this.propertyCategories.Add(propertyCategory.Name, propertyCategory.Label);
+                    propertyCategories.Add(propertyCategory.Name, propertyCategory.Label);
                 }
 
             //prepare sockets (i.e. also properties) and selectbox options
@@ -101,7 +102,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
                 foreach (Socket socket in boxLocalization.Sockets)
                 {
                     //prepare sockets (i.e. also properties)
-                    this.sockets.Add(socket.Name, socket);
+                    sockets.Add(socket.Name, socket);
 
                     //prepare selectbox options
                     if (socket.SelectOptions != null && socket.SelectOptions.Length > 0)
@@ -111,7 +112,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
                         {
                             options.Add(selectBoxParam.Name, selectBoxParam);
                         }
-                        this.selectBoxOptions.Add(socket.Name, options);
+                        selectBoxOptions.Add(socket.Name, options);
                     }
                 }
 
@@ -119,20 +120,21 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
             if (boxLocalization.Actions != null)
                 foreach (Action action in boxLocalization.Actions)
                 {
-                    this.actions.Add(action.Name, action);
+                    actions.Add(action.Name, action);
                 }
 
             //prepare box`s dynamic help items
-            this.dynamicHelpItems = this.getDynamicHelpItems(boxLocalization.DynamicHelpItems);
+            dynamicHelpItems = getDynamicHelpItems(boxLocalization.DynamicHelpItems);
 
             //prepare box`s modules asking for creation
             if (boxLocalization.ModulesAskingForCreationSeq != null)
-                foreach (ModulesAskingForCreation modulesAskingForCreation in boxLocalization.ModulesAskingForCreationSeq)
+                foreach (
+                    ModulesAskingForCreation modulesAskingForCreation in boxLocalization.ModulesAskingForCreationSeq)
                 {
-                    Ferda.Modules.ModulesAskingForCreation modulesAfcItem = new Ferda.Modules.ModulesAskingForCreation();
+                    Modules.ModulesAskingForCreation modulesAfcItem = new Modules.ModulesAskingForCreation();
                     modulesAfcItem.label = modulesAskingForCreation.Label;
                     modulesAfcItem.hint = modulesAskingForCreation.Hint;
-                    modulesAfcItem.help = this.getDynamicHelpItems(modulesAskingForCreation.DynamicHelpItems);
+                    modulesAfcItem.help = getDynamicHelpItems(modulesAskingForCreation.DynamicHelpItems);
                     this.modulesAskingForCreation.Add(modulesAskingForCreation.Name, modulesAfcItem);
                 }
 
@@ -143,22 +145,24 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
                 {
                     try
                     {
-                        this.phrases.Add(phrase.PhraseIdentifier, phrase.PhraseText);
+                        phrases.Add(phrase.PhraseIdentifier, phrase.PhraseText);
                     }
                     catch (ArgumentNullException)
                     {
-                        phrasesLoadError.AppendLine("Ser03: Empty identifier of phrase in box " + this.Identifier + "{" + this.LocaleId + "}");
+                        phrasesLoadError.AppendLine("Ser03: Empty identifier of phrase in box " + Identifier + "{" +
+                                                    LocaleId + "}");
                     }
                     catch (ArgumentException)
                     {
-                        phrasesLoadError.AppendLine("Ser04: Phrase " + phrase.PhraseIdentifier + " in box " + this.Identifier + "{" + this.LocaleId + "} is more than once.");
+                        phrasesLoadError.AppendLine("Ser04: Phrase " + phrase.PhraseIdentifier + " in box " + Identifier +
+                                                    "{" + LocaleId + "} is more than once.");
                     }
                 }
 #if DEBUG
             if (phrasesLoadError.Length > 0)
             {
                 string message = phrasesLoadError.ToString();
-                System.Diagnostics.Debug.WriteLine(message);
+                Debug.WriteLine(message);
                 throw new Exception(message);
             }
 #endif
@@ -186,11 +190,14 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         {
             bool result = phrases.TryGetValue(phraseIdentifier, out phraseLocalizedText);
             if (!result)
-                System.Diagnostics.Debug.WriteLine("Ser12: Phrase " + phraseIdentifier + " is not localized in " + this.Identifier + "{" + this.LocaleId + "}");
+                Debug.WriteLine("Ser12: Phrase " + phraseIdentifier + " is not localized in " + Identifier + "{" +
+                                LocaleId + "}");
             return result;
         }
 
-        private Dictionary<string, Ferda.Modules.ModulesAskingForCreation> modulesAskingForCreation = new Dictionary<string, Ferda.Modules.ModulesAskingForCreation>();
+        private Dictionary<string, Modules.ModulesAskingForCreation> modulesAskingForCreation =
+            new Dictionary<string, Modules.ModulesAskingForCreation>();
+
         /// <summary>
         /// Gets the modules asking for creation.
         /// </summary>
@@ -198,22 +205,24 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// <para><c>Key</c> is name of modules asking for creation.</para>
         /// <para><c>Value</c> is the array of <see cref="T:Ferda.Modules.DynamicHelpItem"/> i.e. dynamic help items. (label, hint and dynamic help items are specified)</para>
         /// </value>
-        public Dictionary<string, Ferda.Modules.ModulesAskingForCreation> ModulesAskingForCreation
+        public Dictionary<string, Modules.ModulesAskingForCreation> ModulesAskingForCreation
         {
             get { return modulesAskingForCreation; }
         }
 
-        private Ferda.Modules.DynamicHelpItem[] dynamicHelpItems;
+        private Modules.DynamicHelpItem[] dynamicHelpItems;
+
         /// <summary>
         /// Gets the localizec dynamic help items of the box.
         /// </summary>
         /// <value>The dynamic help items of the box.</value>
-        public Ferda.Modules.DynamicHelpItem[] DynamicHelpItems
+        public Modules.DynamicHelpItem[] DynamicHelpItems
         {
             get { return dynamicHelpItems; }
         }
 
         private Dictionary<string, Action> actions = new Dictionary<string, Action>();
+
         /// <summary>
         /// Gets the actions of the box.
         /// </summary>
@@ -224,30 +233,40 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         }
 
         private string identifier;
+
         /// <summary>
         /// Gets the box`s identifier.
         /// </summary>
         /// <value>The box`s identifier.</value>
         public string Identifier
-        { get { return identifier; } }
+        {
+            get { return identifier; }
+        }
 
         private string label;
+
         /// <summary>
         /// Gets the box`s label.
         /// </summary>
         /// <value>The box`s label.</value>
         public string Label
-        { get { return label; } }
+        {
+            get { return label; }
+        }
 
         private string hint;
+
         /// <summary>
         /// Gets the box`s hint i.e. short tip.
         /// </summary>
         /// <value>The box`s hint.</value>
         public string Hint
-        { get { return hint; } }
+        {
+            get { return hint; }
+        }
 
         private Dictionary<string, string> propertyCategories = new Dictionary<string, string>();
+
         /// <summary>
         /// Gets (localized) names of the categories of the property.
         /// </summary>
@@ -261,6 +280,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         }
 
         private Dictionary<string, string> categories = new Dictionary<string, string>();
+
         /// <summary>
         /// Gets (localized) names of the categories of the box.
         /// </summary>
@@ -274,6 +294,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         }
 
         private Dictionary<string, string> helpFilesPaths = new Dictionary<string, string>();
+
         /// <summary>
         /// Gets the help files paths.
         /// </summary>
@@ -288,6 +309,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         }
 
         private HelpFileInfo[] helpFiles;
+
         /// <summary>
         /// Gets the help files.
         /// </summary>
@@ -304,15 +326,15 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         /// </summary>
         /// <param name="dynamicHelpItems">The dynamic help items.</param>
         /// <returns>Converted dynamic help items.</returns>
-        private Ferda.Modules.DynamicHelpItem[] getDynamicHelpItems(DynamicHelpItem[] dynamicHelpItems)
+        private Modules.DynamicHelpItem[] getDynamicHelpItems(DynamicHelpItem[] dynamicHelpItems)
         {
             if (dynamicHelpItems != null && dynamicHelpItems.Length > 0)
             {
-                List<Ferda.Modules.DynamicHelpItem> result = new List<Ferda.Modules.DynamicHelpItem>();
+                List<Modules.DynamicHelpItem> result = new List<Modules.DynamicHelpItem>();
                 foreach (DynamicHelpItem dynamicHelpItem in dynamicHelpItems)
                 {
-                    Ferda.Modules.DynamicHelpItem item = new Ferda.Modules.DynamicHelpItem();
-                    item.identifier = this.localeId + dynamicHelpItem.Identifier;
+                    Modules.DynamicHelpItem item = new Modules.DynamicHelpItem();
+                    item.identifier = localeId + dynamicHelpItem.Identifier;
                     item.label = dynamicHelpItem.Label;
                     item.url = dynamicHelpItem.Url;
                     result.Add(item);
@@ -320,10 +342,11 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
                 return result.ToArray();
             }
             else
-                return new Ferda.Modules.DynamicHelpItem[0];
+                return new Modules.DynamicHelpItem[0];
         }
 
         private Dictionary<string, Socket> sockets = new Dictionary<string, Socket>();
+
         /// <summary>
         /// Gets the localization of the sockets.
         /// </summary>
@@ -353,15 +376,19 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         {
             try
             {
-                return this.Sockets[socketName];
+                return Sockets[socketName];
             }
             catch (Exception ex)
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(ex, "", "Ser02: GetSocket(...): socketName (" + socketName + ") in box " + this.Identifier + "{" + this.LocaleId + "} is not localized.", socketName);
+                throw Exceptions.NameNotExistError(ex, "",
+                                                   "Ser02: GetSocket(...): socketName (" + socketName + ") in box " +
+                                                   Identifier + "{" + LocaleId + "} is not localized.", socketName);
             }
         }
 
-        private Dictionary<string, Dictionary<string, SelectOption>> selectBoxOptions = new Dictionary<string, Dictionary<string, SelectOption>>();
+        private Dictionary<string, Dictionary<string, SelectOption>> selectBoxOptions =
+            new Dictionary<string, Dictionary<string, SelectOption>>();
+
         /// <summary>
         /// Gets the the selectbox`s option of specified name of the property.
         /// </summary>
@@ -376,15 +403,16 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
         {
             try
             {
-                return this.selectBoxOptions[propertyName][optionName];
+                return selectBoxOptions[propertyName][optionName];
             }
             catch (Exception ex)
             {
                 if (fallOnError)
                 {
-                    string message = "Ser01: GetSelectBoxOption(...): unknown propertyName (" + propertyName + ") or optionName (" + optionName + ")";
-                    System.Diagnostics.Debug.WriteLine(message);
-                    throw new System.Exception(message, ex);
+                    string message = "Ser01: GetSelectBoxOption(...): unknown propertyName (" + propertyName +
+                                     ") or optionName (" + optionName + ")";
+                    Debug.WriteLine(message);
+                    throw new Exception(message, ex);
                 }
                 else
                     return null;

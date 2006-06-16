@@ -38,6 +38,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ItemGroup>
+    <Compile Include="BasicPropertyValueTypes.cs" />
     <Compile Include="BoolTI.cs" />
     <Compile Include="CategoriesTI.cs" />
     <Compile Include="DateTI.cs" />

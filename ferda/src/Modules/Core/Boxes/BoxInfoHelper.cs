@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
 
 namespace Ferda.Modules.Boxes
 {
@@ -19,10 +18,35 @@ namespace Ferda.Modules.Boxes
         /// specified array of <see cref="T:System.String">Strings</see> (<c>input</c>).
         /// </summary>
         /// <param name="input">Input array of <see cref="T:System.String">Strings</see>.</param>
-        /// <returns>Output array of <see cref="T:Ferda.Modules.SelectString"/>.</returns>
-        public static SelectString[] StringArrayToSelectStringArray(string[] input)
+        /// <returns>
+        /// Output array of <see cref="T:Ferda.Modules.SelectString"/>.
+        /// </returns>
+        public static SelectString[] GetSelectStringArray(string[] input)
         {
             if ((input == null) || (input.Length == 0))
+                return new SelectString[0];
+            List<SelectString> result = new List<SelectString>();
+            foreach (string item in input)
+            {
+                SelectString selectString = new SelectString();
+                selectString.name = item;
+                selectString.label = item;
+                result.Add(selectString);
+            }
+            return result.ToArray();
+        }
+
+        /// <summary>
+        /// Creates an array of <see cref="T:Ferda.Modules.SelectString"/> from
+        /// specified list of <see cref="T:System.String">Strings</see> (<c>input</c>).
+        /// </summary>
+        /// <param name="input">Input list of <see cref="T:System.String">Strings</see>.</param>
+        /// <returns>
+        /// Output array of <see cref="T:Ferda.Modules.SelectString"/>.
+        /// </returns>
+        public static SelectString[] GetSelectStringArray(List<string> input)
+        {
+            if ((input == null) || (input.Count == 0))
                 return new SelectString[0];
             List<SelectString> result = new List<SelectString>();
             foreach (string item in input)
@@ -130,6 +154,7 @@ namespace Ferda.Modules.Boxes
             }
             return String.Empty;
         }
+
         #endregion
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Ferda.Modules.Boxes.Serializer.Configuration
@@ -14,8 +15,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
     /// is actually deserealized XML configuration file. The 
     /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Helper"/> creates 
     /// more efficient structures for futher working with the configuration 
-    /// (e. g. <see cref="T:System.Collections.Generic.Dictionary">
-    /// Dictionaries</see>).
+    /// (e. g. Dictionaries).
     /// </para>
     /// </summary>
     /// <remarks>
@@ -31,7 +31,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
     /// <seealso cref="T:Ferda.Modules.Boxes.BoxInfo"/>
     /// <seealso cref="T:Ferda.Modules.Boxes.Serializer.Localization.BoxLocalization"/>
     [Serializable]
-    public class Helper : Ferda.Modules.Boxes.Serializer.Configuration.IHelper
+    public class Helper : IHelper
     {
         /// <summary>
         /// <para>
@@ -44,52 +44,53 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         {
             if (box == null)
             {
-                System.Diagnostics.Debug.WriteLine("Ser06");
+                Debug.WriteLine("Ser06");
                 throw new ArgumentNullException("box");
             }
 
-            this.identifier = box.Identifier;
-            this.iconPath = box.IconPath;
-            this.designPath = box.DesignPath;
-            this.categories = box.Categories;
+            identifier = box.Identifier;
+            iconPath = box.IconPath;
+            designPath = box.DesignPath;
+            categories = box.Categories;
 
             //prepare Dictionary of actions and Lists its needed connected sockets
             if (box.Actions != null)
                 foreach (Action action in box.Actions)
                 {
                     //add action to Dictionary
-                    this.actions.Add(action.Name, action);
+                    actions.Add(action.Name, action);
 
                     //prepare List of action`s needed connected sockets
                     List<string[]> neededConnectedSockets = new List<string[]>();
                     if (action.NeededConnectedSocketsOptions != null)
-                        foreach (NeededConnectedSocketsOption neededSocketsOption in action.NeededConnectedSocketsOptions)
+                        foreach (
+                            NeededConnectedSocketsOption neededSocketsOption in action.NeededConnectedSocketsOptions)
                         {
                             neededConnectedSockets.Add(neededSocketsOption.NeededConnectedSockets);
                         }
                     //add the List to Dictionary
-                    this.actionNeededConnectedSockets.Add(action.Name, neededConnectedSockets.ToArray());
+                    actionNeededConnectedSockets.Add(action.Name, neededConnectedSockets.ToArray());
                 }
 
             //prepare Dictionary of sockets
             if (box.Sockets != null)
                 foreach (Socket socket in box.Sockets)
                 {
-                    this.sockets.Add(socket.Name, socket);
+                    sockets.Add(socket.Name, socket);
                 }
 
             //prepere socket`s BoxTypes
-            this.prepareSocketTypes();
+            prepareSocketTypes();
 
             //prepare Dictionary of properties
             if (box.Properties != null)
                 foreach (Property property in box.Properties)
                 {
-                    this.properties.Add(property.Name, property);
+                    properties.Add(property.Name, property);
                 }
 
             //prepare restrictions of the properties
-            this.preparePropertyRestrictions();
+            preparePropertyRestrictions();
 
             //prepare modules asking for creation
             if (box.ModulesAskingForCreationSeq != null)
@@ -104,16 +105,18 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
                 // there is not defined the socket of the same name (identifier)
                 StringBuilder missingSocketDefinition = new StringBuilder();
 
-                foreach (string propertyName in this.properties.Keys)
+                foreach (string propertyName in properties.Keys)
                 {
-                    if (!this.sockets.ContainsKey(propertyName)) // && this.properties[propertyName].Visible == true
+                    if (!sockets.ContainsKey(propertyName)) // && this.properties[propertyName].Visible == true
                     {
-                        missingSocketDefinition.AppendLine("Ser07: There is missing definiction for socket named: " + propertyName + " in the config XML file! (" + this.Identifier + ")");
+                        missingSocketDefinition.AppendLine("Ser07: There is missing definiction for socket named: " +
+                                                           propertyName + " in the config XML file! (" + Identifier +
+                                                           ")");
                     }
                 }
                 if (missingSocketDefinition.Length > 0)
                 {
-                    System.Diagnostics.Debug.WriteLine(missingSocketDefinition.ToString());
+                    Debug.WriteLine(missingSocketDefinition.ToString());
                     throw new Exception(missingSocketDefinition.ToString());
                 }
             }
@@ -121,14 +124,18 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         }
 
         private string identifier;
+
         /// <summary>
         /// Gets the box`s identifier.
         /// </summary>
         /// <value>The box`s identifier.</value>
         public string Identifier
-        { get { return identifier; } }
+        {
+            get { return identifier; }
+        }
 
         private string iconPath;
+
         /// <summary>
         /// Gets the path to box`s icon design i.e. the "ico" file.
         /// </summary>
@@ -138,9 +145,12 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box"/>.
         /// </remarks>
         public string IconPath
-        { get { return iconPath; } }
+        {
+            get { return iconPath; }
+        }
 
         private string designPath;
+
         /// <summary>
         /// Gets the path to the <see href="http://www.w3.org/tr/2000/cr-svg-20001102/index.html">
         /// Scalable Vector Graphics (SVG)</see> design file of the box.
@@ -151,17 +161,23 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box"/>.
         /// </remarks>
         public string DesignPath
-        { get { return designPath; } }
+        {
+            get { return designPath; }
+        }
 
         private string[] categories;
+
         /// <summary>
         /// Gets the categories i.e. names of categories where the box module belongs to.
         /// </summary>
         /// <value>The categories.</value>
         public string[] Categories
-        { get { return categories; } }
+        {
+            get { return categories; }
+        }
 
-        private Dictionary<string, Boxes.Serializer.Configuration.Socket> sockets = new Dictionary<string, Socket>();
+        private Dictionary<string, Socket> sockets = new Dictionary<string, Socket>();
+
         /// <summary>
         /// Gets the sockets.
         /// </summary>
@@ -170,12 +186,13 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is the socket`s name.</para>
         /// 	<para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Socket"/>.</para>
         /// </value>
-        public Dictionary<string, Boxes.Serializer.Configuration.Socket> Sockets
+        public Dictionary<string, Socket> Sockets
         {
             get { return sockets; }
         }
 
-        private SortedList<string, Boxes.Serializer.Configuration.Property> properties = new SortedList<string, Property>();
+        private SortedList<string, Property> properties = new SortedList<string, Property>();
+
         /// <summary>
         /// Gets the properties.
         /// </summary>
@@ -184,12 +201,13 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is name of the property.</para>
         /// 	<para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Property"/>.</para>
         /// </value>
-        public SortedList<string, Boxes.Serializer.Configuration.Property> Properties
+        public SortedList<string, Property> Properties
         {
             get { return properties; }
         }
 
-        private Dictionary<string, Boxes.Serializer.Configuration.Action> actions = new Dictionary<string, Action>();
+        private Dictionary<string, Action> actions = new Dictionary<string, Action>();
+
         /// <summary>
         /// Gets the actions.
         /// </summary>
@@ -198,12 +216,13 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is the action`s name.</para>
         /// 	<para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Action"/>.</para>
         /// </value>
-        public Dictionary<string, Boxes.Serializer.Configuration.Action> Actions
+        public Dictionary<string, Action> Actions
         {
             get { return actions; }
         }
 
         private Dictionary<string, string[][]> actionNeededConnectedSockets = new Dictionary<string, string[][]>();
+
         /// <summary>
         /// Gets the action`s needed connected sockets.
         /// </summary>
@@ -221,6 +240,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         }
 
         private List<string> modulesAskingForCreation = new List<string>();
+
         /// <summary>
         /// Gets names the modules asking for creation.
         /// </summary>
@@ -249,11 +269,13 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         {
             try
             {
-                return this.Sockets[socketName];
+                return Sockets[socketName];
             }
             catch (Exception ex)
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(ex, "", "Ser08: GetSocket(...): socketName (" + socketName + ") in box " + this.Identifier + " doesn`t exist.", socketName);
+                throw Exceptions.NameNotExistError(ex, "",
+                                                   "Ser08: GetSocket(...): socketName (" + socketName + ") in box " +
+                                                   Identifier + " doesn`t exist.", socketName);
             }
         }
 
@@ -261,16 +283,16 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is the socket`s name.</para>
         /// <para><c>Value</c> is the array of accepted boxTypes.</para>
         /// </summary>
-        private Dictionary<string, Ferda.Modules.BoxType[]> socketsBoxTypes = new Dictionary<string, Ferda.Modules.BoxType[]>();
+        private Dictionary<string, Modules.BoxType[]> socketsBoxTypes = new Dictionary<string, Modules.BoxType[]>();
 
         /// <summary>
         /// Prepares the socket`s boxTypes i.e. fill in <c>socketsBoxTypes</c>.
         /// </summary>
         private void prepareSocketTypes()
         {
-            List<Ferda.Modules.BoxType> boxTypes = new List<Ferda.Modules.BoxType>();
-            List<Ferda.Modules.NeededSocket> neededSockets = new List<Ferda.Modules.NeededSocket>();
-            foreach (Socket socket in this.sockets.Values)
+            List<Modules.BoxType> boxTypes = new List<Modules.BoxType>();
+            List<Modules.NeededSocket> neededSockets = new List<Modules.NeededSocket>();
+            foreach (Socket socket in sockets.Values)
             {
                 if (socket.SocketTypes != null)
                 {
@@ -278,7 +300,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
                     //process soket`s boxTypes
                     foreach (BoxType boxType in socket.SocketTypes)
                     {
-                        Ferda.Modules.BoxType boxTypeItem = new Ferda.Modules.BoxType();
+                        Modules.BoxType boxTypeItem = new Modules.BoxType();
                         boxTypeItem.functionIceId = boxType.FunctionIceId;
 
                         //process boxType`s needed sockets
@@ -286,7 +308,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
                         if (boxType.NeededSockets != null)
                             foreach (NeededSocket neededSocket in boxType.NeededSockets)
                             {
-                                Ferda.Modules.NeededSocket neededSocketItem = new Ferda.Modules.NeededSocket();
+                                Modules.NeededSocket neededSocketItem = new Modules.NeededSocket();
                                 neededSocketItem.functionIceId = neededSocket.FunctionIceId;
                                 neededSocketItem.socketName = neededSocket.SocketName;
                                 neededSockets.Add(neededSocketItem);
@@ -298,11 +320,11 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
                         //the boxType is done
                         boxTypes.Add(boxTypeItem);
                     }
-                    this.socketsBoxTypes.Add(socket.Name, boxTypes.ToArray());
+                    socketsBoxTypes.Add(socket.Name, boxTypes.ToArray());
                 }
                 else
                 {
-                    this.socketsBoxTypes.Add(socket.Name, new Ferda.Modules.BoxType[0]);
+                    socketsBoxTypes.Add(socket.Name, new Modules.BoxType[0]);
                 }
             }
         }
@@ -316,15 +338,17 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// </returns>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with
         /// specified <c>socketName</c> in the box.</exception>
-        public Ferda.Modules.BoxType[] GetSocketTypes(string socketName)
+        public Modules.BoxType[] GetSocketTypes(string socketName)
         {
             try
             {
-                return this.socketsBoxTypes[socketName];
+                return socketsBoxTypes[socketName];
             }
             catch (Exception ex)
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(ex, "", "Ser09: GetSocket(...): socketName (" + socketName + ") in box " + this.Identifier + " doesn`t exist.", socketName);
+                throw Exceptions.NameNotExistError(ex, "",
+                                                   "Ser09: GetSocket(...): socketName (" + socketName + ") in box " +
+                                                   Identifier + " doesn`t exist.", socketName);
             }
         }
 
@@ -344,13 +368,14 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         {
             try
             {
-                return this.Properties[propertyName];
+                return Properties[propertyName];
             }
             catch (Exception ex)
             {
-                string message = "Ser10: GetProperty(...): propertyName (" + propertyName + ") in box " + this.Identifier + " doesn`t exist.";
-                System.Diagnostics.Debug.WriteLine(message);
-                throw Ferda.Modules.Exceptions.NameNotExistError(ex, "", message, propertyName);
+                string message = "Ser10: GetProperty(...): propertyName (" + propertyName + ") in box " + Identifier +
+                                 " doesn`t exist.";
+                Debug.WriteLine(message);
+                throw Exceptions.NameNotExistError(ex, "", message, propertyName);
             }
         }
 
@@ -358,41 +383,42 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is name of the property.</para>
         /// <para><c>Value</c> is the list of restrictions.</para>
         /// </summary>
-        private Dictionary<string, List<Ferda.Modules.Restriction>> propertiesRestrictions = new Dictionary<string, List<Ferda.Modules.Restriction>>();
+        private Dictionary<string, List<Modules.Restriction>> propertiesRestrictions =
+            new Dictionary<string, List<Modules.Restriction>>();
 
         /// <summary>
         /// Prepares lists of restictions of possible values of the properties.
         /// </summary>
         private void preparePropertyRestrictions()
         {
-            List<Ferda.Modules.Restriction> result;
-            foreach (Property property in this.properties.Values)
+            List<Modules.Restriction> result;
+            foreach (Property property in properties.Values)
             {
                 if (property.NumericalRestrictions != null)
                 {
-                    result = new List<Ferda.Modules.Restriction>();
+                    result = new List<Modules.Restriction>();
                     foreach (Restriction restriction in property.NumericalRestrictions)
                     {
-                        Ferda.Modules.Restriction itemOfResult = new Ferda.Modules.Restriction();
+                        Modules.Restriction itemOfResult = new Modules.Restriction();
                         if (restriction.Floating != 0)
                         {
                             itemOfResult.integral = new long[0];
-                            itemOfResult.floating = new double[] { restriction.Floating };
+                            itemOfResult.floating = new double[] {restriction.Floating};
                         }
                         else // if (restriction.Floating == 0)
                         {
-                            itemOfResult.integral = new long[] { restriction.Integral };
+                            itemOfResult.integral = new long[] {restriction.Integral};
                             itemOfResult.floating = new double[0];
                         }
                         itemOfResult.min = restriction.Min;
                         itemOfResult.including = restriction.Including;
                         result.Add(itemOfResult);
                     }
-                    this.propertiesRestrictions.Add(property.Name, result);
+                    propertiesRestrictions.Add(property.Name, result);
                 }
                 else
                 {
-                    this.propertiesRestrictions.Add(property.Name, new List<Ferda.Modules.Restriction>());
+                    propertiesRestrictions.Add(property.Name, new List<Modules.Restriction>());
                 }
             }
         }
@@ -402,23 +428,23 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>
-        /// 	<see cref="T:System.Collections.Generic.List"/> of
-        /// <see cref="T:Ferda.Modules.Restriction">Restriction</see>.
+        /// List of <see cref="T:Ferda.Modules.Restriction">Restriction</see>.
         /// </returns>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">
         /// There is no property with specified name (<c>propertyName</c>) in the box.
         /// </exception>
-        public List<Ferda.Modules.Restriction> GetPropertyRestrictions(string propertyName)
+        public List<Modules.Restriction> GetPropertyRestrictions(string propertyName)
         {
             try
             {
-                return this.propertiesRestrictions[propertyName];
+                return propertiesRestrictions[propertyName];
             }
             catch (Exception ex)
             {
-                string message = "Ser11: GetProperty(...): propertyName (" + propertyName + ") in box " + this.Identifier + " doesn`t exist.";
-                System.Diagnostics.Debug.WriteLine(message);
-                throw Ferda.Modules.Exceptions.NameNotExistError(ex, "", message, propertyName);
+                string message = "Ser11: GetProperty(...): propertyName (" + propertyName + ") in box " + Identifier +
+                                 " doesn`t exist.";
+                Debug.WriteLine(message);
+                throw Exceptions.NameNotExistError(ex, "", message, propertyName);
             }
         }
     }

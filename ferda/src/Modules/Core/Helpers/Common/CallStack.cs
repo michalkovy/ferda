@@ -16,8 +16,12 @@ namespace Ferda.Modules.Helpers.Common
         /// <returns>Stack dump as formated string.</returns>
         public static string DumpStack()
         {
-            StringBuilder stringBuilder = new StringBuilder(255);
+            
             System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace(true);
+            return stackTrace.ToString();
+
+            /*
+            StringBuilder stringBuilder = new StringBuilder(255);
             string stackIndent = "";
             // skip dumping this function
             for (int i = 1; i < stackTrace.FrameCount; i++)
@@ -30,6 +34,7 @@ namespace Ferda.Modules.Helpers.Common
                 stackIndent += "  ";
             }
             return stringBuilder.ToString();
+             */
         }
     }
 }

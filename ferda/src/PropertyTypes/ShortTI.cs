@@ -24,7 +24,17 @@ namespace Ferda.Modules
 		{
 			this.shortValue = iface.getShortValue();
 		}
-		
+
+        public static implicit operator short(ShortTI v)
+        {
+            return v.shortValue;
+        }
+
+        public static implicit operator ShortTI(short v)
+        {
+            return new ShortTI(v);
+        }
+	    
 		/// <summary>
 		/// Method getShortValue
 		/// </summary>

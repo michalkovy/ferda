@@ -1,10 +1,10 @@
 // BoxModuleFactoryI.cs - creator of factory for boxes on Ferda modules side
 //
 // Authors: 
-//   Michal Kováč <michal.kovac.develop@centrum.cz>
-//   Tomáš Kuchař <tomas.kuchar@gmail.com>
+//   Michal KovĂˇÄŤ <michal.kovac.develop@centrum.cz>
+//   TomĂˇĹˇ KuchaĹ™ <tomas.kuchar@gmail.com>
 //
-// Copyright (c) 2005 Michal Kováč, Tomáš Kuchař 
+// Copyright (c) 2005 Michal KovĂˇÄŤ, TomĂˇĹˇ KuchaĹ™ 
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Ferda.Modules.Boxes;
+using Ferda.ModulesManager;
+using Ice;
 
 namespace Ferda.Modules
 {
@@ -48,12 +48,12 @@ namespace Ferda.Modules
         /// of the box module required by <b>Modules Manager</b>.
         /// </summary>
         /// <remarks>
-        /// The <see cref="T:Ferda.Modules.Boxex.IBoxInfo"/> provides 
+        /// The <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> provides 
         /// some fundamental functionality so if you are developing 
         /// new box module you don`t have to bother about implementing the 
         /// <b>Factory Creator</b> moreover if you are using e.g. 
-        /// <see cref="T:Ferda.Modules.Boxex.BoxInfo"/> implementatiion of
-        /// the <see cref="T:Ferda.Modules.Boxex.IBoxInfo"/> interface you
+        /// <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> implementatiion of
+        /// the <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> interface you
         /// don`t need to understand the theory about <b>Factory Creators</b>
         /// and <b>Factories</b> in practice.
         /// </remarks>
@@ -67,7 +67,7 @@ namespace Ferda.Modules
         public BoxModuleFactoryCreatorI(IBoxInfo boxInfo, ReapThread reapThread)
         {
             this.boxInfo = boxInfo;
-            this.reaper = reapThread;
+            reaper = reapThread;
         }
 
         /// <summary>
@@ -81,12 +81,15 @@ namespace Ferda.Modules
         /// <see cref="T:Ferda.Modules.BoxModuleFactoryI">box module factory</see>.
         /// </returns>
         /// <seealso cref="T:Ferda.Modules.BoxModuleFactoryI"/>
-        public override BoxModuleFactoryPrx createBoxModuleFactory(string[] localePrefs, Ferda.ModulesManager.ManagersEnginePrx manager, Ice.Current __current)
+        public override BoxModuleFactoryPrx createBoxModuleFactory(string[] localePrefs, ManagersEnginePrx manager,
+                                                                   Current __current)
         {
-            BoxModuleFactoryCreatorPrx myProxy = BoxModuleFactoryCreatorPrxHelper.uncheckedCast(__current.adapter.addWithUUID(this));
-            BoxModuleFactoryI boxModuleFactory = new BoxModuleFactoryI(this.boxInfo, myProxy, localePrefs, manager);
-            BoxModuleFactoryPrx boxModuleFactoryPrx = BoxModuleFactoryPrxHelper.uncheckedCast(__current.adapter.addWithUUID(boxModuleFactory));
-            this.reaper.Add(boxModuleFactoryPrx, boxModuleFactory);
+            BoxModuleFactoryCreatorPrx myProxy =
+                BoxModuleFactoryCreatorPrxHelper.uncheckedCast(__current.adapter.addWithUUID(this));
+            BoxModuleFactoryI boxModuleFactory = new BoxModuleFactoryI(boxInfo, myProxy, localePrefs, manager);
+            BoxModuleFactoryPrx boxModuleFactoryPrx =
+                BoxModuleFactoryPrxHelper.uncheckedCast(__current.adapter.addWithUUID(boxModuleFactory));
+            reaper.Add(boxModuleFactoryPrx, boxModuleFactory);
             return boxModuleFactoryPrx;
         }
 
@@ -113,9 +116,9 @@ namespace Ferda.Modules
         /// </para>
         /// </remarks>
         /// <seealso cref="M:Ferda.Modules.Boxes.IBoxInfo.GetBoxCategoryLocalizedName(System.String,System.String)"/>
-        public override string[] getBoxCategories(Ice.Current __current)
+        public override string[] getBoxCategories(Current __current)
         {
-            return this.boxInfo.Categories;
+            return boxInfo.Categories;
         }
 
         /// <summary>
@@ -127,13 +130,13 @@ namespace Ferda.Modules
         /// <returns>
         /// Localized name of the category named <c>categoryName</c>.
         /// </returns>
-        public override string[] getBoxCategoryLocalizedName(string locale, string categoryName, Ice.Current __current)
+        public override string[] getBoxCategoryLocalizedName(string locale, string categoryName, Current __current)
         {
-            string localizedCategoryName = this.boxInfo.GetBoxCategoryLocalizedName(locale, categoryName);
+            string localizedCategoryName = boxInfo.GetBoxCategoryLocalizedName(locale, categoryName);
             if (String.IsNullOrEmpty(localizedCategoryName))
                 return new string[0];
             else
-                return new string[] { localizedCategoryName };
+                return new string[] {localizedCategoryName};
         }
 
         /// <summary>
@@ -144,9 +147,9 @@ namespace Ferda.Modules
         /// An array of strings representing Ice identifiers 
         /// of the box module`s functions.
         /// </returns>
-        public override string[] getBoxModuleFunctionsIceIds(Ice.Current __current)
+        public override string[] getBoxModuleFunctionsIceIds(Current __current)
         {
-            return this.boxInfo.GetBoxModuleFunctionsIceIds();
+            return boxInfo.GetBoxModuleFunctionsIceIds();
         }
 
         /// <summary>
@@ -155,9 +158,9 @@ namespace Ferda.Modules
         /// </summary>
         /// <param name="__current">The Ice.Current.</param>
         /// <returns>The string representation of SVG design file.</returns>
-        public override string getDesign(Ice.Current __current)
+        public override string getDesign(Current __current)
         {
-            return this.boxInfo.Design;
+            return boxInfo.Design;
         }
 
         /// <summary>
@@ -166,9 +169,9 @@ namespace Ferda.Modules
         /// <param name="localePrefs">The localization preferences.</param>
         /// <param name="__current">The Ice.Current.</param>
         /// <returns>Localized hint (short suggestion) of the box module.</returns>
-        public override string getHint(string[] localePrefs, Ice.Current __current)
+        public override string getHint(string[] localePrefs, Current __current)
         {
-            return this.boxInfo.GetHint(localePrefs);
+            return boxInfo.GetHint(localePrefs);
         }
 
         /// <summary>
@@ -177,9 +180,9 @@ namespace Ferda.Modules
         /// <param name="identifier">The identifier of the help file.</param>
         /// <param name="__current">The Ice.Current.</param>
         /// <returns>Content of the help file as array of <see cref="T:System.Byte">Bytes</see>.</returns>
-        public override byte[] getHelpFile(string identifier, Ice.Current __current)
+        public override byte[] getHelpFile(string identifier, Current __current)
         {
-            return this.boxInfo.GetHelpFile(identifier);
+            return boxInfo.GetHelpFile(identifier);
         }
 
         /// <summary>
@@ -190,9 +193,9 @@ namespace Ferda.Modules
         /// The box module`s icon i.e. content of the "*.ico" file 
         /// as array of <see cref="T:System.Byte">Bytes</see>.
         /// </returns>
-        public override byte[] getIcon(Ice.Current __current)
+        public override byte[] getIcon(Current __current)
         {
-            return this.boxInfo.Icon;
+            return boxInfo.Icon;
         }
 
         /// <summary>
@@ -208,9 +211,9 @@ namespace Ferda.Modules
         /// <see cref="M:Ferda.Modules.BoxModuleFactoryCreatorI.getIdentifier(Ice.Current)">identifier</see> 
         /// i.e. type is used.
         /// </returns>
-        public override string getIdentifier(Ice.Current __current)
+        public override string getIdentifier(Current __current)
         {
-            return this.boxInfo.Identifier;
+            return boxInfo.Identifier;
         }
 
         /// <summary>
@@ -219,9 +222,9 @@ namespace Ferda.Modules
         /// <param name="localePrefs">The localization preferences.</param>
         /// <param name="__current">The Ice.Current.</param>
         /// <returns>Localized label of the box module.</returns>
-        public override string getLabel(string[] localePrefs, Ice.Current __current)
+        public override string getLabel(string[] localePrefs, Current __current)
         {
-            return this.boxInfo.GetLabel(localePrefs);
+            return boxInfo.GetLabel(localePrefs);
         }
     }
 }

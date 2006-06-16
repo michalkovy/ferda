@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
+
 namespace Ferda.Modules.Boxes.Serializer.Configuration
 {
     /// <summary>
@@ -23,7 +24,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// the action can be executed. The condition is array of socket`s names
         /// in which other box(es) has to be connected.</para>
         /// </value>
-        System.Collections.Generic.Dictionary<string, string[][]> ActionNeededConnectedSockets { get; }
+        Dictionary<string, string[][]> ActionNeededConnectedSockets { get; }
 
         /// <summary>
         /// Gets the actions.
@@ -32,7 +33,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is the action`s name.</para>
         /// <para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Action"/>.</para>
         /// </value>
-        System.Collections.Generic.Dictionary<string, Ferda.Modules.Boxes.Serializer.Configuration.Action> Actions { get; }
+        Dictionary<string, Action> Actions { get; }
 
         /// <summary>
         /// Gets the categories i.e. names of categories where the box module belongs to.
@@ -62,20 +63,19 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <exception cref="T:Ferda.Modules.NameNotExistError">
         /// There is no property with specified name (<c>propertyName</c>) in the box.
         /// </exception>
-        Ferda.Modules.Boxes.Serializer.Configuration.Property GetProperty(string propertyName);
+        Property GetProperty(string propertyName);
 
         /// <summary>
         /// Gets the restrictions on possible values of the property.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>
-        /// <see cref="T:System.Collections.Generic.List"/> of 
-        /// <see cref="T:Ferda.Modules.Restriction">Restriction</see>.
+        /// List of <see cref="T:Ferda.Modules.Restriction">Restrictions</see>.
         /// </returns>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">
         /// There is no property with specified name (<c>propertyName</c>) in the box.
         /// </exception>
-        System.Collections.Generic.List<Ferda.Modules.Restriction> GetPropertyRestrictions(string propertyName);
+        List<Modules.Restriction> GetPropertyRestrictions(string propertyName);
 
         /// <summary>
         /// Gets the socket.
@@ -87,7 +87,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// </returns>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with 
         /// the specified name (<c>socketName</c>) in the box.</exception>
-        Ferda.Modules.Boxes.Serializer.Configuration.Socket GetSocket(string socketName);
+        Socket GetSocket(string socketName);
 
         /// <summary>
         /// Gets the socket`s types.
@@ -96,7 +96,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <returns>Array of <see cref="T:Ferda.Modules.BoxType"/>.</returns>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">There is no socket with 
         /// specified <c>socketName</c> in the box.</exception>
-        Ferda.Modules.BoxType[] GetSocketTypes(string socketName);
+        Modules.BoxType[] GetSocketTypes(string socketName);
 
         /// <summary>
         /// Gets the path to box`s icon design i.e. the "ico" file.
@@ -122,8 +122,8 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <see cref="T:Ferda.Modules.ModulesAskingForCreation"/> structures are empty because all the
         /// memebers in this structure depends on localization or dynamic (or runtime) factors.
         /// </remarks>
-        System.Collections.Generic.List<string> ModulesAskingForCreation { get; }
-        
+        List<string> ModulesAskingForCreation { get; }
+
         /// <summary>
         /// Gets the properties.
         /// </summary>
@@ -131,7 +131,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is name of the property.</para>
         /// <para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Property"/>.</para>
         /// </value>
-        System.Collections.Generic.SortedList<string, Ferda.Modules.Boxes.Serializer.Configuration.Property> Properties { get; }
+        SortedList<string, Property> Properties { get; }
 
         /// <summary>
         /// Gets the sockets.
@@ -140,6 +140,6 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// <para><c>Key</c> is the socket`s name.</para>
         /// <para><c>Value</c> is the <see cref="Ferda.Modules.Boxes.Serializer.Configuration.Socket"/>.</para>
         /// </value>
-        System.Collections.Generic.Dictionary<string, Ferda.Modules.Boxes.Serializer.Configuration.Socket> Sockets { get; }
+        Dictionary<string, Socket> Sockets { get; }
     }
 }

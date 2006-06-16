@@ -68,7 +68,7 @@ namespace Ferda.Modules.Helpers.Caching
         /// <returns>
         /// <c>true</c> if the cache is obsolete; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsObsolete(DateTimeT explicitReload, Dictionary<string, IComparable> currentSettingForEqualTest)
+        public bool IsObsolete(DateTimeTI explicitReload, Dictionary<string, IComparable> currentSettingForEqualTest)
         {
             lock (this)
             {

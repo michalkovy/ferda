@@ -1,0 +1,103 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8A77381C-4DBC-40FA-A090-9AF34D65660E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ferda.Guha.MiningProcessor</RootNamespace>
+    <AssemblyName>MiningProcessor</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ferda.Math, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\Ferda.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\icecs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BitStrings\MissingInformation.cs" />
+    <Compile Include="Formulas\AttributeNameInLiteralsProvider.cs" />
+    <Compile Include="BitStrings\BitStringCacheTest.cs" />
+    <Compile Include="Design\BothSignsSetting.cs" />
+    <Compile Include="Design\CoefficientSetting.cs" />
+    <Compile Include="Design\CoefficientFixedSetSetting.cs" />
+    <Compile Include="Design\CoefficientType.cs" />
+    <Compile Include="BitStrings\BitString.cs" />
+    <Compile Include="Design\BitStringGeneratorPrx.cs" />
+    <Compile Include="BitStrings\BitStringIdentifier.cs" />
+    <Compile Include="Design\ClassOfEquivalence.cs" />
+    <Compile Include="Design\ConjunctionSetting.cs" />
+    <Compile Include="Formulas\ConjunctionFormula.cs" />
+    <Compile Include="Design\DisjunctionSetting.cs" />
+    <Compile Include="Formulas\DisjunctionFormula.cs" />
+    <Compile Include="Design\EntityImporatancePair.cs" />
+    <Compile Include="Formulas\Formula.cs" />
+    <Compile Include="BitStrings\IBitString.cs" />
+    <Compile Include="BitStrings\IBitStringCache.cs" />
+    <Compile Include="Formulas\IFormula.cs" />
+    <Compile Include="Design\ILeafEntitySetting.cs" />
+    <Compile Include="Design\IEntitySetting.cs" />
+    <Compile Include="Generation\Common.cs" />
+    <Compile Include="Generation\IEntityEnumerator.cs" />
+    <Compile Include="Design\IMultipleOperandEntitySetting.cs" />
+    <Compile Include="Design\Importance.cs" />
+    <Compile Include="Design\ISingleOperandEntitySetting.cs" />
+    <Compile Include="Formulas\Atom.cs" />
+    <Compile Include="Miners\Pseudocode.cs" />
+    <Compile Include="MiningProcessor.cs" />
+    <Compile Include="Design\NegationSetting.cs" />
+    <Compile Include="Formulas\NegationFormula.cs" />
+    <Compile Include="BitStrings\BitStringCache.cs" />
+    <Compile Include="Generation\LeafEntities.cs" />
+    <Compile Include="Generation\Factory.cs" />
+    <Compile Include="Generation\Helpers.cs" />
+    <Compile Include="Generation\SingleOperandEntities.cs" />
+    <Compile Include="Generation\Subsets.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DesignDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Notes.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

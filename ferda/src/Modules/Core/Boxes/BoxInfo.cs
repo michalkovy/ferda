@@ -1,12 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Resources;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Xml;
+using System.Text;
 using Ferda.Modules.Boxes.Serializer;
-using System.Diagnostics;
+using Ferda.Modules.Boxes.Serializer.Configuration;
+using Ferda.Modules.Boxes.Serializer.Localization;
+using Ice;
+using Action=Ferda.Modules.Boxes.Serializer.Configuration.Action;
+using Exception=System.Exception;
+using Helper=Ferda.Modules.Boxes.Serializer.Configuration.Helper;
+using IHelper=Ferda.Modules.Boxes.Serializer.Configuration.IHelper;
+using Object=Ice.Object;
+using SelectOption=Ferda.Modules.Boxes.Serializer.Configuration.SelectOption;
+using Socket=Ferda.Modules.Boxes.Serializer.Configuration.Socket;
 
 namespace Ferda.Modules.Boxes
 {
@@ -50,7 +58,7 @@ namespace Ferda.Modules.Boxes
     /// when the specified <c>localePrefs</c> is required.
     /// </para>
     /// </remarks>
-    public abstract class BoxInfo : Ferda.Modules.Boxes.IBoxInfo
+    public abstract class BoxInfo : IBoxInfo
     {
         #region Config files directory
 
@@ -58,10 +66,11 @@ namespace Ferda.Modules.Boxes
         /// Name of application subdirectory, were are 
         /// configuration files stored (in next subdirectories).
         /// </summary>
-        /// <seealso cref="P:Ferda.Modules.Boxes.BoxInfo.configFilesDirectoryPath"/>
+        /// <seealso cref="P:Ferda.Modules.Boxes.BoxInfo._configFilesDirectoryPath"/>
         private const string configFilesFolderName = "BoxModulesServices";
 
         private string _configFilesDirectoryPath = String.Empty;
+
         /// <summary>
         /// Default directory for config files is in ApplicationDomainDirectory + 
         /// <see cref="P:Ferda.Modules.Boxes.BoxInfo.configFilesFolderName"/> + 
@@ -76,10 +85,10 @@ namespace Ferda.Modules.Boxes
                 if (String.IsNullOrEmpty(_configFilesDirectoryPath))
                 {
                     return Path.Combine(
-                            configFilesFolderName,
+                        configFilesFolderName,
                         identifier.Replace(
                             '.',
-                            System.IO.Path.DirectorySeparatorChar)
+                            Path.DirectorySeparatorChar)
                         );
                 }
                 else
@@ -142,7 +151,7 @@ namespace Ferda.Modules.Boxes
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box">config file</see>
         /// (independent on localization).
         /// </summary>
-        protected Boxes.Serializer.Configuration.IHelper box;
+        protected IHelper box;
 
         /// <summary>
         /// Identifier of default localization.
@@ -158,17 +167,20 @@ namespace Ferda.Modules.Boxes
         /// <para>Key: localeId (something like: en-US, cs-CZ, ..., or <see cref="F:Ferda.Modules.Boxes.BoxInfo.defaultLanguageId"/>)</para>
         /// <para>Value: <see cref="T:Ferda.Modules.Boxes.Serializer.Localization.Helper">deserealized localization config file</see>.</para>
         /// </remarks>
-        protected Dictionary<string, Boxes.Serializer.Localization.IHelper> boxLocalizations = new Dictionary<string, Ferda.Modules.Boxes.Serializer.Localization.IHelper>();
+        protected Dictionary<string, Serializer.Localization.IHelper> boxLocalizations =
+            new Dictionary<string, Serializer.Localization.IHelper>();
+
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// <para>Default constructor.</para>
         /// <para>Loads box config file (independent on localization) 
         /// i.e. stores box config file deserealization to 
         /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.box">cache</see>.
         /// </para>
-        /// <para>Config files are loaded from <see cref="F:Ferda.Modules.Boxes.BoxInfo.ConfigFilesDirectoryPath"/>.</para>
+        /// <para>Config files are loaded from <see cref="F:Ferda.Modules.Boxes.BoxInfo._configFilesDirectoryPath"/>.</para>
         /// </summary>
         /// <remarks>
         /// Localization config files are loaded (deserealized and stored in
@@ -179,16 +191,16 @@ namespace Ferda.Modules.Boxes
         protected BoxInfo()
         {
             //Deserealize and store box config file
-            this.box = new Boxes.Serializer.Configuration.Helper(
-                Boxes.Serializer.Reader.ReadBox(
-                    Path.Combine(this.ConfigFilesDirectoryPath, boxCofigFileName)
+            box = new Helper(
+                Reader.ReadBox(
+                    Path.Combine(ConfigFilesDirectoryPath, boxCofigFileName)
                     )
                 );
 
             //Deserealization has to be sucessful
-            if (this.box == null)
+            if (box == null)
             {
-                string message = "BoxInf01: Unable to get config for " + this.identifier;
+                string message = "BoxInf01: Unable to get config for " + identifier;
                 Debug.WriteLine(message);
                 throw new Exception(message);
             }
@@ -213,16 +225,16 @@ namespace Ferda.Modules.Boxes
         {
             _configFilesDirectoryPath = pathToConfigFiles;
             //Deserealize and store box config file
-            this.box = new Boxes.Serializer.Configuration.Helper(
-                Boxes.Serializer.Reader.ReadBox(
-                    Path.Combine(this.ConfigFilesDirectoryPath, boxCofigFileName)
+            box = new Helper(
+                Reader.ReadBox(
+                    Path.Combine(ConfigFilesDirectoryPath, boxCofigFileName)
                     )
                 );
 
             //Deserealization has to be sucessful
-            if (this.box == null)
+            if (box == null)
             {
-                string message = "BoxInf01: Unable to get config for " + this.identifier;
+                string message = "BoxInf01: Unable to get config for " + identifier;
                 Debug.WriteLine(message);
                 throw new Exception(message);
             }
@@ -237,15 +249,15 @@ namespace Ferda.Modules.Boxes
         /// and localization config files are loaded (deserealized and stored in
         /// cache) as needed (lazy loading).
         /// </remarks>
-        public BoxInfo(Boxes.Serializer.Configuration.IHelper configurationHelper)
+        public BoxInfo(IHelper configurationHelper)
         {
             if (configurationHelper == null)
             {
-                string message = "BoxInf17: Unable to get config for " + this.identifier;
+                string message = "BoxInf17: Unable to get config for " + identifier;
                 Debug.WriteLine(message);
                 throw new ArgumentNullException(message);
             }
-            this.box = configurationHelper;
+            box = configurationHelper;
         }
 
         /// <summary>
@@ -261,35 +273,36 @@ namespace Ferda.Modules.Boxes
         /// <c>localizations</c> does not satisfy some localePrefs.
         /// </remarks>
         public BoxInfo(
-            Boxes.Serializer.Configuration.IHelper configurationHelper,
-            Boxes.Serializer.Localization.IHelper defaultLocalization,
-            Boxes.Serializer.Localization.IHelper[] localizations
+            IHelper configurationHelper,
+            Serializer.Localization.IHelper defaultLocalization,
+            Serializer.Localization.IHelper[] localizations
             )
         {
             if (configurationHelper == null)
             {
-                string message = "BoxInf18: Unable to get config for " + this.identifier;
+                string message = "BoxInf18: Unable to get config for " + identifier;
                 Debug.WriteLine(message);
                 throw new ArgumentNullException(message);
             }
-            this.box = configurationHelper;
+            box = configurationHelper;
 
             if (defaultLocalization == null)
             {
-                string message = "BoxInf19: Unable to get default localization for " + this.identifier;
+                string message = "BoxInf19: Unable to get default localization for " + identifier;
                 Debug.WriteLine(message);
                 throw new ArgumentNullException(message);
             }
-            this.boxLocalizations.Add(defaultLanguageId, defaultLocalization);
+            boxLocalizations.Add(defaultLanguageId, defaultLocalization);
 
             if (localizations.Length > 0)
             {
-                foreach (Boxes.Serializer.Localization.IHelper localization in localizations)
+                foreach (Serializer.Localization.IHelper localization in localizations)
                 {
-                    this.boxLocalizations.Add(localization.LocaleId, localization);
+                    boxLocalizations.Add(localization.LocaleId, localization);
                 }
             }
         }
+
         #endregion
 
         #region Localization files
@@ -310,7 +323,7 @@ namespace Ferda.Modules.Boxes
         /// If no localePref can be used (no ones is loaded no one can be loaded) than
         /// default localePref is used.
         /// </remarks>
-        private Boxes.Serializer.Localization.IHelper getLocalization(string[] localePrefs)
+        private Serializer.Localization.IHelper getLocalization(string[] localePrefs)
         {
             //I need to try use most forward localeId from localePrefs,
             //If no localeId can be used I have to use default locale (defaultLanguageId)
@@ -328,20 +341,20 @@ namespace Ferda.Modules.Boxes
             foreach (string localeId in localePrefsWithDefault)
             {
                 //Localization exists and is useful
-                if (this.boxLocalizations.ContainsKey(localeId) && this.boxLocalizations[localeId] != null)
-                    return this.boxLocalizations[localeId];
+                if (boxLocalizations.ContainsKey(localeId) && boxLocalizations[localeId] != null)
+                    return boxLocalizations[localeId];
 
-                //Localization does not exist (try another)
-                else if (this.boxLocalizations.ContainsKey(localeId))
+                    //Localization does not exist (try another)
+                else if (boxLocalizations.ContainsKey(localeId))
                 {
                     continue;
                 }
 
-                //I don`t know if Localization exists (try to load file)
+                    //I don`t know if Localization exists (try to load file)
                 else
                 {
-                    Boxes.Serializer.Localization.BoxLocalization boxLoc =
-                        Boxes.Serializer.Reader.ReadBoxLocalization(
+                    BoxLocalization boxLoc =
+                        Reader.ReadBoxLocalization(
                             Path.Combine(
                                 ConfigFilesDirectoryPath,
                                 getLocalizationFileName(localeId)
@@ -350,25 +363,25 @@ namespace Ferda.Modules.Boxes
                     if (boxLoc == null)
                     {
                         //Localization does not exist
-                        this.boxLocalizations.Add(localeId, null);
+                        boxLocalizations.Add(localeId, null);
                         continue;
                     }
                     else
                     {
                         //Localization exists
-                        this.boxLocalizations.Add(
+                        boxLocalizations.Add(
                             localeId,
-                            new Boxes.Serializer.Localization.Helper(boxLoc, localeId)
+                            new Serializer.Localization.Helper(boxLoc, localeId)
                             );
-                        return this.boxLocalizations[localeId];
+                        return boxLocalizations[localeId];
                     }
                 }
             }
             // localizatino file not found -> throw an exception
             StringBuilder message = new StringBuilder();
             foreach (string localePref in localePrefs)
-                message.Append(localePrefs + ",");
-            throw new Exception("BoxInf02: Localization file not found: " + this.Identifier + "{" + message.ToString() + "}");
+                message.Append(localePref + ",");
+            throw new Exception("BoxInf02: Localization file not found: " + Identifier + "{" + message.ToString() + "}");
         }
 
         #endregion
@@ -385,10 +398,7 @@ namespace Ferda.Modules.Boxes
         /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.configFilesFolderName">subdirectory</see>
         /// and final path is used for getting stored configuration [localization] XML files.
         /// </remarks>
-        protected abstract string identifier
-        {
-            get;
-        }
+        protected abstract string identifier { get; }
 
         /// <summary>
         /// Creates <see cref="T:Ice.Object"/> implementing Ice interface of
@@ -412,7 +422,7 @@ namespace Ferda.Modules.Boxes
         /// this interface</see> is shared by all instances of the box modules
         /// of the same type <see cref="P:Ferda.Modules.Boxes.IBoxInfo.Identifier"/>
         /// </remarks>
-        public abstract void CreateFunctions(BoxModuleI boxModule, out Ice.Object iceObject, out IFunctions functions);
+        public abstract void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions);
 
         /// <summary>
         /// Gets function`s Ice identifiers of the box module.
@@ -472,11 +482,13 @@ namespace Ferda.Modules.Boxes
         /// </example>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">Iff
         /// there is no property named <c>propertyName</c></exception>
-        public virtual PropertyValue GetPropertyObjectFromInterface(string propertyName, Ice.ObjectPrx objectPrx)
+        public virtual PropertyValue GetPropertyObjectFromInterface(string propertyName, ObjectPrx objectPrx)
         {
-            if (this.TestPropertyNameExistence(propertyName))
+            if (TestPropertyNameExistence(propertyName))
                 return null;
-            throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "BoxInf03: GetPropertyObjectFromInterface(...) is not implemented in box module: " + this.identifier + " for property named " + propertyName + ".", propertyName);
+            throw Exceptions.NameNotExistError(null, null,
+                                               "BoxInf03: GetPropertyObjectFromInterface(...) is not implemented in box module: " +
+                                               identifier + " for property named " + propertyName + ".", propertyName);
         }
 
         /// <summary>
@@ -492,7 +504,8 @@ namespace Ferda.Modules.Boxes
         /// Modules asking for creation dynamically depends on actual
         /// inner state of the box module.
         /// </remarks>
-        public abstract ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule);
+        public abstract ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
+                                                                               BoxModuleI boxModule);
 
         /// <summary>
         /// Gets value of readonly property. Readonly properties may not be
@@ -511,8 +524,9 @@ namespace Ferda.Modules.Boxes
         /// </remarks>
         public virtual PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            string message = "BoxInf04: GetReadOnlyPropertyValue(...) is not implemented in box module: " + this.identifier + " for property named " + propertyName + ".";
-            System.Diagnostics.Debug.WriteLine(message);
+            string message = "BoxInf04: GetReadOnlyPropertyValue(...) is not implemented in box module: " + identifier +
+                             " for property named " + propertyName + ".";
+            Debug.WriteLine(message);
             throw new Exception(message);
         }
 
@@ -541,7 +555,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public virtual DynamicHelpItem[] GetDynamicHelpItems(string[] localePrefs, BoxModuleI boxModule)
         {
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             return boxLocalization.DynamicHelpItems;
         }
 
@@ -554,10 +568,11 @@ namespace Ferda.Modules.Boxes
         /// <exception cref="T:Ferda.Modules.BoxRuntimeError">Thrown if any runtime error occured while executing the action.</exception>
         public virtual void RunAction(string actionName, BoxModuleI boxModule)
         {
-            if (!this.box.Actions.ContainsKey(actionName))
-                throw Ferda.Modules.Exceptions.NameNotExistError(null, null, "BoxInf05", actionName);
-            string message = "BoxInf06: RunAction is not implemented in box module: " + this.identifier + " for action named " + actionName + ".";
-            System.Diagnostics.Debug.WriteLine(message);
+            if (!box.Actions.ContainsKey(actionName))
+                throw Exceptions.NameNotExistError(null, null, "BoxInf05", actionName);
+            string message = "BoxInf06: RunAction is not implemented in box module: " + identifier +
+                             " for action named " + actionName + ".";
+            Debug.WriteLine(message);
             throw new Exception(message);
         }
 
@@ -591,8 +606,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public HelpFileInfo[] GetHelpFileInfoSeq(string[] localePrefs)
         {
-            List<HelpFileInfo> result = new List<HelpFileInfo>();
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             return boxLocalization.HelpFiles;
         }
 
@@ -606,7 +620,7 @@ namespace Ferda.Modules.Boxes
         public byte[] GetHelpFile(string identifier)
         {
             string helpFilePath;
-            foreach (Boxes.Serializer.Localization.IHelper boxLocalization in this.boxLocalizations.Values)
+            foreach (Serializer.Localization.IHelper boxLocalization in boxLocalizations.Values)
             {
                 if (boxLocalization.HelpFilesPaths.TryGetValue(identifier, out helpFilePath))
                     return BoxInfoHelper.TryGetBinaryFile(ConfigFilesDirectoryPath, helpFilePath, false);
@@ -627,16 +641,16 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public SocketInfo[] GetSockets(string[] localePrefs)
         {
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             List<SocketInfo> result = new List<SocketInfo>();
-            foreach (Boxes.Serializer.Configuration.Socket socket in this.box.Sockets.Values)
+            foreach (Socket socket in box.Sockets.Values)
             {
                 //gets localized part of result
-                Boxes.Serializer.Localization.Socket localizedSocket = null;
+                Serializer.Localization.Socket localizedSocket = null;
                 if (!boxLocalization.Sockets.TryGetValue(socket.Name, out localizedSocket))
                 {
                     //socket isn`t localized so if corresponding property (if exists) is visible throw exception!
-                    Boxes.Serializer.Configuration.Property property;
+                    Property property;
                     if (box.Properties.TryGetValue(socket.Name, out property) && property.Visible)
                         //this will throw Ferda.Modules.NameNotExistError exception
                         boxLocalization.GetSocket(socket.Name);
@@ -647,7 +661,7 @@ namespace Ferda.Modules.Boxes
                     (localizedSocket == null) ? "" : localizedSocket.Label,
                     (localizedSocket == null) ? "" : localizedSocket.Hint,
                     BoxInfoHelper.TryGetStringFile(ConfigFilesDirectoryPath, socket.DesignPath, false),
-                    this.box.GetSocketTypes(socket.Name),
+                    box.GetSocketTypes(socket.Name),
                     socket.SettingProperties,
                     socket.MoreThanOne
                     );
@@ -671,7 +685,7 @@ namespace Ferda.Modules.Boxes
         /// </remarks>
         public BoxType[] GetSocketTypes(string socketName)
         {
-            return this.box.GetSocketTypes(socketName);
+            return box.GetSocketTypes(socketName);
         }
 
         /// <summary>
@@ -689,7 +703,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public bool TestSocketNameExistence(string socketName)
         {
-            return this.box.Sockets.ContainsKey(socketName);
+            return box.Sockets.ContainsKey(socketName);
         }
 
         /// <summary>
@@ -705,7 +719,7 @@ namespace Ferda.Modules.Boxes
         /// is no <c>socketName</c> in Box module</exception>
         public bool IsSocketMoreThanOne(string socketName)
         {
-            return this.box.GetSocket(socketName).MoreThanOne;
+            return box.GetSocket(socketName).MoreThanOne;
         }
 
         /// <summary>
@@ -720,15 +734,16 @@ namespace Ferda.Modules.Boxes
         /// </remarks>
         public string[] GetSocketNames()
         {
-            int count = this.box.Sockets.Count;
+            int count = box.Sockets.Count;
             if (count > 0)
             {
                 string[] result = new string[count];
-                this.box.Sockets.Keys.CopyTo(result, 0);
+                box.Sockets.Keys.CopyTo(result, 0);
                 return result;
             }
             return new string[0];
         }
+
         #endregion
 
         #region Properties
@@ -745,7 +760,7 @@ namespace Ferda.Modules.Boxes
         /// is no property named <c>propertyName</c> in the box module</exception>
         public bool IsPropertyReadOnly(string propertyName)
         {
-            return this.box.GetProperty(propertyName).ReadOnly;
+            return box.GetProperty(propertyName).ReadOnly;
         }
 
         /// <summary>
@@ -761,7 +776,7 @@ namespace Ferda.Modules.Boxes
         /// is no property named <c>propertyName</c> in the box module</exception>
         public string GetPropertyRegexp(string propertyName)
         {
-            return this.box.GetProperty(propertyName).Regexp;
+            return box.GetProperty(propertyName).Regexp;
         }
 
         /// <summary>
@@ -777,7 +792,7 @@ namespace Ferda.Modules.Boxes
         /// is no property named <c>propertyName</c> in the box module</exception>
         public List<Restriction> GetPropertyRestrictions(string propertyName)
         {
-            return this.box.GetPropertyRestrictions(propertyName);
+            return box.GetPropertyRestrictions(propertyName);
         }
 
         /// <summary>
@@ -795,7 +810,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public bool TestPropertyNameExistence(string propertyName)
         {
-            return this.box.Properties.ContainsKey(propertyName);
+            return box.Properties.ContainsKey(propertyName);
         }
 
         /// <summary>
@@ -810,11 +825,11 @@ namespace Ferda.Modules.Boxes
         /// </remarks>
         public string[] GetPropertiesNames()
         {
-            int count = this.box.Properties.Count;
+            int count = box.Properties.Count;
             if (count > 0)
             {
                 string[] result = new string[count];
-                this.box.Properties.Keys.CopyTo(result, 0);
+                box.Properties.Keys.CopyTo(result, 0);
                 return result;
             }
             return new string[0];
@@ -836,9 +851,9 @@ namespace Ferda.Modules.Boxes
         public SelectString[] GetPropertyFixedOptions(string propertyName)
         {
             List<SelectString> result = new List<SelectString>();
-            Boxes.Serializer.Configuration.SelectOption[] selectBoxItems = this.box.GetProperty(propertyName).SelectOptions;
+            SelectOption[] selectBoxItems = box.GetProperty(propertyName).SelectOptions;
             if (selectBoxItems != null)
-                foreach (Boxes.Serializer.Configuration.SelectOption selectBoxItem in selectBoxItems)
+                foreach (SelectOption selectBoxItem in selectBoxItems)
                 {
                     SelectString resultItem = new SelectString();
                     resultItem.name = selectBoxItem.Name;
@@ -858,9 +873,8 @@ namespace Ferda.Modules.Boxes
         {
             List<PropertyInfo> result = new List<PropertyInfo>();
             List<SelectString> selectStrings = new List<SelectString>();
-            Dictionary<string, string> selectStringsXL = new Dictionary<string, string>();
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
-            foreach (Boxes.Serializer.Configuration.Property property in this.box.Properties.Values)
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            foreach (Property property in box.Properties.Values)
             {
                 //gets name of category where the proprety belongs to
                 string categoryName = String.Empty;
@@ -871,12 +885,13 @@ namespace Ferda.Modules.Boxes
                 SelectString[] selectBoxParams = null;
                 if (property.SelectOptions != null && property.SelectOptions.Length > 0)
                 {
-                    foreach (Boxes.Serializer.Configuration.SelectOption selectBoxItem in property.SelectOptions)
+                    foreach (SelectOption selectBoxItem in property.SelectOptions)
                     {
                         SelectString selectString = new SelectString();
                         selectString.name = selectBoxItem.Name;
                         selectString.disableProperties = selectBoxItem.DisableProperties;
-                        selectString.label = boxLocalization.GetSelectBoxOption(property.Name, selectBoxItem.Name, true).Label;
+                        selectString.label =
+                            boxLocalization.GetSelectBoxOption(property.Name, selectBoxItem.Name, true).Label;
                         selectStrings.Add(selectString);
                     }
                     selectBoxParams = selectStrings.ToArray();
@@ -910,7 +925,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public string GetPropertyDataType(string propertyName)
         {
-            return this.box.GetProperty(propertyName).TypeClassIceId;
+            return box.GetProperty(propertyName).TypeClassIceId;
         }
 
         /// <summary>
@@ -926,10 +941,11 @@ namespace Ferda.Modules.Boxes
         public string GetPropertyOptionShortLocalizedLabel(string propertyName, string optionName, string[] localePrefs)
         {
             //get localization
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
 
             //get SelectBoxParam according to propertyName and optionName
-            Boxes.Serializer.Localization.SelectOption selectBoxParam = boxLocalization.GetSelectBoxOption(propertyName, optionName, false);
+            Serializer.Localization.SelectOption selectBoxParam =
+                boxLocalization.GetSelectBoxOption(propertyName, optionName, false);
 
             //return short label (if its not empty)
             if (!String.IsNullOrEmpty(selectBoxParam.ShortLabel))
@@ -953,34 +969,40 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public PropertyValue GetPropertyDefaultValue(string propertyName)
         {
-            Boxes.Serializer.Configuration.Property boxProperty = this.box.GetProperty(propertyName);
+            Property boxProperty = box.GetProperty(propertyName);
             if (boxProperty != null)
             {
                 switch (boxProperty.TypeClassIceId)
                 {
                     case "::Ferda::Modules::BoolT":
-                        return new BoolTI((boxProperty.Default == "True") || (boxProperty.Default == "true") || (boxProperty.Default == "1"));
+                        return
+                            new BoolTI((boxProperty.Default == "True") || (boxProperty.Default == "true") ||
+                                       (boxProperty.Default == "1"));
                     case "::Ferda::Modules::ShortT":
-                        return new ShortTI(System.Convert.ToInt16(boxProperty.Default));
+                        return new ShortTI(Convert.ToInt16(boxProperty.Default));
                     case "::Ferda::Modules::IntT":
-                        return new IntTI(System.Convert.ToInt32(boxProperty.Default));
+                        return new IntTI(Convert.ToInt32(boxProperty.Default));
                     case "::Ferda::Modules::LongT":
-                        return new LongTI(System.Convert.ToInt64(boxProperty.Default));
+                        return new LongTI(Convert.ToInt64(boxProperty.Default));
                     case "::Ferda::Modules::FloatT":
                         if (!String.IsNullOrEmpty(boxProperty.Default))
                         {
-                            return new FloatTI(System.Convert.ToSingle(
-                                boxProperty.Default.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator)
-                                ));
+                            return new FloatTI(Convert.ToSingle(
+                                                   boxProperty.Default.Replace(".",
+                                                                               CultureInfo.CurrentCulture.NumberFormat.
+                                                                                   NumberDecimalSeparator)
+                                                   ));
                         }
                         else
                             return new FloatTI(0);
                     case "::Ferda::Modules::DoubleT":
                         if (!String.IsNullOrEmpty(boxProperty.Default))
                         {
-                            return new DoubleTI(System.Convert.ToDouble(
-                                boxProperty.Default.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator)
-                                ));
+                            return new DoubleTI(Convert.ToDouble(
+                                                    boxProperty.Default.Replace(".",
+                                                                                CultureInfo.CurrentCulture.NumberFormat.
+                                                                                    NumberDecimalSeparator)
+                                                    ));
                         }
                         else
                             return new DoubleTI(0);
@@ -1027,11 +1049,12 @@ namespace Ferda.Modules.Boxes
         /// <returns>Localized label of the box module.</returns>
         public string GetLabel(string[] localePrefs)
         {
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             if (String.IsNullOrEmpty(boxLocalization.Label))
             {
 #if DEBUG
-                string message = "BoxInf07: Localized label is empty :" + this.identifier + " (" + boxLocalization.LocaleId + ")";
+                string message = "BoxInf07: Localized label is empty :" + identifier + " (" + boxLocalization.LocaleId +
+                                 ")";
                 Debug.WriteLine(message);
                 throw new Exception(message);
 #endif
@@ -1059,9 +1082,9 @@ namespace Ferda.Modules.Boxes
             get
             {
 #if DEBUG
-                if (this.box.Identifier != identifier)
+                if (box.Identifier != identifier)
                 {
-                    string message = "BoxInf08: Box identifier inconsistence. " + this.identifier + " vs. " + this.box.Identifier;
+                    string message = "BoxInf08: Box identifier inconsistence. " + identifier + " vs. " + box.Identifier;
                     Debug.WriteLine(message);
                     throw new Exception(message);
                 }
@@ -1085,10 +1108,7 @@ namespace Ferda.Modules.Boxes
         /// </value>
         public byte[] Icon
         {
-            get
-            {
-                return BoxInfoHelper.TryGetBinaryFile(ConfigFilesDirectoryPath, this.box.IconPath, false);
-            }
+            get { return BoxInfoHelper.TryGetBinaryFile(ConfigFilesDirectoryPath, box.IconPath, false); }
         }
 
         /// <summary>
@@ -1100,7 +1120,7 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public string GetHint(string[] localePrefs)
         {
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             if (!String.IsNullOrEmpty(boxLocalization.Hint))
                 return boxLocalization.Hint;
             else
@@ -1116,8 +1136,8 @@ namespace Ferda.Modules.Boxes
         {
             get
             {
-                return System.Convert.ToString(
-                    BoxInfoHelper.TryGetStringFile(ConfigFilesDirectoryPath, this.box.DesignPath, false)
+                return Convert.ToString(
+                    BoxInfoHelper.TryGetStringFile(ConfigFilesDirectoryPath, box.DesignPath, false)
                     );
             }
         }
@@ -1146,9 +1166,9 @@ namespace Ferda.Modules.Boxes
         {
             get
             {
-                if (this.box.Categories == null)
+                if (box.Categories == null)
                     return new string[0];
-                return this.box.Categories;
+                return box.Categories;
             }
         }
 
@@ -1164,8 +1184,8 @@ namespace Ferda.Modules.Boxes
         {
             if (String.IsNullOrEmpty(categoryName))
                 return String.Empty;
-            string[] localePrefs = (String.IsNullOrEmpty(cultureName)) ? new string[0] : new string[] { cultureName };
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            string[] localePrefs = (String.IsNullOrEmpty(cultureName)) ? new string[0] : new string[] {cultureName};
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             string result;
             if (boxLocalization.Categories.TryGetValue(categoryName, out result))
             {
@@ -1173,7 +1193,9 @@ namespace Ferda.Modules.Boxes
             }
             else
             {
-                Debug.Assert(categoryName == "other", "Category is not localized (" + this.identifier + " - " + cultureName + " - " + categoryName + ".");
+                Debug.Assert(categoryName == "other",
+                             "Category is not localized (" + identifier + " - " + cultureName + " - " + categoryName +
+                             ".");
                 return String.Empty;
             }
         }
@@ -1192,15 +1214,15 @@ namespace Ferda.Modules.Boxes
         public ActionInfo[] GetActions(string[] localePrefs)
         {
             List<ActionInfo> result = new List<ActionInfo>();
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
-            foreach (Boxes.Serializer.Configuration.Action action in this.box.Actions.Values)
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            foreach (Action action in box.Actions.Values)
             {
                 ActionInfo resultItem = new ActionInfo(
                     action.Name,
                     boxLocalization.Actions[action.Name].Label,
                     boxLocalization.Actions[action.Name].Hint,
                     BoxInfoHelper.TryGetBinaryFile(ConfigFilesDirectoryPath, action.IconPath, false),
-                    this.GetActionInfoNeededConnectedSockets(action.Name)
+                    GetActionInfoNeededConnectedSockets(action.Name)
                     );
                 result.Add(resultItem);
             }
@@ -1217,18 +1239,20 @@ namespace Ferda.Modules.Boxes
         /// <remarks>Returned value is array of conditions on connections in
         /// sockets. At least one of returned conditions has to be realized before
         /// execution of the action is allowed.</remarks>
-        /// <exception cref="T:Ferda.Modules.NameNotExistsError">Iff <c>actionName</c> is bad.</exception>
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">Iff <c>actionName</c> is bad.</exception>
         public string[][] GetActionInfoNeededConnectedSockets(string actionName)
         {
             try
             {
-                return this.box.ActionNeededConnectedSockets[actionName];
+                return box.ActionNeededConnectedSockets[actionName];
             }
             catch (KeyNotFoundException ex)
             {
-                throw Ferda.Modules.Exceptions.NameNotExistError(ex, null, "BoxInf10: Bad name of action. (" + actionName + ")", actionName);
+                throw Exceptions.NameNotExistError(ex, null, "BoxInf10: Bad name of action. (" + actionName + ")",
+                                                   actionName);
             }
         }
+
         #endregion
 
         #region Other helping functions
@@ -1241,10 +1265,11 @@ namespace Ferda.Modules.Boxes
         /// <returns>Prepared data for next processing by 
         /// <see cref="M:Ferda.Modules.Boxes.BoxInfo.GetModulesAskingForCreation(System.String[], Ferda.Modules.BoxModuleI)"/>.
         /// </returns>
-        protected Dictionary<string, ModulesAskingForCreation> getModulesAskingForCreationNonDynamic(string[] localePrefs)
+        protected Dictionary<string, ModulesAskingForCreation> getModulesAskingForCreationNonDynamic(
+            string[] localePrefs)
         {
-            List<string> input = this.box.ModulesAskingForCreation;
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            List<string> input = box.ModulesAskingForCreation;
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             Dictionary<string, ModulesAskingForCreation> result = new Dictionary<string, ModulesAskingForCreation>();
             foreach (string moduleAFCName in input)
             {
@@ -1254,6 +1279,7 @@ namespace Ferda.Modules.Boxes
             }
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -1268,12 +1294,11 @@ namespace Ferda.Modules.Boxes
         /// </returns>
         public bool TryGetPhrase(string phraseIdentifier, out string phraseLocalizedText, string[] localePrefs)
         {
-            Boxes.Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
+            Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);
             return boxLocalization.TryGetPhrase(phraseIdentifier, out phraseLocalizedText);
         }
 
         #region IBoxInfo Members
-
 
         /// <summary>
         /// Validates setting of this box module.
