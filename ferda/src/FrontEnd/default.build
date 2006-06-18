@@ -37,9 +37,9 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}" />
   		</references>
 		</csc>
-    <!-- TODO odkomentovat buildaddins
+    
     <nant buildfile="${path::combine('AddIns','default.build')}" target="buildaddins"/>
-    -->
+
 
     <copy todir="${build.dir}">
       <fileset basedir=".">
