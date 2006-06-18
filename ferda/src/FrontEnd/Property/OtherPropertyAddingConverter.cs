@@ -72,7 +72,14 @@ namespace Ferda.FrontEnd.Properties
                     return string.Empty;
                 }
                 OtherProperty prop = value as OtherProperty;
-                return prop.Box.GetPropertyOtherAbout(prop.PropertyName);
+                if (prop.Box != null)
+                {
+                    return prop.Box.GetPropertyOtherAbout(prop.PropertyName);
+                }
+                else
+                {
+                    return prop.Result;
+                }
             }
             else
             {
