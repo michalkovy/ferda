@@ -282,8 +282,17 @@ namespace Ferda.FrontEnd
             {
                 faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
                     e.boxIdentity);
+                string faultBoxName;
+                if (faultBox == null)
+                {
+                    faultBoxName = string.Empty;
+                }
+                else
+                {
+                    faultBoxName = faultBox.UserName;
+                }
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBox.UserName, e.userMessage);
+                    faultBoxName, e.userMessage);
                 d.ShowDialog();
                 return;
             }
@@ -291,8 +300,17 @@ namespace Ferda.FrontEnd
             {
                 faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
                     e.boxIdentity);
+                string faultBoxName;
+                if (faultBox == null)
+                {
+                    faultBoxName = string.Empty;
+                }
+                else
+                {
+                    faultBoxName = faultBox.UserName;
+                }
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBox.UserName, e.userMessage);
+                    faultBoxName, e.userMessage);
                 d.ShowDialog();
                 return;
             }
@@ -300,8 +318,17 @@ namespace Ferda.FrontEnd
             {
                 faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
                     e.boxIdentity);
+                string faultBoxName;
+                if (faultBox == null)
+                {
+                    faultBoxName = string.Empty;
+                }
+                else
+                {
+                    faultBoxName = faultBox.UserName;
+                }
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBox.UserName, e.userMessage);
+                    faultBoxName, e.userMessage);
                 d.ShowDialog();
                 return;
             }
@@ -309,8 +336,17 @@ namespace Ferda.FrontEnd
             {
                 faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
                     e.boxIdentity);
+                string faultBoxName;
+                if (faultBox == null)
+                {
+                    faultBoxName = string.Empty;
+                }
+                else
+                {
+                    faultBoxName = faultBox.UserName;
+                }
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBox.UserName, e.userMessage);
+                    faultBoxName, e.userMessage);
                 d.ShowDialog();
                 return;
             }
