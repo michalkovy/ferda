@@ -132,7 +132,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
         /// <param name="about"></param>
         /// <param name="current__">Ice context</param>
         /// <returns>Modified property value</returns>
-        public override PropertyValue run(PropertyValue valueBefore, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, global::Ice.Current current__)
+        public override PropertyValue run(PropertyValue valueBefore, string propertyName, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, global::Ice.Current current__)
         {
             string locale;
             try

@@ -596,6 +596,7 @@ namespace Ferda
                     this.madeInCreator.GetProperty(name).settingModuleIdentifier);
 				string about;
 				PropertyValue value = prx.run(this.GetPropertyOther(name),
+						name,
 						this.iceBoxModulePrx,
 						this.helper.LocalePrefs,
 						this.helper.ManagersEnginePrx,
