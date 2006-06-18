@@ -1,0 +1,179 @@
+// SelectTablesControl.cs - UserControl class for selecting tables to display
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2006 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Text;
+using System.Windows.Forms;
+using Ferda.Modules;
+using Ferda.Modules.Boxes;
+using Ferda.ModulesManager;
+using Ferda.FrontEnd.AddIns;
+using System.Resources;
+using System.Reflection;
+
+namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
+{
+    public partial class MultiSelectStringsControl : System.Windows.Forms.Form
+    {
+        #region Private variables
+
+        /// <summary>
+        /// All available strings
+        /// </summary>
+        SelectString[] allStrings;
+
+        /// <summary>
+        /// Strings already selected
+        /// </summary>
+        string[] selectedStrings;
+
+        /// <summary>
+        /// Resourcemanager
+        /// </summary>
+        ResourceManager resManager;
+
+        /// <summary>
+        /// Localization string - for now, en-US or cs-CZ
+        /// </summary>
+        private string localizationString;
+
+        #endregion
+
+
+        #region Public variables
+
+        public string[] ReturnStrings;
+
+        #endregion
+
+
+        #region Constructor
+
+        public MultiSelectStringsControl(string [] localePrefs, IOwnerOfAddIn ownerOfAddIn, SelectString [] allStrings, string [] selectedStrings)
+        {
+            //setting the ResManager resource manager and localization string
+            string locale;
+            try
+            {
+                locale = localePrefs[0];
+                localizationString = locale;
+                locale = "Ferda.FrontEnd.AddIns.SelectTables.Localization_" + locale;
+                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
+            }
+            catch
+            {
+                resManager = new ResourceManager("Ferda.FrontEnd.AddIns.SelectTables.Localization_en-US",
+            Assembly.GetExecutingAssembly());
+                localizationString = "en-US";
+            }
+            this.selectedStrings = selectedStrings;
+            this.allStrings = allStrings;
+            InitializeComponent();
+        }
+
+        #endregion
+
+
+        #region Initialization
+
+        private void InitList()
+        {
+            List<string> tempList = new List<string>();
+            tempList.AddRange(this.selectedStrings);
+            foreach (Ferda.Modules.SelectString var in this.allStrings)
+            {
+                if (tempList.IndexOf(var.name) != -1)
+                {
+                    this.CheckedListBox.Items.Add(var.label, true);
+                }
+                else
+                {
+                    this.CheckedListBox.Items.Add(var.label, false);
+                }
+            }
+        }
+
+        #endregion
+
+
+        #region Localization
+        /// <summary>
+        /// Resource manager of the application, it is filled according to the
+        /// current localization
+        /// </summary>
+        public ResourceManager ResManager
+        {
+            get
+            {
+                return resManager;
+            }
+        }
+
+        /// <summary>
+        /// Localization string of the application, possible values are "en-US" and "cs-CZ"
+        /// </summary>
+        public string LocalizationString
+        {
+            get
+            {
+                return localizationString;
+            }
+        }
+
+        /// <summary>
+        /// Method to change l10n.
+        /// </summary>
+        /// <param name="rm">Resource manager to handle new l10n resource</param>
+        public void ChangeLocale(ResourceManager rm)
+        {
+            this.Text = rm.GetString("SelectTables");
+            this.ButtonCancel.Text = rm.GetString("Cancel");
+            this.ButtonSubmit.Text = rm.GetString("Submit");
+        }
+
+        #endregion
+
+
+        #region Button handlers
+
+        /// <summary>
+        /// Returns selected items as a string array
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonSubmit_Click(object sender, EventArgs e)
+        {
+            this.ReturnStrings = new string[this.CheckedListBox.CheckedIndices.Count];
+
+            for(int i = 0; i < this.CheckedListBox.CheckedItems.Count;i++ )
+            {
+                this.ReturnStrings[i] = this.allStrings[this.CheckedListBox.CheckedIndices[i]].name;
+            }
+            this.DialogResult = DialogResult.OK;
+            this.Dispose();
+            return;
+        }
+
+        #endregion
+    }
+}
