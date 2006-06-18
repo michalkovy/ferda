@@ -71,7 +71,7 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings.MyIce
             this.ownerOfAddIn = ownerOfAddIn;
 
             //setting the ResManager resource manager and localization string
-            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.SelectTables.Localization_en-US",
+            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.MultiSelectStrings.Localization_en-US",
             Assembly.GetExecutingAssembly());
             localizationString = "en-US";
         }
@@ -84,7 +84,7 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings.MyIce
 
         public override string getIdentifier(Ice.Current current__)
         {
-            return "SelectTables";
+            return "MultiSelectStrings";
         }
 
         public override string getLabel(string[] localePrefs, Ice.Current current__)
@@ -94,16 +94,16 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings.MyIce
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.SelectTables.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.MultiSelectStrings.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
             catch { }
-            return resManager.GetString("SelectTables");
+            return resManager.GetString("MultiSelectStrings");
         }
 
         public override string getPropertyAbout(PropertyValue value, Ice.Current current__)
         {
-            return ((StringT)value).getStringValue();
+            return "";
         }
 
         #endregion
@@ -128,7 +128,7 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings.MyIce
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ODBCConnectionString.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.MultiSelectStrings.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
             catch {}
@@ -159,7 +159,6 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings.MyIce
                 about = this.getPropertyAbout(valueBefore);
                 return valueBefore;
             }
-
             return propertyValue;
         }
 

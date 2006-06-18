@@ -120,8 +120,8 @@
   <data name="Cancel" xml:space="preserve">
     <value>Storno</value>
   </data>
-  <data name="SelectTables" xml:space="preserve">
-    <value>Výběr tabulek</value>
+  <data name="MultiSelectStrings" xml:space="preserve">
+    <value>Výběr řetězců</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Ok</value>

@@ -120,8 +120,8 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="SelectTables" xml:space="preserve">
-    <value>Select tables</value>
+  <data name="MultiSelectStrings" xml:space="preserve">
+    <value>Select strings</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Ok</value>
