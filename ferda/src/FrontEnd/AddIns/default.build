@@ -20,7 +20,7 @@
 	</target>
 	<target name="buildaddins">
 			<!--<mkdir dir="${addInsBuild.dir}/Common"/>-->
-
+<!--
 		<csc target="library" output="${path::combine(addInsBuild.dir,'StringSeqSettingModule.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="StringSeqSettingModule/**.cs"/>
@@ -247,6 +247,7 @@
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
+-->
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ODBCConnectionString.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ODBCConnectionString/**.cs"/>
@@ -264,6 +265,7 @@
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'Ferda.Data.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
@@ -276,6 +278,7 @@
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
+<!--
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ShowTable.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ShowTable/**.cs"/>
@@ -331,6 +334,7 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+-->
 	</target>
 	<target name="clean">
 		<delete failonerror="false">

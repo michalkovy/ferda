@@ -71,6 +71,11 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         /// </summary>
         private IOwnerOfAddIn ownerOfAddIn;
 
+        /// <summary>
+        /// ProviderInvariantName
+        /// </summary>
+        string providerInvariantName;
+
 
         #endregion
 
@@ -98,7 +103,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         /// </summary>
         /// <param name="localePrefs">localeprefs</param>
         /// <param name="currentDSN">Current DSN</param>
-        public ODBCConnectionStringControl(string[] localePrefs, string currentDSN, IOwnerOfAddIn ownerOfAddIn)
+        public ODBCConnectionStringControl(string[] localePrefs, string currentDSN, IOwnerOfAddIn ownerOfAddIn, string ProviderInvariantName)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -116,6 +121,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
                 localizationString = "en-US";
             }
             this.ownerOfAddIn = ownerOfAddIn;
+            this.providerInvariantName = ProviderInvariantName;
             this.path = Assembly.GetExecutingAssembly().Location;
             InitializeComponent();
             this.ChangeLocale(resManager);
@@ -142,6 +148,12 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             this.TextBoxPassword.LostFocus += new EventHandler(TextBoxPassword_LostFocus);
             this.LoadIcons();
             this.InitIcons();
+
+            //if the connection is not ODBC, enable custom connection string only
+            if (this.providerInvariantName != Ferda.Guha.Data.DataProviderHelper.OdbcInvariantName)
+            {
+                this.RadioUseCustomString.Checked = true;
+            }
         }
 
         /// <summary>
@@ -184,7 +196,15 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
         {
             try
             {
-                Ferda.Modules.Helpers.Data.Database.TestConnectionString(connectionString, null);
+                Ferda.Guha.Data.DatabaseConnectionSetting setting = 
+                    new Ferda.Guha.Data.DatabaseConnectionSetting(
+                    this.providerInvariantName, connectionString,
+                    new Ferda.Modules.DateTimeTI(DateTime.MinValue)
+                    );
+                Ferda.Guha.Data.DatabaseConnectionSettingHelper helper =
+                    new Ferda.Guha.Data.DatabaseConnectionSettingHelper(setting);
+
+                Ferda.Guha.Data.GenericDatabaseCache.GetGenericDatabase(helper);
                 return true;
             }
             catch { }

@@ -145,12 +145,14 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
             catch
             {
             }
+            Ferda.Modules.Boxes.DataPreparation.DatabaseFunctionsPrx prx =
+                Ferda.Modules.Boxes.DataPreparation.DatabaseFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
             about = resManager.GetString("ConnectionStringAbout");
             StringT connectionString = (StringT)valueBefore;
             PropertyValue returnValue = new PropertyValue();
             PropertyValue propertyValue = valueBefore;
-            Ferda.FrontEnd.AddIns.ODBCConnectionString.ODBCConnectionStringControl listView = new Ferda.FrontEnd.AddIns.ODBCConnectionString.ODBCConnectionStringControl(localePrefs, connectionString.getStringValue(),ownerOfAddIn);
+            Ferda.FrontEnd.AddIns.ODBCConnectionString.ODBCConnectionStringControl listView = new Ferda.FrontEnd.AddIns.ODBCConnectionString.ODBCConnectionStringControl(localePrefs, connectionString.getStringValue(),ownerOfAddIn, prx.getDatabaseConnectionSetting().providerInvariantName);
             listView.ShowInTaskbar = false;
             listView.Disposed += new EventHandler(listView_Disposed);
             System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);

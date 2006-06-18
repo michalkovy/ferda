@@ -28,6 +28,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ferda.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\Ferda.Data.dll</HintPath>
+    </Reference>
     <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
@@ -70,16 +74,6 @@
     <Compile Include="3rdParty\ODBCCP32.cs" />
     <Compile Include="3rdParty\Reg.cs" />
     <Compile Include="3rdParty\registry.cs" />
-    <Compile Include="Localization_cs-CZ.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Localization_cs-CZ.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Localization_en-US.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Localization_en-US.resx</DependentUpon>
-    </Compile>
     <Compile Include="ODBCConnectionStringControl.cs">
       <SubType>Form</SubType>
     </Compile>
