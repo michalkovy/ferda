@@ -1,8 +1,8 @@
-// ConnectionStringIce.cs - class for ice communication
+// SelectTablesIce.cs - class for ice communication
 //
 // Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2006 Alexander Kuzmin
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,12 +27,13 @@ using Ferda.FrontEnd.AddIns;
 using System.Resources;
 using System.Reflection;
 
-namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
+
+namespace Ferda.FrontEnd.AddIns.MultiSelectStrings.MyIce
 {
     /// <summary>
     /// Class for ice communication
     /// </summary>
-    class ConnectionStringIce : SettingModuleWithStringAbilityDisp_
+    class MultiSelectStringsIce : SettingModuleDisp_
     {
         #region Private variables
 
@@ -53,9 +53,9 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
         private string localizationString;
 
         /// <summary>
-        /// Resulting DSN string
+        /// Resulting string with selected tables
         /// </summary>
-        string returnString;
+        string [] returnStrings;
 
         #endregion
 
@@ -66,12 +66,12 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
         /// Class constructor
         /// </summary>
         /// <param name="ownerOfAddIn">Owner of addin</param>
-        public ConnectionStringIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
+        public MultiSelectStringsIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
         {
             this.ownerOfAddIn = ownerOfAddIn;
 
             //setting the ResManager resource manager and localization string
-            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ODBCConnectionString.Localization_en-US",
+            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.SelectTables.Localization_en-US",
             Assembly.GetExecutingAssembly());
             localizationString = "en-US";
         }
@@ -81,39 +81,35 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
 
         #region Other ice
 
-        public override string getLabel(string[] localePrefs, global::Ice.Current current__)
+
+        public override string getIdentifier(Ice.Current current__)
+        {
+            return "SelectTables";
+        }
+
+        public override string getLabel(string[] localePrefs, Ice.Current current__)
         {
             string locale;
             try
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ODBCConnectionString.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.SelectTables.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
-            catch {}
-            return resManager.GetString("ConnectionString");
+            catch { }
+            return resManager.GetString("SelectTables");
         }
 
-        public override string getPropertyAbout(PropertyValue value, global::Ice.Current current__)
+        public override string getPropertyAbout(PropertyValue value, Ice.Current current__)
         {
             return ((StringT)value).getStringValue();
-        }
-
-        public override string getIdentifier(global::Ice.Current current__)
-        {
-            return "ODBCConnectionString";
-        }
-
-        public override PropertyValue convertFromStringAbout(string about, string[] localePrefs, Ice.Current current__)
-        {
-            return new StringTI(about);
         }
 
         #endregion
 
 
-        #region IceRun
+        #region Icerun
 
         /// <summary>
         /// Ice run
@@ -125,7 +121,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
         /// <param name="about"></param>
         /// <param name="current__">Ice context</param>
         /// <returns>Modified property value</returns>
-        public override PropertyValue run(PropertyValue valueBefore, string propertyName, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, global::Ice.Current current__)
+        public override PropertyValue run(PropertyValue valueBefore, string propertyName, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, Ice.Current current__)
         {
             string locale;
             try
@@ -135,28 +131,26 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
                 locale = "Ferda.FrontEnd.AddIns.ODBCConnectionString.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
-            catch
-            {
-            }
-            Ferda.Modules.Boxes.DataPreparation.DatabaseFunctionsPrx prx =
-                Ferda.Modules.Boxes.DataPreparation.DatabaseFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+            catch {}
 
-            about = resManager.GetString("ConnectionStringAbout");
-            StringT connectionString = (StringT)valueBefore;
-            PropertyValue returnValue = new PropertyValue();
+            StringSeqT selectedStrings = (StringSeqT)valueBefore;
             PropertyValue propertyValue = valueBefore;
-            ODBCConnectionString.ODBCConnectionStringControl listView =
-                new ODBCConnectionString.ODBCConnectionStringControl(localePrefs,
-                connectionString.getStringValue(),
+            PropertyValue returnValue = new PropertyValue();
+
+            MultiSelectStrings.MultiSelectStringsControl listView =
+                new MultiSelectStrings.MultiSelectStringsControl(localePrefs,
                 ownerOfAddIn,
-                prx.getDatabaseConnectionSetting().providerInvariantName);
+                boxModuleParam.getPropertyOptions(propertyName),
+                selectedStrings.stringSeqValue
+                );
+
             listView.ShowInTaskbar = false;
             listView.Disposed += new EventHandler(listView_Disposed);
             System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                connectionString.stringValue = this.returnString;
-                PropertyValue resultValue = connectionString;
+                selectedStrings.stringSeqValue = this.returnStrings;
+                PropertyValue resultValue = selectedStrings;
                 about = this.getPropertyAbout(resultValue);
                 propertyValue = resultValue;
             }
@@ -181,10 +175,10 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
         /// <param name="e"></param>
         void listView_Disposed(object sender, EventArgs e)
         {
-            Ferda.FrontEnd.AddIns.ODBCConnectionString.ODBCConnectionStringControl listView =
-                (Ferda.FrontEnd.AddIns.ODBCConnectionString.ODBCConnectionStringControl)sender;
+            Ferda.FrontEnd.AddIns.MultiSelectStrings.MultiSelectStringsControl listView =
+                (Ferda.FrontEnd.AddIns.MultiSelectStrings.MultiSelectStringsControl)sender;
 
-            this.returnString = listView.ReturnString;
+            this.returnStrings = listView.ReturnStrings;
         }
 
         #endregion

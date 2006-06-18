@@ -335,6 +335,37 @@
 			</references>
 		</csc>
 -->
+
+    <csc target="library" output="${path::combine(addInsBuild.dir,'MultiSelectStrings.dll')}" debug="${debug}" optimize="${optimize}">
+      <sources>
+        <include name="MultiSelectStrings/**.cs"/>
+        <include name="MultiSelectStrings/MyIce/**.cs"/>
+        <exclude name="MultiSelectStrings/bin/**.*"/>
+        <exclude name="MultiSelectStrings/obj/**.*"/>
+      </sources>
+      <resources prefix="Ferda.FrontEnd.AddIns.MultiSelectStrings">
+        <include name="MultiSelectStrings/**.resx"/>
+        <exclude name="MultiSelectStrings/MultiSelectStrings.resx"/>
+      </resources>
+      <references>
+        <include name="System.dll"/>
+        <include name="System.Data.dll"/>
+        <include name="System.Windows.Forms.dll"/>
+        <include name="System.Collections.dll"/>
+        <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+        <include name="${path::combine(build.dir,'Ferda.Data.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+        <include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+        <include name="${path::combine(lib.dir,'icecs.dll')}"/>
+      </references>
+    </csc>
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+      <fileset basedir="MultiSelectStrings/Help">
+        <include name="*.*" />
+      </fileset>
+    </copy>
 	</target>
 	<target name="clean">
 		<delete failonerror="false">
