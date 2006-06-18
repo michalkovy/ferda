@@ -733,19 +733,10 @@ module Ferda {
 			 *
 			 * @throws BoxRuntimeError Is thrown if some runtime error ocured.
 			 *
-			 * @throws BadValueError Is thrown if function/method gets bad values.
-			 *
-			 * @throws BadParamsError Is thrown if some property/socket has bad value.
-			 *
-			 * @throws NoConnectionInSocketError Is thrown if some connection is required.
-			 *
 			 **/
 			nonmutating void validate()
 				throws
-					BoxRuntimeError,
-					BadValueError,
-					BadParamsError,
-					NoConnectionInSocketError;
+					BoxRuntimeError;
 		};
 
 		interface Entity {
@@ -855,6 +846,7 @@ module Ferda {
 			 **/
 			PropertyValue run(
 				PropertyValue valueBefore,
+				string propertyName,
 				BoxModule* boxModuleParam,
 				StringSeq localePrefs,
 				Ferda::ModulesManager::ManagersEngine* manager,
