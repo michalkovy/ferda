@@ -77,18 +77,20 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.SelectTables.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.MultiSelectStrings.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
             catch
             {
-                resManager = new ResourceManager("Ferda.FrontEnd.AddIns.SelectTables.Localization_en-US",
+                resManager = new ResourceManager("Ferda.FrontEnd.AddIns.MultiSelectStrings.Localization_en-US",
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
             this.selectedStrings = selectedStrings;
             this.allStrings = allStrings;
+            this.InitList();
             InitializeComponent();
+            this.ChangeLocale(this.resManager);
         }
 
         #endregion
@@ -146,7 +148,7 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
         /// <param name="rm">Resource manager to handle new l10n resource</param>
         public void ChangeLocale(ResourceManager rm)
         {
-            this.Text = rm.GetString("SelectTables");
+            this.Text = rm.GetString("MultiSelectStrings");
             this.ButtonCancel.Text = rm.GetString("Cancel");
             this.ButtonSubmit.Text = rm.GetString("Submit");
         }
