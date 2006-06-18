@@ -185,6 +185,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot fint the box identity.
+        /// </summary>
+        internal static string BoxExceptionDialogFaultName {
+            get {
+                return ResourceManager.GetString("BoxExceptionDialogFaultName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to has thrown an exception..
         /// </summary>
         internal static string BoxExceptionDialogKecy {
