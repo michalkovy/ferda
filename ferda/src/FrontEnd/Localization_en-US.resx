@@ -160,6 +160,9 @@
   <data name="BoxExceptionDialogDetails" xml:space="preserve">
     <value>Exception details:</value>
   </data>
+  <data name="BoxExceptionDialogFaultName" xml:space="preserve">
+    <value>Cannot fint the box identity</value>
+  </data>
   <data name="BoxExceptionDialogKecy" xml:space="preserve">
     <value>has thrown an exception.</value>
   </data>

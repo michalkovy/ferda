@@ -156,6 +156,9 @@
   <data name="BoxExceptionDialogDetails" xml:space="preserve">
     <value>Podrobnosti výjimky:</value>
   </data>
+  <data name="BoxExceptionDialogFaultName" xml:space="preserve">
+    <value>Nelze zjistit identitu krabičky</value>
+  </data>
   <data name="BoxExceptionDialogKecy" xml:space="preserve">
     <value>nastala výjimka.</value>
   </data>

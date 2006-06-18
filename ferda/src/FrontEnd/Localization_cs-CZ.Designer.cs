@@ -178,6 +178,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nelze zjistit identitu krabičky.
+        /// </summary>
+        internal static string BoxExceptionDialogFaultName {
+            get {
+                return ResourceManager.GetString("BoxExceptionDialogFaultName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to nastala výjimka..
         /// </summary>
         internal static string BoxExceptionDialogKecy {

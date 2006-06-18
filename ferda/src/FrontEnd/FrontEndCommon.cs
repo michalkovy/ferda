@@ -271,6 +271,7 @@ namespace Ferda.FrontEnd
             ProjectManager.ProjectManager projManager)
         {
             IBoxModule faultBox;
+            string userMessage = string.Empty;
 
             //trying to validate the box and catching the exceptions
             try
@@ -285,12 +286,29 @@ namespace Ferda.FrontEnd
                 string faultBoxName;
                 if (faultBox == null)
                 {
-                    faultBoxName = string.Empty;
+                    faultBoxName = resManager.GetString("BoxExceptionDialogFaultName");
                 }
                 else
                 {
                     faultBoxName = faultBox.UserName;
                 }
+
+                userMessage += e.userMessage;
+                userMessage += "\n\n" + e.restrictionType.ToString();
+                userMessage += "\n\nSockets:\n";
+                foreach (string socket in e.socketsNames)
+                {
+                    userMessage += socket + '\n';
+                }
+#if DEBUG
+                userMessage += "\n\nException to string:\n";
+                userMessage += e.ToString();
+                if (e.InnerException != null)
+                {
+                    userMessage += "\n\nInnerException to string:\n";
+                    userMessage += e.InnerException.ToString();
+                }
+#endif
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
                     faultBoxName, e.userMessage);
                 d.ShowDialog();
@@ -303,14 +321,26 @@ namespace Ferda.FrontEnd
                 string faultBoxName;
                 if (faultBox == null)
                 {
-                    faultBoxName = string.Empty;
+                    faultBoxName = resManager.GetString("BoxExceptionDialogFaultName");
                 }
                 else
                 {
                     faultBoxName = faultBox.UserName;
                 }
+
+                userMessage += e.userMessage;
+                userMessage += "\n\n" + e.restrictionType.ToString();
+#if DEBUG
+                userMessage += "\n\nException to string:\n";
+                userMessage += e.ToString();
+                if (e.InnerException != null)
+                {
+                    userMessage += "\n\nInnerException to string:\n";
+                    userMessage += e.InnerException.ToString();
+                }
+#endif
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBoxName, e.userMessage);
+                    faultBoxName, userMessage);
                 d.ShowDialog();
                 return;
             }
@@ -321,14 +351,32 @@ namespace Ferda.FrontEnd
                 string faultBoxName;
                 if (faultBox == null)
                 {
-                    faultBoxName = string.Empty;
+                    faultBoxName = resManager.GetString("BoxExceptionDialogFaultName");
                 }
                 else
                 {
                     faultBoxName = faultBox.UserName;
                 }
+
+                userMessage += e.userMessage;
+
+                userMessage += "\n\nSockets:\n";
+                foreach (string socket in e.socketsNames)
+                {
+                    userMessage += socket + '\n';
+                }
+#if DEBUG
+                userMessage += "\n\nException to string:\n";
+                userMessage += e.ToString();
+                if (e.InnerException != null)
+                {
+                    userMessage += "\n\nInnerException to string:\n";
+                    userMessage += e.InnerException.ToString();
+                }
+#endif
+
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBoxName, e.userMessage);
+                    faultBoxName, userMessage);
                 d.ShowDialog();
                 return;
             }
@@ -339,14 +387,25 @@ namespace Ferda.FrontEnd
                 string faultBoxName;
                 if (faultBox == null)
                 {
-                    faultBoxName = string.Empty;
+                    faultBoxName = resManager.GetString("BoxExceptionDialogFaultName");
                 }
                 else
                 {
                     faultBoxName = faultBox.UserName;
                 }
+
+                userMessage += e.userMessage;
+#if DEBUG
+                userMessage += "\n\nException to string:\n";
+                userMessage += e.ToString();
+                if (e.InnerException != null)
+                {
+                    userMessage += "\n\nInnerException to string:\n";
+                    userMessage += e.InnerException.ToString();
+                }
+#endif
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBoxName, e.userMessage);
+                    faultBoxName, userMessage);
                 d.ShowDialog();
                 return;
             }
