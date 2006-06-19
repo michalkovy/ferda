@@ -19,8 +19,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
+using System;
 using System.Collections.Generic;
-using Ice;
+using Object=Ice.Object;
 
 namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
 {
@@ -117,7 +118,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                         // == Ferda.Modules.Boxes.DataMiningCommon.Attributes.Attribute.AttributeBoxInfo.typeIdentifier;
                         break;
                     default:
-                        throw Exceptions.SwitchCaseNotImplementedError(moduleAFCName);
+                        throw new NotImplementedException();
                 }
                 moduleConnection.boxModuleParam = boxModule.MyProxy;
                 singleModuleAFC.modulesConnection = new ModulesConnection[] {moduleConnection};

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 
 namespace Ferda.Modules
@@ -11,42 +9,18 @@ namespace Ferda.Modules
     /// </summary>
     public static class Exceptions
     {
-        /// <summary>
-        /// Gets BoxRuntimeError exception.
-        /// </summary>
-        /// <param name="e">The inner exception.</param>
-        /// <param name="boxIdentity">The box identity.</param>
-        /// <param name="userMessage">The user message.</param>
-        /// <returns>
-        /// The <see cref="Ferda.Modules.BoxRuntimeError"/> exception.
-        /// </returns>
-        public static Ferda.Modules.BoxRuntimeError BoxRuntimeError(Exception e, string boxIdentity, string userMessage)
+        private static void prepare(BoxRuntimeError ex, string boxIdentity, string userMessage)
         {
-            Debug.WriteLine(userMessage);
-            Ferda.Modules.BoxRuntimeError ex = new BoxRuntimeError(e);
+            Debug.Assert(!String.IsNullOrEmpty(userMessage));
             ex.boxIdentity = boxIdentity;
             ex.userMessage = userMessage;
-            return ex;
         }
 
-        /// <summary>
-        /// Gets NoConnectionInSocketError exception.
-        /// </summary>
-        /// <param name="e">The inner exception.</param>
-        /// <param name="boxIdentity">The box identity.</param>
-        /// <param name="userMessage">The user message.</param>
-        /// <param name="socketsNames">Names of the empty sockets.</param>
-        /// <returns>
-        /// The <see cref="Ferda.Modules.NoConnectionInSocketError"/> exception.
-        /// </returns>
-        public static Ferda.Modules.NoConnectionInSocketError NoConnectionInSocketError(Exception e, string boxIdentity, string userMessage, string[] socketsNames)
+        private static void prepare(BadParamsError ex, string boxIdentity, string userMessage,
+                                    restrictionTypeEnum restrictionType)
         {
-            Debug.WriteLine(userMessage);
-            Ferda.Modules.NoConnectionInSocketError ex = new NoConnectionInSocketError(e);
-            ex.boxIdentity = boxIdentity;
-            ex.userMessage = userMessage;
-            ex.socketsNames = socketsNames;
-            return ex;
+            prepare(ex, boxIdentity, userMessage);
+            ex.restrictionType = restrictionType;
         }
 
         /// <summary>
@@ -60,31 +34,12 @@ namespace Ferda.Modules
         /// <returns>
         /// The <see cref="Ferda.Modules.BadValueError"/> exception.
         /// </returns>
-        public static Ferda.Modules.BadValueError BadValueError(Exception e, string boxIdentity, string userMessage, string[] socketsNames, restrictionTypeEnum restrictionType)
+        public static BadValueError BadValueError(Exception e, string boxIdentity, string userMessage,
+                                                  string[] socketsNames, restrictionTypeEnum restrictionType)
         {
-            Debug.WriteLine(userMessage);
-            Ferda.Modules.BadValueError ex = new BadValueError(e);
-            ex.boxIdentity = boxIdentity;
-            ex.userMessage = userMessage;
+            BadValueError ex = new BadValueError(e);
+            prepare(ex, boxIdentity, userMessage, restrictionType);
             ex.socketsNames = socketsNames;
-            ex.restrictionType = restrictionType;
-            return ex;
-        }
-
-        /// <summary>
-        /// Gets NameNotExistError exception.
-        /// </summary>
-        /// <param name="e">The inner exception.</param>
-        /// <param name="boxIdentity">The box identity.</param>
-        /// <param name="userMessage">The user message.</param>
-        /// <param name="notExistingName">The not existing name.</param>
-        /// <returns>
-        /// The <see cref="Ferda.Modules.NameNotExistError"/> exception.
-        /// </returns>
-        public static Ferda.Modules.NameNotExistError NameNotExistError(Exception e, string boxIdentity, string userMessage, string notExistingName)
-        {
-            Debug.WriteLine(userMessage + " NotExistingName: " + notExistingName);
-            Ferda.Modules.NameNotExistError ex = new NameNotExistError(e);
             return ex;
         }
 
@@ -98,54 +53,61 @@ namespace Ferda.Modules
         /// <returns>
         /// The <see cref="T:Ferda.Modules.BadParamsError"/> exception.
         /// </returns>
-        public static Ferda.Modules.BadParamsError BadParamsError(Exception e, string boxIdentity, string userMessage, restrictionTypeEnum restrictionType)
+        public static BadParamsError BadParamsError(Exception e, string boxIdentity, string userMessage,
+                                                    restrictionTypeEnum restrictionType)
         {
-            Debug.WriteLine(userMessage);
-            Ferda.Modules.BadParamsError ex = new BadParamsError(e);
-            ex.boxIdentity = boxIdentity;
-            ex.userMessage = userMessage;
-            ex.restrictionType = restrictionType;
-            return ex;
-        }
-
-        public static Ferda.Modules.BadParamsError BadParamsUnexpectedReasonError(Exception e, string boxIdentity)
-        {
-            Debug.WriteLine(e.Message);
-            Ferda.Modules.BadParamsError ex = new BadParamsError(e);
-            ex.boxIdentity = boxIdentity;
-            ex.restrictionType = restrictionTypeEnum.UnexpectedReason;
+            BadParamsError ex = new BadParamsError(e);
+            prepare(ex, boxIdentity, userMessage, restrictionType);
             return ex;
         }
 
         /// <summary>
-        /// Gets SwitchCaseNotImplementedError exception.
-        /// This exception should be thrown in <c>default</c> branch of 
-        /// the switch is used and it shouldn`t be.
+        /// Gets NoConnectionInSocketError exception.
         /// </summary>
-        /// <param name="value">The value which leads to the exception.</param>
+        /// <param name="e">The inner exception.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <param name="userMessage">The user message.</param>
+        /// <param name="socketsNames">Names of the empty sockets.</param>
         /// <returns>
-        /// The <see cref="T:System.ArgumentOutOfRangeException"/> exception.
+        /// The <see cref="Ferda.Modules.NoConnectionInSocketError"/> exception.
         /// </returns>
-        public static ArgumentOutOfRangeException SwitchCaseNotImplementedError(object value)
+        public static NoConnectionInSocketError NoConnectionInSocketError(Exception e, string boxIdentity, string[] socketsNames)
         {
-            Debug.WriteLine("SwitchCaseNotImplementedError(" + value.ToString() + ")");
-            return new ArgumentOutOfRangeException(value.ToString());
+            Debug.Assert(socketsNames == null || socketsNames.Length == 0);
+
+            NoConnectionInSocketError ex = new NoConnectionInSocketError(e);
+            prepare(ex, boxIdentity, "There is no connection in the socket!");
+            ex.socketsNames = socketsNames;
+            return ex;
         }
 
         /// <summary>
-        /// Gets SwitchCaseNotImplementedError exception.
-        /// This exception should be thrown in <c>default</c> branch of
-        /// the switch is used and it shouldn`t be.
+        /// Gets BoxRuntimeError exception.
         /// </summary>
-        /// <param name="value">The value which leads to the exception.</param>
+        /// <param name="e">The inner exception.</param>
+        /// <param name="boxIdentity">The box identity.</param>
         /// <param name="userMessage">The user message.</param>
         /// <returns>
-        /// The <see cref="T:System.ArgumentOutOfRangeException"/> exception.
+        /// The <see cref="Ferda.Modules.BoxRuntimeError"/> exception.
         /// </returns>
-        public static ArgumentOutOfRangeException SwitchCaseNotImplementedError(object value, string userMessage)
+        public static BoxRuntimeError BoxRuntimeError(Exception e, string boxIdentity, string userMessage)
         {
-            Debug.WriteLine(userMessage + " SwitchCaseNotImplementedError(" + value.ToString() + ")");
-            return new ArgumentOutOfRangeException(value.ToString(), userMessage);
+            BoxRuntimeError ex = new BoxRuntimeError(e);
+            prepare(ex, boxIdentity, userMessage);
+            return ex;
+        }
+
+        /// <summary>
+        /// Gets NameNotExistError exception.
+        /// </summary>
+        /// <param name="e">The inner exception.</param>
+        /// <param name="notExistingName">The not existing name.</param>
+        /// <returns>
+        /// The <see cref="Ferda.Modules.NameNotExistError"/> exception.
+        /// </returns>
+        public static NameNotExistError NameNotExistError(Exception e, string notExistingName)
+        {
+            return new NameNotExistError("NotExistingName: " + notExistingName, e);
         }
     }
 }

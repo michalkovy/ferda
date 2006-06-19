@@ -7,7 +7,7 @@
     <ProjectGuid>{080262C5-D4FC-4722-B1E7-46E927D34507}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample</RootNamespace>
+    <RootNamespace>Ferda.Modules.Boxes.Sample</RootNamespace>
     <AssemblyName>Sample</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

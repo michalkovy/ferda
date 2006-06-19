@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Ferda.Modules;
 
@@ -143,7 +144,8 @@ namespace Ferda.Modules.Helpers.Common
                     case RangeEnum.Half:
                         return -2;
                     default:
-                        throw Ferda.Modules.Exceptions.SwitchCaseNotImplementedError(rangeEnum);
+                        Debug.Assert(false, "Switch case not implemented " + rangeEnum);
+                        throw new NotImplementedException();
                 }
             }
             else //if (parsedResult == ParsedResultType.Value)

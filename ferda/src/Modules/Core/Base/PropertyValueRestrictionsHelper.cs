@@ -28,7 +28,13 @@ namespace Ferda.Modules.Boxes
         public static void TryIsIntegralPropertyCorrect(IBoxInfo boxInfo, string propertyName, long propertyValue)
         {
             List<Restriction> restrictions = boxInfo.GetPropertyRestrictions(propertyName);
-            BadValueError possibleException = new BadValueError();
+            BadValueError possibleException = Exceptions.BadValueError(
+                        null,
+                        null,
+                        "Property value is not from interval of allowed values.", 
+                        new string[] { propertyName },
+                        restrictionTypeEnum.OtherReason
+                        );
             foreach (Restriction restriction in restrictions)
             {
                 if (restriction.integral.Length == 0)
@@ -90,7 +96,13 @@ namespace Ferda.Modules.Boxes
         public static void TryIsFloatingPropertyCorrect(IBoxInfo boxInfo, string propertyName, double propertyValue)
         {
             List<Restriction> restrictions = boxInfo.GetPropertyRestrictions(propertyName);
-            BadValueError possibleException = new BadValueError();
+            BadValueError possibleException = Exceptions.BadValueError(
+                        null,
+                        null,
+                        "Property value is not from interval of allowed values.", 
+                        new string[] { propertyName },
+                        restrictionTypeEnum.OtherReason
+                        );
             foreach (Restriction restriction in restrictions)
             {
                 if (restriction.floating.Length == 0)
@@ -158,9 +170,13 @@ namespace Ferda.Modules.Boxes
                     Regex.IsMatch(propertyValue,
                                   regexp))
                 {
-                    BadValueError possibleException = new BadValueError();
-                    possibleException.restrictionType = restrictionTypeEnum.Regexp;
-                    throw possibleException;
+                    throw Exceptions.BadValueError(
+                        null, 
+                        null,
+                        "Property value does not match the regular expression.", 
+                        new string[]{propertyName}, 
+                        restrictionTypeEnum.Regexp
+                        );
                 }
             }
             SelectString[] selectValues = boxInfo.GetPropertyFixedOptions(propertyName);
@@ -177,9 +193,13 @@ namespace Ferda.Modules.Boxes
                 }
                 if (!inOptions)
                 {
-                    BadValueError possibleException = new BadValueError();
-                    possibleException.restrictionType = restrictionTypeEnum.NotInSelectOptions;
-                    throw possibleException;
+                    throw Exceptions.BadValueError(
+                        null,
+                        null,
+                        "Property value is not in select options.", 
+                        new string[] { propertyName },
+                        restrictionTypeEnum.NotInSelectOptions
+                        );
                 }
             }
         }

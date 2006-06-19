@@ -71,6 +71,7 @@ namespace Tests.MiningProcessor
                 + " (A-P)",
             new CoefficientSetting(
                 new GuidStruct(BitStringCacheTest.Attr1Id),
+                ImportanceEnum.Basic,
                 null,
                 minLen,
                 maxLen,
@@ -85,6 +86,7 @@ namespace Tests.MiningProcessor
                 + " (A)",
             new CoefficientSetting(
                 new GuidStruct(BitStringCacheTest.Attr2Id),
+                ImportanceEnum.Basic,
                 null,
                 minLen,
                 maxLen,
@@ -158,6 +160,7 @@ namespace Tests.MiningProcessor
             
             CoefficientSetting coef = new CoefficientSetting(
                 new GuidStruct(BitStringCacheTest.Attr1Id),
+                ImportanceEnum.Basic,
                 null,
                 1,
                 3,
@@ -170,6 +173,7 @@ namespace Tests.MiningProcessor
 
             NegationSetting neg = new NegationSetting(
                     new GuidStruct((new Guid()).ToString()),
+                    ImportanceEnum.Basic,
                     coef);
 
             result.AppendLine("Negation of Cuts: 1 - 3 (A-P) ");
@@ -178,6 +182,7 @@ namespace Tests.MiningProcessor
             
             BothSignsSetting both = new BothSignsSetting(
                     new GuidStruct((new Guid()).ToString()),
+                    ImportanceEnum.Basic,
                     coef);
 
             result.AppendLine("Both signs of Cuts: 1 - 3 (A-P) ");
@@ -198,6 +203,7 @@ namespace Tests.MiningProcessor
 
             CoefficientSetting coef = new CoefficientSetting(
                 new GuidStruct(BitStringCacheTest.Attr1Id),
+                ImportanceEnum.Basic,
                 null,
                 1,
                 3,
@@ -210,6 +216,7 @@ namespace Tests.MiningProcessor
 
             CoefficientSetting coef2 = new CoefficientSetting(
                 new GuidStruct(BitStringCacheTest.Attr1Id),
+                ImportanceEnum.Basic,
                 null,
                 3,
                 3,
@@ -222,6 +229,7 @@ namespace Tests.MiningProcessor
             
             NegationSetting neg = new NegationSetting(
                     new GuidStruct((new Guid()).ToString()),
+                    ImportanceEnum.Basic,
                     coef2);
 
             result.AppendLine("Negation of Intervals: 3 - 3 (A-P) ");
@@ -230,11 +238,13 @@ namespace Tests.MiningProcessor
 
             ConjunctionSetting conj = new ConjunctionSetting(
                     new GuidStruct((new Guid()).ToString()),
-                    new EntityImportancePair[]
+                    ImportanceEnum.Basic,
+                    new IEntitySetting[]
                         {
-                            new EntityImportancePair(coef, ImportanceEnum.Forced), 
-                            new EntityImportancePair(coef2, ImportanceEnum.Basic), 
-                        }, 
+                            coef,
+                            coef2
+                        }
+                    , 
                     new GuidStruct[][]{},
                     1,
                     3

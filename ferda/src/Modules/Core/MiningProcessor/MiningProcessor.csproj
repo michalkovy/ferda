@@ -37,6 +37,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
     </Reference>
+    <Reference Include="iceboxcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
+    </Reference>
     <Reference Include="icecs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\icecs.dll</HintPath>
@@ -74,6 +78,7 @@
     <Compile Include="Design\Importance.cs" />
     <Compile Include="Design\ISingleOperandEntitySetting.cs" />
     <Compile Include="Formulas\Atom.cs" />
+    <Compile Include="Generation\MiningProcessorFunctionsI.cs" />
     <Compile Include="Miners\Pseudocode.cs" />
     <Compile Include="MiningProcessor.cs" />
     <Compile Include="Design\NegationSetting.cs" />
@@ -84,7 +89,9 @@
     <Compile Include="Generation\Helpers.cs" />
     <Compile Include="Generation\SingleOperandEntities.cs" />
     <Compile Include="Generation\Subsets.cs" />
+    <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DesignDiagram.cd" />

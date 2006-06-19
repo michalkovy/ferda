@@ -124,6 +124,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Constructor that allocates the memory.
         /// </summary>
         /// <param name="length">The length of BitString (the number of bits).</param>
+        /// <param name="identifier">The identifier.</param>
         private BitString(int length, IFormula identifier)
         {
             _identifier = identifier;
@@ -161,6 +162,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Initialize bit string from a string of characters '0' and '1'.
         /// </summary>
         /// <param name="source">Initialization string, which can contain only characters '0' and '1'.</param>
+        /// <param name="identifier">The identifier.</param>
         /// <exception cref="NullReferenceException">Input string cannot be a null reference..</exception>
         /// <exception cref="ArgumentException">Input string can contain only characters '0' and '1'.</exception>
         public BitString(string source, Atom identifier)

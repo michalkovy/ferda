@@ -273,9 +273,8 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
             }
             catch (Exception ex)
             {
-                throw Exceptions.NameNotExistError(ex, "",
-                                                   "Ser08: GetSocket(...): socketName (" + socketName + ") in box " +
-                                                   Identifier + " doesn`t exist.", socketName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(ex, socketName);
             }
         }
 
@@ -346,9 +345,8 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
             }
             catch (Exception ex)
             {
-                throw Exceptions.NameNotExistError(ex, "",
-                                                   "Ser09: GetSocket(...): socketName (" + socketName + ") in box " +
-                                                   Identifier + " doesn`t exist.", socketName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(ex, socketName);
             }
         }
 
@@ -372,10 +370,8 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
             }
             catch (Exception ex)
             {
-                string message = "Ser10: GetProperty(...): propertyName (" + propertyName + ") in box " + Identifier +
-                                 " doesn`t exist.";
-                Debug.WriteLine(message);
-                throw Exceptions.NameNotExistError(ex, "", message, propertyName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(ex, propertyName);
             }
         }
 
@@ -441,10 +437,8 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
             }
             catch (Exception ex)
             {
-                string message = "Ser11: GetProperty(...): propertyName (" + propertyName + ") in box " + Identifier +
-                                 " doesn`t exist.";
-                Debug.WriteLine(message);
-                throw Exceptions.NameNotExistError(ex, "", message, propertyName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(ex, propertyName);
             }
         }
     }

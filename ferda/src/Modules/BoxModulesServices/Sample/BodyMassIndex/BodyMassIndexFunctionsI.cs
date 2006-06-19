@@ -195,7 +195,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                         _boxModule.StringIceIdentity,
                         "Both input columns has to come from the same datamatrix",
                         new string[] {"HeightColumn", "WeightColumn"},
-                        restrictionTypeEnum.Other
+                        restrictionTypeEnum.OtherReason
                         );
                 else
                     return false;
@@ -240,7 +240,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                         return columnSelectExpression + "*" + multiplicator.ToString();
                     }
                 default:
-                    throw Exceptions.SwitchCaseNotImplementedError(columnUnits);
+                    throw new NotImplementedException();
             }
         }
 
@@ -270,7 +270,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                         return columnSelectExpression + "*" + multiplicator.ToString();
                     }
                 default:
-                    throw Exceptions.SwitchCaseNotImplementedError(columnUnits);
+                    throw new NotImplementedException();
             }
         }
 

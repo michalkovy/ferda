@@ -5,34 +5,6 @@ namespace Ferda.Modules.Boxes
 {
     public static class ExceptionsHandler
     {
-        //public delegate ResultType MethodDelegate<ResultType, ObjectType>(ObjectType someObject);
-
-        //public static ResultType TryCatchMethod<ResultType, ObjectType>(
-        //    MethodDelegate<ResultType, ObjectType> methodDelegate, 
-        //    ObjectType someObject, 
-        //    string boxIdentity)
-        //{
-        //    ResultType result;
-        //    try
-        //    {
-        //        result = methodDelegate(someObject);
-        //        return result;
-        //    }
-        //    catch (BadParamsError e)
-        //    {
-        //        // na vyber jestli poslad vyjimku nebo implicitni konstrukci vysledku
-        //        e.boxIdentity = boxIdentity;
-        //        throw;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new BoxRuntimeError(e);
-        //    }
-        //    finally
-        //    {
-        //    }
-        //}
-
         public delegate ResultType MethodDelegate<ResultType>();
 
         public static ResultType TryCatchMethodNoThrow<ResultType>(
@@ -70,14 +42,21 @@ namespace Ferda.Modules.Boxes
             catch (BoxRuntimeError e)
             {
                 // na vyber jestli poslad vyjimku nebo implicitni konstrukci vysledku
-                e.boxIdentity = boxIdentity;
+                if (String.IsNullOrEmpty(e.boxIdentity))
+                    e.boxIdentity = boxIdentity;
+                Debug.Assert(!String.IsNullOrEmpty(e.boxIdentity));
+                Debug.Assert(!String.IsNullOrEmpty(e.userMessage));
                 throw;
+            }
+            catch (Ice.Exception e)
+            {
+                Debug.Assert(false);
+                throw Exceptions.BoxRuntimeError(e, boxIdentity, "Unexpected Ice exception.");
             }
             catch (Exception e)
             {
-                BoxRuntimeError ex = new BoxRuntimeError(e);
-                ex.boxIdentity = boxIdentity;
-                throw ex;
+                Debug.Assert(false);
+                throw Exceptions.BoxRuntimeError(e, boxIdentity, "Unexpected exception.");
             }
             finally
             {

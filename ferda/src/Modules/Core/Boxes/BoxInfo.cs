@@ -486,9 +486,8 @@ namespace Ferda.Modules.Boxes
         {
             if (TestPropertyNameExistence(propertyName))
                 return null;
-            throw Exceptions.NameNotExistError(null, null,
-                                               "BoxInf03: GetPropertyObjectFromInterface(...) is not implemented in box module: " +
-                                               identifier + " for property named " + propertyName + ".", propertyName);
+            Debug.Assert(false);
+            throw Exceptions.NameNotExistError(null, propertyName);
         }
 
         /// <summary>
@@ -569,11 +568,9 @@ namespace Ferda.Modules.Boxes
         public virtual void RunAction(string actionName, BoxModuleI boxModule)
         {
             if (!box.Actions.ContainsKey(actionName))
-                throw Exceptions.NameNotExistError(null, null, "BoxInf05", actionName);
-            string message = "BoxInf06: RunAction is not implemented in box module: " + identifier +
-                             " for action named " + actionName + ".";
-            Debug.WriteLine(message);
-            throw new Exception(message);
+                throw Exceptions.NameNotExistError(null, actionName);
+            Debug.Assert(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -1248,8 +1245,7 @@ namespace Ferda.Modules.Boxes
             }
             catch (KeyNotFoundException ex)
             {
-                throw Exceptions.NameNotExistError(ex, null, "BoxInf10: Bad name of action. (" + actionName + ")",
-                                                   actionName);
+                throw Exceptions.NameNotExistError(ex, actionName);
             }
         }
 
