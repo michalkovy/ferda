@@ -380,9 +380,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
             }
             catch (Exception ex)
             {
-                throw Exceptions.NameNotExistError(ex, "",
-                                                   "Ser02: GetSocket(...): socketName (" + socketName + ") in box " +
-                                                   Identifier + "{" + LocaleId + "} is not localized.", socketName);
+                throw Exceptions.NameNotExistError(ex, socketName);
             }
         }
 

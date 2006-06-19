@@ -8,13 +8,6 @@
 module Ferda {
 	module Modules {
 
-		enum CardinalityEnum
-		{
-			Nominal,
-			Ordinal,
-			Cardinal
-		};
-
 		enum AttributeDomainEnum
 		{
 			WholeDomain,
@@ -101,51 +94,6 @@ module Ferda {
 			Half,
 			All
 		};
-		enum ValueSubTypeEnum
-		{
-				Unknown,
-		    BooleanType,
-		    //DateType,
-		    DateTimeType,
-		    TimeType,
-		    ShortIntegerType,
-		    IntegerType,
-		    LongIntegerType,
-		    UnsignedShortIntegerType,
-		    UnsignedIntegerType,
-		    UnsignedLongIntegerType,
-		    FloatType,
-		    DoubleType,
-		    DecimalType,
-		    StringType
-		};
-		enum CoefficientTypeEnum
-		{
-		    Subset,
-		    OneParticularCategory,
-		    Interval,
-		    CyclicalInterval,
-		    Cut,
-		    LeftCut,
-		    RightCut
-		};
-		enum LiteralTypeEnum
-		{
-		    Basic,
-		    Remaining
-		};
-		enum GaceTypeEnum
-		{
-		    Positive,
-		    Negative,
-		    Both
-		};
-		enum MissigTypeEnum
-		{
-		    Deleting,
-		    PesimisticFillUp,
-		    OptimisticFillUp
-		};
 		enum WorkingWithCedentsFirstSetEnum
 		{
 				Cedent1
@@ -163,11 +111,6 @@ module Ferda {
 		    DifferencesOfRelativeFrequencies,
 		    DifferenceOfQuantifierValues,
 		    AbsoluteDifferenceOfQuantifierValues
-		};
-		enum DirectionEnum
-		{
-			RowsOnColumns,
-			ColumnsOnRows
 		};
 		enum RelationEnum
 		{

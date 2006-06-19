@@ -243,9 +243,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
             List<IEntityEnumerator> forcedEnts = new List<IEntityEnumerator>();
             List<IEntityEnumerator> basicEnts = new List<IEntityEnumerator>();
             List<IEntityEnumerator> auxiliaryEnts = new List<IEntityEnumerator>();
-            foreach (EntityImportancePair operand in _setting.operands)
+            foreach (IEntitySetting operand in _setting.operands)
             {
-                IEntityEnumerator tmpEnt = Factory.Create(operand.entity);
+                IEntityEnumerator tmpEnt = Factory.Create(operand);
                 // TODO constructors in factory or something like that
                 switch (operand.importance)
                 {
@@ -601,7 +601,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             int literalIndex;
             IEnumerator<IBitString> literalTrace;
-            IBitString bitString;
+            //IBitString bitString;
 
             switch (_state)
             {

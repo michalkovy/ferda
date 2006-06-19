@@ -1,10 +1,10 @@
 // BoxModuleI.cs - box on Ferda modules side
 //
 // Authors: 
-//   Michal KovĂˇÄŤ <michal.kovac.develop@centrum.cz>
-//   TomĂˇĹˇ KuchaĹ™ <tomas.kuchar@gmail.com>
+//   Michal Kováč <michal.kovac.develop@centrum.cz>
+//   Tomáš Kuchař <tomas.kuchar@gmail.com>
 //
-// Copyright (c) 2005 Michal KovĂˇÄŤ, TomĂˇĹˇ KuchaĹ™ 
+// Copyright (c) 2005 Michal Kováč, Tomáš Kuchař
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -108,7 +108,8 @@ namespace Ferda.Modules
         {
             if (!boxInfo.TestSocketNameExistence(socketName))
             {
-                throw Exceptions.NameNotExistError(null, null, "BMI05", socketName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(null, socketName);
             }
             return GetConnections(socketName);
         }
@@ -131,7 +132,8 @@ namespace Ferda.Modules
         {
             if (!boxInfo.TestSocketNameExistence(socketName))
             {
-                throw Exceptions.NameNotExistError(null, null, "BMI06", socketName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(null, socketName);
             }
             lock (this)
             {
@@ -909,7 +911,10 @@ namespace Ferda.Modules
         {
             // tests if there is the specified property exists
             if (!boxInfo.TestPropertyNameExistence(propertyName))
-                throw Exceptions.NameNotExistError(null, null, "BMI19", propertyName);
+            {
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(null, propertyName);
+            }
             // gets and returns the options
             return boxInfo.GetPropertyOptions(propertyName, this);
         }
@@ -931,7 +936,8 @@ namespace Ferda.Modules
             // tests property existence
             if (!boxInfo.TestPropertyNameExistence(propertyName))
             {
-                throw Exceptions.NameNotExistError(null, null, "BMI20", propertyName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(null, propertyName);
             }
             // tests property value if it is set
             return boxInfo.IsPropertySet(propertyName, getProperty(propertyName));
@@ -1031,7 +1037,8 @@ namespace Ferda.Modules
             // tests specified socketName existence
             if (!boxInfo.TestSocketNameExistence(socketName))
             {
-                throw Exceptions.NameNotExistError(null, null, "BMI21", socketName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(null, socketName);
             }
 
             // tests Ferda.Modules.BoxType of otherModule
@@ -1164,7 +1171,8 @@ namespace Ferda.Modules
             if (!boxInfo.TestPropertyNameExistence(propertyName))
             {
                 // there is no property of the specified propertyName
-                throw Exceptions.NameNotExistError(null, null, "BMI25", propertyName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(null, propertyName);
             }
             if (propertyValue != null && !propertyValue.ice_isA(boxInfo.GetPropertyDataType(propertyName)))
             {
@@ -1273,7 +1281,10 @@ namespace Ferda.Modules
         private PropertyValue getReadOnlyPropertyValue(string propertyName)
         {
             if (!boxInfo.TestPropertyNameExistence(propertyName))
-                throw Exceptions.NameNotExistError(null, null, "BMI28", propertyName);
+            {
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(null, propertyName);
+            }
             if (!boxInfo.IsPropertyReadOnly(propertyName))
             {
                 string message = "BMI01: Property " + propertyName + " is not readonly as expected";
@@ -1299,7 +1310,8 @@ namespace Ferda.Modules
             // tests if property of specified name exists
             if (!boxInfo.TestPropertyNameExistence(propertyName))
             {
-                throw Exceptions.NameNotExistError(null, null, "DBI29", propertyName);
+                Debug.Assert(false);
+                throw Exceptions.NameNotExistError(null, propertyName);
             }
 
             // readonly properties
@@ -1310,7 +1322,8 @@ namespace Ferda.Modules
                     return result;
                 else // returns "empty" PropertyValue
                 {
-                    switch (boxInfo.GetPropertyDataType(propertyName))
+                    string propertyDataType = boxInfo.GetPropertyDataType(propertyName);
+                    switch (propertyDataType)
                     {
                         case "::Ferda::Modules::BoolT":
                             return new BoolTI(false);
@@ -1333,10 +1346,8 @@ namespace Ferda.Modules
                         case "::Ferda::Modules::TimeT":
                             return new TimeTI(0, 0, 0);
                         default:
-                            string message = "BMI02";
-                            Debug.WriteLine(message);
-                            throw Exceptions.SwitchCaseNotImplementedError(boxInfo.GetPropertyDataType(propertyName),
-                                                                           message);
+                            Debug.Assert(false, "Switch case not implemented " + propertyDataType);
+                            throw new NotImplementedException();
                     }
                 }
             }
@@ -1505,13 +1516,17 @@ namespace Ferda.Modules
             {
                 boxInfo.Validate(this);
             }
-            catch (BadParamsError)
+            catch (BoxRuntimeError)
             {
                 throw;
             }
+            catch(Ice.Exception e)
+            {
+                throw new BoxRuntimeError(e);
+            }
             catch (Exception e)
             {
-                throw new BadParamsError(e);
+                throw new BoxRuntimeError(e);
             }
         }
     }

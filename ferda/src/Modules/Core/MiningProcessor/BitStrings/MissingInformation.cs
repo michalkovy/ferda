@@ -42,6 +42,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="cached">The cached.</param>
         /// <param name="asked">The asked.</param>
+        /// <param name="notInCached">Not in cached (out).</param>
         /// <returns>1 ... uncomparable or greater</returns>
         private static int Compare(ReadOnlyCollection<Guid> cached, ReadOnlyCollection<Guid> asked, out List<Guid> notInCached)
         {

@@ -100,7 +100,7 @@ namespace Ferda.Guha.Data
             }
             catch (Exception e)
             {
-                throw Modules.Exceptions.BadParamsError(e, null, null, restrictionTypeEnum.DbConnectionString);
+                throw Modules.Exceptions.BadParamsError(e, null, null, restrictionTypeEnum.DbConnectionStringError);
             }
         }
 

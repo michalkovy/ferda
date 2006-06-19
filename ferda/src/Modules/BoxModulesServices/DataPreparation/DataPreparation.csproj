@@ -5,9 +5,9 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AE98C890-A6CE-461C-A245-54E87F383CD0}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataPreparation</RootNamespace>
+    <RootNamespace>Ferda.Modules.Boxes.DataPreparation</RootNamespace>
     <AssemblyName>DataPreparation</AssemblyName>
     <StartupObject>
     </StartupObject>
