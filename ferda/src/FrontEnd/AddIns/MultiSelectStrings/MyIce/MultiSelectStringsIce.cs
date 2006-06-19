@@ -26,7 +26,7 @@ using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns;
 using System.Resources;
 using System.Reflection;
-
+using PropertyInfo=Ferda.Modules.PropertyInfo;
 
 namespace Ferda.FrontEnd.AddIns.MultiSelectStrings.MyIce
 {
@@ -137,10 +137,24 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings.MyIce
             PropertyValue propertyValue = valueBefore;
             PropertyValue returnValue = new PropertyValue();
 
+            // for dynamicaly changing select box params
+            SelectString[] selStrings = boxModuleParam.getPropertyOptions(propertyName);
+            
+            // for static select box params
+            if (selStrings == null || selStrings.Length == 0)
+            {
+                PropertyInfo[] properties = boxModuleParam.getMyFactory().getProperties();
+                foreach (PropertyInfo property in properties)
+                {
+                    if (property.name == propertyName)
+                        selStrings = property.selectBoxParams;
+                }
+            }
+            
             MultiSelectStrings.MultiSelectStringsControl listView =
                 new MultiSelectStrings.MultiSelectStringsControl(localePrefs,
                 ownerOfAddIn,
-                boxModuleParam.getPropertyOptions(propertyName),
+                selStrings,
                 selectedStrings.stringSeqValue
                 );
 

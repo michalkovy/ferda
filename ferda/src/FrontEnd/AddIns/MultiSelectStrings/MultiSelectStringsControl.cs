@@ -88,8 +88,8 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
             }
             this.selectedStrings = selectedStrings;
             this.allStrings = allStrings;
-            this.InitList();
             InitializeComponent();
+            this.InitList();
             this.ChangeLocale(this.resManager);
         }
 
