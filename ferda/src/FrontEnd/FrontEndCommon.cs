@@ -418,7 +418,8 @@ namespace Ferda.FrontEnd
             }
 
             //showing to the user that the validation went right
-            MessageBox.Show(resManager.GetString("ValidateOK"));
+            MessageBox.Show(resManager.GetString("ValidateOK"), 
+                resManager.GetString("ValidateCaption"));
         }
     }
 }

@@ -490,6 +490,9 @@
   <data name="UserNoteCaption" xml:space="preserve">
     <value>User note: </value>
   </data>
+  <data name="ValidateCaption" xml:space="preserve">
+    <value>Box validation</value>
+  </data>
   <data name="ValidateICEException" xml:space="preserve">
     <value>An unknown ICE exception has occured.</value>
   </data>
