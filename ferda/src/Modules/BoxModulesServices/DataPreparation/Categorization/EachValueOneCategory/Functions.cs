@@ -67,6 +67,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             get { return _boxModule.GetPropertyString(PropXCategory); }
         }
 
+        private string _nullCategoryName = null;
         public StringTI IncludeNullCategory
         {
             get { return _nullCategoryName; }
@@ -169,6 +170,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             if (_cacheFlagColumn.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValueColumn == null && fallOnError))
             {
+                _cachesReloadFlag = Guid.NewGuid();
                 _cachedValueColumn = ExceptionsHandler.GetResult<GenericColumn>(
                     fallOnError,
                     delegate
@@ -187,11 +189,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return _cachedValueColumn;
         }
 
-
         private CacheFlag _cacheFlag = new CacheFlag();
         private Attribute<IComparable> _cachedValue = null;
-        private string _nullCategoryName = null;
-
         public Attribute<IComparable> GetAttribute(bool fallOnError)
         {
             _nullCategoryName = null;
@@ -235,6 +234,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
             {
+                _cachesReloadFlag = Guid.NewGuid();
                 _cachedValue = ExceptionsHandler.GetResult<Attribute<IComparable>>(
                     fallOnError,
                     delegate
@@ -293,6 +293,66 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return _cachedValue;
         }
 
+        private Guid _cachesReloadFlag = Guid.NewGuid();
+        private Guid _lastReloadFlag;
+        private Dictionary<string, BitString> _cachedValueBitStrings = null;
+        public Dictionary<string, BitString> GetBitStrings(bool fallOnError)
+        {
+            lock (this)
+            {
+                return ExceptionsHandler.GetResult<Dictionary<string, BitString>>(
+                    fallOnError,
+                    delegate
+                    {
+                        // get primary key
+                        ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                        if (prx == null)
+                            return null;
+                        string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
+
+                        GenericColumn gc = GetGenericColumn(fallOnError);
+                        Attribute<IComparable> att = GetAttribute(true);
+                        if (_lastReloadFlag == null || _lastReloadFlag != _cachesReloadFlag)
+                        {
+                            _lastReloadFlag = _cachesReloadFlag;
+                            if (gc == null || att == null)
+                                return null;
+                            _cachedValueBitStrings = att.GetBitStrings(gc.GetSelect(pks));
+                        }
+                        return _cachedValueBitStrings;
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                );
+            }
+        }
+
+        public BitString GetBitString(string categoryName, bool fallOnError)
+        {
+            lock (this)
+            {
+                return ExceptionsHandler.GetResult<BitString>(
+                    fallOnError,
+                    delegate
+                    {
+                        Dictionary<string, BitString> cachedValueBitStrings = GetBitStrings(fallOnError);
+                        if (cachedValueBitStrings == null)
+                            return null;
+                        else
+                            return cachedValueBitStrings[categoryName];
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                );
+            }
+        }
+        
         public string[] GetCategoriesNames(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(
@@ -384,6 +444,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 _boxModule.StringIceIdentity
                 );
         }
+
         public double[] GetCategoriesNumericValues(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<double[]>(
@@ -464,8 +525,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public override CardinalityEnum GetAttributeCardinality(Current current__)
         {
-            //TODO
-            throw new Exception("The method or operation is not implemented.");
+            if (GenericColumn.CompareCardinality(
+                   Cardinality,
+                   PotentiallyCardinality(true)
+                   ) > 1)
+            {
+                throw Exceptions.BadValueError(
+                    null,
+                    _boxModule.StringIceIdentity,
+                    "Unsupported cardinality type for current attribute setting.",
+                    new string[] { PropCardinality },
+                    restrictionTypeEnum.OtherReason
+                );
+            }
+            return Cardinality;
         }
 
         public override GuidStruct GetAttributeId(Current current__)
@@ -483,8 +556,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public override BitString GetBitString(string categoryId, Current current__)
         {
-            //TODO
-            throw new Exception("The method or operation is not implemented.");
+            return GetBitString(categoryId, true);
         }
 
         public override string[] GetCategoriesIds(Current current__)

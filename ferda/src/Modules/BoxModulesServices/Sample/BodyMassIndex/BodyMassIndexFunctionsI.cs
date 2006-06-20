@@ -261,7 +261,7 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                     return columnSelectExpression + "/1000";
                 case "Pound":
                     {
-                        double multiplicator = 0.45359237; //TODO
+                        double multiplicator = 0.45359237;
                         return columnSelectExpression + "*" + multiplicator.ToString();
                     }
                 case "Ounce":

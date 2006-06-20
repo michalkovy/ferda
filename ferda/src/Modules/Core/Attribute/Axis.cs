@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using Ferda.Guha.MiningProcessor;
 
 namespace Ferda.Guha.Attribute
 {
@@ -324,8 +325,6 @@ namespace Ferda.Guha.Attribute
         /// and value is the frequency of the category in specified <c>dataTable</c>.</returns>
         public Dictionary<string, int> GetFrequencies(DataTable dataTable)
         {
-            //TODO make a test
-
             Disabled = false;
             Build();
 
@@ -389,6 +388,87 @@ namespace Ferda.Guha.Attribute
                 }
             }
             return result;
+        }
+
+        
+        private const int _blockSize = 64;
+        private const long _one = -1;
+        private void setTrueBit(int index, long[] array)
+        {
+            array[index / _blockSize] |= _one << (index % _blockSize);
+            // set false bit : _array[index / _blockSize] &= ~(_one << (index % _blockSize));
+        }
+        
+        /// <summary>
+        /// Gets bit strings. Each bit string corresponds to one category and 
+        /// contains positive bit on <c>i</c> possition (bit index) if specified dataTable 
+        /// has value covered by the category on row <c>i</c>.
+        /// </summary>
+        /// <param name="dataTable">The table with one column sorted by primary key.</param>
+        /// <returns></returns>
+        public Dictionary<string, BitString> GetBitStrings(DataTable dataTable)
+        {
+            Disabled = false;
+            Build();
+
+            if (dataTable == null)
+                return null;
+
+            // INITIALIZE
+            int length = dataTable.Rows.Count;
+
+            if (length == 0)
+                return null;
+
+            int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
+            
+            Dictionary<string, BitString> result = new Dictionary<string, BitString>();
+            
+            foreach (KeyValuePair<string, Category<T>> pair in _attribute)
+            {
+                long[] tmpBitArray = new long[arraySize];
+                tmpBitArray.Initialize();
+                result.Add(pair.Key, new BitString(tmpBitArray, length));
+            }
+
+            // PROCESS DATA
+            
+            T item;
+            string categoryName;
+            int i = -1;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                i++;
+                
+                item = (T)row[0];
+                if (_enumValues.TryGetValue(item, out categoryName))
+                {
+                    setTrueBit(i, result[categoryName].value);
+                }
+                else if (
+                    _intervals.TryGetValue(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute),
+                                           out categoryName))
+                {
+                    setTrueBit(i, result[categoryName].value);
+                }
+                //else not covered
+            }
+            return result;
+            //UNDONE public  IBitString GenerateBitString(string categoryName, DataTable dataTable)
+            /*
+             * Takhle to je v Rel-Mineru
+             * 
+             * GetBitString(bitStringDefinition, dataTable)
+             * {
+             *      for (i=0; i< dataTable.Rows.Count; i++)
+             *      {
+             *          BS[i] = CheckBitStringCondition(
+             *                      bitStringDefinition, 
+             *                      dataTable.Rows[i].Column[0]
+             *                  );
+             *      }
+             * }
+             * */
         }
     }
 }

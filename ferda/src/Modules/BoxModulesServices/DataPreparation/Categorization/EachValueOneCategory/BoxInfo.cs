@@ -76,6 +76,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             dummy = Func.GetAttribute(true);
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);
+            dummy = Func.GetBitStrings(true);
 
             if (GenericColumn.CompareCardinality(
                    Func.Cardinality,
