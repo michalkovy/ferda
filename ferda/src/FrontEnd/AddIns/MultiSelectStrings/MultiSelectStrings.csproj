@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="FerdaFrontEnd, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaFrontEnd.exe</HintPath>
+    </Reference>
     <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>

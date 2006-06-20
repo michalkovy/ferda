@@ -33,7 +33,7 @@ using System.Reflection;
 
 namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
 {
-    public partial class MultiSelectStringsControl : System.Windows.Forms.Form
+    public partial class MultiSelectStringsControl : System.Windows.Forms.Form, Ferda.FrontEnd.IIconProvider
     {
         #region Private variables
 
@@ -56,6 +56,18 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
         /// Localization string - for now, en-US or cs-CZ
         /// </summary>
         private string localizationString;
+
+        /// <summary>
+        /// Current path (for icon loading)
+        /// </summary>
+        private string path;
+
+        /// <summary>
+        /// Dictionary that contains all the icons for the application, ]
+        /// that are keyed by string values. See 
+        /// <see cref="F:Ferda.FrontEnd.FerdaForm.LoadIcons"/> for their names
+        /// </summary>
+        private Dictionary<string, Icon> iconProvider;
 
         #endregion
 
@@ -87,9 +99,12 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
                 localizationString = "en-US";
             }
             this.selectedStrings = selectedStrings;
+            this.path = Assembly.GetExecutingAssembly().Location;
             this.allStrings = allStrings;
             InitializeComponent();
             this.InitList();
+            this.LoadIcons();
+            this.InitIcons();
             this.ChangeLocale(this.resManager);
         }
 
@@ -113,6 +128,39 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
                     this.CheckedListBox.Items.Add(var.label, false);
                 }
             }
+        }
+
+        /// <summary>
+        /// Method to load all icons
+        /// </summary>
+        private void InitIcons()
+        {
+            this.Icon = iconProvider["FerdaIcon"];
+        }
+
+        /// <summary>
+        /// Loads the icons for the application
+        /// </summary>
+        /// <remarks>
+        /// Sometimes, the program path can change and at this time, no icons
+        /// are present
+        /// </remarks>
+        private void LoadIcons()
+        {
+            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex("(\\\\)");
+            string[] s = r.Split(this.path);
+            string newPath = "";
+            for (int j = 0; j < s.GetLength(0) - 3; j++)
+            {
+                newPath = newPath + s[j];
+            }
+
+            Icon i;
+            iconProvider = new Dictionary<string, Icon>();
+
+            //loading the program icon
+            i = new Icon(newPath + "FerdaFrontEnd.ico");
+            iconProvider.Add("FerdaIcon", i);
         }
 
         #endregion
@@ -149,8 +197,8 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
         public void ChangeLocale(ResourceManager rm)
         {
             this.Text = rm.GetString("MultiSelectStrings");
-            this.ButtonCancel.Text = rm.GetString("Cancel");
-            this.ButtonSubmit.Text = rm.GetString("Submit");
+            this.Button2Submit.Text = rm.GetString("Submit");
+            this.Button1Cancel.Text = rm.GetString("Cancel");
         }
 
         #endregion
@@ -163,7 +211,7 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonSubmit_Click(object sender, EventArgs e)
+        private void Button2Submit_Click(object sender, EventArgs e)
         {
             this.ReturnStrings = new string[this.CheckedListBox.CheckedIndices.Count];
 
@@ -174,6 +222,15 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
             this.DialogResult = DialogResult.OK;
             this.Dispose();
             return;
+        }
+
+        #endregion
+
+        #region IIconProvider Members
+
+        public Icon GetIcon(string IconName)
+        {
+            return iconProvider[IconName];
         }
 
         #endregion
