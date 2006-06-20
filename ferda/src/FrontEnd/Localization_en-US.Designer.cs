@@ -1173,6 +1173,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Box validation.
+        /// </summary>
+        internal static string ValidateCaption {
+            get {
+                return ResourceManager.GetString("ValidateCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An unknown ICE exception has occured..
         /// </summary>
         internal static string ValidateICEException {

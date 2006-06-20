@@ -821,16 +821,17 @@ using Ferda.ModulesManager;
             dockingManager.DockWindow(propertyGridContent, DockStyle.Right);
 
             //docking the user note
-            dockingManager.AddForm(userNoteContent);
-            AddOwnedForm(userNoteContent);
-            DockContainer cont = propertyGridContent.HostContainer;
-            cont.DockWindow(userNoteContent, DockStyle.Bottom);
+            DockContainer cont;
+            //dockingManager.AddForm(userNoteContent);
+            //AddOwnedForm(userNoteContent);
+            //cont = propertyGridContent.HostContainer;
+            //cont.DockWindow(userNoteContent, DockStyle.Bottom);
 
             //docking the context help
-            dockingManager.AddForm(contextHelpContent);
-            AddOwnedForm(contextHelpContent);
-            cont = userNoteContent.HostContainer;
-            cont.DockWindow(contextHelpContent, DockStyle.Fill);
+            //dockingManager.AddForm(contextHelpContent);
+            //AddOwnedForm(contextHelpContent);
+            //cont = userNoteContent.HostContainer;
+            //cont.DockWindow(contextHelpContent, DockStyle.Fill);
 
             //docking the newBox
             dockingManager.AddForm(newBoxContent);

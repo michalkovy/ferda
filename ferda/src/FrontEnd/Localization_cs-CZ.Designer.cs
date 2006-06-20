@@ -1159,6 +1159,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Validace krabičky.
+        /// </summary>
+        internal static string ValidateCaption {
+            get {
+                return ResourceManager.GetString("ValidateCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nastala neznámá ICE výjimka..
         /// </summary>
         internal static string ValidateICEException {
