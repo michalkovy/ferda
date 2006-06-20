@@ -138,7 +138,7 @@ namespace Ferda.Guha.Data
                             {
                                 long dataTableRowsCount = GenericDataTable.Explain.recordsCount;
 
-                                //TODO optimize this
+                                //UNDONE optimize this
                                 command.CommandText =
                                     "SELECT SUM( "
                                     + "(" + columnQuotedIdentifier + " - '" + result.valueAverage + "')"
@@ -255,7 +255,7 @@ namespace Ferda.Guha.Data
                         value = Convert.ToString(dbValue);
                         break;
                     case DbDataTypeEnum.TimeType:
-                        // TODO possibly mistake
+                        // UNDONE, FIX possibly mistake
                         value = (Convert.ToDateTime(dbValue)).TimeOfDay;
                         break;
                     case DbDataTypeEnum.UnsignedIntegerType:

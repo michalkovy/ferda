@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Object=Ice.Object;
+using Object = Ice.Object;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
 {
@@ -20,13 +20,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return ((Functions) boxModule.FunctionsIObj).Name;
+            return ((Functions)boxModule.FunctionsIObj).Name;
         }
 
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
                                                                                BoxModuleI boxModule)
         {
-            Functions Func = (Functions) boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
 
             Dictionary<string, ModulesAskingForCreation> modulesAFC = getModulesAskingForCreationNonDynamic(localePrefs);
             List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();
@@ -56,15 +56,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                                 newMAFC.hint = moduleAFC.hint.Replace("@Name", columnName);
                                 newMAFC.help = moduleAFC.help;
                                 singleModuleAFC = new ModuleAskingForCreation();
-                                singleModuleAFC.modulesConnection = new ModulesConnection[] {moduleConnection};
+                                singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
                                 ;
                                 singleModuleAFC.newBoxModuleIdentifier = Column.BoxInfo.typeIdentifier;
                                 PropertySetting propertySetting = new PropertySetting();
                                 propertySetting.propertyName = Column.Functions.PropSelectExpression;
                                 propertySetting.value = new StringTI(columnName);
-                                singleModuleAFC.propertySetting = new PropertySetting[] {propertySetting};
+                                singleModuleAFC.propertySetting = new PropertySetting[] { propertySetting };
                                 allColumnModulesAFC.Add(singleModuleAFC);
-                                newMAFC.newModules = new ModuleAskingForCreation[] {singleModuleAFC};
+                                newMAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
                                 result.Add(newMAFC);
                             }
                         }
@@ -74,9 +74,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                         singleModuleAFC = new ModuleAskingForCreation();
                         moduleConnection.socketName = Column.Functions.SockDataTable;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
-                        singleModuleAFC.modulesConnection = new ModulesConnection[] {moduleConnection};
+                        singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
                         singleModuleAFC.newBoxModuleIdentifier = Column.BoxInfo.typeIdentifier;
-                        moduleAFC.newModules = new ModuleAskingForCreation[] {singleModuleAFC};
+                        moduleAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
                         result.Add(moduleAFC);
                         break;
                     case "AllColumns":
@@ -97,7 +97,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
 
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions) boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
 
             switch (propertyName)
             {
@@ -123,7 +123,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
 
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions) boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (propertyName)
             {
                 case Functions.PropType:
@@ -139,7 +139,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
 
         public override void Validate(BoxModuleI boxModule)
         {
-            Functions Func = (Functions) boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
 
             // try to invoke methods
             object dummy = Func.GetDatabaseFunctionsPrx(true);
@@ -147,8 +147,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             dummy = Func.GetDataTableExplain(true);
             dummy = Func.GetColumnExplainSeq(true);
             dummy = Func.GetColumnsNames(true);
-            dummy = Func.GetDataTableInfo(true);
             dummy = Func.GetDataTablesNames(true);
+            DataTableInfo dti = Func.GetDataTableInfo(true);
+            if (dti.recordsCount <= 0)
+                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                               "The table has no records. Please select non empty data table for analysis.",
+                                               new string[] { Functions.PropName, Functions.PropRecordsCount },
+                                               restrictionTypeEnum.Minimum);
             Func.TryPrimaryKey(true);
         }
     }

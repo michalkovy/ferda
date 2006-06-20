@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using Ferda.Guha.Data;
+using Ferda.Guha.MiningProcessor;
 
 namespace Ferda.Guha.Attribute
 {
@@ -248,23 +249,18 @@ namespace Ferda.Guha.Attribute
             return Axis.GetUncoveredValues(dataTable);
         }
 
-        // TODO Bit string generation
-        //public Dictionary<string, IBitString> GenerateBitStrings(DataTable dataTable)
-        //public  IBitString GenerateBitString(string categoryName, DataTable dataTable)
-        /*
-         * jak to je v Rel-Mineru?
-         * 
-         * GetBitString(bitStringDefinition, dataTable)
-         * {
-         *      for (i=0; i< dataTable.Rows.Count; i++)
-         *      {
-         *          BS[i] = CheckBitStringCondition(
-         *                      bitStringDefinition, 
-         *                      dataTable.Rows[i].Column[0]
-         *                  );
-         *      }
-         * }
-         * */
+
+        /// <summary>
+        /// Gets bit strings. Each bit string corresponds to one category and 
+        /// contains positive bit on <c>i</c> possition (bit index) if specified dataTable 
+        /// has value covered by the category on row <c>i</c>.
+        /// </summary>
+        /// <param name="dataTable">The table with one column sorted by primary key.</param>
+        /// <returns></returns>
+        public Dictionary<string, BitString> GetBitStrings(DataTable dataTable)
+        {
+            return Axis.GetBitStrings(dataTable);
+        }
 
         #endregion
 
