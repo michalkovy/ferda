@@ -43,7 +43,6 @@ namespace Ferda.Guha.Attribute
         /// following procedure should be evaluated when 
         /// the "unchecked" operations finnished.<br />
         /// 1. Axis.Disabled = false; <br />
-        /// 2. Attribute.ReduceCategories()<br />
         /// 3. Axis.CheckDisjunctivity()<br />
         /// Step [3] will failed if categories are not disjunctive.
         /// </remarks>
@@ -90,7 +89,7 @@ namespace Ferda.Guha.Attribute
                 return;
             Build(); // falls if enumerations are not disjunctive or requestedNumberOfIntervals are not disjunctive
 
-            if (_intervals.Count == 0 || _enumValues.Count == 0)
+            if (_intervals.Count == 0 && _enumValues.Count == 0)
                 return;
 
             SortedDictionary<T, string>.KeyCollection.Enumerator enumValuesEnumerator = _enumValues.Keys.GetEnumerator();
@@ -103,12 +102,12 @@ namespace Ferda.Guha.Attribute
             int compareResult;
             foreach (KeyValuePair<Interval<T>, string> interval in _intervals)
             {
-                CompareIntervalWithNextEnumItem:
+            CompareIntervalWithNextEnumItem:
                 compareResult = _attribute.Compare(interval.Key, currentEnum);
                 if (compareResult < 0)
                     continue;
                 if (compareResult == 0)
-                    throw new DisjunctivityCollisionException();
+                    throw Exceptions.AttributeCategoriesDisjunctivityError(null, null);
                 if (compareResult > 0)
                 {
                     if (enumValuesEnumerator.MoveNext())
@@ -151,40 +150,37 @@ namespace Ferda.Guha.Attribute
                 _enumValues.Clear();
             if (!_intervalsAreValid)
                 _intervals.Clear();
-            else
+            try
             {
-                try
+                string categoryName;
+                // process all categories
+                foreach (KeyValuePair<string, Category<T>> category in _attribute)
                 {
-                    string categoryName;
-                    // process all categories
-                    foreach (KeyValuePair<string, Category<T>> category in _attribute)
+                    categoryName = category.Key;
+
+                    // process enumerations
+                    if (!_enumsAreValid)
                     {
-                        categoryName = category.Key;
-
-                        // process enumerations
-                        if (!_enumsAreValid)
+                        foreach (T item in category.Value.Enumeration)
                         {
-                            foreach (T item in category.Value.Enumeration)
-                            {
-                                _enumValues.Add(item, categoryName);
-                            }
+                            _enumValues.Add(item, categoryName);
                         }
+                    }
 
-                        // process requestedNumberOfIntervals 
-                        if (!_intervalsAreValid)
+                    // process requestedNumberOfIntervals 
+                    if (!_intervalsAreValid)
+                    {
+                        foreach (Interval<T> interval in category.Value.Intervals)
                         {
-                            foreach (Interval<T> interval in category.Value.Intervals)
-                            {
-                                _intervals.Add(interval, categoryName);
-                            }
+                            _intervals.Add(interval, categoryName);
                         }
                     }
                 }
-                catch (ArgumentException ex)
-                    // thrown iff *.add(...) method failed i.e. if categories are not disjunctive
-                {
-                    throw new DisjunctivityCollisionException(ex);
-                }
+            }
+            catch (ArgumentException ex)
+            // thrown iff *.add(...) method failed i.e. if categories are not disjunctive
+            {
+                throw Exceptions.AttributeCategoriesDisjunctivityError(ex, null);
             }
             _enumsAreValid = true;
             _intervalsAreValid = true;
@@ -206,7 +202,7 @@ namespace Ferda.Guha.Attribute
 
             Build();
 
-            if (_intervals.Count == 0 || _enumValues.Count == 0)
+            if (_intervals.Count == 0 && _enumValues.Count == 0)
                 return new string[0];
 
             // Thesis:
@@ -215,19 +211,19 @@ namespace Ferda.Guha.Attribute
             string categoryName;
 
             if (_enumValues.TryGetValue(item, out categoryName))
-                return new string[] {categoryName};
+                return new string[] { categoryName };
 
             if (
                 _intervals.TryGetValue(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute),
                                        out categoryName))
-                return new string[] {categoryName};
+                return new string[] { categoryName };
 
             return new string[0];
         }
 
         /// <summary>
-        /// Categorieses the in collision. Returns names of categories 
-        /// which contains the specified <c>interval</c>. If disabled emty
+        /// Returns names of categories 
+        /// which contains the specified <c>interval</c>. If disabled empty
         /// array is returned.
         /// </summary>
         /// <param name="interval">The interval.</param>
@@ -239,7 +235,7 @@ namespace Ferda.Guha.Attribute
 
             Build();
 
-            if (_intervals.Count == 0 || _enumValues.Count == 0)
+            if (_intervals.Count == 0 && _enumValues.Count == 0)
                 return new string[0];
 
             List<string> result = new List<string>();
@@ -249,7 +245,7 @@ namespace Ferda.Guha.Attribute
             foreach (KeyValuePair<T, string> item in _enumValues)
             {
                 comparationResult = _attribute.Compare(interval, item.Key);
-                if (comparationResult < 0)
+                if (comparationResult > 0)
                     continue;
                 else if (comparationResult == 0)
                     result.Add(item.Value);
@@ -260,7 +256,7 @@ namespace Ferda.Guha.Attribute
             foreach (KeyValuePair<Interval<T>, string> item in _intervals)
             {
                 comparationResult = _attribute.Compare(interval, item.Key);
-                if (comparationResult < 0)
+                if (comparationResult > 0)
                     continue;
                 else if (comparationResult == 0)
                     result.Add(item.Value);
@@ -284,7 +280,7 @@ namespace Ferda.Guha.Attribute
 
             Build();
 
-            if (_intervals.Count == 0 || _enumValues.Count == 0)
+            if (_intervals.Count == 0 && _enumValues.Count == 0)
                 return new string[0];
 
             List<string> result = new List<string>();
@@ -344,18 +340,18 @@ namespace Ferda.Guha.Attribute
             string categoryName;
             foreach (DataRow row in dataTable.Rows)
             {
-                item = (T) row[0];
+                item = (T)row[0];
                 if (_enumValues.TryGetValue(item, out categoryName))
                 {
                     Debug.Assert(result.ContainsKey(categoryName), "This should never happend");
-                    result[categoryName] += (int) row[1];
+                    result[categoryName] += (int)row[1];
                 }
                 else if (
                     _intervals.TryGetValue(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute),
                                            out categoryName))
                 {
                     Debug.Assert(result.ContainsKey(categoryName), "This should never happend");
-                    result[categoryName] += (int) row[1];
+                    result[categoryName] += (int)row[1];
                 }
                 //else not covered               
             }
@@ -382,7 +378,7 @@ namespace Ferda.Guha.Attribute
             T item;
             foreach (DataRow row in dataTable.Rows)
             {
-                item = (T) row[0];
+                item = (T)row[0];
                 if (
                     !_enumValues.ContainsKey(item)
                     &&

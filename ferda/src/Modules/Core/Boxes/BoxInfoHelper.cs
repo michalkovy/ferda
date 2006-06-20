@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using Ferda.Guha.Data;
+using LumenWorks.Framework.IO.Csv;
 
 namespace Ferda.Modules.Boxes
 {
@@ -60,6 +62,26 @@ namespace Ferda.Modules.Boxes
         }
 
         /// <summary>
+        /// Creates an array of <c>ValueFrequencyPair</c> from
+        /// specified <c>Dictionary&lt;string, int&gt;</c> (<c>input</c>).
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns>
+        /// Output array of <see cref="T:Ferda.Modules.SelectString"/>.
+        /// </returns>
+        public static ValueFrequencyPair[] GetValueFrequencyPairArray(Dictionary<string, int> input)
+        {
+            if ((input == null) || (input.Count == 0))
+                return new ValueFrequencyPair[0];
+            List<ValueFrequencyPair> result = new List<ValueFrequencyPair>();
+            foreach (KeyValuePair<string, int> pair in input)
+            {
+                result.Add(new ValueFrequencyPair(pair.Key, pair.Value));
+            }
+            return result.ToArray();
+        }
+
+        /// <summary>
         /// Parses array of <see cref="T:System.String">strings</see>
         /// from specified CSV string (<c>csvString</c>).
         /// </summary>
@@ -68,13 +90,20 @@ namespace Ferda.Modules.Boxes
         /// Splited CSV string in array of <see cref="T:System.String">strings</see>.</returns>
         public static string[] Csv2Strings(string csvString)
         {
-            Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))", RegexOptions.Compiled);
-            if (!String.IsNullOrEmpty(csvString))
-            {
-                return r.Split(csvString);
-            }
-            else
+            if (String.IsNullOrEmpty(csvString))
                 return new string[0];
+
+            using (CsvReader csv =
+                   new CsvReader(new StringReader(csvString), false))
+            {
+                int fieldCount = csv.FieldCount;
+                List<string> result = new List<string>();
+                for (int i = 0; i < fieldCount; i++)
+                    result.Add(csv[i]);
+                return result.ToArray();
+            }
+
+            //Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))", RegexOptions.Compiled);
         }
 
         public static string SequenceToString(IEnumerable<string> items, string separator)

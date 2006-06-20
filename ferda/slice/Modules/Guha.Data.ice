@@ -77,8 +77,7 @@ module Ferda {
 				Nominal,
 				Ordinal,
 				OrdinalCyclic,
-				Cardinal,
-				CardinalNumeric
+				Cardinal
 			};
 
 			struct ColumnExplain

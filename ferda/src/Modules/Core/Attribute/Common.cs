@@ -140,31 +140,32 @@ namespace Ferda.Guha.Attribute
         /// <returns></returns>
         public static object GetAttributeObject(DbSimpleDataTypeEnum dbDataType, bool intervalsAllowed)
         {
-            switch (dbDataType)
-            {
-                case DbSimpleDataTypeEnum.BooleanSimpleType:
-                    return new Attribute<bool>(intervalsAllowed);
-                case DbSimpleDataTypeEnum.DateTimeSimpleType:
-                    return new Attribute<DateTime>(intervalsAllowed);
-                case DbSimpleDataTypeEnum.DoubleSimpleType:
-                    return new Attribute<double>(intervalsAllowed);
-                case DbSimpleDataTypeEnum.FloatSimpleType:
-                    return new Attribute<float>(intervalsAllowed);
-                case DbSimpleDataTypeEnum.IntegerSimpleType:
-                    return new Attribute<int>(intervalsAllowed);
-                case DbSimpleDataTypeEnum.LongSimpleType:
-                    return new Attribute<long>(intervalsAllowed);
-                case DbSimpleDataTypeEnum.ShortSimpleType:
-                    return new Attribute<short>(intervalsAllowed);
-                case DbSimpleDataTypeEnum.StringSimpleType:
-                    return new Attribute<string>(intervalsAllowed);
-                case DbSimpleDataTypeEnum.TimeSimpleType:
-                    return new Attribute<TimeSpan>(intervalsAllowed);
-                case DbSimpleDataTypeEnum.UnknownSimpleType:
-                    return new Attribute<IComparable>(intervalsAllowed);
-                default:
-                    throw new NotImplementedException();
-            }
+            return new Attribute<IComparable>(dbDataType, intervalsAllowed);
+            //switch (dbDataType)
+            //{
+            //    case DbSimpleDataTypeEnum.BooleanSimpleType:
+            //        return new Attribute<bool>(intervalsAllowed);
+            //    case DbSimpleDataTypeEnum.DateTimeSimpleType:
+            //        return new Attribute<DateTime>(intervalsAllowed);
+            //    case DbSimpleDataTypeEnum.DoubleSimpleType:
+            //        return new Attribute<double>(intervalsAllowed);
+            //    case DbSimpleDataTypeEnum.FloatSimpleType:
+            //        return new Attribute<float>(intervalsAllowed);
+            //    case DbSimpleDataTypeEnum.IntegerSimpleType:
+            //        return new Attribute<int>(intervalsAllowed);
+            //    case DbSimpleDataTypeEnum.LongSimpleType:
+            //        return new Attribute<long>(intervalsAllowed);
+            //    case DbSimpleDataTypeEnum.ShortSimpleType:
+            //        return new Attribute<short>(intervalsAllowed);
+            //    case DbSimpleDataTypeEnum.StringSimpleType:
+            //        return new Attribute<string>(intervalsAllowed);
+            //    case DbSimpleDataTypeEnum.TimeSimpleType:
+            //        return new Attribute<TimeSpan>(intervalsAllowed);
+            //    case DbSimpleDataTypeEnum.UnknownSimpleType:
+            //        return new Attribute<IComparable>(intervalsAllowed);
+            //    default:
+            //        throw new NotImplementedException();
+            //}
         }
     }
 }

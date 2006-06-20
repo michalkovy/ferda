@@ -20,7 +20,7 @@ module Ferda {
 				
 				class BitString
 				{
-					Ferda::Modules::IntSeq value; //TODO mozna blbe
+					Ferda::Modules::LongSeq value;
 					int lenght;
 				};
 				

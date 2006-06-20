@@ -51,8 +51,6 @@ namespace Ferda.Guha.Attribute
             _enumeration.Sort(_category.Attribute);
 
 #if DEBUG
-            if (_category.Attribute.LazyReduction)
-                return;
             bool initialized = false;
             T lastEnumItem = default(T);
             foreach (T item in _enumeration)
@@ -135,6 +133,27 @@ namespace Ferda.Guha.Attribute
         /// </exception>
         public void Add(T item, bool force)
         {
+            add(item, force, false);
+        }
+
+        internal void AddWhileReducing(T item, bool force)
+        {
+            add(item, force, true);
+        }
+        
+        /// <summary>
+        /// Adds the specified item to the enumeration.
+        /// If <c>force</c> mode is enabled than collisisons are resolved by
+        /// exclusion of the <c>item</c> from the other category in collisions.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="force">If set to <c>true</c> force addition is enambled (on); otherwise, exception is thrown when collision is detected.</param>
+        /// <exception cref="T:Ferda.Guha.Attribute.DisjunctivityCollisionException">
+        /// Thrown in not forced mode (force is off) and collision with any other 
+        /// category is detected.
+        /// </exception>
+        private void add(T item, bool force, bool nowReducing)
+        {
             // already contained in the enumeration
             // -> finish
             if (Contains(item))
@@ -147,7 +166,8 @@ namespace Ferda.Guha.Attribute
                 // no disjuntivity collisions
                 // the value is not covered by no category
                 _enumeration.Add(item);
-                _category.Reduce(false); // can be joined to some interval (value of the open boundary of some interval)
+                if (!nowReducing)
+                    _category.Reduce(); // can be joined to some interval (value of the open boundary of some interval)
                 _category.Attribute.Axis.NotValid(true, false);
                 return;
             }
@@ -166,14 +186,14 @@ namespace Ferda.Guha.Attribute
                 {
                     _category.Attribute.Exclude(item, categoryInCollision);
                     _enumeration.Add(item);
-                    _category.Reduce(false);
-                    // can be joined to some interval (value of the open boundary of some interval)
+                    if (!nowReducing)
+                        _category.Reduce(); // can be joined to some interval (value of the open boundary of some interval)
                     _category.Attribute.Axis.NotValid(true, true);
                     return;
                 }
                 else
                 {
-                    throw new DisjunctivityCollisionException(categoryInCollision);
+                    throw Exceptions.AttributeCategoriesDisjunctivityError(null, null, categoryInCollision);
                 }
             }
         }

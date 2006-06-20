@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<project name="CVS Reader - LumenWorks.Framework.IO" default="build" basedir=".">
+	<target name="build">
+		<csc target="library" output="${path::combine(serverbin.dir,'CvsReader.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="LumenWorks.Framework.IO/**.cs" />
+			</sources>
+			<resources prefix="LumenWorks.Framework.IO">
+				<include name="*.resx" />
+			</resources>
+			<references>
+				<include name="System.dll" />
+				<include name="System.Data.dll" />
+				<include name="System.XML.dll" />
+			</references>
+		</csc>
+	</target>
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset basedir="${serverbin.dir}">
+				<include name="CvsReader.*"/>
+			</fileset>
+		</delete>
+	</target>
+</project>

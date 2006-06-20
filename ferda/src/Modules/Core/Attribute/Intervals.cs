@@ -59,17 +59,22 @@ namespace Ferda.Guha.Attribute
         /// </summary>
         public void Sort()
         {
+            Sort(false);
+        }
+        
+        internal void Sort(bool nowReducing)
+        {
             _intervals.Sort(_category.Attribute);
 
 #if DEBUG
-            if (_category.Attribute.LazyReduction)
+            if (nowReducing)
                 return;
             Interval<T> lastInterval = null;
             foreach (Interval<T> item in _intervals)
             {
                 if (lastInterval != null)
                     if (_category.Attribute.Compare(lastInterval, item) >= 0)
-                        throw new Exception("This should never happend.");
+                        throw new ApplicationException("This should never happend.");
                 lastInterval = item;
             }
 #endif
@@ -162,13 +167,17 @@ namespace Ferda.Guha.Attribute
         /// <param name="leftBoundary">The left boundary.</param>
         /// <param name="rightValue">The right value.</param>
         /// <param name="rightBoundary">The right boundary.</param>
-        /// <param name="force">if set to <c>true</c> the interval is 
-        /// updated even if it is in collision with another category 
-        /// (intersection will be removed from the another category).
-        /// </param>
+        /// <param name="force">if set to <c>true</c> the interval is
+        /// updated even if it is in collision with another category
+        /// (intersection will be removed from the another category).</param>
         public void Add(T leftValue, BoundaryEnum leftBoundary, T rightValue, BoundaryEnum rightBoundary, bool force)
         {
-            add(-1, leftValue, leftBoundary, rightValue, rightBoundary, force);
+            add(-1, leftValue, leftBoundary, rightValue, rightBoundary, force, false);
+        }
+
+        internal void AddWhileReducing(T leftValue, BoundaryEnum leftBoundary, T rightValue, BoundaryEnum rightBoundary, bool force)
+        {
+            add(-1, leftValue, leftBoundary, rightValue, rightBoundary, force, true);
         }
 
         /// <summary>
@@ -206,7 +215,7 @@ namespace Ferda.Guha.Attribute
         }
 
         private void add(int index, T leftValue, BoundaryEnum leftBoundary, T rightValue, BoundaryEnum rightBoundary,
-                         bool force)
+                         bool force, bool nowReducing)
         {
             if (!_category.Attribute.IntervalsAllowed)
                 throw new IntervalsNotAllowedException();
@@ -239,7 +248,8 @@ namespace Ferda.Guha.Attribute
                 // (it can [partially/full] overlap with some interval or enumeration itemToExclude)
                 // -> add the interavl and reduce the category
                 add(index, newInterval);
-                _category.Reduce(false);
+                if (!nowReducing)
+                    _category.Reduce();
                 _category.Attribute.Axis.NotValid(true, true);
                 return;
             }
@@ -251,14 +261,15 @@ namespace Ferda.Guha.Attribute
                 {
                     _category.Attribute.Exclude(newInterval, categoriesInCollision);
                     add(index, newInterval);
-                    _category.Reduce(false);
+                    if (!nowReducing)
+                        _category.Reduce();
                     // the interval could be excluded even from own category (if it was in categoriesInCollision)
                     _category.Attribute.Axis.NotValid(true, true);
                     return;
                 }
                 else
                 {
-                    throw new DisjunctivityCollisionException(categoriesInCollision);
+                    throw Exceptions.AttributeCategoriesDisjunctivityError(null, null, categoriesInCollision);
                 }
             }
         }
@@ -289,7 +300,7 @@ namespace Ferda.Guha.Attribute
                 // no disjuctivity collision even with previous interval setting
                 // -> previous interval is removed, new is added
                 RemoveAt(index);
-                add(index, leftValue, leftBoundary, rightValue, rightBoundary, force);
+                add(index, leftValue, leftBoundary, rightValue, rightBoundary, force, true);
                 return;
             }
             else if (categoriesInCollision.Length == 1 || categoriesInCollision[0] == _category.Name)
@@ -299,7 +310,7 @@ namespace Ferda.Guha.Attribute
                 // -> previous interval is removed, new is added 
                 // + reduction if needed ... not if in collision only if previous interval setting (in add(...) method)
                 RemoveAt(index);
-                add(index, leftValue, leftBoundary, rightValue, rightBoundary, force);
+                add(index, leftValue, leftBoundary, rightValue, rightBoundary, force, false);
                 return;
             }
             // interval is in some disjunctivity collision 
@@ -309,12 +320,12 @@ namespace Ferda.Guha.Attribute
                 {
                     // this will make all needed (exclusion, addition, reduction, ...)
                     RemoveAt(index);
-                    add(index, leftValue, leftBoundary, rightValue, rightBoundary, force);
+                    add(index, leftValue, leftBoundary, rightValue, rightBoundary, force, false);
                     return;
                 }
                 else
                 {
-                    throw new DisjunctivityCollisionException(categoriesInCollision);
+                    throw Exceptions.AttributeCategoriesDisjunctivityError(null, null, categoriesInCollision);
                 }
             }
         }

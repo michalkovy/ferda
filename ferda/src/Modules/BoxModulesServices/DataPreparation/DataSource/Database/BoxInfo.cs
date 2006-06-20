@@ -136,14 +136,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
                     return BoxInfoHelper.GetSelectStringArray(
                         DataProviderHelper.FactoryClassesInvariantNames
                         );
-                //case Functions.PropAcceptableDataTableTypes:
-                //    return new SelectString[]
-                //        {
-                //            new SelectString("a", "A", null), 
-                //            new SelectString("b", "B", null), 
-                //            new SelectString("c", "C", null), 
-                //            new SelectString("d", "D", null)
-                //        };
                 default:
                     return null;
             }

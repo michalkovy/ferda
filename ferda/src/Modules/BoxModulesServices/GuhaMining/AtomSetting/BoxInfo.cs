@@ -77,7 +77,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
                                                    {Functions.SockBitStringGenerator, Functions.PropMinimalLength},
                                                restrictionTypeEnum.OtherReason);
 
-            //TODO conform coefficient type a attribute cardinality type
+            //conform coefficient type a attribute cardinality type
             CardinalityEnum attributeCardinalityType = Func.GetAttributeCardinality(true);
             CoefficientTypeEnum coefficientType = Func.CoefficientType;
             if (coefficientType == CoefficientTypeEnum.Subsets)
@@ -90,8 +90,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
                      || coefficientType == CoefficientTypeEnum.Intervals)
             {
                 if (attributeCardinalityType == CardinalityEnum.Ordinal
-                    || attributeCardinalityType == CardinalityEnum.Cardinal
-                    || attributeCardinalityType == CardinalityEnum.CardinalNumeric)
+                    || attributeCardinalityType == CardinalityEnum.Cardinal)
                 {
                     //OK
                 }

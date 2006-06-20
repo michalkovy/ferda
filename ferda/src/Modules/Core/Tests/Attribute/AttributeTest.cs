@@ -3,7 +3,11 @@
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.Attribute;
+using Ferda.Guha.Data;
+using Ferda.Modules;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ferda.Guha.Attribute;
+using BoundaryEnum=Ferda.Guha.Attribute.BoundaryEnum;
 
 namespace Tests.Attribute
 {
@@ -56,7 +60,8 @@ namespace Tests.Attribute
                             )
                     },
                 Helper.categoryBName,
-                intervalsAllowed
+                intervalsAllowed,
+                DbSimpleDataTypeEnum.IntegerSimpleType
                 );
 
             string serialized = Serializer.Serialize<int>(serializable);
@@ -64,7 +69,7 @@ namespace Tests.Attribute
 
             // CONSTRUCTOR TEST
 
-            Attribute<int> target = new Attribute<int>(deserialized, false);
+            Attribute<int> target = new Attribute<int>(DbSimpleDataTypeEnum.IntegerSimpleType, deserialized, false);
 
             Assert.AreEqual(intervalsAllowed, target.IntervalsAllowed);
             Assert.IsTrue(target.ContainsKey(Helper.categoryAName));
@@ -166,7 +171,7 @@ namespace Tests.Attribute
             //JoinCategoriesTest()
             string newCategoryName;
             target.JoinCategories(new string[] {Helper.categoryAName, Helper.categoryBName},
-                                  NewCategoryName.Own, Helper.categoryDName, out newCategoryName, true);
+                                  NewCategoryName.Own, Helper.categoryDName, out newCategoryName);
             Assert.AreEqual(newCategoryName, Helper.categoryDName);
             Assert.IsTrue(target.ContainsKey(Helper.categoryDName));
             Assert.AreEqual(1, target.Count);
@@ -183,7 +188,7 @@ namespace Tests.Attribute
         public void CompareTest()
         {
             //default comparer
-            Attribute<int> target = new Attribute<int>(true);
+            Attribute<int> target = new Attribute<int>(DbSimpleDataTypeEnum.IntegerSimpleType, true);
 
             // (10, 111)
             Interval<int> a = new Interval<int>(10, BoundaryEnum.Open, 111, BoundaryEnum.Open, target);
@@ -233,8 +238,22 @@ namespace Tests.Attribute
             target.Add("d");
             target["d"].Intervals.Add(-110, BoundaryEnum.Closed, 111, BoundaryEnum.Closed, true);
 
-            target.Add("b");
-            target["b"].Intervals.Add(0, BoundaryEnum.Infinity, 0, BoundaryEnum.Infinity, false);
+            {
+                // try add category of same name again
+                bool failedAsExpected = false;
+                try
+                {
+                    target.Add("b");
+                    target["b"].Intervals.Add(0, BoundaryEnum.Infinity, 0, BoundaryEnum.Infinity, false);
+                }
+                catch (BadParamsError ex)
+                {
+                    if (ex.restrictionType == restrictionTypeEnum.AttributeCategoriesDisjunctivityError)
+                    failedAsExpected = true;
+                }
+                Assert.IsTrue(failedAsExpected);
+            }
+            
 
 
             // compare intervals
@@ -272,7 +291,7 @@ namespace Tests.Attribute
             // categoryAName (10, 12>; {8, 16}
             // categoryBName {3, 1006}
             // categoryCName (-inf, -2000); (-1000, -12>; {-800,-1600}; NULL
-            Attribute<int> target = new Attribute<int>(true);
+            Attribute<int> target = new Attribute<int>(DbSimpleDataTypeEnum.IntegerSimpleType, true);
             target.Add(Helper.categoryAName);
             target[Helper.categoryAName].Intervals.Add(10, BoundaryEnum.Open, 12, BoundaryEnum.Closed, false);
             target[Helper.categoryAName].Enumeration.Add(8, false);
@@ -330,7 +349,7 @@ namespace Tests.Attribute
         public void ExcludeTest1b()
         {
             // categoryDName =&gt; (4, 777>
-            Attribute<int> target = new Attribute<int>(true);
+            Ferda.Guha.Attribute.Attribute<int> target = new Attribute<int>(DbSimpleDataTypeEnum.IntegerSimpleType, true);
             target.Add(Helper.categoryDName);
             target[Helper.categoryDName].Intervals.Add(4, BoundaryEnum.Open, 777, BoundaryEnum.Closed, true);
 
@@ -366,7 +385,7 @@ namespace Tests.Attribute
         {
             bool intervalsAllowed = true;
 
-            Attribute<int> target = new Attribute<int>(intervalsAllowed);
+            Attribute<int> target = new Attribute<int>(DbSimpleDataTypeEnum.IntegerSimpleType, intervalsAllowed);
 
             Assert.IsTrue(target.IntervalsAllowed);
             target.Add(Helper.categoryAName);
@@ -384,7 +403,7 @@ namespace Tests.Attribute
         {
             bool intervalsAllowed = false;
 
-            Attribute<int> target = new Attribute<int>(intervalsAllowed);
+            Attribute<int> target = new Attribute<int>(DbSimpleDataTypeEnum.IntegerSimpleType, intervalsAllowed);
 
             Assert.IsFalse(target.IntervalsAllowed);
             target.Add(Helper.categoryAName);
@@ -398,8 +417,7 @@ namespace Tests.Attribute
         [TestMethod()]
         public void ReduceTest()
         {
-            Attribute<int> target = new Attribute<int>(true);
-            target.LazyReduction = true;
+            Attribute<int> target = new Attribute<int>(DbSimpleDataTypeEnum.IntegerSimpleType, true);
 
             target.Add(Helper.categoryAName);
             // (-inf, -80)
@@ -409,8 +427,9 @@ namespace Tests.Attribute
             target[Helper.categoryAName].Intervals.Add(Helper.GetT(-700), BoundaryEnum.Open, Helper.GetT(-300),
                                                        BoundaryEnum.Open, false);
 
-            Assert.AreEqual(2, target[Helper.categoryAName].Intervals.Count);
-            target.Reduce(true); // (-inf, -80)
+            //Assert.AreEqual(2, target[Helper.categoryAName].Intervals.Count);
+            //target.Reduce();
+            // (-inf, -80)
             Assert.AreEqual(1, target[Helper.categoryAName].Intervals.Count);
             Assert.IsTrue(
                 Helper.ExactEqual<int>(
@@ -421,16 +440,18 @@ namespace Tests.Attribute
             // (-80, 100>
             target[Helper.categoryAName].Intervals.Add(Helper.GetT(-80), BoundaryEnum.Open, Helper.GetT(100),
                                                        BoundaryEnum.Closed, false);
-            Assert.AreEqual(2, target[Helper.categoryAName].Intervals.Count);
-            target.Reduce(true); // (-inf, -80) (-80, 100>
+            //Assert.AreEqual(2, target[Helper.categoryAName].Intervals.Count);
+            //target.Reduce(true);
+            // (-inf, -80) (-80, 100>
             Assert.AreEqual(2, target[Helper.categoryAName].Intervals.Count);
 
             // {-80}
             target[Helper.categoryAName].Enumeration.Add(Helper.GetT(-80), false);
-            Assert.AreEqual(3,
-                            target[Helper.categoryAName].Intervals.Count +
-                            target[Helper.categoryAName].Enumeration.Count);
-            target.Reduce(true); // (-inf, 100>
+            //Assert.AreEqual(3,
+            //                target[Helper.categoryAName].Intervals.Count +
+            //                target[Helper.categoryAName].Enumeration.Count);
+            //target.Reduce(true);
+            // (-inf, 100>
             Assert.AreEqual(1, target[Helper.categoryAName].Intervals.Count);
             Assert.AreEqual(0, target[Helper.categoryAName].Enumeration.Count);
             Assert.IsTrue(
@@ -455,10 +476,11 @@ namespace Tests.Attribute
             target[Helper.categoryAName].Enumeration.Add(Helper.GetT(-7999), false);
             // {-8000}
             target[Helper.categoryAName].Enumeration.Add(Helper.GetT(-8000), false);
-            Assert.AreEqual(7,
-                            target[Helper.categoryAName].Intervals.Count +
-                            target[Helper.categoryAName].Enumeration.Count);
-            target.Reduce(true); // (-inf, 101>
+            //Assert.AreEqual(7,
+            //                target[Helper.categoryAName].Intervals.Count +
+            //                target[Helper.categoryAName].Enumeration.Count);
+            //target.Reduce(true);
+            // (-inf, 101>
             Assert.AreEqual(1,
                             target[Helper.categoryAName].Intervals.Count +
                             target[Helper.categoryAName].Enumeration.Count);
@@ -469,7 +491,8 @@ namespace Tests.Attribute
                 );
 
             target[Helper.categoryAName].Enumeration.Add(Helper.GetT(8033), false);
-            target.Reduce(true); // (-inf, 101> {8033}
+            //target.Reduce(true);
+            // (-inf, 101> {8033}
             Assert.AreEqual(1, target[Helper.categoryAName].Intervals.Count);
             Assert.AreEqual(1, target[Helper.categoryAName].Enumeration.Count);
         }
