@@ -1,4 +1,5 @@
 using System;
+using Ferda.Guha.Data;
 using Exception=System.Exception;
 using Object=Ice.Object;
 
@@ -27,8 +28,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
                                                                                BoxModuleI boxModule)
         {
-            //TODO
-            throw new Exception("The method or operation is not implemented.");
+            return new ModulesAskingForCreation[0];
         }
 
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
@@ -75,6 +75,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             object dummy = Func.GetColumnFunctionsPrx(true);
             dummy = Func.GetAttribute(true);
             dummy = Func.GetCategoriesNames(true);
+            dummy = Func.GetCategoriesAndFrequencies(true);
+
+            if (GenericColumn.CompareCardinality(
+                   Func.Cardinality,
+                   Func.PotentiallyCardinality(true)
+                   ) > 1)
+            {
+                throw Exceptions.BadValueError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Unsupported cardinality type for current attribute setting.",
+                    new string[]{Functions.PropCardinality},
+                    restrictionTypeEnum.OtherReason
+                );
+            }
         }
     }
 }

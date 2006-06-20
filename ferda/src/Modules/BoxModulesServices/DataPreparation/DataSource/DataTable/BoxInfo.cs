@@ -149,6 +149,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             dummy = Func.GetColumnsNames(true);
             dummy = Func.GetDataTableInfo(true);
             dummy = Func.GetDataTablesNames(true);
+            Func.TryPrimaryKey(true);
         }
     }
 }

@@ -361,7 +361,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// </para>
         /// <para>
         /// If property data type is <c>::Ferda::Modules::StringSeqT</c>
-        /// the default value is parsed as CSV (semicolon as separator) string 
+        /// the default value is parsed as CSV (',' as delimeter) string 
         /// into array of strings.
         /// </para>
         /// </remarks>

@@ -5,6 +5,7 @@
 #include <Modules/BasicPropertyTypes.ice>
 #include <Modules/Exceptions.ice>
 #include <Modules/Guha.Data.ice>
+#include <Modules/Guha.MiningProcessor.ice>
 
 module Ferda {
 	module Modules {
@@ -66,7 +67,13 @@ module Ferda {
 					
 					// ATTRIBUTE
 					
-					interface AttributeFunctions {
+					enum DomainEnum
+					{
+						WholeDomain,
+						SubDomain
+					};
+					
+					interface AttributeFunctions extends Ferda::Guha::MiningProcessor::BitStringGenerator {
 						nonmutating	string getAttribute()
 							throws Ferda::Modules::BoxRuntimeError;
 						nonmutating Ferda::Guha::Data::ValuesAndFrequencies getCategoriesAndFrequencies()

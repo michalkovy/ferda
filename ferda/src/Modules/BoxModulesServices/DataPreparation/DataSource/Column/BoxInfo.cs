@@ -27,9 +27,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
                                                                                BoxModuleI boxModule)
         {
-            //TODO
             return new ModulesAskingForCreation[0];
-            //throw new Exception("The method or operation is not implemented.");
         }
 
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
@@ -92,13 +90,17 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             dummy = Func.GetColumnInfo(true);
 
             if (GenericColumn.CompareCardinality(
-                    Func.Cardinality,
-                    tmp.PotentiallyCardinality
-                    ) > 1)
+                   Func.Cardinality,
+                   tmp.PotentiallyCardinality
+                   ) > 1)
             {
-                BadParamsError ex = new BadParamsError("Unsupported cardinality type for current data type.");
-                ex.boxIdentity = boxModule.StringIceIdentity;
-                throw ex;
+                throw Exceptions.BadValueError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Unsupported cardinality type for current data type.",
+                    new string[] { Functions.PropCardinality },
+                    restrictionTypeEnum.OtherReason
+                );
             }
         }
     }

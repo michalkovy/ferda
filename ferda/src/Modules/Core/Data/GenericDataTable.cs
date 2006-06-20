@@ -90,8 +90,8 @@ namespace Ferda.Guha.Data
         /// <c>uniqueColumns</c>. (These columns can simulate Primary Key.)
         /// </summary>
         /// <param name="uniqueColumns">The columns to test unicity.</param>
-        /// <exception cref="T:Ferda.Modules.BadParamsError">
-        /// <b>DbUniqueKeyError</b> or <b>DbUnexpectedError</b>
+        /// <exception cref="T:Ferda.Modules.BadValueError">
+        /// <b>DbUniqueKeyError</b>
         /// Thrown when the specified columns does not satisfy the 
         /// unicity of values in the database.
         /// </exception>
@@ -125,7 +125,7 @@ namespace Ferda.Guha.Data
             catch (DbException e)
             {
                 //throws innnerException if columns are not in dataMatrix
-                throw Exceptions.DbUnexpectedError(e, null);
+                throw Exceptions.DbUniqueKeyError(e, null);
             }
         }
 

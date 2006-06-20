@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
+using Ferda.Guha.Data;
 
 namespace Ferda.Guha.Attribute
 {
@@ -169,6 +170,11 @@ namespace Ferda.Guha.Attribute
         /// Intervals allowed.
         /// </summary>
         public bool IntervalsAllowed;
+        
+        /// <summary>
+        /// Data type of values i.e. of T.
+        /// </summary>
+        public DbSimpleDataTypeEnum DbDataType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.AttributeSerializable&lt;T&gt;"/> class.
@@ -183,11 +189,12 @@ namespace Ferda.Guha.Attribute
         /// <param name="categories">The categories.</param>
         /// <param name="nullContainingCategoryName">Name of the null containing category.</param>
         /// <param name="intervalsAllowed">if set to <c>true</c> intervals are allowed.</param>
-        public AttributeSerializable(CategorySerializable<T>[] categories, string nullContainingCategoryName, bool intervalsAllowed)
+        public AttributeSerializable(CategorySerializable<T>[] categories, string nullContainingCategoryName, bool intervalsAllowed, DbSimpleDataTypeEnum dbDataType)
         {
             Categories = categories;
             NullContainingCategoryName = nullContainingCategoryName;
             IntervalsAllowed = intervalsAllowed;
+            DbDataType = dbDataType;
         }
         
     }
@@ -226,5 +233,27 @@ namespace Ferda.Guha.Attribute
             object deserealized = deserealizer.Deserialize(reader);
             return (AttributeSerializable<T>)deserealized;
         }
+        
+        //public static string Serialize<T>(AttributeSerializable<T> attributeSerializable, DbSimpleDataTypeEnum dataType)
+        //    where T : IComparable
+        //{
+        //    string serializedAttribute = Serialize(attributeSerializable);
+        //    AttributeSerialization result = new AttributeSerialization();
+        //    result.DataType = dataType;
+        //    result.SerializedAttribute = serializedAttribute;
+
+        //    XmlSerializer serializer = new XmlSerializer(typeof(AttributeSerialization));
+        //    StringBuilder sb = new StringBuilder();
+        //    StringWriter writer = new StringWriter(sb);
+        //    serializer.Serialize(writer, result);
+        //    return sb.ToString();
+        //}
     }
+
+    //[Serializable()]
+    //public class AttributeSerialization
+    //{
+    //    public DbSimpleDataTypeEnum DataType;
+    //    public string SerializedAttribute;
+    //}
 }

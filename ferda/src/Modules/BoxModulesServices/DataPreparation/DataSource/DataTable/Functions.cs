@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Ferda.Guha.Data;
 using Ferda.Modules.Helpers.Caching;
 using Ice;
@@ -90,6 +91,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                 fallOnError);
         }
 
+        public string GetName(bool fallOnError)
+        {
+            if (String.IsNullOrEmpty(Name) && fallOnError)
+            {
+                throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
+                                           "Property is not set.", new string[] { PropName },
+                                           restrictionTypeEnum.Missing);
+            }
+            else
+                return Name;
+        }
+
         private CacheFlag _cacheFlag = new CacheFlag();
         private GenericDataTable _cachedValue = null;
 
@@ -104,9 +117,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                     fallOnError,
                     prx.getDatabaseConnectionSetting,
                     delegate
-                        {
-                            return null;
-                        },
+                    {
+                        return null;
+                    },
                     _boxModule.StringIceIdentity
                     );
 
@@ -125,17 +138,48 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                 _cachedValue = ExceptionsHandler.GetResult<GenericDataTable>(
                     fallOnError,
                     delegate
-                        {
-                            return GenericDatabaseCache.GetGenericDatabase(connSetting)[Name];
-                        },
+                    {
+                        string name = GetName(fallOnError);
+                        return GenericDatabaseCache.GetGenericDatabase(connSetting)[Name];
+                    },
                     delegate
-                        {
-                            return null;
-                        },
+                    {
+                        return null;
+                    },
                     _boxModule.StringIceIdentity
                     );
             }
             return _cachedValue;
+        }
+
+        /// <summary>
+        /// Tests the unique columns i.e. unicity of values in data in specified
+        /// <c>uniqueColumns</c>. (These columns can simulate Primary Key.)
+        /// </summary>
+        /// <param name="fallOnError">if set to <c>true</c> the method will fall on error.</param>
+        /// <exception cref="T:Ferda.Modules.BadValueError">
+        /// <b>DbUniqueKeyError</b>
+        /// Thrown when the specified columns does not satisfy the
+        /// unicity of values in the database.
+        /// </exception>
+        public void TryPrimaryKey(bool fallOnError)
+        {
+            Debug.Assert(fallOnError);
+            ExceptionsHandler.GetResult<object>(
+                fallOnError,
+                delegate
+                {
+                    GenericDataTable tmp = GetGenericDataTable(fallOnError);
+                    if (tmp != null)
+                        tmp.TestUniqueKey(PrimaryKeyColumns);
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
         }
 
         public string[] GetDataTablesNames(bool fallOnError)
@@ -144,15 +188,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             return ExceptionsHandler.GetResult<string[]>(
                 fallOnError,
                 delegate
-                    {
-                        if (prx != null)
-                            return prx.getDataTablesNames();
-                        return new string[0];
-                    },
+                {
+                    if (prx != null)
+                        return prx.getDataTablesNames();
+                    return new string[0];
+                },
                 delegate
-                    {
-                        return new string[0];
-                    },
+                {
+                    return new string[0];
+                },
                 _boxModule.StringIceIdentity
                 );
         }
@@ -162,16 +206,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             return ExceptionsHandler.GetResult<DataTableExplain>(
                 fallOnError,
                 delegate
-                    {
-                        GenericDataTable tmp = GetGenericDataTable(fallOnError);
-                        if (tmp != null)
-                            return tmp.Explain;
-                        return null;
-                    },
+                {
+                    GenericDataTable tmp = GetGenericDataTable(fallOnError);
+                    if (tmp != null)
+                        return tmp.Explain;
+                    return null;
+                },
                 delegate
-                    {
-                        return null;
-                    },
+                {
+                    return null;
+                },
                 _boxModule.StringIceIdentity
                 );
         }
@@ -181,22 +225,23 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             return ExceptionsHandler.GetResult<DataTableInfo>(
                 fallOnError,
                 delegate
-                    {
-                        DataTableExplain tmp1 = GetDataTableExplain(fallOnError);
-                        DatabaseFunctionsPrx tmp2 = GetDatabaseFunctionsPrx(fallOnError);
-                        if (tmp1 != null && tmp2 != null)
-                            return new DataTableInfo(tmp2.getDatabaseConnectionSetting(),
-                                                     Name,
-                                                     tmp1.type,
-                                                     tmp1.remarks,
-                                                     PrimaryKeyColumns,
-                                                     tmp1.recordsCount);
-                        return null;
-                    },
+                {
+                    DataTableExplain tmp1 = GetDataTableExplain(fallOnError);
+                    DatabaseFunctionsPrx tmp2 = GetDatabaseFunctionsPrx(fallOnError);
+                    string name = GetName(fallOnError);
+                    if (tmp1 != null && tmp2 != null)
+                        return new DataTableInfo(tmp2.getDatabaseConnectionSetting(),
+                                                 name,
+                                                 tmp1.type,
+                                                 tmp1.remarks,
+                                                 PrimaryKeyColumns,
+                                                 tmp1.recordsCount);
+                    return null;
+                },
                 delegate
-                    {
-                        return null;
-                    },
+                {
+                    return null;
+                },
                 _boxModule.StringIceIdentity
                 );
         }
@@ -206,24 +251,24 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             return ExceptionsHandler.GetResult<ColumnExplain[]>(
                 fallOnError,
                 delegate
+                {
+                    List<ColumnExplain> result = new List<ColumnExplain>();
+                    GenericDataTable tmp = GetGenericDataTable(fallOnError);
+                    if (tmp != null)
                     {
-                        List<ColumnExplain> result = new List<ColumnExplain>();
-                        GenericDataTable tmp = GetGenericDataTable(fallOnError);
-                        if (tmp != null)
+                        foreach (GenericColumn column in tmp)
                         {
-                            foreach (GenericColumn column in tmp)
-                            {
-                                if (!column.IsDerived)
-                                    result.Add(column.Explain);
-                            }
-                            return result.ToArray();
+                            if (!column.IsDerived)
+                                result.Add(column.Explain);
                         }
-                        return new ColumnExplain[0];
-                    },
+                        return result.ToArray();
+                    }
+                    return new ColumnExplain[0];
+                },
                 delegate
-                    {
-                        return new ColumnExplain[0];
-                    },
+                {
+                    return new ColumnExplain[0];
+                },
                 _boxModule.StringIceIdentity
                 );
         }
@@ -233,16 +278,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             return ExceptionsHandler.GetResult<string[]>(
                 fallOnError,
                 delegate
-                    {
-                        GenericDataTable tmp = GetGenericDataTable(fallOnError);
-                        if (tmp != null)
-                            return tmp.BasicColumnsNames;
-                        return new string[0];
-                    },
+                {
+                    GenericDataTable tmp = GetGenericDataTable(fallOnError);
+                    if (tmp != null)
+                        return tmp.BasicColumnsNames;
+                    return new string[0];
+                },
                 delegate
-                    {
-                        return new string[0];
-                    },
+                {
+                    return new string[0];
+                },
                 _boxModule.StringIceIdentity
                 );
         }

@@ -215,7 +215,8 @@ namespace Ferda.Guha.Data
         /// <remarks>
         /// For <c>DbDataTypeEnum.TimeType</c> returns <c>TimeSpan</c> (time of day) not <c>DateTime</c>.
         /// </remarks>
-        public static bool TryParseValue(object dbValue, DbDataTypeEnum dbDataType, out IComparable value)
+        /// <returns>false if parsed value is DBNull.Value; otherwise, return true</returns>
+        public static bool ParseValue(object dbValue, DbDataTypeEnum dbDataType, out IComparable value)
         {
             if (dbValue == DBNull.Value)
             {
@@ -537,6 +538,32 @@ namespace Ferda.Guha.Data
         }
 
         /// <summary>
+        /// Determines whether the specified data type is numeric.
+        /// </summary>
+        /// <param name="dataType">Type of the data.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified data type is numeric; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool GetIsNumericDataType(DbDataTypeEnum dataType)
+        {
+            switch (dataType)
+            {
+                case DbDataTypeEnum.DecimalType:
+                case DbDataTypeEnum.DoubleType:
+                case DbDataTypeEnum.FloatType:
+                case DbDataTypeEnum.IntegerType:
+                case DbDataTypeEnum.LongIntegerType:
+                case DbDataTypeEnum.ShortIntegerType:
+                case DbDataTypeEnum.UnsignedIntegerType:
+                case DbDataTypeEnum.UnsignedLongIntegerType:
+                case DbDataTypeEnum.UnsignedShortIntegerType:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        
+        /// <summary>
         /// Gets a value indicating whether this instance is of numeric data type.
         /// </summary>
         /// <value>
@@ -546,21 +573,7 @@ namespace Ferda.Guha.Data
         {
             get
             {
-                switch (Explain.dataType)
-                {
-                    case DbDataTypeEnum.DecimalType:
-                    case DbDataTypeEnum.DoubleType:
-                    case DbDataTypeEnum.FloatType:
-                    case DbDataTypeEnum.IntegerType:
-                    case DbDataTypeEnum.LongIntegerType:
-                    case DbDataTypeEnum.ShortIntegerType:
-                    case DbDataTypeEnum.UnsignedIntegerType:
-                    case DbDataTypeEnum.UnsignedLongIntegerType:
-                    case DbDataTypeEnum.UnsignedShortIntegerType:
-                        return true;
-                    default:
-                        return false;
-                }
+                return GetIsNumericDataType(Explain.dataType);
             }
         }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using Ferda.Guha.Data;
 
 namespace Ferda.Guha.Attribute
 {
@@ -32,9 +33,11 @@ namespace Ferda.Guha.Attribute
 
         private string _nullContainingCategory = null;
 
-        bool _lazyReduction = false;
+        private bool _lazyReduction = false;
 
-        bool _intervalsAllowed = false;
+        private readonly bool _intervalsAllowed = false;
+
+        private readonly DbSimpleDataTypeEnum _dbDataType;
 
         #endregion
 
@@ -81,22 +84,17 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether reduction of categories is lazy evaluated.
-        /// </summary>
-        /// <value><c>true</c> if lazy reduction is on; otherwise (reduction is continuous), <c>false</c>.</value>
-        public bool LazyReduction
-        {
-            get { return _lazyReduction; }
-            set { _lazyReduction = value; }
-        }
-
-        /// <summary>
         /// Gets a value indicating whether intervals are allowed.
         /// </summary>
         /// <value><c>true</c> if intervals are allowed; otherwise, <c>false</c>.</value>
         public bool IntervalsAllowed
         {
             get { return _intervalsAllowed; }
+        }
+
+        public DbSimpleDataTypeEnum DbDataType
+        {
+            get { return _dbDataType; }
         }
 
         #endregion
@@ -147,17 +145,18 @@ namespace Ferda.Guha.Attribute
 
         #region Constructors
 
-        private Attribute()
+        private Attribute(DbSimpleDataTypeEnum dbDataType)
         {
             _axis = new Axis<T>(this);
+            _dbDataType = dbDataType;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Attribute&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="intervalsAllowed">if set to <c>true</c> creation of intervals allowed (only for ordinal data).</param>
-        public Attribute(bool intervalsAllowed)
-            : this()
+        public Attribute(DbSimpleDataTypeEnum dbDataType, bool intervalsAllowed)
+            : this(dbDataType)
         {
             _intervalsAllowed = intervalsAllowed;
         }
@@ -180,7 +179,7 @@ namespace Ferda.Guha.Attribute
             {
                 // enable Axis
                 Axis.Disabled = false;
-                Reduce(false);
+                Reduce();
                 Axis.CheckDisjunctivity();
             }
         }
@@ -190,8 +189,8 @@ namespace Ferda.Guha.Attribute
         /// </summary>
         /// <param name="serializedAttribute">The serialized attribute.</param>
         /// <param name="lazyDisjunctivityChecking">if set to <c>true</c> [lazy disjunctivity checking].</param>
-        public Attribute(AttributeSerializable<T> serializedAttribute, bool lazyDisjunctivityChecking)
-            : this(serializedAttribute.IntervalsAllowed)
+        public Attribute(DbSimpleDataTypeEnum dbDataType, AttributeSerializable<T> serializedAttribute, bool lazyDisjunctivityChecking)
+            : this(dbDataType, serializedAttribute.IntervalsAllowed)
         {
             loadAttribute(serializedAttribute, lazyDisjunctivityChecking);
         }
@@ -207,6 +206,7 @@ namespace Ferda.Guha.Attribute
                 AttributeSerializable<T> result = new AttributeSerializable<T>();
                 result.NullContainingCategoryName = NullContainingCategory;
                 result.IntervalsAllowed = IntervalsAllowed;
+                result.DbDataType = DbDataType;
 
                 List<CategorySerializable<T>> categories = new List<CategorySerializable<T>>();
                 foreach (KeyValuePair<string, Category<T>> pair in _categories)
@@ -247,7 +247,7 @@ namespace Ferda.Guha.Attribute
         {
             return Axis.GetUncoveredValues(dataTable);
         }
-        
+
         // TODO Bit string generation
         //public Dictionary<string, IBitString> GenerateBitStrings(DataTable dataTable)
         //public  IBitString GenerateBitString(string categoryName, DataTable dataTable)
@@ -271,9 +271,8 @@ namespace Ferda.Guha.Attribute
         #region Collisions (Reduce, Join, Exclude)
 
         /// <summary>
-        /// Reduces the specified force.
+        /// Reduces the attribute ().
         /// </summary>
-        /// <param name="force">if set to <c>true</c> categories are reduced even if lazy reduction is on.</param>
         /// <remarks>
         /// Categories can contains intervals and enumeration values that are 
         /// not disjunctive (if lazy reduction is on OR when new interval or enumeration
@@ -283,13 +282,12 @@ namespace Ferda.Guha.Attribute
         /// If there is category like:
         /// <code>{0};(0;1&gt;;$lt0.5;16);{7;8;9}</code> than reduction of this category is <code>&lt;0;16)</code>
         /// </example>
-        public void Reduce(bool force)
+        public void Reduce()
         {
-            if (!_lazyReduction || force)
-                foreach (KeyValuePair<string, Category<T>> category in _categories)
-                {
-                    category.Value.Reduce(force);
-                }
+            foreach (KeyValuePair<string, Category<T>> category in _categories)
+            {
+                category.Value.Reduce();
+            }
         }
 
         /// <summary>
@@ -300,9 +298,8 @@ namespace Ferda.Guha.Attribute
         /// <param name="newCategoryNameCreationType">New type of the category name creation.</param>
         /// <param name="ownNewCategoryName">Name of the own new category.</param>
         /// <param name="newCategoryName">New name of the category.</param>
-        /// <param name="forceReduce">if set to <c>true</c> the newly created category will be reduced even if lazy reduction is on.</param>
         public void JoinCategories(string[] categories, NewCategoryName newCategoryNameCreationType,
-                                   string ownNewCategoryName, out string newCategoryName, bool forceReduce)
+                                   string ownNewCategoryName, out string newCategoryName)
         {
             // Axis.NotValid(true, true);
             // ... not needed this is called when needed in add/update/remove methods above
@@ -339,7 +336,7 @@ namespace Ferda.Guha.Attribute
 
             // new (joined) category will be added
             Category<T> newCategory = new Category<T>(newIntervals, newEnumeration, this);
-            newCategory.Reduce(forceReduce);
+            newCategory.Reduce();
 
             if (newCategoryNameCreationType == NewCategoryName.Default)
                 newCategoryName = newCategory.DefaultLabel;
@@ -596,7 +593,7 @@ namespace Ferda.Guha.Attribute
             if (lazyDisjunctivityChecking)
             {
                 Axis.Disabled = axisWasDisabled;
-                Reduce(false);
+                Reduce();
                 Axis.CheckDisjunctivity();
             }
         }
@@ -638,7 +635,7 @@ namespace Ferda.Guha.Attribute
             {
                 // enable Axis
                 Axis.Disabled = axisWasDisabled;
-                Reduce(false);
+                Reduce();
                 Axis.CheckDisjunctivity();
             }
         }
@@ -665,6 +662,70 @@ namespace Ferda.Guha.Attribute
                               categoriesSeparator);
             }
             return result.ToString();
+        }
+
+        /// <summary>
+        /// Gets the names of categories.
+        /// </summary>
+        /// <param name="ordered">if set to <c>true</c> names are ordered by categories ord number.</param>
+        /// <returns></returns>
+        public List<string> GetCategoriesIds(out bool ordered)
+        {
+            ordered = true;
+            List<string> result = GetSort();
+            if (result == null)
+            {
+                ordered = false;
+                result = new List<string>(_categories.Keys);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the names of categories exclude the specified <c>missing category</c>.
+        /// </summary>
+        /// <param name="missingCategoryName">Name of the missing category.</param>
+        /// <returns></returns>
+        public List<string> GetNotMissingsCategorieIds(string missingCategoryName)
+        {
+            bool dummy;
+            List<string> result = GetCategoriesIds(out dummy);
+            if (missingCategoryName == null)
+                return result;
+            if (result.Contains(missingCategoryName))
+                result.Remove(missingCategoryName);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the single values of specified <c>categories</c> or null.
+        /// </summary>
+        /// <param name="categories">The categories.</param>
+        /// <returns></returns>
+        public List<T> GetSingleValues(List<string> categories)
+        {
+            Category<T> category;
+            List<T> result = new List<T>();
+            foreach (string categoryName in categories)
+            {
+                if (!_categories.TryGetValue(categoryName, out category))
+                    throw new ArgumentException();
+                else if (
+                    (category.Intervals.Count > 0)
+                    ||
+                    (category.Enumeration.Count > 1)
+                    ||
+                    (category.Enumeration.Count == 0)
+                    )
+                {
+                    return null;
+                }
+                else if (category.Enumeration.Count == 1)
+                {
+                    result.Add(category.Enumeration[0]);
+                }
+            }
+            return result;
         }
 
         /// <summary>

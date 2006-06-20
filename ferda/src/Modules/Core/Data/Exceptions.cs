@@ -105,14 +105,15 @@ namespace Ferda.Guha.Data
         /// <param name="innnerException">The innner exception.</param>
         /// <param name="boxIdentity">The box identity.</param>
         /// <returns>
-        /// 	<see cref="T:Ferda.Modules.BadParamsError"/> exception.
+        /// 	<see cref="T:Ferda.Modules.BadValueError"/> exception.
         /// </returns>
-        public static BadParamsError DbUniqueKeyError(Exception innnerException, string boxIdentity)
+        public static BadValueError DbUniqueKeyError(Exception innnerException, string boxIdentity)
         {
-            return Modules.Exceptions.BadParamsError(
+            return Modules.Exceptions.BadValueError(
                 innnerException,
                 boxIdentity,
                 "Specified column(s) is not unique key.",
+                null,
                 restrictionTypeEnum.DbUniqueKeyError
                 );
         }

@@ -38,7 +38,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 sum = (sum & 0x55) + ((sum >> 1) & 0x55);
                 sum = (sum & 0x33) + ((sum >> 2) & 0x33);
                 sum = (sum & 0x0F) + ((sum >> 4) & 0x0F);
-                _lookup8[i] = (Byte) sum;
+                _lookup8[i] = (Byte)sum;
             }
 #endif
 
@@ -51,7 +51,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 sum = (sum & 0x3333) + ((sum >> 2) & 0x3333);
                 sum = (sum & 0x0F0F) + ((sum >> 4) & 0x0F0F);
                 sum = (sum & 0x00FF) + ((sum >> 8) & 0x00FF);
-                _lookup16[i] = (Byte) sum;
+                _lookup16[i] = (Byte)sum;
             }
 #endif
         }
@@ -68,7 +68,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         }
 
         private List<Guid> _usedAttributes;
-        
+
         private List<Guid> joinUsedAttributes(ReadOnlyCollection<Guid> x, ReadOnlyCollection<Guid> y)
         {
             ReadOnlyCollection<Guid> big;
@@ -77,7 +77,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
                 big = x;
                 small = y;
-            }   
+            }
             else
             {
                 big = y;
@@ -91,7 +91,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
             return result;
         }
-        
+
         public ReadOnlyCollection<Guid> UsedAttributes
         {
             get { return _usedAttributes.AsReadOnly(); }
@@ -129,6 +129,35 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         {
             _identifier = identifier;
             create(length);
+        }
+
+        public BitString(int length, BitStringIdentifier identifier, long[] bits)
+        {
+            if (length <= 0)
+                throw new ArgumentOutOfRangeException("length", "The length of a BitString must be a positive integer.");
+
+            _size = length;
+            _identifier = new Atom(identifier);
+            
+            int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
+            
+#if USE64BIT
+            if (arraySize != bits.Length)
+                throw new ArgumentOutOfRangeException("bits", "The array of bits has bad size (Lenght).");
+
+            _array = new ulong[arraySize];
+            for(int i=0; i < bits.Length; i++)
+            {
+                unchecked
+                {
+                    //TODO test this
+                    _array[i] = (ulong)bits[i];
+                }
+            }
+
+#else
+            throw new NotImplementedException();
+#endif
         }
 
         /// <summary>
@@ -179,7 +208,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         break;
 
                     case '1':
-                        _array[i/_blockSize] |= (_one << (i%_blockSize));
+                        _array[i / _blockSize] |= (_one << (i % _blockSize));
                         _sum++;
                         break;
 
@@ -204,7 +233,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
             _size = length;
             _sum = 0;
-            int arraySize = (length + _blockSize - 1)/_blockSize; // rounding up...
+            int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
 
 #if USE64BIT
             _array = new ulong[arraySize];
@@ -259,7 +288,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (source is BitString)
             {
                 BitString result = new BitString(this);
-                result.and((BitString) source);
+                result.and((BitString)source);
                 result._identifier = Formula.And(Identifier, source.Identifier);
                 result._usedAttributes = joinUsedAttributes(UsedAttributes, source.UsedAttributes);
                 return result;
@@ -278,10 +307,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             Debug.Assert(_array.Length == source._array.Length,
                          "The array sizes don't match, although bit string lengths are the same.");
             Debug.Assert(
-                (_size%_blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size%_blockSize)) == 0),
+                (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
             Debug.Assert(
-                (_size%_blockSize == 0) || ((source._array[_array.Length - 1] & (_allOnes << _size%_blockSize)) == 0),
+                (_size % _blockSize == 0) || ((source._array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
 
 #if UNSAFE
@@ -339,7 +368,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (source is BitString)
             {
                 BitString result = new BitString(this);
-                result.or((BitString) source);
+                result.or((BitString)source);
                 result._identifier = Formula.Or(Identifier, source.Identifier);
                 result._usedAttributes = joinUsedAttributes(UsedAttributes, source.UsedAttributes);
                 return result;
@@ -358,10 +387,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             Debug.Assert(_array.Length == source._array.Length,
                          "The array sizes don't match, although bit string lengths are the same.");
             Debug.Assert(
-                (_size%_blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size%_blockSize)) == 0),
+                (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
             Debug.Assert(
-                (_size%_blockSize == 0) || ((source._array[_array.Length - 1] & (_allOnes << _size%_blockSize)) == 0),
+                (_size % _blockSize == 0) || ((source._array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
 
 #if UNSAFE
@@ -428,7 +457,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 throw new InvalidOperationException("BitString was not initialized (use create method first).");
 
             Debug.Assert(
-                (_size%_blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size%_blockSize)) == 0),
+                (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
 
 #if UNSAFE
@@ -453,9 +482,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     *ptr = ~(*ptr);
                     ptr++;
                 }
-                if (_size%_blockSize > 0)
+                if (_size % _blockSize > 0)
                 {
-                    *(ptr - 1) &= _allOnes >> (_blockSize - _size%_blockSize);
+                    *(ptr - 1) &= _allOnes >> (_blockSize - _size % _blockSize);
                 }
             }
 #else
@@ -506,7 +535,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 Debug.Assert(_sum >= -1, "The sum must be -1 (i.e. \"unknown\") or non-negative.");
                 Debug.Assert(_sum <= _size, "The sum must be less than or equal to the size of the bit string.");
                 Debug.Assert(
-                    (_size%_blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size%_blockSize)) == 0),
+                    (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                     "The bit string contains non-zero bits in the last block behind the allowed length.");
 
                 if (_sum >= 0)
@@ -552,20 +581,20 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         current = *currentPtr++;
                         for (int j = _blockSize - 1; j > 0; j--)
                         {
-                            _sum += (int) (current & _one);
+                            _sum += (int)(current & _one);
                             current >>= 1;
                         }
-                        _sum += (int) current;
+                        _sum += (int)current;
                     }
 
                     // sum the last block
                     current = *currentPtr;
-                    for (int j = (_size - 1)%_blockSize; j > 0; j--)
+                    for (int j = (_size - 1) % _blockSize; j > 0; j--)
                     {
-                        _sum += (int) (current & _one);
+                        _sum += (int)(current & _one);
                         current >>= 1;
                     }
-                    _sum += (int) (current & _one);
+                    _sum += (int)(current & _one);
                 }
             }
         }
@@ -651,7 +680,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             block = (block & 0x0F0F0F0F0F0F0F0Ful) + ((block >> 4) & 0x0F0F0F0F0F0F0F0Ful);
             block = (block & 0x00FF00FF00FF00FFul) + ((block >> 8) & 0x00FF00FF00FF00FFul);
             block = (block & 0x0000FFFF0000FFFFul) + ((block >> 16) & 0x0000FFFF0000FFFFul);
-            return (int) ((block & 0x00000000FFFFFFFFul) + (block >> 32));
+            return (int)((block & 0x00000000FFFFFFFFul) + (block >> 32));
         }
 #else
         private static int SumFoldBlock(uint block)
@@ -674,14 +703,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 {
 #if USE64BIT
                     ulong current = _array[i];
-                    _sum += _lookup8[(int) (current & _8bits)];
-                    _sum += _lookup8[(int) ((current >> 8) & _8bits)];
-                    _sum += _lookup8[(int) ((current >> 16) & _8bits)];
-                    _sum += _lookup8[(int) ((current >> 24) & _8bits)];
-                    _sum += _lookup8[(int) ((current >> 32) & _8bits)];
-                    _sum += _lookup8[(int) ((current >> 40) & _8bits)];
-                    _sum += _lookup8[(int) ((current >> 48) & _8bits)];
-                    _sum += _lookup8[(int) (current >> 56)];
+                    _sum += _lookup8[(int)(current & _8bits)];
+                    _sum += _lookup8[(int)((current >> 8) & _8bits)];
+                    _sum += _lookup8[(int)((current >> 16) & _8bits)];
+                    _sum += _lookup8[(int)((current >> 24) & _8bits)];
+                    _sum += _lookup8[(int)((current >> 32) & _8bits)];
+                    _sum += _lookup8[(int)((current >> 40) & _8bits)];
+                    _sum += _lookup8[(int)((current >> 48) & _8bits)];
+                    _sum += _lookup8[(int)(current >> 56)];
 #else
                     uint current = _array[i];
                     _sum += _lookup8[(int) (current & _8bits)];
@@ -709,14 +738,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         {
                             ulong current = *currentPtr++;
 
-                            _sum += *(lookup + (int) (current & _8bits));
-                            _sum += *(lookup + (int) ((current >> 8) & _8bits));
-                            _sum += *(lookup + (int) ((current >> 16) & _8bits));
-                            _sum += *(lookup + (int) ((current >> 24) & _8bits));
-                            _sum += *(lookup + (int) ((current >> 32) & _8bits));
-                            _sum += *(lookup + (int) ((current >> 40) & _8bits));
-                            _sum += *(lookup + (int) ((current >> 48) & _8bits));
-                            _sum += *(lookup + (int) (current >> 56));
+                            _sum += *(lookup + (int)(current & _8bits));
+                            _sum += *(lookup + (int)((current >> 8) & _8bits));
+                            _sum += *(lookup + (int)((current >> 16) & _8bits));
+                            _sum += *(lookup + (int)((current >> 24) & _8bits));
+                            _sum += *(lookup + (int)((current >> 32) & _8bits));
+                            _sum += *(lookup + (int)((current >> 40) & _8bits));
+                            _sum += *(lookup + (int)((current >> 48) & _8bits));
+                            _sum += *(lookup + (int)(current >> 56));
                         }
                     }
                 }
@@ -753,10 +782,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 {
 #if USE64BIT
                     ulong current = _array[i];
-                    _sum += _lookup16[(int) (current & _16bits)];
-                    _sum += _lookup16[(int) ((current >> 16) & _16bits)];
-                    _sum += _lookup16[(int) ((current >> 32) & _16bits)];
-                    _sum += _lookup16[(int) (current >> 48)];
+                    _sum += _lookup16[(int)(current & _16bits)];
+                    _sum += _lookup16[(int)((current >> 16) & _16bits)];
+                    _sum += _lookup16[(int)((current >> 32) & _16bits)];
+                    _sum += _lookup16[(int)(current >> 48)];
 #else
                     uint current = _array[i];
                     _sum += _lookup16[(int) (current & _16bits)];
@@ -782,10 +811,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         {
                             ulong current = *currentPtr++;
 
-                            _sum += *(lookup + (int) (current & _16bits));
-                            _sum += *(lookup + (int) ((current >> 16) & _16bits));
-                            _sum += *(lookup + (int) ((current >> 32) & _16bits));
-                            _sum += *(lookup + (int) (current >> 48));
+                            _sum += *(lookup + (int)(current & _16bits));
+                            _sum += *(lookup + (int)((current >> 16) & _16bits));
+                            _sum += *(lookup + (int)((current >> 32) & _16bits));
+                            _sum += *(lookup + (int)(current >> 48));
                         }
                     }
                 }
@@ -882,11 +911,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
             if (value)
             {
-                _array[index/_blockSize] |= _one << (index%_blockSize);
+                _array[index / _blockSize] |= _one << (index % _blockSize);
             }
             else
             {
-                _array[index/_blockSize] &= ~(_one << (index%_blockSize));
+                _array[index / _blockSize] &= ~(_one << (index % _blockSize));
             }
 
             _sum = -1;
@@ -906,7 +935,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 throw new ArgumentOutOfRangeException("index",
                                                       "Index must be between 0 and the length of BitString minus 1.");
 
-            return (_array[index/_blockSize] & (_one << (index%_blockSize))) > 0;
+            return (_array[index / _blockSize] & (_one << (index % _blockSize))) > 0;
         }
 
 
@@ -949,7 +978,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     {
                         *currentPtr++ = _allOnes;
                     }
-                    *currentPtr = _allOnes >> (_blockSize - (_size - 1)%_blockSize - 1);
+                    *currentPtr = _allOnes >> (_blockSize - (_size - 1) % _blockSize - 1);
                     _sum = _size;
                 }
                 else
@@ -1009,7 +1038,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         retValue.Append((_array[i] & (_one << j)) > 0 ? '1' : '0');
                     }
                 }
-                for (j = 0; j < _size%_blockSize; j++)
+                for (j = 0; j < _size % _blockSize; j++)
                 {
                     retValue.Append((_array[i] & (_one << j)) > 0 ? '1' : '0');
                 }
@@ -1054,10 +1083,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             Debug.Assert(_array.Length == that._array.Length,
                          "The array sizes don't match, although bit string lengths are the same.");
             Debug.Assert(
-                (_size%_blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size%_blockSize)) == 0),
+                (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
             Debug.Assert(
-                (_size%_blockSize == 0) || ((that._array[_array.Length - 1] & (_allOnes << _size%_blockSize)) == 0),
+                (_size % _blockSize == 0) || ((that._array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
 
             for (int i = 0; i < _array.Length; i++)
@@ -1124,13 +1153,13 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 return 0;
 
             Debug.Assert(
-                (_size%_blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size%_blockSize)) == 0),
+                (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
 
             int hash = _size;
             for (int i = 0; i < _array.Length; i++)
             {
-                hash ^= (int) _array[i];
+                hash ^= (int)_array[i];
             }
             return hash;
         }

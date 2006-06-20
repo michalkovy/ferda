@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Ferda.Guha.Attribute;
 using Ferda.Guha.Data;
 using Ferda.Modules.Helpers.Caching;
 using Ice;
-using Exception=System.Exception;
+using Exception = System.Exception;
+using Ferda.Guha.MiningProcessor;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategory
 {
@@ -42,6 +44,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         public const string PropDomain = "Domain";
         public const string PropFrom = "From";
         public const string PropTo = "To";
+        public const string PropCardinality = "Cardinality";
         public const string SockColumn = "Column";
 
         public string NameInLiterals
@@ -69,9 +72,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             get { return _nullCategoryName; }
         }
 
-        public string Domain
+        public DomainEnum Domain
         {
-            get { return _boxModule.GetPropertyString(PropDomain); }
+            get
+            {
+                return (DomainEnum)Enum.Parse(
+                                     typeof(DomainEnum),
+                                     _boxModule.GetPropertyString(PropDomain)
+                                     );
+            }
         }
 
         public string From
@@ -82,6 +91,17 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         public string To
         {
             get { return _boxModule.GetPropertyString(PropTo); }
+        }
+
+        public CardinalityEnum Cardinality
+        {
+            get
+            {
+                return (Guha.Data.CardinalityEnum)Enum.Parse(
+                                     typeof(Guha.Data.CardinalityEnum),
+                                     _boxModule.GetPropertyString(PropCardinality)
+                                     );
+            }
         }
 
         #endregion
@@ -97,16 +117,83 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 fallOnError);
         }
 
+        private void parseFromTo(DbDataTypeEnum dataType, out IComparable from, out IComparable to)
+        {
+            try
+            {
+                GenericColumn.ParseValue(From, dataType, out from);
+            }
+            catch (Exception e)
+            {
+                throw Exceptions.BadValueError(
+                    e,
+                    _boxModule.StringIceIdentity,
+                    null,
+                    new string[] { PropFrom },
+                    restrictionTypeEnum.BadFormat
+                    );
+            }
+            try
+            {
+                GenericColumn.ParseValue(From, dataType, out to);
+            }
+            catch (Exception e)
+            {
+                throw Exceptions.BadValueError(
+                    e,
+                    _boxModule.StringIceIdentity,
+                    null,
+                    new string[] { PropTo },
+                    restrictionTypeEnum.BadFormat
+                    );
+            }
+        }
+
+        private CacheFlag _cacheFlagColumn = new CacheFlag();
+        private GenericColumn _cachedValueColumn = null;
+        public GenericColumn GetGenericColumn(bool fallOnError)
+        {
+            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+            if (prx == null)
+                return null;
+            ColumnInfo column = prx.getColumnInfo();
+
+            DatabaseConnectionSettingHelper connSetting =
+                new DatabaseConnectionSettingHelper(column.dataTable.databaseConnectionSetting);
+
+            Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
+            cacheSetting.Add(Datasource.Database.BoxInfo.typeIdentifier + Datasource.Database.Functions.PropConnectionString, connSetting);
+            cacheSetting.Add(Datasource.DataTable.BoxInfo.typeIdentifier + Datasource.DataTable.Functions.PropName, column.dataTable.dataTableName);
+            cacheSetting.Add(Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropSelectExpression, column.columnSelectExpression);
+
+            if (_cacheFlagColumn.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
+                || (_cachedValueColumn == null && fallOnError))
+            {
+                _cachedValueColumn = ExceptionsHandler.GetResult<GenericColumn>(
+                    fallOnError,
+                    delegate
+                    {
+                        return
+                            GenericDatabaseCache.GetGenericDatabase(connSetting)[column.dataTable.dataTableName].GetGenericColumn
+                                (column.columnSelectExpression);
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                    );
+            }
+            return _cachedValueColumn;
+        }
+
+
         private CacheFlag _cacheFlag = new CacheFlag();
         private Attribute<IComparable> _cachedValue = null;
-        //DbDataTypeEnum _columnDataType = DbDataTypeEnum.UnknownType;
-        //Ferda.Guha.Data.CardinalityEnum _columnCardinality = Ferda.Guha.Data.CardinalityEnum.Nominal;
         private string _nullCategoryName = null;
 
         public Attribute<IComparable> GetAttribute(bool fallOnError)
         {
-            //_columnDataType = DbDataTypeEnum.UnknownType;
-            //_columnCardinality = Ferda.Guha.Data.CardinalityEnum.Nominal;
             _nullCategoryName = null;
 
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
@@ -118,17 +205,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     fallOnError,
                     prx.getColumnInfo,
                     delegate
-                        {
-                            return null;
-                        },
+                    {
+                        return null;
+                    },
                     _boxModule.StringIceIdentity
                     );
 
             if (tmp == null)
                 return null;
-
-            //_columnDataType = tmp.dataType;
-            //_columnCardinality = tmp.cardinality;
 
             DatabaseConnectionSettingHelper connSetting =
                 new DatabaseConnectionSettingHelper(tmp.dataTable.databaseConnectionSetting);
@@ -144,7 +228,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 tmp.columnSelectExpression);
             cacheSetting.Add(Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropCardinality,
                              tmp.cardinality);
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
 
@@ -154,41 +238,55 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 _cachedValue = ExceptionsHandler.GetResult<Attribute<IComparable>>(
                     fallOnError,
                     delegate
+                    {
+                        DbDataTypeEnum dataType = prx.getColumnInfo().dataType;
+
+                        //UNDONE Column.getDistinctsAndFrequencies(WHERE from - to)
+                        //GenericColumn column = GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTable.dataTableName].GetGenericColumn(tmp.columnSelectExpression);
+                        //System.Data.DataTable dt = column.GetDistinctsAndFrequencies(null);
+
+                        ValuesAndFrequencies df = prx.getDistinctsAndFrequencies();
+
+                        Debug.Assert(df.dataType == dataType);
+                        DbSimpleDataTypeEnum simpleDbDataType = GenericColumn.GetSimpleDataType(df.dataType);
+
+                        Attribute<IComparable> result =
+                            (Attribute<IComparable>)Common.GetAttributeObject(simpleDbDataType, false);
+
+                        List<object> enumeration = new List<object>();
+                        bool containsNull = false;
+                        if (Domain != DomainEnum.WholeDomain)
                         {
-                            ValuesAndFrequencies df = prx.getDistinctsAndFrequencies();
-                            DbSimpleDataTypeEnum simpleDbDataType = GenericColumn.GetSimpleDataType(df.dataType);
-
-                            Attribute<IComparable> result =
-                                (Attribute<IComparable>) Common.GetAttributeObject(simpleDbDataType, false);
-
-                            List<object> enumeration = new List<object>();
                             IComparable from;
-                            GenericColumn.TryParseValue(From, df.dataType, out from);
                             IComparable to;
-                            GenericColumn.TryParseValue(From, df.dataType, out to);
-                            bool containsNull = false;
+                            parseFromTo(dataType, out from, out to);
                             foreach (ValueFrequencyPair dfItem in df.data)
                             {
-                                if (dfItem.value == nullValueConstant.value)
+                                IComparable enumItem;
+                                if (!GenericColumn.ParseValue(dfItem.value, df.dataType, out enumItem))
                                     containsNull = true;
-                                else
-                                {
-                                    IComparable enumItem;
-                                    GenericColumn.TryParseValue(dfItem.value, df.dataType, out enumItem);
-                                    if (enumItem.CompareTo(from) >= 0 && enumItem.CompareTo(to) <= 0)
-                                        enumeration.Add(enumItem);
-                                }
+                                if (enumItem.CompareTo(from) >= 0 && enumItem.CompareTo(to) <= 0)
+                                    enumeration.Add(enumItem);
                             }
-                            result.CreateEnums(enumeration.ToArray(), containsNull, true);
-
-                            return result;
-                            //GenericColumn column = GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTable.dataTableName].GetGenericColumn(tmp.columnSelectExpression);
-                            //System.Data.DataTable dt = column.GetDistinctsAndFrequencies(null); //TODO WHERE
-                        },
-                    delegate
+                        }
+                        else
                         {
-                            return null;
-                        },
+                            foreach (ValueFrequencyPair dfItem in df.data)
+                            {
+                                IComparable enumItem;
+                                if (!GenericColumn.ParseValue(dfItem.value, df.dataType, out enumItem))
+                                    containsNull = true;
+                                enumeration.Add(enumItem);
+                            }
+                        }
+                        result.CreateEnums(enumeration.ToArray(), containsNull, true);
+
+                        return result;
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
                     _boxModule.StringIceIdentity
                     );
             }
@@ -197,24 +295,157 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public string[] GetCategoriesNames(bool fallOnError)
         {
-            Attribute<IComparable> tmp = GetAttribute(fallOnError);
             return ExceptionsHandler.GetResult<string[]>(
                 fallOnError,
                 delegate
+                {
+                    Attribute<IComparable> tmp = GetAttribute(fallOnError);
+                    if (tmp != null)
                     {
-                        if (tmp != null)
-                        {
-                            List<string> result = new List<string>(tmp.Keys);
-                            return result.ToArray();
-                        }
-                        return new string[0];
-                    },
+                        bool dummy;
+                        List<string> result = tmp.GetCategoriesIds(out dummy);
+                        return result.ToArray();
+                    }
+                    return new string[0];
+                },
                 delegate
-                    {
-                        return new string[0];
-                    },
+                {
+                    return new string[0];
+                },
                 _boxModule.StringIceIdentity
                 );
+        }
+
+        public string[] GetCategoriesIds(bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    Attribute<IComparable> tmp = GetAttribute(fallOnError);
+                    if (tmp != null)
+                    {
+                        List<string> result = tmp.GetNotMissingsCategorieIds(XCategory);
+                        return result.ToArray();
+                    }
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+
+        public CardinalityEnum PotentiallyCardinality(bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<CardinalityEnum>(
+                fallOnError,
+                delegate
+                {
+                    ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                    Attribute<IComparable> tmp = GetAttribute(fallOnError);
+                    GenericColumn tmp2 = GetGenericColumn(fallOnError);
+                    if (tmp != null && tmp2 != null && prx != null)
+                    {
+                        CardinalityEnum columnCardinality = prx.getColumnInfo().cardinality;
+
+                        bool ordered;
+                        tmp.GetCategoriesIds(out ordered);
+
+                        if (GenericColumn.CompareCardinality(columnCardinality, CardinalityEnum.Nominal) <= 0)
+                            return CardinalityEnum.Nominal;
+                        else
+                        {
+                            if (!ordered)
+                                return CardinalityEnum.Nominal;
+                            else
+                            {
+                                if (GenericColumn.CompareCardinality(columnCardinality, CardinalityEnum.Cardinal) >= 0)
+                                {
+                                    bool isSingleValueCategories = (GetCategoriesNumericValues(fallOnError) != null);
+                                    if (isSingleValueCategories)
+                                        return CardinalityEnum.Cardinal;
+                                }
+                                else
+                                {
+                                    return columnCardinality; // Ordinal / OrdinalCyclic
+                                }
+                            }
+                        }
+                    }
+                    return CardinalityEnum.Nominal;
+                },
+                delegate
+                {
+                    return CardinalityEnum.Nominal;
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+        public double[] GetCategoriesNumericValues(bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<double[]>(
+                fallOnError,
+                delegate
+                {
+                    Attribute<IComparable> tmp = GetAttribute(fallOnError);
+                    GenericColumn tmp2 = GetGenericColumn(fallOnError);
+                    if (tmp != null && tmp2 != null)
+                    {
+                        if (!tmp2.IsNumericDataType)
+                            return null;
+                        List<IComparable> partialResult = tmp.GetSingleValues(tmp.GetNotMissingsCategorieIds(XCategory));
+                        List<double> result = new List<double>(partialResult.Count);
+                        foreach (IComparable comparable in partialResult)
+                        {
+                            result.Add((double)comparable);
+                        }
+                        return result.ToArray();
+                    }
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+
+        public ValuesAndFrequencies GetCategoriesAndFrequencies(bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<ValuesAndFrequencies>(
+                fallOnError,
+                delegate
+                {
+                    Attribute<IComparable> tmp = GetAttribute(fallOnError);
+                    GenericColumn tmp2 = GetGenericColumn(fallOnError);
+                    if (tmp != null && tmp2 != null)
+                    {
+                        Dictionary<string, int> categoriesFrequencies = tmp.GetFrequencies(
+                            tmp2.GetDistinctsAndFrequencies(null)
+                            );
+                        return new ValuesAndFrequencies(
+                            tmp2.Explain.dataType,
+                            BoxInfoHelper.GetValueFrequencyPairArray(categoriesFrequencies)
+                            );
+                    }
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+
+        private GuidStruct getGuidStruct()
+        {
+            // TODO 
+            return new GuidStruct((new Guid()).ToString());
         }
 
         #endregion
@@ -228,8 +459,47 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public override ValuesAndFrequencies getCategoriesAndFrequencies(Current current__)
         {
+            return GetCategoriesAndFrequencies(true);
+        }
+
+        public override CardinalityEnum GetAttributeCardinality(Current current__)
+        {
             //TODO
             throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override GuidStruct GetAttributeId(Current current__)
+        {
+            return getGuidStruct();
+        }
+
+        public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
+        {
+            return new GuidAttributeNamePair[]
+                {
+                    new GuidAttributeNamePair(getGuidStruct(), NameInLiterals),
+                };
+        }
+
+        public override BitString GetBitString(string categoryId, Current current__)
+        {
+            //TODO
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override string[] GetCategoriesIds(Current current__)
+        {
+            return GetCategoriesIds(true);
+        }
+
+        public override double[] GetCategoriesNumericValues(Current current__)
+        {
+            return GetCategoriesNumericValues(true);
+        }
+
+        public override string GetMissingInformationCategoryId(Current current__)
+        {
+            return XCategory;
         }
 
         #endregion

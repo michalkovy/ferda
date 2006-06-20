@@ -239,10 +239,7 @@ namespace Ferda.Guha.Attribute
                 }
                 else //interval and enumItem are not disjunctive
                 {
-                    if (_attribute.LazyReduction)
-                        throw new NotComparableCollisionException("Probably because LazyReduction is on.");
-                    else
-                        throw new NotComparableCollisionException("Critical error: This shold never happend.");
+                    throw new NotComparableCollisionException("Critical error: This shold never happend.");
                 }
             }
             while (iIndex < _intervals.Count)
@@ -267,8 +264,6 @@ namespace Ferda.Guha.Attribute
             _enumeration.Sort();
 
 #if DEBUG
-            if (_attribute.LazyReduction)
-                return;
             int iIndex = 0;
             int eIndex = 0;
             int compareResult;
@@ -324,19 +319,21 @@ namespace Ferda.Guha.Attribute
                     result.Append(_enumeration[eIndex].ToString());
                     eIndex++;
                 }
-                else // only if category is not reduced
+                else
                 {
-                    if (!_attribute.LazyReduction)
-                    {
-                        Debugger.Break();
-                        throw new Exception(
-                            "This should never happend ... only if category is not reduced, but reduction is not lazy.");
-                    }
-                    result.Append(_enumeration[eIndex].ToString());
-                    eIndex++;
-                    result.Append(Common.CategoryMembersSeparator);
-                    result.Append(_intervals[iIndex].ToString());
-                    iIndex++;
+                    Debug.Assert(false); // only if category is not reduced (deprecated)
+                    throw Exceptions.AttributeCategoriesDisjunctivityError(null, null);
+                    //if (!_attribute.LazyReduction)
+                    //{
+                    //    Debugger.Break();
+                    //    throw new Exception(
+                    //        "This should never happend ... only if category is not reduced, but reduction is not lazy.");
+                    //}
+                    //result.Append(_enumeration[eIndex].ToString());
+                    //eIndex++;
+                    //result.Append(Common.CategoryMembersSeparator);
+                    //result.Append(_intervals[iIndex].ToString());
+                    //iIndex++;
                 }
             }
             if (_attribute.NullContainingCategory == Name)
@@ -461,160 +458,153 @@ namespace Ferda.Guha.Attribute
         /// Reduces the specified category i.e. overlaping interavals are 
         /// joined, duplicits are removed.
         /// </summary>
-        /// <param name="force">if set to <c>false</c> redution is not proviede whedn lazy reduction is enabled (on).</param>
-        public void Reduce(bool force)
+        public void Reduce()
         {
-            if (!_attribute.LazyReduction || force)
+            if (_intervals.Count == 0)
+                return;
+
+            bool lastAxisDisabledValue = _attribute.Axis.Disabled;
+            _attribute.Axis.Disabled = true;
+
+            // ENUMERATION
+            // if enumeration 
+            //  is in disjunctivity collision
+            //      with interval ... the value is removed from enumertion
+            //      with other enum value ... can not come ... exception should be thrown
+            //  is direct neighbour of some interval ... interavl is updated, the value is removed from enumeration
+            _enumeration.Sort();
+            List<T> resultEnumeration = new List<T>();
+            IEnumerator<T> enumValuesEnumerator = _enumeration.GetEnumerator();
+            T currentEnumValue = default(T);
+            bool currentEnumValueIsSet = false;
+            if (enumValuesEnumerator.MoveNext())
             {
-                if (_intervals.Count == 0)
-                    return;
+                currentEnumValue = enumValuesEnumerator.Current;
+                currentEnumValueIsSet = true;
+            }
 
-                bool lastLazyReductionValue = _attribute.LazyReduction;
-                _attribute.LazyReduction = true;
-                bool lastAxisDisabledValue = _attribute.Axis.Disabled;
-                _attribute.Axis.Disabled = true;
+            // INTERVALS
+            //
+            // requestedNumberOfIntervals init
+            _intervals.Sort(true);
+            List<Interval<T>> intervals = new List<Interval<T>>();
+            intervals.AddRange(_intervals);
+            List<Interval<T>> resultIntervals = new List<Interval<T>>();
+            Interval<T> lastInterval = null;
+            T updIntLV, updIntRV;
+            updIntLV = updIntRV = default(T);
+            BoundaryEnum updIntLB, updIntRB;
+            updIntLB = updIntRB = 0; //default .. BUNO
 
-                // ENUMERATION
-                // if enumeration 
-                //  is in disjunctivity collision
-                //      with interval ... the value is removed from enumertion
-                //      with other enum value ... can not come ... exception should be thrown
-                //  is direct neighbour of some interval ... interavl is updated, the value is removed from enumeration
-                _enumeration.Sort();
-                List<T> resultEnumeration = new List<T>();
-                IEnumerator<T> enumValuesEnumerator = _enumeration.GetEnumerator();
-                T currentEnumValue = default(T);
-                bool currentEnumValueIsSet = false;
-                if (enumValuesEnumerator.MoveNext())
+            // requestedNumberOfIntervals and enumerations are sorted
+            // proccess all requestedNumberOfIntervals and enumerations by one walk-through
+            foreach (Interval<T> currentInterval in intervals)
+            {
+            NextIntervalEvaluation:
+                if (lastInterval == null) // only in first iteration
                 {
-                    currentEnumValue = enumValuesEnumerator.Current;
-                    currentEnumValueIsSet = true;
+                    updIntLV = currentInterval.LeftValue;
+                    updIntRV = currentInterval.RightValue;
+                    updIntLB = currentInterval.LeftBoundary;
+                    updIntRB = currentInterval.RightBoundary;
+                    lastInterval = new Interval<T>(updIntLV, updIntLB, updIntRV, updIntRB, _attribute);
+                    continue;
                 }
 
-                // INTERVALS
-                //
-                // requestedNumberOfIntervals init
-                _intervals.Sort();
-                List<Interval<T>> intervals = new List<Interval<T>>();
-                intervals.AddRange(_intervals);
-                List<Interval<T>> resultIntervals = new List<Interval<T>>();
-                Interval<T> lastInterval = null;
-                T updIntLV, updIntRV;
-                updIntLV = updIntRV = default(T);
-                BoundaryEnum updIntLB, updIntRB;
-                updIntLB = updIntRB = 0; //default .. BUNO
+            UpdatedIntervalEvaluation:
+                lastInterval = new Interval<T>(updIntLV, updIntLB, updIntRV, updIntRB, _attribute);
 
-                // requestedNumberOfIntervals and enumerations are sorted
-                // proccess all requestedNumberOfIntervals and enumerations by one walk-through
-                foreach (Interval<T> currentInterval in intervals)
+                if (
+                    _attribute.Compare(lastInterval, currentInterval) == 0
+                    // this can come only if lazy reduce is used and axis was disabled
+                    || directDisjunctiveNeighbour(lastInterval, currentInterval)
+                    )
                 {
-                NextIntervalEvaluation:
-                    if (lastInterval == null) // only in first iteration
-                    {
-                        updIntLV = currentInterval.LeftValue;
-                        updIntRV = currentInterval.RightValue;
-                        updIntLB = currentInterval.LeftBoundary;
-                        updIntRB = currentInterval.RightBoundary;
-                        lastInterval = new Interval<T>(updIntLV, updIntLB, updIntRV, updIntRB, _attribute);
-                        continue;
-                    }
+                    #region getting new bounds
 
-                UpdatedIntervalEvaluation:
-                    lastInterval = new Interval<T>(updIntLV, updIntLB, updIntRV, updIntRB, _attribute);
-
-                    if (
-                        _attribute.Compare(lastInterval, currentInterval) == 0
-                        // this can come only if lazy reduce is used and axis was disabled
-                        || directDisjunctiveNeighbour(lastInterval, currentInterval)
+                    // "currentInterval" will not be in resultIntervals
+                    // enlarge (if needed last interval)
+                    if // choose smaller left value & boundary
+                        (!
+                         (
+                             lastInterval.LeftBoundary == BoundaryEnum.Infinity
+                             ||
+                             (
+                                 currentInterval.LeftBoundary != BoundaryEnum.Infinity
+                                 && _attribute.Compare(lastInterval.LeftValue, currentInterval.LeftValue) < 0
+                             )
+                         )
                         )
                     {
-                        #region getting new bounds
-
-                        // "currentInterval" will not be in resultIntervals
-                        // enlarge (if needed last interval)
-                        if // choose smaller left value & boundary
-                            (!
-                             (
-                                 lastInterval.LeftBoundary == BoundaryEnum.Infinity
-                                 ||
-                                 (
-                                     currentInterval.LeftBoundary != BoundaryEnum.Infinity
-                                     && _attribute.Compare(lastInterval.LeftValue, currentInterval.LeftValue) < 0
-                                 )
-                             )
-                            )
-                        {
-                            updIntLV = currentInterval.LeftValue;
-                            updIntLB = currentInterval.LeftBoundary;
-                        }
-                        if // choose bigger right value & boundary
-                            (!
-                             (
-                                 lastInterval.RightBoundary == BoundaryEnum.Infinity
-                                 ||
-                                 (
-                                     currentInterval.RightBoundary != BoundaryEnum.Infinity
-                                     && _attribute.Compare(lastInterval.RightValue, currentInterval.RightValue) > 0
-                                 )
-                             )
-                            )
-                        {
-                            updIntRV = currentInterval.RightValue;
-                            updIntRB = currentInterval.RightBoundary;
-                        }
-
-                        #endregion
+                        updIntLV = currentInterval.LeftValue;
+                        updIntLB = currentInterval.LeftBoundary;
                     }
-                    else
-                    // last interval is smaller than current one
-                    // processing enumeration is needed
+                    if // choose bigger right value & boundary
+                        (!
+                         (
+                             lastInterval.RightBoundary == BoundaryEnum.Infinity
+                             ||
+                             (
+                                 currentInterval.RightBoundary != BoundaryEnum.Infinity
+                                 && _attribute.Compare(lastInterval.RightValue, currentInterval.RightValue) > 0
+                             )
+                         )
+                        )
                     {
-                        if (
-                            reduceEnumeration(enumValuesEnumerator, ref currentEnumValue, ref currentEnumValueIsSet,
-                                              resultEnumeration, ref updIntLV, ref updIntLB, ref updIntRV, ref updIntRB)
-                            )
-                            // enumerattion processing may change comparation result of last and current interval
-                            goto UpdatedIntervalEvaluation;
-
-                        // interval may not be more extended (extension by requestedNumberOfIntervals and enumerations finnished)
-                        resultIntervals.Add(new Interval<T>(updIntLV, updIntLB, updIntRV, updIntRB, _attribute));
-                        lastInterval = null;
-                        goto NextIntervalEvaluation;
+                        updIntRV = currentInterval.RightValue;
+                        updIntRB = currentInterval.RightBoundary;
                     }
-                }
 
-                // update last processed interval
-                if (lastInterval != null)
+                    #endregion
+                }
+                else
+                // last interval is smaller than current one
+                // processing enumeration is needed
                 {
-                    reduceEnumeration(enumValuesEnumerator, ref currentEnumValue, ref currentEnumValueIsSet,
-                                      resultEnumeration, ref updIntLV, ref updIntLB, ref updIntRV, ref updIntRB);
-                    resultIntervals.Add(
-                        new Interval<T>(updIntLV, updIntLB, updIntRV, updIntRB, _attribute)
-                        );
+                    if (
+                        reduceEnumeration(enumValuesEnumerator, ref currentEnumValue, ref currentEnumValueIsSet,
+                                          resultEnumeration, ref updIntLV, ref updIntLB, ref updIntRV, ref updIntRB)
+                        )
+                        // enumerattion processing may change comparation result of last and current interval
+                        goto UpdatedIntervalEvaluation;
+
+                    // interval may not be more extended (extension by requestedNumberOfIntervals and enumerations finnished)
+                    resultIntervals.Add(new Interval<T>(updIntLV, updIntLB, updIntRV, updIntRB, _attribute));
+                    lastInterval = null;
+                    goto NextIntervalEvaluation;
                 }
-
-                _intervals.Clear();
-                if (resultIntervals.Count > 0)
-                    foreach (Interval<T> interval in resultIntervals)
-                        _intervals.Add(interval.LeftValue, interval.LeftBoundary, interval.RightValue,
-                                       interval.RightBoundary, true);
-
-                // not processed enumeration memebers
-                //  if _intervals.Count == 0 or members greather than all requestedNumberOfIntervals
-                if (currentEnumValueIsSet)
-                    resultEnumeration.Add(currentEnumValue);
-                while (enumValuesEnumerator.MoveNext())
-                {
-                    resultEnumeration.Add(enumValuesEnumerator.Current);
-                }
-                _enumeration.Clear();
-                if (resultEnumeration.Count > 0)
-                    foreach (T enumValue in resultEnumeration)
-                        _enumeration.Add(enumValue, true);
-
-                _attribute.LazyReduction = lastLazyReductionValue;
-                _attribute.Axis.Disabled = lastAxisDisabledValue;
             }
+
+            // update last processed interval
+            if (lastInterval != null)
+            {
+                reduceEnumeration(enumValuesEnumerator, ref currentEnumValue, ref currentEnumValueIsSet,
+                                  resultEnumeration, ref updIntLV, ref updIntLB, ref updIntRV, ref updIntRB);
+                resultIntervals.Add(
+                    new Interval<T>(updIntLV, updIntLB, updIntRV, updIntRB, _attribute)
+                    );
+            }
+
+            _intervals.Clear();
+            if (resultIntervals.Count > 0)
+                foreach (Interval<T> interval in resultIntervals)
+                    _intervals.AddWhileReducing(interval.LeftValue, interval.LeftBoundary, interval.RightValue,
+                                   interval.RightBoundary, true);
+
+            // not processed enumeration memebers
+            //  if _intervals.Count == 0 or members greather than all requestedNumberOfIntervals
+            if (currentEnumValueIsSet)
+                resultEnumeration.Add(currentEnumValue);
+            while (enumValuesEnumerator.MoveNext())
+            {
+                resultEnumeration.Add(enumValuesEnumerator.Current);
+            }
+            _enumeration.Clear();
+            if (resultEnumeration.Count > 0)
+                foreach (T enumValue in resultEnumeration)
+                    _enumeration.AddWhileReducing(enumValue, true);
+
+            _attribute.Axis.Disabled = lastAxisDisabledValue;
         }
 
         #region IEquatable<Category<T>> Members
