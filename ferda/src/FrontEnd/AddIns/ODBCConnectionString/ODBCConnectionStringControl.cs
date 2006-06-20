@@ -401,13 +401,10 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString
             if (this.TestConnectionStringAction(this.ComposeString()))
             {
                 MessageBox.Show(this.resManager.GetString("ConnectionStringOk"), this.resManager.GetString("MessageTitleSuccess"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
                 this.TextBoxNewConnectionString.Text = this.ComposeString();
             }
-
             else
             {
-
                 MessageBox.Show(this.resManager.GetString("ConnectionStringFail"), this.resManager.GetString("MessageTitleFail"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
