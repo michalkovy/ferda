@@ -70,6 +70,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
+            resetCoefficient();
         }
 
         public override long TotalCount
@@ -113,6 +114,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
+            resetCoefficient();
         }
 
         public override long TotalCount
@@ -180,6 +182,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         continue;
                     yield return _currentBitString;
                 }
+            
+            resetCoefficient();
         }
 
         public override long TotalCount
@@ -241,6 +245,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         goto restart;
                     }
                 }
+            resetCoefficient();
         }
 
         public override long TotalCount
@@ -301,6 +306,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         goto restart;
                     }
                 }
+            resetCoefficient();
         }
 
         public override long TotalCount
@@ -346,6 +352,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             //TODO
             throw new Exception("The method or operation is not implemented.");
+            resetCoefficient();
         }
 
         public override long TotalCount
