@@ -45,7 +45,7 @@ namespace Tests.MiningProcessor
             Assert.AreEqual(entity.TotalCount, count);
             return result;
         }
-        
+
         private string writeOutput(IEntityEnumerator entity)
         {
             string result = "";
@@ -69,7 +69,7 @@ namespace Tests.MiningProcessor
             _coefficients.Add(
                 type.ToString() + ": " + minLen.ToString() + " - " + maxLen.ToString()
                 + " (A-P)",
-            new CoefficientSetting(
+            new CoefficientSettingI(
                 new GuidStruct(BitStringCacheTest.Attr1Id),
                 ImportanceEnum.Basic,
                 null,
@@ -84,7 +84,7 @@ namespace Tests.MiningProcessor
             _coefficients.Add(
                 type.ToString() + ": " + minLen.ToString() + " - " + maxLen.ToString()
                 + " (A)",
-            new CoefficientSetting(
+            new CoefficientSettingI(
                 new GuidStruct(BitStringCacheTest.Attr2Id),
                 ImportanceEnum.Basic,
                 null,
@@ -157,8 +157,8 @@ namespace Tests.MiningProcessor
         public void SingleOperandTest()
         {
             StringBuilder result = new StringBuilder();
-            
-            CoefficientSetting coef = new CoefficientSetting(
+
+            CoefficientSettingI coef = new CoefficientSettingI(
                 new GuidStruct(BitStringCacheTest.Attr1Id),
                 ImportanceEnum.Basic,
                 null,
@@ -171,7 +171,7 @@ namespace Tests.MiningProcessor
             result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef)));
             result.AppendLine("-------------------------------");
 
-            NegationSetting neg = new NegationSetting(
+            NegationSettingI neg = new NegationSettingI(
                     new GuidStruct((new Guid()).ToString()),
                     ImportanceEnum.Basic,
                     coef);
@@ -179,8 +179,8 @@ namespace Tests.MiningProcessor
             result.AppendLine("Negation of Cuts: 1 - 3 (A-P) ");
             result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(neg)));
             result.AppendLine("-------------------------------");
-            
-            BothSignsSetting both = new BothSignsSetting(
+
+            BothSignsSettingI both = new BothSignsSettingI(
                     new GuidStruct((new Guid()).ToString()),
                     ImportanceEnum.Basic,
                     coef);
@@ -188,7 +188,7 @@ namespace Tests.MiningProcessor
             result.AppendLine("Both signs of Cuts: 1 - 3 (A-P) ");
             result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(both)));
             result.AppendLine("-------------------------------");
-            
+
             string r = result.ToString();
             Debug.Write(r);
         }
@@ -199,9 +199,10 @@ namespace Tests.MiningProcessor
         [TestMethod()]
         public void MultiOperandTest()
         {
+            bool traceInput = false;
             StringBuilder result = new StringBuilder();
 
-            CoefficientSetting coef = new CoefficientSetting(
+            CoefficientSettingI coef = new CoefficientSettingI(
                 new GuidStruct(BitStringCacheTest.Attr1Id),
                 ImportanceEnum.Basic,
                 null,
@@ -210,12 +211,15 @@ namespace Tests.MiningProcessor
                 CoefficientTypeEnum.Cuts
                 );
 
-            result.AppendLine("Cuts: 1 - 3 (A-P) ");
-            result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef)));
-            result.AppendLine("-------------------------------");
+            if (traceInput)
+            {
+                result.AppendLine("Cuts: 1 - 3 (A-P) ");
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef)));
+                result.AppendLine("-------------------------------");
+            }
 
-            CoefficientSetting coef2 = new CoefficientSetting(
-                new GuidStruct(BitStringCacheTest.Attr1Id),
+            CoefficientSettingI coef2 = new CoefficientSettingI(
+                new GuidStruct(BitStringCacheTest.Attr3Id),
                 ImportanceEnum.Basic,
                 null,
                 3,
@@ -223,20 +227,23 @@ namespace Tests.MiningProcessor
                 CoefficientTypeEnum.Intervals
                 );
 
-            result.AppendLine("Intervals: 3 - 3 (A-P) ");
-            result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef2)));
-            result.AppendLine("-------------------------------");
+            if (traceInput)
+            {
+                result.AppendLine("Intervals: 3 - 3 (1-8) ");
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef2)));
+                result.AppendLine("-------------------------------");
+            }
             
-            NegationSetting neg = new NegationSetting(
-                    new GuidStruct((new Guid()).ToString()),
-                    ImportanceEnum.Basic,
-                    coef2);
+            //NegationSettingI neg = new NegationSettingI(
+            //        new GuidStruct((new Guid()).ToString()),
+            //        ImportanceEnum.Basic,
+            //        coef2);
 
-            result.AppendLine("Negation of Intervals: 3 - 3 (A-P) ");
-            result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(neg)));
-            result.AppendLine("-------------------------------");
+            //result.AppendLine("Negation of Intervals: 3 - 3 (A-P) ");
+            //result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(neg)));
+            //result.AppendLine("-------------------------------");
 
-            ConjunctionSetting conj = new ConjunctionSetting(
+            DisjunctionSettingI disj = new DisjunctionSettingI(
                     new GuidStruct((new Guid()).ToString()),
                     ImportanceEnum.Basic,
                     new IEntitySetting[]
@@ -244,14 +251,14 @@ namespace Tests.MiningProcessor
                             coef,
                             coef2
                         }
-                    , 
-                    new GuidStruct[][]{},
+                    ,
+                    new GuidStruct[][] { },
                     1,
                     3
                 );
 
-            result.AppendLine("Conjunction(1-3) of : ... (A-P) ");
-            result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(conj)));
+            result.AppendLine("Disjunction(1-3) of [Cuts: 1 - 3 (A-P)] and [Intervals: 3 - 3 (1-8)]: ");
+            result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(disj)));
             result.AppendLine("-------------------------------");
 
             string r = result.ToString();

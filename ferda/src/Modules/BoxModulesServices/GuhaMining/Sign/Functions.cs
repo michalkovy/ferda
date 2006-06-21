@@ -90,16 +90,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
                             {
                                 case SignTypeEnum.Both:
                                     {
-                                        BothSignsSetting result =
-                                            new BothSignsSetting();
+                                        BothSignsSettingI result =
+                                            new BothSignsSettingI();
                                         result.id = new GuidStruct((new Guid()).ToString()); //TODO Guid
                                         result.importance = Importance;
                                         return result;
                                     }
                                 case SignTypeEnum.Negative:
                                     {
-                                        NegationSetting result =
-                                            new NegationSetting();
+                                        NegationSettingI result =
+                                            new NegationSettingI();
                                         result.id = new GuidStruct((new Guid()).ToString()); //TODO Guid
                                         result.importance = Importance;
                                         return result;

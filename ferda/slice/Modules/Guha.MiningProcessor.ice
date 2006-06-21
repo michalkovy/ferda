@@ -21,7 +21,7 @@ module Ferda {
 				class BitString
 				{
 					Ferda::Modules::LongSeq value;
-					int lenght;
+					int length;
 				};
 				
 				struct GuidAttributeNamePair
@@ -103,8 +103,8 @@ module Ferda {
 
 				class CoefficientSetting extends ILeafEntitySetting
 				{
-					int minLenght;
-					int maxLenght;
+					int minLength;
+					int maxLength;
 					CoefficientTypeEnum coefficientType;
 				};
 				
@@ -134,8 +134,8 @@ module Ferda {
 				{
 					IEntitySettingSeq operands;
 					GuidStructSeqSeq classesOfEquivalence;
-					int minLenght;
-					int maxLenght;
+					int minLength;
+					int maxLength;
 				};
 				
 				class ConjunctionSetting extends IMultipleOperandEntitySetting

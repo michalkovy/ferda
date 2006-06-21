@@ -41,10 +41,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 for (int i = 0; true; i++)
                 {
                     prolongCoefficient(_categoriesNames[i]);
-                    if (_actualLenght < _effectiveMinLength)
+                    if (_actualLength < _effectiveMinLength)
                         continue;
                     yield return _currentBitString;
-                    if (_actualLenght + 1 > _effectiveMaxLength)
+                    if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
         }
@@ -70,10 +70,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 for (int i = _categoriesNames.Length - 1; true; i--)
                 {
                     prolongCoefficient(_categoriesNames[i]);
-                    if (_actualLenght < _effectiveMinLength)
+                    if (_actualLength < _effectiveMinLength)
                         continue;
                     yield return _currentBitString;
-                    if (_actualLenght + 1 > _effectiveMaxLength)
+                    if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
         }
@@ -102,10 +102,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 for (int i = 0; true; i++)
                 {
                     prolongCoefficient(_categoriesNames[i]);
-                    if (_actualLenght < _effectiveMinLength)
+                    if (_actualLength < _effectiveMinLength)
                         continue;
                     yield return _currentBitString;
-                    if (_actualLenght + 1 > _effectiveMaxLength)
+                    if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
 
@@ -122,10 +122,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     if (i < 0)
                         break;
                     prolongCoefficient(_categoriesNames[i]);
-                    if (_actualLenght > _effectiveMaxLength
-                        || _actualLenght == _categoriesNames.Length)
+                    if (_actualLength > _effectiveMaxLength
+                        || _actualLength == _categoriesNames.Length)
                         break;
-                    if (_actualLenght < _effectiveMinLength)
+                    if (_actualLength < _effectiveMinLength)
                         continue;
                     yield return _currentBitString;
                 }
@@ -161,10 +161,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 for (int i = start; true; i++)
                 {
                     prolongCoefficient(_categoriesNames[i]);
-                    if (_actualLenght < _effectiveMinLength)
+                    if (_actualLength < _effectiveMinLength)
                         continue;
                     yield return _currentBitString;
-                    if ((_actualLenght + 1 > _effectiveMaxLength)
+                    if ((_actualLength + 1 > _effectiveMaxLength)
                         || (i + 1 >= _categoriesNames.Length))
                     {
                         //if (i == _categoriesNames.Length - 1)
@@ -208,47 +208,21 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 for (int i = start; true; i++)
                 {
                     prolongCoefficient(_categoriesNames[i % _categoriesNames.Length]);
-                    if (_actualLenght < _effectiveMinLength)
+                    if (_actualLength < _effectiveMinLength)
                         continue;
-                    if (_actualLenght == _categoriesNames.Length && start > 0)
+                    if (_actualLength == _categoriesNames.Length && start > 0)
                     {
                         resetCoefficient();
                         goto restart;
                     }
                     yield return _currentBitString;
-                    if (_actualLenght + 1 > _effectiveMaxLength)
+                    if (_actualLength + 1 > _effectiveMaxLength)
                     {
                         resetCoefficient();
                         goto restart;
                     }
                 }
         }
-
-        //public override IEnumerator<IBitString> GetBitStringEnumerator()
-        //{
-        //    int start = 0;
-        //restart:
-        //    if (_effectiveMinLength <= _categoriesNames.Length - start
-        //        && start < _categoriesNames.Length)
-        //        for (int i = start; true; i++)
-        //        {
-        //            prolongCoefficient(_categoriesNames[i]);
-        //            if (_actualLenght < _effectiveMinLength)
-        //                continue;
-        //            yield return _currentBitString;
-        //            if ((_actualLenght + 1 > _effectiveMaxLength)
-        //                || (i + 1 >= _categoriesNames.Length))
-        //            {
-        //                //if (i == _categoriesNames.Length - 1)
-        //                //{
-        //                //    break;
-        //                //}
-        //                start++;
-        //                resetCoefficient();
-        //                goto restart;
-        //            }
-        //        }
-        //}
 
         public override long TotalCount
         {
@@ -294,4 +268,44 @@ namespace Ferda.Guha.MiningProcessor.Generation
             }
         }
     }
+
+    //public abstract class Combinations : EntityEnumerable
+    //{
+    //    private IBitString[] set;
+
+    //    protected abstract IBitString operation(IBitString operand1, IBitString operand2);
+
+    //    private int minLength = 1;
+    //    private int maxLength = 3;
+
+    //    private IEntityEnumerator baseEnumerator;
+    //    private IBitString baseBitString;
+    //    public override IEnumerator<IBitString> GetBitStringEnumerator()
+    //    {
+    //        int length = 0;
+    //        Stack<IBitString> bitStringStack = new Stack<IBitString>(maxLength);
+    //        foreach (IEntityEnumerator member in set)
+    //        {
+    //            baseEnumerator = member;
+    //            foreach (IBitString s in member)
+    //            {
+    //                if (bitStringStack.Count == 0)
+    //                    bitStringStack.Push(s);
+    //                else
+    //                {
+    //                    IBitString previous = bitStringStack.Peek();
+    //                    bitStringStack.Push(operation(previous, s));
+    //                }
+    //                // bitStringStack.Count ~ length of subset
+    //                if (bitStringStack.Count > minLength)
+    //                    yield return bitStringStack.Peek();
+
+    //                length++;
+    //                baseBitString = s;
+    //            }
+    //            if (length > minLength)
+    //                ;
+    //        }
+    //    }
+    //}
 }

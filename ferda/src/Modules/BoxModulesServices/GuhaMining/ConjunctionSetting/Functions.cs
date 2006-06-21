@@ -102,12 +102,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
                             return null;
                         else
                         {
-                            Guha.MiningProcessor.ConjunctionSetting result =
-                                new Guha.MiningProcessor.ConjunctionSetting();
+                            ConjunctionSettingI result =
+                                new ConjunctionSettingI();
                             result.id = new GuidStruct((new Guid()).ToString()); //TODO Guid
                             result.importance = Importance;
-                            result.maxLenght = MaximalLength;
-                            result.minLenght = MinimalLength;
+                            result.maxLength = MaximalLength;
+                            result.minLength = MinimalLength;
                             List<IEntitySetting> operands = new List<IEntitySetting>();
                             foreach (BooleanAttributeSettingFunctionsPrx prx in subFormulas)
                             {

@@ -166,13 +166,13 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
                             return null;
                         else
                         {
-                            CoefficientSetting result =
-                                new CoefficientSetting();
+                            CoefficientSettingI result =
+                                new CoefficientSettingI();
                             result.id = new GuidStruct((new Guid()).ToString()); //TODO Guid
                             result.importance = Importance;
                             result.generator = bitStringGenerator;
-                            result.maxLenght = MaximalLength;
-                            result.minLenght = MinimalLength;
+                            result.maxLength = MaximalLength;
+                            result.minLength = MinimalLength;
                             result.coefficientType = CoefficientType;
                             return result;
                         }

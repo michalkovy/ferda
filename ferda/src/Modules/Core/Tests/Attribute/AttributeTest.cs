@@ -6,7 +6,6 @@ using Ferda.Guha.Attribute;
 using Ferda.Guha.Data;
 using Ferda.Modules;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ferda.Guha.Attribute;
 using BoundaryEnum=Ferda.Guha.Attribute.BoundaryEnum;
 
 namespace Tests.Attribute

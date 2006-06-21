@@ -6,29 +6,96 @@ using Ferda.Modules;
 namespace Ferda.Guha.MiningProcessor
 {
     #region Ice object implementations
-    class BitStringI : BitString { }
+    public class BitStringI : BitString { }
 
-    class IEntitySettingI : IEntitySetting { }
+    public class IEntitySettingI : IEntitySetting { }
 
-    class ILeafEntitySettingI : ILeafEntitySetting { }
+    public class ILeafEntitySettingI : ILeafEntitySetting { }
 
-    class CoefficientFixedSetSettingI : CoefficientFixedSetSetting { }
+    public class CoefficientFixedSetSettingI : CoefficientFixedSetSetting
+    {
+        public CoefficientFixedSetSettingI(GuidStruct id, ImportanceEnum importance, BitStringGeneratorPrx generator, string[] categoriesIds)
+            : base(id, importance, generator, categoriesIds)
+        {
+        }
 
-    class CoefficientSettingI : CoefficientSetting { }
+        public CoefficientFixedSetSettingI()
+            : base()
+        {
+        }
+    }
 
-    class ISingleOperandEntitySettingI : ISingleOperandEntitySetting { }
+    public class CoefficientSettingI : CoefficientSetting
+    {
+        public CoefficientSettingI(GuidStruct id, ImportanceEnum importance, BitStringGeneratorPrx generator, int minLength, int maxLength, CoefficientTypeEnum coefficientType)
+            : base(id, importance, generator, minLength, maxLength, coefficientType)
+        {
+        }
 
-    class NegationSettingI : NegationSetting { }
+        public CoefficientSettingI()
+            : base()
+        {
+        }
+    }
 
-    class BothSignsSettingI : BothSignsSetting { }
+    public class ISingleOperandEntitySettingI : ISingleOperandEntitySetting { }
 
-    class IMultipleOperandEntitySettingI : IMultipleOperandEntitySetting { }
+    public class NegationSettingI : NegationSetting
+    {
+        public NegationSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting operand)
+            : base(id, importance, operand)
+        {
+        }
 
-    class ConjunctionSettingI : ConjunctionSetting { }
+        public NegationSettingI()
+            : base()
+        {
+        }
+    }
 
-    class DisjunctionSettingI : DisjunctionSetting { }
+    public class BothSignsSettingI : BothSignsSetting
+    {
+        public BothSignsSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting operand)
+            : base(id, importance, operand)
+        {
+        }
+
+        public BothSignsSettingI()
+            : base()
+        {
+        }
+    }
+
+    public class IMultipleOperandEntitySettingI : IMultipleOperandEntitySetting { }
+
+    public class ConjunctionSettingI : ConjunctionSetting
+    {
+        public ConjunctionSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting[] operands, GuidStruct[][] classesOfEquivalence, int minLength, int maxLength)
+            : base(id, importance, operands, classesOfEquivalence, minLength, maxLength)
+        {
+        }
+
+        public ConjunctionSettingI()
+            : base()
+        {
+        }
+    }
+
+
+    public class DisjunctionSettingI : DisjunctionSetting
+    {
+        public DisjunctionSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting[] operands, GuidStruct[][] classesOfEquivalence, int minLength, int maxLength)
+            : base(id, importance, operands, classesOfEquivalence, minLength, maxLength)
+        {
+        }
+
+        public DisjunctionSettingI()
+            : base()
+        {
+        }
+    }
     #endregion
-    
+
     public class ObjectFactoryForPropertyTypes : Ice.LocalObjectImpl, Ice.ObjectFactory
     {
         #region ObjectFactoryOperationsNC_ Members
@@ -93,7 +160,7 @@ namespace Ferda.Guha.MiningProcessor
                 foreach (string s in types)
                 {
                     if (communicator.findObjectFactory(s) == null)
-                        communicator.addObjectFactory(factory, s);                    
+                        communicator.addObjectFactory(factory, s);
                 }
             }
         }

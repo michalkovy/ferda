@@ -6,7 +6,7 @@ namespace Design
 
         int MinimalLength { get; set; }
 
-        int MaximalLenght { get; set; }
+        int MaximalLength { get; set; }
 
         EntityImporatancePair[] Operands { get; set; }
     }

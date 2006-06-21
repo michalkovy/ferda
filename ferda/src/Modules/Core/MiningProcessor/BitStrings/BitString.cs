@@ -123,30 +123,30 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <summary>
         /// Constructor that allocates the memory.
         /// </summary>
-        /// <param name="length">The length of BitString (the number of bits).</param>
         /// <param name="identifier">The identifier.</param>
-        private BitString(int length, IFormula identifier)
+        /// <param name="usedAttributes">The used attributes.</param>
+        private BitString(IFormula identifier, List<Guid> usedAttributes)
         {
+            _usedAttributes = usedAttributes;
             _identifier = identifier;
-            create(length);
         }
 
         public BitString(int length, BitStringIdentifier identifier, long[] bits)
+        : this(new Atom(identifier), new List<Guid>(new Guid[] { identifier.AttributeId }))
         {
             if (length <= 0)
                 throw new ArgumentOutOfRangeException("length", "The length of a BitString must be a positive integer.");
 
             _size = length;
-            _identifier = new Atom(identifier);
-            
+
             int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
-            
+
 #if USE64BIT
             if (arraySize != bits.Length)
-                throw new ArgumentOutOfRangeException("bits", "The array of bits has bad size (Lenght).");
+                throw new ArgumentOutOfRangeException("bits", "The array of bits has bad size (Length).");
 
             _array = new ulong[arraySize];
-            for(int i=0; i < bits.Length; i++)
+            for (int i = 0; i < bits.Length; i++)
             {
                 unchecked
                 {
@@ -165,14 +165,13 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="source">Source BitString that will be copied.</param>
         public BitString(BitString source)
+            : this(source.Identifier, new List<Guid>(source.UsedAttributes))
         {
             if (source._size == 0)
                 throw new InvalidOperationException("Cannot copy-construct a BitString from an uninitialized one.");
 
             _size = source._size;
             _sum = source._sum;
-            _identifier = source._identifier;
-            _usedAttributes = new List<Guid>(UsedAttributes);
 
 #if USE64BIT
             _array = new ulong[source._array.Length];
@@ -195,10 +194,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <exception cref="NullReferenceException">Input string cannot be a null reference..</exception>
         /// <exception cref="ArgumentException">Input string can contain only characters '0' and '1'.</exception>
         public BitString(string source, Atom identifier)
-            : this(source.Length, identifier)
+            : this(identifier, new List<Guid>(new Guid[] { identifier.BitStringIdentifier.AttributeId }))
         {
-            _usedAttributes = new List<Guid>();
-            _usedAttributes.Add(identifier.BitStringIdentifier.AttributeId);
+            create(source.Length);
             for (int i = 0; i < source.Length; i++)
             {
                 switch (source[i])
