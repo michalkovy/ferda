@@ -40,7 +40,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
             {
                 result.Add(formula.ToString());
             }
-            return Formula.SequenceToString(result, FormulaSeparator.And);
+            return Formula.SequenceToString(result, FormulaSeparator.And, true);
         }
     }
 }

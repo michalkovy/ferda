@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Ferda.Guha.Math;
 using Ferda.Guha.MiningProcessor.BitStrings;
 
 namespace Ferda.Guha.MiningProcessor.Generation
@@ -61,11 +62,13 @@ namespace Ferda.Guha.MiningProcessor.Generation
         }
 
         #endregion
+
+        public abstract long TotalCount { get;}
     }
 
     public abstract class EntityEnumerableCoefficient : EntityEnumerable
     {
-        private readonly CoefficientSetting _setting;
+        protected readonly CoefficientSetting _setting;
 
         public EntityEnumerableCoefficient(CoefficientSetting setting)
             : base(new Guid(setting.id.value))
@@ -124,8 +127,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
             else
                 _currentBitString = _currentBitString.Or(newBitString);
         }
-
-        public abstract long TotalCount { get;}
     }
 
     #region Not Used
@@ -1123,7 +1124,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         #region Fields
 
-        private List<IEntityEnumerator> _sourceEntities = new List<IEntityEnumerator>();
+        protected List<IEntityEnumerator> _sourceEntities = new List<IEntityEnumerator>();
 
         // max(1, number of forced operands, min length param))
         private int _effectiveMinLength;
@@ -1135,6 +1136,36 @@ namespace Ferda.Guha.MiningProcessor.Generation
         private readonly IMultipleOperandEntitySetting _setting;
 
         #endregion
+
+        public override long TotalCount
+        {
+            get
+            {
+                long result = 0;
+
+                // initialize 
+                int count = _sourceEntities.Count;
+                List<long> totalCounts = new List<long>(_sourceEntities.Count);
+                int i = -1;
+                foreach (IEntityEnumerator entity in _sourceEntities)
+                {
+                    i++;
+                    totalCounts[i] = entity.TotalCount;
+                }
+
+                // compute
+                for (int length = _effectiveMinLength; length <= _effectiveMaxLength; length++)
+                {
+                    long countOfCombinations = Combinatorics.BinomialCoefficient(count, length);
+                    long entitySelectedTimes = countOfCombinations / count;
+                    foreach (long l in totalCounts)
+                    {
+                        result += entitySelectedTimes * l;
+                    }
+                }
+                return result;
+            }
+        }
 
         #region IDisposable Members
 

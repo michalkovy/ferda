@@ -40,7 +40,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
             foreach (IFormula formula in _operands)
             {
                 Atom atom = formula as Atom;
-                if (formula == null)
+                if (atom == null)
                     result.Add(formula.ToString());
                 else
                 {
@@ -55,7 +55,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
             {
                 result.Add(Atom.WriteAtom(pair.Key, pair.Value));
             }
-            return Formula.SequenceToString(result, FormulaSeparator.Or);
+            return Formula.SequenceToString(result, FormulaSeparator.Or, true);
         }
     }
 }
