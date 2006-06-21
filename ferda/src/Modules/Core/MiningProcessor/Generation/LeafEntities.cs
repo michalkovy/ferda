@@ -1,8 +1,10 @@
+#define Testing
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Ferda.Guha.Math;
 using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Guha.MiningProcessor.Formulas;
 
 namespace Ferda.Guha.MiningProcessor.Generation
 {
@@ -23,6 +25,27 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 new Guid(_setting.generator.GetAttributeId().value),
                 _setting.categoriesIds,
                 BitwiseOperation.Or);
+        }
+
+        public override long TotalCount
+        {
+            get { return 1; }
+        }
+
+        public override string ToString()
+        {
+            string result = "";
+#if Testing
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+#else
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
+                new Guid(_setting.generator.GetAttributeId().value)
+                );
+#endif
+            result += "["
+                + Formulas.Formula.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
+                + "] (fixed set)";
+            return result;
         }
     }
 
@@ -53,6 +76,20 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             get { return _effectiveMaxLength - _effectiveMinLength + 1; }
         }
+
+        public override string ToString()
+        {
+            string result = "";
+#if Testing
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+#else
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
+                new Guid(_setting.generator.GetAttributeId().value)
+                );
+#endif
+            result += "Left Cuts [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
+            return result;
+        }
     }
 
     public class RightCuts : EntityEnumerableCoefficient
@@ -81,6 +118,20 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public override long TotalCount
         {
             get { return _effectiveMaxLength - _effectiveMinLength + 1; }
+        }
+
+        public override string ToString()
+        {
+            string result = "";
+#if Testing
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+#else
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
+                new Guid(_setting.generator.GetAttributeId().value)
+                );
+#endif
+            result += "Right Cuts [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
+            return result;
         }
     }
 
@@ -141,6 +192,20 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     return (_effectiveMaxLength - _effectiveMinLength + 1) * 2;
             }
         }
+
+        public override string ToString()
+        {
+            string result = "";
+#if Testing
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+#else
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
+                new Guid(_setting.generator.GetAttributeId().value)
+                );
+#endif
+            result += "Cuts [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
+            return result;
+        }
     }
 
     public class Intervals : EntityEnumerableCoefficient
@@ -187,6 +252,20 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     _categoriesNames.Length - _effectiveMinLength + 1
                     );
             }
+        }
+
+        public override string ToString()
+        {
+            string result = "";
+#if Testing
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+#else
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
+                new Guid(_setting.generator.GetAttributeId().value)
+                );
+#endif
+            result += "Intervals [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
+            return result;
         }
     }
 
@@ -238,6 +317,20 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 }
             }
         }
+
+        public override string ToString()
+        {
+            string result = "";
+#if Testing
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+#else
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
+                new Guid(_setting.generator.GetAttributeId().value)
+                );
+#endif
+            result += "Cyclic Intervals [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
+            return result;
+        }
     }
 
     public class Subsets : EntityEnumerableCoefficient
@@ -266,6 +359,20 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 }
                 return result;
             }
+        }
+
+        public override string ToString()
+        {
+            string result = "";
+#if Testing
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+#else
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
+                new Guid(_setting.generator.GetAttributeId().value)
+                );
+#endif
+            result += "Subsets [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
+            return result;
         }
     }
 

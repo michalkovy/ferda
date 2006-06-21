@@ -5,6 +5,6 @@ namespace Ferda.Guha.MiningProcessor
 {
     public interface IEntityEnumerator : IEnumerable<IBitString>
     {
-        // casto i IEnumerator<IBitString>
+        long TotalCount { get;}
     }
 }

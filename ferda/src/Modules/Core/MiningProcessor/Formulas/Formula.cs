@@ -48,7 +48,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         /// </summary>
         public const string NegationSign = "\u00AC";
 
-        public static string SequenceToString(IEnumerable<string> items, FormulaSeparator formulaSeparator)
+        public static string SequenceToString(IEnumerable<string> items, FormulaSeparator formulaSeparator, bool sorted)
         {
             string separator;
             switch (formulaSeparator)
@@ -64,6 +64,12 @@ namespace Ferda.Guha.MiningProcessor.Formulas
                     break;
                 default:
                     throw new System.NotImplementedException();
+            }
+            
+            if (sorted)
+            {
+                List<string> sortedItems = new List<string>(items);
+                items = sortedItems;
             }
 
             string result = null;

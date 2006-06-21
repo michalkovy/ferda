@@ -17,6 +17,16 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 yield return bitString.Not();
             }
         }
+
+        public override long TotalCount
+        {
+            get { return _entity.TotalCount; }
+        }
+
+        public override string ToString()
+        {
+            return "Negation of <" + _entity.ToString() + ">";
+        }
     }
     
     public class BothSigns : SingleOperandEntity
@@ -33,6 +43,16 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 yield return bitString;
                 yield return bitString.Not();
             }
+        }
+
+        public override long TotalCount
+        {
+            get { return _entity.TotalCount * 2; }
+        }
+        
+        public override string ToString()
+        {
+            return "Both signs of <" + _entity.ToString() + ">";
         }
     }
 }

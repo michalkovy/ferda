@@ -12,10 +12,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private static Dictionary<Guid, Dictionary<string, string>> _bitStringsSetting;
         private static Dictionary<Guid, Dictionary<string, IBitString>> _bitStrings;
 
-        public const string Attr1Id = "CA761232-ED42-11CE-BACD-00AA0057B223";
-        public const string Attr2Id = "CA761232-ED42-11CE-BACD-00AA0057B224";
-        public const string Attr3Id = "CA761232-ED42-11CE-BACD-00AA0057B225";
-        
+        public const string Attr1Id = "CA761232-ED42-11CE-BACD-00AA0057B221";
+        public const string Attr2Id = "CA761232-ED42-11CE-BACD-00AA0057B222";
+        public const string Attr3Id = "CA761232-ED42-11CE-BACD-00AA0057B223";
+        public const string Attr4Id = "CA761232-ED42-11CE-BACD-00AA0057B224";
+
+        /// <summary>
+        /// Initializes the <see cref="T:BitStringCacheTest"/> class.
+        /// </summary>
         static BitStringCacheTest()
         {
             _bitStringsSetting = new Dictionary<Guid, Dictionary<string, string>>();
@@ -54,6 +58,17 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _bitStringsSetting[attr3Name].Add("7", "0000000001000000");
             _bitStringsSetting[attr3Name].Add("8", "0000000010000000");
 
+            Guid attr4Name = new Guid(Attr4Id);
+            _bitStringsSetting.Add(attr4Name, new Dictionary<string, string>());
+            _bitStringsSetting[attr4Name].Add("alpha", "0000000000000001");
+            _bitStringsSetting[attr4Name].Add("beta", "0000000000000100");
+            _bitStringsSetting[attr4Name].Add("gamma", "0000000000010000");
+            _bitStringsSetting[attr4Name].Add("delta", "0000000001000000");
+            _bitStringsSetting[attr4Name].Add("epsilon", "0000000100000000");
+            _bitStringsSetting[attr4Name].Add("zeta", "0000010000000000");
+            _bitStringsSetting[attr4Name].Add("eta", "0001000000000000");
+            _bitStringsSetting[attr4Name].Add("theta", "0100000000000000");
+            
             _bitStrings = new Dictionary<Guid, Dictionary<string, IBitString>>();
             foreach (KeyValuePair<Guid, Dictionary<string, string>> pair in _bitStringsSetting)
             {

@@ -10,7 +10,8 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         public static string GetAttributeNameInLiterals(Guid attributeId)
         {
 #if Testing
-                return "Attribute";
+            string stringId = attributeId.ToString();
+            return "Attribute" + stringId.Substring(stringId.Length - 1);
 #else
                 return attributeId.ToString();
 #endif

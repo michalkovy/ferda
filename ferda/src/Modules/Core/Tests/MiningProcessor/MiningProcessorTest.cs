@@ -30,45 +30,33 @@ namespace Tests.MiningProcessor
             set { testContextInstance = value; }
         }
 
-        private string writeOutput(EntityEnumerableCoefficient entity)
+        private string writeOutput(IEntityEnumerator entity)
         {
-            string result = "";
+            StringBuilder result = new StringBuilder(1024);
+            result.AppendLine(entity.ToString());
             long count = 0;
             foreach (IBitString s in entity)
             {
                 count++;
-                result += s.Identifier.ToString() + "\n";
-                result += s.ToString() + "\n";
+                result.AppendLine(s.Identifier.ToString());
+                result.AppendLine(s.ToString());
             }
-            if (entity.TotalCount != count)
-                Debugger.Break();
-            Assert.AreEqual(entity.TotalCount, count);
-            return result;
-        }
-
-        private string writeOutput(IEntityEnumerator entity)
-        {
-            string result = "";
-            //long count = 0;
-            foreach (IBitString s in entity)
+            if (!entity.GetType().IsSubclassOf(typeof(MutliOperandEntity)))
             {
-                //count++;
-                result += s.Identifier.ToString() + "\n";
-                result += s.ToString() + "\n";
+                if (entity.TotalCount != count)
+                    Debugger.Break();
+                Assert.AreEqual(entity.TotalCount, count);
             }
-            //if (entity.TotalCount != count)
-            //    Debugger.Break();
-            //Assert.AreEqual(entity.TotalCount, count);
-            return result;
+            result.AppendLine("-------------------------------");
+
+            return result.ToString();
         }
 
-        private Dictionary<string, CoefficientSetting> _coefficients = new Dictionary<string, CoefficientSetting>();
+        private List<CoefficientSetting> _coefficients = new List<CoefficientSetting>();
 
         private void CreateCS1(CoefficientTypeEnum type, int minLen, int maxLen)
         {
             _coefficients.Add(
-                type.ToString() + ": " + minLen.ToString() + " - " + maxLen.ToString()
-                + " (A-P)",
             new CoefficientSettingI(
                 new GuidStruct(BitStringCacheTest.Attr1Id),
                 ImportanceEnum.Basic,
@@ -82,8 +70,6 @@ namespace Tests.MiningProcessor
         private void CreateCS2(CoefficientTypeEnum type, int minLen, int maxLen)
         {
             _coefficients.Add(
-                type.ToString() + ": " + minLen.ToString() + " - " + maxLen.ToString()
-                + " (A)",
             new CoefficientSettingI(
                 new GuidStruct(BitStringCacheTest.Attr2Id),
                 ImportanceEnum.Basic,
@@ -137,11 +123,9 @@ namespace Tests.MiningProcessor
 
             CreateCSss();
 
-            foreach (KeyValuePair<string, CoefficientSetting> pair in _coefficients)
+            foreach (CoefficientSetting entity in _coefficients)
             {
-                result.AppendLine(pair.Key);
-                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(pair.Value)));
-                result.AppendLine("-------------------------------");
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(entity)));
             }
 
             string r = result.ToString();
@@ -167,27 +151,21 @@ namespace Tests.MiningProcessor
                 CoefficientTypeEnum.Cuts
                 );
 
-            result.AppendLine("Cuts: 1 - 3 (A-P) ");
             result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef)));
-            result.AppendLine("-------------------------------");
 
             NegationSettingI neg = new NegationSettingI(
                     new GuidStruct((new Guid()).ToString()),
                     ImportanceEnum.Basic,
                     coef);
 
-            result.AppendLine("Negation of Cuts: 1 - 3 (A-P) ");
             result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(neg)));
-            result.AppendLine("-------------------------------");
 
             BothSignsSettingI both = new BothSignsSettingI(
                     new GuidStruct((new Guid()).ToString()),
                     ImportanceEnum.Basic,
                     coef);
 
-            result.AppendLine("Both signs of Cuts: 1 - 3 (A-P) ");
             result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(both)));
-            result.AppendLine("-------------------------------");
 
             string r = result.ToString();
             Debug.Write(r);
@@ -202,7 +180,7 @@ namespace Tests.MiningProcessor
             bool traceInput = false;
             StringBuilder result = new StringBuilder();
 
-            CoefficientSettingI coef = new CoefficientSettingI(
+            CoefficientSettingI coef1 = new CoefficientSettingI(
                 new GuidStruct(BitStringCacheTest.Attr1Id),
                 ImportanceEnum.Basic,
                 null,
@@ -213,43 +191,55 @@ namespace Tests.MiningProcessor
 
             if (traceInput)
             {
-                result.AppendLine("Cuts: 1 - 3 (A-P) ");
-                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef)));
-                result.AppendLine("-------------------------------");
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef1)));
             }
 
-            CoefficientSettingI coef2 = new CoefficientSettingI(
+            CoefficientSettingI coef3 = new CoefficientSettingI(
                 new GuidStruct(BitStringCacheTest.Attr3Id),
                 ImportanceEnum.Basic,
                 null,
-                3,
-                3,
+                5,
+                5,
                 CoefficientTypeEnum.Intervals
                 );
 
             if (traceInput)
             {
-                result.AppendLine("Intervals: 3 - 3 (1-8) ");
-                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef2)));
-                result.AppendLine("-------------------------------");
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef3)));
             }
-            
-            //NegationSettingI neg = new NegationSettingI(
-            //        new GuidStruct((new Guid()).ToString()),
-            //        ImportanceEnum.Basic,
-            //        coef2);
 
-            //result.AppendLine("Negation of Intervals: 3 - 3 (A-P) ");
-            //result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(neg)));
-            //result.AppendLine("-------------------------------");
+            CoefficientSettingI coef4 = new CoefficientSettingI(
+                new GuidStruct(BitStringCacheTest.Attr4Id),
+                ImportanceEnum.Basic,
+                null,
+                6,
+                6,
+                CoefficientTypeEnum.Cuts
+                );
+
+            if (traceInput)
+            {
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef4)));
+            }
+
+            NegationSettingI negCoef4 = new NegationSettingI(
+                    new GuidStruct((new Guid()).ToString()),
+                    ImportanceEnum.Basic,
+                    coef4);
+
+            if (traceInput)
+            {
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(negCoef4)));
+            }
 
             DisjunctionSettingI disj = new DisjunctionSettingI(
                     new GuidStruct((new Guid()).ToString()),
                     ImportanceEnum.Basic,
                     new IEntitySetting[]
                         {
-                            coef,
-                            coef2
+                            coef1,
+                            coef3,
+                            negCoef4
                         }
                     ,
                     new GuidStruct[][] { },
@@ -257,10 +247,8 @@ namespace Tests.MiningProcessor
                     3
                 );
 
-            result.AppendLine("Disjunction(1-3) of [Cuts: 1 - 3 (A-P)] and [Intervals: 3 - 3 (1-8)]: ");
             result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(disj)));
-            result.AppendLine("-------------------------------");
-
+ 
             string r = result.ToString();
             Debug.Write(r);
         }
