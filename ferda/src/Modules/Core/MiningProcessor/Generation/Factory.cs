@@ -78,11 +78,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
             {
                 return new BothSigns((BothSignsSettingI)setting);
             }
-            else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::ConjunctionSetting"))
+            else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::DisjunctionSetting"))
             {
                 return new Disjunction((DisjunctionSettingI)setting);
             }
-            else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::DisjunctionSetting"))
+            else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::ConjunctionSetting"))
             {
                 return new Conjunction((ConjunctionSettingI)setting);
             }

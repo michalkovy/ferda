@@ -14,6 +14,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         public const string Attr1Id = "CA761232-ED42-11CE-BACD-00AA0057B223";
         public const string Attr2Id = "CA761232-ED42-11CE-BACD-00AA0057B224";
+        public const string Attr3Id = "CA761232-ED42-11CE-BACD-00AA0057B225";
         
         static BitStringCacheTest()
         {
@@ -41,6 +42,17 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             Guid attr2Name = new Guid(Attr2Id);
             _bitStringsSetting.Add(attr2Name, new Dictionary<string, string>());
             _bitStringsSetting[attr2Name].Add("A", "00001");
+
+            Guid attr3Name = new Guid(Attr3Id);
+            _bitStringsSetting.Add(attr3Name, new Dictionary<string, string>());
+            _bitStringsSetting[attr3Name].Add("1", "0000000000000001");
+            _bitStringsSetting[attr3Name].Add("2", "0000000000000010");
+            _bitStringsSetting[attr3Name].Add("3", "0000000000000100");
+            _bitStringsSetting[attr3Name].Add("4", "0000000000001000");
+            _bitStringsSetting[attr3Name].Add("5", "0000000000010000");
+            _bitStringsSetting[attr3Name].Add("6", "0000000000100000");
+            _bitStringsSetting[attr3Name].Add("7", "0000000001000000");
+            _bitStringsSetting[attr3Name].Add("8", "0000000010000000");
 
             _bitStrings = new Dictionary<Guid, Dictionary<string, IBitString>>();
             foreach (KeyValuePair<Guid, Dictionary<string, string>> pair in _bitStringsSetting)

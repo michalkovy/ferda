@@ -18,7 +18,7 @@ namespace Design
             set { throw new Exception("The method or operation is not implemented."); }
         }
 
-        public int MaximalLenght
+        public int MaximalLength
         {
             get { throw new Exception("The method or operation is not implemented."); }
             set { throw new Exception("The method or operation is not implemented."); }

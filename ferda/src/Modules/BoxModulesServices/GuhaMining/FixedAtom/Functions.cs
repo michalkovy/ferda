@@ -125,8 +125,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
                             return null;
                         else
                         {
-                            CoefficientFixedSetSetting result =
-                                new CoefficientFixedSetSetting();
+                            CoefficientFixedSetSettingI result =
+                                new CoefficientFixedSetSettingI();
                             result.id = new GuidStruct((new Guid()).ToString()); //TODO Guid
                             result.importance = Importance;
                             result.generator = bitStringGenerator;
