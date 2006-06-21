@@ -33,7 +33,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
                    + Formula.SequenceToString(
                          categories, 
                          FormulaSeparator.AtomMembers,
-                         true
+                         false
                          ) 
                    + ")";
         }
