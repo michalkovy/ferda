@@ -43,7 +43,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 );
 #endif
             result += "["
-                + Formulas.Formula.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
+                + Formula.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
                 + "] (fixed set)";
             return result;
         }
@@ -182,7 +182,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         continue;
                     yield return _currentBitString;
                 }
-            
+
             resetCoefficient();
         }
 
@@ -339,7 +339,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         }
     }
 
-    public class Subsets : EntityEnumerableCoefficient
+    public class Subsets : EntityEnumerableCoefficient, SubsetsInstance<IBitString, IBitString>
     {
         public Subsets(CoefficientSetting setting)
             : base(setting)
@@ -347,12 +347,98 @@ namespace Ferda.Guha.MiningProcessor.Generation
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.Subsets);
             //TODO integritni omezeni (ordinal...)
         }
+        /*
+        Stack<IBitString> sB = new Stack<IBitString>();
+        Stack<int> sI = new Stack<int>();
+        private void sBPush(IBitString adding)
+        {
+            if (sB.Count > 0)
+            {
+                IBitString previous = sB.Peek();
+                sB.Push(previous.Or(adding));
+            }
+            else
+            {
+                sB.Push(adding);
+            }
+        }
+        private bool returnCurrent(out IBitString result)
+        {
+            Debug.Assert(sB.Count <= _effectiveMaxLength);
+            if (sB.Count >= _effectiveMinLength)
+            {
+                result = sB.Peek();
+                return true;
+            }
+            result = null;
+            return false;
+        }
+        private void getEntity(int index)
+        {
+            IBitString bS = getBitString(_categoriesNames[index]);
+            sBPush(bS);
+            sI.Push(index);
+        }
+        private bool prolong(bool afterRemove)
+        {
+            if (sB.Count == _effectiveMaxLength) // not after remove
+                return false;
+            int newIndex;
+            if (afterRemove)
+                newIndex = sI.Pop() + 1;
+            else
+                newIndex = sI.Peek() + 1;
+            if (newIndex >= _categoriesNames.Length)
+                return false;
+            getEntity(newIndex);
+            return true;
+        }
+        private bool removeLastItem()
+        {
+            if (sB.Count > 0)
+            {
+                sB.Pop();
+                return true;
+            }
+            return false;
+        }
+        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        {
+            IBitString result;
+            bool afterRemove;
+            afterRemove = false;
+
+            #region initialize
+
+            sB.Clear();
+            sI.Clear();
+            getEntity(0);
+
+            #endregion
+
+        returnCurrent:
+            if (returnCurrent(out result))
+                yield return result;
+        prolong:
+            if (prolong(afterRemove))
+            {
+                afterRemove = false;
+                goto returnCurrent;
+            }
+            if (removeLastItem())
+            {
+                afterRemove = true;
+                goto prolong;
+            }
+        }
+        */
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
-            //TODO
-            throw new Exception("The method or operation is not implemented.");
-            resetCoefficient();
+            Subsets<IBitString, IBitString> enumerator =
+                new Subsets<IBitString, IBitString>(_effectiveMinLength, _effectiveMaxLength, _categoriesNames.Length,
+                                                    this);
+            return enumerator.GetEnumerator();
         }
 
         public override long TotalCount
@@ -360,7 +446,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             get
             {
                 long result = 0;
-                for (int j = _effectiveMinLength; j <= _categoriesNames.Length; j++)
+                for (int j = _effectiveMinLength; j <= _effectiveMaxLength; j++)
                 {
                     result += Combinatorics.BinomialCoefficient(_categoriesNames.Length, j);
                 }
@@ -381,45 +467,29 @@ namespace Ferda.Guha.MiningProcessor.Generation
             result += "Subsets [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
             return result;
         }
+
+        #region SubsetsInstance<IBitString,IBitString> Members
+
+        public IBitString operation(IBitString previous, IBitString current)
+        {
+            return previous.Or(current);
+        }
+
+        public IBitString operation(IBitString current)
+        {
+            return current;
+        }
+
+        public IBitString getItem(int index)
+        {
+            return getBitString(_categoriesNames[index]);
+        }
+
+        public IBitString getDefaultInit()
+        {
+            return null;
+        }
+
+        #endregion
     }
-
-    //public abstract class Combinations : EntityEnumerable
-    //{
-    //    private IBitString[] set;
-
-    //    protected abstract IBitString operation(IBitString operand1, IBitString operand2);
-
-    //    private int minLength = 1;
-    //    private int maxLength = 3;
-
-    //    private IEntityEnumerator baseEnumerator;
-    //    private IBitString baseBitString;
-    //    public override IEnumerator<IBitString> GetBitStringEnumerator()
-    //    {
-    //        int length = 0;
-    //        Stack<IBitString> bitStringStack = new Stack<IBitString>(maxLength);
-    //        foreach (IEntityEnumerator member in set)
-    //        {
-    //            baseEnumerator = member;
-    //            foreach (IBitString s in member)
-    //            {
-    //                if (bitStringStack.Count == 0)
-    //                    bitStringStack.Push(s);
-    //                else
-    //                {
-    //                    IBitString previous = bitStringStack.Peek();
-    //                    bitStringStack.Push(operation(previous, s));
-    //                }
-    //                // bitStringStack.Count ~ length of subset
-    //                if (bitStringStack.Count > minLength)
-    //                    yield return bitStringStack.Peek();
-
-    //                length++;
-    //                baseBitString = s;
-    //            }
-    //            if (length > minLength)
-    //                ;
-    //        }
-    //    }
-    //}
 }

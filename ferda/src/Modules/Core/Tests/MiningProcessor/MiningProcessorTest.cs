@@ -41,7 +41,7 @@ namespace Tests.MiningProcessor
                 result.AppendLine(s.Identifier.ToString());
                 result.AppendLine(s.ToString());
             }
-            if (!entity.GetType().IsSubclassOf(typeof(MutliOperandEntity)))
+            //if (!entity.GetType().IsSubclassOf(typeof(MutliOperandEntity)))
             {
                 if (entity.TotalCount != count)
                     Debugger.Break();
@@ -85,9 +85,12 @@ namespace Tests.MiningProcessor
             CreateCS1(type, 1, 1);
             CreateCS1(type, 1, 3);
             CreateCS1(type, 3, 3);
-            CreateCS1(type, 2, 15);
-            CreateCS1(type, 3, 16);
-            CreateCS1(type, 4, 17);
+            if (type != CoefficientTypeEnum.Subsets)
+            {
+                CreateCS1(type, 2, 15);
+                CreateCS1(type, 3, 16);
+                CreateCS1(type, 4, 17);
+            }
         }
 
         private void CreateCS2s(CoefficientTypeEnum type)
@@ -98,17 +101,19 @@ namespace Tests.MiningProcessor
 
         private void CreateCSss()
         {
-            CreateCS1s(CoefficientTypeEnum.LeftCuts);
-            CreateCS1s(CoefficientTypeEnum.RightCuts);
-            CreateCS1s(CoefficientTypeEnum.Cuts);
-            CreateCS1s(CoefficientTypeEnum.Intervals);
-            CreateCS1s(CoefficientTypeEnum.CyclicIntervals);
-
             CreateCS2s(CoefficientTypeEnum.LeftCuts);
             CreateCS2s(CoefficientTypeEnum.RightCuts);
             CreateCS2s(CoefficientTypeEnum.Cuts);
             CreateCS2s(CoefficientTypeEnum.Intervals);
             CreateCS2s(CoefficientTypeEnum.CyclicIntervals);
+            CreateCS2s(CoefficientTypeEnum.Subsets);
+
+            CreateCS1s(CoefficientTypeEnum.LeftCuts);
+            CreateCS1s(CoefficientTypeEnum.RightCuts);
+            CreateCS1s(CoefficientTypeEnum.Cuts);
+            CreateCS1s(CoefficientTypeEnum.Intervals);
+            CreateCS1s(CoefficientTypeEnum.CyclicIntervals);
+            CreateCS1s(CoefficientTypeEnum.Subsets);
         }
 
         public static string coefficientAttributeId = "";
@@ -130,8 +135,6 @@ namespace Tests.MiningProcessor
 
             string r = result.ToString();
             Debug.Write(r);
-
-            //TODO test subsets
         }
 
         /// <summary>
@@ -243,12 +246,12 @@ namespace Tests.MiningProcessor
                         }
                     ,
                     new GuidStruct[][] { },
-                    1,
+                    2,
                     3
                 );
 
             result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(disj)));
- 
+
             string r = result.ToString();
             Debug.Write(r);
         }
