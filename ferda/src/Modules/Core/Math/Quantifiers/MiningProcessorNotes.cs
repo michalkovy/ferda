@@ -1,50 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//TODO rozmyslet taky "UF"-Filter
 
 namespace Ferda.Guha.Math.Quantifiers
 {
-
-    #region BitStrings
-
-    /// <summary>
-    /// Interface pro bitové/fuzzy retizky
-    /// </summary>
-    interface IBitString
-    {
-    }
-
-    class BoolString : IBitString
-    {
-    }
-
-    class FuzzyString : IBitString
-    {
-    }
-
-    #endregion
-
-    /// <summary>
-    /// Struktura navrzena Michalem .. obecna hypoteza
-    /// </summary>
-    public class Hypothesis
-    {
-    }
-
     public class QuantifierValueQueue
     {
-        private QuantifierSemanticEnum _quantifierSemantic;
+        //private QuantifierSemanticEnum _quantifierSemantic;
         double value;
-        Hypothesis hypothesis;
+        //Hypothesis hypothesis;
     }
 
     public class Quantifier
     {
-        /// <summary>
-        /// Proxy func. obj. konkretniho kvantifikatoru
-        /// </summary>
-        public AbstractQuantifierFunctions functionsPrx;
+        ///// <summary>
+        ///// Proxy func. obj. konkretniho kvantifikatoru
+        ///// </summary>
+        //public AbstractQuantifierFunctions functionsPrx;
 
         /// <summary>
         /// Nastaveni kvantifikatoru
@@ -110,7 +82,7 @@ namespace Ferda.Guha.Math.Quantifiers
         /// </summary>
         public abstract void GenerateHypotheses();
 
-        public void ProcessQuantifiers(Hypothesis hypothesis, ContingencyTable contingecyTable)
+        public void ProcessQuantifiers(ContingencyTable contingecyTable)
         {
             // save TopN (mozna i FirstN) hypothesis
             foreach (Quantifier var in _quantifiers)
@@ -137,17 +109,5 @@ namespace Ferda.Guha.Math.Quantifiers
      *      Valid hypotheses are dropped if do not fit to any of the queues in favor 
      *      of stronger hypotheses. Note that this approach slightly diverges from the 
      *      original GUHA method, which put all prime hypotheses to output.
-     * */
-
-    /* Filtr
-     * 
-     * musi do nej jit zapojit "ruzne" kvantifikatory, a ty budou mit ruzne potreby 
-     * (FromRow, ..., )
-     * 
-     * musi se tvarit jako bezny kvantifikator
-     * 
-     * bizardni priklad muze byt 
-     * (MinValue/MaxValue - FI/(Base*AA)) > 5
-     * 
      * */
 }

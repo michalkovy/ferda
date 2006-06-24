@@ -103,30 +103,6 @@ module Ferda {
 		    Cedent2,
 		    Cedent1AndCedent2
 		};
-		enum OperationModeEnum
-		{
-		    FirstSetFrequencies,
-		    SecondSetFrequencies,
-		    DifferencesOfAbsoluteFrequencies,
-		    DifferencesOfRelativeFrequencies,
-		    DifferenceOfQuantifierValues,
-		    AbsoluteDifferenceOfQuantifierValues
-		};
-		enum RelationEnum
-		{
-		    Equal,
-		    LessThan,
-		    LessThanOrEqual,
-		    GreaterThan,
-		    GreaterThanOrEqual
-		};
-		enum UnitsEnum
-		{
-		    AbsoluteNumber,
-				RelativeToActCondition,
-		    RelativeToAllObjects,
-		    RelativeToMaxFrequency
-		};
 		enum CedentEnum {
 				Antecedent,
 				Succedent,
@@ -143,15 +119,14 @@ module Ferda {
 		    Canceled,
 		    Failed
 		};
-
-
-				struct AbstractQuantifierSetting
-				{
-					IntSeqSeq firstContingencyTableRows;
-					IntSeqSeq secondContingencyTableRows;
-					DoubleSeq numericValues; // for CF&SDCF quantifeirs over numeric values of the attribute
-					long allObjectsCount;
-				};
+		
+		struct GeneratingStruct {
+			GenerationStateEnum generationState;
+			long generationNrOfTests;
+			long generationNrOfHypotheses;
+			DateTimeT generationStartTime;
+			TimeT generationTotalTime;
+		};
 
 				enum LiteralDimensionEnum {
 					FirstDimension,
@@ -177,19 +152,11 @@ module Ferda {
 				sequence<BooleanLiteralStruct> BooleanLiteralStructSeq;
 
 				struct HypothesisStruct {
-					AbstractQuantifierSetting quantifierSetting;
+					//AbstractQuantifierSetting quantifierSetting;
 					BooleanLiteralStructSeq booleanLiterals;
 					LiteralStructSeq literals;
 				};
 				sequence<HypothesisStruct> HypothesisStructSeq;
-
-				struct GeneratingStruct {
-					GenerationStateEnum generationState;
-					long generationNrOfTests;
-					long generationNrOfHypotheses;
-					DateTimeT generationStartTime;
-					TimeT generationTotalTime;
-				};
 	};
 };
 

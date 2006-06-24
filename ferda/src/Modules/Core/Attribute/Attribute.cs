@@ -34,8 +34,6 @@ namespace Ferda.Guha.Attribute
 
         private string _nullContainingCategory = null;
 
-        private bool _lazyReduction = false;
-
         private readonly bool _intervalsAllowed = false;
 
         private readonly DbSimpleDataTypeEnum _dbDataType;
@@ -155,6 +153,7 @@ namespace Ferda.Guha.Attribute
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Attribute&lt;T&gt;"/> class.
         /// </summary>
+        /// <param name="dbDataType">Type of the db data.</param>
         /// <param name="intervalsAllowed">if set to <c>true</c> creation of intervals allowed (only for ordinal data).</param>
         public Attribute(DbSimpleDataTypeEnum dbDataType, bool intervalsAllowed)
             : this(dbDataType)
@@ -188,6 +187,7 @@ namespace Ferda.Guha.Attribute
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Attribute&lt;T&gt;"/> class.
         /// </summary>
+        /// <param name="dbDataType">Type of the db data.</param>
         /// <param name="serializedAttribute">The serialized attribute.</param>
         /// <param name="lazyDisjunctivityChecking">if set to <c>true</c> [lazy disjunctivity checking].</param>
         public Attribute(DbSimpleDataTypeEnum dbDataType, AttributeSerializable<T> serializedAttribute, bool lazyDisjunctivityChecking)
@@ -306,18 +306,12 @@ namespace Ferda.Guha.Attribute
             List<T> newEnumeration = new List<T>();
             List<Interval<T>> newIntervals = new List<Interval<T>>();
             Category<T> currentCategory;
-            StringBuilder newCategoryNameBuilder = new StringBuilder(0);
             foreach (string categoryName in categories)
             {
                 if (_categories.TryGetValue(categoryName, out currentCategory))
                 {
                     newEnumeration.AddRange(currentCategory.Enumeration);
                     newIntervals.AddRange(currentCategory.Intervals);
-                    if (newCategoryNameCreationType == NewCategoryName.JoinPreviousNames)
-                        if (newCategoryNameBuilder.Length == 0)
-                            newCategoryNameBuilder.Append(categoryName);
-                        else
-                            newCategoryNameBuilder.Append(Common.CategoriesNamesSeparator + categoryName);
                 }
                 else
                     throw new ArgumentException("There is no category named \"" + categoryName + "\" in categories.");
@@ -337,7 +331,7 @@ namespace Ferda.Guha.Attribute
             if (newCategoryNameCreationType == NewCategoryName.Default)
                 newCategoryName = newCategory.DefaultLabel;
             else if (newCategoryNameCreationType == NewCategoryName.JoinPreviousNames)
-                newCategoryName = newCategoryNameBuilder.ToString();
+                newCategoryName = Ferda.Modules.Helpers.Common.Print.SequenceToString(categories, Common.CategoriesNamesSeparator);
             else // if (newCategoryNameSpecification == NewCategoryName.Own)
                 newCategoryName = ownNewCategoryName;
 

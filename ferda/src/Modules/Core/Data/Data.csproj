@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="GarbageThread.cs" />
     <Compile Include="Localization.en-US.Designer.cs">
       <DependentUpon>Localization.en-US.resx</DependentUpon>

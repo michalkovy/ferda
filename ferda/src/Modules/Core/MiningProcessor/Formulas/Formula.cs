@@ -73,15 +73,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
                 items = sortedItems;
             }
 
-            string result = null;
-            foreach (string s in items)
-            {
-                if (result != null)
-                    result += separator + s;
-                else
-                    result = s;
-            }
-            return result;
+            return Ferda.Modules.Helpers.Common.Print.SequenceToString(items, separator);
         }
     }
 }

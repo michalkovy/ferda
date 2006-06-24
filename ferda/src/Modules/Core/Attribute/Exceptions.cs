@@ -43,12 +43,13 @@ namespace Ferda.Guha.Attribute
             else
                 return result;
         }
-        
+
         /// <summary>
         /// Gets the categories in attribute disjunctivity error.
         /// </summary>
         /// <param name="innnerException">The innner exception.</param>
         /// <param name="boxIdentity">The box identity.</param>
+        /// <param name="categoriesInCollision">The categories in collision.</param>
         /// <returns></returns>
         public static BadParamsError AttributeCategoriesDisjunctivityError(Exception innnerException, string boxIdentity, IEnumerable<string> categoriesInCollision)
         {

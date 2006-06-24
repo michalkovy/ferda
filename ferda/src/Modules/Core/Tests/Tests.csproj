@@ -34,6 +34,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Helpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Helpers\bin\Debug\Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="icecs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\icecs.dll</HintPath>
@@ -53,6 +57,7 @@
     <Compile Include="Data\GenericDatabaseCacheTest.cs" />
     <Compile Include="Attribute\Helper.cs" />
     <Compile Include="MiningProcessor\MiningProcessorTest.cs" />
+    <Compile Include="Helpers\Caching\MostRecentlyUsedTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

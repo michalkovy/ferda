@@ -75,15 +75,7 @@ namespace Ferda.Guha.Attribute
         /// </returns>
         public override string ToString()
         {
-            string result = String.Empty;
-            for (int i = 0; i < Count; i++)
-            {
-                if (i > 0)
-                    result += Common.CategoryMembersSeparator;
-
-                result += _enumeration[i].ToString();
-            }
-            return result;
+            return Ferda.Modules.Helpers.Common.Print.SequenceToString(_enumeration, Common.CategoryMembersSeparator);
         }
 
         #region IList<T> Members
@@ -140,7 +132,7 @@ namespace Ferda.Guha.Attribute
         {
             add(item, force, true);
         }
-        
+
         /// <summary>
         /// Adds the specified item to the enumeration.
         /// If <c>force</c> mode is enabled than collisisons are resolved by
@@ -148,8 +140,9 @@ namespace Ferda.Guha.Attribute
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="force">If set to <c>true</c> force addition is enambled (on); otherwise, exception is thrown when collision is detected.</param>
+        /// <param name="nowReducing">if set to <c>true</c> this method is invoked while execution of reducing .</param>
         /// <exception cref="T:Ferda.Guha.Attribute.DisjunctivityCollisionException">
-        /// Thrown in not forced mode (force is off) and collision with any other 
+        /// Thrown in not forced mode (force is off) and collision with any other
         /// category is detected.
         /// </exception>
         private void add(T item, bool force, bool nowReducing)

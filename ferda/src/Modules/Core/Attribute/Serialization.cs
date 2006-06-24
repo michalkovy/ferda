@@ -189,6 +189,7 @@ namespace Ferda.Guha.Attribute
         /// <param name="categories">The categories.</param>
         /// <param name="nullContainingCategoryName">Name of the null containing category.</param>
         /// <param name="intervalsAllowed">if set to <c>true</c> intervals are allowed.</param>
+        /// <param name="dbDataType">Type of the db data.</param>
         public AttributeSerializable(CategorySerializable<T>[] categories, string nullContainingCategoryName, bool intervalsAllowed, DbSimpleDataTypeEnum dbDataType)
         {
             Categories = categories;

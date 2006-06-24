@@ -11,7 +11,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override void SetUp(IEntitySetting[] booleanCedents, TaskTypeEnum taskType, Ferda.ModulesManager.ProgressBarPrx progressBar, Ferda.ModulesManager.OutputPrx output, Ice.Current current__)
+        public override void SetUp(BooleanAttribute[] booleanAttributes, CategorialAttribute[] categorialAttributes, TaskTypeEnum taskType, Ferda.ModulesManager.ProgressBarPrx progressBar, Ferda.ModulesManager.OutputPrx output, BitStringGeneratorProviderPrx bitStringGenerator, Ice.Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }
