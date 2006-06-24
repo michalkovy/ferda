@@ -24,7 +24,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
                 return null;
             else
             {
-                return attributeName + "(" + BoxInfoHelper.SequenceToString(Func.Categories, ", ") + ")";
+                return attributeName + "(" + Helpers.Common.Print.SequenceToString(Func.Categories, ", ") + ")";
             }
         }
 

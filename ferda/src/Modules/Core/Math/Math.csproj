@@ -48,7 +48,6 @@
     <Compile Include="Combinatorics.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="InformationTheory.cs" />
-    <Compile Include="Quantifiers\AbstractQuantifierFunctions.cs" />
     <Compile Include="ContingencyTable.cs" />
     <Compile Include="Factorial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

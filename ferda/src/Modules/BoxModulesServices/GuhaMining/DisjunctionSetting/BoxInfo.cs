@@ -35,7 +35,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
                     else
                         result.Add(s);
                 }
-                return BoxInfoHelper.SequenceToString(result, "\u2228");
+                return Helpers.Common.Print.SequenceToString(result, "\u2228");
             }
         }
 

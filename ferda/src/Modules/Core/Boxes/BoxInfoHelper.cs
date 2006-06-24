@@ -106,24 +106,6 @@ namespace Ferda.Modules.Boxes
             //Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))", RegexOptions.Compiled);
         }
 
-        public static string SequenceToString(IEnumerable<string> items, string separator)
-        {
-            if (items == null)
-                return String.Empty;
-            string result = null;
-            foreach (string s in items)
-            {
-                if (result != null)
-                    result += separator + s;
-                else
-                    result = s;
-            }
-            if (result == null)
-                return String.Empty;
-            else
-                return result;
-        }
-
         #region Files
 
         /// <summary>

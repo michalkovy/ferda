@@ -3,6 +3,31 @@ using Ferda.Guha.Data;
 namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
 {
     /// <summary>
+    /// Specifies type of handling missing information in analyzed data.
+    /// Now is supported deleting for all tasks and specially for 4ft 
+    /// (but not SD) tasks is allowed other setting.
+    /// </summary>
+    public enum MissingInformationHandlingEnum
+    {
+        /// <summary>
+        /// Deletion of objects where analyzed data are not specified 
+        /// i.e. they are missing.
+        /// </summary>
+        Deleting,
+
+        /// <summary>
+        /// Optimistic completion of missing information.
+        /// </summary>
+        Optimistic,
+
+        /// <summary>
+        /// Secured completion of missing infomration.
+        /// </summary>
+        Secured
+    }
+
+
+    /// <summary>
     /// Key information for SD*-Miners. This specifies how
     /// the SD*-Miner will serve contingecy tables to quantifiers.
     /// </summary>
@@ -52,34 +77,42 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
     }
 
     /// <summary>
-    /// The quantifier tries to increase or decrease its value.
-    /// Quantifier semantic is in the quantifier instance defined
-    /// by the <c>Relation</c> property.
+    /// Some quantifiers has defined value (e.g. Sum in KL-quantifier),
+    /// some quantifiers has not defined value but other significant
+    /// value can be generated (see FunctionOfRowEachRow or FunctionOfRow).
+    /// And of course there are also quantifiers with has neither
+    /// defined value nor other sighnificant value (see E-Quantifier). 
     /// </summary>
-    /// <remarks>
-    /// In the front of hypothesis will be quantifers sorted by the
-    /// semantic of the quantifier form best to worse.
-    /// </remarks>
-    public enum QuantifierSemanticEnum
+    enum EvaluationPropertiesEnum
     {
         /// <summary>
-        /// Relation used in quantifier is &lt;= or &lt;
-        /// i. e. lesser value is better value.
+        /// Quantifiers that has defined its value. (Most of quantifiers has 
+        /// been modified for this purpose e.g. Fouded Implication has in definition
+        /// condition on p and Base, the Base condition has been removed to separately
+        /// quantifier and thats why we can speculates value of FI as (a/a+b) which 
+        /// can be compared with user specified p parameter.)
         /// </summary>
-        MinimizeValue,
+        HasValue,
 
         /// <summary>
-        /// Relation used in quantifier is =&gt; or &gt;
-        /// i. e. greater value is better value.
+        /// Some quantifiers has not defined value but other significant
+        /// value can be generated. As example you can see documentation for
+        /// following (Two-dimensional i.e. KL) quantifeirs: 
+        /// FunctionOfRowEachRow, FunctionOfRow.
         /// </summary>
-        MaximizeValue,
+        GeneratesSignificantNumber,
 
         /// <summary>
-        /// Relation used in quantifier is ==
-        /// i. e. only values equals to specified treshold are accepted.
+        /// Some quantifiers does not provide significant numeric value.
+        /// E.g. let us have quantifier, which checks following conditions:
+        /// <![CDATA[
+        /// b / (a + b) >= Treshold
+        /// c / (c + d) >= Treshold
+        /// ]]>
+        /// What can be interpeted as value of quantifier in this case?
         /// </summary>
-        OnlyEquals
-    }
+        HasNoValue
+    };
 
     /// <summary>
     /// Qunatifier may be applied on some submatix of contingecy table.
@@ -185,7 +218,20 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
         /// b' + c' <= b + c
         /// ]]>
         /// </summary>
-        SigmaEquivalency
+        SigmaEquivalency,
+
+        /// <summary>
+        /// Let us have Phi, Psi and Cond are boolean attributes 
+        /// than quantifier ~ is symetrical if Phi~Psi/Cond is true
+        /// if and only if Psi~Phi/Cond is true.
+        /// </summary>
+        Symetrical,
+
+        /// <summary>
+        /// Have the same improtant theoretical properties as 
+        /// Fisher`s quantifier. 
+        /// </summary>
+        FPropertyQuantifier
     }
 
     /// <summary>
@@ -220,74 +266,6 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
     } ;
 
     /// <summary>
-    /// The *-Miner needs to know some information about the quantifier.
-    /// </summary>
-    public class QuantifierSetting
-    {
-        /// <summary>
-        /// Key information for SD*-Miners. This specifies how
-        /// the SD*-Miner will serve contingecy tables to quantifiers.
-        /// </summary>
-        OperationModeEnum operationMode;
-
-        /// <summary>
-        /// The quantifier tries to increase or decrease its value.
-        /// Quantifier semantic is in the quantifier instance defined
-        /// by the <c>Relation</c> property.
-        /// </summary>
-        QuantifierSemanticEnum quantifierSemantic;
-
-        /// <summary>
-        /// Specifies presumption of calculating the quantifier.
-        /// Evaluating of quantifiers should be in order to save
-        /// performance i.e. take into account "failure" of quantifiers,
-        /// its performance requirements, ... (quantifier uses numeric values, ...).
-        /// </summary>
-        PerformanceDifficultyEnum quantifierPerformanceDifficulty;
-
-        /// <summary>
-        /// Indicates wheter the quantifier requires numeric values
-        /// (some CF quantifiers).
-        /// </summary>
-        bool needsNumericValues;
-
-        /// <summary>
-        /// Quantifier expects only submatrix of contingency table
-        /// of specified shape. (Default is All see <see cref="T:Ferda.Guha.Math.Quantifiers.IceDesignDocumentation.BoundTypeEnum"/>)
-        /// </summary>
-        Bound FromRow;
-
-        Bound ToRow;
-        Bound FromColumn;
-        Bound ToColumn;
-
-        /// <summary>
-        /// Some quantifiers may to work only with ordinal data etc.
-        /// (e.g. Kendal quantifier observe ordinal dependence of two attributes)
-        /// </summary>
-        CardinalityEnum supportedData;
-
-        /// <summary>
-        /// Specifies the classes of quantifiers, where this one belongs to.
-        /// Classes are defined by <b>Truth preservation condition</b>.
-        /// Please not that some classes are in inclusion so there will be 
-        /// mentioned always the top class of inclusion, where this quantifier 
-        /// belongs to.
-        /// </summary>
-        /// <remarks>
-        /// Empty array means the same as <c>QuantifierClassEnum.Unknown</c>.
-        /// </remarks>
-        QuantifierClassEnum[] quantifierClasses;
-
-        /// <summary>
-        /// Some quantifiers does not support computation over float/double
-        /// contingency table i.e. they needs integer values. (For Example 
-        /// <c>Sum(i=a..a+b)(...)</c>)
-        /// </summary>
-        bool supportsFloatContingencyTable;
-    }
-
-    /// <summary>
     /// Contingency table is converted to specified units.
     /// E.g. if units are relative to number N than (new CT)ij = ((old CT)ij / N) * 100 == (old CT)ij * (100 / N)
     /// hence items in newly created (relative) contingecy table are
@@ -318,9 +296,8 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
 
         /// <summary>
         /// Contingency table is relative to number of all records in analysed 
-        /// data.  
+        /// data even object with missing information in analyzed attributes.
         /// </summary>
-        //TODO co s missing information
         RelativeToAllObjects,
 
         /// <summary>
@@ -328,4 +305,103 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
         /// </summary>
         RelativeToMaxFrequency
     } ;
+
+    /// <summary>
+    /// The *-Miner needs to know some information about the quantifier.
+    /// </summary>
+    public class QuantifierSetting
+    {
+        /// <summary>
+        /// Ice identity of the quantifier box module. TODO WHY NEEDED?
+        /// </summary>
+        string stringIceIdentity;
+
+        /// <summary>
+        /// Specifies type of handling missing information in analyzed data.
+        /// </summary>
+        MissingInformationHandlingEnum missingInformationHandling;
+
+        /// <summary>
+        /// Key information for SD*-Miners. This specifies how
+        /// the SD*-Miner will serve contingecy tables to quantifiers.
+        /// </summary>
+        OperationModeEnum operationMode;
+
+        /// <summary>
+        /// This describes the semantic of values returned by 
+        /// quantifier (if any is returned). This property is fictive
+        /// i.e. this property is not in fact definec in slice and passed
+        /// by quantifier to generator. But it can be equivalently determined
+        /// from implemented quantifier function interface.
+        /// </summary>
+        EvaluationPropertiesEnum evaluationProperty;
+
+        /// <summary>
+        /// Quantifiers with defined values often tries minimalize or
+        /// maximalize the value. Only values in the <c>relation</c> to specified
+        /// <c>treshold</c> can be interpreted as true.
+        /// </summary>
+        Ferda.Guha.Math.RelationEnum relation;
+
+        /// <summary>
+        /// This makes sense only if 
+        /// </summary>
+        double treshold;
+
+        /// <summary>
+        /// Quantifier expects only submatrix of contingency table
+        /// of specified shape. (Default is All see <see cref="T:Ferda.Guha.Math.Quantifiers.IceDesignDocumentation.BoundTypeEnum"/>)
+        /// </summary>
+        Bound FromRow;
+
+        Bound ToRow;
+        Bound FromColumn;
+        Bound ToColumn;
+
+        /// <summary>
+        /// Specifies the classes of quantifiers, where this one belongs to.
+        /// Classes are defined by <b>Truth preservation condition</b>.
+        /// Please not that some classes are in inclusion so there will be 
+        /// mentioned always the top class of inclusion, where this quantifier 
+        /// belongs to.
+        /// </summary>
+        /// <remarks>
+        /// Empty array means the same as <c>QuantifierClassEnum.Unknown</c>.
+        /// </remarks>
+        QuantifierClassEnum[] quantifierClasses;
+
+        /// <summary>
+        /// Specifies presumption of calculating the quantifier.
+        /// Evaluating of quantifiers should be in order to save
+        /// performance i.e. take into account "failure" of quantifiers,
+        /// its performance requirements, ... (quantifier uses numeric values, ...).
+        /// </summary>
+        PerformanceDifficultyEnum performanceDifficulty;
+
+        /// <summary>
+        /// Indicates wheter the quantifier requires numeric values
+        /// (some CF quantifiers).
+        /// </summary>
+        bool needsNumericValues;
+
+        /// <summary>
+        /// Some quantifiers may to work only with ordinal data etc.
+        /// (e.g. Kendal quantifier observe ordinal dependence of two attributes)
+        /// </summary>
+        CardinalityEnum supportedData;
+
+        /// <summary>
+        /// Used units in quantifier. Please not that some quantifiers 
+        /// supports only some units, so this setting is sometimes hard specified
+        /// by programmer, sometimes by user.
+        /// </summary>
+        UnitsEnum units;
+
+        /// <summary>
+        /// Some quantifiers does not support computation over float/double
+        /// contingency table i.e. they needs integer values. (For Example 
+        /// <c>Sum(i=a..a+b)(...)</c>)
+        /// </summary>
+        bool supportsFloatContingencyTable;
+    }
 }

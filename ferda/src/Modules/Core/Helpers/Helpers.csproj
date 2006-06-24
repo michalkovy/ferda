@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Caching\Cache.cs" />
     <Compile Include="Caching\CacheFlag.cs" />
+    <Compile Include="Caching\MostRecentlyUsed.cs" />
     <Compile Include="Caching\TimeOut.cs" />
     <Compile Include="Common\CallStack.cs" />
     <Compile Include="Common\Constants.cs">
@@ -57,6 +58,7 @@
     <Compile Include="Common\Csv.cs" />
     <Compile Include="Common\Others.cs" />
     <Compile Include="Common\Parsing.cs" />
+    <Compile Include="Common\Print.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.csproj">

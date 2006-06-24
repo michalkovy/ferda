@@ -1,4 +1,6 @@
 //#define CONSOLE_APPLICATION_FOR_SERVICE_STATARTUP_DEBUGGING
+using Ice;
+
 namespace Ferda.Modules.Boxes.GuhaMining
 {
     /// <summary>
@@ -22,6 +24,13 @@ namespace Ferda.Modules.Boxes.GuhaMining
             registerBox(FixedAtom.BoxInfo.typeIdentifier, new FixedAtom.BoxInfo());
             registerBox(Sign.BoxInfo.typeIdentifier, new Sign.BoxInfo());
         }
+
+        public override void AddCustomFactoriesToComunicator(Communicator communicator)
+        {
+            Ferda.Guha.MiningProcessor.ObjectFactory factory = new Ferda.Guha.MiningProcessor.ObjectFactory();
+            Ferda.Guha.MiningProcessor.ObjectFactory.addFactoryToCommunicator(communicator, factory);
+        }
+
 
         /// <summary>
         /// Says that this service has property boxes

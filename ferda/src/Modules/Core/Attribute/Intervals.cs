@@ -88,15 +88,7 @@ namespace Ferda.Guha.Attribute
         /// </returns>
         public override string ToString()
         {
-            string result = String.Empty;
-            for (int i = 0; i < Count; i++)
-            {
-                if (i > 0)
-                    result += Common.CategoryMembersSeparator;
-
-                result += _intervals[i].ToString();
-            }
-            return result;
+            return Ferda.Modules.Helpers.Common.Print.SequenceToString(_intervals, Common.CategoryMembersSeparator);
         }
 
         #region IList<interval<T>> Members

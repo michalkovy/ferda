@@ -63,7 +63,7 @@ module Ferda {
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 				
-				// BOOLEAN CEDEN SETTING ENTITIES
+				// BOOLEAN ATTRIBUTE SETTING ENTITIES
 			
 				enum ImportanceEnum
 				{
@@ -157,6 +157,15 @@ module Ferda {
 					nonmutating GuidStructSeq GetEquivalenceClass()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
+				
+				// MINING TASK BOX MODULE FUNCTIOS
+				
+				interface BitStringGeneratorProvider
+				{
+					nonmutating BitStringGenerator* GetBitStringGenerator(GuidStruct attributeId)
+						throws Ferda::Modules::BoxRuntimeError;
+				};
+				
 				// MINING PROCESSOR SERVICE FUNCTIONS
 				
 				enum TaskTypeEnum
@@ -169,13 +178,41 @@ module Ferda {
 					SDCF					
 				};
 				
+				enum MarkEnum
+				{
+					Antecedent,
+					Succedent,
+					Condition,
+					RowAttribute,
+					ColumnAttribute,
+					Attribute,
+					FirstSet,
+					SecondSet
+				};
+				
+				struct BooleanAttribute
+				{
+					MarkEnum mark;
+					IEntitySetting setting;
+				};
+				sequence<BooleanAttribute> BooleanAttributeSeq;
+
+				struct CategorialAttribute
+				{
+					MarkEnum mark;
+					BitStringGenerator* setting;
+				};
+				sequence<CategorialAttribute> CategorialAttributeSeq;
+				
 				interface MiningProcessorFunctions
 				{
 					void SetUp(
-						IEntitySettingSeq booleanCedents, 
+						BooleanAttributeSeq booleanAttributes, 
+						CategorialAttributeSeq categorialAttributes,
 						TaskTypeEnum taskType,
 						Ferda::ModulesManager::ProgressBar* progressBar,
-						Ferda::ModulesManager::Output* output
+						Ferda::ModulesManager::Output* output,
+						BitStringGeneratorProvider* bitStringGenerator
 						)
 						throws Ferda::Modules::BoxRuntimeError;
 						

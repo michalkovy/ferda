@@ -1,5 +1,5 @@
-#ifndef FERDA_GUHA_MATH_QUANTIFIERS
-#define FERDA_GUHA_MATH_QUANTIFIERS
+#ifndef FERDA_GUHA_MATH
+#define FERDA_GUHA_MATH
 
 #include <Modules/BuiltinSequences.ice>
 #include <Modules/BasicPropertyTypes.ice>

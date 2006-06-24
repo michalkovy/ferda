@@ -17,8 +17,8 @@ namespace Ferda.Guha.MiningProcessor
         {
             _adapter = communicator.createObjectAdapter(name);
             _adapter.add(new MiningProcessorFunctionsI(), Ice.Util.stringToIdentity("Ferda.Guha.MiningProcessor.MiningProcessorFunctions"));
-            ObjectFactoryForPropertyTypes factory = new ObjectFactoryForPropertyTypes();
-            ObjectFactoryForPropertyTypes.addFactoryToCommunicator(communicator, factory);
+            ObjectFactory factory = new ObjectFactory();
+            ObjectFactory.addFactoryToCommunicator(communicator, factory);
             _adapter.activate(); 
         }
 

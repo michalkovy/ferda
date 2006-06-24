@@ -251,7 +251,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                         DbSimpleDataTypeEnum simpleDbDataType = GenericColumn.GetSimpleDataType(df.dataType);
 
                         Attribute<IComparable> result =
-                            (Attribute<IComparable>)Common.GetAttributeObject(simpleDbDataType, false);
+                            (Attribute<IComparable>)Guha.Attribute.Common.GetAttributeObject(simpleDbDataType, false);
 
                         List<object> enumeration = new List<object>();
                         bool containsNull = false;

@@ -96,7 +96,7 @@ namespace Ferda.Guha.MiningProcessor
     }
     #endregion
 
-    public class ObjectFactoryForPropertyTypes : Ice.LocalObjectImpl, Ice.ObjectFactory
+    public class ObjectFactory : Ice.LocalObjectImpl, Ice.ObjectFactory
     {
         #region ObjectFactoryOperationsNC_ Members
 
@@ -139,7 +139,7 @@ namespace Ferda.Guha.MiningProcessor
         #endregion
 
         public static void addFactoryToCommunicator(Ice.Communicator communicator,
-        ObjectFactoryForPropertyTypes factory)
+        ObjectFactory factory)
         {
             lock (communicator)
             {

@@ -538,5 +538,4 @@ namespace Ferda.Guha.Math.Quantifiers
     }
 
     #endregion
-
 }

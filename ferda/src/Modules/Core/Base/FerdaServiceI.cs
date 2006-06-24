@@ -71,6 +71,11 @@ namespace Ferda.Modules
             }
         }
 
+
+        public virtual void AddCustomFactoriesToComunicator(Communicator communicator)
+        {
+        }
+
         /// <summary>
         /// This will be executed for stopping the service
         /// </summary>
