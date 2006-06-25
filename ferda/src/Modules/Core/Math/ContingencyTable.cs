@@ -13,7 +13,7 @@ namespace Ferda.Guha.Math
         /// (obdelnikove pole kladnych float/double hodnot)
         /// [rows,columns]; na políèku [0,0] je parametr <c>a</c> (známy z ètyøpolních tabulek)
         /// </summary>
-        protected readonly double[,] _contingecyTable;
+        protected readonly double[][] _contingecyTable;
 
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Ferda.Guha.Math
         /// <value></value>
         public double this[int rowIndex, int columnIndex]
         {
-            get { return _contingecyTable[rowIndex, columnIndex]; }
+            get { return _contingecyTable[rowIndex][columnIndex]; }
         }
 
         protected readonly double _denominator;
@@ -42,16 +42,24 @@ namespace Ferda.Guha.Math
             get { return _denominator; }
         }
 
-        private readonly double _sum;
-        
-        /// <summary>
-        /// Gets the sum of all vaules in contingency table. This number is not
-        /// denominted by teh Denominator.
-        /// </summary>
-        /// <value>The sum.</value>
-        public double Sum
+        public ContingencyTable(double[][] contingencyTable, double denominator)
         {
-            get { return _sum; }
+            if (contingencyTable == null)
+                throw new ArgumentNullException("contingencyTable");
+            if (contingencyTable.Length == 0)
+                throw new ArgumentException("Contingency table is degenerative.", "contingencyTable");
+            // Test shape
+#if DEBUG
+            int rowLength = contingencyTable.Length;
+            foreach (double[] row in contingencyTable)
+            {
+                if (row.Length != rowLength)
+                    throw new ArgumentException("Contingecy table is not in shape of regular rectangle.",
+                                                "contingecyTable");
+            }            
+#endif
+            _contingecyTable = contingencyTable;
+            _denominator = denominator;
         }
         
         private void prepareSums()
@@ -60,16 +68,70 @@ namespace Ferda.Guha.Math
             _rowSums.Initialize();
             _columnSums = new double[NumberOfColumns];
             _columnSums.Initialize();
+            _sum = 0;
             for (int r = 0; r < NumberOfRows; r++)
             {
                 for (int c = 0; c < NumberOfColumns; c++)
                 {
-                    _rowSums[r] += _contingecyTable[r, c];
-                    _columnSums[c] += _contingecyTable[r, c];
+                    double item = this[r, c];
+                    _rowSums[r] += item;
+                    _columnSums[c] += item;
+                    _max = System.Math.Max(_max, item);
+                    _min = System.Math.Min(_min, item);
+                }
+                _sum += _rowSums[r];
+            }
+        }
+
+        private double _sum = -1;
+        /// <summary>
+        /// Gets the sum of all vaules in contingency table. This number is not
+        /// denominted by teh Denominator.
+        /// </summary>
+        /// <value>The sum.</value>
+        public double Sum
+        {
+            get
+            {
+                lock (this)
+                {
+                    if (_sum < 0)
+                        prepareSums();
+                    return _sum;
                 }
             }
         }
 
+        private double _max = Double.NegativeInfinity;
+
+        public double Max
+        {
+            get
+            {
+                lock (this)
+                {
+                    if (_max == Double.NegativeInfinity)
+                        prepareSums();
+                    return _max;
+                }
+            }
+        }
+
+        private double _min = Double.PositiveInfinity;
+
+        public double Min
+        {
+            get
+            {
+                lock (this)
+                {
+                    if (_min == Double.PositiveInfinity)
+                        prepareSums();
+                    return _min;
+                }
+            }
+        }
+        
         private double[] _rowSums = null;
         /// <summary>
         /// Sum of all values in row [r]. Denominator is not applied.
@@ -78,9 +140,12 @@ namespace Ferda.Guha.Math
         {
             get
             {
-                if (_rowSums == null)
-                    prepareSums();
-                return _rowSums;
+                lock (this)
+                {
+                    if (_rowSums == null)
+                        prepareSums();
+                    return _rowSums;
+                }
             }
         }
 
@@ -92,139 +157,41 @@ namespace Ferda.Guha.Math
         {
             get
             {
-                if (_columnSums == null)
-                prepareSums();
-                return _columnSums;
+                lock (this)
+                {
+                    if (_columnSums == null)
+                        prepareSums();
+                    return _columnSums;
+                }
             }
-        }
-
-        public ContingencyTable(double[,] contingencyTable, double denominator, double sum)
-        {
-            _contingecyTable = contingencyTable;
-            _denominator = denominator;
-            _sum = sum;
         }
 
         public int NumberOfRows
         {
-            get { return _contingecyTable.GetLength(0); }
+            get { return _contingecyTable.Length; }
         }
 
         public int NumberOfColumns
         {
-            get { return _contingecyTable.GetLength(1); }
-        }
-
-        public ContingencyTable Minus(ContingencyTable other)
-        {
-            /* Operators needed
-             * ----------------
-             * DifferencesOfAbsoluteFrequencies,
-            DifferencesOfRelativeFrequencies,
-             *
-             * */
-            return null;
-        }
-
-        public ContingencyTable GetSubMatrix(int rowFrom, int rowTo, int columnFrom, int columnTo)
-        {
-            //TODO
-            return null;
-        }
-
-        private ContingencyTable _relativeFrequencies = null;
-
-        public ContingencyTable RelativeFrequencies
-        {
-            get
-            {
-                if (_relativeFrequencies == null)
-                {
-                    //TODO
-                }
-                return _relativeFrequencies;
-            }
-        }
-
-        private ContingencyTable _relativeFrequenciesToMax = null;
-
-        public ContingencyTable RelativeFrequenciesToMax
-        {
-            get
-            {
-                if (_relativeFrequenciesToMax == null)
-                {
-                    //TODO
-                }
-                return _relativeFrequenciesToMax;
-            }
-        }
-
-        private ContingencyTable _relativeFrequenciesToRowMax = null;
-
-        public ContingencyTable RelativeFrequenciesToRowMax
-        {
-            get
-            {
-                if (_relativeFrequenciesToRowMax == null)
-                {
-                    //TODO
-                }
-                return _relativeFrequenciesToRowMax;
-            }
-        }
-
-        private ContingencyTable _relativeFrequenciesToColumnMax = null;
-
-        public ContingencyTable RelativeFrequenciesToColumnMax
-        {
-            get
-            {
-                if (_relativeFrequenciesToColumnMax == null)
-                {
-                    //TODO
-                }
-                return _relativeFrequenciesToColumnMax;
-            }
-        }
-
-        private double _max = Double.NegativeInfinity;
-
-        public double Max
-        {
-            get
-            {
-                if (_max == Double.NegativeInfinity)
-                    foreach (double var in _contingecyTable)
-                        _max = System.Math.Max(_max, var);
-                return _max;
-            }
-        }
-
-        private double _min = Double.PositiveInfinity;
-
-        public double Min
-        {
-            get
-            {
-                if (_min == Double.PositiveInfinity)
-                    foreach (double var in _contingecyTable)
-                        _min = System.Math.Min(_min, var);
-                return _min;
-            }
+            get { return _contingecyTable[0].Length; }
         }
         
         public void ForEach(Action<double> action)
         {
-            foreach (double var in _contingecyTable)
-                action(var);
+            foreach (double[] row in _contingecyTable)
+            {
+                foreach (double var in row)
+                {
+                    action(var);
+                }
+            }
         }
     }
 
     public class FourFoldContingencyTable : ContingencyTable
     {
-        public FourFoldContingencyTable(double[,] contingencyTable, double denominator, double sum)
-            : base(contingencyTable, denominator, sum)
+        public FourFoldContingencyTable(double[][] contingencyTable, double denominator)
+            : base(contingencyTable, denominator)
         {
             if (NumberOfColumns != 2 || NumberOfRows != 2)
                 throw new ArgumentException("Bad size of contingency table", "contingencyTable");
@@ -238,7 +205,7 @@ namespace Ferda.Guha.Math
         /// <result>The <c>a</c> frequency of the 4f-table (four fold table).</result>
         public double A
         {
-            get { return _contingecyTable[0, 0]; }
+            get { return this[0, 0]; }
         }
 
         /// <summary>
@@ -257,7 +224,7 @@ namespace Ferda.Guha.Math
         /// <result>The <c>b</c> frequency of the 4f-table (four fold table).</result>
         public double B
         {
-            get { return _contingecyTable[0, 1]; }
+            get { return this[0, 1]; }
         }
 
         /// <summary>
@@ -276,7 +243,7 @@ namespace Ferda.Guha.Math
         /// <result>The <c>c</c> frequency of the 4f-table (four fold table).</result>
         public double C
         {
-            get { return _contingecyTable[1, 0]; }
+            get { return this[1, 0]; }
         }
 
         /// <summary>
@@ -295,7 +262,7 @@ namespace Ferda.Guha.Math
         /// <result>The <c>d</c> frequency of the 4f-table (four fold table).</result>
         public double D
         {
-            get { return _contingecyTable[1, 1]; }
+            get { return this[1, 1]; }
         }
 
         /// <summary>
@@ -408,8 +375,8 @@ namespace Ferda.Guha.Math
     
     public class SingleDimensionContingecyTable : ContingencyTable
     {
-        public SingleDimensionContingecyTable(double[,] contingencyTable, double denominator, double sum)
-            : base(contingencyTable, denominator, sum)
+        public SingleDimensionContingecyTable(double[][] contingencyTable, double denominator)
+            : base(contingencyTable, denominator)
         {
             if (NumberOfRows != 1)
                 throw new ArgumentException("Bad size of contingency table", "contingencyTable");
@@ -422,7 +389,7 @@ namespace Ferda.Guha.Math
         /// <value></value>
         public double this[int columnIndex]
         {
-            get { return _contingecyTable[0, columnIndex]; }
+            get { return this[0, columnIndex]; }
         }
     }
 }

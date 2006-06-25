@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Guha.MiningProcessor.Generation;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
     public class CategorialAttribute
     {
-        private readonly Guid _attributeId;
-        public Guid AttributeId
+        private readonly CategorialAttributeFormula _identifier;
+        public CategorialAttributeFormula Identifier
         {
-            get { return _attributeId; }
+            get { return _identifier; }
         }
         
         private readonly IBitString[] _bitStrings;
@@ -21,8 +22,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         
         public CategorialAttribute(BitStringGeneratorPrx generator)
         {
-            _attributeId = new Guid(generator.GetAttributeId().value);
-            _bitStrings = Helpers.GetBitStrings(generator, AttributeId);
+            _identifier = new CategorialAttributeFormula(new Guid(generator.GetAttributeId().value));
+            _bitStrings = Helpers.GetBitStrings(generator, _identifier.AttributeId);
         }
     }
 }

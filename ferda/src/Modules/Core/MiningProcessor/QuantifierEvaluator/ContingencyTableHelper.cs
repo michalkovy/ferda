@@ -5,16 +5,6 @@ using Ferda.Guha.Math.Quantifiers;
 
 namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 {
-    [Serializable()]
-    public class CTSerializable
-    {
-        public bool TwoTables;
-        public double[][] ContingencyTableA;
-        public double[][] ContingencyTableB;
-        public long AllObjectsCount;
-        public string numericValuesAttributeIdGuid;
-    }
-
     internal class bounds : IEquatable<bounds>
     {
         public int FromRow;
@@ -85,6 +75,49 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             _cT[1] = new double[2];
             _cT[1].Initialize();
         }
+
+        private void computeDenominators()
+        {
+            double sum = 0.0d;
+            double max = Double.MinValue;
+            foreach (double[] row in _cT)
+            {
+                foreach (double item in row)
+                {
+                    max = System.Math.Max(max, item);
+                    sum += item;
+                }
+            }
+            _relativeToActConditionDenominator = sum;
+            _relativeToMaxFrequencyDenominator = max;
+        }
+
+        private double _relativeToActConditionDenominator = -1;
+        public double RelativeToActConditionDenominator
+        {
+            get
+            {
+                if (_relativeToActConditionDenominator < 0)
+                {
+                    computeDenominators();
+                }
+                return _relativeToActConditionDenominator;
+            }
+        }
+
+        private double _relativeToMaxFrequencyDenominator = -1;
+        public double RelativeToMaxFrequencyDenominator
+        {
+            get
+            {
+                if (_relativeToMaxFrequencyDenominator < 0)
+                {
+                    computeDenominators();
+                }
+                return _relativeToMaxFrequencyDenominator;
+            }
+        }
+
     }
 
     /// <summary>
@@ -147,6 +180,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
     public class ContingencyTableHelper
     {
+        #region Fields and Properties
         private double[][] _contingencyTable;
         public double[][] ContingencyTable
         {
@@ -159,24 +193,142 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             get { return _allObjectsCount; }
         }
 
+        double _denominator = 1.0d;
+
         private Guid _numericValuesAttributeId;
         public Guid NumericValuesAttributeId
         {
             get { return _numericValuesAttributeId; }
         }
 
-        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount)
+        private double _relativeToActConditionDenominator = -1;
+        protected double relativeToActConditionDenominator
         {
-            _contingencyTable = contingencyTable;
-            _allObjectsCount = allObjectsCount;
+            get
+            {
+                if (_relativeToActConditionDenominator < 0)
+                {
+                    computeDenominators();
+                }
+                return _relativeToActConditionDenominator * _denominator;
+            }
         }
 
-        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount, Guid numericValuesAttributeId)
-            : this(contingencyTable, allObjectsCount)
+        private double _relativeToMaxFrequencyDenominator = -1;
+        protected double relativeToMaxFrequencyDenominator
+        {
+            get
+            {
+                if (_relativeToMaxFrequencyDenominator < 0)
+                {
+                    computeDenominators();
+                }
+                return _relativeToMaxFrequencyDenominator * _denominator;
+            }
+        }
+        #endregion
+
+        #region Operator Minus (of Absolute/Relative Frequencies)
+        public static ContingencyTableHelper OperatorAbsMinus(ContingencyTableHelper op1, ContingencyTableHelper op2)
+        {
+            if (!(
+                     (op1.NumericValuesAttributeId == null && op2.NumericValuesAttributeId == null)
+                    ||
+                     (op1.NumericValuesAttributeId == op2.NumericValuesAttributeId)
+                 ))
+                throw new ArgumentException();
+            int numOfRows = op1.ContingencyTable.Length;
+            int numOfCols = op1.ContingencyTable[0].Length;
+            if ((op2.ContingencyTable.Length != numOfRows)
+                || (op2.ContingencyTable[0].Length != numOfCols))
+                throw new ArgumentException();
+            if (op1.AllObjectsCount != op2.AllObjectsCount)
+                throw new ArgumentException();
+            double[][] result = new double[numOfRows][];
+            for (int r = 0; r < numOfRows; r++)
+            {
+                result[r] = new double[numOfCols];
+                for (int c = 0; c < numOfCols; c++)
+                {
+                    result[r][c] = System.Math.Abs(
+                        op1.ContingencyTable[r][c]
+                        - op2.ContingencyTable[r][c]
+                        );
+                }
+            }
+            if (op1.NumericValuesAttributeId == null)
+                return new ContingencyTableHelper(result, op1.AllObjectsCount);
+            else
+                return new ContingencyTableHelper(result, op1.AllObjectsCount, op1.NumericValuesAttributeId);
+        }
+
+        public static ContingencyTableHelper OperatorRelMinus(ContingencyTableHelper op1, ContingencyTableHelper op2)
+        {
+            if (!(
+                     (op1.NumericValuesAttributeId == null && op2.NumericValuesAttributeId == null)
+                    ||
+                     (op1.NumericValuesAttributeId == op2.NumericValuesAttributeId)
+                 ))
+                throw new ArgumentException();
+            int numOfRows = op1.ContingencyTable.Length;
+            int numOfCols = op1.ContingencyTable[0].Length;
+            if ((op2.ContingencyTable.Length != numOfRows)
+                || (op2.ContingencyTable[0].Length != numOfCols))
+                throw new ArgumentException();
+            if (op1.AllObjectsCount != op2.AllObjectsCount)
+                throw new ArgumentException();
+            double op1Den = op1.relativeToActConditionDenominator;
+            double op2Den = op2.relativeToActConditionDenominator;
+            double[][] result = new double[numOfRows][];
+            for (int r = 0; r < numOfRows; r++)
+            {
+                result[r] = new double[numOfCols];
+                for (int c = 0; c < numOfCols; c++)
+                {
+                    result[r][c] = System.Math.Abs(
+                        op1.ContingencyTable[r][c] * op2Den
+                        - op2.ContingencyTable[r][c] * op1Den
+                        );
+                }
+            }
+            double newDenominator = op1Den * op2Den;
+            if (op1.NumericValuesAttributeId == null)
+                return new ContingencyTableHelper(result, op1.AllObjectsCount, newDenominator);
+            else
+                return new ContingencyTableHelper(result, op1.AllObjectsCount, newDenominator, op1.NumericValuesAttributeId);
+        } 
+        #endregion
+
+        #region Constructors
+        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount, double denominator)
+        {
+            if (contingencyTable == null)
+                throw new ArgumentNullException("contingencyTable");
+            if (contingencyTable.Length == 0)
+                throw new ArgumentException("Contingency table is degenerative.", "contingencyTable");
+            _contingencyTable = contingencyTable;
+            _allObjectsCount = allObjectsCount;
+            _denominator = denominator;
+        }
+
+        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount)
+            : this(contingencyTable, allObjectsCount, 1.0d)
+        {
+        }
+
+        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount, double denominator, Guid numericValuesAttributeId)
+            : this(contingencyTable, allObjectsCount, denominator)
         {
             _numericValuesAttributeId = numericValuesAttributeId;
         }
 
+        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount, Guid numericValuesAttributeId)
+            : this (contingencyTable, allObjectsCount, 1.0d, numericValuesAttributeId)
+        {
+        }
+        #endregion
+
+        #region Sub matrix
         private int GetBoundFromIndex(Bound fromBound, int length)
         {
             switch (fromBound.boundType)
@@ -280,12 +432,11 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 }
             }
 
-
             // denominator
             switch (units)
             {
                 case UnitsEnum.AbsoluteNumber:
-                    result.denominator = 1;
+                    result.denominator = _denominator;
                     break;
                 case UnitsEnum.Irrelevant:
                     result.denominator = 1;
@@ -293,7 +444,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 case UnitsEnum.RelativeToActCondition:
                     if (b != null) // subTable
                     {
-                        result.denominator = _cached[b].RelativeToActConditionDenominator;
+                        result.denominator = _cached[b].RelativeToActConditionDenominator * _denominator;
                     }
                     else
                     {
@@ -301,12 +452,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     }
                     break;
                 case UnitsEnum.RelativeToAllObjects:
-                    result.denominator = _allObjectsCount;
+                    result.denominator = _allObjectsCount * _denominator;
                     break;
                 case UnitsEnum.RelativeToMaxFrequency:
                     if (b != null) // subTable
                     {
-                        result.denominator = _cached[b].RelativeToMaxFrequencyDenominator;
+                        result.denominator = _cached[b].RelativeToMaxFrequencyDenominator * _denominator;
                     }
                     else
                     {
@@ -318,7 +469,9 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
             return result;
         }
+        #endregion
 
+        #region PureFFTQuantifiers: Quantifier classe, missing informatin handling
         public bool IsInQuantifierClass(QuantifierClassEnum[] inClasses, QuantifierClassEnum asked)
         {
             foreach (QuantifierClassEnum inClass in inClasses)
@@ -329,8 +482,6 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         public QuantifierEvaluateSetting GetSubTable(QuantifierClassEnum[] quantifierClasses, MissingInformationHandlingEnum missingInformationHandling, UnitsEnum units)
         {
-            QuantifierEvaluateSetting result = new QuantifierEvaluateSetting();
-
             FourFoldContingencyTable fourFCT = new FourFoldContingencyTable();
             NineFoldContingencyTablePair nineFCTP = new NineFoldContingencyTablePair(_contingencyTable);
             switch (missingInformationHandling)
@@ -342,15 +493,200 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     fourFCT.d = nineFCTP.f001;
                     break;
                 case MissingInformationHandlingEnum.Optimistic:
+                    if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.Implicational))
+                    {
+                        fourFCT.a = nineFCTP.f111 + nineFCTP.f1x1 + nineFCTP.fx11 + nineFCTP.fxx1
+                                  + nineFCTP.f11x + nineFCTP.f1xx + nineFCTP.fx1x + nineFCTP.fxxx;
+                        fourFCT.b = nineFCTP.f101;
+                    }
+                    else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.SigmaDoubleImplicational))
+                    {
+                        // we create a, b in the same way as for QuantifierClassEnum.Implicational
+                        fourFCT.a = nineFCTP.f111 + nineFCTP.f1x1 + nineFCTP.fx11 + nineFCTP.fxx1
+                                  + nineFCTP.f11x + nineFCTP.f1xx + nineFCTP.fx1x + nineFCTP.fxxx;
+                        fourFCT.b = nineFCTP.f101;
+                        fourFCT.c = nineFCTP.f011;
+                    }
+                    else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.SigmaEquivalency))
+                    {
+                        // we create a, b, c in the same way as for QuantifierClassEnum.SigmaDoubleImplicational
+                        fourFCT.a = nineFCTP.f111;
+                        fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01 + nineFCTP.fxx1
+                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
+                        fourFCT.c = nineFCTP.f011 + nineFCTP.fx11 + nineFCTP.f0x1
+                                  + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
+                        fourFCT.d = nineFCTP.f001 + nineFCTP.f0x1 + nineFCTP.fx01
+                                  + nineFCTP.f00x + nineFCTP.f0xx + nineFCTP.fx0x;
+                    }
+                    else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.FPropertyQuantifier))
+                    {
+                        fourFCT.a = nineFCTP.f111 + nineFCTP.f1x1 + nineFCTP.fx11
+                                  + nineFCTP.f11x + nineFCTP.f1xx + nineFCTP.fx1x;
+                        fourFCT.b = nineFCTP.f101;
+                        fourFCT.c = nineFCTP.f011;
+                        fourFCT.d = nineFCTP.f001 + nineFCTP.fx01 + nineFCTP.f0x1
+                                  + nineFCTP.f00x + nineFCTP.fx0x + nineFCTP.f0xx;
+
+                        #region Add fxxx and fxx1 to a and d as |a-d| is minimal
+                        double sH = nineFCTP.fxxx + nineFCTP.fxx1;
+                        if (sH != 0)
+                        {
+                            double dH = System.Math.Abs(nineFCTP.fxxx - nineFCTP.fxx1);
+                            double dAB = System.Math.Abs(fourFCT.a - fourFCT.d);
+                            if (System.Math.Abs(dAB - sH) < System.Math.Abs(dAB - dH))
+                            {
+                                if (fourFCT.a < fourFCT.d)
+                                    fourFCT.a += sH;
+                                else
+                                    fourFCT.d += sH;
+                            }
+                            else
+                            {
+                                if (nineFCTP.fxxx < nineFCTP.fxx1)
+                                {
+                                    if (fourFCT.a < fourFCT.d)
+                                    {
+                                        fourFCT.a += nineFCTP.fxx1;
+                                        fourFCT.d += nineFCTP.fxxx;
+                                    }
+                                    else
+                                    {
+                                        fourFCT.a += nineFCTP.fxxx;
+                                        fourFCT.d += nineFCTP.fxx1;
+                                    }
+                                }
+                                else
+                                {
+                                    if (fourFCT.a < fourFCT.d)
+                                    {
+                                        fourFCT.a += nineFCTP.fxxx;
+                                        fourFCT.d += nineFCTP.fxx1;
+                                    }
+                                    else
+                                    {
+                                        fourFCT.a += nineFCTP.fxx1;
+                                        fourFCT.d += nineFCTP.fxxx;
+                                    }
+                                }
+                            }
+                        }
+                        #endregion
+                    }
                     break;
                 case MissingInformationHandlingEnum.Secured:
+                    if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.Implicational))
+                    {
+                        fourFCT.a = nineFCTP.f111;
+                        fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01 + nineFCTP.fxx1
+                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
+                    }
+                    else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.SigmaDoubleImplicational))
+                    {
+                        // we create a, b in the same way as for QuantifierClassEnum.Implicational
+                        fourFCT.a = nineFCTP.f111;
+                        fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01 + nineFCTP.fxx1
+                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
+                        fourFCT.c = nineFCTP.f011 + nineFCTP.fx11 + nineFCTP.f0x1
+                                  + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
+                        //nineFCTP.fxx1, nineFCTP.fxxx can be placed in b or c (it is equivalent)
+                    }
+                    else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.SigmaEquivalency))
+                    {
+                        // we create a, b, c in the same way as for QuantifierClassEnum.SigmaDoubleImplicational
+                        fourFCT.a = nineFCTP.f111;
+                        fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01 + nineFCTP.fxx1
+                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
+                        fourFCT.c = nineFCTP.f011 + nineFCTP.fx11 + nineFCTP.f0x1
+                                  + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
+                        fourFCT.d = nineFCTP.f001;
+                    }
+                    else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.FPropertyQuantifier))
+                    {
+                        fourFCT.a = nineFCTP.f111;
+                        fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01
+                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x;
+                        fourFCT.c = nineFCTP.f011 + nineFCTP.fx11 + nineFCTP.f0x1
+                                  + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
+                        fourFCT.d = nineFCTP.f001;
+
+                        #region Add fxxx and fxx1 to b and c as |b-c| is minimal
+                        double sH = nineFCTP.fxxx + nineFCTP.fxx1;
+                        if (sH != 0)
+                        {
+                            double dH = System.Math.Abs(nineFCTP.fxxx - nineFCTP.fxx1);
+                            double dBC = System.Math.Abs(fourFCT.b - fourFCT.c);
+                            if (System.Math.Abs(dBC - sH) < System.Math.Abs(dBC - dH))
+                            {
+                                if (fourFCT.b < fourFCT.c)
+                                    fourFCT.b += sH;
+                                else
+                                    fourFCT.c += sH;
+                            }
+                            else
+                            {
+                                if (nineFCTP.fxxx < nineFCTP.fxx1)
+                                {
+                                    if (fourFCT.b < fourFCT.c)
+                                    {
+                                        fourFCT.b += nineFCTP.fxx1;
+                                        fourFCT.c += nineFCTP.fxxx;
+                                    }
+                                    else
+                                    {
+                                        fourFCT.b += nineFCTP.fxxx;
+                                        fourFCT.c += nineFCTP.fxx1;
+                                    }
+                                }
+                                else
+                                {
+                                    if (fourFCT.b < fourFCT.c)
+                                    {
+                                        fourFCT.b += nineFCTP.fxxx;
+                                        fourFCT.c += nineFCTP.fxx1;
+                                    }
+                                    else
+                                    {
+                                        fourFCT.b += nineFCTP.fxx1;
+                                        fourFCT.c += nineFCTP.fxxx;
+                                    }
+                                }
+                            }
+                        }
+                        #endregion
+                    }
                     break;
                 default:
-                    break;
+                    throw new NotImplementedException();
             }
-            //TODO dodelat
-            return null;
+            QuantifierEvaluateSetting result = new QuantifierEvaluateSetting();
+            result.contingencyTable = fourFCT.ContingencyTable;
+            result.numericValuesProviders = null;
+            result.numericValuesAttributeId = null;
+
+            switch (units)
+            {
+                case UnitsEnum.AbsoluteNumber:
+                    result.denominator = _denominator;
+                    break;
+                case UnitsEnum.Irrelevant:
+                    result.denominator = 1;
+                    break;
+                case UnitsEnum.RelativeToActCondition:
+                    result.denominator = fourFCT.RelativeToActConditionDenominator * _denominator;
+                    break;
+                case UnitsEnum.RelativeToAllObjects:
+                    result.denominator = _allObjectsCount * _denominator;
+                    break;
+                case UnitsEnum.RelativeToMaxFrequency:
+                    result.denominator = fourFCT.RelativeToMaxFrequencyDenominator * _denominator;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            return result;
         }
+        #endregion
 
         private void computeDenominators()
         {
@@ -367,41 +703,5 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             _relativeToActConditionDenominator = sum;
             _relativeToMaxFrequencyDenominator = max;
         }
-
-        private double _relativeToActConditionDenominator = -1;
-        protected double relativeToActConditionDenominator
-        {
-            get
-            {
-                if (_relativeToActConditionDenominator < 0)
-                {
-                    computeDenominators();
-                }
-                return _relativeToActConditionDenominator;
-            }
-        }
-
-        private double _relativeToMaxFrequencyDenominator = -1;
-        protected double relativeToMaxFrequencyDenominator
-        {
-            get
-            {
-                if (_relativeToMaxFrequencyDenominator < 0)
-                {
-                    computeDenominators();
-                }
-                return _relativeToMaxFrequencyDenominator;
-            }
-        }
-
-        //    PRO VYTVORENI SPRAVNE KONTINGENCNI TABULKY (az na operation mode!)
-
-        //    Bound FromRow;
-        //    Bound ToRow;
-        //    Bound FromColumn;
-        //    Bound ToColumn;
-
-        //    QuantifierClassEnumSeq quantifierClasses;
-        //    UnitsEnum units;	
     }
 }

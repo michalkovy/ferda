@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Helpers\bin\Debug\Helpers.dll</HintPath>
     </Reference>
+    <Reference Include="iceboxcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
+    </Reference>
     <Reference Include="icecs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\icecs.dll</HintPath>
@@ -52,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\AttributeTest.cs" />
+    <Compile Include="MiningProcessor\HypothesisSerializableTest.cs" />
     <Compile Include="Math\FactorialTest.cs" />
     <Compile Include="Math\FourFoldQuantifiersTest.cs" />
     <Compile Include="Data\GenericDatabaseCacheTest.cs" />

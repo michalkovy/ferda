@@ -187,7 +187,7 @@ module Ferda {
 					ColumnAttribute,
 					Attribute,
 					FirstSet,
-					SecondSet
+					SecondSet					
 				};
 				
 				struct BooleanAttribute

@@ -1,22 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
-    public class DisjunctionFormula : IFormula
+    public class DisjunctionFormula : BooleanAttributeFormula
     {
-        private readonly IFormula[] _operands;
+        private readonly BooleanAttributeFormula[] _operands;
 
-        public IFormula[] Operands
+        public BooleanAttributeFormula[] Operands
         {
             get { return _operands; }
         }
 
-        public DisjunctionFormula(IFormula[] operands)
+        public DisjunctionFormula(BooleanAttributeFormula[] operands)
         {
             // flattening
-            List<IFormula> operandsLists = new List<IFormula>();
-            foreach (IFormula operand in operands)
+            List<BooleanAttributeFormula> operandsLists = new List<BooleanAttributeFormula>();
+            foreach (BooleanAttributeFormula operand in operands)
             {
                 DisjunctionFormula disjunction = operand as DisjunctionFormula;
                 if (disjunction == null)
@@ -28,8 +29,8 @@ namespace Ferda.Guha.MiningProcessor.Formulas
             _operands = operandsLists.ToArray();
         }
 
-        public DisjunctionFormula(IFormula operandA, IFormula operandB)
-            : this(new IFormula[] { operandA, operandB })
+        public DisjunctionFormula(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
+            : this(new BooleanAttributeFormula[] { operandA, operandB })
         {
         }
 
@@ -37,25 +38,25 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         {
             List<string> result = new List<string>();
             Dictionary<Guid, List<string>> atoms = new Dictionary<Guid, List<string>>();
-            foreach (IFormula formula in _operands)
+            foreach (BooleanAttributeFormula formula in _operands)
             {
-                Atom atom = formula as Atom;
-                if (atom == null)
+                AtomFormula atomFormula = formula as AtomFormula;
+                if (atomFormula == null)
                     result.Add(formula.ToString());
                 else
                 {
                     //group atoms
-                    if (!(atoms.ContainsKey(atom.BitStringIdentifier.AttributeId)))
-                        atoms[atom.BitStringIdentifier.AttributeId] = new List<string>();
-                    atoms[atom.BitStringIdentifier.AttributeId].Add(atom.BitStringIdentifier.CategoryId);
+                    if (!(atoms.ContainsKey(atomFormula.BitStringIdentifier.AttributeId)))
+                        atoms[atomFormula.BitStringIdentifier.AttributeId] = new List<string>();
+                    atoms[atomFormula.BitStringIdentifier.AttributeId].Add(atomFormula.BitStringIdentifier.CategoryId);
                 }
             }
             // print atoms
             foreach (KeyValuePair<Guid, List<string>> pair in atoms)
             {
-                result.Add(Atom.WriteAtom(pair.Key, pair.Value));
+                result.Add(AtomFormula.WriteAtom(pair.Key, pair.Value));
             }
-            return Formula.SequenceToString(result, FormulaSeparator.Or, true);
+            return FormulaHelper.SequenceToString(result, FormulaSeparator.Or, true);
         }
     }
 }

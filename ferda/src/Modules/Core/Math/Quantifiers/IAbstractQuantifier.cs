@@ -103,9 +103,8 @@ namespace Ferda.Guha.Math.Quantifiers
 
     public class QuantifierValidateData : IQuantifierValidateData
     {
-        private readonly double[,] _contingencyTable;
+        private readonly double[][] _contingencyTable;
         private readonly double _denominator;
-        private readonly double _sum;
 
         private readonly double _treshold;
         private readonly RelationEnum _relation;
@@ -114,9 +113,8 @@ namespace Ferda.Guha.Math.Quantifiers
         private readonly double[] _numericValues;
 
         public QuantifierValidateData(
-            double[,] contingencyTable,
+            double[][] contingencyTable,
             double denominator,
-            double sum,
             double treshold,
             RelationEnum relation,
             Dictionary<string, object> otherParams,
@@ -125,7 +123,6 @@ namespace Ferda.Guha.Math.Quantifiers
         {
             _contingencyTable = contingencyTable;
             _denominator = denominator;
-            _sum = sum;
 
             _treshold = treshold;
             _relation = relation;
@@ -138,17 +135,17 @@ namespace Ferda.Guha.Math.Quantifiers
 
         public ContingencyTable ContingencyTable
         {
-            get { return new ContingencyTable(_contingencyTable, _denominator, _sum); }
+            get { return new ContingencyTable(_contingencyTable, _denominator); }
         }
 
         public FourFoldContingencyTable FourFoldContingencyTable
         {
-            get { return new FourFoldContingencyTable(_contingencyTable, _denominator, _sum); }
+            get { return new FourFoldContingencyTable(_contingencyTable, _denominator); }
         }
 
         public SingleDimensionContingecyTable SingleDimensionContingecyTable
         {
-            get { return new SingleDimensionContingecyTable(_contingencyTable, _denominator, _sum); }
+            get { return new SingleDimensionContingecyTable(_contingencyTable, _denominator); }
         }
 
         public object GetParam(string paramName)

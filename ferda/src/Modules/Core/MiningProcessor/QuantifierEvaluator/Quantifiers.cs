@@ -42,12 +42,6 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             out CardinalityEnum maximalRequestedCardinality
             )
         {
-            // MissingInformationHandlingEnum missingInformationHandling;
-            // ----------------------------------------------------------
-            // pro 4ft-kvantifikátory použité v SD úlohách je (stejnì jako 
-            // pro jiné než 4ft-kvantifikátory) nutné, aby byla nastavena 
-            // vlastnost na Deleting.
-            
             // OperationModeEnum operationMode;
             // --------------------------------
             // pro ne-SD tasky kontrolovat nastavení FirstSetFrequencies 
@@ -57,6 +51,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             // ------------------------
             // pøíslušný kategoriální atribut poskytuje numerické hodnoty 
 
+            // MissingInformationHandlingEnum missingInformationHandling;
+            // ----------------------------------------------------------
+            // pro 4ft-kvantifikátory použité v SD úlohách je (stejnì jako 
+            // pro jiné než 4ft-kvantifikátory) nutné, aby byla nastavena 
+            // vlastnost na Deleting.
+            
             // Ferda::Guha::Data::CardinalityEnum supportedData;
             // -------------------------------------------------
             // všechny použité kategoriální atributy jsou stejné nebo 
