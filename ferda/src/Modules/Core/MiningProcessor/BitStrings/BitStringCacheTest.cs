@@ -79,7 +79,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         valuePair.Key, 
                         new BitString(
                             valuePair.Value, 
-                            new Formulas.Atom(
+                            new Formulas.AtomFormula(
                                 new BitStringIdentifier(
                                     pair.Key, 
                                     valuePair.Key

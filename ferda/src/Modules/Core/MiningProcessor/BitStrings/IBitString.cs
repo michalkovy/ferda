@@ -10,7 +10,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
     /// </summary>
     public interface IBitString : IBitStringBase
     {
-        IFormula Identifier { get; }
+        Formulas.BooleanAttributeFormula Identifier { get; }
 
         ReadOnlyCollection<Guid> UsedAttributes { get; }
 
@@ -20,7 +20,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         int Sum { get; }
     }
 
-    public interface IBitStringCreate
+    public interface IBitStringCreate : IBitStringBase
     {
         void Fill(bool value);
         bool GetBit(int index);

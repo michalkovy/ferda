@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitStrings\CategorialAttribute.cs" />
-    <Compile Include="BitStrings\IBitStringsOps.cs" />
+    <Compile Include="BitStrings\BitStringsOps.cs" />
     <Compile Include="BitStrings\MissingInformation.cs" />
     <Compile Include="Formulas\AttributeNameInLiteralsProvider.cs" />
     <Compile Include="BitStrings\BitStringCacheTest.cs" />
@@ -76,22 +76,25 @@
     <Compile Include="BitStrings\BitStringIdentifier.cs" />
     <Compile Include="Design\ClassOfEquivalence.cs" />
     <Compile Include="Design\ConjunctionSetting.cs" />
+    <Compile Include="Formulas\CategorialAttributeFormula.cs" />
     <Compile Include="Formulas\ConjunctionFormula.cs" />
     <Compile Include="Design\DisjunctionSetting.cs" />
     <Compile Include="Formulas\DisjunctionFormula.cs" />
     <Compile Include="Design\EntityImporatancePair.cs" />
-    <Compile Include="Formulas\Formula.cs" />
+    <Compile Include="Formulas\FormulaHelper.cs" />
     <Compile Include="BitStrings\IBitString.cs" />
     <Compile Include="BitStrings\IBitStringCache.cs" />
-    <Compile Include="Formulas\IFormula.cs" />
+    <Compile Include="ResultSerializable.cs" />
+    <Compile Include="Formulas\BooleanAttributeFormula.cs" />
     <Compile Include="Design\ILeafEntitySetting.cs" />
     <Compile Include="Design\IEntitySetting.cs" />
+    <Compile Include="Formulas\Formula.cs" />
     <Compile Include="Generation\Common.cs" />
     <Compile Include="Generation\IEntityEnumerator.cs" />
     <Compile Include="Design\IMultipleOperandEntitySetting.cs" />
     <Compile Include="Design\Importance.cs" />
     <Compile Include="Design\ISingleOperandEntitySetting.cs" />
-    <Compile Include="Formulas\Atom.cs" />
+    <Compile Include="Formulas\AtomFormula.cs" />
     <Compile Include="Generation\MiningProcessorFunctionsI.cs" />
     <Compile Include="Miners\Pseudocode.cs" />
     <Compile Include="MiningProcessor.cs" />
@@ -113,9 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DesignDiagram.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Notes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,22 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
-    public class ConjunctionFormula : IFormula
+    public class ConjunctionFormula : BooleanAttributeFormula
     {
-        private readonly IFormula[] _operands;
+        private readonly BooleanAttributeFormula[] _operands;
 
-        public IFormula[] Operands
+        public BooleanAttributeFormula[] Operands
         {
             get { return _operands; }
         }
-
-        public ConjunctionFormula(IFormula[] operands)
+        
+        public ConjunctionFormula(BooleanAttributeFormula[] operands)
         {
             // flattening
-            List<IFormula> operandsLists = new List<IFormula>();
-            foreach (IFormula operand in operands)
+            List<BooleanAttributeFormula> operandsLists = new List<BooleanAttributeFormula>();
+            foreach (BooleanAttributeFormula operand in operands)
             {
                 ConjunctionFormula conjunction = operand as ConjunctionFormula;
                 if (conjunction == null)
@@ -28,19 +29,19 @@ namespace Ferda.Guha.MiningProcessor.Formulas
             _operands = operandsLists.ToArray();
         }
 
-        public ConjunctionFormula(IFormula operandA, IFormula operandB)
-            : this(new IFormula[] { operandA, operandB })
+        public ConjunctionFormula(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
+            : this(new BooleanAttributeFormula[] { operandA, operandB })
         {
         }
 
         public override string ToString()
         {
             List<string> result = new List<string>();
-            foreach (IFormula formula in _operands)
+            foreach (BooleanAttributeFormula formula in _operands)
             {
                 result.Add(formula.ToString());
             }
-            return Formula.SequenceToString(result, FormulaSeparator.And, true);
+            return FormulaHelper.SequenceToString(result, FormulaSeparator.And, true);
         }
     }
 }

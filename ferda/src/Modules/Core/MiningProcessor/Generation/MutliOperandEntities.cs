@@ -26,7 +26,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             foreach (IEntityEnumerator entity in _sourceEntities)
                 entities.Add(entity.ToString());
             return "Conjunction of {" 
-                   + Formulas.Formula.SequenceToString(entities, Formulas.FormulaSeparator.AtomMembers, true) 
+                   + Formulas.FormulaHelper.SequenceToString(entities, Formulas.FormulaSeparator.AtomMembers, true) 
                    + "}";
         }
     }
@@ -53,7 +53,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             foreach (IEntityEnumerator entity in _sourceEntities)
                 entities.Add(entity.ToString());
             return "Disjunction of {"
-                   + Formulas.Formula.SequenceToString(entities, Formulas.FormulaSeparator.AtomMembers, true)
+                   + Formulas.FormulaHelper.SequenceToString(entities, Formulas.FormulaSeparator.AtomMembers, true)
                    + "}";
         }
     }

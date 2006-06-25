@@ -43,7 +43,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 );
 #endif
             result += "["
-                + Formula.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
+                + FormulaHelper.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
                 + "] (fixed set)";
             return result;
         }

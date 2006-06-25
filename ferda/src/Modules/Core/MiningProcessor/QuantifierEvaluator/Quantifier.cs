@@ -47,6 +47,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
             get { return _operationMode; }
         }
+        
+        private readonly bool _isPureFourFold;
 
 
         #region For TopN algorithm purposes
@@ -97,6 +99,10 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 _providesAtLeastSignificantValues = true;
             }
 
+            _isPureFourFold = prx.ice_isA("::Ferda::Guha::Math::Quantifiers::FourFoldValid")
+                            || prx.ice_isA("::Ferda::Guha::Math::Quantifiers::FourFoldValue")
+                            || prx.ice_isA("::Ferda::Guha::Math::Quantifiers::FourFoldSignificantValue");
+            
             if (_providesAtLeastSignificantValues)
             {
                 switch (_setting.relation)
@@ -160,21 +166,34 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         private QuantifierEvaluateSetting getQuantifierEvaluateSetting(ContingencyTableHelper contingencyTable)
         {
-            QuantifierEvaluateSetting setting = contingencyTable.GetSubTable(
-                _setting.FromRow,
-                _setting.ToRow,
-                _setting.FromColumn,
-                _setting.ToColumn,
-                _setting.units);
-            if (_setting.needsNumericValues)
+            if (_isPureFourFold)
             {
-                Guid numericValuesAttributeId = contingencyTable.NumericValuesAttributeId;
-                if (numericValuesAttributeId == null)
-                    throw new ArgumentNullException();
-                setting.numericValuesAttributeId = new GuidStruct(numericValuesAttributeId.ToString());
-                setting.numericValuesProviders = _taskFuncPrx.GetBitStringGenerator(setting.numericValuesAttributeId);
+                QuantifierEvaluateSetting setting = contingencyTable.GetSubTable(
+                    _setting.quantifierClasses,
+                    _setting.missingInformationHandling,
+                    _setting.units);
+                if (_setting.needsNumericValues)
+                    throw new NotImplementedException();
+                return setting;
             }
-            return setting;
+            else
+            {
+                QuantifierEvaluateSetting setting = contingencyTable.GetSubTable(
+                    _setting.FromRow,
+                    _setting.ToRow,
+                    _setting.FromColumn,
+                    _setting.ToColumn,
+                    _setting.units);
+                if (_setting.needsNumericValues)
+                {
+                    Guid numericValuesAttributeId = contingencyTable.NumericValuesAttributeId;
+                    if (numericValuesAttributeId == null)
+                        throw new ArgumentNullException();
+                    setting.numericValuesAttributeId = new GuidStruct(numericValuesAttributeId.ToString());
+                    setting.numericValuesProviders = _taskFuncPrx.GetBitStringGenerator(setting.numericValuesAttributeId);
+                }
+                return setting;
+            }
         }
 
         /// <summary>

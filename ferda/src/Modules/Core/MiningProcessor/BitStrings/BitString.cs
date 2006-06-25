@@ -60,9 +60,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private int _size;
         private int _sum = -1;
 
-        private IFormula _identifier;
+        private Formulas.BooleanAttributeFormula _identifier;
 
-        public IFormula Identifier
+        public Formulas.BooleanAttributeFormula Identifier
         {
             get { return _identifier; }
         }
@@ -125,14 +125,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="usedAttributes">The used attributes.</param>
-        private BitString(IFormula identifier, List<Guid> usedAttributes)
+        private BitString(Formulas.BooleanAttributeFormula identifier, List<Guid> usedAttributes)
         {
             _usedAttributes = usedAttributes;
             _identifier = identifier;
         }
 
         public BitString(int length, BitStringIdentifier identifier, long[] bits)
-        : this(new Atom(identifier), new List<Guid>(new Guid[] { identifier.AttributeId }))
+        : this(new AtomFormula(identifier), new List<Guid>(new Guid[] { identifier.AttributeId }))
         {
             if (length <= 0)
                 throw new ArgumentOutOfRangeException("length", "The length of a BitString must be a positive integer.");
@@ -193,7 +193,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <param name="identifier">The identifier.</param>
         /// <exception cref="NullReferenceException">Input string cannot be a null reference..</exception>
         /// <exception cref="ArgumentException">Input string can contain only characters '0' and '1'.</exception>
-        public BitString(string source, Atom identifier)
+        public BitString(string source, AtomFormula identifier)
             : this(identifier, new List<Guid>(new Guid[] { identifier.BitStringIdentifier.AttributeId }))
         {
             create(source.Length);
@@ -287,7 +287,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
                 BitString result = new BitString(this);
                 result.and((BitString)source);
-                result._identifier = Formula.And(Identifier, source.Identifier);
+                result._identifier = FormulaHelper.And(Identifier, source.Identifier);
                 result._usedAttributes = joinUsedAttributes(UsedAttributes, source.UsedAttributes);
                 return result;
             }
@@ -367,7 +367,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
                 BitString result = new BitString(this);
                 result.or((BitString)source);
-                result._identifier = Formula.Or(Identifier, source.Identifier);
+                result._identifier = FormulaHelper.Or(Identifier, source.Identifier);
                 result._usedAttributes = joinUsedAttributes(UsedAttributes, source.UsedAttributes);
                 return result;
             }
@@ -444,7 +444,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         {
             BitString result = new BitString(this);
             result.not();
-            result._identifier = Formula.Not(Identifier);
+            result._identifier = FormulaHelper.Not(Identifier);
             result._usedAttributes = new List<Guid>(UsedAttributes);
             return result;
         }

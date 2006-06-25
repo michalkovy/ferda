@@ -1,17 +1,19 @@
+using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
-    public class NegationFormula : IFormula
+    public class NegationFormula : BooleanAttributeFormula
     {
-        private IFormula _operand;
+        private readonly BooleanAttributeFormula _operand;
 
-        public IFormula Operand
+        public BooleanAttributeFormula Operand
         {
             get { return _operand; }
         }
 
-        public NegationFormula(IFormula operand)
+        public NegationFormula(BooleanAttributeFormula operand)
         {
             _operand = operand;
         }
@@ -19,10 +21,10 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         public override string ToString()
         {
             string result = _operand.ToString();
-            if (result.Contains(Formula.SeparatorAnd) || result.Contains(Formula.SeparatorOr))
-                return Formula.NegationSign + "(" + result + ")";
+            if (result.Contains(FormulaHelper.SeparatorAnd) || result.Contains(FormulaHelper.SeparatorOr))
+                return FormulaHelper.NegationSign + "(" + result + ")";
             else
-                return Formula.NegationSign + result;
+                return FormulaHelper.NegationSign + result;
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
+    [Serializable()]
     public class BitStringIdentifier : IEquatable<BitStringIdentifier>
     {
         private readonly Guid _attributeId;
@@ -11,7 +12,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             get { return _attributeId; }
         }
 
-        public readonly string _categoryId;
+        private readonly string _categoryId;
 
         public string CategoryId
         {

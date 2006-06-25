@@ -4,7 +4,8 @@ using Ferda.Guha.MiningProcessor.BitStrings;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
-    public class Atom : IFormula
+    [Serializable()]
+    public class AtomFormula : BooleanAttributeFormula
     {
         private readonly BitStringIdentifier _bitStringIdentifier;
 
@@ -13,7 +14,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
             get { return _bitStringIdentifier; }
         }
 
-        public Atom(BitStringIdentifier bitStringIdentifier)
+        public AtomFormula(BitStringIdentifier bitStringIdentifier)
         {
             _bitStringIdentifier = bitStringIdentifier;
         }
@@ -29,12 +30,12 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         public static string WriteAtom(Guid attribute, IEnumerable<string> categories)
         {
             return AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(attribute)
-                   + "(" 
-                   + Formula.SequenceToString(
-                         categories, 
+                   + "("
+                   + FormulaHelper.SequenceToString(
+                         categories,
                          FormulaSeparator.AtomMembers,
                          false
-                         ) 
+                         )
                    + ")";
         }
     }
