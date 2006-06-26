@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Ferda.Guha.MiningProcessor.Formulas;
+using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
+    public interface IEmptyBitString : IBitString
+    {}
+    
     /// <summary>
-    /// And, Not, Or vraci novy IBitString
+    /// And, Not, Or returns new IBitString
     /// </summary>
     public interface IBitString : IBitStringBase
     {
         Formulas.BooleanAttributeFormula Identifier { get; }
-
-        ReadOnlyCollection<Guid> UsedAttributes { get; }
 
         IBitString And(IBitString source);
         IBitString Not();

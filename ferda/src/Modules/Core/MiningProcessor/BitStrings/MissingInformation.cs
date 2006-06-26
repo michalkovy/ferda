@@ -2,140 +2,81 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using Ferda.Modules.Helpers.Caching;
+using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
-    public class MissingInformation
+    public class MissingInformation : MostRecentlyUsed<Set<Guid>, IBitString>
     {
         private readonly IBitStringCache _bitStringCache;
 
-        public MissingInformation(IBitStringCache bitStringCache)
+        public const int cacheDefaultSize = 1048576; // ~1Mb
+
+        public MissingInformation()
+            : base(cacheDefaultSize)
         {
-            _bitStringCache = bitStringCache;
+            _bitStringCache = BitStringCache.GetInstance();
         }
 
-        private class pair
+        public override IBitString GetValue(Set<Guid> key)
         {
-            private readonly ReadOnlyCollection<Guid> _key;
-            private readonly IBitString _value;
-            public ReadOnlyCollection<Guid> Key
-            {
-                get { return _key; }
-            }
-            public IBitString Value
-            {
-                get { return _value; }
-            }
+            if (key.Count == 0)
+                return new EmptyBitString();
 
-            public pair(ReadOnlyCollection<Guid> key, IBitString value)
+            // try get subset
+            Set<Guid> bestMatch = null;
+            foreach (Set<Guid> set in Keys)
             {
-                _key = key;
-                _value = value;
-            }
-        }
-
-        private Stack<pair> _cache = new Stack<pair>();
-
-
-        /// <summary>
-        /// Compares the specified collections of Guids. (If cached &gt; asked returns integer &gt; 0)
-        /// </summary>
-        /// <param name="cached">The cached.</param>
-        /// <param name="asked">The asked.</param>
-        /// <param name="notInCached">Not in cached (out).</param>
-        /// <returns>1 ... uncomparable or greater</returns>
-        private static int Compare(ReadOnlyCollection<Guid> cached, ReadOnlyCollection<Guid> asked, out List<Guid> notInCached)
-        {
-            notInCached = null;
-            int sizeComparation = cached.Count - asked.Count;
-            if (sizeComparation > 0)
-                return 1;
-            else if (sizeComparation == 0)
-            {
-                // test equality
-                foreach (Guid guid in asked)
+                if (set.Count > key.Count)
+                    continue;
+                if (bestMatch == null || bestMatch.Count < set.Count)
                 {
-                    if (cached.Contains(guid))
-                        continue;
-                    else
-                        return 1;
+                    // test subset
+                    if (set.IsSubsetOf(key))
+                        bestMatch = set;
+                    if (bestMatch.Count == key.Count - 1)
+                        break;
                 }
-                return 0;
             }
-            else //if (sizeComparation < 0)
+            if (bestMatch !=  null)
             {
-                // test subset
-                foreach (Guid guid in cached)
+                IBitString last = this[bestMatch];
+                IBitString newCached = null;
+                foreach (Guid guid in key)
                 {
-                    if (cached.Contains(guid))
-                        continue;
-                    else
-                        return 1;
-                }
-                // collect notInCached
-                notInCached = new List<Guid>();
-                foreach (Guid guid in asked)
-                {
-                    if (cached.Contains(guid))
-                        continue;
-                    else
-                        notInCached.Add(guid);
-                }
-                return -1;
-            }
-        }
-
-        public IBitString GetMissingInformation(ReadOnlyCollection<Guid> attributesIds)
-        {
-        restart:
-            if (_cache.Count > 0)
-            {
-                pair last = _cache.Peek();
-                List<Guid> notInCached = null;
-                int comparationResult = Compare(last.Key, attributesIds, out notInCached);
-                if (comparationResult == 0)
-                    return last.Value;
-                else if (comparationResult == 1)
-                {
-                    _cache.Pop();
-                    goto restart;
-                }
-                else if (comparationResult == -1)
-                {
-                    IBitString newCached = null;
-                    foreach (Guid guid in notInCached)
+                    if (!bestMatch.Contains(guid))
                     {
                         IBitString newBitString = _bitStringCache.GetMissingInformationBitString(guid);
                         if (newCached == null)
-                            newCached = last.Value.Or(newBitString);
+                            newCached = last.Or(newBitString);
                         else
                             newCached = newCached.Or(newBitString);
                     }
-                    _cache.Push(new pair(attributesIds, newCached));
-                    return _cache.Peek().Value;
                 }
-                throw new ApplicationException();
+                return newCached;
             }
             else
             {
                 IBitString newCached = null;
-                foreach (Guid guid in attributesIds)
+                foreach (Guid guid in key)
                 {
-                    IBitString newBitString = _bitStringCache.GetMissingInformationBitString(guid);
-                    if (newCached == null)
-                        newCached = newBitString;
-                    else
-                        newCached = newCached.Or(newBitString);
+                    if (!bestMatch.Contains(guid))
+                    {
+                        IBitString newBitString = _bitStringCache.GetMissingInformationBitString(guid);
+                        if (newCached == null)
+                            newCached = newBitString;
+                        else
+                            newCached = newCached.Or(newBitString);
+                    }
                 }
-                _cache.Push(new pair(attributesIds, newCached));
-                return _cache.Peek().Value;
+                return newCached;
             }
-            /*
-             * zasobnik 
-             * je-li posledni mensi pak prodluz, uloz a pouzij
-             * je-li stejny pak nech ulozeny a pouzij
-             * je-li delsi jiny pak iterativnì zkracuj
-             * */
+        }
+
+        public override int GetSize(IBitString itemToMeasure)
+        {
+            return itemToMeasure.Length;
         }
     }
 }

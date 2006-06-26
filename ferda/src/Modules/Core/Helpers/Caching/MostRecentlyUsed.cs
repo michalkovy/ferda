@@ -54,6 +54,14 @@ namespace Ferda.Modules.Helpers.Caching
         private LinkedList<KeyT> _list;
         private Dictionary<KeyT, ValueT> _cache;
 
+        public Dictionary<KeyT, ValueT>.KeyCollection Keys
+        {
+            get
+            {
+                return _cache.Keys;
+            }
+        }
+        
         /// <summary>
         /// Construct a most recently used items list with the maximum number of items
         /// allowed in the list.

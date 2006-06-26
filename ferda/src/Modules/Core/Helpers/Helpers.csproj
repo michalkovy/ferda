@@ -7,7 +7,7 @@
     <ProjectGuid>{5A2270C8-8780-4820-88C1-8AE0D5101E3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Helpers</RootNamespace>
+    <RootNamespace>Ferda.Modules.Helpers</RootNamespace>
     <AssemblyName>Helpers</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -59,6 +59,7 @@
     <Compile Include="Common\Others.cs" />
     <Compile Include="Common\Parsing.cs" />
     <Compile Include="Common\Print.cs" />
+    <Compile Include="Common\Set.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.csproj">

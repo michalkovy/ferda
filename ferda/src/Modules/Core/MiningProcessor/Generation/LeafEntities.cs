@@ -1,10 +1,11 @@
-#define Testing
+//#define Testing
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Ferda.Guha.Math;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Guha.MiningProcessor.Formulas;
+using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.Generation
 {
@@ -12,19 +13,24 @@ namespace Ferda.Guha.MiningProcessor.Generation
     {
         private readonly CoefficientFixedSetSetting _setting;
 
+        protected Guid _attributeId;
+        
         public FixedSet(CoefficientFixedSetSetting setting)
             : base(new Guid(setting.id.value))
         {
             _setting = setting;
+            _attributeId = new Guid(setting.generator.GetAttributeId().value);
         }
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
-            yield return Helpers.GetBitString(
+            IBitString result = Helpers.GetBitString(
                 _setting.generator,
-                new Guid(_setting.generator.GetAttributeId().value),
+                _attributeId,
                 _setting.categoriesIds,
                 BitwiseOperation.Or);
+
+            yield return result;
         }
 
         public override long TotalCount
@@ -36,16 +42,32 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             string result = "";
 #if Testing
-            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(Id);
 #else
             result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
-                new Guid(_setting.generator.GetAttributeId().value)
+                _attributeId
                 );
 #endif
             result += "["
                 + FormulaHelper.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
                 + "] (fixed set)";
             return result;
+        }
+
+        public override Set<Guid> UsedAttributes
+        {
+            get
+            {
+                return new Set<Guid>(_attributeId);
+            }
+        }
+
+        public override Set<Guid> UsedEntities
+        {
+            get
+            {
+                return new Set<Guid>(Id);
+            }
         }
     }
 
@@ -55,7 +77,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             : base(setting)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.LeftCuts);
-            //TODO integritni omezeni (ordinal...)
+            //UNDONE integritni omezeni (ordinal...)
         }
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
@@ -99,7 +121,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             : base(setting)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.RightCuts);
-            //TODO integritni omezeni (ordinal...)
+            //UNDONE integritni omezeni (ordinal...)
         }
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
@@ -143,7 +165,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             : base(setting)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.Cuts);
-            //TODO integritni omezeni (ordinal...)
+            //UNDONE integritni omezeni (ordinal...)
         }
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
@@ -218,7 +240,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             : base(setting)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.Intervals);
-            //TODO integritni omezeni (ordinal...)
+            //UNDONE integritni omezeni (ordinal...)
         }
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
@@ -280,7 +302,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             : base(setting)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.CyclicIntervals);
-            //TODO integritni omezeni (ordinal...)
+            //UNDONE integritni omezeni (ordinal...)
         }
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
@@ -345,93 +367,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
             : base(setting)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.Subsets);
-            //TODO integritni omezeni (ordinal...)
+            //UNDONE integritni omezeni (ordinal...)
         }
-        /*
-        Stack<IBitString> sB = new Stack<IBitString>();
-        Stack<int> sI = new Stack<int>();
-        private void sBPush(IBitString adding)
-        {
-            if (sB.Count > 0)
-            {
-                IBitString previous = sB.Peek();
-                sB.Push(previous.Or(adding));
-            }
-            else
-            {
-                sB.Push(adding);
-            }
-        }
-        private bool returnCurrent(out IBitString result)
-        {
-            Debug.Assert(sB.Count <= _effectiveMaxLength);
-            if (sB.Count >= _effectiveMinLength)
-            {
-                result = sB.Peek();
-                return true;
-            }
-            result = null;
-            return false;
-        }
-        private void getEntity(int index)
-        {
-            IBitString bS = getBitString(_categoriesNames[index]);
-            sBPush(bS);
-            sI.Push(index);
-        }
-        private bool prolong(bool afterRemove)
-        {
-            if (sB.Count == _effectiveMaxLength) // not after remove
-                return false;
-            int newIndex;
-            if (afterRemove)
-                newIndex = sI.Pop() + 1;
-            else
-                newIndex = sI.Peek() + 1;
-            if (newIndex >= _categoriesNames.Length)
-                return false;
-            getEntity(newIndex);
-            return true;
-        }
-        private bool removeLastItem()
-        {
-            if (sB.Count > 0)
-            {
-                sB.Pop();
-                return true;
-            }
-            return false;
-        }
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
-        {
-            IBitString result;
-            bool afterRemove;
-            afterRemove = false;
-
-            #region initialize
-
-            sB.Clear();
-            sI.Clear();
-            getEntity(0);
-
-            #endregion
-
-        returnCurrent:
-            if (returnCurrent(out result))
-                yield return result;
-        prolong:
-            if (prolong(afterRemove))
-            {
-                afterRemove = false;
-                goto returnCurrent;
-            }
-            if (removeLastItem())
-            {
-                afterRemove = true;
-                goto prolong;
-            }
-        }
-        */
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {

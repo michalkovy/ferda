@@ -1,0 +1,34 @@
+Poznamky k integritnim
+======================
+
+Importance
+----------
+- Vstupni entita do Negation/Both signs nesmi byt Auxiliary.
+- V Conjunction/Disjunction musi byt nejmene jedna entita ne-Auxiliary.
+
+Dalsi
+-----
+Kvantifikatory pro SD tasky musi byt jen Quantifier Value Functions
+
+
+Poznamky
+========
+Statistiky
+ - Total relevant Questions (nebere v uvahu Improtance a tridy ekvivalence)
+ - verified
+ - # of hypotheses
+
+Max # radku zkoumane matice musi byt < Int32.MaxValue
+
+Nebude
+======
+ Min-Max delka hypotezy
+ TopN
+ ? Classes of equivalence
+ ? zlepsovani, preskoky
+
+Pripraveno, nebude
+==================
+ Equifreqvency attribute
+ Equidistant attribute
+ Kvantifikatory
