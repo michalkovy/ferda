@@ -206,6 +206,8 @@ module Ferda {
 				
 				interface MiningProcessorFunctions
 				{
+					// pro BooleanAttributesSeq plati, ze tam muze byt zastoupena jenda MarkEnum nejvyse jendou
+					// pro CategorialAttributeSeq plati, ze tam muze byt jenda MarkEnum zastoupena vicekrat
 					void SetUp(
 						BooleanAttributeSeq booleanAttributes, 
 						CategorialAttributeSeq categorialAttributes,

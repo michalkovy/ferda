@@ -49,7 +49,6 @@
 				<arg file="Modules/Guha.Math.ice"/>
 				<arg file="Modules/Guha.Math.Quantifiers.ice"/>
 				<arg file="Modules/Guha.MiningProcessor.ice"/>
-				<arg file="Modules/Guha.Hypothesis.ice"/>
 			</exec>
 			<echo message="Generuji .cs z .ice souboru v adresari ModulesManager..."/>
 			<mkdir dir="${build.dir}/ModulesManager/generated"/>

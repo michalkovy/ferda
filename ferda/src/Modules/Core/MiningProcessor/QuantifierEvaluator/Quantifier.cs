@@ -22,7 +22,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     public class Quantifier
     {
         private readonly QuantifierBaseFunctionsPrx _prx;
-        private readonly BitStringGeneratorProvider _taskFuncPrx;
+        private readonly BitStringGeneratorProviderPrx _taskFuncPrx;
 
         private readonly QuantifierSetting _setting;
         public QuantifierSetting Setting
@@ -64,24 +64,41 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
             get { return _performanceDifficulty; }
         }
-
-        private long _numberOfInfokes = 0;
-        public long NumberOfInfokes
+        
+        public double ActualEfficiency
         {
-            get { return _numberOfInfokes; }
+            get
+            {
+                if (NumberOfInvokes == 0)
+                    return 0;
+                // (-0.5;0.5>
+                double efficiency = -0.5d + NumberOfFalseInvokes / NumberOfInvokes;
+                return (Int64.MaxValue * efficiency) / (double)NumberOfInvokes;
+            }
         }
 
-        private long _numberOfFalseInfokes = 0;
-        public long NumberOfFalseInfokes
+        private long _numberOfInvokes = 0;
+        public long NumberOfInvokes
         {
-            get { return _numberOfFalseInfokes; }
+            get { return _numberOfInvokes; }
+        }
+
+        private long _numberOfFalseInvokes = 0;
+        public long NumberOfFalseInvokes
+        {
+            get { return _numberOfFalseInvokes; }
         }
 
         #endregion
 
         #region Constructors
 
-        public Quantifier(QuantifierBaseFunctionsPrx prx, BitStringGeneratorProvider taskFuncPrx)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Quantifier"/> class.
+        /// </summary>
+        /// <param name="prx">The quantifier proxy.</param>
+        /// <param name="taskFuncPrx">The "numeric values providers" provider.</param>
+        public Quantifier(QuantifierBaseFunctionsPrx prx, BitStringGeneratorProviderPrx taskFuncPrx)
         {
             _prx = prx;
             _taskFuncPrx = taskFuncPrx;
@@ -122,7 +139,14 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 }
             }
         }
-        public Quantifier(QuantifierBaseFunctionsPrx prx, BitStringGeneratorProvider taskFuncPrx, string[] localePrefs)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Quantifier"/> class.
+        /// </summary>
+        /// <param name="prx">The quantifier proxy.</param>
+        /// <param name="taskFuncPrx">The "numeric values providers" provider.</param>
+        /// <param name="localePrefs">The locale prefs.</param>
+        public Quantifier(QuantifierBaseFunctionsPrx prx, BitStringGeneratorProviderPrx taskFuncPrx, string[] localePrefs)
             : this(prx, taskFuncPrx)
         {
             _localePrefs = localePrefs;

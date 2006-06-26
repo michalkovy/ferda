@@ -6,7 +6,7 @@ using Ferda.Guha.MiningProcessor.Generation;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
-    public class CategorialAttribute
+    public class CategorialAttributeTrace
     {
         private readonly CategorialAttributeFormula _identifier;
         public CategorialAttributeFormula Identifier
@@ -20,7 +20,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             get { return _bitStrings; }
         }
         
-        public CategorialAttribute(BitStringGeneratorPrx generator)
+        public CategorialAttributeTrace(BitStringGeneratorPrx generator)
         {
             _identifier = new CategorialAttributeFormula(new Guid(generator.GetAttributeId().value));
             _bitStrings = Helpers.GetBitStrings(generator, _identifier.AttributeId);

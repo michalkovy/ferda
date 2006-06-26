@@ -1,8 +1,9 @@
-//#define Testing
+#define Testing
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Ferda.Modules.Helpers.Caching;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
@@ -18,7 +19,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
     /// category ID (string)).
     /// </remarks>
     /// <seealso href="http://www.yoda.arachsys.com/csharp/singleton.html">Singleton in .NET C#</seealso>
-    public class BitStringCache : Ferda.Modules.Helpers.Caching.MostRecentlyUsed<BitStringIdentifier, IBitString>, IBitStringCache
+    public class BitStringCache : MostRecentlyUsed<BitStringIdentifier, IBitString>, IBitStringCache
     {
         private static readonly BitStringCache _instance = new BitStringCache(cacheDefaultSize);
         private static readonly object padlock = new object();
@@ -44,6 +45,15 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private BitStringCache(int maxItems)
             : base(maxItems)
         {
+        }
+        
+        internal static IBitStringCache GetInstance()
+        {
+            return _instance;
+            // !!! only for constructor of MissingInformation 
+            // (MI class is initialized before cache is fisrttime 
+            // touched by MI instance is firstime used after some 
+            // usage the cache (rightway inicialization of cache))
         }
 
         public static IBitStringCache GetInstance(BitStringGeneratorPrx prx)
@@ -103,9 +113,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
             else
             {
-                // TODO
-                // attribute has no missing values, "false" bit string should be returned
-                throw new NotImplementedException();
+                return EmptyBitStringSingleton.EmptyBitString;
             }
         }
 
@@ -121,9 +129,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         public override IBitString GetValue(BitStringIdentifier bitStringId)
         {
-            //TODO
-            //return getBitStringGeneratorPrx(bitStringId.AttributeId).GetBitString(bitStringId._categoryId);
-            return null;
+            
+            MiningProcessor.BitString bs = getBitStringGeneratorPrx(bitStringId.AttributeId).GetBitString(bitStringId.CategoryId);
+            return new BitString(bs.length, bitStringId, bs.value);
         }
 
         public override int GetSize(IBitString itemToMeasure)

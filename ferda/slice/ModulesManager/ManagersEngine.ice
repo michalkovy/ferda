@@ -21,14 +21,19 @@ module Ferda {
 		exception BoxModuleNotExistError{};
 		
 		interface ProgressTask {
-		  nonmutating float getValue();
-		  void stop();
-    };
-    
-    interface ProgressBar {
-      idempotent void setValue(float value);
-      void done();
-    };
+			nonmutating float getValue();
+			void stop();
+		};
+		
+		interface ProgressBar {
+			idempotent void setValue(float value);
+			//idempotent void setValue(float value, string message);
+			
+			//idempotent void running(); 
+			//ten progress bar by mel ukazovat ze bezi, ale ne konretni hotovou cast (v %), pokud tohle dlouho nezavolam, tak by se mel zastavit
+			
+			void done();
+		};
 
 		interface Output {
 			void writeMsg(MsgType type, string name, string message);
@@ -52,14 +57,14 @@ module Ferda {
 		};
 		
 		interface BoxModuleValidator {
-		  nonmutating void validate(string boxModuleIceIdentity)
-  		  throws
-  					Ferda::Modules::BoxRuntimeError,
-  					Ferda::Modules::BadValueError,
-  					Ferda::Modules::BadParamsError,
-  					Ferda::Modules::NoConnectionInSocketError,
-            BoxModuleNotExistError;
-    };
+			nonmutating void validate(string boxModuleIceIdentity)
+				throws
+						Ferda::Modules::BoxRuntimeError,
+						Ferda::Modules::BadValueError,
+						Ferda::Modules::BadParamsError,
+						Ferda::Modules::NoConnectionInSocketError,
+						BoxModuleNotExistError;
+		};
 		
 		
 		sequence<Ferda::Modules::BoxModuleFactoryCreator*> BoxModuleFactoryCreatorSeq;

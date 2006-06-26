@@ -1,3 +1,5 @@
+#define Testing
+
 #define USE64BIT
 #define LOOKUP8
 #define LOOKUP16
@@ -67,37 +69,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             get { return _identifier; }
         }
 
-        private List<Guid> _usedAttributes;
-
-        private List<Guid> joinUsedAttributes(ReadOnlyCollection<Guid> x, ReadOnlyCollection<Guid> y)
-        {
-            ReadOnlyCollection<Guid> big;
-            ReadOnlyCollection<Guid> small;
-            if (x.Count >= y.Count)
-            {
-                big = x;
-                small = y;
-            }
-            else
-            {
-                big = y;
-                small = x;
-            }
-            List<Guid> result = new List<Guid>(big);
-            foreach (Guid guid in small)
-            {
-                if (!result.Contains(guid))
-                    result.Add(guid);
-            }
-            return result;
-        }
-
-        public ReadOnlyCollection<Guid> UsedAttributes
-        {
-            get { return _usedAttributes.AsReadOnly(); }
-        }
-
-
 #if USE64BIT
         private const int _blockSize = 64;
         private const ulong _zero = 0ul;
@@ -124,18 +95,16 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Constructor that allocates the memory.
         /// </summary>
         /// <param name="identifier">The identifier.</param>
-        /// <param name="usedAttributes">The used attributes.</param>
-        private BitString(Formulas.BooleanAttributeFormula identifier, List<Guid> usedAttributes)
+        private BitString(BooleanAttributeFormula identifier)
         {
-            _usedAttributes = usedAttributes;
             _identifier = identifier;
         }
 
         public BitString(int length, BitStringIdentifier identifier, long[] bits)
-        : this(new AtomFormula(identifier), new List<Guid>(new Guid[] { identifier.AttributeId }))
+        : this(new AtomFormula(identifier))
         {
             if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", "The length of a BitString must be a positive integer.");
+                throw Exceptions.BitStringLengthError();
 
             _size = length;
 
@@ -150,7 +119,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
                 unchecked
                 {
-                    //TODO test this
                     _array[i] = (ulong)bits[i];
                 }
             }
@@ -165,7 +133,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="source">Source BitString that will be copied.</param>
         public BitString(BitString source)
-            : this(source.Identifier, new List<Guid>(source.UsedAttributes))
+            : this(source.Identifier)
         {
             if (source._size == 0)
                 throw new InvalidOperationException("Cannot copy-construct a BitString from an uninitialized one.");
@@ -186,6 +154,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 #endif
         }
 
+#if Testing
         /// <summary>
         /// Initialize bit string from a string of characters '0' and '1'.
         /// </summary>
@@ -194,7 +163,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <exception cref="NullReferenceException">Input string cannot be a null reference..</exception>
         /// <exception cref="ArgumentException">Input string can contain only characters '0' and '1'.</exception>
         public BitString(string source, AtomFormula identifier)
-            : this(identifier, new List<Guid>(new Guid[] { identifier.BitStringIdentifier.AttributeId }))
+            : this(identifier)
         {
             create(source.Length);
             for (int i = 0; i < source.Length; i++)
@@ -215,7 +184,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 }
             }
         }
-
+#endif
+        
         /// <summary>
         /// This method allocates the memory of BitString.
         /// Call this method only after the default constructor was used.
@@ -225,7 +195,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private void create(int length)
         {
             if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", "The length of a BitString must be a positive integer.");
+                throw Exceptions.BitStringLengthError();
             if (_size > 0)
                 throw new InvalidOperationException("BitString cannot be initialized more than once.");
 
@@ -288,8 +258,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 BitString result = new BitString(this);
                 result.and((BitString)source);
                 result._identifier = FormulaHelper.And(Identifier, source.Identifier);
-                result._usedAttributes = joinUsedAttributes(UsedAttributes, source.UsedAttributes);
                 return result;
+            }
+            else if (source is EmptyBitString)
+            {
+                return new BitString(this);
             }
             else
                 throw new NotImplementedException();
@@ -300,7 +273,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (_size == 0)
                 throw new InvalidOperationException("BitString was not initialized (use create method first).");
             if (_size != source._size)
-                throw new InvalidOperationException("BitString sizes do not match.");
+                throw Exceptions.BitStringsLengtsAreNotEqualError();
 
             Debug.Assert(_array.Length == source._array.Length,
                          "The array sizes don't match, although bit string lengths are the same.");
@@ -368,8 +341,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 BitString result = new BitString(this);
                 result.or((BitString)source);
                 result._identifier = FormulaHelper.Or(Identifier, source.Identifier);
-                result._usedAttributes = joinUsedAttributes(UsedAttributes, source.UsedAttributes);
                 return result;
+            }
+            else if (source is EmptyBitString)
+            {
+                return new BitString(this);
             }
             else
                 throw new NotImplementedException();
@@ -380,7 +356,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (_size == 0)
                 throw new InvalidOperationException("BitString was not initialized (use create method first).");
             if (source._size != _size)
-                throw new InvalidOperationException("BitString sizes do not match.");
+                throw Exceptions.BitStringsLengtsAreNotEqualError();
 
             Debug.Assert(_array.Length == source._array.Length,
                          "The array sizes don't match, although bit string lengths are the same.");
@@ -445,7 +421,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             BitString result = new BitString(this);
             result.not();
             result._identifier = FormulaHelper.Not(Identifier);
-            result._usedAttributes = new List<Guid>(UsedAttributes);
             return result;
         }
 

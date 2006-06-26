@@ -5,8 +5,9 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Guha.MiningProcessor.Formulas;
 
-namespace Ferda.Guha.MiningProcessor.Formulas
+namespace Ferda.Guha.MiningProcessor
 {
     [Serializable()]
     public class SerializableFormula
