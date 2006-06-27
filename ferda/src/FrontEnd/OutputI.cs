@@ -81,7 +81,8 @@ namespace Ferda {
 
             public override ProgressBarPrx startProgress(ProgressTaskPrx task, string name, string hint, Current current__)
             {
-                return null;
+                ProgressBarI progressBar = new ProgressBarI(task, name, hint);
+                return ProgressBarPrxHelper.uncheckedCast(current__.adapter.addWithUUID(progressBar));
             }
         }
     }

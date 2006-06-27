@@ -21,17 +21,16 @@ module Ferda {
 		exception BoxModuleNotExistError{};
 		
 		interface ProgressTask {
-			nonmutating float getValue();
+			nonmutating float getValue(out string message);
 			void stop();
 		};
 		
 		interface ProgressBar {
-			idempotent void setValue(float value);
-			//idempotent void setValue(float value, string message);
+		  // ten progress bar by mel ukazovat ze bezi, ale ne konretni hotovou cast (v %),
+      // pokud tohle dlouho nezavolam, tak by se mel zastavit - hodnota zaporna
+			idempotent void setValue(float value, string message);
 			
-			//idempotent void running(); 
-			//ten progress bar by mel ukazovat ze bezi, ale ne konretni hotovou cast (v %), pokud tohle dlouho nezavolam, tak by se mel zastavit
-			
+			// Call this on end. After calling this, its proxy will not be usable
 			void done();
 		};
 
