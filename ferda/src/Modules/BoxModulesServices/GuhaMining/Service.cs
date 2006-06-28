@@ -17,12 +17,18 @@ namespace Ferda.Modules.Boxes.GuhaMining
         /// </remarks>
         protected override void registerBoxes()
         {
+            // guha mining setting
             registerBox(AtomSetting.BoxInfo.typeIdentifier, new AtomSetting.BoxInfo());
             registerBox(ClassOfEquivalence.BoxInfo.typeIdentifier, new ClassOfEquivalence.BoxInfo());
             registerBox(ConjunctionSetting.BoxInfo.typeIdentifier, new ConjunctionSetting.BoxInfo());
             registerBox(DisjunctionSetting.BoxInfo.typeIdentifier, new DisjunctionSetting.BoxInfo());
             registerBox(FixedAtom.BoxInfo.typeIdentifier, new FixedAtom.BoxInfo());
             registerBox(Sign.BoxInfo.typeIdentifier, new Sign.BoxInfo());
+            
+            // guha task boxes
+            registerBox(Tasks.FourFold.BoxInfo.typeIdentifier, new Tasks.FourFold.BoxInfo());
+            
+            // guha quantifiers boxes
         }
 
         public override void AddCustomFactoriesToComunicator(Communicator communicator)

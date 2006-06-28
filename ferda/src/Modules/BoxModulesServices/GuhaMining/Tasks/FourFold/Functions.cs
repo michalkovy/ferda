@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.Math.Quantifiers;
+using Ferda.ModulesManager;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 {
@@ -40,6 +41,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 
         public const string PropDone = "Done";
         public const string PropNumberOfHypotheses = "NumberOfHypotheses";
+        public const string PropMaxNumberOfHypotheses = "MaxNumberOfHypotheses";
 
         public DateTimeTI Done
         {
@@ -86,69 +88,80 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
                 return prx.GetBitStringGenerator(attributeId);
             return (null);
         }
-        
+
         public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Ice.Current current__)
         {
             BitStringGeneratorPrx result;
             BooleanAttributeSettingFunctionsPrx prx;
-            
+
             prx = GetBooleanAttributeSettingFunctionsPrx(SockSuccedent, true);
             result = getBitStringGenerator(attributeId, prx);
             if (result != null)
                 return result;
-            
+
             prx = GetBooleanAttributeSettingFunctionsPrx(SockAntecedent, false);
             result = getBitStringGenerator(attributeId, prx);
             if (result != null)
                 return result;
-            
+
             prx = GetBooleanAttributeSettingFunctionsPrx(SockCondition, false);
             result = getBitStringGenerator(attributeId, prx);
             if (result != null)
                 return result;
-            
+
             return null;
         }
 
 
         public void Run()
         {
-            List<BooleanAttribute> cedents = new List<BooleanAttribute>();
+            // Progress Bar
+            ProgressBarPrx pB = _boxModule.Output.startProgress(null, "Testovací PB", "Hintik pri startu");
+            for (int i = 0; i < 10; i++)
+            {
+                pB.setValue(10 / (i + 1), "Zvysuji na " + ((i + 1) * 10) + "%");
+            }
+            pB.done();
+            return;
 
-            BooleanAttributeSettingFunctionsPrx prx;
+            //List<BooleanAttribute> cedents = new List<BooleanAttribute>();
 
-            prx = GetBooleanAttributeSettingFunctionsPrx(SockSuccedent, true);
-            cedents.Add(new BooleanAttribute(MarkEnum.Succedent, prx.GetEntitySetting()));
+            //BooleanAttributeSettingFunctionsPrx prx;
 
-            prx = GetBooleanAttributeSettingFunctionsPrx(SockAntecedent, false);
-            if (prx != null)
-                cedents.Add(new BooleanAttribute(MarkEnum.Antecedent, prx.GetEntitySetting()));
+            //prx = GetBooleanAttributeSettingFunctionsPrx(SockSuccedent, true);
+            //cedents.Add(new BooleanAttribute(MarkEnum.Succedent, prx.GetEntitySetting()));
 
-            prx = GetBooleanAttributeSettingFunctionsPrx(SockCondition, false);
-            if (prx != null)
-                cedents.Add(new BooleanAttribute(MarkEnum.Condition, prx.GetEntitySetting()));
+            //prx = GetBooleanAttributeSettingFunctionsPrx(SockAntecedent, false);
+            //if (prx != null)
+            //    cedents.Add(new BooleanAttribute(MarkEnum.Antecedent, prx.GetEntitySetting()));
 
-            //UNDONE Load Balancing
-            MiningProcessorFunctionsPrx miningProcessor = 
-                MiningProcessorFunctionsPrxHelper.checkedCast(
-                    _boxModule.Manager.getManagersLocator().findAllObjectsWithType(
-                        "::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"
-                        )[0]
-                    );
+            //prx = GetBooleanAttributeSettingFunctionsPrx(SockCondition, false);
+            //if (prx != null)
+            //    cedents.Add(new BooleanAttribute(MarkEnum.Condition, prx.GetEntitySetting()));
 
-            BitStringGeneratorProviderPrx bsProvider = BitStringGeneratorProviderPrxHelper.checkedCast(_boxModule.getFunctions());
+            ////UNDONE Load Balancing
+            //MiningProcessorFunctionsPrx miningProcessor =
+            //    MiningProcessorFunctionsPrxHelper.checkedCast(
+            //        _boxModule.Manager.getManagersLocator().findAllObjectsWithType(
+            //            "::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"
+            //            )[0]
+            //        );
 
-            string statistics;
-            string result =
-                miningProcessor.Run(
-                        cedents.ToArray(),
-                        new CategorialAttribute[0],
-                        GetQuantifierBaseFunctions(true).ToArray(),
-                        TaskTypeEnum.FourFold,
-                        bsProvider,
-                        _boxModule.Output,
-                        out statistics
-                    );
+            //BitStringGeneratorProviderPrx bsProvider = BitStringGeneratorProviderPrxHelper.checkedCast(_boxModule.getFunctions());
+
+            ////TODO PropMaxNumberOfHypotheses
+
+            //string statistics;
+            //string result =
+            //    miningProcessor.Run(
+            //            cedents.ToArray(),
+            //            new CategorialAttribute[0],
+            //            GetQuantifierBaseFunctions(true).ToArray(),
+            //            TaskTypeEnum.FourFold,
+            //            bsProvider,
+            //            _boxModule.Output,
+            //            out statistics
+            //        );
         }
 
         public override QuantifierBaseFunctionsPrx[] GetQuantifiers(Ice.Current current__)
