@@ -7,93 +7,14 @@
 
 module Ferda {
 	module Modules {
+		
+		struct GuidStruct
+		{
+			string value;
+		};
+		sequence<GuidStruct> GuidStructSeq;
+		sequence<GuidStructSeq> GuidStructSeqSeq;
 
-		enum AttributeDomainEnum
-		{
-			WholeDomain,
-			SubDomainValueBounds,
-			SubDomainNumberOfValuesBounds
-		};
-
-		enum BoundaryEnum
-		{
-			Sharp,
-			Round,
-			Infinity
-		};
-
-		struct DateStruct
-		{
-			int year;
-			short month;
-			short day;
-		};
-		struct TimeStruct
-		{
-			short hour;
-			short minute;
-			short second;
-		};
-		struct DateTimeStruct
-		{
-			int year;
-			short month;
-			short day;
-			short hour;
-			short minute;
-			short second;
-		};
-
-		struct DateTimeIntervalStruct
-		{
-			BoundaryEnum leftBoundType;
-			BoundaryEnum rightBoundType;
-			DateTimeStruct leftBound;
-			DateTimeStruct rightBound;
-		};
-		sequence<DateTimeIntervalStruct> DateTimeIntervalStructSeq;
-		dictionary<string, DateTimeIntervalStructSeq> DateTimeIntervalCategorySeq;
-
-		struct LongIntervalStruct
-		{
-			BoundaryEnum leftBoundType;
-			BoundaryEnum rightBoundType;
-			long leftBound;
-			long rightBound;
-		};
-		sequence<LongIntervalStruct> LongIntervalStructSeq;
-		dictionary<string, LongIntervalStructSeq> LongIntervalCategorySeq;
-
-		struct FloatIntervalStruct
-		{
-			BoundaryEnum leftBoundType;
-			BoundaryEnum rightBoundType;
-			float leftBound;
-			float rightBound;
-		};
-		sequence<FloatIntervalStruct> FloatIntervalStructSeq;
-		dictionary<string, FloatIntervalStructSeq> FloatIntervalCategorySeq;
-
-		dictionary<string, StringSeq> EnumCategorySeq;
-
-		struct CategoriesStruct
-		{
-			DateTimeIntervalCategorySeq dateTimeIntervals;
-			LongIntervalCategorySeq longIntervals;
-			FloatIntervalCategorySeq floatIntervals;
-			EnumCategorySeq enums;
-		};
-
-		enum SidesEnum
-		{
-			Left,
-			Right
-		};
-		enum RangeEnum
-		{
-			Half,
-			All
-		};
 		enum WorkingWithCedentsFirstSetEnum
 		{
 				Cedent1

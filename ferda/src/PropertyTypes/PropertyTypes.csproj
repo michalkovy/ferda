@@ -40,7 +40,6 @@
   <ItemGroup>
     <Compile Include="BasicPropertyValueTypes.cs" />
     <Compile Include="BoolTI.cs" />
-    <Compile Include="CategoriesTI.cs" />
     <Compile Include="DateTI.cs" />
     <Compile Include="DateTimeTI.cs" />
     <Compile Include="DoubleTI.cs" />

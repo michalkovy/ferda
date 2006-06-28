@@ -138,7 +138,8 @@ namespace Tests.Data
                 }
                 catch (BadParamsError e)
                 {
-                    if (e.restrictionType == restrictionTypeEnum.DbUnexpectedError)
+                    if (e.restrictionType == restrictionTypeEnum.DbUnexpectedError
+                        || e.restrictionType == restrictionTypeEnum.DbUniqueKeyError)
                         failedAsExpected = true;
                 }
                 Assert.IsTrue(failedAsExpected);

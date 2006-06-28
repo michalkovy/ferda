@@ -4,9 +4,23 @@
 #include <Modules/BuiltinSequences.ice>
 #include <Modules/BasicPropertyTypes.ice>
 #include <Modules/Exceptions.ice>
+#include <Modules/Common.ice>
 #include <Modules/Guha.Data.ice>
 #include <Modules/Guha.Math.ice>
 #include <Modules/Guha.MiningProcessor.ice>
+
+
+module Ferda {
+	module Guha {
+		module MiningProcessor {
+			
+				//FORWARD DECLARATION
+				
+				interface BitStringGenerator;				
+		};
+	};
+};
+
 
 module Ferda {
 	module Guha {
@@ -111,7 +125,7 @@ module Ferda {
 					double denominator;
 					
 					//numeric values
-					Ferda::Guha::MiningProcessor::GuidStruct numericValuesAttributeId;
+					Ferda::Modules::GuidStruct numericValuesAttributeId;
 					Ferda::Guha::MiningProcessor::BitStringGenerator* numericValuesProviders;
 				};
 
@@ -146,8 +160,6 @@ module Ferda {
 					nonmutating double ComputeValue(QuantifierEvaluateSetting param)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
-				
-
 				
 				//FourFold
 				//TwoDimensions

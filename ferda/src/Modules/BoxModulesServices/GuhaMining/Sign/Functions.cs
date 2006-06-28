@@ -35,6 +35,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
         public const string PropSignType = "SignType";
         public const string SockBooleanAttributeSetting = "BooleanAttributeSetting";
 
+        public GuidStruct Guid
+        {
+            get
+            {
+                return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule);
+            }
+        }
+        
         public ImportanceEnum Importance
         {
             get
@@ -92,7 +100,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
                                     {
                                         BothSignsSettingI result =
                                             new BothSignsSettingI();
-                                        result.id = new GuidStruct((new Guid()).ToString()); //TODO Guid
+                                        result.id = Guid;
                                         result.importance = Importance;
                                         return result;
                                     }
@@ -100,7 +108,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
                                     {
                                         NegationSettingI result =
                                             new NegationSettingI();
-                                        result.id = new GuidStruct((new Guid()).ToString()); //TODO Guid
+                                        result.id = Guid;
                                         result.importance = Importance;
                                         return result;
                                     }
@@ -131,6 +139,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
             return GetBitStringGeneratorPrx(true).GetAttributeNames();
+        }
+
+        public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Current current__)
+        {
+            return GetBitStringGeneratorPrx(true).GetBitStringGenerator(attributeId);
         }
 
         #endregion

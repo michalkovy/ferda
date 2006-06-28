@@ -38,6 +38,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
         public const string PropMaximalLength = "MaximalLength";
         public const string SockBitStringGenerator = "BitStringGenerator";
 
+        public GuidStruct Guid
+        {
+            get
+            {
+                return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule);
+            }
+        }
+        
         public ImportanceEnum Importance
         {
             get
@@ -168,7 +176,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
                         {
                             CoefficientSettingI result =
                                 new CoefficientSettingI();
-                            result.id = new GuidStruct((new Guid()).ToString()); //TODO Guid
+                            result.id = Guid;
                             result.importance = Importance;
                             result.generator = bitStringGenerator;
                             result.maxLength = MaximalLength;
@@ -199,6 +207,13 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
             return GetBitStringGeneratorPrx(true).GetAttributeNames();
         }
 
+        public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Current current__)
+        {
+            if (attributeId.value == Guid.value)
+                return GetBitStringGeneratorPrx(true);
+            return null;
+        }
+        
         #endregion
     }
 }

@@ -89,7 +89,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         {
             get
             {
-#if !Testing
+#if Testing
                 return BitStringCacheTest.GetBitString(bitStringId);
 #endif
                 return base[bitStringId];

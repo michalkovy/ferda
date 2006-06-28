@@ -47,6 +47,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         public const string PropCardinality = "Cardinality";
         public const string SockColumn = "Column";
 
+        public GuidStruct Guid
+        {
+            get
+            {
+                return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule);
+            }
+        }
+
         public string NameInLiterals
         {
             get { return _boxModule.GetPropertyString(PropNameInLiterals); }
@@ -170,7 +178,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             if (_cacheFlagColumn.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValueColumn == null && fallOnError))
             {
-                _cachesReloadFlag = Guid.NewGuid();
+                _cachesReloadFlag = System.Guid.NewGuid();
                 _cachedValueColumn = ExceptionsHandler.GetResult<GenericColumn>(
                     fallOnError,
                     delegate
@@ -234,7 +242,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
             {
-                _cachesReloadFlag = Guid.NewGuid();
+                _cachesReloadFlag = System.Guid.NewGuid();
                 _cachedValue = ExceptionsHandler.GetResult<Attribute<IComparable>>(
                     fallOnError,
                     delegate
@@ -293,7 +301,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return _cachedValue;
         }
 
-        private Guid _cachesReloadFlag = Guid.NewGuid();
+        private Guid _cachesReloadFlag = System.Guid.NewGuid();
         private Guid _lastReloadFlag;
         private Dictionary<string, BitString> _cachedValueBitStrings = null;
         public Dictionary<string, BitString> GetBitStrings(bool fallOnError)
@@ -503,12 +511,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 );
         }
 
-        private GuidStruct getGuidStruct()
-        {
-            // TODO 
-            return new GuidStruct((new Guid()).ToString());
-        }
-
         #endregion
 
         #region Ice Functions
@@ -543,14 +545,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public override GuidStruct GetAttributeId(Current current__)
         {
-            return getGuidStruct();
+            return Guid;
         }
 
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
             return new GuidAttributeNamePair[]
                 {
-                    new GuidAttributeNamePair(getGuidStruct(), NameInLiterals),
+                    new GuidAttributeNamePair(Guid, NameInLiterals),
                 };
         }
 

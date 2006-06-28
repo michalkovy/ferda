@@ -23,6 +23,10 @@ namespace Ferda.Guha.Math
 
         public static bool Compare(RelationEnum relation, double firstOperand, double secondOperand)
         {
+            if (firstOperand == Double.NaN)
+                return false;
+            if (secondOperand == Double.NaN)
+                return false;
             switch (relation)
             {
                 case RelationEnum.Equal:

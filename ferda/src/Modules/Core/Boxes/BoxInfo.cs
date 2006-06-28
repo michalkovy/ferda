@@ -1022,8 +1022,8 @@ namespace Ferda.Modules.Boxes
                             return new TimeTI(Convert.ToDateTime(boxProperty.Default));
                         else
                             return new TimeTI(0, 0, 0);
-                    case "::Ferda::Modules::CategoriesT":
-                        return new CategoriesTI();
+                    //case "::Ferda::Modules::CategoriesT":
+                    //    return new CategoriesTI();
                     case "::Ferda::Modules::GenerationInfoT":
                         return new GenerationInfoTI();
                     case "::Ferda::Modules::HypothesesT":

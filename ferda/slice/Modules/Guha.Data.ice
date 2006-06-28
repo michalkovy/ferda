@@ -116,7 +116,7 @@ module Ferda {
 			};
 			sequence<ValueFrequencyPair> ValueFrequencyPairSeq;
 					
-			class ValuesAndFrequencies {
+			struct ValuesAndFrequencies {
 				DbDataTypeEnum dataType; // distincts data type
 				ValueFrequencyPairSeq data;
 			};

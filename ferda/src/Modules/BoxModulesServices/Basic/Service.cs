@@ -105,13 +105,13 @@ namespace Ferda.Modules.Boxes.Basic
                                         return new DateTimeTI(DateTimeTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
-            registerPropertyBox("CategoriesT",
-                                new CategoriesTI(),
-                                delegate(ObjectPrx prx)
-                                    {
-                                        return new CategoriesTI(CategoriesTInterfacePrxHelper.checkedCast(prx));
-                                    },
-                                "CategoriesT");
+            //registerPropertyBox("CategoriesT",
+            //                    new CategoriesTI(),
+            //                    delegate(ObjectPrx prx)
+            //                        {
+            //                            return new CategoriesTI(CategoriesTInterfacePrxHelper.checkedCast(prx));
+            //                        },
+            //                    "CategoriesT");
         }
 
         /// <summary>

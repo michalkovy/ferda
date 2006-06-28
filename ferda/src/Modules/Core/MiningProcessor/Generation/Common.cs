@@ -1,10 +1,11 @@
-//#define Testing
+#define Testing
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Ferda.Guha.Math;
 using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Modules;
 using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.Generation
@@ -594,7 +595,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
         private void getEntity(int index)
         {
             IEnumerator<IBitString> enumerator = _sourceEntities[index].GetEnumerator();
-            enumerator.Reset();
+            
+            //enumerator.Reset();
+            // UNDONE ... myslim, ze by to melo byt odkomentovane, ale 
+            // kdyz je to odkomentovane tak to zde pada na NotSupprotedOperation
+            
             Debug.Assert(enumerator.MoveNext());
             sE.Push(enumerator);
             sBPush(enumerator.Current);

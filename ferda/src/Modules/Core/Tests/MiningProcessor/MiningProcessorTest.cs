@@ -7,6 +7,7 @@ using System.Text;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Guha.MiningProcessor.Generation;
+using Ferda.Modules;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.MiningProcessor

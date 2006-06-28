@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
+using Ferda.Modules;
 
 namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 {

@@ -14,7 +14,7 @@ namespace Ferda.Guha.Attribute
     public class Axis<T>
         where T : IComparable
     {
-        //TODO null containing category even in Attribute.cs!!! -> Axis.NotValid(...)
+        //UNDONE null containing category even in Attribute.cs!!! -> Axis.NotValid(...)
 
         #region Fields
 
@@ -364,7 +364,7 @@ namespace Ferda.Guha.Attribute
         /// <param name="dataTable">The data table with covered values in column [0].</param>
         public List<T> GetUncoveredValues(DataTable dataTable)
         {
-            //TODO make a test
+            //UNDONE make a test
 
             Disabled = false;
             Build();
@@ -392,7 +392,7 @@ namespace Ferda.Guha.Attribute
 
         
         private const int _blockSize = 64;
-        private const long _one = -1;
+        private const long _one = 1;
         private void setTrueBit(int index, long[] array)
         {
             array[index / _blockSize] |= _one << (index % _blockSize);

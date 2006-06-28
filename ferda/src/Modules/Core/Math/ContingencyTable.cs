@@ -1,4 +1,5 @@
 using System;
+using Ferda.Guha.Math.Quantifiers;
 
 namespace Ferda.Guha.Math
 {
@@ -61,6 +62,10 @@ namespace Ferda.Guha.Math
             _contingecyTable = contingencyTable;
             _denominator = denominator;
         }
+        
+        public ContingencyTable(QuantifierEvaluateSetting quantifierEvaluateSetting)
+            : this(quantifierEvaluateSetting.contingencyTable, quantifierEvaluateSetting.denominator)
+        {}
         
         private void prepareSums()
         {
@@ -197,6 +202,10 @@ namespace Ferda.Guha.Math
                 throw new ArgumentException("Bad size of contingency table", "contingencyTable");
         }
 
+        public FourFoldContingencyTable(QuantifierEvaluateSetting quantifierEvaluateSetting)
+            : this(quantifierEvaluateSetting.contingencyTable, quantifierEvaluateSetting.denominator)
+        {}
+        
         #region Fields (A, B, C, D, R, S, K, L, N)
 
         /// <summary>
@@ -382,6 +391,10 @@ namespace Ferda.Guha.Math
                 throw new ArgumentException("Bad size of contingency table", "contingencyTable");
         }
 
+        public SingleDimensionContingecyTable(QuantifierEvaluateSetting quantifierEvaluateSetting)
+            : this(quantifierEvaluateSetting.contingencyTable, quantifierEvaluateSetting.denominator)
+        {}
+        
         /// <summary>
         /// Gets the item with the specified column index.
         /// Returned values are not denominated by the denominator.
