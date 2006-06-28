@@ -32,3 +32,14 @@ Pripraveno, nebude
  Equifreqvency attribute
  Equidistant attribute
  Kvantifikatory
+ 
+    /* TopN algoritmus
+     * 
+     * Task Results
+     * -	The valid hypotheses are kept sorted by the natural values given by 
+     *      the quantifiers. For every quantifier there is a queue of top hypotheses.
+     * -	The user can specify the maximum number of hypotheses in queues. 
+     *      Valid hypotheses are dropped if do not fit to any of the queues in favor 
+     *      of stronger hypotheses. Note that this approach slightly diverges from the 
+     *      original GUHA method, which put all prime hypotheses to output.
+     * */

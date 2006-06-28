@@ -14,7 +14,7 @@ namespace Ferda.Modules
 	XmlInclude(typeof(DateValueT)),
 	XmlInclude(typeof(DateTimeValueT)),
 	XmlInclude(typeof(TimeValueT)),
-	XmlInclude(typeof(CategoriesValueT)),
+    //XmlInclude(typeof(CategoriesValueT)),
 	XmlInclude(typeof(GenerationInfoValueT)),
 	XmlInclude(typeof(HypothesesValueT))]
 	public class ValueT
@@ -135,17 +135,17 @@ namespace Ferda.Modules
 		}
 	}
 
-	public class CategoriesValueT : ValueT
-	{
-		public Ferda.Modules.CategoriesTI.Categories Value;
+    //public class CategoriesValueT : ValueT
+    //{
+    //    public Ferda.Modules.CategoriesTI.Categories Value;
 
-		public override PropertyValue GetPropertyValue()
-		{
-			CategoriesTI result = new CategoriesTI();
-			result.categoriesValue = Ferda.Modules.CategoriesTI.Categories.Struct2Dict(Value);
-			return result;
-		}
-	}
+    //    public override PropertyValue GetPropertyValue()
+    //    {
+    //        CategoriesTI result = new CategoriesTI();
+    //        result.categoriesValue = Ferda.Modules.CategoriesTI.Categories.Struct2Dict(Value);
+    //        return result;
+    //    }
+    //}
 
 	public class GenerationInfoValueT : ValueT
 	{

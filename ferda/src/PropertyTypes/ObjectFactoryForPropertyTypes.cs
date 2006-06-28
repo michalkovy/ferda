@@ -38,8 +38,8 @@ namespace Ferda.Modules
 					return new DateTI(0,0,0);
 				case "::Ferda::Modules::DateTimeT":
 					return new DateTimeTI(0,0,0,0,0,0);
-				case "::Ferda::Modules::CategoriesT":
-					return new CategoriesTI();
+                //case "::Ferda::Modules::CategoriesT":
+                //    return new CategoriesTI();
 				case "::Ferda::Modules::GenerationInfoT":
 					return new GenerationInfoTI();
 				case "::Ferda::Modules::HypothesesT":
@@ -85,8 +85,8 @@ namespace Ferda.Modules
                 if (communicator.findObjectFactory("::Ferda::Modules::DateTimeT") == null)
                     communicator.addObjectFactory(factory, "::Ferda::Modules::DateTimeT");
                 
-                if (communicator.findObjectFactory("::Ferda::Modules::CategoriesT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::CategoriesT");
+                //if (communicator.findObjectFactory("::Ferda::Modules::CategoriesT") == null)
+                //    communicator.addObjectFactory(factory, "::Ferda::Modules::CategoriesT");
                 if (communicator.findObjectFactory("::Ferda::Modules::GenerationInfoT") == null)
                     communicator.addObjectFactory(factory, "::Ferda::Modules::GenerationInfoT");
                 if (communicator.findObjectFactory("::Ferda::Modules::HypothesesT") == null)

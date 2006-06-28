@@ -5,16 +5,27 @@
 #include <Modules/BasicPropertyTypes.ice>
 #include <Modules/Exceptions.ice>
 #include <Modules/Guha.Data.ice>
+#include <Modules/Guha.Math.Quantifiers.ice>
 #include <ModulesManager/ManagersEngine.ice>
 
 module Ferda {
 	module Guha {
-		module MiningProcessor {
+		module Math {
+			module Quantifiers {
+			
+				//FORWARD DECLARATION
 				
-				struct GuidStruct
-				{
-					string value;
-				};
+				interface QuantifierBaseFunctions;
+				sequence<QuantifierBaseFunctions*> QuantifierBaseFunctionsPrxSeq;
+				
+			};
+		};
+	};
+};
+
+module Ferda {
+	module Guha {
+		module MiningProcessor {
 				
 				// BIT STRING GENERATOR
 				
@@ -26,7 +37,7 @@ module Ferda {
 				
 				struct GuidAttributeNamePair
 				{
-					GuidStruct id;
+					Ferda::Modules::GuidStruct id;
 					string attributeName;								
 				};
 				sequence<GuidAttributeNamePair> GuidAttributeNamePairSeq;
@@ -36,13 +47,10 @@ module Ferda {
 					GuidAttributeNamePairSeq GetAttributeNames()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
-				
-				sequence<GuidStruct> GuidStructSeq;
-				sequence<GuidStructSeq> GuidStructSeqSeq;
-				
+			
 				interface BitStringGenerator extends AttributeNameProvider
 				{
-					GuidStruct GetAttributeId()
+					Ferda::Modules::GuidStruct GetAttributeId()
 						throws Ferda::Modules::BoxRuntimeError;
 						
 					Ferda::Guha::Data::CardinalityEnum GetAttributeCardinality()
@@ -74,7 +82,7 @@ module Ferda {
 			
 				class IEntitySetting
 				{
-					GuidStruct id;
+					Ferda::Modules::GuidStruct id;
 					ImportanceEnum importance;
 				};
 				sequence<IEntitySetting> IEntitySettingSeq;
@@ -133,7 +141,7 @@ module Ferda {
 				class IMultipleOperandEntitySetting extends IEntitySetting
 				{
 					IEntitySettingSeq operands;
-					GuidStructSeqSeq classesOfEquivalence;
+					Ferda::Modules::GuidStructSeqSeq classesOfEquivalence;
 					int minLength;
 					int maxLength;
 				};
@@ -145,8 +153,14 @@ module Ferda {
 				{};
 				
 				// SETTING BOX MODULES
+
+				interface BitStringGeneratorProvider
+				{
+					nonmutating BitStringGenerator* GetBitStringGenerator(Ferda::Modules::GuidStruct attributeId)
+						throws Ferda::Modules::BoxRuntimeError;
+				};
 				
-				interface BooleanAttributeSettingFunctions extends AttributeNameProvider
+				interface BooleanAttributeSettingFunctions extends AttributeNameProvider, BitStringGeneratorProvider
 				{
 					nonmutating IEntitySetting GetEntitySetting()
 						throws Ferda::Modules::BoxRuntimeError;
@@ -154,16 +168,18 @@ module Ferda {
 				
 				interface EquivalenceClassFunctions
 				{
-					nonmutating GuidStructSeq GetEquivalenceClass()
+					nonmutating Ferda::Modules::GuidStructSeq GetEquivalenceClass()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 				
 				// MINING TASK BOX MODULE FUNCTIOS
 				
-				interface BitStringGeneratorProvider
+				interface MiningTaskFunctions extends BitStringGeneratorProvider
 				{
-					nonmutating BitStringGenerator* GetBitStringGenerator(GuidStruct attributeId)
+					Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq GetQuantifiers()
 						throws Ferda::Modules::BoxRuntimeError;
+					string GetResult(out string statistics)
+						throws Ferda::Modules::BoxRuntimeError;						
 				};
 				
 				// MINING PROCESSOR SERVICE FUNCTIONS
@@ -208,26 +224,17 @@ module Ferda {
 				{
 					// pro BooleanAttributesSeq plati, ze tam muze byt zastoupena jenda MarkEnum nejvyse jendou
 					// pro CategorialAttributeSeq plati, ze tam muze byt jenda MarkEnum zastoupena vicekrat
-					void SetUp(
+					string Run(
 						BooleanAttributeSeq booleanAttributes, 
 						CategorialAttributeSeq categorialAttributes,
+						Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq quantifiers,
 						TaskTypeEnum taskType,
-						Ferda::ModulesManager::ProgressBar* progressBar,
+						BitStringGeneratorProvider* bitStringGenerator,
 						Ferda::ModulesManager::Output* output,
-						BitStringGeneratorProvider* bitStringGenerator
+						out string statistics
 						)
 						throws Ferda::Modules::BoxRuntimeError;
 						
-					void Start()
-						throws Ferda::Modules::BoxRuntimeError;
-						
-					void Stop()
-						throws Ferda::Modules::BoxRuntimeError;
-						
-					//ProgressTask
-					
-					void GetResult() //TODO
-						throws Ferda::Modules::BoxRuntimeError;
 				};			
 		};
 	};

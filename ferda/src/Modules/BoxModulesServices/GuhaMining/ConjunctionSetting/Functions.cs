@@ -38,6 +38,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
         public const string SockBooleanAttributeSetting = "BooleanAttributeSetting";
         public const string SockEquivalenceClasses = "EquivalenceClasses";
 
+        public GuidStruct Guid
+        {
+            get
+            {
+                return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule);
+            }
+        }
+
         public ImportanceEnum Importance
         {
             get
@@ -104,7 +112,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
                         {
                             ConjunctionSettingI result =
                                 new ConjunctionSettingI();
-                            result.id = new GuidStruct((new Guid()).ToString()); //TODO Guid
+                            result.id = Guid;
                             result.importance = Importance;
                             result.maxLength = MaximalLength;
                             result.minLength = MinimalLength;
@@ -152,6 +160,20 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
             return result.ToArray();
         }
 
+        public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Current current__)
+        {
+            BitStringGeneratorPrx result;
+            List<BooleanAttributeSettingFunctionsPrx> subFormulas =
+                GetBooleanAttributeSettingFunctionsPrxs(true);
+            foreach (BooleanAttributeSettingFunctionsPrx prx in subFormulas)
+            {
+                result = prx.GetBitStringGenerator(attributeId);
+                if (result != null)
+                    return result;
+            }
+            return null;
+        }
+        
         #endregion
     }
 }

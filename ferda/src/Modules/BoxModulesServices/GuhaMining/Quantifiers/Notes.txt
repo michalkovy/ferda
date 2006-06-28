@@ -1,0 +1,140 @@
+* mam implementovane
+# mam Functions
+^ mam BoxInfo
+$ mam XML konfigurak
+
+Four Fold Quantifiers (9)
+-------------------------
+Base treshold
+	Base (a-freq) *#
+Implicational
+	FoundedImplication *#
+	LowerCriticalImplication
+	UpperCriticalImplication
+Double Implicational
+	DoubleFoundedImplication *#
+	DoubleLowerCriticalImplication
+	DoubleUpperCriticalImplication
+Equivalence
+	FoundedEquivalence *#
+	LowerCriticalEquivalence
+	UpperCriticalEquivalence
+Distribution Significance
+	ChiSquare
+	SimpleDeviation
+	Fisher
+Above Below Outside Average
+	AboveBelowAverageImplication *
+Next
+	E *
+
+// See document 093 CF a SDCF Kvantifikátory.doc
+Single-Dimension (jen relativni) *#
+-----------------------------------
+NominalVariableDistributionCharacteristics
+	NominalVariationNormalized *#
+	VariationRatio *#
+OrdinalVariableDistributionCharacteristics
+	DiscreteOrdinaryVariationNormalized *#
+CardinalVariableDistributionCharacteristics (Needs numeric values)
+	AritmeticAverage *#
+	GeometricAverage *#
+	Variance *#
+	StandardDeviation *#
+	Asymetry *# ... koeficient asymetrie kolem støedu rozložení
+	Skewness *# ... šikmost
+
+One-Or-Two-Dimensional Quantifiers *#
+-------------------------------------
+Aggregation
+	AnyValue *#
+	Minimum *#
+	Maximum *#
+	Average *#
+	Sum *#
+
+Strict Two-Dimensional Quantifiers *# (1)
+-----------------------------------------
+Functional Dependence
+	FunctionOfRow(FunctionSumOfRows) *#
+	FunctionOfRowEachRow(FunctionEachRow) *#
+Ordinal Dependence
+	Kendall *#
+Information Theory
+	InformationDependence *#
+	ConditionalEntropy *#
+	MutualInformationNormalized *#
+Distribution
+	ChiSquare
+	
+	
+	
+	
+        public OperationModeEnum OperationMode
+        {
+            get {}
+        }
+        public RelationEnum Relation
+        {
+            get {}
+        }
+        public double Treshold
+        {
+            get{}
+        }
+        public BoundTypeEnum FromRowBoundary
+        {
+            get{}
+        }
+        public int FromRowBoundaryIndex
+        {
+            get{}
+        }
+        public BoundTypeEnum ToRowBoundary
+        {
+            get{}
+        }
+        public int ToRowBoundaryIndex
+        {
+            get{}
+        }
+        public BoundTypeEnum FromColumnBoundary
+        {
+            get { }
+        }
+        public int FromColumnBoundaryIndex
+        {
+            get { }
+        }
+        public BoundTypeEnum ToColumnBoundary
+        {
+            get { }
+        }
+        public int ToColumnBoundaryIndex
+        {
+            get { }
+        }
+        public QuantifierClassEnum[] QuantifierClasses
+        {
+            get {}
+        }
+        public PerformanceDifficultyEnum PerformanceDifficulty
+        {
+            get {}
+        }
+        public bool NeedsNumericValues
+        {
+            get {}
+        }
+        public CardinalityEnum SupportedData
+        {
+            get{}
+        }
+        public UnitsEnum Units
+        {
+            get{}
+        }
+        public bool SupportsFloatContingencyTable
+        {
+            get{}
+        }

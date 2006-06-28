@@ -73,6 +73,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
             // try to invoke methods
             object dummy = Func.GetColumnFunctionsPrx(true);
+            dummy = Func.GetAttributeId();
+            dummy = Func.GetAttributeNames();
             dummy = Func.GetAttribute(true);
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);

@@ -18,14 +18,6 @@ module Ferda {
 			StringSeq stringSeqValue;
 		};
 
-		interface CategoriesTInterface {
-			CategoriesStruct getCategories();
-		};
-
-		class CategoriesT extends PropertyValue implements CategoriesTInterface {
-			CategoriesStruct categoriesValue;
-		};
-
 		interface GenerationInfoTInterface {
 			GeneratingStruct getGenerationInfo();
 		};

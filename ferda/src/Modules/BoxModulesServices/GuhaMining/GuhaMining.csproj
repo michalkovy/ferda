@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ferda.MiningProcessor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\Ferda.MiningProcessor.dll</HintPath>
-    </Reference>
     <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
@@ -45,6 +41,14 @@
     <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaMath, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaMath.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaMiningProcessor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaMiningProcessor.dll</HintPath>
     </Reference>
     <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -73,10 +77,61 @@
     <Compile Include="DisjunctionSetting\Functions.cs" />
     <Compile Include="FixedAtom\BoxInfo.cs" />
     <Compile Include="FixedAtom\Functions.cs" />
+    <Compile Include="Quantifiers\Common.cs" />
+    <Compile Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\Equivalence\FoundedEquivalence\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\FourFoldQuantifiers.cs" />
+    <Compile Include="Quantifiers\FourFold\Implicational\FoundedImplication\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\AboveBelowAverageImplication\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\Base\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\Base\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\E\Functions.cs" />
+    <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\AritmeticAverage\Functions.cs" />
+    <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Asymetry\Functions.cs" />
+    <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\GeometricAverage\Functions.cs" />
+    <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Skewness\Functions.cs" />
+    <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\StandardDeviation\Functions.cs" />
+    <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Variance\Functions.cs" />
+    <Compile Include="Quantifiers\OneDimensional\NominalVariableDistributionCharacteristics\NominalVariationNormalized\Functions.cs" />
+    <Compile Include="Quantifiers\OneDimensional\NominalVariableDistributionCharacteristics\VariationRatio\Functions.cs" />
+    <Compile Include="Quantifiers\OneDimensional\OrdinalVariableDistributionCharacteristics\DiscreteOrdinaryVariationNormalized\Functions.cs" />
+    <Compile Include="Quantifiers\OneOrTwoDimensional\Aggregation\AnyValue\Functions.cs" />
+    <Compile Include="Quantifiers\OneOrTwoDimensional\Aggregation\Average\Functions.cs" />
+    <Compile Include="Quantifiers\OneOrTwoDimensional\Aggregation\Maximum\Functions.cs" />
+    <Compile Include="Quantifiers\OneOrTwoDimensional\Aggregation\Minimum\Functions.cs" />
+    <Compile Include="Quantifiers\OneOrTwoDimensional\Aggregation\Sum\Functions.cs" />
+    <Compile Include="Quantifiers\TwoDimensional\FunctionalDependence\FunctionOfRowEachRow\Functions.cs" />
+    <Compile Include="Quantifiers\TwoDimensional\FunctionalDependence\FunctionOfRow\Functions.cs" />
+    <Compile Include="Quantifiers\TwoDimensional\InformationTheory\ConditionalEntropy\Functions.cs" />
+    <Compile Include="Quantifiers\TwoDimensional\InformationTheory\InformationDependence\Functions.cs" />
+    <Compile Include="Quantifiers\TwoDimensional\InformationTheory\MutualInformationNormalized\Functions.cs" />
+    <Compile Include="Quantifiers\TwoDimensional\OrdinalDependence\Kendall\Functions.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sign\BoxInfo.cs" />
     <Compile Include="Sign\Functions.cs" />
+    <Compile Include="Tasks\FourFold\BoxInfo.cs" />
+    <Compile Include="Tasks\FourFold\Functions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Quantifiers\Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Quantifiers\FourFold\DistributionSignificance\ChiSquare\" />
+    <Folder Include="Quantifiers\FourFold\DistributionSignificance\Fisher\" />
+    <Folder Include="Quantifiers\FourFold\DistributionSignificance\SimpleDeviation\" />
+    <Folder Include="Quantifiers\FourFold\DoubleImplicational\DoubleLowerCriticalImplication\" />
+    <Folder Include="Quantifiers\FourFold\DoubleImplicational\DoubleUpperCriticalImplication\" />
+    <Folder Include="Quantifiers\FourFold\Equivalence\LowerCriticalEquivalence\" />
+    <Folder Include="Quantifiers\FourFold\Equivalence\UpperCriticalEquivalence\" />
+    <Folder Include="Quantifiers\FourFold\Implicational\LowerCriticalImplication\" />
+    <Folder Include="Quantifiers\FourFold\Implicational\UpperCriticalImplication\" />
+    <Folder Include="Quantifiers\TwoDimensional\Distribution\ChiSquare\" />
+    <Folder Include="Tasks\SDFourFold\" />
+    <Folder Include="Tasks\SDSingleDimensional\" />
+    <Folder Include="Tasks\SDTwoDimensional\" />
+    <Folder Include="Tasks\SingleDimensional\" />
+    <Folder Include="Tasks\TwoDimensional\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

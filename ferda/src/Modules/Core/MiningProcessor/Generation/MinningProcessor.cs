@@ -159,6 +159,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
             negation = input.Not();
             return;
         }
+
+        public abstract Result Trace();
     }
 
     public class FourFoldMiningProcessor : MiningProcessorBase
@@ -200,7 +202,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         }
 
 
-        public Result Trace()
+        public override Result Trace()
         {
             Result result = new Result();
             result.TaskTypeEnum = TaskTypeEnum.FourFold;

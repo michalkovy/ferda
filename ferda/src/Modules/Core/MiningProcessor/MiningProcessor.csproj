@@ -29,14 +29,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ferda.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\Ferda.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Ferda.Math, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\Ferda.Math.dll</HintPath>
-    </Reference>
     <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
@@ -45,9 +37,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="FerdaData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaData.dll</HintPath>
+    </Reference>
     <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaMath, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaMath.dll</HintPath>
     </Reference>
     <Reference Include="iceboxcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
@@ -118,6 +118,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DesignDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Miners\" />

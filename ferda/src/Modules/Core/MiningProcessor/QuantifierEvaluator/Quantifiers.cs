@@ -9,8 +9,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     public class Quantifiers
     {
         public const int InvokesBeforeNextReorderOfQuantifiers = 128;
-        
+
         private readonly Dictionary<string, Quantifier> _quantifeirs;
+        public Dictionary<string, Quantifier> Quantifeirs
+        {
+            get { return _quantifeirs; }
+        } 
 
         private Quantifiers(int quantifiersCount)
         {

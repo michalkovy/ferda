@@ -185,5 +185,21 @@ namespace Ferda.Modules.Boxes
         }
 
         #endregion
+        
+        public static GuidStruct GetGuidStructFromProperty(string propertyName, BoxModuleI boxModule)
+        {
+            string guid = boxModule.GetPropertyString(propertyName);
+            if (String.IsNullOrEmpty(guid))
+            {
+                Guid value = Guid.NewGuid();
+                guid = value.ToString();
+                boxModule.setProperty(
+                    propertyName, 
+                    new StringTI(guid)
+                    );
+            }
+
+            return new GuidStruct(guid);
+        }
     }
 }
