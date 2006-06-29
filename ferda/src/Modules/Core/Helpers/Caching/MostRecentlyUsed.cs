@@ -25,6 +25,10 @@ namespace Ferda.Modules.Helpers.Caching
         where KeyT : IEquatable<KeyT>
     {
         private int _maxSize = 50;
+        /// <summary>
+        /// Gets or sets the maximal size of the cache.
+        /// </summary>
+        /// <value>The maximal size of the cache.</value>
         public int MaxSize
         {
             get { return _maxSize; }
@@ -41,12 +45,21 @@ namespace Ferda.Modules.Helpers.Caching
         }
 
         private int _actSize = 0;
+        /// <summary>
+        /// Gets the actual size of the cache.
+        /// </summary>
+        /// <value>The actual size of the cache.</value>
         public int ActSize
         {
             get { return _actSize; }
         }
 
-        public int Count
+        /// <summary>
+        /// Gets the number of elements contained in the cache instance.
+        /// </summary>
+        /// <value></value>
+        /// <returns>The number of elements contained in the cache instance.</returns>
+        public new int Count
         {
             get { return _cache.Count; }
         }
@@ -54,6 +67,11 @@ namespace Ferda.Modules.Helpers.Caching
         private LinkedList<KeyT> _list;
         private Dictionary<KeyT, ValueT> _cache;
 
+        /// <summary>
+        /// Gets an <see cref="T:System.Collections.ICollection"></see> object containing the keys of the <see cref="T:System.Collections.IDictionary"></see> object.
+        /// </summary>
+        /// <value></value>
+        /// <returns>An <see cref="T:System.Collections.ICollection"></see> object containing the keys of the <see cref="T:System.Collections.IDictionary"></see> object.</returns>
         public Dictionary<KeyT, ValueT>.KeyCollection Keys
         {
             get
@@ -76,6 +94,11 @@ namespace Ferda.Modules.Helpers.Caching
 
         public abstract ValueT GetValue(KeyT key);
 
+        /// <summary>
+        /// Gets the size of the value item.
+        /// </summary>
+        /// <param name="itemToMeasure">The item to measure.</param>
+        /// <returns></returns>
         public virtual int GetSize(ValueT itemToMeasure)
         {
             return 1;
@@ -93,12 +116,23 @@ namespace Ferda.Modules.Helpers.Caching
                 _actSize -= removingValueSize;
             }
         }
-        
+
+        /// <summary>
+        /// Determines whether the cache contains the value with specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>
+        /// 	<c>true</c> if the cache contains the value with specified key; otherwise, <c>false</c>.
+        /// </returns>
         public bool Contains(KeyT key)
         {
             return _cache.ContainsKey(key);
         }
 
+        /// <summary>
+        /// Gets the value with the specified key.
+        /// </summary>
+        /// <value></value>
         public ValueT this[KeyT key]
         {
             get
@@ -133,6 +167,12 @@ namespace Ferda.Modules.Helpers.Caching
             }
         }
 
+        /// <summary>
+        /// Returns a <see cref="T:System.String"></see> that represents the current <see cref="T:System.Object"></see>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.String"></see> that represents the current <see cref="T:System.Object"></see>.
+        /// </returns>
         public override string ToString()
         {
             return Helpers.Common.Print.SequenceToString(_list, ", ") + " (act size: " + ActSize + ")";
