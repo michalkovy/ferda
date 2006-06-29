@@ -200,7 +200,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDe
             }
         }
 
-        double AbsoluteTreshold
+        public double AbsoluteTreshold
         {
             get
             {

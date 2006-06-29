@@ -30,6 +30,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
         public const string PropUnits = "Units";
         public const string PropSupportsFloatContingencyTable = "SupportsFloatContingencyTable";
 
+        //TODO
         public const string PropDependenceDirection = "DependenceDirection";
         public const string PropAbsoluteTreshold = "AbsoluteTreshold";
 

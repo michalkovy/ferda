@@ -1,9 +1,9 @@
 using System;
 using Ferda.Guha.Data;
 using Ferda.Guha.MiningProcessor;
-using Object = Ice.Object;
+using Object=Ice.Object;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Base
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.NominalVariationNormalized
 {
     internal class BoxInfo : Boxes.BoxInfo
     {
@@ -24,7 +24,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Base
             return null;
         }
 
-        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.Others.Base";
+        public const string typeIdentifier = "GuhaMining.Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.NominalVariationNormalized";
 
         protected override string identifier
         {
@@ -61,18 +61,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Base
                 case Common.PropToRowBoundaryIndex:
                     return new IntTI(Func.ToRowBoundaryIndex);
 
-                case Common.PropFromColumnBoundary:
-                    return new StringTI(Func.FromColumnBoundary.ToString());
-                case Common.PropFromColumnBoundaryIndex:
-                    return new IntTI(Func.FromColumnBoundaryIndex);
-                case Common.PropToColumnBoundary:
-                    return new StringTI(Func.ToColumnBoundary.ToString());
-                case Common.PropToColumnBoundaryIndex:
-                    return new IntTI(Func.ToColumnBoundaryIndex);
-
-                //case Common.PropUnits:
-                //    return new StringTI(Func.Units.ToString());
-
+                case Common.PropUnits:
+                    return new StringTI(Func.Units.ToString());
+                case Common.PropMissingInformationHandling:
+                    return new StringTI(Func.MissingInformationHandling.ToString());
+                    
                 case Common.PropNeedsNumericValues:
                     return new BoolTI(Func.NeedsNumericValues);
                 case Common.PropSupportedData:

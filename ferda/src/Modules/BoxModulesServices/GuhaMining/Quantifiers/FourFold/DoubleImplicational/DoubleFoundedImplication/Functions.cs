@@ -5,14 +5,14 @@ using Ferda.Guha.Data;
 using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Implicational.DoubleFoundedImplication
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication
 {
     /// <summary>
     /// Computes the <c>strength</c> of double founded implication.
     /// </summary>
     /// <returns>
     /// The strength defined as <c>a / (a + b + c)</c>.
-    /// If (a + b + c) = 0, returns NaN.
+    /// If (a + b + c) = 0, returns NaN. Values are from interval [0, 1].
     /// </returns>
     public class Functions : FourFoldValueDisp_, IFunctions
     {

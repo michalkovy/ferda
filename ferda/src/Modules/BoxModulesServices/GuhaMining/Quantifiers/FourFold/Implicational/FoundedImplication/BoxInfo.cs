@@ -1,9 +1,9 @@
 using System;
 using Ferda.Guha.Data;
 using Ferda.Guha.MiningProcessor;
-using Object = Ice.Object;
+using Object=Ice.Object;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Base
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication
 {
     internal class BoxInfo : Boxes.BoxInfo
     {
@@ -24,7 +24,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Base
             return null;
         }
 
-        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.Others.Base";
+        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication";
 
         protected override string identifier
         {
@@ -70,9 +70,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Base
                 case Common.PropToColumnBoundaryIndex:
                     return new IntTI(Func.ToColumnBoundaryIndex);
 
-                //case Common.PropUnits:
-                //    return new StringTI(Func.Units.ToString());
-
+                case Common.PropUnits:
+                    return new StringTI(Func.Units.ToString());
+                    
                 case Common.PropNeedsNumericValues:
                     return new BoolTI(Func.NeedsNumericValues);
                 case Common.PropSupportedData:
