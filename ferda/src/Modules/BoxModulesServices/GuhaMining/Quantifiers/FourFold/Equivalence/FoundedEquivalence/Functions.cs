@@ -5,14 +5,14 @@ using Ferda.Guha.Data;
 using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Implicational.FoundedEquivalence
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Equivalence.FoundedEquivalence
 {
     /// <summary>
     /// Computes the <c>strength</c> of founded equivalence.
     /// </summary>
     /// <returns>
     /// The strength defined as <c>(a + d) / (a + b + c + d)</c>.
-    /// If (a + b + c + d) = 0, returns NaN. Values are from interval [0, 1]
+    /// If (a + b + c + d) = 0, returns NaN. Values are from interval [0, 1].
     /// </returns>
     public class Functions : FourFoldValueDisp_, IFunctions
     {

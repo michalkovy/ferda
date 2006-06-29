@@ -50,30 +50,16 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
         /// <summary>
         /// Let quantifer function Q(contingecy_table), contingecy table
         /// for the first set is A, contingency table for second set is B than 
-        /// studied value is Q(Abs(A - B)).
+        /// studied value is Q(Abs(A - B)). (Both A and B are converted by specifed units.)
         /// </summary>
-        DifferencesOfAbsoluteFrequencies,
+        DifferenceOfFrequencies,
 
         /// <summary>
         /// Let quantifer function Q(contingecy_table), contingecy table
         /// for the first set is A, contingency table for second set is B than 
-        /// studied value is Q(Abs((A in percents) - (B in percents))).
-        /// </summary>
-        DifferencesOfRelativeFrequencies,
-
-        /// <summary>
-        /// Let quantifer function Q(contingecy_table), contingecy table
-        /// for the first set is A, contingency table for second set is B than 
-        /// studied value is (Q(A) - Q(B)).
+        /// studied value is (Q(A) - Q(B)). (Both A and B are converted by specifed units.)
         /// </summary>
         DifferenceOfQuantifierValues,
-
-        /// <summary>
-        /// Let quantifer function Q(contingecy_table), contingecy table
-        /// for the first set is A, contingency table for second set is B than 
-        /// studied value is Abs(Q(A) - Q(B)).
-        /// </summary>
-        AbsoluteDifferenceOfQuantifierValues
     }
 
     /// <summary>

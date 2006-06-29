@@ -179,7 +179,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveBelowA
         {
             get
             {
-                return 0;
+                return 1;
             }
         }
         public QuantifierClassEnum[] QuantifierClasses

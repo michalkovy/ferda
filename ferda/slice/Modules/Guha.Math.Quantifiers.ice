@@ -38,10 +38,8 @@ module Ferda {
 				{
 					FirstSetFrequencies,
 					SecondSetFrequencies,
-					DifferencesOfAbsoluteFrequencies,
-					DifferencesOfRelativeFrequencies,
-					DifferenceOfQuantifierValues,
-					AbsoluteDifferenceOfQuantifierValues
+					DifferenceOfFrequencies,
+					DifferenceOfQuantifierValues
 				};
 
 				//enum EvaluationPropertiesEnum

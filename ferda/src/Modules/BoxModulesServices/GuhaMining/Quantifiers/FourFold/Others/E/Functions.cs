@@ -42,10 +42,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.E
         {
             get
             {
-                return (OperationModeEnum)Enum.Parse(
-                    typeof(OperationModeEnum),
-                    _boxModule.GetPropertyString(Common.PropOperationMode)
-                    );
+                return OperationModeEnum.FirstSetFrequencies;
             }
         }
         public MissingInformationHandlingEnum MissingInformationHandling
@@ -128,7 +125,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.E
         {
             get
             {
-                return 0;
+                return 1;
             }
         }
         public QuantifierClassEnum[] QuantifierClasses
