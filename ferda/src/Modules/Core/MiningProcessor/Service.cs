@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.MiningProcessor.Generation;
+using Ferda.Guha.MiningProcessor.Miners;
 using Ice;
 using System.Text;
 using IceBox;

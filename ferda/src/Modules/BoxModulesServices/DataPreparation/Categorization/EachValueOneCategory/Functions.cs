@@ -340,6 +340,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public BitString GetBitString(string categoryName, bool fallOnError)
         {
+            // TODO categoryName je "" kdyz by melo byt null!!
             lock (this)
             {
                 return ExceptionsHandler.GetResult<BitString>(
@@ -350,7 +351,17 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                         if (cachedValueBitStrings == null)
                             return null;
                         else
-                            return cachedValueBitStrings[categoryName];
+                        {
+                            try
+                            {
+                                return cachedValueBitStrings[categoryName];
+                            }
+                            catch (KeyNotFoundException e)
+                            {
+                                throw Exceptions.BoxRuntimeError(e, _boxModule.StringIceIdentity,
+                                                                 "Category named " + categoryName + " was not found in the attribute.");
+                            }
+                        }
                     },
                     delegate
                     {
@@ -573,7 +584,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public override string GetMissingInformationCategoryId(Current current__)
         {
-            return XCategory;
+            //UNDONE nejde delak kategorie se jmenem "" protoze default value pro StringT property je "" a ne null
+            if (String.IsNullOrEmpty(XCategory))
+                return null;
+            else
+                return XCategory;
         }
 
         #endregion

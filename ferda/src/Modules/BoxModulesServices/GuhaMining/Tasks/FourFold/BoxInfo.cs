@@ -47,10 +47,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
             Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (propertyName)
             {
-                case Functions.PropDone:
-                    return Func.Done;
-                case Functions.PropNumberOfHypotheses:
-                    return Func.NumberOfHypotheses;
+                case Common.PropTotalNumberOfRelevantQuestions:
+                    return new DoubleTI(Common.TotalNumberOfRelevantQuestions(Func));
+                case Common.PropNumberOfVerifications:
+                    return new LongTI(Common.NumberOfVerifications(Func));
+                case Common.PropNumberOfHypotheses:
+                    return new LongTI(Common.NumberOfHypotheses(Func));
+                case Common.PropStartTime:
+                    return new DateTimeTI(Common.StartTime(Func));
+                case Common.PropEndTime:
+                    return new DateTimeTI(Common.EndTime(Func));
                 default:
                     throw new NotImplementedException();
             }

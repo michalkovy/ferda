@@ -87,7 +87,9 @@
     <Compile Include="BitStrings\IBitString.cs" />
     <Compile Include="BitStrings\IBitStringCache.cs" />
     <Compile Include="Generation\EmptyTrace.cs" />
-    <Compile Include="Generation\MinningProcessor.cs" />
+    <Compile Include="Miners\MinningProcessor.cs" />
+    <Compile Include="QuantifierEvaluator\FirstN.cs" />
+    <Compile Include="QuantifierEvaluator\IEvaluator.cs" />
     <Compile Include="ResultSerializable.cs" />
     <Compile Include="Formulas\BooleanAttributeFormula.cs" />
     <Compile Include="Design\ILeafEntitySetting.cs" />
@@ -99,8 +101,7 @@
     <Compile Include="Design\Importance.cs" />
     <Compile Include="Design\ISingleOperandEntitySetting.cs" />
     <Compile Include="Formulas\AtomFormula.cs" />
-    <Compile Include="Generation\MiningProcessorFunctionsI.cs" />
-    <Compile Include="MiningProcessor.cs" />
+    <Compile Include="Miners\MiningProcessorFunctionsI.cs" />
     <Compile Include="Design\NegationSetting.cs" />
     <Compile Include="Formulas\NegationFormula.cs" />
     <Compile Include="BitStrings\BitStringCache.cs" />
@@ -121,9 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Miners\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

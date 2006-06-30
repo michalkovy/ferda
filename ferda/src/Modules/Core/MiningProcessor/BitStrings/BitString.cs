@@ -1,4 +1,4 @@
-#define Testing
+//#define Testing
 
 #define USE64BIT
 #define LOOKUP8

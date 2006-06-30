@@ -9,6 +9,8 @@ using Ferda.Guha.MiningProcessor.Formulas;
 
 namespace Ferda.Guha.MiningProcessor
 {
+    #region Result (set of hypothesis)
+    
     [Serializable()]
     public class SerializableFormula
     {
@@ -240,7 +242,7 @@ namespace Ferda.Guha.MiningProcessor
         public long AllObjectsCount;
         public List<Hypothesis> Hypotheses = new List<Hypothesis>();
         public TaskTypeEnum TaskTypeEnum;
-        
+
         public bool TwoContingencyTables
         {
             get
@@ -281,7 +283,6 @@ namespace Ferda.Guha.MiningProcessor
             }
         }
     }
-
 
     [Serializable()]
     public class SerializableResult
@@ -348,5 +349,36 @@ namespace Ferda.Guha.MiningProcessor
             SerializableResult serializable = (SerializableResult)deserealized;
             return SerializableResult.Build(serializable);
         }
+    } 
+    
+    #endregion
+
+    #region Result Info
+    [Serializable()]
+    public class SerializableResultInfo
+    {
+        public double TotalNumberOfRelevantQuestions;
+        public long NumberOfVerifications;
+        public long NumberOfHypotheses;
+        public DateTime StartTime;
+        public DateTime EndTime;
+
+        public static string Serialize(SerializableResultInfo input)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(SerializableResultInfo));
+            StringBuilder sb = new StringBuilder();
+            StringWriter writer = new StringWriter(sb);
+            serializer.Serialize(writer, input);
+            return sb.ToString();
+        }
+
+        public static SerializableResultInfo DeSerialize(string input)
+        {
+            StringReader reader = new StringReader(input);
+            XmlSerializer deserealizer = new XmlSerializer(typeof(SerializableResultInfo));
+            object deserealized = deserealizer.Deserialize(reader);
+            return (SerializableResultInfo)deserealized;
+        }
     }
+    #endregion
 }

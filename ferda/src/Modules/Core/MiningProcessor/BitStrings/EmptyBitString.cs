@@ -20,7 +20,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
     public class EmptyBitString : IEmptyBitString
     {
-        public static BooleanAttributeFormula EmptyBitStringId = new AtomFormula(new BitStringIdentifier(new Guid("Empty BitString"), "Empty BitString Category"));
+        public static BitStringIdentifier EmptyBitStringIdentifier = new BitStringIdentifier(new Guid(), "Empty BitString Category");
+        
+        public static BooleanAttributeFormula EmptyBitStringId = new AtomFormula(EmptyBitStringIdentifier);
         
         internal EmptyBitString()
         {}
