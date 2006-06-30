@@ -12,12 +12,12 @@ module Ferda {
 	module Guha {
 		module Math {
 			module Quantifiers {
-			
+
 				//FORWARD DECLARATION
-				
+
 				interface QuantifierBaseFunctions;
 				sequence<QuantifierBaseFunctions*> QuantifierBaseFunctionsPrxSeq;
-				
+
 			};
 		};
 	};
@@ -26,69 +26,69 @@ module Ferda {
 module Ferda {
 	module Guha {
 		module MiningProcessor {
-				
+
 				// BIT STRING GENERATOR
-				
+
 				class BitString
 				{
 					Ferda::Modules::LongSeq value;
 					int length;
 				};
-				
+
 				struct GuidAttributeNamePair
 				{
 					Ferda::Modules::GuidStruct id;
-					string attributeName;								
+					string attributeName;
 				};
 				sequence<GuidAttributeNamePair> GuidAttributeNamePairSeq;
-				
+
 				interface AttributeNameProvider
 				{
 					GuidAttributeNamePairSeq GetAttributeNames()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
-			
+
 				interface BitStringGenerator extends AttributeNameProvider
 				{
 					Ferda::Modules::GuidStruct GetAttributeId()
 						throws Ferda::Modules::BoxRuntimeError;
-						
+
 					Ferda::Guha::Data::CardinalityEnum GetAttributeCardinality()
 						throws Ferda::Modules::BoxRuntimeError;
-					
+
 					// vrati id kategorie, krome missing inforamtion kategorie
 					// jmena kategorii musi byt setridene (pro attribute cardianlity ">" nominal)
 					Ferda::Modules::StringSeq GetCategoriesIds()
 						throws Ferda::Modules::BoxRuntimeError;
-					
+
 					Ferda::Modules::DoubleSeq GetCategoriesNumericValues()
 						throws Ferda::Modules::BoxRuntimeError;
-					
+
 					BitString GetBitString(string categoryId)
 						throws Ferda::Modules::BoxRuntimeError;
-						
+
 					string GetMissingInformationCategoryId()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
-				
+
 				// BOOLEAN ATTRIBUTE SETTING ENTITIES
-			
+
 				enum ImportanceEnum
 				{
 					Forced,
 					Basic,
 					Auxiliary
-				};			
-			
+				};
+
 				class IEntitySetting
 				{
 					Ferda::Modules::GuidStruct id;
 					ImportanceEnum importance;
 				};
 				sequence<IEntitySetting> IEntitySettingSeq;
-				
+
 				// Leaf Entities
-				
+
 				class ILeafEntitySetting extends IEntitySetting
 				{
 					BitStringGenerator* generator;
@@ -98,7 +98,7 @@ module Ferda {
 				{
 					Ferda::Modules::StringSeq categoriesIds;
 				};
-				
+
 				enum CoefficientTypeEnum
 				{
 					Subsets,
@@ -115,27 +115,27 @@ module Ferda {
 					int maxLength;
 					CoefficientTypeEnum coefficientType;
 				};
-				
+
 				// Single Operand Entities
 
 				class ISingleOperandEntitySetting extends IEntitySetting
 				{
 					IEntitySetting operand;
 				};
-				
+
 				enum SignTypeEnum
 				{
 					Positive,
 					Negative,
 					Both,
 				};
-				
+
 				class NegationSetting extends ISingleOperandEntitySetting
 				{};
-				
+
 				class BothSignsSetting extends ISingleOperandEntitySetting
 				{};
-				
+
 				// Multiple Operand Entities
 
 				class IMultipleOperandEntitySetting extends IEntitySetting
@@ -145,13 +145,13 @@ module Ferda {
 					int minLength;
 					int maxLength;
 				};
-				
+
 				class ConjunctionSetting extends IMultipleOperandEntitySetting
 				{};
-				
+
 				class DisjunctionSetting extends IMultipleOperandEntitySetting
 				{};
-				
+
 				// SETTING BOX MODULES
 
 				interface BitStringGeneratorProvider
@@ -159,21 +159,21 @@ module Ferda {
 					nonmutating BitStringGenerator* GetBitStringGenerator(Ferda::Modules::GuidStruct attributeId)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
-				
+
 				interface BooleanAttributeSettingFunctions extends AttributeNameProvider, BitStringGeneratorProvider
 				{
 					nonmutating IEntitySetting GetEntitySetting()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
-				
+
 				interface EquivalenceClassFunctions
 				{
 					nonmutating Ferda::Modules::GuidStructSeq GetEquivalenceClass()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
-				
+
 				// MINING TASK BOX MODULE FUNCTIOS
-				
+
 				interface MiningTaskFunctions extends BitStringGeneratorProvider
 				{
 					Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq GetQuantifiers()
@@ -191,9 +191,9 @@ module Ferda {
 					CF,
 					SDFourFold,
 					SDKL,
-					SDCF					
+					SDCF
 				};
-				
+
 				enum MarkEnum
 				{
 					Antecedent,
@@ -203,9 +203,9 @@ module Ferda {
 					ColumnAttribute,
 					Attribute,
 					FirstSet,
-					SecondSet					
+					SecondSet
 				};
-				
+
 				struct BooleanAttribute
 				{
 					MarkEnum mark;
@@ -219,23 +219,39 @@ module Ferda {
 					BitStringGenerator* setting;
 				};
 				sequence<CategorialAttribute> CategorialAttributeSeq;
-				
+
+				enum TaskEvaluationTypeEnum
+				{
+					FirstN
+					//TopN
+				};
+
+				struct TaskRunParams
+				{
+					TaskTypeEnum taskType;
+					TaskEvaluationTypeEnum evaluationType;
+					long maxSizeOfResult; // N from FirstN or TopN
+				};
+
 				interface MiningProcessorFunctions
 				{
+					// returned string is serialized Ferda.Guha.MiningProcessor.SerializableResult
+					// returned string in out param is serialized Ferda.Guha.MiningProcessor.SerializableResultInfo
+
 					// pro BooleanAttributesSeq plati, ze tam muze byt zastoupena jenda MarkEnum nejvyse jendou
 					// pro CategorialAttributeSeq plati, ze tam muze byt jenda MarkEnum zastoupena vicekrat
 					string Run(
-						BooleanAttributeSeq booleanAttributes, 
+						BooleanAttributeSeq booleanAttributes,
 						CategorialAttributeSeq categorialAttributes,
 						Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq quantifiers,
-						TaskTypeEnum taskType,
+						TaskRunParams taskParams,
 						BitStringGeneratorProvider* bitStringGenerator,
 						Ferda::ModulesManager::Output* output,
-						out string statistics
+						out string resultInfo
 						)
 						throws Ferda::Modules::BoxRuntimeError;
-						
-				};			
+
+				};
 		};
 	};
 };

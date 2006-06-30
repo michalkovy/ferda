@@ -39,7 +39,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         break;
                 }
             }
-            if (bestMatch !=  null)
+            if (bestMatch != null)
             {
                 IBitString last = this[bestMatch];
                 IBitString newCached = null;
@@ -61,14 +61,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 IBitString newCached = null;
                 foreach (Guid guid in key)
                 {
-                    if (!bestMatch.Contains(guid))
-                    {
-                        IBitString newBitString = _bitStringCache.GetMissingInformationBitString(guid);
-                        if (newCached == null)
-                            newCached = newBitString;
-                        else
-                            newCached = newCached.Or(newBitString);
-                    }
+                    IBitString newBitString = _bitStringCache.GetMissingInformationBitString(guid);
+                    if (newCached == null)
+                        newCached = newBitString;
+                    else
+                        newCached = newCached.Or(newBitString);
                 }
                 return newCached;
             }

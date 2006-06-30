@@ -1,23 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Ferda.Guha.Data;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Guha.MiningProcessor.Generation;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 using Ferda.Modules;
 using Ferda.Modules.Helpers.Common;
 
-namespace Ferda.Guha.MiningProcessor.Generation
+namespace Ferda.Guha.MiningProcessor.Miners
 {
     public abstract class MiningProcessorBase
     {
-        protected long _numberOfVerifications = 0;
-        public long NumberOfVerifications
-        {
-            get { return _numberOfVerifications; }
-        }
-
         private long _totalCount = Int64.MinValue;
         public long TotalCount
         {
@@ -36,8 +32,20 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         protected readonly Quantifiers _quantifiers;
 
-        public MiningProcessorBase(QuantifierBaseFunctionsPrx[] quantifiers, BitStringGeneratorProviderPrx taskFuncPrx)
+        private readonly TaskRunParams _taskParams;
+        public TaskRunParams TaskParams
         {
+            get { return _taskParams; }
+        }
+
+
+        public MiningProcessorBase(
+            QuantifierBaseFunctionsPrx[] quantifiers,
+            BitStringGeneratorProviderPrx taskFuncPrx,
+            TaskRunParams taskParams
+            )
+        {
+            _taskParams = taskParams;
             _quantifiers = new Quantifiers(quantifiers, taskFuncPrx);
         }
 
@@ -160,7 +168,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             return;
         }
 
-        public abstract Result Trace();
+        public abstract Result Trace(out SerializableResultInfo rInfo);
     }
 
     public class FourFoldMiningProcessor : MiningProcessorBase
@@ -172,12 +180,13 @@ namespace Ferda.Guha.MiningProcessor.Generation
         #endregion
 
         public FourFoldMiningProcessor(
-            BooleanAttribute[] booleanAttributes, 
-            CategorialAttribute[] categorialAttributes, 
-            QuantifierBaseFunctionsPrx[] quantifiers, 
+            BooleanAttribute[] booleanAttributes,
+            CategorialAttribute[] categorialAttributes,
+            QuantifierBaseFunctionsPrx[] quantifiers,
+            TaskRunParams taskParams,
             BitStringGeneratorProviderPrx taskFuncPrx
             )
-            : base(quantifiers, taskFuncPrx)
+            : base(quantifiers, taskFuncPrx, taskParams)
         {
             // Validate quantifiers
             bool notOnlyFirstSetOperationMode;
@@ -202,12 +211,24 @@ namespace Ferda.Guha.MiningProcessor.Generation
         }
 
 
-        public override Result Trace()
+        public override Result Trace(out SerializableResultInfo rInfo)
         {
+            Debug.Assert(TaskParams.taskType == TaskTypeEnum.FourFold);
             Result result = new Result();
-            result.TaskTypeEnum = TaskTypeEnum.FourFold;
+            result.TaskTypeEnum = TaskParams.taskType;
+
+            rInfo = new SerializableResultInfo();
+            rInfo.StartTime = DateTime.Now;
+            rInfo.TotalNumberOfRelevantQuestions = TotalCount;
+
+            IEvaluator evaluator;
+            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
+                evaluator = new FirstN(_quantifiers, result, rInfo, TaskParams);
+            else
+                throw new NotImplementedException();
+
             long allObjectsCount = Int64.MinValue;
-            
+
             MissingInformation succedentMI = new MissingInformation();
             MissingInformation antecedentMI = new MissingInformation();
             MissingInformation conditionMI = new MissingInformation();
@@ -220,7 +241,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             foreach (IBitString s in _succedent)
             {
                 GetNegationAndMissings(s, out sNeg, out sMis, _succedent.UsedAttributes, succedentMI);
-                if (allObjectsCount<0)
+                if (allObjectsCount < 0)
                     allObjectsCount = s.Length;
                 foreach (IBitString a in _antecedent)
                 {
@@ -228,18 +249,39 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     foreach (IBitString c in _condition)
                     {
                         GetNegationAndMissings(c, out cNeg, out cMis, _condition.UsedAttributes, conditionMI);
-                        _numberOfVerifications++;
-                        FourFoldContingencyTable fft = new FourFoldContingencyTable();
-                        //TODO
-                        _quantifiers.Valid(
-                            new ContingencyTableHelper(
-                                fft.ContingencyTable, 
-                                allObjectsCount
-                                )
-                            );
+
+                        rInfo.NumberOfVerifications++;
+
+                        NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
+                        // TODO make 18-fold table
+
+                        // TMP setup
+                        Random random = new Random();
+                        fft.f111 = random.Next(0, 256);
+                        fft.f101 = random.Next(0, 256);
+                        fft.f011 = random.Next(0, 256);
+                        fft.f001 = random.Next(0, 256);
+                        
+                        ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
+                            fft.ContingencyTable,
+                            allObjectsCount);
+
+                        Hypothesis hypothesis = new Hypothesis();
+                        hypothesis.SetFormula(MarkEnum.Succedent, s.Identifier);
+                        hypothesis.SetFormula(MarkEnum.Attribute, a.Identifier);
+                        hypothesis.SetFormula(MarkEnum.Condition, c.Identifier);
+                        hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
+                        //h.NumericValuesAttributeId = contingencyTable.NumericValuesAttributeId;
+
+                        if (evaluator.VerifyIsComplete(contingencyTable, hypothesis))
+                            goto finish;
+
                     }
                 }
             }
+        finish:
+            evaluator.Flush();
+            rInfo.EndTime = DateTime.Now;
             result.AllObjectsCount = allObjectsCount;
             return result;
         }
