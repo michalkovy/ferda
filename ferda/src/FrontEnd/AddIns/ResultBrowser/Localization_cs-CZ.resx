@@ -165,6 +165,9 @@
   <data name="Empty" xml:space="preserve">
     <value>Prázdná hodnota</value>
   </data>
+  <data name="EmptyResult" xml:space="preserve">
+    <value>Prázdný výsledek</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Chyba</value>
   </data>
@@ -257,6 +260,9 @@
   </data>
   <data name="StatisticsUnimplemented" xml:space="preserve">
     <value>Statistika není implementována</value>
+  </data>
+  <data name="SubmitColumnChange" xml:space="preserve">
+    <value>Znovu zobrazit</value>
   </data>
   <data name="SuccedentFilter" xml:space="preserve">
     <value>Filtr pro succedent</value>

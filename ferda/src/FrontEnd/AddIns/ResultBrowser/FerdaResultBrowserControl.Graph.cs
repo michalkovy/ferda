@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
+//using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
 using Ferda.Modules;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
@@ -38,9 +38,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         #region Private variables
 
 
-
-        private Steema.TeeChart.TChart ContingencyTableChart;
-
+   //     private Steema.TeeChart.TChart ContingencyTableChart;
 
 
         #endregion
@@ -53,6 +51,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private void InitializeGraph()
         {
+            /*
             this.ResultBrowserSplit.Panel2.SuspendLayout();
             this.ResultBrowserSplit.SuspendLayout();
             this.SuspendLayout();
@@ -74,6 +73,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.Panel2.ResumeLayout(false);
             this.ResultBrowserSplit.ResumeLayout(false);
             this.ResumeLayout(false);
+             * */
         }
 
 
@@ -85,33 +85,33 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         private void TrackBar3d_Scroll(object sender, EventArgs e)
         {
-            this.ContingencyTableChart.Aspect.Chart3DPercent = this.TrackBar3d.Value;
+          //  this.ContingencyTableChart.Aspect.Chart3DPercent = this.TrackBar3d.Value;
         }
 
         private void TrackBarZoom_Scroll(object sender, EventArgs e)
         {
-            this.ContingencyTableChart.Aspect.Zoom = this.TrackBarZoom.Value;
+           // this.ContingencyTableChart.Aspect.Zoom = this.TrackBarZoom.Value;
         }
 
 
         private void TrackBarHOffset_Scroll(object sender, EventArgs e)
         {
-            this.ContingencyTableChart.Aspect.HorizOffset = this.TrackBarHOffset.Value;
+          //  this.ContingencyTableChart.Aspect.HorizOffset = this.TrackBarHOffset.Value;
         }
 
         private void TrackBarVOffset_Scroll(object sender, EventArgs e)
         {
-            this.ContingencyTableChart.Aspect.VertOffset = this.TrackBarVOffset.Value;
+           // this.ContingencyTableChart.Aspect.VertOffset = this.TrackBarVOffset.Value;
         }
 
         private void CheckBoxShowLabels_CheckedChanged(object sender, EventArgs e)
         {
-            ShowLabels(this.ContingencyTableChart);
+           // ShowLabels(this.ContingencyTableChart);
         }
 
         #endregion
 
-
+        /*
         #region Other private methods
 
         /// <summary>
@@ -173,6 +173,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
            // int i = 0;
             int j = 0;
 
+            /*
             int[][] transpondedTable = FerdaResultBrowserControl.Transpose(hypothese.quantifierSetting.secondContingencyTableRows);
 
             for (int k = transpondedTable.GetUpperBound(0); k >=0; k--)
@@ -447,11 +448,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     default:
                         e.Stop = true;
                         break; 
-                } */
+                }
             }
         }
 
         #endregion
+*/
     }
 }
 

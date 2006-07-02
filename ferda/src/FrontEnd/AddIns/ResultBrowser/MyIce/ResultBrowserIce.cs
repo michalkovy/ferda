@@ -25,6 +25,9 @@ using Ferda.Modules;
 using System.Resources;
 using System.Reflection;
 using System.Windows.Forms;
+using Ferda.Guha.Math.Quantifiers;
+using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
@@ -155,56 +158,30 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             catch
             {
             }
-            //getting proxy for task identifier
-            Ice.ObjectPrx prx2 = boxModuleParam.getMyFactory();
+            BitStringGeneratorProviderPrx  taskProxy =
+                BitStringGeneratorProviderPrxHelper.checkedCast(boxModuleParam.getFunctions());
+            
+            MiningTaskFunctionsPrx taskProxy1 =
+                MiningTaskFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+            string statistics = String.Empty;
 
-            Modules.BoxModuleFactoryPrx tprx2 =
-            Modules.BoxModuleFactoryPrxHelper.checkedCast(prx2);
-
-            string taskType = tprx2.getMyFactoryCreator().getIdentifier();
-
-            //getting proxy for hypotheses and quantifiers
-            Ice.ObjectPrx prx = boxModuleParam.getFunctions();
-
-            Modules.Boxes.LISpMinerTasks.AbstractLMTask.AbstractLMTaskFunctionsPrx tprx =
-                Modules.Boxes.LISpMinerTasks.AbstractLMTask.AbstractLMTaskFunctionsPrxHelper.checkedCast(prx);
-            Modules.HypothesisStruct[] hypotheses = tprx.getResult();
-
-            Modules.Boxes.LISpMinerTasks.AbstractLMTask.QuantifierProvider[] used_quantifiers =
-                tprx.getQuantifierProviders();
-
-
-            Ice.ObjectPrx[] prxs =
-                manager.getManagersLocator().findAllObjectsWithType("::Ferda::Statistics::StatisticsProvider");
-
-            //get from task box
-            // string taskType = "LISpMinerTasks.FFTask";
-            string temp = "";
-
-            List<Ferda.Statistics.StatisticsProviderPrx> proxies = new List<Ferda.Statistics.StatisticsProviderPrx>();
-
-            foreach (Ice.ObjectPrx proxy in prxs)
-            {
-                Ferda.Statistics.StatisticsProviderPrx checkedProxy =
-                Ferda.Statistics.StatisticsProviderPrxHelper.checkedCast(proxy);
-
-                temp = checkedProxy.getTaskType();
-
-                if (temp.CompareTo(taskType) == 0)
-                {
-                    proxies.Add(checkedProxy);
-                }
-            }
+            Quantifiers quantifiers = new Quantifiers(taskProxy1.GetQuantifiers(), taskProxy, localePrefs);
 
             try
             {
-                FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(localePrefs, hypotheses, used_quantifiers, this.Displayer, proxies, taskType, ownerOfAddIn);
+                FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(localePrefs, taskProxy1.GetResult(out statistics), quantifiers, this.Displayer, ownerOfAddIn);
                 this.ownerOfAddIn.ShowDockableControl(control, resManager.GetString("ResultBrowserControl"));
             }
             catch (Ferda.Modules.NoConnectionInSocketError)
             {
                 MessageBox.Show(resManager.GetString("BoxNotConnected"), resManager.GetString("Error"),
                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            catch (Ferda.Modules.BadValueError)
+            {
+                MessageBox.Show(resManager.GetString("EmptyResult"), resManager.GetString("Error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
