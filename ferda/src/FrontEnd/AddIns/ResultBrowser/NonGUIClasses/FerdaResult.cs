@@ -24,8 +24,9 @@ using System.Collections.Generic;
 using System.Text;
 using Ferda.FrontEnd.AddIns.ResultBrowser;
 using Ferda.Modules;
-using Ferda.Modules.Boxes.LISpMinerTasks.AbstractLMTask;
-using Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier;
+using Ferda.Guha.Math.Quantifiers;
+using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 using Ferda.ModulesManager;
 using System.Resources;
 using System.Reflection;
@@ -89,12 +90,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
     };
 
+    
     /// <summary>
-    /// Struct for saving counted statistics
+    /// Struct for saving counted values
     /// </summary>
     public struct CountedValues
     {
         private string ValueName;
+        private string UserValueName;
         private Double ValueValue;
 
         public string Name
@@ -108,6 +111,19 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                 ValueName = value;
             }
         }
+
+        public string UserName
+        {
+            get
+            {
+                return UserValueName;
+            }
+            set
+            {
+                UserValueName = value;
+            }
+        }
+
         public Double Value
         {
             get
@@ -122,6 +138,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
     };
 
+    #region Commented
+    /*
+    
     /// <summary>
     /// Struct for literal filters
     /// </summary>
@@ -179,16 +198,18 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                 selected = value;
             }
         }
-    }
+    }*/
+
+    #endregion
 
 
     /// <summary>
-    /// Structure for storing cached quantifiers and statistics
+    /// Structure for storing cached quantifiers
     /// </summary>
-    public struct CachedHypothesis
+    public struct CachedHypothesisValues
     {
-        public CountedValues[] StatisticsList;
-        public CountedValues[] QuantifiersList;
+        public CountedValues[] QuantifiersFirstTable;
+        public CountedValues[] QuantifiersSecondTable;
     }
 
     #endregion
@@ -213,7 +234,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <summary>
         /// Hypotheses to display
         /// </summary>
-        private HypothesisStruct[] Hypotheses;
+  //      private HypothesisStruct[] Hypotheses;
 
         /// <summary>
         /// Quantifier is a function which takes in an integer array and returns an integer
@@ -225,54 +246,58 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <summary>
         /// Array of used quantifiers.
         /// </summary>
-        private QuantifierProvider[] UsedQuantifiers;
-
-        /// <summary>
-        /// Array of actual quantifiers - user can choose to use more quantifiers that were used in the beginning.
-        /// Represented by the array of boolean flags.
-        /// </summary>
-        private int[] SelectedQuantifiers;
+        private Quantifiers quantifiers;
 
         /// <summary>
         /// Array for cached hypotheses
         /// </summary>
-        private CachedHypothesis[] cachedHypotheses;
+        private CachedHypothesisValues[] cachedHypotheses;
 
         /// <summary>
-        /// List of statistics function proxies
+        /// Array of quantifiers labels
         /// </summary>
-        List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies;
+        private string [] quantifiersLabels;
 
         /// <summary>
-        /// Cached statistics names
+        /// Array of quantifiers uerlabels
         /// </summary>
-        List<string> cachedStatisticsNames;
+        private string[] quantifiersUserLabels = new string [0];
 
+
+        /// <summary>
+        /// Deserialized result
+        /// </summary>
+        private Result result;
+
+        #region Commented
         /// <summary>
         /// List of quantifiers proxies
         /// </summary>
-        private Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier.AbstractQuantifierFunctionsPrx[] proxy;
+     //   private Ferda.Modules.Boxes.LISpMinerTasks.AbstractQuantifier.AbstractQuantifierFunctionsPrx[] proxy;
 
         /// <summary>
         /// Dictionary determining which antecedent values to display
         /// </summary>
-        private Dictionary<string, LiteralFilter> antecedentFilter = new Dictionary<string, LiteralFilter>();
+    //    private Dictionary<string, LiteralFilter> antecedentFilter = new Dictionary<string, LiteralFilter>();
 
         /// <summary>
         /// Dictionary determining which succedent values to display
         /// </summary>
-        private Dictionary<string, LiteralFilter> succedentFilter = new Dictionary<string, LiteralFilter>();
+    //    private Dictionary<string, LiteralFilter> succedentFilter = new Dictionary<string, LiteralFilter>();
 
         /// <summary>
         /// Dictionary determining which condition values to display
         /// </summary>
-        private Dictionary<string, LiteralFilter> conditionFilter = new Dictionary<string, LiteralFilter>();
+        //   private Dictionary<string, LiteralFilter> conditionFilter = new Dictionary<string, LiteralFilter>();
 
+        #endregion
         #endregion
 
 
         #region Properties
 
+        #region Commented
+        /*
         /// <summary>
         /// Gets or sets antecedent filter
         /// </summary>
@@ -317,23 +342,24 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                 conditionFilter = value;
             }
         }
-
+        */
+        #endregion
         /// <summary>
         /// Gets all filtered hypotheses in the result
         /// </summary>
         /// <returns>Dictionary with all filtered hypotheses</returns>
         public Dictionary<int, HypothesisStruct> AllFilteredHypotheses
-        {
+        {           
             get
             {
                 Dictionary<int, HypothesisStruct> returnDict = new Dictionary<int, HypothesisStruct>();
-                for (int i = 0; i < Hypotheses.Length; i++)
+                /*for (int i = 0; i < Hypotheses.Length; i++)
                 {
                     if (HypothesisIsValid(Hypotheses[i]))
                     {
                         returnDict.Add(i, Hypotheses[i]);
                     }
-                }
+                }*/
                 return returnDict;
             }
         }
@@ -342,11 +368,87 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Gets all hypotheses
         /// </summary>
         /// <returns>Array with all hypotheses</returns>
-        public HypothesisStruct[] AllHypotheses
+        public List<Hypothesis> AllHypotheses
         {
             get
             {
-                return this.Hypotheses;
+                return this.result.Hypotheses;
+            }
+        }
+
+        /// <summary>
+        /// Count of hypotheses
+        /// </summary>
+        public long AllHypothesesCount
+        {
+            get
+            {
+                try
+                {
+                    return result.AllObjectsCount;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method to get string value of MarkEnums for the given hypothesis
+        /// </summary>
+        /// <param name="mark">MarkEnum to get String value for</param>
+        /// <param name="hypothesisId">Hypothesis id</param>
+        /// <returns></returns>
+        public string GetFormula(MarkEnum mark, int hypothesisId)
+        {
+            try
+            {
+                return this.result.Hypotheses[hypothesisId].GetFormula(mark).ToString();
+            }
+            catch
+            {
+                return "GetFormula failed";
+            }
+        }
+
+        /// <summary>
+        /// Gets semantic marks of the hypotheses in result
+        /// </summary>
+        public MarkEnum[] SemanticMarks
+        {
+            get
+            {
+                try
+                {
+                    return this.result.GetSemanticMarks();
+                }
+                catch
+                {
+                    return new MarkEnum[0];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Quantifiers labels
+        /// </summary>
+        public string[] QuantifiersLabels
+        {
+            get
+            {
+                return this.quantifiersLabels;
+            }
+        }
+
+        /// <summary>
+        /// Quantifiers userlabels
+        /// </summary>
+        public string[] QuantifiersUserLabels
+        {
+            get
+            {
+                return this.quantifiersUserLabels;
             }
         }
 
@@ -359,9 +461,21 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Class constructor
         /// </summary>
         /// <param name="rm">Resource manager</param>
-        public FerdaResult(ResourceManager rm)
+        public FerdaResult(ResourceManager rm, string result, Quantifiers quantifiers)
         {
             this.resManager = rm;
+            this.quantifiers = quantifiers;
+            this.result = SerializableResult.DeSerialize(result);
+
+            List<string> temp = new List<string>();
+            List<string> temp1 = new List<string>();
+            foreach (Ferda.Guha.MiningProcessor.QuantifierEvaluator.Quantifier quantifier in quantifiers.Quantifeirs.Values)
+            {
+                temp.Add(quantifier.LocalizedLabel);
+                temp1.Add(quantifier.LocalizedUserLabel);
+            }
+            this.quantifiersLabels = temp.ToArray();
+            this.quantifiersUserLabels = temp1.ToArray();
         }
 
         #endregion
@@ -373,32 +487,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Method to initialize the ResultBrowser structure
         /// </summary>
         /// <param name="hypotheses"></param>
-        public void Initialize(HypothesisStruct[] hypotheses, QuantifierProvider[] used_quantifiers, List<Ferda.Statistics.StatisticsProviderPrx> statisticsProxies)
+        public void Initialize(HypothesisStruct[] hypotheses)
         {
-            this.Hypotheses = hypotheses;
-            this.statisticsProxies = statisticsProxies;
-
-            //working with quantifiers - need to obtain all quantifier, for now working only with used ones
-            this.UsedQuantifiers = used_quantifiers;
-            this.SelectedQuantifiers = new int[this.UsedQuantifiers.Length];
-
-            for (int i = 0; i < this.SelectedQuantifiers.Length; i++)
-            {
-                this.SelectedQuantifiers[i] = 0;
-            }
-            proxy = new AbstractQuantifierFunctionsPrx[this.UsedQuantifiers.Length];
-            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
-            {
-                this.proxy[i] = this.UsedQuantifiers[i].functions;
-            }
 
             #region Caching
 
-            //caching statistics names
-            this.cachedStatisticsNames = this.GetStatisticsNames();
-
             //initializing hypotheses cache
-            this.cachedHypotheses = new CachedHypothesis[this.Hypotheses.Length];
+            this.cachedHypotheses = new CachedHypothesisValues[this.result.Hypotheses.Count];
 
             Thread IceCommunicationThread = new Thread(new ThreadStart(IceCommunication));
             IceCommunicationThread.Start();         
@@ -410,15 +505,22 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Method to be launched in separate thread, takes long time to complete
         /// </summary>
         private void IceCommunication()
-        {
-            //caching hypotheses quantifiers and statistics values
-            for (int i = 0; i < this.Hypotheses.Length; i++)
+        {          
+            //caching hypotheses quantifiers
+            for (int i = 0; i < this.result.Hypotheses.Count; i++)
             {
-                this.cachedHypotheses[i].QuantifiersList = this.GetQuantifiers(i);
-                this.cachedHypotheses[i].StatisticsList = this.GetStatistics(i);
+                this.cachedHypotheses[i].QuantifiersFirstTable = this.QuantifiersValuesFirstTable(i);
+                if (result.TwoContingencyTables)
+                {
+                    this.cachedHypotheses[i].QuantifiersSecondTable = this.QuantifiersValuesSecondTable(i);
+                }
+                else
+                {
+                    this.cachedHypotheses[i].QuantifiersSecondTable = new CountedValues[0];
+                }
                 this.OnIceTick();
             }
-            this.InitFilters();
+        //    this.InitFilters();
             this.OnIceComplete();
         }
 
@@ -427,6 +529,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         #region Column methods
 
+        #region commented
+        /*
         /// <summary>
         /// Method for retrieving used column names.
         /// </summary>
@@ -510,349 +614,17 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             return returnArray;
         }
+         * */
+        #endregion
 
         #endregion
 
 
         #region Methods for composing various strings
 
-        /// <summary>
-        /// Function to get a string value for antecedent
-        /// </summary>
-        /// <param name="hypothese">Hypothese to extract value from</param>
-        /// <returns>String value with antecedent</returns>
-        public static String GetAntecedentString(HypothesisStruct hypothesis)
-        {
-            StringBuilder returnString = new StringBuilder();
-            bool firstRun = true;
-            bool boolCedent = false;
-            if (hypothesis.literals.Length > 0)
-            {
-                foreach (LiteralStruct literal in hypothesis.literals)
-                {
-                    if (literal.cedentType == CedentEnum.Antecedent)
-                    {
-                        returnString.Append(literal.literalName);
-                    }
-                }
-            }
-            else
-            {
-                boolCedent = true;
-                foreach (BooleanLiteralStruct literal in hypothesis.booleanLiterals)
-                {
-                    if (literal.cedentType == CedentEnum.Antecedent)
-                    {
-                        if (!firstRun)
-                        {
-                            returnString.Append(") & ");
-                        }
-                        if (literal.negation)
-                        {
-                            returnString.Append('\u00AC' + literal.literalName + "(");
-                        }
-                        else
-                        {
-                            returnString.Append(literal.literalName + "(");
-                        }
-                        foreach (String category in literal.categoriesNames)
-                        {
-                            returnString.Append(category.ToString());
-                        }
-                        firstRun = false;
-                    }
-                }
-            }
-            if (returnString.Length == 0)
-            {
-                return String.Empty;
-            }
-            else
-            {
-                if (boolCedent)
-                    returnString.Append(")");
+        #region commented
 
-                return returnString.ToString();
-            }
-        }
-
-        /// <summary>
-        /// Function to get a string value for first set
-        /// </summary>
-        /// <param name="hypothese">Hypothese to extract value from</param>
-        /// <returns>String value with antecedent</returns>
-        public static String GetFirstSetString(HypothesisStruct hypothesis)
-        {
-            StringBuilder returnString = new StringBuilder();
-            bool firstRun = true;
-            bool boolCedent = false;
-            if (hypothesis.literals.Length > 0)
-            {
-                foreach (LiteralStruct literal in hypothesis.literals)
-                {
-                    if (literal.cedentType == CedentEnum.FirstSet)
-                    {
-                        returnString.Append(literal.literalName);
-                    }
-                }
-            }
-            else
-            {
-                boolCedent = true;
-                foreach (BooleanLiteralStruct literal in hypothesis.booleanLiterals)
-                {
-                    if (literal.cedentType == CedentEnum.FirstSet)
-                    {
-                        if (!firstRun)
-                        {
-                            returnString.Append(") & ");
-                        }
-                        if (literal.negation)
-                        {
-                            returnString.Append('\u00AC' + literal.literalName + "(");
-                        }
-                        else
-                        {
-                            returnString.Append(literal.literalName + "(");
-                        }
-                        foreach (String category in literal.categoriesNames)
-                        {
-                            returnString.Append(category.ToString());
-                        }
-                        firstRun = false;
-                    }
-                }
-            }
-            if (returnString.Length == 0)
-            {
-                return String.Empty;
-            }
-            else
-            {
-                if (boolCedent)
-                    returnString.Append(")");
-
-                return returnString.ToString();
-            }
-        }
-
-        /// <summary>
-        /// Function to get a string value for second set
-        /// </summary>
-        /// <param name="hypothese">Hypothese to extract value from</param>
-        /// <returns>String value with antecedent</returns>
-        public static String GetSecondSetString(HypothesisStruct hypothesis)
-        {
-            StringBuilder returnString = new StringBuilder();
-            bool firstRun = true;
-            bool boolCedent = false;
-            if (hypothesis.literals.Length > 0)
-            {
-                foreach (LiteralStruct literal in hypothesis.literals)
-                {
-                    if (literal.cedentType == CedentEnum.SecondSet)
-                    {
-                        returnString.Append(literal.literalName);
-                    }
-                }
-            }
-            else
-            {
-                boolCedent = true;
-                foreach (BooleanLiteralStruct literal in hypothesis.booleanLiterals)
-                {
-                    if (literal.cedentType == CedentEnum.SecondSet)
-                    {
-                        if (!firstRun)
-                        {
-                            returnString.Append(") & ");
-                        }
-                        if (literal.negation)
-                        {
-                            returnString.Append('\u00AC' + literal.literalName + "(");
-                        }
-                        else
-                        {
-                            returnString.Append(literal.literalName + "(");
-                        }
-                        foreach (String category in literal.categoriesNames)
-                        {
-                            returnString.Append(category.ToString());
-                        }
-                        firstRun = false;
-                    }
-                }
-            }
-            if (returnString.Length == 0)
-            {
-                return String.Empty;
-            }
-            else
-            {
-                if (boolCedent)
-                    returnString.Append(")");
-
-                return returnString.ToString();
-            }
-        }
-
-        /// <summary>
-        /// Function to get a string value for succedent
-        /// </summary>
-        /// <param name="hypothese">Hypothese to extract value from</param>
-        /// <returns>String value with succedent</returns>
-        public static String GetSuccedentString(HypothesisStruct hypothese)
-        {
-            StringBuilder returnString = new StringBuilder();
-            bool firstRun = true;
-            bool boolCedent = false;
-
-            if (hypothese.literals.Length > 0)
-            {
-                foreach (LiteralStruct literal in hypothese.literals)
-                {
-                    if (literal.cedentType == CedentEnum.Succedent)
-                    {
-                        returnString.Append(literal.literalName);
-                    }
-                }
-            }
-            else
-            {
-                boolCedent = true;
-                foreach (BooleanLiteralStruct literal in hypothese.booleanLiterals)
-                {
-                    if (literal.cedentType == CedentEnum.Succedent)
-                    {
-                        if (!firstRun)
-                        {
-                            returnString.Append(") & ");
-                        }
-                        if (literal.negation)
-                        {
-                            returnString.Append('\u00AC' + literal.literalName + "(");
-                        }
-                        else
-                        {
-                            returnString.Append(literal.literalName + "(");
-                        }
-                        foreach (String category in literal.categoriesNames)
-                        {
-                            returnString.Append(category.ToString());
-                        }
-                        firstRun = false;
-                    }
-                }
-            }
-
-            if (returnString.Length == 0)
-            {
-                return String.Empty;
-            }
-
-            else
-            {
-                if (boolCedent)
-                    returnString.Append(")");
-                return returnString.ToString();
-            }
-        }
-
-
-        /// <summary>
-        /// Function to get a string value for condition
-        /// </summary>
-        /// <param name="hypothese">Hypothese to extract value from</param>
-        /// <returns>String value with condition</returns>
-        public static String GetConditionString(HypothesisStruct hypothese)
-        {
-            StringBuilder returnString = new StringBuilder();
-            bool firstRun = true;
-            foreach (BooleanLiteralStruct literal in hypothese.booleanLiterals)
-            {
-                if (literal.cedentType == CedentEnum.Condition)
-                {
-                    if (!firstRun)
-                    {
-                        returnString.Append(") & ");
-                    }
-                    if (literal.negation)
-                    {
-                        returnString.Append('\u00AC' + literal.literalName + "(");
-                    }
-                    else
-                    {
-                        returnString.Append(literal.literalName + "(");
-                    }
-                    foreach (String category in literal.categoriesNames)
-                    {
-                        returnString.Append(category.ToString());
-                    }
-                    firstRun = false;
-                }
-            }
-
-            if (returnString.Length == 0)
-            {
-                return "";
-            }
-            else
-            {
-                returnString.Append(")");
-                return returnString.ToString();
-            }
-        }
-
-        /// <summary>
-        /// Method to compose hypothesis name
-        /// </summary>
-        /// <param name="hypothese">Hypothese </param>
-        /// <returns></returns>
-        public static String GetHypothesisName(HypothesisStruct hypothesis)
-        {
-            StringBuilder returnString = new StringBuilder();
-            if (hypothesis.literals.Length > 0)
-            {
-                string temp, temp1;
-                temp = temp1 = String.Empty;
-                temp = FerdaResult.GetAntecedentString(hypothesis);
-                temp1 = FerdaResult.GetSuccedentString(hypothesis);
-                if (temp != String.Empty)
-                {
-                    if (temp1 != String.Empty)
-                    {
-                        returnString.Append(temp + " " + '\u00D7' + " " + temp1);
-                    }
-                    else
-                    {
-                        returnString.Append(temp);
-                    }
-                }
-                else
-                {
-                    if (temp1 != String.Empty)
-                    {
-                        returnString.Append(temp1);
-                    }
-                    else
-                    {
-                        returnString.Append(String.Empty);
-                    }
-                }
-            }
-            else
-            {
-                returnString.Append(FerdaResult.GetAntecedentString(hypothesis) +
-                   '\u2022' + '\u2022' + FerdaResult.GetSuccedentString(hypothesis));
-            }
-
-            if (!FerdaResult.GetConditionString(hypothesis).Equals(""))
-            {
-                returnString.Append(" \\ " + FerdaResult.GetConditionString(hypothesis));
-            }
-            return returnString.ToString();
-        }
-
+        /*
         /// <summary>
         /// Method to get hypothesis contingency table
         /// </summary>
@@ -880,7 +652,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             return returnString.ToString();
         }
-
+        
         /// <summary>
         /// Method which gets used quantifiers names
         /// </summary>
@@ -918,6 +690,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             return returnString;
         }
 
+         * */
+        #endregion
         #endregion
 
 
@@ -947,142 +721,108 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         #region Quantifier functions
 
         /// <summary>
-        /// Method which finds out whether the quantifier is selected.
+        /// Counting all of the quantifiers for the first contingency table of the chosen hypothesis
         /// </summary>
-        /// <param name="quantifier"></param>
+        /// <param name="index">Hypothesis index</param>
         /// <returns></returns>
-        protected bool QuantifierIsSelected(QuantifierProvider quantifier)
+        private CountedValues[] QuantifiersValuesFirstTable(int index)
         {
-            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
+            List<CountedValues> returnValues = new List<CountedValues>();
+
+            foreach (Ferda.Guha.MiningProcessor.QuantifierEvaluator.Quantifier quantifier in quantifiers.Quantifeirs.Values)
             {
-                if (quantifier == this.UsedQuantifiers[i])
+                if (quantifier.ProvidesValues)
                 {
-                    if (this.SelectedQuantifiers[i] == 1)
-                    {
-                        return true;
-                    }
+                    CountedValues countedValue = new CountedValues();
+                    countedValue.Name = quantifier.LocalizedLabel;
+                    countedValue.UserName = quantifier.LocalizedUserLabel;
+                    ContingencyTableHelper helper = new ContingencyTableHelper(
+                        result.Hypotheses[index].ContingencyTableA, result.AllObjectsCount);
+                    countedValue.Value = quantifier.Value(helper);
                 }
             }
-            return false;
+            return returnValues.ToArray();
         }
 
         /// <summary>
-        /// Method which finds out whether the quantifier is used.
+        /// Counting all of the quantifiers for the second contingency table of the chosen hypothesis
         /// </summary>
-        /// <param name="quantifier"></param>
+        /// <param name="index">Hypothesis index</param>
         /// <returns></returns>
-        protected bool QuantifierIsUsed(QuantifierProvider quantifier)
+        private CountedValues[] QuantifiersValuesSecondTable(int index)
         {
-            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
+            List<CountedValues> returnValues = new List<CountedValues>();
+
+            foreach (Ferda.Guha.MiningProcessor.QuantifierEvaluator.Quantifier quantifier in quantifiers.Quantifeirs.Values)
             {
-                if (quantifier == this.UsedQuantifiers[i])
+                if (quantifier.ProvidesValues)
                 {
-                    return true;
+                    CountedValues countedValue = new CountedValues();
+                    countedValue.Name = quantifier.LocalizedLabel;
+                    countedValue.UserName = quantifier.LocalizedUserLabel;
+                    ContingencyTableHelper helper = new ContingencyTableHelper(
+                        result.Hypotheses[index].ContingencyTableB, result.AllObjectsCount);
+                    countedValue.Value = quantifier.Value(helper);
                 }
             }
-            return false;
+            return returnValues.ToArray();
         }
 
         /// <summary>
-        /// Method for reading the pre-counted quantifier from cache
+        /// Method for reading the pre-counted quantifiers for first table from cache
         /// </summary>
         /// <param name="hypid">Id of the hypothesis to get values for</param>
         /// <param name="precision">Number of decimal places of precision</param>
         /// <returns>List of counted values</returns>
-        public double[] ReadSelectedQuantifiersFromCache(int hypid, int precision)
+        public double[] ReadQuantifiersFromCacheFirstTable(int hypid, int precision)
         {
             List<double> returnQuantifiers = new List<double>();
-       //     double[] quantifiers = new double[cachedHypotheses[hypid].QuantifiersList.Length];
-            for (int i = 0; i < cachedHypotheses[hypid].QuantifiersList.Length; i++)
+            double[] quantifiers = new double[cachedHypotheses[hypid].QuantifiersFirstTable.Length];
+            for (int i = 0; i < cachedHypotheses[hypid].QuantifiersFirstTable.Length; i++)
             {
-                if (this.SelectedQuantifiers[i] != 0)
-                {
-                    returnQuantifiers.Add(Math.Round(cachedHypotheses[hypid].QuantifiersList[i].Value, precision));
-                }
+                returnQuantifiers.Add(Math.Round(cachedHypotheses[hypid].QuantifiersFirstTable[i].Value, precision));
             }
             return returnQuantifiers.ToArray();
         }
 
         /// <summary>
-        /// Method for reading the pre-counted quantifier from cache
+        /// Method for reading the pre-counted quantifiers for second table from cache
         /// </summary>
         /// <param name="hypid">Id of the hypothesis to get values for</param>
         /// <param name="precision">Number of decimal places of precision</param>
         /// <returns>List of counted values</returns>
-        public double[] ReadAllQuantifiersFromCache(int hypid, int precision)
+        public double[] ReadQuantifiersFromCacheSecondTable(int hypid, int precision)
         {
-            double[] quantifiers = new double[cachedHypotheses[hypid].QuantifiersList.Length];
-            for (int i = 0; i < cachedHypotheses[hypid].QuantifiersList.Length; i++)
+            List<double> returnQuantifiers = new List<double>();
+            double[] quantifiers = new double[cachedHypotheses[hypid].QuantifiersSecondTable.Length];
+            for (int i = 0; i < cachedHypotheses[hypid].QuantifiersSecondTable.Length; i++)
             {
-                quantifiers[i] = Math.Round(cachedHypotheses[hypid].QuantifiersList[i].Value, precision);
+                returnQuantifiers.Add(Math.Round(cachedHypotheses[hypid].QuantifiersSecondTable[i].Value, precision));
             }
-            return quantifiers;
-        }
-
-        /// <summary>
-        /// Method for reading statistics from cache
-        /// </summary>
-        /// <param name="hypid">Hypothesis id to read statistics for</param>
-        /// <param name="precision">Number of decimal places of precision</param>
-        /// <returns>List of counted values</returns>
-        public List<CountedValues> ReadStatisticsFromCache(int hypid, int precision)
-        {
-            List<CountedValues> statistics = new List<CountedValues>();
-            for (int i = 0; i < cachedHypotheses[hypid].StatisticsList.Length; i++)
-            {
-                CountedValues temp = new CountedValues();
-                temp.Name = cachedHypotheses[hypid].StatisticsList[i].Name;
-                temp.Value = Math.Round(cachedHypotheses[hypid].StatisticsList[i].Value, precision);
-                statistics.Add(temp);
-            }
-            return statistics;
-        }
-
-        /// <summary>
-        /// Method which applies all quantifiers on the contingency table data.
-        /// </summary>
-        /// <param name="hypothese">Hypothese to take tables from</param>
-        /// <returns>List of values for each quantifier</returns>
-        private List<double> CountAllQuantifiers(HypothesisStruct hypothese)
-        {
-            List<double> returnList = new List<double>();
-            for (int i = 0; i < this.UsedQuantifiers.Length; i++)
-            {
-                returnList.Add(this.proxy[i].Value(hypothese.quantifierSetting));
-            }
-            return returnList;
-        }
-
-        /// <summary>
-        /// Method which applies all quantifiers on the hypothese contingency table
-        /// </summary>
-        /// <param name="hypothese"></param>
-        /// <returns>Arraylist of values</returns>
-        public List<double> AllQuantifierValues(HypothesisStruct hypothese)
-        {
-            return this.CountAllQuantifiers(hypothese);
+            return returnQuantifiers.ToArray();
         }
 
         #endregion
 
 
-        #region Hypotheses methods      
+        #region Hypotheses methods
 
         /// <summary>
         /// Gets hypothesis at the required index
         /// </summary>
         /// <param name="index">Index of the hypothesis to get</param>
         /// <returns></returns>
-        public HypothesisStruct GetHypothese(int index)
+        public Hypothesis GetHypothese(int index)
         {
-            return this.Hypotheses[index];
+            return this.result.Hypotheses[index];
         }
 
         #endregion
 
 
         #region Caching methods
-
+        #region commented
+        /*
         /// <summary>
         /// Method for counting quantifiers values for hypothese
         /// </summary>
@@ -1090,9 +830,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <returns>Counted quantifiers values</returns>
         private CountedValues[] GetQuantifiers(int HypId)
         {
-
-            List<string> names = this.GetAllQuantifierNames();
-            List<double> values = this.CountAllQuantifiers(this.Hypotheses[HypId]);
+            
+          //  List<string> names = this.GetAllQuantifierNames();
+          //  List<double> values = this.CountAllQuantifiers(this.Hypotheses[HypId]);
             CountedValues[] quantifiers = new CountedValues[values.Count];
 
             for (int i = 0; i < values.Count; i++)
@@ -1102,45 +842,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             return quantifiers;
         }
-
-        /// <summary>
-        /// Method for counting statistics values for hypothese
-        /// </summary>
-        /// <param name="HypId">Hypothesis id to count values for</param>
-        /// <returns>Counted statistics values</returns>
-        private CountedValues[] GetStatistics(int HypId)
-        {
-            CountedValues[] returnList = new CountedValues[this.statisticsProxies.Count];
-            for (int i = 0; i < this.statisticsProxies.Count; i++)
-            {
-                returnList[i].Name = this.cachedStatisticsNames[i];
-                returnList[i].Value = this.statisticsProxies[i].getStatistics(this.Hypotheses[HypId].quantifierSetting);
-            }
-            return returnList;
-        }
-
-        /// <summary>
-        /// Method for getting statistics names
-        /// </summary>
-        /// <returns>List of statistics names</returns>
-        private List<string> GetStatisticsNames()
-        {
-            List<string> names = new List<string>();
-            foreach (Ferda.Statistics.StatisticsProviderPrx prx in this.statisticsProxies)
-            {
-                names.Add(prx.getStatisticsName());
-            }
-            return names;
-        }
-
-        /// <summary>
-        /// Method for getting statistics name from cache
-        /// </summary>
-        /// <returns>List of strings with statistics names</returns>
-        public List<string> ReadStatisticsNamesFromCache()
-        {
-            return this.cachedStatisticsNames;
-        }
+         * */
+        #endregion
 
         #endregion
 
@@ -1168,7 +871,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
 
         #region Filtering methods
-
+        #region commented
+        /*
         /// <summary>
         /// Method which initializes the filters
         /// </summary>
@@ -1360,7 +1064,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             return true;
         }
-
+        */
+        #endregion
         #endregion
 
 

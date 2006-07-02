@@ -45,13 +45,13 @@
       <ExecutableExtension>.exe</ExecutableExtension>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaFrontEnd.exe</HintPath>
     </Reference>
+    <Reference Include="FerdaMiningProcessor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaMiningProcessor.dll</HintPath>
+    </Reference>
     <Reference Include="FerdaModulesManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
-    </Reference>
-    <Reference Include="FerdaStatistics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\FerdaStatistics.dll</HintPath>
     </Reference>
     <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

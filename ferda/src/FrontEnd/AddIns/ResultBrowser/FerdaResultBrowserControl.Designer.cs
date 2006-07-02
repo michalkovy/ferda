@@ -51,14 +51,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.QuantifiersListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ResultBrowserSplit = new System.Windows.Forms.SplitContainer();
             this.HypothesesListView = new System.Windows.Forms.ListView();
-            this.ColumnHypotheseName = new System.Windows.Forms.ColumnHeader();
-            this.ColumnAntecedent = new System.Windows.Forms.ColumnHeader();
-            this.ColumnSuccedent = new System.Windows.Forms.ColumnHeader();
-            this.ColumnCondition = new System.Windows.Forms.ColumnHeader();
+            this.ColumnHypothesisId = new System.Windows.Forms.ColumnHeader();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ButtonSubmitColumnChange = new System.Windows.Forms.Button();
+            this.LabelColumnsToDisplay = new System.Windows.Forms.Label();
+            this.CheckedListMarks = new System.Windows.Forms.CheckedListBox();
             this.ButtonHelp = new System.Windows.Forms.Button();
             this.LabelCount = new System.Windows.Forms.Label();
             this.LabelHypothesesTotal = new System.Windows.Forms.Label();
@@ -71,10 +70,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.CheckedListBoxAntecedents = new System.Windows.Forms.CheckedListBox();
             this.LabelNumeric = new System.Windows.Forms.Label();
             this.NumericUpDownDecimals = new System.Windows.Forms.NumericUpDown();
-            this.LabelCurrentlySorted = new System.Windows.Forms.Label();
-            this.LabelSortedBy = new System.Windows.Forms.Label();
-            this.ComboBoxSortStatistics = new System.Windows.Forms.ComboBox();
-            this.LabelSortHypotheses = new System.Windows.Forms.Label();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.LabelProgressBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressBarIceTicks = new System.Windows.Forms.ToolStripProgressBar();
@@ -108,11 +103,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ContextMenuGraphRightClick.SuspendLayout();
             this.SuspendLayout();
             // 
-            // QuantifiersListContextMenu
-            // 
-            this.QuantifiersListContextMenu.Name = "contextMenuStrip1";
-            this.QuantifiersListContextMenu.Size = new System.Drawing.Size(61, 4);
-            // 
             // ResultBrowserSplit
             // 
             this.ResultBrowserSplit.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -137,11 +127,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // HypothesesListView
             // 
             this.HypothesesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ColumnHypotheseName,
-            this.ColumnAntecedent,
-            this.ColumnSuccedent,
-            this.ColumnCondition});
-            this.HypothesesListView.ContextMenuStrip = this.QuantifiersListContextMenu;
+            this.ColumnHypothesisId});
             this.HypothesesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HypothesesListView.FullRowSelect = true;
             this.HypothesesListView.GridLines = true;
@@ -153,24 +139,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.HypothesesListView.UseCompatibleStateImageBehavior = false;
             this.HypothesesListView.View = System.Windows.Forms.View.Details;
             // 
-            // ColumnHypotheseName
+            // ColumnHypothesisId
             // 
-            this.ColumnHypotheseName.Width = 250;
-            // 
-            // ColumnAntecedent
-            // 
-            this.ColumnAntecedent.Width = 180;
-            // 
-            // ColumnSuccedent
-            // 
-            this.ColumnSuccedent.Width = 180;
-            // 
-            // ColumnCondition
-            // 
-            this.ColumnCondition.Width = 180;
+            this.ColumnHypothesisId.Width = 250;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.ButtonSubmitColumnChange);
+            this.panel1.Controls.Add(this.LabelColumnsToDisplay);
+            this.panel1.Controls.Add(this.CheckedListMarks);
             this.panel1.Controls.Add(this.ButtonHelp);
             this.panel1.Controls.Add(this.LabelCount);
             this.panel1.Controls.Add(this.LabelHypothesesTotal);
@@ -183,24 +160,48 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.panel1.Controls.Add(this.CheckedListBoxAntecedents);
             this.panel1.Controls.Add(this.LabelNumeric);
             this.panel1.Controls.Add(this.NumericUpDownDecimals);
-            this.panel1.Controls.Add(this.LabelCurrentlySorted);
-            this.panel1.Controls.Add(this.LabelSortedBy);
-            this.panel1.Controls.Add(this.ComboBoxSortStatistics);
-            this.panel1.Controls.Add(this.LabelSortHypotheses);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1064, 99);
             this.panel1.TabIndex = 2;
             // 
+            // ButtonSubmitColumnChange
+            // 
+            this.ButtonSubmitColumnChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonSubmitColumnChange.Location = new System.Drawing.Point(299, 73);
+            this.ButtonSubmitColumnChange.Name = "ButtonSubmitColumnChange";
+            this.ButtonSubmitColumnChange.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSubmitColumnChange.TabIndex = 18;
+            this.ButtonSubmitColumnChange.Text = "Re-display";
+            this.ButtonSubmitColumnChange.UseVisualStyleBackColor = true;
+            this.ButtonSubmitColumnChange.Click += new System.EventHandler(this.ButtonSubmitColumnChange_Click);
+            // 
+            // LabelColumnsToDisplay
+            // 
+            this.LabelColumnsToDisplay.AutoSize = true;
+            this.LabelColumnsToDisplay.Location = new System.Drawing.Point(280, 5);
+            this.LabelColumnsToDisplay.Name = "LabelColumnsToDisplay";
+            this.LabelColumnsToDisplay.Size = new System.Drawing.Size(94, 13);
+            this.LabelColumnsToDisplay.TabIndex = 17;
+            this.LabelColumnsToDisplay.Text = "Columns to display";
+            // 
+            // CheckedListMarks
+            // 
+            this.CheckedListMarks.FormattingEnabled = true;
+            this.CheckedListMarks.Location = new System.Drawing.Point(283, 22);
+            this.CheckedListMarks.Name = "CheckedListMarks";
+            this.CheckedListMarks.Size = new System.Drawing.Size(120, 49);
+            this.CheckedListMarks.TabIndex = 16;
+            // 
             // ButtonHelp
             // 
             this.ButtonHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonHelp.Location = new System.Drawing.Point(420, 74);
+            this.ButtonHelp.Location = new System.Drawing.Point(682, 74);
             this.ButtonHelp.Name = "ButtonHelp";
             this.ButtonHelp.Size = new System.Drawing.Size(75, 22);
             this.ButtonHelp.TabIndex = 15;
-            this.ButtonHelp.Text = "button1";
+            this.ButtonHelp.Text = "Help";
             this.ButtonHelp.UseVisualStyleBackColor = true;
             this.ButtonHelp.Click += new System.EventHandler(this.ButtonHelp_Click);
             // 
@@ -225,8 +226,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // ButtonSubmitFilter
             // 
+            this.ButtonSubmitFilter.Enabled = false;
             this.ButtonSubmitFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonSubmitFilter.Location = new System.Drawing.Point(330, 74);
+            this.ButtonSubmitFilter.Location = new System.Drawing.Point(592, 74);
             this.ButtonSubmitFilter.Name = "ButtonSubmitFilter";
             this.ButtonSubmitFilter.Size = new System.Drawing.Size(75, 22);
             this.ButtonSubmitFilter.TabIndex = 12;
@@ -237,7 +239,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LabelConditionFilter
             // 
             this.LabelConditionFilter.AutoSize = true;
-            this.LabelConditionFilter.Location = new System.Drawing.Point(525, 5);
+            this.LabelConditionFilter.Location = new System.Drawing.Point(787, 5);
             this.LabelConditionFilter.Name = "LabelConditionFilter";
             this.LabelConditionFilter.Size = new System.Drawing.Size(73, 13);
             this.LabelConditionFilter.TabIndex = 11;
@@ -246,7 +248,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LabelSuccedentFilter
             // 
             this.LabelSuccedentFilter.AutoSize = true;
-            this.LabelSuccedentFilter.Location = new System.Drawing.Point(389, 5);
+            this.LabelSuccedentFilter.Location = new System.Drawing.Point(651, 5);
             this.LabelSuccedentFilter.Name = "LabelSuccedentFilter";
             this.LabelSuccedentFilter.Size = new System.Drawing.Size(81, 13);
             this.LabelSuccedentFilter.TabIndex = 10;
@@ -255,7 +257,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LabelAntecedentFilter
             // 
             this.LabelAntecedentFilter.AutoSize = true;
-            this.LabelAntecedentFilter.Location = new System.Drawing.Point(244, 5);
+            this.LabelAntecedentFilter.Location = new System.Drawing.Point(506, 5);
             this.LabelAntecedentFilter.Name = "LabelAntecedentFilter";
             this.LabelAntecedentFilter.Size = new System.Drawing.Size(84, 13);
             this.LabelAntecedentFilter.TabIndex = 9;
@@ -264,8 +266,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // CheckedListBoxConditions
             // 
             this.CheckedListBoxConditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CheckedListBoxConditions.CheckOnClick = true;
+            this.CheckedListBoxConditions.Enabled = false;
             this.CheckedListBoxConditions.FormattingEnabled = true;
-            this.CheckedListBoxConditions.Location = new System.Drawing.Point(528, 22);
+            this.CheckedListBoxConditions.Location = new System.Drawing.Point(790, 22);
             this.CheckedListBoxConditions.Name = "CheckedListBoxConditions";
             this.CheckedListBoxConditions.Size = new System.Drawing.Size(120, 47);
             this.CheckedListBoxConditions.TabIndex = 8;
@@ -273,8 +277,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // CheckedListBoxSuccedents
             // 
             this.CheckedListBoxSuccedents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CheckedListBoxSuccedents.CheckOnClick = true;
+            this.CheckedListBoxSuccedents.Enabled = false;
             this.CheckedListBoxSuccedents.FormattingEnabled = true;
-            this.CheckedListBoxSuccedents.Location = new System.Drawing.Point(392, 22);
+            this.CheckedListBoxSuccedents.Location = new System.Drawing.Point(654, 22);
             this.CheckedListBoxSuccedents.Name = "CheckedListBoxSuccedents";
             this.CheckedListBoxSuccedents.Size = new System.Drawing.Size(120, 47);
             this.CheckedListBoxSuccedents.TabIndex = 7;
@@ -282,8 +288,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // CheckedListBoxAntecedents
             // 
             this.CheckedListBoxAntecedents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CheckedListBoxAntecedents.CheckOnClick = true;
+            this.CheckedListBoxAntecedents.Enabled = false;
             this.CheckedListBoxAntecedents.FormattingEnabled = true;
-            this.CheckedListBoxAntecedents.Location = new System.Drawing.Point(247, 22);
+            this.CheckedListBoxAntecedents.Location = new System.Drawing.Point(509, 22);
             this.CheckedListBoxAntecedents.Name = "CheckedListBoxAntecedents";
             this.CheckedListBoxAntecedents.Size = new System.Drawing.Size(120, 47);
             this.CheckedListBoxAntecedents.TabIndex = 6;
@@ -300,6 +308,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // NumericUpDownDecimals
             // 
             this.NumericUpDownDecimals.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NumericUpDownDecimals.Enabled = false;
             this.NumericUpDownDecimals.Location = new System.Drawing.Point(99, 49);
             this.NumericUpDownDecimals.Maximum = new decimal(new int[] {
             10,
@@ -320,44 +329,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             0,
             0});
             this.NumericUpDownDecimals.ValueChanged += new System.EventHandler(this.NumericUpDownDecimals_ValueChanged);
-            // 
-            // LabelCurrentlySorted
-            // 
-            this.LabelCurrentlySorted.AutoSize = true;
-            this.LabelCurrentlySorted.Location = new System.Drawing.Point(75, 28);
-            this.LabelCurrentlySorted.Name = "LabelCurrentlySorted";
-            this.LabelCurrentlySorted.Size = new System.Drawing.Size(37, 13);
-            this.LabelCurrentlySorted.TabIndex = 3;
-            this.LabelCurrentlySorted.Text = "(none)";
-            // 
-            // LabelSortedBy
-            // 
-            this.LabelSortedBy.AutoSize = true;
-            this.LabelSortedBy.Location = new System.Drawing.Point(3, 28);
-            this.LabelSortedBy.Name = "LabelSortedBy";
-            this.LabelSortedBy.Size = new System.Drawing.Size(55, 13);
-            this.LabelSortedBy.TabIndex = 2;
-            this.LabelSortedBy.Text = "Sorted by:";
-            // 
-            // ComboBoxSortStatistics
-            // 
-            this.ComboBoxSortStatistics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboBoxSortStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComboBoxSortStatistics.FormattingEnabled = true;
-            this.ComboBoxSortStatistics.Location = new System.Drawing.Point(78, 2);
-            this.ComboBoxSortStatistics.Name = "ComboBoxSortStatistics";
-            this.ComboBoxSortStatistics.Size = new System.Drawing.Size(141, 21);
-            this.ComboBoxSortStatistics.TabIndex = 1;
-            this.ComboBoxSortStatistics.SelectionChangeCommitted += new System.EventHandler(this.ComboBoxSortStatistics_SelectionChangeCommitted);
-            // 
-            // LabelSortHypotheses
-            // 
-            this.LabelSortHypotheses.AutoSize = true;
-            this.LabelSortHypotheses.Location = new System.Drawing.Point(3, 5);
-            this.LabelSortHypotheses.Name = "LabelSortHypotheses";
-            this.LabelSortHypotheses.Size = new System.Drawing.Size(43, 13);
-            this.LabelSortHypotheses.TabIndex = 0;
-            this.LabelSortHypotheses.Text = "Sort by:";
             // 
             // StatusStrip
             // 
@@ -586,13 +557,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         #endregion
 
-        private System.Windows.Forms.ContextMenuStrip QuantifiersListContextMenu;
         private System.Windows.Forms.SplitContainer ResultBrowserSplit;
         private System.Windows.Forms.ListView HypothesesListView;
-        private System.Windows.Forms.ColumnHeader ColumnHypotheseName;
-        private System.Windows.Forms.ColumnHeader ColumnAntecedent;
-        private System.Windows.Forms.ColumnHeader ColumnSuccedent;
-        private System.Windows.Forms.ColumnHeader ColumnCondition;
+        private System.Windows.Forms.ColumnHeader ColumnHypothesisId;
         private System.Windows.Forms.GroupBox GroupBoxChangeGraph;
         private System.Windows.Forms.TrackBar TrackBar3d;
         private System.Windows.Forms.ContextMenuStrip ContextMenuGraphRightClick;
@@ -607,28 +574,27 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ToolStripCopyChart;
         private System.Windows.Forms.CheckBox CheckBoxShowLabels;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ComboBox ComboBoxSortStatistics;
-        private System.Windows.Forms.Label LabelSortHypotheses;
-        private System.Windows.Forms.Label LabelCurrentlySorted;
-        private System.Windows.Forms.Label LabelSortedBy;
-        private System.Windows.Forms.NumericUpDown NumericUpDownDecimals;
-        private System.Windows.Forms.Label LabelNumeric;
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ToolStripProgressBar ProgressBarIceTicks;
         private System.Windows.Forms.ToolStripStatusLabel LabelProgressBar;
-        private System.Windows.Forms.CheckedListBox CheckedListBoxAntecedents;
+        private System.Windows.Forms.RadioButton RadioSecondTable;
+        private System.Windows.Forms.RadioButton RadioFirstTable;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button ButtonHelp;
+        private System.Windows.Forms.Label LabelCount;
+        private System.Windows.Forms.Label LabelHypothesesTotal;
+        private System.Windows.Forms.Button ButtonSubmitFilter;
+        private System.Windows.Forms.Label LabelConditionFilter;
         private System.Windows.Forms.Label LabelSuccedentFilter;
         private System.Windows.Forms.Label LabelAntecedentFilter;
         private System.Windows.Forms.CheckedListBox CheckedListBoxConditions;
         private System.Windows.Forms.CheckedListBox CheckedListBoxSuccedents;
-        private System.Windows.Forms.Label LabelConditionFilter;
-        private System.Windows.Forms.Button ButtonSubmitFilter;
-        private System.Windows.Forms.Label LabelHypothesesTotal;
-        private System.Windows.Forms.Label LabelCount;
-        private System.Windows.Forms.RadioButton RadioSecondTable;
-        private System.Windows.Forms.RadioButton RadioFirstTable;
-        private System.Windows.Forms.Button ButtonHelp;
+        private System.Windows.Forms.CheckedListBox CheckedListBoxAntecedents;
+        private System.Windows.Forms.Label LabelNumeric;
+        private System.Windows.Forms.NumericUpDown NumericUpDownDecimals;
+        private System.Windows.Forms.Label LabelColumnsToDisplay;
+        private System.Windows.Forms.CheckedListBox CheckedListMarks;
+        private System.Windows.Forms.Button ButtonSubmitColumnChange;
     }
 }
 

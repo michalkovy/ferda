@@ -21,7 +21,8 @@
 using System;
 using System.Collections;
 using System.Text;
-using Ferda.Modules.Boxes.DataMiningCommon.Column;
+//using Ferda.Modules.Boxes.DataMiningCommon.Column;
+using Ferda.Modules.Boxes.DataPreparation;
 using Ferda.Modules;
 using System.Data.Odbc;
 using System.Data;
@@ -29,7 +30,7 @@ using System.Reflection;
 
 namespace Ferda.FrontEnd.AddIns.Common.Database
 {
-
+    /*
     #region CategoryFrequency struct
 
     /// <summary>
@@ -651,5 +652,5 @@ namespace Ferda.FrontEnd.AddIns.Common.Database
         }
 
         #endregion
-    }
+    }*/
 }
