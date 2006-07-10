@@ -149,11 +149,17 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             dummy = Func.GetColumnsNames(true);
             dummy = Func.GetDataTablesNames(true);
             DataTableInfo dti = Func.GetDataTableInfo(true);
-            if (dti.recordsCount <= 0)
+            long recordsCount = dti.recordsCount;
+            if (recordsCount <= 0)
                 throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
                                                "The table has no records. Please select non empty data table for analysis.",
                                                new string[] { Functions.PropName, Functions.PropRecordsCount },
                                                restrictionTypeEnum.Minimum);
+            if (recordsCount >= Int32.MaxValue)
+                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                               "The table has more than " + Int32.MaxValue + " records. Data mining of data tables of such size is not supported.",
+                                               new string[] { Functions.PropName, Functions.PropRecordsCount },
+                                               restrictionTypeEnum.Maximum);
             Func.TryPrimaryKey(true);
         }
     }
