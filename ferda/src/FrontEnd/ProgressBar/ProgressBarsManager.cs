@@ -1,0 +1,135 @@
+// ProgressBarsManager.cs - a component of the working environment that can display
+// progress bars of controls' actions
+//
+// Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
+//
+// Copyright (c) 2006 Martin Ralbovský
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Text;
+using System.Windows.Forms;
+
+namespace Ferda.FrontEnd.ProgressBar
+{
+    /// <summary>
+    /// A component of the working environmnet that can display, hide or stop the
+    /// progress bar of actions of individual boxes.
+    /// </summary>
+    public class ProgressBarsManager : UserControl
+    {
+        #region Constructor
+
+        /// <summary>
+        /// Default consturctor for the class
+        /// </summary>
+        public ProgressBarsManager()
+        {
+            InitializeComponent();
+
+            //Initialize components things
+            components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Resizes the control according to the size of the parent content
+        /// </summary>
+        public void ChangeSize()
+        {
+            if (Parent != null)
+            {
+                this.Size = Parent.Size;
+            }
+        }
+
+        /// <summary>
+        /// Initializing the component
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // ProgressBarsManager
+            // 
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Name = "ProgressBarControl";
+            this.ResumeLayout(false);
+        }
+
+        /// <summary>
+        /// Adds a progress bar control of a specific box
+        /// </summary>
+        /// <param name="progressBar">control to be added</param>
+        public void AddBoxProgressBar(BoxProgressBar progressBar)
+        {
+            //control se bude davt na konec seznamu - vypocitava se misto
+
+            this.Controls.Add(progressBar);
+        }
+
+        /// <summary>
+        /// Removes a progress bar control of a specific box
+        /// </summary>
+        /// <param name="progressBar">control to be removed</param>
+        public void RemoveBoxProgressBar(BoxProgressBar progressBar)
+        {
+            this.Controls.Remove(progressBar);
+
+            //vsechny ostatni controly, ktere byly "za" zrusenym progressbarem
+            //se posunou na jeho misto
+        }
+
+        /// <summary>
+        /// Hides a progress bar control of a specific box
+        /// </summary>
+        /// <param name="progressBar">control to be hidden</param>
+        public void HideProgressBar(BoxProgressBar progressBar)
+        {
+            progressBar.Visible = false;
+
+            //a potom posunu vsechny ostatni
+        }
+
+        #endregion
+    }
+}

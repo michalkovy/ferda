@@ -448,6 +448,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inicializace uživatelské poznámky a progress barů.
+        /// </summary>
+        internal static string LoadingUserNoteProgressBar {
+            get {
+                return ResourceManager.GetString("LoadingUserNoteProgressBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zvolte lokalizaci aplikace.
         /// </summary>
         internal static string LocalizationLabel {
@@ -984,6 +993,15 @@ namespace Ferda.FrontEnd {
         internal static string PreferencesDialogCaption {
             get {
                 return ResourceManager.GetString("PreferencesDialogCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Progress bary:).
+        /// </summary>
+        internal static string ProgressBarsCaption {
+            get {
+                return ResourceManager.GetString("ProgressBarsCaption", resourceCulture);
             }
         }
         

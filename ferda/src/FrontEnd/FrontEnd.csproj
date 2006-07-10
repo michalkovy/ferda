@@ -177,7 +177,14 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="OutputI.cs" />
-    <Compile Include="ProgressBarI.cs" />
+    <Compile Include="ProgressBar\BoxProgressBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProgressBar\ProgressBarI.cs">
+    </Compile>
+    <Compile Include="ProgressBar\ProgressBarsManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Property\AsyncPropertyCatcher.cs" />
     <EmbeddedResource Include="Desktop\RenameDialog.resx">
       <DependentUpon>RenameDialog.cs</DependentUpon>
@@ -217,6 +224,10 @@
     <Compile Include="Property\StringComboAddingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <EmbeddedResource Include="ProgressBar\BoxProgressBar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BoxProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Property\StringComboAddingControl.resx">
       <DependentUpon>StringComboAddingControl.cs</DependentUpon>
     </EmbeddedResource>
