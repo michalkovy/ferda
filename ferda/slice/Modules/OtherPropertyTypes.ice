@@ -17,22 +17,6 @@ module Ferda {
 		class StringSeqT extends PropertyValue implements StringSeqTInterface {
 			StringSeq stringSeqValue;
 		};
-
-		interface GenerationInfoTInterface {
-			GeneratingStruct getGenerationInfo();
-		};
-
-		class GenerationInfoT extends PropertyValue implements GenerationInfoTInterface {
-			GeneratingStruct generationInfoValue;
-		};
-
-		interface HypothesesTInterface {
-			HypothesisStructSeq getHypothesesValue();
-		};
-
-		class HypothesesT extends PropertyValue implements HypothesesTInterface {
-			HypothesisStructSeq hypothesesValue;
-		};
 	};
 };
 #endif

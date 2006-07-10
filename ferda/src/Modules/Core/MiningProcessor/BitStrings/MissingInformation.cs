@@ -7,7 +7,7 @@ using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
-    public class MissingInformation : MostRecentlyUsed<Set<Guid>, IBitString>
+    public class MissingInformation : MostRecentlyUsed<Set<string>, IBitString>
     {
         private readonly IBitStringCache _bitStringCache;
 
@@ -19,14 +19,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _bitStringCache = BitStringCache.GetInstance();
         }
 
-        public override IBitString GetValue(Set<Guid> key)
+        public override IBitString GetValue(Set<string> key)
         {
             if (key.Count == 0)
-                return new EmptyBitString();
+                return FalseBitString.GetInstance();
 
             // try get subset
-            Set<Guid> bestMatch = null;
-            foreach (Set<Guid> set in Keys)
+            Set<string> bestMatch = null;
+            foreach (Set<string> set in Keys)
             {
                 if (set.Count > key.Count)
                     continue;
@@ -43,7 +43,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
                 IBitString last = this[bestMatch];
                 IBitString newCached = null;
-                foreach (Guid guid in key)
+                foreach (string guid in key)
                 {
                     if (!bestMatch.Contains(guid))
                     {
@@ -59,7 +59,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             else
             {
                 IBitString newCached = null;
-                foreach (Guid guid in key)
+                foreach (string guid in key)
                 {
                     IBitString newBitString = _bitStringCache.GetMissingInformationBitString(guid);
                     if (newCached == null)

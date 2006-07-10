@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
-
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
     public class NegationFormula : BooleanAttributeFormula

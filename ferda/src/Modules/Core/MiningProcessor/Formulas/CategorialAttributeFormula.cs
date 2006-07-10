@@ -1,31 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
     public class CategorialAttributeFormula : Formula
     {
-        private Guid _attributeId;
-        
-        public Guid AttributeId
+        private string _attributeGuid;
+
+        public string AttributeGuid
         {
-            get { return _attributeId; }
-            set { _attributeId = value; }
+            get { return _attributeGuid; }
+            set { _attributeGuid = value; }
         }
 
         public CategorialAttributeFormula()
         {
         }
-        
-        public CategorialAttributeFormula(Guid attributeId)
+
+        public CategorialAttributeFormula(string attributeGuid)
         {
-            _attributeId = attributeId;
+            _attributeGuid = attributeGuid;
         }
 
         public override string ToString()
         {
-            return AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(_attributeId);
+            return AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(_attributeGuid);
         }
     }
 }

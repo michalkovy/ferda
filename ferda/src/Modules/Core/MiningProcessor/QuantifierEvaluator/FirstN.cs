@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 {
     public class FirstN : IEvaluator
@@ -37,6 +33,5 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
             ;
         }
-
     }
 }

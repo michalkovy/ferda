@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Ferda.Guha.Data;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor.BitStrings;
@@ -15,6 +14,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
     public abstract class MiningProcessorBase
     {
         private long _totalCount = Int64.MinValue;
+
         public long TotalCount
         {
             get
@@ -33,13 +33,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
         protected readonly Quantifiers _quantifiers;
 
         private readonly TaskRunParams _taskParams;
+
         public TaskRunParams TaskParams
         {
             get { return _taskParams; }
         }
 
 
-        public MiningProcessorBase(
+        protected MiningProcessorBase(
             QuantifierBaseFunctionsPrx[] quantifiers,
             BitStringGeneratorProviderPrx taskFuncPrx,
             TaskRunParams taskParams
@@ -49,7 +50,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
             _quantifiers = new Quantifiers(quantifiers, taskFuncPrx);
         }
 
-        public static IEntitySetting GetBoolanAttributeBySemantic(MarkEnum semantic, BooleanAttribute[] booleanAttributes)
+        public static IEntitySetting GetBoolanAttributeBySemantic(MarkEnum semantic,
+                                                                  BooleanAttribute[] booleanAttributes)
         {
             if (booleanAttributes == null)
                 return null;
@@ -61,7 +63,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
             return null;
         }
 
-        public static BitStringGeneratorPrx[] GetCategorialAttributeBySemantic(MarkEnum semantic, CategorialAttribute[] categorialAttributes)
+        public static BitStringGeneratorPrx[] GetCategorialAttributeBySemantic(MarkEnum semantic,
+                                                                               CategorialAttribute[]
+                                                                                   categorialAttributes)
         {
             if (categorialAttributes == null)
                 return null;
@@ -77,7 +81,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return result.ToArray();
         }
 
-        public static IEntityEnumerator CreateBooleanAttributeTrace(MarkEnum semantic, BooleanAttribute[] booleanAttributes, bool allowsEmptyBitStrings)
+        public static IEntityEnumerator CreateBooleanAttributeTrace(MarkEnum semantic,
+                                                                    BooleanAttribute[] booleanAttributes,
+                                                                    bool allowsEmptyBitStrings)
         {
             IEntitySetting setting = GetBoolanAttributeBySemantic(semantic, booleanAttributes);
             if (setting == null)
@@ -90,7 +96,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             if (setting is IMultipleOperandEntitySetting)
             {
-                IMultipleOperandEntitySetting mos = (IMultipleOperandEntitySetting)setting;
+                IMultipleOperandEntitySetting mos = (IMultipleOperandEntitySetting) setting;
                 if (mos.minLength == 0 && !allowsEmptyBitStrings)
                     throw Exceptions.EmptyCedentIsNotAllowedError(semantic);
             }
@@ -98,7 +104,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             return Factory.Create(setting);
         }
 
-        public static CategorialAttributeTrace[] CreateCategorialAttributeTrace(MarkEnum semantic, CategorialAttribute[] categorialAttributes, bool allowEmptyCategorialCedent)
+        public static CategorialAttributeTrace[] CreateCategorialAttributeTrace(MarkEnum semantic,
+                                                                                CategorialAttribute[]
+                                                                                    categorialAttributes,
+                                                                                bool allowEmptyCategorialCedent)
         {
             BitStringGeneratorPrx[] setting = GetCategorialAttributeBySemantic(semantic, categorialAttributes);
             if (setting == null)
@@ -124,9 +133,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return result.ToArray();
         }
 
-        protected abstract void getCedents(out ICollection<IEntityEnumerator> booleanCedents, out ICollection<CategorialAttributeTrace[]> categorialCedents);
+        protected abstract void getCedents(out ICollection<IEntityEnumerator> booleanCedents,
+                                           out ICollection<CategorialAttributeTrace[]> categorialCedents);
 
-        protected static long totalCount(ICollection<IEntityEnumerator> booleanCedents, ICollection<CategorialAttributeTrace[]> categorialCedents)
+        protected static long totalCount(ICollection<IEntityEnumerator> booleanCedents,
+                                         ICollection<CategorialAttributeTrace[]> categorialCedents)
         {
             unchecked
             {
@@ -154,142 +165,68 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         /// <summary>
         /// Gets the negation and missings bit strings. Please note
-        /// that both negation and missings can be instances 
-        /// of IEmptyBitString.
+        /// that both negation and missings can be instances
+        /// of IEmptyBitString or IFalseBitString.
         /// </summary>
         /// <param name="input">The input.</param>
         /// <param name="missings">The missings.</param>
         /// <param name="negation">The negation.</param>
+        /// <param name="usedAttributes">The used attributes.</param>
         /// <param name="missingInformation">The missing information IBitString provider.</param>
-        public static void GetNegationAndMissings(IBitString input, out IBitString missings, out IBitString negation, Set<Guid> usedAttributes, MissingInformation missingInformation)
+        public static void GetNegationAndMissings(IBitString input, out IBitString missings, out IBitString negation,
+                                                  Set<string> usedAttributes, MissingInformation missingInformation)
         {
-            missings = missingInformation[usedAttributes];
-            negation = input.Not();
-            return;
-        }
-
-        public abstract Result Trace(out SerializableResultInfo rInfo);
-    }
-
-    public class FourFoldMiningProcessor : MiningProcessorBase
-    {
-        #region Fields
-        private readonly IEntityEnumerator _antecedent;
-        private readonly IEntityEnumerator _succedent;
-        private readonly IEntityEnumerator _condition;
-        #endregion
-
-        public FourFoldMiningProcessor(
-            BooleanAttribute[] booleanAttributes,
-            CategorialAttribute[] categorialAttributes,
-            QuantifierBaseFunctionsPrx[] quantifiers,
-            TaskRunParams taskParams,
-            BitStringGeneratorProviderPrx taskFuncPrx
-            )
-            : base(quantifiers, taskFuncPrx, taskParams)
-        {
-            // Validate quantifiers
-            bool notOnlyFirstSetOperationMode;
-            bool needsNumericValues; // ignore
-            bool notOnlyDeletingMissingInformation; // ignore allways study ... for that purpose if user join new quantifier to task box after run to see its values in Result Browser
-            CardinalityEnum maximalRequestedCardinality; // UNDONE ignored
-
-            _quantifiers.ValidRequests(
-                out notOnlyFirstSetOperationMode,
-                out needsNumericValues,
-                out notOnlyDeletingMissingInformation,
-                out maximalRequestedCardinality
-                );
-
-            if (notOnlyFirstSetOperationMode)
-                throw Ferda.Modules.Exceptions.BadParamsError(null, null, "Property \"Operation mode\" is not set to \"FirstSetOperationMode\" in some quantifier.", restrictionTypeEnum.OtherReason);
-
-            // Create cedent traces
-            _antecedent = CreateBooleanAttributeTrace(MarkEnum.Antecedent, booleanAttributes, true);
-            _succedent = CreateBooleanAttributeTrace(MarkEnum.Succedent, booleanAttributes, false);
-            _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, booleanAttributes, true);
-        }
-
-
-        public override Result Trace(out SerializableResultInfo rInfo)
-        {
-            Debug.Assert(TaskParams.taskType == TaskTypeEnum.FourFold);
-            Result result = new Result();
-            result.TaskTypeEnum = TaskParams.taskType;
-
-            rInfo = new SerializableResultInfo();
-            rInfo.StartTime = DateTime.Now;
-            rInfo.TotalNumberOfRelevantQuestions = TotalCount;
-
-            IEvaluator evaluator;
-            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
-                evaluator = new FirstN(_quantifiers, result, rInfo, TaskParams);
-            else
-                throw new NotImplementedException();
-
-            long allObjectsCount = Int64.MinValue;
-
-            MissingInformation succedentMI = new MissingInformation();
-            MissingInformation antecedentMI = new MissingInformation();
-            MissingInformation conditionMI = new MissingInformation();
-            IBitString sMis;
-            IBitString sNeg;
-            IBitString aMis;
-            IBitString aNeg;
-            IBitString cMis;
-            IBitString cNeg;
-            foreach (IBitString s in _succedent)
+            if (input is EmptyBitString)
             {
-                GetNegationAndMissings(s, out sNeg, out sMis, _succedent.UsedAttributes, succedentMI);
-                if (allObjectsCount < 0)
-                    allObjectsCount = s.Length;
-                foreach (IBitString a in _antecedent)
-                {
-                    GetNegationAndMissings(a, out aNeg, out aMis, _antecedent.UsedAttributes, antecedentMI);
-                    foreach (IBitString c in _condition)
-                    {
-                        GetNegationAndMissings(c, out cNeg, out cMis, _condition.UsedAttributes, conditionMI);
-
-                        rInfo.NumberOfVerifications++;
-
-                        NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
-                        // TODO make 18-fold table
-
-                        // TMP setup
-                        Random random = new Random();
-                        fft.f111 = random.Next(0, 256);
-                        fft.f101 = random.Next(0, 256);
-                        fft.f011 = random.Next(0, 256);
-                        fft.f001 = random.Next(0, 256);
-                        
-                        ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
-                            fft.ContingencyTable,
-                            allObjectsCount);
-
-                        Hypothesis hypothesis = new Hypothesis();
-                        hypothesis.SetFormula(MarkEnum.Succedent, s.Identifier);
-                        hypothesis.SetFormula(MarkEnum.Attribute, a.Identifier);
-                        hypothesis.SetFormula(MarkEnum.Condition, c.Identifier);
-                        hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
-                        //h.NumericValuesAttributeId = contingencyTable.NumericValuesAttributeId;
-
-                        if (evaluator.VerifyIsComplete(contingencyTable, hypothesis))
-                            goto finish;
-
-                    }
-                }
+                missings = FalseBitString.GetInstance();
+                negation = FalseBitString.GetInstance();
+                return;
             }
-        finish:
-            evaluator.Flush();
-            rInfo.EndTime = DateTime.Now;
-            result.AllObjectsCount = allObjectsCount;
-            return result;
+            else
+            {
+                missings = missingInformation[usedAttributes];
+                Debug.Assert(!(missings is EmptyBitString));
+                if (missings is EmptyBitString)
+                    throw new ArgumentException();
+                if (missings is FalseBitString)
+                {
+                    negation = input.Not();
+                }
+                else
+                {
+                    negation = input.Or(missings).Not();    
+                }
+                return;
+            }
         }
 
-        protected override void getCedents(out ICollection<IEntityEnumerator> booleanCedents, out ICollection<CategorialAttributeTrace[]> categorialCedents)
+        /// <summary>
+        /// Gets the missings bit strings. Please note
+        /// that missings can be instances
+        /// of IEmptyBitString or IFalseBitString.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="missings">The missings.</param>
+        /// <param name="usedAttributes">The used attributes.</param>
+        /// <param name="missingInformation">The missing information IBitString provider.</param>
+        public static void GetMissings(IBitString input, out IBitString missings,
+                                                  Set<string> usedAttributes, MissingInformation missingInformation)
         {
-            booleanCedents = new IEntityEnumerator[] { _antecedent, _succedent, _condition };
-            categorialCedents = null;
+            if (input is EmptyBitString)
+            {
+                missings = FalseBitString.GetInstance();
+                return;
+            }
+            else
+            {
+                missings = missingInformation[usedAttributes];
+                Debug.Assert(!(missings is EmptyBitString));
+                if (!(missings is EmptyBitString))
+                    throw new ArgumentException();
+                return;
+            }
         }
+        
+        public abstract Result Trace(out SerializableResultInfo rInfo);
     }
 }

@@ -14,7 +14,7 @@ namespace Ferda.Guha.MiningProcessor
     public interface IEntityEnumerator : IEnumerable<IBitString>
     {
         long TotalCount { get;}
-        Set<Guid> UsedAttributes { get; }
-        Set<Guid> UsedEntities { get; }
+        Set<string> UsedAttributes { get; }
+        Set<string> UsedEntities { get; }
     }
 }

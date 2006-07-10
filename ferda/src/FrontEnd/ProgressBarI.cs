@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ferda.ModulesManager;
+using Ferda.Modules;
 
 namespace Ferda.FrontEnd
 {

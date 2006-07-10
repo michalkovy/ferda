@@ -4,8 +4,18 @@ using System.Text;
 
 namespace Ferda.Modules.Helpers.Common
 {
+    /// <summary>
+    /// This class provides some methods that helps to converts
+    /// some objects to strings.
+    /// </summary>
     public static class Print
     {
+        /// <summary>
+        /// Convert sequence of objects to string.
+        /// </summary>
+        /// <param name="items">The items.</param>
+        /// <param name="separator">The separator.</param>
+        /// <returns></returns>
         public static string SequenceToString<T>(IEnumerable<T> items, string separator)
         {
             if (items == null)

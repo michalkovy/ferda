@@ -13,10 +13,11 @@ namespace Ferda.Modules
 	XmlInclude(typeof(StringSeqValueT)),
 	XmlInclude(typeof(DateValueT)),
 	XmlInclude(typeof(DateTimeValueT)),
-	XmlInclude(typeof(TimeValueT)),
+	XmlInclude(typeof(TimeValueT))
     //XmlInclude(typeof(CategoriesValueT)),
-	XmlInclude(typeof(GenerationInfoValueT)),
-	XmlInclude(typeof(HypothesesValueT))]
+	//XmlInclude(typeof(GenerationInfoValueT)),
+	//XmlInclude(typeof(HypothesesValueT))
+	    ]
 	public class ValueT
 	{
 		public virtual PropertyValue GetPropertyValue()
@@ -147,23 +148,23 @@ namespace Ferda.Modules
     //    }
     //}
 
-	public class GenerationInfoValueT : ValueT
-	{
-		public Ferda.Modules.GeneratingStruct Value;
+    //public class GenerationInfoValueT : ValueT
+    //{
+    //    public Ferda.Modules.GeneratingStruct Value;
 
-		public override PropertyValue GetPropertyValue()
-		{
-			return new GenerationInfoTI(Value);
-		}
-	}
+    //    public override PropertyValue GetPropertyValue()
+    //    {
+    //        return new GenerationInfoTI(Value);
+    //    }
+    //}
 
-	public class HypothesesValueT : ValueT
-	{
-		public Ferda.Modules.HypothesisStruct[] Value;
+    //public class HypothesesValueT : ValueT
+    //{
+    //    public Ferda.Modules.HypothesisStruct[] Value;
 
-		public override PropertyValue GetPropertyValue()
-		{
-			return new HypothesesTI(Value);
-		}
-	}
+    //    public override PropertyValue GetPropertyValue()
+    //    {
+    //        return new HypothesesTI(Value);
+    //    }
+    //}
 }

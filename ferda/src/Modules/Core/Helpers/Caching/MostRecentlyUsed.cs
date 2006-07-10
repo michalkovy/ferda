@@ -92,6 +92,11 @@ namespace Ferda.Modules.Helpers.Caching
             _cache = new Dictionary<KeyT, ValueT>(_maxSize);
         }
 
+        /// <summary>
+        /// Gets the value of specified <c>key</c>.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
         public abstract ValueT GetValue(KeyT key);
 
         /// <summary>
@@ -111,9 +116,8 @@ namespace Ferda.Modules.Helpers.Caching
                 KeyT lastKey = _list.Last.Value;
                 _list.RemoveLast();
                 ValueT removingValue = _cache[lastKey];
-                int removingValueSize = GetSize(removingValue);
+                _actSize -= GetSize(removingValue);
                 _cache.Remove(lastKey);
-                _actSize -= removingValueSize;
             }
         }
 

@@ -3,6 +3,9 @@ using System.Xml;
 
 namespace Ferda.Modules.Boxes.Serializer
 {
+    /// <summary>
+    /// Validates input XML files against specified XSD files.
+    /// </summary>
     public static class XmlValidator
     {
         /// <summary>

@@ -72,6 +72,10 @@ namespace Ferda.Modules
         }
 
 
+        /// <summary>
+        /// Adds the custom factories to the comunicator.
+        /// </summary>
+        /// <param name="communicator">The communicator.</param>
         public virtual void AddCustomFactoriesToComunicator(Communicator communicator)
         {
         }

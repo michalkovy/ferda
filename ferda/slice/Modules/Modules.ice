@@ -1063,7 +1063,12 @@ module Ferda {
 		interface PropertyBoxModuleFactoryCreator extends BoxModuleFactoryCreator {
 			nonmutating string getPropertyClassIceId();
 		};
-
+		
+				
+		interface ProgressTask {
+			nonmutating float getValue(out string message);
+			void stop();
+		};
 	};
 };
 

@@ -24,6 +24,12 @@ namespace Ferda.Modules.Boxes
         
         #region Private methods
         
+        /// <summary>
+        /// Method delegate for checked casting of proxies.
+        /// </summary>
+        /// <typeparam name="ResultPrx">Result type of the proxy.</typeparam>
+        /// <param name="objectProxy">The proxy</param>
+        /// <returns></returns>
         public delegate ResultPrx MethodDelegate<ResultPrx>(ObjectPrx objectProxy);
 
         private static ObjectPrx getObjectPrx(BoxModuleI boxModule, string socketName)
@@ -372,6 +378,13 @@ namespace Ferda.Modules.Boxes
         #endregion
 
         #region Box Module(s) default user labels
+
+        /// <summary>
+        /// Gets the box label connected in the specified <c>socketName</c>.
+        /// </summary>
+        /// <param name="boxModule">The current box module.</param>
+        /// <param name="socketName">Name of the socket.</param>
+        /// <returns></returns>
         public static string GetInputBoxLabel(BoxModuleI boxModule, string socketName)
         {
             Debug.Assert(!String.IsNullOrEmpty(socketName));
@@ -386,7 +399,12 @@ namespace Ferda.Modules.Boxes
             }
             return null;
         }
-
+        /// <summary>
+        /// Gets the labels of boxes connected in the specified <c>socketName</c>.
+        /// </summary>
+        /// <param name="boxModule">The current box module.</param>
+        /// <param name="socketName">Name of the socket.</param>
+        /// <returns></returns>
         public static string[] GetInputBoxesLabels(BoxModuleI boxModule, string socketName)
         {
             Debug.Assert(!String.IsNullOrEmpty(socketName));

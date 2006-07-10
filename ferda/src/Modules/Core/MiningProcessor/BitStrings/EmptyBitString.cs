@@ -1,31 +1,37 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using Ferda.Guha.MiningProcessor.Formulas;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
-    public static class EmptyBitStringSingleton
-    {
-        private static EmptyBitString _emptyBitString = new EmptyBitString();
-        public static EmptyBitString EmptyBitString
-        {
-            get
-            {
-                return _emptyBitString;
-            }
-        }
-    }
-
     public class EmptyBitString : IEmptyBitString
     {
-        public static BitStringIdentifier EmptyBitStringIdentifier = new BitStringIdentifier(new Guid(), "Empty BitString Category");
-        
-        public static BooleanAttributeFormula EmptyBitStringId = new AtomFormula(EmptyBitStringIdentifier);
-        
-        internal EmptyBitString()
-        {}
+        #region Singleton
+
+        private static readonly EmptyBitString _instance = new EmptyBitString();
+        private static readonly object padlock = new object();
+
+        static EmptyBitString()
+        {
+        }
+
+        public static EmptyBitString GetInstance()
+        {
+            lock (padlock)
+            {
+                return _instance;
+            }
+        }
+
+        #endregion
+
+        public static readonly BitStringIdentifier EmptyBitStringIdentifier =
+            new BitStringIdentifier(null, "Empty BitString Category");
+
+        public static readonly BooleanAttributeFormula EmptyBitStringId = new AtomFormula(EmptyBitStringIdentifier);
+
+        private EmptyBitString()
+        {
+        }
 
         #region IBitString Members
 
@@ -36,19 +42,22 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         public IBitString And(IBitString source)
         {
-            if (source is BitString)
+            BitString bs = source as BitString;
+            if (bs != null)
             {
-                return ((BitString)source).And(this);
+                return bs.And(this);
             }
-            else if (source is EmptyBitString)
+
+            EmptyBitString ebs = source as EmptyBitString;
+            if (ebs != null)
             {
-                EmptyBitString other = (EmptyBitString)source;
-                if (other.Length != Length)
-                    throw Exceptions.BitStringsLengtsAreNotEqualError();
+                //EmptyBitString other = (EmptyBitString)source;
+                //if (other.Length != Length)
+                //    throw Exceptions.BitStringsLengtsAreNotEqualError();
                 return this;
             }
-            else
-                throw new NotImplementedException();
+
+            throw new NotImplementedException();
         }
 
         public IBitString Not()
@@ -58,34 +67,36 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         public IBitString Or(IBitString source)
         {
-            if (source is BitString)
+            BitString bs = source as BitString;
+            if (bs != null)
             {
-                return ((BitString)source).Or(this);
+                return bs.Or(this);
             }
-            else if (source is EmptyBitString)
+
+            EmptyBitString ebs = source as EmptyBitString;
+            if (ebs != null)
             {
-                EmptyBitString other = (EmptyBitString)source;
-                if (other.Length != Length)
-                    throw Exceptions.BitStringsLengtsAreNotEqualError();
+                //EmptyBitString other = (EmptyBitString)source;
+                //if (other.Length != Length)
+                //    throw Exceptions.BitStringsLengtsAreNotEqualError();
                 return this;
             }
-            else
-                throw new NotImplementedException();
+
+            throw new NotImplementedException();
         }
 
         public int Sum
         {
-            get { return Length; }
+            get { return Int32.MinValue; }
         }
 
         #endregion
 
         #region IBitStringBase Members
 
-
         public int Length
         {
-            get { return Int32.MinValue; }
+            get { return 1; }
         }
 
         #endregion

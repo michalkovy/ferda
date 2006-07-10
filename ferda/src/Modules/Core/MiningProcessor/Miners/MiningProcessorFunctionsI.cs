@@ -1,22 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Ferda.Guha.MiningProcessor.Generation;
+using Ferda.Guha.Math.Quantifiers;
 using Ferda.Modules;
+using Ferda.ModulesManager;
+using Ice;
+using Exception=System.Exception;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
-    class MiningProcessorFunctionsI : MiningProcessorFunctionsDisp_
+    internal class MiningProcessorFunctionsI : MiningProcessorFunctionsDisp_
     {
         public override string Run(
             BooleanAttribute[] booleanAttributes,
-            CategorialAttribute[] categorialAttributes, 
-            Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrx[] quantifiers,
-            TaskRunParams taskParams, 
-            BitStringGeneratorProviderPrx bitStringGenerator, 
-            Ferda.ModulesManager.OutputPrx output, 
-            out string resultInfo, 
-            Ice.Current current__
+            CategorialAttribute[] categorialAttributes,
+            QuantifierBaseFunctionsPrx[] quantifiers,
+            TaskRunParams taskParams,
+            BitStringGeneratorProviderPrx bitStringGenerator,
+            OutputPrx output,
+            out string resultInfo,
+            Current current__
             )
         {
             try
@@ -51,11 +51,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 resultInfo = SerializableResultInfo.Serialize(rInfo);
                 return SerializableResult.Serialize(result);
             }
-            catch(BoxRuntimeError)
+            catch (BoxRuntimeError)
             {
                 throw;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw Modules.Exceptions.BoxRuntimeError(e, null, "An error ocured in mining processor: " + e.Message);
             }

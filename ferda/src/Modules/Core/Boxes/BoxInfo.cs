@@ -1024,10 +1024,10 @@ namespace Ferda.Modules.Boxes
                             return new TimeTI(0, 0, 0);
                     //case "::Ferda::Modules::CategoriesT":
                     //    return new CategoriesTI();
-                    case "::Ferda::Modules::GenerationInfoT":
-                        return new GenerationInfoTI();
-                    case "::Ferda::Modules::HypothesesT":
-                        return new HypothesesTI();
+                    //case "::Ferda::Modules::GenerationInfoT":
+                    //    return new GenerationInfoTI();
+                    //case "::Ferda::Modules::HypothesesT":
+                    //    return new HypothesesTI();
                     default:
                         return null;
                 }

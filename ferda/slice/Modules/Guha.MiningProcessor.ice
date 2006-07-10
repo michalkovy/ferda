@@ -56,7 +56,7 @@ module Ferda {
 					Ferda::Guha::Data::CardinalityEnum GetAttributeCardinality()
 						throws Ferda::Modules::BoxRuntimeError;
 
-					// vrati id kategorie, krome missing inforamtion kategorie
+					// vrati id vsech kategorii, krome missing inforamtion kategorie
 					// jmena kategorii musi byt setridene (pro attribute cardianlity ">" nominal)
 					Ferda::Modules::StringSeq GetCategoriesIds()
 						throws Ferda::Modules::BoxRuntimeError;
@@ -67,7 +67,7 @@ module Ferda {
 					BitString GetBitString(string categoryId)
 						throws Ferda::Modules::BoxRuntimeError;
 
-					string GetMissingInformationCategoryId()
+					Ferda::Modules::StringOpt GetMissingInformationCategoryId()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 
@@ -174,7 +174,7 @@ module Ferda {
 
 				// MINING TASK BOX MODULE FUNCTIOS
 
-				interface MiningTaskFunctions extends BitStringGeneratorProvider
+				interface MiningTaskFunctions extends AttributeNameProvider, BitStringGeneratorProvider
 				{
 					Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq GetQuantifiers()
 						throws Ferda::Modules::BoxRuntimeError;
@@ -225,12 +225,20 @@ module Ferda {
 					FirstN
 					//TopN
 				};
+				
+				enum WorkingWithSecondSetModeEnum
+				{
+					None,
+					Cedent2,
+		    	Cedent1AndCedent2
+				};
 
 				struct TaskRunParams
 				{
 					TaskTypeEnum taskType;
 					TaskEvaluationTypeEnum evaluationType;
 					long maxSizeOfResult; // N from FirstN or TopN
+					WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode; // for SD tasks only
 				};
 
 				interface MiningProcessorFunctions

@@ -24,14 +24,14 @@ namespace Ferda.Guha.MiningProcessor.Formulas
             if (_bitStringIdentifier == EmptyBitString.EmptyBitStringIdentifier)
                 return "";
             return WriteAtom(
-                _bitStringIdentifier.AttributeId,
-                new string[] { _bitStringIdentifier.CategoryId }
+                _bitStringIdentifier.AttributeGuid,
+                new string[] {_bitStringIdentifier.CategoryId}
                 );
         }
 
-        public static string WriteAtom(Guid attribute, IEnumerable<string> categories)
+        public static string WriteAtom(string attributeGuid, IEnumerable<string> categories)
         {
-            return AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(attribute)
+            return AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(attributeGuid)
                    + "("
                    + FormulaHelper.SequenceToString(
                          categories,

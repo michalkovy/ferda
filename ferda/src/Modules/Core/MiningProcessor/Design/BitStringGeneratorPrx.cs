@@ -6,7 +6,7 @@ namespace Design
 {
     public class BitStringGeneratorPrx
     {
-        public Guid AttributeId
+        public Guid AttributeGuid
         {
             get { throw new NotImplementedException(); }
         }
