@@ -34,7 +34,7 @@ namespace Ferda {
         public class OutputI : OutputDisp_
         {
 
-            #region fields 
+            #region Fields 
 
             /// <summary>
             /// Control that handles all the progress bars
@@ -43,23 +43,32 @@ namespace Ferda {
 
             #endregion
 
-            #region Constructor 
+            #region Properties
+
+            /// <summary>
+            /// Control that handles all the progress bars
+            /// </summary>
+            public ProgressBarsManager Control
+            {
+                set
+                {
+                    control = value;
+                }
+                get
+                {
+                    return control;
+                }
+            }
+
+            #endregion
+
+            #region Constructor
 
             /// <summary>
             /// 
             /// </summary>
             public OutputI()
             {
-            }
-
-            /// <summary>
-            /// Default constructor of the class
-            /// </summary>
-            /// <param name="control">ProgressBar control for displaying the
-            /// progress bars</param>
-            public OutputI(ProgressBarsManager control)
-            {
-                this.control = control;
             }
 
             #endregion
@@ -114,7 +123,7 @@ namespace Ferda {
 
             public override ProgressBarPrx startProgress(ProgressTaskPrx task, string name, string hint, Current current__)
             {
-                ProgressBarI progressBar = new ProgressBarI(task, name, hint);
+                ProgressBarI progressBar = new ProgressBarI(task, name, hint, control);
                 return ProgressBarPrxHelper.uncheckedCast(current__.adapter.addWithUUID(progressBar));
             }
         }

@@ -43,6 +43,9 @@ namespace Ferda.FrontEnd.ProgressBar
         private System.Windows.Forms.LinkLabel LLHide;
         private ProgressBarI myProgressBarI;
 
+        delegate void SetHintDelegate(string hint);
+        delegate void SetValueDelegate(float value);
+
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -64,17 +67,6 @@ namespace Ferda.FrontEnd.ProgressBar
         }
 
         /// <summary>
-        /// Property sets the hint
-        /// </summary>
-        public string Hint
-        {
-            set
-            {
-                LHint.Text = value;
-            }
-        }
-
-        /// <summary>
         /// Sets the style of the progress bar - in order to display the continuos
         /// scrolling without any values
         /// </summary>
@@ -83,21 +75,6 @@ namespace Ferda.FrontEnd.ProgressBar
             set
             {
                 progressBar.Style = value;
-            }
-        }
-
-        /// <summary>
-        /// Sets the value to indicate the progress of a box
-        /// </summary>
-        public float Value
-        {
-            set
-            {
-                if (value > 1 || value < 0)
-                {
-                    throw new ApplicationException("Invalid value for a progress bar");
-                }
-                progressBar.Value = System.Convert.ToInt32(value * 100);
             }
         }
 
@@ -155,7 +132,7 @@ namespace Ferda.FrontEnd.ProgressBar
             // progressBar
             // 
             this.progressBar.Location = new System.Drawing.Point(0, 50);
-            this.progressBar.Name = "progressBar1";
+            this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(152, 23);
             this.progressBar.TabIndex = 0;
             // 
@@ -187,6 +164,7 @@ namespace Ferda.FrontEnd.ProgressBar
             this.LLStop.TabIndex = 3;
             this.LLStop.TabStop = true;
             this.LLStop.Text = "Stop";
+            this.LLStop.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LLStop_LinkClicked);
             // 
             // LLHide
             // 
@@ -197,6 +175,7 @@ namespace Ferda.FrontEnd.ProgressBar
             this.LLHide.TabIndex = 4;
             this.LLHide.TabStop = true;
             this.LLHide.Text = "Hide";
+            this.LLHide.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LLHide_LinkClicked);
             // 
             // BoxProgressBar
             // 
@@ -216,6 +195,73 @@ namespace Ferda.FrontEnd.ProgressBar
         }
 
         #endregion
+
+        /// <summary>
+        /// Sets the hint of the box progress bar (also from another
+        /// thread)
+        /// </summary>
+        /// <param name="hint">Name of the hint to be displayed</param>
+        public void SetHint(string hint)
+        {
+            if (InvokeRequired)
+            {
+                SetHintDelegate d = new SetHintDelegate(SetHint);
+                Invoke(d, new object[] { hint });
+            }
+            else
+            {
+                LHint.Text = hint;
+            }
+        }
+
+        /// <summary>
+        /// Sets the value of the progress bar (also from another thread)
+        /// </summary>
+        /// <param name="value">New value of the progress bar</param>
+        public void SetValue(float value)
+        {
+            if (InvokeRequired)
+            {
+                SetValueDelegate d = new SetValueDelegate(SetValue);
+                Invoke(d, new object[] { value });
+            }
+            else
+            {
+                if (value > 1 || value < 0)
+                {
+                    throw new ApplicationException("Invalid value for a progress bar");
+                }
+                progressBar.Value = System.Convert.ToInt32(value * 100);
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Hides the actual progress bar
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        private void LLHide_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ProgressBarsManager man = Parent as ProgressBarsManager;
+            if (man != null)
+            {
+                man.RemoveBoxProgressBar(this);
+            }
+        }
+
+        /// <summary>
+        /// Sends a stop signal to the box
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        private void LLStop_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            myProgressBarI.stop();
+        }
 
         #endregion
     }
