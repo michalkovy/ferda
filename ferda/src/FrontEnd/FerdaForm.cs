@@ -76,6 +76,10 @@ using Ferda.ModulesManager;
         /// User note control
         /// </summary>
         private UserNote.FerdaUserNote userNote;
+        /// <summary>
+        /// Progress bar control
+        /// </summary>
+        private ProgressBar.ProgressBarsManager progressBarControl;
 
         /// <summary>
         /// All view controls
@@ -90,6 +94,7 @@ using Ferda.ModulesManager;
         private DockDotNET.DockWindow contextHelpContent;
         private DockDotNET.DockWindow newBoxContent;
         private DockDotNET.DockWindow userNoteContent;
+        private DockDotNET.DockWindow progressBarContent;
 
         /// <summary>
         /// Project manager
@@ -290,7 +295,9 @@ using Ferda.ModulesManager;
             SetupArchive();
             prescreen.DisplayText(ResManager.GetString("LoadingNewBox"));
             SetupNewBox();
+            prescreen.DisplayText(ResManager.GetString("LoadingUserNoteProgressBar"));
             SetupUserNote();
+            SetupProgessBar();
             prescreen.DisplayText(ResManager.GetString("LoadingDesktop"));
             SetupDesktop();
 
@@ -607,6 +614,31 @@ using Ferda.ModulesManager;
         }
 
         /// <summary>
+        /// Initializes the progress bar control for the application
+        /// </summary>
+        protected void SetupProgessBar()
+        {
+            //creating the progress bar control and its content
+            progressBarControl = new ProgressBar.ProgressBarsManager();
+            progressBarContent = new DockWindow();
+
+            //I dont really know how this works, but putting there a smaller number
+            //makes the progress bar a little bit smaller
+            progressBarContent.Size = new Size(150, 50);
+
+            //synchronizing the sizes of the content and progress bar
+            progressBarControl.ClientSize = progressBarContent.Size;
+            progressBarContent.Resize += new EventHandler(progressBarContent_Resize);
+
+            //Settings required by teh DockDotNet library to dock anything
+            progressBarContent.DockType = DockContainerType.ToolWindow;
+            progressBarContent.Text = ResManager.GetString("ProgressBarsCaption");
+            progressBarContent.ResumeLayout(false);
+
+            progressBarContent.Controls.Add(progressBarControl);
+        }
+
+        /// <summary>
         /// Initialization of all the SVG stuff in the application
         /// </summary>
         protected void SetupSVG()
@@ -822,22 +854,30 @@ using Ferda.ModulesManager;
 
             //docking the user note
             DockContainer cont;
-            //dockingManager.AddForm(userNoteContent);
-            //AddOwnedForm(userNoteContent);
-            //cont = propertyGridContent.HostContainer;
-            //cont.DockWindow(userNoteContent, DockStyle.Bottom);
+            dockingManager.AddForm(userNoteContent);
+            AddOwnedForm(userNoteContent);
+            cont = propertyGridContent.HostContainer;
+            cont.DockWindow(userNoteContent, DockStyle.Bottom);
 
             //docking the context help
-            //dockingManager.AddForm(contextHelpContent);
-            //AddOwnedForm(contextHelpContent);
-            //cont = userNoteContent.HostContainer;
-            //cont.DockWindow(contextHelpContent, DockStyle.Fill);
+            dockingManager.AddForm(contextHelpContent);
+            AddOwnedForm(contextHelpContent);
+            cont = userNoteContent.HostContainer;
+            cont.DockWindow(contextHelpContent, DockStyle.Fill);
+
+            //docking progress bars
+            dockingManager.AddForm(progressBarContent);
+            AddOwnedForm(progressBarContent);
+            cont = contextHelpContent.HostContainer;
+            cont.DockWindow(progressBarContent, DockStyle.Fill);
 
             //docking the newBox
             dockingManager.AddForm(newBoxContent);
             AddOwnedForm(newBoxContent);
             cont = archiveContent.HostContainer;
             cont.DockWindow(newBoxContent, DockStyle.Bottom);
+            //TODO zprovoznit menu->view->progress bars, jestlize se tvori nova
+            //progressbarcontrol, musi se to oznamit i outputI (pripadne se udelat nova)
         }
 
         ///<summary>
@@ -1632,6 +1672,17 @@ using Ferda.ModulesManager;
         {
             userNote.ChangeSize();    
         }
+
+        /// <summary>
+        /// Forces the progressBarControl to resize
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void progressBarContent_Resize(object sender, EventArgs e)
+        {
+            progressBarControl.ChangeSize();
+        }
+
 
         /// <summary>
         /// Forces the property grid to resize

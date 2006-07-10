@@ -22,6 +22,7 @@ using System;
 using Ice;
 using Ferda.ModulesManager;
 using System.Windows.Forms;
+using Ferda.FrontEnd.ProgressBar;
 
 namespace Ferda {
     namespace FrontEnd {
@@ -29,7 +30,38 @@ namespace Ferda {
         /// <summary>
         /// A class that writes different messages to the user
         /// </summary>
-        public class OutputI : OutputDisp_ {
+        public class OutputI : OutputDisp_
+        {
+
+            #region fields 
+
+            /// <summary>
+            /// Control that handles all the progress bars
+            /// </summary>
+            protected ProgressBarsManager control;
+
+            #endregion
+
+            #region Constructor 
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public OutputI()
+            {
+            }
+
+            /// <summary>
+            /// Default constructor of the class
+            /// </summary>
+            /// <param name="control">ProgressBar control for displaying the
+            /// progress bars</param>
+            public OutputI(ProgressBarsManager control)
+            {
+                this.control = control;
+            }
+
+            #endregion
 
             /// <summary>
             /// Method writeMsg

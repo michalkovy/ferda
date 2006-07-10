@@ -462,6 +462,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading User note and Progress Bars.
+        /// </summary>
+        internal static string LoadingUserNoteProgressBar {
+            get {
+                return ResourceManager.GetString("LoadingUserNoteProgressBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose the localization of the application.
         /// </summary>
         internal static string LocalizationLabel {
@@ -998,6 +1007,15 @@ namespace Ferda.FrontEnd {
         internal static string PreferencesDialogCaption {
             get {
                 return ResourceManager.GetString("PreferencesDialogCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Progress Bars.
+        /// </summary>
+        internal static string ProgressBarsCaption {
+            get {
+                return ResourceManager.GetString("ProgressBarsCaption", resourceCulture);
             }
         }
         

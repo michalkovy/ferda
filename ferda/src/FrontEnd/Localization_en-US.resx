@@ -253,6 +253,9 @@
   <data name="LoadingSVG" xml:space="preserve">
     <value>Loading SVG ...</value>
   </data>
+  <data name="LoadingUserNoteProgressBar" xml:space="preserve">
+    <value>Loading User note and Progress Bars</value>
+  </data>
   <data name="LocalizationLabel" xml:space="preserve">
     <value>Choose the localization of the application</value>
   </data>
@@ -432,6 +435,9 @@
   </data>
   <data name="PreferencesDialogCaption" xml:space="preserve">
     <value>Preferences</value>
+  </data>
+  <data name="ProgressBarsCaption" xml:space="preserve">
+    <value>Progress Bars</value>
   </data>
   <data name="ProjectLoadErrorCaption" xml:space="preserve">
     <value>Errors have occured while loading the project</value>
