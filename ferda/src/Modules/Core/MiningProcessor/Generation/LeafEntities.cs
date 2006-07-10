@@ -1,5 +1,4 @@
 //#define Testing
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Ferda.Guha.Math;
@@ -13,20 +12,20 @@ namespace Ferda.Guha.MiningProcessor.Generation
     {
         private readonly CoefficientFixedSetSetting _setting;
 
-        protected Guid _attributeId;
-        
+        private string _attributeGuid;
+
         public FixedSet(CoefficientFixedSetSetting setting)
-            : base(new Guid(setting.id.value))
+            : base(setting.id)
         {
             _setting = setting;
-            _attributeId = new Guid(setting.generator.GetAttributeId().value);
+            _attributeGuid = setting.generator.GetAttributeId().value;
         }
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
             IBitString result = Helpers.GetBitString(
                 _setting.generator,
-                _attributeId,
+                _attributeGuid,
                 _setting.categoriesIds,
                 BitwiseOperation.Or);
 
@@ -42,32 +41,26 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             string result = "";
 #if Testing
-            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(Id);
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(Guid);
 #else
             result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
-                _attributeId
+                _attributeGuid
                 );
 #endif
             result += "["
-                + FormulaHelper.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
-                + "] (fixed set)";
+                      + FormulaHelper.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
+                      + "] (fixed set)";
             return result;
         }
 
-        public override Set<Guid> UsedAttributes
+        public override Set<string> UsedAttributes
         {
-            get
-            {
-                return new Set<Guid>(_attributeId);
-            }
+            get { return new Set<string>(_attributeGuid); }
         }
 
-        public override Set<Guid> UsedEntities
+        public override Set<string> UsedEntities
         {
-            get
-            {
-                return new Set<Guid>(Id);
-            }
+            get { return new Set<string>(Guid); }
         }
     }
 
@@ -104,10 +97,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             string result = "";
 #if Testing
-            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(_setting.id.value);
 #else
             result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
-                new Guid(_setting.generator.GetAttributeId().value)
+                _setting.generator.GetAttributeId().value
                 );
 #endif
             result += "Left Cuts [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
@@ -148,10 +141,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             string result = "";
 #if Testing
-            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(_setting.id.value);
 #else
             result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
-                new Guid(_setting.generator.GetAttributeId().value)
+                _setting.generator.GetAttributeId().value
                 );
 #endif
             result += "Right Cuts [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
@@ -193,7 +186,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
             if (_categoriesNames.Length != _effectiveMaxLength || _categoriesNames.Length != 1)
                 for (int i = _categoriesNames.Length - 1; true; i--)
                 {
-
                     if (i < 0)
                         break;
                     prolongCoefficient(_categoriesNames[i]);
@@ -213,9 +205,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
             get
             {
                 if (_effectiveMaxLength == _categoriesNames.Length)
-                    return ((_effectiveMaxLength - _effectiveMinLength + 1) * 2) - 1;
+                    return ((_effectiveMaxLength - _effectiveMinLength + 1)*2) - 1;
                 else
-                    return (_effectiveMaxLength - _effectiveMinLength + 1) * 2;
+                    return (_effectiveMaxLength - _effectiveMinLength + 1)*2;
             }
         }
 
@@ -223,10 +215,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             string result = "";
 #if Testing
-            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(_setting.id.value);
 #else
             result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
-                new Guid(_setting.generator.GetAttributeId().value)
+                _setting.generator.GetAttributeId().value
                 );
 #endif
             result += "Cuts [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
@@ -246,7 +238,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
             int start = 0;
-        restart:
+            restart:
             if (_effectiveMinLength <= _categoriesNames.Length - start
                 && start < _categoriesNames.Length)
                 for (int i = start; true; i++)
@@ -285,10 +277,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             string result = "";
 #if Testing
-            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(_setting.id.value);
 #else
             result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
-                new Guid(_setting.generator.GetAttributeId().value)
+                _setting.generator.GetAttributeId().value
                 );
 #endif
             result += "Intervals [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
@@ -308,12 +300,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
             int start = -1;
-        restart:
+            restart:
             start++;
             if (start < _categoriesNames.Length)
                 for (int i = start; true; i++)
                 {
-                    prolongCoefficient(_categoriesNames[i % _categoriesNames.Length]);
+                    prolongCoefficient(_categoriesNames[i%_categoriesNames.Length]);
                     if (_actualLength < _effectiveMinLength)
                         continue;
                     if (_actualLength == _categoriesNames.Length && start > 0)
@@ -337,11 +329,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
             {
                 if (_effectiveMaxLength < _categoriesNames.Length)
                 {
-                    return (_effectiveMaxLength - _effectiveMinLength + 1) * _categoriesNames.Length;
+                    return (_effectiveMaxLength - _effectiveMinLength + 1)*_categoriesNames.Length;
                 }
                 else
                 {
-                    return (_effectiveMaxLength - _effectiveMinLength) * _categoriesNames.Length + 1;
+                    return (_effectiveMaxLength - _effectiveMinLength)*_categoriesNames.Length + 1;
                 }
             }
         }
@@ -350,10 +342,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             string result = "";
 #if Testing
-            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(_setting.id.value);
 #else
             result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
-                new Guid(_setting.generator.GetAttributeId().value)
+                _setting.generator.GetAttributeId().value
                 );
 #endif
             result += "Cyclic Intervals [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";
@@ -395,10 +387,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             string result = "";
 #if Testing
-            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(new Guid(_setting.id.value));
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(_setting.id.value);
 #else
             result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
-                new Guid(_setting.generator.GetAttributeId().value)
+                _setting.generator.GetAttributeId().value
                 );
 #endif
             result += "Subsets [" + _effectiveMinLength + "-" + _effectiveMaxLength + "]";

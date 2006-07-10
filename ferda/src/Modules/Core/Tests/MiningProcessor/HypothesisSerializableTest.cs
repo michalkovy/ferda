@@ -27,52 +27,16 @@ namespace Tests
             set { testContextInstance = value; }
         }
 
-        #region Additional test attributes
-
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-
-        #endregion
-
         /// <summary>
         ///A test for Serialize (Result)
         ///</summary>
         [TestMethod()]
         public void SerializeTest()
         {
-            BitStringIdentifier bsiA = new BitStringIdentifier(Guid.NewGuid(), "category A");
-            BitStringIdentifier bsiB = new BitStringIdentifier(Guid.NewGuid(), "category B");
-            BitStringIdentifier bsiC = new BitStringIdentifier(Guid.NewGuid(), "category C");
-            BitStringIdentifier bsiD = new BitStringIdentifier(Guid.NewGuid(), "category D");
+            BitStringIdentifier bsiA = new BitStringIdentifier("ABCD", "category A");
+            BitStringIdentifier bsiB = new BitStringIdentifier("BCDE", "category B");
+            BitStringIdentifier bsiC = new BitStringIdentifier("CDEF", "category C");
+            BitStringIdentifier bsiD = new BitStringIdentifier("DEFG", "category D");
 
             Result r = new Result();
             r.AllObjectsCount = 510345;
@@ -115,7 +79,7 @@ namespace Tests
                     ));
             h.SetFormula(MarkEnum.Attribute,
                 new CategorialAttributeFormula(
-                    bsiD.AttributeId
+                    bsiD.AttributeGuid
                     ));
 
             r.Hypotheses.Add(h);
@@ -133,5 +97,23 @@ namespace Tests
             
             ;
         }
+
+
+        /// <summary>
+        /// A test for SerializableResultInfo()
+        /// </summary>
+        [TestMethod()]
+        public void SerializableResultInfoTest()
+        {
+            SerializableResultInfo sri = new SerializableResultInfo();
+            sri.StartTime = DateTime.Now;
+            sri.NumberOfHypotheses = 2;
+            sri.NumberOfVerifications = 20154;
+            sri.TotalNumberOfRelevantQuestions = 6547324.54d;
+            sri.EndTime = DateTime.Now + new TimeSpan(0, 3, 45);
+            string serialized = SerializableResultInfo.Serialize(sri);
+            SerializableResultInfo deserealized = SerializableResultInfo.DeSerialize(serialized);
+        }
+		
     }
 }

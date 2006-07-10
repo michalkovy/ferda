@@ -10,7 +10,7 @@ using Ferda.Guha.MiningProcessor.Formulas;
 namespace Ferda.Guha.MiningProcessor
 {
     #region Result (set of hypothesis)
-    
+
     [Serializable()]
     public class SerializableFormula
     {
@@ -24,7 +24,7 @@ namespace Ferda.Guha.MiningProcessor
         }
         public FormulaType Type;
         public SerializableFormula[] Operands;
-        public Guid AttributeId;
+        public string AttributeGuid;
         public string CategoryId;
 
         public static Formula Build(SerializableFormula input)
@@ -44,7 +44,7 @@ namespace Ferda.Guha.MiningProcessor
             switch (input.Type)
             {
                 case FormulaType.AtomFormula:
-                    return new AtomFormula(new BitStringIdentifier(input.AttributeId, input.CategoryId));
+                    return new AtomFormula(new BitStringIdentifier(input.AttributeGuid, input.CategoryId));
                 case FormulaType.NegationFormula:
                     return new NegationFormula(inner[0]);
                 case FormulaType.ConjunctionFormula:
@@ -52,7 +52,7 @@ namespace Ferda.Guha.MiningProcessor
                 case FormulaType.DisjunctionFormula:
                     return new DisjunctionFormula(inner);
                 case FormulaType.CategorialFormula:
-                    return new CategorialAttributeFormula(input.AttributeId);
+                    return new CategorialAttributeFormula(input.AttributeGuid);
                 default:
                     throw new NotImplementedException();
             }
@@ -67,7 +67,7 @@ namespace Ferda.Guha.MiningProcessor
                 AtomFormula af = input as AtomFormula;
                 if (af != null)
                 {
-                    result.AttributeId = af.BitStringIdentifier.AttributeId;
+                    result.AttributeGuid = af.BitStringIdentifier.AttributeGuid;
                     result.CategoryId = af.BitStringIdentifier.CategoryId;
                     result.Type = FormulaType.AtomFormula;
                     return result;
@@ -114,7 +114,7 @@ namespace Ferda.Guha.MiningProcessor
                 CategorialAttributeFormula caf = input as CategorialAttributeFormula;
                 if (caf != null)
                 {
-                    result.AttributeId = caf.AttributeId;
+                    result.AttributeGuid = caf.AttributeGuid;
                     result.Type = FormulaType.CategorialFormula;
                     return result;
                 }
@@ -130,7 +130,7 @@ namespace Ferda.Guha.MiningProcessor
         public double[][] ContingencyTableA;
         public double[][] ContingencyTableB;
 
-        public Guid NumericValuesAttributeId
+        public string NumericValuesAttributeGuid
         {
             get
             {
@@ -138,9 +138,9 @@ namespace Ferda.Guha.MiningProcessor
                 if (f == null)
                 {
                     Debug.Assert(false);
-                    return new Guid();
+                    return null;
                 }
-                return f.AttributeId;
+                return f.AttributeGuid;
             }
         }
 
@@ -240,6 +240,7 @@ namespace Ferda.Guha.MiningProcessor
     public class Result
     {
         public long AllObjectsCount;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         public List<Hypothesis> Hypotheses = new List<Hypothesis>();
         public TaskTypeEnum TaskTypeEnum;
 
@@ -336,21 +337,29 @@ namespace Ferda.Guha.MiningProcessor
             SerializableResult serializable = SerializableResult.Build(input);
             XmlSerializer serializer = new XmlSerializer(typeof(SerializableResult));
             StringBuilder sb = new StringBuilder();
-            StringWriter writer = new StringWriter(sb);
-            serializer.Serialize(writer, serializable);
-            return sb.ToString();
+            using (
+            StringWriter writer = new StringWriter(sb)
+            )
+            {
+                serializer.Serialize(writer, serializable);
+                return sb.ToString();
+            }
         }
 
         public static Result DeSerialize(string input)
         {
-            StringReader reader = new StringReader(input);
-            XmlSerializer deserealizer = new XmlSerializer(typeof(SerializableResult));
-            object deserealized = deserealizer.Deserialize(reader);
-            SerializableResult serializable = (SerializableResult)deserealized;
-            return SerializableResult.Build(serializable);
+            using (
+            StringReader reader = new StringReader(input)
+            )
+            {
+                XmlSerializer deserealizer = new XmlSerializer(typeof(SerializableResult));
+                object deserealized = deserealizer.Deserialize(reader);
+                SerializableResult serializable = (SerializableResult)deserealized;
+                return SerializableResult.Build(serializable);
+            }
         }
-    } 
-    
+    }
+
     #endregion
 
     #region Result Info
@@ -363,21 +372,33 @@ namespace Ferda.Guha.MiningProcessor
         public DateTime StartTime;
         public DateTime EndTime;
 
+        public SerializableResultInfo()
+        {
+        }
+
         public static string Serialize(SerializableResultInfo input)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(SerializableResultInfo));
             StringBuilder sb = new StringBuilder();
-            StringWriter writer = new StringWriter(sb);
-            serializer.Serialize(writer, input);
-            return sb.ToString();
+            using (
+            StringWriter writer = new StringWriter(sb)
+            )
+            {
+                serializer.Serialize(writer, input);
+                return sb.ToString();
+            }
         }
 
         public static SerializableResultInfo DeSerialize(string input)
         {
-            StringReader reader = new StringReader(input);
-            XmlSerializer deserealizer = new XmlSerializer(typeof(SerializableResultInfo));
-            object deserealized = deserealizer.Deserialize(reader);
-            return (SerializableResultInfo)deserealized;
+            using (
+            StringReader reader = new StringReader(input)
+            )
+            {
+                XmlSerializer deserealizer = new XmlSerializer(typeof(SerializableResultInfo));
+                object deserealized = deserealizer.Deserialize(reader);
+                return (SerializableResultInfo)deserealized;
+            }
         }
     }
     #endregion

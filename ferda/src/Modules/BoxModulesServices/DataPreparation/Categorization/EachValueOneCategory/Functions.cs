@@ -582,13 +582,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return GetCategoriesNumericValues(true);
         }
 
-        public override string GetMissingInformationCategoryId(Current current__)
+        public override string[] GetMissingInformationCategoryId(Current current__)
         {
-            //UNDONE nejde delak kategorie se jmenem "" protoze default value pro StringT property je "" a ne null
             if (String.IsNullOrEmpty(XCategory))
-                return null;
+                return new string[0];
             else
-                return XCategory;
+                return new string[] { XCategory };
         }
 
         #endregion

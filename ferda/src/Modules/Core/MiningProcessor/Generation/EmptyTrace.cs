@@ -1,6 +1,5 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Modules.Helpers.Common;
 
@@ -21,26 +20,26 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         public IEnumerator<IBitString> GetEnumerator()
         {
-            yield return EmptyBitStringSingleton.EmptyBitString;
+            yield return EmptyBitString.GetInstance();
         }
 
         #endregion
 
         #region IEnumerable Members
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
-        public Set<Guid> UsedAttributes
+        public Set<string> UsedAttributes
         {
-            get { return new Set<Guid>(); }
+            get { return new Set<string>(); }
         }
 
-        public Set<Guid> UsedEntities
+        public Set<string> UsedEntities
         {
-            get { return new Set<Guid>(); }
+            get { return new Set<string>(); }
         }
 
         #endregion

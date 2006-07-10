@@ -3,10 +3,26 @@ using System.Diagnostics;
 
 namespace Ferda.Modules.Boxes
 {
+    /// <summary>
+    /// This class provides some static methods that helps to invokes
+    /// (nearly) any methods, with specified error handling behaviour.
+    /// </summary>
     public static class ExceptionsHandler
     {
+        /// <summary>
+        /// The method delegate.
+        /// </summary>
+        /// <typeparam name="ResultType"></typeparam>
+        /// <returns></returns>
         public delegate ResultType MethodDelegate<ResultType>();
 
+        /// <summary>
+        /// Invokes the method delegate. On error no exception is thrown, 
+        /// but default init delegate is invoked to return result.
+        /// </summary>
+        /// <param name="methodDelegate">The method delegate.</param>
+        /// <param name="defaultInit">The default init.</param>
+        /// <returns></returns>
         public static ResultType TryCatchMethodNoThrow<ResultType>(
             MethodDelegate<ResultType> methodDelegate,
             MethodDelegate<ResultType> defaultInit)
@@ -29,6 +45,14 @@ namespace Ferda.Modules.Boxes
             }
         }
 
+        /// <summary>
+        /// Invokes the method delegate. On error the exception is thrown.
+        /// Exceptions that are not compatible with <c>BoxRuntimeError</c>
+        /// are converted to this one.
+        /// </summary>
+        /// <param name="methodDelegate">The method delegate.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <returns></returns>
         public static ResultType TryCatchMethodThrow<ResultType>(
             MethodDelegate<ResultType> methodDelegate,
             string boxIdentity)
@@ -63,6 +87,16 @@ namespace Ferda.Modules.Boxes
             }
         }
 
+        /// <summary>
+        /// Gets the result with parameter <c>fallOnError</c> specifying
+        /// the behaviour in case of error i.e. default init invocation to return
+        /// default value or exception (<c>BoxRuntimeError</c>) throwing.
+        /// </summary>
+        /// <param name="fallOnError">if set to <c>true</c> exception is thrown on error.</param>
+        /// <param name="methodDelegate">The method delegate.</param>
+        /// <param name="defaultInit">The default init.</param>
+        /// <param name="boxIdentity">The box identity.</param>
+        /// <returns></returns>
         public static ResultType GetResult<ResultType>(
             bool fallOnError,
             MethodDelegate<ResultType> methodDelegate,

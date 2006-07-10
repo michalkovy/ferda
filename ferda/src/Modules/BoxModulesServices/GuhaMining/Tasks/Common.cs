@@ -30,6 +30,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
 
         public static BitStringGeneratorPrx GetBitStringGenerator(BoxModuleI boxModule, GuidStruct attributeId, string[] socketsNames)
         {
+            // TODO categorial attributes
             BitStringGeneratorPrx result;
             BooleanAttributeSettingFunctionsPrx prx;
 
@@ -50,7 +51,25 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             return null;
         }
 
-
+        public static GuidAttributeNamePair[] GetAttributeNames(BoxModuleI boxModule, string[] socketsNames)
+        {
+            List<GuidAttributeNamePair> result = new List<GuidAttributeNamePair>();
+            foreach (string s in socketsNames)
+            {
+                if (String.IsNullOrEmpty(s))
+                    continue;
+                
+                AttributeNameProviderPrx prx = SocketConnections.GetPrx<AttributeNameProviderPrx>(
+                    boxModule,
+                    s,
+                    AttributeNameProviderPrxHelper.checkedCast,
+                    false);
+                if (prx != null)
+                    result.AddRange(prx.GetAttributeNames());
+            }
+            return result.ToArray();
+        }
+        
         public const string PropMaxNumberOfHypotheses = "MaxNumberOfHypotheses";
         public const string PropExecutionType = "ExecutionType";
 
@@ -194,6 +213,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             return boxModule.GetPropertyString(PropResult);
         }
 
+        public static void SetResultInfo(BoxModuleI boxModule, string value)
+        {
+            boxModule.setProperty(PropResultInfo, new StringTI(value));
+        }
+
+        public static void SetResult(BoxModuleI boxModule, string value)
+        {
+            boxModule.setProperty(PropResult, new StringTI(value));
+        }
+        
         #endregion
     }
 }

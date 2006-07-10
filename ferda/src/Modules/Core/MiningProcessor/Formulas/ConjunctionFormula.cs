@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
@@ -12,7 +10,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         {
             get { return _operands; }
         }
-        
+
         public ConjunctionFormula(BooleanAttributeFormula[] operands)
         {
             // flattening
@@ -30,7 +28,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         }
 
         public ConjunctionFormula(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
-            : this(new BooleanAttributeFormula[] { operandA, operandB })
+            : this(new BooleanAttributeFormula[] {operandA, operandB})
         {
         }
 

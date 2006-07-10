@@ -1,8 +1,8 @@
 // OutputI.cs - A class that writes different messages to the user
 //
-// Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
+// Author: Martin Ralbovsk <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Martin Ralbovský
+// Copyright (c) 2005 Martin Ralbovsk
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ using System;
 using Ice;
 using Ferda.ModulesManager;
 using System.Windows.Forms;
+using Ferda.Modules;
 using Ferda.FrontEnd.ProgressBar;
 
 namespace Ferda {

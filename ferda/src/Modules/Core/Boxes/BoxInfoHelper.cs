@@ -185,7 +185,13 @@ namespace Ferda.Modules.Boxes
         }
 
         #endregion
-        
+
+        /// <summary>
+        /// Gets the GUID struct from specified property.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns></returns>
         public static GuidStruct GetGuidStructFromProperty(string propertyName, BoxModuleI boxModule)
         {
             string guid = boxModule.GetPropertyString(propertyName);

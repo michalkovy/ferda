@@ -32,17 +32,17 @@ namespace Ferda.Guha.Attribute
         /// Left value.
         /// </summary>
         public T LeftValue;
-        
+
         /// <summary>
         /// Right value.
         /// </summary>
         public T RightValue;
-        
+
         /// <summary>
         /// Left boundary.
         /// </summary>
         public BoundaryEnum LeftBoundary;
-        
+
         /// <summary>
         /// Right boundary.
         /// </summary>
@@ -96,17 +96,17 @@ namespace Ferda.Guha.Attribute
         /// Category name.
         /// </summary>
         public string Name;
-        
+
         /// <summary>
         /// Category ord number.
         /// </summary>
         public int OrdNumber;
-        
+
         /// <summary>
         /// Enumeration of values (for discrete values).
         /// </summary>
         public T[] Enumeration;
-        
+
         /// <summary>
         /// Array of intervals.
         /// </summary>
@@ -160,17 +160,17 @@ namespace Ferda.Guha.Attribute
         /// Array of categories.
         /// </summary>
         public CategorySerializable<T>[] Categories;
-        
+
         /// <summary>
         /// Name of category containing null.
         /// </summary>
         public string NullContainingCategoryName;
-        
+
         /// <summary>
         /// Intervals allowed.
         /// </summary>
         public bool IntervalsAllowed;
-        
+
         /// <summary>
         /// Data type of values i.e. of T.
         /// </summary>
@@ -197,7 +197,7 @@ namespace Ferda.Guha.Attribute
             IntervalsAllowed = intervalsAllowed;
             DbDataType = dbDataType;
         }
-        
+
     }
 
     /// <summary>
@@ -216,9 +216,13 @@ namespace Ferda.Guha.Attribute
         {
             XmlSerializer serializer = new XmlSerializer(typeof(AttributeSerializable<T>));
             StringBuilder sb = new StringBuilder();
-            StringWriter writer = new StringWriter(sb);
-            serializer.Serialize(writer, attributeSerializable);
-            return sb.ToString();
+            using (
+            StringWriter writer = new StringWriter(sb)
+            )
+            {
+                serializer.Serialize(writer, attributeSerializable);
+                return sb.ToString();
+            }
         }
 
         /// <summary>
@@ -229,12 +233,16 @@ namespace Ferda.Guha.Attribute
         public static AttributeSerializable<T> Deserialize<T>(string serializedAttributeSerializable)
             where T : IComparable
         {
-            StringReader reader = new StringReader(serializedAttributeSerializable);
-            XmlSerializer deserealizer = new XmlSerializer(typeof(AttributeSerializable<T>));
-            object deserealized = deserealizer.Deserialize(reader);
-            return (AttributeSerializable<T>)deserealized;
+            using (
+            StringReader reader = new StringReader(serializedAttributeSerializable)
+            )
+            {
+                XmlSerializer deserealizer = new XmlSerializer(typeof(AttributeSerializable<T>));
+                object deserealized = deserealizer.Deserialize(reader);
+                return (AttributeSerializable<T>)deserealized;
+            }
         }
-        
+
         //public static string Serialize<T>(AttributeSerializable<T> attributeSerializable, DbSimpleDataTypeEnum dataType)
         //    where T : IComparable
         //{
@@ -247,6 +255,7 @@ namespace Ferda.Guha.Attribute
         //    StringBuilder sb = new StringBuilder();
         //    StringWriter writer = new StringWriter(sb);
         //    serializer.Serialize(writer, result);
+        //    writer.Dispose(); 
         //    return sb.ToString();
         //}
     }

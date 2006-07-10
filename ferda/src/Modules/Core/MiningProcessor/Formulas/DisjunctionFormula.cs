@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
@@ -30,14 +28,14 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         }
 
         public DisjunctionFormula(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
-            : this(new BooleanAttributeFormula[] { operandA, operandB })
+            : this(new BooleanAttributeFormula[] {operandA, operandB})
         {
         }
 
         public override string ToString()
         {
             List<string> result = new List<string>();
-            Dictionary<Guid, List<string>> atoms = new Dictionary<Guid, List<string>>();
+            Dictionary<string, List<string>> atoms = new Dictionary<string, List<string>>();
             foreach (BooleanAttributeFormula formula in _operands)
             {
                 AtomFormula atomFormula = formula as AtomFormula;
@@ -46,13 +44,13 @@ namespace Ferda.Guha.MiningProcessor.Formulas
                 else
                 {
                     //group atoms
-                    if (!(atoms.ContainsKey(atomFormula.BitStringIdentifier.AttributeId)))
-                        atoms[atomFormula.BitStringIdentifier.AttributeId] = new List<string>();
-                    atoms[atomFormula.BitStringIdentifier.AttributeId].Add(atomFormula.BitStringIdentifier.CategoryId);
+                    if (!(atoms.ContainsKey(atomFormula.BitStringIdentifier.AttributeGuid)))
+                        atoms[atomFormula.BitStringIdentifier.AttributeGuid] = new List<string>();
+                    atoms[atomFormula.BitStringIdentifier.AttributeGuid].Add(atomFormula.BitStringIdentifier.CategoryId);
                 }
             }
             // print atoms
-            foreach (KeyValuePair<Guid, List<string>> pair in atoms)
+            foreach (KeyValuePair<string, List<string>> pair in atoms)
             {
                 result.Add(AtomFormula.WriteAtom(pair.Key, pair.Value));
             }

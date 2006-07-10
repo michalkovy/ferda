@@ -11,7 +11,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
     public static class Helpers
     {
-        public static IBitString GetBitString(BitStringGeneratorPrx bitStringGeneratorPrx, Guid attributeId,
+        public static IBitString GetBitString(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid,
                                               string[] categoriesIds, BitwiseOperation operation)
         {
             IBitString result = null;
@@ -22,18 +22,18 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     foreach (string var in categoriesIds)
                     {
                         if (result == null)
-                            result = cache[attributeId, var];
+                            result = cache[attributeGuid, var];
                         else
-                            result = result.And(cache[attributeId, var]);
+                            result = result.And(cache[attributeGuid, var]);
                     }
                     return result;
                 case BitwiseOperation.Or:
                     foreach (string var in categoriesIds)
                     {
                         if (result == null)
-                            result = cache[attributeId, var];
+                            result = cache[attributeGuid, var];
                         else
-                            result = result.Or(cache[attributeId, var]);
+                            result = result.Or(cache[attributeGuid, var]);
                     }
                     return result;
                 default:
@@ -41,15 +41,15 @@ namespace Ferda.Guha.MiningProcessor.Generation
             }
         }
 
-        public static IBitString[] GetBitStrings(BitStringGeneratorPrx bitStringGeneratorPrx, Guid attributeId)
+        public static IBitString[] GetBitStrings(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid)
         {
             IBitStringCache cache = BitStringCache.GetInstance(bitStringGeneratorPrx);
-            string[] categoriesIds = cache.GetCategoriesIds(attributeId);
+            string[] categoriesIds = cache.GetCategoriesIds(attributeGuid);
             IBitString[] result = new IBitString[categoriesIds.Length];
             for (int i = 0; i < categoriesIds.Length; i++)
-			{
-			    result[i] = cache[attributeId, categoriesIds[i]];
-			}
+            {
+                result[i] = cache[attributeGuid, categoriesIds[i]];
+            }
             return result;
         }
     }

@@ -3,188 +3,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Ferda.Guha.Math;
+using System.Diagnostics.CodeAnalysis;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Modules;
 using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.Generation
 {
-    #region Subsets
-    internal class LongMultiplicationArraySubsetsInstance : SubsetsInstance<long, long>
-    {
-        private long[] _items;
-        public LongMultiplicationArraySubsetsInstance(long[] items)
-        {
-            _items = items;
-        }
-
-        #region SubsetsInstance<int,int[]> Members
-
-        public long operation(long previous, long current)
-        {
-            return previous * current;
-        }
-
-        public long operation(long current)
-        {
-            return current;
-        }
-
-        public long getItem(int index)
-        {
-            return _items[index];
-        }
-
-        public long getDefaultInit()
-        {
-            return 0;
-        }
-
-        #endregion
-    }
-
-    public interface SubsetsInstance<T, M>
-    {
-        M operation(M previous, T current);
-        M operation(T current);
-        T getItem(int index);
-        M getDefaultInit();
-    }
-
-    public class Subsets<T, M> : IEnumerable<M>
-    {
-        private int _effectiveMinLength;
-        private int _effectiveMaxLength;
-        private int _itemsCount;
-        private SubsetsInstance<T, M> _instance;
-        public Subsets(int effectiveMinLength, int effectiveMaxLength, int itemsCount, SubsetsInstance<T, M> instance)
-        {
-            _effectiveMinLength = effectiveMinLength;
-            _effectiveMaxLength = effectiveMaxLength;
-            _itemsCount = itemsCount;
-            _instance = instance;
-        }
-
-        Stack<M> sB = new Stack<M>();
-        Stack<int> sI = new Stack<int>();
-        private void sBPush(T adding)
-        {
-            if (sB.Count > 0)
-            {
-                M previous = sB.Peek();
-                sB.Push(_instance.operation(previous, adding));
-            }
-            else
-            {
-                sB.Push(_instance.operation(adding));
-            }
-        }
-        private bool returnCurrent(out M result)
-        {
-            Debug.Assert(sB.Count <= _effectiveMaxLength);
-            if (sB.Count >= _effectiveMinLength)
-            {
-                result = sB.Peek();
-                return true;
-            }
-            result = _instance.getDefaultInit();
-            return false;
-        }
-        private void getEntity(int index)
-        {
-            sBPush(_instance.getItem(index));
-            sI.Push(index);
-        }
-        private bool prolong(bool afterRemove)
-        {
-            if (sB.Count == _effectiveMaxLength) // not after remove
-                return false;
-            int newIndex;
-            if (afterRemove)
-                newIndex = sI.Pop() + 1;
-            else
-                newIndex = sI.Peek() + 1;
-            if (newIndex >= _itemsCount)
-                return false;
-            getEntity(newIndex);
-            return true;
-        }
-        private bool removeLastItem()
-        {
-            if (sB.Count > 0)
-            {
-                sB.Pop();
-                return true;
-            }
-            return false;
-        }
-
-        #region IEnumerable<M> Members
-
-        public IEnumerator<M> GetEnumerator()
-        //public override IEnumerator<IBitString> GetBitStringEnumerator()
-        {
-            M result;
-            bool afterRemove;
-            afterRemove = false;
-
-            #region initialize
-
-            sB.Clear();
-            sI.Clear();
-            getEntity(0);
-
-            #endregion
-
-        returnCurrent:
-            if (returnCurrent(out result))
-                yield return result;
-        prolong:
-            if (prolong(afterRemove))
-            {
-                afterRemove = false;
-                goto returnCurrent;
-            }
-            if (removeLastItem())
-            {
-                afterRemove = true;
-                goto prolong;
-            }
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
-    }
-    #endregion
-
     public abstract class EntityEnumerable : IEntityEnumerator
     {
         /// <summary>
         /// Unique identifier of entity.
         /// </summary>
-        private Guid _id;
+        private string _guid;
 
-        public Guid Id
+        public string Guid
         {
-            get { return _id; }
+            get { return _guid; }
         }
 
         private EntityEnumerable()
         {
         }
 
-        public EntityEnumerable(Guid id)
+        protected EntityEnumerable(GuidStruct id)
         {
-            _id = id;
+            _guid = id.value;
         }
 
         public abstract IEnumerator<IBitString> GetBitStringEnumerator();
@@ -221,29 +65,29 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         #endregion
 
-        public abstract long TotalCount { get;}
+        public abstract long TotalCount { get; }
 
-        public abstract Set<Guid> UsedAttributes { get;}
+        public abstract Set<string> UsedAttributes { get; }
 
-        public abstract Set<Guid> UsedEntities { get;}
+        public abstract Set<string> UsedEntities { get; }
     }
 
     public abstract class EntityEnumerableCoefficient : EntityEnumerable
     {
         protected readonly CoefficientSetting _setting;
 
-        public EntityEnumerableCoefficient(CoefficientSetting setting)
-            : base(new Guid(setting.id.value))
+        protected EntityEnumerableCoefficient(CoefficientSetting setting)
+            : base(setting.id)
         {
             _setting = setting;
 
             _cache = BitStringCache.GetInstance(setting.generator);
 #if Testing
-            _attributeId = Id;
+            _attributeGuid = Guid;
 #else
-            _attributeId = new Guid(setting.generator.GetAttributeId().value);
+            _attributeGuid = setting.generator.GetAttributeId().value;
 #endif
-            _categoriesNames = _cache.GetCategoriesIds(_attributeId);
+            _categoriesNames = _cache.GetCategoriesIds(_attributeGuid);
 
             _effectiveMaxLength = System.Math.Min(System.Math.Max(1, _setting.maxLength), _categoriesNames.Length);
             _effectiveMinLength = System.Math.Min(System.Math.Max(1, _setting.minLength), _effectiveMaxLength);
@@ -257,7 +101,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         // <= categories.Count, >= 1
         protected int _effectiveMaxLength;
 
-        protected Guid _attributeId;
+        protected string _attributeGuid;
 
         protected string[] _categoriesNames;
 
@@ -275,7 +119,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         protected IBitString getBitString(string categoryName)
         {
-            return _cache[_attributeId, categoryName];
+            return _cache[_attributeGuid, categoryName];
         }
 
         protected void prolongCoefficient(string categoryName)
@@ -293,16 +137,15 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 _currentBitString = _currentBitString.Or(newBitString);
         }
 
-        public override Set<Guid> UsedAttributes
+        public override Set<string> UsedAttributes
         {
-            get { return new Set<Guid>(_attributeId); }
+            get { return new Set<string>(_attributeGuid); }
         }
 
-        public override Set<Guid> UsedEntities
+        public override Set<string> UsedEntities
         {
-            get { return new Set<Guid>(Id); }
+            get { return new Set<string>(Guid); }
         }
-
     }
 
     public abstract class SingleOperandEntity : EntityEnumerable
@@ -311,19 +154,19 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         protected readonly IEntityEnumerator _entity;
 
-        public SingleOperandEntity(ISingleOperandEntitySetting setting)
-            : base(new Guid(setting.id.value))
+        protected SingleOperandEntity(ISingleOperandEntitySetting setting)
+            : base(setting.id)
         {
             _setting = setting;
             _entity = Factory.Create(_setting.operand);
         }
 
-        public override Set<Guid> UsedAttributes
+        public override Set<string> UsedAttributes
         {
             get { return _entity.UsedAttributes; }
         }
 
-        public override Set<Guid> UsedEntities
+        public override Set<string> UsedEntities
         {
             get { return _entity.UsedEntities; }
         }
@@ -337,8 +180,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// Constructor.
         /// </summary>
         /// <param name="setting">The setting.</param>
-        public MutliOperandEntity(IMultipleOperandEntitySetting setting)
-            : base(new Guid(setting.id.value))
+        protected MutliOperandEntity(IMultipleOperandEntitySetting setting)
+            : base(setting.id)
         {
             if (setting == null)
                 throw new ArgumentNullException("setting", "The reference to setting cannot be null.");
@@ -391,26 +234,26 @@ namespace Ferda.Guha.MiningProcessor.Generation
             if (_setting.classesOfEquivalence != null
                 && _setting.classesOfEquivalence.Length > 0)
             {
-                Set<Set<Guid>> cof = new Set<Set<Guid>>();
+                Set<Set<string>> cof = new Set<Set<string>>();
                 foreach (GuidStruct[] structs in _setting.classesOfEquivalence)
                 {
                     if (structs != null && structs.Length > 0)
                     {
-                        Set<Guid> set = new Set<Guid>();
+                        Set<string> set = new Set<string>();
                         foreach (GuidStruct guidStruct in structs)
                         {
                             if (guidStruct != null)
-                                set.Add(new Guid(guidStruct.value));
+                                set.Add(guidStruct.value);
                         }
                         if (cof.Count > 0)
                         {
                             // if set is {A, B} and some previous set was {B, C}, only union will be added ie.e. {A, B, C}
                             // test disjunctivity with other classes of equivalence
-                            List<Set<Guid>> inCollision = new List<Set<Guid>>();
+                            List<Set<string>> inCollision = new List<Set<string>>();
 
-                            foreach (Set<Guid> previousSet in cof)
+                            foreach (Set<string> previousSet in cof)
                             {
-                                foreach (Guid guid in set)
+                                foreach (string guid in set)
                                 {
                                     if (previousSet.Contains(guid))
                                     {
@@ -419,7 +262,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                                     }
                                 }
                             }
-                            foreach (Set<Guid> col in inCollision)
+                            foreach (Set<string> col in inCollision)
                             {
                                 set.AddRange(col);
                                 cof.Remove(col);
@@ -431,7 +274,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 _classesOfEquivalence = cof;
             }
         }
-        private Set<Set<Guid>> _classesOfEquivalence;
+
+        private Set<Set<string>> _classesOfEquivalence;
 
         #endregion
 
@@ -442,10 +286,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
         protected int _forcedCount = 0;
         protected int _basicCount = 0;
 
-        protected List<IEntityEnumerator> _sourceEntities = new List<IEntityEnumerator>();
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")] protected List<IEntityEnumerator>
+            _sourceEntities = new List<IEntityEnumerator>();
 
         // max(0, number of forced operands, min length param))
         private readonly int _effectiveMinLength;
+
         public int EffectiveMinLength
         {
             get { return _effectiveMinLength; }
@@ -453,6 +299,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         // min(number of operands, max length param)
         private readonly int _effectiveMaxLength;
+
         public int EffectiveMaxLength
         {
             get { return _effectiveMaxLength; }
@@ -463,6 +310,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         #endregion
 
         private long _totalCount = -1;
+
         public override long TotalCount
         {
             get
@@ -481,7 +329,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 }
 
                 Subsets<long, long> subsets = new Subsets<long, long>(_effectiveMinLength, _effectiveMaxLength, count,
-                        new LongMultiplicationArraySubsetsInstance(totalCounts.ToArray())
+                                                                      new LongMultiplicationArraySubsetsInstance(
+                                                                          totalCounts.ToArray())
                     );
                 foreach (long l in subsets)
                 {
@@ -492,44 +341,44 @@ namespace Ferda.Guha.MiningProcessor.Generation
             }
         }
 
-        public override Set<Guid> UsedAttributes
+        public override Set<string> UsedAttributes
         {
             get
             {
                 if (sE.Count == 0)
-                    return new Set<Guid>();
+                    return new Set<string>();
                 else
                 {
-                    Set<Guid> result = null;
+                    Set<string> result = null;
                     foreach (IEnumerator<IBitString> enumerator in sE)
                     {
                         if (result == null)
-                            result = ((IEntityEnumerator)enumerator).UsedAttributes;
+                            result = ((IEntityEnumerator) enumerator).UsedAttributes;
                         else
-                            result.AddRange(((IEntityEnumerator)enumerator).UsedAttributes);
+                            result.AddRange(((IEntityEnumerator) enumerator).UsedAttributes);
                     }
                     return result;
                 }
             }
         }
 
-        public override Set<Guid> UsedEntities
+        public override Set<string> UsedEntities
         {
             get
             {
                 if (sE.Count == 0)
-                    return new Set<Guid>(Id);
+                    return new Set<string>(Guid);
                 else
                 {
-                    Set<Guid> result = null;
+                    Set<string> result = null;
                     foreach (IEnumerator<IBitString> enumerator in sE)
                     {
                         if (result == null)
-                            result = ((IEntityEnumerator)enumerator).UsedAttributes;
+                            result = ((IEntityEnumerator) enumerator).UsedAttributes;
                         else
-                            result.AddRange(((IEntityEnumerator)enumerator).UsedAttributes);
+                            result.AddRange(((IEntityEnumerator) enumerator).UsedAttributes);
                     }
-                    result.Add(Id);
+                    result.Add(Guid);
                     return result;
                 }
             }
@@ -549,9 +398,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         #endregion
 
-        Stack<IEnumerator<IBitString>> sE = new Stack<IEnumerator<IBitString>>();
-        Stack<IBitString> sB = new Stack<IBitString>();
-        Stack<int> sI = new Stack<int>();
+        private Stack<IEnumerator<IBitString>> sE = new Stack<IEnumerator<IBitString>>();
+        private Stack<IBitString> sB = new Stack<IBitString>();
+        private Stack<int> sI = new Stack<int>();
+
         private void sBPush(IBitString adding)
         {
             if (sB.Count > 0)
@@ -564,6 +414,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 sB.Push(adding);
             }
         }
+
         private bool moveNextInTopEntity()
         {
             IEnumerator<IBitString> enumerator = sE.Peek();
@@ -579,10 +430,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 return false;
             }
         }
+
         private bool returnCurrent(out IBitString result)
         {
             // TODO classes of equivalence ... rozmyslet a dodelat
-            
+
             Debug.Assert(sB.Count <= _effectiveMaxLength);
             if (sB.Count >= _effectiveMinLength)
             {
@@ -592,22 +444,24 @@ namespace Ferda.Guha.MiningProcessor.Generation
             result = null;
             return false;
         }
+
         private void getEntity(int index)
         {
             IEnumerator<IBitString> enumerator = _sourceEntities[index].GetEnumerator();
-            
+
             //enumerator.Reset();
             // UNDONE ... myslim, ze by to melo byt odkomentovane, ale 
             // kdyz je to odkomentovane tak to zde pada na NotSupprotedOperation
-            
+
             Debug.Assert(enumerator.MoveNext());
             sE.Push(enumerator);
             sBPush(enumerator.Current);
             sI.Push(index);
         }
+
         private bool prolong(bool afterRemove)
         {
-        restart:
+            restart:
             if (sB.Count == _effectiveMaxLength) // not after remove
                 return false;
             int newIndex;
@@ -647,15 +501,15 @@ namespace Ferda.Guha.MiningProcessor.Generation
             return true;
         }
 
-        private Set<Guid> getClassOfEquivalence(Set<Guid> set)
+        private Set<string> getClassOfEquivalence(Set<string> set)
         {
             if (_classesOfEquivalence == null || _classesOfEquivalence.Count == 0)
                 return null;
             if (set == null || set.Count == 0)
                 return null;
-            foreach (Set<Guid> set1 in _classesOfEquivalence)
+            foreach (Set<string> set1 in _classesOfEquivalence)
             {
-                foreach (Guid guid in set)
+                foreach (string guid in set)
                 {
                     if (set1.Contains(guid))
                         return set1;
@@ -669,11 +523,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
             if (_classesOfEquivalence == null || _classesOfEquivalence.Count == 0)
                 return false;
 
-            Set<Guid> usedClassOfEquiv = getClassOfEquivalence(UsedEntities);
+            Set<string> usedClassOfEquiv = getClassOfEquivalence(UsedEntities);
             if (usedClassOfEquiv == null)
                 return false;
 
-            Set<Guid> newItemClassOfEquiv =
+            Set<string> newItemClassOfEquiv =
                 getClassOfEquivalence((_sourceEntities[newIndex]).UsedEntities);
             if (newItemClassOfEquiv == null)
                 return false;
@@ -682,6 +536,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 return true;
             return false;
         }
+
         private bool removeLastItem()
         {
             if (sE.Count > 0)
@@ -692,6 +547,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             }
             return false;
         }
+
         //private void debugTest()
         //{
         //    Debug.Assert(sE.Count == sB.Count);
@@ -699,7 +555,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
             if (_effectiveMinLength == 0)
-                yield return EmptyBitStringSingleton.EmptyBitString;
+                yield return EmptyBitString.GetInstance();
 
             IBitString result;
             bool afterRemove;
@@ -714,10 +570,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
             #endregion
 
-        returnCurrent:
+            returnCurrent:
             if (returnCurrent(out result))
                 yield return result;
-        prolong:
+            prolong:
             if (prolong(afterRemove))
             {
                 afterRemove = false;
@@ -741,7 +597,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 afterRemove = true;
                 goto prolong;
             }
-        finish:
+            finish:
             sE.Clear();
             sB.Clear();
             sI.Clear();

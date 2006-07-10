@@ -1,3 +1,5 @@
+#define ProgressBarDebug
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,32 +37,39 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
         #region Properties
 
         #endregion
+        
+        private static string[] getSocketNames()
+        {
+            return new string[]
+                {
+                    Common.SockSuccedent,
+                    Common.SockAntecedent,
+                    Common.SockCondition
+                };
+        }
 
         public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Ice.Current current__)
         {
             return Common.GetBitStringGenerator(
                 _boxModule,
                 attributeId,
-                new string[]
-                    {
-                        Common.SockSuccedent,
-                        Common.SockAntecedent,
-                        Common.SockCondition
-                    });
+                getSocketNames()
+                );
         }
 
 
         public void Run()
         {
-            //// Progress Bar
-            //ProgressBarPrx pB = _boxModule.Output.startProgress(null, "Testovací PB", "Hintik pri startu");
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    pB.setValue(10 / (i + 1), "Zvysuji na " + ((i + 1) * 10) + "%");
-            //}
-            //pB.done();
-            //return;
-
+#if ProgressBarDebug
+            // Progress Bar
+            ProgressBarPrx pB = _boxModule.Output.startProgress(null, "Testovací PB", "Hintik pri startu");
+            for (int i = 0; i < 10; i++)
+            {
+                pB.setValue(10 / (i + 1), "Zvysuji na " + ((i + 1) * 10) + "%");
+            }
+            pB.done();
+            return;
+#else
             #region Cedents
             List<BooleanAttribute> cedents = new List<BooleanAttribute>();
 
@@ -88,7 +97,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
             TaskRunParams taskRunParams = new TaskRunParams(
                     TaskTypeEnum.FourFold,
                     Common.ExecutionType(_boxModule),
-                    Common.MaxNumberOfHypotheses(_boxModule)
+                    Common.MaxNumberOfHypotheses(_boxModule),
+                    WorkingWithSecondSetModeEnum.None
                 );
             
             string statistics;
@@ -103,8 +113,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
                         out statistics
                     );
             
+            Common.SetResult(_boxModule, result);
+            Common.SetResultInfo(_boxModule, statistics);
+            
             // reset cache
             _cachedSerializableResultInfo = null;
+#endif
         }
 
         public override QuantifierBaseFunctionsPrx[] GetQuantifiers(Ice.Current current__)
@@ -129,5 +143,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
         }
 
         #endregion
+
+        public override GuidAttributeNamePair[] GetAttributeNames(Ice.Current current__)
+        {
+            return Common.GetAttributeNames(_boxModule, getSocketNames());
+        }
     }
 }

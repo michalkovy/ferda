@@ -1,4 +1,5 @@
 //#define Testing
+
 #if Testing
 
 using System;
@@ -9,8 +10,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 {
     public static class BitStringCacheTest
     {
-        private static Dictionary<Guid, Dictionary<string, string>> _bitStringsSetting;
-        private static Dictionary<Guid, Dictionary<string, IBitString>> _bitStrings;
+        private static Dictionary<string, Dictionary<string, string>> _bitStringsSetting;
+        private static Dictionary<string, Dictionary<string, IBitString>> _bitStrings;
 
         public const string Attr1Id = "CA761232-ED42-11CE-BACD-00AA0057B221";
         public const string Attr2Id = "CA761232-ED42-11CE-BACD-00AA0057B222";
@@ -22,9 +23,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         static BitStringCacheTest()
         {
-            _bitStringsSetting = new Dictionary<Guid, Dictionary<string, string>>();
+            _bitStringsSetting = new Dictionary<string, Dictionary<string, string>>();
 
-            Guid attr1Name = new Guid(Attr1Id);
+            string attr1Name = Attr1Id;
             _bitStringsSetting.Add(attr1Name, new Dictionary<string, string>());
             _bitStringsSetting[attr1Name].Add("A", "0000000000000001");
             _bitStringsSetting[attr1Name].Add("B", "0000000000000010");
@@ -43,11 +44,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _bitStringsSetting[attr1Name].Add("O", "0100000000000000");
             _bitStringsSetting[attr1Name].Add("P", "1000000000000000");
 
-            Guid attr2Name = new Guid(Attr2Id);
+            string attr2Name = Attr2Id;
             _bitStringsSetting.Add(attr2Name, new Dictionary<string, string>());
             _bitStringsSetting[attr2Name].Add("A", "00001");
 
-            Guid attr3Name = new Guid(Attr3Id);
+            string attr3Name = Attr3Id;
             _bitStringsSetting.Add(attr3Name, new Dictionary<string, string>());
             _bitStringsSetting[attr3Name].Add("1", "0000000000000001");
             _bitStringsSetting[attr3Name].Add("2", "0000000000000010");
@@ -58,7 +59,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _bitStringsSetting[attr3Name].Add("7", "0000000001000000");
             _bitStringsSetting[attr3Name].Add("8", "0000000010000000");
 
-            Guid attr4Name = new Guid(Attr4Id);
+            string attr4Name = Attr4Id;
             _bitStringsSetting.Add(attr4Name, new Dictionary<string, string>());
             _bitStringsSetting[attr4Name].Add("alpha", "0000000000000001");
             _bitStringsSetting[attr4Name].Add("beta", "0000000000000100");
@@ -69,8 +70,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _bitStringsSetting[attr4Name].Add("eta", "0001000000000000");
             _bitStringsSetting[attr4Name].Add("theta", "0100000000000000");
             
-            _bitStrings = new Dictionary<Guid, Dictionary<string, IBitString>>();
-            foreach (KeyValuePair<Guid, Dictionary<string, string>> pair in _bitStringsSetting)
+            _bitStrings = new Dictionary<string, Dictionary<string, IBitString>>();
+            foreach (KeyValuePair<string, Dictionary<string, string>> pair in _bitStringsSetting)
             {
                 _bitStrings.Add(pair.Key, new Dictionary<string, IBitString>());
                 foreach (KeyValuePair<string, string> valuePair in pair.Value)
@@ -93,12 +94,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         public static IBitString GetBitString(BitStringIdentifier bitStringId)
         {
-            return _bitStrings[bitStringId.AttributeId][bitStringId.CategoryId];
+            return _bitStrings[bitStringId.AttributeGuid][bitStringId.CategoryId];
         }
 
-        public static string[] GetCategoriesIds(Guid attributeId)
+        public static string[] GetCategoriesIds(string attributeGuid)
         {
-            List<string> result = new List<string>(_bitStrings[attributeId].Keys);
+            List<string> result = new List<string>(_bitStrings[attributeGuid].Keys);
             return result.ToArray();
         }
     }

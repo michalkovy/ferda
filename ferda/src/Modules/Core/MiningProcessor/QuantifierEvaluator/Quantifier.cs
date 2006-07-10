@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Modules;
@@ -26,46 +24,52 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         private readonly BitStringGeneratorProviderPrx _taskFuncPrx;
 
         private readonly QuantifierSetting _setting;
+
         public QuantifierSetting Setting
         {
             get { return _setting; }
         }
 
         private readonly bool _providesValues = false;
+
         public bool ProvidesValues
         {
             get { return _providesValues; }
         }
 
         private readonly bool _providesAtLeastSignificantValues = false;
+
         public bool ProvidesAtLeastSignificantValues
         {
             get { return _providesAtLeastSignificantValues; }
         }
 
         private readonly OperationModeEnum _operationMode;
+
         public OperationModeEnum OperationMode
         {
             get { return _operationMode; }
         }
-        
-        private readonly bool _isPureFourFold;
 
+        private readonly bool _isPureFourFold;
 
         #region For TopN algorithm purposes
 
-        private readonly QuantifierValueQueueSemantic _quantifierValueQueueSemantic = QuantifierValueQueueSemantic.Unsupported;
+        private readonly QuantifierValueQueueSemantic _quantifierValueQueueSemantic =
+            QuantifierValueQueueSemantic.Unsupported;
+
         public QuantifierValueQueueSemantic QuantifierValueQueueSemantic
         {
             get { return _quantifierValueQueueSemantic; }
         }
 
         private readonly PerformanceDifficultyEnum _performanceDifficulty;
+
         public PerformanceDifficultyEnum PerformanceDifficulty
         {
             get { return _performanceDifficulty; }
         }
-        
+
         public double ActualEfficiency
         {
             get
@@ -73,18 +77,20 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 if (NumberOfInvokes == 0)
                     return 0;
                 // (-0.5;0.5>
-                double efficiency = -0.5d + NumberOfFalseInvokes / NumberOfInvokes;
-                return (Int64.MaxValue * efficiency) / (double)NumberOfInvokes;
+                double efficiency = -0.5d + NumberOfFalseInvokes/NumberOfInvokes;
+                return (Int64.MaxValue*efficiency)/(double) NumberOfInvokes;
             }
         }
 
         private long _numberOfInvokes = 0;
+
         public long NumberOfInvokes
         {
             get { return _numberOfInvokes; }
         }
 
         private long _numberOfFalseInvokes = 0;
+
         public long NumberOfFalseInvokes
         {
             get { return _numberOfFalseInvokes; }
@@ -118,9 +124,9 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
 
             _isPureFourFold = prx.ice_isA("::Ferda::Guha::Math::Quantifiers::FourFoldValid")
-                            || prx.ice_isA("::Ferda::Guha::Math::Quantifiers::FourFoldValue")
-                            || prx.ice_isA("::Ferda::Guha::Math::Quantifiers::FourFoldSignificantValue");
-            
+                              || prx.ice_isA("::Ferda::Guha::Math::Quantifiers::FourFoldValue")
+                              || prx.ice_isA("::Ferda::Guha::Math::Quantifiers::FourFoldSignificantValue");
+
             if (_providesAtLeastSignificantValues)
             {
                 switch (_setting.relation)
@@ -147,7 +153,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         /// <param name="prx">The quantifier proxy.</param>
         /// <param name="taskFuncPrx">The "numeric values providers" provider.</param>
         /// <param name="localePrefs">The locale prefs.</param>
-        public Quantifier(QuantifierBaseFunctionsPrx prx, BitStringGeneratorProviderPrx taskFuncPrx, string[] localePrefs)
+        public Quantifier(QuantifierBaseFunctionsPrx prx, BitStringGeneratorProviderPrx taskFuncPrx,
+                          string[] localePrefs)
             : this(prx, taskFuncPrx)
         {
             _localePrefs = localePrefs;
@@ -160,6 +167,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         private readonly string[] _localePrefs = null;
 
         private string _localizedLabel = null;
+
         public string LocalizedLabel
         {
             get
@@ -174,6 +182,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         private string _localizedUserLabel = null;
+
         public string LocalizedUserLabel
         {
             get
@@ -199,6 +208,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     _setting.units);
                 if (_setting.needsNumericValues)
                     throw new NotImplementedException();
+                setting.numericValuesAttributeId = new GuidStruct(String.Empty);
                 return setting;
             }
             else
@@ -211,12 +221,15 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     _setting.units);
                 if (_setting.needsNumericValues)
                 {
-                    Guid numericValuesAttributeId = contingencyTable.NumericValuesAttributeId;
-                    if (numericValuesAttributeId == null)
-                        throw new ArgumentNullException();
-                    setting.numericValuesAttributeId = new GuidStruct(numericValuesAttributeId.ToString());
-                    setting.numericValuesProviders = _taskFuncPrx.GetBitStringGenerator(setting.numericValuesAttributeId);
+                    string numericValuesAttributeGuid = contingencyTable.NumericValuesAttributeGuid;
+                    if (numericValuesAttributeGuid == null)
+                        throw new ArgumentNullException(
+                            "The quantifier needs numeric values, but argument \"NumericValuesAttributeGuid\" is null.");
+                    setting.numericValuesAttributeId = new GuidStruct(numericValuesAttributeGuid);
+                    setting.numericValuesProviders =
+                        _taskFuncPrx.GetBitStringGenerator(setting.numericValuesAttributeId);
                 }
+                setting.numericValuesAttributeId = new GuidStruct(String.Empty);
                 return setting;
             }
         }
@@ -234,7 +247,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
             QuantifierEvaluateSetting setting = getQuantifierEvaluateSetting(contingencyTable);
 
-            QuantifierValueFunctionsPrx prx = (QuantifierValueFunctionsPrx)_prx;
+            QuantifierValueFunctionsPrx prx = QuantifierValueFunctionsPrxHelper.checkedCast(_prx);
             return prx.ComputeValue(setting);
         }
 
@@ -253,12 +266,13 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
             if (ProvidesValues)
             {
-                QuantifierValueFunctionsPrx prx = (QuantifierValueFunctionsPrx)_prx;
+                QuantifierValueFunctionsPrx prx = QuantifierValueFunctionsPrxHelper.checkedCast(_prx);
                 return prx.ComputeValidValue(setting, out value);
             }
             else
             {
-                QuantifierSignificantValueFunctionsPrx prx = (QuantifierSignificantValueFunctionsPrx)_prx;
+                QuantifierSignificantValueFunctionsPrx prx =
+                    QuantifierSignificantValueFunctionsPrxHelper.checkedCast(_prx);
                 return prx.ComputeValidValue(setting, out value);
             }
         }
@@ -275,17 +289,18 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
             if (ProvidesValues)
             {
-                QuantifierValueFunctionsPrx prx = (QuantifierValueFunctionsPrx)_prx;
+                QuantifierValueFunctionsPrx prx = QuantifierValueFunctionsPrxHelper.checkedCast(_prx);
                 return prx.Compute(setting);
             }
             else if (ProvidesAtLeastSignificantValues)
             {
-                QuantifierSignificantValueFunctionsPrx prx = (QuantifierSignificantValueFunctionsPrx)_prx;
+                QuantifierSignificantValueFunctionsPrx prx =
+                    QuantifierSignificantValueFunctionsPrxHelper.checkedCast(_prx);
                 return prx.Compute(setting);
             }
             else
             {
-                QuantifierValidFunctions prx = (QuantifierValidFunctions)_prx;
+                QuantifierValidFunctionsPrx prx = QuantifierValidFunctionsPrxHelper.checkedCast(_prx);
                 return prx.Compute(setting);
             }
         }
@@ -297,7 +312,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         /// <returns></returns>
         public bool TestTreshold(double value)
         {
-            return Ferda.Guha.Math.Common.Compare(_setting.relation, value, _setting.treshold);
+            return Common.Compare(_setting.relation, value, _setting.treshold);
         }
     }
 }

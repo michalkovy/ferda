@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
@@ -10,7 +10,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         Or,
         AtomMembers
     }
-    
+
     public static class FormulaHelper
     {
         public static BooleanAttributeFormula And(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
@@ -33,17 +33,19 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         /// http://www.fileformat.info/info/unicode/char/2227/index.htm
         /// </summary>
         public const string SeparatorAnd = " \u2227 ";
+
         //public const string SeparatorAnd = "&";
-        
+
         /// <summary>
         /// Unicode Character 'LOGICAL OR' (U+2228)
         /// http://www.fileformat.info/info/unicode/char/2228/index.htm
         /// </summary>
         public const string SeparatorOr = " \u2228 ";
+
         //public const string SeparatorOr = "|";
-        
+
         public const string SeparatorAtomMembers = ", ";
-        
+
         /// <summary>
         /// Unicode Character 'NOT SIGN' (U+00AC)
         /// http://www.fileformat.info/info/unicode/char/00ac/index.htm
@@ -67,14 +69,14 @@ namespace Ferda.Guha.MiningProcessor.Formulas
                 default:
                     throw new NotImplementedException();
             }
-            
+
             if (sorted)
             {
                 List<string> sortedItems = new List<string>(items);
                 items = sortedItems;
             }
 
-            return Ferda.Modules.Helpers.Common.Print.SequenceToString(items, separator);
+            return Print.SequenceToString(items, separator);
         }
     }
 }

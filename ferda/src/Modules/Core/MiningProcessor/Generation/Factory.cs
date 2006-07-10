@@ -7,10 +7,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public static IEntityEnumerator Create(IEntitySetting setting)
         {
             if (setting.ice_isA("::Ferda::Guha::MiningProcessor::CoefficientFixedSetSetting"))
-                return new FixedSet((CoefficientFixedSetSettingI)setting);
+                return new FixedSet((CoefficientFixedSetSettingI) setting);
             else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::CoefficientSetting"))
             {
-                CoefficientSettingI coefSetting = (CoefficientSettingI)setting;
+                CoefficientSettingI coefSetting = (CoefficientSettingI) setting;
                 switch (coefSetting.coefficientType)
                 {
                     case CoefficientTypeEnum.Subsets:
@@ -29,19 +29,19 @@ namespace Ferda.Guha.MiningProcessor.Generation
             }
             else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::NegationSetting"))
             {
-                return new Negation((NegationSettingI)setting);
+                return new Negation((NegationSettingI) setting);
             }
             else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::BothSignsSetting"))
             {
-                return new BothSigns((BothSignsSettingI)setting);
+                return new BothSigns((BothSignsSettingI) setting);
             }
             else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::DisjunctionSetting"))
             {
-                return new Disjunction((DisjunctionSettingI)setting);
+                return new Disjunction((DisjunctionSettingI) setting);
             }
             else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::ConjunctionSetting"))
             {
-                return new Conjunction((ConjunctionSettingI)setting);
+                return new Conjunction((ConjunctionSettingI) setting);
             }
             throw new NotImplementedException();
         }

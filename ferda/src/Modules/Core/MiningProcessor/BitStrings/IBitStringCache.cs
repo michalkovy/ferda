@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
@@ -42,10 +42,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <value></value>
         /// <returns>Bit string responding to given guid that is stored in cache or obtained from data preprocesor.</returns>
         IBitString this[BitStringIdentifier bitStringId] { get; }
-        IBitString this[Guid attributeId, string categoryId] { get; }
-        
-        IBitString GetMissingInformationBitString(Guid attributeId);
-        
-        string[] GetCategoriesIds(Guid attributeId);
+        IBitString this[string attributeGuid, string categoryId] { get; }
+
+        IBitString GetMissingInformationBitString(string attributeGuid);
+
+        string[] GetCategoriesIds(string attributeGuid);
     }
 }

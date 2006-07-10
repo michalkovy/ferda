@@ -11,7 +11,8 @@ module Ferda {
 		interface BoxModule;
 		interface BoxModuleFactoryCreator;
 		interface ModuleForInteraction;		
-		interface SettingModule;		
+		interface SettingModule;
+		interface ProgressTask;
 	};
 	
 	module ModulesManager {
@@ -19,11 +20,6 @@ module Ferda {
 		enum MsgType { Debug, Info, Warning, Error };
 		
 		exception BoxModuleNotExistError{};
-		
-		interface ProgressTask {
-			nonmutating float getValue(out string message);
-			void stop();
-		};
 		
 		interface ProgressBar {
 		  // ten progress bar by mel ukazovat ze bezi, ale ne konretni hotovou cast (v %),
@@ -36,7 +32,7 @@ module Ferda {
 
 		interface Output {
 			void writeMsg(MsgType type, string name, string message);
-			ProgressBar* startProgress(ProgressTask* task, string name, string hint);
+			ProgressBar* startProgress(Ferda::Modules::ProgressTask* task, string name, string hint);
 		};
 		
 		interface BoxModuleProjectInformation {

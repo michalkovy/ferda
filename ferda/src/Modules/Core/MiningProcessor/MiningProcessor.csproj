@@ -15,10 +15,12 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS, Testing</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRules>-Microsoft.Naming#CA1707</CodeAnalysisRules>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -65,44 +67,47 @@
     <Compile Include="BitStrings\CategorialAttributeTrace.cs" />
     <Compile Include="BitStrings\BitStringsOps.cs" />
     <Compile Include="BitStrings\EmptyBitString.cs" />
+    <Compile Include="BitStrings\FalseBitString.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="BitStrings\MissingInformation.cs" />
     <Compile Include="Formulas\AttributeNameInLiteralsProvider.cs" />
     <Compile Include="BitStrings\BitStringCacheTest.cs" />
-    <Compile Include="Design\BothSignsSetting.cs" />
-    <Compile Include="Design\CoefficientSetting.cs" />
-    <Compile Include="Design\CoefficientFixedSetSetting.cs" />
-    <Compile Include="Design\CoefficientType.cs" />
+    <None Include="Design\BothSignsSetting.cs" />
+    <None Include="Design\CoefficientSetting.cs" />
+    <None Include="Design\CoefficientFixedSetSetting.cs" />
+    <None Include="Design\CoefficientType.cs" />
     <Compile Include="BitStrings\BitString.cs" />
-    <Compile Include="Design\BitStringGeneratorPrx.cs" />
+    <None Include="Design\BitStringGeneratorPrx.cs" />
     <Compile Include="BitStrings\BitStringIdentifier.cs" />
-    <Compile Include="Design\ClassOfEquivalence.cs" />
-    <Compile Include="Design\ConjunctionSetting.cs" />
+    <None Include="Design\ClassOfEquivalence.cs" />
+    <None Include="Design\ConjunctionSetting.cs" />
     <Compile Include="Formulas\CategorialAttributeFormula.cs" />
     <Compile Include="Formulas\ConjunctionFormula.cs" />
-    <Compile Include="Design\DisjunctionSetting.cs" />
+    <None Include="Design\DisjunctionSetting.cs" />
     <Compile Include="Formulas\DisjunctionFormula.cs" />
-    <Compile Include="Design\EntityImporatancePair.cs" />
+    <None Include="Design\EntityImporatancePair.cs" />
     <Compile Include="Formulas\FormulaHelper.cs" />
     <Compile Include="BitStrings\IBitString.cs" />
     <Compile Include="BitStrings\IBitStringCache.cs" />
     <Compile Include="Generation\EmptyTrace.cs" />
+    <Compile Include="Generation\SubsetsGenerationHelper.cs" />
+    <Compile Include="Miners\FourFoldMiningProcessor.cs" />
     <Compile Include="Miners\MinningProcessor.cs" />
     <Compile Include="QuantifierEvaluator\FirstN.cs" />
     <Compile Include="QuantifierEvaluator\IEvaluator.cs" />
     <Compile Include="ResultSerializable.cs" />
     <Compile Include="Formulas\BooleanAttributeFormula.cs" />
-    <Compile Include="Design\ILeafEntitySetting.cs" />
-    <Compile Include="Design\IEntitySetting.cs" />
+    <None Include="Design\ILeafEntitySetting.cs" />
+    <None Include="Design\IEntitySetting.cs" />
     <Compile Include="Formulas\Formula.cs" />
     <Compile Include="Generation\Common.cs" />
     <Compile Include="Generation\IEntityEnumerator.cs" />
-    <Compile Include="Design\IMultipleOperandEntitySetting.cs" />
-    <Compile Include="Design\Importance.cs" />
-    <Compile Include="Design\ISingleOperandEntitySetting.cs" />
+    <None Include="Design\IMultipleOperandEntitySetting.cs" />
+    <None Include="Design\Importance.cs" />
+    <None Include="Design\ISingleOperandEntitySetting.cs" />
     <Compile Include="Formulas\AtomFormula.cs" />
     <Compile Include="Miners\MiningProcessorFunctionsI.cs" />
-    <Compile Include="Design\NegationSetting.cs" />
+    <None Include="Design\NegationSetting.cs" />
     <Compile Include="Formulas\NegationFormula.cs" />
     <Compile Include="BitStrings\BitStringCache.cs" />
     <Compile Include="Generation\LeafEntities.cs" />

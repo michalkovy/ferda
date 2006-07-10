@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
@@ -42,7 +40,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
             int rNum = twoDimTable.GetLength(0);
             int cNum = twoDimTable.GetLength(1);
-            
+
             IBitString[][] result = new IBitString[rNum][];
             for (int r = 0; r < rNum; r++)
             {
@@ -63,7 +61,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 throw new ArgumentNullException("operand");
 
             int rNum = rowOperand.GetLength(0);
-            
+
             IBitString[] result = new IBitString[rNum];
             for (int r = 0; r < rNum; r++)
             {

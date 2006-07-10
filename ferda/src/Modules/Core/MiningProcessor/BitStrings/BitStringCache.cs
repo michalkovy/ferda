@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Ferda.Modules.Helpers.Caching;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
@@ -30,8 +29,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         // bits its in bits, for strings of floats (fuzzy bit strings) 
         // it is in floats
 
-        private Dictionary<Guid, BitStringGeneratorPrx> _bitStringGenerators =
-                        new Dictionary<Guid, BitStringGeneratorPrx>();
+        // key is attributeGuid
+        private Dictionary<string, BitStringGeneratorPrx> _bitStringGenerators =
+            new Dictionary<string, BitStringGeneratorPrx>();
+
+        private MissingInformationBitStringsIdsCache _missingInformationBitStringsIdsCache;
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
@@ -45,8 +47,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private BitStringCache(int maxItems)
             : base(maxItems)
         {
+            _missingInformationBitStringsIdsCache = new MissingInformationBitStringsIdsCache(this);
         }
-        
+
         internal static IBitStringCache GetInstance()
         {
             return _instance;
@@ -63,18 +66,18 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 #endif
             lock (padlock)
             {
-                Guid prxAttributeID = new Guid(prx.GetAttributeId().value);
-                if (!_instance._bitStringGenerators.ContainsKey(prxAttributeID))
-                    _instance._bitStringGenerators.Add(prxAttributeID, prx);
+                string attributeGuid = prx.GetAttributeId().value;
+                if (!_instance._bitStringGenerators.ContainsKey(attributeGuid))
+                    _instance._bitStringGenerators.Add(attributeGuid, prx);
 
                 return _instance;
             }
         }
 
-        private BitStringGeneratorPrx getBitStringGeneratorPrx(Guid attributeId)
+        public BitStringGeneratorPrx GetBitStringGeneratorPrx(string attributeGuid)
         {
             BitStringGeneratorPrx prx;
-            if (_bitStringGenerators.TryGetValue(attributeId, out prx))
+            if (_bitStringGenerators.TryGetValue(attributeGuid, out prx))
             {
                 return prx;
             }
@@ -95,48 +98,76 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 return base[bitStringId];
             }
         }
-        public IBitString this[Guid attributeId, string categoryId]
+
+        public IBitString this[string attributeGuid, string categoryId]
         {
-            get
-            {
-                return this[new BitStringIdentifier(attributeId, categoryId)];
-            }
+            get { return this[new BitStringIdentifier(attributeGuid, categoryId)]; }
         }
 
-        public IBitString GetMissingInformationBitString(Guid attributeId)
+        public IBitString GetMissingInformationBitString(string attributeGuid)
         {
-            string missingInformationCategoryId =
-                getBitStringGeneratorPrx(attributeId).GetMissingInformationCategoryId();
-            if (missingInformationCategoryId != null)
+            string categoryId = _missingInformationBitStringsIdsCache[attributeGuid];
+            if (categoryId != null)
             {
-                return base[new BitStringIdentifier(attributeId, missingInformationCategoryId)];
+                return base[new BitStringIdentifier(attributeGuid, categoryId)];
             }
             else
             {
-                return EmptyBitStringSingleton.EmptyBitString;
+                return FalseBitString.GetInstance();
             }
         }
 
-        public string[] GetCategoriesIds(Guid attributeId)
+        public string[] GetCategoriesIds(string attributeGuid)
         {
 #if Testing
-            return BitStringCacheTest.GetCategoriesIds(attributeId);
+            return BitStringCacheTest.GetCategoriesIds(attributeGuid);
 #endif
-            return getBitStringGeneratorPrx(attributeId).GetCategoriesIds();
+            return GetBitStringGeneratorPrx(attributeGuid).GetCategoriesIds();
         }
 
         #endregion
 
-        public override IBitString GetValue(BitStringIdentifier bitStringId)
+        public override IBitString GetValue(BitStringIdentifier key)
         {
-            
-            MiningProcessor.BitString bs = getBitStringGeneratorPrx(bitStringId.AttributeId).GetBitString(bitStringId.CategoryId);
-            return new BitString(bs.length, bitStringId, bs.value);
+            MiningProcessor.BitString bs = GetBitStringGeneratorPrx(key.AttributeGuid).GetBitString(key.CategoryId);
+            return new BitString(bs.length, key, bs.value);
         }
 
         public override int GetSize(IBitString itemToMeasure)
         {
             return itemToMeasure.Length;
+        }
+    }
+
+    internal class MissingInformationBitStringsIdsCache : MostRecentlyUsed<string, string>
+    {
+        private readonly BitStringCache _bitStringCache;
+
+        private const int cacheDefaultSize = 32;
+
+        public MissingInformationBitStringsIdsCache(BitStringCache bitStringCache)
+            : base(cacheDefaultSize)
+        {
+            _bitStringCache = bitStringCache;
+        }
+
+        public override string GetValue(string key)
+        {
+            string[] missingInformationCategoryId =
+                _bitStringCache.GetBitStringGeneratorPrx(key).GetMissingInformationCategoryId();
+            if (missingInformationCategoryId.Length == 1)
+            {
+                return missingInformationCategoryId[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public override int GetSize(string itemToMeasure)
+        {
+            return 1;
         }
     }
 }

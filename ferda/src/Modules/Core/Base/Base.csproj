@@ -7,7 +7,7 @@
     <ProjectGuid>{E10C446E-8D76-41AB-89EC-C5C45F56D1D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Base</RootNamespace>
+    <RootNamespace>Ferda.Modules</RootNamespace>
     <AssemblyName>Base</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -53,9 +53,9 @@
     <Compile Include="FerdaServiceI.cs" />
     <Compile Include="IBoxInfo.cs" />
     <Compile Include="IFunctions.cs" />
+    <Compile Include="ProgressTaskI.cs" />
     <Compile Include="PropertyValueRestrictionsHelper.cs" />
     <Compile Include="ReapThread.cs" />
-    <Compile Include="Resources.cs" />
     <Compile Include="SocketConnections.cs" />
   </ItemGroup>
   <ItemGroup>

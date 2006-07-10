@@ -1,3 +1,4 @@
+#if DEBUG
 using Ferda.Guha.Data;
 
 namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
@@ -391,3 +392,4 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
         bool supportsFloatContingencyTable;
     }
 }
+#endif 

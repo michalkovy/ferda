@@ -1,20 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using Ferda.Modules;
+using Ice;
 
 namespace Ferda.Guha.MiningProcessor
 {
+
     #region Ice object implementations
-    public class BitStringI : BitString { }
 
-    public class IEntitySettingI : IEntitySetting { }
+    public class BitStringI : BitString
+    {
+    }
 
-    public class ILeafEntitySettingI : ILeafEntitySetting { }
+    public class IEntitySettingI : IEntitySetting
+    {
+    }
+
+    public class ILeafEntitySettingI : ILeafEntitySetting
+    {
+    }
 
     public class CoefficientFixedSetSettingI : CoefficientFixedSetSetting
     {
-        public CoefficientFixedSetSettingI(GuidStruct id, ImportanceEnum importance, BitStringGeneratorPrx generator, string[] categoriesIds)
+        public CoefficientFixedSetSettingI(GuidStruct id, ImportanceEnum importance, BitStringGeneratorPrx generator,
+                                           string[] categoriesIds)
             : base(id, importance, generator, categoriesIds)
         {
         }
@@ -27,7 +35,8 @@ namespace Ferda.Guha.MiningProcessor
 
     public class CoefficientSettingI : CoefficientSetting
     {
-        public CoefficientSettingI(GuidStruct id, ImportanceEnum importance, BitStringGeneratorPrx generator, int minLength, int maxLength, CoefficientTypeEnum coefficientType)
+        public CoefficientSettingI(GuidStruct id, ImportanceEnum importance, BitStringGeneratorPrx generator,
+                                   int minLength, int maxLength, CoefficientTypeEnum coefficientType)
             : base(id, importance, generator, minLength, maxLength, coefficientType)
         {
         }
@@ -38,7 +47,9 @@ namespace Ferda.Guha.MiningProcessor
         }
     }
 
-    public class ISingleOperandEntitySettingI : ISingleOperandEntitySetting { }
+    public class ISingleOperandEntitySettingI : ISingleOperandEntitySetting
+    {
+    }
 
     public class NegationSettingI : NegationSetting
     {
@@ -66,11 +77,14 @@ namespace Ferda.Guha.MiningProcessor
         }
     }
 
-    public class IMultipleOperandEntitySettingI : IMultipleOperandEntitySetting { }
+    public class IMultipleOperandEntitySettingI : IMultipleOperandEntitySetting
+    {
+    }
 
     public class ConjunctionSettingI : ConjunctionSetting
     {
-        public ConjunctionSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting[] operands, GuidStruct[][] classesOfEquivalence, int minLength, int maxLength)
+        public ConjunctionSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting[] operands,
+                                   GuidStruct[][] classesOfEquivalence, int minLength, int maxLength)
             : base(id, importance, operands, classesOfEquivalence, minLength, maxLength)
         {
         }
@@ -84,7 +98,8 @@ namespace Ferda.Guha.MiningProcessor
 
     public class DisjunctionSettingI : DisjunctionSetting
     {
-        public DisjunctionSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting[] operands, GuidStruct[][] classesOfEquivalence, int minLength, int maxLength)
+        public DisjunctionSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting[] operands,
+                                   GuidStruct[][] classesOfEquivalence, int minLength, int maxLength)
             : base(id, importance, operands, classesOfEquivalence, minLength, maxLength)
         {
         }
@@ -94,13 +109,14 @@ namespace Ferda.Guha.MiningProcessor
         {
         }
     }
+
     #endregion
 
-    public class ObjectFactory : Ice.LocalObjectImpl, Ice.ObjectFactory
+    public class ObjectFactory : LocalObjectImpl, Ice.ObjectFactory
     {
         #region ObjectFactoryOperationsNC_ Members
 
-        public Ice.Object create(string type)
+        public Object create(string type)
         {
             switch (type)
             {
@@ -127,7 +143,7 @@ namespace Ferda.Guha.MiningProcessor
                 case "::Ferda::Guha::MiningProcessor::DisjunctionSetting":
                     return new DisjunctionSettingI();
             }
-            System.Diagnostics.Debug.Assert(false);
+            Debug.Assert(false);
             return null;
         }
 
@@ -138,8 +154,8 @@ namespace Ferda.Guha.MiningProcessor
 
         #endregion
 
-        public static void addFactoryToCommunicator(Ice.Communicator communicator,
-        ObjectFactory factory)
+        public static void addFactoryToCommunicator(Communicator communicator,
+                                                    ObjectFactory factory)
         {
             lock (communicator)
             {

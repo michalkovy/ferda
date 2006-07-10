@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Ferda.Guha.Data;
 using Ferda.Guha.Math.Quantifiers;
 
@@ -11,10 +10,11 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         public const int InvokesBeforeNextReorderOfQuantifiers = 128;
 
         private readonly Dictionary<string, Quantifier> _quantifeirs;
+
         public Dictionary<string, Quantifier> Quantifeirs
         {
             get { return _quantifeirs; }
-        } 
+        }
 
         private Quantifiers(int quantifiersCount)
         {
@@ -27,7 +27,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         /// <param name="quantifiers">The quantifiers.</param>
         /// <param name="taskFuncPrx">The "numeric values providers" provider.</param>
         /// <param name="localePrefs">The locale prefs.</param>
-        public Quantifiers(QuantifierBaseFunctionsPrx[] quantifiers, BitStringGeneratorProviderPrx taskFuncPrx, string[] localePrefs)
+        public Quantifiers(QuantifierBaseFunctionsPrx[] quantifiers, BitStringGeneratorProviderPrx taskFuncPrx,
+                           string[] localePrefs)
             : this(quantifiers.Length)
         {
             foreach (QuantifierBaseFunctionsPrx prx in quantifiers)
@@ -105,6 +106,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         #region Sort quantifiers by efficiency
+
         private ICollection<Quantifier> sortByActualEfficiency(ICollection<Quantifier> quantifiers)
         {
             if (quantifiers.Count <= 1)
@@ -128,6 +130,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         private List<Quantifier> _qQuiteEasy;
         private List<Quantifier> _qEasy;
         private int _invokes = 0;
+
         private List<Quantifier> getQuantifiersSortedByEfficiency()
         {
             lock (this)
@@ -139,6 +142,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         _sortedByEfficiency = new List<Quantifier>(_quantifeirs.Count);
 
                         #region Divide by performance difficulty
+
                         _qDifficult = new List<Quantifier>();
                         _qQuiteDifficult = new List<Quantifier>();
                         _qMedium = new List<Quantifier>();
@@ -168,6 +172,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                                     throw new NotImplementedException();
                             }
                         }
+
                         #endregion
                     }
 
@@ -181,7 +186,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 }
                 return _sortedByEfficiency;
             }
-        } 
+        }
+
         #endregion
 
         public bool Valid(ContingencyTableHelper contingencyTable)

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 using Ferda.Guha.Math.Quantifiers;
 
 namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
@@ -56,12 +56,32 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     /// </remarks>
     internal class FourFoldContingencyTable
     {
-        public double a { get { return _cT[0][0]; } set { _cT[0][0] = value; } }
-        public double b { get { return _cT[0][1]; } set { _cT[0][1] = value; } }
-        public double c { get { return _cT[1][0]; } set { _cT[1][0] = value; } }
-        public double d { get { return _cT[1][1]; } set { _cT[1][1] = value; } }
+        public double a
+        {
+            get { return _cT[0][0]; }
+            set { _cT[0][0] = value; }
+        }
+
+        public double b
+        {
+            get { return _cT[0][1]; }
+            set { _cT[0][1] = value; }
+        }
+
+        public double c
+        {
+            get { return _cT[1][0]; }
+            set { _cT[1][0] = value; }
+        }
+
+        public double d
+        {
+            get { return _cT[1][1]; }
+            set { _cT[1][1] = value; }
+        }
 
         private double[][] _cT;
+
         public double[][] ContingencyTable
         {
             get { return _cT; }
@@ -93,6 +113,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         private double _relativeToActConditionDenominator = -1;
+
         public double RelativeToActConditionDenominator
         {
             get
@@ -106,6 +127,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         private double _relativeToMaxFrequencyDenominator = -1;
+
         public double RelativeToMaxFrequencyDenominator
         {
             get
@@ -117,7 +139,6 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 return _relativeToMaxFrequencyDenominator;
             }
         }
-
     }
 
     /// <summary>
@@ -133,28 +154,116 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     /// </remarks>
     internal class NineFoldContingencyTablePair
     {
-        public double f111 { get { return _cT[0][0]; } set { _cT[0][0] = value; } }
-        public double f1x1 { get { return _cT[0][1]; } set { _cT[0][1] = value; } }
-        public double f101 { get { return _cT[0][2]; } set { _cT[0][2] = value; } }
-        public double f11x { get { return _cT[0][3]; } set { _cT[0][3] = value; } }
-        public double f1xx { get { return _cT[0][4]; } set { _cT[0][4] = value; } }
-        public double f10x { get { return _cT[0][5]; } set { _cT[0][5] = value; } }
+        public double f111
+        {
+            get { return _cT[0][0]; }
+            set { _cT[0][0] = value; }
+        }
 
-        public double fx11 { get { return _cT[1][0]; } set { _cT[1][0] = value; } }
-        public double fxx1 { get { return _cT[1][1]; } set { _cT[1][1] = value; } }
-        public double fx01 { get { return _cT[1][2]; } set { _cT[1][2] = value; } }
-        public double fx1x { get { return _cT[1][3]; } set { _cT[1][3] = value; } }
-        public double fxxx { get { return _cT[1][4]; } set { _cT[1][4] = value; } }
-        public double fx0x { get { return _cT[1][5]; } set { _cT[1][5] = value; } }
+        public double f1x1
+        {
+            get { return _cT[0][1]; }
+            set { _cT[0][1] = value; }
+        }
 
-        public double f011 { get { return _cT[2][0]; } set { _cT[2][0] = value; } }
-        public double f0x1 { get { return _cT[2][1]; } set { _cT[2][1] = value; } }
-        public double f001 { get { return _cT[2][2]; } set { _cT[2][2] = value; } }
-        public double f01x { get { return _cT[2][3]; } set { _cT[2][3] = value; } }
-        public double f0xx { get { return _cT[2][4]; } set { _cT[2][4] = value; } }
-        public double f00x { get { return _cT[2][5]; } set { _cT[2][5] = value; } }
+        public double f101
+        {
+            get { return _cT[0][2]; }
+            set { _cT[0][2] = value; }
+        }
+
+        public double f11x
+        {
+            get { return _cT[0][3]; }
+            set { _cT[0][3] = value; }
+        }
+
+        public double f1xx
+        {
+            get { return _cT[0][4]; }
+            set { _cT[0][4] = value; }
+        }
+
+        public double f10x
+        {
+            get { return _cT[0][5]; }
+            set { _cT[0][5] = value; }
+        }
+
+        public double fx11
+        {
+            get { return _cT[1][0]; }
+            set { _cT[1][0] = value; }
+        }
+
+        public double fxx1
+        {
+            get { return _cT[1][1]; }
+            set { _cT[1][1] = value; }
+        }
+
+        public double fx01
+        {
+            get { return _cT[1][2]; }
+            set { _cT[1][2] = value; }
+        }
+
+        public double fx1x
+        {
+            get { return _cT[1][3]; }
+            set { _cT[1][3] = value; }
+        }
+
+        public double fxxx
+        {
+            get { return _cT[1][4]; }
+            set { _cT[1][4] = value; }
+        }
+
+        public double fx0x
+        {
+            get { return _cT[1][5]; }
+            set { _cT[1][5] = value; }
+        }
+
+        public double f011
+        {
+            get { return _cT[2][0]; }
+            set { _cT[2][0] = value; }
+        }
+
+        public double f0x1
+        {
+            get { return _cT[2][1]; }
+            set { _cT[2][1] = value; }
+        }
+
+        public double f001
+        {
+            get { return _cT[2][2]; }
+            set { _cT[2][2] = value; }
+        }
+
+        public double f01x
+        {
+            get { return _cT[2][3]; }
+            set { _cT[2][3] = value; }
+        }
+
+        public double f0xx
+        {
+            get { return _cT[2][4]; }
+            set { _cT[2][4] = value; }
+        }
+
+        public double f00x
+        {
+            get { return _cT[2][5]; }
+            set { _cT[2][5] = value; }
+        }
 
         private double[][] _cT;
+
         public double[][] ContingencyTable
         {
             get { return _cT; }
@@ -181,27 +290,33 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     public class ContingencyTableHelper
     {
         #region Fields and Properties
+
         private double[][] _contingencyTable;
+
+        [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public double[][] ContingencyTable
         {
             get { return _contingencyTable; }
         }
 
         private long _allObjectsCount;
+
         public long AllObjectsCount
         {
             get { return _allObjectsCount; }
         }
 
-        double _denominator = 1.0d;
+        private double _denominator = 1.0d;
 
-        private Guid _numericValuesAttributeId;
-        public Guid NumericValuesAttributeId
+        private string _numericValuesAttributeGuid;
+
+        public string NumericValuesAttributeGuid
         {
-            get { return _numericValuesAttributeId; }
+            get { return _numericValuesAttributeGuid; }
         }
 
         private double _relativeToActConditionDenominator = -1;
+
         protected double relativeToActConditionDenominator
         {
             get
@@ -210,11 +325,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 {
                     computeDenominators();
                 }
-                return _relativeToActConditionDenominator * _denominator;
+                return _relativeToActConditionDenominator*_denominator;
             }
         }
 
         private double _relativeToMaxFrequencyDenominator = -1;
+
         protected double relativeToMaxFrequencyDenominator
         {
             get
@@ -223,18 +339,20 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 {
                     computeDenominators();
                 }
-                return _relativeToMaxFrequencyDenominator * _denominator;
+                return _relativeToMaxFrequencyDenominator*_denominator;
             }
         }
+
         #endregion
 
         #region Operator Minus (of Absolute/Relative Frequencies)
+
         public static ContingencyTableHelper OperatorAbsMinus(ContingencyTableHelper op1, ContingencyTableHelper op2)
         {
             if (!(
-                     (op1.NumericValuesAttributeId == null && op2.NumericValuesAttributeId == null)
-                    ||
-                     (op1.NumericValuesAttributeId == op2.NumericValuesAttributeId)
+                     (op1.NumericValuesAttributeGuid == null && op2.NumericValuesAttributeGuid == null)
+                     ||
+                     (op1.NumericValuesAttributeGuid == op2.NumericValuesAttributeGuid)
                  ))
                 throw new ArgumentException();
             int numOfRows = op1.ContingencyTable.Length;
@@ -256,18 +374,18 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         );
                 }
             }
-            if (op1.NumericValuesAttributeId == null)
+            if (op1.NumericValuesAttributeGuid == null)
                 return new ContingencyTableHelper(result, op1.AllObjectsCount);
             else
-                return new ContingencyTableHelper(result, op1.AllObjectsCount, op1.NumericValuesAttributeId);
+                return new ContingencyTableHelper(result, op1.AllObjectsCount, op1.NumericValuesAttributeGuid);
         }
 
         public static ContingencyTableHelper OperatorRelMinus(ContingencyTableHelper op1, ContingencyTableHelper op2)
         {
             if (!(
-                     (op1.NumericValuesAttributeId == null && op2.NumericValuesAttributeId == null)
-                    ||
-                     (op1.NumericValuesAttributeId == op2.NumericValuesAttributeId)
+                     (op1.NumericValuesAttributeGuid == null && op2.NumericValuesAttributeGuid == null)
+                     ||
+                     (op1.NumericValuesAttributeGuid == op2.NumericValuesAttributeGuid)
                  ))
                 throw new ArgumentException();
             int numOfRows = op1.ContingencyTable.Length;
@@ -286,20 +404,24 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 for (int c = 0; c < numOfCols; c++)
                 {
                     result[r][c] = System.Math.Abs(
-                        op1.ContingencyTable[r][c] * op2Den
-                        - op2.ContingencyTable[r][c] * op1Den
+                        op1.ContingencyTable[r][c]*op2Den
+                        - op2.ContingencyTable[r][c]*op1Den
                         );
                 }
             }
-            double newDenominator = op1Den * op2Den;
-            if (op1.NumericValuesAttributeId == null)
+            double newDenominator = op1Den*op2Den;
+            if (op1.NumericValuesAttributeGuid == null)
                 return new ContingencyTableHelper(result, op1.AllObjectsCount, newDenominator);
             else
-                return new ContingencyTableHelper(result, op1.AllObjectsCount, newDenominator, op1.NumericValuesAttributeId);
-        } 
+                return
+                    new ContingencyTableHelper(result, op1.AllObjectsCount, newDenominator,
+                                               op1.NumericValuesAttributeGuid);
+        }
+
         #endregion
 
         #region Constructors
+
         public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount, double denominator)
         {
             if (contingencyTable == null)
@@ -316,19 +438,23 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
         }
 
-        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount, double denominator, Guid numericValuesAttributeId)
+        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount, double denominator,
+                                      string numericValuesAttributeGuid)
             : this(contingencyTable, allObjectsCount, denominator)
         {
-            _numericValuesAttributeId = numericValuesAttributeId;
+            _numericValuesAttributeGuid = numericValuesAttributeGuid;
         }
 
-        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount, Guid numericValuesAttributeId)
-            : this (contingencyTable, allObjectsCount, 1.0d, numericValuesAttributeId)
+        public ContingencyTableHelper(double[][] contingencyTable, long allObjectsCount,
+                                      string numericValuesAttributeGuid)
+            : this(contingencyTable, allObjectsCount, 1.0d, numericValuesAttributeGuid)
         {
         }
+
         #endregion
 
         #region Sub matrix
+
         private int GetBoundFromIndex(Bound fromBound, int length)
         {
             switch (fromBound.boundType)
@@ -336,7 +462,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 case BoundTypeEnum.All:
                     return 0;
                 case BoundTypeEnum.Half:
-                    return (int)System.Math.Floor((double)length / 2);
+                    return (int) System.Math.Floor((double) length/2);
                 case BoundTypeEnum.Number:
                     if (fromBound.number < length)
                         return length;
@@ -354,7 +480,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 case BoundTypeEnum.All:
                     return length - 1;
                 case BoundTypeEnum.Half:
-                    return (int)System.Math.Ceiling((double)length / 2);
+                    return (int) System.Math.Ceiling((double) length/2);
                 case BoundTypeEnum.Number:
                     if (toBound.number < length)
                         return length;
@@ -390,7 +516,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             _cached.Add(b, val);
         }
 
-        public QuantifierEvaluateSetting GetSubTable(Bound fromRow, Bound toRow, Bound fromColumn, Bound toColumn, UnitsEnum units)
+        public QuantifierEvaluateSetting GetSubTable(Bound fromRow, Bound toRow, Bound fromColumn, Bound toColumn,
+                                                     UnitsEnum units)
         {
             QuantifierEvaluateSetting result = new QuantifierEvaluateSetting();
 
@@ -444,7 +571,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 case UnitsEnum.RelativeToActCondition:
                     if (b != null) // subTable
                     {
-                        result.denominator = _cached[b].RelativeToActConditionDenominator * _denominator;
+                        result.denominator = _cached[b].RelativeToActConditionDenominator*_denominator;
                     }
                     else
                     {
@@ -452,12 +579,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     }
                     break;
                 case UnitsEnum.RelativeToAllObjects:
-                    result.denominator = _allObjectsCount * _denominator;
+                    result.denominator = _allObjectsCount*_denominator;
                     break;
                 case UnitsEnum.RelativeToMaxFrequency:
                     if (b != null) // subTable
                     {
-                        result.denominator = _cached[b].RelativeToMaxFrequencyDenominator * _denominator;
+                        result.denominator = _cached[b].RelativeToMaxFrequencyDenominator*_denominator;
                     }
                     else
                     {
@@ -469,9 +596,11 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
             return result;
         }
+
         #endregion
 
         #region PureFFTQuantifiers: Quantifier classe, missing informatin handling
+
         public bool IsInQuantifierClass(QuantifierClassEnum[] inClasses, QuantifierClassEnum asked)
         {
             foreach (QuantifierClassEnum inClass in inClasses)
@@ -480,7 +609,9 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return false;
         }
 
-        public QuantifierEvaluateSetting GetSubTable(QuantifierClassEnum[] quantifierClasses, MissingInformationHandlingEnum missingInformationHandling, UnitsEnum units)
+        public QuantifierEvaluateSetting GetSubTable(QuantifierClassEnum[] quantifierClasses,
+                                                     MissingInformationHandlingEnum missingInformationHandling,
+                                                     UnitsEnum units)
         {
             FourFoldContingencyTable fourFCT = new FourFoldContingencyTable();
             NineFoldContingencyTablePair nineFCTP = new NineFoldContingencyTablePair(_contingencyTable);
@@ -496,14 +627,14 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.Implicational))
                     {
                         fourFCT.a = nineFCTP.f111 + nineFCTP.f1x1 + nineFCTP.fx11 + nineFCTP.fxx1
-                                  + nineFCTP.f11x + nineFCTP.f1xx + nineFCTP.fx1x + nineFCTP.fxxx;
+                                    + nineFCTP.f11x + nineFCTP.f1xx + nineFCTP.fx1x + nineFCTP.fxxx;
                         fourFCT.b = nineFCTP.f101;
                     }
                     else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.SigmaDoubleImplicational))
                     {
                         // we create a, b in the same way as for QuantifierClassEnum.Implicational
                         fourFCT.a = nineFCTP.f111 + nineFCTP.f1x1 + nineFCTP.fx11 + nineFCTP.fxx1
-                                  + nineFCTP.f11x + nineFCTP.f1xx + nineFCTP.fx1x + nineFCTP.fxxx;
+                                    + nineFCTP.f11x + nineFCTP.f1xx + nineFCTP.fx1x + nineFCTP.fxxx;
                         fourFCT.b = nineFCTP.f101;
                         fourFCT.c = nineFCTP.f011;
                     }
@@ -512,22 +643,23 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         // we create a, b, c in the same way as for QuantifierClassEnum.SigmaDoubleImplicational
                         fourFCT.a = nineFCTP.f111;
                         fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01 + nineFCTP.fxx1
-                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
+                                    + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
                         fourFCT.c = nineFCTP.f011 + nineFCTP.fx11 + nineFCTP.f0x1
-                                  + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
+                                    + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
                         fourFCT.d = nineFCTP.f001 + nineFCTP.f0x1 + nineFCTP.fx01
-                                  + nineFCTP.f00x + nineFCTP.f0xx + nineFCTP.fx0x;
+                                    + nineFCTP.f00x + nineFCTP.f0xx + nineFCTP.fx0x;
                     }
                     else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.FPropertyQuantifier))
                     {
                         fourFCT.a = nineFCTP.f111 + nineFCTP.f1x1 + nineFCTP.fx11
-                                  + nineFCTP.f11x + nineFCTP.f1xx + nineFCTP.fx1x;
+                                    + nineFCTP.f11x + nineFCTP.f1xx + nineFCTP.fx1x;
                         fourFCT.b = nineFCTP.f101;
                         fourFCT.c = nineFCTP.f011;
                         fourFCT.d = nineFCTP.f001 + nineFCTP.fx01 + nineFCTP.f0x1
-                                  + nineFCTP.f00x + nineFCTP.fx0x + nineFCTP.f0xx;
+                                    + nineFCTP.f00x + nineFCTP.fx0x + nineFCTP.f0xx;
 
                         #region Add fxxx and fxx1 to a and d as |a-d| is minimal
+
                         double sH = nineFCTP.fxxx + nineFCTP.fxx1;
                         if (sH != 0)
                         {
@@ -570,6 +702,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                                 }
                             }
                         }
+
                         #endregion
                     }
                     break;
@@ -578,16 +711,16 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     {
                         fourFCT.a = nineFCTP.f111;
                         fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01 + nineFCTP.fxx1
-                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
+                                    + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
                     }
                     else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.SigmaDoubleImplicational))
                     {
                         // we create a, b in the same way as for QuantifierClassEnum.Implicational
                         fourFCT.a = nineFCTP.f111;
                         fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01 + nineFCTP.fxx1
-                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
+                                    + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
                         fourFCT.c = nineFCTP.f011 + nineFCTP.fx11 + nineFCTP.f0x1
-                                  + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
+                                    + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
                         //nineFCTP.fxx1, nineFCTP.fxxx can be placed in b or c (it is equivalent)
                     }
                     else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.SigmaEquivalency))
@@ -595,21 +728,22 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         // we create a, b, c in the same way as for QuantifierClassEnum.SigmaDoubleImplicational
                         fourFCT.a = nineFCTP.f111;
                         fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01 + nineFCTP.fxx1
-                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
+                                    + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x + nineFCTP.fxxx;
                         fourFCT.c = nineFCTP.f011 + nineFCTP.fx11 + nineFCTP.f0x1
-                                  + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
+                                    + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
                         fourFCT.d = nineFCTP.f001;
                     }
                     else if (IsInQuantifierClass(quantifierClasses, QuantifierClassEnum.FPropertyQuantifier))
                     {
                         fourFCT.a = nineFCTP.f111;
                         fourFCT.b = nineFCTP.f101 + nineFCTP.f1x1 + nineFCTP.fx01
-                                  + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x;
+                                    + nineFCTP.f10x + nineFCTP.f1xx + nineFCTP.fx0x;
                         fourFCT.c = nineFCTP.f011 + nineFCTP.fx11 + nineFCTP.f0x1
-                                  + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
+                                    + nineFCTP.f01x + nineFCTP.fx1x + nineFCTP.f0xx;
                         fourFCT.d = nineFCTP.f001;
 
                         #region Add fxxx and fxx1 to b and c as |b-c| is minimal
+
                         double sH = nineFCTP.fxxx + nineFCTP.fxx1;
                         if (sH != 0)
                         {
@@ -652,6 +786,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                                 }
                             }
                         }
+
                         #endregion
                     }
                     break;
@@ -661,7 +796,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             QuantifierEvaluateSetting result = new QuantifierEvaluateSetting();
             result.contingencyTable = fourFCT.ContingencyTable;
             result.numericValuesProviders = null;
-            result.numericValuesAttributeId = null;
+            //result.numericValuesAttributeId = null;
 
             switch (units)
             {
@@ -672,13 +807,13 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     result.denominator = 1;
                     break;
                 case UnitsEnum.RelativeToActCondition:
-                    result.denominator = fourFCT.RelativeToActConditionDenominator * _denominator;
+                    result.denominator = fourFCT.RelativeToActConditionDenominator*_denominator;
                     break;
                 case UnitsEnum.RelativeToAllObjects:
-                    result.denominator = _allObjectsCount * _denominator;
+                    result.denominator = _allObjectsCount*_denominator;
                     break;
                 case UnitsEnum.RelativeToMaxFrequency:
-                    result.denominator = fourFCT.RelativeToMaxFrequencyDenominator * _denominator;
+                    result.denominator = fourFCT.RelativeToMaxFrequencyDenominator*_denominator;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -686,6 +821,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
             return result;
         }
+
         #endregion
 
         private void computeDenominators()

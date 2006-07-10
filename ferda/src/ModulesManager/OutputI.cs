@@ -20,6 +20,7 @@
 
 using System;
 using Ice;
+using Ferda.Modules;
 
 namespace Ferda {
     namespace ModulesManager {

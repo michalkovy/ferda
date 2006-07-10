@@ -160,14 +160,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
             return result.ToArray();
         }
 
-        public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Current current__)
+        public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeGuid, Current current__)
         {
             BitStringGeneratorPrx result;
             List<BooleanAttributeSettingFunctionsPrx> subFormulas =
                 GetBooleanAttributeSettingFunctionsPrxs(true);
             foreach (BooleanAttributeSettingFunctionsPrx prx in subFormulas)
             {
-                result = prx.GetBitStringGenerator(attributeId);
+                result = prx.GetBitStringGenerator(attributeGuid);
                 if (result != null)
                     return result;
             }

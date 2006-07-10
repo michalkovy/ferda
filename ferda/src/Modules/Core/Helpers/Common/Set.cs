@@ -12,10 +12,17 @@ namespace Ferda.Modules.Helpers.Common
     public class Set<T> : IEquatable<Set<T>>, IEnumerable<T>
         where T : IEquatable<T>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Set&lt;T&gt;"/> class.
+        /// </summary>
         public Set()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Set&lt;T&gt;"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
         public Set(T item)
         {
             _set.Add(item);
@@ -79,6 +86,13 @@ namespace Ferda.Modules.Helpers.Common
 
 
 
+        /// <summary>
+        /// Determines whether the sepecified set is subset of this set.
+        /// </summary>
+        /// <param name="set">The set.</param>
+        /// <returns>
+        /// 	<c>true</c> if the sepecified set is subset of this set; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsSubsetOf(Set<T> set)
         {
             if (set == null)
@@ -96,6 +110,13 @@ namespace Ferda.Modules.Helpers.Common
 
         #region IEquatable<Set<T>> Members
 
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>
+        /// true if the current object is equal to the other parameter; otherwise, false.
+        /// </returns>
         public bool Equals(Set<T> other)
         {
             if (other == null)
@@ -110,13 +131,49 @@ namespace Ferda.Modules.Helpers.Common
             return true;
         }
 
+        public override int GetHashCode()
+        {
+            if (Count == 0)
+                return 0;
+            else
+            {
+                int result = 0;
+                foreach (T item in _set)
+                {
+                    result |= item.GetHashCode();
+                }
+                result ^= Count;
+                return result;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (this == obj) return true;
+            Set<T> set = obj as Set<T>;
+            if (set == null) return false;
+            if (!Equals(set)) return false;
+            return true;
+        }
+
         #endregion
 
+        /// <summary>
+        /// Joins the specified set.
+        /// </summary>
+        /// <param name="op2">The set.</param>
+        /// <returns></returns>
         public Set<T> Join(Set<T> op2)
         {
             return Join(this, op2);
         }
 
+        /// <summary>
+        /// Joins the specified sets.
+        /// </summary>
+        /// <param name="op1">The set 1.</param>
+        /// <param name="op2">The set 2.</param>
+        /// <returns></returns>
         public static Set<T> Join(Set<T> op1, Set<T> op2)
         {
             Set<T> result = new Set<T>();
@@ -133,6 +190,11 @@ namespace Ferda.Modules.Helpers.Common
             return result;
         }
 
+        /// <summary>
+        /// Joins the specified sets.
+        /// </summary>
+        /// <param name="ops">The sets.</param>
+        /// <returns></returns>
         public static Set<T> Join(Set<T>[] ops)
         {
             Set<T> result = new Set<T>();
@@ -151,6 +213,12 @@ namespace Ferda.Modules.Helpers.Common
 
         #region IEnumerable<Set<T>> Members
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"></see> that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
             return _set.GetEnumerator();

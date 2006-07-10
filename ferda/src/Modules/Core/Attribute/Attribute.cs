@@ -91,6 +91,10 @@ namespace Ferda.Guha.Attribute
             get { return _intervalsAllowed; }
         }
 
+        /// <summary>
+        /// Gets the DB data type of the T type.
+        /// </summary>
+        /// <value>The DB data type of the T type.</value>
         public DbSimpleDataTypeEnum DbDataType
         {
             get { return _dbDataType; }

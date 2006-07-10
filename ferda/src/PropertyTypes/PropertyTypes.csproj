@@ -44,8 +44,6 @@
     <Compile Include="DateTimeTI.cs" />
     <Compile Include="DoubleTI.cs" />
     <Compile Include="FloatTI.cs" />
-    <Compile Include="GenerationInfoTI.cs" />
-    <Compile Include="HypothesesTI.cs" />
     <Compile Include="IntTI.cs" />
     <Compile Include="IValue.cs" />
     <Compile Include="LongTI.cs" />

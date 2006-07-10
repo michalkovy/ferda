@@ -117,7 +117,7 @@ namespace Tests.MiningProcessor
             CreateCS1s(CoefficientTypeEnum.Subsets);
         }
 
-        public static string coefficientAttributeId = "";
+        public static string coefficientAttributeGuid = "";
 
         /// <summary>
         ///A test for Coefficients
