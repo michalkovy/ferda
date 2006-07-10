@@ -62,8 +62,8 @@ namespace Ferda.FrontEnd.ProgressBar
 
             //creating a new progress bar control
             myControl = new BoxProgressBar(this);
-            myControl.Name = name;
-            myControl.Hint = hint;
+            myControl.BoxName = name;
+            myControl.SetHint(hint);
 
             parentControl.AddBoxProgressBar(myControl);
         }
@@ -97,13 +97,24 @@ namespace Ferda.FrontEnd.ProgressBar
             else
             {
                 myControl.ProgressStyle = ProgressBarStyle.Continuous;
-                myControl.Value = value;
+                myControl.SetValue(value);
             }
 
+            myControl.SetHint(message);
             //asyncAdapt();
         }
 
-        //refreshovani z frontendu je blbost...
+        /// <summary>
+        /// Stops the current task
+        /// </summary>
+        public void stop()
+        {
+            if (task != null)
+            {
+                task.stop();
+            }
+        }
+
         //co kdyz uzivatel klikne 2x na stejnou akci - jak se to bude resit?
     }
 }

@@ -743,14 +743,16 @@ using Ferda.ModulesManager;
 
             prescreen.DisplayText(form.ResManager.GetString("LoadingProjectManager"));
             //loading the project manager
+            OutputI output = new OutputI();
             ProjectManager.ProjectManager pm =
                 new ProjectManager.ProjectManager(
 				args,
 				iceConfig.ProjectManagerOptions,
-				new Ferda.FrontEnd.OutputI());
+				output);
 
             //setting the form for the project manager
 		    form.RightAfterConstructor(pm, prescreen);
+            output.Control = form.progressBarControl;
 
             prescreen.DisplayText(form.ResManager.GetString("LoadingAddIns"));
             //loading the add ins

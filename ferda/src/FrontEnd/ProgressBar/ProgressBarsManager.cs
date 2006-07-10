@@ -35,6 +35,12 @@ namespace Ferda.FrontEnd.ProgressBar
     /// </summary>
     public class ProgressBarsManager : UserControl
     {
+        #region Class fields
+
+        delegate void MyDelegate(BoxProgressBar progressBar);
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -102,9 +108,20 @@ namespace Ferda.FrontEnd.ProgressBar
         /// <param name="progressBar">control to be added</param>
         public void AddBoxProgressBar(BoxProgressBar progressBar)
         {
-            //control se bude davt na konec seznamu - vypocitava se misto
-
-            this.Controls.Add(progressBar);
+            if (InvokeRequired)
+            {
+                MyDelegate d = new MyDelegate(AddBoxProgressBar);
+                this.Invoke(d, new object[] { progressBar });
+            }
+            else
+            {
+                if (Controls.Count != 0)
+                {
+                    int controlHeight = Controls[0].Height;
+                    progressBar.Location = new Point(0, Controls.Count * controlHeight);
+                }
+                this.Controls.Add(progressBar);
+            }
         }
 
         /// <summary>
@@ -113,10 +130,22 @@ namespace Ferda.FrontEnd.ProgressBar
         /// <param name="progressBar">control to be removed</param>
         public void RemoveBoxProgressBar(BoxProgressBar progressBar)
         {
-            this.Controls.Remove(progressBar);
+            if (InvokeRequired)
+            {
+                MyDelegate d = new MyDelegate(RemoveBoxProgressBar);
+                this.Invoke(d, new object[] { progressBar });
+            }
+            else
+            {
+                this.Controls.Remove(progressBar);
 
-            //vsechny ostatni controly, ktere byly "za" zrusenym progressbarem
-            //se posunou na jeho misto
+                //vsechny ostatni controly, ktere byly "za" zrusenym progressbarem
+                //se posunou na jeho misto
+                for (int i = 0; i < Controls.Count; i++)
+                {
+                    Controls[i].Location = new Point(0, i * Controls[0].Height);
+                }
+            }
         }
 
         /// <summary>
