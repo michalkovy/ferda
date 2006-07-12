@@ -44,11 +44,19 @@ using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
-    public struct UsedColumns
+    public struct UsedColumn
     {
         public int ColumnId;
         public MarkEnum ColumnType;
         public string ColumnName;
+        public bool Selected;
+    }
+
+    public struct UsedQuantifier
+    {
+        public int QuantifierId;
+        public string QuantifierLabel;
+        public string QuantifierUserLabel;
         public bool Selected;
     }
     /// <summary>
@@ -101,7 +109,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Columns
         /// </summary>
-        private UsedColumns[] columns;
+        private UsedColumn[] columns;
+
+        /// <summary>
+        /// Quantifiers
+        /// </summary>
+        private UsedQuantifier[] quantifiers;
 
         /// <summary>
         /// Previously selected index
@@ -169,11 +182,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private void ColumnsInit(MarkEnum[] marks)
         {
             int i = 0;
-            columns = new UsedColumns[marks.Length];
+            columns = new UsedColumn[marks.Length];
             foreach (MarkEnum mark in marks)
             {
                 this.CheckedListMarks.Items.Add(mark.ToString(), false);
-                UsedColumns usedColumn = new UsedColumns();
+                UsedColumn usedColumn = new UsedColumn();
                 usedColumn.ColumnId = i;
                 usedColumn.ColumnType = mark;
                 usedColumn.ColumnName = mark.ToString();
@@ -183,10 +196,30 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
         }
 
+        /// <summary>
+        /// Inits quantifiers display checkbox and internal quantifiers list
+        /// </summary>
+        /// <param name="labels"></param>
+        /// <param name="userLabels"></param>
+        private void QuantifiersInit(string[] labels, string [] userLabels)
+        {
+            quantifiers = new UsedQuantifier[labels.Length];
+            for (int i = 0; i < labels.Length; i++)
+            {
+                this.CheckedListQuantifiers.Items.Add(labels[i] + "(" + userLabels[i] + ")", false);
+                UsedQuantifier usedQuantifier = new UsedQuantifier();
+                usedQuantifier.QuantifierId = i;
+                usedQuantifier.QuantifierLabel = labels[i];
+                usedQuantifier.QuantifierUserLabel = userLabels[i];
+                usedQuantifier.Selected = false;
+                quantifiers[i] = usedQuantifier;
+            }
+        }
+
         private void AllInit()
         {
             ColumnsInit(resultBrowser.SemanticMarks);
-            //TODO: Quantifiers checkboxlist init
+            QuantifiersInit(resultBrowser.QuantifiersLabels, resultBrowser.QuantifiersUserLabels);
             //TODO: Filters init
             //TODO: Hypotheses count init
             AddAllHypothesesToListView();
@@ -210,7 +243,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             //TODO: Check filters
 
-            foreach (UsedColumns column in this.columns)
+            foreach (UsedColumn column in this.columns)
             {
                 if (column.Selected)
                 {
@@ -218,8 +251,25 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
             }
 
-            //TODO: Add quantifiers columns
+            double [] quantifiersValues;
+            if (RadioFirstTable.Checked)
+            {
+                quantifiersValues = resultBrowser.ReadQuantifiersFromCacheFirstTable(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
+            }
+            else
+            {
+                quantifiersValues = resultBrowser.ReadQuantifiersFromCacheSecondTable(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
+            }
+            for (int i = 0; i < quantifiersValues.Length; i++)
+            {
+                if (quantifiers[i].Selected)
+                {
+                    item.SubItems.Add(quantifiersValues[i].ToString());
+                }
+            }
+            HypothesesListView.Items.Add(item);
         }
+
 
         /// <summary>
         /// Adds all hypotheses to listview
@@ -251,11 +301,31 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         }
 
         /// <summary>
+        /// Map the quantifier checkbox to internal quantifier structure
+        /// </summary>
+        private void ChangeQuantifierCheck()
+        {
+            for (int i = 0; i < CheckedListQuantifiers.Items.Count; i++)
+            {
+                if (CheckedListQuantifiers.CheckedItems.IndexOf(CheckedListQuantifiers.Items[i]) != -1)
+                {
+                    quantifiers[i].Selected = true;
+                }
+                else
+                {
+                    quantifiers[i].Selected = false;
+                }
+            }
+        }
+
+        /// <summary>
         /// Method which temporarily disables all of the user controls until initialization is done
         /// </summary>
         private void PreloadDisable()
         {
             // this.HypothesesListView.Visible = false;
+            this.CheckedListMarks.Enabled = false;
+            this.CheckedListQuantifiers.Enabled = false;
             this.CheckedListBoxAntecedents.Enabled = false;
             this.CheckedListBoxConditions.Enabled = false;
             this.CheckedListBoxSuccedents.Enabled = false;
@@ -270,6 +340,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         {
             this.HypothesesListView.Enabled = true;
             this.HypothesesListView.Visible = true;
+            this.CheckedListMarks.Enabled = true;
+            this.CheckedListQuantifiers.Enabled = true;
             this.CheckedListBoxAntecedents.Enabled = true;
             this.CheckedListBoxConditions.Enabled = true;
             this.CheckedListBoxSuccedents.Enabled = true;
@@ -663,7 +735,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             table.Properties.Add(hName);
             table[resManager.GetString("HypothesisId")] = hypothesisId;
 
-            foreach (UsedColumns column in this.columns)
+            foreach (UsedColumn column in this.columns)
             {
                 if (column.Selected)
                 {
@@ -772,15 +844,26 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             #region Used quantifiers and their values
 
-            /*
+            
             //used quantifiers and their values
-            List<string> names = this.resultBrowser.GetAllQuantifierNames();
-            double[] quantifiers = this.resultBrowser.ReadAllQuantifiersFromCache(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
+            double[] quantifiers;
+
+            if (this.RadioFirstTable.Checked)
+            {
+                quantifiers = resultBrowser.ReadQuantifiersFromCacheFirstTable(hypothesisId,
+                    Convert.ToInt32(this.NumericUpDownDecimals.Value));
+            }
+            else
+            {
+                quantifiers = resultBrowser.ReadQuantifiersFromCacheSecondTable(hypothesisId,
+                    Convert.ToInt32(this.NumericUpDownDecimals.Value));
+            }
 
             for (int i = 0; i < quantifiers.Length; i++)
             {
                 PropertySpec hQuantifier = new PropertySpec(
-                names[i],
+                resultBrowser.QuantifiersLabels[i]
+                    + "(" + resultBrowser.QuantifiersUserLabels[i] + ")",
                 typeof(double),
                 resManager.GetString("AppliedQuantifiers"),
                 resManager.GetString("AppliedQuantifiers"),
@@ -788,9 +871,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 );
                 hQuantifier.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                 table.Properties.Add(hQuantifier);
-                table[names[i]] = quantifiers[i];
+                table[resultBrowser.QuantifiersLabels[i]
+                    + "(" + resultBrowser.QuantifiersUserLabels[i]+")"] = quantifiers[i];
             }
-             * */
 
             #endregion
 
@@ -1160,6 +1243,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private void ButtonSubmitColumnChange_Click(object sender, EventArgs e)
         {
             ChangeColumnCheck();
+            ChangeQuantifierCheck();
             this.HypothesesListView.Items.Clear();
             this.HypothesesListView.Columns.Clear();
 
@@ -1169,6 +1253,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 if (columns[i].Selected)
                 {
                     this.HypothesesListView.Columns.Add(columns[i].ColumnName);
+                }
+            }
+
+            for (int i = 0; i < quantifiers.Length; i++)
+            {
+                if (quantifiers[i].Selected)
+                {
+                    this.HypothesesListView.Columns.Add(quantifiers[i].QuantifierLabel +
+                        "(" + quantifiers[i].QuantifierUserLabel + ")");
                 }
             }
             AddAllHypothesesToListView();
@@ -1229,6 +1322,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             LabelAntecedentFilter.Text = rm.GetString("AntecedentFilter");
             LabelSuccedentFilter.Text = rm.GetString("SuccedentFilter");
             LabelConditionFilter.Text = rm.GetString("ConditionFilter");
+            LabelColumnsToDisplay.Text = rm.GetString("LabelColumnsToDisplay");
+            LabelQuantifiersToDisplay.Text = rm.GetString("LabelQuantifiersToDisplay");
             ButtonSubmitFilter.Text = rm.GetString("ButtonFilter");
             LabelHypothesesTotal.Text = rm.GetString("HypothesesCount");
             RadioFirstTable.Text = rm.GetString("RadioFirst");

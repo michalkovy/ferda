@@ -198,6 +198,9 @@
   <data name="HypothesisId" xml:space="preserve">
     <value>ID hypotézy</value>
   </data>
+  <data name="LabelColumnsToDisplay" xml:space="preserve">
+    <value>Zobrazené sloupce</value>
+  </data>
   <data name="LabelHOffset" xml:space="preserve">
     <value>Hor. posun</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="LabelPerspective" xml:space="preserve">
     <value>Perspektiva</value>
+  </data>
+  <data name="LabelQuantifiersToDisplay" xml:space="preserve">
+    <value>Zobrazené kvantifikátory</value>
   </data>
   <data name="LabelRotation" xml:space="preserve">
     <value>Rotace</value>
