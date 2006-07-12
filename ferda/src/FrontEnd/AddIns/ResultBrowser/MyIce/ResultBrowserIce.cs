@@ -77,10 +77,31 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         public override Ferda.Modules.BoxType[] getAcceptedBoxTypes(Ice.Current __current)
         {
-            BoxType a = new BoxType();
-            a.neededSockets = new NeededSocket[0];
-            a.functionIceId = "::Ferda::Modules::Boxes::LISpMinerTasks::AbstractLMTask::AbstractLMTaskFunctions";
-            return new BoxType[] { a };
+            BoxType a1 = new BoxType();
+            a1.neededSockets = new NeededSocket[0];
+            a1.functionIceId = "::GuhaMining::Tasks::FourFold";
+
+            BoxType a2 = new BoxType();
+            a2.neededSockets = new NeededSocket[0];
+            a2.functionIceId = "::GuhaMining::Tasks::SDFourFold";
+
+            BoxType a3 = new BoxType();
+            a3.neededSockets = new NeededSocket[0];
+            a3.functionIceId = "::GuhaMining::Tasks::SingleDimensional";
+
+            BoxType a4 = new BoxType();
+            a4.neededSockets = new NeededSocket[0];
+            a4.functionIceId = "::GuhaMining::Tasks::SDSingleDimensional";
+
+            BoxType a5 = new BoxType();
+            a5.neededSockets = new NeededSocket[0];
+            a5.functionIceId = "::GuhaMining::Tasks::TwoDimensional";
+
+            BoxType a6 = new BoxType();
+            a6.neededSockets = new NeededSocket[0];
+            a6.functionIceId = "::GuhaMining::Tasks::SDTwoDimensional";
+
+            return new BoxType[] { a1, a2, a3, a4, a5, a6 };
         }
 
         public override Ferda.Modules.DynamicHelpItem[] getDynamicHelpItems(string[] localePrefs, Ice.Current __current)

@@ -201,6 +201,9 @@
   <data name="HypothesisId" xml:space="preserve">
     <value>Hypothesis ID</value>
   </data>
+  <data name="LabelColumnsToDisplay" xml:space="preserve">
+    <value>Columns to display</value>
+  </data>
   <data name="LabelHOffset" xml:space="preserve">
     <value>Hor. offset</value>
   </data>
@@ -209,6 +212,9 @@
   </data>
   <data name="LabelPerspective" xml:space="preserve">
     <value>Perspective</value>
+  </data>
+  <data name="LabelQuantifiersToDisplay" xml:space="preserve">
+    <value>Quantifiers to display</value>
   </data>
   <data name="LabelRotation" xml:space="preserve">
     <value>Rotation</value>
