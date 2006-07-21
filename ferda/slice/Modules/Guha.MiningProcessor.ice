@@ -41,8 +41,14 @@ module Ferda {
 					string attributeName;
 				};
 				sequence<GuidAttributeNamePair> GuidAttributeNamePairSeq;
+				
+				interface SourceDataTableIdProvider
+				{
+					string GetSourceDataTableId()
+						throws Ferda::Modules::BoxRuntimeError;
+				};
 
-				interface AttributeNameProvider
+				interface AttributeNameProvider extends SourceDataTableIdProvider 
 				{
 					GuidAttributeNamePairSeq GetAttributeNames()
 						throws Ferda::Modules::BoxRuntimeError;

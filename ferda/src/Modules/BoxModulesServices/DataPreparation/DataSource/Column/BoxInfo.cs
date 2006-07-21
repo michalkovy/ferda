@@ -89,10 +89,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             dummy = Func.GetDistinctsAndFrequencies(true);
             dummy = Func.GetColumnInfo(true);
 
-            if (GenericColumn.CompareCardinality(
-                   Func.Cardinality,
-                   tmp.PotentiallyCardinality
-                   ) > 1)
+            if (Common.CompareCardinalityEnums(
+                    Func.Cardinality,
+                    tmp.PotentiallyCardinality
+                    ) > 1)
             {
                 throw Exceptions.BadValueError(
                     null,

@@ -24,7 +24,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         if (result == null)
                             result = cache[attributeGuid, var];
                         else
-                            result = result.And(cache[attributeGuid, var]);
+                            result = result.AndCloned(cache[attributeGuid, var]);
                     }
                     return result;
                 case BitwiseOperation.Or:
@@ -33,7 +33,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         if (result == null)
                             result = cache[attributeGuid, var];
                         else
-                            result = result.Or(cache[attributeGuid, var]);
+                            result = result.OrCloned(cache[attributeGuid, var]);
                     }
                     return result;
                 default:

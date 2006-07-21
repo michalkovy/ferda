@@ -77,8 +77,8 @@ namespace Ferda.Guha.MiningProcessor
                 ConjunctionFormula cf = input as ConjunctionFormula;
                 if (cf != null)
                 {
-                    SerializableFormula[] inners = new SerializableFormula[cf.Operands.Length];
-                    for (int i = 0; i < cf.Operands.Length; i++)
+                    SerializableFormula[] inners = new SerializableFormula[cf.Operands.Count];
+                    for (int i = 0; i < cf.Operands.Count; i++)
                     {
                         inners[i] = Build(cf.Operands[i]);
                     }
@@ -91,8 +91,8 @@ namespace Ferda.Guha.MiningProcessor
                 DisjunctionFormula df = input as DisjunctionFormula;
                 if (df != null)
                 {
-                    SerializableFormula[] inners = new SerializableFormula[df.Operands.Length];
-                    for (int i = 0; i < df.Operands.Length; i++)
+                    SerializableFormula[] inners = new SerializableFormula[df.Operands.Count];
+                    for (int i = 0; i < df.Operands.Count; i++)
                     {
                         inners[i] = Build(df.Operands[i]);
                     }

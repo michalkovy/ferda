@@ -40,50 +40,83 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             get { return EmptyBitStringId; }
         }
 
+        #region AND
+        
+        public IBitString andSpecial(IBitString source, bool cloned)
+        {
+            if (source is EmptyBitString)
+                return this;
+            else if (source is FalseBitString)
+                return source;
+            else
+                throw new NotImplementedException();
+        }
+
         public IBitString And(IBitString source)
         {
             BitString bs = source as BitString;
             if (bs != null)
-            {
                 return bs.And(this);
-            }
-
-            EmptyBitString ebs = source as EmptyBitString;
-            if (ebs != null)
-            {
-                //EmptyBitString other = (EmptyBitString)source;
-                //if (other.Length != Length)
-                //    throw Exceptions.BitStringsLengtsAreNotEqualError();
-                return this;
-            }
-
-            throw new NotImplementedException();
+            else
+                return andSpecial(source, false);
         }
 
+        public IBitString AndCloned(IBitString source)
+        {
+            BitString bs = source as BitString;
+            if (bs != null)
+                return bs.AndCloned(this);
+            else
+                return andSpecial(source, false);
+        } 
+        
+        #endregion
+
+        #region NOT
+        
         public IBitString Not()
         {
             return this;
+        }
+
+        public IBitString NotCloned()
+        {
+            return this;
+        } 
+        
+        #endregion
+
+        #region OR
+        
+        public IBitString orSpecial(IBitString source, bool cloned)
+        {
+            if (source is EmptyBitString)
+                return this;
+            else if (source is FalseBitString)
+                return this;
+            else
+                throw new NotImplementedException();
         }
 
         public IBitString Or(IBitString source)
         {
             BitString bs = source as BitString;
             if (bs != null)
-            {
                 return bs.Or(this);
-            }
-
-            EmptyBitString ebs = source as EmptyBitString;
-            if (ebs != null)
-            {
-                //EmptyBitString other = (EmptyBitString)source;
-                //if (other.Length != Length)
-                //    throw Exceptions.BitStringsLengtsAreNotEqualError();
-                return this;
-            }
-
-            throw new NotImplementedException();
+            else
+                return andSpecial(source, false);
         }
+
+        public IBitString OrCloned(IBitString source)
+        {
+            BitString bs = source as BitString;
+            if (bs != null)
+                return bs.OrCloned(this);
+            else
+                return andSpecial(source, false);
+        } 
+        
+        #endregion
 
         public int Sum
         {

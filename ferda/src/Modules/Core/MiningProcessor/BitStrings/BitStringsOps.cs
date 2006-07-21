@@ -6,7 +6,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
     {
         private static IBitString operation(IBitString operand1, IBitString operand2)
         {
-            return operand1.And(operand2);
+            return operand1.AndCloned(operand2);
         }
 
         public static IBitString[][] Operation(IBitString[] rowOperand, IBitString[] columnOperand)
@@ -75,7 +75,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
     {
         private static IBitString operation(IBitString operand1, IBitString operand2)
         {
-            return operand1.Or(operand2);
+            return operand1.OrCloned(operand2);
         }
 
         public static IBitString[][] Operation(IBitString[] rowOperand, IBitString[] columnOperand)

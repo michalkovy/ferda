@@ -13,10 +13,10 @@
 module Ferda {
 	module Guha {
 		module MiningProcessor {
-			
+
 				//FORWARD DECLARATION
-				
-				interface BitStringGenerator;				
+
+				interface BitStringGenerator;
 		};
 	};
 };
@@ -33,7 +33,7 @@ module Ferda {
 					Optimistic,
 					Secured
 				};
-	
+
 				enum OperationModeEnum
 				{
 					FirstSetFrequencies,
@@ -96,24 +96,24 @@ module Ferda {
 				struct QuantifierSetting
 				{
 					string stringIceIdentity;
-				
+
 					MissingInformationHandlingEnum missingInformationHandling;
 					OperationModeEnum operationMode;
 					//EvaluationPropertiesEnum evaluationProperty; fictive can be determined from functions interface
 					Ferda::Guha::Math::RelationEnum relation;
 					double treshold;
-					
+
 					// bounds
 					Bound FromRow;
 					Bound ToRow;
 					Bound FromColumn;
 					Bound ToColumn;
-					
+
 					QuantifierClassEnumSeq quantifierClasses;
 					PerformanceDifficultyEnum performanceDifficulty;
 					bool needsNumericValues;
 					Ferda::Guha::Data::CardinalityEnum supportedData;
-					UnitsEnum units;					
+					UnitsEnum units;
 					bool supportsFloatContingencyTable;
 				};
 
@@ -121,7 +121,7 @@ module Ferda {
 				{
 					Ferda::Modules::DoubleSeqSeq contingencyTable;
 					double denominator;
-					
+
 					//numeric values
 					Ferda::Modules::GuidStruct numericValuesAttributeId;
 					Ferda::Guha::MiningProcessor::BitStringGenerator* numericValuesProviders;
@@ -132,9 +132,9 @@ module Ferda {
 					nonmutating QuantifierSetting GetQuantifierSetting()
 						throws Ferda::Modules::BoxRuntimeError;
 					nonmutating string GetLocalizedBoxLabel(Ferda::Modules::StringSeq localePrefs)
-						throws Ferda::Modules::BoxRuntimeError;												
+						throws Ferda::Modules::BoxRuntimeError;
 					nonmutating string GetLocalizedUserBoxLabel(Ferda::Modules::StringSeq localePrefs)
-						throws Ferda::Modules::BoxRuntimeError;												
+						throws Ferda::Modules::BoxRuntimeError;
 					nonmutating bool Compute(QuantifierEvaluateSetting param)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
@@ -144,12 +144,12 @@ module Ferda {
 					nonmutating bool ComputeValidValue(QuantifierEvaluateSetting param, out double value)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
-				
-				interface QuantifierValidFunctions extends QuantifierBaseFunctions 
+
+				interface QuantifierValidFunctions extends QuantifierBaseFunctions
 				{
 				};
 
-				interface QuantifierSignificantValueFunctions extends QuantifierBaseFunctions, QuantifierValueBaseFunctions 
+				interface QuantifierSignificantValueFunctions extends QuantifierBaseFunctions, QuantifierValueBaseFunctions
 				{
 				};
 
@@ -158,7 +158,7 @@ module Ferda {
 					nonmutating double ComputeValue(QuantifierEvaluateSetting param)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
-				
+
 				//FourFold
 				//TwoDimensions
 				//SingleDimension
@@ -182,7 +182,7 @@ module Ferda {
 				interface FourFoldSingleDimensionValue extends QuantifierValueFunctions{};
 				interface SingleDimensionTwoDimensionsValue extends QuantifierValueFunctions{};
 				interface FourFoldSingleDimensionTwoDimensionsValue extends QuantifierValueFunctions{};
-				
+
 				interface FourFoldSignificantValue extends QuantifierSignificantValueFunctions{};
 				interface TwoDimensionsSignificantValue extends QuantifierSignificantValueFunctions{};
 				interface SingleDimensionSignificantValue extends QuantifierSignificantValueFunctions{};
@@ -190,6 +190,51 @@ module Ferda {
 				interface FourFoldSingleDimensionSignificantValue extends QuantifierSignificantValueFunctions{};
 				interface SingleDimensionTwoDimensionsSignificantValue extends QuantifierSignificantValueFunctions{};
 				interface FourFoldSingleDimensionTwoDimensionsSignificantValue extends QuantifierSignificantValueFunctions{};
+
+				/* 4ft and SD4ft
+::Ferda::Guha::Math::Quantifiers::FourFoldValid
+::Ferda::Guha::Math::Quantifiers::FourFoldTwoDimensionsValid
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionValid
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsValid
+::Ferda::Guha::Math::Quantifiers::FourFoldValue
+::Ferda::Guha::Math::Quantifiers::FourFoldTwoDimensionsValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSignificantValue
+::Ferda::Guha::Math::Quantifiers::FourFoldTwoDimensionsSignificantValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionSignificantValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsSignificantValue
+				*/
+
+				/* CF and SDCF
+::Ferda::Guha::Math::Quantifiers::SingleDimensionValid
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionValid
+::Ferda::Guha::Math::Quantifiers::SingleDimensionTwoDimensionsValid
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsValid
+::Ferda::Guha::Math::Quantifiers::SingleDimensionValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionValue
+::Ferda::Guha::Math::Quantifiers::SingleDimensionTwoDimensionsValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsValue
+::Ferda::Guha::Math::Quantifiers::SingleDimensionSignificantValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionSignificantValue
+::Ferda::Guha::Math::Quantifiers::SingleDimensionTwoDimensionsSignificantValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsSignificantValue
+				*/
+
+				/* KL and SDKL
+::Ferda::Guha::Math::Quantifiers::TwoDimensionsValid
+::Ferda::Guha::Math::Quantifiers::FourFoldTwoDimensionsValid
+::Ferda::Guha::Math::Quantifiers::SingleDimensionTwoDimensionsValid
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsValid
+::Ferda::Guha::Math::Quantifiers::TwoDimensionsValue
+::Ferda::Guha::Math::Quantifiers::FourFoldTwoDimensionsValue
+::Ferda::Guha::Math::Quantifiers::SingleDimensionTwoDimensionsValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsValue
+::Ferda::Guha::Math::Quantifiers::TwoDimensionsSignificantValue
+::Ferda::Guha::Math::Quantifiers::FourFoldTwoDimensionsSignificantValue
+::Ferda::Guha::Math::Quantifiers::SingleDimensionTwoDimensionsSignificantValue
+::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsSignificantValue
+				*/
 			};
 		};
 	};

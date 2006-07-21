@@ -49,9 +49,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     {
                         IBitString newBitString = _bitStringCache.GetMissingInformationBitString(guid);
                         if (newCached == null)
-                            newCached = last.Or(newBitString);
+                            newCached = last.OrCloned(newBitString);
                         else
-                            newCached = newCached.Or(newBitString);
+                            newCached = newCached.OrCloned(newBitString);
                     }
                 }
                 return newCached;
@@ -65,7 +65,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     if (newCached == null)
                         newCached = newBitString;
                     else
-                        newCached = newCached.Or(newBitString);
+                        newCached = newCached.OrCloned(newBitString);
                 }
                 return newCached;
             }

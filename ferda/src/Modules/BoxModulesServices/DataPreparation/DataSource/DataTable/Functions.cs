@@ -311,6 +311,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             return GetDataTableInfo(true);
         }
 
+        public override string GetSourceDataTableId(Current current__)
+        {
+            return _boxModule.StringIceIdentity;
+        }
+        
         #endregion
     }
 }

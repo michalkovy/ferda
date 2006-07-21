@@ -4,32 +4,37 @@ namespace Ferda.Guha.MiningProcessor.Formulas
 {
     public class ConjunctionFormula : BooleanAttributeFormula
     {
-        private readonly BooleanAttributeFormula[] _operands;
+        private readonly List<BooleanAttributeFormula> _operands;
 
-        public BooleanAttributeFormula[] Operands
+        public List<BooleanAttributeFormula> Operands
         {
             get { return _operands; }
+        }
+        
+        private static void addOperand(List<BooleanAttributeFormula> list, BooleanAttributeFormula operand)
+        {
+            // flattening
+            ConjunctionFormula conjunction = operand as ConjunctionFormula;
+            if (conjunction == null)
+                list.Add(operand);
+            else
+                list.AddRange(conjunction.Operands);            
         }
 
         public ConjunctionFormula(BooleanAttributeFormula[] operands)
         {
-            // flattening
-            List<BooleanAttributeFormula> operandsLists = new List<BooleanAttributeFormula>();
+            _operands = new List<BooleanAttributeFormula>(2);
             foreach (BooleanAttributeFormula operand in operands)
             {
-                ConjunctionFormula conjunction = operand as ConjunctionFormula;
-                if (conjunction == null)
-                    operandsLists.Add(operand);
-                else
-                    operandsLists.AddRange(conjunction.Operands);
+                addOperand(_operands, operand);
             }
-
-            _operands = operandsLists.ToArray();
         }
 
         public ConjunctionFormula(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
-            : this(new BooleanAttributeFormula[] {operandA, operandB})
         {
+            _operands = new List<BooleanAttributeFormula>(2);
+            addOperand(_operands, operandA);
+            addOperand(_operands, operandB);
         }
 
         public override string ToString()

@@ -125,16 +125,21 @@ namespace Ferda.Guha.MiningProcessor.Generation
         protected void prolongCoefficient(string categoryName)
         {
             IBitString newBitString = getBitString(categoryName);
-
-            _actualLength++;
-
-            if (_currentBitString == null)
+            
+            if (_actualLength == 0)
             {
-                Debug.Assert(_actualLength == 1);
+                Debug.Assert(_currentBitString == null);
                 _currentBitString = newBitString;
             }
+            else if (_actualLength == 1)
+            {
+                _currentBitString = _currentBitString.OrCloned(newBitString);
+            }
             else
+            {
                 _currentBitString = _currentBitString.Or(newBitString);
+            }
+            _actualLength++;
         }
 
         public override Set<string> UsedAttributes
@@ -200,17 +205,17 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 {
                     case ImportanceEnum.Forced:
                         while (forcedEnts.ContainsKey(tmpEntCount))
-                            tmpEntCount *= 1.0000001d;
+                            tmpEntCount *= 1.001d;
                         forcedEnts.Add(tmpEntCount, tmpEnt);
                         break;
                     case ImportanceEnum.Basic:
                         while (basicEnts.ContainsKey(tmpEntCount))
-                            tmpEntCount *= 1.0000001d;
+                            tmpEntCount *= 1.001d;
                         basicEnts.Add(tmpEntCount, tmpEnt);
                         break;
                     case ImportanceEnum.Auxiliary:
                         while (auxiliaryEnts.ContainsKey(tmpEntCount))
-                            tmpEntCount *= 1.0000001d;
+                            tmpEntCount *= 1.001d;
                         auxiliaryEnts.Add(tmpEntCount, tmpEnt);
                         break;
                     default:

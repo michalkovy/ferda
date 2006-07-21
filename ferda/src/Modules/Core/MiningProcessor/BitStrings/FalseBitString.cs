@@ -41,14 +41,43 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return this;
         }
 
+        public IBitString AndCloned(IBitString source)
+        {
+            return this;
+        }
+
         public IBitString Not()
         {
             throw new NotSupportedException("Negation of false bit string is not supported.");
         }
 
+        public IBitString NotCloned()
+        {
+            throw new NotSupportedException("Negation of false bit string is not supported.");
+        }
+
+        public IBitString orSpecial(IBitString source, bool cloned)
+        {
+            if (source is EmptyBitString)
+                return source;
+            else if (source is FalseBitString)
+                return this;
+            else
+                throw new NotImplementedException();
+        }
+        
         public IBitString Or(IBitString source)
         {
             return source;
+        }
+
+        public IBitString OrCloned(IBitString source)
+        {
+            BitString bs = source as BitString;
+            if (bs != null)
+                return bs.OrCloned(this);
+            else
+                return orSpecial(source, false);
         }
 
         public int Sum

@@ -5,7 +5,7 @@ using Ferda.Guha.MiningProcessor;
 using Ferda.ModulesManager;
 using Ice;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
+namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDFourFold
 {
     public class Functions : MiningTaskFunctionsDisp_, IFunctions, ITask
     {
@@ -83,7 +83,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
                 {
                     Common.SockSuccedent,
                     Common.SockAntecedent,
-                    Common.SockCondition
+                    Common.SockCondition,
+                    Common.SockSDCedent1,
+                    Common.SockSDCedent2
                 };
         }
 
@@ -94,7 +96,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 
         public bool IsRequiredOneAtMinimumAttributeInSocket(string socketName)
         {
-            if (socketName == Common.SockSuccedent)
+            if (socketName == Common.SockSuccedent
+                || socketName == Common.SockSDCedent1
+                || socketName == Common.SockSDCedent2)
                 return true;
             return false;
         }
@@ -103,21 +107,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 
         public void Run()
         {
-#if ProgressBarDebug
-            // Progress Bar
-            ProgressBarPrx pB = _boxModule.Output.startProgress(null, "Testovací PB", "Hintik pri startu");
-            for (int i = 0; i < 10; i++)
-            {
-                pB.setValue(10/(i + 1), "Zvysuji na " + ((i + 1)*10) + "%");
-            }
-            pB.done();
-            return;
-#else
-            Common.RunTask(_boxModule, this, TaskTypeEnum.FourFold);
-
+            Common.RunTask(_boxModule, this, TaskTypeEnum.SDFourFold);
+            
             // reset cache
             _cachedSerializableResultInfo = null;
-#endif
         }
     }
 }

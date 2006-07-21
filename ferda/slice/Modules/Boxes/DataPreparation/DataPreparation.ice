@@ -37,7 +37,7 @@ module Ferda {
 						long recordsCount;
 					};
 
-					interface DataTableFunctions {
+					interface DataTableFunctions extends Ferda::Guha::MiningProcessor::SourceDataTableIdProvider {
 						nonmutating	DataTableInfo	getDataTableInfo()
 							throws Ferda::Modules::BoxRuntimeError;
 						nonmutating Ferda::Guha::Data::ColumnExplainSeq getColumnExplainSeq()
@@ -56,7 +56,7 @@ module Ferda {
 						Ferda::Guha::Data::CardinalityEnum cardinality;
 					};
 					
-					interface ColumnFunctions {
+					interface ColumnFunctions extends Ferda::Guha::MiningProcessor::SourceDataTableIdProvider {
 						nonmutating	ColumnInfo getColumnInfo()
 							throws Ferda::Modules::BoxRuntimeError;
 						nonmutating Ferda::Guha::Data::ColumnStatistics getColumnStatistics()

@@ -208,7 +208,7 @@ namespace Tests.Data
             GenericColumn DATECOLUMNcolumn = table["DATE Column"]; //datetime
             Assert.IsTrue(DATECOLUMNcolumn.DbSimpleDataType == DbSimpleDataTypeEnum.DateTimeSimpleType);
             Assert.IsFalse(DATECOLUMNcolumn.IsNumericDataType);
-            Assert.IsTrue(DATECOLUMNcolumn.PotentiallyCardinality == CardinalityEnum.Cardinal);
+            Assert.IsTrue(DATECOLUMNcolumn.PotentiallyCardinality == CardinalityEnum.OrdinalCyclic);
             Assert.IsFalse(DATECOLUMNcolumn.IsDerived);
             //Assert.IsTrue(DATECOLUMNcolumn.Statistics.ValueMin == -1); //UNDONE??
             //Assert.IsTrue(DATECOLUMNcolumn.Statistics.ValueMax == 0); //UNDONE??

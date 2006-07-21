@@ -4,32 +4,37 @@ namespace Ferda.Guha.MiningProcessor.Formulas
 {
     public class DisjunctionFormula : BooleanAttributeFormula
     {
-        private readonly BooleanAttributeFormula[] _operands;
+        private readonly List<BooleanAttributeFormula> _operands;
 
-        public BooleanAttributeFormula[] Operands
+        public List<BooleanAttributeFormula> Operands
         {
             get { return _operands; }
         }
 
-        public DisjunctionFormula(BooleanAttributeFormula[] operands)
+        private static void addOperand(List<BooleanAttributeFormula> list, BooleanAttributeFormula operand)
         {
             // flattening
-            List<BooleanAttributeFormula> operandsLists = new List<BooleanAttributeFormula>();
+            DisjunctionFormula disjunction = operand as DisjunctionFormula;
+            if (disjunction == null)
+                list.Add(operand);
+            else
+                list.AddRange(disjunction.Operands);
+        }
+        
+        public DisjunctionFormula(BooleanAttributeFormula[] operands)
+        {
+            _operands = new List<BooleanAttributeFormula>(2);
             foreach (BooleanAttributeFormula operand in operands)
             {
-                DisjunctionFormula disjunction = operand as DisjunctionFormula;
-                if (disjunction == null)
-                    operandsLists.Add(operand);
-                else
-                    operandsLists.AddRange(disjunction.Operands);
+                addOperand(_operands, operand);
             }
-
-            _operands = operandsLists.ToArray();
         }
 
         public DisjunctionFormula(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
-            : this(new BooleanAttributeFormula[] {operandA, operandB})
         {
+            _operands = new List<BooleanAttributeFormula>(2);
+            addOperand(_operands, operandA);
+            addOperand(_operands, operandB);
         }
 
         public override string ToString()

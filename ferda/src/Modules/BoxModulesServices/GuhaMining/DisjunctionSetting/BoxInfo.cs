@@ -64,6 +64,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
             // try to invoke methods
             object dummy = Func.GetEntitySetting(true);
             dummy = Func.GetAttributeNames();
+            dummy = Func.GetSourceDataTableId();
         }
     }
 }
