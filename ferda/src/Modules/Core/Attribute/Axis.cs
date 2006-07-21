@@ -88,7 +88,7 @@ namespace Ferda.Guha.Attribute
         {
             if (_disabled)
                 return;
-            Build(); // falls if enumerations are not disjunctive or requestedNumberOfIntervals are not disjunctive
+            Build(); // falls if enumerations are not disjunctive or intervals are not disjunctive
 
             if (_intervals.Count == 0 && _enumValues.Count == 0)
                 return;
@@ -168,7 +168,7 @@ namespace Ferda.Guha.Attribute
                         }
                     }
 
-                    // process requestedNumberOfIntervals 
+                    // process intervals 
                     if (!_intervalsAreValid)
                     {
                         foreach (Interval<T> interval in category.Value.Intervals)
@@ -207,7 +207,7 @@ namespace Ferda.Guha.Attribute
                 return new string[0];
 
             // Thesis:
-            // the itemToExclude T can be contained only once in enumerations xor requestedNumberOfIntervals
+            // the itemToExclude T can be contained only once in enumerations xor intervals
 
             string categoryName;
 

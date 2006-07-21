@@ -50,6 +50,7 @@
     <Compile Include="BoxInfoHelper.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BoxInfoLoadTesting.cs" />
     <Compile Include="ExceptionsHandler.cs" />
     <Compile Include="Serializer\Configuration\Box.cs" />
     <Compile Include="Serializer\Configuration\Helper.cs" />

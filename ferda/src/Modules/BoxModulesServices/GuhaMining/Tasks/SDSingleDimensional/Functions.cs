@@ -5,7 +5,7 @@ using Ferda.Guha.MiningProcessor;
 using Ferda.ModulesManager;
 using Ice;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
+namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDSingleDimensional
 {
     public class Functions : MiningTaskFunctionsDisp_, IFunctions, ITask
     {
@@ -81,20 +81,25 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
         {
             return new string[]
                 {
-                    Common.SockSuccedent,
-                    Common.SockAntecedent,
-                    Common.SockCondition
+                    Common.SockCondition,
+                    Common.SockSDCedent1,
+                    Common.SockSDCedent2
                 };
         }
 
         public string[] GetCategorialAttributesSocketNames()
         {
-            return new string[0];
+            return new string[]
+                {
+                    Common.SockAttribute
+                };
         }
 
         public bool IsRequiredOneAtMinimumAttributeInSocket(string socketName)
         {
-            if (socketName == Common.SockSuccedent)
+            if (socketName == Common.SockAttribute
+                || socketName == Common.SockSDCedent1
+                || socketName == Common.SockSDCedent2)
                 return true;
             return false;
         }
@@ -103,21 +108,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 
         public void Run()
         {
-#if ProgressBarDebug
-            // Progress Bar
-            ProgressBarPrx pB = _boxModule.Output.startProgress(null, "Testovací PB", "Hintik pri startu");
-            for (int i = 0; i < 10; i++)
-            {
-                pB.setValue(10/(i + 1), "Zvysuji na " + ((i + 1)*10) + "%");
-            }
-            pB.done();
-            return;
-#else
-            Common.RunTask(_boxModule, this, TaskTypeEnum.FourFold);
+            Common.RunTask(_boxModule, this, TaskTypeEnum.SDCF);
 
             // reset cache
             _cachedSerializableResultInfo = null;
-#endif
         }
     }
 }

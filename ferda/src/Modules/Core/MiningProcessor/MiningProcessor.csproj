@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="BitStrings\CategorialAttributeTrace.cs" />
     <Compile Include="BitStrings\BitStringsOps.cs" />
+    <Compile Include="BitStrings\BitString_part2.cs" />
     <Compile Include="BitStrings\EmptyBitString.cs" />
     <Compile Include="BitStrings\FalseBitString.cs" />
     <Compile Include="Exceptions.cs" />

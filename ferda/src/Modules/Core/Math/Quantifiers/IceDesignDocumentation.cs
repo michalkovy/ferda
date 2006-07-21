@@ -262,12 +262,12 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
     {
         /// <summary>
         /// Value of the quantifier does not depends on units.
-        /// E.g. Q(CT) = (CT)00 / (CT)01
+        /// E.g. Q(CT) = CT[0, 0] / CT[0, 1]
         /// </summary>
         Irrelevant,
 
         /// <summary>
-        /// Contingecy table is useda as is i.e. no units conversion
+        /// Contingecy table is used as is i.e. no units conversion
         /// is applied.
         /// </summary>
         AbsoluteNumber,

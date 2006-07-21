@@ -6,7 +6,7 @@ namespace Design
     public enum Importance
     {
         /// <summary>
-        /// Forced entity must be present in every cedent.
+        /// Forced entity must be present in each cedent.
         /// </summary>
         Forced,
 

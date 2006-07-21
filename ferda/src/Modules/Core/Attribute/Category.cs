@@ -116,7 +116,7 @@ namespace Ferda.Guha.Attribute
         public Category(CategorySerializable<T> category, Attribute<T> attributeClass)
             : this(attributeClass)
         {
-            // process requestedNumberOfIntervals
+            // process intervals
             foreach (IntervalSerializable<T> interval in category.Intervals)
             {
                 _intervals.Add(
@@ -485,7 +485,7 @@ namespace Ferda.Guha.Attribute
 
             // INTERVALS
             //
-            // requestedNumberOfIntervals init
+            // intervals init
             _intervals.Sort(true);
             List<Interval<T>> intervals = new List<Interval<T>>();
             intervals.AddRange(_intervals);
@@ -496,8 +496,8 @@ namespace Ferda.Guha.Attribute
             BoundaryEnum updIntLB, updIntRB;
             updIntLB = updIntRB = 0; //default .. BUNO
 
-            // requestedNumberOfIntervals and enumerations are sorted
-            // proccess all requestedNumberOfIntervals and enumerations by one walk-through
+            // intervals and enumerations are sorted
+            // proccess all intervals and enumerations by one walk-through
             foreach (Interval<T> currentInterval in intervals)
             {
             NextIntervalEvaluation:
@@ -568,7 +568,7 @@ namespace Ferda.Guha.Attribute
                         // enumerattion processing may change comparation result of last and current interval
                         goto UpdatedIntervalEvaluation;
 
-                    // interval may not be more extended (extension by requestedNumberOfIntervals and enumerations finnished)
+                    // interval may not be more extended (extension by intervals and enumerations finnished)
                     resultIntervals.Add(new Interval<T>(updIntLV, updIntLB, updIntRV, updIntRB, _attribute));
                     lastInterval = null;
                     goto NextIntervalEvaluation;
@@ -591,8 +591,8 @@ namespace Ferda.Guha.Attribute
                     _intervals.AddWhileReducing(interval.LeftValue, interval.LeftBoundary, interval.RightValue,
                                    interval.RightBoundary, true);
 
-            // not processed enumeration memebers
-            //  if _intervals.Count == 0 or members greather than all requestedNumberOfIntervals
+            // not processed enumeration members
+            //  if _intervals.Count == 0 or members greather than all intervals
             if (currentEnumValueIsSet)
                 resultEnumeration.Add(currentEnumValue);
             while (enumValuesEnumerator.MoveNext())

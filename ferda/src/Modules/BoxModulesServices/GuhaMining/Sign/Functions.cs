@@ -146,6 +146,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
             return GetBitStringGeneratorPrx(true).GetBitStringGenerator(attributeId);
         }
 
+        public override string GetSourceDataTableId(Current current__)
+        {
+            BooleanAttributeSettingFunctionsPrx prx = GetBitStringGeneratorPrx(true);
+            if (prx != null)
+                return prx.GetSourceDataTableId();
+            return null;
+        }
+
         #endregion
     }
 }

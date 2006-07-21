@@ -9,75 +9,24 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
     public interface ITask
     {
         SerializableResultInfo GetResultInfo();
+        string[] GetCategorialAttributesSocketNames();
+        string[] GetBooleanAttributesSocketNames();
+        bool IsRequiredOneAtMinimumAttributeInSocket(string socketName);
     }
 
     public static class Common
     {
-        public static MiningProcessorFunctionsPrx GetMiningProcessorFunctionsPrx(BoxModuleI boxModule)
-        {
-            //UNDONE Load Balancing
-            return MiningProcessorFunctionsPrxHelper.checkedCast(
-                    boxModule.Manager.getManagersLocator().findAllObjectsWithType(
-                        "::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"
-                        )[0]
-                    );
-        }
+        #region Other Properties
 
-        public static BitStringGeneratorProviderPrx GetBitStringGeneratorProviderPrx(BoxModuleI boxModule)
-        {
-            return BitStringGeneratorProviderPrxHelper.checkedCast(boxModule.getFunctions());
-        }
-
-        public static BitStringGeneratorPrx GetBitStringGenerator(BoxModuleI boxModule, GuidStruct attributeId, string[] socketsNames)
-        {
-            // TODO categorial attributes
-            BitStringGeneratorPrx result;
-            BooleanAttributeSettingFunctionsPrx prx;
-
-            foreach (string s in socketsNames)
-            {
-                if (String.IsNullOrEmpty(s))
-                    continue;
-
-                prx = GetBooleanAttributeSettingFunctionsPrx(boxModule, s, false);
-
-                if (prx == null)
-                    continue;
-
-                result = prx.GetBitStringGenerator(attributeId);
-                if (result != null)
-                    return result;
-            }
-            return null;
-        }
-
-        public static GuidAttributeNamePair[] GetAttributeNames(BoxModuleI boxModule, string[] socketsNames)
-        {
-            List<GuidAttributeNamePair> result = new List<GuidAttributeNamePair>();
-            foreach (string s in socketsNames)
-            {
-                if (String.IsNullOrEmpty(s))
-                    continue;
-                
-                AttributeNameProviderPrx prx = SocketConnections.GetPrx<AttributeNameProviderPrx>(
-                    boxModule,
-                    s,
-                    AttributeNameProviderPrxHelper.checkedCast,
-                    false);
-                if (prx != null)
-                    result.AddRange(prx.GetAttributeNames());
-            }
-            return result.ToArray();
-        }
-        
         public const string PropMaxNumberOfHypotheses = "MaxNumberOfHypotheses";
         public const string PropExecutionType = "ExecutionType";
+        public const string PropWorkingWithSecondSetMode = "WorkingWithSecondSetMode";
 
         public static long MaxNumberOfHypotheses(BoxModuleI boxModule)
         {
             return boxModule.GetPropertyLong(PropMaxNumberOfHypotheses);
         }
-        
+
         public static TaskEvaluationTypeEnum ExecutionType(BoxModuleI boxModule)
         {
             return (TaskEvaluationTypeEnum)Enum.Parse(
@@ -85,6 +34,13 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                         boxModule.GetPropertyString(PropExecutionType)
                     );
         }
+
+        public static WorkingWithSecondSetModeEnum WorkingWithSecondSetMode(BoxModuleI boxModule)
+        {
+            return (WorkingWithSecondSetModeEnum)Enum.Parse(typeof(WorkingWithSecondSetModeEnum), boxModule.GetPropertyString(PropWorkingWithSecondSetMode));
+        }
+
+        #endregion
 
         #region Boolean and Categorial attributes
 
@@ -94,10 +50,35 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         public const string SockRowAttribute = "RowAttribute";
         public const string SockColumnAttribute = "ColumnAttribute";
         public const string SockAttribute = "Attribute";
-        public const string SockFirstSet = "FirstSet";
-        public const string SockSecondSet = "SecondSet";
+        public const string SockSDCedent1 = "SDCedent1";
+        public const string SockSDCedent2 = "SDCedent2";
+        
+        private static MarkEnum socketName2MarkEnum(string socketName)
+        {
+            switch(socketName)
+            {
+                case SockAntecedent:
+                    return MarkEnum.Antecedent;
+                case SockSuccedent:
+                    return MarkEnum.Succedent;
+                case SockCondition:
+                    return MarkEnum.Condition;
+                case SockRowAttribute:
+                    return MarkEnum.RowAttribute;
+                case SockColumnAttribute:
+                    return MarkEnum.ColumnAttribute;
+                case SockAttribute:
+                    return MarkEnum.Attribute;
+                case SockSDCedent1:
+                    return MarkEnum.FirstSet;
+                case SockSDCedent2:
+                    return MarkEnum.SecondSet;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
-        public static BooleanAttributeSettingFunctionsPrx GetBooleanAttributeSettingFunctionsPrx(BoxModuleI boxModule, string sockName, bool fallOnError)
+        public static BooleanAttributeSettingFunctionsPrx GetBooleanAttributePrx(BoxModuleI boxModule, string sockName, bool fallOnError)
         {
             return SocketConnections.GetPrx<BooleanAttributeSettingFunctionsPrx>(
                 boxModule,
@@ -106,14 +87,88 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 fallOnError);
         }
 
+        public static List<BitStringGeneratorPrx> GetCategorialAttributePrxs(BoxModuleI boxModule, string sockName, bool oneAtMininum, bool fallOnError)
+        {
+            return SocketConnections.GetPrxs<BitStringGeneratorPrx>(
+                boxModule,
+                sockName,
+                BitStringGeneratorPrxHelper.checkedCast,
+                oneAtMininum,
+                fallOnError);
+        }
+
         public static BooleanAttribute GetBooleanAttribute(BoxModuleI boxModule, MarkEnum semantic, string sockName, bool fallOnError)
         {
-            BooleanAttributeSettingFunctionsPrx prx = GetBooleanAttributeSettingFunctionsPrx(boxModule, sockName, fallOnError);
+            BooleanAttributeSettingFunctionsPrx prx = GetBooleanAttributePrx(boxModule, sockName, fallOnError);
             if (prx != null)
             {
                 return new BooleanAttribute(semantic, prx.GetEntitySetting());
             }
             return null;
+        }
+
+        public static List<CategorialAttribute> GetCategorialAttributes(BoxModuleI boxModule, MarkEnum semantic, string sockName, bool oneAtMinimum, bool fallOnError)
+        {
+            List<BitStringGeneratorPrx> prxs = GetCategorialAttributePrxs(boxModule, sockName, oneAtMinimum, fallOnError);
+            if (prxs != null)
+            {
+                List<CategorialAttribute> result = new List<CategorialAttribute>(prxs.Count);
+                foreach (BitStringGeneratorPrx prx in prxs)
+                {
+                    result.Add(new CategorialAttribute(semantic, prx));
+                }
+                return result;
+            }
+            return null;
+        }
+        
+        public static BooleanAttribute[] GetBooleanAttributes(BoxModuleI boxModule, ITask taskFunctions)
+        {
+            string[] socketNames = taskFunctions.GetBooleanAttributesSocketNames();
+            if (socketNames == null || socketNames.Length == 0)
+                return new BooleanAttribute[0];
+            
+            List<BooleanAttribute> result = new List<BooleanAttribute>();
+            BooleanAttribute item;
+            foreach (string s in socketNames)
+            {
+                if (String.IsNullOrEmpty(s))
+                    continue;
+                item = GetBooleanAttribute(
+                    boxModule,
+                    socketName2MarkEnum(s),
+                    s,
+                    taskFunctions.IsRequiredOneAtMinimumAttributeInSocket(s)
+                    );
+                if (item != null)
+                    result.Add(item);
+            }
+            return result.ToArray();
+        }
+        
+        public static CategorialAttribute[] GetCategorialAttributes(BoxModuleI boxModule, ITask taskFunctions)
+        {
+            string[] socketNames = taskFunctions.GetCategorialAttributesSocketNames();
+            if (socketNames == null || socketNames.Length == 0)
+                return new CategorialAttribute[0];
+            
+            List<CategorialAttribute> result = new List<CategorialAttribute>();
+            foreach (string s in socketNames)
+            {
+                if (String.IsNullOrEmpty(s))
+                    continue;
+                
+                List<CategorialAttribute> items = GetCategorialAttributes(
+                    boxModule,
+                    socketName2MarkEnum(s),
+                    s,
+                    taskFunctions.IsRequiredOneAtMinimumAttributeInSocket(s),
+                    true
+                    );
+                if (items != null && items.Count > 0)
+                    result.AddRange(items);
+            }
+            return result.ToArray();
         }
 
         #endregion
@@ -222,7 +277,226 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         {
             boxModule.setProperty(PropResult, new StringTI(value));
         }
+
+        #endregion
+
+        #region Working with boolean/categorial attributes sockets
+        
+        public static string GetSourceDataTableId(BoxModuleI boxModule, ITask taskFunctions)
+        {
+            BitStringGeneratorPrx result;
+            BooleanAttributeSettingFunctionsPrx prx;
+            string last = null;
+            string newer;
+
+            string[] socketsNames;
+
+            // boolean attributes
+            socketsNames = taskFunctions.GetBooleanAttributesSocketNames();
+            if (socketsNames != null && socketsNames.Length > 0)
+                foreach (string s in socketsNames)
+                {
+                    if (String.IsNullOrEmpty(s))
+                        continue;
+
+                    prx = GetBooleanAttributePrx(boxModule, s, false);
+
+                    if (prx == null)
+                        continue;
+
+                    newer = prx.GetSourceDataTableId();
+                    if (String.IsNullOrEmpty(last))
+                        last = newer;
+                    else if (last != newer)
+                        throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                "Mining over only source data table is supported.",
+                                new string[] { s },
+                                restrictionTypeEnum.OtherReason);
+                }
+
+            // categorial attributes
+            socketsNames = taskFunctions.GetCategorialAttributesSocketNames();
+            if (socketsNames != null && socketsNames.Length > 0)
+                foreach (string s in socketsNames)
+                {
+                    if (String.IsNullOrEmpty(s))
+                        continue;
+
+                    List<BitStringGeneratorPrx> prxs = GetCategorialAttributePrxs(boxModule, s, false, false);
+                    if (prxs != null && prxs.Count > 0)
+                        foreach (BitStringGeneratorPrx generatorPrx in prxs)
+                        {
+                            if (generatorPrx == null)
+                                continue;
+
+                            newer = generatorPrx.GetSourceDataTableId();
+                            if (String.IsNullOrEmpty(last))
+                                last = newer;
+                            else if (last != newer)
+                                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                        "Mining over only source data table is supported.",
+                                        new string[] { s },
+                                        restrictionTypeEnum.OtherReason);
+                        }
+                }
+            return last;
+        }
+
+        public static BitStringGeneratorPrx GetBitStringGenerator(BoxModuleI boxModule, GuidStruct attributeId, ITask taskFunctions)
+        {
+            BitStringGeneratorPrx result;
+            BooleanAttributeSettingFunctionsPrx prx;
+
+            string[] socketsNames;
+
+            // boolean attributes
+            socketsNames = taskFunctions.GetBooleanAttributesSocketNames();
+            if (socketsNames != null && socketsNames.Length > 0)
+                foreach (string s in socketsNames)
+                {
+                    if (String.IsNullOrEmpty(s))
+                        continue;
+
+                    prx = GetBooleanAttributePrx(boxModule, s, false);
+
+                    if (prx == null)
+                        continue;
+
+                    result = prx.GetBitStringGenerator(attributeId);
+                    if (result != null)
+                        return result;
+                }
+
+            // categorial attributes
+            socketsNames = taskFunctions.GetCategorialAttributesSocketNames();
+            if (socketsNames != null && socketsNames.Length > 0)
+                foreach (string s in socketsNames)
+                {
+                    if (String.IsNullOrEmpty(s))
+                        continue;
+
+                    List<BitStringGeneratorPrx> prxs = GetCategorialAttributePrxs(boxModule, s, false, false);
+                    if (prxs != null && prxs.Count > 0)
+                        foreach (BitStringGeneratorPrx generatorPrx in prxs)
+                        {
+                            if (generatorPrx == null)
+                                continue;
+
+                            if (generatorPrx.GetAttributeId() == attributeId)
+                                return generatorPrx;
+                        }
+                }
+            return null;
+        }
+
+        public static GuidAttributeNamePair[] GetAttributeNames(BoxModuleI boxModule, ITask taskFunctions)
+        {
+            List<GuidAttributeNamePair> result = new List<GuidAttributeNamePair>();
+            string[] socketsNames;
+
+            // boolean attributes
+            socketsNames = taskFunctions.GetBooleanAttributesSocketNames();
+            foreach (string s in socketsNames)
+            {
+                if (String.IsNullOrEmpty(s))
+                    continue;
+
+                AttributeNameProviderPrx prx = SocketConnections.GetPrx<AttributeNameProviderPrx>(
+                    boxModule,
+                    s,
+                    AttributeNameProviderPrxHelper.checkedCast,
+                    false);
+                if (prx != null)
+                    result.AddRange(prx.GetAttributeNames());
+            }
+            // categorial attributes
+            socketsNames = taskFunctions.GetCategorialAttributesSocketNames();
+            if (socketsNames != null && socketsNames.Length > 0)
+                foreach (string s in socketsNames)
+                {
+                    if (String.IsNullOrEmpty(s))
+                        continue;
+
+                    List<BitStringGeneratorPrx> prxs = GetCategorialAttributePrxs(boxModule, s, false, false);
+                    if (prxs != null && prxs.Count > 0)
+                        foreach (BitStringGeneratorPrx generatorPrx in prxs)
+                        {
+                            if (generatorPrx == null)
+                                continue;
+
+                            result.AddRange(generatorPrx.GetAttributeNames());
+                        }
+                }
+            return result.ToArray();
+        } 
         
         #endregion
+
+        public static MiningProcessorFunctionsPrx GetMiningProcessorFunctionsPrx(BoxModuleI boxModule)
+        {
+            //UNDONE Load Balancing
+            return MiningProcessorFunctionsPrxHelper.checkedCast(
+                    boxModule.Manager.getManagersLocator().findAllObjectsWithType(
+                        "::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"
+                        )[0]
+                    );
+        }
+
+        public static BitStringGeneratorProviderPrx GetBitStringGeneratorProviderPrx(BoxModuleI boxModule)
+        {
+            return BitStringGeneratorProviderPrxHelper.checkedCast(boxModule.getFunctions());
+        }
+        
+        private static bool isSDTaskType(TaskTypeEnum taskType)
+        {
+            switch (taskType)
+            {
+                case TaskTypeEnum.CF:
+                case TaskTypeEnum.FourFold:
+                case TaskTypeEnum.KL:
+                    return false;
+                case TaskTypeEnum.SDCF:
+                case TaskTypeEnum.SDFourFold:
+                case TaskTypeEnum.SDKL:
+                    return true;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        
+        public static void RunTask(BoxModuleI boxModule, ITask taskFunctions, TaskTypeEnum taskType)
+        {
+            MiningProcessorFunctionsPrx miningProcessor = GetMiningProcessorFunctionsPrx(boxModule);
+            BitStringGeneratorProviderPrx bsProvider = GetBitStringGeneratorProviderPrx(boxModule);
+            
+            WorkingWithSecondSetModeEnum secondSetWorking =
+                isSDTaskType(taskType)
+                    ?
+                WorkingWithSecondSetMode(boxModule)
+                    :
+                WorkingWithSecondSetModeEnum.None;
+            
+            TaskRunParams taskRunParams = new TaskRunParams(
+                taskType,
+                ExecutionType(boxModule),
+                MaxNumberOfHypotheses(boxModule),
+                secondSetWorking
+                );
+            
+            string statistics;
+            string result =
+                miningProcessor.Run(
+                        GetBooleanAttributes(boxModule, taskFunctions),
+                        GetCategorialAttributes(boxModule, taskFunctions),
+                        GetQuantifierBaseFunctions(boxModule, true).ToArray(),
+                        taskRunParams,
+                        bsProvider,
+                        boxModule.Output,
+                        out statistics
+                    );
+            
+            SetResult(boxModule, result);
+            SetResultInfo(boxModule, statistics);
+        }
     }
 }

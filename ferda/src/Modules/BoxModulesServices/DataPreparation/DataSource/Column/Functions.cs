@@ -343,6 +343,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             return GetDistinctsAndFrequencies(true);
         }
 
+        public override string GetSourceDataTableId(Current current__)
+        {
+            DataTableFunctionsPrx prx = GetDataTableFunctionsPrx(true);
+            if (prx != null)
+                return prx.GetSourceDataTableId();
+            return null;
+        }
+
         #endregion
     }
 }

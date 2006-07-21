@@ -138,6 +138,16 @@
     <Compile Include="Tasks\Common.cs" />
     <Compile Include="Tasks\FourFold\BoxInfo.cs" />
     <Compile Include="Tasks\FourFold\Functions.cs" />
+    <Compile Include="Tasks\SDFourFold\BoxInfo.cs" />
+    <Compile Include="Tasks\SDFourFold\Functions.cs" />
+    <Compile Include="Tasks\SDSingleDimensional\BoxInfo.cs" />
+    <Compile Include="Tasks\SDSingleDimensional\Functions.cs" />
+    <Compile Include="Tasks\SDTwoDimensional\BoxInfo.cs" />
+    <Compile Include="Tasks\SDTwoDimensional\Functions.cs" />
+    <Compile Include="Tasks\SingleDimensional\BoxInfo.cs" />
+    <Compile Include="Tasks\SingleDimensional\Functions.cs" />
+    <Compile Include="Tasks\TwoDimensional\BoxInfo.cs" />
+    <Compile Include="Tasks\TwoDimensional\Functions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Quantifiers\Notes.txt" />
@@ -153,11 +163,6 @@
     <Folder Include="Quantifiers\FourFold\Implicational\LowerCriticalImplication\" />
     <Folder Include="Quantifiers\FourFold\Implicational\UpperCriticalImplication\" />
     <Folder Include="Quantifiers\TwoDimensional\Distribution\ChiSquare\" />
-    <Folder Include="Tasks\SDFourFold\" />
-    <Folder Include="Tasks\SDSingleDimensional\" />
-    <Folder Include="Tasks\SDTwoDimensional\" />
-    <Folder Include="Tasks\SingleDimensional\" />
-    <Folder Include="Tasks\TwoDimensional\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -190,11 +190,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     throw new ArgumentException();
                 if (missings is FalseBitString)
                 {
-                    negation = input.Not();
+                    negation = input.NotCloned();
                 }
                 else
                 {
-                    negation = input.Or(missings).Not();    
+                    negation = input.OrCloned(missings).NotCloned();    
                 }
                 return;
             }

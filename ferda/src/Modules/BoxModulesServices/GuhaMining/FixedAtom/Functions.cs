@@ -170,6 +170,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
                 return GetBitStringGeneratorPrx(true);
             return null;
         }
+
+        public override string GetSourceDataTableId(Current current__)
+        {
+            BitStringGeneratorPrx prx = GetBitStringGeneratorPrx(true);
+            if (prx != null)
+                return prx.GetSourceDataTableId();
+            return null;
+        }
         
         #endregion
     }

@@ -54,13 +54,13 @@ namespace Ferda.Guha.Data
     /// </para>
     /// </remarks>
     /// <seealso href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnvs05/html/vsgenerics.asp?frame=true&amp;hidetoc=true">
-    /// Generic Coding with the ADO.NET 2.0 Base Classes and Factories (MSDN Library)
+    /// Bob Beauchemin: Generic Coding with the ADO.NET 2.0 Base Classes and Factories (MSDN Library)
     /// </seealso>
     /// <seealso href="http://msdn2.microsoft.com/en-us/library/t9f29wbk.aspx">
     /// Writing Provider-Independent Code in ADO.NET (MSDN Library)
     /// </seealso>
     /// <seealso href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnvs05/html/adonet2schemas.asp?frame=true&amp;hidetoc=true">
-    /// Schemas in ADO.NET 2.0 (MSDN Library)
+    /// Bob Beauchemin: Schemas in ADO.NET 2.0 (MSDN Library)
     /// </seealso>
     public class NamespaceDoc
     {

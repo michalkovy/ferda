@@ -433,7 +433,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                         bool ordered;
                         tmp.GetCategoriesIds(out ordered);
 
-                        if (GenericColumn.CompareCardinality(columnCardinality, CardinalityEnum.Nominal) <= 0)
+                        if (Ferda.Guha.Data.Common.CompareCardinalityEnums(columnCardinality, CardinalityEnum.Nominal) <= 0)
                             return CardinalityEnum.Nominal;
                         else
                         {
@@ -441,7 +441,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                                 return CardinalityEnum.Nominal;
                             else
                             {
-                                if (GenericColumn.CompareCardinality(columnCardinality, CardinalityEnum.Cardinal) >= 0)
+                                if (Ferda.Guha.Data.Common.CompareCardinalityEnums(columnCardinality, CardinalityEnum.Cardinal) >= 0)
                                 {
                                     bool isSingleValueCategories = (GetCategoriesNumericValues(fallOnError) != null);
                                     if (isSingleValueCategories)
@@ -538,7 +538,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public override CardinalityEnum GetAttributeCardinality(Current current__)
         {
-            if (GenericColumn.CompareCardinality(
+            if (Ferda.Guha.Data.Common.CompareCardinalityEnums(
                    Cardinality,
                    PotentiallyCardinality(true)
                    ) > 1)
@@ -590,6 +590,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 return new string[] { XCategory };
         }
 
+        public override string GetSourceDataTableId(Current current__)
+        {
+            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(true);
+            if (prx != null)
+                return prx.GetSourceDataTableId();
+            return null;
+        }
+        
         #endregion
     }
 }

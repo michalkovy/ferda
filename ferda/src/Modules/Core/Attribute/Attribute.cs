@@ -1045,7 +1045,7 @@ namespace Ferda.Guha.Attribute
             // b < a
             else if (isFirstLessThanSecond(b, a))
                 return 1;
-            // requestedNumberOfIntervals are not disjunctive
+            // intervals are not disjunctive
             else
                 return 0;
         }

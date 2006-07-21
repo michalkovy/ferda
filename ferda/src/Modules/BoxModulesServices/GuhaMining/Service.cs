@@ -24,10 +24,17 @@ namespace Ferda.Modules.Boxes.GuhaMining
             registerBox(DisjunctionSetting.BoxInfo.typeIdentifier, new DisjunctionSetting.BoxInfo());
             registerBox(FixedAtom.BoxInfo.typeIdentifier, new FixedAtom.BoxInfo());
             registerBox(Sign.BoxInfo.typeIdentifier, new Sign.BoxInfo());
-            
+
             // guha task boxes
             registerBox(Tasks.FourFold.BoxInfo.typeIdentifier, new Tasks.FourFold.BoxInfo());
-            
+            registerBox(Tasks.SDFourFold.BoxInfo.typeIdentifier, new Tasks.SDFourFold.BoxInfo());
+
+            registerBox(Tasks.SingleDimensional.BoxInfo.typeIdentifier, new Tasks.SingleDimensional.BoxInfo());
+            registerBox(Tasks.SDSingleDimensional.BoxInfo.typeIdentifier, new Tasks.SDSingleDimensional.BoxInfo());
+
+            registerBox(Tasks.TwoDimensional.BoxInfo.typeIdentifier, new Tasks.TwoDimensional.BoxInfo());
+            registerBox(Tasks.SDTwoDimensional.BoxInfo.typeIdentifier, new Tasks.SDTwoDimensional.BoxInfo());
+
             // guha quantifiers boxes
             registerBox(GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo());
             registerBox(GuhaMining.Quantifiers.FourFold.Equivalence.FoundedEquivalence.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.FourFold.Equivalence.FoundedEquivalence.BoxInfo());
@@ -72,10 +79,10 @@ namespace Ferda.Modules.Boxes.GuhaMining
             get { return true; }
         }
 
-
 #if CONSOLE_APPLICATION_FOR_SERVICE_STATARTUP_DEBUGGING
         private void registerBox(string factoryIdentifier, BoxInfo boxInfo)
         {
+            BoxInfoLoadTesting.Test(boxInfo, new string[] { "en-US" });
         }
 
         public static void Main(string[] args)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Ferda.Guha.Data;
 using Object = Ice.Object;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
+namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDFourFold
 {
     internal class BoxInfo : Boxes.BoxInfo
     {
@@ -35,7 +35,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
             return null;
         }
 
-        public const string typeIdentifier = "GuhaMining.Tasks.FourFold";
+        public const string typeIdentifier = "GuhaMining.Tasks.SDFourFold";
 
         protected override string identifier
         {

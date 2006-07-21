@@ -1261,8 +1261,7 @@ namespace Ferda.Modules.Boxes
         /// <returns>Prepared data for next processing by 
         /// <see cref="M:Ferda.Modules.Boxes.BoxInfo.GetModulesAskingForCreation(System.String[], Ferda.Modules.BoxModuleI)"/>.
         /// </returns>
-        protected Dictionary<string, ModulesAskingForCreation> getModulesAskingForCreationNonDynamic(
-            string[] localePrefs)
+        public Dictionary<string, ModulesAskingForCreation> getModulesAskingForCreationNonDynamic(string[] localePrefs)
         {
             List<string> input = box.ModulesAskingForCreation;
             Serializer.Localization.IHelper boxLocalization = getLocalization(localePrefs);

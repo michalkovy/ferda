@@ -80,7 +80,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);
 
-            if (GenericColumn.CompareCardinality(
+            if (Ferda.Guha.Data.Common.CompareCardinalityEnums(
                    Func.Cardinality,
                    Func.PotentiallyCardinality(true)
                    ) > 1)

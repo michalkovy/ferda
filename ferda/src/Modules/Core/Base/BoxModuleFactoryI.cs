@@ -243,8 +243,7 @@ namespace Ferda.Modules
         /// </returns>
         public override SocketInfo[] getSockets(Current __current)
         {
-            SocketInfo[] s = boxInfo.GetSockets(localePrefs);
-            return s;
+            return boxInfo.GetSockets(localePrefs);
         }
 
         /// <summary>

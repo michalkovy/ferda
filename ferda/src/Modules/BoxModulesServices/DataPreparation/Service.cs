@@ -42,7 +42,9 @@ namespace Ferda.Modules.Boxes.DataPreparation
 
 #if CONSOLE_APPLICATION_FOR_SERVICE_STATARTUP_DEBUGGING
         private void registerBox(string factoryIdentifier, BoxInfo boxInfo)
-        { }
+        {
+            BoxInfoLoadTesting.Test(boxInfo, new string[] { "en-US" });
+        }
 
         public static void Main(string[] args)
         {

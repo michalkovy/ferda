@@ -104,11 +104,14 @@ namespace Ferda.Guha.Data
 
                             {
                                 string selectAvgExpression;
-                                if (PotentiallyCardinality == CardinalityEnum.Cardinal
+                                if (Explain.dataType == DbDataTypeEnum.StringType)
+                                    selectAvgExpression = "AVG(LEN(" + columnQuotedIdentifier + ")) AS Average";
+                                else if (PotentiallyCardinality == CardinalityEnum.Cardinal
+                                    || PotentiallyCardinality == CardinalityEnum.OrdinalCyclic
+                                    || PotentiallyCardinality == CardinalityEnum.Ordinal
                                     || Explain.dataType == DbDataTypeEnum.BooleanType)
                                     selectAvgExpression = "AVG(" + columnQuotedIdentifier + ") AS Average";
-                                else if (Explain.dataType == DbDataTypeEnum.StringType)
-                                    selectAvgExpression = "AVG(LEN(" + columnQuotedIdentifier + ")) AS Average";
+
                                 else //if (Explain.dataType == DbDataTypeEnum.UnknownType)
                                     selectAvgExpression = "'N/A' AS Average";
 
@@ -145,7 +148,7 @@ namespace Ferda.Guha.Data
                                     + " * (" + columnQuotedIdentifier + " - '" + result.valueAverage + "')"
                                     + ") FROM " + dataTableQuotedIdentifier;
 
-                                result.valueVariability = Convert.ToDouble(command.ExecuteScalar())/dataTableRowsCount;
+                                result.valueVariability = Convert.ToDouble(command.ExecuteScalar()) / dataTableRowsCount;
                                 result.valueStandardDeviation = System.Math.Sqrt(result.valueVariability);
                             }
                             else
@@ -481,7 +484,7 @@ namespace Ferda.Guha.Data
                     return DbDataTypeEnum.StringType;
                 case "System.DateTime":
                     return DbDataTypeEnum.DateTimeType;
-                    //return ValueSubTypeEnum.DateType;
+                //return ValueSubTypeEnum.DateType;
                 case "System.TimeSpan":
                     return DbDataTypeEnum.TimeType;
                 case "System.Byte[]": //BLOB, Memo, ...
@@ -562,7 +565,7 @@ namespace Ferda.Guha.Data
                     return false;
             }
         }
-        
+
         /// <summary>
         /// Gets a value indicating whether this instance is of numeric data type.
         /// </summary>
@@ -587,14 +590,14 @@ namespace Ferda.Guha.Data
             {
                 switch (DbSimpleDataType)
                 {
-                    case DbSimpleDataTypeEnum.DateTimeSimpleType:
                     case DbSimpleDataTypeEnum.DoubleSimpleType:
                     case DbSimpleDataTypeEnum.FloatSimpleType:
                     case DbSimpleDataTypeEnum.IntegerSimpleType:
                     case DbSimpleDataTypeEnum.LongSimpleType:
                     case DbSimpleDataTypeEnum.ShortSimpleType:
-                    case DbSimpleDataTypeEnum.TimeSimpleType:
                         return CardinalityEnum.Cardinal;
+                    case DbSimpleDataTypeEnum.DateTimeSimpleType:
+                    case DbSimpleDataTypeEnum.TimeSimpleType:
                     case DbSimpleDataTypeEnum.StringSimpleType:
                         return CardinalityEnum.OrdinalCyclic;
                     case DbSimpleDataTypeEnum.BooleanSimpleType:
@@ -607,27 +610,6 @@ namespace Ferda.Guha.Data
         }
 
         #endregion
-
-        /// <summary>
-        /// Compares the cardinality. Cardinality can be sorted by 
-        /// inclusion e.g. Nominal is &lt; Ordinal etc.
-        /// </summary>
-        /// <param name="x">The x.</param>
-        /// <param name="y">The y.</param>
-        /// <returns></returns>
-        public static int CompareCardinality(CardinalityEnum x, CardinalityEnum y)
-        {
-            if (x == y)
-                return 0;
-            else if (y == CardinalityEnum.Cardinal && x != CardinalityEnum.Cardinal)
-                return -1;
-            else if (y == CardinalityEnum.OrdinalCyclic && x != CardinalityEnum.OrdinalCyclic)
-                return -1;
-            else if (y == CardinalityEnum.Ordinal && x != CardinalityEnum.Ordinal)
-                return -1;
-            else
-                return 1;
-        }
 
         /// <summary>
         /// Gets the quoted query identifier of the column i.e.

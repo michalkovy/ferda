@@ -173,6 +173,25 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
             }
             return null;
         }
+
+        public override string GetSourceDataTableId(Current current__)
+        {
+            List<BooleanAttributeSettingFunctionsPrx> prxs = GetBooleanAttributeSettingFunctionsPrxs(true);
+            string last = null;
+            if (prxs != null)
+                foreach (BooleanAttributeSettingFunctionsPrx prx in prxs)
+                {
+                    string newer = prx.GetSourceDataTableId();
+                    if (String.IsNullOrEmpty(last))
+                        last = newer;
+                    else if (last != newer)
+                        throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
+                                                       "Mining over only source data table is supported.",
+                                                       new string[] { SockBooleanAttributeSetting },
+                                                       restrictionTypeEnum.OtherReason);
+                }
+            return last;
+        }
         
         #endregion
     }
