@@ -1,3 +1,5 @@
+using Ferda.Guha.MiningProcessor.Results;
+
 namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 {
     public interface IEvaluator

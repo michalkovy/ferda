@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
+using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Modules;
 
 namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
@@ -22,6 +23,9 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     {
         private readonly QuantifierBaseFunctionsPrx _prx;
         private readonly BitStringGeneratorProviderPrx _taskFuncPrx;
+        private readonly QuantifierValueFunctionsPrx _prxValue;
+        private readonly QuantifierSignificantValueFunctionsPrx _prxSignificantValue;
+        private readonly QuantifierValidFunctionsPrx _prxValid;
 
         private readonly QuantifierSetting _setting;
 
@@ -77,8 +81,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 if (NumberOfInvokes == 0)
                     return 0;
                 // (-0.5;0.5>
-                double efficiency = -0.5d + NumberOfFalseInvokes/NumberOfInvokes;
-                return (Int64.MaxValue*efficiency)/(double) NumberOfInvokes;
+                double efficiency = -0.5d + NumberOfFalseInvokes / NumberOfInvokes;
+                return (Int64.MaxValue * efficiency) / (double)NumberOfInvokes;
             }
         }
 
@@ -99,7 +103,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         #endregion
 
         #region Constructors
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Quantifier"/> class.
         /// </summary>
@@ -113,14 +117,18 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             _performanceDifficulty = _setting.performanceDifficulty;
             _operationMode = _setting.operationMode;
 
+            _prxValid = QuantifierValidFunctionsPrxHelper.checkedCast(_prx);
+            
             if (prx.ice_isA("::Ferda::Guha::Math::Quantifiers::QuantifierValueFunctions"))
             {
                 _providesValues = true;
                 _providesAtLeastSignificantValues = true;
+                _prxValue = QuantifierValueFunctionsPrxHelper.checkedCast(_prx);
             }
             else if (prx.ice_isA("::Ferda::Guha::Math::Quantifiers::QuantifierValueBaseFunctions"))
             {
                 _providesAtLeastSignificantValues = true;
+                _prxSignificantValue = QuantifierSignificantValueFunctionsPrxHelper.checkedCast(_prx);
             }
 
             _isPureFourFold = prx.ice_isA("::Ferda::Guha::Math::Quantifiers::FourFoldValid")
@@ -234,6 +242,93 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
         }
 
+        #region OperationMode ... evaluation of Hypothesis
+        
+        public QuantifierEvaluateSetting GetFirstTable(Hypothesis hypothesis, long allObjectsCount)
+        {
+            return getQuantifierEvaluateSetting(
+                new ContingencyTableHelper(
+                    hypothesis.ContingencyTableA,
+                    allObjectsCount,
+                    hypothesis.NumericValuesAttributeGuid
+                    )
+                );
+        }
+        
+        public QuantifierEvaluateSetting GetSecondTable(Hypothesis hypothesis, long allObjectsCount)
+        {
+            return getQuantifierEvaluateSetting(
+                new ContingencyTableHelper(
+                    hypothesis.ContingencyTableB,
+                    allObjectsCount,
+                    hypothesis.NumericValuesAttributeGuid
+                    )
+                );
+        }
+        
+        public QuantifierEvaluateSetting GetFirstDiffSecondTable(Hypothesis hypothesis, long allObjectsCount)
+        {
+            QuantifierEvaluateSetting first = GetFirstTable(hypothesis, allObjectsCount);
+            QuantifierEvaluateSetting second = GetSecondTable(hypothesis, allObjectsCount);
+            ContingencyTableHelper result;
+            if (_setting.needsNumericValues)
+            {
+                result = ContingencyTableHelper.OperatorMinus(
+                    new ContingencyTableHelper(
+                        first.contingencyTable,
+                        allObjectsCount,
+                        first.denominator,
+                        first.numericValuesAttributeId.value
+                        ),
+                    new ContingencyTableHelper(
+                        second.contingencyTable,
+                        allObjectsCount,
+                        second.denominator,
+                        second.numericValuesAttributeId.value
+                        )
+                    );
+                GuidStruct numericValuesAttributeId = new GuidStruct(result.NumericValuesAttributeGuid);
+                return new QuantifierEvaluateSetting(
+                    result.ContingencyTable,
+                    result.Denominator,
+                    numericValuesAttributeId,
+                    _taskFuncPrx.GetBitStringGenerator(numericValuesAttributeId)
+                    );
+            }
+            else
+            {
+                result = ContingencyTableHelper.OperatorMinus(
+                    new ContingencyTableHelper(
+                        first.contingencyTable,
+                        allObjectsCount,
+                        first.denominator
+                        ),
+                    new ContingencyTableHelper(
+                        second.contingencyTable,
+                        allObjectsCount,
+                        second.denominator
+                        )
+                    );
+                return new QuantifierEvaluateSetting(
+                    result.ContingencyTable,
+                    result.Denominator,
+                    null,
+                    null
+                    );
+            }
+
+        }
+        
+	    #endregion
+
+        #region Value
+        private double value(QuantifierEvaluateSetting setting)
+        {
+            if (!ProvidesValues)
+                throw new InvalidOperationException();
+            return _prxValue.ComputeValue(setting);
+        }
+
         /// <summary>
         /// !!! SD tasky smi pouzivat jen toto rozhrani.
         /// !!! V result browseru ukazovat hdnoty jen tech kvantifikatoru poskytujicich toto rozhrani.
@@ -242,15 +337,45 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         /// <returns></returns>
         public double Value(ContingencyTableHelper contingencyTable)
         {
-            if (!ProvidesValues)
-                throw new InvalidOperationException();
-
             QuantifierEvaluateSetting setting = getQuantifierEvaluateSetting(contingencyTable);
-
-            QuantifierValueFunctionsPrx prx = QuantifierValueFunctionsPrxHelper.checkedCast(_prx);
-            return prx.ComputeValue(setting);
+            return value(setting);
         }
 
+        public double Value(Hypothesis hypothesis, long allObjectsCount)
+        {
+            switch (_setting.operationMode)
+            {
+                case OperationModeEnum.DifferenceOfFrequencies:
+                    return value(GetFirstDiffSecondTable(hypothesis, allObjectsCount));
+                case OperationModeEnum.DifferenceOfQuantifierValues:
+                    return
+                        value(GetFirstTable(hypothesis, allObjectsCount))
+                        -
+                        value(GetSecondTable(hypothesis, allObjectsCount));
+                case OperationModeEnum.FirstSetFrequencies:
+                    return value(GetFirstTable(hypothesis, allObjectsCount));
+                case OperationModeEnum.SecondSetFrequencies:
+                    return value(GetSecondTable(hypothesis, allObjectsCount));
+                default:
+                    throw new NotImplementedException();
+            }
+        } 
+        #endregion
+
+        private bool atLeastSignificantValidValue(QuantifierEvaluateSetting setting, out double value)
+        {
+            if (!ProvidesAtLeastSignificantValues)
+                throw new InvalidOperationException();
+            if (ProvidesValues)
+            {
+                return _prxValue.ComputeValidValue(setting, out value);
+            }
+            else
+            {
+                return _prxSignificantValue.ComputeValidValue(setting, out value);
+            }
+        }
+        
         /// <summary>
         /// Pro ucely TopN. !!! pozor ne vsechny kvantifikatory poskytuji toto rozhrani
         /// </summary>
@@ -259,24 +384,26 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         /// <returns></returns>
         public bool AtLeastSignificantValidValue(ContingencyTableHelper contingencyTable, out double value)
         {
-            if (!ProvidesAtLeastSignificantValues)
-                throw new InvalidOperationException();
-
             QuantifierEvaluateSetting setting = getQuantifierEvaluateSetting(contingencyTable);
+            return atLeastSignificantValidValue(setting, out value);
+        }
 
+        private bool valid(QuantifierEvaluateSetting setting)
+        {
             if (ProvidesValues)
             {
-                QuantifierValueFunctionsPrx prx = QuantifierValueFunctionsPrxHelper.checkedCast(_prx);
-                return prx.ComputeValidValue(setting, out value);
+                return _prxValue.Compute(setting);
+            }
+            else if (ProvidesAtLeastSignificantValues)
+            {
+                return _prxSignificantValue.Compute(setting);
             }
             else
             {
-                QuantifierSignificantValueFunctionsPrx prx =
-                    QuantifierSignificantValueFunctionsPrxHelper.checkedCast(_prx);
-                return prx.ComputeValidValue(setting, out value);
+                return _prxValid.Compute(setting);
             }
         }
-
+        
         /// <summary>
         /// !!! Pro kvantifikatory neposkytujici jiny interface,
         /// !!! Pro ucely FirstN
@@ -286,23 +413,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         public bool Valid(ContingencyTableHelper contingencyTable)
         {
             QuantifierEvaluateSetting setting = getQuantifierEvaluateSetting(contingencyTable);
-
-            if (ProvidesValues)
-            {
-                QuantifierValueFunctionsPrx prx = QuantifierValueFunctionsPrxHelper.checkedCast(_prx);
-                return prx.Compute(setting);
-            }
-            else if (ProvidesAtLeastSignificantValues)
-            {
-                QuantifierSignificantValueFunctionsPrx prx =
-                    QuantifierSignificantValueFunctionsPrxHelper.checkedCast(_prx);
-                return prx.Compute(setting);
-            }
-            else
-            {
-                QuantifierValidFunctionsPrx prx = QuantifierValidFunctionsPrxHelper.checkedCast(_prx);
-                return prx.Compute(setting);
-            }
+            return valid(setting);
         }
 
         /// <summary>

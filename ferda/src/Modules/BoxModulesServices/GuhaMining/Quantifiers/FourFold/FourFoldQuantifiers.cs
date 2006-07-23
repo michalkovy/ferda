@@ -4,7 +4,7 @@
 //namespace Ferda.Guha.Math.Quantifiers
 //{
 //    #region Implications
-    
+
 //    /// <summary>
 //    /// Computes lower critical implication.
 //    /// </summary>
@@ -22,7 +22,7 @@
 //    {
 //        // P: Statistical confidence parameter.
 //        // The parameter p must be between 0 and 1 (inclusive).
-        
+
 //        // (Treshold)
 //        // Alpha: Statistical significance (usually 5%).
 //        // The parameter alpha must be greater than 0.0 and less then or equal to 0.5.
@@ -55,7 +55,7 @@
 //        public bool Validate(IQuantifierValidateData data, out double value)
 //        {
 //            //TODO Denominator
-            
+
 //            // get params
 //            FourFoldContingencyTable table = data.FourFoldContingencyTable;
 
@@ -130,7 +130,7 @@
 
 //        #endregion
 //    }
-    
+
 //    //TODO
 //    //public class UpperCriticalImplication : IQuantifierValidate{ }
 
@@ -337,6 +337,6 @@
 
 //    //TODO fisher
 //    //public class Fisher : ???
-    
+
 //    #endregion
 //}

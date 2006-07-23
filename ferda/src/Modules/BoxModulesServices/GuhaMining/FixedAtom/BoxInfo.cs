@@ -1,3 +1,4 @@
+using Ferda.Modules.Helpers.Common;
 using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
@@ -24,7 +25,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
                 return null;
             else
             {
-                return attributeName + "(" + Helpers.Common.Print.SequenceToString(Func.Categories, ", ") + ")";
+                return attributeName + "(" + Print.SequenceToString(Func.Categories, ", ") + ")";
             }
         }
 

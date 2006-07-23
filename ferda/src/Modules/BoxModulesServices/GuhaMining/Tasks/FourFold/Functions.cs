@@ -2,6 +2,7 @@
 
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Results;
 using Ferda.ModulesManager;
 using Ice;
 

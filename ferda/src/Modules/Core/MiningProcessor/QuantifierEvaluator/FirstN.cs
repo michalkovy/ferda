@@ -1,28 +1,40 @@
+using Ferda.Guha.MiningProcessor.Miners;
+using Ferda.Guha.MiningProcessor.Results;
+
 namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 {
     public class FirstN : IEvaluator
     {
-        private Quantifiers _quantifiers;
-        private Result _result;
-        private SerializableResultInfo _rInfo;
-        private TaskRunParams _taskParams;
+        private readonly MiningProcessorBase _miningProcessor;
+        private readonly Quantifiers _quantifiers;
+        private readonly Result _result;
+        private readonly SerializableResultInfo _rInfo;
+        private readonly long _n;
 
-        public FirstN(Quantifiers quantifiers, Result result, SerializableResultInfo rInfo, TaskRunParams taskParams)
+        public FirstN(MiningProcessorBase miningProcessor)
         {
-            _quantifiers = quantifiers;
-            _result = result;
-            _rInfo = rInfo;
-            _taskParams = taskParams;
+            _miningProcessor = miningProcessor;
+            _quantifiers = miningProcessor.Quantifiers;
+            _result = miningProcessor.Result;
+            _rInfo = miningProcessor.ResultInfo;
+            _n = miningProcessor.TaskParams.maxSizeOfResult;
         }
 
         //TODO tady pujde bufferovat zadani a volat Valid na pole CT
         public bool VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis)
         {
+            _rInfo.NumberOfVerifications++;
+            _miningProcessor.ProgressSetValue(
+                _rInfo.NumberOfHypotheses/_n,
+                string.Format("Number of Verifications: {0}, Number of hypotheses: {1}", 
+                              _rInfo.NumberOfVerifications,
+                              _rInfo.NumberOfHypotheses)
+                );
             if (_quantifiers.Valid(contingencyTable))
             {
                 _rInfo.NumberOfHypotheses++;
                 _result.Hypotheses.Add(hypothesis);
-                if (_result.Hypotheses.Count >= _taskParams.maxSizeOfResult)
+                if (_result.Hypotheses.Count >= _n)
                     return true;
             }
             return false;

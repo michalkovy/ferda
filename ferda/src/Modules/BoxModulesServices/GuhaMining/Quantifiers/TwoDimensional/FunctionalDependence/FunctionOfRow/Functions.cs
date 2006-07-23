@@ -2,6 +2,7 @@ using System;
 using Ferda.Guha.Data;
 using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
+using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRow
 {
@@ -57,164 +58,142 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDe
 
         public OperationModeEnum OperationMode
         {
-            get
-            {
-                return OperationModeEnum.FirstSetFrequencies;
-            }
+            get { return OperationModeEnum.FirstSetFrequencies; }
         }
+
         public MissingInformationHandlingEnum MissingInformationHandling
         {
-            get
-            {
-                return MissingInformationHandlingEnum.Deleting;
-            }
+            get { return MissingInformationHandlingEnum.Deleting; }
         }
+
         public RelationEnum Relation
         {
             get
             {
-                return (RelationEnum)Enum.Parse(
-                    typeof(RelationEnum),
-                    _boxModule.GetPropertyString(Common.PropRelation)
-                    );
+                return (RelationEnum) Enum.Parse(
+                                          typeof (RelationEnum),
+                                          _boxModule.GetPropertyString(Common.PropRelation)
+                                          );
             }
         }
+
         public double Treshold
         {
-            get
-            {
-                return _boxModule.GetPropertyDouble(Common.PropTreshold);
-            }
+            get { return _boxModule.GetPropertyDouble(Common.PropTreshold); }
         }
+
         public BoundTypeEnum FromRowBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropFromRowBoundary)
-                    );
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropFromRowBoundary)
+                                           );
             }
         }
+
         public int FromRowBoundaryIndex
         {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropFromRowBoundaryIndex);
-            }
+            get { return _boxModule.GetPropertyInt(Common.PropFromRowBoundaryIndex); }
         }
+
         public BoundTypeEnum ToRowBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropToRowBoundary)
-                    );
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropToRowBoundary)
+                                           );
             }
         }
+
         public int ToRowBoundaryIndex
         {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropToRowBoundaryIndex);
-            }
+            get { return _boxModule.GetPropertyInt(Common.PropToRowBoundaryIndex); }
         }
+
         public BoundTypeEnum FromColumnBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropFromColumnBoundary)
-                    );
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropFromColumnBoundary)
+                                           );
             }
         }
+
         public int FromColumnBoundaryIndex
         {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropFromColumnBoundaryIndex);
-            }
+            get { return _boxModule.GetPropertyInt(Common.PropFromColumnBoundaryIndex); }
         }
+
         public BoundTypeEnum ToColumnBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropToColumnBoundary)
-                    );
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropToColumnBoundary)
+                                           );
             }
         }
+
         public int ToColumnBoundaryIndex
         {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropToColumnBoundaryIndex);
-            }
+            get { return _boxModule.GetPropertyInt(Common.PropToColumnBoundaryIndex); }
         }
+
         public QuantifierClassEnum[] QuantifierClasses
         {
-            get
-            {
-                return new QuantifierClassEnum[]{};
-            }
+            get { return new QuantifierClassEnum[] {}; }
         }
+
         public PerformanceDifficultyEnum PerformanceDifficulty
         {
-            get
-            {
-                return PerformanceDifficultyEnum.QuiteEasy;
-            }
+            get { return PerformanceDifficultyEnum.QuiteEasy; }
         }
+
         public bool NeedsNumericValues
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
+
         public CardinalityEnum SupportedData
         {
-            get
-            {
-                return CardinalityEnum.Nominal;
-            }
+            get { return CardinalityEnum.Nominal; }
         }
+
         public UnitsEnum Units
         {
             get
             {
-                return (UnitsEnum)Enum.Parse(
-                    typeof(UnitsEnum),
-                    _boxModule.GetPropertyString(Common.PropUnits)
-                    );
+                return (UnitsEnum) Enum.Parse(
+                                       typeof (UnitsEnum),
+                                       _boxModule.GetPropertyString(Common.PropUnits)
+                                       );
             }
         }
+
         public bool SupportsFloatContingencyTable
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         public double AbsoluteTreshold
         {
-            get
-            {
-                return _boxModule.GetPropertyDouble(Common.PropAbsoluteTreshold);
-            }
+            get { return _boxModule.GetPropertyDouble(Common.PropAbsoluteTreshold); }
         }
-        
-        public override bool Compute(QuantifierEvaluateSetting param, Ice.Current current__)
+
+        public override bool Compute(QuantifierEvaluateSetting param, Current current__)
         {
             double value;
             return ComputeValidValue(param, out value);
         }
 
-        public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Ice.Current current__)
+        public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__)
         {
             ContingencyTable table = new ContingencyTable(param);
             double p = Treshold;
@@ -238,10 +217,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDe
             }
 
             //Tests:
-            if (Guha.Math.Common.Compare(Relation, sumRowMaxFreq, p * m) //test on p
-                && Guha.Math.Common.Compare(Relation, (absTr * table.Denominator) - m, -sumRowMaxFreq)) //test on Tr (opposite relation)
+            if (Guha.Math.Common.Compare(Relation, sumRowMaxFreq, p*m) //test on p
+                && Guha.Math.Common.Compare(Relation, (absTr*table.Denominator) - m, -sumRowMaxFreq))
+                //test on Tr (opposite relation)
             {
-                value = sumRowMaxFreq / m;
+                value = sumRowMaxFreq/m;
                 return true;
             }
             else
@@ -251,17 +231,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDe
             }
         }
 
-        public override string GetLocalizedBoxLabel(string[] localePrefs, Ice.Current current__)
+        public override string GetLocalizedBoxLabel(string[] localePrefs, Current current__)
         {
             return _boxModule.BoxInfo.GetLabel(localePrefs);
         }
 
-        public override string GetLocalizedUserBoxLabel(string[] localePrefs, Ice.Current current__)
+        public override string GetLocalizedUserBoxLabel(string[] localePrefs, Current current__)
         {
             return _boxModule.Manager.getProjectInformation().getUserLabel(_boxModule.StringIceIdentity);
         }
 
-        public override QuantifierSetting GetQuantifierSetting(Ice.Current current__)
+        public override QuantifierSetting GetQuantifierSetting(Current current__)
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,

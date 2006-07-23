@@ -1,87 +1,82 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using Ferda.Guha.Data;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Guha.MiningProcessor.Generation;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
-using Ferda.Modules;
+using Ferda.Guha.MiningProcessor.Results;
+using Ferda.ModulesManager;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
     public class FourFoldMiningProcessor : MiningProcessorBase
     {
-        #region Fields
+        protected override void getCedents(out ICollection<IEntityEnumerator> booleanCedents,
+                                           out ICollection<CategorialAttributeTrace[]> categorialCedents)
+        {
+            booleanCedents = new IEntityEnumerator[] {_antecedent, _succedent, _condition};
+            categorialCedents = null;
+        }
 
-        private readonly IEntityEnumerator _antecedent;
-        private readonly IEntityEnumerator _succedent;
-        private readonly IEntityEnumerator _condition;
+        public override TaskTypeEnum TaskType
+        {
+            get { return TaskTypeEnum.FourFold; }
+        }
 
-        #endregion
+        protected override CategorialAttributeTrace[] attributesWhichShouldSupportNumericValues()
+        {
+            return null;
+        }
+
+        protected override List<CategorialAttributeTrace[]> attributesWhichRequestsSomeCardinality()
+        {
+            return null;
+        }
+
+        private IEntityEnumerator _antecedent;
+        private IEntityEnumerator _succedent;
+        private IEntityEnumerator _condition;
+
+        protected override void prepareAttributeTraces()
+        {
+            if (!ProgressSetValue(-1, "Preparing Succedent trace"))
+                return;
+            _succedent = CreateBooleanAttributeTrace(MarkEnum.Succedent, _booleanAttributes, false);
+
+            if (!ProgressSetValue(-1, "Preparing Antecedent trace"))
+                return;
+            _antecedent = CreateBooleanAttributeTrace(MarkEnum.Antecedent, _booleanAttributes, true);
+
+            if (!ProgressSetValue(-1, "Preparing Condition trace"))
+                return;
+            _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true);
+        }
 
         public FourFoldMiningProcessor(
             BooleanAttribute[] booleanAttributes,
             CategorialAttribute[] categorialAttributes,
             QuantifierBaseFunctionsPrx[] quantifiers,
             TaskRunParams taskParams,
-            BitStringGeneratorProviderPrx taskFuncPrx
+            BitStringGeneratorProviderPrx taskFuncPrx,
+            ProgressTaskListener progressListener,
+            ProgressBarPrx progressBarPrx
             )
-            : base(quantifiers, taskFuncPrx, taskParams)
+            : base(
+                booleanAttributes, categorialAttributes, quantifiers, taskFuncPrx, taskParams, progressListener,
+                progressBarPrx)
         {
-            // Validate quantifiers
-            bool notOnlyFirstSetOperationMode;
-            bool needsNumericValues; // ignore
-            bool notOnlyDeletingMissingInformation;
-            // ignore allways study ... for that purpose if user join new quantifier to task box after run to see its values in Result Browser
-            CardinalityEnum maximalRequestedCardinality; // UNDONE ignored
-
-            _quantifiers.ValidRequests(
-                out notOnlyFirstSetOperationMode,
-                out needsNumericValues,
-                out notOnlyDeletingMissingInformation,
-                out maximalRequestedCardinality
-                );
-
-            if (notOnlyFirstSetOperationMode)
-                throw Modules.Exceptions.BadParamsError(null, null,
-                                                        "Property \"Operation mode\" is not set to \"FirstSetOperationMode\" in some quantifier.",
-                                                        restrictionTypeEnum.OtherReason);
-
-            // Create cedent traces
-            _antecedent = CreateBooleanAttributeTrace(MarkEnum.Antecedent, booleanAttributes, true);
-            _succedent = CreateBooleanAttributeTrace(MarkEnum.Succedent, booleanAttributes, false);
-            _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, booleanAttributes, true);
+            afterConstruct();
         }
 
-        private class NineFoldTableOfBitStrings
+        public override void Trace()
         {
-            public IBitString pSpA;
-            public IBitString pSxA;
-            public IBitString pSnA;
-
-            public IBitString xSpA;
-            public IBitString xSxA;
-            public IBitString xSnA;
-
-            public IBitString nSpA;
-            public IBitString nSxA;
-            public IBitString nSnA;
-        }
-
-        public override Result Trace(out SerializableResultInfo rInfo)
-        {
-            Debug.Assert(TaskParams.taskType == TaskTypeEnum.FourFold);
-            Result result = new Result();
-            result.TaskTypeEnum = TaskParams.taskType;
-
-            rInfo = new SerializableResultInfo();
-            rInfo.StartTime = DateTime.Now;
-            rInfo.TotalNumberOfRelevantQuestions = TotalCount;
+            if (!ProgressSetValue(-1, "Begining of attributes trace."))
+                return;
+            resultInit();
 
             IEvaluator evaluator;
             if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
-                evaluator = new FirstN(_quantifiers, result, rInfo, TaskParams);
+                evaluator = new FirstN(this);
             else
                 throw new NotImplementedException();
 
@@ -93,17 +88,17 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IBitString xA;
             IBitString nA;
             IBitString xC;
-            NineFoldTableOfBitStrings nineFT = new NineFoldTableOfBitStrings();
+            nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
 
             foreach (IBitString pS in _succedent)
             {
-                if (pS is EmptyBitString)
+                if (pS is IEmptyBitString)
                     continue;
                 GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
                 if (allObjectsCount < 0)
                     allObjectsCount = pS.Length;
                 if (allObjectsCount < 0)
-                    throw new ApplicationException("Unknown all objects count.");
+                    throw new ApplicationException("Unable to determine \"all objects count\".");
                 foreach (IBitString pA in _antecedent)
                 {
                     GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
@@ -122,7 +117,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                     foreach (IBitString pC in _condition)
                     {
-                        rInfo.NumberOfVerifications++;
                         NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
                         if (pC is FalseBitString)
                         {
@@ -171,12 +165,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         }
 
                         ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
-                             fft.ContingencyTable,
-                             allObjectsCount);
+                            fft.ContingencyTable,
+                            allObjectsCount);
 
                         Hypothesis hypothesis = new Hypothesis();
                         hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
-                        hypothesis.SetFormula(MarkEnum.Attribute, pA.Identifier);
+                        hypothesis.SetFormula(MarkEnum.Antecedent, pA.Identifier);
                         hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
                         hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
                         //h.NumericValuesAttributeGuid = contingencyTable.NumericValuesAttributeGuid;
@@ -186,18 +180,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     }
                 }
             }
-        finish:
+            finish:
+            ProgressSetValue(1, "Completing result.");
             evaluator.Flush();
-            rInfo.EndTime = DateTime.Now;
-            result.AllObjectsCount = allObjectsCount;
-            return result;
-        }
-
-        protected override void getCedents(out ICollection<IEntityEnumerator> booleanCedents,
-                                           out ICollection<CategorialAttributeTrace[]> categorialCedents)
-        {
-            booleanCedents = new IEntityEnumerator[] { _antecedent, _succedent, _condition };
-            categorialCedents = null;
+            resultFinish(allObjectsCount);
         }
     }
 }

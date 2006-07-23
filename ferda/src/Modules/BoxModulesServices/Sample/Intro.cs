@@ -19,10 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Ferda.Modules.Boxes.Sample
 {
     /// <summary>
@@ -217,7 +213,7 @@ namespace Ferda.Modules.Boxes.Sample
     /// a nápovědy:
     /// <list type="bullet">
     /// <listheader>
-        /// <term>dokumentace</term>
+    /// <term>dokumentace</term>
     /// <description>XSD schémata</description>
     /// </listheader>
     /// <item>
@@ -293,10 +289,10 @@ namespace Ferda.Modules.Boxes.Sample
     /// Options:
     /// - Argument -IDIR, kde DIR je cesta k *.ice souborům tj. slice návrhům, 
     ///   na které se v našem slice návru odkazujeme pomocí direktivy #include
-	/// - Argument --output-dir je cesta do adresáře, kam se výsledné C# (*.cs) 
+    /// - Argument --output-dir je cesta do adresáře, kam se výsledné C# (*.cs) 
     ///   soubor/y vygenerují.
     /// Slice-Files:
-	/// - Seznam souborů ke zpracování (vygeneruje *.cs ze zadaných *.ice)
+    /// - Seznam souborů ke zpracování (vygeneruje *.cs ze zadaných *.ice)
     /// 
     /// Více z příkazové řádky pomocí $ slice2cs --help
     /// </code>

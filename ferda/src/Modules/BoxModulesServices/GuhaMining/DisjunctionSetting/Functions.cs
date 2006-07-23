@@ -40,12 +40,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
 
         public GuidStruct Guid
         {
-            get
-            {
-                return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule);
-            }
+            get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
-        
+
         public ImportanceEnum Importance
         {
             get
@@ -187,12 +184,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
                     else if (last != newer)
                         throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
                                                        "Mining over only source data table is supported.",
-                                                       new string[] { SockBooleanAttributeSetting },
+                                                       new string[] {SockBooleanAttributeSetting},
                                                        restrictionTypeEnum.OtherReason);
                 }
             return last;
         }
-        
+
         #endregion
     }
 }

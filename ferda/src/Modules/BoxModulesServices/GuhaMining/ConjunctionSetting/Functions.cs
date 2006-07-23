@@ -40,10 +40,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
 
         public GuidStruct Guid
         {
-            get
-            {
-                return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule);
-            }
+            get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
 
         public ImportanceEnum Importance
@@ -192,7 +189,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
                 }
             return last;
         }
-        
+
         #endregion
     }
 }

@@ -2,7 +2,7 @@
 
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
-using Ferda.ModulesManager;
+using Ferda.Guha.MiningProcessor.Results;
 using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDSingleDimensional

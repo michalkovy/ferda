@@ -37,10 +37,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
 
         public GuidStruct Guid
         {
-            get
-            {
-                return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule);
-            }
+            get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
 
         public ImportanceEnum Importance
@@ -178,7 +175,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
                 return prx.GetSourceDataTableId();
             return null;
         }
-        
+
         #endregion
     }
 }

@@ -37,12 +37,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
 
         public GuidStruct Guid
         {
-            get
-            {
-                return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule);
-            }
+            get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
-        
+
         public ImportanceEnum Importance
         {
             get
