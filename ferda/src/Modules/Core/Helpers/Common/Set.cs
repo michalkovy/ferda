@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Ferda.Modules.Helpers.Common
 {
@@ -13,14 +12,14 @@ namespace Ferda.Modules.Helpers.Common
         where T : IEquatable<T>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Set&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Modules.Helpers.Common.Set`1"/> class.
         /// </summary>
         public Set()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Set&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Modules.Helpers.Common.Set`1"/> class.
         /// </summary>
         /// <param name="item">The item.</param>
         public Set(T item)

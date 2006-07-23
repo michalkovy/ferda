@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Ferda.Guha.Data;
 using Object=Ice.Object;
 
@@ -78,6 +79,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);
+            Debug.Assert(dummy == null);
 
             if (Common.CompareCardinalityEnums(
                     Func.Cardinality,

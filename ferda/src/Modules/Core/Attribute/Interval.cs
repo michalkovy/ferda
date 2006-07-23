@@ -63,14 +63,14 @@ namespace Ferda.Guha.Attribute
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Intervals{T}"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Intervals`1"/> class.
         /// </summary>
         private Interval()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Intervals{T}"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Intervals`1"/> class.
         /// </summary>
         /// <param name="leftValue">The left value.</param>
         /// <param name="leftBoundary">The left boundary.</param>
@@ -125,7 +125,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Please see <see cref="T:Ferda.Guha.Attribute.Interval{T}.Equals(Ferda.Guha.Attribute.Interval{T})"/>.
+        /// Please see <see cref="T:Ferda.Guha.Attribute.Interval`1.Equals(Ferda.Guha.Attribute.Interval`1)"/>.
         /// </summary>
         public override bool Equals(object obj)
         {

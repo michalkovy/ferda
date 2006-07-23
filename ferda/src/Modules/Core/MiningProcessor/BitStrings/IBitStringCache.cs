@@ -39,9 +39,19 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Second case - bit string is not found in cache, leads to request to data preprocesor. Obtained string is first stored in cache and then returned to the caller.
         /// Cache is transparent for any exceptions from data preprocesor.
         /// </summary>
-        /// <value></value>
-        /// <returns>Bit string responding to given guid that is stored in cache or obtained from data preprocesor.</returns>
+        /// <value>
+        /// Bit string responding to given guid that is stored in cache or obtained from data preprocesor.
+        /// </value>
         IBitString this[BitStringIdentifier bitStringId] { get; }
+
+        /// <summary>
+        /// Allows to obtain bit string identified by its guid.
+        /// Internally distinguish between two possible cases.
+        /// First case - bit string is stored in cache, leads to simple handling. Stored bit string is returned to the caller.
+        /// Second case - bit string is not found in cache, leads to request to data preprocesor. Obtained string is first stored in cache and then returned to the caller.
+        /// Cache is transparent for any exceptions from data preprocesor.
+        /// </summary>
+        /// <value>The Bit string with the specified attribute GUID (string) and category ID (i.e. name) (string).</value>
         IBitString this[string attributeGuid, string categoryId] { get; }
 
         IBitString GetMissingInformationBitString(string attributeGuid);

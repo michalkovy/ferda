@@ -57,7 +57,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     internal class FourFoldContingencyTable
     {
         /// <summary>
-        /// Ant && Succ
+        /// Ant and Succ
         /// </summary>
         public double a
         {
@@ -66,7 +66,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         /// <summary>
-        /// Ant && notSucc
+        /// Ant and notSucc
         /// </summary>
         public double b
         {
@@ -75,7 +75,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         /// <summary>
-        /// notAnt && Succ
+        /// notAnt and Succ
         /// </summary>
         public double c
         {
@@ -84,7 +84,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         /// <summary>
-        /// notAnt && Succ
+        /// notAnt and Succ
         /// </summary>
         public double d
         {

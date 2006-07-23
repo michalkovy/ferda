@@ -382,8 +382,7 @@ namespace Ferda.Modules.Boxes.Serializer.Configuration
         /// for setting this property. When it is set to "",
         /// no Setting Module will be used.
         /// </summary>
-        /// <seealso cref="T:Ferda.Modules.SettingModule"/>
-        /// <seealso cref="M:Ferda.Modules.SettingModule.getIdentifier(Ice.Current)"/>
+        /// <seealso cref="T:Ferda.Modules.SettingModule">Ferda.Modules.SettingModule.getIdentifier(Ice.Current) (method)</seealso>
         public string SettingModuleIdentifier;
     }
 

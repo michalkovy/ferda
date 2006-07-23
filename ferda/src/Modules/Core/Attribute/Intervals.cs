@@ -26,7 +26,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Intervals{T}"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Intervals`1"/> class.
         /// </summary>
         /// <param name="category">The category.</param>
         public Intervals(Category<T> category)
@@ -114,7 +114,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Gets the <see cref="T:Ferda.Guha.Attribute.Intervals{T}"/> at the specified <c>index</c>.
+        /// Gets the <see cref="T:Ferda.Guha.Attribute.Intervals`1"/> at the specified <c>index</c>.
         /// </summary>
         public Interval<T> this[int index]
         {

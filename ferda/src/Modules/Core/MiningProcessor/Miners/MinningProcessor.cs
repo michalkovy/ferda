@@ -463,7 +463,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// of IEmptyBitString or IFalseBitString.
         /// </summary>
         /// <param name="input">The input.</param>
-        /// <param name="usedAttributes">The used attributes.</param>
         /// <param name="negation">The negation.</param>
         public static void GetNegation(IBitString input, out IBitString negation)
         {

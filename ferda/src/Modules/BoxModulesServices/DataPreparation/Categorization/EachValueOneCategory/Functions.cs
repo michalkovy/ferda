@@ -328,7 +328,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
                             GenericColumn gc = GetGenericColumn(fallOnError);
                             Attribute<IComparable> att = GetAttribute(true);
-                            if (_lastReloadFlag == null || _lastReloadFlag != _cachesReloadFlag)
+                            if (String.IsNullOrEmpty(_lastReloadFlag.ToString()) || _lastReloadFlag != _cachesReloadFlag)
                             {
                                 _lastReloadFlag = _cachesReloadFlag;
                                 if (gc == null || att == null)

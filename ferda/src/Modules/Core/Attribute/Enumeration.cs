@@ -21,14 +21,14 @@ namespace Ferda.Guha.Attribute
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Enumeration{T}"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Enumeration`1"/> class.
         /// </summary>
         private Enumeration()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Enumeration{T}"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Enumeration`1"/> class.
         /// </summary>
         /// <param name="category">The category where the enumeration belongs to.</param>
         public Enumeration(Category<T> category)
@@ -119,7 +119,7 @@ namespace Ferda.Guha.Attribute
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="force">If set to <c>true</c> force addition is enambled (on); otherwise, exception is thrown when collision is detected.</param>
-        /// <exception cref="T:Ferda.Guha.Attribute.DisjunctivityCollisionException">
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
         /// Thrown in not forced mode (force is off) and collision with any other 
         /// category is detected.
         /// </exception>
@@ -141,7 +141,7 @@ namespace Ferda.Guha.Attribute
         /// <param name="item">The item.</param>
         /// <param name="force">If set to <c>true</c> force addition is enambled (on); otherwise, exception is thrown when collision is detected.</param>
         /// <param name="nowReducing">if set to <c>true</c> this method is invoked while execution of reducing .</param>
-        /// <exception cref="T:Ferda.Guha.Attribute.DisjunctivityCollisionException">
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
         /// Thrown in not forced mode (force is off) and collision with any other
         /// category is detected.
         /// </exception>
