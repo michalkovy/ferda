@@ -439,17 +439,24 @@ namespace Ferda.Guha.Attribute
             foreach (DataRow row in dataTable.Rows)
             {
                 i++;
-                
-                item = (T)row[0];
-                if (_enumValues.TryGetValue(item, out categoryName))
+                if (row[0] is DBNull)
                 {
-                    setTrueBit(i, result[categoryName].value);
+                    if (_attribute.NullContainingCategory != null)
+                        setTrueBit(i, result[_attribute.NullContainingCategory].value);
                 }
-                else if (
-                    _intervals.TryGetValue(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute),
-                                           out categoryName))
+                else
                 {
-                    setTrueBit(i, result[categoryName].value);
+                    item = (T)row[0];
+                    if (_enumValues.TryGetValue(item, out categoryName))
+                    {
+                        setTrueBit(i, result[categoryName].value);
+                    }
+                    else if (
+                        _intervals.TryGetValue(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute),
+                                               out categoryName))
+                    {
+                        setTrueBit(i, result[categoryName].value);
+                    }
                 }
                 //else not covered
             }

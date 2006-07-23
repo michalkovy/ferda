@@ -1141,6 +1141,25 @@ namespace Ferda.Modules
                     boxInfo.RunAction(actionName, this);
                     //throws BoxRuntimeError, NameNotExistError
                 }
+                catch (BoxRuntimeError e)
+                {
+                    // na vyber jestli poslad vyjimku nebo implicitni konstrukci vysledku
+                    if (String.IsNullOrEmpty(e.boxIdentity))
+                        e.boxIdentity = StringIceIdentity;
+                    Debug.Assert(!String.IsNullOrEmpty(e.boxIdentity));
+                    Debug.Assert(!String.IsNullOrEmpty(e.userMessage));
+                    throw;
+                }
+                catch (Ice.Exception e)
+                {
+                    Debug.Assert(false);
+                    throw Exceptions.BoxRuntimeError(e, StringIceIdentity, "Unexpected Ice exception." + e.Message);
+                }
+                catch (Exception e)
+                {
+                    Debug.Assert(false);
+                    throw Exceptions.BoxRuntimeError(e, StringIceIdentity, "Unexpected exception." + e.Message);
+                }
                 finally
                 {
                     // unlock the box module

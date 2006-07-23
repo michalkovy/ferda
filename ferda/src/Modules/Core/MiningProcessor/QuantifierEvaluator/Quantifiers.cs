@@ -192,6 +192,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         public bool Valid(ContingencyTableHelper contingencyTable)
         {
+            if (contingencyTable.IsEmpty)
+                return false;
             foreach (Quantifier q in getQuantifiersSortedByEfficiency())
             {
                 if (!q.Valid(contingencyTable))

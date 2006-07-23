@@ -109,7 +109,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
             ProgressBarPrx pB = _boxModule.Output.startProgress(null, "Testovací PB", "Hintik pri startu");
             for (int i = 0; i < 10; i++)
             {
-                pB.setValue(10/(i + 1), "Zvysuji na " + ((i + 1)*10) + "%");
+                pB.setValue((i + 1) / (float)10, "Zvysuji na " + ((i + 1) * 10) + "%");
+                System.Threading.Thread.Sleep(1000);
             }
             pB.done();
             return;

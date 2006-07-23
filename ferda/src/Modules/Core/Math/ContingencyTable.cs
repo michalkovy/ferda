@@ -51,7 +51,7 @@ namespace Ferda.Guha.Math
                 throw new ArgumentException("Contingency table is degenerative.", "contingencyTable");
             // Test shape
 #if DEBUG
-            int rowLength = contingencyTable.Length;
+            int rowLength = contingencyTable[0].Length;
             foreach (double[] row in contingencyTable)
             {
                 if (row.Length != rowLength)

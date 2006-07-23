@@ -208,20 +208,20 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         private QuantifierEvaluateSetting getQuantifierEvaluateSetting(ContingencyTableHelper contingencyTable)
         {
+            QuantifierEvaluateSetting setting;
             if (_isPureFourFold)
             {
-                QuantifierEvaluateSetting setting = contingencyTable.GetSubTable(
+                setting = contingencyTable.GetSubTable(
                     _setting.quantifierClasses,
                     _setting.missingInformationHandling,
                     _setting.units);
                 if (_setting.needsNumericValues)
                     throw new NotImplementedException();
                 setting.numericValuesAttributeId = new GuidStruct(String.Empty);
-                return setting;
             }
             else
             {
-                QuantifierEvaluateSetting setting = contingencyTable.GetSubTable(
+                setting = contingencyTable.GetSubTable(
                     _setting.FromRow,
                     _setting.ToRow,
                     _setting.FromColumn,
@@ -238,8 +238,10 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         _taskFuncPrx.GetBitStringGenerator(setting.numericValuesAttributeId);
                 }
                 setting.numericValuesAttributeId = new GuidStruct(String.Empty);
-                return setting;
             }
+            if (setting.denominator > 0.0d)
+                Debug.Assert(false);
+            return setting;
         }
 
         #region OperationMode ... evaluation of Hypothesis

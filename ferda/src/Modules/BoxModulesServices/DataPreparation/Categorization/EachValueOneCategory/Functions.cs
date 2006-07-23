@@ -280,7 +280,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                                     IComparable enumItem;
                                     if (!GenericColumn.ParseValue(dfItem.value, df.dataType, out enumItem))
                                         containsNull = true;
-                                    if (enumItem.CompareTo(from) >= 0 && enumItem.CompareTo(to) <= 0)
+                                    else if (enumItem.CompareTo(from) >= 0 && enumItem.CompareTo(to) <= 0)
                                         enumeration.Add(enumItem);
                                 }
                             }
@@ -291,7 +291,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                                     IComparable enumItem;
                                     if (!GenericColumn.ParseValue(dfItem.value, df.dataType, out enumItem))
                                         containsNull = true;
-                                    enumeration.Add(enumItem);
+                                    else
+                                        enumeration.Add(enumItem);
                                 }
                             }
                             result.CreateEnums(enumeration.ToArray(), containsNull, true);
