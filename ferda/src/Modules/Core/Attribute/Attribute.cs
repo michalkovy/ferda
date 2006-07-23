@@ -46,6 +46,9 @@ namespace Ferda.Guha.Attribute
         /// Gets or sets name of the null containing category.
         /// </summary>
         /// <value>The name of the null containing category.</value>
+        /// <remarks>
+        /// If equals to Null than no category contains null.
+        /// </remarks>
         public string NullContainingCategory
         {
             get
@@ -620,6 +623,8 @@ namespace Ferda.Guha.Attribute
             string categoryName;
             foreach (object value in values)
             {
+                // in values should not be true (value == null)
+                // for that purposes is there parameter "addNullCategory"
                 categoryName = value.ToString();
                 Add(categoryName);
                 this[categoryName].Enumeration.Add((T)value, false);
@@ -802,7 +807,10 @@ namespace Ferda.Guha.Attribute
             {
                 foreach (KeyValuePair<string, Category<T>> pair in _categories)
                 {
-                    sortedList.Add(pair.Value.OrdNumber, pair.Key);
+                    if (sortedList.ContainsKey(pair.Value.OrdNumber))
+                        return null;
+                    else 
+                        sortedList.Add(pair.Value.OrdNumber, pair.Key);
                     // throws argument exception iff already contains 
                     // specified key i.e. category with same OrdNumber
                 }

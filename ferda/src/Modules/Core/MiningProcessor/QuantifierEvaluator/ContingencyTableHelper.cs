@@ -322,6 +322,22 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             get { return _denominator; }
         }
         
+        public bool IsEmpty
+        {
+            get
+            {
+                foreach (double[] doubles in _contingencyTable)
+                {
+                    foreach (double d in doubles)
+                    {
+                        if (d > 0.0)
+                            return false;
+                    }
+                }
+                return true;
+            }
+        }
+        
         private string _numericValuesAttributeGuid;
         public string NumericValuesAttributeGuid
         {

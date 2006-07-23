@@ -221,7 +221,8 @@ namespace Ferda.Guha.Data
         /// <returns>false if parsed value is DBNull.Value; otherwise, return true</returns>
         public static bool ParseValue(object dbValue, DbDataTypeEnum dbDataType, out IComparable value)
         {
-            if (dbValue == DBNull.Value)
+            if (dbValue == DBNull.Value
+                || dbValue.ToString() == Ferda.Guha.Data.nullValueConstant.value)
             {
                 value = null;
                 return false;

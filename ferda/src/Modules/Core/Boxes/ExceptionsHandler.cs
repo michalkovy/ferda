@@ -75,12 +75,12 @@ namespace Ferda.Modules.Boxes
             catch (Ice.Exception e)
             {
                 Debug.Assert(false);
-                throw Exceptions.BoxRuntimeError(e, boxIdentity, "Unexpected Ice exception.");
+                throw Exceptions.BoxRuntimeError(e, boxIdentity, "Unexpected Ice exception." + e.Message);
             }
             catch (Exception e)
             {
                 Debug.Assert(false);
-                throw Exceptions.BoxRuntimeError(e, boxIdentity, "Unexpected exception.");
+                throw Exceptions.BoxRuntimeError(e, boxIdentity, "Unexpected exception." + e.Message);
             }
             finally
             {
