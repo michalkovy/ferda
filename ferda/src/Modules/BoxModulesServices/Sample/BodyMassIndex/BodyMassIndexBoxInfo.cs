@@ -35,27 +35,11 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
     public class BodyMassIndexBoxInfo : BoxInfo
     {
         /// <summary>
-        /// Creates <see cref="T:Ice.Object"/> implementing Ice interface of
-        /// the box module i.e. box`s functions declared in slice design.
+        /// Creates the functions.
         /// </summary>
-        /// <param name="boxModule">Box module, to which created functions
-        /// will belong to.</param>
-        /// <param name="iceObject">An out parameter returning <see cref="T:Ice.Object"/>
-        /// implementing box`s "ice" functions. This value is same as value
-        /// of <c>functions</c>.</param>
-        /// <param name="functions">An out parameter returning <see cref="T:Ice.Object"/>
-        /// implementing box`s "ice" functions. This value is same as value
-        /// of <c>iceObject</c>.</param>
-        /// <example>
-        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see>
-        /// 	<see cref="M:Ferda.Modules.Boxes.IBoxInfo.CreateFunctions(Ferda.Modules.BoxModuleI,Ice.Object,Ferda.Modules.IFunctions)"/>.
-        /// </example>
-        /// <remarks>
-        /// Each instance of the box module has its own functions object but
-        /// class implementing <see cref="T:Ferda.Modules.Boxes.IBoxInfo">
-        /// this interface</see> is shared by all instances of the box modules
-        /// of the same type <see cref="P:Ferda.Modules.Boxes.IBoxInfo.Identifier"/>
-        /// </remarks>
+        /// <param name="boxModule">The box module.</param>
+        /// <param name="iceObject">The ice object.</param>
+        /// <param name="functions">The functions.</param>
         public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
         {
             BodyMassIndexFunctionsI result = new BodyMassIndexFunctionsI();

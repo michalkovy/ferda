@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
@@ -10,7 +9,7 @@ namespace Ferda.Guha.Attribute
     /// <summary>
     /// Serializable form of generic interval.
     /// </summary>
-    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute{T}"/></typeparam>
+    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute`1"/></typeparam>
     [Serializable()]
     [XmlInclude(typeof(Int16)),
         XmlInclude(typeof(UInt16)),
@@ -49,14 +48,14 @@ namespace Ferda.Guha.Attribute
         public BoundaryEnum RightBoundary;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.IntervalSerializable&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.IntervalSerializable`1"/> class.
         /// </summary>
         public IntervalSerializable()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.IntervalSerializable&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.IntervalSerializable`1"/> class.
         /// </summary>
         /// <param name="leftValue">The left value.</param>
         /// <param name="rightValue">The right value.</param>
@@ -74,7 +73,7 @@ namespace Ferda.Guha.Attribute
     /// <summary>
     /// Serializabled form of generic category.
     /// </summary>
-    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute{T}"/></typeparam>
+    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute`1"/></typeparam>
     [Serializable()]
     [XmlInclude(typeof(Int16)),
         XmlInclude(typeof(UInt16)),
@@ -113,14 +112,14 @@ namespace Ferda.Guha.Attribute
         public IntervalSerializable<T>[] Intervals;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.CategorySerializable&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.CategorySerializable`1"/> class.
         /// </summary>
         public CategorySerializable()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.CategorySerializable&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.CategorySerializable`1"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="ordNumber">The ord number.</param>
@@ -138,7 +137,7 @@ namespace Ferda.Guha.Attribute
     /// <summary>
     /// Serializabled form of generic attribute.
     /// </summary>
-    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute{T}"/></typeparam>
+    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute`1"/></typeparam>
     [Serializable()]
     [XmlInclude(typeof(Int16)),
         XmlInclude(typeof(UInt16)),
@@ -177,14 +176,14 @@ namespace Ferda.Guha.Attribute
         public DbSimpleDataTypeEnum DbDataType;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.AttributeSerializable&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.AttributeSerializable`1"/> class.
         /// </summary>
         public AttributeSerializable()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.AttributeSerializable&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.AttributeSerializable`1"/> class.
         /// </summary>
         /// <param name="categories">The categories.</param>
         /// <param name="nullContainingCategoryName">Name of the null containing category.</param>
@@ -202,7 +201,7 @@ namespace Ferda.Guha.Attribute
 
     /// <summary>
     /// Provides serialize and deserialize method for serializable
-    /// form of generic attribute. See <see cref="T:Ferda.Guha.Attribute.AttributeSerializable{T}"/>.
+    /// form of generic attribute. See <see cref="T:Ferda.Guha.Attribute.AttributeSerializable`1"/>.
     /// </summary>
     public static class Serializer
     {

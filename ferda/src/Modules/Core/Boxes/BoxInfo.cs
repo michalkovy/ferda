@@ -413,8 +413,7 @@ namespace Ferda.Modules.Boxes
         /// implementing box`s "ice" functions. This value is same as value
         /// of <c>iceObject</c>.</param>
         /// <example>
-        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see> 
-        /// <see cref="M:Ferda.Modules.Boxes.IBoxInfo.CreateFunctions(Ferda.Modules.BoxModuleI,Ice.Object,Ferda.Modules.IFunctions)"/>.
+        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see> method <code>CreateFunctions(...)</code>.
         /// </example>
         /// <remarks>
         /// Each instance of the box module has its own functions object but

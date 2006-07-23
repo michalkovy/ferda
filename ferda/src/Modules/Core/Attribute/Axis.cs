@@ -10,7 +10,7 @@ namespace Ferda.Guha.Attribute
     /// Provides some essential method like disjunctivity checking
     /// for the attribute.
     /// </summary>
-    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute{T}"/></typeparam>
+    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute`1"/></typeparam>
     public class Axis<T>
         where T : IComparable
     {
@@ -68,7 +68,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Axis{T}"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Axis`1"/> class.
         /// </summary>
         /// <param name="attribute">The to work over attribute.</param>
         internal Axis(Attribute<T> attribute)

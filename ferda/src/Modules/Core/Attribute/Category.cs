@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Ferda.Modules;
 
 namespace Ferda.Guha.Attribute
 {
@@ -80,7 +79,7 @@ namespace Ferda.Guha.Attribute
         /// Categories can be sorted by the OrdNubmers. Please notice
         /// that there is no checking if two categories has the same OrdNumber
         /// even the OrdNumbers does not have to corresponds real sort. For 
-        /// reals sort you can use <see cref="M:Ferda.Guha.Attribute.Attribute{T}.SetDefaultOrds"/> method. 
+        /// reals sort you can use <see cref="M:Ferda.Guha.Attribute.Attribute`1.SetDefaultOrds"/> method. 
         /// </remarks>
         public int OrdNumber
         {
@@ -99,7 +98,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Category&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Category`1"/> class.
         /// </summary>
         /// <param name="attributeClass">The parent attribute class.</param>
         public Category(Attribute<T> attributeClass)
@@ -109,7 +108,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Category&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Category`1"/> class.
         /// </summary>
         /// <param name="category">The category.</param>
         /// <param name="attributeClass">The parent attribute class.</param>
@@ -140,7 +139,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Category&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Category`1"/> class.
         /// </summary>
         /// <param name="intervals">The intervals.</param>
         /// <param name="enumeration">The enumeration.</param>
@@ -167,7 +166,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Category&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Category`1"/> class.
         /// </summary>
         /// <param name="intervals">The intervals.</param>
         /// <param name="enumeration">The enumeration.</param>
@@ -621,12 +620,12 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Please see <see cref="T:Ferda.Guha.Attribute.Category{T}.Equals(Ferda.Guha.Attribute.Category{T})"/>.
+        /// Please see <see cref="T:Ferda.Guha.Attribute.Category`1.Equals(Ferda.Guha.Attribute.Category`1)"/>.
         /// </summary>
         public override bool Equals(object obj)
         {
             Category<T> other = obj as Category<T>;
-            return this.Equals(other);
+            return Equals(other);
         }
 
         /// <summary>

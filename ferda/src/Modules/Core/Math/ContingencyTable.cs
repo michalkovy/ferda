@@ -219,7 +219,7 @@ namespace Ferda.Guha.Math
 
         /// <summary>
         /// Gets the <c>a</c> frequency of the 4f-table (four fold table). (divided by the 
-        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
+        /// <see cref="P:Ferda.Guha.Math.ContingencyTable.Denominator"/>)
         /// </summary>
         /// <result>The <c>a</c> frequency of the 4f-table (four fold table).</result>
         public double Adiv
@@ -238,7 +238,7 @@ namespace Ferda.Guha.Math
 
         /// <summary>
         /// Gets the <c>b</c> frequency of the 4f-table (four fold table). (divided by the 
-        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
+        /// <see cref="P:Ferda.Guha.Math.ContingencyTable.Denominator"/>)
         /// </summary>
         /// <result>The <c>b</c> frequency of the 4f-table (four fold table).</result>
         public double Bdiv
@@ -257,7 +257,7 @@ namespace Ferda.Guha.Math
 
         /// <summary>
         /// Gets the <c>c</c> frequency of the 4f-table (four fold table). (divided by the 
-        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
+        /// <see cref="P:Ferda.Guha.Math.ContingencyTable.Denominator"/>)
         /// </summary>
         /// <result>The <c>c</c> frequency of the 4f-table (four fold table).</result>
         public double Cdiv
@@ -276,7 +276,7 @@ namespace Ferda.Guha.Math
 
         /// <summary>
         /// Gets the <c>d</c> frequency of the 4f-table (four fold table). (divided by the 
-        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
+        /// <see cref="P:Ferda.Guha.Math.ContingencyTable.Denominator"/>)
         /// </summary>
         /// <result>The <c>d</c> frequency of the 4f-table (four fold table).</result>
         public double Ddiv
@@ -295,7 +295,7 @@ namespace Ferda.Guha.Math
 
         /// <summary>
         /// Gets the <c>r = a + b</c> frequency of the 4f-table (four fold table). (divided by the 
-        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
+        /// <see cref="P:Ferda.Guha.Math.ContingencyTable.Denominator"/>)
         /// </summary>
         /// <result>The <c>r = a + b</c> frequency of the 4f-table (four fold table).</result>
         public double Rdiv
@@ -314,7 +314,7 @@ namespace Ferda.Guha.Math
 
         /// <summary>
         /// Gets the <c>s = c + d</c> frequency of the 4f-table (four fold table). (divided by the 
-        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
+        /// <see cref="P:Ferda.Guha.Math.ContingencyTable.Denominator"/>)
         /// </summary>
         /// <result>The <c>s = c + d</c> frequency of the 4f-table (four fold table).</result>
         public double Sdiv
@@ -333,7 +333,7 @@ namespace Ferda.Guha.Math
 
         /// <summary>
         /// Gets the <c>k = a + c</c> frequency of the 4f-table (four fold table). (divided by the 
-        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
+        /// <see cref="P:Ferda.Guha.Math.ContingencyTable.Denominator"/>)
         /// </summary>
         /// <result>The <c>k = a + c</c> frequency of the 4f-table (four fold table).</result>
         public double Kdiv
@@ -352,7 +352,7 @@ namespace Ferda.Guha.Math
 
         /// <summary>
         /// Gets the <c>l = b + d</c> frequency of the 4f-table (four fold table). (divided by the 
-        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
+        /// <see cref="P:Ferda.Guha.Math.ContingencyTable.Denominator"/>)
         /// </summary>
         /// <result>The <c>l = b + d</c> frequency of the 4f-table (four fold table).</result>
         public double Ldiv
@@ -371,7 +371,7 @@ namespace Ferda.Guha.Math
 
         /// <summary>
         /// Gets the <c>n = a + b + c + d</c> frequency of the 4f-table (four fold table). (divided by the 
-        /// <see cref="F:Ferda.Modules.Quantifiers.ContingencyTable.denominator"/>)
+        /// <see cref="P:Ferda.Guha.Math.ContingencyTable.Denominator"/>)
         /// </summary>
         /// <result>The <c>n = a + b + c + d</c> frequency of the 4f-table (four fold table).</result>
         public double Ndiv

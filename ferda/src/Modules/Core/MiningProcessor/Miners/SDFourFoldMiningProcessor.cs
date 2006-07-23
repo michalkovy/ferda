@@ -201,7 +201,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         ////h.NumericValuesAttributeGuid = contingencyTable.NumericValuesAttributeGuid;
 
                         //if (evaluator.VerifyIsComplete(contingencyTable, hypothesis))
-                        //    goto finish;
+                            goto finish;
                     }
                 }
             }

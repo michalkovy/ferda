@@ -2117,7 +2117,8 @@ namespace LumenWorks.Framework.IO.Csv
 
 							if (_reader != null)
 							{
-								_reader.Dispose();
+                                if (_reader is IDisposable)
+                                    ((IDisposable)_reader).Dispose(); 
 
 								_reader = null;
 								_buffer = null;

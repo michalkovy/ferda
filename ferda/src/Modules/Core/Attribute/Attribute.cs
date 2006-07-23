@@ -155,7 +155,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Attribute&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Attribute`1"/> class.
         /// </summary>
         /// <param name="dbDataType">Type of the db data.</param>
         /// <param name="intervalsAllowed">if set to <c>true</c> creation of intervals allowed (only for ordinal data).</param>
@@ -189,7 +189,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Attribute&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Attribute.Attribute`1"/> class.
         /// </summary>
         /// <param name="dbDataType">Type of the db data.</param>
         /// <param name="serializedAttribute">The serialized attribute.</param>
@@ -1210,7 +1210,7 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
-        /// Gets the <see cref="T:Ferda.Guha.Attribute.Category&lt;T&gt;"/> with the specified key.
+        /// Gets the <see cref="T:Ferda.Guha.Attribute.Category`1"/> with the specified key.
         /// </summary>
         /// <value></value>
         public Category<T> this[string key]

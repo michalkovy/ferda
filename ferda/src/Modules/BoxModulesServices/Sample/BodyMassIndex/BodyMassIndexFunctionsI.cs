@@ -203,12 +203,13 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         }
 
         /// <summary>
-        /// Converts <see cref="P:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsI.GetHeightColumn"/> 
-        /// <see cref="P:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsI.HeightUnits">units</see> to meters.
+        /// Converts from specified <see cref="P:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsI.HeightUnits">units</see> to meters.
         /// </summary>
         /// <param name="columnSelectExpression">The column select expression.</param>
         /// <param name="columnUnits">The column units.</param>
-        /// <returns>Height (in meters) column select expression.</returns>
+        /// <returns>
+        /// Height (in meters) column select expression.
+        /// </returns>
         private string convertToMeters(string columnSelectExpression, string columnUnits)
         {
             switch (columnUnits)
@@ -245,12 +246,13 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         }
 
         /// <summary>
-        /// Converts <see cref="P:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsI.WeightColumn"/> 
-        /// <see cref="P:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsI.WeightUnits">units</see> to kilograms.
+        /// Converts from specified <see cref="P:Ferda.Modules.Boxes.Sample.BodyMassIndex.BodyMassIndexFunctionsI.WeightUnits">units</see> to kilograms.
         /// </summary>
         /// <param name="columnSelectExpression">The column select expression.</param>
         /// <param name="columnUnits">The column units.</param>
-        /// <returns>Weight (in kilograms) column select expression.</returns>
+        /// <returns>
+        /// Weight (in kilograms) column select expression.
+        /// </returns>
         private string convertToKilograms(string columnSelectExpression, string columnUnits)
         {
             switch (columnUnits)
@@ -389,8 +391,6 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// <returns>Basic information about the column.</returns>
         public override ColumnInfo getColumnInfo(Current current__)
         {
-            ColumnInfo result = new ColumnInfo();
-
             // locks all sockets and properties of current and (recursively) all souce boxes
             _boxModule.Manager.getBoxModuleLocker().lockBoxModule(_boxModule.StringIceIdentity);
 

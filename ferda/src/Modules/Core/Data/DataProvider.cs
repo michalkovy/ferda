@@ -87,9 +87,10 @@ namespace Ferda.Guha.Data
         /// <summary>
         /// Gets the DB provider factory.
         /// </summary>
-        /// <param name="providerInvariantName ">The data provider invariant name.</param>
+        /// <param name="providerInvariantName">Name of the provider invariant.</param>
+        /// <returns></returns>
         /// <exception cref="T:Ferda.Modules.BadParamsError">
-        /// <b>DbProviderInvariantNameError</b>
+        /// 	<b>DbProviderInvariantNameError</b>
         /// Thrown iff specified <c>dataProvider</c> is unknown.
         /// </exception>
         public static DbProviderFactory GetDbProviderFactory(string providerInvariantName)

@@ -102,9 +102,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     
                     foreach (IBitString cS in _condition)
                     {
-                        cT = BitStringsArraySums.Sum(
-                            BitStringsArrayAnd.Operation(bSCT, cS)
+                        if (cS is IEmptyBitString)
+                            cT = BitStringsArraySums.Sum(bSCT);
+                        else
+                            cT = BitStringsArraySums.Sum(
+                                BitStringsArrayAnd.Operation(bSCT, cS)
                             );
+                        
                         contingencyTable = new ContingencyTableHelper(
                             cT,
                             allObjectsCount
