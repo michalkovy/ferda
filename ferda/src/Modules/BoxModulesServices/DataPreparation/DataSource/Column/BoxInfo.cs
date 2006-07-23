@@ -1,6 +1,5 @@
 using System;
 using Ferda.Guha.Data;
-using Exception=System.Exception;
 using Object=Ice.Object;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
@@ -98,9 +97,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                     null,
                     boxModule.StringIceIdentity,
                     "Unsupported cardinality type for current data type.",
-                    new string[] { Functions.PropCardinality },
+                    new string[] {Functions.PropCardinality},
                     restrictionTypeEnum.OtherReason
-                );
+                    );
             }
         }
     }

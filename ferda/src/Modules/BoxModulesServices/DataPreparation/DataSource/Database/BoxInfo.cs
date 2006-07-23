@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.Data;
-using Object = Ice.Object;
+using Object=Ice.Object;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
 {
@@ -21,13 +21,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
 
             string connectionString = Func.ConnectionString;
             if (!String.IsNullOrEmpty(connectionString))
             {
                 {
-                    string[] items = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] items = connectionString.Split(new char[] {';'}, StringSplitOptions.RemoveEmptyEntries);
                     if (items != null)
                         foreach (string item in items)
                         {
@@ -44,7 +44,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
                     string result;
                     if (!String.IsNullOrEmpty(databaseName))
                     {
-                        string[] items = databaseName.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] items =
+                            databaseName.Split(new char[] {'/', '\\'}, StringSplitOptions.RemoveEmptyEntries);
                         if (items != null && items.Length > 0)
                             for (int i = items.Length - 1; i >= 0; i--)
                             {
@@ -70,7 +71,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
                                                                                BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
 
             Dictionary<string, ModulesAskingForCreation> modulesAFC = getModulesAskingForCreationNonDynamic(localePrefs);
             List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();
@@ -100,14 +101,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
                                 newMAFC.hint = moduleAFC.hint.Replace("@Name", dataMatrixName);
                                 newMAFC.help = moduleAFC.help;
                                 singleModuleAFC = new ModuleAskingForCreation();
-                                singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
+                                singleModuleAFC.modulesConnection = new ModulesConnection[] {moduleConnection};
                                 singleModuleAFC.newBoxModuleIdentifier = DataTable.BoxInfo.typeIdentifier;
                                 PropertySetting propertySetting = new PropertySetting();
                                 propertySetting.propertyName = DataTable.Functions.PropName;
                                 propertySetting.value = new StringTI(dataMatrixName);
-                                singleModuleAFC.propertySetting = new PropertySetting[] { propertySetting };
+                                singleModuleAFC.propertySetting = new PropertySetting[] {propertySetting};
                                 allDataMatrixModulesAFC.Add(singleModuleAFC);
-                                newMAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
+                                newMAFC.newModules = new ModuleAskingForCreation[] {singleModuleAFC};
                                 result.Add(newMAFC);
                             }
                         }
@@ -150,7 +151,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
 
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
             switch (propertyName)
             {
                 case Functions.PropLastReloadRequest:
@@ -172,7 +173,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
 
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
             switch (actionName)
             {
                 case "ReloadRequest":
@@ -185,7 +186,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
 
         public override void Validate(BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
 
             // try to invoke methods
             object dummy = Func.GetConnectionInfo(true);

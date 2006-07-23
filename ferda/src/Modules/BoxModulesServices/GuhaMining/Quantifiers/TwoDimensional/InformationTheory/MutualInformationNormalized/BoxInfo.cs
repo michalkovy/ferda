@@ -1,6 +1,4 @@
 using System;
-using Ferda.Guha.Data;
-using Ferda.Guha.MiningProcessor;
 using Object=Ice.Object;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized
@@ -24,7 +22,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.InformationT
             return null;
         }
 
-        public const string typeIdentifier = "GuhaMining.Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized";
+        public const string typeIdentifier =
+            "GuhaMining.Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized";
 
         protected override string identifier
         {
@@ -49,14 +48,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.InformationT
 
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
             switch (propertyName)
             {
                 case Common.PropUnits:
                     return new StringTI(Func.Units.ToString());
                 case Common.PropMissingInformationHandling:
                     return new StringTI(Func.MissingInformationHandling.ToString());
-                    
+
                 case Common.PropNeedsNumericValues:
                     return new BoolTI(Func.NeedsNumericValues);
                 case Common.PropSupportedData:

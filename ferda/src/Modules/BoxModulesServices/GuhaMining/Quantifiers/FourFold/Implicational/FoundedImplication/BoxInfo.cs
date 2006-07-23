@@ -1,6 +1,4 @@
 using System;
-using Ferda.Guha.Data;
-using Ferda.Guha.MiningProcessor;
 using Object=Ice.Object;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication
@@ -49,7 +47,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Implicational.Foun
 
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
             switch (propertyName)
             {
                 case Common.PropFromRowBoundary:
@@ -72,7 +70,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Implicational.Foun
 
                 case Common.PropUnits:
                     return new StringTI(Func.Units.ToString());
-                    
+
                 case Common.PropNeedsNumericValues:
                     return new BoolTI(Func.NeedsNumericValues);
                 case Common.PropSupportedData:

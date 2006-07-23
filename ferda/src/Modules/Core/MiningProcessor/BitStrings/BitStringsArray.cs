@@ -139,4 +139,40 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return result;
         }
     }
+    
+    public static class BitStringsArraySums
+    {
+        public static double[][] Sum(IBitString[][] bitStringsArray)
+        {
+            if (bitStringsArray == null)
+                throw new ArgumentNullException("bitStringsArray");
+            
+            int rNum = bitStringsArray.Length;
+            int cNum = bitStringsArray[0].Length;
+            double[][] result = new double[rNum][];
+            for (int r = 0; r < rNum; r++)
+            {
+                result[r] = new double[cNum];
+                for (int c = 0; c < cNum; c++)
+                {
+                    result[r][c] = bitStringsArray[r][c].Sum;
+                }
+            }
+            return result;            
+        }
+
+        public static double[] Sum(IBitString[] bitStringsArray)
+        {
+            if (bitStringsArray == null)
+                throw new ArgumentNullException("bitStringsArray");
+
+            int rNum = bitStringsArray.Length;
+            double[] result = new double[rNum];
+            for (int r = 0; r < rNum; r++)
+            {
+                result[r] = bitStringsArray[r].Sum;
+            }
+            return result;
+        }
+    }
 }

@@ -50,14 +50,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             get { return _boxModule.GetPropertyString(PropSelectExpression); }
         }
 
-        public Guha.Data.CardinalityEnum Cardinality
+        public CardinalityEnum Cardinality
         {
             get
             {
-                return (Guha.Data.CardinalityEnum)Enum.Parse(
-                                                       typeof(Guha.Data.CardinalityEnum),
-                                                       _boxModule.GetPropertyString(PropCardinality)
-                                                       );
+                return (CardinalityEnum) Enum.Parse(
+                                             typeof (CardinalityEnum),
+                                             _boxModule.GetPropertyString(PropCardinality)
+                                             );
             }
         }
 
@@ -142,7 +142,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             if (String.IsNullOrEmpty(SelectExpression) && fallOnError)
             {
                 throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
-                                               "Property is not set.", new string[] { PropSelectExpression },
+                                               "Property is not set.", new string[] {PropSelectExpression},
                                                restrictionTypeEnum.Missing);
             }
             else
@@ -163,9 +163,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                     fallOnError,
                     prx.getDataTableInfo,
                     delegate
-                    {
-                        return null;
-                    },
+                        {
+                            return null;
+                        },
                     _boxModule.StringIceIdentity
                     );
 
@@ -186,16 +186,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                 _cachedValue = ExceptionsHandler.GetResult<GenericColumn>(
                     fallOnError,
                     delegate
-                    {
-                        string selectExpression = GetSelectExpression(fallOnError);
-                        return
-                            GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTableName].GetGenericColumn
-                                (selectExpression);
-                    },
+                        {
+                            string selectExpression = GetSelectExpression(fallOnError);
+                            return
+                                GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTableName].GetGenericColumn
+                                    (selectExpression);
+                        },
                     delegate
-                    {
-                        return null;
-                    },
+                        {
+                            return null;
+                        },
                     _boxModule.StringIceIdentity
                     );
             }
@@ -208,15 +208,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             return ExceptionsHandler.GetResult<string[]>(
                 fallOnError,
                 delegate
-                {
-                    if (prx != null)
-                        return prx.getColumnsNames();
-                    return new string[0];
-                },
+                    {
+                        if (prx != null)
+                            return prx.getColumnsNames();
+                        return new string[0];
+                    },
                 delegate
-                {
-                    return new string[0];
-                },
+                    {
+                        return new string[0];
+                    },
                 _boxModule.StringIceIdentity
                 );
         }
@@ -226,16 +226,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             return ExceptionsHandler.GetResult<ColumnExplain>(
                 fallOnError,
                 delegate
-                {
-                    GenericColumn tmp = GetGenericColumn(fallOnError);
-                    if (tmp != null)
-                        return tmp.Explain;
-                    return null;
-                },
+                    {
+                        GenericColumn tmp = GetGenericColumn(fallOnError);
+                        if (tmp != null)
+                            return tmp.Explain;
+                        return null;
+                    },
                 delegate
-                {
-                    return null;
-                },
+                    {
+                        return null;
+                    },
                 _boxModule.StringIceIdentity
                 );
         }
@@ -245,16 +245,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             return ExceptionsHandler.GetResult<ColumnStatistics>(
                 fallOnError,
                 delegate
-                {
-                    GenericColumn tmp = GetGenericColumn(fallOnError);
-                    if (tmp != null)
-                        return tmp.Statistics;
-                    return null;
-                },
+                    {
+                        GenericColumn tmp = GetGenericColumn(fallOnError);
+                        if (tmp != null)
+                            return tmp.Statistics;
+                        return null;
+                    },
                 delegate
-                {
-                    return null;
-                },
+                    {
+                        return null;
+                    },
                 _boxModule.StringIceIdentity
                 );
         }
@@ -264,37 +264,37 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             return ExceptionsHandler.GetResult<ValuesAndFrequencies>(
                 fallOnError,
                 delegate
-                {
-                    GenericColumn tmp1 = GetGenericColumn(fallOnError);
-                    ColumnExplain tmp2 = GetColumnExplain(fallOnError);
-                    if (tmp1 != null && tmp2 != null)
                     {
-                        System.Data.DataTable dt = tmp1.GetDistinctsAndFrequencies(null);
-                        ValuesAndFrequencies result = new ValuesAndFrequencies();
-                        result.dataType = tmp2.dataType;
-                        List<ValueFrequencyPair> data = new List<ValueFrequencyPair>();
-
-                        foreach (DataRow row in dt.Rows)
+                        GenericColumn tmp1 = GetGenericColumn(fallOnError);
+                        ColumnExplain tmp2 = GetColumnExplain(fallOnError);
+                        if (tmp1 != null && tmp2 != null)
                         {
-                            if (row[0] == DBNull.Value)
-                            {
-                                data.Add(new ValueFrequencyPair(nullValueConstant.value, Convert.ToInt32(row[1])));
-                            }
-                            else
-                            {
-                                data.Add(new ValueFrequencyPair(row[0].ToString(), Convert.ToInt32(row[1])));
-                            }
-                        }
+                            System.Data.DataTable dt = tmp1.GetDistinctsAndFrequencies(null);
+                            ValuesAndFrequencies result = new ValuesAndFrequencies();
+                            result.dataType = tmp2.dataType;
+                            List<ValueFrequencyPair> data = new List<ValueFrequencyPair>();
 
-                        result.data = data.ToArray();
-                        return result;
-                    }
-                    return null;
-                },
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                if (row[0] == DBNull.Value)
+                                {
+                                    data.Add(new ValueFrequencyPair(nullValueConstant.value, Convert.ToInt32(row[1])));
+                                }
+                                else
+                                {
+                                    data.Add(new ValueFrequencyPair(row[0].ToString(), Convert.ToInt32(row[1])));
+                                }
+                            }
+
+                            result.data = data.ToArray();
+                            return result;
+                        }
+                        return null;
+                    },
                 delegate
-                {
-                    return null;
-                },
+                    {
+                        return null;
+                    },
                 _boxModule.StringIceIdentity
                 );
         }
@@ -304,22 +304,22 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             return ExceptionsHandler.GetResult<ColumnInfo>(
                 fallOnError,
                 delegate
-                {
-                    DataTableFunctionsPrx tmp1 = GetDataTableFunctionsPrx(fallOnError);
-                    ColumnExplain tmp2 = GetColumnExplain(fallOnError);
-                    string selectExpression = GetSelectExpression(fallOnError);
-                    if (tmp1 != null && tmp2 != null)
-                        return new ColumnInfo(tmp1.getDataTableInfo(),
-                                              selectExpression,
-                                              tmp2.dataType,
-                                              Cardinality
-                            );
-                    return null;
-                },
+                    {
+                        DataTableFunctionsPrx tmp1 = GetDataTableFunctionsPrx(fallOnError);
+                        ColumnExplain tmp2 = GetColumnExplain(fallOnError);
+                        string selectExpression = GetSelectExpression(fallOnError);
+                        if (tmp1 != null && tmp2 != null)
+                            return new ColumnInfo(tmp1.getDataTableInfo(),
+                                                  selectExpression,
+                                                  tmp2.dataType,
+                                                  Cardinality
+                                );
+                        return null;
+                    },
                 delegate
-                {
-                    return null;
-                },
+                    {
+                        return null;
+                    },
                 _boxModule.StringIceIdentity
                 );
         }

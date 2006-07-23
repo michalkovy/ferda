@@ -1,11 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Ferda.Guha.Data;
 using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
+using Ice;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.
+    AritmeticAverage
 {
     /// <summary>
     /// Aritmetic average is defined as <c>Sum(i)(Freq i * Value i)</c>
@@ -39,154 +39,129 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.CardinalVari
         {
             get
             {
-                return (OperationModeEnum)Enum.Parse(
-                    typeof(OperationModeEnum),
-                    _boxModule.GetPropertyString(Common.PropOperationMode)
-                    );
+                return (OperationModeEnum) Enum.Parse(
+                                               typeof (OperationModeEnum),
+                                               _boxModule.GetPropertyString(Common.PropOperationMode)
+                                               );
             }
         }
+
         public MissingInformationHandlingEnum MissingInformationHandling
         {
-            get
-            {
-                return MissingInformationHandlingEnum.Deleting;
-            }
+            get { return MissingInformationHandlingEnum.Deleting; }
         }
+
         public RelationEnum Relation
         {
             get
             {
-                return (RelationEnum)Enum.Parse(
-                    typeof(RelationEnum),
-                    _boxModule.GetPropertyString(Common.PropRelation)
-                    );
+                return (RelationEnum) Enum.Parse(
+                                          typeof (RelationEnum),
+                                          _boxModule.GetPropertyString(Common.PropRelation)
+                                          );
             }
         }
+
         public double Treshold
         {
-            get
-            {
-                return _boxModule.GetPropertyDouble(Common.PropTreshold);
-            }
+            get { return _boxModule.GetPropertyDouble(Common.PropTreshold); }
         }
+
         public BoundTypeEnum FromRowBoundary
         {
-            get
-            {
-                return BoundTypeEnum.All;
-            }
+            get { return BoundTypeEnum.All; }
         }
+
         public int FromRowBoundaryIndex
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
+
         public BoundTypeEnum ToRowBoundary
         {
-            get
-            {
-                return BoundTypeEnum.All;
-            }
+            get { return BoundTypeEnum.All; }
         }
+
         public int ToRowBoundaryIndex
         {
-            get
-            {
-                return 0;
-            }
+            get { return 0; }
         }
+
         public BoundTypeEnum FromColumnBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropFromColumnBoundary)
-                    );
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropFromColumnBoundary)
+                                           );
             }
         }
+
         public int FromColumnBoundaryIndex
         {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropFromColumnBoundaryIndex);
-            }
+            get { return _boxModule.GetPropertyInt(Common.PropFromColumnBoundaryIndex); }
         }
+
         public BoundTypeEnum ToColumnBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropToColumnBoundary)
-                    );
-            }
-        }
-        public int ToColumnBoundaryIndex
-        {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropToColumnBoundaryIndex);
-            }
-        }
-        public QuantifierClassEnum[] QuantifierClasses
-        {
-            get
-            {
-                return new QuantifierClassEnum[]{};
-            }
-        }
-        public PerformanceDifficultyEnum PerformanceDifficulty
-        {
-            get
-            {
-                return PerformanceDifficultyEnum.QuiteEasy;
-            }
-        }
-        public bool NeedsNumericValues
-        {
-            get
-            {
-                return true;
-            }
-        }
-        public CardinalityEnum SupportedData
-        {
-            get
-            {
-                return CardinalityEnum.Cardinal;
-            }
-        }
-        public UnitsEnum Units
-        {
-            get
-            {
-                return UnitsEnum.RelativeToActCondition;
-            }
-        }
-        public bool SupportsFloatContingencyTable
-        {
-            get
-            {
-                return true;
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropToColumnBoundary)
+                                           );
             }
         }
 
-        public override bool Compute(QuantifierEvaluateSetting param, Ice.Current current__)
+        public int ToColumnBoundaryIndex
+        {
+            get { return _boxModule.GetPropertyInt(Common.PropToColumnBoundaryIndex); }
+        }
+
+        public QuantifierClassEnum[] QuantifierClasses
+        {
+            get { return new QuantifierClassEnum[] {}; }
+        }
+
+        public PerformanceDifficultyEnum PerformanceDifficulty
+        {
+            get { return PerformanceDifficultyEnum.QuiteEasy; }
+        }
+
+        public bool NeedsNumericValues
+        {
+            get { return true; }
+        }
+
+        public CardinalityEnum SupportedData
+        {
+            get { return CardinalityEnum.Cardinal; }
+        }
+
+        public UnitsEnum Units
+        {
+            get { return UnitsEnum.RelativeToActCondition; }
+        }
+
+        public bool SupportsFloatContingencyTable
+        {
+            get { return true; }
+        }
+
+        public override bool Compute(QuantifierEvaluateSetting param, Current current__)
         {
             double value = ComputeValue(param);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
-        public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Ice.Current current__)
+        public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__)
         {
             value = ComputeValue(param);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
-        public override double ComputeValue(QuantifierEvaluateSetting param, Ice.Current current__)
+        public override double ComputeValue(QuantifierEvaluateSetting param, Current current__)
         {
             return ExceptionsHandler.TryCatchMethodThrow<double>(
                 delegate
@@ -198,28 +173,28 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.CardinalVari
                 _boxModule.StringIceIdentity
                 );
         }
-        
-        public static double ComputeAritmeticAverage(SingleDimensionContingecyTable table, double [] values)
+
+        public static double ComputeAritmeticAverage(SingleDimensionContingecyTable table, double[] values)
         {
             double result = 0;
             for (int c = 0; c < table.NumberOfColumns; c++)
             {
-                result += table[c] * values[c];
+                result += table[c]*values[c];
             }
-            return result / table.Denominator;            
+            return result/table.Denominator;
         }
 
-        public override string GetLocalizedBoxLabel(string[] localePrefs, Ice.Current current__)
+        public override string GetLocalizedBoxLabel(string[] localePrefs, Current current__)
         {
             return _boxModule.BoxInfo.GetLabel(localePrefs);
         }
 
-        public override string GetLocalizedUserBoxLabel(string[] localePrefs, Ice.Current current__)
+        public override string GetLocalizedUserBoxLabel(string[] localePrefs, Current current__)
         {
             return _boxModule.Manager.getProjectInformation().getUserLabel(_boxModule.StringIceIdentity);
         }
 
-        public override QuantifierSetting GetQuantifierSetting(Ice.Current current__)
+        public override QuantifierSetting GetQuantifierSetting(Current current__)
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,

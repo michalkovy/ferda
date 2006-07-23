@@ -68,6 +68,7 @@
 			<sources>
 				<include name="Modules/Core/Base/generated/*.cs"/>
 				<include name="Modules/Core/Base/Exceptions.cs"/>
+				<include name="Modules/Core/Base/ProgressTaskI.cs"/>
 				<include name="ModulesManager/generated/**.cs"/>
 				<include name="PropertyTypes/**.cs"/>
 				<include name="CommonAssemblyInfo.cs"/>

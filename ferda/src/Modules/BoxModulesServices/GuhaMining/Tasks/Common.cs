@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Results;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks
 {
@@ -29,15 +29,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
 
         public static TaskEvaluationTypeEnum ExecutionType(BoxModuleI boxModule)
         {
-            return (TaskEvaluationTypeEnum)Enum.Parse(
-                        typeof(TaskEvaluationTypeEnum),
-                        boxModule.GetPropertyString(PropExecutionType)
-                    );
+            return (TaskEvaluationTypeEnum) Enum.Parse(
+                                                typeof (TaskEvaluationTypeEnum),
+                                                boxModule.GetPropertyString(PropExecutionType)
+                                                );
         }
 
         public static WorkingWithSecondSetModeEnum WorkingWithSecondSetMode(BoxModuleI boxModule)
         {
-            return (WorkingWithSecondSetModeEnum)Enum.Parse(typeof(WorkingWithSecondSetModeEnum), boxModule.GetPropertyString(PropWorkingWithSecondSetMode));
+            return
+                (WorkingWithSecondSetModeEnum)
+                Enum.Parse(typeof (WorkingWithSecondSetModeEnum),
+                           boxModule.GetPropertyString(PropWorkingWithSecondSetMode));
         }
 
         #endregion
@@ -52,10 +55,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         public const string SockAttribute = "Attribute";
         public const string SockSDCedent1 = "SDCedent1";
         public const string SockSDCedent2 = "SDCedent2";
-        
+
         private static MarkEnum socketName2MarkEnum(string socketName)
         {
-            switch(socketName)
+            switch (socketName)
             {
                 case SockAntecedent:
                     return MarkEnum.Antecedent;
@@ -78,7 +81,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             }
         }
 
-        public static BooleanAttributeSettingFunctionsPrx GetBooleanAttributePrx(BoxModuleI boxModule, string sockName, bool fallOnError)
+        public static BooleanAttributeSettingFunctionsPrx GetBooleanAttributePrx(BoxModuleI boxModule, string sockName,
+                                                                                 bool fallOnError)
         {
             return SocketConnections.GetPrx<BooleanAttributeSettingFunctionsPrx>(
                 boxModule,
@@ -87,7 +91,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 fallOnError);
         }
 
-        public static List<BitStringGeneratorPrx> GetCategorialAttributePrxs(BoxModuleI boxModule, string sockName, bool oneAtMininum, bool fallOnError)
+        public static List<BitStringGeneratorPrx> GetCategorialAttributePrxs(BoxModuleI boxModule, string sockName,
+                                                                             bool oneAtMininum, bool fallOnError)
         {
             return SocketConnections.GetPrxs<BitStringGeneratorPrx>(
                 boxModule,
@@ -97,7 +102,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 fallOnError);
         }
 
-        public static BooleanAttribute GetBooleanAttribute(BoxModuleI boxModule, MarkEnum semantic, string sockName, bool fallOnError)
+        public static BooleanAttribute GetBooleanAttribute(BoxModuleI boxModule, MarkEnum semantic, string sockName,
+                                                           bool fallOnError)
         {
             BooleanAttributeSettingFunctionsPrx prx = GetBooleanAttributePrx(boxModule, sockName, fallOnError);
             if (prx != null)
@@ -107,9 +113,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             return null;
         }
 
-        public static List<CategorialAttribute> GetCategorialAttributes(BoxModuleI boxModule, MarkEnum semantic, string sockName, bool oneAtMinimum, bool fallOnError)
+        public static List<CategorialAttribute> GetCategorialAttributes(BoxModuleI boxModule, MarkEnum semantic,
+                                                                        string sockName, bool oneAtMinimum,
+                                                                        bool fallOnError)
         {
-            List<BitStringGeneratorPrx> prxs = GetCategorialAttributePrxs(boxModule, sockName, oneAtMinimum, fallOnError);
+            List<BitStringGeneratorPrx> prxs =
+                GetCategorialAttributePrxs(boxModule, sockName, oneAtMinimum, fallOnError);
             if (prxs != null)
             {
                 List<CategorialAttribute> result = new List<CategorialAttribute>(prxs.Count);
@@ -121,13 +130,13 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             }
             return null;
         }
-        
+
         public static BooleanAttribute[] GetBooleanAttributes(BoxModuleI boxModule, ITask taskFunctions)
         {
             string[] socketNames = taskFunctions.GetBooleanAttributesSocketNames();
             if (socketNames == null || socketNames.Length == 0)
                 return new BooleanAttribute[0];
-            
+
             List<BooleanAttribute> result = new List<BooleanAttribute>();
             BooleanAttribute item;
             foreach (string s in socketNames)
@@ -145,19 +154,19 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             }
             return result.ToArray();
         }
-        
+
         public static CategorialAttribute[] GetCategorialAttributes(BoxModuleI boxModule, ITask taskFunctions)
         {
             string[] socketNames = taskFunctions.GetCategorialAttributesSocketNames();
             if (socketNames == null || socketNames.Length == 0)
                 return new CategorialAttribute[0];
-            
+
             List<CategorialAttribute> result = new List<CategorialAttribute>();
             foreach (string s in socketNames)
             {
                 if (String.IsNullOrEmpty(s))
                     continue;
-                
+
                 List<CategorialAttribute> items = GetCategorialAttributes(
                     boxModule,
                     socketName2MarkEnum(s),
@@ -255,7 +264,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             if (String.IsNullOrEmpty(serializedRI))
                 return null;
             else
-                return SerializableResultInfo.DeSerialize(serializedRI);
+                return SerializableResultInfo.Deserialize(serializedRI);
         }
 
         public static string GetResultInfo(BoxModuleI boxModule)
@@ -281,10 +290,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         #endregion
 
         #region Working with boolean/categorial attributes sockets
-        
+
         public static string GetSourceDataTableId(BoxModuleI boxModule, ITask taskFunctions)
         {
-            BitStringGeneratorPrx result;
             BooleanAttributeSettingFunctionsPrx prx;
             string last = null;
             string newer;
@@ -309,9 +317,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                         last = newer;
                     else if (last != newer)
                         throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
-                                "Mining over only source data table is supported.",
-                                new string[] { s },
-                                restrictionTypeEnum.OtherReason);
+                                                       "Mining over only source data table is supported.",
+                                                       new string[] {s},
+                                                       restrictionTypeEnum.OtherReason);
                 }
 
             // categorial attributes
@@ -334,15 +342,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                                 last = newer;
                             else if (last != newer)
                                 throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
-                                        "Mining over only source data table is supported.",
-                                        new string[] { s },
-                                        restrictionTypeEnum.OtherReason);
+                                                               "Mining over only source data table is supported.",
+                                                               new string[] {s},
+                                                               restrictionTypeEnum.OtherReason);
                         }
                 }
             return last;
         }
 
-        public static BitStringGeneratorPrx GetBitStringGenerator(BoxModuleI boxModule, GuidStruct attributeId, ITask taskFunctions)
+        public static BitStringGeneratorPrx GetBitStringGenerator(BoxModuleI boxModule, GuidStruct attributeId,
+                                                                  ITask taskFunctions)
         {
             BitStringGeneratorPrx result;
             BooleanAttributeSettingFunctionsPrx prx;
@@ -428,25 +437,25 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                         }
                 }
             return result.ToArray();
-        } 
-        
+        }
+
         #endregion
 
         public static MiningProcessorFunctionsPrx GetMiningProcessorFunctionsPrx(BoxModuleI boxModule)
         {
             //UNDONE Load Balancing
             return MiningProcessorFunctionsPrxHelper.checkedCast(
-                    boxModule.Manager.getManagersLocator().findAllObjectsWithType(
-                        "::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"
-                        )[0]
-                    );
+                boxModule.Manager.getManagersLocator().findAllObjectsWithType(
+                    "::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"
+                    )[0]
+                );
         }
 
         public static BitStringGeneratorProviderPrx GetBitStringGeneratorProviderPrx(BoxModuleI boxModule)
         {
             return BitStringGeneratorProviderPrxHelper.checkedCast(boxModule.getFunctions());
         }
-        
+
         private static bool isSDTaskType(TaskTypeEnum taskType)
         {
             switch (taskType)
@@ -463,38 +472,39 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                     throw new NotImplementedException();
             }
         }
-        
+
         public static void RunTask(BoxModuleI boxModule, ITask taskFunctions, TaskTypeEnum taskType)
         {
             MiningProcessorFunctionsPrx miningProcessor = GetMiningProcessorFunctionsPrx(boxModule);
             BitStringGeneratorProviderPrx bsProvider = GetBitStringGeneratorProviderPrx(boxModule);
-            
+
             WorkingWithSecondSetModeEnum secondSetWorking =
                 isSDTaskType(taskType)
                     ?
                 WorkingWithSecondSetMode(boxModule)
                     :
                 WorkingWithSecondSetModeEnum.None;
-            
+
             TaskRunParams taskRunParams = new TaskRunParams(
                 taskType,
                 ExecutionType(boxModule),
                 MaxNumberOfHypotheses(boxModule),
                 secondSetWorking
                 );
-            
+
             string statistics;
             string result =
                 miningProcessor.Run(
-                        GetBooleanAttributes(boxModule, taskFunctions),
-                        GetCategorialAttributes(boxModule, taskFunctions),
-                        GetQuantifierBaseFunctions(boxModule, true).ToArray(),
-                        taskRunParams,
-                        bsProvider,
-                        boxModule.Output,
-                        out statistics
+                    boxModule.MyProxy,
+                    GetBooleanAttributes(boxModule, taskFunctions),
+                    GetCategorialAttributes(boxModule, taskFunctions),
+                    GetQuantifierBaseFunctions(boxModule, true).ToArray(),
+                    taskRunParams,
+                    bsProvider,
+                    boxModule.Output,
+                    out statistics
                     );
-            
+
             SetResult(boxModule, result);
             SetResultInfo(boxModule, statistics);
         }

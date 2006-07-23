@@ -1,6 +1,7 @@
 #ifndef FERDA_GUHA_MININGPROCESSOR
 #define FERDA_GUHA_MININGPROCESSOR
 
+#include <Modules/Modules.ice>
 #include <Modules/BuiltinSequences.ice>
 #include <Modules/BasicPropertyTypes.ice>
 #include <Modules/Exceptions.ice>
@@ -67,6 +68,7 @@ module Ferda {
 					Ferda::Modules::StringSeq GetCategoriesIds()
 						throws Ferda::Modules::BoxRuntimeError;
 
+					// kdyz atribut neposkytuje numericka data vraci Null resp. double[0]
 					Ferda::Modules::DoubleSeq GetCategoriesNumericValues()
 						throws Ferda::Modules::BoxRuntimeError;
 
@@ -255,6 +257,7 @@ module Ferda {
 					// pro BooleanAttributesSeq plati, ze tam muze byt zastoupena jenda MarkEnum nejvyse jendou
 					// pro CategorialAttributeSeq plati, ze tam muze byt jenda MarkEnum zastoupena vicekrat
 					string Run(
+						Ferda::Modules::BoxModule* taskBoxModule,
 						BooleanAttributeSeq booleanAttributes,
 						CategorialAttributeSeq categorialAttributes,
 						Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq quantifiers,

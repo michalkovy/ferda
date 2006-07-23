@@ -1,5 +1,6 @@
 //#define CONSOLE_APPLICATION_FOR_SERVICE_STATARTUP_DEBUGGING
 using Ice;
+using ObjectFactory=Ferda.Guha.MiningProcessor.ObjectFactory;
 
 namespace Ferda.Modules.Boxes.GuhaMining
 {
@@ -36,38 +37,84 @@ namespace Ferda.Modules.Boxes.GuhaMining
             registerBox(Tasks.SDTwoDimensional.BoxInfo.typeIdentifier, new Tasks.SDTwoDimensional.BoxInfo());
 
             // guha quantifiers boxes
-            registerBox(GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.FourFold.Equivalence.FoundedEquivalence.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.FourFold.Equivalence.FoundedEquivalence.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.FourFold.Others.AboveBelowAverageImplication.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.FourFold.Others.AboveBelowAverageImplication.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.FourFold.Others.Base.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.FourFold.Others.Base.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.FourFold.Others.E.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.FourFold.Others.E.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Asymetry.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Asymetry.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.GeometricAverage.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.GeometricAverage.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Skewness.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Skewness.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.StandardDeviation.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.StandardDeviation.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Variance.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Variance.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.NominalVariationNormalized.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.NominalVariationNormalized.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.VariationRatio.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.VariationRatio.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneDimensional.OrdinalVariableDistributionCharacteristics.DiscreteOrdinaryVariationNormalized.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneDimensional.OrdinalVariableDistributionCharacteristics.DiscreteOrdinaryVariationNormalized.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.AnyValue.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.AnyValue.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.Average.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.Average.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.Maximum.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.Maximum.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.Minimum.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.Minimum.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.Sum.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.OneOrTwoDimensional.Aggregation.Sum.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRow.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRow.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRowEachRow.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRowEachRow.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.TwoDimensional.InformationTheory.ConditionalEntropy.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.TwoDimensional.InformationTheory.ConditionalEntropy.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.TwoDimensional.InformationTheory.InformationDependence.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.TwoDimensional.InformationTheory.InformationDependence.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized.BoxInfo());
-            registerBox(GuhaMining.Quantifiers.TwoDimensional.OrdinalDependence.Kendall.BoxInfo.typeIdentifier, new GuhaMining.Quantifiers.TwoDimensional.OrdinalDependence.Kendall.BoxInfo());
+            registerBox(Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo.typeIdentifier,
+                        new Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo());
+            registerBox(Quantifiers.FourFold.Equivalence.FoundedEquivalence.BoxInfo.typeIdentifier,
+                        new Quantifiers.FourFold.Equivalence.FoundedEquivalence.BoxInfo());
+            registerBox(Quantifiers.FourFold.Implicational.FoundedImplication.BoxInfo.typeIdentifier,
+                        new Quantifiers.FourFold.Implicational.FoundedImplication.BoxInfo());
+            registerBox(Quantifiers.FourFold.Others.AboveBelowAverageImplication.BoxInfo.typeIdentifier,
+                        new Quantifiers.FourFold.Others.AboveBelowAverageImplication.BoxInfo());
+            registerBox(Quantifiers.FourFold.Others.Base.BoxInfo.typeIdentifier,
+                        new Quantifiers.FourFold.Others.Base.BoxInfo());
+            registerBox(Quantifiers.FourFold.Others.E.BoxInfo.typeIdentifier,
+                        new Quantifiers.FourFold.Others.E.BoxInfo());
+            registerBox(
+                Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage.BoxInfo.
+                    typeIdentifier,
+                new Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage.BoxInfo());
+            registerBox(
+                Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Asymetry.BoxInfo.typeIdentifier,
+                new Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Asymetry.BoxInfo());
+            registerBox(
+                Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.GeometricAverage.BoxInfo.
+                    typeIdentifier,
+                new Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.GeometricAverage.BoxInfo());
+            registerBox(
+                Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Skewness.BoxInfo.typeIdentifier,
+                new Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Skewness.BoxInfo());
+            registerBox(
+                Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.StandardDeviation.BoxInfo.
+                    typeIdentifier,
+                new Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.StandardDeviation.BoxInfo());
+            registerBox(
+                Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Variance.BoxInfo.typeIdentifier,
+                new Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Variance.BoxInfo());
+            registerBox(
+                Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.NominalVariationNormalized.BoxInfo
+                    .typeIdentifier,
+                new
+                    Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.NominalVariationNormalized.
+                    BoxInfo());
+            registerBox(
+                Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.VariationRatio.BoxInfo.
+                    typeIdentifier,
+                new Quantifiers.OneDimensional.NominalVariableDistributionCharacteristics.VariationRatio.BoxInfo());
+            registerBox(
+                Quantifiers.OneDimensional.OrdinalVariableDistributionCharacteristics.
+                    DiscreteOrdinaryVariationNormalized.BoxInfo.typeIdentifier,
+                new
+                    Quantifiers.OneDimensional.OrdinalVariableDistributionCharacteristics.
+                    DiscreteOrdinaryVariationNormalized.BoxInfo());
+            registerBox(Quantifiers.OneOrTwoDimensional.Aggregation.AnyValue.BoxInfo.typeIdentifier,
+                        new Quantifiers.OneOrTwoDimensional.Aggregation.AnyValue.BoxInfo());
+            registerBox(Quantifiers.OneOrTwoDimensional.Aggregation.Average.BoxInfo.typeIdentifier,
+                        new Quantifiers.OneOrTwoDimensional.Aggregation.Average.BoxInfo());
+            registerBox(Quantifiers.OneOrTwoDimensional.Aggregation.Maximum.BoxInfo.typeIdentifier,
+                        new Quantifiers.OneOrTwoDimensional.Aggregation.Maximum.BoxInfo());
+            registerBox(Quantifiers.OneOrTwoDimensional.Aggregation.Minimum.BoxInfo.typeIdentifier,
+                        new Quantifiers.OneOrTwoDimensional.Aggregation.Minimum.BoxInfo());
+            registerBox(Quantifiers.OneOrTwoDimensional.Aggregation.Sum.BoxInfo.typeIdentifier,
+                        new Quantifiers.OneOrTwoDimensional.Aggregation.Sum.BoxInfo());
+            registerBox(Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRow.BoxInfo.typeIdentifier,
+                        new Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRow.BoxInfo());
+            registerBox(Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRowEachRow.BoxInfo.typeIdentifier,
+                        new Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRowEachRow.BoxInfo());
+            registerBox(Quantifiers.TwoDimensional.InformationTheory.ConditionalEntropy.BoxInfo.typeIdentifier,
+                        new Quantifiers.TwoDimensional.InformationTheory.ConditionalEntropy.BoxInfo());
+            registerBox(Quantifiers.TwoDimensional.InformationTheory.InformationDependence.BoxInfo.typeIdentifier,
+                        new Quantifiers.TwoDimensional.InformationTheory.InformationDependence.BoxInfo());
+            registerBox(
+                Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized.BoxInfo.typeIdentifier,
+                new Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized.BoxInfo());
+            registerBox(Quantifiers.TwoDimensional.OrdinalDependence.Kendall.BoxInfo.typeIdentifier,
+                        new Quantifiers.TwoDimensional.OrdinalDependence.Kendall.BoxInfo());
         }
 
         public override void AddCustomFactoriesToComunicator(Communicator communicator)
         {
-            Ferda.Guha.MiningProcessor.ObjectFactory factory = new Ferda.Guha.MiningProcessor.ObjectFactory();
-            Ferda.Guha.MiningProcessor.ObjectFactory.addFactoryToCommunicator(communicator, factory);
+            ObjectFactory factory = new ObjectFactory();
+            ObjectFactory.addFactoryToCommunicator(communicator, factory);
         }
 
 

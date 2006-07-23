@@ -4,6 +4,7 @@ using System;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Guha.MiningProcessor.Formulas;
+using Ferda.Guha.MiningProcessor.Results;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
@@ -88,7 +89,7 @@ namespace Tests
 
             actual = SerializableResult.Serialize(r);
 
-            Result rOut = SerializableResult.DeSerialize(actual);
+            Result rOut = SerializableResult.Deserialize(actual);
 
             Formula af = rOut.Hypotheses[0].GetFormula(MarkEnum.Antecedent);
             Formula nf = rOut.Hypotheses[0].GetFormula(MarkEnum.Succedent);
@@ -112,7 +113,7 @@ namespace Tests
             sri.TotalNumberOfRelevantQuestions = 6547324.54d;
             sri.EndTime = DateTime.Now + new TimeSpan(0, 3, 45);
             string serialized = SerializableResultInfo.Serialize(sri);
-            SerializableResultInfo deserealized = SerializableResultInfo.DeSerialize(serialized);
+            SerializableResultInfo deserealized = SerializableResultInfo.Deserialize(serialized);
         }
 		
     }

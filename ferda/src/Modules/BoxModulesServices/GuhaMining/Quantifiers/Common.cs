@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Modules.Helpers.Caching;
@@ -37,7 +35,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
         #endregion
 
         private static NumericValuesCache _numericValuesCache = new NumericValuesCache();
-        
+
         public static double[] GetNumericValues(QuantifierEvaluateSetting param)
         {
             Guid numericValuesAttributeId = new Guid(param.numericValuesAttributeId.value);
@@ -49,8 +47,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
                     )
                 ];
         }
-        
     }
+
     public class GuidPrxPair<T> : IEquatable<GuidPrxPair<T>>
     {
         public Guid Guid;
@@ -61,7 +59,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
             Guid = guid;
             Prx = prx;
         }
-        
+
         #region IEquatable<GuidPrxPair<T>> Members
 
         public bool Equals(GuidPrxPair<T> other)
@@ -79,6 +77,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
     public class NumericValuesCache : MostRecentlyUsed<GuidPrxPair<BitStringGeneratorPrx>, double[]>
     {
         public const int DefaultNumericValuesCacheSize = 1;
+
         public NumericValuesCache()
             : base(DefaultNumericValuesCacheSize)
         {

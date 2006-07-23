@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Ferda.Guha.Data;
 using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
+using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.OrdinalDependence.Kendall
 {
@@ -60,167 +59,149 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.OrdinalDepen
         {
             get
             {
-                return (OperationModeEnum)Enum.Parse(
-                    typeof(OperationModeEnum), 
-                    _boxModule.GetPropertyString(Common.PropOperationMode)
-                    );
+                return (OperationModeEnum) Enum.Parse(
+                                               typeof (OperationModeEnum),
+                                               _boxModule.GetPropertyString(Common.PropOperationMode)
+                                               );
             }
         }
+
         public MissingInformationHandlingEnum MissingInformationHandling
         {
-            get
-            {
-                return MissingInformationHandlingEnum.Deleting;
-            }
+            get { return MissingInformationHandlingEnum.Deleting; }
         }
+
         public RelationEnum Relation
         {
             get
             {
-                return (RelationEnum)Enum.Parse(
-                    typeof(RelationEnum),
-                    _boxModule.GetPropertyString(Common.PropRelation)
-                    );
+                return (RelationEnum) Enum.Parse(
+                                          typeof (RelationEnum),
+                                          _boxModule.GetPropertyString(Common.PropRelation)
+                                          );
             }
         }
+
         public double Treshold
         {
-            get
-            {
-                return _boxModule.GetPropertyDouble(Common.PropTreshold);
-            }
+            get { return _boxModule.GetPropertyDouble(Common.PropTreshold); }
         }
+
         public BoundTypeEnum FromRowBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropFromRowBoundary)
-                    );
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropFromRowBoundary)
+                                           );
             }
         }
+
         public int FromRowBoundaryIndex
         {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropFromRowBoundaryIndex);
-            }
+            get { return _boxModule.GetPropertyInt(Common.PropFromRowBoundaryIndex); }
         }
+
         public BoundTypeEnum ToRowBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropToRowBoundary)
-                    );
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropToRowBoundary)
+                                           );
             }
         }
+
         public int ToRowBoundaryIndex
         {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropToRowBoundaryIndex);
-            }
+            get { return _boxModule.GetPropertyInt(Common.PropToRowBoundaryIndex); }
         }
+
         public BoundTypeEnum FromColumnBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropFromColumnBoundary)
-                    );
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropFromColumnBoundary)
+                                           );
             }
         }
+
         public int FromColumnBoundaryIndex
         {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropFromColumnBoundaryIndex);
-            }
+            get { return _boxModule.GetPropertyInt(Common.PropFromColumnBoundaryIndex); }
         }
+
         public BoundTypeEnum ToColumnBoundary
         {
             get
             {
-                return (BoundTypeEnum)Enum.Parse(
-                    typeof(BoundTypeEnum),
-                    _boxModule.GetPropertyString(Common.PropToColumnBoundary)
-                    );
+                return (BoundTypeEnum) Enum.Parse(
+                                           typeof (BoundTypeEnum),
+                                           _boxModule.GetPropertyString(Common.PropToColumnBoundary)
+                                           );
             }
         }
+
         public int ToColumnBoundaryIndex
         {
-            get
-            {
-                return _boxModule.GetPropertyInt(Common.PropToColumnBoundaryIndex);
-            }
+            get { return _boxModule.GetPropertyInt(Common.PropToColumnBoundaryIndex); }
         }
+
         public QuantifierClassEnum[] QuantifierClasses
         {
-            get
-            {
-                return new QuantifierClassEnum[]{};
-            }
+            get { return new QuantifierClassEnum[] {}; }
         }
+
         public PerformanceDifficultyEnum PerformanceDifficulty
         {
-            get
-            {
-                return PerformanceDifficultyEnum.QuiteDifficult;
-            }
+            get { return PerformanceDifficultyEnum.QuiteDifficult; }
         }
+
         public bool NeedsNumericValues
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
+
         public CardinalityEnum SupportedData
         {
-            get
-            {
-                return CardinalityEnum.Ordinal;
-            }
+            get { return CardinalityEnum.Ordinal; }
         }
+
         public UnitsEnum Units
         {
-            get
-            {
-                return UnitsEnum.Irrelevant;
-            }
+            get { return UnitsEnum.Irrelevant; }
         }
+
         public bool SupportsFloatContingencyTable
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
-        
-        public override bool Compute(QuantifierEvaluateSetting param, Ice.Current current__)
+
+        public override bool Compute(QuantifierEvaluateSetting param, Current current__)
         {
             double value = ComputeValue(param);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
-        public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Ice.Current current__)
+        public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__)
         {
             value = ComputeValue(param);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
-        public override double ComputeValue(QuantifierEvaluateSetting param, Ice.Current current__)
+        public override double ComputeValue(QuantifierEvaluateSetting param, Current current__)
         {
             ContingencyTable table = new ContingencyTable(param);
             // qTmp[r,c] = Sum(i>=r,j<=c)(Freq i,j)
+
             #region Initialize qTmp (Q table, P table can be computed from qTmp)
 
             // qTmp[r,c] = Sum(i>=r,j<=c)(Freq i,j)
-            double[,] qTmp = new double[table.NumberOfRows, table.NumberOfColumns];
+            double[,] qTmp = new double[table.NumberOfRows,table.NumberOfColumns];
             qTmp.Initialize();
             for (int r = table.NumberOfRows - 1; r >= 0; r--)
             {
@@ -262,6 +243,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.OrdinalDepen
                     }
                 }
             }
+
             #endregion
 
             double p = 0;
@@ -287,40 +269,40 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.OrdinalDepen
                     // pSum = Sum(i>r,j>c)(Freq i,j)
                     // => pSum[r,c] = qTmp[r+1,*] - qTmp[r+1,c] (! be careful to overflow)
                     if (r < table.NumberOfRows - 1)
-                        p += item * qTmp[r + 1, table.NumberOfColumns - 1] - qTmp[r + 1, c];
+                        p += item*qTmp[r + 1, table.NumberOfColumns - 1] - qTmp[r + 1, c];
 
                     // qSum = Sum(i>r,j<c)(Freq i,j)
                     // => qSum[r,c] = qTmp[r+1,c-1] (! be careful to overflow)
                     if (c > 0 && r < table.NumberOfRows - 1)
-                        q += item * qTmp[r + 1, c - 1];
+                        q += item*qTmp[r + 1, c - 1];
                 }
-                sumRowSum_2 += System.Math.Pow(table.RowSums[r], 2);
+                sumRowSum_2 += Math.Pow(table.RowSums[r], 2);
             }
             for (int c = 0; c < table.NumberOfColumns; c++)
             {
-                sumColSum_2 += System.Math.Pow(table.ColumnSums[c], 2);
+                sumColSum_2 += Math.Pow(table.ColumnSums[c], 2);
             }
 
-            double n_2 = System.Math.Pow(table.Sum, 2);
+            double n_2 = Math.Pow(table.Sum, 2);
             //n^2 where n = Sum(r,c)(Freq r,c)
 
             return
-                2 * System.Math.Abs(p - q)
+                2*Math.Abs(p - q)
                 /
-                System.Math.Sqrt((n_2 - sumRowSum_2) * (n_2 - sumColSum_2));
+                Math.Sqrt((n_2 - sumRowSum_2)*(n_2 - sumColSum_2));
         }
 
-        public override string GetLocalizedBoxLabel(string[] localePrefs, Ice.Current current__)
+        public override string GetLocalizedBoxLabel(string[] localePrefs, Current current__)
         {
             return _boxModule.BoxInfo.GetLabel(localePrefs);
         }
 
-        public override string GetLocalizedUserBoxLabel(string[] localePrefs, Ice.Current current__)
+        public override string GetLocalizedUserBoxLabel(string[] localePrefs, Current current__)
         {
             return _boxModule.Manager.getProjectInformation().getUserLabel(_boxModule.StringIceIdentity);
         }
 
-        public override QuantifierSetting GetQuantifierSetting(Ice.Current current__)
+        public override QuantifierSetting GetQuantifierSetting(Current current__)
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,

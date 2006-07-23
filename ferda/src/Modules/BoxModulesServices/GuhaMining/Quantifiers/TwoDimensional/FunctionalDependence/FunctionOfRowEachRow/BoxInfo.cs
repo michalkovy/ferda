@@ -1,6 +1,4 @@
 using System;
-using Ferda.Guha.Data;
-using Ferda.Guha.MiningProcessor;
 using Object=Ice.Object;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRowEachRow
@@ -24,7 +22,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDe
             return null;
         }
 
-        public const string typeIdentifier = "GuhaMining.Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRowEachRow";
+        public const string typeIdentifier =
+            "GuhaMining.Quantifiers.TwoDimensional.FunctionalDependence.FunctionOfRowEachRow";
 
         protected override string identifier
         {
@@ -49,14 +48,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDe
 
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
             switch (propertyName)
             {
                 case Common.PropOperationMode:
                     return new StringTI(Func.OperationMode.ToString());
                 case Common.PropMissingInformationHandling:
                     return new StringTI(Func.MissingInformationHandling.ToString());
-                    
+
                 case Common.PropNeedsNumericValues:
                     return new BoolTI(Func.NeedsNumericValues);
                 case Common.PropSupportedData:

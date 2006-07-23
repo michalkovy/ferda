@@ -2,7 +2,7 @@
 
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
-using Ferda.ModulesManager;
+using Ferda.Guha.MiningProcessor.Results;
 using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDTwoDimensional
@@ -111,7 +111,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDTwoDimensional
         public void Run()
         {
             Common.RunTask(_boxModule, this, TaskTypeEnum.SDKL);
-            
+
             // reset cache
             _cachedSerializableResultInfo = null;
         }

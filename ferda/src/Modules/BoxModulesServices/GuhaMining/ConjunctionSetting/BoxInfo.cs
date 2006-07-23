@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ferda.Modules.Helpers.Common;
 using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
@@ -35,7 +36,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
                     else
                         result.Add(s);
                 }
-                return Helpers.Common.Print.SequenceToString(result, "\u2227");
+                return Print.SequenceToString(result, "\u2227");
             }
         }
 

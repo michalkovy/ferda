@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Ferda.Guha.Data;
-using Object = Ice.Object;
+using Object=Ice.Object;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 {
@@ -44,7 +42,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
             switch (propertyName)
             {
                 case Common.PropTotalNumberOfRelevantQuestions:
@@ -64,7 +62,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
             switch (actionName)
             {
                 case "Run":
@@ -78,8 +76,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
         public override void Validate(BoxModuleI boxModule)
         {
             // all used attributes are from the same data table
-            
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            Functions Func = (Functions) boxModule.FunctionsIObj;
             Func.GetSourceDataTableId();
         }
     }

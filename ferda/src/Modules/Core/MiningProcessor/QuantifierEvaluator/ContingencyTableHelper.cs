@@ -56,24 +56,36 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     /// </remarks>
     internal class FourFoldContingencyTable
     {
+        /// <summary>
+        /// Ant && Succ
+        /// </summary>
         public double a
         {
             get { return _cT[0][0]; }
             set { _cT[0][0] = value; }
         }
 
+        /// <summary>
+        /// Ant && notSucc
+        /// </summary>
         public double b
         {
             get { return _cT[0][1]; }
             set { _cT[0][1] = value; }
         }
 
+        /// <summary>
+        /// notAnt && Succ
+        /// </summary>
         public double c
         {
             get { return _cT[1][0]; }
             set { _cT[1][0] = value; }
         }
 
+        /// <summary>
+        /// notAnt && Succ
+        /// </summary>
         public double d
         {
             get { return _cT[1][1]; }
@@ -292,7 +304,6 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         #region Fields and Properties
 
         private double[][] _contingencyTable;
-
         [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public double[][] ContingencyTable
         {
@@ -300,23 +311,24 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         private long _allObjectsCount;
-
         public long AllObjectsCount
         {
             get { return _allObjectsCount; }
         }
 
         private double _denominator = 1.0d;
-
+        public double Denominator
+        {
+            get { return _denominator; }
+        }
+        
         private string _numericValuesAttributeGuid;
-
         public string NumericValuesAttributeGuid
         {
             get { return _numericValuesAttributeGuid; }
         }
 
         private double _relativeToActConditionDenominator = -1;
-
         protected double relativeToActConditionDenominator
         {
             get
@@ -330,7 +342,6 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         private double _relativeToMaxFrequencyDenominator = -1;
-
         protected double relativeToMaxFrequencyDenominator
         {
             get
@@ -347,40 +358,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         #region Operator Minus (of Absolute/Relative Frequencies)
 
-        public static ContingencyTableHelper OperatorAbsMinus(ContingencyTableHelper op1, ContingencyTableHelper op2)
-        {
-            if (!(
-                     (op1.NumericValuesAttributeGuid == null && op2.NumericValuesAttributeGuid == null)
-                     ||
-                     (op1.NumericValuesAttributeGuid == op2.NumericValuesAttributeGuid)
-                 ))
-                throw new ArgumentException();
-            int numOfRows = op1.ContingencyTable.Length;
-            int numOfCols = op1.ContingencyTable[0].Length;
-            if ((op2.ContingencyTable.Length != numOfRows)
-                || (op2.ContingencyTable[0].Length != numOfCols))
-                throw new ArgumentException();
-            if (op1.AllObjectsCount != op2.AllObjectsCount)
-                throw new ArgumentException();
-            double[][] result = new double[numOfRows][];
-            for (int r = 0; r < numOfRows; r++)
-            {
-                result[r] = new double[numOfCols];
-                for (int c = 0; c < numOfCols; c++)
-                {
-                    result[r][c] = System.Math.Abs(
-                        op1.ContingencyTable[r][c]
-                        - op2.ContingencyTable[r][c]
-                        );
-                }
-            }
-            if (op1.NumericValuesAttributeGuid == null)
-                return new ContingencyTableHelper(result, op1.AllObjectsCount);
-            else
-                return new ContingencyTableHelper(result, op1.AllObjectsCount, op1.NumericValuesAttributeGuid);
-        }
-
-        public static ContingencyTableHelper OperatorRelMinus(ContingencyTableHelper op1, ContingencyTableHelper op2)
+        public static ContingencyTableHelper OperatorMinus(ContingencyTableHelper op1, ContingencyTableHelper op2)
         {
             if (!(
                      (op1.NumericValuesAttributeGuid == null && op2.NumericValuesAttributeGuid == null)
@@ -601,7 +579,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         #region PureFFTQuantifiers: Quantifier classe, missing informatin handling
 
-        public bool IsInQuantifierClass(QuantifierClassEnum[] inClasses, QuantifierClassEnum asked)
+        public static bool IsInQuantifierClass(QuantifierClassEnum[] inClasses, QuantifierClassEnum asked)
         {
             foreach (QuantifierClassEnum inClass in inClasses)
                 if (inClass == asked)

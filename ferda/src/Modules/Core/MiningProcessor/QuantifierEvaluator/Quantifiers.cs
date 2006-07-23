@@ -7,7 +7,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 {
     public class Quantifiers
     {
-        public const int InvokesBeforeNextReorderOfQuantifiers = 128;
+        private const int invokesBeforeNextReorderOfQuantifiers = 128;
 
         private readonly Dictionary<string, Quantifier> _quantifeirs;
 
@@ -135,7 +135,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
             lock (this)
             {
-                if (_invokes > InvokesBeforeNextReorderOfQuantifiers || _sortedByEfficiency == null)
+                if (_invokes > invokesBeforeNextReorderOfQuantifiers || _sortedByEfficiency == null)
                 {
                     if (_sortedByEfficiency == null)
                     {
@@ -201,5 +201,67 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
             return true;
         }
+
+        #region Used SD operation modes in quantifiers
+        
+        public class UsedSDQuantifiersOpeartionModesClass
+        {
+            public bool DifferenceOfFrequencies = false;
+            public List<Quantifier> QDifferenceOfFrequencies = new List<Quantifier>();
+            
+            public bool DifferenceOfQuantifierValues = false;
+            public List<Quantifier> QDifferenceOfQuantifierValues = new List<Quantifier>();
+            
+            public bool FirstSetFrequencies = false;
+            public List<Quantifier> QFirstSetFrequencies = new List<Quantifier>();
+            
+            public bool SecondSetFrequencies = false;
+            public List<Quantifier> QSecondSetFrequencies = new List<Quantifier>();
+        }
+
+        private UsedSDQuantifiersOpeartionModesClass _usedSDQuantifiersOpeartionModes = null;
+        public UsedSDQuantifiersOpeartionModesClass UsedSDQuantifiersOpeartionModes
+        {
+            get
+            {
+                if (_usedSDQuantifiersOpeartionModes == null)
+                {
+                    _usedSDQuantifiersOpeartionModes = usedSDQuantifiersOperationModes();
+                }
+                return _usedSDQuantifiersOpeartionModes;
+            }
+        }
+
+        private UsedSDQuantifiersOpeartionModesClass usedSDQuantifiersOperationModes()
+        {
+            UsedSDQuantifiersOpeartionModesClass result = new UsedSDQuantifiersOpeartionModesClass();
+            foreach (Quantifier value in _quantifeirs.Values)
+            {
+                switch (value.Setting.operationMode)
+                {
+                    case OperationModeEnum.DifferenceOfFrequencies:
+                        result.DifferenceOfFrequencies = true;
+                        result.QDifferenceOfFrequencies.Add(value);
+                        break;
+                    case OperationModeEnum.DifferenceOfQuantifierValues:
+                        result.DifferenceOfQuantifierValues = true;
+                        result.QDifferenceOfQuantifierValues.Add(value);
+                        break;
+                    case OperationModeEnum.FirstSetFrequencies:
+                        result.FirstSetFrequencies = true;
+                        result.QFirstSetFrequencies.Add(value);
+                        break;
+                    case OperationModeEnum.SecondSetFrequencies:
+                        result.SecondSetFrequencies = true;
+                        result.QSecondSetFrequencies.Add(value);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+            return result;
+        } 
+        
+        #endregion
     }
 }

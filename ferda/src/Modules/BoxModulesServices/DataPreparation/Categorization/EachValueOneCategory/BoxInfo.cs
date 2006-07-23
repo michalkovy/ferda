@@ -1,6 +1,5 @@
 using System;
 using Ferda.Guha.Data;
-using Exception=System.Exception;
 using Object=Ice.Object;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategory
@@ -80,18 +79,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);
 
-            if (Ferda.Guha.Data.Common.CompareCardinalityEnums(
-                   Func.Cardinality,
-                   Func.PotentiallyCardinality(true)
-                   ) > 1)
+            if (Common.CompareCardinalityEnums(
+                    Func.Cardinality,
+                    Func.PotentiallyCardinality(true)
+                    ) > 1)
             {
                 throw Exceptions.BadValueError(
                     null,
                     boxModule.StringIceIdentity,
                     "Unsupported cardinality type for current attribute setting.",
-                    new string[]{Functions.PropCardinality},
+                    new string[] {Functions.PropCardinality},
                     restrictionTypeEnum.OtherReason
-                );
+                    );
             }
         }
     }
