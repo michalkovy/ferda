@@ -1,3 +1,4 @@
+using Ferda.Guha.MiningProcessor;
 using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Sign
@@ -53,8 +54,32 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
             Functions Func = (Functions) boxModule.FunctionsIObj;
 
             // try to invoke methods
-            object dummy = Func.GetEntitySetting(true);
-            dummy = Func.GetAttributeNames();
+            IEntitySetting myES = Func.GetEntitySetting(true);
+            object dummy = Func.GetAttributeNames();
+            
+            BooleanAttributeSettingFunctionsPrx booleanAttribute = Func.GetBitStringGeneratorPrx(true);
+            if (booleanAttribute != null)
+            {
+                IEntitySetting eS = booleanAttribute.GetEntitySetting();
+                // inner entity can not be auxiliary
+                if (eS.importance == ImportanceEnum.Auxiliary)
+                    throw Exceptions.BadValueError(
+                        null,
+                        boxModule.StringIceIdentity,
+                        "Inner boolean attribute setting can not be auxiliary.",
+                        new string[] {Functions.SockBooleanAttributeSetting},
+                        restrictionTypeEnum.OtherReason
+                        );
+                if (eS.importance == ImportanceEnum.Forced &&
+                    myES.importance != ImportanceEnum.Forced)
+                    throw Exceptions.BadValueError(
+                        null,
+                        boxModule.StringIceIdentity,
+                        "Inner boolean attribute setting is forced, therefore current has to be also forced.",
+                        new string[] { Functions.SockBooleanAttributeSetting },
+                        restrictionTypeEnum.OtherReason
+                        );
+            }
         }
     }
 }
