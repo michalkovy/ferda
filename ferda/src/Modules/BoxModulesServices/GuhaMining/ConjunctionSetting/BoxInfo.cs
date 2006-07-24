@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ferda.Guha.MiningProcessor;
 using Ferda.Modules.Helpers.Common;
 using Ice;
 
@@ -63,9 +64,43 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
             Functions Func = (Functions) boxModule.FunctionsIObj;
 
             // try to invoke methods
-            object dummy = Func.GetEntitySetting(true);
-            dummy = Func.GetAttributeNames();
+            IEntitySetting myES = Func.GetEntitySetting(true);
+            object dummy = Func.GetAttributeNames();
             dummy = Func.GetSourceDataTableId();
+
+            List<BooleanAttributeSettingFunctionsPrx> booleanAttributes = Func.GetBooleanAttributeSettingFunctionsPrxs(true);
+            if (booleanAttributes != null)
+            {
+                bool notOnlyAuxiliary = false;
+                bool containsForced = false;
+                foreach (BooleanAttributeSettingFunctionsPrx prx in booleanAttributes)
+                {
+                    IEntitySetting eS = prx.GetEntitySetting();
+                    if (eS.importance != ImportanceEnum.Auxiliary)
+                        notOnlyAuxiliary = true;
+                    if (eS.importance == ImportanceEnum.Forced)
+                        containsForced = true;
+                }
+                
+                // inner entity can not be auxiliary
+                if (!notOnlyAuxiliary)
+                    throw Exceptions.BadValueError(
+                        null,
+                        boxModule.StringIceIdentity,
+                        "Inner boolean attribute settings can not be only auxiliary.",
+                        new string[] { Functions.SockBooleanAttributeSetting },
+                        restrictionTypeEnum.OtherReason
+                        );
+                if (containsForced &&
+                    myES.importance != ImportanceEnum.Forced)
+                    throw Exceptions.BadValueError(
+                        null,
+                        boxModule.StringIceIdentity,
+                        "Some inner boolean attribute setting is forced, therefore current has to be also forced.",
+                        new string[] { Functions.SockBooleanAttributeSetting },
+                        restrictionTypeEnum.OtherReason
+                        );
+            }
         }
     }
 }
