@@ -17,7 +17,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 throw new ArgumentNullException("operand1");
             if (operand2 == null)
                 throw new ArgumentNullException("operand2");
-            return operand1.AndCloned(operand2);
+            return operand1.And(operand2);
         }
 
         public override string ToString()
@@ -44,7 +44,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 throw new ArgumentNullException("operand1");
             if (operand2 == null)
                 throw new ArgumentNullException("operand2");
-            return operand1.OrCloned(operand2);
+            return operand1.Or(operand2);
         }
 
         public override string ToString()

@@ -1,4 +1,4 @@
-#define ProgressBarDebug
+//#define ProgressBarDebug
 
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
@@ -115,10 +115,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
             pB.done();
             return;
 #else
-            Common.RunTask(_boxModule, this, TaskTypeEnum.FourFold);
-
             // reset cache
             _cachedSerializableResultInfo = null;
+            
+            Common.RunTask(_boxModule, this, TaskTypeEnum.FourFold);
 #endif
         }
     }

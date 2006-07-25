@@ -239,7 +239,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 }
                 setting.numericValuesAttributeId = new GuidStruct(String.Empty);
             }
-            if (setting.denominator > 0.0d)
+            if (setting.denominator <= 0.0d)
                 Debug.Assert(false);
             return setting;
         }

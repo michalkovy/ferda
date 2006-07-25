@@ -30,7 +30,7 @@ module Ferda {
 
 				// BIT STRING GENERATOR
 
-				class BitString
+				class BitStringIce
 				{
 					Ferda::Modules::LongSeq value;
 					int length;
@@ -72,7 +72,7 @@ module Ferda {
 					Ferda::Modules::DoubleSeq GetCategoriesNumericValues()
 						throws Ferda::Modules::BoxRuntimeError;
 
-					BitString GetBitString(string categoryId)
+					BitStringIce GetBitString(string categoryId)
 						throws Ferda::Modules::BoxRuntimeError;
 
 					Ferda::Modules::StringOpt GetMissingInformationCategoryId()

@@ -272,7 +272,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         private float _progressValue = -1;
         private string _progressMessage = "Loading ...";
         private long _progressLastUpdateTicks = DateTime.Now.Ticks;
-        private const long _progressMinCountOfTicksToPublish = 333; // 1000 ~ second
+        private const long _progressMinCountOfTicksToPublish = 500000;
+        // ticks:
+        // 1 tick = 100-nanosecond 
+        // nano is 0.000 000 001
+        // mili is 0.001
+        // 0.05 sec is ticks * 500 000
 
         public float ProgressGetValue(out string message)
         {
@@ -451,9 +456,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     throw new ArgumentException();
 
                 if (missings is FalseBitString)
-                    negation = input.NotCloned();
+                    negation = input.Not();
                 else
-                    negation = input.OrCloned(missings).NotCloned();
+                    negation = input.Or(missings).Not();
             }
         }
 
@@ -469,7 +474,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             if (input is EmptyBitString)
                 negation = FalseBitString.GetInstance();
             else
-                negation = input.NotCloned();
+                negation = input.Not();
         }
 
         /// <summary>

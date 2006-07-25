@@ -292,7 +292,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                                 continue;
                             enumeration.Add(row[0]);
                         }
-                            
+
                         result.CreateEnums(enumeration.ToArray(), containsNull, true);
 
                         return result;
@@ -309,30 +309,47 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         private Guid _cachesReloadFlag = System.Guid.NewGuid();
         private Guid _lastReloadFlag;
-        private Dictionary<string, BitString> _cachedValueBitStrings = null;
-
-        public Dictionary<string, BitString> GetBitStrings(bool fallOnError)
+        private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
+        private long _lastBSQueryTicks = 0;
+        public Dictionary<string, BitStringIce> GetBitStrings(bool fallOnError)
         {
             lock (this)
             {
-                return ExceptionsHandler.GetResult<Dictionary<string, BitString>>(
+                return ExceptionsHandler.GetResult<Dictionary<string, BitStringIce>>(
                     fallOnError,
                     delegate
                     {
-                        // get primary key
-                        ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
-                        if (prx == null)
-                            return null;
-                        string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
-
-                        GenericColumn gc = GetGenericColumn(fallOnError);
-                        Attribute<IComparable> att = GetAttribute(true);
-                        if (String.IsNullOrEmpty(_lastReloadFlag.ToString()) || _lastReloadFlag != _cachesReloadFlag)
+                        if (_cachedValueBitStrings == null
+                            || String.IsNullOrEmpty(_lastReloadFlag.ToString())
+                            || _lastReloadFlag != _cachesReloadFlag
+                            || (DateTime.Now.Ticks - _lastBSQueryTicks) > 300000000
+                            )
+                            // ticks:
+                            // 1 tick = 100-nanosecond 
+                            // nano is 0.000 000 001
+                            // mili is 0.001
+                            // 0.3 sec is ticks * 3 000 000
                         {
-                            _lastReloadFlag = _cachesReloadFlag;
-                            if (gc == null || att == null)
+                            // get primary key
+                            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                            if (prx == null)
                                 return null;
-                            _cachedValueBitStrings = att.GetBitStrings(gc.GetSelect(pks));
+                            string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
+
+                            GenericColumn gc = GetGenericColumn(fallOnError);
+                            Attribute<IComparable> att = GetAttribute(true);
+                            //if (String.IsNullOrEmpty(_lastReloadFlag.ToString()) || _lastReloadFlag != _cachesReloadFlag)
+                            {
+                                if (gc == null || att == null)
+                                {
+                                    _cachedValueBitStrings = null;
+                                    return null;
+                                }
+                                _cachedValueBitStrings = att.GetBitStrings(gc.GetSelect(pks));
+                            }
+
+                            _lastBSQueryTicks = DateTime.Now.Ticks;
+                            _lastReloadFlag = _cachesReloadFlag;
                         }
                         return _cachedValueBitStrings;
                     },
@@ -345,16 +362,19 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             }
         }
 
-        public BitString GetBitString(string categoryName, bool fallOnError)
+        public BitStringIce GetBitString(string categoryName, bool fallOnError)
         {
-            // TODO categoryName je "" kdyz by melo byt null!!
+            // categoryName is "" if it should be null (throught middleware)
+            if (String.IsNullOrEmpty(categoryName))
+                return null;
+
             lock (this)
             {
-                return ExceptionsHandler.GetResult<BitString>(
+                return ExceptionsHandler.GetResult<BitStringIce>(
                     fallOnError,
                     delegate
                     {
-                        Dictionary<string, BitString> cachedValueBitStrings = GetBitStrings(fallOnError);
+                        Dictionary<string, BitStringIce> cachedValueBitStrings = GetBitStrings(fallOnError);
                         if (cachedValueBitStrings == null)
                             return null;
                         else
@@ -579,7 +599,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 };
         }
 
-        public override BitString GetBitString(string categoryId, Current current__)
+        public override BitStringIce GetBitString(string categoryId, Current current__)
         {
             return GetBitString(categoryId, true);
         }

@@ -103,17 +103,17 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 {
                     GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
 
-                    nineFT.pSpA = pS.AndCloned(pA);
-                    nineFT.pSxA = pS.AndCloned(xA);
-                    nineFT.pSnA = pS.AndCloned(nA);
+                    nineFT.pSpA = pS.And(pA);
+                    nineFT.pSxA = pS.And(xA);
+                    nineFT.pSnA = pS.And(nA);
 
-                    nineFT.xSpA = xS.AndCloned(pA);
-                    nineFT.xSxA = xS.AndCloned(xA);
-                    nineFT.xSnA = xS.AndCloned(nA);
+                    nineFT.xSpA = xS.And(pA);
+                    nineFT.xSxA = xS.And(xA);
+                    nineFT.xSnA = xS.And(nA);
 
-                    nineFT.nSpA = nS.AndCloned(pA);
-                    nineFT.nSxA = nS.AndCloned(xA);
-                    nineFT.nSnA = nS.AndCloned(nA);
+                    nineFT.nSpA = nS.And(pA);
+                    nineFT.nSxA = nS.And(xA);
+                    nineFT.nSnA = nS.And(nA);
 
                     foreach (IBitString pC in _condition)
                     {
@@ -139,29 +139,29 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         }
                         else
                         {
-                            fft.f111 = nineFT.pSpA.AndCloned(pC).Sum;
-                            fft.f1x1 = nineFT.pSxA.AndCloned(pC).Sum;
-                            fft.f101 = nineFT.pSnA.AndCloned(pC).Sum;
+                            fft.f111 = nineFT.pSpA.And(pC).Sum;
+                            fft.f1x1 = nineFT.pSxA.And(pC).Sum;
+                            fft.f101 = nineFT.pSnA.And(pC).Sum;
 
-                            fft.fx11 = nineFT.xSpA.AndCloned(pC).Sum;
-                            fft.fxx1 = nineFT.xSxA.AndCloned(pC).Sum;
-                            fft.fx01 = nineFT.xSnA.AndCloned(pC).Sum;
+                            fft.fx11 = nineFT.xSpA.And(pC).Sum;
+                            fft.fxx1 = nineFT.xSxA.And(pC).Sum;
+                            fft.fx01 = nineFT.xSnA.And(pC).Sum;
 
-                            fft.f011 = nineFT.nSpA.AndCloned(pC).Sum;
-                            fft.f0x1 = nineFT.nSxA.AndCloned(pC).Sum;
-                            fft.f001 = nineFT.nSnA.AndCloned(pC).Sum;
+                            fft.f011 = nineFT.nSpA.And(pC).Sum;
+                            fft.f0x1 = nineFT.nSxA.And(pC).Sum;
+                            fft.f001 = nineFT.nSnA.And(pC).Sum;
 
-                            fft.f11x = nineFT.pSpA.AndCloned(xC).Sum;
-                            fft.f1xx = nineFT.pSxA.AndCloned(xC).Sum;
-                            fft.f10x = nineFT.pSnA.AndCloned(xC).Sum;
+                            fft.f11x = nineFT.pSpA.And(xC).Sum;
+                            fft.f1xx = nineFT.pSxA.And(xC).Sum;
+                            fft.f10x = nineFT.pSnA.And(xC).Sum;
 
-                            fft.fx1x = nineFT.xSpA.AndCloned(xC).Sum;
-                            fft.fxxx = nineFT.xSxA.AndCloned(xC).Sum;
-                            fft.fx0x = nineFT.xSnA.AndCloned(xC).Sum;
+                            fft.fx1x = nineFT.xSpA.And(xC).Sum;
+                            fft.fxxx = nineFT.xSxA.And(xC).Sum;
+                            fft.fx0x = nineFT.xSnA.And(xC).Sum;
 
-                            fft.f01x = nineFT.nSpA.AndCloned(xC).Sum;
-                            fft.f0xx = nineFT.nSxA.AndCloned(xC).Sum;
-                            fft.f00x = nineFT.nSnA.AndCloned(xC).Sum;
+                            fft.f01x = nineFT.nSpA.And(xC).Sum;
+                            fft.f0xx = nineFT.nSxA.And(xC).Sum;
+                            fft.f00x = nineFT.nSnA.And(xC).Sum;
                         }
 
                         ContingencyTableHelper contingencyTable = new ContingencyTableHelper(

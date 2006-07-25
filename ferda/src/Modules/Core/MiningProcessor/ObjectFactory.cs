@@ -7,7 +7,7 @@ namespace Ferda.Guha.MiningProcessor
 
     #region Ice object implementations
 
-    public class BitStringI : BitString
+    public class BitStringIceI : BitStringIce
     {
     }
 
@@ -120,8 +120,8 @@ namespace Ferda.Guha.MiningProcessor
         {
             switch (type)
             {
-                case "::Ferda::Guha::MiningProcessor::BitString":
-                    return new BitStringI();
+                case "::Ferda::Guha::MiningProcessor::BitStringIce":
+                    return new BitStringIceI();
                 case "::Ferda::Guha::MiningProcessor::IEntitySetting":
                     return new IEntitySettingI();
                 case "::Ferda::Guha::MiningProcessor::ILeafEntitySetting":
@@ -161,7 +161,7 @@ namespace Ferda.Guha.MiningProcessor
             {
                 string[] types = new string[]
                     {
-                        "::Ferda::Guha::MiningProcessor::BitString",
+                        "::Ferda::Guha::MiningProcessor::BitStringIce",
                         "::Ferda::Guha::MiningProcessor::IEntitySetting",
                         "::Ferda::Guha::MiningProcessor::ILeafEntitySetting",
                         "::Ferda::Guha::MiningProcessor::CoefficientFixedSetSetting",

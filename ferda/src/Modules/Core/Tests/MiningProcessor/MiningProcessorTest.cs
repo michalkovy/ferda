@@ -9,6 +9,7 @@ using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Guha.MiningProcessor.Generation;
 using Ferda.Modules;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using BitString=Ferda.Guha.MiningProcessor.BitStrings.BitString;
 
 namespace Tests.MiningProcessor
 {
@@ -255,6 +256,23 @@ namespace Tests.MiningProcessor
 
             string r = result.ToString();
             Debug.Write(r);
+        }
+        
+        /// <summary>
+        /// A test for single operand entities.
+        /// </summary>
+        [TestMethod()]
+        public void BitStringConstructorPerformanceTest()
+        {
+            int length = 255;
+            BitStringIdentifier bsId = new BitStringIdentifier("654", "category1");
+            long[] bits = new long[] {40540565747, 5776644, 843, 15400000005};
+            long time1 = DateTime.Now.Ticks;
+            for (int i = 0; i < 100000; i++)
+            {
+                BitString bs = new BitString(bsId, length, bits);
+            }
+            Console.Out.WriteLine("time1 = {0}", DateTime.Now.Ticks - time1);
         }
     }
 }

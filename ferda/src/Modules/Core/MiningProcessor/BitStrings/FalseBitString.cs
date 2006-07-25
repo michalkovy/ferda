@@ -71,14 +71,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return source;
         }
 
-        public IBitString OrCloned(IBitString source)
-        {
-            BitString bs = source as BitString;
-            if (bs != null)
-                return bs.OrCloned(this);
-            else
-                return orSpecial(source, false);
-        }
+        //public IBitString OrCloned(IBitString source)
+        //{
+        //    BitString bs = source as BitString;
+        //    if (bs != null)
+        //        return bs.OrCloned(this);
+        //    else
+        //        return orSpecial(source, false);
+        //}
 
         public int Sum
         {

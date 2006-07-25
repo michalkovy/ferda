@@ -106,10 +106,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.TwoDimensional
 
         public void Run()
         {
-            Common.RunTask(_boxModule, this, TaskTypeEnum.KL);
-
             // reset cache
             _cachedSerializableResultInfo = null;
+
+            Common.RunTask(_boxModule, this, TaskTypeEnum.KL);
         }
     }
 }
