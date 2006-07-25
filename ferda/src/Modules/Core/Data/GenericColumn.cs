@@ -73,7 +73,7 @@ namespace Ferda.Guha.Data
 
                         DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
 
-                        string columnQuotedIdentifier = getQuotedQueryIdentifier();
+                        string columnQuotedIdentifier = GetQuotedQueryIdentifier();
                         string dataTableQuotedIdentifier =
                             GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
 
@@ -365,7 +365,7 @@ namespace Ferda.Guha.Data
         /// <exception cref="T:System.ArgumentNullException">Thrown when converting faild.</exception>
         public void TestDerivedColumnDbDataType(DbDataTypeEnum dbDataType)
         {
-            string columnQuotedIdentifier = getQuotedQueryIdentifier();
+            string columnQuotedIdentifier = GetQuotedQueryIdentifier();
             string dataTableQuotedIdentifier =
                 GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
 
@@ -431,7 +431,7 @@ namespace Ferda.Guha.Data
         /// </summary>
         public DbDataTypeEnum DetermineDerivedColumnDbDataType()
         {
-            string columnQuotedIdentifier = getQuotedQueryIdentifier();
+            string columnQuotedIdentifier = GetQuotedQueryIdentifier();
             string dataTableQuotedIdentifier =
                 GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
 
@@ -618,7 +618,7 @@ namespace Ferda.Guha.Data
         /// any quotation) otherwise quotes the name of the column.
         /// </summary>
         /// <returns>Quoted query identifier of the column</returns>
-        private string getQuotedQueryIdentifier()
+        public string GetQuotedQueryIdentifier()
         {
             if (IsDerived)
                 return _explain.name;
@@ -648,11 +648,54 @@ namespace Ferda.Guha.Data
                                ? String.Empty
                                : " WHERE " + whereCondition;
 
-            string columnQuotedIdentifier = getQuotedQueryIdentifier();
+            string columnQuotedIdentifier = GetQuotedQueryIdentifier();
 
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
             command.CommandText =
                 "SELECT " + columnQuotedIdentifier + ", COUNT(1) "
+                + " FROM " + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
+                + where
+                + " GROUP BY " + columnQuotedIdentifier
+                + " ORDER BY " + columnQuotedIdentifier;
+
+            DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
+            dataAdapter.SelectCommand = command;
+
+            try
+            {
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet);
+                return dataSet.Tables[0];
+            }
+            catch (DbException e)
+            {
+                throw Exceptions.DbUnexpectedError(e, null);
+            }
+        }
+
+        /// <summary>
+        /// Gets the distincts.
+        /// </summary>
+        /// <param name="whereCondition">The where condition.</param>
+        /// <returns></returns>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// <b>DbUnexpectedError</b>
+        /// Thrown when the specifiec column does not support
+        /// basic SQL queries (DISTINCT) e.g.
+        /// the column is of type "BLOB", "Memo", ... (often
+        /// DbSimpleDataTypeEnum.UnknownSimpleType)
+        /// </exception>
+        public DataTable GetDistincts(string whereCondition)
+        {
+            string where = (String.IsNullOrEmpty(whereCondition))
+                               ? String.Empty
+                               : " WHERE " + whereCondition;
+
+            string columnQuotedIdentifier = GetQuotedQueryIdentifier();
+
+            DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
+            command.CommandText =
+                "SELECT " + columnQuotedIdentifier
                 + " FROM " + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
                 + where
                 + " GROUP BY " + columnQuotedIdentifier
@@ -689,7 +732,7 @@ namespace Ferda.Guha.Data
             // test the unique key
             GenericDataTable.TestUniqueKey(uniqueKeyForSort);
 
-            string columnQuotedIdentifier = getQuotedQueryIdentifier();
+            string columnQuotedIdentifier = GetQuotedQueryIdentifier();
             string dataTableQuotedIdentifier =
                 GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
             string uniqueKeyQuotedIdentifier = GenericDataTable.getQuotedColumnsNames(uniqueKeyForSort);
