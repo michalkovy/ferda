@@ -401,7 +401,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         public IBitString operation(IBitString previous, IBitString current)
         {
-            return previous.OrCloned(current);
+            return previous.Or(current);
         }
 
         public IBitString operation(IBitString current)

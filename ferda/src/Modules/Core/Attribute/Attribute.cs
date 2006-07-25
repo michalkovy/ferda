@@ -264,7 +264,7 @@ namespace Ferda.Guha.Attribute
         /// </summary>
         /// <param name="dataTable">The table with one column sorted by primary key.</param>
         /// <returns></returns>
-        public Dictionary<string, BitString> GetBitStrings(DataTable dataTable)
+        public Dictionary<string, BitStringIce> GetBitStrings(DataTable dataTable)
         {
             return Axis.GetBitStrings(dataTable);
         }

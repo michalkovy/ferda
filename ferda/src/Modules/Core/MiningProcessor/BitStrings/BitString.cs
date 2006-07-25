@@ -19,7 +19,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
     /// <summary>
     /// This class represents a bit string of a fixed length.
     /// </summary>
-    public partial class BitString : IBitString, IBitStringCreate, IBitStringBase
+    public class BitString : IBitString, IBitStringCreate, IBitStringBase
     {
         #region Fields
 
@@ -100,8 +100,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _identifier = identifier;
         }
 
-        public BitString(int length, BitStringIdentifier identifier, long[] bits)
-            : this(new AtomFormula(identifier))
+        public unsafe BitString(BitStringIdentifier identifier, int length, long[] bits)
+        : this(new AtomFormula(identifier))
         {
             if (length <= 0)
                 throw Exceptions.BitStringLengthError();
@@ -113,7 +113,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 #if USE64BIT
             if (arraySize != bits.Length)
                 throw new ArgumentOutOfRangeException("bits", "The array of bits has bad size (Length).");
-
+            
             _array = new ulong[arraySize];
             for (int i = 0; i < bits.Length; i++)
             {
@@ -122,7 +122,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     _array[i] = (ulong)bits[i];
                 }
             }
-
 #else
             throw new NotImplementedException();
 #endif
@@ -185,7 +184,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
         }
 #endif
-
+        
         /// <summary>
         /// This method allocates the memory of BitString.
         /// Call this method only after the default constructor was used.
@@ -245,69 +244,19 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         #endregion
 
-        private static void testSizes(BitString source1, BitString source2)
-        {
-            if (source1._size == 0)
-                throw new InvalidOperationException("BitString was not initialized (use create method first).");
-            if (source1._size != source2._size)
-                throw Exceptions.BitStringsLengtsAreNotEqualError();
-
-            Debug.Assert(source1._array.Length == source2._array.Length,
-                         "The array sizes don't match, although bit string lengths are the same.");
-            Debug.Assert(
-                (source1._size % _blockSize == 0) || ((source1._array[source1._array.Length - 1] & (_allOnes << source1._size % _blockSize)) == 0),
-                "The bit string contains non-zero bits in the last block behind the allowed length.");
-            Debug.Assert(
-                (source1._size % _blockSize == 0) || ((source2._array[source1._array.Length - 1] & (_allOnes << source1._size % _blockSize)) == 0),
-                "The bit string contains non-zero bits in the last block behind the allowed length.");
-        }
-        
         #region AND
 
+        /// <summary>
+        /// Performs the bitwise AND operation on current BitString against the specified BitString.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
         public IBitString And(IBitString source)
         {
-            BitString bsSource = source as BitString;
-            if (bsSource != null)
+            if (source is BitString)
             {
-                testSizes(this, bsSource);
-#if UNSAFE
-                andUnsafe(bsSource);
-#else
-                andSafe(bsSource);
-#endif
-                _sum = -1;
-                _identifier = FormulaHelper.And(Identifier, source.Identifier);
-                return this;
-            }
-            else if (source is EmptyBitString)
-            {
-                return this;
-            }
-            else if (source is FalseBitString)
-            {
-                return source;
-            }
-            else
-                throw new NotImplementedException();
-        }
-        
-        public IBitString AndCloned(IBitString source)
-        {
-            BitString bsSource = source as BitString;
-            if (bsSource != null)
-            {
-                BitString result = new BitString(FormulaHelper.And(Identifier, bsSource.Identifier));
-                if (_size == 0)
-                    throw new InvalidOperationException("Cannot copy-construct a BitString from an uninitialized one.");
-                result._size = _size;
-                result._sum = -1;
-
-                testSizes(this, bsSource);
-#if UNSAFE
-                result._array = andUnsafe(_array, bsSource._array);
-#else
-                result._array = andSafe(_array, bsSource._array);
-#endif
+                BitString result = new BitString(this);
+                result.and((BitString)source);
+                result._identifier = FormulaHelper.And(Identifier, source.Identifier);
                 return result;
             }
             else if (source is EmptyBitString)
@@ -321,55 +270,80 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             else
                 throw new NotImplementedException();
         }
+
+        protected void and(BitString source)
+        {
+            if (_size == 0)
+                throw new InvalidOperationException("BitString was not initialized (use create method first).");
+            if (_size != source._size)
+                throw Exceptions.BitStringsLengtsAreNotEqualError();
+
+            Debug.Assert(_array.Length == source._array.Length,
+                         "The array sizes don't match, although bit string lengths are the same.");
+            Debug.Assert(
+                (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
+                "The bit string contains non-zero bits in the last block behind the allowed length.");
+            Debug.Assert(
+                (_size % _blockSize == 0) || ((source._array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
+                "The bit string contains non-zero bits in the last block behind the allowed length.");
+
+#if UNSAFE
+            andUnsafe(source);
+#else
+            andSafe(source);
+#endif
+
+            _sum = -1;
+        }
+
+#if UNSAFE
+        private unsafe void andUnsafe(BitString source)
+        {
+#if USE64BIT
+            fixed (ulong* destPin = _array, sourcePin = source._array)
+            {
+                ulong* destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
+                while (destPtr < stopPtr)
+                {
+                    *destPtr++ &= *sourcePtr++;
+                }
+            }
+#else
+            fixed (uint *destPin = _array, sourcePin = source._array)
+            {
+                uint *destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
+                while (destPtr < stopPtr)
+                {
+                    *destPtr++ &= *sourcePtr++;
+                }
+            }
+#endif
+        }
+#else
+        private void andSafe(BitString source)
+        {
+            for (int i = 0; i < _array.Length; i++)
+            {
+                _array[i] &= source._array[i];
+            }
+        }
+#endif
 
         #endregion
 
         #region OR
 
+        /// <summary>
+        /// Performs the bitwise OR operation on current BitString against the specified BitString.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
         public IBitString Or(IBitString source)
         {
-            BitString bsSource = source as BitString;
-            if (bsSource != null)
+            if (source is BitString)
             {
-                testSizes(this, bsSource);
-#if UNSAFE
-                orUnsafe(bsSource);
-#else
-                orSafe(bsSource);
-#endif
-                _sum = -1;
-                _identifier = FormulaHelper.Or(Identifier, source.Identifier);
-                return this;
-            }
-            else if (source is EmptyBitString)
-            {
-                return this;
-            }
-            else if (source is FalseBitString)
-            {
-                return this;
-            }
-            else
-                throw new NotImplementedException();
-        }
-
-        public IBitString OrCloned(IBitString source)
-        {
-            BitString bsSource = source as BitString;
-            if (bsSource != null)
-            {
-                BitString result = new BitString(FormulaHelper.Or(Identifier, bsSource.Identifier));
-                if (_size == 0)
-                    throw new InvalidOperationException("Cannot copy-construct a BitString from an uninitialized one.");
-                result._size = _size;
-                result._sum = -1;
-
-                testSizes(this, bsSource);
-#if UNSAFE
-                result._array = orUnsafe(_array, bsSource._array);
-#else
-                result._array = orSafe(_array, bsSource._array);
-#endif
+                BitString result = new BitString(this);
+                result.or((BitString)source);
+                result._identifier = FormulaHelper.Or(Identifier, source.Identifier);
                 return result;
             }
             else if (source is EmptyBitString)
@@ -383,34 +357,75 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             else
                 throw new NotImplementedException();
         }
-        
+
+        protected void or(BitString source)
+        {
+            if (_size == 0)
+                throw new InvalidOperationException("BitString was not initialized (use create method first).");
+            if (source._size != _size)
+                throw Exceptions.BitStringsLengtsAreNotEqualError();
+
+            Debug.Assert(_array.Length == source._array.Length,
+                         "The array sizes don't match, although bit string lengths are the same.");
+            Debug.Assert(
+                (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
+                "The bit string contains non-zero bits in the last block behind the allowed length.");
+            Debug.Assert(
+                (_size % _blockSize == 0) || ((source._array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
+                "The bit string contains non-zero bits in the last block behind the allowed length.");
+
+#if UNSAFE
+            orUnsafe(source);
+#else
+            orSafe(source);
+#endif
+
+            _sum = -1;
+        }
+
+#if UNSAFE
+        private unsafe void orUnsafe(BitString source)
+        {
+#if USE64BIT
+            fixed (ulong* destPin = _array, sourcePin = source._array)
+            {
+                ulong* destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
+                while (destPtr < stopPtr)
+                {
+                    *destPtr++ |= *sourcePtr++;
+                }
+            }
+#else
+            fixed (uint *destPin = _array, sourcePin = source._array)
+            {
+                uint *destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
+                while (destPtr < stopPtr)
+                {
+                    *destPtr++ |= *sourcePtr++;
+                }
+            }
+#endif
+        }
+#else
+        private void orSafe(BitString source)
+        {
+            for (int i = 0; i < _array.Length; i++)
+            {
+                _array[i] |= source._array[i];
+            }
+        }
+#endif
+
         #endregion
 
         #region NOT
 
+        /// <summary>
+        /// Performs the bitwise NOT on current BitString.
+        /// </summary>
         public IBitString Not()
         {
-#if UNSAFE
-            notUnsafe();
-#else
-            notSafe();
-#endif
-            if (_sum >= 0)
-                _sum = _size - _sum;
-            _identifier = FormulaHelper.Not(Identifier);
-            return this;
-        }
-
-        public IBitString NotCloned()
-        {
-            BitString result = new BitString(FormulaHelper.Or(Identifier, Identifier));
-            if (_size == 0)
-                throw new InvalidOperationException("Cannot copy-construct a BitString from an uninitialized one.");
-#if UNSAFE
-            result._array = notUnsafe(_array, _size);
-#else
-            result._array = notSafe(_array, _size);
-#endif
+            BitString result = new BitString(this);
             result.not();
             result._identifier = FormulaHelper.Not(Identifier);
             return result;
@@ -435,12 +450,61 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 _sum = _size - _sum;
         }
 
-
+#if UNSAFE
+        private unsafe void notUnsafe()
+        {
+#if USE64BIT
+            fixed (ulong* pin = _array)
+            {
+                ulong* ptr = pin, stop = pin + _array.Length;
+                while (ptr < stop)
+                {
+                    *ptr = ~(*ptr);
+                    ptr++;
+                }
+                if (_size % _blockSize > 0)
+                {
+                    *(ptr - 1) &= _allOnes >> (_blockSize - _size % _blockSize);
+                }
+            }
+#else
+            fixed (uint *pin = _array)
+            {
+                uint *ptr = pin, stop = pin + _array.Length;
+                while (ptr < stop)
+                {
+                    *ptr = ~ (*ptr);
+                    ptr++;
+                }
+                if (_size % _blockSize > 0)
+                {
+                    *(ptr - 1) &= _allOnes >> (_blockSize - _size % _blockSize);
+                }
+            }
+#endif
+        }
+#else
+        private void notSafe()
+        {
+            for (int i = 0; i < _array.Length; i++)
+            {
+                _array[i] = ~_array[i];
+            }
+            if (_size % _blockSize > 0)
+            {
+                _array[_array.Length - 1] &= _allOnes >> (_blockSize - _size % _blockSize);
+            }
+        }
+#endif
 
         #endregion
 
         #region SUM
 
+        /// <summary>
+        /// Performs the bitwise SUM operation on current BitString.
+        /// </summary>
+        /// <returns>The number of bits set to 1 in current BitString.</returns>
         public int Sum
         {
             get
@@ -462,7 +526,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 #if UNSAFE
                 sumLookup16Unsafe();
 #else
-                sumLookup16Safe();
+            sumLookup16Safe();
 #endif
 
                 Debug.Assert(_sum >= 0, "The sum must be non-negative.");
@@ -599,7 +663,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return (int)((block & 0x00000000FFFFFFFFul) + (block >> 32));
         }
 #else
-        private static int sumFoldBlock(uint block)
+        private static int SumFoldBlock(uint block)
         {
             block = (block & 0x55555555u) + ((block >> 1) & 0x55555555u);
             block = (block & 0x33333333u) + ((block >> 2) & 0x33333333u);
@@ -812,6 +876,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         #endregion
 
+        /// <summary>
+        /// Sets a specified bit in the BitString.
+        /// </summary>
+        /// <param name="index">Index of the bit to be set.</param>
+        /// <param name="value">New value of the bit.</param>
         public void SetBit(int index, bool value)
         {
             if (_size == 0)
@@ -832,6 +901,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _sum = -1;
         }
 
+
+        /// <summary>
+        /// Gets a value of the specified bit from the BitString.
+        /// </summary>
+        /// <param name="index">Index of the bit to be retrieved.</param>
+        /// <returns>Value of the specified bit from the BitString.</returns>
         public bool GetBit(int index)
         {
             if (_size == 0)
@@ -843,6 +918,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return (_array[index / _blockSize] & (_one << (index % _blockSize))) > 0;
         }
 
+
+        /// <summary>
+        /// Fills the whole BitString with the specified value.
+        /// </summary>
+        /// <param name="value">Value to be filled into every bit of the BitString.</param>
+        /// <remarks>
+        /// <para>BitString are filled with zeroes when created, so there is no need to call Fill(false) after create() method.</para>
+        /// </remarks>
         public void Fill(bool value)
         {
             if (_size == 0)
@@ -957,47 +1040,108 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             get { return _size; }
         }
 
-        ///// <summary>
-        ///// Compares two bit strings by value.
-        ///// </summary>
-        ///// <param name="obj">Another bit string.</param>
-        ///// <returns><b>true</b> if the bit strings are the same object or if they contain the same value, <b>false</b> otherwise.</returns>
-        //public override bool Equals(object obj)
-        //{
-        //    BitString that = obj as BitString;
-        //    if (that == null)
-        //        return false;
+        /// <summary>
+        /// Compares two bit strings by value.
+        /// </summary>
+        /// <param name="obj">Another bit string.</param>
+        /// <returns><b>true</b> if the bit strings are the same object or if they contain the same value, <b>false</b> otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            BitString that = obj as BitString;
+            if (that == null)
+                return false;
 
-        //    if (ReferenceEquals(this, that))
-        //        return true;
+            if (ReferenceEquals(this, that))
+                return true;
 
-        //    if (_size != that._size)
-        //        return false;
+            if (_size != that._size)
+                return false;
 
-        //    if ((_sum >= 0) && (that._sum >= 0) && (_sum != that._sum))
-        //        return false;
+            if ((_sum >= 0) && (that._sum >= 0) && (_sum != that._sum))
+                return false;
 
-        //    Debug.Assert(_array.Length == that._array.Length,
-        //                 "The array sizes don't match, although bit string lengths are the same.");
-        //    Debug.Assert(
-        //        (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
-        //        "The bit string contains non-zero bits in the last block behind the allowed length.");
-        //    Debug.Assert(
-        //        (_size % _blockSize == 0) || ((that._array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
-        //        "The bit string contains non-zero bits in the last block behind the allowed length.");
+            Debug.Assert(_array.Length == that._array.Length,
+                         "The array sizes don't match, although bit string lengths are the same.");
+            Debug.Assert(
+                (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
+                "The bit string contains non-zero bits in the last block behind the allowed length.");
+            Debug.Assert(
+                (_size % _blockSize == 0) || ((that._array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
+                "The bit string contains non-zero bits in the last block behind the allowed length.");
 
-        //    for (int i = 0; i < _array.Length; i++)
-        //    {
-        //        if (_array[i] != that._array[i])
-        //            return false;
-        //    }
+            for (int i = 0; i < _array.Length; i++)
+            {
+                if (_array[i] != that._array[i])
+                    return false;
+            }
 
-        //    if ((_sum >= 0) && (that._sum < 0))
-        //        that._sum = _sum;
-        //    else if ((that._sum >= 0) && (_sum < 0))
-        //        _sum = that._sum;
+            if ((_sum >= 0) && (that._sum < 0))
+                that._sum = _sum;
+            else if ((that._sum >= 0) && (_sum < 0))
+                _sum = that._sum;
 
-        //    return true;
-        //}
+            return true;
+        }
+
+
+        /// <summary>
+        /// Compares two bit strings by value.
+        /// </summary>
+        /// <param name="a">A BitString or a null reference.</param>
+        /// <param name="b">A BitString or a null reference.</param>
+        /// <returns><b>true</b> if the bit strings are the same object or if they contain the same value, <b>false</b> otherwise.</returns>
+        public static bool Equals(BitString a, BitString b)
+        {
+            return Object.Equals(a, b);
+        }
+
+
+        /// <summary>
+        /// Compares two bit strings by value.
+        /// </summary>
+        /// <param name="a">A BitString or a null reference.</param>
+        /// <param name="b">A BitString or a null reference.</param>
+        /// <returns><b>true</b> if the bit strings are the same object or if they contain the same value, <b>false</b> otherwise.</returns>
+        public static bool operator ==(BitString a, BitString b)
+        {
+            return Object.Equals(a, b);
+        }
+
+
+        /// <summary>
+        /// Compares two bit strings by value for unequality.
+        /// </summary>
+        /// <param name="a">A BitString or a null reference.</param>
+        /// <param name="b">A BitString or a null reference.</param>
+        /// <returns><b>false</b> if the bit strings are the same object or if they contain the same value, <b>true</b> otherwise.</returns>
+        public static bool operator !=(BitString a, BitString b)
+        {
+            return !Object.Equals(a, b);
+        }
+
+
+        /// <summary>
+        /// Returns the hash code for this instance of bit string.
+        /// </summary>
+        /// <returns>A 32-bit signed integer hash code.</returns>
+        /// <remarks>
+        /// <para>Implemented as a XOR over the array that stores the bit string, plus one XOR for the real bit string size.</para>
+        /// </remarks>
+        public override int GetHashCode()
+        {
+            if (_size == 0)
+                return 0;
+
+            Debug.Assert(
+                (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
+                "The bit string contains non-zero bits in the last block behind the allowed length.");
+
+            int hash = _size;
+            for (int i = 0; i < _array.Length; i++)
+            {
+                hash ^= (int)_array[i];
+            }
+            return hash;
+        }
     }
 }

@@ -133,7 +133,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
             }
             else if (_actualLength == 1)
             {
-                _currentBitString = _currentBitString.OrCloned(newBitString);
+                //_currentBitString = _currentBitString.OrCloned(newBitString);
+                _currentBitString = _currentBitString.Or(newBitString);
             }
             else
             {

@@ -64,9 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitStrings\MissingInformationBitStringsIdsCache.cs" />
     <Compile Include="Generation\CategorialAttributeTrace.cs" />
     <Compile Include="BitStrings\BitStringsArray.cs" />
-    <Compile Include="BitStrings\BitString_part2.cs" />
     <Compile Include="BitStrings\EmptyBitString.cs" />
     <Compile Include="BitStrings\FalseBitString.cs" />
     <Compile Include="Exceptions.cs" />

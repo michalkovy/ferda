@@ -125,24 +125,24 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 {
                     GetNegation(pA, out nA);
 
-                    fourFT.pSpA = pS.AndCloned(pA);
-                    fourFT.pSnA = pS.AndCloned(nA);
+                    fourFT.pSpA = pS.And(pA);
+                    fourFT.pSnA = pS.And(nA);
 
-                    fourFT.nSpA = nS.AndCloned(pA);
-                    fourFT.nSnA = nS.AndCloned(nA);
+                    fourFT.nSpA = nS.And(pA);
+                    fourFT.nSnA = nS.And(nA);
 
                     foreach (IBitString pC in _condition)
                     {
                         foreach (IBitString fS in _firstSet)
                         {
-                            fSF = fS.AndCloned(pC);
+                            fSF = fS.And(pC);
                             FourFoldContingencyTable fourFoldCT = new FourFoldContingencyTable();
 
-                            fourFoldCT.a = fourFT.pSpA.AndCloned(fSF).Sum;
-                            fourFoldCT.c = fourFT.pSnA.AndCloned(fSF).Sum;
+                            fourFoldCT.a = fourFT.pSpA.And(fSF).Sum;
+                            fourFoldCT.c = fourFT.pSnA.And(fSF).Sum;
 
-                            fourFoldCT.b = fourFT.nSpA.AndCloned(fSF).Sum;
-                            fourFoldCT.d = fourFT.nSnA.AndCloned(fSF).Sum;
+                            fourFoldCT.b = fourFT.nSpA.And(fSF).Sum;
+                            fourFoldCT.d = fourFT.nSnA.And(fSF).Sum;
 
                             skipSecondSet = false;
                             if (quantifiers.FirstSetFrequencies)
@@ -169,10 +169,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                     switch (TaskParams.sdWorkingWithSecondSetMode)
                                     {
                                         case WorkingWithSecondSetModeEnum.Cedent1AndCedent2:
-                                            sSF = sS.AndCloned(fS).AndCloned(pC);
+                                            sSF = sS.And(fS).And(pC);
                                             break;
                                         case WorkingWithSecondSetModeEnum.Cedent2:
-                                            sSF = sS.AndCloned(pC);
+                                            sSF = sS.And(pC);
                                             break;
                                         case WorkingWithSecondSetModeEnum.None:
                                         default:
@@ -181,11 +181,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                                     FourFoldContingencyTable fourFoldCT2 = new FourFoldContingencyTable();
 
-                                    fourFoldCT2.a = fourFT.pSpA.AndCloned(sSF).Sum;
-                                    fourFoldCT2.c = fourFT.pSnA.AndCloned(sSF).Sum;
+                                    fourFoldCT2.a = fourFT.pSpA.And(sSF).Sum;
+                                    fourFoldCT2.c = fourFT.pSnA.And(sSF).Sum;
 
-                                    fourFoldCT2.b = fourFT.nSpA.AndCloned(sSF).Sum;
-                                    fourFoldCT2.d = fourFT.nSnA.AndCloned(sSF).Sum;
+                                    fourFoldCT2.b = fourFT.nSpA.And(sSF).Sum;
+                                    fourFoldCT2.d = fourFT.nSnA.And(sSF).Sum;
                                 }
                         }
 

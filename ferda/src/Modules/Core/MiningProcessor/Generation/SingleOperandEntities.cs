@@ -45,7 +45,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 // UNDONE if inner entity does not contain multioperand 
                 // entity (with cached bit strings, than operation "Not" 
                 // can be used without "Cloned")
-                yield return bitString.NotCloned();
+                yield return bitString.Not();
             }
         }
 

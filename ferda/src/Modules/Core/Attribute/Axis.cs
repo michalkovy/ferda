@@ -421,7 +421,7 @@ namespace Ferda.Guha.Attribute
         /// </summary>
         /// <param name="dataTable">The table with one column sorted by primary key.</param>
         /// <returns></returns>
-        public Dictionary<string, BitString> GetBitStrings(DataTable dataTable)
+        public Dictionary<string, BitStringIce> GetBitStrings(DataTable dataTable)
         {
             Disabled = false;
             Build();
@@ -437,13 +437,13 @@ namespace Ferda.Guha.Attribute
 
             int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
             
-            Dictionary<string, BitString> result = new Dictionary<string, BitString>();
+            Dictionary<string, BitStringIce> result = new Dictionary<string, BitStringIce>();
             
             foreach (KeyValuePair<string, Category<T>> pair in _attribute)
             {
                 long[] tmpBitArray = new long[arraySize];
                 tmpBitArray.Initialize();
-                result.Add(pair.Key, new BitString(tmpBitArray, length));
+                result.Add(pair.Key, new BitStringIce(tmpBitArray, length));
             }
 
             // PROCESS DATA

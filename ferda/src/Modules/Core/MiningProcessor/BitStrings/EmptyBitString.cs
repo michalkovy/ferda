@@ -61,14 +61,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 return andSpecial(source, false);
         }
 
-        public IBitString AndCloned(IBitString source)
-        {
-            BitString bs = source as BitString;
-            if (bs != null)
-                return bs.AndCloned(this);
-            else
-                return andSpecial(source, false);
-        } 
+        //public IBitString AndCloned(IBitString source)
+        //{
+        //    BitString bs = source as BitString;
+        //    if (bs != null)
+        //        return bs.AndCloned(this);
+        //    else
+        //        return andSpecial(source, false);
+        //} 
         
         #endregion
 
@@ -107,14 +107,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 return andSpecial(source, false);
         }
 
-        public IBitString OrCloned(IBitString source)
-        {
-            BitString bs = source as BitString;
-            if (bs != null)
-                return bs.OrCloned(this);
-            else
-                return andSpecial(source, false);
-        } 
+        //public IBitString OrCloned(IBitString source)
+        //{
+        //    BitString bs = source as BitString;
+        //    if (bs != null)
+        //        return bs.OrCloned(this);
+        //    else
+        //        return andSpecial(source, false);
+        //} 
         
         #endregion
 

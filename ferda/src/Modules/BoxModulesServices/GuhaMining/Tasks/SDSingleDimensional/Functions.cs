@@ -108,10 +108,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDSingleDimensional
 
         public void Run()
         {
-            Common.RunTask(_boxModule, this, TaskTypeEnum.SDCF);
-
             // reset cache
             _cachedSerializableResultInfo = null;
+            
+            Common.RunTask(_boxModule, this, TaskTypeEnum.SDCF);
         }
     }
 }
