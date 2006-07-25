@@ -602,7 +602,7 @@ namespace Ferda.Guha.Attribute
         /// <param name="values">The values.</param>
         /// <param name="addNullCategory">if set to <c>true</c> null category (empty, null containing) will be created and added.</param>
         /// <param name="lazyDisjunctivityChecking">if set to <c>true</c> lazy disjunctivity checking is on.</param>
-        public void CreateEnums(object[] values, bool addNullCategory, bool lazyDisjunctivityChecking)
+        public void CreateEnums(IEnumerable<object> values, bool addNullCategory, bool lazyDisjunctivityChecking)
         {
             if (_categories.Count > 0)
                 throw new InvalidOperationException("The attribute already contains some categories");
@@ -623,6 +623,8 @@ namespace Ferda.Guha.Attribute
             string categoryName;
             foreach (object value in values)
             {
+                //if (value == null || value is DBNull)
+                //    continue;
                 // in values should not be true (value == null)
                 // for that purposes is there parameter "addNullCategory"
                 categoryName = value.ToString();

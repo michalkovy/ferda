@@ -339,18 +339,26 @@ namespace Ferda.Guha.Attribute
             string categoryName;
             foreach (DataRow row in dataTable.Rows)
             {
-                item = (T)row[0];
-                if (_enumValues.TryGetValue(item, out categoryName))
+                if (row[0] is DBNull)
                 {
-                    Debug.Assert(result.ContainsKey(categoryName), "This should never happend");
-                    result[categoryName] += (int)row[1];
+                    if (_attribute.NullContainingCategory != null)
+                        result[_attribute.NullContainingCategory] += (int)row[1];
                 }
-                else if (
-                    _intervals.TryGetValue(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute),
-                                           out categoryName))
+                else
                 {
-                    Debug.Assert(result.ContainsKey(categoryName), "This should never happend");
-                    result[categoryName] += (int)row[1];
+                    item = (T)row[0];
+                    if (_enumValues.TryGetValue(item, out categoryName))
+                    {
+                        Debug.Assert(result.ContainsKey(categoryName), "This should never happend");
+                        result[categoryName] += (int)row[1];
+                    }
+                    else if (
+                        _intervals.TryGetValue(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute),
+                                               out categoryName))
+                    {
+                        Debug.Assert(result.ContainsKey(categoryName), "This should never happend");
+                        result[categoryName] += (int)row[1];
+                    }
                 }
                 //else not covered               
             }
@@ -377,14 +385,21 @@ namespace Ferda.Guha.Attribute
             T item;
             foreach (DataRow row in dataTable.Rows)
             {
-                item = (T)row[0];
-                if (
-                    !_enumValues.ContainsKey(item)
-                    &&
-                    !_intervals.ContainsKey(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute))
-                    )
+                if (row[0] is DBNull)
                 {
-                    result.Add(item);
+                    continue;
+                }
+                else
+                {
+                    item = (T)row[0];
+                    if (
+                        !_enumValues.ContainsKey(item)
+                        &&
+                        !_intervals.ContainsKey(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute))
+                        )
+                    {
+                        result.Add(item);
+                    }
                 }
             }
             return result;

@@ -85,7 +85,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             dummy = Func.GetColumnsNames(true);
             dummy = Func.GetColumnStatistics(true);
             dummy = Func.GetColumnExplain(true);
-            dummy = Func.GetDistinctsAndFrequencies(true);
+            //dummy = Func.GetDistinctsAndFrequencies(true);
             dummy = Func.GetColumnInfo(true);
 
             if (Common.CompareCardinalityEnums(
