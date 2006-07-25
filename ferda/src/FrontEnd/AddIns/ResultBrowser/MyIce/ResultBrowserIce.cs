@@ -184,6 +184,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             
             MiningTaskFunctionsPrx taskProxy1 =
                 MiningTaskFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+
+            AttributeNameProviderPrx nameProvider =
+                AttributeNameProviderPrxHelper.checkedCast(boxModuleParam.getFunctions());
+
+            Ferda.Guha.MiningProcessor.Formulas.AttributeNameInLiteralsProvider.Init(nameProvider);
+            
             string statistics = String.Empty;
 
             Quantifiers quantifiers = new Quantifiers(taskProxy1.GetQuantifiers(), taskProxy, localePrefs);
