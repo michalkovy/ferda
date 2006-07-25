@@ -209,8 +209,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
     /// </summary>
     public struct CachedHypothesisValues
     {
-        public CountedValues[] QuantifiersFirstTable;
-        public CountedValues[] QuantifiersSecondTable;
+        public CountedValues[] Quantifiers;
     }
 
     #endregion
@@ -511,15 +510,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             //caching hypotheses quantifiers
             for (int i = 0; i < this.result.Hypotheses.Count; i++)
             {
-                this.cachedHypotheses[i].QuantifiersFirstTable = this.QuantifiersValuesFirstTable(i);
-                if (result.TwoContingencyTables)
-                {
-                    this.cachedHypotheses[i].QuantifiersSecondTable = this.QuantifiersValuesSecondTable(i);
-                }
-                else
-                {
-                    this.cachedHypotheses[i].QuantifiersSecondTable = new CountedValues[0];
-                }
+                this.cachedHypotheses[i].Quantifiers = this.QuantifiersValues(i);
                 this.OnIceTick();
             }
         //    this.InitFilters();
@@ -727,7 +718,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="index">Hypothesis index</param>
         /// <returns></returns>
-        private CountedValues[] QuantifiersValuesFirstTable(int index)
+        private CountedValues[] QuantifiersValues(int index)
         {
             List<CountedValues> returnValues = new List<CountedValues>();
 
@@ -738,14 +729,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                     CountedValues countedValue = new CountedValues();
                     countedValue.Name = quantifier.LocalizedLabel;
                     countedValue.UserName = quantifier.LocalizedUserLabel;
-                    ContingencyTableHelper helper = new ContingencyTableHelper(
-                        result.Hypotheses[index].ContingencyTableA, result.AllObjectsCount);
-                    countedValue.Value = quantifier.Value(helper);
+                    countedValue.Value = 
+                        quantifier.Value(result.Hypotheses[index],result.AllObjectsCount);
                 }
             }
             return returnValues.ToArray();
         }
 
+        /*
         /// <summary>
         /// Counting all of the quantifiers for the second contingency table of the chosen hypothesis
         /// </summary>
@@ -768,7 +759,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                 }
             }
             return returnValues.ToArray();
-        }
+        }*/
 
         /// <summary>
         /// Method for reading the pre-counted quantifiers for first table from cache
@@ -776,17 +767,17 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <param name="hypid">Id of the hypothesis to get values for</param>
         /// <param name="precision">Number of decimal places of precision</param>
         /// <returns>List of counted values</returns>
-        public double[] ReadQuantifiersFromCacheFirstTable(int hypid, int precision)
+        public double[] ReadQuantifiersFromCache(int hypid, int precision)
         {
             List<double> returnQuantifiers = new List<double>();
-            double[] quantifiers = new double[cachedHypotheses[hypid].QuantifiersFirstTable.Length];
-            for (int i = 0; i < cachedHypotheses[hypid].QuantifiersFirstTable.Length; i++)
+            double[] quantifiers = new double[cachedHypotheses[hypid].Quantifiers.Length];
+            for (int i = 0; i < cachedHypotheses[hypid].Quantifiers.Length; i++)
             {
-                returnQuantifiers.Add(Math.Round(cachedHypotheses[hypid].QuantifiersFirstTable[i].Value, precision));
+                returnQuantifiers.Add(Math.Round(cachedHypotheses[hypid].Quantifiers[i].Value, precision));
             }
             return returnQuantifiers.ToArray();
         }
-
+        /*
         /// <summary>
         /// Method for reading the pre-counted quantifiers for second table from cache
         /// </summary>
@@ -803,7 +794,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             return returnQuantifiers.ToArray();
         }
-
+        */
         #endregion
 
 

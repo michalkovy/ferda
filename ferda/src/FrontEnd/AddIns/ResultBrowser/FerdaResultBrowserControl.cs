@@ -254,14 +254,16 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
 
             double [] quantifiersValues;
+            quantifiersValues = resultBrowser.ReadQuantifiersFromCache(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
+            /*
             if (RadioFirstTable.Checked)
             {
-                quantifiersValues = resultBrowser.ReadQuantifiersFromCacheFirstTable(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
+                
             }
             else
             {
                 quantifiersValues = resultBrowser.ReadQuantifiersFromCacheSecondTable(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
-            }
+            }*/
             for (int i = 0; i < quantifiersValues.Length; i++)
             {
                 if (quantifiers[i].Selected)
@@ -850,16 +852,19 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //used quantifiers and their values
             double[] quantifiers;
 
+            quantifiers = resultBrowser.ReadQuantifiersFromCache(hypothesisId,
+                    Convert.ToInt32(this.NumericUpDownDecimals.Value));
+            /*
             if (this.RadioFirstTable.Checked)
             {
-                quantifiers = resultBrowser.ReadQuantifiersFromCacheFirstTable(hypothesisId,
+                quantifiers = resultBrowser.ReadQuantifiersFromCache(hypothesisId,
                     Convert.ToInt32(this.NumericUpDownDecimals.Value));
             }
             else
             {
                 quantifiers = resultBrowser.ReadQuantifiersFromCacheSecondTable(hypothesisId,
                     Convert.ToInt32(this.NumericUpDownDecimals.Value));
-            }
+            }*/
 
             for (int i = 0; i < quantifiers.Length; i++)
             {
