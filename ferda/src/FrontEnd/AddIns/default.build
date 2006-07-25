@@ -44,7 +44,7 @@
         <include name="${path::combine(lib.dir,'icecs.dll')}"/>
       </references>
     </csc>
-    <!--
+
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ResultBrowser.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ResultBrowser/**.cs"/>
@@ -67,6 +67,7 @@
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.dll')}"/>
@@ -79,6 +80,7 @@
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
+<!--
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ExplainTable.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ExplainTable/**.cs"/>

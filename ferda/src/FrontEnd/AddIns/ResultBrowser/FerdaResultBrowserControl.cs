@@ -37,6 +37,7 @@ using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns.Common.ListView;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 
 #endregion
@@ -163,6 +164,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             resultBrowser = new FerdaResult(resManager, result, quantifiers);
             resultBrowser.IceTicked += new LongRunTick(resultBrowser_IceTicked);
             resultBrowser.IceComplete += new LongRunCompleted(resultBrowser_IceComplete);
+          //  resultBrowser.Initialize
             this.hypothesesCount = resultBrowser.AllHypothesesCount;
             AllInit();
             this.ChangeLocale(this.resManager);

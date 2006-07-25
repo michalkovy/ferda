@@ -28,10 +28,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\AddInsCommon.dll</HintPath>
     </Reference>
-    <Reference Include="DockDotNET, Version=1.0.2177.34787, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\DockDotNET.dll</HintPath>
-    </Reference>
     <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
@@ -64,14 +60,6 @@
     <Reference Include="icegridcs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b555a647d8de49c2">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\icegridcs.dll</HintPath>
-    </Reference>
-    <Reference Include="NAFGraph, Version=2.1.2177.34788, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\NAFGraph.dll</HintPath>
-    </Reference>
-    <Reference Include="NetronMaths, Version=2.1.1786.17601, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\NetronMaths.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

@@ -26,6 +26,7 @@ using Ferda.FrontEnd.AddIns.ResultBrowser;
 using Ferda.Modules;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 using Ferda.ModulesManager;
 using System.Resources;
@@ -342,8 +343,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                 conditionFilter = value;
             }
         }
-        */
-        #endregion
+        
         /// <summary>
         /// Gets all filtered hypotheses in the result
         /// </summary>
@@ -359,10 +359,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                     {
                         returnDict.Add(i, Hypotheses[i]);
                     }
-                }*/
+                }
                 return returnDict;
             }
         }
+         * */
+        #endregion
 
         /// <summary>
         /// Gets all hypotheses
@@ -465,7 +467,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         {
             this.resManager = rm;
             this.quantifiers = quantifiers;
-            this.result = SerializableResult.DeSerialize(result);
+            this.result = SerializableResult.Deserialize(result);
 
             List<string> temp = new List<string>();
             List<string> temp1 = new List<string>();
@@ -487,7 +489,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Method to initialize the ResultBrowser structure
         /// </summary>
         /// <param name="hypotheses"></param>
-        public void Initialize(HypothesisStruct[] hypotheses)
+        public void Initialize()
         {
 
             #region Caching
@@ -850,6 +852,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         #region Other methods
 
+        /*
         /// <summary>
         /// Method to decide whether the hypothesis is of 4-ft miner
         /// </summary>
@@ -866,7 +869,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             return false;
         }
-
+        */
         #endregion
 
 
