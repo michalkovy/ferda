@@ -183,7 +183,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 if (_localizedLabel == null)
                 {
                     Debug.Assert(_localePrefs != null && _localePrefs.Length > 0);
-                    _prx.GetLocalizedBoxLabel(_localePrefs);
+                    _localizedLabel = _prx.GetLocalizedBoxLabel(_localePrefs);
                 }
                 return _localizedLabel;
             }
@@ -198,7 +198,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 if (_localizedUserLabel == null)
                 {
                     Debug.Assert(_localePrefs != null && _localePrefs.Length > 0);
-                    _prx.GetLocalizedUserBoxLabel(_localePrefs);
+                    _localizedUserLabel = _prx.GetLocalizedUserBoxLabel(_localePrefs);
                 }
                 return _localizedUserLabel;
             }
