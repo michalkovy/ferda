@@ -164,9 +164,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             resultBrowser = new FerdaResult(resManager, result, quantifiers);
             resultBrowser.IceTicked += new LongRunTick(resultBrowser_IceTicked);
             resultBrowser.IceComplete += new LongRunCompleted(resultBrowser_IceComplete);
-          //  resultBrowser.Initialize
+            resultBrowser.Initialize();
             this.hypothesesCount = resultBrowser.AllHypothesesCount;
-            AllInit();
+            
             this.ChangeLocale(this.resManager);
             this.displayer = Displayer;
             this.displayer.Reset();
@@ -546,6 +546,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         void resultBrowser_IceComplete()
         {
             //  this.Initialize();
+            AllInit();
             this.LabelProgressBar.Visible = false;
             this.ProgressBarIceTicks.Visible = false;
             this.StatusStrip.Visible = false;

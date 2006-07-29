@@ -386,7 +386,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             {
                 try
                 {
-                    return result.AllObjectsCount;
+                    return result.Hypotheses.Count;
                 }
                 catch
                 {
@@ -477,6 +477,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             this.quantifiersLabels = temp.ToArray();
             this.quantifiersUserLabels = temp1.ToArray();
+            //this.hy
         }
 
         #endregion
