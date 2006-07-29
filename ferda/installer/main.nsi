@@ -23,7 +23,9 @@
 
 
 XPStyle on
-
+!define MUI_ICON "icons\FerdaFrontEnd.ico"
+!define MUI_UNICON "icons\FerdaFrontEnd.ico"
+!define MUI_HEADERIMAGE_BITMAP "icons\ferdaheader.bmp"
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "..\LICENSE"
 !insertmacro MUI_PAGE_COMPONENTS
@@ -70,7 +72,6 @@ OutFile "ferda_install.exe"
 !include "section_basefiles.nsi"
 !include "section_addins.nsi"
 !include "section_boxes.nsi"
-!include "section_ferdagens.nsi"
 
 ;Intergration section
 !include "section_integration.nsi"
@@ -83,21 +84,20 @@ OutFile "ferda_install.exe"
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 !insertmacro MUI_DESCRIPTION_TEXT ${BaseFiles} $(DESC_BaseFiles)
 !insertmacro MUI_DESCRIPTION_TEXT ${FerdaAddIns} $(DESC_FerdaAddIns)
-!insertmacro MUI_DESCRIPTION_TEXT ${AttributeFrequency} $(DESC_AttributeFrequency)
-!insertmacro MUI_DESCRIPTION_TEXT ${ColumnFrequency} $(DESC_ColumnFrequency)
-!insertmacro MUI_DESCRIPTION_TEXT ${DatabaseInfo} $(DESC_DatabaseInfo)
-!insertmacro MUI_DESCRIPTION_TEXT ${ExplainTable} $(DESC_ExplainTable)
-!insertmacro MUI_DESCRIPTION_TEXT ${ShowTable} $(DESC_ShowTable)
-!insertmacro MUI_DESCRIPTION_TEXT ${EditCategories} $(DESC_EditCategories)
+
+
 !insertmacro MUI_DESCRIPTION_TEXT ${ResultBrowser} $(DESC_ResultBrowser)
 !insertmacro MUI_DESCRIPTION_TEXT ${ODBCConnectionString} $(DESC_ODBCConnectionString)
+!insertmacro MUI_DESCRIPTION_TEXT ${MultiSelectStrings} $(DESC_MultiSelectStrings)
+
+!insertmacro MUI_DESCRIPTION_TEXT ${DataPreparation} $(DESC_DataPreparation)
+!insertmacro MUI_DESCRIPTION_TEXT ${GuhaMining} $(DESC_GuhaMining)
+!insertmacro MUI_DESCRIPTION_TEXT ${Sample} $(DESC_Sample)
+
 !insertmacro MUI_DESCRIPTION_TEXT ${Boxes} $(DESC_Boxes)
-!insertmacro MUI_DESCRIPTION_TEXT ${FFTTask} $(DESC_FFTTAsk)
-!insertmacro MUI_DESCRIPTION_TEXT ${KLTask} $(DESC_KLTask)
-!insertmacro MUI_DESCRIPTION_TEXT ${SDFFTTask} $(DESC_SDFFTTask)  
-!insertmacro MUI_DESCRIPTION_TEXT ${Ice} $(DESC_Ice)
+
 !insertmacro MUI_DESCRIPTION_TEXT ${FerdaBase} $(DESC_FerdaBase)
-!insertmacro MUI_DESCRIPTION_TEXT ${FerdaGens} $(DESC_FerdaGens)
+
 !insertmacro MUI_DESCRIPTION_TEXT ${FerdaIntegration} $(DESC_FerdaIntegration)
 !insertmacro MUI_DESCRIPTION_TEXT ${StartMenu} $(DESC_StartMenu)
 !insertmacro MUI_DESCRIPTION_TEXT ${DesktopShortcut} $(DESC_DesktopShortcut)

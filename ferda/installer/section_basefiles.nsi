@@ -45,12 +45,6 @@ SectionGroup "$(Basefiles)" BaseFiles
 
 	SectionEnd
 
-;hidden section with task progress addin
-Section
-  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\WaitDialog.*
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "WaitDialog" "" 
-SectionEnd
 	
 	Section
 	SectionIn RO ;section is read-only

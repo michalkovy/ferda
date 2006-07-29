@@ -516,6 +516,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
         //    this.InitFilters();
             this.OnIceComplete();
+
+            //TODO: Implement callback functions not to access datastructure from a separate thread
+            //Formally not thread-safe, but I know what I am doing :-)
         }
 
         #endregion

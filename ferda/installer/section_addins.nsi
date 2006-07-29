@@ -4,43 +4,6 @@ Section
 CreateDirectory "$INSTDIR\FrontEnd\AddIns"
 SectionEnd
 
-Section "$(AttributeFrequency)" AttributeFrequency
-  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\AttributeFrequency.*
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "AttributeFrequency" ""
-SectionEnd
-
-Section "$(ColumnFrequency)" ColumnFrequency
-  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\ColumnFrequency.*
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ColumnFrequency" ""
-SectionEnd
-
-Section "$(DatabaseInfo)" DatabaseInfo
-  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\DatabaseInfo.*
-  ;Store installation folder
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "DatabaseInfo" ""
-SectionEnd
-
-Section "$(EditCategories)" EditCategories
-  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\EditCategories.*
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "EditCategories" ""
-SectionEnd
-
-Section "$(ExplainTable)" ExplainTable
-  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\ExplainTable.*
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ExplainTable" ""
-SectionEnd
-
-Section "$(ShowTable)" ShowTable
-  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\ShowTable.*
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ShowTable" ""
-SectionEnd
-
 Section "$(ResultBrowser)" ResultBrowser
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
   File ..\bin\FrontEnd\AddIns\ResultBrowser.* 
@@ -51,6 +14,12 @@ Section "$(ODBCConnectionString)" ODBCConnectionString
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
   File ..\bin\FrontEnd\AddIns\ODBCConnectionString.*
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ODBCConnectionString" "" 
+SectionEnd
+
+Section "$(MultiSelectStrings)" MultiSelectStrings
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\MultiSelectStrings.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "MultiSelectStrings" "" 
 SectionEnd
 
 ;addins help
