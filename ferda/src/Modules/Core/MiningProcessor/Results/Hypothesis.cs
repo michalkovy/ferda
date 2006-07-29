@@ -36,7 +36,7 @@ namespace Ferda.Guha.MiningProcessor.Results
                 CategorialAttributeFormula f = GetFormula(MarkEnum.Attribute) as CategorialAttributeFormula;
                 if (f == null)
                 {
-                    Debug.Assert(false);
+                    //Debug.Assert(false);
                     return null;
                 }
                 return f.AttributeGuid;

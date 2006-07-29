@@ -326,6 +326,11 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         #region Value
         private double value(QuantifierEvaluateSetting setting)
         {
+            if (Setting.needsNumericValues && String.IsNullOrEmpty(setting.numericValuesAttributeId.value))
+            {
+                Debug.Assert(false);
+                return Double.NaN;
+            }
             if (!ProvidesValues)
                 throw new InvalidOperationException();
             return _prxValue.ComputeValue(setting);
@@ -366,6 +371,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         private bool atLeastSignificantValidValue(QuantifierEvaluateSetting setting, out double value)
         {
+            Debug.Assert(!(Setting.needsNumericValues && String.IsNullOrEmpty(setting.numericValuesAttributeId.value)));
+
             if (!ProvidesAtLeastSignificantValues)
                 throw new InvalidOperationException();
             if (ProvidesValues)
@@ -392,6 +399,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         private bool valid(QuantifierEvaluateSetting setting)
         {
+            Debug.Assert(!(Setting.needsNumericValues && String.IsNullOrEmpty(setting.numericValuesAttributeId.value)));
+            
             if (ProvidesValues)
             {
                 return _prxValue.Compute(setting);

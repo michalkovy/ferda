@@ -295,6 +295,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
                         result.CreateEnums(enumeration.ToArray(), containsNull, true);
 
+                        _nullCategoryName = result.NullContainingCategory;
+
                         return result;
                     },
                     delegate
