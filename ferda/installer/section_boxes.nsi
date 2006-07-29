@@ -1,33 +1,18 @@
 SectionGroup "$(Boxes)" Boxes
 	
-	Section "FFTTask" FFTTask
-	SetOutPath "$INSTDIR\Server\BoxModulesServices\LISpMinerTasks\FFTTask"
-	File /r ..\bin\Server\BoxModulesServices\LISpMinerTasks\FFTTask\*.*
+	Section "$(DataPreparation)" DataPreparation
+	SetOutPath "$INSTDIR\Server\BoxModulesServices\DataPreparation"
+	File /r ..\bin\Server\BoxModulesServices\DataPreparation\*.*
 	SectionEnd
 	
-	Section "CFTask" CFTask
-	SetOutPath "$INSTDIR\Server\BoxModulesServices\LISpMinerTasks\CFTask"
-	File /r ..\bin\Server\BoxModulesServices\LISpMinerTasks\CFTask\*.*
+	Section "$(GuhaMining)" GuhaMining
+	SetOutPath "$INSTDIR\Server\BoxModulesServices\GuhaMining"
+	File /r ..\bin\Server\BoxModulesServices\GuhaMining\*.*
 	SectionEnd
 	
-	Section "KLTask" KLTask
-	SetOutPath "$INSTDIR\Server\BoxModulesServices\LISpMinerTasks\KLTask"
-	File /r ..\bin\Server\BoxModulesServices\LISpMinerTasks\KLTask\*.*
-	SectionEnd
-	
-	Section "SDFFTTask" SDFFTTask
-	SetOutPath "$INSTDIR\Server\BoxModulesServices\LISpMinerTasks\SDFFTTask"
-	File /r ..\bin\Server\BoxModulesServices\LISpMinerTasks\SDFFTTask\*.*
-	SectionEnd
-	
-	Section "SDKLTask" SDKLTask
-	SetOutPath "$INSTDIR\Server\BoxModulesServices\LISpMinerTasks\SDKLTask"
-	File /r ..\bin\Server\BoxModulesServices\LISpMinerTasks\SDKLTask\*.*
-	SectionEnd
-	
-	Section "SDCFTask" SDCFTask
-	SetOutPath "$INSTDIR\Server\BoxModulesServices\LISpMinerTasks\SDCFTask"
-	File /r ..\bin\Server\BoxModulesServices\LISpMinerTasks\SDCFTask\*.*
+	Section "$(Sample)" Sample
+	SetOutPath "$INSTDIR\Server\BoxModulesServices\Sample"
+	File /r ..\bin\Server\BoxModulesServices\Sample\*.*
 	SectionEnd
 	
 SectionGroupEnd

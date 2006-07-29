@@ -5,24 +5,23 @@
   
   LangString DESC_BaseFiles ${LANG_ENGLISH} "Basefiles to correctly run Ferda environment"
   LangString DESC_FerdaBase ${LANG_ENGLISH} "Ferda DataMiner basefiles"
-  LangString DESC_FerdaCommonBoxes ${LANG_ENGLISH} "Ferda DataMiner common boxes"
-  LangString DESC_FerdaGens ${LANG_ENGLISH} "Ferda DataMiner gens"
+
+
   LangString DESC_FerdaAddIns ${LANG_ENGLISH} "Ferda DataMiner addins"
   LangString DESC_Boxes ${LANG_ENGLISH} "Ferda DataMiner boxes"
   LangString DESC_Ice ${LANG_ENGLISH} "IcePack"
-  LangString DESC_AttributeFrequency ${LANG_ENGLISH} "Module for counting attributes frequencies"
-  LangString DESC_ColumnFrequency ${LANG_ENGLISH} "Module for counting columns frequencies"
-  LangString DESC_DatabaseInfo ${LANG_ENGLISH} "Module for displaying information about database"
-  LangString DESC_ExplainTable ${LANG_ENGLISH} "Module for displaying information about tables"
-  LangString DESC_ShowTable ${LANG_ENGLISH} "Module for displaying the whole table"
-  LangString DESC_EditCategories ${LANG_ENGLISH} "Module for editing categories"
+
   LangString DESC_ResultBrowser ${LANG_ENGLISH} "Module for browsing and filtering results"
   LangString DESC_ODBCConnectionString ${LANG_ENGLISH} "Module for composing ODBC connection string"
+  LangString DESC_MultiSelectStrings ${LANG_ENGLISH} "Module for submitting multiple selection"
   
-   LangString DESC_DataMiningCommon ${LANG_ENGLISH} "Common boxes for datamining procedures"
-   LangString DESC_FFTTask ${LANG_ENGLISH} "Boxes for creating tasks to run on 4ft Miner"
-   LangString DESC_KLTask ${LANG_ENGLISH} "Boxes for creating tasks to run on KL Miner"
-   LangString DESC_SDFFTTask ${LANG_ENGLISH} "Boxes for creating tasks to run on SD4ft Miner"
+  LangString DESC_DataPreparation ${LANG_ENGLISH} "Data preparation boxes"
+  LangString DESC_GuhaMining ${LANG_ENGLISH} "GUHA miners"
+  LangString DESC_Sample ${LANG_ENGLISH} "Sample boxes"
+  
+  
+  LangString DESC_DataMiningCommon ${LANG_ENGLISH} "Common boxes for datamining procedures"
+
    
   LangString DESC_FerdaIntegration ${LANG_ENGLISH} "Select Ferda integration"
   LangString DESC_StartMenu ${LANG_ENGLISH} "Create Start menu entry"
@@ -32,22 +31,19 @@
   
   LangString Shortcut_Yes_No ${LANG_ENGLISH} "Put shortcut on the desktop?"
   
-  LangString Gens ${LANG_ENGLISH} "Gens"
   LangString Boxes ${LANG_ENGLISH} "Boxes"
   LangString Basefiles ${LANG_ENGLISH} "Basefiles"
   LangString AddIns ${LANG_ENGLISH} "AddIns"
   LangString FerdaBaseFiles ${LANG_ENGLISH} "Ferda basefiles"
-  LangString DataMiningCommon ${LANG_ENGLISH} "Datamining common boxes"
- ; LangString IcePack ${LANG_ENGLISH} "IceGrid"
   
-  LangString AttributeFrequency ${LANG_ENGLISH} "Attribute frequencies"
-  LangString ColumnFrequency ${LANG_ENGLISH} "Column frequencies"
-  LangString DataBaseInfo ${LANG_ENGLISH} "Database info"
-  LangString EditCategories ${LANG_ENGLISH} "Edit categories"
-  LangString ExplainTable ${LANG_ENGLISH} "Table info"
-  LangString ShowTable ${LANG_ENGLISH} "Show whole table"
-  LangString ResultBrowser ${LANG_ENGLISH} "Result browser"
+  LangString DataPreparation ${LANG_ENGLISH} "Data preparation"
+  LangString GuhaMining ${LANG_ENGLISH} "GUHA mining"
+  LangString Sample ${LANG_ENGLISH} "Sample"
+
+  
+ LangString ResultBrowser ${LANG_ENGLISH} "Result browser"
   LangString ODBCConnectionString ${LANG_ENGLISH} "ODBC Connection string"
+  LangString MultiSelectStrings ${LANG_ENGLISH} "Multiple selection"
   
   LangString Integration ${LANG_ENGLISH} "Integration"
   LangString StartMenu ${LANG_ENGLISH} "Add to Start menu"

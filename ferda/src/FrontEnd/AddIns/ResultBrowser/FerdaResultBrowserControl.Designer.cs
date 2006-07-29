@@ -55,6 +55,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.HypothesesListView = new System.Windows.Forms.ListView();
             this.ColumnHypothesisId = new System.Windows.Forms.ColumnHeader();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.RadioSecondTable = new System.Windows.Forms.RadioButton();
+            this.RadioFirstTable = new System.Windows.Forms.RadioButton();
             this.LabelQuantifiersToDisplay = new System.Windows.Forms.Label();
             this.CheckedListQuantifiers = new System.Windows.Forms.CheckedListBox();
             this.ButtonSubmitColumnChange = new System.Windows.Forms.Button();
@@ -89,13 +92,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ToolStripShowGraphEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripCopyChart = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.RadioFirstTable = new System.Windows.Forms.RadioButton();
-            this.RadioSecondTable = new System.Windows.Forms.RadioButton();
             this.ResultBrowserSplit.Panel1.SuspendLayout();
             this.ResultBrowserSplit.Panel2.SuspendLayout();
             this.ResultBrowserSplit.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDecimals)).BeginInit();
             this.StatusStrip.SuspendLayout();
             this.GroupBoxChangeGraph.SuspendLayout();
@@ -104,7 +105,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBar3d)).BeginInit();
             this.ContextMenuGraphRightClick.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // ResultBrowserSplit
@@ -173,6 +173,37 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.panel1.Size = new System.Drawing.Size(1064, 99);
             this.panel1.TabIndex = 2;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.RadioSecondTable);
+            this.panel2.Controls.Add(this.RadioFirstTable);
+            this.panel2.Location = new System.Drawing.Point(6, 48);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(213, 45);
+            this.panel2.TabIndex = 21;
+            // 
+            // RadioSecondTable
+            // 
+            this.RadioSecondTable.AutoSize = true;
+            this.RadioSecondTable.Location = new System.Drawing.Point(3, 25);
+            this.RadioSecondTable.Name = "RadioSecondTable";
+            this.RadioSecondTable.Size = new System.Drawing.Size(85, 17);
+            this.RadioSecondTable.TabIndex = 1;
+            this.RadioSecondTable.TabStop = true;
+            this.RadioSecondTable.Text = "radioButton2";
+            this.RadioSecondTable.UseVisualStyleBackColor = true;
+            // 
+            // RadioFirstTable
+            // 
+            this.RadioFirstTable.AutoSize = true;
+            this.RadioFirstTable.Location = new System.Drawing.Point(3, 6);
+            this.RadioFirstTable.Name = "RadioFirstTable";
+            this.RadioFirstTable.Size = new System.Drawing.Size(85, 17);
+            this.RadioFirstTable.TabIndex = 0;
+            this.RadioFirstTable.TabStop = true;
+            this.RadioFirstTable.Text = "radioButton1";
+            this.RadioFirstTable.UseVisualStyleBackColor = true;
+            // 
             // LabelQuantifiersToDisplay
             // 
             this.LabelQuantifiersToDisplay.AutoSize = true;
@@ -184,6 +215,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // CheckedListQuantifiers
             // 
+            this.CheckedListQuantifiers.CheckOnClick = true;
             this.CheckedListQuantifiers.FormattingEnabled = true;
             this.CheckedListQuantifiers.Location = new System.Drawing.Point(360, 22);
             this.CheckedListQuantifiers.Name = "CheckedListQuantifiers";
@@ -212,6 +244,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // CheckedListMarks
             // 
+            this.CheckedListMarks.CheckOnClick = true;
             this.CheckedListMarks.FormattingEnabled = true;
             this.CheckedListMarks.Location = new System.Drawing.Point(225, 22);
             this.CheckedListMarks.Name = "CheckedListMarks";
@@ -524,37 +557,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ToolStripCopyChart.Size = new System.Drawing.Size(179, 22);
             this.ToolStripCopyChart.Text = "toolStripMenuItem1";
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.RadioSecondTable);
-            this.panel2.Controls.Add(this.RadioFirstTable);
-            this.panel2.Location = new System.Drawing.Point(6, 48);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(213, 45);
-            this.panel2.TabIndex = 21;
-            // 
-            // RadioFirstTable
-            // 
-            this.RadioFirstTable.AutoSize = true;
-            this.RadioFirstTable.Location = new System.Drawing.Point(3, 6);
-            this.RadioFirstTable.Name = "RadioFirstTable";
-            this.RadioFirstTable.Size = new System.Drawing.Size(85, 17);
-            this.RadioFirstTable.TabIndex = 0;
-            this.RadioFirstTable.TabStop = true;
-            this.RadioFirstTable.Text = "radioButton1";
-            this.RadioFirstTable.UseVisualStyleBackColor = true;
-            // 
-            // RadioSecondTable
-            // 
-            this.RadioSecondTable.AutoSize = true;
-            this.RadioSecondTable.Location = new System.Drawing.Point(3, 25);
-            this.RadioSecondTable.Name = "RadioSecondTable";
-            this.RadioSecondTable.Size = new System.Drawing.Size(85, 17);
-            this.RadioSecondTable.TabIndex = 1;
-            this.RadioSecondTable.TabStop = true;
-            this.RadioSecondTable.Text = "radioButton2";
-            this.RadioSecondTable.UseVisualStyleBackColor = true;
-            // 
             // FerdaResultBrowserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -569,6 +571,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDecimals)).EndInit();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
@@ -579,8 +583,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBar3d)).EndInit();
             this.ContextMenuGraphRightClick.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
