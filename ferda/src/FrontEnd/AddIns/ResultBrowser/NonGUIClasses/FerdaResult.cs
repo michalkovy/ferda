@@ -735,6 +735,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
                     countedValue.UserName = quantifier.LocalizedUserLabel;
                     countedValue.Value = 
                         quantifier.Value(result.Hypotheses[index],result.AllObjectsCount);
+                    returnValues.Add(countedValue);
                 }
             }
             return returnValues.ToArray();

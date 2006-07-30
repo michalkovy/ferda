@@ -53,7 +53,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.components = new System.ComponentModel.Container();
             this.ResultBrowserSplit = new System.Windows.Forms.SplitContainer();
             this.HypothesesListView = new System.Windows.Forms.ListView();
-            this.ColumnHypothesisId = new System.Windows.Forms.ColumnHeader();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.RadioSecondTable = new System.Windows.Forms.RadioButton();
@@ -130,8 +129,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // HypothesesListView
             // 
-            this.HypothesesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ColumnHypothesisId});
             this.HypothesesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HypothesesListView.FullRowSelect = true;
             this.HypothesesListView.GridLines = true;
@@ -142,10 +139,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.HypothesesListView.TabIndex = 3;
             this.HypothesesListView.UseCompatibleStateImageBehavior = false;
             this.HypothesesListView.View = System.Windows.Forms.View.Details;
-            // 
-            // ColumnHypothesisId
-            // 
-            this.ColumnHypothesisId.Width = 250;
             // 
             // panel1
             // 
@@ -592,7 +585,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         private System.Windows.Forms.SplitContainer ResultBrowserSplit;
         private System.Windows.Forms.ListView HypothesesListView;
-        private System.Windows.Forms.ColumnHeader ColumnHypothesisId;
         private System.Windows.Forms.GroupBox GroupBoxChangeGraph;
         private System.Windows.Forms.TrackBar TrackBar3d;
         private System.Windows.Forms.ContextMenuStrip ContextMenuGraphRightClick;
