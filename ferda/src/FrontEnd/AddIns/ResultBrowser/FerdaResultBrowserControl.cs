@@ -45,21 +45,7 @@ using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
-    public struct UsedColumn
-    {
-        public int ColumnId;
-        public MarkEnum ColumnType;
-        public string ColumnName;
-        public bool Selected;
-    }
-
-    public struct UsedQuantifier
-    {
-        public int QuantifierId;
-        public string QuantifierLabel;
-        public string QuantifierUserLabel;
-        public bool Selected;
-    }
+    
     /// <summary>
     /// UserControl class for displaying results
     /// </summary>
@@ -110,7 +96,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Columns
         /// </summary>
-        private UsedColumn[] columns;
+        private UsedMark[] columns;
 
         /// <summary>
         /// Quantifiers
@@ -183,16 +169,25 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="marks"></param>
         private void ColumnsInit(MarkEnum[] marks)
         {
-            int i = 0;
-            columns = new UsedColumn[marks.Length];
+            int i = 1;
+            columns = new UsedMark[marks.Length + 1];
+            UsedMark usedColumn1 = new UsedMark();
+            usedColumn1.id = 0;
+            usedColumn1.ColumnType = MarkEnum.Antecedent;
+            usedColumn1.ColumnName = this.resManager.GetString("HypothesisId");
+            usedColumn1.Selected = true;
+            usedColumn1.width = 200;
+            this.columns[0] = usedColumn1;
+            this.CheckedListMarks.Items.Add(this.resManager.GetString("HypothesisId"), true);
             foreach (MarkEnum mark in marks)
             {
                 this.CheckedListMarks.Items.Add(mark.ToString(), false);
-                UsedColumn usedColumn = new UsedColumn();
-                usedColumn.ColumnId = i;
+                UsedMark usedColumn = new UsedMark();
+                usedColumn.id = i;
                 usedColumn.ColumnType = mark;
                 usedColumn.ColumnName = mark.ToString();
                 usedColumn.Selected = false;
+                usedColumn.width = 200;
                 this.columns[i] = usedColumn;
                 i++;
             }
@@ -210,10 +205,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 this.CheckedListQuantifiers.Items.Add(labels[i] + "(" + userLabels[i] + ")", false);
                 UsedQuantifier usedQuantifier = new UsedQuantifier();
-                usedQuantifier.QuantifierId = i;
+                usedQuantifier.id = i;
                 usedQuantifier.QuantifierLabel = labels[i];
                 usedQuantifier.QuantifierUserLabel = userLabels[i];
                 usedQuantifier.Selected = false;
+                usedQuantifier.width = 200;
                 quantifiers[i] = usedQuantifier;
             }
         }
@@ -224,9 +220,45 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             QuantifiersInit(resultBrowser.QuantifiersLabels, resultBrowser.QuantifiersUserLabels);
             //TODO: Filters init
             //TODO: Hypotheses count init
-            AddAllHypothesesToListView();
-        }
+            
+            HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
+            
+            //adding handler to display hypothesis details in PG
+            HypothesesListView.ItemActivate += new EventHandler(ItemSelectHandler);
+            HypothesesListView.ItemCheck += new ItemCheckEventHandler(ItemSelectHandler);
+            HypothesesListView.MouseClick += new MouseEventHandler(ItemSelectHandler);
+            HypothesesListView.KeyDown += new KeyEventHandler(ItemSelectHandler);
+            HypothesesListView.KeyUp += new KeyEventHandler(ItemSelectHandler);
 
+            HypothesesListView.ColumnWidthChanged += new ColumnWidthChangedEventHandler(HypothesesListView_ColumnWidthChanged);
+
+            for (int i = 0; i < columns.Length; i++)
+            {
+                if (columns[i].Selected)
+                {
+                    ColumnHeader markHeader = new ColumnHeader();
+                    markHeader.Text = columns[i].ColumnName;
+                    markHeader.Width = columns[i].width;
+                    markHeader.Tag = "c" + i.ToString();
+                    this.HypothesesListView.Columns.Add(markHeader);
+                }
+            }
+
+            for (int i = 0; i < quantifiers.Length; i++)
+            {
+                if (quantifiers[i].Selected)
+                {
+                    ColumnHeader quantifierHeader = new ColumnHeader();
+                    quantifierHeader.Text = quantifiers[i].QuantifierLabel +
+                        "(" + quantifiers[i].QuantifierUserLabel + ")";
+                    quantifierHeader.Width = quantifiers[i].width;
+                    quantifierHeader.Tag = "q" + i.ToString();
+                    this.HypothesesListView.Columns.Add(quantifierHeader);
+                }
+            }
+            int j = AddAllHypothesesToListView();
+            this.LabelCount.Text = "(" + j + "/" + hypothesesCount + ")";
+        }
 
         #endregion
 
@@ -239,31 +271,44 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="hypothesisId">Id of hypothesis to add</param>
         private void AddHypothesisToListView(int hypothesisId)
         {
+            int j = 0;
+            bool itemSet = false;
             ListViewItem item = new ListViewItem();
-            item.Text = hypothesisId.ToString();
-            item.Tag = hypothesisId;
-
-            //TODO: Check filters
-
-            foreach (UsedColumn column in this.columns)
+            for (int i = 0; i < this.columns.Length; i++ )
             {
-                if (column.Selected)
+                if (this.columns[i].Selected)
                 {
-                    item.SubItems.Add(resultBrowser.GetFormula(column.ColumnType, hypothesisId));
+                    if (this.columns[i].id == 0)
+                    {
+                        item.Text = hypothesisId.ToString();
+                    }
+                    else
+                    {
+                        item.Text = resultBrowser.GetFormula(this.columns[i].ColumnType, hypothesisId);
+                    }
+                    item.Tag = hypothesisId;
+                    j = i;
+                    itemSet = true;
+                    break;
                 }
             }
 
+            //TODO: Check filters
+
+            for (int i = j + 1; i < this.columns.Length; i++)
+            {
+                if (this.columns[i].Selected)
+                {
+                    item.SubItems.Add(resultBrowser.GetFormula(this.columns[i].ColumnType, hypothesisId));
+                }
+            }
+            if (!itemSet)
+            {
+                return;
+            }
             double [] quantifiersValues;
             quantifiersValues = resultBrowser.ReadQuantifiersFromCache(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
-            /*
-            if (RadioFirstTable.Checked)
-            {
-                
-            }
-            else
-            {
-                quantifiersValues = resultBrowser.ReadQuantifiersFromCacheSecondTable(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
-            }*/
+            
             for (int i = 0; i < quantifiersValues.Length; i++)
             {
                 if (quantifiers[i].Selected)
@@ -278,12 +323,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Adds all hypotheses to listview
         /// </summary>
-        private void AddAllHypothesesToListView()
+        private int AddAllHypothesesToListView()
         {
+            int j = 0;
             for (int i = 0; i < this.hypothesesCount; i++)
             {
                 AddHypothesisToListView(i);
+                j++;
             }
+            return j;
         }
 
         /// <summary>
@@ -355,164 +403,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         #region Commented
         /*
-        /// <summary>
-        /// Method to refresh resultbrowser
-        /// </summary>
-        private void RefreshBrowser()
-        {
-            //disabling the column click handler (sorter)
-            this.columnSorter.column = 0;
-            this.HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
-            HypothesesListView.Sorting = SortOrder.None;
-            HypothesesListView.ListViewItemSorter = null;
-
-            //clearing all the items
-            this.HypothesesListView.Items.Clear();
-
-            while (this.HypothesesListView.Columns.Count > 4)
-            {
-                this.HypothesesListView.Columns.RemoveAt(4);
-            }
-
-            //adding handler to display hypothesis details in richtextbox
-            HypothesesListView.ItemActivate += new EventHandler(ItemSelectHandler);
-            HypothesesListView.ItemCheck += new ItemCheckEventHandler(ItemSelectHandler);
-            HypothesesListView.MouseClick += new MouseEventHandler(ItemSelectHandler);
-            HypothesesListView.KeyDown += new KeyEventHandler(ItemSelectHandler);
-            HypothesesListView.KeyUp += new KeyEventHandler(ItemSelectHandler);
-
-            //adding the column names selected in the context menu
-            foreach (String name in resultBrowser.GetSelectedColumnNames())
-            {
-                ColumnHeader header = new ColumnHeader();
-                header.Text = name;
-                header.Name = name;
-                header.Width = 200;
-                header.TextAlign = HorizontalAlignment.Right;
-                this.HypothesesListView.Columns.Add(header);
-            }
-            int precision = Convert.ToInt32(this.NumericUpDownDecimals.Value);
-
-            //adding hypotheses
-            int i = 0;
-            Dictionary<int,HypothesisStruct> hypoTemp = resultBrowser.AllFilteredHypotheses;
-            foreach (KeyValuePair<int, HypothesisStruct> hypothesis in hypoTemp)
-            {
-                ListViewItem item = new ListViewItem(FerdaResult.GetHypothesisName(hypothesis.Value));
-
-                //antecedent
-                item.SubItems.Add(FerdaResult.GetAntecedentString(hypothesis.Value));
-
-                //succedent
-                item.SubItems.Add(FerdaResult.GetSuccedentString(hypothesis.Value));
-
-                //Condition
-                item.SubItems.Add(FerdaResult.GetConditionString(hypothesis.Value));
-
-                //quantifiers
-                double [] doubleTemp = resultBrowser.ReadSelectedQuantifiersFromCache(i, precision);
-                foreach (double value in doubleTemp)
-                {
-                    item.SubItems.Add(value.ToString("N" + precision.ToString()));
-                }
-
-                item.Tag = hypothesis.Key;
-                HypothesesListView.Items.Add(item);
-                i++;
-            }
-            this.LabelCount.Text = "(" + i + "/" + hypothesesCount + ")";
-            this.LabelCurrentlySorted.Text = resManager.GetString("SortedByNone");
-            //adding the sorter
-            HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
-        }
-
-        /// <summary>
-        /// Method for Result listview initialization
-        /// </summary>
-        private void Initialize()
-        {
-            //no succedent for cf or sdcf
-            if ((this.taskType == "LISpMinerTasks.CFTask") || (this.taskType == "LISpMinerTasks.SDCFTask"))
-            {
-                this.HypothesesListView.Columns[2].Width = 0;
-            }
-            //adding unused quantifiers in the context menu
-            ToolStripMenuItem tempitem;
-            foreach (String item in resultBrowser.GetUsedColumnNames())
-            {
-                tempitem = (ToolStripMenuItem)this.QuantifiersListContextMenu.Items.Add(item);
-                tempitem.Click += new EventHandler(ItemClick);
-                tempitem.CheckOnClick = true;
-            }
-
-            foreach (String item in resultBrowser.GetUnusedColumnNames())
-            {
-                tempitem = (ToolStripMenuItem)this.QuantifiersListContextMenu.Items.Add(item);
-                tempitem.Click += new EventHandler(ItemClick);
-                tempitem.CheckOnClick = true;
-            }
-
-            //filling the listbox for sorting by statistics
-            foreach (string name in resultBrowser.ReadStatisticsNamesFromCache())
-            {
-                this.ComboBoxSortStatistics.Items.Add(name);
-            }
-            this.InitFiltersCombos();
-            this.RefreshBrowser();
-            this.ToolStripShowGraphEdit.Click += new EventHandler(ToolStripShowGraphEdit_Click);
-            this.ToolStripCopyChart.Click += new EventHandler(ToolStripCopyChart_Click);
-            this.HypothesesListView.Visible = true;
-            this.HypothesesListView.Enabled = true;
-        }
-        
-        /// <summary>
-        /// Method to re-read items to listview
-        /// </summary>
-        private void ReReadItems()
-        {
-            //disabling the column click handler (sorter)
-            this.columnSorter.column = 0;
-            this.HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
-            HypothesesListView.Sorting = SortOrder.None;
-            HypothesesListView.ListViewItemSorter = null;
-
-            //clearing all the items
-            this.HypothesesListView.Items.Clear();
-
-            int precision = Convert.ToInt32(this.NumericUpDownDecimals.Value);
-
-            //adding hypotheses
-            int i = 0;
-            foreach (KeyValuePair<int, HypothesisStruct> hypothesis in resultBrowser.AllFilteredHypotheses)
-            {
-                ListViewItem item = new ListViewItem(FerdaResult.GetHypothesisName(hypothesis.Value));
-
-                //antecedent
-                item.SubItems.Add(FerdaResult.GetAntecedentString(hypothesis.Value));
-
-                //succedent
-                item.SubItems.Add(FerdaResult.GetSuccedentString(hypothesis.Value));
-
-                //Condition
-                item.SubItems.Add(FerdaResult.GetConditionString(hypothesis.Value));
-
-                //quantifiers
-                foreach (double value in resultBrowser.ReadSelectedQuantifiersFromCache(i, precision))
-                {
-                    item.SubItems.Add(value.ToString("N" + precision.ToString()));
-                }
-
-                item.Tag = hypothesis.Key;
-                HypothesesListView.Items.Add(item);
-                i++;
-            }
-            this.LabelCount.Text = "(" + i + "/" + hypothesesCount + ")";
-            this.LabelCurrentlySorted.Text = resManager.GetString("SortedByNone");
-            //adding the sorter
-            HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
-        }
          
-
         /// <summary>
         /// Method which fills in all the available values for filters
         /// </summary>
@@ -728,121 +619,44 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             #region Filling in marks according to columns selected
 
-            //HypothesisId is always displayed
-            PropertySpec hName = new PropertySpec(
-                resManager.GetString("HypothesisId"),
-                typeof(int),
-                resManager.GetString("HypothesisId"),
-                resManager.GetString("HypothesisId"),
-                hypothesisId
-                );
-            hName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-            table.Properties.Add(hName);
-            table[resManager.GetString("HypothesisId")] = hypothesisId;
-
-            foreach (UsedColumn column in this.columns)
+            foreach (UsedMark column in this.columns)
             {
                 if (column.Selected)
                 {
-                    PropertySpec tName = new PropertySpec(
-                    column.ColumnName,
-                    typeof(string),
-                    column.ColumnName,
-                    column.ColumnName,
-                    resultBrowser.GetFormula(column.ColumnType, hypothesisId)
-                    );
-                    hName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                    table.Properties.Add(hName);
-                    table[column.ColumnName] = resultBrowser.GetFormula(column.ColumnType, hypothesisId);
+                    //if it's id column, don't run getformula
+                    if (column.id == 0)
+                    {
+                        PropertySpec tName = new PropertySpec(
+                       column.ColumnName,
+                       typeof(string),
+                       column.ColumnName,
+                       column.ColumnName,
+                       resultBrowser.GetFormula(column.ColumnType, hypothesisId)
+                       );
+                        tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                        table.Properties.Add(tName);
+                        table[column.ColumnName] = hypothesisId.ToString();
+                    }
+                    else
+                    {
+                        PropertySpec tName = new PropertySpec(
+                        column.ColumnName,
+                        typeof(string),
+                        column.ColumnName,
+                        column.ColumnName,
+                        resultBrowser.GetFormula(column.ColumnType, hypothesisId)
+                        );
+                        tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                        table.Properties.Add(tName);
+                        table[column.ColumnName] = resultBrowser.GetFormula(column.ColumnType, hypothesisId);
+                    }
                 }
             }
 
             #region PG commented out
-            /*
-            //name
-            PropertySpec hName = new PropertySpec(
-                resManager.GetString("ColumnHypothesisName"),
-                typeof(string),
-                resManager.GetString("HypothesisData"),
-                resManager.GetString("HypothesisData"),
-                "HypothesisName"
-                );
-            hName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-            table.Properties.Add(hName);
-            table[resManager.GetString("ColumnHypothesisName")] = "HypothesisName";
 
-            //antecedent
-            PropertySpec hAntecedent = new PropertySpec(
-                antecedentText,
-                typeof(string),
-                resManager.GetString("HypothesisData"),
-                resManager.GetString("HypothesisData"),
-                "AntecedentValue"
-                );
-            hAntecedent.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-            table.Properties.Add(hAntecedent);
-            table[antecedentText] = "AntecedentValue";
+           
 
-            //succedent
-            if (succedentText != String.Empty)
-            {
-                PropertySpec hSuccedent = new PropertySpec(
-                    succedentText,
-                    typeof(string),
-                    resManager.GetString("HypothesisData"),
-                    resManager.GetString("HypothesisData"),
-                    "SuccedentValue"
-                    );
-                hSuccedent.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(hSuccedent);
-                table[succedentText] = "SuccedentValue";
-            }
-
-            //condition
-            PropertySpec hCondition = new PropertySpec(
-                resManager.GetString("ColumnCondition"),
-                typeof(string),
-                resManager.GetString("HypothesisData"),
-                resManager.GetString("HypothesisData"),
-                "ConditionValue"
-                );
-            hCondition.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-            table.Properties.Add(hCondition);
-            table[resManager.GetString("ColumnCondition")] = "ConditionValue";
-
-            
-            //first set
-            string temp1 = FerdaResult.GetFirstSetString(hypothesis);
-            if(!(temp1.CompareTo(String.Empty) == 0))
-            {
-                PropertySpec hFirstSet = new PropertySpec(
-                "1" + resManager.GetString("FirstSet"),
-                typeof(string),
-                resManager.GetString("HypothesisData"),
-                resManager.GetString("HypothesisData"),
-                temp1
-                );
-            hFirstSet.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-            table.Properties.Add(hFirstSet);
-            table["1" + resManager.GetString("FirstSet")] = temp1;
-            }
-            
-            //second set
-            temp1 = FerdaResult.GetSecondSetString(hypothesis);
-            if (!(temp1.CompareTo(String.Empty) == 0))
-            {
-                PropertySpec hSecondSet = new PropertySpec(
-                "2" + resManager.GetString("SecondSet"),
-                typeof(string),
-                resManager.GetString("HypothesisData"),
-                resManager.GetString("HypothesisData"),
-                temp1
-                );
-                hSecondSet.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(hSecondSet);
-                table["2" + resManager.GetString("SecondSet")] = temp1;
-            }
-             * */
             #endregion
             #endregion
 
@@ -1253,14 +1067,20 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             ChangeColumnCheck();
             ChangeQuantifierCheck();
             this.HypothesesListView.Items.Clear();
+            this.columnSorter.column = 0;
+            HypothesesListView.ColumnClick -= new ColumnClickEventHandler(ClickOnColumn);
+            HypothesesListView.ListViewItemSorter = null;
             this.HypothesesListView.Columns.Clear();
 
-            this.HypothesesListView.Columns.Add(this.resManager.GetString("HypothesisId"));
             for (int i = 0; i < columns.Length; i++)
             {
                 if (columns[i].Selected)
                 {
-                    this.HypothesesListView.Columns.Add(columns[i].ColumnName);
+                    ColumnHeader markHeader = new ColumnHeader();
+                    markHeader.Text = columns[i].ColumnName;
+                    markHeader.Width = columns[i].width;
+                    markHeader.Tag = "c" + i.ToString();
+                    this.HypothesesListView.Columns.Add(markHeader);
                 }
             }
 
@@ -1268,11 +1088,35 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 if (quantifiers[i].Selected)
                 {
-                    this.HypothesesListView.Columns.Add(quantifiers[i].QuantifierLabel +
-                        "(" + quantifiers[i].QuantifierUserLabel + ")");
+                    ColumnHeader quantifierHeader = new ColumnHeader();
+                    quantifierHeader.Text = quantifiers[i].QuantifierLabel +
+                        "(" + quantifiers[i].QuantifierUserLabel + ")";
+                    quantifierHeader.Width = quantifiers[i].width;
+                    quantifierHeader.Tag = "q" + i.ToString();
+                    this.HypothesesListView.Columns.Add(quantifierHeader);
                 }
             }
             AddAllHypothesesToListView();
+            HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
+            HypothesesListView.ListViewItemSorter = columnSorter;
+        }
+
+        void HypothesesListView_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            string key = (string)HypothesesListView.Columns[e.ColumnIndex].Tag;
+            int index = Convert.ToInt32(key.Substring(1));
+            
+            //it is a column
+            if (key.Substring(0, 1).CompareTo("c") == 0)
+            {
+                this.columns[index].width = HypothesesListView.Columns[e.ColumnIndex].Width;
+            }
+
+            //it is a quantifier column
+            if (key.Substring(0, 1).CompareTo("q") == 0)
+            {
+                this.quantifiers[index].width = HypothesesListView.Columns[e.ColumnIndex].Width;
+            } 
         }
 
         #endregion
@@ -1310,10 +1154,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="rm">Resource manager to handle new l10n resource</param>
         private void ChangeLocale(ResourceManager rm)
         {
-            if (HypothesesListView.Columns.Count > 0)
-            {
-                HypothesesListView.Columns[0].Text = rm.GetString("HypothesisId");
-            }
             GroupBoxChangeGraph.Text = rm.GetString("GraphViewOptions");
             ButtonSubmitColumnChange.Text = rm.GetString("SubmitColumnChange");
             ToolStripShowGraphEdit.Text = rm.GetString("GraphViewOptions");
@@ -1363,5 +1203,23 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         }
 
         #endregion
+    }
+
+    public class UsedColumn
+    {
+        public int id;
+        public bool Selected;
+        public int width;
+    }
+    public class UsedMark : UsedColumn
+    {
+        public MarkEnum ColumnType;
+        public string ColumnName;
+    }
+
+    public class UsedQuantifier : UsedColumn
+    {
+        public string QuantifierLabel;
+        public string QuantifierUserLabel;
     }
 }
