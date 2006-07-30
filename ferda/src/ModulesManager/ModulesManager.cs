@@ -39,11 +39,13 @@ namespace Ferda {
 			/// <param name="localePrefs">A string[] representing locales with descending importance</param>
 			protected void InitAdapterAndHelper(string[] args, string[] localePrefs)
 			{
-				Debug.WriteLine("Loading config...");
-				Ice.Properties properties = Ice.Util.createProperties();
-				properties.load("config");
-				Debug.WriteLine("Creating communicator...");
-				communicator = Ice.Util.initializeWithProperties(ref args, properties);
+                Debug.WriteLine("Loading config and creating communicator...");
+				//Ice.Properties properties = Ice.Util.createProperties();
+				//properties.load("config");
+                string[] newargs = new string[args.Length + 1];
+                newargs[0] = "--Ice.Config=config";
+                args.CopyTo(newargs, 1);
+				communicator = Ice.Util.initialize(ref newargs);
 				Debug.WriteLine("Creating factory for basic property types...");
 				Ferda.Modules.ObjectFactoryForPropertyTypes factory =
 				new Ferda.Modules.ObjectFactoryForPropertyTypes();
