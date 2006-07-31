@@ -15,7 +15,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <summary>
         /// Unique identifier of entity.
         /// </summary>
-        private string _guid;
+        private readonly string _guid;
 
         public string Guid
         {
@@ -26,9 +26,23 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
         }
 
-        protected EntityEnumerable(GuidStruct id)
+        private readonly MarkEnum _cedentType;
+        public MarkEnum CedentType
+        {
+            get { return _cedentType; }
+        }
+
+        private readonly ISkipOptimalization _parentSkipOptimalization;
+        public ISkipOptimalization ParentSkipOptimalization
+        {
+            get { return _parentSkipOptimalization; }
+        }
+        
+        protected EntityEnumerable(GuidStruct id, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
         {
             _guid = id.value;
+            _cedentType = cedentType;
+            _parentSkipOptimalization = skipOptimalization;
         }
 
         public abstract IEnumerator<IBitString> GetBitStringEnumerator();
@@ -76,8 +90,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
     {
         protected readonly CoefficientSetting _setting;
 
-        protected EntityEnumerableCoefficient(CoefficientSetting setting)
-            : base(setting.id)
+        protected EntityEnumerableCoefficient(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting.id, skipOptimalization, cedentType)
         {
             _setting = setting;
 
@@ -154,17 +168,17 @@ namespace Ferda.Guha.MiningProcessor.Generation
         }
     }
 
-    public abstract class SingleOperandEntity : EntityEnumerable
+    public abstract class SingleOperandEntity : EntityEnumerable, INotLeafEntityEnumerator
     {
         protected readonly ISingleOperandEntitySetting _setting;
 
         protected readonly IEntityEnumerator _entity;
 
-        protected SingleOperandEntity(ISingleOperandEntitySetting setting)
-            : base(setting.id)
+        protected SingleOperandEntity(ISingleOperandEntitySetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting.id, skipOptimalization, cedentType)
         {
             _setting = setting;
-            _entity = Factory.Create(_setting.operand);
+            _entity = Factory.Create(_setting.operand, this, cedentType);
         }
 
         public override Set<string> UsedAttributes
@@ -176,9 +190,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             get { return _entity.UsedEntities; }
         }
+
+        public abstract SkipSetting BaseSkipSetting(MarkEnum cedentType);
     }
 
-    public abstract class MutliOperandEntity : EntityEnumerable
+    public abstract class MutliOperandEntity : EntityEnumerable, INotLeafEntityEnumerator
     {
         #region Constructors
 
@@ -186,8 +202,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// Constructor.
         /// </summary>
         /// <param name="setting">The setting.</param>
-        protected MutliOperandEntity(IMultipleOperandEntitySetting setting)
-            : base(setting.id)
+        protected MutliOperandEntity(IMultipleOperandEntitySetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting.id, skipOptimalization, cedentType)
         {
             if (setting == null)
                 throw new ArgumentNullException("setting", "The reference to setting cannot be null.");
@@ -200,7 +216,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             SortedList<double, IEntityEnumerator> auxiliaryEnts = new SortedList<double, IEntityEnumerator>();
             foreach (IEntitySetting operand in _setting.operands)
             {
-                IEntityEnumerator tmpEnt = Factory.Create(operand);
+                IEntityEnumerator tmpEnt = Factory.Create(operand, this, cedentType);
                 double tmpEntCount = tmpEnt.TotalCount;
                 switch (operand.importance)
                 {
@@ -390,6 +406,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
             }
         }
 
+        public abstract SkipSetting BaseSkipSetting(MarkEnum cedentType);
+
         #region IDisposable Members
 
         /// <summary>
@@ -445,6 +463,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
             if (sB.Count >= _effectiveMinLength)
             {
                 result = sB.Peek();
+                SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                if (parentSkipSetting != null)
+                {
+                    if (!Ferda.Guha.Math.Common.Compare(parentSkipSetting.Relation, result.Sum, parentSkipSetting.Treshold))
+                        return false;
+                }
                 return true;
             }
             result = null;

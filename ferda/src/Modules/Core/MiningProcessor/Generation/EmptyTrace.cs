@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Ferda.Guha.MiningProcessor.BitStrings;
@@ -40,6 +41,16 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public Set<string> UsedEntities
         {
             get { return new Set<string>(); }
+        }
+
+        #endregion
+
+        #region IEntityEnumerator Members
+
+
+        public MarkEnum CedentType
+        {
+            get { throw new NotImplementedException("This should be never invoked."); }
         }
 
         #endregion

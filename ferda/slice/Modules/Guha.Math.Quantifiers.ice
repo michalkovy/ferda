@@ -96,6 +96,7 @@ module Ferda {
 				struct QuantifierSetting
 				{
 					string stringIceIdentity;
+					string boxTypeIdentifier;
 
 					MissingInformationHandlingEnum missingInformationHandling;
 					OperationModeEnum operationMode;

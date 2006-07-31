@@ -18,7 +18,7 @@ namespace Tests.MiningProcessor
     ///to contain all Ferda.Guha.MiningProcessor.Generation.LeftCuts Unit Tests
     ///</summary>
     [TestClass()]
-    public class MiningProcessorTest
+    public class MiningProcessorTest : ISkipOptimalization
     {
         private TestContext testContextInstance;
 
@@ -132,7 +132,7 @@ namespace Tests.MiningProcessor
 
             foreach (CoefficientSetting entity in _coefficients)
             {
-                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(entity)));
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(entity, this, MarkEnum.Condition)));
             }
 
             string r = result.ToString();
@@ -156,21 +156,21 @@ namespace Tests.MiningProcessor
                 CoefficientTypeEnum.Cuts
                 );
 
-            result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef)));
+            result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef, this, MarkEnum.Condition)));
 
             NegationSettingI neg = new NegationSettingI(
                     new GuidStruct((new Guid()).ToString()),
                     ImportanceEnum.Basic,
                     coef);
 
-            result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(neg)));
+            result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(neg, this, MarkEnum.Condition)));
 
             BothSignsSettingI both = new BothSignsSettingI(
                     new GuidStruct((new Guid()).ToString()),
                     ImportanceEnum.Basic,
                     coef);
 
-            result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(both)));
+            result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(both, this, MarkEnum.Condition)));
 
             string r = result.ToString();
             Debug.Write(r);
@@ -196,7 +196,7 @@ namespace Tests.MiningProcessor
 
             if (traceInput)
             {
-                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef1)));
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef1, this, MarkEnum.Condition)));
             }
 
             CoefficientSettingI coef3 = new CoefficientSettingI(
@@ -210,7 +210,7 @@ namespace Tests.MiningProcessor
 
             if (traceInput)
             {
-                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef3)));
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef3, this, MarkEnum.Condition)));
             }
 
             CoefficientSettingI coef4 = new CoefficientSettingI(
@@ -224,7 +224,7 @@ namespace Tests.MiningProcessor
 
             if (traceInput)
             {
-                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef4)));
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(coef4, this, MarkEnum.Condition)));
             }
 
             NegationSettingI negCoef4 = new NegationSettingI(
@@ -234,7 +234,7 @@ namespace Tests.MiningProcessor
 
             if (traceInput)
             {
-                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(negCoef4)));
+                result.AppendLine(writeOutput((EntityEnumerableCoefficient)Factory.Create(negCoef4, this, MarkEnum.Condition)));
             }
 
             DisjunctionSettingI disj = new DisjunctionSettingI(
@@ -252,7 +252,7 @@ namespace Tests.MiningProcessor
                     3
                 );
 
-            result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(disj)));
+            result.AppendLine(writeOutput((IEntityEnumerator)Factory.Create(disj, this, MarkEnum.Condition)));
 
             string r = result.ToString();
             Debug.Write(r);
@@ -274,5 +274,14 @@ namespace Tests.MiningProcessor
             }
             Console.Out.WriteLine("time1 = {0}", DateTime.Now.Ticks - time1);
         }
+
+        #region ISkipOptimalization Members
+
+        public SkipSetting BaseSkipSetting(MarkEnum cedentType)
+        {
+            return null;
+        }
+
+        #endregion
     }
 }

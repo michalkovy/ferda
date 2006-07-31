@@ -195,6 +195,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneOrTwoDimensional.Aggrega
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,
+                _boxModule.BoxInfo.Identifier,
                 MissingInformationHandling,
                 OperationMode,
                 Relation,

@@ -15,11 +15,11 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS, Testing</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;Testing</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRules>-Microsoft.Naming#CA1707</CodeAnalysisRules>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -91,8 +91,12 @@
     <Compile Include="BitStrings\IBitString.cs" />
     <Compile Include="BitStrings\IBitStringCache.cs" />
     <Compile Include="Generation\EmptyTrace.cs" />
+    <Compile Include="Generation\INotLeafEntityEnumerator.cs" />
+    <Compile Include="Generation\ISkipOptimalization.cs" />
     <Compile Include="Generation\SubsetsGenerationHelper.cs" />
     <Compile Include="Miners\CFMiningProcessor.cs" />
+    <Compile Include="Miners\SDKLMiningProcessor.cs" />
+    <Compile Include="Miners\SDCFMiningProcessor.cs" />
     <Compile Include="Miners\KLMiningProcessor.cs" />
     <Compile Include="Miners\tablesOfBitStrings.cs" />
     <Compile Include="Miners\ProgressTaskListener.cs" />

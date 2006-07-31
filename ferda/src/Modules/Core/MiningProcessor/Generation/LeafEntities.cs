@@ -14,8 +14,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         private string _attributeGuid;
 
-        public FixedSet(CoefficientFixedSetSetting setting)
-            : base(setting.id)
+        public FixedSet(CoefficientFixedSetSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting.id, skipOptimalization, cedentType)
         {
             _setting = setting;
             _attributeGuid = setting.generator.GetAttributeId().value;
@@ -28,8 +28,13 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 _attributeGuid,
                 _setting.categoriesIds,
                 BitwiseOperation.Or);
-
-            yield return result;
+            
+            SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+            if (parentSkipSetting != null)
+            {
+                if (Common.Compare(parentSkipSetting.Relation, result.Sum, parentSkipSetting.Treshold))
+                    yield return result;
+            }
         }
 
         public override long TotalCount
@@ -66,8 +71,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
     public class LeftCuts : EntityEnumerableCoefficient
     {
-        public LeftCuts(CoefficientSetting setting)
-            : base(setting)
+        public LeftCuts(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting, skipOptimalization, cedentType)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.LeftCuts);
             //UNDONE integritni omezeni (ordinal...)
@@ -81,7 +86,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     prolongCoefficient(_categoriesNames[i]);
                     if (_actualLength < _effectiveMinLength)
                         continue;
-                    yield return _currentBitString;
+                    
+                    SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                    if (parentSkipSetting != null)
+                    {
+                        if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
+                            yield return _currentBitString;
+                    }
+                    
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
@@ -110,8 +122,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
     public class RightCuts : EntityEnumerableCoefficient
     {
-        public RightCuts(CoefficientSetting setting)
-            : base(setting)
+        public RightCuts(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting, skipOptimalization, cedentType)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.RightCuts);
             //UNDONE integritni omezeni (ordinal...)
@@ -125,7 +137,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     prolongCoefficient(_categoriesNames[i]);
                     if (_actualLength < _effectiveMinLength)
                         continue;
-                    yield return _currentBitString;
+
+                    SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                    if (parentSkipSetting != null)
+                    {
+                        if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
+                            yield return _currentBitString;
+                    }
+                    
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
@@ -154,8 +173,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
     public class Cuts : EntityEnumerableCoefficient
     {
-        public Cuts(CoefficientSetting setting)
-            : base(setting)
+        public Cuts(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting, skipOptimalization, cedentType)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.Cuts);
             //UNDONE integritni omezeni (ordinal...)
@@ -172,7 +191,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     prolongCoefficient(_categoriesNames[i]);
                     if (_actualLength < _effectiveMinLength)
                         continue;
-                    yield return _currentBitString;
+
+                    SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                    if (parentSkipSetting != null)
+                    {
+                        if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
+                            yield return _currentBitString;
+                    }
+                    
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
@@ -194,7 +220,13 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         break;
                     if (_actualLength < _effectiveMinLength)
                         continue;
-                    yield return _currentBitString;
+
+                    SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                    if (parentSkipSetting != null)
+                    {
+                        if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
+                            yield return _currentBitString;
+                    }
                 }
 
             resetCoefficient();
@@ -228,8 +260,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
     public class Intervals : EntityEnumerableCoefficient
     {
-        public Intervals(CoefficientSetting setting)
-            : base(setting)
+        public Intervals(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting, skipOptimalization, cedentType)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.Intervals);
             //UNDONE integritni omezeni (ordinal...)
@@ -246,7 +278,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     prolongCoefficient(_categoriesNames[i]);
                     if (_actualLength < _effectiveMinLength)
                         continue;
-                    yield return _currentBitString;
+
+                    SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                    if (parentSkipSetting != null)
+                    {
+                        if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
+                            yield return _currentBitString;
+                    }
+                    
                     if ((_actualLength + 1 > _effectiveMaxLength)
                         || (i + 1 >= _categoriesNames.Length))
                     {
@@ -290,8 +329,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
     public class CyclicIntervals : EntityEnumerableCoefficient
     {
-        public CyclicIntervals(CoefficientSetting setting)
-            : base(setting)
+        public CyclicIntervals(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting, skipOptimalization, cedentType)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.CyclicIntervals);
             //UNDONE integritni omezeni (ordinal...)
@@ -313,7 +352,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         resetCoefficient();
                         goto restart;
                     }
-                    yield return _currentBitString;
+                    
+                    SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                    if (parentSkipSetting != null)
+                    {
+                        if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
+                            yield return _currentBitString;
+                    }
+                    
                     if (_actualLength + 1 > _effectiveMaxLength)
                     {
                         resetCoefficient();
@@ -355,8 +401,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
     public class Subsets : EntityEnumerableCoefficient, SubsetsInstance<IBitString, IBitString>
     {
-        public Subsets(CoefficientSetting setting)
-            : base(setting)
+        public Subsets(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting, skipOptimalization, cedentType)
         {
             Debug.Assert(setting.coefficientType == CoefficientTypeEnum.Subsets);
             //UNDONE integritni omezeni (ordinal...)

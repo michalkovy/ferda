@@ -120,7 +120,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         public int Sum
         {
-            get { return Int32.MinValue; }
+            get { return Int32.MaxValue; }
         }
 
         #endregion

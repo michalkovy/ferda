@@ -44,15 +44,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             if (!ProgressSetValue(-1, "Preparing Row Attribute trace"))
                 return;
-            _rowAttribute = CreateCategorialAttributeTrace(MarkEnum.RowAttribute, _categorialAttributes, false);
+            _rowAttribute = CreateCategorialAttributeTrace(MarkEnum.RowAttribute, _categorialAttributes, false, this);
 
             if (!ProgressSetValue(-1, "Preparing Column Attribute trace"))
                 return;
-            _columnAttribute = CreateCategorialAttributeTrace(MarkEnum.ColumnAttribute, _categorialAttributes, false);
+            _columnAttribute = CreateCategorialAttributeTrace(MarkEnum.ColumnAttribute, _categorialAttributes, false, this);
 
             if (!ProgressSetValue(-1, "Preparing Condition trace"))
                 return;
-            _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true);
+            _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true, this);
         }
 
         public KLMiningProcessor(
@@ -83,19 +83,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
             else
                 throw new NotImplementedException();
 
-            long allObjectsCount = Int64.MinValue;
-
             ContingencyTableHelper contingencyTable;
             IBitString[][] bSCT;
             double[][] cT;
 
             foreach (CategorialAttributeTrace rowTrace in _rowAttribute)
             {
-                if (allObjectsCount < 0)
-                    allObjectsCount = rowTrace.BitStrings[0].Length;
-                if (allObjectsCount < 0)
-                    throw new ApplicationException("Unable to determine \"all objects count\".");
-
                 foreach (CategorialAttributeTrace columnTrace in _columnAttribute)
                 {
                     bSCT = BitStringsArrayAnd.Operation(rowTrace.BitStrings, columnTrace.BitStrings);
@@ -111,7 +104,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         
                         contingencyTable = new ContingencyTableHelper(
                             cT,
-                            allObjectsCount
+                            _result.AllObjectsCount
                             );
                         Hypothesis hypothesis = new Hypothesis();
                         hypothesis.SetFormula(MarkEnum.RowAttribute, rowTrace.Identifier);
@@ -128,7 +121,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         finish:
             ProgressSetValue(1, "Completing result.");
             evaluator.Flush();
-            resultFinish(allObjectsCount);
+            resultFinish();
         }
     }
 }

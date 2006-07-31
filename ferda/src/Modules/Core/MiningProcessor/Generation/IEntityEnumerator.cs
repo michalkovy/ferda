@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Modules.Helpers.Common;
 
-namespace Ferda.Guha.MiningProcessor
+namespace Ferda.Guha.MiningProcessor.Generation
 {
     /// <summary>
     /// Iterates through IBitStrings provider. Please note that no
@@ -16,5 +16,6 @@ namespace Ferda.Guha.MiningProcessor
         long TotalCount { get;}
         Set<string> UsedAttributes { get; }
         Set<string> UsedEntities { get; }
+        MarkEnum CedentType { get;}
     }
 }

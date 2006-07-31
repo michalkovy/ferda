@@ -196,6 +196,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.InformationT
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,
+                _boxModule.BoxInfo.Identifier,
                 MissingInformationHandling,
                 OperationMode,
                 Relation,

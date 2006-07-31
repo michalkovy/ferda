@@ -478,6 +478,23 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             MiningProcessorFunctionsPrx miningProcessor = GetMiningProcessorFunctionsPrx(boxModule);
             BitStringGeneratorProviderPrx bsProvider = GetBitStringGeneratorProviderPrx(boxModule);
 
+            List<QuantifierBaseFunctionsPrx> quantifiers = GetQuantifierBaseFunctions(boxModule, true);
+            if (quantifiers == null || quantifiers.Count == 0)
+                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                               "There must be connected at least one quantifier to task box module.",
+                                               new string[] {SockQuantifiers}, restrictionTypeEnum.OtherReason);
+            
+            // UNDONE in this version is only operation mode difference of quatifier values supported for SD tasks            
+            if (isSDTaskType(taskType))
+            foreach (QuantifierBaseFunctionsPrx prx in quantifiers)
+            {
+                if (prx.GetQuantifierSetting().operationMode != OperationModeEnum.DifferenceOfQuantifierValues)
+                    throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                               "Only \"DifferenceOfQuantifierValues\" Operation Mode is supported in quantifiers for SD tasks.",
+                               new string[] { SockQuantifiers }, restrictionTypeEnum.OtherReason);
+            }
+            
+            
             WorkingWithSecondSetModeEnum secondSetWorking =
                 isSDTaskType(taskType)
                     ?
