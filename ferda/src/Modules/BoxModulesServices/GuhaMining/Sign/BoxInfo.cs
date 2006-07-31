@@ -1,4 +1,5 @@
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Formulas;
 using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Sign
@@ -25,10 +26,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
 
             if (inputBoxLabel == null)
                 return null;
-            else if (inputBoxLabel.Contains("\u2227") || inputBoxLabel.Contains("\u2228"))
-                return "\u00AC" + "(" + inputBoxLabel + ")";
+            else if (inputBoxLabel.Contains(FormulaHelper.SeparatorAnd) || inputBoxLabel.Contains(FormulaHelper.SeparatorOr))
+                return FormulaHelper.NegationSign + "(" + inputBoxLabel + ")";
             else
-                return "\u00AC" + inputBoxLabel;
+                return FormulaHelper.NegationSign + inputBoxLabel;
         }
 
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,

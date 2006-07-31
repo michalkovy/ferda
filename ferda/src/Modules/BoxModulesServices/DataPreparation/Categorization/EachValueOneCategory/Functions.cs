@@ -205,8 +205,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public Attribute<IComparable> GetAttribute(bool fallOnError)
         {
-            _nullCategoryName = null;
-
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
             if (prx == null)
                 return null;
@@ -251,6 +249,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     fallOnError,
                     delegate
                     {
+                        _nullCategoryName = null;
                         GenericColumn column = GetGenericColumn(fallOnError);
                         if (column == null)
                             return null;

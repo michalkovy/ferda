@@ -32,7 +32,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         /// Unicode Character 'LOGICAL AND' (U+2227)
         /// http://www.fileformat.info/info/unicode/char/2227/index.htm
         /// </summary>
-        public const string SeparatorAnd = " \u2227 ";
+        public const string SeparatorAnd = " & "; //better \u2227
 
         //public const string SeparatorAnd = "&";
 
@@ -40,7 +40,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         /// Unicode Character 'LOGICAL OR' (U+2228)
         /// http://www.fileformat.info/info/unicode/char/2228/index.htm
         /// </summary>
-        public const string SeparatorOr = " \u2228 ";
+        public const string SeparatorOr = " | "; //better \u2228
 
         //public const string SeparatorOr = "|";
 
