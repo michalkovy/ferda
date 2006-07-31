@@ -88,10 +88,34 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             progressBarPrx);
                         break;
                     case TaskTypeEnum.SDCF:
+                        miningProcessor = new SDCFMiningProcessor(
+                            booleanAttributes,
+                            categorialAttributes,
+                            quantifiers,
+                            taskParams,
+                            bitStringGenerator,
+                            progressListener,
+                            progressBarPrx);
                         break;
                     case TaskTypeEnum.SDFourFold:
+                        miningProcessor = new SDFourFoldMiningProcessor(
+                            booleanAttributes,
+                            categorialAttributes,
+                            quantifiers,
+                            taskParams,
+                            bitStringGenerator,
+                            progressListener,
+                            progressBarPrx);
                         break;
                     case TaskTypeEnum.SDKL:
+                        miningProcessor = new SDKLMiningProcessor(
+                            booleanAttributes,
+                            categorialAttributes,
+                            quantifiers,
+                            taskParams,
+                            bitStringGenerator,
+                            progressListener,
+                            progressBarPrx);
                         break;
                     default:
                         throw new NotImplementedException();

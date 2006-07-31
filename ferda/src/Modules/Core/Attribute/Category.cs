@@ -665,7 +665,7 @@ namespace Ferda.Guha.Attribute
         {
             if (ReferenceEquals(x, y))
                 return true;
-            else if (ReferenceEquals(x, null))
+            else if (ReferenceEquals(x, null) || ReferenceEquals(y, null))
                 return false;
             else
                 return x.Equals(y);

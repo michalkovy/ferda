@@ -91,6 +91,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
                             return null;
                         else
                         {
+                            IEntitySetting innerEntitySetting = booleanAttribute.GetEntitySetting();
                             switch (SignType)
                             {
                                 case SignTypeEnum.Both:
@@ -99,6 +100,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
                                             new BothSignsSettingI();
                                         result.id = Guid;
                                         result.importance = Importance;
+                                        result.operand = innerEntitySetting;
                                         return result;
                                     }
                                 case SignTypeEnum.Negative:
@@ -107,6 +109,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
                                             new NegationSettingI();
                                         result.id = Guid;
                                         result.importance = Importance;
+                                        result.operand = innerEntitySetting;
                                         return result;
                                     }
                                 case SignTypeEnum.Positive:

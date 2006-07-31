@@ -543,7 +543,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 missings = missingInformation[usedAttributes];
                 Debug.Assert(!(missings is EmptyBitString));
-                if (!(missings is EmptyBitString))
+                if (missings is EmptyBitString)
                     throw new ArgumentException();
             }
         }

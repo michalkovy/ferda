@@ -509,6 +509,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 secondSetWorking
                 );
 
+            SetResult(boxModule, null);
+            SetResultInfo(boxModule, null);
+
             string statistics;
             string result =
                 miningProcessor.Run(
