@@ -9,18 +9,18 @@ using Ferda.ModulesManager;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
-    public class SDFourFoldMiningProcessor : MiningProcessorBase
+    public class SDKLMiningProcessor : MiningProcessorBase
     {
         protected override void getCedents(out ICollection<IEntityEnumerator> booleanCedents,
                                            out ICollection<CategorialAttributeTrace[]> categorialCedents)
         {
-            booleanCedents = new IEntityEnumerator[] { _antecedent, _succedent, _condition, _firstSet, _secondSet };
-            categorialCedents = null;
+            booleanCedents = new IEntityEnumerator[] { _condition, _firstSet, _secondSet };
+            categorialCedents = new CategorialAttributeTrace[][] { _rowAttribute, _columnAttribute };
         }
 
         public override TaskTypeEnum TaskType
         {
-            get { return TaskTypeEnum.FourFold; }
+            get { return TaskTypeEnum.SDKL; }
         }
 
         protected override CategorialAttributeTrace[] attributesWhichShouldSupportNumericValues()
@@ -30,24 +30,27 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         protected override List<CategorialAttributeTrace[]> attributesWhichRequestsSomeCardinality()
         {
-            return null;
+            List<CategorialAttributeTrace[]> result = new List<CategorialAttributeTrace[]>();
+            result.Add(_rowAttribute);
+            result.Add(_columnAttribute);
+            return result;
         }
 
-        private IEntityEnumerator _antecedent;
-        private IEntityEnumerator _succedent;
+        private CategorialAttributeTrace[] _rowAttribute;
+        private CategorialAttributeTrace[] _columnAttribute;
         private IEntityEnumerator _condition;
         private IEntityEnumerator _firstSet;
         private IEntityEnumerator _secondSet;
 
         protected override void prepareAttributeTraces()
         {
-            if (!ProgressSetValue(-1, "Preparing Succedent trace"))
+            if (!ProgressSetValue(-1, "Preparing Row Attribute trace"))
                 return;
-            _succedent = CreateBooleanAttributeTrace(MarkEnum.Succedent, _booleanAttributes, false, this);
+            _rowAttribute = CreateCategorialAttributeTrace(MarkEnum.RowAttribute, _categorialAttributes, false, this);
 
-            if (!ProgressSetValue(-1, "Preparing Antecedent trace"))
+            if (!ProgressSetValue(-1, "Preparing Column Attribute trace"))
                 return;
-            _antecedent = CreateBooleanAttributeTrace(MarkEnum.Antecedent, _booleanAttributes, true, this);
+            _columnAttribute = CreateCategorialAttributeTrace(MarkEnum.ColumnAttribute, _categorialAttributes, false, this);
 
             if (!ProgressSetValue(-1, "Preparing Condition trace"))
                 return;
@@ -62,7 +65,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             _secondSet = CreateBooleanAttributeTrace(MarkEnum.SecondSet, _booleanAttributes, false, this);
         }
 
-        public SDFourFoldMiningProcessor(
+        public SDKLMiningProcessor(
             BooleanAttribute[] booleanAttributes,
             CategorialAttribute[] categorialAttributes,
             QuantifierBaseFunctionsPrx[] quantifiers,
@@ -90,54 +93,38 @@ namespace Ferda.Guha.MiningProcessor.Miners
             else
                 throw new NotImplementedException();
 
-            //MissingInformation missingInformation = new MissingInformation();
-            //IBitString xS;
-            IBitString nS;
-            //IBitString xA;
-            IBitString nA;
-            //IBitString xC;
+            IBitString[][] bSCT;
+
             IBitString fSF; // first set
             IBitString sSF; // second set
-            
-            fourFoldTableOfBitStrings fourFT = new fourFoldTableOfBitStrings();
-            FourFoldContingencyTable fourFoldCT1;
-            FourFoldContingencyTable fourFoldCT2;
+
             ContingencyTableHelper contingencyTable1;
             ContingencyTableHelper contingencyTable2;
+            double[][] cT1;
+            double[][] cT2;
 
-            foreach (IBitString pS in _succedent)
+            foreach (CategorialAttributeTrace rowTrace in _rowAttribute)
             {
-                if (pS is EmptyBitString)
-                    continue;
-                GetNegation(pS, out nS);
-                foreach (IBitString pA in _antecedent)
+                foreach (CategorialAttributeTrace columnTrace in _columnAttribute)
                 {
-                    GetNegation(pA, out nA);
-
-                    fourFT.pSpA = pS.And(pA);
-                    fourFT.pSnA = pS.And(nA);
-
-                    fourFT.nSpA = nS.And(pA);
-                    fourFT.nSnA = nS.And(nA);
-
-                    foreach (IBitString pC in _condition)
+                    bSCT = BitStringsArrayAnd.Operation(rowTrace.BitStrings, columnTrace.BitStrings);
+                    foreach (IBitString cS in _condition)
                     {
                         foreach (IBitString fS in _firstSet)
                         {
                             #region SD first set contingency table
-                            fSF = fS.And(pC);
-                            fourFoldCT1 = new FourFoldContingencyTable();
+                            fSF = fS.And(cS);
 
-                            fourFoldCT1.a = fourFT.pSpA.And(fSF).Sum;
-                            fourFoldCT1.c = fourFT.pSnA.And(fSF).Sum;
-
-                            fourFoldCT1.b = fourFT.nSpA.And(fSF).Sum;
-                            fourFoldCT1.d = fourFT.nSnA.And(fSF).Sum;
-
+                            if (fSF is IEmptyBitString)
+                                cT1 = BitStringsArraySums.Sum(bSCT);
+                            else
+                                cT1 = BitStringsArraySums.Sum(
+                                    BitStringsArrayAnd.Operation(bSCT, fSF)
+                                    );
                             contingencyTable1 = new ContingencyTableHelper(
-                                fourFoldCT1.ContingencyTable,
+                                cT1,
                                 _result.AllObjectsCount
-                                ); 
+                                );
                             #endregion
 
                             double[] sDFirstSetValues = evaluator.SDFirstSetValues(contingencyTable1);
@@ -148,39 +135,39 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                 switch (TaskParams.sdWorkingWithSecondSetMode)
                                 {
                                     case WorkingWithSecondSetModeEnum.Cedent1AndCedent2:
-                                        sSF = sS.And(fS).And(pC);
+                                        sSF = sS.And(fS).And(cS);
                                         break;
                                     case WorkingWithSecondSetModeEnum.Cedent2:
-                                        sSF = sS.And(pC);
+                                        sSF = sS.And(cS);
                                         break;
                                     case WorkingWithSecondSetModeEnum.None:
                                     default:
                                         throw new NotImplementedException();
                                 }
 
-                                fourFoldCT2 = new FourFoldContingencyTable();
-
-                                fourFoldCT2.a = fourFT.pSpA.And(sSF).Sum;
-                                fourFoldCT2.c = fourFT.pSnA.And(sSF).Sum;
-
-                                fourFoldCT2.b = fourFT.nSpA.And(sSF).Sum;
-                                fourFoldCT2.d = fourFT.nSnA.And(sSF).Sum;
+                                if (sSF is IEmptyBitString)
+                                    cT2 = BitStringsArraySums.Sum(bSCT);
+                                else
+                                    cT2 = BitStringsArraySums.Sum(
+                                        BitStringsArrayAnd.Operation(bSCT, sSF)
+                                        );
 
                                 contingencyTable2 = new ContingencyTableHelper(
-                                    fourFoldCT2.ContingencyTable,
+                                    cT2,
                                     _result.AllObjectsCount
                                     );
                                 #endregion
 
                                 Hypothesis hypothesis = new Hypothesis();
-                                hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
-                                hypothesis.SetFormula(MarkEnum.Antecedent, pA.Identifier);
-                                hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
+                                hypothesis.SetFormula(MarkEnum.RowAttribute, rowTrace.Identifier);
+                                hypothesis.SetFormula(MarkEnum.ColumnAttribute, columnTrace.Identifier);
+                                hypothesis.SetFormula(MarkEnum.Condition, cS.Identifier);
                                 hypothesis.SetFormula(MarkEnum.FirstSet, fS.Identifier);
                                 hypothesis.SetFormula(MarkEnum.SecondSet, sS.Identifier);
                                 hypothesis.ContingencyTableA = contingencyTable1.ContingencyTable;
                                 hypothesis.ContingencyTableB = contingencyTable2.ContingencyTable;
-                                
+
+
                                 if (evaluator.VerifyIsCompleteSDSecondSet(contingencyTable2, sDFirstSetValues, hypothesis))
                                     goto finish;
                             }
@@ -188,6 +175,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     }
                 }
             }
+
         finish:
             ProgressSetValue(1, "Completing result.");
             evaluator.Flush();

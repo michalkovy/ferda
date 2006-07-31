@@ -337,8 +337,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         /// <summary>
-        /// !!! SD tasky smi pouzivat jen toto rozhrani.
-        /// !!! V result browseru ukazovat hdnoty jen tech kvantifikatoru poskytujicich toto rozhrani.
+        /// !!! kvantifikatory modu DifferenceOfQuantifierValues v SD tascich smi pouzivat jen toto rozhrani.
+        /// !!! V result browseru ukazovat hodnoty jen tech kvantifikatoru poskytujicich toto rozhrani.
         /// </summary>
         /// <param name="contingencyTable">The contingency table.</param>
         /// <returns></returns>

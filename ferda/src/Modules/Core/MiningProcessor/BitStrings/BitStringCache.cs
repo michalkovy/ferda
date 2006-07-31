@@ -63,7 +63,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         {
 #if Testing
             return _instance;
-#endif
+#else
             lock (padlock)
             {
                 string attributeGuid = prx.GetAttributeId().value;
@@ -72,6 +72,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
                 return _instance;
             }
+#endif
         }
 
         public BitStringGeneratorPrx GetBitStringGeneratorPrx(string attributeGuid)
@@ -94,8 +95,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
 #if Testing
                 return BitStringCacheTest.GetBitString(bitStringId);
-#endif
+#else
                 return base[bitStringId];
+#endif
             }
         }
 
@@ -121,8 +123,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         {
 #if Testing
             return BitStringCacheTest.GetCategoriesIds(attributeGuid);
-#endif
+#else
             return GetBitStringGeneratorPrx(attributeGuid).GetCategoriesIds();
+#endif
         }
 
         #endregion

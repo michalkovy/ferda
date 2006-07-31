@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Ferda.Guha.MiningProcessor.Miners;
 using Ferda.Guha.MiningProcessor.Results;
 
@@ -25,8 +26,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
             _rInfo.NumberOfVerifications++;
             _miningProcessor.ProgressSetValue(
-                _rInfo.NumberOfHypotheses/_n,
-                string.Format("Number of Verifications: {0}, Number of hypotheses: {1}", 
+                _rInfo.NumberOfHypotheses / _n,
+                string.Format("Number of Verifications: {0}, Number of hypotheses: {1}",
                               _rInfo.NumberOfVerifications,
                               _rInfo.NumberOfHypotheses)
                 );
@@ -45,5 +46,43 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
             ;
         }
+
+        #region IEvaluator Members
+
+
+        public double[] SDFirstSetValues(ContingencyTableHelper contingencyTable)
+        {
+            return _quantifiers.Values(contingencyTable);
+        }
+
+        public bool VerifyIsCompleteSDSecondSet(ContingencyTableHelper contingencyTable, double[] sDFirstSetValues, Hypothesis hypothesis)
+        {
+            _rInfo.NumberOfVerifications++;
+            _miningProcessor.ProgressSetValue(
+                _rInfo.NumberOfHypotheses / _n,
+                string.Format("Number of Verifications: {0}, Number of hypotheses: {1}",
+                              _rInfo.NumberOfVerifications,
+                              _rInfo.NumberOfHypotheses)
+                );
+            double[] sDSecondSetValues = _quantifiers.Values(contingencyTable);
+            Debug.Assert(sDFirstSetValues.Length == sDSecondSetValues.Length);
+            for (int i = 0; i < sDFirstSetValues.Length; i++)
+            {
+                if (
+                _quantifiers.VerifySdDifferenceOfQuantifierValues(
+                    sDFirstSetValues,
+                    sDSecondSetValues)
+                    )
+                {
+                    _rInfo.NumberOfHypotheses++;
+                    _result.Hypotheses.Add(hypothesis);
+                    if (_result.Hypotheses.Count >= _n)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        #endregion
     }
 }

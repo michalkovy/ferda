@@ -13,7 +13,13 @@ using Ferda.ModulesManager;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
-    public abstract class MiningProcessorBase
+    public interface IComputeAllObjectsCount
+    {
+        void ComputeAllObjectsCount(CategorialAttributeTrace[] attributes);
+        void ComputeAllObjectsCount(IEntityEnumerator attribute);
+    }
+
+    public abstract class MiningProcessorBase : IComputeAllObjectsCount, ISkipOptimalization
     {
         #region Abstract memebers
 
@@ -223,6 +229,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
             get { return _quantifiers; }
         }
 
+        private readonly QuantifierSetting _baseQuantifierSetting;
+
         private readonly TaskRunParams _taskParams;
         public TaskRunParams TaskParams
         {
@@ -250,16 +258,16 @@ namespace Ferda.Guha.MiningProcessor.Miners
             _result = new Result();
             Debug.Assert(TaskParams.taskType == TaskType);
             _result.TaskTypeEnum = TaskType;
+            _result.AllObjectsCount = _allObjectsCount;
 
             _resultInfo = new SerializableResultInfo();
             _resultInfo.StartTime = DateTime.Now;
             _resultInfo.TotalNumberOfRelevantQuestions = TotalCount;
         }
 
-        protected void resultFinish(long allObjectsCount)
+        protected void resultFinish()
         {
             _resultInfo.EndTime = DateTime.Now;
-            _result.AllObjectsCount = allObjectsCount;
         }
 
         #endregion
@@ -332,6 +340,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             _categorialAttributes = categorialAttributes;
             ProgressSetValue(-1, "Preparing quantifiers");
             _quantifiers = new Quantifiers(quantifiers, taskFuncPrx);
+            _baseQuantifierSetting = _quantifiers.GetBaseQuantifierSetting();
         }
 
         protected void afterConstruct()
@@ -341,6 +350,38 @@ namespace Ferda.Guha.MiningProcessor.Miners
             TestOfQuantifiersXAttributes();
         }
 
+        long _allObjectsCount = -1;
+
+        public void ComputeAllObjectsCount(CategorialAttributeTrace[] attributes)
+        {
+            if (_allObjectsCount > 0)
+                return;
+            if (attributes == null || attributes.Length == 0)
+                return;
+            foreach (CategorialAttributeTrace trace in attributes)
+            {
+                if (trace.BitStrings.Length == 0)
+                {
+                    Debug.Assert(false);
+                    continue;
+                }
+                _allObjectsCount = trace.BitStrings[0].Length;
+                return;
+            }
+        }
+
+        public void ComputeAllObjectsCount(IEntityEnumerator attribute)
+        {
+            if (_allObjectsCount > 0)
+                return;
+            if (!(attribute is EmptyTrace))
+                return;
+            foreach (IBitString s in attribute)
+            {
+                _allObjectsCount = s.Length;
+                return;
+            }
+        }
         #region Attributes traces preparing
 
         public static IEntitySetting GetBoolanAttributeBySemantic(MarkEnum semantic,
@@ -376,7 +417,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         public static IEntityEnumerator CreateBooleanAttributeTrace(MarkEnum semantic,
                                                                     BooleanAttribute[] booleanAttributes,
-                                                                    bool allowsEmptyBitStrings)
+                                                                    bool allowsEmptyBitStrings,
+                                                                    MiningProcessorBase miningProcessorBase)
         {
             IEntitySetting setting = GetBoolanAttributeBySemantic(semantic, booleanAttributes);
             if (setting == null)
@@ -394,13 +436,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     throw Exceptions.EmptyCedentIsNotAllowedError(semantic);
             }
 
-            return Factory.Create(setting);
+            IEntityEnumerator finalResult = Factory.Create(setting, miningProcessorBase, semantic);
+            miningProcessorBase.ComputeAllObjectsCount(finalResult);
+            return finalResult;
         }
 
         public static CategorialAttributeTrace[] CreateCategorialAttributeTrace(MarkEnum semantic,
-                                                                                CategorialAttribute[]
-                                                                                    categorialAttributes,
-                                                                                bool allowEmptyCategorialCedent)
+                                                                                CategorialAttribute[] categorialAttributes,
+                                                                                bool allowEmptyCategorialCedent,
+                                                                                MiningProcessorBase miningProcessorBase)
         {
             BitStringGeneratorPrx[] setting = GetCategorialAttributeBySemantic(semantic, categorialAttributes);
             if (setting == null)
@@ -422,8 +466,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 else
                     return null;
             }
-            else
-                return result.ToArray();
+
+            CategorialAttributeTrace[] finalResult = result.ToArray();
+            miningProcessorBase.ComputeAllObjectsCount(finalResult);
+            return finalResult;
         }
 
         #endregion
@@ -504,5 +550,64 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         #endregion
 
+        #region ISkipOptimalization Members
+
+        private int _actConditionCountOfObjects = -1;
+        public int ActConditionCountOfObjects
+        {
+            set
+            {
+                _actConditionCountOfObjects = value;
+            }
+        }
+
+        private double _baseSkipSettingTreshold = -1;
+        private double _baseSkipSettingNotTreshold = -1;
+        public SkipSetting BaseSkipSetting(MarkEnum cedentType)
+        {
+            if (_baseQuantifierSetting == null)
+                return null;
+            if (_baseQuantifierSetting.units == UnitsEnum.RelativeToActCondition)
+                if (cedentType == MarkEnum.Condition)
+                    return null;
+                else
+                {
+                    return new SkipSetting(
+                        _baseQuantifierSetting.relation,
+                        _baseQuantifierSetting.treshold * _actConditionCountOfObjects,
+                        _baseSkipSettingNotTreshold = _allObjectsCount - _baseSkipSettingTreshold
+                        );
+                }
+            if (_baseQuantifierSetting.units == UnitsEnum.RelativeToMaxFrequency)
+                return null;
+
+            if (_baseSkipSettingTreshold < 0 || _baseSkipSettingNotTreshold < 0)
+            {
+                switch (_baseQuantifierSetting.units)
+                {
+
+                    case UnitsEnum.AbsoluteNumber:
+                    case UnitsEnum.Irrelevant:
+                        _baseSkipSettingTreshold = _baseQuantifierSetting.treshold;
+                        _baseSkipSettingNotTreshold = _allObjectsCount - _baseSkipSettingTreshold;
+                        break;
+                    case UnitsEnum.RelativeToAllObjects:
+                        _baseSkipSettingTreshold = _baseQuantifierSetting.treshold * _result.AllObjectsCount;
+                        _baseSkipSettingNotTreshold = _allObjectsCount - _baseSkipSettingTreshold;
+                        break;
+                    case UnitsEnum.RelativeToActCondition:
+                    case UnitsEnum.RelativeToMaxFrequency:
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+            return new SkipSetting(
+                _baseQuantifierSetting.relation,
+                _baseSkipSettingTreshold,
+                _baseSkipSettingNotTreshold
+                );
+        }
+
+        #endregion
     }
 }

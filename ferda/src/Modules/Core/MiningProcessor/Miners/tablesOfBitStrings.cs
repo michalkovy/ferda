@@ -7,17 +7,17 @@ namespace Ferda.Guha.MiningProcessor.Miners
 {
     internal class nineFoldTableOfBitStrings
     {
-        public IBitString pSpA;
-        public IBitString pSxA;
-        public IBitString pSnA;
+        public IBitString pApB;
+        public IBitString pAxB;
+        public IBitString pAnB;
 
-        public IBitString xSpA;
-        public IBitString xSxA;
-        public IBitString xSnA;
+        public IBitString xApB;
+        public IBitString xAxB;
+        public IBitString xAnB;
 
-        public IBitString nSpA;
-        public IBitString nSxA;
-        public IBitString nSnA;
+        public IBitString nApB;
+        public IBitString nAxB;
+        public IBitString nAnB;
     }
 
     internal class fourFoldTableOfBitStrings

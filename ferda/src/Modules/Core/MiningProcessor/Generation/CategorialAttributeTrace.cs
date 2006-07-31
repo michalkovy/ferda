@@ -14,11 +14,18 @@ namespace Ferda.Guha.MiningProcessor.Generation
             get { return _identifier; }
         }
 
-        private readonly IBitString[] _bitStrings;
+        private IBitString[] _bitStrings;
 
         public IBitString[] BitStrings
         {
-            get { return _bitStrings; }
+            get
+            {
+                if (_bitStrings == null)
+                {
+                    _bitStrings = Helpers.GetBitStrings(_generator, _identifier.AttributeGuid);
+                }
+                return _bitStrings;
+            }
         }
 
         private bool _supportsNumericValues = false;
@@ -58,7 +65,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 throw new ArgumentNullException("generator");
             _generator = generator;
             _identifier = new CategorialAttributeFormula(generator.GetAttributeId().value);
-            _bitStrings = Helpers.GetBitStrings(generator, _identifier.AttributeGuid);
+            //_bitStrings = Helpers.GetBitStrings(generator, _identifier.AttributeGuid);
         }
     }
 }

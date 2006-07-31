@@ -6,8 +6,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
 {
     public class Conjunction : MutliOperandEntity
     {
-        public Conjunction(IMultipleOperandEntitySetting setting)
-            : base(setting)
+        public Conjunction(IMultipleOperandEntitySetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting, skipOptimalization, cedentType)
         {
         }
 
@@ -29,12 +29,24 @@ namespace Ferda.Guha.MiningProcessor.Generation
                    + Formulas.FormulaHelper.SequenceToString(entities, Formulas.FormulaSeparator.AtomMembers, true) 
                    + "}";
         }
+
+        public override SkipSetting BaseSkipSetting(MarkEnum cedentType)
+        {
+            SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(cedentType);
+            if (parentSkipSetting == null)
+                return null;
+            // UNDONE (this is OK for >  or >= relations)
+            if (Ferda.Guha.Math.Common.GetRelationOrientation(parentSkipSetting.Relation) > 0)
+                return ParentSkipOptimalization.BaseSkipSetting(cedentType);
+            else
+                return null;
+        }
     }
 
     public class Disjunction : MutliOperandEntity
     {
-        public Disjunction(IMultipleOperandEntitySetting setting)
-            : base(setting)
+        public Disjunction(IMultipleOperandEntitySetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting, skipOptimalization, cedentType)
         {
         }
 
@@ -55,6 +67,13 @@ namespace Ferda.Guha.MiningProcessor.Generation
             return "Disjunction of {"
                    + Formulas.FormulaHelper.SequenceToString(entities, Formulas.FormulaSeparator.AtomMembers, true)
                    + "}";
+        }
+
+        public override SkipSetting BaseSkipSetting(MarkEnum cedentType)
+        {
+            // UNDONE
+            // no base skip optimalization for disjunctions
+            return null;
         }
     }
 }

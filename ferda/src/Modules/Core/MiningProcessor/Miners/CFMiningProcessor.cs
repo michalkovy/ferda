@@ -42,11 +42,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             if (!ProgressSetValue(-1, "Preparing Attribute trace"))
                 return;
-            _attribute = CreateCategorialAttributeTrace(MarkEnum.Attribute, _categorialAttributes, false);
+            _attribute = CreateCategorialAttributeTrace(MarkEnum.Attribute, _categorialAttributes, false, this);
 
             if (!ProgressSetValue(-1, "Preparing Condition trace"))
                 return;
-            _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true);
+            _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true, this);
         }
 
         public CFMiningProcessor(
@@ -77,18 +77,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
             else
                 throw new NotImplementedException();
 
-            long allObjectsCount = Int64.MinValue;
-
             ContingencyTableHelper contingencyTable;
             double[][] cT;
             
             foreach (CategorialAttributeTrace trace in _attribute)
             {
-                if (allObjectsCount < 0)
-                    allObjectsCount = trace.BitStrings[0].Length;
-                if (allObjectsCount < 0)
-                    throw new ApplicationException("Unable to determine \"all objects count\".");
-                
                 foreach (IBitString cS in _condition)
                 {
                     cT = new double[1][];
@@ -100,7 +93,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             );
                     contingencyTable = new ContingencyTableHelper(
                         cT,
-                        allObjectsCount,
+                        _result.AllObjectsCount,
                         trace.Identifier.AttributeGuid
                         );
                     Hypothesis hypothesis = new Hypothesis();
@@ -116,7 +109,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             finish:
             ProgressSetValue(1, "Completing result.");
             evaluator.Flush();
-            resultFinish(allObjectsCount);
+            resultFinish();
         }
     }
 }

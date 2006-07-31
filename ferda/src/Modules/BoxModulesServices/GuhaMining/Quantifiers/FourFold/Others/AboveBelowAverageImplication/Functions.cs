@@ -240,6 +240,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveBelowA
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,
+                _boxModule.BoxInfo.Identifier,
                 MissingInformationHandling,
                 OperationMode,
                 Relation,

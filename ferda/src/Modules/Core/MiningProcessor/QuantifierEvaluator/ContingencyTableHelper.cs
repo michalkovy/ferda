@@ -162,7 +162,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     /// ]]>
     /// </summary>
     /// <remarks>
-    /// Please not that <c>f111</c> is at position [0][0].
+    /// Please note that <c>f111</c> is at position [0][0].
+    /// Indexes of items has this meaning: [antecedent, succedent, condition]
     /// </remarks>
     internal class NineFoldContingencyTablePair
     {

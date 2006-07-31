@@ -35,6 +35,16 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         {
             return Equals(obj as BitStringIdentifier);
         }
+        
+        public static bool operator ==(BitStringIdentifier op1, BitStringIdentifier op2)
+        {
+            return op1.Equals(op2);
+        }
+        
+        public static bool operator !=(BitStringIdentifier op1, BitStringIdentifier op2)
+        {
+            return !op1.Equals(op2);
+        }
 
         #region IEquatable<BitStringIdentifier> Members
 

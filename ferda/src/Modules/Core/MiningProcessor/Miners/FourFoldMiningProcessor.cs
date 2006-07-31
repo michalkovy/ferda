@@ -14,7 +14,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         protected override void getCedents(out ICollection<IEntityEnumerator> booleanCedents,
                                            out ICollection<CategorialAttributeTrace[]> categorialCedents)
         {
-            booleanCedents = new IEntityEnumerator[] {_antecedent, _succedent, _condition};
+            booleanCedents = new IEntityEnumerator[] { _antecedent, _succedent, _condition };
             categorialCedents = null;
         }
 
@@ -41,15 +41,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             if (!ProgressSetValue(-1, "Preparing Succedent trace"))
                 return;
-            _succedent = CreateBooleanAttributeTrace(MarkEnum.Succedent, _booleanAttributes, false);
+            _succedent = CreateBooleanAttributeTrace(MarkEnum.Succedent, _booleanAttributes, false, this);
 
             if (!ProgressSetValue(-1, "Preparing Antecedent trace"))
                 return;
-            _antecedent = CreateBooleanAttributeTrace(MarkEnum.Antecedent, _booleanAttributes, true);
+            _antecedent = CreateBooleanAttributeTrace(MarkEnum.Antecedent, _booleanAttributes, true, this);
 
             if (!ProgressSetValue(-1, "Preparing Condition trace"))
                 return;
-            _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true);
+            _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true, this);
         }
 
         public FourFoldMiningProcessor(
@@ -80,8 +80,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             else
                 throw new NotImplementedException();
 
-            long allObjectsCount = Int64.MinValue;
-
             MissingInformation missingInformation = new MissingInformation();
             IBitString xS;
             IBitString nS;
@@ -90,83 +88,68 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IBitString xC;
             nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
 
-            foreach (IBitString pS in _succedent)
+            foreach (IBitString pC in _condition)
             {
-                if (pS is IEmptyBitString)
-                    continue;
-                GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
-                if (allObjectsCount < 0)
-                    allObjectsCount = pS.Length;
-                if (allObjectsCount < 0)
-                    throw new ApplicationException("Unable to determine \"all objects count\".");
-                foreach (IBitString pA in _antecedent)
+                //if (pC is FalseBitString)
+                //{
+                //    // empty contingency table (zeros)
+                //    continue;
+                //}
+                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
+
+                if (pC is IEmptyBitString)
+                    ActConditionCountOfObjects = (int)_result.AllObjectsCount;
+                else
+                    ActConditionCountOfObjects = pC.Sum;
+
+                foreach (IBitString pS in _succedent)
                 {
-                    GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
+                    if (pS is IEmptyBitString)
+                        continue;
+                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
 
-                    nineFT.pSpA = pS.And(pA);
-                    nineFT.pSxA = pS.And(xA);
-                    nineFT.pSnA = pS.And(nA);
+                    // A is condition, B is succedent
+                    nineFT.pApB = pC.And(pS);
+                    nineFT.pAxB = pC.And(xS);
+                    nineFT.pAnB = pC.And(nS);
 
-                    nineFT.xSpA = xS.And(pA);
-                    nineFT.xSxA = xS.And(xA);
-                    nineFT.xSnA = xS.And(nA);
+                    nineFT.xApB = xC.And(pS);
+                    nineFT.xAxB = xC.And(xS);
+                    nineFT.xAnB = xC.And(nS);
 
-                    nineFT.nSpA = nS.And(pA);
-                    nineFT.nSxA = nS.And(xA);
-                    nineFT.nSnA = nS.And(nA);
-
-                    foreach (IBitString pC in _condition)
+                    foreach (IBitString pA in _antecedent)
                     {
+                        GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
+
                         NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
-                        if (pC is FalseBitString)
-                        {
-                            // empty contingency table (zeros)
-                        }
-                        GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
-                        if (pC is EmptyBitString || xC.Sum == 0)
-                        {
-                            fft.f111 = nineFT.pSpA.Sum;
-                            fft.f1x1 = nineFT.pSxA.Sum;
-                            fft.f101 = nineFT.pSnA.Sum;
+                        fft.f111 = nineFT.pApB.And(pA).Sum;
+                        fft.f1x1 = nineFT.pAxB.And(pA).Sum;
+                        fft.f101 = nineFT.pAnB.And(pA).Sum;
 
-                            fft.fx11 = nineFT.xSpA.Sum;
-                            fft.fxx1 = nineFT.xSxA.Sum;
-                            fft.fx01 = nineFT.xSnA.Sum;
+                        fft.fx11 = nineFT.pApB.And(xA).Sum;
+                        fft.fxx1 = nineFT.pAxB.And(xA).Sum;
+                        fft.fx01 = nineFT.pAnB.And(xA).Sum;
 
-                            fft.f011 = nineFT.nSpA.Sum;
-                            fft.f0x1 = nineFT.nSxA.Sum;
-                            fft.f001 = nineFT.nSnA.Sum;
-                        }
-                        else
-                        {
-                            fft.f111 = nineFT.pSpA.And(pC).Sum;
-                            fft.f1x1 = nineFT.pSxA.And(pC).Sum;
-                            fft.f101 = nineFT.pSnA.And(pC).Sum;
+                        fft.f011 = nineFT.pApB.And(nA).Sum;
+                        fft.f0x1 = nineFT.pAxB.And(nA).Sum;
+                        fft.f001 = nineFT.pAnB.And(nA).Sum;
 
-                            fft.fx11 = nineFT.xSpA.And(pC).Sum;
-                            fft.fxx1 = nineFT.xSxA.And(pC).Sum;
-                            fft.fx01 = nineFT.xSnA.And(pC).Sum;
+                        fft.f11x = nineFT.xApB.And(pA).Sum;
+                        fft.f1xx = nineFT.xAxB.And(pA).Sum;
+                        fft.f10x = nineFT.xAnB.And(pA).Sum;
 
-                            fft.f011 = nineFT.nSpA.And(pC).Sum;
-                            fft.f0x1 = nineFT.nSxA.And(pC).Sum;
-                            fft.f001 = nineFT.nSnA.And(pC).Sum;
+                        fft.fx1x = nineFT.xApB.And(xA).Sum;
+                        fft.fxxx = nineFT.xAxB.And(xA).Sum;
+                        fft.fx0x = nineFT.xAnB.And(xA).Sum;
 
-                            fft.f11x = nineFT.pSpA.And(xC).Sum;
-                            fft.f1xx = nineFT.pSxA.And(xC).Sum;
-                            fft.f10x = nineFT.pSnA.And(xC).Sum;
-
-                            fft.fx1x = nineFT.xSpA.And(xC).Sum;
-                            fft.fxxx = nineFT.xSxA.And(xC).Sum;
-                            fft.fx0x = nineFT.xSnA.And(xC).Sum;
-
-                            fft.f01x = nineFT.nSpA.And(xC).Sum;
-                            fft.f0xx = nineFT.nSxA.And(xC).Sum;
-                            fft.f00x = nineFT.nSnA.And(xC).Sum;
-                        }
+                        fft.f01x = nineFT.xApB.And(nA).Sum;
+                        fft.f0xx = nineFT.xAxB.And(nA).Sum;
+                        fft.f00x = nineFT.xAnB.And(nA).Sum;
 
                         ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
                             fft.ContingencyTable,
-                            allObjectsCount);
+                            _result.AllObjectsCount
+                            );
 
                         Hypothesis hypothesis = new Hypothesis();
                         hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
@@ -180,10 +163,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     }
                 }
             }
-            finish:
+
+        finish:
             ProgressSetValue(1, "Completing result.");
             evaluator.Flush();
-            resultFinish(allObjectsCount);
+            resultFinish();
         }
     }
 }

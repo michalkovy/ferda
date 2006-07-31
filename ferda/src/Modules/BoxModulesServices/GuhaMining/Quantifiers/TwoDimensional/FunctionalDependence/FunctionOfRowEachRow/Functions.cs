@@ -249,6 +249,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDe
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,
+                _boxModule.BoxInfo.Identifier,
                 MissingInformationHandling,
                 OperationMode,
                 Relation,

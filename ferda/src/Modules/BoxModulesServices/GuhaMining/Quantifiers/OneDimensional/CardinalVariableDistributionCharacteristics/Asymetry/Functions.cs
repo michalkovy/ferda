@@ -204,6 +204,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.CardinalVari
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,
+                _boxModule.BoxInfo.Identifier,
                 MissingInformationHandling,
                 OperationMode,
                 Relation,

@@ -186,6 +186,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Implicational.Foun
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,
+                _boxModule.BoxInfo.Identifier,
                 MissingInformationHandling,
                 OperationMode,
                 Relation,

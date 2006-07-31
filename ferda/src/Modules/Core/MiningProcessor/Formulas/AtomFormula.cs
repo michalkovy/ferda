@@ -21,8 +21,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
 
         public override string ToString()
         {
-            if (_bitStringIdentifier.AttributeGuid == EmptyBitString.EmptyBitStringIdentifier.AttributeGuid
-                && _bitStringIdentifier.CategoryId == EmptyBitString.EmptyBitStringIdentifier.CategoryId)
+            if (_bitStringIdentifier == EmptyBitString.EmptyBitStringIdentifier)
                 return "";
             return WriteAtom(
                 _bitStringIdentifier.AttributeGuid,

@@ -182,6 +182,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.NominalVaria
         {
             return new QuantifierSetting(
                 _boxModule.StringIceIdentity,
+                _boxModule.BoxInfo.Identifier,
                 MissingInformationHandling,
                 OperationMode,
                 Relation,
