@@ -1,45 +1,17 @@
-Poznamky k integritnim
-======================
-
-Importance
-----------
-- Vstupni entita do Negation/Both signs nesmi byt Auxiliary.
-- V Conjunction/Disjunction musi byt nejmene jedna entita ne-Auxiliary.
-
-Dalsi
------
-Kvantifikatory pro SD tasky musi byt jen Quantifier Value Functions
-
-
 Poznamky
 ========
 Statistiky
- - Total relevant Questions (nebere v uvahu Improtance a tridy ekvivalence)
- - verified
- - # of hypotheses
-
-Max # radku zkoumane matice musi byt < Int32.MaxValue
+ - TotalCount of relevant Questions (nebere v uvahu Improtance a tridy ekvivalence)
 
 Nebude
 ======
  Min-Max delka hypotezy
  TopN
- ? Classes of equivalence
- ? zlepsovani, preskoky
+ Classes of equivalence
+ zlepsovani, preskoky (ty jsou jen pro Base)
 
 Pripraveno, nebude
 ==================
  Equifreqvency attribute
  Equidistant attribute
  Kvantifikatory
- 
-    /* TopN algoritmus
-     * 
-     * Task Results
-     * -	The valid hypotheses are kept sorted by the natural values given by 
-     *      the quantifiers. For every quantifier there is a queue of top hypotheses.
-     * -	The user can specify the maximum number of hypotheses in queues. 
-     *      Valid hypotheses are dropped if do not fit to any of the queues in favor 
-     *      of stronger hypotheses. Note that this approach slightly diverges from the 
-     *      original GUHA method, which put all prime hypotheses to output.
-     * */

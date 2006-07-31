@@ -35,6 +35,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 if (Common.Compare(parentSkipSetting.Relation, result.Sum, parentSkipSetting.Treshold))
                     yield return result;
             }
+            else
+            {
+                yield return result;
+            }
         }
 
         public override long TotalCount
@@ -93,6 +97,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
                             yield return _currentBitString;
                     }
+                    else
+                    {
+                        yield return _currentBitString;
+                    }
                     
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
@@ -143,6 +151,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
                             yield return _currentBitString;
+                    }
+                    else
+                    {
+                        yield return _currentBitString;
                     }
                     
                     if (_actualLength + 1 > _effectiveMaxLength)
@@ -198,6 +210,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
                             yield return _currentBitString;
                     }
+                    else
+                    {
+                        yield return _currentBitString;
+                    }
                     
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
@@ -226,6 +242,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
                             yield return _currentBitString;
+                    }
+                    else
+                    {
+                        yield return _currentBitString;
                     }
                 }
 
@@ -284,6 +304,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
                             yield return _currentBitString;
+                    }
+                    else
+                    {
+                        yield return _currentBitString;
                     }
                     
                     if ((_actualLength + 1 > _effectiveMaxLength)
@@ -358,6 +382,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
                             yield return _currentBitString;
+                    }
+                    else
+                    {
+                        yield return _currentBitString;
                     }
                     
                     if (_actualLength + 1 > _effectiveMaxLength)

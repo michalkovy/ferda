@@ -34,9 +34,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 {
                     // test subset
                     if (set.IsSubsetOf(key))
+                    {
                         bestMatch = set;
-                    if (bestMatch.Count == key.Count - 1)
-                        break;
+                        if (bestMatch.Count == key.Count - 1)
+                            break;
+                    }
                 }
             }
             if (bestMatch != null)

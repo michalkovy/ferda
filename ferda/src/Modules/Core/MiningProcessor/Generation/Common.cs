@@ -202,6 +202,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// Constructor.
         /// </summary>
         /// <param name="setting">The setting.</param>
+        /// <param name="skipOptimalization">The skip optimalization.</param>
+        /// <param name="cedentType">Type of the cedent.</param>
         protected MutliOperandEntity(IMultipleOperandEntitySetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
             : base(setting.id, skipOptimalization, cedentType)
         {
@@ -372,12 +374,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 else
                 {
                     Set<string> result = null;
-                    foreach (IEnumerator<IBitString> enumerator in sE)
+                    foreach (int enumeratorIndex in sI)
                     {
                         if (result == null)
-                            result = ((IEntityEnumerator) enumerator).UsedAttributes;
+                            result = _sourceEntities[enumeratorIndex].UsedAttributes;
                         else
-                            result.AddRange(((IEntityEnumerator) enumerator).UsedAttributes);
+                            result.AddRange(_sourceEntities[enumeratorIndex].UsedAttributes);
                     }
                     return result;
                 }

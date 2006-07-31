@@ -474,12 +474,17 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
 
             public static bool operator ==(interval a, interval b)
             {
+                if (ReferenceEquals(a, b))
+                    return true;
+                else if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+                    return false;
+                else
                 return Object.Equals(a, b);
             }
 
             public static bool operator !=(interval a, interval b)
             {
-                return !Object.Equals(a, b);
+                return !(a == b);
             }
         }
 

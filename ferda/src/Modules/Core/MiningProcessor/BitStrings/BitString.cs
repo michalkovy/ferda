@@ -101,7 +101,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         }
 
         public unsafe BitString(BitStringIdentifier identifier, int length, long[] bits)
-        : this(new AtomFormula(identifier))
+            : this(new AtomFormula(identifier))
         {
             if (length <= 0)
                 throw Exceptions.BitStringLengthError();
@@ -113,7 +113,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 #if USE64BIT
             if (arraySize != bits.Length)
                 throw new ArgumentOutOfRangeException("bits", "The array of bits has bad size (Length).");
-            
+
             _array = new ulong[arraySize];
             for (int i = 0; i < bits.Length; i++)
             {
@@ -184,7 +184,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
         }
 #endif
-        
+
         /// <summary>
         /// This method allocates the memory of BitString.
         /// Call this method only after the default constructor was used.
@@ -1104,7 +1104,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <returns><b>true</b> if the bit strings are the same object or if they contain the same value, <b>false</b> otherwise.</returns>
         public static bool operator ==(BitString a, BitString b)
         {
-            return Object.Equals(a, b);
+            if (ReferenceEquals(a, b))
+                return true;
+            else if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+                return false;
+            else
+                return Object.Equals(a, b);
         }
 
 

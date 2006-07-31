@@ -25,7 +25,7 @@ namespace RelMiner
         private static int recursionCount;
         private static int cacheHit;
         private static int cacheMiss;
-#endif 
+#endif
 
         /// <summary>
         /// Creates equifrequency intervals from the sorted array of values from database.
@@ -69,7 +69,7 @@ namespace RelMiner
             {
                 if (sortedValues[i] != null)
                 {
-                    Debug.Assert(((IComparable) currentValue).CompareTo((IComparable) sortedValues[i]) <= 0);
+                    Debug.Assert(((IComparable)currentValue).CompareTo((IComparable)sortedValues[i]) <= 0);
                     if (currentValue.Equals(sortedValues[i]))
                     {
                         currentCount++;
@@ -102,7 +102,7 @@ namespace RelMiner
 
             // start the recursion
             Result result =
-                FindSplit(dataArray, new Interval(0, dataArray.Count), intervals, (float) totalCount/(float) intervals,
+                FindSplit(dataArray, new Interval(0, dataArray.Count), intervals, (float)totalCount / (float)intervals,
                           cache);
 
 #if PERFCOUNTERS
@@ -121,7 +121,7 @@ namespace RelMiner
             object[] resultObjects = new object[intervals - 1];
             for (i = 0; i < intervals - 1; i++)
             {
-                resultObjects[i] = ((Data) dataArray[((Interval) result.Intervals[i]).Right]).Value;
+                resultObjects[i] = ((Data)dataArray[((Interval)result.Intervals[i]).Right]).Value;
             }
             return resultObjects;
         }
@@ -151,7 +151,7 @@ namespace RelMiner
                 result.Intervals.Add(bounds);
                 int count = 0;
                 for (int i = bounds.Left; i < bounds.Right; i++)
-                    count += ((Data) dataArray[i]).Count;
+                    count += ((Data)dataArray[i]).Count;
                 result.Cost = ResultPenalty(count, optimum);
                 return result;
             }
@@ -164,7 +164,7 @@ namespace RelMiner
                 for (int i = bounds.Left; i < bounds.Right; i++)
                 {
                     result.Intervals.Add(new Interval(i, i + 1));
-                    result.Cost += ResultPenalty(((Data) dataArray[i]).Count, optimum);
+                    result.Cost += ResultPenalty(((Data)dataArray[i]).Count, optimum);
                 }
                 return result;
             }
@@ -177,21 +177,21 @@ namespace RelMiner
             }
 
             // count objects that must be in the left part
-            int leftIntervals = intervals/2;
+            int leftIntervals = intervals / 2;
             int leftSum = 0;
             for (int i = 0; i < leftIntervals; i++)
-                leftSum += ((Data) dataArray[bounds.Left + i]).Count;
+                leftSum += ((Data)dataArray[bounds.Left + i]).Count;
 
             // add some more intervals until optimal point is reached
             int bestSplit;
-            int leftOptimalSum = (int) Math.Round(optimum*leftIntervals);
+            int leftOptimalSum = (int)Math.Round(optimum * leftIntervals);
             for (bestSplit = bounds.Left + leftIntervals;
                  bestSplit < bounds.Right - (intervals - leftIntervals);
                  bestSplit++)
             {
-                if (leftSum + ((Data) dataArray[bestSplit]).Count > leftOptimalSum)
+                if (leftSum + ((Data)dataArray[bestSplit]).Count > leftOptimalSum)
                     break;
-                leftSum += ((Data) dataArray[bestSplit]).Count;
+                leftSum += ((Data)dataArray[bestSplit]).Count;
             }
 
             // start testing these split points (spreading to left and right)
@@ -199,7 +199,7 @@ namespace RelMiner
             int rightSplit = bestSplit + 1;
             bool leftStop = false; // there's always at least one solution
             bool rightStop = (rightSplit > bounds.Right - (intervals - leftIntervals));
-                // go right only if there is another possible split point
+            // go right only if there is another possible split point
 
             // spread to both sides and search for better solutions
             Result bestResult = new Result(), leftTmpResult, rightTmpResult;
@@ -252,7 +252,7 @@ namespace RelMiner
 #endif
 
                     // check stop criterium (result penalty is too big)
-                    if (sum > stopLimit*bestResult.Cost)
+                    if (sum > stopLimit * bestResult.Cost)
                     {
                         // stop spreading to the left
                         leftStop = true;
@@ -324,7 +324,7 @@ namespace RelMiner
 #endif
 
                     // check stop criterium (result penalty is too big)
-                    if (sum > stopLimit*bestResult.Cost)
+                    if (sum > stopLimit * bestResult.Cost)
                     {
                         // stop testing spreading to the right
                         rightStop = true;
@@ -377,11 +377,11 @@ namespace RelMiner
         private static float ResultPenalty(int count, float optimum)
         {
             float penalty;
-            if ((float) count > optimum)
-                penalty = ((float) count)/optimum - 1.0f;
+            if ((float)count > optimum)
+                penalty = ((float)count) / optimum - 1.0f;
             else
-                penalty = optimum/((float) count) - 1.0f;
-            return penalty*penalty;
+                penalty = optimum / ((float)count) - 1.0f;
+            return penalty * penalty;
         }
 
         private class Data
@@ -461,7 +461,7 @@ namespace RelMiner
             public override bool Equals(object obj)
             {
                 Interval that = obj as Interval;
-                if ((object) that == null)
+                if ((object)that == null)
                     return false;
 
                 return ReferenceEquals(this, that) || (Left == that.Left) && (Right == that.Right);
@@ -476,12 +476,17 @@ namespace RelMiner
 
             public static bool operator ==(Interval a, Interval b)
             {
-                return Equals(a, b);
+                if (ReferenceEquals(a, b))
+                    return true;
+                else if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+                    return false;
+                else
+                    return Equals(a, b);
             }
 
             public static bool operator !=(Interval a, Interval b)
             {
-                return !Equals(a, b);
+                return !(a == b);
             }
         }
 
@@ -521,7 +526,7 @@ namespace RelMiner
             {
                 // we will store results up to the size of ceil(intervals / 2),
                 // where intervals is the requested output number of equifrequency intervals
-                int size = (intervals + 1)/2;
+                int size = (intervals + 1) / 2;
 
                 // initialize cache lines (an array of hashtables)
                 cacheLines = new Hashtable[size - 1];
@@ -556,7 +561,7 @@ namespace RelMiner
                 }
 
                 // do the cache lookup
-                Result result = (Result) cacheLine[bounds];
+                Result result = (Result)cacheLine[bounds];
                 if (result == null)
                 {
 #if PERFCOUNTERS
