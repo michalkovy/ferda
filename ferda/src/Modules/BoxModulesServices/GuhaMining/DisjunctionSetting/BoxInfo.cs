@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Modules.Helpers.Common;
 using Ice;
 
@@ -32,12 +33,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
                 List<string> result = new List<string>();
                 foreach (string s in inputBoxesLabels)
                 {
-                    if (s.Contains("\u2227"))
+                    if (s.Contains(FormulaHelper.SeparatorAnd))
                         result.Add("(" + s + ")");
                     else
                         result.Add(s);
                 }
-                return Print.SequenceToString(result, "\u2228");
+                return Print.SequenceToString(result, FormulaHelper.SeparatorOr);
             }
         }
 
