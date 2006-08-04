@@ -90,13 +90,13 @@ namespace Ferda.FrontEnd.ProgressBar
         /// <param name="current__">some ICE stuff</param>
         public override void setValue(float value, string message, Ice.Current current__)
         {
-            if (value == -1)
+            if (value < 0) // == -1
             {
-                myControl.ProgressStyle = ProgressBarStyle.Marquee;
+                myControl.SetProgressBarStyle(ProgressBarStyle.Marquee);
             }
             else
             {
-                myControl.ProgressStyle = ProgressBarStyle.Continuous;
+                myControl.SetProgressBarStyle(ProgressBarStyle.Continuous);
                 myControl.SetValue(value);
             }
 

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Data;
 using System.Text;
@@ -45,8 +46,9 @@ namespace Ferda.FrontEnd.ProgressBar
 
         delegate void SetHintDelegate(string hint);
         delegate void SetValueDelegate(float value);
+        delegate void SetProgressBarStyleDelegate(ProgressBarStyle value);
 
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -101,7 +103,7 @@ namespace Ferda.FrontEnd.ProgressBar
 
         #region Methods
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -116,8 +118,8 @@ namespace Ferda.FrontEnd.ProgressBar
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -128,16 +130,16 @@ namespace Ferda.FrontEnd.ProgressBar
             this.LLStop = new System.Windows.Forms.LinkLabel();
             this.LLHide = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
-            // 
+            //
             // progressBar
-            // 
+            //
             this.progressBar.Location = new System.Drawing.Point(0, 50);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(152, 23);
             this.progressBar.TabIndex = 0;
-            // 
+            //
             // LName
-            // 
+            //
             this.LName.AutoSize = true;
             this.LName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.LName.Location = new System.Drawing.Point(4, 4);
@@ -145,18 +147,18 @@ namespace Ferda.FrontEnd.ProgressBar
             this.LName.Size = new System.Drawing.Size(41, 13);
             this.LName.TabIndex = 1;
             this.LName.Text = "label1";
-            // 
+            //
             // LHint
-            // 
+            //
             this.LHint.AutoSize = true;
             this.LHint.Location = new System.Drawing.Point(7, 21);
             this.LHint.Name = "LHint";
             this.LHint.Size = new System.Drawing.Size(35, 13);
             this.LHint.TabIndex = 2;
             this.LHint.Text = "label1";
-            // 
+            //
             // LLStop
-            // 
+            //
             this.LLStop.AutoSize = true;
             this.LLStop.Location = new System.Drawing.Point(118, 4);
             this.LLStop.Name = "LLStop";
@@ -165,9 +167,9 @@ namespace Ferda.FrontEnd.ProgressBar
             this.LLStop.TabStop = true;
             this.LLStop.Text = "Stop";
             this.LLStop.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LLStop_LinkClicked);
-            // 
+            //
             // LLHide
-            // 
+            //
             this.LLHide.AutoSize = true;
             this.LLHide.Location = new System.Drawing.Point(118, 21);
             this.LLHide.Name = "LLHide";
@@ -176,9 +178,9 @@ namespace Ferda.FrontEnd.ProgressBar
             this.LLHide.TabStop = true;
             this.LLHide.Text = "Hide";
             this.LLHide.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LLHide_LinkClicked);
-            // 
+            //
             // BoxProgressBar
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -195,6 +197,23 @@ namespace Ferda.FrontEnd.ProgressBar
         }
 
         #endregion
+
+        /// <summary>
+        /// Sets the hint of the box progress bar (also from another
+        /// thread)
+        /// </summary>
+        public void SetProgressBarStyle(ProgressBarStyle value)
+        {
+            if (InvokeRequired)
+            {
+                SetProgressBarStyleDelegate d = new SetProgressBarStyleDelegate(SetProgressBarStyle);
+                Invoke(d, new object[] { value });
+            }
+            else
+            {
+                ProgressStyle = value;
+            }
+        }
 
         /// <summary>
         /// Sets the hint of the box progress bar (also from another
@@ -227,11 +246,14 @@ namespace Ferda.FrontEnd.ProgressBar
             }
             else
             {
-                if (value > 1 || value < 0)
-                {
-                    throw new ApplicationException("Invalid value for a progress bar");
-                }
-                progressBar.Value = System.Convert.ToInt32(value * 100);
+                Debug.Assert(!(value > 1 || value < 0));
+
+                if (value >= 1)
+                    progressBar.Value = 100;
+                else if (value <= 0)
+                    progressBar.Value = 0;
+                else
+                    progressBar.Value = System.Convert.ToInt32(value * 100);
             }
         }
 
