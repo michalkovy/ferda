@@ -143,6 +143,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             finally
             {
                 progressBarPrx.done();
+                System.Threading.Thread.Sleep(10);
                 ProgressTaskI.Destroy(current__.adapter, progressPrx);
             }
         }

@@ -68,7 +68,7 @@ namespace Ferda.FrontEnd
         /// <param name="resManager">Resource Manager of the application</param>
         /// <param name="projectManager">Project Manager class</param>
         /// <param name="controlsManager">Controls manager that takes care of the controls</param>
-        public static void LoadProject(string fileName, Control parent, 
+        public static void LoadProject(string fileName, Control parent,
             ResourceManager resManager, ref ProjectManager.ProjectManager projectManager,
             IControlsManager controlsManager)
         {
@@ -80,7 +80,7 @@ namespace Ferda.FrontEnd
                 {
                     fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open);
                 }
-                catch(FileNotFoundException)
+                catch (FileNotFoundException)
                 {
                     MessageBox.Show(resManager.GetString("ProjectLoadFileNotFound"),
                         resManager.GetString("ProjectLoadErrorCaption"),
@@ -261,17 +261,29 @@ namespace Ferda.FrontEnd
             return acrobatPath;
         }
 
+        private static string GetFaultBoxName(ProjectManager.ProjectManager projManager, ResourceManager resManager, string boxIdentity)
+        {
+            if (!String.IsNullOrEmpty(boxIdentity))
+            {
+                IBoxModule faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(boxIdentity);
+                if (faultBox != null)
+                    return faultBox.UserName;
+            }
+            return resManager.GetString("BoxExceptionDialogFaultName");
+        }
+
         /// <summary>
         /// Validates a box
         /// </summary>
         /// <param name="box">Box to be validated</param>
         /// <param name="resManager">Manager for the localized resources</param>
         /// <param name="projManager">Project manager to identify boxes by identity</param>
-        public static void ValidateBox(IBoxModule box, ResourceManager resManager, 
+        public static void ValidateBox(IBoxModule box, ResourceManager resManager,
             ProjectManager.ProjectManager projManager)
         {
             IBoxModule faultBox;
             string userMessage = string.Empty;
+            string faultBoxName;
 
             //trying to validate the box and catching the exceptions
             try
@@ -281,17 +293,7 @@ namespace Ferda.FrontEnd
             //the Ferda exceptions
             catch (BadValueError e)
             {
-                faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
-                    e.boxIdentity);
-                string faultBoxName;
-                if (faultBox == null)
-                {
-                    faultBoxName = resManager.GetString("BoxExceptionDialogFaultName");
-                }
-                else
-                {
-                    faultBoxName = faultBox.UserName;
-                }
+                faultBoxName = GetFaultBoxName(projManager, resManager, e.boxIdentity);
 
                 userMessage += e.userMessage;
                 userMessage += "\n\n" + e.restrictionType.ToString();
@@ -316,17 +318,7 @@ namespace Ferda.FrontEnd
             }
             catch (BadParamsError e)
             {
-                faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
-                    e.boxIdentity);
-                string faultBoxName;
-                if (faultBox == null)
-                {
-                    faultBoxName = resManager.GetString("BoxExceptionDialogFaultName");
-                }
-                else
-                {
-                    faultBoxName = faultBox.UserName;
-                }
+                faultBoxName = GetFaultBoxName(projManager, resManager, e.boxIdentity);
 
                 userMessage += e.userMessage;
                 userMessage += "\n\n" + e.restrictionType.ToString();
@@ -346,17 +338,7 @@ namespace Ferda.FrontEnd
             }
             catch (NoConnectionInSocketError e)
             {
-                faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
-                    e.boxIdentity);
-                string faultBoxName;
-                if (faultBox == null)
-                {
-                    faultBoxName = resManager.GetString("BoxExceptionDialogFaultName");
-                }
-                else
-                {
-                    faultBoxName = faultBox.UserName;
-                }
+                faultBoxName = GetFaultBoxName(projManager, resManager, e.boxIdentity);
 
                 userMessage += e.userMessage;
 
@@ -382,17 +364,7 @@ namespace Ferda.FrontEnd
             }
             catch (BoxRuntimeError e)
             {
-                faultBox = projManager.ModulesManager.GetIBoxModuleByIdentity(
-                    e.boxIdentity);
-                string faultBoxName;
-                if (faultBox == null)
-                {
-                    faultBoxName = resManager.GetString("BoxExceptionDialogFaultName");
-                }
-                else
-                {
-                    faultBoxName = faultBox.UserName;
-                }
+                faultBoxName = GetFaultBoxName(projManager, resManager, e.boxIdentity);
 
                 userMessage += e.userMessage;
 #if DEBUG
@@ -410,15 +382,27 @@ namespace Ferda.FrontEnd
                 return;
             }
             // other unwanted exceptions
-            catch (Ice.UnknownUserException)
+            catch (Ice.UnknownUserException e)
             {
+#if DEBUG
+                userMessage += "\n\nException to string:\n";
+                userMessage += e.ToString();
+                if (e.InnerException != null)
+                {
+                    userMessage += "\n\nInnerException to string:\n";
+                    userMessage += e.InnerException.ToString();
+                }
+#else
+                userMessage += resManager.GetString("ValidateICEException");
+#endif
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    box.UserName, resManager.GetString("ValidateICEException"));
+                    box.UserName, userMessage);
+                d.ShowDialog();
                 return;
             }
 
             //showing to the user that the validation went right
-            MessageBox.Show(resManager.GetString("ValidateOK"), 
+            MessageBox.Show(resManager.GetString("ValidateOK"),
                 resManager.GetString("ValidateCaption"));
         }
     }

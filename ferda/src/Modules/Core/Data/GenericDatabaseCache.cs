@@ -83,8 +83,25 @@ namespace Ferda.Guha.Data
         internal static Dictionary<DatabaseConnectionSettingHelper, GenericDatabase> _connections =
             new Dictionary<DatabaseConnectionSettingHelper, GenericDatabase>();
 
+        
+        //UNDONE
+        /*
         private static GarbageThread _garbage = new GarbageThread();
         private static Thread _garbageThread;
+
+        static GenericDatabaseCache()
+        {
+            _garbageThread = new Thread(_garbage.Run);
+            _garbageThread.Start();
+        }
+
+        // UNDONE
+        static ~GenericDatabaseCache()
+        {
+            _garbage.Terminate();
+            _garbageThread.Join();
+        }
+        */
 
         /// <summary>
         /// Gets the generic database (shared database connection and 
@@ -106,14 +123,6 @@ namespace Ferda.Guha.Data
         /// </exception>
         public static GenericDatabase GetGenericDatabase(DatabaseConnectionSettingHelper databaseConnectionSetting)
         {
-            lock ("gargageThread")
-            {
-                if (_garbageThread == null)
-                {
-                    _garbageThread = new Thread(_garbage.Run);
-                    _garbageThread.Start();
-                }
-            }
             lock (_connections)
             {
                 //iff cached

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Ferda.Guha.Data
 {
-    internal class GarbageThread : IDisposable
+    internal class GarbageThread
     {
         private bool _terminated;
         private const int _timeout = 360000; //miliseconds
@@ -36,13 +36,13 @@ namespace Ferda.Guha.Data
             }
         }
 
-        #region IDisposable Members
-
-        public void Dispose()
+        public void Terminate()
         {
-            _terminated = true;
+            lock (this)
+            {
+                _terminated = true;
+                Monitor.Pulse(this);
+            }
         }
-
-        #endregion
     }
 }
