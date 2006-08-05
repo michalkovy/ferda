@@ -3,12 +3,19 @@
 
 module Ferda {
 	module Modules {
+		sequence<bool> BoolSeq;
+		
 		sequence<byte> ByteSeq;
+		
 		sequence<string> StringSeq;
 		sequence<StringSeq> StringSeqSeq;
+		
 		sequence<int> IntSeq;
 		sequence<IntSeq> IntSeqSeq;
+		
 		sequence<long> LongSeq;
+		sequence<LongSeq> LongSeqSeq;
+		
 		sequence<double> DoubleSeq;
 		sequence<DoubleSeq> DoubleSeqSeq;
 

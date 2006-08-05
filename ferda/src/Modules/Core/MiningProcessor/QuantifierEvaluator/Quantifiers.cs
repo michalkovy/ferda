@@ -215,6 +215,52 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
             return true;
         }
+        
+        private List<ContingencyTableHelper> onlyGoods(List<ContingencyTableHelper> contingencyTables, List<bool> goodsFlags, out List<int> onlyGoodsIndexes)
+        {
+            List<ContingencyTableHelper> result = new List<ContingencyTableHelper>();
+            onlyGoodsIndexes = new List<int>();
+            ;
+            for (int i = 0; i < goodsFlags.Count; i++ )
+            {
+                if (goodsFlags[i])
+                {
+                    onlyGoodsIndexes.Add(i);
+                    result.Add(contingencyTables[i]);
+                }
+            }
+            return result;
+        }
+        
+        private void updateGoods(List<bool> goodsFlags, bool[] updateFlags, List<int> indexes)
+        {
+            for (int i = 0; i < updateFlags.Length; i++)
+            {
+                if (!updateFlags[i])
+                    goodsFlags[indexes[i]] = false;
+            }
+        }
+
+        public List<bool> Valid(List<ContingencyTableHelper> contingencyTables)
+        {
+            List<bool> result = new List<bool>(contingencyTables.Count);
+            List<ContingencyTableHelper> onlyGoods;
+            List<int> onlyGoodsIndexes;
+
+            for (int i = 0; i < contingencyTables.Count; i++)
+            {
+                    result.Insert(i, !(contingencyTables[i].IsEmpty));
+            }
+                
+            foreach (Quantifier q in getQuantifiersSortedByEfficiency())
+            {
+                onlyGoods = this.onlyGoods(contingencyTables, result, out onlyGoodsIndexes);
+                if (onlyGoods.Count == 0)
+                    return result;
+                updateGoods(result, q.Valid(onlyGoods), onlyGoodsIndexes);
+            }
+            return result;
+        }
 
         public double[] Values(ContingencyTableHelper contingencyTable)
         {

@@ -167,7 +167,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
             }
         finish:
-            ProgressSetValue(1, "Completing result.");
             evaluator.Flush();
             resultFinish();
         }

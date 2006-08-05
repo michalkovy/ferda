@@ -127,6 +127,7 @@ module Ferda {
 					Ferda::Modules::GuidStruct numericValuesAttributeId;
 					Ferda::Guha::MiningProcessor::BitStringGenerator* numericValuesProviders;
 				};
+				sequence<QuantifierEvaluateSetting> QuantifierEvaluateSettingSeq;
 
 				interface QuantifierBaseFunctions
 				{
@@ -137,6 +138,8 @@ module Ferda {
 					nonmutating string GetLocalizedUserBoxLabel(Ferda::Modules::StringSeq localePrefs)
 						throws Ferda::Modules::BoxRuntimeError;
 					nonmutating bool Compute(QuantifierEvaluateSetting param)
+						throws Ferda::Modules::BoxRuntimeError;
+					nonmutating Ferda::Modules::BoolSeq ComputeBatch(QuantifierEvaluateSettingSeq param)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 

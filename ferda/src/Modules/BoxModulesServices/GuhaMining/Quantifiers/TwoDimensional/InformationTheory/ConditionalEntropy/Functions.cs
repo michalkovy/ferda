@@ -232,5 +232,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.InformationT
                 SupportsFloatContingencyTable
                 );
         }
+
+        public override bool[] ComputeBatch(QuantifierEvaluateSetting[] param, Current current__)
+        {
+            return Common.ComputeBatch(param, this.Compute);
+        }
     }
 }

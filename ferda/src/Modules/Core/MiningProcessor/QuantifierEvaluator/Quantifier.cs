@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
@@ -103,7 +104,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         #endregion
 
         #region Constructors
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Quantifier"/> class.
         /// </summary>
@@ -118,7 +119,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             _operationMode = _setting.operationMode;
 
             _prxValid = QuantifierValidFunctionsPrxHelper.checkedCast(_prx);
-            
+
             if (prx.ice_isA("::Ferda::Guha::Math::Quantifiers::QuantifierValueFunctions"))
             {
                 _providesValues = true;
@@ -245,7 +246,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         #region OperationMode ... evaluation of Hypothesis
-        
+
         public QuantifierEvaluateSetting GetFirstTable(Hypothesis hypothesis, long allObjectsCount)
         {
             return getQuantifierEvaluateSetting(
@@ -256,7 +257,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     )
                 );
         }
-        
+
         public QuantifierEvaluateSetting GetSecondTable(Hypothesis hypothesis, long allObjectsCount)
         {
             return getQuantifierEvaluateSetting(
@@ -267,7 +268,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     )
                 );
         }
-        
+
         public QuantifierEvaluateSetting GetFirstDiffSecondTable(Hypothesis hypothesis, long allObjectsCount)
         {
             QuantifierEvaluateSetting first = GetFirstTable(hypothesis, allObjectsCount);
@@ -320,8 +321,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
 
         }
-        
-	    #endregion
+
+        #endregion
 
         #region Value
         private double value(QuantifierEvaluateSetting setting)
@@ -366,7 +367,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 default:
                     throw new NotImplementedException();
             }
-        } 
+        }
         #endregion
 
         private bool atLeastSignificantValidValue(QuantifierEvaluateSetting setting, out double value)
@@ -384,7 +385,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 return _prxSignificantValue.ComputeValidValue(setting, out value);
             }
         }
-        
+
         /// <summary>
         /// Pro ucely TopN. !!! pozor ne vsechny kvantifikatory poskytuji toto rozhrani
         /// </summary>
@@ -400,7 +401,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         private bool valid(QuantifierEvaluateSetting setting)
         {
             Debug.Assert(!(Setting.needsNumericValues && String.IsNullOrEmpty(setting.numericValuesAttributeId.value)));
-            
+
             if (ProvidesValues)
             {
                 return _prxValue.Compute(setting);
@@ -414,7 +415,23 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 return _prxValid.Compute(setting);
             }
         }
-        
+
+        private bool[] valid(QuantifierEvaluateSetting[] setting)
+        {
+            if (ProvidesValues)
+            {
+                return _prxValue.ComputeBatch(setting);
+            }
+            else if (ProvidesAtLeastSignificantValues)
+            {
+                return _prxSignificantValue.ComputeBatch(setting);
+            }
+            else
+            {
+                return _prxValid.ComputeBatch(setting);
+            }
+        }
+
         /// <summary>
         /// !!! Pro kvantifikatory neposkytujici jiny interface,
         /// !!! Pro ucely FirstN
@@ -424,6 +441,16 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         public bool Valid(ContingencyTableHelper contingencyTable)
         {
             QuantifierEvaluateSetting setting = getQuantifierEvaluateSetting(contingencyTable);
+            return valid(setting);
+        }
+
+        public bool[] Valid(List<ContingencyTableHelper> contingencyTables)
+        {
+            QuantifierEvaluateSetting[] setting = new QuantifierEvaluateSetting[contingencyTables.Count];
+            for (int i = 0; i < contingencyTables.Count; i++)
+            {
+                setting[i] = getQuantifierEvaluateSetting(contingencyTables[i]);
+            }
             return valid(setting);
         }
 
