@@ -207,5 +207,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Base
                 SupportsFloatContingencyTable
                 );
         }
+
+        public override bool[] ComputeBatch(QuantifierEvaluateSetting[] param, Current current__)
+        {
+            return Common.ComputeBatch(param, this.Compute);
+        }
     }
 }

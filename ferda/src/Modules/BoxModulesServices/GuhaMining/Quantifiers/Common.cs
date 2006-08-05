@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Modules.Helpers.Caching;
@@ -46,6 +47,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
                     numericValuesProviderPrx
                     )
                 ];
+        }
+        
+        public delegate bool ComputeDelegate(QuantifierEvaluateSetting param);
+        
+        public static bool[] ComputeBatch(QuantifierEvaluateSetting[] param, ComputeDelegate compute)
+        {
+            List<bool> result = new List<bool>(param.Length);
+            for (int i = 0; i < param.Length; i++)
+            {
+                result.Insert(i, compute(param[i]));
+            }
+            return result.ToArray();
         }
     }
 

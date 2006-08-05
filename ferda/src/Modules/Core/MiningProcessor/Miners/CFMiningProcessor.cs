@@ -14,8 +14,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
         protected override void getCedents(out ICollection<IEntityEnumerator> booleanCedents,
                                            out ICollection<CategorialAttributeTrace[]> categorialCedents)
         {
-            booleanCedents = new IEntityEnumerator[] { _condition};
-            categorialCedents = new CategorialAttributeTrace[][] { _attribute};
+            booleanCedents = new IEntityEnumerator[] { _condition };
+            categorialCedents = new CategorialAttributeTrace[][] { _attribute };
         }
 
         public override TaskTypeEnum TaskType
@@ -79,7 +79,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             ContingencyTableHelper contingencyTable;
             double[][] cT;
-            
+
             foreach (CategorialAttributeTrace trace in _attribute)
             {
                 foreach (IBitString cS in _condition)
@@ -105,9 +105,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         goto finish;
                 }
             }
-          
-            finish:
-            ProgressSetValue(1, "Completing result.");
+
+        finish:
             evaluator.Flush();
             resultFinish();
         }

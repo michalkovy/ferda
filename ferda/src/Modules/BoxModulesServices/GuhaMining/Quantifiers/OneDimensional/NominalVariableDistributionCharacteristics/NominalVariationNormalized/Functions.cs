@@ -221,5 +221,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.NominalVaria
                 SupportsFloatContingencyTable
                 );
         }
+
+        public override bool[] ComputeBatch(QuantifierEvaluateSetting[] param, Current current__)
+        {
+            return Common.ComputeBatch(param, this.Compute);
+        }
     }
 }
