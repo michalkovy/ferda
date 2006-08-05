@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="CVS Reader - LumenWorks.Framework.IO" default="build" basedir=".">
 	<target name="build">
-		<csc target="library" output="${path::combine(serverbin.dir,'CvsReader.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(serverbin.dir,'CvsReader.dll')}" debug="${debug}" optimize="${optimize}" keyfile="CvsReader.snk">
 			<sources>
 				<include name="LumenWorks.Framework.IO/**.cs" />
 			</sources>

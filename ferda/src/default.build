@@ -64,7 +64,7 @@
 		</nant>
 	</target>
 	<target name="FerdaBaseBuild" description="Build modules" depends="FerdaBaseCreate-common-assemblyinfo">
-		<csc target="library" output="${path::combine(serverbin.dir,'FerdaBase.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(serverbin.dir,'FerdaBase.dll')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaBase.snk">
 			<sources>
 				<include name="Modules/Core/Base/generated/*.cs"/>
 				<include name="Modules/Core/Base/Exceptions.cs"/>
