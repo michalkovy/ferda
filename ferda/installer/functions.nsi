@@ -822,3 +822,71 @@ Function CheckForSpaces
  Pop $R2
  Pop $R1
 FunctionEnd
+
+
+ ; Usage:
+;   Push $SYSDIR\myDll.dll
+;   Push "MyAssemblyName"
+;   Call AddManagedDLL
+;
+Function AddManagedDLL
+  ;Exch $R0
+  Pop $R5
+  nsExec::Exec '"gacutil.exe" /i "$R5" /f'
+ 
+  ;Pop $R0
+FunctionEnd
+
+
+Function AddToGacFileList
+
+Exch $R0 #path
+Exch
+Exch $R1 #filter
+Exch
+Exch 2
+Exch $R2 #output file
+Exch 2
+Push $R3
+Push $R4
+ ClearErrors
+ FindFirst $R3 $R4 "$R0\$R1"
+ 
+ Loop: 
+ Push "$R0\$R4"
+ Call AddManagedDll
+ IfErrors Errors
+ StrCpy $0 $R4 -4
+ WriteRegStr HKCU "Software\Ferda DataMiner\GAC" "$0" "$R4"
+ ;MessageBox MB_OK|MB_ICONEXCLAMATION "No errors $0 $R4"
+ FindNext $R3 $R4
+ Goto Loop
+  
+ Errors:
+ ;MessageBox MB_OK|MB_ICONEXCLAMATION "Errors $R4"
+ StrCmp $R4 "" Done +1
+ ClearErrors
+ FindNext $R3 $R4
+ Goto Loop
+ 
+ Done:
+ FindClose $R3
+Pop $R4
+Pop $R3
+Pop $R2
+Pop $R1
+Pop $R0
+FunctionEnd
+
+
+Function un.DeleteFromGac
+ 
+StrCpy $0 0
+loop:
+  EnumRegValue $1 HKCU "Software\Ferda DataMiner\GAC" $0
+  nsExec::Exec '"gacutil.exe" /u $1'
+  ;MessageBox MB_OK|MB_ICONEXCLAMATION "Uninstalling $1"
+  IntOp $0 $0 + 1
+  StrCmp $1 "" done loop
+done:
+FunctionEnd

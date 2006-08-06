@@ -11,6 +11,8 @@ SectionGroup "$(Basefiles)" BaseFiles
 	File ..\NEWS
 	File ..\README
 	File ..\UNINSTALL
+	
+	File utils\gacutil.exe
 	  
 	SetOutPath "$INSTDIR\FrontEnd"
 	File ..\bin\FrontEnd\*.*
@@ -82,26 +84,12 @@ SectionGroup "$(Basefiles)" BaseFiles
     Push $INSTDIR\db\application.xml      #-- file to replace in
     Call AdvReplaceInFile         #-- Call the Function
 
-    ;Push "exepath=$\"./FerdaLMTasksBoxes.exe$\""             #-- text to be replaced  within the " "
-    ;Push "exepath=$\"$INSTDIR\Server\FerdaLMTasksBoxes.exe$\""
-    ;Push all                      #-- replace all occurrences
-    ;Push all                      #-- replace all occurrences
-    ;Push $INSTDIR\db\application.xml     #-- file to replace in
-    ;Call AdvReplaceInFile         #-- Call the Function
-    
-    ;editing path in IceConfig.xml file
-
     Push "<IceBinPath />"
     Push "<IceBinPath>$R1\bin\</IceBinPath>"
     Push all
     Push all
     Push $INSTDIR\FrontEnd\FrontEndConfig.xml
     Call AdvReplaceInFile         #-- Call the Function
-
-
-    ;direct installation of the service
-    ; Service (manual starting)
-    ;nsSCM::Install /NOUNLOAD "FerdaIceGridNode" "FerdaIceGridNode" 16 3 "$INSTDIR\ThirdParty\ice\bin\icegridnode.exe --service FerdaIceGridNode --Ice.Config=$\"$INSTDIR\db\config$\" --IceGrid.Registry.Data=$\"$INSTDIR\db\registry$\" --IceGrid.Node.Data=$\"$INSTDIR\db\node$\"" "" "" "" ""
                            
 	;creating .bat for ice
     Push "icegridadmin --Ice.Config=config -e $\"application add $\'application.xml$\'$\""             #-- text to be replaced  within the " "
@@ -111,13 +99,10 @@ SectionGroup "$(Basefiles)" BaseFiles
     Push $INSTDIR\ice-install.bat     #-- file to replace in
     Call AdvReplaceInFile         #-- Call the Function
 
-        
-    
-;need to start FerdaIceGridNode first, otherwise cannot add application.xml
-;nsSCM::Start "FerdaIceGridNode" 
-;executing the batch
-;ExecWait "$INSTDIR\ice-install.bat"
-;nsSCM::Stop "FerdaIceGridNode"
+    Push ""
+    Push "*.dll"
+    Push "$INSTDIR\Server"
+    Call AddToGacFileList
 
 
  SectionEnd
