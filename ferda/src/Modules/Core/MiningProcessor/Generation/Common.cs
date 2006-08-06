@@ -224,17 +224,17 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 {
                     case ImportanceEnum.Forced:
                         while (forcedEnts.ContainsKey(tmpEntCount))
-                            tmpEntCount *= 1.001d;
+                            tmpEntCount *= 1.1d; //UNDONE
                         forcedEnts.Add(tmpEntCount, tmpEnt);
                         break;
                     case ImportanceEnum.Basic:
                         while (basicEnts.ContainsKey(tmpEntCount))
-                            tmpEntCount *= 1.001d;
+                            tmpEntCount *= 1.1d;
                         basicEnts.Add(tmpEntCount, tmpEnt);
                         break;
                     case ImportanceEnum.Auxiliary:
                         while (auxiliaryEnts.ContainsKey(tmpEntCount))
-                            tmpEntCount *= 1.001d;
+                            tmpEntCount *= 1.1d; //UNDONE
                         auxiliaryEnts.Add(tmpEntCount, tmpEnt);
                         break;
                     default:
