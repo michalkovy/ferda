@@ -128,8 +128,10 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             foreach (Quantifier quantifier in quantifiers)
             {
                 double actualEfficiency = quantifier.ActualEfficiency;
+                if (actualEfficiency <= 0.000000001d)
+                    actualEfficiency = 0.00000001d; //UNDONE
                 while (result.ContainsKey(actualEfficiency))
-                    actualEfficiency *= 1.0000001d;
+                    actualEfficiency *= 1.1d; //UNDONE
                 result.Add(actualEfficiency, quantifier);
             }
             return result.Values;
