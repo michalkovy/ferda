@@ -261,7 +261,7 @@ namespace Ferda.FrontEnd
             return acrobatPath;
         }
 
-        private static string GetFaultBoxName(ProjectManager.ProjectManager projManager, ResourceManager resManager, string boxIdentity)
+        private static string GetFaultBoxName(ProjectManager.ProjectManager projManager, string boxIdentity)
         {
             if (!String.IsNullOrEmpty(boxIdentity))
             {
@@ -269,9 +269,43 @@ namespace Ferda.FrontEnd
                 if (faultBox != null)
                     return faultBox.UserName;
             }
-            return resManager.GetString("BoxExceptionDialogFaultName");
+            return null;
         }
 
+        public static string GetFaultBoxName(string faultBoxName, ResourceManager resManager)
+        {
+            if (String.IsNullOrEmpty(faultBoxName))
+                return resManager.GetString("BoxExceptionDialogFaultName");
+            return faultBoxName;
+        }
+
+        private static string exceptionToString(Exception e)
+        {
+            string result = "\n\nException to string:\n";
+            result += e.ToString();
+            if (e.InnerException != null)
+            {
+                result += "\n\nInnerException to string:\n";
+                result += e.InnerException.ToString();
+            }
+            return result;
+        }
+        
+        private static string exceptionSocketNamesToString(string[] socketsNames)
+        {
+            string result = "\n\nSockets:\n";
+            foreach (string socket in socketsNames)
+            {
+                result += socket + '\n';
+            }
+            return result;
+        }
+        
+        private static string exceptionRestrictionTypeToString(restrictionTypeEnum restrictionType)
+        {
+            return "\n\n" + restrictionType.ToString() + '\n';
+        }
+        
         /// <summary>
         /// Validates a box
         /// </summary>
@@ -281,122 +315,21 @@ namespace Ferda.FrontEnd
         public static void ValidateBox(IBoxModule box, ResourceManager resManager,
             ProjectManager.ProjectManager projManager)
         {
-            IBoxModule faultBox;
-            string userMessage = string.Empty;
-            string faultBoxName;
-
             //trying to validate the box and catching the exceptions
             try
             {
                 box.Validate();
             }
             //the Ferda exceptions
-            catch (BadValueError e)
+            catch (Exception e)
             {
-                faultBoxName = GetFaultBoxName(projManager, resManager, e.boxIdentity);
-
-                userMessage += e.userMessage;
-                userMessage += "\n\n" + e.restrictionType.ToString();
-                userMessage += "\n\nSockets:\n";
-                foreach (string socket in e.socketsNames)
-                {
-                    userMessage += socket + '\n';
-                }
-#if DEBUG
-                userMessage += "\n\nException to string:\n";
-                userMessage += e.ToString();
-                if (e.InnerException != null)
-                {
-                    userMessage += "\n\nInnerException to string:\n";
-                    userMessage += e.InnerException.ToString();
-                }
-#endif
-                BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBoxName, e.userMessage);
-                d.ShowDialog();
-                return;
-            }
-            catch (BadParamsError e)
-            {
-                faultBoxName = GetFaultBoxName(projManager, resManager, e.boxIdentity);
-
-                userMessage += e.userMessage;
-                userMessage += "\n\n" + e.restrictionType.ToString();
-#if DEBUG
-                userMessage += "\n\nException to string:\n";
-                userMessage += e.ToString();
-                if (e.InnerException != null)
-                {
-                    userMessage += "\n\nInnerException to string:\n";
-                    userMessage += e.InnerException.ToString();
-                }
-#endif
-                BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBoxName, userMessage);
-                d.ShowDialog();
-                return;
-            }
-            catch (NoConnectionInSocketError e)
-            {
-                faultBoxName = GetFaultBoxName(projManager, resManager, e.boxIdentity);
-
-                userMessage += e.userMessage;
-
-                userMessage += "\n\nSockets:\n";
-                foreach (string socket in e.socketsNames)
-                {
-                    userMessage += socket + '\n';
-                }
-#if DEBUG
-                userMessage += "\n\nException to string:\n";
-                userMessage += e.ToString();
-                if (e.InnerException != null)
-                {
-                    userMessage += "\n\nInnerException to string:\n";
-                    userMessage += e.InnerException.ToString();
-                }
-#endif
+                string faultBoxName;
+                string message;
+                GetExceptionInfo(e, projManager, out faultBoxName, out message);
+                faultBoxName = GetFaultBoxName(faultBoxName, resManager);
 
                 BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBoxName, userMessage);
-                d.ShowDialog();
-                return;
-            }
-            catch (BoxRuntimeError e)
-            {
-                faultBoxName = GetFaultBoxName(projManager, resManager, e.boxIdentity);
-
-                userMessage += e.userMessage;
-#if DEBUG
-                userMessage += "\n\nException to string:\n";
-                userMessage += e.ToString();
-                if (e.InnerException != null)
-                {
-                    userMessage += "\n\nInnerException to string:\n";
-                    userMessage += e.InnerException.ToString();
-                }
-#endif
-                BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    faultBoxName, userMessage);
-                d.ShowDialog();
-                return;
-            }
-            // other unwanted exceptions
-            catch (Ice.UnknownUserException e)
-            {
-#if DEBUG
-                userMessage += "\n\nException to string:\n";
-                userMessage += e.ToString();
-                if (e.InnerException != null)
-                {
-                    userMessage += "\n\nInnerException to string:\n";
-                    userMessage += e.InnerException.ToString();
-                }
-#else
-                userMessage += resManager.GetString("ValidateICEException");
-#endif
-                BoxExceptionDialog d = new BoxExceptionDialog(resManager,
-                    box.UserName, userMessage);
+                    faultBoxName, message);
                 d.ShowDialog();
                 return;
             }
@@ -404,6 +337,73 @@ namespace Ferda.FrontEnd
             //showing to the user that the validation went right
             MessageBox.Show(resManager.GetString("ValidateOK"),
                 resManager.GetString("ValidateCaption"));
+        }
+
+        public static void GetExceptionInfo(Exception ex,
+            ProjectManager.ProjectManager projManager, out string faultBoxName, out string message)
+        {
+            faultBoxName = string.Empty;
+            message = string.Empty;
+
+            {
+                BadValueError e = ex as BadValueError;
+                if (e != null)
+                {
+                    faultBoxName = GetFaultBoxName(projManager, e.boxIdentity);
+
+                    message += e.userMessage;
+                    message += exceptionRestrictionTypeToString(e.restrictionType);
+                    message += exceptionSocketNamesToString(e.socketsNames);
+                    message += exceptionToString(e);
+                    return;
+                }
+            }
+            {
+                BadParamsError e = ex as BadParamsError;
+                if (e != null)
+                {
+                    faultBoxName = GetFaultBoxName(projManager, e.boxIdentity);
+
+                    message += e.userMessage;
+                    message += exceptionRestrictionTypeToString(e.restrictionType);
+                    message += exceptionToString(e);
+
+                    return;
+                }
+            }
+            {
+                NoConnectionInSocketError e = ex as NoConnectionInSocketError;
+                if (e != null)
+                {
+                    faultBoxName = GetFaultBoxName(projManager, e.boxIdentity);
+
+                    message += e.userMessage;
+                    message += exceptionSocketNamesToString(e.socketsNames);
+                    message += exceptionToString(e);
+
+                    return;
+                }
+            }
+            {
+                BoxRuntimeError e = ex as BoxRuntimeError;
+                if (e != null)
+                {
+                    faultBoxName = GetFaultBoxName(projManager, e.boxIdentity);
+
+                    message += e.userMessage;
+                    message += exceptionToString(e);
+
+                    return;
+                }
+            }
+            // other unwanted exceptions (Ice.UnknownUserException or Exception)
+            {
+                //message += resManager.GetString("ValidateICEException");
+
+                message += exceptionToString(ex);
+
+                return;
+            }
         }
     }
 }

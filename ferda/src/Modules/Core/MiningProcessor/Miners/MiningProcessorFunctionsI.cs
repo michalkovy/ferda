@@ -141,7 +141,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 else
                     progressBarPrx.setValue(-1, "Generation failed");
                 System.Threading.Thread.Sleep(1500);
-                throw Modules.Exceptions.BoxRuntimeError(e, null, "An error ocured in mining processor: " + e.Message);
+                throw Modules.Exceptions.BoxRuntimeError(e, null, "An error ocured in mining processor: " + e.Message + "\n" + e.ToString());
             }
             finally
             {

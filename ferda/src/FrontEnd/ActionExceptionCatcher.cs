@@ -87,32 +87,30 @@ namespace Ferda.FrontEnd
         /// <param name="ex">An Ice.Exception</param>
         public override void ice_exception(Exception ex)
         {
-            if (ex is Ferda.Modules.BoxRuntimeError)
-            {
-                Ferda.Modules.BoxRuntimeError error = (Ferda.Modules.BoxRuntimeError)ex;
-
-                //getting info about the box that has created the exception
-                IBoxModule box =
-                    projectManager.ModulesManager.GetIBoxModuleByIdentity(error.boxIdentity);
+            //if (ex is Ferda.Modules.BoxRuntimeError)
+            //{...
+                string faultBoxName;
+                string message;
+                FrontEndCommon.GetExceptionInfo(ex, projectManager, out faultBoxName, out message);
                 
-                BoxExceptionThreadClass c = new BoxExceptionThreadClass(projectManager.ModulesManager, resourceManager, box, error.userMessage);
+                BoxExceptionThreadClass c = new BoxExceptionThreadClass(projectManager.ModulesManager, resourceManager, faultBoxName, message);
                 Thread th = new Thread(new ThreadStart(c.ThreadStart));
                 th.Start();
                 return;
-            }
-            if (ex is Ferda.Modules.BadParamsError)
-            {
-                Ferda.Modules.BadParamsError error =
-                    (Ferda.Modules.BadParamsError)ex;
+            //}
+            //if (ex is Ferda.Modules.BadParamsError)
+            //{
+            //    Ferda.Modules.BadParamsError error =
+            //        (Ferda.Modules.BadParamsError)ex;
 
-                //getting info about the box that has created the exception
-                IBoxModule box =
-                    projectManager.ModulesManager.GetIBoxModuleByIdentity(error.boxIdentity);
+            //    //getting info about the box that has created the exception
+            //    IBoxModule box =
+            //        projectManager.ModulesManager.GetIBoxModuleByIdentity(error.boxIdentity);
 
-                BoxExceptionThreadClass c = new BoxExceptionThreadClass(projectManager.ModulesManager, resourceManager, box, error.userMessage);
-                Thread th = new Thread(new ThreadStart(c.ThreadStart));
-                th.Start();
-            }
+            //    BoxExceptionThreadClass c = new BoxExceptionThreadClass(projectManager.ModulesManager, resourceManager, box, error.userMessage);
+            //    Thread th = new Thread(new ThreadStart(c.ThreadStart));
+            //    th.Start();
+            //}
         }
 
         /// <summary>
