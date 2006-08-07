@@ -4,14 +4,43 @@
 <article lang="cs">
   <articleinfo>
     <title>Kompilace Ferdy na operačním systému Windows</title>
+    <authorgroup>
+      <author>
+        <firstname>Michal</firstname>
 
-    <author>
-      <firstname>Michal</firstname>
+        <surname>Kováč</surname>
 
-      <surname>Kováč</surname>
-
-      <email>michal.kovac.develop@centrum.cz</email>
-    </author>
+        <email>michal.kovac.develop@centrum.cz</email>
+      </author>
+      <author>
+        <firstname>Martin</firstname>
+        <surname>Ralbovský</surname>
+        <email>martin.ralbovsky@gmail.com</email>
+      </author>
+    </authorgroup>
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.1</revnumber>
+        <date>2006-08-07</date>
+        <revdescription>
+          <para>
+            Úprava dokumentu podle nové verzi Ferdy, přechod na nový Nant, Ice 3.1
+            a přidání DLLek do GAC.
+          </para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2006-03-22</date>
+        <revdescription>
+          <para>
+            Dokument vytvořen
+          </para>
+        </revdescription>
+      </revision>
+    </revhistory>
+    -->
   </articleinfo>
 
   <abstract>
@@ -21,18 +50,31 @@
   <section>
     <title>Získání zdrojových souborů Ferdy</title>
 
-    <para>Buď lze stáhnout zdrojové soubory ze Sourceforge (<ulink url="http://ferda.sourceforge.net">http://ferda.sourceforge.net</ulink>) či lze stáhnout zdrojové soubory ze subversion repository například příkazem <code>svn checkout svn://svn.berlios.de/ferdadataminer/ferda</code></para>
+    <para>
+      Buď lze stáhnout zdrojové soubory ze Sourceforge (<ulink url="http://ferda.sourceforge.net">http://ferda.sourceforge.net</ulink>) 
+      či lze stáhnout zdrojové soubory ze subversion repository umístněné na adrese
+      <code>https://svn.sourceforge.net/svnroot/ferda</code>.
+    </para>
   </section>
 
   <section>
     <title>Potřebné nástroje a nastavení</title>
 
-    <para>Pro kompilaci Ferdy je potřeba nainstalovat .NET Framework 2.0, .NET
-    Framework 2.0 SDK, poslední verzi <ulink
-    url="http://nant.sourceforge.net">NAntu</ulink> a <ulink
-    url="http://www.zeroc.com">Ice</ulink>. Po nainstalování NAntu a Ice je třeba dát
-    Ice a NAnt bin adresář do proměnné prostředí PATH. Dále je třeba v souboru
-    ferda.build nastavit proměnnou ice.dir na adresář Ice.</para>
+    <para>
+      Pro kompilaci Ferdy je potřeba nainstalovat .NET Framework 2.0, .NET
+      Framework 2.0 SDK,
+      <ulink url="http://nant.sourceforge.net">NAnt</ulink>(v součastné verzi je podporovaná verze  0.85rc4)
+
+      a
+      <ulink url="http://www.zeroc.com">Ice</ulink> (součastná verze Ferdy běží na Ice 3.1.).
+      Po nainstalování NAntu a Ice je třeba dát
+      Ice a NAnt bin adresář do proměnné prostředí PATH. Dále je třeba v souboru
+      ferda.build nastavit proměnnou ice.dir na adresář Ice.
+      Protože se dll knihovny Ferdy automaticky přidávají do GAC (Global Assembly Cache), je třeba
+      mít pro správné fungování NAnt skriptů v proměnné PATH také příkaz gacutil, který přidává
+      knihovny do GAC (typická cesta je například "c:\Program
+      Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\").
+    </para>
   </section>
 
   <section>
