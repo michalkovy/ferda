@@ -23,8 +23,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private static readonly BitStringCache _instance = new BitStringCache(cacheDefaultSize);
         private static readonly object padlock = new object();
 
-        private const int cacheDefaultSize = 1048576; // ~1Mb
-        // private const int cacheDefaultSize = 1310720; // ~10MB
+        //private const int cacheDefaultSize = 1048576; // ~1Mb
+        //private const int cacheDefaultSize = 1310720; // ~10MB
+        private const int cacheDefaultSize = 32768; // ~32MB
         // size is in BitString units i.e. for strings of 
         // bits its in bits, for strings of floats (fuzzy bit strings) 
         // it is in floats

@@ -36,9 +36,9 @@ namespace Ferda.FrontEnd
         /// </summary>
         protected ResourceManager resourceManager;
         /// <summary>
-        /// Box that has thrown the exception
+        /// The name of box which failed.
         /// </summary>
-        protected IBoxModule box;
+        protected string faultBoxName;
         /// <summary>
         /// Message to be displayed to the user
         /// </summary>
@@ -51,17 +51,17 @@ namespace Ferda.FrontEnd
         /// <summary>
         /// Default constructor of the class
         /// </summary>
-        /// <param name="menuItem">Modules manager of the application</param>
+        /// <param name="modulesManager">The Modules Manager.</param>
         /// <param name="resManager">Resource manager</param>
-        /// <param name="box">Box that has thrown the exception</param>
+        /// <param name="faultBoxName">Name of the fault box.</param>
         /// <param name="userMessage">Message to be displayed to the user</param>
-        public BoxExceptionThreadClass(ModulesManager.ModulesManager mod,
-            ResourceManager resManager, IBoxModule box, string userMessage)
+        public BoxExceptionThreadClass(ModulesManager.ModulesManager modulesManager,
+            ResourceManager resManager, string faultBoxName, string userMessage)
         {
             this.resourceManager = resManager;
-            this.box = box;
+            this.faultBoxName = faultBoxName;
             this.userMessage = userMessage;
-            this.modulesManager = mod;
+            this.modulesManager = modulesManager;
         }
 
         /// <summary>
@@ -70,8 +70,10 @@ namespace Ferda.FrontEnd
         public void ThreadStart()
         {
             modulesManager.UnlockAllBoxes();
-            BoxExceptionDialog dialog = new BoxExceptionDialog(resourceManager,
-                box.UserName, userMessage);
+            BoxExceptionDialog dialog;
+            faultBoxName = FrontEndCommon.GetFaultBoxName(faultBoxName, resourceManager);
+            dialog = new BoxExceptionDialog(resourceManager,
+                faultBoxName, userMessage);
             dialog.ShowDialog();
         }
     }

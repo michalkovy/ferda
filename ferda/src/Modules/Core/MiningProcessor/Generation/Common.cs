@@ -448,6 +448,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
             {
                 if (sB.Count > 0)
                     sB.Pop();
+                if (enumerator.Current == null)
+                    throw new ApplicationException("enumerator.Current == null in private bool moveNextInTopEntity()");
                 sBPush(enumerator.Current);
                 return true;
             }
@@ -460,11 +462,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
         private bool returnCurrent(out IBitString result)
         {
             // TODO classes of equivalence ... rozmyslet a dodelat
-
+            if (sB == null)
+                throw new ApplicationException("sB is null in private bool returnCurrent(out IBitString result)");
             Debug.Assert(sB.Count <= _effectiveMaxLength);
             if (sB.Count >= _effectiveMinLength)
             {
                 result = sB.Peek();
+                if (result == null)
+                    throw new ApplicationException("result is null in private bool returnCurrent(out IBitString result)");
                 SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
                 if (parentSkipSetting != null)
                 {
@@ -487,6 +492,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
             Debug.Assert(enumerator.MoveNext());
             sE.Push(enumerator);
+            if (enumerator.Current == null)
+            {
+                throw new ApplicationException("enumerator.Current == null in private void getEntity(int index)");
+                // + _sourceEntities[index].ToString()
+            }
             sBPush(enumerator.Current);
             sI.Push(index);
         }

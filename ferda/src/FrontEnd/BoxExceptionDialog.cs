@@ -121,7 +121,6 @@ namespace Ferda.FrontEnd
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BoxExceptionDialog));
             this.BOk = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.LBox = new System.Windows.Forms.Label();
@@ -133,8 +132,9 @@ namespace Ferda.FrontEnd
             // 
             // BOk
             // 
+            this.BOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.BOk.Location = new System.Drawing.Point(382, 231);
+            this.BOk.Location = new System.Drawing.Point(382, 235);
             this.BOk.Name = "BOk";
             this.BOk.Size = new System.Drawing.Size(75, 23);
             this.BOk.TabIndex = 0;
@@ -190,10 +190,13 @@ namespace Ferda.FrontEnd
             // 
             // RTBExceptionDetails
             // 
+            this.RTBExceptionDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.RTBExceptionDetails.Location = new System.Drawing.Point(214, 116);
             this.RTBExceptionDetails.Name = "RTBExceptionDetails";
             this.RTBExceptionDetails.ReadOnly = true;
-            this.RTBExceptionDetails.Size = new System.Drawing.Size(243, 96);
+            this.RTBExceptionDetails.Size = new System.Drawing.Size(243, 113);
             this.RTBExceptionDetails.TabIndex = 6;
             this.RTBExceptionDetails.Text = "";
             // 
@@ -201,7 +204,7 @@ namespace Ferda.FrontEnd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(469, 266);
+            this.ClientSize = new System.Drawing.Size(467, 265);
             this.Controls.Add(this.RTBExceptionDetails);
             this.Controls.Add(this.LExceptionDetails);
             this.Controls.Add(this.LExceptionKecy);
@@ -209,9 +212,8 @@ namespace Ferda.FrontEnd
             this.Controls.Add(this.LBox);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.BOk);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(475, 294);
             this.Name = "BoxExceptionDialog";
             this.Text = "BoxExceptionDialog";
             this.ResumeLayout(false);

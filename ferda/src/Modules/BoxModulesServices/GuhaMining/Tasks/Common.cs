@@ -475,6 +475,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
 
         public static void RunTask(BoxModuleI boxModule, ITask taskFunctions, TaskTypeEnum taskType)
         {
+            //validate
+            //boxModule.Manager.getBoxModuleValidator().validate(boxModule.StringIceIdentity);
+            
             MiningProcessorFunctionsPrx miningProcessor = GetMiningProcessorFunctionsPrx(boxModule);
             BitStringGeneratorProviderPrx bsProvider = GetBitStringGeneratorProviderPrx(boxModule);
 

@@ -35,7 +35,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             public Hypothesis Hypothesis;
         }
 
-        private const int _bufferSize = 30;
+        private const int _bufferSize = 300;
         private bufferItem[] _buffer = new bufferItem[_bufferSize];
         private int _actBufferUsed = 0;
 
