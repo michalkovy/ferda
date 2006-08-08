@@ -1365,7 +1365,6 @@ namespace Ferda.Modules
                         case "::Ferda::Modules::TimeT":
                             return new TimeTI(0, 0, 0);
                         default:
-                            Debug.Assert(false, "Switch case not implemented " + propertyDataType);
                             throw new NotImplementedException();
                     }
                 }

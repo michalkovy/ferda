@@ -367,8 +367,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         {
             // categoryName is "" if it should be null (throught middleware)
             if (String.IsNullOrEmpty(categoryName))
-                return null;
-
+                if (fallOnError)
+                    throw Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
+                                                 "String.IsNullOrEmpty(categoryName) in public BitStringIce GetBitString(string categoryName, bool fallOnError)");
+                else
+                    return null;
+            
             lock (this)
             {
                 return ExceptionsHandler.GetResult<BitStringIce>(
@@ -377,7 +381,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     {
                         Dictionary<string, BitStringIce> cachedValueBitStrings = GetBitStrings(fallOnError);
                         if (cachedValueBitStrings == null)
-                            return null;
+                        {
+                            if (fallOnError)
+                                throw Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
+                                                                 "cachedValueBitStrings == null in public BitStringIce GetBitString(string categoryName, bool fallOnError)");
+                            else
+                                return null;
+                        }
                         else
                         {
                             try

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -139,7 +140,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
             returnCurrent:
             if (returnCurrent(out result))
+            {
+                //if (result == null)
+                //    throw new ApplicationException("result == null in public IEnumerator<M> GetEnumerator()");
                 yield return result;
+            }
             prolong:
             if (prolong(afterRemove))
             {

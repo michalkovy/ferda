@@ -34,7 +34,7 @@ namespace Ferda.Modules.Boxes
                 }
                 dummy = boxInfo.GetHint(locales);
                 dummy = boxInfo.GetLabel(locales);
-                Debug.Assert(String.IsNullOrEmpty((string)dummy));
+                Debug.Assert(!String.IsNullOrEmpty((string)dummy));
 
                 dummy = boxInfo.GetActions(locales);
                 dummy = boxInfo.GetProperties(locales);
