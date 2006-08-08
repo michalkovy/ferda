@@ -1,5 +1,6 @@
 #define BATCH
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Ferda.Guha.MiningProcessor.Miners;
@@ -22,7 +23,27 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             _result = miningProcessor.Result;
             _rInfo = miningProcessor.ResultInfo;
             _n = miningProcessor.TaskParams.maxSizeOfResult;
+            switch(_miningProcessor.TaskType)
+            {
+                case TaskTypeEnum.FourFold:
+                case TaskTypeEnum.SDFourFold:
+                    _bufferMaxUsedSize = _bufferSize;
+                    break;
+                case TaskTypeEnum.KL:
+                case TaskTypeEnum.SDKL:
+                    _bufferMaxUsedSize = _bufferSize / 100;
+                    break;
+                case TaskTypeEnum.CF:
+                case TaskTypeEnum.SDCF:
+                    _bufferMaxUsedSize = _bufferSize / 10;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            if (_bufferMaxUsedSize <= 0)
+                throw new ApplicationException();
         }
+        private readonly int _bufferMaxUsedSize;
 
         private class bufferItem
         {
@@ -38,16 +59,17 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         private const int _bufferSize = 300;
         private bufferItem[] _buffer = new bufferItem[_bufferSize];
         private int _actBufferUsed = 0;
+        
 
         public bool VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis)
         {
 #if BATCH //Valid ComputeBatch(setting[] ...)
-            if (_actBufferUsed < _bufferSize)
+            if (_actBufferUsed < _bufferMaxUsedSize)
             {
                 _buffer[_actBufferUsed] = new bufferItem(contingencyTable, hypothesis);
                 _actBufferUsed++;
             }
-            if (_actBufferUsed == _bufferSize)
+            if (_actBufferUsed == _bufferMaxUsedSize)
                 return flushIsComplete();
 
             return false;
