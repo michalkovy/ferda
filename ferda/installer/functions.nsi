@@ -884,8 +884,8 @@ Function un.DeleteFromGac
 StrCpy $0 0
 loop:
   EnumRegValue $1 HKCU "Software\Ferda DataMiner\GAC" $0
-  nsExec::Exec '"gacutil.exe" /u $1'
-  ;MessageBox MB_OK|MB_ICONEXCLAMATION "Uninstalling $1"
+ ; MessageBox MB_OK|MB_ICONEXCLAMATION "Uninstalling $1"
+  ExecWait '"$INSTDIR\gacutil.exe" /u "$1"'
   IntOp $0 $0 + 1
   StrCmp $1 "" done loop
 done:
