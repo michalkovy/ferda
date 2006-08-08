@@ -16,8 +16,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (columnOperand == null)
                 throw new ArgumentNullException("columnOperand");
 
-            int rNum = rowOperand.GetLength(0);
-            int cNum = columnOperand.GetLength(0);
+            int rNum = rowOperand.Length;
+            int cNum = columnOperand.Length;
 
             IBitString[][] result = new IBitString[rNum][];
             for (int r = 0; r < rNum; r++)
@@ -38,8 +38,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (operand == null)
                 throw new ArgumentNullException("operand");
 
-            int rNum = twoDimTable.GetLength(0);
-            int cNum = twoDimTable.GetLength(1);
+            int rNum = twoDimTable.Length;
+            int cNum = twoDimTable[0].Length;
 
             IBitString[][] result = new IBitString[rNum][];
             for (int r = 0; r < rNum; r++)
@@ -60,7 +60,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (operand == null)
                 throw new ArgumentNullException("operand");
 
-            int rNum = rowOperand.GetLength(0);
+            int rNum = rowOperand.Length;
 
             IBitString[] result = new IBitString[rNum];
             for (int r = 0; r < rNum; r++)
@@ -85,8 +85,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (columnOperand == null)
                 throw new ArgumentNullException("columnOperand");
 
-            int rNum = rowOperand.GetLength(0);
-            int cNum = columnOperand.GetLength(0);
+            int rNum = rowOperand.Length;
+            int cNum = columnOperand.Length;
 
             IBitString[][] result = new IBitString[rNum][];
             for (int r = 0; r < rNum; r++)
@@ -107,8 +107,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (operand == null)
                 throw new ArgumentNullException("operand");
 
-            int rNum = twoDimTable.GetLength(0);
-            int cNum = twoDimTable.GetLength(1);
+            int rNum = twoDimTable.Length;
+            int cNum = twoDimTable[0].Length;
 
             IBitString[][] result = new IBitString[rNum][];
             for (int r = 0; r < rNum; r++)
@@ -129,7 +129,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (operand == null)
                 throw new ArgumentNullException("operand");
 
-            int rNum = rowOperand.GetLength(0);
+            int rNum = rowOperand.Length;
 
             IBitString[] result = new IBitString[rNum];
             for (int r = 0; r < rNum; r++)
