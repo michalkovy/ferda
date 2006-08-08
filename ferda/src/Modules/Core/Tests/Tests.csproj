@@ -57,8 +57,6 @@
   <ItemGroup>
     <Compile Include="Attribute\AttributeTest.cs" />
     <Compile Include="MiningProcessor\HypothesisSerializableTest.cs" />
-    <Compile Include="Math\FactorialTest.cs" />
-    <Compile Include="Math\FourFoldQuantifiersTest.cs" />
     <Compile Include="Data\GenericDatabaseCacheTest.cs" />
     <Compile Include="Attribute\Helper.cs" />
     <Compile Include="MiningProcessor\MiningProcessorTest.cs" />

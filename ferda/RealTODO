@@ -17,3 +17,7 @@ Vsichni
  - nasadit teoretickou dokumentaci (az bude)
  - schuzka s Rauchem
 
+Od verze 2.0
+ - krabicka column by mohl mit vlastnost "contains NULL values"
+ - frekvence kategorii pomocí sql dotazù (pøi velkém množství dat nebo malém poètu kategorií)
+ - MiningProcessor: Total Count of relevant questions neumí pracovat s Importance a Classes of equivalence
