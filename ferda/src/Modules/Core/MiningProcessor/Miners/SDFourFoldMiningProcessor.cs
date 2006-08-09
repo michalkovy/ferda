@@ -20,7 +20,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         public override TaskTypeEnum TaskType
         {
-            get { return TaskTypeEnum.FourFold; }
+            get { return TaskTypeEnum.SDFourFold; }
         }
 
         protected override CategorialAttributeTrace[] attributesWhichShouldSupportNumericValues()

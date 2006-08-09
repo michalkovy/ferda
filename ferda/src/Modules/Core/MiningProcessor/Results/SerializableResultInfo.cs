@@ -13,6 +13,11 @@ namespace Ferda.Guha.MiningProcessor.Results
     public class SerializableResultInfo
     {
         /// <summary>
+        /// Other string info ... for some other purposes (like performance testing).
+        /// </summary>
+        public string OtherInfo;
+        
+        /// <summary>
         /// Total number of relevant questions specified by
         /// setting all boolean/categorial attributes.
         /// </summary>

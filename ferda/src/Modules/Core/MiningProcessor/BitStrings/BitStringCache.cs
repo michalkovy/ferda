@@ -131,9 +131,28 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         #endregion
 
+        private static long _iceTicks;
+        public static long IceTicks
+        {
+            get { return _iceTicks; }
+            set { _iceTicks = value; }
+        }
+
+        private static long _iceCalls;
+        public static long IceCalls
+        {
+            get { return _iceCalls; }
+            set { _iceCalls = value; }
+        }
+        
         public override IBitString GetValue(BitStringIdentifier key)
         {
+            long before = DateTime.Now.Ticks;
+            _iceCalls++;
+            
             BitStringIce bs = GetBitStringGeneratorPrx(key.AttributeGuid).GetBitString(key.CategoryId);
+            
+            _iceTicks += DateTime.Now.Ticks - before;
             return new BitString(key, bs.length, bs.value);
         }
 

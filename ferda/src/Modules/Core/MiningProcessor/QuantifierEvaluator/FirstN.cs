@@ -125,15 +125,15 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 }
             }
 
-            _miningProcessor.ProgressSetValue(
-                _rInfo.NumberOfHypotheses / _n,
+            bool shouldStop = !_miningProcessor.ProgressSetValue(
+                (float)(_rInfo.NumberOfHypotheses) / (float)_n,
                 string.Format("Number of Verifications: {0}, Number of hypotheses: {1}",
                               _rInfo.NumberOfVerifications,
                               _rInfo.NumberOfHypotheses)
                 );
             
             _actBufferUsed = 0;
-            return finalResult;
+            return finalResult || shouldStop;
         }
 
         #region IEvaluator Members
@@ -146,13 +146,6 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         public bool VerifyIsCompleteSDSecondSet(ContingencyTableHelper contingencyTable, double[] sDFirstSetValues, Hypothesis hypothesis)
         {
-            _rInfo.NumberOfVerifications++;
-            _miningProcessor.ProgressSetValue(
-                _rInfo.NumberOfHypotheses / _n,
-                string.Format("Number of Verifications: {0}, Number of hypotheses: {1}",
-                              _rInfo.NumberOfVerifications,
-                              _rInfo.NumberOfHypotheses)
-                );
             double[] sDSecondSetValues = _quantifiers.Values(contingencyTable);
             Debug.Assert(sDFirstSetValues.Length == sDSecondSetValues.Length);
             for (int i = 0; i < sDFirstSetValues.Length; i++)
@@ -169,7 +162,13 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         return true;
                 }
             }
-            return false;
+            bool shouldStop = !_miningProcessor.ProgressSetValue(
+                (float)(_rInfo.NumberOfHypotheses) / (float)_n,
+                string.Format("Number of Verifications: {0}, Number of hypotheses: {1}",
+                              _rInfo.NumberOfVerifications,
+                              _rInfo.NumberOfHypotheses)
+                );
+            return false || shouldStop;
         }
 
         #endregion
