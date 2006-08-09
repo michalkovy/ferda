@@ -4,7 +4,7 @@
 Ice.Default.Locator=IceGrid/Locator:tcp -h 127.0.0.1 -p 12000
 
 Ice.MessageSizeMax=409600
-#default 1024kB~1MB
+#default 1024 i.e. 1024kB i.e. 1MB
 
 #
 # IceGrid registry configuration.
