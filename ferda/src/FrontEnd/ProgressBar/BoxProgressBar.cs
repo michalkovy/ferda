@@ -257,6 +257,21 @@ namespace Ferda.FrontEnd.ProgressBar
             }
         }
 
+        /// <summary>
+        /// Adapts the width of the progress bar according to the new value
+        /// determined in parameter. The method occurs when resizing
+        /// </summary>
+        /// <param name="width">New width of the control</param>
+        public void ChangeWidht(int width)
+        {
+            this.Size = new Size(width, Height);
+            this.progressBar.Width = width;
+            this.LLHide.Location = 
+                new Point(width - LLHide.Width, LLHide.Location.Y);
+            this.LLStop.Location =
+                new Point(width - LLStop.Width, LLStop.Location.Y);
+        }
+
         #endregion
 
         #region Events

@@ -85,6 +85,11 @@ namespace Ferda.FrontEnd.ProgressBar
             if (Parent != null)
             {
                 this.Size = Parent.Size;
+
+                foreach (BoxProgressBar bar in Controls)
+                {
+                    bar.ChangeWidht(this.Size.Width);
+                }
             }
         }
 

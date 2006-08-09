@@ -186,10 +186,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Property\AsyncPropertyCatcher.cs" />
-    <EmbeddedResource Include="BoxExceptionDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>BoxExceptionDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Desktop\RenameDialog.resx">
       <DependentUpon>RenameDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
