@@ -322,7 +322,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
             get { return _denominator; }
         }
-        
+
         public bool IsEmpty
         {
             get
@@ -338,7 +338,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 return true;
             }
         }
-        
+
         private string _numericValuesAttributeGuid;
         public string NumericValuesAttributeGuid
         {
@@ -354,7 +354,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 {
                     computeDenominators();
                 }
-                return _relativeToActConditionDenominator*_denominator;
+                return _relativeToActConditionDenominator * _denominator;
             }
         }
 
@@ -367,7 +367,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 {
                     computeDenominators();
                 }
-                return _relativeToMaxFrequencyDenominator*_denominator;
+                return _relativeToMaxFrequencyDenominator * _denominator;
             }
         }
 
@@ -399,12 +399,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 for (int c = 0; c < numOfCols; c++)
                 {
                     result[r][c] = System.Math.Abs(
-                        op1.ContingencyTable[r][c]*op2Den
-                        - op2.ContingencyTable[r][c]*op1Den
+                        op1.ContingencyTable[r][c] * op2Den
+                        - op2.ContingencyTable[r][c] * op1Den
                         );
                 }
             }
-            double newDenominator = op1Den*op2Den;
+            double newDenominator = op1Den * op2Den;
             if (op1.NumericValuesAttributeGuid == null)
                 return new ContingencyTableHelper(result, op1.AllObjectsCount, newDenominator);
             else
@@ -457,7 +457,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 case BoundTypeEnum.All:
                     return 0;
                 case BoundTypeEnum.Half:
-                    return (int) System.Math.Floor((double) length/2);
+                    return (int)System.Math.Floor((double)length / 2);
                 case BoundTypeEnum.Number:
                     if (fromBound.number < length)
                         return length;
@@ -475,7 +475,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 case BoundTypeEnum.All:
                     return length - 1;
                 case BoundTypeEnum.Half:
-                    return (int) System.Math.Ceiling((double) length/2);
+                    return (int)System.Math.Ceiling((double)length / 2);
                 case BoundTypeEnum.Number:
                     if (toBound.number < length)
                         return length;
@@ -566,7 +566,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 case UnitsEnum.RelativeToActCondition:
                     if (b != null) // subTable
                     {
-                        result.denominator = _cached[b].RelativeToActConditionDenominator*_denominator;
+                        result.denominator = _cached[b].RelativeToActConditionDenominator * _denominator;
                     }
                     else
                     {
@@ -574,12 +574,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     }
                     break;
                 case UnitsEnum.RelativeToAllObjects:
-                    result.denominator = _allObjectsCount*_denominator;
+                    result.denominator = _allObjectsCount * _denominator;
                     break;
                 case UnitsEnum.RelativeToMaxFrequency:
                     if (b != null) // subTable
                     {
-                        result.denominator = _cached[b].RelativeToMaxFrequencyDenominator*_denominator;
+                        result.denominator = _cached[b].RelativeToMaxFrequencyDenominator * _denominator;
                     }
                     else
                     {
@@ -608,7 +608,23 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                                                      MissingInformationHandlingEnum missingInformationHandling,
                                                      UnitsEnum units)
         {
-            FourFoldContingencyTable fourFCT = new FourFoldContingencyTable();
+            double[][] fourFoldCT;
+            bool fromFFCT = false;
+            FourFoldContingencyTable fourFCT = null;
+
+            if (_contingencyTable.Length == 2 && _contingencyTable[0].Length == 2)
+            {
+                fromFFCT = true;
+                if (missingInformationHandling == MissingInformationHandlingEnum.Deleting)
+                {
+                    fourFoldCT = _contingencyTable;
+                    goto skipMissingInformationHandlingSwitch;
+                }
+                else
+                    throw new NotImplementedException();
+            }
+
+            fourFCT = new FourFoldContingencyTable();
             NineFoldContingencyTablePair nineFCTP = new NineFoldContingencyTablePair(_contingencyTable);
             switch (missingInformationHandling)
             {
@@ -788,8 +804,10 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 default:
                     throw new NotImplementedException();
             }
+            fourFoldCT = fourFCT.ContingencyTable;
+        skipMissingInformationHandlingSwitch:
             QuantifierEvaluateSetting result = new QuantifierEvaluateSetting();
-            result.contingencyTable = fourFCT.ContingencyTable;
+            result.contingencyTable = fourFoldCT;
             result.numericValuesProviders = null;
             //result.numericValuesAttributeId = null;
 
@@ -802,13 +820,19 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     result.denominator = 1;
                     break;
                 case UnitsEnum.RelativeToActCondition:
-                    result.denominator = fourFCT.RelativeToActConditionDenominator*_denominator;
+                    if (fromFFCT)
+                        result.denominator = relativeToActConditionDenominator * _denominator;
+                    else
+                        result.denominator = fourFCT.RelativeToActConditionDenominator * _denominator;
                     break;
                 case UnitsEnum.RelativeToAllObjects:
-                    result.denominator = _allObjectsCount*_denominator;
+                    result.denominator = _allObjectsCount * _denominator;
                     break;
                 case UnitsEnum.RelativeToMaxFrequency:
-                    result.denominator = fourFCT.RelativeToMaxFrequencyDenominator*_denominator;
+                    if (fromFFCT)
+                        result.denominator = relativeToMaxFrequencyDenominator * _denominator;
+                    else
+                        result.denominator = fourFCT.RelativeToMaxFrequencyDenominator * _denominator;
                     break;
                 default:
                     throw new NotImplementedException();

@@ -398,38 +398,67 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return atLeastSignificantValidValue(setting, out value);
         }
 
+        private static long _iceTicks;
+        public static long IceTicks
+        {
+            get { return _iceTicks; }
+            set { _iceTicks = value; }
+        }
+
+        private static long _iceCalls;
+        public static long IceCalls
+        {
+            get { return _iceCalls; }
+            set { _iceCalls = value; }
+        }
+        
         private bool valid(QuantifierEvaluateSetting setting)
         {
+            long before = DateTime.Now.Ticks;
+            _iceCalls++;
+            
             Debug.Assert(!(Setting.needsNumericValues && String.IsNullOrEmpty(setting.numericValuesAttributeId.value)));
+            bool result;
 
             if (ProvidesValues)
             {
-                return _prxValue.Compute(setting);
+                result = _prxValue.Compute(setting);
             }
             else if (ProvidesAtLeastSignificantValues)
             {
-                return _prxSignificantValue.Compute(setting);
+                result = _prxSignificantValue.Compute(setting);
             }
             else
             {
-                return _prxValid.Compute(setting);
+                result = _prxValid.Compute(setting);
             }
+            
+            _iceTicks += DateTime.Now.Ticks - before;
+            return result;
         }
 
         private bool[] valid(QuantifierEvaluateSetting[] setting)
         {
+            long before = DateTime.Now.Ticks;
+            _iceCalls++;
+
+            bool[] result;
+            
             if (ProvidesValues)
             {
-                return _prxValue.ComputeBatch(setting);
+                result = _prxValue.ComputeBatch(setting);
             }
             else if (ProvidesAtLeastSignificantValues)
             {
-                return _prxSignificantValue.ComputeBatch(setting);
+                result = _prxSignificantValue.ComputeBatch(setting);
             }
             else
             {
-                return _prxValid.ComputeBatch(setting);
+                result = _prxValid.ComputeBatch(setting);
             }
+            
+            _iceTicks += DateTime.Now.Ticks - before;
+            return result;
         }
 
         /// <summary>

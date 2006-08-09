@@ -1,5 +1,7 @@
 using System;
 using Ferda.Guha.Math.Quantifiers;
+using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Modules;
 using Ferda.ModulesManager;
@@ -44,6 +46,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
             Current current__
             )
         {
+            // Ice peformance
+            BitStringCache.IceCalls = 0;
+            BitStringCache.IceTicks = 0;
+            Quantifier.IceCalls = 0;
+            Quantifier.IceTicks = 0;
+            long before = DateTime.Now.Ticks;
+            
             ProgressTaskListener progressListener = new ProgressTaskListener();
             ProgressTaskPrx progressPrx =
                 ProgressTaskI.Create(current__.adapter, progressListener);
@@ -122,6 +131,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
                 miningProcessor.Trace();
                 miningProcessor.ProgressSetValue(1, "Completing result.");
+
+                // performance ICE
+                miningProcessor.ResultInfo.OtherInfo = string.Format("BitStringCache.IceCalls: {0}; BitStringCache.IceTicks: {1}; Quantifier.IceCalls: {2}; Quantifier.IceTicks: {3}; All.Ticks: {4}", BitStringCache.IceCalls, BitStringCache.IceTicks, Quantifier.IceCalls, Quantifier.IceTicks, DateTime.Now.Ticks - before);
+                
                 resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
                 return SerializableResult.Serialize(miningProcessor.Result);
             }
