@@ -126,6 +126,8 @@ namespace Ferda.FrontEnd.ProgressBar
                     progressBar.Location = new Point(0, Controls.Count * controlHeight);
                 }
                 this.Controls.Add(progressBar);
+
+                ChangeSize();
             }
         }
 
