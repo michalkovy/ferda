@@ -528,8 +528,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                     boxModule.Output,
                     out statistics
                     );
-            SerializableResultInfo deserealized = SerializableResultInfo.Deserialize(statistics);
-            boxModule.Output.writeMsg(MsgType.Info, "Peformance info", deserealized.OtherInfo);
+                    
+            //SerializableResultInfo deserealized = SerializableResultInfo.Deserialize(statistics);
+            //boxModule.Output.writeMsg(MsgType.Info, "Peformance info", deserealized.OtherInfo);
+            
             SetResult(boxModule, result);
             SetResultInfo(boxModule, statistics);
         }

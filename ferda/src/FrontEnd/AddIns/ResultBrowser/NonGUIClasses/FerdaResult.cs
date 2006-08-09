@@ -409,7 +409,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             catch
             {
-                return "GetFormula failed";
+                return String.Empty;
             }
         }
 

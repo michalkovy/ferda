@@ -23,7 +23,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             _result = miningProcessor.Result;
             _rInfo = miningProcessor.ResultInfo;
             _n = miningProcessor.TaskParams.maxSizeOfResult;
-            switch(_miningProcessor.TaskType)
+            switch (_miningProcessor.TaskType)
             {
                 case TaskTypeEnum.FourFold:
                 case TaskTypeEnum.SDFourFold:
@@ -59,7 +59,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         private const int _bufferSize = 300;
         private bufferItem[] _buffer = new bufferItem[_bufferSize];
         private int _actBufferUsed = 0;
-        
+
 
         public bool VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis)
         {
@@ -96,7 +96,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
             flushIsComplete();
         }
-                
+
         private bool flushIsComplete()
         {
             if (_actBufferUsed == 0)
@@ -126,12 +126,9 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
 
             bool shouldStop = !_miningProcessor.ProgressSetValue(
-                (float)(_rInfo.NumberOfHypotheses) / (float)_n,
-                string.Format("Number of Verifications: {0}, Number of hypotheses: {1}",
-                              _rInfo.NumberOfVerifications,
-                              _rInfo.NumberOfHypotheses)
+                progress(), progressMessage()
                 );
-            
+
             _actBufferUsed = 0;
             return finalResult || shouldStop;
         }
@@ -162,15 +159,28 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         return true;
                 }
             }
+            _rInfo.NumberOfVerifications += sDFirstSetValues.Length;
             bool shouldStop = !_miningProcessor.ProgressSetValue(
-                (float)(_rInfo.NumberOfHypotheses) / (float)_n,
-                string.Format("Number of Verifications: {0}, Number of hypotheses: {1}",
-                              _rInfo.NumberOfVerifications,
-                              _rInfo.NumberOfHypotheses)
+                progress(), progressMessage()
                 );
             return false || shouldStop;
         }
 
         #endregion
+
+        private float progress()
+        {
+            return System.Math.Max(
+                (float)(_rInfo.NumberOfHypotheses) / (float)_n,
+                (float)(_rInfo.NumberOfVerifications) / (float)(_miningProcessor.TotalCount)
+                );
+        }
+
+        private string progressMessage()
+        {
+            return string.Format("Number of Verifications: {0}, Number of hypotheses: {1}",
+                                 _rInfo.NumberOfVerifications,
+                                 _rInfo.NumberOfHypotheses);
+        }
     }
 }
