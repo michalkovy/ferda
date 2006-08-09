@@ -199,7 +199,7 @@
     <value>Hypothesis data</value>
   </data>
   <data name="HypothesisId" xml:space="preserve">
-    <value>Hypothesis ID</value>
+    <value>ID</value>
   </data>
   <data name="LabelColumnsToDisplay" xml:space="preserve">
     <value>Columns to display</value>

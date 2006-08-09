@@ -196,7 +196,7 @@
     <value>Údaje o hypotéze</value>
   </data>
   <data name="HypothesisId" xml:space="preserve">
-    <value>ID hypotézy</value>
+    <value>ID</value>
   </data>
   <data name="LabelColumnsToDisplay" xml:space="preserve">
     <value>Zobrazené sloupce</value>
