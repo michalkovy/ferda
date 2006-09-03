@@ -27,6 +27,7 @@ using Ferda.Modules;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Results;
+using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 using Ferda.ModulesManager;
 using System.Resources;
@@ -401,7 +402,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <param name="mark">MarkEnum to get String value for</param>
         /// <param name="hypothesisId">Hypothesis id</param>
         /// <returns></returns>
-        public string GetFormula(MarkEnum mark, int hypothesisId)
+        public string GetFormulaString(MarkEnum mark, int hypothesisId)
         {
             try
             {
@@ -411,6 +412,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             {
                 return String.Empty;
             }
+        }
+
+        public CategorialAttributeFormula GetFormula(MarkEnum mark, int hypothesisId)
+        {
+            CategorialAttributeFormula formula =
+                this.result.Hypotheses[hypothesisId].GetFormula(mark) as CategorialAttributeFormula;
+            return formula;
         }
 
         /// <summary>
@@ -453,6 +461,17 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
         }
 
+        /// <summary>
+        /// True when hypotheses in the result containt two contingency tables
+        /// </summary>
+        public bool TwoContingencyTables
+        {
+            get
+            {
+                return this.result.TwoContingencyTables;
+            }
+        }
+
         #endregion
 
 
@@ -477,7 +496,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             }
             this.quantifiersLabels = temp.ToArray();
             this.quantifiersUserLabels = temp1.ToArray();
-            //this.hy
+
+            
         }
 
         #endregion

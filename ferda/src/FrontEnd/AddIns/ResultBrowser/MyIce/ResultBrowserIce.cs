@@ -159,16 +159,20 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             catch
             {
             }
-            BitStringGeneratorProviderPrx  taskProxy =
+            string taskLabel = boxModuleParam.getMyFactory().getMyFactoryCreator().getLabel(localePrefs);
+            BitStringGeneratorProviderPrx taskProxy =
                 BitStringGeneratorProviderPrxHelper.checkedCast(boxModuleParam.getFunctions());
             
             MiningTaskFunctionsPrx taskProxy1 =
                 MiningTaskFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+        
 
             AttributeNameProviderPrx nameProvider =
                 AttributeNameProviderPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
+
             Ferda.Guha.MiningProcessor.Formulas.AttributeNameInLiteralsProvider.Init(nameProvider);
+
             
             string statistics = String.Empty;
 
@@ -176,8 +180,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             try
             {
-                FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(localePrefs, taskProxy1.GetResult(out statistics), quantifiers, this.Displayer, ownerOfAddIn);
-                this.ownerOfAddIn.ShowDockableControl(control, resManager.GetString("ResultBrowserControl"));
+                FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(localePrefs, taskProxy1.GetResult(out statistics), quantifiers, taskProxy, this.Displayer, ownerOfAddIn);
+                this.ownerOfAddIn.ShowDockableControl(control, taskLabel + " - " + resManager.GetString("ResultBrowserControl"));
             }
             catch (Ferda.Modules.NoConnectionInSocketError)
             {
