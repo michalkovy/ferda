@@ -37,6 +37,7 @@ using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns.Common.ListView;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 
@@ -108,6 +109,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         int previousIndex = 1;
 
+        /// <summary>
+        /// Taskproxy for getting names of the attribues
+        /// </summary>
+        BitStringGeneratorProviderPrx taskProxy;
+
         #endregion
 
 
@@ -121,7 +127,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="quantifiers">quantifiers</param>
         /// <param name="Displayer">Propertygrid</param>
         /// <param name="ownerOfAddIn">Ownerofaddin</param>
-        public FerdaResultBrowserControl(string[] localePrefs, string result, Quantifiers quantifiers, IOtherObjectDisplayer Displayer, IOwnerOfAddIn ownerOfAddIn)
+        public FerdaResultBrowserControl(string[] localePrefs, string result, Quantifiers quantifiers, BitStringGeneratorProviderPrx taskProxy, IOtherObjectDisplayer Displayer, IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -138,6 +144,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
+            this.taskProxy = taskProxy;
             this.ownerOfAddIn = ownerOfAddIn;
             columnSorter.column = 0;
             InitializeComponent();
@@ -284,7 +291,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     }
                     else
                     {
-                        item.Text = resultBrowser.GetFormula(this.columns[i].ColumnType, hypothesisId);
+                        item.Text = resultBrowser.GetFormulaString(this.columns[i].ColumnType, hypothesisId);
                     }
                     item.Tag = hypothesisId;
                     j = i;
@@ -299,7 +306,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 if (this.columns[i].Selected)
                 {
-                    item.SubItems.Add(resultBrowser.GetFormula(this.columns[i].ColumnType, hypothesisId));
+                    item.SubItems.Add(resultBrowser.GetFormulaString(this.columns[i].ColumnType, hypothesisId));
                 }
             }
             if (!itemSet)
@@ -631,7 +638,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                        typeof(string),
                        column.ColumnName,
                        column.ColumnName,
-                       resultBrowser.GetFormula(column.ColumnType, hypothesisId)
+                       resultBrowser.GetFormulaString(column.ColumnType, hypothesisId)
                        );
                         tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(tName);
@@ -644,11 +651,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                         typeof(string),
                         column.ColumnName,
                         column.ColumnName,
-                        resultBrowser.GetFormula(column.ColumnType, hypothesisId)
+                        resultBrowser.GetFormulaString(column.ColumnType, hypothesisId)
                         );
                         tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(tName);
-                        table[column.ColumnName] = resultBrowser.GetFormula(column.ColumnType, hypothesisId);
+                        table[column.ColumnName] = resultBrowser.GetFormulaString(column.ColumnType, hypothesisId);
                     }
                 }
             }
@@ -702,12 +709,121 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             #region Contingency tables
 
-            /*
+            CategorialAttributeFormula formulaX = null;
+            GuidStruct guidX = null;
+            GuidAttributeNamePair[] rowCategories = null;
+
+            CategorialAttributeFormula formulaY = null;
+            GuidStruct guidY = null;
+            GuidAttributeNamePair[] columnCategories = null;
+
+            if ((formulaX = resultBrowser.GetFormula(MarkEnum.RowAttribute, hypothesisId)) != null)
+            {
+                guidX = new GuidStruct(formulaX.AttributeGuid);
+            }
+            else
+            {
+                if ((formulaX = resultBrowser.GetFormula(MarkEnum.Antecedent, hypothesisId)) != null)
+                {
+                    guidX = new GuidStruct(formulaX.AttributeGuid);
+                }
+            }
+
+            if (guidX != null)
+            {
+                rowCategories =
+                taskProxy.GetBitStringGenerator(guidX).GetAttributeNames();
+            }
+
+            if ((formulaY = resultBrowser.GetFormula(MarkEnum.ColumnAttribute, hypothesisId)) != null)
+            {
+                guidY = new GuidStruct(formulaY.AttributeGuid);
+            }
+            else
+            {
+                if ((formulaY = resultBrowser.GetFormula(MarkEnum.Succedent, hypothesisId)) != null)
+                {
+                    guidY = new GuidStruct(formulaY.AttributeGuid);
+                }
+            }
+
+            if (guidY != null)
+            {
+                columnCategories =
+                taskProxy.GetBitStringGenerator(guidY).GetAttributeNames();
+            }
+
+            
             int i1 = 1;
             int j1 = 1;
-
-            if (FerdaResult.IsFFT(hypothesis))
+            //hypothesis.
+            
+            string nameX = String.Empty;
+            string nameY = String.Empty;
+            foreach (double[] row in hypothesis.ContingencyTableA)
             {
+                foreach (double value in row)
+                {
+                    if (guidX != null)
+                    {
+                        nameX = rowCategories[i1 - 1].attributeName;
+                    }
+                    else
+                    {
+                        nameX = i1.ToString();
+                    }
+
+                    if (guidY != null)
+                    {
+                        nameY = columnCategories[j1 - 1].attributeName;
+                    }
+                    else
+                    {
+                        nameY = j1.ToString();
+                    }
+                    PropertySpec hValue = new PropertySpec(
+                        nameX + "-" + nameY,
+                        typeof(int),
+                        "1. " + resManager.GetString("ContingencyTable"),
+                        "1. " + resManager.GetString("ContingencyTable"),
+                        value
+                        );
+                    hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                    table.Properties.Add(hValue);
+                    table[nameX + "-" + nameY] = value;
+                    j1++;
+                }
+                i1++;
+                j1 = 1;
+            }
+
+            i1 = 1;
+            j1 = 1;
+
+            if (this.resultBrowser.TwoContingencyTables)
+            {
+                foreach (double[] row in hypothesis.ContingencyTableB)
+                {
+                    foreach (double value in row)
+                    {
+                        PropertySpec hValue = new PropertySpec(
+                            i1.ToString() + "-" + j1.ToString(),
+                            typeof(int),
+                            "2. " + resManager.GetString("ContingencyTable"),
+                            "2. " + resManager.GetString("ContingencyTable"),
+                            value
+                            );
+                        hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                        table.Properties.Add(hValue);
+                        table[i1.ToString() + "-" + j1.ToString()] = value;
+                        j1++;
+                    }
+                    i1++;
+                    j1 = 1;
+                }
+            }
+
+            /*
                 foreach (int[] row in hypothesis.quantifierSetting.firstContingencyTableRows)
                 {
                     foreach (int value in row)
@@ -802,9 +918,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     j1 = 1;
                     i1++;
                 }
-            }
-            else
-            {
+
                 foreach (int[] row in hypothesis.quantifierSetting.firstContingencyTableRows)
                 {
                     foreach (int value in row)
@@ -884,6 +998,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     i1++;
                 }
 
+            /*
                 i1 = 1;
                 j1 = 1;
                 foreach (int[] row in hypothesis.quantifierSetting.secondContingencyTableRows)
@@ -964,9 +1079,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     j1 = 1;
                     i1++;
                 }
-            }
-             * */
-
+            */
             #endregion
 
             this.displayer.Reset();
