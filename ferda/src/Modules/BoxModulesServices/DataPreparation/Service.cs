@@ -21,6 +21,8 @@ namespace Ferda.Modules.Boxes.DataPreparation
                         new Datasource.DataTable.BoxInfo());
             registerBox(Datasource.Column.BoxInfo.typeIdentifier,
                         new Datasource.Column.BoxInfo());
+            registerBox(Datasource.VirtualColumn.BoxInfo.typeIdentifier,
+                        new Datasource.VirtualColumn.BoxInfo());
             registerBox(Categorization.EachValueOneCategory.BoxInfo.typeIdentifier,
                         new Categorization.EachValueOneCategory.BoxInfo());
             /*
