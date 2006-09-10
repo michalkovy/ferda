@@ -79,6 +79,8 @@
     <Compile Include="DataSource\Database\Functions.cs" />
     <Compile Include="DataSource\DataTable\BoxInfo.cs" />
     <Compile Include="DataSource\DataTable\Functions.cs" />
+    <Compile Include="DataSource\VirtualColumn\BoxInfo.cs" />
+    <Compile Include="DataSource\VirtualColumn\Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
   </ItemGroup>
