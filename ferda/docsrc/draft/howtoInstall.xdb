@@ -45,7 +45,7 @@
       <title>Hardware requirements</title>
 
       <para>Ferda runs on x86 platform. The required hardware configuration is
-      similar to one required for Microsoft .NET Framework 2.0 and Ice 3.0, as
+      similar to one required for Microsoft .NET Framework 2.0 and Ice 3.1.0, as
       Ferda utilizes both of these frameworks. Minimal hardware configuration
       is 600 megahertz (MHz) Pentium processor, or an AMD Opteron, AMD
       Athlon64 or AMD Athlon XP processor. The recommended configuration is
@@ -97,8 +97,8 @@
               Engine) Framework which is programmed by ZeroC. Framework
               installer for Windows is downloadable at <ulink
               url="http://www.zeroc.com/download.html#win32_msi">http://www.zeroc.com/download.html#win32_msi</ulink>.
-              Currently Ferda runs on version 3.0.1of Ice framework. You will
-              need to download Windows Installer for Visual Studio .NET 2003
+              Currently Ferda runs on version 3.1.0 of Ice framework. You will
+              need to download Windows Installer for Visual Studio .NET 2005
               in order to run Ferda. Please note the directory where Ice is
               installed, you will need it in further steps.</para>
             </formalpara>
@@ -122,27 +122,17 @@
     <para></para>
 
     <section>
-      <title>Uninstall .NET Framework prior to 2.0 if applicable</title>
-
-      <para>If there is Microsoft .NET Framework 1.1 or less installed on your
-      machine, please uninstall it prior to installing 2.0 version. Ferda WILL
-      NOT work when Microsoft .NET Framework 1.1 is installed.</para>
-    </section>
-
-    <section>
       <title>Install .NET Framework 2.0</title>
 
       <para>Launch the downloaded framework installer and follow the
-      instructions on the screen. After .NET Framework has been successfully
-      installed, proceed to 2.2.</para>
+      instructions on the screen.</para>
     </section>
 
     <section>
       <title>Install Ice Framework</title>
 
       <para>Please make sure that you have the Windows Installer for Visual
-      Studio .NET 2003 downloaded (do NOT install using Windows Installer for
-      Visual Studio 2005) . Launch the downloaded framework installer. Install
+      Studio .NET 2005 downloaded. Launch the downloaded framework installer. Install
       the Ice framework with the default options. Changing of the default
       options is not recommended, Ferda could behave unexpectedly as a
       result.</para>
@@ -220,17 +210,6 @@
 
                     <para>Here you can select boxes which you would like to
                     use when working with Ferda Dataminer.</para>
-                  </formalpara>
-                </listitem>
-
-                <listitem>
-                  <formalpara>
-                    <title>Gens</title>
-
-                    <para>Here you can select which Lisp gens are to be
-                    installed with Ferda. Please note that if you select a
-                    taskbox, you have to select the corresponding gen in order
-                    to be able to run tasks on Ferda.</para>
                   </formalpara>
                 </listitem>
 
