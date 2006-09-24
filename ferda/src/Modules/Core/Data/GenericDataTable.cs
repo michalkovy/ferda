@@ -53,6 +53,38 @@ namespace Ferda.Guha.Data
             }
         }
 
+      //  private string _masterDataTableName = String.Empty;
+
+        private string _detailDataTableName;
+
+        /// <summary>
+        /// Detail DataTable name
+        /// </summary>
+        public string DetailDataTableName
+        {
+            get { return _detailDataTableName; }
+        }
+
+        private string _masterTableIdColumn = String.Empty;
+
+        /// <summary>
+        /// Master table id column
+        /// </summary>
+        public string MasterTableIdColumn
+        {
+            get { return _masterTableIdColumn; }
+        }
+
+        private string _detailTableIdColumn = String.Empty;
+
+        /// <summary>
+        /// Detail table id column
+        /// </summary>
+        public string DetailTableIdColumn
+        {
+            get { return _detailTableIdColumn; }
+        }
+
         #region Constructors
 
         /// <summary>
@@ -66,6 +98,22 @@ namespace Ferda.Guha.Data
             _explain = explain;
         }
 
+        /*
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Ferda.Guha.Data.GenericDataTable"/> class.
+        /// </summary>
+        /// <param name="genericDatabase">The generic database.</param>
+        /// <param name="detailDataTableName"></param>
+        /// <param name="joinKey"></param>
+        /// /// <param name="explain">The explain.</param>
+        internal GenericDataTable(GenericDatabase genericDatabase, string detailDataTableName, string joinKey, DataTableExplain explain)
+        {
+            _genericDatabase = genericDatabase;
+            _detailDataTableName = detailDataTableName;
+            _joinKey = joinKey;
+            _explain = explain;
+        }
+        */
         #endregion
 
         /// <summary>
@@ -293,10 +341,27 @@ namespace Ferda.Guha.Data
                         //IsHidden
                         resultItem.isLong = Convert.ToBoolean(row["IsLong"]);
                         resultItem.isReadOnly = Convert.ToBoolean(row["IsReadOnly"]);
-                        _columns.Add(resultItem.name, new GenericColumn(this, resultItem, false));
+                        _columns.Add(resultItem.name, new GenericColumn(this, resultItem, false, false));
                     }
                 }
                 return _columns;
+            }
+        }
+
+        private Dictionary<string, GenericColumn> _virtualColumns = null;
+
+        /// <summary>
+        /// Virtual columns.
+        /// </summary>
+        private Dictionary<string, GenericColumn> virtualColumns
+        {
+            get
+            {
+                if (_virtualColumns == null)
+                {
+                    _virtualColumns = new Dictionary<string, GenericColumn>();
+                }
+                return _virtualColumns;
             }
         }
 
@@ -353,6 +418,36 @@ namespace Ferda.Guha.Data
         }
 
         /// <summary>
+        /// Gets the virtual column.
+        /// </summary>
+        /// <param name="columnName">Name of the column.</param>
+        /// <param name="detailDataTableName">Name of the detail datatable.</param>
+        /// <param name="joinKey">Name of the joinkey.</param>
+        /// <returns>The generic column.</returns>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// <b>DbColumnNameError</b>
+        /// Thrown when the specified column is not a correct 
+        /// SQL query.
+        /// </exception>
+        public GenericColumn GetVirtualColumn(string columnName, string detailDataTableName, string masterTableIdColumn, string detailTableIdColumn)
+        {
+            _detailDataTableName = detailDataTableName;
+            _masterTableIdColumn = masterTableIdColumn;
+            _detailTableIdColumn = detailTableIdColumn;
+            GenericColumn result;
+
+            if (virtualColumns.TryGetValue(columnName, out result))
+            {
+                return result;
+            }
+            else // requested column is derived and it is not in cached yet
+            {
+                AddVirtualColumn(columnName);
+                return virtualColumns[columnName];
+            }
+        }
+
+        /// <summary>
         /// Gets names of the columns in current data table (derived columns are not
         /// included).
         /// </summary>
@@ -381,7 +476,7 @@ namespace Ferda.Guha.Data
 
         #endregion
 
-        #region Derived Columns
+        #region Derived and virtual Columns
 
         /// <summary>
         /// Tests the derived column select expression.
@@ -400,6 +495,38 @@ namespace Ferda.Guha.Data
                 // TODO possibly security attacs here
                 command.CommandText = "SELECT " + columnSelectExpression + " FROM " +
                                       GenericDatabase.QuoteQueryIdentifier(_explain.name) + " WHERE 0";
+                command.ExecuteNonQuery();
+            }
+            catch (DbException e)
+            {
+                throw Exceptions.DbColumnNameError(e, null);
+            }
+        }
+
+        /// <summary>
+        /// Tests the virtual column select expression
+        /// </summary>
+        /// <param name="columnSelectExpression">The column select expression.</param>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// <b>DbColumnNameError</b>
+        /// Thrown when the specified columns does is not correct 
+        /// SQL query.
+        /// </exception>
+        private void testVirtualColumnSelectExpression(string columnSelectExpression)
+        {
+            try
+            {
+                DbCommand command = GenericDatabase.CreateDbCommand();
+                // TODO possibly security attacs here
+                command.CommandText = "SELECT " + _detailDataTableName 
+                                      + "." + columnSelectExpression + " FROM " +
+                                      GenericDatabase.QuoteQueryIdentifier(_detailDataTableName)
+                                      + ","
+                                      + GenericDatabase.QuoteQueryIdentifier(_explain.name)
+                                      + " WHERE "
+                                      + _explain.name + "." + _masterTableIdColumn
+                                      + "="
+                                      + _detailDataTableName + "." + _detailTableIdColumn;
                 command.ExecuteNonQuery();
             }
             catch (DbException e)
@@ -439,12 +566,56 @@ namespace Ferda.Guha.Data
                     false,
                     false
                     ),
-                true
+                true,
+                false
                 );
 
             _columns.Add(columnSelectExpression, column);
             DbDataTypeEnum dataType =
                 column.DetermineDerivedColumnDbDataType();
+            ColumnExplain explain = column.Explain;
+            explain.dataType = dataType;
+            column.Explain = explain;
+        }
+
+        /// <summary>
+        /// Adds the virtual column.
+        /// </summary>
+        /// <param name="columnSelectExpression">The column select expression.</param>
+        /// <exception cref="T:Ferda.Modules.BadParamsError">
+        /// <b>DbColumnNameError</b>
+        /// Thrown when the specified <c>columnSelectExpression</c> 
+        /// is not correct SQL query.
+        /// </exception>
+        public void AddVirtualColumn(string columnSelectExpression)
+        {
+            testVirtualColumnSelectExpression(columnSelectExpression);
+
+            GenericColumn column = new GenericColumn(
+                this,
+                new ColumnExplain(
+                    columnSelectExpression,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    DbDataTypeEnum.UnknownType,
+                    -1,
+                    true,
+                    true,
+                    true,
+                    false,
+                    false,
+                    false,
+                    false
+                    ),
+                false,
+                true
+                );
+
+            _virtualColumns.Add(columnSelectExpression, column);
+            DbDataTypeEnum dataType =
+                column.DetermineVirtualColumnDbDataType(_detailDataTableName, _masterTableIdColumn, _detailTableIdColumn);
             ColumnExplain explain = column.Explain;
             explain.dataType = dataType;
             column.Explain = explain;

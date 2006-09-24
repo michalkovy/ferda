@@ -48,6 +48,19 @@ namespace Ferda.Guha.Data
             get { return _isDerived; }
         }
 
+        private readonly bool _isVirtual;
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is virtual.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is virtual; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsVirtual
+        {
+            get { return _isVirtual; }
+        }
+
         private ColumnStatistics _statistics = null;
 
         /// <summary>
@@ -73,9 +86,28 @@ namespace Ferda.Guha.Data
 
                         DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
 
-                        string columnQuotedIdentifier = GetQuotedQueryIdentifier();
-                        string dataTableQuotedIdentifier =
-                            GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+                        string columnQuotedIdentifier;
+                        string dataTableQuotedIdentifier;
+                        if(!IsVirtual)
+                        {
+                            dataTableQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+                            columnQuotedIdentifier = GetQuotedQueryIdentifier();
+                        }
+                        else
+                        {
+                            dataTableQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                                + ","
+                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
+                                + " WHERE "
+                                + GenericDataTable.DetailDataTableName
+                                + "."
+                                + GenericDataTable.MasterTableIdColumn
+                                + "="
+                                + GenericDataTable.Explain.name
+                                + "."
+                                + GenericDataTable.MasterTableIdColumn;
+                            columnQuotedIdentifier = GenericDataTable.DetailDataTableName + "." + GetQuotedQueryIdentifier();
+                        }
 
                         try
                         {
@@ -176,11 +208,13 @@ namespace Ferda.Guha.Data
         /// <param name="genericDataTable">The generic data table.</param>
         /// <param name="explain">The explain.</param>
         /// <param name="isDerived">if set to <c>true</c> [is derived].</param>
-        internal GenericColumn(GenericDataTable genericDataTable, ColumnExplain explain, bool isDerived)
+        /// <param name="isVirtual">if set to <c>true</c> [is virtual].</param>
+        internal GenericColumn(GenericDataTable genericDataTable, ColumnExplain explain, bool isDerived, bool isVirtual)
         {
             _genericDataTable = genericDataTable;
             _explain = explain;
             _isDerived = isDerived;
+            _isVirtual = isVirtual;
         }
 
         /// <summary>
@@ -454,6 +488,44 @@ namespace Ferda.Guha.Data
         }
 
         /// <summary>
+        /// Determines the db data type of the virtual column.
+        /// </summary>
+        public DbDataTypeEnum DetermineVirtualColumnDbDataType(string detailTableName, string masterTableIdColumn, string detailTableIdColumn)
+        {
+            string columnQuotedIdentifier = detailTableName + "." + GetQuotedQueryIdentifier();
+            string dataTableQuotedIdentifier =
+                GenericDataTable.GenericDatabase.QuoteQueryIdentifier(detailTableName)
+            + ","
+            + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+
+            string whereQuotedIdentifier =
+                detailTableName
+            + "."
+            + detailTableIdColumn
+            + "="
+            + GenericDataTable.Explain.name
+            + "."
+            + masterTableIdColumn;
+
+            DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
+
+            command.CommandText =
+                String.Format("SELECT DISTINCT {0} FROM {1} WHERE {2}", columnQuotedIdentifier, dataTableQuotedIdentifier, whereQuotedIdentifier);
+
+            try
+            {
+                DbDataReader reader = command.ExecuteReader();
+                Type type = reader.GetProviderSpecificFieldType(0);
+                DbDataTypeEnum result = GetDbDataTypeFromFullName(type.FullName);
+                return result;
+            }
+            catch (DbException ex)
+            {
+                throw Exceptions.DbUnexpectedError(ex, null);
+            }
+        }
+
+        /// <summary>
         /// Gets the type of the db data.
         /// </summary>
         /// <param name="fullNameOfDataType">The full name of .NET data type.</param>
@@ -614,16 +686,17 @@ namespace Ferda.Guha.Data
 
         /// <summary>
         /// Gets the quoted query identifier of the column i.e.
-        /// if the column is derived returns its name (does not make
-        /// any quotation) otherwise quotes the name of the column.
+        /// if the column is derived or virtual, returns its name
+        /// (does not make any quotation) otherwise quotes the name of the column.
         /// </summary>
         /// <returns>Quoted query identifier of the column</returns>
         public string GetQuotedQueryIdentifier()
         {
-            if (IsDerived)
+            if ((IsDerived) || (IsVirtual))
                 return _explain.name;
             else
                 return GenericDataTable.GenericDatabase.QuoteQueryIdentifier(_explain.name);
+
         }
 
         /// <summary>
@@ -647,13 +720,45 @@ namespace Ferda.Guha.Data
             string where = (String.IsNullOrEmpty(whereCondition))
                                ? String.Empty
                                : " WHERE " + whereCondition;
+            string tableName;
+            string columnQuotedIdentifier;
 
-            string columnQuotedIdentifier = GetQuotedQueryIdentifier();
+            if (IsVirtual)
+            {
+                if (String.IsNullOrEmpty(whereCondition))
+                {
+                    where = " WHERE ";
+                }
+                else
+                {
+                    where = where + " AND ";
+                }
+                where = where
+                    + GenericDataTable.DetailDataTableName
+                    + "."
+                    + GenericDataTable.DetailTableIdColumn
+                    + "="
+                    + GenericDataTable.Explain.name
+                    + "."
+                    + GenericDataTable.MasterTableIdColumn;
+
+                tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                + ","
+                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+                columnQuotedIdentifier = GenericDataTable.DetailDataTableName + "." + GetQuotedQueryIdentifier();
+            }
+            else
+            {
+                tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+                columnQuotedIdentifier = GetQuotedQueryIdentifier();
+            }
+
+            //string columnQuotedIdentifier = GetQuotedQueryIdentifier();
 
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
             command.CommandText =
                 "SELECT " + columnQuotedIdentifier + ", COUNT(1) "
-                + " FROM " + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
+                + " FROM " + tableName
                 + where
                 + " GROUP BY " + columnQuotedIdentifier
                 + " ORDER BY " + columnQuotedIdentifier;
@@ -690,13 +795,45 @@ namespace Ferda.Guha.Data
             string where = (String.IsNullOrEmpty(whereCondition))
                                ? String.Empty
                                : " WHERE " + whereCondition;
+            string tableName;
+            string columnQuotedIdentifier;
 
-            string columnQuotedIdentifier = GetQuotedQueryIdentifier();
+            if (IsVirtual)
+            {
+                if (String.IsNullOrEmpty(whereCondition))
+                {
+                    where = " WHERE ";
+                }
+                else
+                {
+                    where = where + " AND ";
+                }
+                where = where
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                    + "."
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailTableIdColumn)
+                    + "="
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
+                    + "."
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.MasterTableIdColumn);
+                tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                    + ","
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+                columnQuotedIdentifier = GenericDataTable.DetailDataTableName + "." + GetQuotedQueryIdentifier();
+            }
+            else
+            {
+                tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+                columnQuotedIdentifier = GetQuotedQueryIdentifier();
+            }
+
+
+             
 
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
             command.CommandText =
                 "SELECT " + columnQuotedIdentifier
-                + " FROM " + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
+                + " FROM " + tableName
                 + where
                 + " GROUP BY " + columnQuotedIdentifier
                 + " ORDER BY " + columnQuotedIdentifier;
@@ -732,9 +869,34 @@ namespace Ferda.Guha.Data
             // test the unique key
             GenericDataTable.TestUniqueKey(uniqueKeyForSort);
 
-            string columnQuotedIdentifier = GetQuotedQueryIdentifier();
-            string dataTableQuotedIdentifier =
-                GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+            string columnQuotedIdentifier;
+
+            string dataTableQuotedIdentifier;
+            if (!IsVirtual)
+            {
+                dataTableQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+                columnQuotedIdentifier = GetQuotedQueryIdentifier();
+            }
+            else
+            {
+                dataTableQuotedIdentifier = 
+                    GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                    + ","
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
+                    + " WHERE "
+                    + GenericDataTable.DetailDataTableName
+                    + "."
+                    + GenericDataTable.DetailTableIdColumn
+                    + "="
+                    + GenericDataTable.Explain.name
+                    + "."
+                    + GenericDataTable.MasterTableIdColumn;
+                columnQuotedIdentifier = GenericDataTable.DetailDataTableName + "." + GetQuotedQueryIdentifier();
+            }
+
+
+          //  string dataTableQuotedIdentifier =
+        //        GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
             string uniqueKeyQuotedIdentifier = GenericDataTable.getQuotedColumnsNames(uniqueKeyForSort);
 
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();

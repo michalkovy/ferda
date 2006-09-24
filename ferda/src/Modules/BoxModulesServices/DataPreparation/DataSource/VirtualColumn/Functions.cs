@@ -25,6 +25,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
         public const string PropDetailIdColumn = "DetailIdColumn";
         public const string PropDetailResultColumn = "DetailResultColumn";
        // public const string PropSelectExpression = "SelectExpression";
+     //   public const string PropJoinKey = "JoinKey";
         public const string PropDataType = "DataType";
         public const string PropCardinality = "Cardinality";
         public const string PropValueMin = "ValueMin";
@@ -36,13 +37,28 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
         public const string SockMasterDataTable = "MasterDataTable";
         public const string SockDetailDataTable = "DetailDataTable";
 
-        /*
+        public string MasterTableIdColumn
+        {
+            get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
+        }
+
+        public string DetailTableIdColumn
+        {
+            get { return _boxModule.GetPropertyString(PropDetailIdColumn); }
+        }
+
+        public string DetailTableResultColumn
+        {
+            get { return _boxModule.GetPropertyString(PropDetailResultColumn); }
+        }
+
+        
         public string Name
         {
             get { return _boxModule.GetPropertyString(PropName); }
         }
 
-        
+        /*
         public string SelectExpression
         {
             get { return _boxModule.GetPropertyString(PropSelectExpression); }
@@ -55,6 +71,72 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             {
                 return 
             }
+        }*/
+
+        public DataTableFunctionsPrx GetDataTableFunctionsPrx(bool fallOnError)
+        {
+            return SocketConnections.GetPrx<DataTableFunctionsPrx>(
+                _boxModule,
+                SockMasterDataTable,
+                DataTableFunctionsPrxHelper.checkedCast,
+                fallOnError);
+        }
+
+        public string[] GetColumnsNames(bool fallOnError)
+        {
+            DataTableFunctionsPrx prx = GetDataTableFunctionsPrx(fallOnError);
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    if (prx != null)
+                        return prx.getColumnsNames();
+                    return new string[0];
+                },
+                delegate
+                {
+                    return new string[0];
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+        /*
+        public string[] GetColumnsNames(bool fallOnError)
+        {
+
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    GenericDataTable tmp = GetGenericDataTable(fallOnError);
+                    if (tmp != null)
+                        return tmp.BasicColumnsNames;
+                    return new string[0];
+                },
+                delegate
+                {
+                    return new string[0];
+                },
+                _boxModule.StringIceIdentity
+                );
+
+
+
+            DataTableFunctionsPrx prx = GetDataTableFunctionsPrx(fallOnError);
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    if (prx != null)
+                        return prx.getColumnsNames();
+                    return new string[0];
+                },
+                delegate
+                {
+                    return new string[0];
+                },
+                _boxModule.StringIceIdentity
+                );
         }*/
 
         public CardinalityEnum Cardinality
@@ -157,45 +239,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             return GetDistinctsAndFrequencies(true);
         }
 
+
         #region Functions
-        /*
-        public string[] GetColumnsNames(bool fallOnError)
-        {
-
-            return ExceptionsHandler.GetResult<string[]>(
-                fallOnError,
-                delegate
-                    {
-                        GenericDataTable tmp = GetGenericDataTable(fallOnError);
-                        if (tmp != null)
-                            return tmp.BasicColumnsNames;
-                        return new string[0];
-                    },
-                delegate
-                    {
-                        return new string[0];
-                    },
-                _boxModule.StringIceIdentity
-                );
-
-
-
-            DataTableFunctionsPrx prx = GetDataTableFunctionsPrx(fallOnError);
-            return ExceptionsHandler.GetResult<string[]>(
-                fallOnError,
-                delegate
-                {
-                    if (prx != null)
-                        return prx.getColumnsNames();
-                    return new string[0];
-                },
-                delegate
-                {
-                    return new string[0];
-                },
-                _boxModule.StringIceIdentity
-                );
-        }*/
+        
 
 
         public DataTableFunctionsPrx GetMasterDataTableFunctionsPrx(bool fallOnError)
@@ -281,6 +327,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             if (prx == null)
                 return null;
 
+            DataTableFunctionsPrx prx1 = GetDetailDataTableFunctionsPrx(fallOnError);
+            if (prx1 == null)
+                return null;
+
             DataTableInfo tmp =
                 ExceptionsHandler.GetResult<DataTableInfo>(
                     fallOnError,
@@ -295,25 +345,42 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             if (tmp == null)
                 return null;
 
+            DataTableInfo tmp1 =
+                ExceptionsHandler.GetResult<DataTableInfo>(
+                    fallOnError,
+                    prx1.getDataTableInfo,
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                    );
+
+            if (tmp1 == null)
+                return null;
+
             DatabaseConnectionSettingHelper connSetting =
                 new DatabaseConnectionSettingHelper(tmp.databaseConnectionSetting);
 
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
             cacheSetting.Add(Database.BoxInfo.typeIdentifier + Database.Functions.PropConnectionString, connSetting);
-            cacheSetting.Add(DataTable.BoxInfo.typeIdentifier + DataTable.Functions.PropName, tmp.dataTableName);
+            cacheSetting.Add(DataTable.BoxInfo.typeIdentifier + DataTable.Functions.PropName + "Master", tmp.dataTableName);
+            cacheSetting.Add(DataTable.BoxInfo.typeIdentifier + DataTable.Functions.PropName + "Detail", tmp1.dataTableName);
        //     cacheSetting.Add(BoxInfo.typeIdentifier + PropSelectExpression, SelectExpression);
 
-            if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
-                || (_cachedValue == null && fallOnError))
-            {
+ //           if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
+ //               || (_cachedValue == null && fallOnError))
+ //           {
                 _cachedValue = ExceptionsHandler.GetResult<GenericColumn>(
                     fallOnError,
                     delegate
                     {
-                        string selectExpression = GetSelectExpression(fallOnError);
+                       // FOR FUTURE IMPLEMENTATION: result column here does not have to be
+                       // given as a name, a select expression can be applied
+                       // string selectExpression = GetSelectExpression(fallOnError);
                         return
-                            GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTableName].GetGenericColumn
-                                (selectExpression);
+                            GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTableName].GetVirtualColumn
+                                (DetailTableResultColumn, tmp1.dataTableName, MasterTableIdColumn, DetailTableIdColumn);
                     },
                     delegate
                     {
@@ -321,7 +388,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                     },
                     _boxModule.StringIceIdentity
                     );
-            }
+    //        }
             return _cachedValue;
         }
 
@@ -393,10 +460,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 _boxModule.StringIceIdentity
                 );
         }
-
+        /*
         public string GetSelectExpression(bool fallOnError)
         {
-            /*
+            
             if (String.IsNullOrEmpty(SelectExpression) && fallOnError)
             {
                 throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
@@ -404,10 +471,24 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                                                restrictionTypeEnum.Missing);
             }
             else
-                return SelectExpression;*/
+                return SelectExpression;
 
             return String.Empty;
         }
+
+        
+        public string GetJoinKey(bool fallOnError)
+        {
+            
+            if (String.IsNullOrEmpty(MasterTableIdColumn) && fallOnError)
+            {
+                throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
+                                               "Property is not set.", new string[] { PropJoinKey },
+                                               restrictionTypeEnum.Missing);
+            }
+            else
+                return MasterTableIdColumn;
+        }*/
 
         public ColumnInfo GetColumnInfo(bool fallOnError)
         {
@@ -417,10 +498,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 {
                     DataTableFunctionsPrx tmp1 = GetMasterDataTableFunctionsPrx(fallOnError);
                     ColumnExplain tmp2 = GetColumnExplain(fallOnError);
-                    string selectExpression = GetSelectExpression(fallOnError);
+                   // string selectExpression = GetSelectExpression(fallOnError);
                     if (tmp1 != null && tmp2 != null)
                         return new ColumnInfo(tmp1.getDataTableInfo(),
-                                              selectExpression,
+                                              DetailTableResultColumn,
                                               tmp2.dataType,
                                               Cardinality
                             );
