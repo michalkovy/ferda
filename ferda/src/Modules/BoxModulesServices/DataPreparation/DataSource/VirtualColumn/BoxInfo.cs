@@ -23,6 +23,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
         {
             return "VirtualColumnGenericName";
            // return ((Functions)boxModule.FunctionsIObj).Name;
+            //return String.Empty;
         }
 
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
@@ -55,7 +56,61 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                     return null;
             }
         }
+        
+        public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            switch (propertyName)
+            {
+                case Functions.PropDataType:
+                    return Func.DataType;
+                case Functions.PropValueMin:
+                    return Func.ValueMin;
+                case Functions.PropValueMax:
+                    return Func.ValueMax;
+                case Functions.PropValueAverage:
+                    return Func.ValueAverage;
+                case Functions.PropValueVariability:
+                    return Func.ValueVariability;
+                case Functions.PropValueStandardDeviation:
+                    return Func.ValueStandardDeviation;
+                case Functions.PropValueDistincts:
+                    return Func.ValueDistincts;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        
         public const string typeIdentifier = "DataPreparation.DataSource.VirtualColumn";
+        
+        public override void Validate(BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            // try to invoke methods
+            object dummy = Func.GetDataTableFunctionsPrx(true);
+            GenericColumn tmp = Func.GetGenericColumn(true);
+            dummy = Func.GetColumnsNames(true);
+            dummy = Func.GetColumnStatistics(true);
+            dummy = Func.GetColumnExplain(true);
+            //dummy = Func.GetDistinctsAndFrequencies(true);
+            dummy = Func.GetColumnInfo(true);
+
+            if (Common.CompareCardinalityEnums(
+                    Func.Cardinality,
+                    tmp.PotentiallyCardinality
+                    ) > 1)
+            {
+                throw Exceptions.BadValueError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Unsupported cardinality type for current data type.",
+                    new string[] { Functions.PropCardinality },
+                    restrictionTypeEnum.OtherReason
+                    );
+            }
+        }
+
         protected override string identifier
         {
             get { return typeIdentifier; }
