@@ -1,8 +1,9 @@
 // ExplainTableIce.cs - class for ice communication
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Authors:  Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//           Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,57 +25,45 @@ using System.Text;
 using System.Windows.Forms;
 using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns;
-using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
 using Ferda.FrontEnd.AddIns.ExplainTable;
+using Ferda.FrontEnd.AddIns.Common.MyIce;
 using System.Resources;
 using System.Reflection;
 
 namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
 {
     /// <summary>
-    /// Class for ice communication
+    /// Class for Ice communication for the ExplainTable module for interaction
     /// </summary>
-    public class ExplainTableIce : Ferda.Modules.ModuleForInteractionDisp_
+    public class ExplainTableIce : ModuleForInteractionIce
     {
-        #region Private variables
-
-        /// <summary>
-        /// Owner of addin
-        /// </summary>
-        Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
-
-        /// <summary>
-        /// L10n resource manager
-        /// </summary>
-        private ResourceManager resManager;
-
-        /// <summary>
-        /// L10n string, for now en-US or cs-CZ
-        /// </summary>
-        private string localizationString;
-
-        #endregion
-
-
         #region Constructor
 
         /// <summary>
-        /// Class constructor
+        /// Default constructor for the class
         /// </summary>
-        /// <param name="ownerOfAddIn">Owner of addin</param>
-        public ExplainTableIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
+        /// <param name="ownerOfAddIn">Owner of this addIn</param>
+        public ExplainTableIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn) :
+            base(ownerOfAddIn, null)
         {
-            this.ownerOfAddIn = ownerOfAddIn;
-            //setting the ResManager resource manager and localization string
+            //setting the resource manager
             resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ExplainTable.Localization_en-US",
             Assembly.GetExecutingAssembly());
-            localizationString = "en-US";
         }
 
         #endregion
 
+        #region Other Ice functions
 
-        #region Other ice
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="__current"></param>
+        /// <returns></returns>
+        public override string[] getNeededConnectedSockets(Ice.Current __current)
+        {
+            return new string[0];
+        }
 
         /// <summary>
         /// Gets accepted box type
@@ -87,21 +76,6 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
             boxType.neededSockets = new Modules.NeededSocket[0];
             boxType.functionIceId = "::Ferda::Modules::Boxes::DataMiningCommon::DataMatrix::DataMatrixFunctions";
             return new Modules.BoxType[] { boxType };
-        }
-
-        public override Ferda.Modules.DynamicHelpItem[] getDynamicHelpItems(string[] localePrefs, Ice.Current __current)
-        {
-            return null;
-        }
-
-        public override byte[] getHelpFile(string identifier, Ice.Current __current)
-        {
-            return null;
-        }
-
-        public override Ferda.Modules.HelpFileInfo[] getHelpFileInfoSeq(string[] localePrefs, Ice.Current __current)
-        {
-            return null;
         }
 
         public override string getHint(string[] localePrefs, Ice.Current __current)
@@ -120,11 +94,6 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
             return resManager.GetString("ExplainTableModule");
         }
 
-        public override byte[] getIcon(Ice.Current __current)
-        {
-            return null;
-        }
-
         public override string getLabel(string[] localePrefs, Ice.Current __current)
         {
             string locale;
@@ -141,18 +110,16 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
             return resManager.GetString("ExplainTableModule");
         }
 
-        public override string[] getNeededConnectedSockets(Ice.Current __current)
-        {
-            return new string[0];
-        }
-
         #endregion
+    }
+}
 
-
+/* OLD EXPLAIN TABLE IMPLEMENTATION
         #region IceRun
 
         /// <summary>
-        /// Ice run
+        /// The method is called by te Ice framework when a module for interaction
+        /// is to be displayed
         /// </summary>
         /// <param name="boxModuleParam">BoxModuleParams</param>
         /// <param name="localePrefs">localeprefs</param>
@@ -203,5 +170,4 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
         }
 
         #endregion
-    }
-}
+*/

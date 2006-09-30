@@ -2,7 +2,7 @@
 //
 // Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2006 Alexander Kuzmin
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -53,6 +53,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private string localizationString;
 
+        /// <summary>
+        /// Reference to the IOtherObjectDisplayer - in FrontEnd a property grid
+        /// capable of displaying properties of an object
+        /// </summary>
         private Ferda.FrontEnd.Properties.IOtherObjectDisplayer Displayer;
 
         #endregion
@@ -60,7 +64,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         #region Constructor
 
-        public ResultBrowserIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn, Ferda.FrontEnd.Properties.IOtherObjectDisplayer Displayer)
+        public ResultBrowserIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn,
+            Ferda.FrontEnd.Properties.IOtherObjectDisplayer Displayer)
         {
             this.ownerOfAddIn = ownerOfAddIn;
             //setting the ResManager resource manager and localization string
@@ -146,6 +151,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         #region Run
 
+        /// <summary>
+        /// The method is called by te Ice framework when a module for interaction
+        /// is to be displayed.
+        /// </summary>
+        /// <param name="boxModuleParam">BoxModuleParams</param>
+        /// <param name="localePrefs">localeprefs</param>
+        /// <param name="manager">Manager proxy</param>
+        /// <param name="__current">Ice context</param>
         public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, Ferda.ModulesManager.ManagersEnginePrx manager, Ice.Current __current)
         {
             string locale;
