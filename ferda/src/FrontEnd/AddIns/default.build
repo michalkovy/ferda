@@ -41,6 +41,8 @@
         <include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaLMTasksBoxes.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+        <include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
         <include name="${path::combine(lib.dir,'icecs.dll')}"/>
       </references>
     </csc>
@@ -105,6 +107,8 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+    
+    
 		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
     		  <fileset basedir="ExplainTable/Help">
      		   <include name="*.*" /> 

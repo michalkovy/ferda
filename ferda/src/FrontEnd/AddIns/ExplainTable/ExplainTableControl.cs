@@ -26,7 +26,7 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
+//using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
 using Ferda.FrontEnd.AddIns.Common.ListView;
 using System.Resources;
 using System.Reflection;
@@ -54,12 +54,12 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// <summary>
         /// ColumnSchemaInfo array
         /// </summary>
-        private ColumnSchemaInfo[] dataMatrix;
+        //private ColumnSchemaInfo[] dataMatrix;
 
         /// <summary>
         /// DataMatrixInfo
         /// </summary>
-        private DataMatrixInfo dataMatrixInfo;
+        //private DataMatrixInfo dataMatrixInfo;
 
         /// <summary>
         /// Owner of addin
@@ -82,7 +82,8 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// <param name="localePrefs">Localeprefs</param>
         /// <param name="dataMatrix">Datamatrix</param>
         /// <param name="dataMatrixInfo">Datamatrix info</param>
-        public ExplainTable(string[] localePrefs, ColumnSchemaInfo[] dataMatrix, DataMatrixInfo dataMatrixInfo, IOwnerOfAddIn ownerOfAddIn)
+        public ExplainTable(string[] localePrefs, IOwnerOfAddIn ownerOfAddIn)
+            //ColumnSchemaInfo[] dataMatrix, DataMatrixInfo dataMatrixInfo, IOwnerOfAddIn ownerOfAddIn)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -101,8 +102,8 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
             }
             this.ownerOfAddIn = ownerOfAddIn;
             comparer.column = 0;
-            this.dataMatrix = dataMatrix;
-            this.dataMatrixInfo = dataMatrixInfo;
+            //this.dataMatrix = dataMatrix;
+            //this.dataMatrixInfo = dataMatrixInfo;
             InitializeComponent();
             this.ListViewInit();
             this.MakeListView();
@@ -206,25 +207,25 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// </summary>
         private void MakeListView()
         {
-            foreach (ColumnSchemaInfo columnInfo in this.dataMatrix)
-            {
-                ListViewItem newItem = new ListViewItem();
-                newItem.Text = columnInfo.name;
-                newItem.SubItems.Add(columnInfo.allowDBNull.ToString());
-                newItem.SubItems.Add(columnInfo.columnOrdinal.ToString());
-                newItem.SubItems.Add(columnInfo.columnSize.ToString());
-                newItem.SubItems.Add(columnInfo.dataType.ToString());
-                newItem.SubItems.Add(columnInfo.isAutoIncrement.ToString());
-                newItem.SubItems.Add(columnInfo.isKey.ToString());
-                newItem.SubItems.Add(columnInfo.isLong.ToString());
-                newItem.SubItems.Add(columnInfo.isReadOnly.ToString());
-                newItem.SubItems.Add(columnInfo.isRowVersion.ToString());
-                newItem.SubItems.Add(columnInfo.isUnique.ToString());
-                newItem.SubItems.Add(columnInfo.numericPrecision.ToString());
-                newItem.SubItems.Add(columnInfo.numericScale.ToString());
-                newItem.SubItems.Add(columnInfo.providerType.ToString());
-                this.ExplainTableListView.Items.Add(newItem);
-            }
+            //foreach (ColumnSchemaInfo columnInfo in this.dataMatrix)
+            //{
+            //    ListViewItem newItem = new ListViewItem();
+            //    newItem.Text = columnInfo.name;
+            //    newItem.SubItems.Add(columnInfo.allowDBNull.ToString());
+            //    newItem.SubItems.Add(columnInfo.columnOrdinal.ToString());
+            //    newItem.SubItems.Add(columnInfo.columnSize.ToString());
+            //    newItem.SubItems.Add(columnInfo.dataType.ToString());
+            //    newItem.SubItems.Add(columnInfo.isAutoIncrement.ToString());
+            //    newItem.SubItems.Add(columnInfo.isKey.ToString());
+            //    newItem.SubItems.Add(columnInfo.isLong.ToString());
+            //    newItem.SubItems.Add(columnInfo.isReadOnly.ToString());
+            //    newItem.SubItems.Add(columnInfo.isRowVersion.ToString());
+            //    newItem.SubItems.Add(columnInfo.isUnique.ToString());
+            //    newItem.SubItems.Add(columnInfo.numericPrecision.ToString());
+            //    newItem.SubItems.Add(columnInfo.numericScale.ToString());
+            //    newItem.SubItems.Add(columnInfo.providerType.ToString());
+            //    this.ExplainTableListView.Items.Add(newItem);
+            //}
         }
 
         /// <summary>
