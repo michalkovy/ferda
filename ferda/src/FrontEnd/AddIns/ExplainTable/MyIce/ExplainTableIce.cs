@@ -27,13 +27,14 @@ using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns;
 using Ferda.FrontEnd.AddIns.ExplainTable;
 using Ferda.FrontEnd.AddIns.Common.MyIce;
+using Ferda.Modules.Boxes.DataPreparation;
 using System.Resources;
 using System.Reflection;
 
 namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
 {
     /// <summary>
-    /// Class for Ice communication for the ExplainTable module for interaction
+    /// Class for Ice communication for the ExplainTableControl module for interaction
     /// </summary>
     public class ExplainTableIce : ModuleForInteractionIce
     {
@@ -56,13 +57,16 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
         #region Other Ice functions
 
         /// <summary>
-        /// 
+        /// Gets a list of sockets needed to be connected in order for the module to
+        /// work
         /// </summary>
-        /// <param name="__current"></param>
-        /// <returns></returns>
+        /// <param name="__current">ICE stuff</param>
+        /// <returns>List of socket names for module to work propertly</returns>
         public override string[] getNeededConnectedSockets(Ice.Current __current)
         {
-            return new string[0];
+            //there has to be a database connected to the data table and a name 
+            //needs to be selected
+            return new string[] { "Database", "Name" };
         }
 
         /// <summary>
@@ -74,48 +78,37 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
         {
             Modules.BoxType boxType = new Modules.BoxType();
             boxType.neededSockets = new Modules.NeededSocket[0];
-            boxType.functionIceId = "::Ferda::Modules::Boxes::DataMiningCommon::DataMatrix::DataMatrixFunctions";
+            boxType.functionIceId = "::Ferda::Modules::Boxes::DataPreparation::DataTableFunctions";
             return new Modules.BoxType[] { boxType };
         }
 
+        /// <summary>
+        /// Gets hint to the module according for a specified localization
+        /// </summary>
+        /// <param name="localePrefs">Localization preferences</param>
+        /// <param name="__current">Some ICE stuff</param>
+        /// <returns>Localized hint</returns>
         public override string getHint(string[] localePrefs, Ice.Current __current)
         {
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ExplainTable.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-            }
+            Localize(localePrefs);
             return resManager.GetString("ExplainTableModule");
         }
 
+        /// <summary>
+        /// Gets label of the module according to the localization
+        /// </summary>
+        /// <param name="localePrefs">Localization specification</param>
+        /// <param name="__current">Some ICE stuff</param>
+        /// <returns>Localized label</returns>
         public override string getLabel(string[] localePrefs, Ice.Current __current)
         {
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ExplainTable.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-            }
+            Localize(localePrefs);
             return resManager.GetString("ExplainTableModule");
         }
 
         #endregion
-    }
-}
 
-/* OLD EXPLAIN TABLE IMPLEMENTATION
-        #region IceRun
+        #region Run function
 
         /// <summary>
         /// The method is called by te Ice framework when a module for interaction
@@ -125,27 +118,70 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
         /// <param name="localePrefs">localeprefs</param>
         /// <param name="manager">Manager proxy</param>
         /// <param name="__current">Ice context</param>
-        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
+        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam,
+            string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
         {
-            string locale;
+            Localize(localePrefs);
+
+            DataTableFunctionsPrx prx =
+                DataTableFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+
             try
             {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ExplainTable.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
+                //getting the label
+                string label = manager.getProjectInformation().
+                    getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
+                ExplainTableControl control =
+                    new ExplainTableControl(resManager, ownerOfAddIn, prx.getColumnExplainSeq());
+                ownerOfAddIn.ShowDockableControl(control, 
+                    resManager.GetString("Explain") + " " + label);
             }
-            catch
+            catch (Ferda.Modules.BoxRuntimeError)
             {
+                MessageBox.Show(resManager.GetString("BoxRunTimeError"),
+                        resManager.GetString("Error"), MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
             }
+        }
+
+        #endregion
+
+        #region Other functions
+
+        /// <summary>
+        /// Adjusts the resource manager according to the recent localization
+        /// </summary>
+        /// <param name="localePrefs">string array determining the localization
+        /// preferences</param>
+        private void Localize(string[] localePrefs)
+        {
+            //poznamka - tohle cele bylo ve try bloku... uvidime jak to bude
+            //fungovat bez neho
+            string locale;
+            locale = localePrefs[0];
+            localizationString = locale;
+            locale = "Ferda.FrontEnd.AddIns.ExplainTable.Localization_" + locale;
+            resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
+        }
+
+        #endregion
+    }
+}
+
+/* OLD EXPLAIN TABLE IMPLEMENTATION
+        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
+        {
             Ferda.Modules.Boxes.DataMiningCommon.DataMatrix.DataMatrixFunctionsPrx prx =
                 Ferda.Modules.Boxes.DataMiningCommon.DataMatrix.DataMatrixFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
             try
             {
                 string label = manager.getProjectInformation().getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                Ferda.FrontEnd.AddIns.ExplainTable.ExplainTable control = new ExplainTable(localePrefs, prx.explain(), prx.getDataMatrixInfo(), ownerOfAddIn);
-                this.ownerOfAddIn.ShowDockableControl(control, resManager.GetString("Explain") + " " + label);
+                Ferda.FrontEnd.AddIns.ExplainTableControl.ExplainTableControl 
+ *                  control = new ExplainTableControl(localePrefs, prx.explain(), 
+ *                  prx.getDataMatrixInfo(), ownerOfAddIn);
+                this.ownerOfAddIn.ShowDockableControl(control, 
+ *                  resManager.GetString("Explain") + " " + label);
             }
 
             catch (Ferda.Modules.NoConnectionInSocketError)
@@ -168,6 +204,4 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
                 }
             }
         }
-
-        #endregion
 */

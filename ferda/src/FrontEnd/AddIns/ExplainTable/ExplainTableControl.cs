@@ -26,7 +26,8 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-//using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
+using Ferda.Modules.Boxes.DataPreparation;
+using Ferda.Guha.Data;
 using Ferda.FrontEnd.AddIns.Common.ListView;
 using System.Resources;
 using System.Reflection;
@@ -37,7 +38,7 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
     /// <summary>
     /// UserControl class for displaying SQL query explain table results
     /// </summary>
-    public partial class ExplainTable : UserControl
+    public partial class ExplainTableControl : UserControl
     {
         #region Private variables
 
@@ -45,11 +46,6 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// Resource manager
         /// </summary>
         private ResourceManager resManager;
-
-        /// <summary>
-        /// Localization string, en-US or cs-CZ for now.
-        /// </summary>
-        private string localizationString;
 
         /// <summary>
         /// ColumnSchemaInfo array
@@ -71,8 +67,12 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// </summary>
         private ListViewItemComparer comparer = new ListViewItemComparer();
 
-        #endregion
+        /// <summary>
+        /// Array of structures that holds inrofmation about the columns
+        /// </summary>
+        private ColumnExplain[] columnExplains;
 
+        #endregion
 
         #region Constructor
 
@@ -82,31 +82,18 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// <param name="localePrefs">Localeprefs</param>
         /// <param name="dataMatrix">Datamatrix</param>
         /// <param name="dataMatrixInfo">Datamatrix info</param>
-        public ExplainTable(string[] localePrefs, IOwnerOfAddIn ownerOfAddIn)
-            //ColumnSchemaInfo[] dataMatrix, DataMatrixInfo dataMatrixInfo, IOwnerOfAddIn ownerOfAddIn)
+        public ExplainTableControl(ResourceManager resManager, IOwnerOfAddIn ownerOfAddIn, 
+            ColumnExplain [] columnExplain)
         {
-            //setting the ResManager resource manager and localization string
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ExplainTable.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-                resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ExplainTable.Localization_en-US",
-            Assembly.GetExecutingAssembly());
-                localizationString = "en-US";
-            }
             this.ownerOfAddIn = ownerOfAddIn;
+            this.resManager = resManager;
             comparer.column = 0;
-            //this.dataMatrix = dataMatrix;
-            //this.dataMatrixInfo = dataMatrixInfo;
+            this.columnExplains = columnExplain;
+
             InitializeComponent();
             this.ListViewInit();
             this.MakeListView();
+            
             this.ToolStripMenuItemCopyAll.Click += new EventHandler(ToolStripMenuItemCopyAll_Click);
             this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
         }
@@ -117,7 +104,6 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         }
 
         #endregion
-
 
         #region Context menu handlers
 
@@ -199,7 +185,6 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
 
         #endregion
 
-
         #region Other private methods
 
         /// <summary>
@@ -207,25 +192,25 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// </summary>
         private void MakeListView()
         {
-            //foreach (ColumnSchemaInfo columnInfo in this.dataMatrix)
-            //{
-            //    ListViewItem newItem = new ListViewItem();
-            //    newItem.Text = columnInfo.name;
-            //    newItem.SubItems.Add(columnInfo.allowDBNull.ToString());
-            //    newItem.SubItems.Add(columnInfo.columnOrdinal.ToString());
-            //    newItem.SubItems.Add(columnInfo.columnSize.ToString());
-            //    newItem.SubItems.Add(columnInfo.dataType.ToString());
-            //    newItem.SubItems.Add(columnInfo.isAutoIncrement.ToString());
-            //    newItem.SubItems.Add(columnInfo.isKey.ToString());
-            //    newItem.SubItems.Add(columnInfo.isLong.ToString());
-            //    newItem.SubItems.Add(columnInfo.isReadOnly.ToString());
-            //    newItem.SubItems.Add(columnInfo.isRowVersion.ToString());
-            //    newItem.SubItems.Add(columnInfo.isUnique.ToString());
-            //    newItem.SubItems.Add(columnInfo.numericPrecision.ToString());
-            //    newItem.SubItems.Add(columnInfo.numericScale.ToString());
-            //    newItem.SubItems.Add(columnInfo.providerType.ToString());
-            //    this.ExplainTableListView.Items.Add(newItem);
-            //}
+            foreach (ColumnExplain columnInfo in columnExplains)
+            {
+                ListViewItem newItem = new ListViewItem();
+                newItem.Text = columnInfo.name;
+                newItem.SubItems.Add(columnInfo.allowDBNull.ToString());
+                newItem.SubItems.Add(columnInfo.columnOrdinal.ToString());
+                newItem.SubItems.Add(columnInfo.columnSize.ToString());
+                newItem.SubItems.Add(columnInfo.dataType.ToString());
+                newItem.SubItems.Add(columnInfo.isAutoIncrement.ToString());
+                newItem.SubItems.Add(columnInfo.isKey.ToString());
+                newItem.SubItems.Add(columnInfo.isLong.ToString());
+                newItem.SubItems.Add(columnInfo.isReadOnly.ToString());
+                newItem.SubItems.Add(columnInfo.isRowVersion.ToString());
+                newItem.SubItems.Add(columnInfo.isUnique.ToString());
+                newItem.SubItems.Add(columnInfo.numericPrecision.ToString());
+                newItem.SubItems.Add(columnInfo.numericScale.ToString());
+                newItem.SubItems.Add(columnInfo.providerType.ToString());
+                this.ExplainTableListView.Items.Add(newItem);
+            }
         }
 
         /// <summary>
@@ -236,14 +221,15 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
             this.ChangeLocale(resManager);
 
             //adding a handling method for column sorting
-            this.ExplainTableListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ExplainTableListView_ColumnClick);
+            this.ExplainTableListView.ColumnClick += 
+                new ColumnClickEventHandler(this.ExplainTableListView_ColumnClick);
         }
 
         /// <summary>
         /// Handler for column click - sorts a listview.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void ExplainTableListView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
         {
             comparer.column = e.Column;
@@ -262,7 +248,6 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
 
         #endregion
 
-
         #region Localization
         /// <summary>
         /// Resource manager of the application, it is filled according to the
@@ -273,17 +258,6 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
             get
             {
                 return resManager;
-            }
-        }
-
-        /// <summary>
-        /// Localization string of the application, possible values are "en-US" and "cs-CZ"
-        /// </summary>
-        public string LocalizationString
-        {
-            get
-            {
-                return localizationString;
             }
         }
 

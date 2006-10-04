@@ -105,24 +105,10 @@ namespace Ferda.FrontEnd.AddIns.Common.MyIce
         /// <param name="localePrefs">Localization preferences</param>
         /// <param name="manager">Proxy of the modules manager</param>
         /// <param name="__current">Some Ice stuff</param>
-        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, 
-            string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
-        {
-            //setting the localizationString and resManager fields
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ResultBrowser.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-                //just for debugging
-                throw new Exception("Could not localize or create resource manager in a module for interaction");
-            }
-        }
+        //public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, 
+        //    string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
+        //{
+        //}
 
         #endregion
 

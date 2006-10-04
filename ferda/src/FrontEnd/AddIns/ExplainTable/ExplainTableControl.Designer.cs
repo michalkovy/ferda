@@ -20,7 +20,7 @@
 
 namespace Ferda.FrontEnd.AddIns.ExplainTable
 {
-    partial class ExplainTable
+    partial class ExplainTableControl
     {
         /// <summary>
         /// Required designer variable.
@@ -140,7 +140,7 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
             this.ToolStripHelp.Text = "toolStripMenuItem1";
             this.ToolStripHelp.Click += new System.EventHandler(this.ToolStripHelp_Click);
             // 
-            // ExplainTable
+            // ExplainTableControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

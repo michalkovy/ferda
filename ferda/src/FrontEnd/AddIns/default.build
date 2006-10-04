@@ -82,7 +82,7 @@
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
-<!--
+
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ExplainTable.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ExplainTable/**.cs"/>
@@ -104,10 +104,11 @@
 				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
-    
+<!--    
     
 		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
     		  <fileset basedir="ExplainTable/Help">
