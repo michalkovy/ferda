@@ -126,6 +126,9 @@
   <data name="BoxNotConnected" xml:space="preserve">
     <value>Box not connected</value>
   </data>
+  <data name="BoxRunTimeError" xml:space="preserve">
+    <value>Box RunTime error. This can be caused by an invalid connection string or an invalid name of the data table. Try the Validate function for further details</value>
+  </data>
   <data name="ColumnAllowDBNull" xml:space="preserve">
     <value>Allow DB null</value>
   </data>
