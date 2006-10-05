@@ -6,10 +6,13 @@
     <authorgroup>
       <author>
         <firstname>Alexander</firstname>
-
         <surname>Kuzmin</surname>
-
         <email>alexander.kuzmin@gmail.com</email>
+      </author>
+      <author>
+        <firstname>Martin</firstname>
+        <surname>Ralbovsky</surname>
+        <email>martin.ralbovsky@gmail.com</email>
       </author>
     </authorgroup>
 
@@ -26,6 +29,12 @@
         <revnumber>1.0</revnumber>
         <date>2006-03-21</date>
         <revremark>Initial version of the document
+        </revremark>
+      </revision>
+      <revision>
+        <revnumber>1.1</revnumber>
+        <date>2006-10-4</date>
+        <revremark>Added the help functionality
         </revremark>
       </revision>
     </revhistory>
@@ -105,6 +114,12 @@
             <para>When this option is selected, the currently items from the
             ExplainTable list are copied to the clipboard as tab separated
             values.</para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>Help</title>
+            <para>Displays the pdf help file describing the module.</para>
           </formalpara>
         </listitem>
       </itemizedlist>
