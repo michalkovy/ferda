@@ -98,11 +98,6 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
             this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
         }
 
-        private void ToolStripHelp_Click(object sender, EventArgs e)
-        {
-            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ExplainTable.pdf");
-        }
-
         #endregion
 
         #region Context menu handlers
@@ -110,8 +105,8 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// <summary>
         /// Copy selected items to clipboard
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         void ToolStripMenuItemCopySelected_Click(object sender, EventArgs e)
         {
             StringBuilder copyString = new StringBuilder();
@@ -148,8 +143,8 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         /// <summary>
         /// Copy all items to clipboard
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         void ToolStripMenuItemCopyAll_Click(object sender, EventArgs e)
         {
             StringBuilder copyString = new StringBuilder();
@@ -181,6 +176,16 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
                 copyString.AppendLine();
             }
             Clipboard.SetDataObject(copyString.ToString(), true);
+        }
+
+        /// <summary>
+        /// Shows the help file for this module for interaction
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        private void ToolStripHelp_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ExplainTable.pdf");
         }
 
         #endregion
