@@ -1,4 +1,5 @@
-// ExplainTableIce.cs - class for ice communication
+// ExplainTableIce.cs - class for ice communication for the ExplainTable module
+// for interaction
 //
 // Authors:  Alexander Kuzmin <alexander.kuzmin@gmail.com>
 //           Martin Ralbovsky <martin.ralbovsky@gmail.com>
@@ -34,7 +35,7 @@ using System.Reflection;
 namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
 {
     /// <summary>
-    /// Class for Ice communication for the ExplainTableControl module for interaction
+    /// Class for Ice communication for the ExplainTable module for interaction
     /// </summary>
     public class ExplainTableIce : ModuleForInteractionIce
     {
@@ -70,7 +71,7 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
         }
 
         /// <summary>
-        /// Gets accepted box type
+        /// Gets accepted box type by this module for interaction
         /// </summary>
         /// <param name="__current">Ice context</param>
         /// <returns>Accpeted box types array</returns>
@@ -114,9 +115,9 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
         /// The method is called by te Ice framework when a module for interaction
         /// is to be displayed
         /// </summary>
-        /// <param name="boxModuleParam">BoxModuleParams</param>
-        /// <param name="localePrefs">localeprefs</param>
-        /// <param name="manager">Manager proxy</param>
+        /// <param name="boxModuleParam">Box that is executing this module for interaction</param>
+        /// <param name="localePrefs">Localization preferences</param>
+        /// <param name="manager">Proxy address of the modules manager</param>
         /// <param name="__current">Ice context</param>
         public override void run(Ferda.Modules.BoxModulePrx boxModuleParam,
             string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)

@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Odbc;
 using System.Data;
-using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
 
 namespace Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses
 {
@@ -59,12 +58,12 @@ namespace Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses
         /// </summary>
         /// <param name="dataMatrixName">Datamatrix name</param>
         /// <param name="dataMatrixStruct">Datamatrix struct</param>
-        public DBInteraction(string dataMatrixName, DataMatrixInfo dataMatrixStruct)
+        public DBInteraction(string dataMatrixName)
+            //, DataMatrixInfo dataMatrixStruct)
         {
-            this.connectionString = dataMatrixStruct.database.odbcConnectionString;
-            this.dataMatrixName = dataMatrixName;
-            this.connection = this.GetConnection();
-
+            //this.connectionString = dataMatrixStruct.database.odbcConnectionString;
+            //this.dataMatrixName = dataMatrixName;
+            //this.connection = this.GetConnection();
         }
 
         #endregion
@@ -78,15 +77,16 @@ namespace Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses
         /// <returns>ODBC connection</returns>
         public OdbcConnection GetConnection()
         {
-            try
-            {
-                return new System.Data.Odbc.OdbcConnection(this.connectionString);
-            }
+            //try
+            //{
+            //    return new System.Data.Odbc.OdbcConnection(this.connectionString);
+            //}
 
-            catch (OdbcException e)
-            {
-                throw Ferda.Modules.Exceptions.BadParamsError(e, null, "Bad ODBC connection string specified. Could not connect to database.", Ferda.Modules.restrictionTypeEnum.DbConnectionString);
-            }
+            //catch (OdbcException e)
+            //{
+            //    throw Ferda.Modules.Exceptions.BadParamsError(e, null, "Bad ODBC connection string specified. Could not connect to database.", Ferda.Modules.restrictionTypeEnum.DbConnectionString);
+            //}
+            return null;
         }
 
         #endregion

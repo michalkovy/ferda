@@ -1,8 +1,9 @@
 // ShowTableControl.cs - UserControl class for displaying database table
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Authors: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//          Martin Ralbovský <martin.ralbovsky@gmail.com>            
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,7 +28,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Resources;
 using System.Reflection;
-using Ferda.Modules.Boxes.DataMiningCommon.DataMatrix;
 using Ferda.FrontEnd.AddIns.Common.ListView;
 using Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses;
 
@@ -47,11 +47,6 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         private ResourceManager resManager;
 
         /// <summary>
-        /// Localization string, en-US or cs-CZ for now.
-        /// </summary>
-        private string localizationString;
-
-        /// <summary>
         /// ColumnInfo array
         /// </summary>
         private string[] columns;
@@ -59,7 +54,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         /// <summary>
         /// DataMatrixInfo
         /// </summary>
-        private DataMatrixInfo dataMatrix;
+        //private DataMatrixInfo dataMatrix;
 
         /// <summary>
         /// Owner of addin
@@ -73,7 +68,6 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
 
         #endregion
 
-
         #region Constructor
 
         /// <summary>
@@ -82,38 +76,24 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         /// <param name="localePrefs">localeprefs</param>
         /// <param name="columns">Columns</param>
         /// <param name="dataMatrix">Datamatrix to display</param>
-        public ShowTableControl(string[] localePrefs, string[] columns, DataMatrixInfo dataMatrix, IOwnerOfAddIn ownerOfAddIn)
+        public ShowTableControl(ResourceManager resManager, string[] columns, IOwnerOfAddIn ownerOfAddIn)
+            //DataMatrixInfo dataMatrix, IOwnerOfAddIn ownerOfAddIn)
         {
-            //setting the ResManager resource manager and localization string
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ShowTable.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-                resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ShowTable.Localization_en-US",
-            Assembly.GetExecutingAssembly());
-                localizationString = "en-US";
-            }
             this.ownerOfAddIn = ownerOfAddIn;
+            this.resManager = resManager;
             comparer.column = 0;
-            this.columns = columns;
-            this.dataMatrix = dataMatrix;
+            //this.columns = columns;
+            //this.dataMatrix = dataMatrix;
             InitializeComponent();
-            this.ChangeLocale(this.resManager);
-            this.ListViewInit();
-            DBInteraction explainTable = new DBInteraction(this.dataMatrix.dataMatrixName, this.dataMatrix);
-            this.MakeListView(explainTable.ShowTable());
+            this.ChangeLocale(ResManager);
+            //this.ListViewInit();
+            //DBInteraction explainTable = new DBInteraction(this.dataMatrix.dataMatrixName, this.dataMatrix);
+            //this.MakeListView(explainTable.ShowTable());
             this.ToolStripMenuItemCopyAll.Click += new EventHandler(ToolStripMenuItemCopyAll_Click);
             this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
         }
 
         #endregion
-
 
         #region Context menu handlers
 
@@ -207,7 +187,6 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
 
         #endregion
 
-
         #region Initialization
 
         /// <summary>
@@ -245,7 +224,6 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
 
         #endregion
 
-
         #region Localization
         /// <summary>
         /// Resource manager of the application, it is filled according to the
@@ -256,17 +234,6 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
             get
             {
                 return resManager;
-            }
-        }
-
-        /// <summary>
-        /// Localization string of the application, possible values are "en-US" and "cs-CZ"
-        /// </summary>
-        public string LocalizationString
-        {
-            get
-            {
-                return localizationString;
             }
         }
 
