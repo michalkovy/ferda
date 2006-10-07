@@ -21,11 +21,11 @@ namespace Ferda.Modules.Boxes.DataPreparation
                         new Datasource.DataTable.BoxInfo());
             registerBox(Datasource.Column.BoxInfo.typeIdentifier,
                         new Datasource.Column.BoxInfo());
-            /*
+            
             
             registerBox(DataPreparation.Categorization.EquidistantIntervals.BoxInfo.typeIdentifier,
                         new DataPreparation.Categorization.EquidistantIntervals.BoxInfo());
-            registerBox(DataPreparation.Categorization.EquifrequencyIntervals.BoxInfo.typeIdentifier,
+            /*registerBox(DataPreparation.Categorization.EquifrequencyIntervals.BoxInfo.typeIdentifier,
                         new DataPreparation.Categorization.EquifrequencyIntervals.BoxInfo());
              * */
             registerBox(Categorization.EachValueOneCategory.BoxInfo.typeIdentifier,

@@ -142,7 +142,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             }
             try
             {
-                GenericColumn.ParseValue(From, dataType, out to);
+                GenericColumn.ParseValue(To, dataType, out to);
             }
             catch (Exception e)
             {
