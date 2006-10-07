@@ -36,21 +36,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, PublicKeyToken=526936f183183f71, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaDataMiningCommonBoxes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaFrontEnd, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\FerdaDataMiningCommonBoxes.dll</HintPath>
-    </Reference>
-    <Reference Include="FerdaLMTasksBoxes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\FerdaLMTasksBoxes.dll</HintPath>
-    </Reference>
-    <Reference Include="FerdaProjectManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\FerdaProjectManager.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaFrontEnd.exe</HintPath>
     </Reference>
     <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -60,10 +52,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\icecs.dll</HintPath>
     </Reference>
-    <Reference Include="icegridcs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b555a647d8de49c2">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\icegridcs.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -71,16 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Localization_cs-CZ.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Localization_cs-CZ.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Localization_en-US.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Localization_en-US.resx</DependentUpon>
-    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="MyIce\ShowTableIce.cs" />
     <Compile Include="NonGUIClasses\DBInteraction.cs" />
