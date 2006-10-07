@@ -30,19 +30,33 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             return new ModulesAskingForCreation[0];
         }
 
+        public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            switch (propertyName)
+            {
+                case Functions.PropCountOfCategories:
+                    return Func.CountOfCategories;
+                case Functions.PropIncludeNullCategory:
+                    return Func.IncludeNullCategory;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
-            
+
             switch (propertyName)
             {
-                case Functions.PropCountOfIntervals:
-                    return BoxInfoHelper.GetSelectStringArray(new List<string>()
+                case Functions.PropXCategory:
+                    return BoxInfoHelper.GetSelectStringArray(
+                        Func.GetCategoriesNames(false)
                         );
                 default:
                     return null;
             }
-          //  return null;
         }
 
         public const string typeIdentifier = "DataPreparation.Categorization.EquidistantIntervals";

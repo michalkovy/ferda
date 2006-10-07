@@ -20,7 +20,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         #region Properties
 
         public const string PropNameInLiterals = "NameInLiterals";
-        public const string PropCountOfIntervals = "CountOfCategories";
+        public const string PropCountOfCategories = "CountOfCategories";
         public const string PropLength = "Length";
         public const string PropClosedFrom = "ClosedFrom";
         public const string PropXCategory = "XCategory";
@@ -52,21 +52,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
-        public string Length
-        {
-            set
-            {
-                _boxModule.setProperty(PropLength, new StringTI(value));
-            }
-        }
-
-        public LongTI CountOfIntervals
+        public long Length
         {
             get
             {
-                return (LongTI)Int32.Parse(
-                    _boxModule.GetPropertyString(PropCountOfIntervals)
-                );
+                return _boxModule.GetPropertyLong(PropLength);
+            }
+        }
+
+        public LongTI CountOfCategories
+        {
+            get
+            {
+                Attribute<IComparable> tmp =
+                    GetAttribute(false);
+                return (tmp != null) ? tmp.Count : 0;
             }
         }
 
@@ -121,26 +121,66 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         /// <summary>
         /// Creates equidistant intervals from the given range of values.
         /// </summary>
-        /// <param name="from">Requested starting point of intervals.</param>
-        /// <param name="to">Requested end point of intervals.</param>
-        /// <param name="count">Requested number of intervals.</param>
+        /// <param name="_from">Requested starting point of intervals.</param>
+        /// <param name="_to">Requested end point of intervals.</param>
+        /// <param name="_length">Requested length of one interval.</param>
         /// <returns>An array of dividing points. The first point returned is the right bound of the first value (the left bound can be -INF), the last point returned is the left bound of the last interval (right bound can be INF).</returns>
-        public static object[] GenerateIntevals(double _from, double _to, long _count)
+        public static object[] GenerateIntevals(double _from, double _to, int _length)
         {
             double actualValue = _from;
-
-            int _size = (int)Math.Floor( (double) ((_to - _from) / _count) );
-
-            object[] intervalsArray = new object[_count];
+            object[] intervalsArray = new object[Convert.ToInt32(Math.Ceiling((_to - _from) / _length)) - 1];
 
             int index = 0;
-            while (actualValue < _to - _size)
+            while (actualValue < _to - _length)
             {
-                intervalsArray[index] = actualValue + _size;
-                actualValue += _size;
+                intervalsArray[index] = actualValue + _length;
+                actualValue += _length;
                 index++;
             }
+            return intervalsArray;
+        }
 
+        /// <summary>
+        /// Creates equidistant intervals from the given range of values.
+        /// </summary>
+        /// <param name="_from">Requested starting point of intervals.</param>
+        /// <param name="_to">Requested end point of intervals.</param>
+        /// <param name="_length">Requested length of one interval.</param>
+        /// <returns>An array of dividing points. The first point returned is the right bound of the first value (the left bound can be -INF), the last point returned is the left bound of the last interval (right bound can be INF).</returns>
+        public static object[] GenerateIntevals(int _from, int _to, int _length)
+        {
+            int actualValue = _from;
+            object[] intervalsArray = new object[Convert.ToInt32(Math.Ceiling(((double)_to - (double)_from) / _length)) - 1];
+
+            int index = 0;
+            while (actualValue < _to - _length)
+            {
+                intervalsArray[index] = actualValue + _length;
+                actualValue += _length;
+                index++;
+            }
+            return intervalsArray;
+        }
+
+        /// <summary>
+        /// Creates equidistant intervals from the given range of values.
+        /// </summary>
+        /// <param name="_from">Requested starting point of intervals.</param>
+        /// <param name="_to">Requested end point of intervals.</param>
+        /// <param name="_length">Requested length of one interval.</param>
+        /// <returns>An array of dividing points. The first point returned is the right bound of the first value (the left bound can be -INF), the last point returned is the left bound of the last interval (right bound can be INF).</returns>
+        public static object[] GenerateIntevals(uint _from, uint _to, uint _length)
+        {
+            uint actualValue = _from;
+            object[] intervalsArray = new object[Convert.ToInt32(Math.Ceiling(((double)_to - (double)_from) / _length)) - 1];
+
+            int index = 0;
+            while (actualValue < _to - _length)
+            {
+                intervalsArray[index] = actualValue + _length;
+                actualValue += _length;
+                index++;
+            }
             return intervalsArray;
         }
 
@@ -216,6 +256,29 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 SockColumn,
                 ColumnFunctionsPrxHelper.checkedCast,
                 fallOnError);
+        }
+
+        public string[] GetCategoriesNames(bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    Attribute<IComparable> tmp = GetAttribute(fallOnError);
+                    if (tmp != null)
+                    {
+                        bool dummy;
+                        List<string> result = tmp.GetCategoriesIds(out dummy);
+                        return result.ToArray();
+                    }
+                    return new string[0];
+                },
+                delegate
+                {
+                    return new string[0];
+                },
+                _boxModule.StringIceIdentity
+                );
         }
 
         private CacheFlag _cacheFlagColumn = new CacheFlag();
@@ -303,6 +366,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropLength, Length);
 
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
@@ -329,12 +393,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         string _min;
                         string _max;
 
-                        //---------DEBUG
-                        //long _count = CountOfIntervals.getLongValue();
-                        long _count = 5;
-
-                        //---------END DEBUG
-
                         if (Domain == DomainEnum.SubDomain)
                         {
                             IComparable from;
@@ -357,21 +415,44 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                             throw new NotImplementedException();
 
                       //  bool containsNull = false;
-
-                        double __min = Convert.ToDouble(_min);
-                        double __max = Convert.ToDouble(_max);
-
-                        object [] _divisionPoints = GenerateIntevals(__min, __max, _count);
-
-                       /* if (_divisionPoints.Length > 1)
+                        object [] _divisionPoints;
+                        IComparable __min;
+                        IComparable __max;
+                        switch (column.Explain.dataType)
                         {
-                            double __tmp = _divisionPoints[1] - _divisionPoints[0];
-                        //    Length = __tmp.ToString();
+                            case DbDataTypeEnum.DoubleType:
+                                case DbDataTypeEnum.FloatType:
+                                double _dmin = Convert.ToDouble(_min);
+                                double _dmax = Convert.ToDouble(_max);
+                                __min = _dmin;
+                                __max = _dmax;
+                                _divisionPoints = GenerateIntevals(_dmin, _dmax, (int)Length);
+                                break;
+
+                            case DbDataTypeEnum.IntegerType:
+                            case DbDataTypeEnum.LongIntegerType:
+                            case DbDataTypeEnum.ShortIntegerType:
+                                int _imin = Convert.ToInt32(_min);
+                                int _imax = Convert.ToInt32(_max);
+                                __min = _imin;
+                                __max = _imax;
+                                _divisionPoints = GenerateIntevals(_imin, _imax, (int)Length);
+                                break;
+
+                            case DbDataTypeEnum.UnsignedIntegerType:
+                            case DbDataTypeEnum.UnsignedLongIntegerType:
+                            case DbDataTypeEnum.UnsignedShortIntegerType:
+                                uint _umin = Convert.ToUInt32(_min);
+                                uint _umax = Convert.ToUInt32(_max);
+                                __min = _umin;
+                                __max = _umax;
+                                _divisionPoints = GenerateIntevals(_umin, _umax, (uint)Length);
+                                break;
+
+                            default:
+                                throw new ArgumentException("Type not supported");
+
                         }
-                        else
-                        {
-                       //     Length = Double.NaN.ToString();
-                        }*/
 
                         result.CreateIntervals(BoundaryEnum.Closed, __min, _divisionPoints,
                                     ClosedFrom, __max, BoundaryEnum.Closed, false);
