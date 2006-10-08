@@ -408,8 +408,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         {
                             _min = column.Statistics.valueMin;
                             _max = column.Statistics.valueMax;
-                            //dt = column.GetDistincts(null);
-                            
+                            //dt = column.GetDistincts(null);     
                         }
                         else
                             throw new NotImplementedException();
