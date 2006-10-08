@@ -1,0 +1,82 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE article PUBLIC '-//OASIS//DTD DocBook XML V4.2//EN'
+               'http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd'>
+<article lang="en">
+  <articleinfo>
+    <title>Box Implementation Principles</title>
+    <author>
+      <firstname>Martin</firstname>
+      <surname>Ralbovský</surname>
+      <email>martin.ralbovsky@gmail.com</email>
+    </author>
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2006-10-7</date>
+      </revision>
+      <revremark>
+        Initial version
+      </revremark>
+    </revhistory>
+    -->
+  </articleinfo>
+  <abstract>
+    <para>
+      This document states the implementation principles of a box which is
+      developed in the academic sphere.
+    </para>
+  </abstract>
+  <section>
+    <title>Introduction</title>
+    <para>
+      Architecture of the Ferda Dataminer system provides extended functionality
+      for the box modules (such as localization, icons or dynamic help). Therefore
+      we emphasise on using most of this functionality when creating boxes in
+      academic environment (master theses, bachelors' works etc.), because the
+      usage can be demanded from the students. The following list states the
+      principles that are mandatory to follow.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <simpara>
+          A new box should not disable any functionality of other existing modules
+          (boxes or modules for interaction). For example when a new version of a
+          box replaces an old version, the modules for interaction that worked with
+          the old version should also work with the new version.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          Box should have an icon.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          A czech and english localization should be provided.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          If there are any boxes asking for creation (boxes that the box can be
+          connected to), the mechanism is implemented.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The normal and slice code should be properly documented.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          A <classname>BoxModule.getDynamicHelpItems()</classname> function should
+          be implemented. This functions should provide information about properties,
+          sockets, actions, modules for interaction and boxes asking for creation
+          of the implemented box. (The individual help items have can have a link
+          to a pdf file with the information about the box). There should be
+          at least one pdf file containing information about the box per each box.
+        </simpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+</article>
