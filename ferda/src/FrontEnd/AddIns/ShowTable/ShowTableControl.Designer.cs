@@ -72,16 +72,6 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
             this.ListViewShowTable.UseCompatibleStateImageBehavior = false;
             this.ListViewShowTable.View = System.Windows.Forms.View.Details;
             // 
-            // ContextMenuData
-            // 
-            this.ContextMenuData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemCopyAll,
-            this.ToolStripMenuItemCopySelected,
-            this.toolStripSeparator1,
-            this.ToolStripHelp});
-            this.ContextMenuData.Name = "ContextMenuData";
-            this.ContextMenuData.Size = new System.Drawing.Size(180, 98);
-            // 
             // ToolStripMenuItemCopyAll
             // 
             this.ToolStripMenuItemCopyAll.Name = "ToolStripMenuItemCopyAll";
@@ -105,6 +95,16 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
             this.ToolStripHelp.Size = new System.Drawing.Size(179, 22);
             this.ToolStripHelp.Text = "toolStripMenuItem1";
             this.ToolStripHelp.Click += new System.EventHandler(this.ToolStripHelp_Click);
+            // 
+            // ContextMenuData
+            // 
+            this.ContextMenuData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemCopyAll,
+            this.ToolStripMenuItemCopySelected,
+            this.toolStripSeparator1,
+            this.ToolStripHelp});
+            this.ContextMenuData.Name = "ContextMenuData";
+            this.ContextMenuData.Size = new System.Drawing.Size(180, 98);
             // 
             // ShowTableControl
             // 

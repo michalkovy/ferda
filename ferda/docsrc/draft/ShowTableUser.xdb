@@ -6,10 +6,13 @@
     <authorgroup>
       <author>
         <firstname>Alexander</firstname>
-
         <surname>Kuzmin</surname>
-
         <email>alexander.kuzmin@gmail.com</email>
+      </author>
+      <author>
+        <firstname>Martin</firstname>
+        <surname>Ralbovský</surname>
+        <email>martin.ralbovsky@gmail.com</email>
       </author>
     </authorgroup>
 
@@ -28,6 +31,13 @@
         <revremark>Initial version of the document
         </revremark>
       </revision>
+      <revision>
+        <revnumber>1.1</revnumber>
+        <date>2006-10-9</date>
+        <revremark>
+          Added the help functionality and some comments
+        </revremark>
+      </revision>
     </revhistory>
     -->
   </articleinfo>
@@ -41,9 +51,18 @@
   <section>
     <title>Introduction</title>
 
-    <para>Welcome to ShowTable module. This is a module designed for
-    displaying the results of SQL for selecting all data from the database
-    table</para>
+    <para>
+      Welcome to ShowTable module. This is a module designed for
+      displaying the results of SQL for selecting all data from the database
+      table.
+    </para>
+    <para>
+      <emphasis>Note:</emphasis>
+      When loading a very large data table, the Ferda system can freeze for a
+      while. This is caused by the high traffic between the data-source and the
+      Ferda system. This problem can be eliminated by some optimalizations
+      implemented by the module, however it is not the priority now.
+    </para>
   </section>
 
   <section>
@@ -103,6 +122,14 @@
             <para>When this option is selected, the currently items from the
             ShowTable list are copied to the clipboard as tab separated
             values.</para>
+          </formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>Help</title>
+            <para>
+              Displays the pdf help file describing the module.
+            </para>
           </formalpara>
         </listitem>
       </itemizedlist>

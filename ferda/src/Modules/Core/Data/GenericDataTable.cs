@@ -218,6 +218,34 @@ namespace Ferda.Guha.Data
             return false;
         }
 
+        /// <summary>
+        /// Funtcion returns a data from the data table
+        /// (equivalent to the "SELECT * FROM tableName" SQL command)
+        /// </summary>
+        /// <returns>
+        /// A DataTable structure filled with the actual data
+        /// </returns>
+        public DataTable Select()
+        {
+            try
+            {
+                //building the command
+                DbCommand command = GenericDatabase.CreateDbCommand();
+                command.CommandText = "SELECT * FROM " +
+                    GenericDatabase.QuoteQueryIdentifier(Explain.name);
+
+                DbDataAdapter dataAdapter = GenericDatabase.CreateDbDataAdapter();
+                dataAdapter.SelectCommand = command;
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet);
+                return dataSet.Tables[0];
+            }
+            catch (DbException ex)
+            {
+                throw Exceptions.DbUnexpectedError(ex, null);
+            }
+        }
+
         #region Columns
 
         private Dictionary<string, GenericColumn> _columns = null;

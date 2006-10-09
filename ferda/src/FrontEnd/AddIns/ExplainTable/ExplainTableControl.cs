@@ -48,16 +48,6 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         private ResourceManager resManager;
 
         /// <summary>
-        /// ColumnSchemaInfo array
-        /// </summary>
-        //private ColumnSchemaInfo[] dataMatrix;
-
-        /// <summary>
-        /// DataMatrixInfo
-        /// </summary>
-        //private DataMatrixInfo dataMatrixInfo;
-
-        /// <summary>
         /// Owner of addin
         /// </summary>
         private IOwnerOfAddIn ownerOfAddIn;
@@ -77,11 +67,13 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
         #region Constructor
 
         /// <summary>
-        /// Class constructor
+        /// Default constructor of the class
         /// </summary>
-        /// <param name="localePrefs">Localeprefs</param>
-        /// <param name="dataMatrix">Datamatrix</param>
-        /// <param name="dataMatrixInfo">Datamatrix info</param>
+        /// <param name="resManager">Resource manager for the module</param>
+        /// <param name="columnExplain">Structure that holds information
+        /// about the columns of the data table</param>
+        /// <param name="ownerOfAddIn">
+        /// Owner of the addin (usually the FrontEnd environment)</param>
         public ExplainTableControl(ResourceManager resManager, IOwnerOfAddIn ownerOfAddIn, 
             ColumnExplain [] columnExplain)
         {
