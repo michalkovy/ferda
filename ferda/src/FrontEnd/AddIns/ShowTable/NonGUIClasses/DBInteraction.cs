@@ -1,8 +1,9 @@
 // DBInteraction.cs - class for interaction with ODBC database
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Authors: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//          Martin Ralbovský <martin.ralbovsky@gmail.com>            
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovský
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,10 +20,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data.Odbc;
 using System.Data;
+using Ferda.Modules.Boxes.DataPreparation;
+using Ferda.Guha.Data;
 
 namespace Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses
 {
@@ -34,119 +35,47 @@ namespace Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses
         #region Private variables
 
         /// <summary>
-        /// Database connection string
+        /// Structure that holds information about the data table
         /// </summary>
-        private string connectionString;
-
-        /// <summary>
-        /// Datamatrix name
-        /// </summary>
-        private string dataMatrixName;
-
-        /// <summary>
-        /// ODBC connection
-        /// </summary>
-        private OdbcConnection connection;
+        private DataTableInfo dataTableStruct;
 
         #endregion
-
 
         #region Constructor
 
         /// <summary>
-        /// Class constructor
+        /// Default constructor for the class
         /// </summary>
-        /// <param name="dataMatrixName">Datamatrix name</param>
-        /// <param name="dataMatrixStruct">Datamatrix struct</param>
-        public DBInteraction(string dataMatrixName)
-            //, DataMatrixInfo dataMatrixStruct)
+        /// <param name="dataTableStruct">
+        /// Structure that holds information about the data table
+        /// </param>
+        public DBInteraction(DataTableInfo dataTableStruct)
         {
-            //this.connectionString = dataMatrixStruct.database.odbcConnectionString;
-            //this.dataMatrixName = dataMatrixName;
-            //this.connection = this.GetConnection();
+            this.dataTableStruct = dataTableStruct;
         }
 
         #endregion
-
-
-        #region Initializing ODBC connection
-
-        /// <summary>
-        /// Initializing ODBC conenction
-        /// </summary>
-        /// <returns>ODBC connection</returns>
-        public OdbcConnection GetConnection()
-        {
-            //try
-            //{
-            //    return new System.Data.Odbc.OdbcConnection(this.connectionString);
-            //}
-
-            //catch (OdbcException e)
-            //{
-            //    throw Ferda.Modules.Exceptions.BadParamsError(e, null, "Bad ODBC connection string specified. Could not connect to database.", Ferda.Modules.restrictionTypeEnum.DbConnectionString);
-            //}
-            return null;
-        }
-
-        #endregion
-
-
-        #region Private methods
-
-        /// <summary>
-        /// Method to compose query for showing the whole table
-        /// </summary>
-        /// <returns></returns>
-        private string ComposeShowTableQuery()
-        {
-            return "SELECT * FROM "
-            + "`" + this.dataMatrixName + "`";
-        }
-
-        /// <summary>
-        /// Method which queries the ODBC connection for a given query.
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns>DataTable with result</returns>
-        private DataTable GetQueryResultTable(string query)
-        {
-            try
-            {
-                OdbcDataAdapter odbcDataAdapter = new OdbcDataAdapter(query, this.connection);
-
-                DataSet dataSet = new DataSet();
-                odbcDataAdapter.Fill(dataSet);
-
-                return dataSet.Tables[0];
-            }
-
-            catch (OdbcException)
-            {
-                this.connection.Close();
-                throw (new Ferda.Modules.BadParamsError());
-
-            }
-            catch
-            {
-                this.connection.Close();
-                throw (new Ferda.Modules.BadParamsError());
-            }
-        }
-
-        #endregion
-
 
         #region Public methods
 
         /// <summary>
-        /// Gets table
+        /// Gets the actual data of the table
         /// </summary>
         /// <returns>Resulting datatable</returns>
         public DataTable ShowTable()
         {
-            this.GetConnection();
-            return this.GetQueryResultTable(this.ComposeShowTableQuery());
+            DatabaseConnectionSettingHelper helper =
+                new DatabaseConnectionSettingHelper(dataTableStruct.databaseConnectionSetting);
+            
+            //testing the database
+            GenericDatabase db = GenericDatabaseCache.GetGenericDatabase(helper);
+
+            //getting the result
+            string tableName = dataTableStruct.dataTableName;
+            GenericDataTable table = db[dataTableStruct.dataTableName];
+            DataTable result = table.Select();
+
+            return result;
         }
 
         #endregion

@@ -30,6 +30,7 @@ using System.Resources;
 using System.Reflection;
 using Ferda.FrontEnd.AddIns.Common.ListView;
 using Ferda.FrontEnd.AddIns.ShowTable.NonGUIClasses;
+using Ferda.Modules.Boxes.DataPreparation;
 
 
 namespace Ferda.FrontEnd.AddIns.ShowTable
@@ -66,29 +67,40 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         /// </summary>
         private ListViewItemComparer comparer = new ListViewItemComparer();
 
+        /// <summary>
+        /// Structure that holds the information about the data table
+        /// </summary>
+        private DataTableInfo dataTableInfo;
+
         #endregion
 
         #region Constructor
 
         /// <summary>
-        /// Class constructor
+        /// Default constructor of the class
         /// </summary>
-        /// <param name="localePrefs">localeprefs</param>
-        /// <param name="columns">Columns</param>
-        /// <param name="dataMatrix">Datamatrix to display</param>
-        public ShowTableControl(ResourceManager resManager, string[] columns, IOwnerOfAddIn ownerOfAddIn)
-            //DataMatrixInfo dataMatrix, IOwnerOfAddIn ownerOfAddIn)
+        /// <param name="resManager">Resource manager for the module</param>
+        /// <param name="ownerOfAddIn">
+        /// Owner of the addin (usually the FrontEnd environment)</param>
+        /// <param name="columns">Names of the columns</param>
+        /// <param name="dataTableInfo">
+        /// Structure that holds the information about the data table</param>
+        public ShowTableControl(ResourceManager resManager, string[] columns, 
+            DataTableInfo dataTableInfo, IOwnerOfAddIn ownerOfAddIn)
         {
             this.ownerOfAddIn = ownerOfAddIn;
             this.resManager = resManager;
+            this.columns = columns;
+            this.dataTableInfo = dataTableInfo;
+
             comparer.column = 0;
-            //this.columns = columns;
-            //this.dataMatrix = dataMatrix;
+            
             InitializeComponent();
+            
             this.ChangeLocale(ResManager);
-            //this.ListViewInit();
-            //DBInteraction explainTable = new DBInteraction(this.dataMatrix.dataMatrixName, this.dataMatrix);
-            //this.MakeListView(explainTable.ShowTable());
+            this.ListViewInit();
+            DBInteraction explainTable = new DBInteraction(dataTableInfo);
+            this.MakeListView(explainTable.ShowTable());
             this.ToolStripMenuItemCopyAll.Click += new EventHandler(ToolStripMenuItemCopyAll_Click);
             this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
         }

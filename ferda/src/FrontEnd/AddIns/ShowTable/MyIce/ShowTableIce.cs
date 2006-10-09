@@ -130,14 +130,16 @@ namespace Ferda.FrontEnd.AddIns.ShowTable.MyIce
                     manager.getProjectInformation().getUserLabel(
                     Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
                 ShowTableControl control = new ShowTableControl(resManager,
-                    prx.getColumnsNames(), ownerOfAddIn);
+                    prx.getColumnsNames(), prx.getDataTableInfo(), ownerOfAddIn);
                 this.ownerOfAddIn.ShowDockableControl(control, 
                     resManager.GetString("Show") + " " + label);
             }
-            catch
+            catch (Ferda.Modules.BoxRuntimeError)
             {
+                MessageBox.Show(resManager.GetString("BoxRunTimeError"),
+                        resManager.GetString("Error"), MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
             }
-
         }
 
         #endregion

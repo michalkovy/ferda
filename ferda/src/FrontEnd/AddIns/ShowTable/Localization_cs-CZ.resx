@@ -123,6 +123,9 @@
   <data name="BoxNotConnected" xml:space="preserve">
     <value>Krabička není zapojena</value>
   </data>
+  <data name="BoxRunTimeError" xml:space="preserve">
+    <value>Chyba krabičky pri spouštění modulu pro interakci. Může to být způsobeno neplatným připojovacím řetězcem nebo neplatným názvem tabulky. Pro bližší informace zkuste funkci Validovat.</value>
+  </data>
   <data name="CopyAllToClipboard" xml:space="preserve">
     <value>Zkopírovat všechny položky do schránky</value>
   </data>
