@@ -630,7 +630,7 @@ FunctionEnd
  
  Function IceDirectoryPre
  
- StrCpy $INSTDIR "c:\Ice-3.1.0"
+ StrCpy $INSTDIR "c:\Ice-3.1.1"
  
  FunctionEnd
   
