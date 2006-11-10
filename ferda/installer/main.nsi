@@ -11,7 +11,7 @@
 ;include constants
 !include "constants.nsi" 
 ;!define MUI_PRODUCT "FerdaDataminer"
-;!define MUI_VERSION "1.0"
+;!define MUI_VERSION "2.0"
 ;mainly 3-rd part functions
 !include "functions.nsi"
 

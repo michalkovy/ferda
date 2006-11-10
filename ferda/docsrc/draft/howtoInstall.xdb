@@ -45,7 +45,7 @@
       <title>Hardware requirements</title>
 
       <para>Ferda runs on x86 platform. The required hardware configuration is
-      similar to one required for Microsoft .NET Framework 2.0 and Ice 3.1.0, as
+      similar to one required for Microsoft .NET Framework 2.0 and Ice 3.1.1, as
       Ferda utilizes both of these frameworks. Minimal hardware configuration
       is 600 megahertz (MHz) Pentium processor, or an AMD Opteron, AMD
       Athlon64 or AMD Athlon XP processor. The recommended configuration is
@@ -97,7 +97,7 @@
               Engine) Framework which is programmed by ZeroC. Framework
               installer for Windows is downloadable at <ulink
               url="http://www.zeroc.com/download.html#win32_msi">http://www.zeroc.com/download.html#win32_msi</ulink>.
-              Currently Ferda runs on version 3.1.0 of Ice framework. You will
+              Currently Ferda runs on version 3.1.1 of Ice framework. You will
               need to download Windows Installer for Visual Studio .NET 2005
               in order to run Ferda. Please note the directory where Ice is
               installed, you will need it in further steps.</para>
