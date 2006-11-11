@@ -765,6 +765,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             return GetCategoriesAndFrequencies(true);
         }
 
+        public override int[] GetCountVector(Current current__)
+        {
+            return new int[0];
+        }
+
         #region IFunctions Members
 
         public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)

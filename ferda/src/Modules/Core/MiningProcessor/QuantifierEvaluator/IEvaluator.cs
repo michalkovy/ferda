@@ -6,6 +6,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     {
         //tady pujde bufferovat zadani a volat Valid na pole CT
         bool VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis);
+
+        /// <summary>
+        /// Returns boolean vector of verification results on contingency tables
+        /// </summary>
+        /// <returns>Boolean vector</returns>
+        bool[] GetEvaluationVector();
         
         //tohle bude validovat zbytek bufferu
         void Flush();

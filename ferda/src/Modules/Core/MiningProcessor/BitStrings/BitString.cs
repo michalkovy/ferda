@@ -69,6 +69,15 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             get { return _identifier; }
         }
 
+
+        private int [] _lengthVector = null;
+
+        public int[] LengthVector
+        {
+            get { return _lengthVector; }
+            set { _lengthVector = value; }
+        }
+
 #if USE64BIT
         private const int _blockSize = 64;
         private const ulong _zero = 0ul;

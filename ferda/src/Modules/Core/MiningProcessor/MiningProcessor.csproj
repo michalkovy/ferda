@@ -105,6 +105,7 @@
     <Compile Include="Miners\FourFoldMiningProcessor.cs" />
     <Compile Include="Miners\MinningProcessor.cs" />
     <Compile Include="QuantifierEvaluator\FirstN.cs" />
+    <Compile Include="QuantifierEvaluator\FirstNNoResult.cs" />
     <Compile Include="QuantifierEvaluator\IEvaluator.cs" />
     <Compile Include="Formulas\BooleanAttributeFormula.cs" />
     <None Include="Design\ILeafEntitySetting.cs" />

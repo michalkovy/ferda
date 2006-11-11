@@ -25,6 +25,7 @@ namespace Ferda.Modules.Boxes.GuhaMining
             registerBox(DisjunctionSetting.BoxInfo.typeIdentifier, new DisjunctionSetting.BoxInfo());
             registerBox(FixedAtom.BoxInfo.typeIdentifier, new FixedAtom.BoxInfo());
             registerBox(Sign.BoxInfo.typeIdentifier, new Sign.BoxInfo());
+            registerBox(VirtualAttributes.VirtualFFTBooleanAttribute.BoxInfo.typeIdentifier, new VirtualAttributes.VirtualFFTBooleanAttribute.BoxInfo());
 
             // guha task boxes
             registerBox(Tasks.FourFold.BoxInfo.typeIdentifier, new Tasks.FourFold.BoxInfo());
@@ -109,6 +110,8 @@ namespace Ferda.Modules.Boxes.GuhaMining
                 new Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized.BoxInfo());
             registerBox(Quantifiers.TwoDimensional.OrdinalDependence.Kendall.BoxInfo.typeIdentifier,
                         new Quantifiers.TwoDimensional.OrdinalDependence.Kendall.BoxInfo());
+
+
         }
 
         public override void AddCustomFactoriesToComunicator(Communicator communicator)

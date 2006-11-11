@@ -77,6 +77,10 @@ module Ferda {
 
 					Ferda::Modules::StringOpt GetMissingInformationCategoryId()
 						throws Ferda::Modules::BoxRuntimeError;
+						
+					//vraci countvector pro relacni DM	
+					Ferda::Modules::IntSeq GetCountVector()
+						throws Ferda::Modules::BoxRuntimeError;
 				};
 
 				// BOOLEAN ATTRIBUTE SETTING ENTITIES
@@ -173,6 +177,15 @@ module Ferda {
 					nonmutating IEntitySetting GetEntitySetting()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
+				
+				interface BooleanAttributeSettingWithBSGenerationAbilityFunctions extends BooleanAttributeSettingFunctions, BitStringGenerator
+				{
+										
+					nonmutating BitStringIce GetNextBitString()
+						throws Ferda::Modules::BoxRuntimeError;
+						
+					//nonmutating bool NextExists
+				};
 
 				interface EquivalenceClassFunctions
 				{
@@ -200,6 +213,13 @@ module Ferda {
 					SDFourFold,
 					SDKL,
 					SDCF
+				};
+				
+				enum ResultTypeEnum
+				{
+					Trace,
+					TraceBoolean,
+					TraceReal
 				};
 
 				enum MarkEnum

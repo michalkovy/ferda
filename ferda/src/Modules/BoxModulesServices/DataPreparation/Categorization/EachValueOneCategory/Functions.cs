@@ -641,6 +641,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return null;
         }
 
+        public override int[] GetCountVector(Current current__)
+        {
+            return new int[0];
+        }
+
         #endregion
+
+        
     }
 }

@@ -5,7 +5,7 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9D598D8A-0393-4E99-9842-49D120C06881}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ferda.Modules.Boxes.GuhaMining</RootNamespace>
     <AssemblyName>GuhaMining</AssemblyName>
@@ -148,6 +148,8 @@
     <Compile Include="Tasks\SingleDimensional\Functions.cs" />
     <Compile Include="Tasks\TwoDimensional\BoxInfo.cs" />
     <Compile Include="Tasks\TwoDimensional\Functions.cs" />
+    <Compile Include="VirtualAttributes\VirtualFFTBooleanAttribute\BoxInfo.cs" />
+    <Compile Include="VirtualAttributes\VirtualFFTBooleanAttribute\Functions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Quantifiers\Notes.txt" />
