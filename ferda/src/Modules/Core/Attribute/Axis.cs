@@ -492,5 +492,70 @@ namespace Ferda.Guha.Attribute
              * }
              * */
         }
+
+        /// <summary>
+        /// Gets bit strings. Each bit string corresponds to one category and 
+        /// contains positive bit on <c>i</c> possition (bit index) if specified dataTable 
+        /// has value covered by the category on row <c>i</c>.
+        /// </summary>
+        /// <param name="dataTable">The table with one column sorted by primary key.</param>
+        /// <param name="countVector">Count vector for purposes of relational DM.</param>
+        /// <returns></returns>
+        public Dictionary<string, BitStringIce> GetBitStrings(DataTable dataTable, int [] countVector)
+        {
+            Disabled = false;
+            Build();
+
+            if (dataTable == null)
+                return null;
+
+            // INITIALIZE
+            int length = dataTable.Rows.Count;
+
+            if (length == 0)
+                return null;
+
+            int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
+
+            Dictionary<string, BitStringIce> result = new Dictionary<string, BitStringIce>();
+
+            foreach (KeyValuePair<string, Category<T>> pair in _attribute)
+            {
+                long[] tmpBitArray = new long[arraySize];
+                tmpBitArray.Initialize();
+                result.Add(pair.Key, new BitStringIce(tmpBitArray, length));
+            }
+
+            // PROCESS DATA
+
+            T item;
+            string categoryName;
+            int i = -1;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                i++;
+                if (row[0] is DBNull)
+                {
+                    if (_attribute.NullContainingCategory != null)
+                        setTrueBit(i, result[_attribute.NullContainingCategory].value);
+                }
+                else
+                {
+                    item = (T)row[0];
+                    if (_enumValues.TryGetValue(item, out categoryName))
+                    {
+                        setTrueBit(i, result[categoryName].value);
+                    }
+                    else if (
+                        _intervals.TryGetValue(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute),
+                                               out categoryName))
+                    {
+                        setTrueBit(i, result[categoryName].value);
+                    }
+                }
+                //else not covered
+            }
+            return result;
+        }
     }
 }

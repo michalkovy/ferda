@@ -6,6 +6,7 @@ using Ferda.Guha.MiningProcessor.Generation;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.ModulesManager;
+using Ferda.Modules;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
@@ -167,6 +168,177 @@ namespace Ferda.Guha.MiningProcessor.Miners
         finish:
             evaluator.Flush();
             resultFinish();
+        }
+
+       // private const string categoryNamePrefix = "VA 4ft: ";
+
+        public override IEnumerable<IBitString> TraceBoolean(int[] CountVector, GuidStruct attributeGuid)
+        {
+          //  if (!ProgressSetValue(-1, "Beginning of attributes trace."))
+         //       return false;
+         //   resultInit();
+
+            IEvaluator evaluator;
+            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
+                evaluator = new FirstNNoResult(this);
+            else
+                throw new NotImplementedException();
+
+            MissingInformation missingInformation = new MissingInformation();
+            IBitString xS;
+            IBitString nS;
+            IBitString xA;
+            IBitString nA;
+            IBitString xC;
+            nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
+
+            //produce mask bitstrings from countvector
+            IBitString[] masks = new IBitString[CountVector.Length];
+
+            int marker = 0;
+
+            int bitStringLength = 0;
+
+            for (int i = 0; i < CountVector.Length; i++)
+            {
+                bitStringLength += CountVector[i];
+            }
+
+            for (int i = 0; i < masks.Length; i++)
+            {
+                
+                long [] tmpString = new long[bitStringLength];
+                
+                for(int k = 0; k < marker; k++)
+                {
+                    tmpString[k] = 0;
+                }
+
+                for (int k = marker; k < marker + CountVector[i]; k++)
+                {
+                    tmpString[k] = 1;
+                }
+
+                for (int k = marker + CountVector[i]; k < bitStringLength; k++)
+                {
+                    tmpString[k] = 0;
+                }
+                masks[i]
+                    = new BitString(new BitStringIdentifier("123", "234"), bitStringLength, tmpString);
+
+                marker += CountVector[i];
+            }
+
+            foreach (IBitString pC in _condition)
+            {
+                //if (pC is FalseBitString)
+                //{
+                //    // empty contingency table (zeros)
+                //    continue;
+                //}
+                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
+
+                if (pC is IEmptyBitString)
+                    ActConditionCountOfObjects = (int)_result.AllObjectsCount;
+                else
+                    ActConditionCountOfObjects = pC.Sum;
+
+                foreach (IBitString pS in _succedent)
+                {
+                    if (pS is IEmptyBitString)
+                        continue;
+                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
+
+                    // A is condition, B is succedent
+                    nineFT.pApB = pC.And(pS);
+                    nineFT.pAxB = pC.And(xS);
+                    nineFT.pAnB = pC.And(nS);
+
+                    nineFT.xApB = xC.And(pS);
+                    nineFT.xAxB = xC.And(xS);
+                    nineFT.xAnB = xC.And(nS);
+
+                    foreach (IBitString pA in _antecedent)
+                    {
+                        GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
+
+
+                        //cycle through countvector-based masks
+                        for (int i = 0; i < masks.Length; i++)
+                        {
+                            NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
+                            fft.f111 = nineFT.pApB.And(pA.And(masks[i])).Sum;
+                            fft.f1x1 = nineFT.pAxB.And(pA.And(masks[i])).Sum;
+                            fft.f101 = nineFT.pAnB.And(pA.And(masks[i])).Sum;
+
+                            fft.fx11 = nineFT.pApB.And(xA.And(masks[i])).Sum;
+                            fft.fxx1 = nineFT.pAxB.And(xA.And(masks[i])).Sum;
+                            fft.fx01 = nineFT.pAnB.And(xA.And(masks[i])).Sum;
+
+                            fft.f011 = nineFT.pApB.And(nA.And(masks[i])).Sum;
+                            fft.f0x1 = nineFT.pAxB.And(nA.And(masks[i])).Sum;
+                            fft.f001 = nineFT.pAnB.And(nA.And(masks[i])).Sum;
+
+                            fft.f11x = nineFT.xApB.And(pA.And(masks[i])).Sum;
+                            fft.f1xx = nineFT.xAxB.And(pA.And(masks[i])).Sum;
+                            fft.f10x = nineFT.xAnB.And(pA.And(masks[i])).Sum;
+
+                            fft.fx1x = nineFT.xApB.And(xA.And(masks[i])).Sum;
+                            fft.fxxx = nineFT.xAxB.And(xA.And(masks[i])).Sum;
+                            fft.fx0x = nineFT.xAnB.And(xA.And(masks[i])).Sum;
+
+                            fft.f01x = nineFT.xApB.And(nA.And(masks[i])).Sum;
+                            fft.f0xx = nineFT.xAxB.And(nA.And(masks[i])).Sum;
+                            fft.f00x = nineFT.xAnB.And(nA.And(masks[i])).Sum;
+
+                            ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
+                                fft.ContingencyTable,
+                                _result.AllObjectsCount
+                                );
+                            
+                            //VerifyIsComplete means no buffer is left.
+                            //If not all relevant questions have been
+                            //generated and verified, will throw an exception
+                            if (evaluator.VerifyIsComplete(contingencyTable, new Hypothesis()))
+                                //goto finish;
+                                throw (new ArgumentOutOfRangeException());
+                            
+                        }
+
+                        //here we create virtual attribute name
+                        //based on relevant question parameters
+                      //  Hypothesis hypothesis = new Hypothesis();
+                     //   hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
+                      //  hypothesis.SetFormula(MarkEnum.Antecedent, pA.Identifier);
+                      //  hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
+                      //  hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
+                        bool [] evalVector = evaluator.GetEvaluationVector();
+                        long[] evalVectorLong = new long[evalVector.Length];
+
+                        for (int i = 0; i < evalVector.Length; i++)
+                        {
+                            evalVectorLong[i] = Convert.ToInt64(evalVector[i]);
+                        }
+
+                        BitString bitString
+                                = new BitString(
+                                new BitStringIdentifier(
+                                attributeGuid.value, 
+                                MarkEnum.Antecedent.ToString() + 
+                                ": " + pA.Identifier + ", " +
+                                MarkEnum.Succedent.ToString() + 
+                                ": " + pS.Identifier + ", " +
+                                MarkEnum.Condition.ToString() +
+                                ": " + pC.Identifier),
+                                evalVectorLong.Length,
+                                evalVectorLong);
+                        yield return bitString;
+
+                        evaluator.Flush();
+                    }
+                }
+            }
+            throw new Exception("The method or operation is not implemented.");
         }
     }
 }

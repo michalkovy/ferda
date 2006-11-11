@@ -495,4 +495,28 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         #endregion
     }
+    /*
+    public class SubsetsOneOne : EntityEnumerable
+    {
+        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        {
+            throw new System.Exception("The method or operation is not implemented.");
+        }
+
+        public override long TotalCount
+        {
+            get { throw new System.Exception("The method or operation is not implemented."); }
+        }
+
+
+        public override Set<string> UsedAttributes
+        {
+            get { return new Set<string>(_attributeGuid); }
+        }
+
+        public override Set<string> UsedEntities
+        {
+            get { return new Set<string>(Guid); }
+        }
+    }*/
 }

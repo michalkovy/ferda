@@ -166,6 +166,11 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return false || shouldStop;
         }
 
+        public bool[] GetEvaluationVector()
+        {
+            return new bool[0];
+        }
+
         #endregion
 
         private float progress()

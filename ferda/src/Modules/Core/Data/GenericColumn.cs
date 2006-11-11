@@ -854,6 +854,36 @@ namespace Ferda.Guha.Data
         }
 
         /// <summary>
+        /// Gets the count vector for the bitstring generation for relational datamining
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetCountVector(string masterIdColumn)
+        {
+            string tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name); ;
+            string columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterIdColumn);
+
+            DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
+            command.CommandText =
+                "SELECT COUNT(*) FROM " + tableName
+                + " GROUP BY " + columnQuotedIdentifier
+                + " ORDER BY " + columnQuotedIdentifier;
+
+            DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
+            dataAdapter.SelectCommand = command;
+
+            try
+            {
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet);
+                return dataSet.Tables[0];
+            }
+            catch (DbException e)
+            {
+                throw Exceptions.DbUnexpectedError(e, null);
+            }
+        }
+
+        /// <summary>
         /// Gets the "SELECT `columnName` FROM `tableName` ORDER BY `<c>uniqueKeyForSort</c>`"
         /// query result. (Specified unique key is tested for unicity.)
         /// </summary>

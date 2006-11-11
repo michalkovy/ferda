@@ -110,5 +110,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             evaluator.Flush();
             resultFinish();
         }
+
+        public override IEnumerable<IBitString> TraceBoolean(int[] CountVector, Ferda.Modules.GuidStruct attributeGuid)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

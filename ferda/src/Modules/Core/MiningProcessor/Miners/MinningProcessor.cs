@@ -33,6 +33,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         public abstract void Trace();
 
+        public abstract IEnumerable<IBitString> TraceBoolean(int[] CountVector, GuidStruct attributeGuid);
+
         protected abstract void prepareAttributeTraces();
 
         #endregion

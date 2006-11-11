@@ -21,7 +21,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return "VirtualColumnGenericName";
+            return null;
            // return ((Functions)boxModule.FunctionsIObj).Name;
             //return String.Empty;
         }
