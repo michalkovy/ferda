@@ -170,13 +170,19 @@ namespace Ferda.Guha.MiningProcessor.Miners
             resultFinish();
         }
 
-       // private const string categoryNamePrefix = "VA 4ft: ";
+        // private const string categoryNamePrefix = "VA 4ft: ";
+        /*
+                public override IEnumerable<IBitString> GetBooleanTraceEnumerator()
+                {
+                    GuidStruct attributeGuid = this.b
+                    //return TraceBoolean(this.
+                }*/
 
-        public override IEnumerable<IBitString> TraceBoolean(int[] CountVector, GuidStruct attributeGuid)
+        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, GuidStruct attributeGuid)
         {
-          //  if (!ProgressSetValue(-1, "Beginning of attributes trace."))
-         //       return false;
-         //   resultInit();
+            //  if (!ProgressSetValue(-1, "Beginning of attributes trace."))
+            //       return false;
+            //   resultInit();
 
             IEvaluator evaluator;
             if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
@@ -206,10 +212,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             for (int i = 0; i < masks.Length; i++)
             {
-                
-                long [] tmpString = new long[bitStringLength];
-                
-                for(int k = 0; k < marker; k++)
+
+                long[] tmpString = new long[bitStringLength];
+
+                for (int k = 0; k < marker; k++)
                 {
                     tmpString[k] = 0;
                 }
@@ -295,24 +301,24 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                 fft.ContingencyTable,
                                 _result.AllObjectsCount
                                 );
-                            
+
                             //VerifyIsComplete means no buffer is left.
                             //If not all relevant questions have been
                             //generated and verified, will throw an exception
                             if (evaluator.VerifyIsComplete(contingencyTable, new Hypothesis()))
                                 //goto finish;
                                 throw (new ArgumentOutOfRangeException());
-                            
+
                         }
 
                         //here we create virtual attribute name
                         //based on relevant question parameters
-                      //  Hypothesis hypothesis = new Hypothesis();
-                     //   hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
-                      //  hypothesis.SetFormula(MarkEnum.Antecedent, pA.Identifier);
-                      //  hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
-                      //  hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
-                        bool [] evalVector = evaluator.GetEvaluationVector();
+                        //  Hypothesis hypothesis = new Hypothesis();
+                        //   hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
+                        //  hypothesis.SetFormula(MarkEnum.Antecedent, pA.Identifier);
+                        //  hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
+                        //  hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
+                        bool[] evalVector = evaluator.GetEvaluationVector();
                         long[] evalVectorLong = new long[evalVector.Length];
 
                         for (int i = 0; i < evalVector.Length; i++)
@@ -320,7 +326,16 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             evalVectorLong[i] = Convert.ToInt64(evalVector[i]);
                         }
 
-                        BitString bitString
+                        yield return new KeyValuePair<string, BitStringIce>(
+                            MarkEnum.Antecedent.ToString() +
+                                ": " + pA.Identifier + ", " +
+                                MarkEnum.Succedent.ToString() +
+                                ": " + pS.Identifier + ", " +
+                                MarkEnum.Condition.ToString() +
+                                ": " + pC.Identifier,
+                        new BitStringIce(evalVectorLong, evalVectorLong.Length));
+
+                        /*BitString bitString
                                 = new BitString(
                                 new BitStringIdentifier(
                                 attributeGuid.value, 
@@ -332,7 +347,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                 ": " + pC.Identifier),
                                 evalVectorLong.Length,
                                 evalVectorLong);
-                        yield return bitString;
+                        yield return bitString;*/
 
                         evaluator.Flush();
                     }

@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Miners;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.ModulesManager;
+using Ferda.Guha.MiningProcessor.BitStrings;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks
 {
@@ -474,14 +476,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             }
         }
 
-        public static void RunTask(BoxModuleI boxModule, ITask taskFunctions, TaskTypeEnum taskType)
+        public static void RunTask(BoxModuleI boxModule, ITask taskFunctions, TaskTypeEnum taskType, ResultTypeEnum resultType)
         {
             //validate
             //boxModule.Manager.getBoxModuleValidator().validate(boxModule.StringIceIdentity);
             
-            MiningProcessorFunctionsPrx miningProcessor = GetMiningProcessorFunctionsPrx(boxModule);
+            //MiningProcessorFunctionsPrx miningProcessor = GetMiningProcessorFunctionsPrx(boxModule);
             BitStringGeneratorProviderPrx bsProvider = GetBitStringGeneratorProviderPrx(boxModule);
-
+            MiningProcessorFunctionsI miningProcessor = new MiningProcessorFunctionsI();
             List<QuantifierBaseFunctionsPrx> quantifiers = GetQuantifierBaseFunctions(boxModule, true);
             if (quantifiers == null || quantifiers.Count == 0)
                 throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
@@ -508,6 +510,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
 
             TaskRunParams taskRunParams = new TaskRunParams(
                 taskType,
+                resultType,
                 ExecutionType(boxModule),
                 MaxNumberOfHypotheses(boxModule),
                 secondSetWorking
@@ -526,12 +529,102 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                     taskRunParams,
                     bsProvider,
                     boxModule.Output,
+                    null,
+                    null,
                     out statistics
                     );
                     
             //SerializableResultInfo deserealized = SerializableResultInfo.Deserialize(statistics);
             //boxModule.Output.writeMsg(MsgType.Info, "Peformance info", deserealized.OtherInfo);
             
+            SetResult(boxModule, result);
+            SetResultInfo(boxModule, statistics);
+        }
+
+        public static IEnumerator<IBitString> RunTaskNoResult(
+            BoxModuleI boxModule, ITask taskFunctions,
+            TaskTypeEnum taskType, ResultTypeEnum resultType,
+            int [] countVector, GuidStruct attributeGuid)
+        {
+            //validate
+            //boxModule.Manager.getBoxModuleValidator().validate(boxModule.StringIceIdentity);
+
+            MiningProcessorFunctionsPrx miningProcessor = GetMiningProcessorFunctionsPrx(boxModule);
+            
+            //Min
+
+            BitStringGeneratorProviderPrx bsProvider = GetBitStringGeneratorProviderPrx(boxModule);
+
+            List<QuantifierBaseFunctionsPrx> quantifiers = GetQuantifierBaseFunctions(boxModule, true);
+            if (quantifiers == null || quantifiers.Count == 0)
+                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                               "There must be connected at least one quantifier to task box module.",
+                                               new string[] { SockQuantifiers }, restrictionTypeEnum.OtherReason);
+
+            // UNDONE in this version is only operation mode difference of quatifier values supported for SD tasks            
+            if (isSDTaskType(taskType))
+                foreach (QuantifierBaseFunctionsPrx prx in quantifiers)
+                {
+                    if (prx.GetQuantifierSetting().operationMode != OperationModeEnum.DifferenceOfQuantifierValues)
+                        throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                   "Only \"DifferenceOfQuantifierValues\" Operation Mode is supported in quantifiers for SD tasks.",
+                                   new string[] { SockQuantifiers }, restrictionTypeEnum.OtherReason);
+                }
+
+
+            WorkingWithSecondSetModeEnum secondSetWorking =
+                isSDTaskType(taskType)
+                    ?
+                WorkingWithSecondSetMode(boxModule)
+                    :
+                WorkingWithSecondSetModeEnum.None;
+
+            TaskRunParams taskRunParams = new TaskRunParams(
+                taskType,
+                resultType,
+                ExecutionType(boxModule),
+                MaxNumberOfHypotheses(boxModule),
+                secondSetWorking
+                );
+
+            SetResult(boxModule, null);
+            SetResultInfo(boxModule, null);
+
+            string statistics;
+            string result =
+                miningProcessor.Run(
+                    boxModule.MyProxy,
+                    GetBooleanAttributes(boxModule, taskFunctions),
+                    GetCategorialAttributes(boxModule, taskFunctions),
+                    GetQuantifierBaseFunctions(boxModule, true).ToArray(),
+                    taskRunParams,
+                    bsProvider,
+                    boxModule.Output,
+                    attributeGuid,
+                    countVector,
+                    out statistics
+                    );
+
+            while (true)
+            {
+                BitStringIceWithCategoryId tmpString = miningProcessor.GetNextBitString();
+                if (tmpString != null)
+                {
+                    yield return new BitString(new BitStringIdentifier("123", tmpString.categoryId), tmpString.bitString.length, tmpString.bitString.value);
+                }
+                else
+                {
+                    yield return null;
+                    break;
+                }
+
+            }
+
+            //miningProcessor.
+
+            //SerializableResultInfo deserealized = SerializableResultInfo.Deserialize(statistics);
+            //boxModule.Output.writeMsg(MsgType.Info, "Peformance info", deserealized.OtherInfo);
+
             SetResult(boxModule, result);
             SetResultInfo(boxModule, statistics);
         }

@@ -107,7 +107,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SingleDimensional
             // reset cache
             _cachedSerializableResultInfo = null;
 
-            Common.RunTask(_boxModule, this, TaskTypeEnum.CF);
+            Common.RunTask(_boxModule, this, TaskTypeEnum.CF, ResultTypeEnum.Trace);
         }
     }
 }

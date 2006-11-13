@@ -110,7 +110,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDFourFold
             // reset cache
             _cachedSerializableResultInfo = null;
             
-            Common.RunTask(_boxModule, this, TaskTypeEnum.SDFourFold);
+            Common.RunTask(_boxModule, this, TaskTypeEnum.SDFourFold, ResultTypeEnum.Trace);
         }
     }
 }

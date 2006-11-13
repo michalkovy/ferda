@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
@@ -10,8 +11,27 @@ using Exception = System.Exception;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
-    internal class MiningProcessorFunctionsI : MiningProcessorFunctionsDisp_
+    public class MiningProcessorFunctionsI : MiningProcessorFunctionsDisp_
     {
+        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
+        {
+            if (_booleanTraceEnumerator.MoveNext())
+            {
+                BitStringIceWithCategoryId _tmpTuple = new BitStringIceWithCategoryId();
+                _tmpTuple.categoryId = _booleanTraceEnumerator.Current.Key;
+                _tmpTuple.bitString = _booleanTraceEnumerator.Current.Value;
+                return _tmpTuple;
+            }
+            else
+                return null;
+        }
+
+       // private static bool firstRun = true;
+
+        private static GuidStruct _attributeId;
+
+        private static int[] _countVector;
+
         private static string taskTypeToString(TaskTypeEnum taskType)
         {
             switch (taskType)
@@ -32,8 +52,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     throw new NotImplementedException();
             }
         }
-        
-        
+
+        private IEnumerator<KeyValuePair<string,BitStringIce>> _booleanTraceEnumerator;
+
         public override string Run(
             BoxModulePrx boxModule,
             BooleanAttribute[] booleanAttributes,
@@ -42,6 +63,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
             TaskRunParams taskParams,
             BitStringGeneratorProviderPrx bitStringGenerator,
             OutputPrx output,
+            GuidStruct attributeId,
+            int[] countVector,
             out string resultInfo,
             Current current__
             )
@@ -52,12 +75,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
             Quantifier.IceCalls = 0;
             Quantifier.IceTicks = 0;
             long before = DateTime.Now.Ticks;
-            
+
             ProgressTaskListener progressListener = new ProgressTaskListener();
             ProgressTaskPrx progressPrx =
                 ProgressTaskI.Create(current__.adapter, progressListener);
             string label = taskTypeToString(taskParams.taskType) + "-Task";
-            ProgressBarPrx progressBarPrx = 
+            ProgressBarPrx progressBarPrx =
                 output.startProgress(progressPrx, label, label + " running...");
             progressBarPrx.setValue(-1, "Loading ...");
 
@@ -129,20 +152,38 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     default:
                         throw new NotImplementedException();
                 }
-                miningProcessor.Trace();
-                miningProcessor.ProgressSetValue(1, "Completing result.");
 
+                switch (taskParams.resultType)
+                {
+                    case ResultTypeEnum.Trace:
+                        miningProcessor.Trace();
+                        miningProcessor.ProgressSetValue(1, "Completing result.");
+                        resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
+                        break;
+
+                    case ResultTypeEnum.TraceBoolean:
+                        resultInfo = String.Empty;
+                        _attributeId = attributeId;
+                        _countVector = countVector;
+                        //bitStringGenerator.
+                        _booleanTraceEnumerator = miningProcessor.TraceBoolean(_countVector, _attributeId).GetEnumerator();
+                        break;
+
+                    case ResultTypeEnum.TraceReal:
+                        throw new NotImplementedException();
+
+                    default:
+                        throw new NotImplementedException();
+                }
                 // performance ICE
                 miningProcessor.ResultInfo.OtherInfo = string.Format("BitStringCache.IceCalls: {0}; BitStringCache.IceTicks: {1}; Quantifier.IceCalls: {2}; Quantifier.IceTicks: {3}; All.Ticks: {4}", BitStringCache.IceCalls, BitStringCache.IceTicks, Quantifier.IceCalls, Quantifier.IceTicks, DateTime.Now.Ticks - before);
-                
-                resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
                 return SerializableResult.Serialize(miningProcessor.Result);
             }
             catch (BoxRuntimeError)
             {
                 if (miningProcessor != null)
                     miningProcessor.ProgressSetValue(-1, "Generation failed");
-                else 
+                else
                     progressBarPrx.setValue(-1, "Generation failed");
                 System.Threading.Thread.Sleep(1500);
                 throw;
