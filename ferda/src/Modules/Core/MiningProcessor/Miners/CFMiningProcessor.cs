@@ -111,7 +111,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             resultFinish();
         }
 
-        public override IEnumerable<IBitString> TraceBoolean(int[] CountVector, Ferda.Modules.GuidStruct attributeGuid)
+        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, Ferda.Modules.GuidStruct attributeGuid)
         {
             throw new Exception("The method or operation is not implemented.");
         }

@@ -200,7 +200,7 @@ module Ferda {
 					Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq GetQuantifiers()
 						throws Ferda::Modules::BoxRuntimeError;
 					string GetResult(out string statistics)
-						throws Ferda::Modules::BoxRuntimeError;						
+						throws Ferda::Modules::BoxRuntimeError;
 				};
 				
 				// MINING PROCESSOR SERVICE FUNCTIONS
@@ -264,9 +264,16 @@ module Ferda {
 				struct TaskRunParams
 				{
 					TaskTypeEnum taskType;
+					ResultTypeEnum resultType;
 					TaskEvaluationTypeEnum evaluationType;
 					long maxSizeOfResult; // N from FirstN or TopN
 					WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode; // for SD tasks only
+				};
+				
+				struct BitStringIceWithCategoryId
+				{
+					BitStringIce bitString;
+					string categoryId;
 				};
 
 				interface MiningProcessorFunctions
@@ -284,8 +291,13 @@ module Ferda {
 						TaskRunParams taskParams,
 						BitStringGeneratorProvider* bitStringGenerator,
 						Ferda::ModulesManager::Output* output,
+						Ferda::Modules::GuidStruct attributeId,
+						Ferda::Modules::IntSeq countVector,
 						out string resultInfo
 						)
+						throws Ferda::Modules::BoxRuntimeError;
+						
+					BitStringIceWithCategoryId GetNextBitString()
 						throws Ferda::Modules::BoxRuntimeError;
 
 				};

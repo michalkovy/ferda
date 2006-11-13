@@ -109,7 +109,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.TwoDimensional
             // reset cache
             _cachedSerializableResultInfo = null;
 
-            Common.RunTask(_boxModule, this, TaskTypeEnum.KL);
+            Common.RunTask(_boxModule, this, TaskTypeEnum.KL,ResultTypeEnum.Trace);
         }
     }
 }

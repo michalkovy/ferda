@@ -37,9 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
     </Reference>
-    <Reference Include="icecs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+    <Reference Include="icecs, Version=3.1.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\icecs.dll</HintPath>
+      <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
