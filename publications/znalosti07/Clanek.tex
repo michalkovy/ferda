@@ -24,20 +24,25 @@ and possible improvements of the validation method.
 {\small {\bf Keywords:} Background knowledge, GUHA Method, Ferda}
 
 \section{Introduction}
+
 The GUHA method and procedures provide a powerful tool for knowledge discovery
 in databases. However the comprehension of the method for non data mining
 experts can be demanding. The experts in the domain need an instrument, which
-can record their needs and present in to the data mining experts without 
-knowing unnecessary details about mining techniques. \emph{Background knowledge}
-rules as defined in this work can help to bridge the gap between the two 
+can record their needs and present them to the data mining experts without 
+knowing unnecessary details about mining techniques. This work introduces 
+an innovative look on the topic. \emph{Background knowledge}
+rules as defined here can help to bridge the gap between the two 
 players by defining data mining tasks. It can also help the data miners
 to focus on the important relationships in the data and draw conclusions
-about the data mining techniques.
+about the data mining techniques. These possibilities are discussed in the
+work along with experiments to show the usage of the \emph{background knowledge}
+rules. 
 
 The work is structured as follows: Section~\ref{section:guha} describes the
 GUHA method, tools that implement the method and individual procedures used during
 the work. Section~\ref{section:backgroundknowledge} describes the \emph{background
-knowledge}, introduces new rule formalization and suggests usage of the formalization.
+knowledge} and suggest its usage as a link between data mining and domain experts.
+Section~\ref{section:form} introduces new rule formalization with some examples.
 There are two experiments conducted in Section~\ref{section:mining} that use
 \emph{background knowledge} rules to question the relevance of important quantifiers.
 Finally, Section~\ref{section:related} puts the work into context of other works
@@ -59,7 +64,7 @@ generates each particular pattern and verifies it against the analyzed data.
 The output of the procedure consists of all patterns that are true in the
 analyzed data and are not contained in other patterns.
 
-\subsection{GUHA Tools} %nebo spis Tools Implementing GUHA Method - nevim
+\subsection{GUHA Tools}
 Apart from the tools presented in this section, several systems implementing
 GUHA procedures were developed in the past. In recent years, the
 \emph{LISp-Miner} system\footnote{See  \url{http://lispminer.vse.cz}.}
@@ -88,12 +93,12 @@ is fully independent on the \emph{LISp-Miner} system and introduces a new
 hypotheses generating engine with improved task setting abilities (details
 can be found in \cite{Kuchar}). 
 
-%\begin{figure}[h]
-%\centering
-%\mbox{\resizebox{0.95\textwidth}{!}{\includegraphics{ferda.png}}}
-%\caption{The Ferda system}
-%\label{fig:ferda}
-%\end{figure}
+\begin{figure}[ht]
+\centering
+\mbox{\resizebox{97mm}{!}{\includegraphics{ferda.eps}}}
+\caption{The Ferda system}
+\label{fig:ferda}
+\end{figure}
 
 Because of the advantages of the Ferda system, mainly the high level modularity
 and the ability to incorporate new independent improvements into existing task
@@ -114,10 +119,11 @@ in form $\varphi \approx \psi / \chi$ where $\varphi$, $\psi$ and $\chi$
 are \emph{boolean attributes} and $\approx$ is the \emph{4FT quantifier},
 as defined in \cite{Kuchar} or \cite{Approach}. $\varphi$, $\psi$ and
 $\chi$ are called \emph{antecedent}, \emph{succedent} and \emph{condition}
-respectivelly\footnote{In other words, the procedure tests a condition
+respectively\footnote{In other words, the procedure tests a condition
 defined by \emph{4FT quantifier} over a four-fold table defined by
 \emph{antecedent} and \emph{succedent} satisfiing conditing defined by
-\emph{condition}}.
+\emph{condition}.}. In this work we use the \emph{founded implication}
+and \emph{above average} quantifiers, as defined in \cite{Classes}.
 
 \subsection{Procedure KL}
 \label{section:kl}
@@ -126,6 +132,8 @@ for hypotheses of form \emph{R} $\sim$ \emph{C}/$\chi$, where \emph{R} and
 \emph{C} are \emph{categorial attributes} representing the row and column
 attributes, $\sim$ is the \emph{KL quantifier} and $\chi$ is the \emph{boolean
 attribute} representing condition (as defined in \cite{Kuchar} or \cite{KL}).
+In this work we used quantifiers derived from the \emph{Kendall quantifier}
+defined in \cite{KLKvant}.
 
 \section{Background Knowledge}
 \label{section:backgroundknowledge}
@@ -139,7 +147,7 @@ we think of \emph{background knowledge} as a part of domain knowledge,
 knowledge that is specific to particular domains (medicine, chemistry, etc.).
 We define \emph{background knowledge} as a set of various verbal rules that
 are accepted in a specific domain as a common knowledge. The rule can
-define functional dependence between quantities, relationship between entities
+describe functional dependence between quantities, relationship between entities
 or say something about their behavior.
 
 \subsection{\emph{Background knowledge} examples}
@@ -158,10 +166,10 @@ available only in Czech.}:
 
 Another type of rules displayed below can be found at the beer marketing domain. 
 Unfortunately the source data from this domain are not available. Thus we 
-cannot verify the rules against the source data (which will be done later).
+cannot verify the rules against the source data.
 
 \begin{itemize}
-\item Younger consumers prefer draught beer.
+\item Younger consumers prefer drought beer.
 \item Older consumers prefer beer in bottles.
 \item Cheap brands are better sold in less economically developed regions.
 \item More expensive brands are better sold during holidays.
@@ -191,6 +199,7 @@ possible only with a sound formalization apparatus of \emph{background knowledge
 rules.
 
 \section{Formalization of Background Knowledge}
+\label{section:form}
 \emph{Background knowledge} contains heterogeneous verbal formulations of dependences
 and relationships in the domain. The relevance and validity of the formulations varies:
 the relationships in physics are formed exactly by mathematical equations, but for
@@ -210,7 +219,7 @@ in \cite{Diplomka} in section 3.2.1.
 \subsection{Attributes, Validation Literals and Abstract Quantifiers}
 \label{section:formalization}
 In order to continue efforts on using \emph{background knowledge} in GUHA
-mining, we thought out a new formalization. The main idea of the new 
+mining, we invented a new formalization. The main idea of the new 
 \emph{Formalization with attributes, validation literals and abstract quantifiers}
 was to make the formalization as close to GUHA terms as possible while still 
 enabling large expressing possibilities of the verbal rule\footnote{As was mentioned
@@ -249,24 +258,24 @@ which has \emph{literal length} equal to 1.
 \emph{Abstract quantifier} is a generalization of a quantifier or quantifiers of 
 a procedure (\emph{4FT} or \emph{KL}). The idea behind \emph{abstract quantifiers}
 is to create a "black-box" quantifier: user does not need to fill any numeral 
-parameters of the quantifier. The quantifier is then more suitable for transfering
+parameters of the quantifier. The quantifier is then more suitable for transferring
 verbal \emph{background knowledge} rules into formalized form.
 
 \medskip
 With all the terms explained, let us see how the formalization is applied to 
 a specific verbal rule \texttt{If education increases, wine consumption increases as well.}
 as presented in Section~\ref{section:bkexamples}. The rule defines relationship
-between two measurable quantities of a pacient. These quantities are stored in the
+between two measurable quantities of a patient. These quantities are stored in the
 database in the form of columns of a table, so \emph{attributes} can be created.
 We name the attributes for \texttt{education} and \texttt{wine consumption}
-\emph{education} and \emph{wine} respectivelly.
+\emph{education} and \emph{wine} respectively.
 
 For this paragraph we will consider only the \emph{KL} procedure. From the 
 Section~\ref{section:kl} the simplified form of hypotheses for \emph{KL}
 \footnote{We do not consider the condition.} shortens to \emph{R} $\sim$ \emph{C} 
 where \emph{R} and \emph{C} are \emph{categorial attributes}, which derive
 from \emph{attributes}. When \texttt{education} and \texttt{wine consumption}
-out of the rule are to be formalized with \emph{R} and \emph{C} of the hypothese,
+out of the rule are to be formalized with \emph{R} and \emph{C} of the hypothesis,
 then the part \texttt{If ... increases, ... increases as well} could be formalized with
 a proper \emph{abstract quantifier}. In \cite{Diplomka} we called this quantifier
 \emph{increasing dependence} and implemented it as a special setting of the 
@@ -314,13 +323,13 @@ the \emph{abstract quantifier}.}
 Number of verbal rules that match with the template is high, note also that all
 the rules presented in Section~\ref{section:bkexamples} match with the template.
 This fact itself does not assure success of the formalization, mainly because the
-real weakness (and strength as well) lies in definition of sound\emph{abstract
+real weakness (and strength as well) lies in definition of sound \emph{abstract
 quantifiers}. We will discuss this matter more in Section~\ref{section:mining}
 
 \section{Experience with Background Knowledge aided GUHA mining}
 \label{section:mining}
 
-\subsection{Implemented \emph{backroung knowledge} validation tool in Ferda system}
+\subsection{\emph{Background knowledge} validation tool in Ferda system}
 A tool for \emph{background knowledge} validation was implemented in the Ferda system for
 purposes of this work and of work \cite{Diplomka}.
 The tool consist of 10 new box modules that include validation boxes, and boxes enabling
@@ -332,7 +341,7 @@ this version enables.}.
 The details of the implementation, with proper explanation of the modules
 and description of validation algorithms can be found in \cite{Diplomka}.
 
-Alhough the implementation details of the tool were skipped because of the short 
+Although the implementation details of the tool were skipped because of the short 
 format of the article, let us mention the implemented \emph{abstract quantifiers}.
 For the \emph{KL} procedure, we implemented the \emph{Increasing dependence} and
 the \emph{Decreasing dependence abstract quantifiers}. As mentioned before, 
@@ -352,11 +361,10 @@ the source data exist. The rules were selected as a sample of the rules that can
 be mined upon (without changing the database schema).}. Rules are listed in Table
  \ref{tab:rules}. 
 
-\begin{table}[h]
-	\centering
-	\begin{tabular}{|p{2cm}|p{4cm}|p{4cm}|}
+\begin{table}[ht]
+	\begin{tabular}{|p{1,5cm}|p{5cm}|p{5cm}|}
 		\hline
-			\textbf{Number} & \textbf{Rule} & \\
+			\textbf{Number} & \textbf{Rule - right side} & \textbf{left side}\\
 		\hline
 			\textbf{1} & If education increases & physical activity after work increases as well\\
 		\hline
@@ -372,36 +380,39 @@ be mined upon (without changing the database schema).}. Rules are listed in Tabl
 		\hline
 			\textbf{7} & Patients with greater responsibility in work & tend to drive to work by car\\
 		\hline
-			\textbf{8} & Patients with smaller responsibility in work & tend to use public transpor to
+			\textbf{8} & Patients with smaller responsibility in work & tend to use public transport to
 			get to work\\
 		\hline
 	\end{tabular}
-\caption{Validated rules}
+	\caption{Validated rules}
 \label{tab:rules}
 \end{table}
 
 \subsection{Validation with default quantifiers' settings}
-There are treshold values of parameters defined for each quantifier, which tell
+There are threshold values of parameters defined for each quantifier, which tell
 us when quantifier's output is significant. We call them \emph{default quantifiers'
-settings}. These values were set up by an agreement among data mining experts.
+settings}. These values were set up by an agreement among data mining experts
+\footnote{However, the values are not fixed and can be subject of further discussion}.
 The first conducted experiment was to verify the values with the aid of the rule
 validation on the STULONG source data.
 
 For the \emph{KL} procedure \emph{abstract quantifiers}, we chose the 
-\emph{increasing} and \emph{decreasing dependece} with settings of 0.7
+\emph{increasing} and \emph{decreasing dependence} with settings of 0.7
 and -0.7 value of the \emph{Kendall's} $\tau_{b}$ parameter\footnote{Explanation
 in \cite{Diplomka}, Section 5.3.5.}. For the \emph{4FT} procedure, we wanted
 to examine settings of the two most used quantifiers from the history of the procedure:
 the \emph{founded implication} and the \emph{above average} quantifiers. For the
 \emph{founded implication} quantifier, the default values are 0.95 for the
 \emph{P} parameter and 0.05 for the \emph{base} parameter. For the \emph{above
-average} quantifier, the default values are 1.2 for the \emph{P} parameter
-and 0.05 for the \emph{Base} parameter\footnote{as defined in \cite{Classes}}. 
+average} quantifier, the default values are 1.2 for the \emph{P} parameter\footnote{
+This value corresponds to 0.2 value with the \emph{P} parameter as defined in 
+\cite{Classes}. We add 1 to avoid negative computation results.}
+and 0.05 for the \emph{Base} parameter. 
 The \emph{founded implication} and \emph{above average} quantifiers and their
 default settings are stored in the \emph{Implication} and \emph{Other abstract
 quantifiers}\footnote{In the implemented tool of the Ferda system}, respectivelly.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\begin{tabular}{|p{2,5cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|}
 		\hline
@@ -428,7 +439,7 @@ quantifiers}\footnote{In the implemented tool of the Ferda system}, respectivell
 \label{tab:validation1}
 \end{table}
 
-The Table~\ref{tab:validation1} shows the results of the first experiment. The \textbf{ID},
+Table~\ref{tab:validation1} shows the results of the first experiment. The \textbf{ID},
 \textbf{DD}, \textbf{FI} and \textbf{AA} stands for \emph{increasing dependence}, 
 \emph{decreasing dependence}, \emph{founded implication} and \emph{above average}
 quantifiers. \textbf{YES} means that the rule was validated with the given quantifier,
@@ -436,7 +447,7 @@ quantifiers. \textbf{YES} means that the rule was validated with the given quant
 rule was not meaningful for given quantifier.
 
 Before we draw any conclusions from the experiment, let us first state some 
-presumptions about the data source. The data table \emph{entry}, which was mined 
+presumptions about the data source. The data table \emph{Entry}, which was mined 
 upon, contains records about the entry examination of 1417 patients. Because of
 this number, we consider the data to be statistically significant. We also
 presume no errors in the data and proper categorization (described in \cite{Diplomka}). 
@@ -460,13 +471,10 @@ results need not to improve merely by changing a parameter of a quantifier.
 We also need to take the shape of the \emph{KL} contingency table into consideration.}.
 With this technique, we could examine more \emph{background knowledge} rules,
 determine the value of the parameter for each rule and compute the average
-of the values. This average value could be used in new mining to discover
-new relationships in the data.
-
-New mining with the quantifier can be done with this average
+of the values. New mining with the quantifier can be done with this average
 value that could discover new relationships in the data.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\begin{tabular}{|p{2,5cm}|p{1,5cm}|p{1,5cm}|}
 		\hline
@@ -494,7 +502,7 @@ value that could discover new relationships in the data.
 \end{table}
 
 As we can see in Table~\ref{tab:validation2}, the results of the experiment
-are rather dissapointing. For the \emph{founded implication} quantifier, majority
+are rather disappointing. For the \emph{founded implication} quantifier, majority
 of rules had the \emph{P} value below 0.5. This means that we cannot rely on
 the quantifier when validating. We got better results for the \emph{above average}
 quantifier where the \emph{P} parameter was only twice below 1. However, only once
@@ -505,9 +513,9 @@ To summarize, the experiments with \emph{abstract quantifiers} based on the
 successful. These quantifiers have been used as pivot quantifiers for the \emph{4FT}
 mining. However, as our experiments showed, they failed to validate \emph{background
 rules} which, according to presumption we made, should be present in the data. 
-Other absract quantifiers should be developed and used in order to get better
-validation results. The Section~\ref{section:related} introduces works that
-should deal with the topic. 
+Other \emph{abstract quantifiers} should be developed and used in order to get better
+validation results. Section~\ref{section:conclusion} introduces works that
+should deal with the topic.
 
 \section{Related work}
 \label{section:related}
@@ -517,11 +525,19 @@ in the past to formalize \emph{background knowledge}, described in \cite{Qualita
 and \cite{Qualitative2}. However, this formalization was no use for GUHA mining. 
 
 In \cite{Puppe}, authors use \emph{background knowledge} for subgroup discovery.
-Improtant part of the work tries to divide \emph{background knowledge} into classes and deals
-separately with each class. Unfortunatelly the rules and formalization defined in
-this work do not belong to any of the classes defined.
+Important part of the work tries to divide \emph{background knowledge} into classes and deals
+separately with each class. Unfortunately the rules and formalization defined in
+this work does not belong to any of the classes defined.
 
-Treti clanek ziskat od Svatka. 
+In \cite{Faure}, authors developed ideologically similar approach: they used
+classical association mining in cooperation with a Bayesian network to store
+the knowledge from domain experts (here called \emph{a priori expert knowledge})
+and improved both the association rules mining and the Bayesian
+network in iterations. This approach is stronger from the methodological point of view 
+(complex methodology is defined) and also enables revision of the domain expert
+knowledge. However, our \emph{background knowledge} formalization is less restrictive
+than the Bayesian network and the GUHA procedures offer greater possibilities than
+the classical association mining.
 
 \section{Conclusion and Future Work}
 \label{section:conclusion}
@@ -555,16 +571,23 @@ are described in \cite{Diplomka}}.
 
 \bibitem{Puppe}
 Atzmueller M., Puppe F.: \emph{A Methodological View on Knowledge-Intensive Subgroup
-Discovery}. In... tady dopsat odkud to je.
+Discovery}. In: S. Staab and V. Sv\'{a}tek (Eds.): EKAW 2006, LNAI 4248, 
+Springer-Verlag 2006, p.~318~--~325
+
 
 \bibitem{Qualitative1}
 Clark P., Matwin S.: \emph{Using Qualitative Models to Guide Inductive Learning}.
 In: Proceedings 10$^{th}$ International Machine Learning Conference (ML93), pg. 
 49 - 56
 
+\bibitem{Faure}
+Faur\'{e} C., Delpart S., Boulicaut J., Mille A.: \emph{Iterative Bayesian Network
+Implementation by Using Annotated Association Rules}. In: S. Staab and V. Sv\'{a}tek
+(Eds.): EKAW 2006, LNAI 4248, Springer-Verlag 2006, p.~326~--~333
+
 \bibitem{GUHA1}
 H\'{a}jek P., Havel I., Chytil M.: \emph{The GUHA method of
-automatic hypotheses determination}. Computing 1, 1966, p. 293 -- 308
+automatic hypotheses determination}. Computing 1, 1966, p.~293~--~308
 
 \bibitem{GUHA2}
 H\'{a}jek P., Havr\'{a}nek, T.: \emph{Mechanising Hypothesis
