@@ -36,7 +36,7 @@ using Ferda.Modules.Boxes.DataPreparation;
 namespace Ferda.FrontEnd.AddIns.ShowTable
 {
     /// <summary>
-    /// Usercontrol class for displaying database table
+    /// Usercontrol class for the module for interaction displaying database table
     /// </summary>
     public partial class ShowTableControl : UserControl
     {
@@ -51,11 +51,6 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         /// ColumnInfo array
         /// </summary>
         private string[] columns;
-
-        /// <summary>
-        /// DataMatrixInfo
-        /// </summary>
-        //private DataMatrixInfo dataMatrix;
 
         /// <summary>
         /// Owner of addin
@@ -97,7 +92,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
             
             InitializeComponent();
             
-            this.ChangeLocale(ResManager);
+            this.ChangeLocale();
             this.ListViewInit();
             DBInteraction explainTable = new DBInteraction(dataTableInfo);
             this.MakeListView(explainTable.ShowTable());
@@ -237,27 +232,17 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
         #endregion
 
         #region Localization
-        /// <summary>
-        /// Resource manager of the application, it is filled according to the
-        /// current localization
-        /// </summary>
-        public ResourceManager ResManager
-        {
-            get
-            {
-                return resManager;
-            }
-        }
 
         /// <summary>
         /// Method to change l10n.
         /// </summary>
-        /// <param name="rm">Resource manager to handle new l10n resource</param>
-        private void ChangeLocale(ResourceManager rm)
+        private void ChangeLocale()
         {
-            this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
-            this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
-            this.ToolStripHelp.Text = rm.GetString("Help");
+            this.ToolStripMenuItemCopySelected.Text = 
+                resManager.GetString("CopySelectedToClipboard");
+            this.ToolStripMenuItemCopyAll.Text = 
+                resManager.GetString("CopyAllToClipboard");
+            this.ToolStripHelp.Text = resManager.GetString("Help");
         }
 
         #endregion

@@ -28,7 +28,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AddInsCommon, Version=1.0.2276.26988, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AddInsCommon, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\AddInsCommon.dll</HintPath>
     </Reference>
@@ -40,13 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaModulesManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaFrontEnd, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
-    </Reference>
-    <Reference Include="FerdaProjectManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\FerdaProjectManager.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaFrontEnd.exe</HintPath>
     </Reference>
     <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -56,15 +52,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\checkout\bin\icecs.dll</HintPath>
     </Reference>
-    <Reference Include="icegridcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\icegridcs.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseInfo.cs">
