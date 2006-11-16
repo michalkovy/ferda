@@ -7,9 +7,7 @@
     <authorgroup>
       <author>
         <firstname>Michal</firstname>
-
         <surname>Kováč</surname>
-
         <email>michal.kovac.develop@centrum.cz</email>
       </author>
       <author>
@@ -20,6 +18,16 @@
     </authorgroup>
     <!--
     <revhistory>
+      <revision>
+        <revnumber>1.2</revnumber>
+        <date>2006-11-16</date>
+        <revdescription>
+          <para>
+            Přidána část o lepším ladění Ferdy - postup kopírování zdrojáků Ferdy do
+            adresáře src.
+          </para>
+        </revdescription>
+      </revision>
       <revision>
         <revnumber>1.1</revnumber>
         <date>2006-08-07</date>
@@ -83,5 +91,14 @@
     <para>Pro první zkompilování Ferdy je třeba v hlavním adresáři Ferda zadat příkaz <code>nant fullinstall</code>.</para>
 
     <para>Dále jsou k dispozici příkazy <code>nant clean</code> (vyčistí zkomilované soubory), <code>nant src</code> (zkomiluje znovu Ferdu) a <code>nant refresh</code> (udělá clean a fullinstall).</para>
+  </section>
+  <section>
+    <title>Nastavení prostředí pro ladění</title>
+    <para>
+      Tento postup zlepší možnosti ladění Ferdy o přístup do zdrojů Ice. Nejdříve
+      vytvořte adresář <classname>c:\src\vc80\stage</classname> Dále do něj uložte zdrojové
+      kódy ICE (stáhnout na <ulink url="http://www.zeroc.com">Zeroc</ulink> pro C#.
+      Výsledná cesta bude (pro Ice verzi 3.1.1) <classname>c:\src\vc80\stage\IceCS-3.1.1\...</classname>.
+    </para>
   </section>
 </article>
