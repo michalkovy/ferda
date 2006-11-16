@@ -29,7 +29,6 @@ Martin
  - krabicky jdou posouvat nahoru a doleva mimo viditelnou plochu
  - plocha o neco vetsi nez je potreba (vysvetlim proc, navrhnu moznost jak udelat ... tomas)
  - performance
- - User Note - cast dokovaciho prostredi
  - Netron
    - zoom
    - mapa
@@ -37,9 +36,6 @@ Martin
    - print + print preview
  - svg
  - ukladani nastaveni rozlozeni pracovni plochy (i modulu pro interakci a modulu pro nastaveni) - dohodni se se Sasou
- - dynamic (kontext) help
- - help - uzivatelska napoveda k prostredi
- - AddIn zobrazujici pomoci AcrobatReadru ten PDF help
  - moznosti - pridat vse v iceConfig a vylepsit vyber lokalizaci
  - DateTime property -> kalendar nestaci
  - kdyz je mezikrabickami ciste vodorovna sipka (neni sikam -> je vysoka asi 1px), tak nenimozny ji uchopit a smazat
