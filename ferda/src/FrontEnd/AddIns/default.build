@@ -113,7 +113,7 @@
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
-<!--      
+   
 		<csc target="library" output="${path::combine(addInsBuild.dir,'DatabaseInfo.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="DatabaseInfo/**.cs"/>
@@ -131,10 +131,12 @@
 				<include name="System.Data.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
+        <include name="System.Drawing.dll" />
 				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
@@ -143,6 +145,8 @@
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
+<!--
+    
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ColumnFrequency.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ColumnFrequency/**.cs"/>

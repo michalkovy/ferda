@@ -1,8 +1,9 @@
-// DatabaseInfo.cs - Usercontrol class
+// DatabaseInfo.cs - UserControl class for displaying info about a database
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Authors: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//          Martin Ralbovský <martin.ralbovsky@gmail.com>            
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,14 +26,19 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using Ferda.Modules.Boxes.DataMiningCommon.Database;
 using System.Resources;
 using System.Reflection;
+
 using Ferda.FrontEnd.AddIns;
 using Ferda.FrontEnd.AddIns.Common.ListView;
+using Ferda.Guha.Data;
 
 namespace Ferda.FrontEnd.AddIns.DatabaseInfo
 {
+    /// <summary>
+    /// Usercontrol class for the module for interaction displaying info about
+    /// a database
+    /// </summary>
     public partial class DataBaseInfo : UserControl
     {
         #region Private variables
@@ -41,16 +47,6 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         /// Localization resource manager
         /// </summary>
         private ResourceManager resManager;
-
-        /// <summary>
-        /// Localization string - for now, en-US or cs-CZ
-        /// </summary>
-        private string localizationString;
-
-        /// <summary>
-        /// Datamatrix array to convert to listview
-        /// </summary>
-        private DataMatrixSchemaInfo[] dataMatrix;
 
         /// <summary>
         /// Owner of addin
@@ -62,36 +58,31 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         /// </summary>
         private ListViewItemComparer comparer = new ListViewItemComparer();
 
+        /// <summary>
+        /// Array of datatable informations
+        /// </summary>
+        private DataTableExplain[] explainSeq;
+
         #endregion
-
-
+        
         #region Constructor
 
         /// <summary>
-        /// Class constructor
+        /// Default class constructor
         /// </summary>
-        /// <param name="localePrefs">localeprefs</param>
-        /// <param name="dataMatrix">Datamatrix</param>
-        public DataBaseInfo(string[] localePrefs, DataMatrixSchemaInfo[] dataMatrix, IOwnerOfAddIn ownerOfAddIn)
+        /// <param name="explainSeq">Array of information about data tables in
+        /// the database</param>
+        /// <param name="ownerOfAddIn">
+        /// Owner of the addin (usually the FrontEnd environment)</param>
+        /// <param name="resManager">Resource manager for the module</param>
+        public DataBaseInfo(ResourceManager resManager, DataTableExplain[] explainSeq, 
+            IOwnerOfAddIn ownerOfAddIn)
         {
-            //setting the ResManager resource manager and localization string
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.DataBaseInfo.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-                resManager = new ResourceManager("Ferda.FrontEnd.AddIns.DataBaseInfo.Localization_en-US",
-            Assembly.GetExecutingAssembly());
-                localizationString = "en-US";
-            }
+            this.resManager = resManager;
             this.ownerOfAddIn = ownerOfAddIn;
+            this.explainSeq = explainSeq;
+
             comparer.column = 0;
-            this.dataMatrix = dataMatrix;
             InitializeComponent();
             this.ListViewInit();
             this.FillDBInfoListView();
@@ -100,7 +91,6 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         }
 
         #endregion
-
 
         #region Context menu handlers
 
@@ -172,7 +162,6 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
 
         #endregion
 
-
         #region Private methods
 
         /// <summary>
@@ -180,9 +169,10 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         /// </summary>
         private void ListViewInit()
         {
-            this.ChangeLocale(resManager);
+            this.ChangeLocale();
             //adding a handling method for column sorting
-            this.DataBaseInfoListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.DataBaseInfoListView_ColumnClick);
+            this.DataBaseInfoListView.ColumnClick += 
+                new ColumnClickEventHandler(this.DataBaseInfoListView_ColumnClick);
         }
 
         /// <summary>
@@ -190,13 +180,13 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         /// </summary>
         private void FillDBInfoListView()
         {
-            foreach (DataMatrixSchemaInfo value in this.dataMatrix)
+            foreach (DataTableExplain explain in explainSeq)
             {
                 ListViewItem newItem = new ListViewItem();
-                newItem.Text = value.name;
-                newItem.SubItems.Add(value.remarks);
-                newItem.SubItems.Add(value.rowCount.ToString());
-                newItem.SubItems.Add(value.type);
+                newItem.Text = explain.name;
+                newItem.SubItems.Add(explain.remarks);
+                newItem.SubItems.Add(explain.recordsCount.ToString());
+                newItem.SubItems.Add(explain.type);
                 this.DataBaseInfoListView.Items.Add(newItem);
             }
         }
@@ -204,8 +194,8 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
         /// <summary>
         /// Handler for column click - sorts a listview.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void DataBaseInfoListView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
         {
             comparer.column = e.Column;
@@ -226,45 +216,22 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo
 
         #endregion
 
-
         #region Localization
-
-        /// <summary>
-        /// Resource manager of the application, it is filled according to the
-        /// current localization
-        /// </summary>
-        public ResourceManager ResManager
-        {
-            get
-            {
-                return resManager;
-            }
-        }
-
-        /// <summary>
-        /// Localization string of the application, possible values are "en-US" and "cs-CZ"
-        /// </summary>
-        public string LocalizationString
-        {
-            get
-            {
-                return localizationString;
-            }
-        }
 
         /// <summary>
         /// Method to change l10n.
         /// </summary>
-        /// <param name="rm">Resource manager to handle new l10n resource</param>
-        public void ChangeLocale(ResourceManager rm)
+        public void ChangeLocale()
         {
-            this.TableName.Text = rm.GetString("TableName");
-            this.TableRemarks.Text = rm.GetString("Remarks");
-            this.TableRowCount.Text = rm.GetString("RowCount");
-            this.TableType.Text = rm.GetString("Type");
-            this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
-            this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
-            this.ToolStripHelp.Text = rm.GetString("Help");
+            this.TableName.Text = resManager.GetString("TableName");
+            this.TableRemarks.Text = resManager.GetString("Remarks");
+            this.TableRowCount.Text = resManager.GetString("RowCount");
+            this.TableType.Text = resManager.GetString("Type");
+            this.ToolStripMenuItemCopyAll.Text = 
+                resManager.GetString("CopyAllToClipboard");
+            this.ToolStripMenuItemCopySelected.Text = 
+                resManager.GetString("CopySelectedToClipboard");
+            this.ToolStripHelp.Text = resManager.GetString("Help");
         }
 
         #endregion

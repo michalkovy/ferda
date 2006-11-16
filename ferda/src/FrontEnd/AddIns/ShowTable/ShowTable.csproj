@@ -63,16 +63,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Localization_cs-CZ.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Localization_cs-CZ.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Localization_en-US.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Localization_en-US.resx</DependentUpon>
-    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="MyIce\ShowTableIce.cs" />
     <Compile Include="NonGUIClasses\DBInteraction.cs" />
