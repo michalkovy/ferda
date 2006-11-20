@@ -7,6 +7,8 @@ using Ferda.Modules.Helpers.Caching;
 using Ice;
 using Common = Ferda.Guha.Attribute.Common;
 using Exception = System.Exception;
+using System.Data;
+using System.Data.Common;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategory
 {
@@ -537,6 +539,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 );
         }
 
+
+        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
         public ValuesAndFrequencies GetCategoriesAndFrequencies(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<ValuesAndFrequencies>(
@@ -564,6 +572,48 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 _boxModule.StringIceIdentity
                 );
         }
+
+        /*
+        public GenericColumn GetGenericColumn(bool fallOnError)
+        {
+            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+            if (prx == null)
+                return null;
+            ColumnInfo column = prx.getColumnInfo();
+
+            DatabaseConnectionSettingHelper connSetting =
+                new DatabaseConnectionSettingHelper(column.dataTable.databaseConnectionSetting);
+
+            Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
+            cacheSetting.Add(
+                Datasource.Database.BoxInfo.typeIdentifier + Datasource.Database.Functions.PropConnectionString,
+                connSetting);
+            cacheSetting.Add(Datasource.DataTable.BoxInfo.typeIdentifier + Datasource.DataTable.Functions.PropName,
+                             column.dataTable.dataTableName);
+            cacheSetting.Add(
+                Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropSelectExpression,
+                column.columnSelectExpression);
+
+            if (_cacheFlagColumn.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
+                || (_cachedValueColumn == null && fallOnError))
+            {
+                _cachesReloadFlag = System.Guid.NewGuid();
+                _cachedValueColumn = ExceptionsHandler.GetResult<GenericColumn>(
+                    fallOnError,
+                    delegate
+                    {
+                        return
+                            GenericDatabaseCache.GetGenericDatabase(connSetting)[column.dataTable.dataTableName].GetGenericColumn(column.columnSelectExpression);
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                    );
+            }
+            return _cachedValueColumn;
+        }*/
 
         #endregion
 
@@ -641,13 +691,19 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return null;
         }
 
-        public override int[] GetCountVector(Current current__)
+        public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, Current current__)
         {
-            return new int[0];
+            GenericColumn _column = GetGenericColumn(true);
+            DataTable _table = _column.GetCountVector(masterIdColumn, masterDatatableName);
+            int[] result = new int[_table.Rows.Count];
+            for (int i = 0; i < _table.Rows.Count; i++)
+            {
+                result[i] = (int)_table.Rows[i][0];
+            }
+            return result;
         }
 
         #endregion
 
-        
     }
 }

@@ -35,7 +35,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         public abstract IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, GuidStruct attributeGuid);
 
-      //  public abstract IEnumerable<IBitString> GetBooleanTraceEnumerator();
+        //  public abstract IEnumerable<IBitString> GetBooleanTraceEnumerator();
 
         protected abstract void prepareAttributeTraces();
 
@@ -299,18 +299,21 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         public bool ProgressSetValue(float value, string message)
         {
-            _progressValue = value;
-            _progressMessage = message;
-
-            long actTicks = DateTime.Now.Ticks;
-            if (System.Math.Abs(_progressLastUpdateTicks - actTicks) > _progressMinCountOfTicksToPublish)
+            if ((_progressBarPrx != null) && (_progressListener != null))
             {
-                _progressLastUpdateTicks = actTicks;
-                _progressBarPrx.setValue(value, message);
-            }
+                _progressValue = value;
+                _progressMessage = message;
 
-            if (_progressListener.Stopped)
-                return false;
+                long actTicks = DateTime.Now.Ticks;
+                if (System.Math.Abs(_progressLastUpdateTicks - actTicks) > _progressMinCountOfTicksToPublish)
+                {
+                    _progressLastUpdateTicks = actTicks;
+                    _progressBarPrx.setValue(value, message);
+                }
+
+                if (_progressListener.Stopped)
+                    return false;
+            }
             return true;
         }
 
@@ -337,12 +340,17 @@ namespace Ferda.Guha.MiningProcessor.Miners
             )
         {
             _progressListener = progressListener;
-            _progressListener.MinningProcessor = this;
+
+            if (_progressListener != null)
+                _progressListener.MinningProcessor = this;
+
             _progressBarPrx = progressBarPrx;
             _taskParams = taskParams;
             _booleanAttributes = booleanAttributes;
             _categorialAttributes = categorialAttributes;
+
             ProgressSetValue(-1, "Preparing quantifiers");
+
             _quantifiers = new Quantifiers(quantifiers, taskFuncPrx);
             _baseQuantifierSetting = _quantifiers.GetBaseQuantifierSetting();
         }
@@ -388,7 +396,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         }
         #region Attributes traces preparing
 
-        public static IEntitySetting GetBoolanAttributeBySemantic(MarkEnum semantic,
+        public static IEntitySetting GetBooleanAttributeBySemantic(MarkEnum semantic,
                                                                   BooleanAttribute[] booleanAttributes)
         {
             if (booleanAttributes == null)
@@ -424,7 +432,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                                                     bool allowsEmptyBitStrings,
                                                                     MiningProcessorBase miningProcessorBase)
         {
-            IEntitySetting setting = GetBoolanAttributeBySemantic(semantic, booleanAttributes);
+            IEntitySetting setting = GetBooleanAttributeBySemantic(semantic, booleanAttributes);
             if (setting == null)
             {
                 if (!allowsEmptyBitStrings)

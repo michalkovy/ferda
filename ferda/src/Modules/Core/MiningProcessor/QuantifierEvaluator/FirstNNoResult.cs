@@ -17,7 +17,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             public ContingencyTableHelper ContingencyTable;
         }
 
-        private const int _bufferSize = 300;
+        private const int _bufferSize = 10000;
         private bufferItem[] _buffer = new bufferItem[_bufferSize];
         private int _actBufferUsed = 0;
         private readonly MiningProcessorBase _miningProcessor;

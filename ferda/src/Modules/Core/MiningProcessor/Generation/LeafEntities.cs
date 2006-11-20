@@ -495,20 +495,78 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         #endregion
     }
-    /*
+    
     public class SubsetsOneOne : EntityEnumerable
     {
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+     
+        private readonly CoefficientSetting _setting;
+
+        private string _attributeGuid;
+
+        public SubsetsOneOne(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+            : base(setting.id, skipOptimalization, cedentType)
         {
-            throw new System.Exception("The method or operation is not implemented.");
+            _setting = setting;
+            _attributeGuid = setting.generator.GetAttributeId().value;
+            
+        }
+
+        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        { 
+            while (true)
+            {
+                BitStringIceWithCategoryId tempString = _setting.generator.GetNextBitString();
+
+                if (tempString != null)
+                {
+                    IBitString result = new BitString(
+                        new BitStringIdentifier(
+                        _setting.generator.GetAttributeId().value, tempString.categoryId),
+                        tempString.bitString.length,
+                        tempString.bitString.value);
+
+                    //IBitString result = Helpers.GetBitString(null, null, null, BitwiseOperation.And);
+
+                    SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                    if (parentSkipSetting != null)
+                    {
+                        if (Common.Compare(parentSkipSetting.Relation, result.Sum, parentSkipSetting.Treshold))
+                            yield return result;
+                    }
+                    else
+                    {
+                        yield return result;
+                    }
+                }
+                else
+                {
+                    yield break;
+                }
+            }
+        
         }
 
         public override long TotalCount
         {
-            get { throw new System.Exception("The method or operation is not implemented."); }
+            get { return 1; }
         }
-
-
+        /*
+        public override string ToString()
+        {
+            string result = "";
+#if Testing
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(Guid);
+#else
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
+                _attributeGuid
+                );
+#endif
+            result += "["
+                      + FormulaHelper.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
+                      + "] (fixed set)";
+            return result;
+        }
+        */
         public override Set<string> UsedAttributes
         {
             get { return new Set<string>(_attributeGuid); }
@@ -518,5 +576,5 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             get { return new Set<string>(Guid); }
         }
-    }*/
+    }
 }

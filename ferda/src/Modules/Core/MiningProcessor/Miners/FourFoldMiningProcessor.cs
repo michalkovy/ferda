@@ -7,6 +7,7 @@ using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.ModulesManager;
 using Ferda.Modules;
+using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
@@ -71,7 +72,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         public override void Trace()
         {
-            if (!ProgressSetValue(-1, "Begining of attributes trace."))
+            if (!ProgressSetValue(-1, "Beginning of attributes trace."))
                 return;
             resultInit();
 
@@ -178,12 +179,20 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     //return TraceBoolean(this.
                 }*/
 
+        private const int _blockSize = 64;
+        private const long _one = 1;
+        private void setTrueBit(int index, long[] array)
+        {
+            array[index / _blockSize] |= _one << (index % _blockSize);
+        }
+
         public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, GuidStruct attributeGuid)
         {
             //  if (!ProgressSetValue(-1, "Beginning of attributes trace."))
             //       return false;
-            //   resultInit();
+            resultInit();
 
+            
             IEvaluator evaluator;
             if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
                 evaluator = new FirstNNoResult(this);
@@ -199,39 +208,41 @@ namespace Ferda.Guha.MiningProcessor.Miners
             nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
 
             //produce mask bitstrings from countvector
-            IBitString[] masks = new IBitString[CountVector.Length];
-
+            BitString[] masks = new BitString[CountVector.Length];
             int marker = 0;
-
-            int bitStringLength = 0;
-
+            int length = 0;           
+           
             for (int i = 0; i < CountVector.Length; i++)
             {
-                bitStringLength += CountVector[i];
+                length += CountVector[i];
+            }
+
+            int arraySize = (length + _blockSize - 1) / _blockSize;
+
+            for (int i = 0; i < masks.Length; i++)
+            {
+                long[] tmpString = new long[arraySize];
+                tmpString.Initialize();
+                masks[i] = new BitString(new BitStringIdentifier(attributeGuid.value, i.ToString()),
+                    length, tmpString);
             }
 
             for (int i = 0; i < masks.Length; i++)
             {
-
-                long[] tmpString = new long[bitStringLength];
-
-                for (int k = 0; k < marker; k++)
+               /* for (int k = 0; k < marker; k++)
                 {
                     tmpString[k] = 0;
-                }
+                }*/
 
                 for (int k = marker; k < marker + CountVector[i]; k++)
                 {
-                    tmpString[k] = 1;
+                    masks[i].SetBit(k, true);
                 }
 
-                for (int k = marker + CountVector[i]; k < bitStringLength; k++)
+               /* for (int k = marker + CountVector[i]; k < bitStringLength; k++)
                 {
                     tmpString[k] = 0;
-                }
-                masks[i]
-                    = new BitString(new BitStringIdentifier("123", "234"), bitStringLength, tmpString);
-
+                }*/
                 marker += CountVector[i];
             }
 
@@ -268,7 +279,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     {
                         GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
 
-
                         //cycle through countvector-based masks
                         for (int i = 0; i < masks.Length; i++)
                         {
@@ -304,10 +314,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                             //VerifyIsComplete means no buffer is left.
                             //If not all relevant questions have been
-                            //generated and verified, will throw an exception
+                            //generated and verified, will stop yielding bitstrings
                             if (evaluator.VerifyIsComplete(contingencyTable, new Hypothesis()))
                                 //goto finish;
-                                throw (new ArgumentOutOfRangeException());
+                                //throw (new ArgumentOutOfRangeException());
+                                break;
 
                         }
 
@@ -319,41 +330,36 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         //  hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
                         //  hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
                         bool[] evalVector = evaluator.GetEvaluationVector();
-                        long[] evalVectorLong = new long[evalVector.Length];
+                      //  long[] evalVectorLong = new long[evalVector.Length];
 
-                        for (int i = 0; i < evalVector.Length; i++)
-                        {
-                            evalVectorLong[i] = Convert.ToInt64(evalVector[i]);
-                        }
+                        int _arraySize = (CountVector.Length + _blockSize - 1) / _blockSize;
 
-                        yield return new KeyValuePair<string, BitStringIce>(
-                            MarkEnum.Antecedent.ToString() +
+                        long[] _tmpString = new long[_arraySize];
+                        _tmpString.Initialize();
+                        string _yieldStringName = MarkEnum.Antecedent.ToString() +
                                 ": " + pA.Identifier + ", " +
                                 MarkEnum.Succedent.ToString() +
                                 ": " + pS.Identifier + ", " +
                                 MarkEnum.Condition.ToString() +
-                                ": " + pC.Identifier,
-                        new BitStringIce(evalVectorLong, evalVectorLong.Length));
+                                ": " + pC.Identifier;
 
-                        /*BitString bitString
-                                = new BitString(
-                                new BitStringIdentifier(
-                                attributeGuid.value, 
-                                MarkEnum.Antecedent.ToString() + 
-                                ": " + pA.Identifier + ", " +
-                                MarkEnum.Succedent.ToString() + 
-                                ": " + pS.Identifier + ", " +
-                                MarkEnum.Condition.ToString() +
-                                ": " + pC.Identifier),
-                                evalVectorLong.Length,
-                                evalVectorLong);
-                        yield return bitString;*/
+                        for (int i = 0; i < evalVector.Length; i++)
+                        {
+                            if (evalVector[i])
+                                setTrueBit(i, _tmpString);
+                               // _yieldString.SetBit(i, true);
+                           // j = i;
+                        }
 
+
+                        yield return new KeyValuePair<string, BitStringIce>(
+                        _yieldStringName,
+                        new BitStringIce(_tmpString, CountVector.Length));
                         evaluator.Flush();
                     }
                 }
             }
-            throw new Exception("The method or operation is not implemented.");
+            //throw new Exception("The method or operation is not implemented.");
         }
     }
 }

@@ -25,6 +25,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         return new LeftCuts(coefSetting, skipOptimalization, cedentType);
                     case CoefficientTypeEnum.RightCuts:
                         return new RightCuts(coefSetting, skipOptimalization, cedentType);
+                    case CoefficientTypeEnum.SubsetsOneOne:
+                        return new SubsetsOneOne(coefSetting, skipOptimalization, cedentType);
                 }
             }
             else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::NegationSetting"))

@@ -85,8 +85,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 return prx;
             }
             else
-                throw new ArgumentException(
-                    "There is not reference to bit string generator (proxy) in bit string cache.");
+                //   throw new ArgumentException(
+                //       "There is not reference to bit string generator (proxy) in bit string cache.");
+                return null;
         }
 
         #region IBitStringCache Members

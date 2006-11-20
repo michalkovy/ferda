@@ -52,5 +52,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
             }
             return result;
         }
+        /*
+        public static int [] GetCountVector(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid, string masterDatatableName)
+        {
+           // bitStringGeneratorPrx.GetCountVector(
+        }*/
     }
 }

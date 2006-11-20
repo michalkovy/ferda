@@ -35,6 +35,13 @@ module Ferda {
 					Ferda::Modules::LongSeq value;
 					int length;
 				};
+				
+								
+				struct BitStringIceWithCategoryId
+				{
+					BitStringIce bitString;
+					string categoryId;
+				};
 
 				struct GuidAttributeNamePair
 				{
@@ -79,7 +86,10 @@ module Ferda {
 						throws Ferda::Modules::BoxRuntimeError;
 						
 					//vraci countvector pro relacni DM	
-					Ferda::Modules::IntSeq GetCountVector()
+					Ferda::Modules::IntSeq GetCountVector(string masterIdColumn, string masterDataTableName)
+						throws Ferda::Modules::BoxRuntimeError;
+						
+					nonmutating BitStringIceWithCategoryId GetNextBitString()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 
@@ -114,6 +124,7 @@ module Ferda {
 				enum CoefficientTypeEnum
 				{
 					Subsets,
+					SubsetsOneOne,
 					CyclicIntervals,
 					Intervals,
 					Cuts,
@@ -181,8 +192,7 @@ module Ferda {
 				interface BooleanAttributeSettingWithBSGenerationAbilityFunctions extends BooleanAttributeSettingFunctions, BitStringGenerator
 				{
 										
-					nonmutating BitStringIce GetNextBitString()
-						throws Ferda::Modules::BoxRuntimeError;
+
 						
 					//nonmutating bool NextExists
 				};
@@ -268,12 +278,6 @@ module Ferda {
 					TaskEvaluationTypeEnum evaluationType;
 					long maxSizeOfResult; // N from FirstN or TopN
 					WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode; // for SD tasks only
-				};
-				
-				struct BitStringIceWithCategoryId
-				{
-					BitStringIce bitString;
-					string categoryId;
 				};
 
 				interface MiningProcessorFunctions
