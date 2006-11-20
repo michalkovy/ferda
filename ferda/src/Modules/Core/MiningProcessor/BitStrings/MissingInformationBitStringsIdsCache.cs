@@ -16,16 +16,19 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         public override string GetValue(string key)
         {
-            string[] missingInformationCategoryId =
-                _bitStringCache.GetBitStringGeneratorPrx(key).GetMissingInformationCategoryId();
-            if (missingInformationCategoryId.Length == 1)
+            BitStringGeneratorPrx proxy =
+                _bitStringCache.GetBitStringGeneratorPrx(key);
+
+            if (proxy != null)
             {
-                return missingInformationCategoryId[0];
+                string[] missingInformationCategoryId =
+                    _bitStringCache.GetBitStringGeneratorPrx(key).GetMissingInformationCategoryId();
+                if (missingInformationCategoryId.Length == 1)
+                {
+                    return missingInformationCategoryId[0];
+                }
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public override int GetSize(string itemToMeasure)

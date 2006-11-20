@@ -26,7 +26,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return null;
         }
 
-       // private static bool firstRun = true;
+        // private static bool firstRun = true;
 
         private static GuidStruct _attributeId;
 
@@ -53,7 +53,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
         }
 
-        private IEnumerator<KeyValuePair<string,BitStringIce>> _booleanTraceEnumerator;
+        private IEnumerator<KeyValuePair<string, BitStringIce>> _booleanTraceEnumerator;
 
         public override string Run(
             BoxModulePrx boxModule,
@@ -76,13 +76,32 @@ namespace Ferda.Guha.MiningProcessor.Miners
             Quantifier.IceTicks = 0;
             long before = DateTime.Now.Ticks;
 
-            ProgressTaskListener progressListener = new ProgressTaskListener();
-            ProgressTaskPrx progressPrx =
-                ProgressTaskI.Create(current__.adapter, progressListener);
+            ProgressTaskListener progressListener = null;
+            ProgressTaskPrx progressPrx = null;
+            ProgressBarPrx progressBarPrx = null;
             string label = taskTypeToString(taskParams.taskType) + "-Task";
-            ProgressBarPrx progressBarPrx =
-                output.startProgress(progressPrx, label, label + " running...");
-            progressBarPrx.setValue(-1, "Loading ...");
+            string result = String.Empty;
+
+            switch (taskParams.resultType)
+            {
+                case ResultTypeEnum.Trace:
+                    progressListener = new ProgressTaskListener();
+                    progressPrx =
+                        ProgressTaskI.Create(current__.adapter, progressListener);
+                    progressBarPrx =
+                        output.startProgress(progressPrx, label, label + " running...");
+                    progressBarPrx.setValue(-1, "Loading ...");
+                    break;
+
+                case ResultTypeEnum.TraceBoolean:
+                    break;
+
+                case ResultTypeEnum.TraceReal:
+                    throw new NotImplementedException();
+
+                default:
+                    throw new NotImplementedException();
+            }
 
             MiningProcessorBase miningProcessor = null;
             try
@@ -158,14 +177,19 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     case ResultTypeEnum.Trace:
                         miningProcessor.Trace();
                         miningProcessor.ProgressSetValue(1, "Completing result.");
+                        miningProcessor.ResultInfo.OtherInfo = string.Format("BitStringCache.IceCalls: {0}; BitStringCache.IceTicks: {1}; Quantifier.IceCalls: {2}; Quantifier.IceTicks: {3}; All.Ticks: {4}", BitStringCache.IceCalls, BitStringCache.IceTicks, Quantifier.IceCalls, Quantifier.IceTicks, DateTime.Now.Ticks - before);
                         resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
+                        result = SerializableResult.Serialize(miningProcessor.Result);
                         break;
 
                     case ResultTypeEnum.TraceBoolean:
                         resultInfo = String.Empty;
                         _attributeId = attributeId;
                         _countVector = countVector;
-                        //bitStringGenerator.
+                        AttributeNameProviderPrx nameProvider = 
+                            AttributeNameProviderPrxHelper.checkedCast(boxModule.getFunctions());
+                        Ferda.Guha.MiningProcessor.Formulas.AttributeNameInLiteralsProvider.Init(nameProvider);
+
                         _booleanTraceEnumerator = miningProcessor.TraceBoolean(_countVector, _attributeId).GetEnumerator();
                         break;
 
@@ -176,8 +200,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         throw new NotImplementedException();
                 }
                 // performance ICE
-                miningProcessor.ResultInfo.OtherInfo = string.Format("BitStringCache.IceCalls: {0}; BitStringCache.IceTicks: {1}; Quantifier.IceCalls: {2}; Quantifier.IceTicks: {3}; All.Ticks: {4}", BitStringCache.IceCalls, BitStringCache.IceTicks, Quantifier.IceCalls, Quantifier.IceTicks, DateTime.Now.Ticks - before);
-                return SerializableResult.Serialize(miningProcessor.Result);
+
+                return result;
             }
             catch (BoxRuntimeError)
             {
@@ -199,9 +223,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
             finally
             {
-                progressBarPrx.done();
-                System.Threading.Thread.Sleep(100);
-                ProgressTaskI.Destroy(current__.adapter, progressPrx);
+                if (progressBarPrx != null)
+                {
+                    progressBarPrx.done();
+                    System.Threading.Thread.Sleep(100);
+                    ProgressTaskI.Destroy(current__.adapter, progressPrx);
+                }
             }
         }
     }

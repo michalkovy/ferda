@@ -7,6 +7,8 @@ using Ferda.Modules.Helpers.Caching;
 using Ice;
 using Common = Ferda.Guha.Attribute.Common;
 using Exception = System.Exception;
+using System.Data;
+using System.Data.Common;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantIntervals
 {
@@ -115,6 +117,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         }
 
         #endregion
+
 
         #region Methods
 
@@ -765,9 +768,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             return GetCategoriesAndFrequencies(true);
         }
 
-        public override int[] GetCountVector(Current current__)
+        public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, Current current__)
         {
-            return new int[0];
+            GenericColumn _column = GetGenericColumn(true);
+            DataTable _table = _column.GetCountVector(masterIdColumn, masterDatatableName);
+            int[] result = new int[_table.Rows.Count];
+            for (int i = 0; i < _table.Rows.Count; i++)
+            {
+                result[i] = (int)_table.Rows[i][0];
+            }
+            return result;
         }
 
         #region IFunctions Members
@@ -778,5 +788,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         }
 
         #endregion
+
+        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

@@ -857,16 +857,22 @@ namespace Ferda.Guha.Data
         /// Gets the count vector for the bitstring generation for relational datamining
         /// </summary>
         /// <returns></returns>
-        public DataTable GetCountVector(string masterIdColumn)
+        public DataTable GetCountVector(string masterIdColumn, string masterDatatableName)
         {
-            string tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name); ;
-            string columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterIdColumn);
+            string _detailTableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name); ;
+            string _columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterIdColumn);
+            string _masterDatatableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterDatatableName);
 
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
             command.CommandText =
-                "SELECT COUNT(*) FROM " + tableName
-                + " GROUP BY " + columnQuotedIdentifier
-                + " ORDER BY " + columnQuotedIdentifier;
+                "SELECT COUNT(*) FROM " + _detailTableName
+               // + " RIGHT OUTER JOIN " + masterDatatableName
+               // + " ON "
+               // + GenericDataTable.Explain.name + "." + masterIdColumn
+               // + "="
+               // + masterDatatableName + "." + masterIdColumn
+                + " GROUP BY " + _columnQuotedIdentifier
+                + " ORDER BY " + _columnQuotedIdentifier;
 
             DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
             dataAdapter.SelectCommand = command;

@@ -435,6 +435,11 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
             throw new Exception("The method or operation is not implemented.");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
             //TODO
