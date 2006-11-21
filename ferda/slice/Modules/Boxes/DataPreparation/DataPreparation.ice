@@ -1,3 +1,25 @@
+/*
+Functions.cs - Function objects for the database box module
+
+Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+Documented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+
+Copyright (c) 2006 Tomáš Kuchaø, Martin Ralbovský
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 #ifndef	FERDA_MODULES_BOXES_DATAPREPARATION
 #define	FERDA_MODULES_BOXES_DATAPREPARATION
 
@@ -15,12 +37,16 @@ module Ferda {
 					// DATABASE
 					
 					interface DatabaseFunctions {
+					     //Returns the connection string
 						nonmutating	Ferda::Guha::Data::DatabaseConnectionSetting	getDatabaseConnectionSetting()
 							throws Ferda::Modules::BoxRuntimeError;
+						//Returns the connection info
 						nonmutating	Ferda::Guha::Data::ConnectionInfo getConnectionInfo()
 							throws Ferda::Modules::BoxRuntimeError;
+						//Returns an array of structures describing the tables in the database
 						nonmutating Ferda::Guha::Data::DataTableExplainSeq getDataTableExplainSeq()
 							throws Ferda::Modules::BoxRuntimeError;
+						//Returns the names of tables in the database
 						nonmutating StringSeq getDataTablesNames()
 							throws Ferda::Modules::BoxRuntimeError;
 					};
