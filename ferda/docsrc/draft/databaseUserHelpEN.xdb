@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+			<author>
+				<personname>
+					<firstname>Tomáš</firstname>
+					<surname>Kuchař</surname>
+				</personname>
+				<email>tomas.kuchar@gmail.com</email>
+			</author>
+		</authorgroup>
+		
+		<title>Database Box User Help</title>
+		<titleabbrev>Database Help</titleabbrev>
+		
+		<!--
+		<revhistory>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2006-11-21</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Initial version of the document
+					</para>
+				</revdescription>
+			</revision>
+		</revhistory>
+		-->
+		<pubdate>2006-11-21</pubdate>
+	</articleinfo>
+
+<abstract>
+	<para>
+		This document provides user help for the <classname>Database</classname> box.
+	</para>
+</abstract>
+
+<section>
+	<title>About the Database box</title>
+	<para>
+		A lot of Ferda's boxes need to access the database and to get information from the database: the database scheme definition,
+		the number and names of the tables and colums, various statistics and the data itself which are later transformed into the bit
+		strings.
+	</para>
+	<para>
+		The <classname>Database</classname> box a box module that stands at the beginning of the process of getting information
+		from a database. The box represents one database, one source of data. User can use the <classname>Database</classname>
+		box to create boxes representing data tables and thus create a task in Ferda.
+	</para>
+	<para>
+		If user wants to work with the box, he need in the first place to set the property <classname>Connection string</classname>,
+		because otherwise the box would not provide any data. If other than ODBC data source is used, the property <classname>
+		Provider invariant name</classname> should also be set. 
+	</para>
+</section>
+
+<section>
+	<title>Properties</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Provider invariant name</title>
+				<para>
+					The name of the ADO.NET provider (ODBC, OleDb, MS SQL...), which will be used for connecting the box
+					to the database with the connection string.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Connection string</title>
+				<para>
+					Connection string for connection to the database. The format of the connection string should correspond
+					to the chosen ADO. NET provider. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Last reload request</title>
+				<para>
+					The date and time of the lase user demanded refresh of information about the database. Information
+					about the database (structure, amount of data, statistics) are beeing cached, therefore situaciton 
+					can occur where the previously stored information do not correspond to actual state of the database.
+					In this case user can execute the <classname>Reload</classname> action and reload the
+					information about the database.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Acceptable data types</title>
+				<para>
+					There can be various types of tables (ALIAS, TABLE, SYNONYM, SYSTEM TABLE, VIEW, GLOBAL TEMPORARY, LOCAL
+					TEMPORARY, EXTERNAL TABLE, SYSTEM VIEW) and user choose with which to work. The types of tables are 
+					presented to the user via dialogs.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Connection timeout</title>
+				<para>
+					Maximum time (in seconds) when the system is trying to initiate connection before stopping
+					the connection attempts.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Database name</title>
+				<para>
+					Name of the database
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Data source</title>
+				<para>
+					Name of the server or the source of data.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Driver</title>
+				<para>
+					Name of the ODBC driver used (only when using the ODBC provider).
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Version of server</title>
+				<para>
+					Version of the database server.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+<section>
+	<title>Actions</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Reload</title>
+				<para>Action reloads the structure and statisticts information about the database, data tables and columns.</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+<section>
+	<title>Modules asking for creation</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Data matrix</title>
+				<para>Creates box corresponding to one of the tables in the database.</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>All data matrixes in the DB</title>
+				<para>Creates boxes for all data matrixes in the database.</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+<section>
+	<title>Detailed information</title>
+	<para>
+		In contrary to previous implementations (Ferda v. 1 and the LISp-Miner, the current <classname>Database</classname> 
+		box is not limited to work with ODBC	data sources only. Ferda now can work with other databases, with databases that
+		do not have proper ODBC driver installed. 
+	</para>
+	<para>
+		With this box you can access all the databases that have installed corresponding ADO. NET provider. There are several
+		databases accessible through the standard Microsoft .NET Framework instalation: ODBC, OleDB, Oracle and MS SQL Server.
+		There is also a possibility to use the third-party providers. The module created is independent on specific data source
+		and it can be used for any data source with driver installed.
+	</para>
+	<para>
+		Further information in "Generic Coding with the ADO.NET 2.0 Base Classes and Factories" that can be found in the MSDN
+		library.
+	</para>
+</section>
+
+</article>
