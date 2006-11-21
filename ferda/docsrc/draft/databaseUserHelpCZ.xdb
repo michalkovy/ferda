@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+			<author>
+				<personname>
+					<firstname>Tomáš</firstname>
+					<surname>Kuchař</surname>
+				</personname>
+				<email>tomas.kuchar@gmail.com</email>
+			</author>
+		</authorgroup>
+		
+		<title>Uživatelská nápověda pro krabičku Databáze</title>
+		<titleabbrev>Databáze nápověda</titleabbrev>
+		
+		<!--
+		<revhistory>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2006-11-21</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Initial version of the document
+					</para>
+				</revdescription>
+			</revision>
+		</revhistory>
+		-->
+		<pubdate>2006-11-21</pubdate>
+	</articleinfo>
+
+<abstract>
+	<para>
+		Tento dokument poskytuje uživatelskou nápovědu pro krabičku <classname>Databáze</classname>.
+	</para>
+</abstract>
+
+<section>
+	<title>O krabičce Databáze</title>
+	<para>
+		Řada krabiček Ferdy potřebuje přistupovat do databáze a získávat z ní různé informace: od definice schématu databáze, tabulek
+		a sloupců přes různé statistiky o konkrétních datech až k čtení těchto dat, která jsou později reprezentována pomocí bitových 
+		řetězců.
+	</para>
+	<para>
+		Krabička <classname>Databáze</classname> je krabička, která je na začátku procesu získávání informací z databáze. 
+		Krabička reprezentuje jednu databázi, jeden datový zdroj. Uživatel může použít krabičku <classname>Databáze</classname>
+		k vytvoření krabiček reprezentujících datové tabulky a tím vytvořit úlohu ve Ferdovi.
+	</para>
+	<para>
+		Pokud uživatel chce pracovat s krabičkou, potřebuje hlavně nastavit vlastnost <classname>Připojovací řetězec</classname>, protože
+		jinak krabička nebude poskytovat žádná data. Při jiném než ODBC datovém zdroji se nastavuje ještě vlastnost 
+		<classname>Jméno providera</classname>.
+	</para>
+</section>
+
+<section>
+	<title>Properties</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Jméno providera</title>
+				<para>
+					Jméno ADO.NET provideru (např.: ODBC, OleDb, MS SQL, Oracle, …), který bude použit pro připojení k databázi
+					pomocí připojovacího řetězce.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Připojovací řetězec</title>
+				<para>
+					Připojovací řetězec pro připojení k databázi. Formát připojovacího řetězce musí odpovídat zvolenému ADO.NET 
+					provideru.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Poslední znovunačtení</title>
+				<para>
+					Datum a čas posledního, uživatelem vyžádaného, obnovení informací o databázi. Jak již bylo uvedeno výše, 
+					informace o databázi (struktuře, množství dat, statistice dat, …) se cachují, může tak někdy dojít k situaci, že 
+					dříve uložené informace neodpovídají skutečnému stavu. V takovém případě může uživatel vyvolat akci 
+					<classname>Znovu načíst</classname> 
+					této krabičky a vyvolat tím nové načtení informací o zdroji dat.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Přijímané typy tabulek</title>
+				<para>
+					V databázi mohou být různé typy tabulek (ALIAS, TABLE, SYNONYM, SYSTEM TABLE, VIEW, GLOBAL TEMPORARY, 
+					LOCAL TEMPORARY, EXTERNAL TABLE, SYSTEM VIEW) přičemž uživatel pravděpodobně nebude chtít pracovat se 
+					všemi, proto má možnost vybrat pouze některé. Typy tabulek, které nevybere, mu nebudou dále nabízeny v dialozích.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Čas vypršení spojení</title>
+				<para>
+					Maximální čas (v sekundách), který je vyhrazen čekání na navázání spojení před ukončením pokusů.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Jméno databáze</title>
+				<para>
+					Jméno databáze
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Datový zdroj</title>
+				<para>
+					Jméno serveru nebo jméno souboru s datovým zdrojem
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Ovladač</title>
+				<para>
+					Jméno ODBC driveru použitého v aktuálním spojení. (Pouze pokud je použit provider typu ODBC.)
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Verze serveru</title>
+				<para>
+					Verze databázového serveru.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+<section>
+	<title>Akce</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Znovu načíst</title>
+				<para>
+					Akce načte strukturu databáze a statistické informace o tabulkách a sloupcích.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+<section>
+	<title>Krabičky nabízené na vytvoření</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Tabulka</title>
+				<para>Vytvoří krabičku korespondující s jednou krabičkou v databázi</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Všechny tabulky v databázi</title>
+				<para>Vytvoří krabičky pro všchny tabulky v databázi.</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+<section>
+	<title>Detailní informace</title>
+	<para>
+		Nedostatkem dřívějších implementací je i to, že dokáží pracovat pouze se zdroji dat ODBC. Toto není příliš dobrý stav, 
+		neboť za optimálních podmínek by měl být schopen Ferda pracovat se všemi druhy databází, tedy i s databázemi, pro 
+		něž neexistuje (nebo není nainstalován) ODBC driver a v případě potřeby tak umožnit vytvářet specializované krabičky, 
+		které by dokázaly využít  specifik jednotlivých konkrétních databází (např. uložené procedury apod.).
+	</para>
+	<para>
+		Nově vytvořenou krabičkou je možno přistupovat ke všem zdrojům, ke kterým existuje a je nainstalován odpovídající 
+		ADO.NET provider. V rámci standardní distribuce Microsoft .NET Frameworku jsou instalovány providery pro datové zdroje typu 
+		ODBC, OleDb, Oracle a MS SQL Server. Dále je možné instalovat providery třetích stran. Vytvořená databázová vrstva je tedy 
+		nezávislá na konkrétním datovém provideru a je ji možné použít pro všechny datové zdroje k nimž existuje a je nainstalován 
+		příslušný provider. Další informace o tomto přístupu píše Bob Beauchemin v článku „Generic Coding with the ADO.NET 2.0 Base 
+		Classes and Factories”, který je dostupný na internetu v MSDN Library.	
+	</para>
+	<para>
+		Další informace v "Generic Coding with the ADO.NET 2.0 Base Classes and Factories", které lze nalézt v MSDN
+		library.
+	</para>
+</section>
+
+</article>

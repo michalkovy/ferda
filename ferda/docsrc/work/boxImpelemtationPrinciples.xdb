@@ -9,17 +9,28 @@
       <surname>Ralbovský</surname>
       <email>martin.ralbovsky@gmail.com</email>
     </author>
-    <!--
+    
+<!--
     <revhistory>
+		<revision>
+			<revnumber>1.1</revnumber>
+			<date>2006-11-21</date>
+			<revdescription>
+				<para>
+					Further specification of the document
+				</para>
+			</revdescription>
+		</revision>
       <revision>
         <revnumber>1.0</revnumber>
         <date>2006-10-7</date>
-      </revision>
-      <revremark>
-        Initial version
+        <revremark>
+			Initial version
       </revremark>
+      </revision>
     </revhistory>
-    -->
+-->
+
   </articleinfo>
   <abstract>
     <para>
@@ -28,7 +39,7 @@
     </para>
   </abstract>
   <section>
-    <title>Introduction</title>
+    <title>Principles</title>
     <para>
       Architecture of the Ferda Dataminer system provides extended functionality
       for the box modules (such as localization, icons or dynamic help). Therefore
@@ -53,7 +64,7 @@
       </listitem>
       <listitem>
         <simpara>
-          A czech and english localization should be provided.
+          A czech and english localization of the should be provided.
         </simpara>
       </listitem>
       <listitem>
@@ -64,17 +75,23 @@
       </listitem>
       <listitem>
         <simpara>
-          The normal and slice code should be properly documented.
+          The normal and slice code should be properly documented. See the
+          <classname>Database</classname> box for an example. 
         </simpara>
       </listitem>
       <listitem>
         <simpara>
           A <classname>BoxModule.getDynamicHelpItems()</classname> function should
-          be implemented. This functions should provide information about properties,
-          sockets, actions, modules for interaction and boxes asking for creation
-          of the implemented box. (The individual help items have can have a link
-          to a pdf file with the information about the box). There should be
-          at least one pdf file containing information about the box per each box.
+          be implemented. This function should provide information and user help
+          about the box. The dynamic help items cant point to a pdf file with this
+          information.
+        </simpara>
+        <simpara>
+			There should be at least one pdf file for each localization (English and Czech)
+			and the file should contain description of the functionality of the box, 
+			description and complete list of all the sockets, visible properties, actions
+			and boxes asking for creation. See the <classname>Database</classname> 
+			box for an example. 
         </simpara>
       </listitem>
       <listitem>
