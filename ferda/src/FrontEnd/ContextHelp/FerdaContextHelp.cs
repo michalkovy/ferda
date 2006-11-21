@@ -22,6 +22,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Resources;
+using System.Collections.Generic;
 using Ferda.FrontEnd.Menu;
 using Ferda.ModulesManager;
 using Ferda.Modules;
@@ -69,7 +70,9 @@ namespace Ferda.FrontEnd.ContextHelp
         /// </summary>
         protected Label LBoxName;
 
-        //the box we are working with
+        ///<summary>
+        ///The box we are working with
+        ///</summary>
         private IBoxModule selectedBox;
         /// <summary>
         /// A link label that shows the tutorial for Ferda
@@ -77,9 +80,10 @@ namespace Ferda.FrontEnd.ContextHelp
         protected LinkLabel LLTutorial;
 
         /// <summary>
-        /// the distance between the first
+        /// The list of all the dynamically linked controls from the context
+        /// help of the box
         /// </summary>
-        protected int itemsOffset = 20;
+        protected LinkLabel [] dynamicLabels = new LinkLabel[0];
 
         #endregion
 
@@ -175,11 +179,23 @@ namespace Ferda.FrontEnd.ContextHelp
             LBoxType.Visible = true;
             LBoxType.Text = SelectedBox.MadeInCreator.Label;
             RTBBoxTypeHint.Visible = true;
+            RTBBoxTypeHint.WordWrap = true;
             RTBBoxTypeHint.Text = SelectedBox.MadeInCreator.Hint;
 
             //determining where to start the dynamic part of the help
-            int y = RTBBoxTypeHint.Bottom + itemsOffset;
+            RTBBoxTypeHint.Size = RTBBoxTypeHint.GetPreferredSize(
+                new Size(RTBBoxTypeHint.Width, 0));
+            int y = RTBBoxTypeHint.Bottom;
 
+            //Deleting all the dynamic labels
+            foreach (LinkLabel label in dynamicLabels)
+            {
+                Controls.Remove(label);
+            }
+
+            //creating the new dynamic labels
+            dynamicLabels = new LinkLabel[SelectedBox.DynamicHelpItems.Length];
+            int i = 0;
             foreach (DynamicHelpItem item in SelectedBox.DynamicHelpItems)
             {
                 LinkLabel label = new LinkLabel();
@@ -189,9 +205,11 @@ namespace Ferda.FrontEnd.ContextHelp
                 label.Text = item.label;
                 label.Location = new Point(0, y);
                 label.Visible = true;
-                this.Controls.Add(label);
                 y += 16;
+                dynamicLabels[i] = label;
+                i++;
             }
+            Controls.AddRange(dynamicLabels);
         }
 
         /// <summary>
@@ -207,6 +225,12 @@ namespace Ferda.FrontEnd.ContextHelp
             LBoxName.Visible = false;
             LBoxType.Visible = false;
             RTBBoxTypeHint.Visible = false;
+
+            //Deleting all the dynamic labels
+            foreach (LinkLabel label in dynamicLabels)
+            {
+                Controls.Remove(label);
+            }
         }
 
 		///<summary>
