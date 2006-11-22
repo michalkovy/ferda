@@ -1,8 +1,9 @@
 // ColumnFrequencyIceGraph.cs - class for displaying charts
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Authors:   Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//           Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,9 +27,12 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Ferda.FrontEnd.AddIns.ColumnFrequency
+namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
 {
-    public partial class ColumnFrequency
+    /// <summary>
+    /// Class for displaying graphs
+    /// </summary>
+    public partial class FrequencyDisplayer
     {
         #region Private variables
 
@@ -48,7 +52,6 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         private Steema.TeeChart.TChart ColumnFrequencyPieChart;
 
         #endregion
-
 
         #region Initialization
 
@@ -96,7 +99,6 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
 
 
         #endregion
-
 
         #region Other private methods
 
@@ -254,7 +256,6 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
                 chart.Series.Add(pieSeries);
             }
         }
-
 
         /// <summary>
         /// Handles copying the chart to clipboard

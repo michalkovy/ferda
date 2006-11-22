@@ -130,16 +130,16 @@
     <value>frekvence</value>
   </data>
   <data name="ColumnFrequencyAreaChart" xml:space="preserve">
-    <value>Plošný graf frekvence sloupců</value>
+    <value>Plošný graf frekvencí</value>
   </data>
   <data name="ColumnFrequencyBarChart" xml:space="preserve">
-    <value>Sloupcový graf frekvence sloupců</value>
+    <value>Sloupcový graf frekvencí</value>
   </data>
   <data name="ColumnFrequencyModule" xml:space="preserve">
-    <value>Modul frekvence sloupců</value>
+    <value>Modul pro zobrazování frekvencí</value>
   </data>
   <data name="ColumnFrequencyPieChart" xml:space="preserve">
-    <value>Výsečový graf frekvence sloupců</value>
+    <value>Výsečový graf frekvencí</value>
   </data>
   <data name="CopyAllToClipboard" xml:space="preserve">
     <value>Zkopírovat všechny položky do schránky</value>
@@ -155,9 +155,6 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Chyba</value>
-  </data>
-  <data name="FrequencesDataGrid" xml:space="preserve">
-    <value>Datagrid frekvenci</value>
   </data>
   <data name="FrequencyColumn" xml:space="preserve">
     <value>Frekvence</value>
