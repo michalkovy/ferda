@@ -131,12 +131,12 @@
 				<include name="System.Data.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
-        <include name="System.Drawing.dll" />
+				<include name="System.Drawing.dll" />
 				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-        <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
@@ -145,40 +145,42 @@
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
-<!--
     
-		<csc target="library" output="${path::combine(addInsBuild.dir,'ColumnFrequency.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(addInsBuild.dir,'FrequencyDisplayer.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
-				<include name="ColumnFrequency/**.cs"/>
-				<include name="ColumnFrequency/MyIce/**.cs"/>
-				<include name="ColumnFrequency/NonGUIClasses/**.cs"/>
-				<exclude name="ColumnFrequency/bin/**.*"/>
-				<exclude name="ColumnFrequency/obj/**.*"/>
+				<include name="FrequencyDisplayer/**.cs"/>
+				<include name="FrequencyDisplayer/MyIce/**.cs"/>
+				<exclude name="FrequencyDisplayer/bin/**.*"/>
+				<exclude name="FrequencyDisplayer/obj/**.*"/>
 			</sources>
-			<resources prefix="Ferda.FrontEnd.AddIns.ColumnFr">
-				<include name="ColumnFrequency/**.resx"/>
-				<exclude name="ColumnFrequency/ColumnFrequency.resx"/>
+			<resources prefix="Ferda.FrontEnd.AddIns.FrequencyDisplayer">
+				<include name="FrequencyDisplayer/**.resx"/>
+				<exclude name="FrequencyDisplayer/FrequencyDisplayer.resx"/>
 			</resources>
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
+				<include name="System.Drawing.dll" />
+				<include name="System.Xml.dll" />
 				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
-				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.dll')}"/>
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
 			</references>
 		</csc>
 		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
-    		  <fileset basedir="ColumnFrequency/Help">
+    		  <fileset basedir="FrequencyDisplayer/Help">
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
+    		
+<!--
 		<csc target="library" output="${path::combine(addInsBuild.dir,'AttributeFrequency.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="AttributeFrequency/**.cs"/>
@@ -205,11 +207,12 @@
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
 			</references>
 		</csc>
-<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
     		  <fileset basedir="AttributeFrequency/Help">
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
+
 		<csc target="library" output="${path::combine(addInsBuild.dir,'EditCategories.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="EditCategories/**.cs"/>
@@ -237,7 +240,7 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
-<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
     		  <fileset basedir="EditCategories/Help">
      		   <include name="*.*" /> 
      		 </fileset>

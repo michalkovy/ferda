@@ -130,16 +130,16 @@
     <value>frequency</value>
   </data>
   <data name="ColumnFrequencyAreaChart" xml:space="preserve">
-    <value>Column frequencies area chart</value>
+    <value>Frequencies area chart</value>
   </data>
   <data name="ColumnFrequencyBarChart" xml:space="preserve">
-    <value>Column frequencies bar chart</value>
+    <value>Frequencies bar chart</value>
   </data>
   <data name="ColumnFrequencyModule" xml:space="preserve">
-    <value>Column frequency module</value>
+    <value>Frequency displayer module</value>
   </data>
   <data name="ColumnFrequencyPieChart" xml:space="preserve">
-    <value>Column frequencies pie chart</value>
+    <value>Frequencies pie chart</value>
   </data>
   <data name="CopyAllToClipboard" xml:space="preserve">
     <value>Copy all items to clipboard</value>
@@ -155,9 +155,6 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
-  </data>
-  <data name="FrequencesDataGrid" xml:space="preserve">
-    <value>Frequences Datagrid</value>
   </data>
   <data name="FrequencyColumn" xml:space="preserve">
     <value>Frequency</value>

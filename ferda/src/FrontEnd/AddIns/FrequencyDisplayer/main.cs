@@ -22,7 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.FrontEnd.AddIns.ColumnFrequency
+namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
 {
     public class Main : Ferda.FrontEnd.AddIns.AbstractMain
     {
@@ -38,7 +38,7 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         {
             get
             {
-                return new Ferda.FrontEnd.AddIns.ColumnFrequency.MyIce.ColumnFrequencyIce(this.OwnerOfAddIn);
+                return new Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce.FrequencyDisplayerIce(this.OwnerOfAddIn);
             }
         }
     }

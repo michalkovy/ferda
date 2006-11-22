@@ -1,4 +1,4 @@
-// ColumnFrequency.cs - GUI part
+// FrequencyDisplayer.cs - GUI part
 //
 // Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
 //
@@ -18,9 +18,9 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-namespace Ferda.FrontEnd.AddIns.ColumnFrequency
+namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
 {
-    partial class ColumnFrequency
+    partial class FrequencyDisplayer
     {
         /// <summary>
         /// Required designer variable.
@@ -247,7 +247,7 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             this.ToolStripHelp.Text = "toolStripMenuItem1";
             this.ToolStripHelp.Click += new System.EventHandler(this.ToolStripHelp_Click);
             // 
-            // ColumnFrequency
+            // FrequencyDisplayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

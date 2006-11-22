@@ -1,7 +1,7 @@
-// DatabaseInfoIce.cs - class for ice communication of the
-// DatabaseInfo module
+// FrequencyDisplayerIce.cs - class for ice communication for the
+//  Column Frequency module for interaction
 //
-// Author:   Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Authors:   Alexander Kuzmin <alexander.kuzmin@gmail.com>
 //           Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
 // Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
@@ -25,37 +25,35 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using Ferda.ModulesManager;
-using Ferda.FrontEnd.AddIns;
-using Ferda.Modules.Boxes.DataPreparation;
-using Ferda.FrontEnd.AddIns.DatabaseInfo;
+using Ferda.Guha.Data;
 using Ferda.FrontEnd.AddIns.Common.MyIce;
+using Ferda.Modules.Boxes.DataPreparation;
 using System.Resources;
 using System.Reflection;
 
-namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
+namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
 {
     /// <summary>
-    /// Class for ice communication
+    /// Class for communication with ice for the
+    /// Column Frequency module for interaction.
     /// </summary>
-    public class DatabaseInfoIce : ModuleForInteractionIce
+    public class FrequencyDisplayerIce : ModuleForInteractionIce
     {
         #region Constructor
 
         /// <summary>
-        /// Default constuctor of the class
+        /// Class constructor
         /// </summary>
         /// <param name="ownerOfAddIn">Owner of addin</param>
-        public DatabaseInfoIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn):
+        public FrequencyDisplayerIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn):
             base(ownerOfAddIn, null)
         {
-            //setting the resource manager
-            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.DataBaseInfo.Localization_en-US",
+            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.FrequencyDisplayer.Localization_en-US",
             Assembly.GetExecutingAssembly());
         }
-
         #endregion
 
-        #region Other Ice functions
+        #region Other ice
 
         /// <summary>
         /// Gets a list of sockets needed to be connected in order for the module to
@@ -65,7 +63,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
         /// <returns>List of socket names for module to work propertly</returns>
         public override string[] getNeededConnectedSockets(Ice.Current __current)
         {
-            return new string[] {"ConnectionString"};
+            return new string[]{"DataTable", "SelectExpression"};
         }
 
         /// <summary>
@@ -77,7 +75,8 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
         {
             Modules.BoxType boxType = new Modules.BoxType();
             boxType.neededSockets = new Modules.NeededSocket[0];
-            boxType.functionIceId = "::Ferda::Modules::Boxes::DataPreparation::DatabaseFunctions";
+            boxType.functionIceId = "::Ferda::Modules::Boxes::DataPreparation::ColumnFunctions";
+
             return new Modules.BoxType[] { boxType };
         }
 
@@ -90,7 +89,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
         public override string getHint(string[] localePrefs, Ice.Current __current)
         {
             Localize(localePrefs);
-            return resManager.GetString("DataBaseInfoModule");
+            return resManager.GetString("ColumnFrequency");
         }
 
         /// <summary>
@@ -102,38 +101,42 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
         public override string getLabel(string[] localePrefs, Ice.Current __current)
         {
             Localize(localePrefs);
-            return resManager.GetString("DataBaseInfoModule");
-
+            return resManager.GetString("ColumnFrequencyModule");
         }
 
         #endregion
 
-        #region Run function
+        #region IceRun
 
         /// <summary>
-        /// The method is called by te Ice framework when a module for interaction
-        /// is to be displayed
+        /// Run method
         /// </summary>
-        /// <param name="boxModuleParam">Box that is executing this module for interaction</param>
-        /// <param name="localePrefs">Localization preferences</param>
-        /// <param name="manager">Proxy address of the modules manager</param>
+        /// <param name="boxModuleParam"></param>
+        /// <param name="localePrefs">Locale prefs</param>
+        /// <param name="manager">Manager proxy</param>
         /// <param name="__current">Ice context</param>
-        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
+        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, 
+            string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
         {
             Localize(localePrefs);
 
-            DatabaseFunctionsPrx prx =
-                DatabaseFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+            ColumnFunctionsPrx prx = 
+                ColumnFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
+            //TODO: V pripade, ze se to bude pouzivat aj pro atribut, tak se tady
+            //musi osetrit neco ve styly "GetNeededConnectedSockets" programove.
             try
             {
+                ValuesAndFrequencies valfreq = prx.getDistinctsAndFrequencies();
+                long rowCount = prx.getColumnInfo().dataTable.recordsCount;
                 string label = manager.getProjectInformation().getUserLabel(
                     Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                DataBaseInfo control = new DataBaseInfo(resManager,
-                    prx.getDataTableExplainSeq(), ownerOfAddIn);
-                this.ownerOfAddIn.ShowDockableControl(control, label + " " + 
-                    resManager.GetString("DataBaseInfo"));
+                Ferda.FrontEnd.AddIns.FrequencyDisplayer.FrequencyDisplayer control =
+                    new FrequencyDisplayer(resManager, valfreq, ownerOfAddIn, rowCount);
+                this.ownerOfAddIn.ShowDockableControl(control, label + " " +
+                    resManager.GetString("ColumnFrequency"));
             }
+
             catch (Ferda.Modules.BoxRuntimeError e)
             {
                 MessageBox.Show(e.Message,
@@ -158,7 +161,7 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
             string locale;
             locale = localePrefs[0];
             localizationString = locale;
-            locale = "Ferda.FrontEnd.AddIns.DataBaseInfo.Localization_" + locale;
+            locale = "Ferda.FrontEnd.AddIns.FrequencyDisplayer.Localization_" + locale;
             resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
         }
 

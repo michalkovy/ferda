@@ -1,8 +1,10 @@
-// ColumnFrequency.cs - Usercontrol class
+// FrequencyDisplayer.cs - user control class for displaying the
+// frequencies of a column
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Authors:   Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//           Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,17 +28,17 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using Ferda.FrontEnd.AddIns.Common.ListView;
-using Ferda.Modules.Boxes.DataMiningCommon.Column;
-using Ferda.FrontEnd.AddIns.ColumnFrequency.NonGUIClasses;
+using Ferda.Modules.Boxes.DataPreparation;
+using Ferda.Guha.Data;
 using System.Resources;
 using System.Reflection;
 
-namespace Ferda.FrontEnd.AddIns.ColumnFrequency
+namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
 {
     /// <summary>
     /// Class for displaying column frequencies
     /// </summary>
-    public partial class ColumnFrequency : UserControl
+    public partial class FrequencyDisplayer : UserControl
     {
         #region Private variables
 
@@ -46,15 +48,9 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         private ResourceManager resManager;
 
         /// <summary>
-        /// Localization string, en-US or cs-CZ for now.
-        /// </summary>
-        private string localizationString;
-
-        /// <summary>
         /// Total count of rows in the table.
         /// </summary>
         private long rowCount;
-
 
         /// <summary>
         /// Datatable containing data from the SQL query
@@ -73,59 +69,101 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
 
         #endregion
 
-
         #region Constructor
 
         /// <summary>
         /// Class constructor
         /// </summary>
-        /// <param name="localePrefs">Localeprefs</param>
-        /// <param name="columnInfo">Columninfo</param>
-        public ColumnFrequency(string[] localePrefs, ColumnInfo columnInfo, IOwnerOfAddIn ownerOfAddIn)
+        /// <param name="resManager">Resource manager for the module</param>
+        /// <param name="ownerOfAddIn">
+        /// Owner of the addin (usually the FrontEnd environment)</param>
+        /// <param name="valfreq">Pairs of values and frequencies to form
+        /// the tables and graphs</param>
+        /// <param name="rowCount">total number of rows in the table</param>
+        public FrequencyDisplayer(ResourceManager resManager, ValuesAndFrequencies valfreq,
+            IOwnerOfAddIn ownerOfAddIn, long rowCount)
         {
-            //setting the ResManager resource manager and localization string
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ColumnFr.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-                resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ColumnFr.Localization_en-US", Assembly.GetExecutingAssembly());
-                localizationString = "en-US";
-            }
+            this.resManager = resManager;
             this.ownerOfAddIn = ownerOfAddIn;
+
             //implicitly sorting by the first column
             comparer.column = 0;
-            this.rowCount = columnInfo.dataMatrix.recordsCount;
+            this.rowCount = rowCount;
+
             InitializeComponent();
-            DBInteraction myDb = new DBInteraction(columnInfo);
-            this.ListViewInit();
-            this.InitializeGraph();
-            this.tempTable = myDb.GetAllValuesCount();
-            this.FrDataTableToFrListView(this.tempTable);
-            this.DrawAreaFromDataTable(this.tempTable, this.ColumnFrequencyAreaChart);
-            this.DrawBarsFromDataTable(this.tempTable, this.ColumnFrequencyBarChart);
-            this.DrawPieFromDataTable(this.tempTable, this.ColumnFrequencyPieChart);
-            this.ToolStripMenuItemAbsolute.CheckedChanged += new EventHandler(ToolStripMenuItem_AbCheckedChanged);
-            this.ToolStripMenuItemCopyAll.Click += new EventHandler(ToolStripMenuItemCopyAll_Click);
-            this.ToolStripMenuItemCopySelected.Click += new EventHandler(ToolStripMenuItemCopySelected_Click);
-            this.ToolStripMenuItemCopyChart.Click += new EventHandler(ToolStripMenuItemCopyChart_Click);
+            ListViewInit();
+            InitializeGraph();
+
+            //Creating the temporary DataTable
+            CreateTable(valfreq);
+
+            this.FrDataTableToFrListView(tempTable);
+            this.DrawAreaFromDataTable(tempTable,
+                this.ColumnFrequencyAreaChart);
+            this.DrawBarsFromDataTable(tempTable,
+                this.ColumnFrequencyBarChart);
+            this.DrawPieFromDataTable(tempTable,
+                this.ColumnFrequencyPieChart);
+
+            //event handling
+            this.ToolStripMenuItemAbsolute.CheckedChanged += 
+                new EventHandler(ToolStripMenuItem_AbCheckedChanged);
+            this.ToolStripMenuItemCopyAll.Click += 
+                new EventHandler(ToolStripMenuItemCopyAll_Click);
+            this.ToolStripMenuItemCopySelected.Click += 
+                new EventHandler(ToolStripMenuItemCopySelected_Click);
+            this.ToolStripMenuItemCopyChart.Click += 
+                new EventHandler(ToolStripMenuItemCopyChart_Click);
         }
 
         #endregion
 
-
         #region Private methods
+
+        /// <summary>
+        /// Creates the temporary table that is used for the graph creation
+        /// and stores it to the local variable
+        /// </summary>
+        /// <param name="valfreq">Values and frequency pairs to create
+        /// the datatable from</param>
+        private void CreateTable(ValuesAndFrequencies valfreq)
+        {
+            DataTable table = new DataTable("Table");
+            DataColumn column;
+            DataRow row;
+
+            //adding the first column
+            column = new DataColumn();
+            column.DataType = typeof(string);
+            column.ColumnName = "DistinctsColumn";
+            column.ReadOnly = true;
+            column.Unique = true;
+            table.Columns.Add(column);
+
+            //adding the second column
+            column = new DataColumn();
+            column.DataType = typeof(System.Int32);
+            column.ColumnName = "DistinctsFrequency";
+            column.ReadOnly = true;
+            column.Unique = false;
+            table.Columns.Add(column);
+
+            //adding the rows to the table
+            foreach (ValueFrequencyPair pair in valfreq.data)
+            {
+                row = table.NewRow();
+                row["DistinctsColumn"] = pair.value;
+                row["DistinctsFrequency"] = pair.frequency;
+                table.Rows.Add(row);
+            }
+
+            tempTable = table;
+        }
 
         /// <summary>
         /// Method to convert Frequences DataTable to Frequences ListView
         /// </summary>
         /// <param name="dataTable"></param>
-        /// <returns></returns>
         private void FrDataTableToFrListView(DataTable dataTable)
         {
             StringBuilder toolTip = new StringBuilder();
@@ -171,7 +209,7 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         /// </summary>
         private void ListViewInit()
         {
-            this.ChangeLocale(resManager);
+            this.ChangeLocale();
             //adding a handling method for column sorting
             this.ColumnFrListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnFrListView_ColumnClick);
         }
@@ -197,17 +235,15 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             ColumnFrListView.ListViewItemSorter = comparer;
         }
 
-
         #endregion
-
 
         #region Context menu handlers
 
         /// <summary>
         /// Viewing absolute values
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         void ToolStripMenuItem_AbCheckedChanged(object sender, EventArgs e)
         {
             this.DrawBarsFromDataTable(this.tempTable, this.ColumnFrequencyBarChart);
@@ -218,8 +254,8 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         /// <summary>
         /// Toggling labels on chart
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void ToolStripMenuToggleMarks_CheckChanged(object sender, EventArgs e)
         {
             this.DrawBarsFromDataTable(this.tempTable, this.ColumnFrequencyBarChart);
@@ -230,8 +266,8 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         /// <summary>
         /// Copy all to clipboard
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         void ToolStripMenuItemCopyAll_Click(object sender, EventArgs e)
         {
             StringBuilder copyString = new StringBuilder();
@@ -257,8 +293,8 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         /// <summary>
         /// Copy selected to clipboard
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         void ToolStripMenuItemCopySelected_Click(object sender, EventArgs e)
         {
             StringBuilder copyString = new StringBuilder();
@@ -281,18 +317,27 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
             Clipboard.SetDataObject(copyString.ToString(), true);
         }
 
+        /// <summary>
+        /// Opens the help document
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void ToolStripHelp_Click(object sender, EventArgs e)
         {
             ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ColumnFrequency.pdf");
         }
 
+        /// <summary>
+        /// Opens the help document
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void ToolStripChartHelp_Click(object sender, EventArgs e)
         {
             ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ColumnFrequency.pdf");
         }
 
         #endregion
-
 
         #region Localization
         /// <summary>
@@ -308,36 +353,24 @@ namespace Ferda.FrontEnd.AddIns.ColumnFrequency
         }
 
         /// <summary>
-        /// Localization string of the application, possible values are "en-US" and "cs-CZ"
-        /// </summary>
-        public string LocalizationString
-        {
-            get
-            {
-                return localizationString;
-            }
-        }
-
-        /// <summary>
         /// Method to change l10n.
         /// </summary>
-        /// <param name="rm">Resource manager to handle new l10n resource</param>
-        private void ChangeLocale(ResourceManager rm)
+        private void ChangeLocale()
         {
-            this.FrequencyColumn.Text = rm.GetString("FrequencyColumn");
-            this.ValuesColumn.Text = rm.GetString("ValueColumn");
-            this.PercentageColumn.Text = rm.GetString("PercentageColumn");
-            this.TabPageBarChart.Text = rm.GetString("TabPageBarChart");
-            this.TabPageAreaChart.Text = rm.GetString("TabPageAreaChart");
-            this.TabPagePieChart.Text = rm.GetString("TabPagePieChart");
-            this.TabPageText.Text = rm.GetString("TabPageText");
-            this.ToolStripMenuItemAbsolute.Text = rm.GetString("ToolStripMenuItemAbsolute");
-            this.ToolStripMenuItemCopyAll.Text = rm.GetString("CopyAllToClipboard");
-            this.ToolStripMenuItemCopySelected.Text = rm.GetString("CopySelectedToClipboard");
-            this.ToolStripMenuItemCopyChart.Text = rm.GetString("CopyChart");
-            this.ToolStripMenuToggleMarks.Text = rm.GetString("ToggleMarks");
-            this.ToolStripHelp.Text = rm.GetString("Help");
-            this.ToolStripChartHelp.Text = rm.GetString("Help");
+            this.FrequencyColumn.Text = resManager.GetString("FrequencyColumn");
+            this.ValuesColumn.Text = resManager.GetString("ValueColumn");
+            this.PercentageColumn.Text = resManager.GetString("PercentageColumn");
+            this.TabPageBarChart.Text = resManager.GetString("TabPageBarChart");
+            this.TabPageAreaChart.Text = resManager.GetString("TabPageAreaChart");
+            this.TabPagePieChart.Text = resManager.GetString("TabPagePieChart");
+            this.TabPageText.Text = resManager.GetString("TabPageText");
+            this.ToolStripMenuItemAbsolute.Text = resManager.GetString("ToolStripMenuItemAbsolute");
+            this.ToolStripMenuItemCopyAll.Text = resManager.GetString("CopyAllToClipboard");
+            this.ToolStripMenuItemCopySelected.Text = resManager.GetString("CopySelectedToClipboard");
+            this.ToolStripMenuItemCopyChart.Text = resManager.GetString("CopyChart");
+            this.ToolStripMenuToggleMarks.Text = resManager.GetString("ToggleMarks");
+            this.ToolStripHelp.Text = resManager.GetString("Help");
+            this.ToolStripChartHelp.Text = resManager.GetString("Help");
         }
         #endregion
     }
