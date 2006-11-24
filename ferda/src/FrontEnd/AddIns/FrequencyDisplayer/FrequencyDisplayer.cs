@@ -79,16 +79,16 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         /// Owner of the addin (usually the FrontEnd environment)</param>
         /// <param name="valfreq">Pairs of values and frequencies to form
         /// the tables and graphs</param>
-        /// <param name="rowCount">total number of rows in the table</param>
         public FrequencyDisplayer(ResourceManager resManager, ValuesAndFrequencies valfreq,
-            IOwnerOfAddIn ownerOfAddIn, long rowCount)
+            IOwnerOfAddIn ownerOfAddIn)
         {
             this.resManager = resManager;
             this.ownerOfAddIn = ownerOfAddIn;
 
             //implicitly sorting by the first column
             comparer.column = 0;
-            this.rowCount = rowCount;
+            //compute the row count
+            ComputeRowCount(valfreq);
 
             InitializeComponent();
             ListViewInit();
@@ -119,6 +119,22 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         #endregion
 
         #region Private methods
+
+        /// <summary>
+        /// Computes the number of rows in the data table
+        /// (from the frequencies of attributes)
+        /// </summary>
+        /// <param name="valfreq">Values and Frequency pair</param>
+        private void ComputeRowCount(ValuesAndFrequencies valfreq)
+        {
+            long count = 0;
+            foreach (ValueFrequencyPair pair in valfreq.data)
+            {
+                count += pair.frequency;
+            }
+
+            rowCount = count;
+        }
 
         /// <summary>
         /// Creates the temporary table that is used for the graph creation
