@@ -120,26 +120,28 @@ namespace Ferda.FrontEnd.AddIns.DatabaseInfo.MyIce
         /// <param name="__current">Ice context</param>
         public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
         {
+            //checking the validity of the box
+            try
+            {
+                boxModuleParam.validate();
+            }
+            catch (Ferda.Modules.BoxRuntimeError e)
+            {
+                ownerOfAddIn.ShowBoxException(e);
+                return;
+            }
+
             Localize(localePrefs);
 
             DatabaseFunctionsPrx prx =
                 DatabaseFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
-            try
-            {
-                string label = manager.getProjectInformation().getUserLabel(
-                    Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                DataBaseInfo control = new DataBaseInfo(resManager,
-                    prx.getDataTableExplainSeq(), ownerOfAddIn);
-                this.ownerOfAddIn.ShowDockableControl(control, label + " " + 
-                    resManager.GetString("DataBaseInfo"));
-            }
-            catch (Ferda.Modules.BoxRuntimeError e)
-            {
-                MessageBox.Show(e.Message,
-                        resManager.GetString("Error"), MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
-            }
+            string label = manager.getProjectInformation().getUserLabel(
+                Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
+            DataBaseInfo control = new DataBaseInfo(resManager,
+                prx.getDataTableExplainSeq(), ownerOfAddIn);
+            this.ownerOfAddIn.ShowDockableControl(control, label + " " + 
+                resManager.GetString("DataBaseInfo"));
         }
 
         #endregion

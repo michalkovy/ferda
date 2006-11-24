@@ -29,9 +29,12 @@ namespace Ferda.FrontEnd.AddIns
         /// <summary>
         /// Shows the exception with the box to the user
         /// </summary>
-        /// <param name="boxUserName">Name of the box that has thrown the exception</param>
-        /// <param name="userMessage">User message to be displayed</param>
-        void ShowBoxException(string boxUserName, string userMessage);
+        /// <param name="e">Exception to be handled</param>
+        /// <remarks>
+        /// This method is called by the Modules for interaction in the
+        /// ModuleForInteraction.Run(...) function when validating a box
+        /// </remarks>
+        void ShowBoxException(System.Exception e);
 
         /// <summary>
         /// Project manager of the Ferda system
