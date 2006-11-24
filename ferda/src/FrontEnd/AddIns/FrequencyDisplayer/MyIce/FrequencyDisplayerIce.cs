@@ -73,15 +73,8 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
         /// <returns>Array of boxtypes</returns>
         public override Ferda.Modules.BoxType[] getAcceptedBoxTypes(Ice.Current __current)
         {
-            Modules.NeededSocket sock1;
-            Modules.NeededSocket sock2;
-
             Modules.BoxType column = new Modules.BoxType();
-            sock1 = new Ferda.Modules.NeededSocket();
-            sock1.socketName = "DataTable";
-            sock2 = new Ferda.Modules.NeededSocket();
-            sock2.socketName = "SelectExpression";
-            column.neededSockets = new Modules.NeededSocket[] { sock1, sock2};
+            column.neededSockets = new Modules.NeededSocket[0];
             column.functionIceId = "::Ferda::Modules::Boxes::DataPreparation::ColumnFunctions";
 
             Modules.BoxType attribute = new Modules.BoxType();
@@ -129,31 +122,30 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
         public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, 
             string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
         {
+            //checking the validity of the box
+            try
+            {
+                boxModuleParam.validate();
+            }
+            catch (Ferda.Modules.BoxRuntimeError e)
+            {
+                ownerOfAddIn.ShowBoxException(e);
+                return;
+            }
+
             Localize(localePrefs);
 
             ColumnFunctionsPrx prx = 
                 ColumnFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
-            //TODO: V pripade, ze se to bude pouzivat aj pro atribut, tak se tady
-            //musi osetrit neco ve styly "GetNeededConnectedSockets" programove.
-            try
-            {
-                ValuesAndFrequencies valfreq = prx.getDistinctsAndFrequencies();
-                long rowCount = prx.getColumnInfo().dataTable.recordsCount;
-                string label = manager.getProjectInformation().getUserLabel(
-                    Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                Ferda.FrontEnd.AddIns.FrequencyDisplayer.FrequencyDisplayer control =
-                    new FrequencyDisplayer(resManager, valfreq, ownerOfAddIn, rowCount);
-                this.ownerOfAddIn.ShowDockableControl(control, label + " " +
-                    resManager.GetString("ColumnFrequency"));
-            }
-
-            catch (Ferda.Modules.BoxRuntimeError e)
-            {
-                MessageBox.Show(e.Message,
-                        resManager.GetString("Error"), MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
-            }
+            ValuesAndFrequencies valfreq = prx.getDistinctsAndFrequencies();
+            long rowCount = prx.getColumnInfo().dataTable.recordsCount;
+            string label = manager.getProjectInformation().getUserLabel(
+                Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
+            Ferda.FrontEnd.AddIns.FrequencyDisplayer.FrequencyDisplayer control =
+                new FrequencyDisplayer(resManager, valfreq, ownerOfAddIn, rowCount);
+            ownerOfAddIn.ShowDockableControl(control, label + " " +
+                resManager.GetString("ColumnFrequency"));
         }
 
         #endregion

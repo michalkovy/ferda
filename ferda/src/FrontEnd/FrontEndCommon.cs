@@ -199,8 +199,8 @@ namespace Ferda.FrontEnd
         /// <summary>
         /// Finds a path to Acrobat Reader (must be version 6 or higher)
         /// </summary>
-        /// <param name="resManager"></param>
-        /// <returns></returns>
+        /// <param name="resManager">Manager of the resources</param>
+        /// <returns>Path to the Acrobat Reader program</returns>
         protected static string FindAcroReaderPath(ResourceManager resManager)
         {
             //getting the root registry of the local machine
@@ -261,6 +261,12 @@ namespace Ferda.FrontEnd
             return acrobatPath;
         }
 
+        /// <summary>
+        /// Gets the name of the box
+        /// </summary>
+        /// <param name="projManager">Project Manager</param>
+        /// <param name="boxIdentity">Ice box identity</param>
+        /// <returns>User's name of the box</returns>
         private static string GetFaultBoxName(ProjectManager.ProjectManager projManager, string boxIdentity)
         {
             if (!String.IsNullOrEmpty(boxIdentity))
@@ -272,6 +278,12 @@ namespace Ferda.FrontEnd
             return null;
         }
 
+        /// <summary>
+        /// Gets the name of the box that has thrown an exception
+        /// </summary>
+        /// <param name="faultBoxName">Fault name of the box</param>
+        /// <param name="resManager">Resource manager</param>
+        /// <returns>User's name of the box</returns>
         public static string GetFaultBoxName(string faultBoxName, ResourceManager resManager)
         {
             if (String.IsNullOrEmpty(faultBoxName))
@@ -279,6 +291,11 @@ namespace Ferda.FrontEnd
             return faultBoxName;
         }
 
+        /// <summary>
+        /// Converts content of an exception into string
+        /// </summary>
+        /// <param name="e">Exception to be converted</param>
+        /// <returns>String representation of the exception</returns>
         private static string exceptionToString(Exception e)
         {
             string result = "\n\nException to string:\n";
@@ -291,6 +308,11 @@ namespace Ferda.FrontEnd
             return result;
         }
         
+        /// <summary>
+        /// Converts array of socket name into one formatted string
+        /// </summary>
+        /// <param name="socketsNames">Socket names</param>
+        /// <returns>Socket names formatted</returns>
         private static string exceptionSocketNamesToString(string[] socketsNames)
         {
             string result = "\n\nSockets:\n";
@@ -301,6 +323,11 @@ namespace Ferda.FrontEnd
             return result;
         }
         
+        /// <summary>
+        /// Converts exception restriction type into string
+        /// </summary>
+        /// <param name="restrictionType">Restriction type</param>
+        /// <returns>Restriction type in string</returns>
         private static string exceptionRestrictionTypeToString(restrictionTypeEnum restrictionType)
         {
             return "\n\n" + restrictionType.ToString() + '\n';
@@ -339,6 +366,17 @@ namespace Ferda.FrontEnd
                 resManager.GetString("ValidateCaption"));
         }
 
+        /// <summary>
+        /// Gets string exception description from an exception
+        /// </summary>
+        /// <param name="ex">Exception to be evaluated</param>
+        /// <param name="projManager">The Project manager</param>
+        /// <param name="faultBoxName">
+        /// Name of the box that has thrown the exception
+        /// </param>
+        /// <param name="message">
+        /// Exception message
+        /// </param>
         public static void GetExceptionInfo(Exception ex,
             ProjectManager.ProjectManager projManager, out string faultBoxName, out string message)
         {

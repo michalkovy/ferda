@@ -122,27 +122,29 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable.MyIce
         public override void run(Ferda.Modules.BoxModulePrx boxModuleParam,
             string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
         {
+            //checking the validity of the box
+            try
+            {
+                boxModuleParam.validate();
+            }
+            catch (Ferda.Modules.BoxRuntimeError e)
+            {
+                ownerOfAddIn.ShowBoxException(e);
+                return;
+            }
+
             Localize(localePrefs);
 
             DataTableFunctionsPrx prx =
                 DataTableFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
-            try
-            {
-                //getting the label
-                string label = manager.getProjectInformation().
-                    getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                ExplainTableControl control =
-                    new ExplainTableControl(resManager, ownerOfAddIn, prx.getColumnExplainSeq());
-                ownerOfAddIn.ShowDockableControl(control, 
-                    resManager.GetString("Explain") + " " + label);
-            }
-            catch (Ferda.Modules.BoxRuntimeError)
-            {
-                MessageBox.Show(resManager.GetString("BoxRunTimeError"),
-                        resManager.GetString("Error"), MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
-            }
+            //getting the label
+            string label = manager.getProjectInformation().
+                getUserLabel(Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
+            ExplainTableControl control =
+                new ExplainTableControl(resManager, ownerOfAddIn, prx.getColumnExplainSeq());
+            ownerOfAddIn.ShowDockableControl(control, 
+                resManager.GetString("Explain") + " " + label);
         }
 
         #endregion

@@ -119,27 +119,29 @@ namespace Ferda.FrontEnd.AddIns.ShowTable.MyIce
             string[] localePrefs, Ferda.ModulesManager.ManagersEnginePrx manager, 
             Ice.Current current__)
         {
+            //checking the validity of the box
+            try
+            {
+                boxModuleParam.validate();
+            }
+            catch (Ferda.Modules.BoxRuntimeError e)
+            {
+                ownerOfAddIn.ShowBoxException(e);
+                return;
+            }
+
             Localize(localePrefs);
 
             DataTableFunctionsPrx prx =
                 DataTableFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
-            try
-            {
-                string label =
-                    manager.getProjectInformation().getUserLabel(
-                    Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-                ShowTableControl control = new ShowTableControl(resManager,
-                    prx.getColumnsNames(), prx.getDataTableInfo(), ownerOfAddIn);
-                this.ownerOfAddIn.ShowDockableControl(control, 
-                    resManager.GetString("Show") + " " + label);
-            }
-            catch (Ferda.Modules.BoxRuntimeError)
-            {
-                MessageBox.Show(resManager.GetString("BoxRunTimeError"),
-                        resManager.GetString("Error"), MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
-            }
+            string label =
+                manager.getProjectInformation().getUserLabel(
+                Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
+            ShowTableControl control = new ShowTableControl(resManager,
+                prx.getColumnsNames(), prx.getDataTableInfo(), ownerOfAddIn);
+            this.ownerOfAddIn.ShowDockableControl(control, 
+                resManager.GetString("Show") + " " + label);
         }
 
         #endregion

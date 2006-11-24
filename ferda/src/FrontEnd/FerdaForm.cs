@@ -1502,14 +1502,21 @@ using Ferda.ModulesManager;
         /// <summary>
         /// Shows the exception with the box to the user
         /// </summary>
-        /// <param name="boxUserName">Name of the box that has thrown the exception</param>
-        /// <param name="userMessage">User message to be displayed</param>
-        public void ShowBoxException(string boxUserName, string userMessage)
+        /// <param name="e">Exception to be handled</param>
+        /// <remarks>
+        /// This method is called by the Modules for interaction in the
+        /// ModuleForInteraction.Run(...) function when validating a box
+        /// </remarks>
+        public void ShowBoxException(Exception e)
         {
-            BoxExceptionDialog dialog = new BoxExceptionDialog(ResManager,
-                boxUserName, userMessage);
-            dialog.TopMost = true;
-            dialog.ShowDialog();
+            string boxName;
+            string message;
+
+            FrontEndCommon.GetExceptionInfo(e, ProjectManager, 
+                out boxName, out message);
+            BoxExceptionDialog d = new BoxExceptionDialog(resManager,
+                boxName, message);
+            d.ShowDialog();
         }
 
         /// <summary>
