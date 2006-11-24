@@ -135,15 +135,43 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
 
             Localize(localePrefs);
 
-            ColumnFunctionsPrx prx = 
-                ColumnFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
-
-            ValuesAndFrequencies valfreq = prx.getDistinctsAndFrequencies();
-            long rowCount = prx.getColumnInfo().dataTable.recordsCount;
+            //getting the label
             string label = manager.getProjectInformation().getUserLabel(
                 Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
+
+            List<string> iceIds = new List<string>(boxModuleParam.getFunctionsIceIds());
+            ValuesAndFrequencies valfreq;
+            //the box has column functionality
+            if (iceIds.Contains(
+                "::Ferda::Modules::Boxes::DataPreparation::ColumnFunctions"))
+            {
+                ColumnFunctionsPrx prx =
+                    ColumnFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+
+                //getting the values and frequencies
+                valfreq = prx.getDistinctsAndFrequencies();
+            }
+            else
+            {
+                //the box has attribute functionality
+                if (iceIds.Contains(
+                    "::Ferda::Modules::Boxes::DataPreparation::AttributeFunctions"))
+                {
+                    AttributeFunctionsPrx prx =
+                        AttributeFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+
+                    //getting the values and frequencies
+                    valfreq = prx.getCategoriesAndFrequencies();
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            //constructing the control
             Ferda.FrontEnd.AddIns.FrequencyDisplayer.FrequencyDisplayer control =
-                new FrequencyDisplayer(resManager, valfreq, ownerOfAddIn, rowCount);
+                new FrequencyDisplayer(resManager, valfreq, ownerOfAddIn);
             ownerOfAddIn.ShowDockableControl(control, label + " " +
                 resManager.GetString("ColumnFrequency"));
         }

@@ -181,38 +181,6 @@
     		</copy>
     		
 <!--
-		<csc target="library" output="${path::combine(addInsBuild.dir,'AttributeFrequency.dll')}" debug="${debug}" optimize="${optimize}">
-			<sources>
-				<include name="AttributeFrequency/**.cs"/>
-				<include name="AttributeFrequency/MyIce/**.cs"/>
-				<include name="AttributeFrequency/NonGUIClasses/**.cs"/>
-				<exclude name="AttributeFrequency/bin/**.*"/>
-				<exclude name="AttributeFrequency/obj/**.*"/>
-			</sources>
-			<resources prefix="Ferda.FrontEnd.AddIns.AttributeFrequency">
-				<include name="AttributeFrequency/**.resx"/>
-				<exclude name="AttributeFrequency/AttributeFrequency.resx"/>
-			</resources>
-			<references>
-				<include name="System.dll"/>
-				<include name="System.Data.dll"/>
-				<include name="System.Windows.Forms.dll"/>
-				<include name="System.Collections.dll"/>
-				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
-				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
-				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
-				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="${path::combine(lib.dir,'TeeChart.Lite.dll')}"/>
-				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
-			</references>
-		</csc>
-		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
-    		  <fileset basedir="AttributeFrequency/Help">
-     		   <include name="*.*" /> 
-     		 </fileset>
-    		</copy>
-
 		<csc target="library" output="${path::combine(addInsBuild.dir,'EditCategories.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="EditCategories/**.cs"/>
