@@ -63,7 +63,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
         /// <returns>List of socket names for module to work propertly</returns>
         public override string[] getNeededConnectedSockets(Ice.Current __current)
         {
-            return new string[]{"DataTable", "SelectExpression"};
+            return new string[] { };
         }
 
         /// <summary>
@@ -73,11 +73,22 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
         /// <returns>Array of boxtypes</returns>
         public override Ferda.Modules.BoxType[] getAcceptedBoxTypes(Ice.Current __current)
         {
-            Modules.BoxType boxType = new Modules.BoxType();
-            boxType.neededSockets = new Modules.NeededSocket[0];
-            boxType.functionIceId = "::Ferda::Modules::Boxes::DataPreparation::ColumnFunctions";
+            Modules.NeededSocket sock1;
+            Modules.NeededSocket sock2;
 
-            return new Modules.BoxType[] { boxType };
+            Modules.BoxType column = new Modules.BoxType();
+            sock1 = new Ferda.Modules.NeededSocket();
+            sock1.socketName = "DataTable";
+            sock2 = new Ferda.Modules.NeededSocket();
+            sock2.socketName = "SelectExpression";
+            column.neededSockets = new Modules.NeededSocket[] { sock1, sock2};
+            column.functionIceId = "::Ferda::Modules::Boxes::DataPreparation::ColumnFunctions";
+
+            Modules.BoxType attribute = new Modules.BoxType();
+            attribute.neededSockets = new Modules.NeededSocket[0];
+            attribute.functionIceId = "::Ferda::Modules::Boxes::DataPreparation::AttributeFunctions";
+
+            return new Modules.BoxType[] { attribute, column };
         }
 
         /// <summary>
