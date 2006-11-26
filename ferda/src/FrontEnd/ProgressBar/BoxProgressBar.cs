@@ -246,7 +246,7 @@ namespace Ferda.FrontEnd.ProgressBar
             }
             else
             {
-                Debug.Assert(!(value > 1 || value < 0));
+               // Debug.Assert(!(value > 1 || value < 0));
 
                 if (value >= 1)
                     progressBar.Value = 100;

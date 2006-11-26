@@ -501,6 +501,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
      
         private readonly CoefficientSetting _setting;
 
+        private long _totalCount = 2;
+
         private string _attributeGuid;
 
         public SubsetsOneOne(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
@@ -515,27 +517,30 @@ namespace Ferda.Guha.MiningProcessor.Generation
         { 
             while (true)
             {
-                BitStringIceWithCategoryId tempString = _setting.generator.GetNextBitString();
-
-                if (tempString != null)
+                BitStringIceWithCategoryId tempString = null;
+                if (_setting.generator.GetNextBitString(out tempString))
                 {
-                    IBitString result = new BitString(
-                        new BitStringIdentifier(
-                        _setting.generator.GetAttributeId().value, tempString.categoryId),
-                        tempString.bitString.length,
-                        tempString.bitString.value);
-
-                    //IBitString result = Helpers.GetBitString(null, null, null, BitwiseOperation.And);
-
-                    SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
-                    if (parentSkipSetting != null)
+                    if (tempString != null)
                     {
-                        if (Common.Compare(parentSkipSetting.Relation, result.Sum, parentSkipSetting.Treshold))
+                        IBitString result = new BitString(
+                            new BitStringIdentifier(
+                            _setting.generator.GetAttributeId().value, tempString.categoryId),
+                            tempString.bitString.length,
+                            tempString.bitString.value);
+
+                        //IBitString result = Helpers.GetBitString(null, null, null, BitwiseOperation.And);
+
+                        SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                        if (parentSkipSetting != null)
+                        {
+                            if (Common.Compare(parentSkipSetting.Relation, result.Sum, parentSkipSetting.Treshold))
+                                yield return result;
+                        }
+                        else
+                        {
                             yield return result;
-                    }
-                    else
-                    {
-                        yield return result;
+                        }
+                        _totalCount++;
                     }
                 }
                 else
@@ -548,25 +553,23 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         public override long TotalCount
         {
-            get { return 1; }
+            get { return _totalCount; }
         }
-        /*
+        
         public override string ToString()
         {
             string result = "";
 #if Testing
-            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(Guid);
+            result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(_setting.id.value);
 #else
             result += AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(
-                _attributeGuid
+                _setting.generator.GetAttributeId().value
                 );
 #endif
-            result += "["
-                      + FormulaHelper.SequenceToString(_setting.categoriesIds, FormulaSeparator.AtomMembers, true)
-                      + "] (fixed set)";
+            result += "Virtual attribute - subsets [1-1]";
             return result;
         }
-        */
+        
         public override Set<string> UsedAttributes
         {
             get { return new Set<string>(_attributeGuid); }

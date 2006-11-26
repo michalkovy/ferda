@@ -89,7 +89,7 @@ module Ferda {
 					Ferda::Modules::IntSeq GetCountVector(string masterIdColumn, string masterDataTableName)
 						throws Ferda::Modules::BoxRuntimeError;
 						
-					nonmutating BitStringIceWithCategoryId GetNextBitString()
+					 bool GetNextBitString(out BitStringIceWithCategoryId bitString)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 
@@ -190,11 +190,8 @@ module Ferda {
 				};
 				
 				interface BooleanAttributeSettingWithBSGenerationAbilityFunctions extends BooleanAttributeSettingFunctions, BitStringGenerator
-				{
-										
+				{	
 
-						
-					//nonmutating bool NextExists
 				};
 
 				interface EquivalenceClassFunctions

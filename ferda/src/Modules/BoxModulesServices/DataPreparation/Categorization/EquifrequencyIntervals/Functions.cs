@@ -1260,6 +1260,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             return result;
         }
 
+        public override bool GetNextBitString(out BitStringIceWithCategoryId bitString, Current current__)
+        {
+            bitString = null;
+            return false;
+        }
+
         #region IFunctions Members
 
         public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
@@ -1268,10 +1274,5 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         }
 
         #endregion
-
-        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
     }
 }

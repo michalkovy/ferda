@@ -539,12 +539,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 );
         }
 
-
-        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
         public ValuesAndFrequencies GetCategoriesAndFrequencies(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<ValuesAndFrequencies>(
@@ -703,7 +697,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return result;
         }
 
-        #endregion
+        public override bool GetNextBitString(out BitStringIceWithCategoryId bitString, Current current__)
+        {
+            bitString = null;
+            return false;
+        }
 
+        #endregion
     }
 }

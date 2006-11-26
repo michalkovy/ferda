@@ -863,16 +863,21 @@ namespace Ferda.Guha.Data
             string _columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterIdColumn);
             string _masterDatatableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterDatatableName);
 
+            if (masterDatatableName.CompareTo(GenericDataTable.Explain.name)==0)
+            {
+                throw Exceptions.DbDataTableNameError(new Exception("Master and detail datatables cannot be same"),null);
+            }
+
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
             command.CommandText =
-                "SELECT COUNT(*) FROM " + _detailTableName
-               // + " RIGHT OUTER JOIN " + masterDatatableName
-               // + " ON "
-               // + GenericDataTable.Explain.name + "." + masterIdColumn
-               // + "="
-               // + masterDatatableName + "." + masterIdColumn
-                + " GROUP BY " + _columnQuotedIdentifier
-                + " ORDER BY " + _columnQuotedIdentifier;
+                "SELECT COUNT(*) FROM " + GenericDataTable.Explain.name
+                + " RIGHT OUTER JOIN " + masterDatatableName
+                + " ON "
+                + GenericDataTable.Explain.name + "." + masterIdColumn
+                + "="
+                + masterDatatableName + "." + masterIdColumn
+                + " GROUP BY " + GenericDataTable.Explain.name + "." + _columnQuotedIdentifier
+                + " ORDER BY " + GenericDataTable.Explain.name + "." + _columnQuotedIdentifier;
 
             DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
             dataAdapter.SelectCommand = command;
