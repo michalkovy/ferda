@@ -481,7 +481,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         {
             //validate
             //boxModule.Manager.getBoxModuleValidator().validate(boxModule.StringIceIdentity);
-
             MiningProcessorFunctionsPrx miningProcessor = GetMiningProcessorFunctionsPrx(boxModule);
             BitStringGeneratorProviderPrx bsProvider = GetBitStringGeneratorProviderPrx(boxModule);
             // MiningProcessorFunctionsI miningProcessor = new MiningProcessorFunctionsI();

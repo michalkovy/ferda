@@ -90,35 +90,50 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             }
         }
 
-        private int[] CountVector
+        internal int[] CountVector
         {
             get
             {
                 if (_countVector == null)
                 {
-                    BooleanAttributeSettingFunctionsPrx _prx = null;
-                    
-                    foreach (string s in new string [] {Common.SockAntecedent, Common.SockSuccedent, Common.SockCondition})
+                    BooleanAttributeSettingFunctionsPrx[] _prxs =
+                        new BooleanAttributeSettingFunctionsPrx[3];
+
+                    int i = 0;
+                    foreach (string s in new string[] { Common.SockAntecedent, Common.SockSuccedent, Common.SockCondition })
                     {
-                        _prx = Common.GetBooleanAttributePrx(_boxModule, s, false);
-                        if (_prx != null)
-                            break;
+                        _prxs[i] = Common.GetBooleanAttributePrx(_boxModule, s, false);
+                        i++;
                     }
                     DataTableFunctionsPrx _dtPrx = GetMasterDataTableFunctionsPrx(true);
                     if (_dtPrx != null)
                     {
-                        GuidStruct _guid = _prx.GetEntitySetting().id;
-                        
-                        if (_guid != null)
+                        BitStringGeneratorPrx __prx = null;
+                        GuidStruct _guid = null;
+                        foreach (BooleanAttributeSettingFunctionsPrx _prx in _prxs)
                         {
-                            BitStringGeneratorPrx __prx = _prx.GetBitStringGenerator(_guid);
-                            string [] _primaryKeyColumns = _dtPrx.getDataTableInfo().primaryKeyColumns;
-                            if(_primaryKeyColumns.Length > 0)
+                            if ((_guid = _prx.GetEntitySetting().id) != null)
                             {
-                                string _dataTableName = _dtPrx.getDataTableInfo().dataTableName;
-                                return __prx.GetCountVector(_primaryKeyColumns[0],_dataTableName);
+                                if ((__prx = _prx.GetBitStringGenerator(_guid)) != null)
+                                    break;
                             }
                         }
+                        if (__prx == null)
+                            throw Exceptions.BoxRuntimeError(
+                                new ArgumentNullException(), _boxModule.BoxInfo.Identifier,
+                                "BitStringGeneratorProxy is null");
+
+                        string[] _primaryKeyColumns = _dtPrx.getDataTableInfo().primaryKeyColumns;
+                        if (_primaryKeyColumns.Length > 0)
+                        {
+                            string _dataTableName = _dtPrx.getDataTableInfo().dataTableName;
+                            return __prx.GetCountVector(_primaryKeyColumns[0], _dataTableName);
+                        }
+                        else
+                        {
+                            throw Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity, "No unique key selected");
+                        }
+
                     }
                     return null;
                 }
@@ -171,13 +186,70 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         private CacheFlag _cacheFlagColumn = new CacheFlag();
         private GenericColumn _cachedValueColumn = null;
 
-        private DataTableFunctionsPrx GetMasterDataTableFunctionsPrx(bool fallOnError)
+        internal DataTableFunctionsPrx GetMasterDataTableFunctionsPrx(bool fallOnError)
         {
             return SocketConnections.GetPrx<DataTableFunctionsPrx>(
                 _boxModule,
                 SockMasterDataTable,
                 DataTableFunctionsPrxHelper.checkedCast,
                 fallOnError);
+        }
+
+        private const int _bufferSize = 200;
+        private BitStringIceWithCategoryId[] bitStringCache =
+            new BitStringIceWithCategoryId[_bufferSize];
+        private int _bufferFlag = 0;
+        private bool _bufferInitialized = false;
+
+        private Queue<BitStringIceWithCategoryId> _buffer =
+            new Queue<BitStringIceWithCategoryId>(_bufferSize);
+
+        /// <summary>
+        /// Method which fills the bitstring buffer
+        /// </summary>
+        private void FillBitStringCache()
+        {
+            for (int i = 0; i < _bufferSize; i++)
+            {
+                if (BitStringEnumerator.MoveNext())
+                {
+                    _buffer.Enqueue(BitStringEnumerator.Current);
+                    _bufferFlag = i;
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method which returns bitstring from buffer
+        /// </summary>
+        /// <returns></returns>
+        private BitStringIceWithCategoryId GetNextBitStringFromBuffer()
+        {
+            
+            if ((!_bufferInitialized) || (_bufferFlag == 0))
+            {
+                FillBitStringCache();
+                if (_bufferFlag == 0)
+                    return null;
+                _bufferInitialized = true;
+            }
+            BitStringIceWithCategoryId _returnBs =
+                _buffer.Dequeue();
+            _bufferFlag--;
+            return _returnBs;
+            /*
+            if (BitStringEnumerator.MoveNext())
+            {
+                return BitStringEnumerator.Current;
+            }
+            else
+            {
+                return null;
+            }*/
         }
 
         #endregion
@@ -239,17 +311,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             return new string[0];
         }
 
-        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
+        public override bool GetNextBitString(out BitStringIceWithCategoryId bitString, Current current__)
         {
-            if (BitStringEnumerator.MoveNext())
+            bitString =
+                GetNextBitStringFromBuffer();
+            if (bitString == null)
             {
-                return BitStringEnumerator.Current;
-            }
-            else
-            {
+                bitString = new
+                    BitStringIceWithCategoryId();
                 _minerInitialized = false;
-                return null;
+                return false;
             }
+            return true;
         }
 
         public override double[] GetCategoriesNumericValues(Current current__)
@@ -259,7 +332,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
-            return Common.GetAttributeNames(_boxModule, this);
+            List<GuidAttributeNamePair>_result = new List<GuidAttributeNamePair>();
+                _result.AddRange(Common.GetAttributeNames(_boxModule, this));
+
+            _result.Add(new GuidAttributeNamePair(Guid,"VirtualFFTBooleanAttribute"));
+
+            return _result.ToArray();
         }
 
         public override string GetSourceDataTableId(Current current__)

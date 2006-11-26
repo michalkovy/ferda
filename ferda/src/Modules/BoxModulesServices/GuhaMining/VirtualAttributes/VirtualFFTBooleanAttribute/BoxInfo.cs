@@ -1,6 +1,7 @@
 using System;
 using Ferda.Guha.Data;
 using Object=Ice.Object;
+using Ferda.Modules.Boxes.DataPreparation;
 
 namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttribute
 {
@@ -56,6 +57,20 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         
         public override void Validate(BoxModuleI boxModule)
         {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            object dummy = Func.GetSourceDataTableId();
+            
+            DataTableFunctionsPrx _dtPrx = Func.GetMasterDataTableFunctionsPrx(true);
+            string[] _primaryKeyColumns = _dtPrx.getDataTableInfo().primaryKeyColumns;
+            if (_primaryKeyColumns.Length < 1)
+            {
+                throw Exceptions.BoxRuntimeError(null, boxModule.StringIceIdentity, "No unique key selected");
+            }
+
+            if (Func.CountVector == null)
+            {
+                throw Exceptions.BoxRuntimeError(null, boxModule.StringIceIdentity, "Unable to get count vector");
+            }
             
         }
 

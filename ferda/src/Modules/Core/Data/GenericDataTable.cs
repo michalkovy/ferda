@@ -450,13 +450,14 @@ namespace Ferda.Guha.Data
         /// </summary>
         /// <param name="columnName">Name of the column.</param>
         /// <param name="detailDataTableName">Name of the detail datatable.</param>
-        /// <param name="joinKey">Name of the joinkey.</param>
+        /// <param name="masterTableIdColumn">Name of the id column of master datatable.</param>
+        /// <param name="detailTableIdColumn">Name of the id column of detail datatable.</param>
         /// <returns>The generic column.</returns>
         /// <exception cref="T:Ferda.Modules.BadParamsError">
         /// <b>DbColumnNameError</b>
         /// Thrown when the specified column is not a correct 
         /// SQL query.
-        /// </exception>
+        /// </exception>       
         public GenericColumn GetVirtualColumn(string columnName, string detailDataTableName, string masterTableIdColumn, string detailTableIdColumn)
         {
             _detailDataTableName = detailDataTableName;

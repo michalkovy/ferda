@@ -121,15 +121,15 @@ namespace Ferda.Guha.Data
         /// <summary>
         /// Gets the db unexpected error.
         /// </summary>
-        /// <param name="innnerException">The innner exception.</param>
+        /// <param name="innerException">The innner exception.</param>
         /// <param name="boxIdentity">The box identity.</param>
         /// <returns>
         /// 	<see cref="T:Ferda.Modules.BadParamsError"/> exception.
         /// </returns>
-        public static BadParamsError DbUnexpectedError(Exception innnerException, string boxIdentity)
+        public static BadParamsError DbUnexpectedError(Exception innerException, string boxIdentity)
         {
             return Modules.Exceptions.BadParamsError(
-                innnerException,
+                innerException,
                 boxIdentity,
                 "Database unexpected error.",
                 restrictionTypeEnum.DbUnexpectedError
