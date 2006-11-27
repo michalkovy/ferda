@@ -867,17 +867,19 @@ namespace Ferda.Guha.Data
             {
                 throw Exceptions.DbDataTableNameError(new Exception("Master and detail datatables cannot be same"),null);
             }
-
+            //select count(Loans1.loan_id) from Loans left join Loans1 on Loans.loan_id = Loans1.loan_id group by Loans.loan_id
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
             command.CommandText =
-                "SELECT COUNT(*) FROM " + GenericDataTable.Explain.name
-                + " RIGHT OUTER JOIN " + masterDatatableName
+                "SELECT COUNT(" + _detailTableName + "." 
+                + _columnQuotedIdentifier + ") FROM "
+                + _masterDatatableName
+                + " LEFT JOIN " + _detailTableName
                 + " ON "
-                + GenericDataTable.Explain.name + "." + masterIdColumn
+                + masterDatatableName + "." + _columnQuotedIdentifier
                 + "="
-                + masterDatatableName + "." + masterIdColumn
-                + " GROUP BY " + GenericDataTable.Explain.name + "." + _columnQuotedIdentifier
-                + " ORDER BY " + GenericDataTable.Explain.name + "." + _columnQuotedIdentifier;
+                + GenericDataTable.Explain.name + "." + _columnQuotedIdentifier
+                + " GROUP BY " + masterDatatableName + "." + _columnQuotedIdentifier
+                + " ORDER BY " + masterDatatableName + "." + _columnQuotedIdentifier;
 
             DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
             dataAdapter.SelectCommand = command;
