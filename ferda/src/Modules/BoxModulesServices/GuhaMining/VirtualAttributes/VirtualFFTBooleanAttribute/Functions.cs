@@ -127,7 +127,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                         if (_primaryKeyColumns.Length > 0)
                         {
                             string _dataTableName = _dtPrx.getDataTableInfo().dataTableName;
-                            return __prx.GetCountVector(_primaryKeyColumns[0], _dataTableName);
+                            _countVector = __prx.GetCountVector(_primaryKeyColumns[0], _dataTableName);
+                            return _countVector;
                         }
                         else
                         {
