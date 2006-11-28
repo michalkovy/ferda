@@ -1,8 +1,9 @@
 // ResultBrowserIce.cs - class for ice communication
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Author:   Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//           Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2006 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,58 +29,55 @@ using System.Windows.Forms;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
+using Ferda.FrontEnd.AddIns.Common.MyIce;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
     /// <summary>
-    /// Class for communication with ice
+    /// Class for communication with ice or the ResultBrowser module
+    /// for interaction
     /// </summary>
-    class ResultBrowserIce : Ferda.Modules.ModuleForInteractionDisp_
+    class ResultBrowserIce : ModuleForInteractionIce
     {
-        #region Private variables
-
-        /// <summary>
-        /// Owner of addin
-        /// </summary>
-        Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
-
-        /// <summary>
-        /// L10n resource manager
-        /// </summary>
-        private ResourceManager resManager;
-
-        /// <summary>
-        /// L10n string, for now en-US or cs-CZ
-        /// </summary>
-        private string localizationString;
-
-        /// <summary>
-        /// Reference to the IOtherObjectDisplayer - in FrontEnd a property grid
-        /// capable of displaying properties of an object
-        /// </summary>
-        private Ferda.FrontEnd.Properties.IOtherObjectDisplayer Displayer;
-
-        #endregion
-
-
         #region Constructor
 
+        /// <summary>
+        /// Default constructor of the class
+        /// </summary>
+        /// <param name="ownerOfAddIn">Owner of addin</param>
+        /// <param name="Displayer">
+        /// The displayer of object properties, normally the FrontEnd with
+        /// the PropertyGrid
+        /// </param>
         public ResultBrowserIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn,
-            Ferda.FrontEnd.Properties.IOtherObjectDisplayer Displayer)
+            Ferda.FrontEnd.Properties.IOtherObjectDisplayer Displayer) :
+            base(ownerOfAddIn, Displayer)
         {
-            this.ownerOfAddIn = ownerOfAddIn;
-            //setting the ResManager resource manager and localization string
             resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ResultBrowser.Localization_en-US",
             Assembly.GetExecutingAssembly());
-            localizationString = "en-US";
-            this.Displayer = Displayer;
         }
 
         #endregion
 
-
         #region Other ice
 
+        /// <summary>
+        /// Gets a list of sockets needed to be connected in order for the module to
+        /// work
+        /// </summary>
+        /// <param name="__current">ICE stuff</param>
+        /// <returns>List of socket names for module to work propertly</returns>
+        public override string[] getNeededConnectedSockets(Ice.Current __current)
+        {
+            return new string[0];
+        }
+
+        /// <summary>
+        /// Gets accepted box types (the Result Browser MFI can be used with these
+        /// types)
+        /// </summary>
+        /// <param name="__current">Ice context</param>
+        /// <returns>Array of boxtypes</returns>
         public override Ferda.Modules.BoxType[] getAcceptedBoxTypes(Ice.Current __current)
         {
             BoxType a1 = new BoxType();
@@ -89,89 +87,59 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             return new BoxType[] { a1 };
         }
 
-        public override Ferda.Modules.DynamicHelpItem[] getDynamicHelpItems(string[] localePrefs, Ice.Current __current)
-        {
-            return null;
-        }
-
-        public override byte[] getHelpFile(string identifier, Ice.Current __current)
-        {
-            return null;
-        }
-
-        public override Ferda.Modules.HelpFileInfo[] getHelpFileInfoSeq(string[] localePrefs, Ice.Current __current)
-        {
-            return null;
-        }
-
+        /// <summary>
+        /// Gets hint to the module according for a specified localization
+        /// </summary>
+        /// <param name="localePrefs">Localization preferences</param>
+        /// <param name="__current">Some ICE stuff</param>
+        /// <returns>Localized hint</returns>
         public override string getHint(string[] localePrefs, Ice.Current __current)
         {
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ResultBrowser.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-            }
+            Localize(localePrefs);
             return resManager.GetString("ResultBrowserModule");
         }
-        public override byte[] getIcon(Ice.Current __current)
-        {
-            return null;
-        }
 
+        /// <summary>
+        /// Gets label of the module according to the localization
+        /// </summary>
+        /// <param name="localePrefs">Localization specification</param>
+        /// <param name="__current">Some ICE stuff</param>
+        /// <returns>Localized label</returns>
         public override string getLabel(string[] localePrefs, Ice.Current __current)
         {
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ResultBrowser.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-
-            }
+            Localize(localePrefs);
             return resManager.GetString("ResultBrowserModule");
-        }
-
-        public override string[] getNeededConnectedSockets(Ice.Current __current)
-        {
-            return new string[0];
         }
 
         #endregion
-
 
         #region Run
 
         /// <summary>
         /// The method is called by te Ice framework when a module for interaction
-        /// is to be displayed.
+        /// is to be displayed
         /// </summary>
-        /// <param name="boxModuleParam">BoxModuleParams</param>
-        /// <param name="localePrefs">localeprefs</param>
-        /// <param name="manager">Manager proxy</param>
+        /// <param name="boxModuleParam">Box that is executing this module for interaction</param>
+        /// <param name="localePrefs">Localization preferences</param>
+        /// <param name="manager">Proxy address of the modules manager</param>
         /// <param name="__current">Ice context</param>
-        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, Ferda.ModulesManager.ManagersEnginePrx manager, Ice.Current __current)
+        public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, 
+            string[] localePrefs, Ferda.ModulesManager.ManagersEnginePrx manager, 
+            Ice.Current __current)
         {
-            string locale;
+            //checking the validity of the box
             try
             {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ResultBrowser.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
+                boxModuleParam.validate();
             }
-            catch
+            catch (Ferda.Modules.BoxRuntimeError e)
             {
+                ownerOfAddIn.ShowBoxException(e);
+                return;
             }
+
+            Localize(localePrefs);
+            
             string taskLabel = boxModuleParam.getMyFactory().getMyFactoryCreator().getLabel(localePrefs);
             BitStringGeneratorProviderPrx taskProxy =
                 BitStringGeneratorProviderPrxHelper.checkedCast(boxModuleParam.getFunctions());
@@ -191,22 +159,32 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             Quantifiers quantifiers = new Quantifiers(taskProxy1.GetQuantifiers(), taskProxy, localePrefs);
 
-            try
-            {
-                FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(localePrefs, taskProxy1.GetResult(out statistics), quantifiers, taskProxy, this.Displayer, ownerOfAddIn);
-                this.ownerOfAddIn.ShowDockableControl(control, taskLabel + " - " + resManager.GetString("ResultBrowserControl"));
-            }
-            catch (Ferda.Modules.NoConnectionInSocketError)
-            {
-                MessageBox.Show(resManager.GetString("BoxNotConnected"), resManager.GetString("Error"),
-                           MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = 
+                new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(
+                resManager, taskProxy1.GetResult(out statistics), quantifiers, 
+                taskProxy, displayer, ownerOfAddIn);
+            this.ownerOfAddIn.ShowDockableControl(control, 
+                taskLabel + " - " + resManager.GetString("ResultBrowserControl"));
+        }
 
-            catch (Ferda.Modules.BadValueError)
-            {
-                MessageBox.Show(resManager.GetString("EmptyResult"), resManager.GetString("Error"),
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+        #endregion
+
+        #region Other functions
+
+        /// <summary>
+        /// Adjusts the resource manager according to the recent localization
+        /// </summary>
+        /// <param name="localePrefs">string array determining the localization
+        /// preferences</param>
+        private void Localize(string[] localePrefs)
+        {
+            //poznamka - tohle cele bylo ve try bloku... uvidime jak to bude
+            //fungovat bez neho
+            string locale;
+            locale = localePrefs[0];
+            localizationString = locale;
+            locale = "Ferda.FrontEnd.AddIns.ResultBrowser.Localization_" + locale;
+            resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
         }
 
         #endregion
