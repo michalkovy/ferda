@@ -1,8 +1,9 @@
 // FerdaResultBrowserControl.Graph.cs - Displaying charts part
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Author:   Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//           Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -31,40 +32,41 @@ using Ferda.Modules;
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
     /// <summary>
-    /// User Control - charts
+    /// Part of the FerdaResultBrowserControl related to drawing
+    /// contingency tables
     /// </summary>
     partial class FerdaResultBrowserControl
     {
         #region Private variables
 
-
-   //     private Steema.TeeChart.TChart ContingencyTableChart;
-
+        /// <summary>
+        /// All the contingency table charts are drawn upon
+        /// this graph
+        /// </summary>
+        private Steema.TeeChart.TChart ContingencyTableChart;
 
         #endregion
-
 
         #region Initialization
 
         /// <summary>
-        /// Method to initialize Steema chart component for displaying contingency table
+        /// Method to initialize Steema chart component for displaying contingency 
+        /// table
         /// </summary>
         private void InitializeGraph()
         {
-            /*
             this.ResultBrowserSplit.Panel2.SuspendLayout();
             this.ResultBrowserSplit.SuspendLayout();
             this.SuspendLayout();
             this.ContingencyTableChart = new Steema.TeeChart.TChart();
             this.ContingencyTableChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContingencyTableChart.Header.Lines = new string[] {
-        "tChart1"};
+            this.ContingencyTableChart.Header.Lines = new string[] {"tChart1"};
             this.ContingencyTableChart.Location = new System.Drawing.Point(0, 0);
             this.ContingencyTableChart.Name = "tChart1";
             this.ContingencyTableChart.Header.Visible = true;
             
             this.ContingencyTableChart.Size = new System.Drawing.Size(466, 286);
-            this.ContingencyTableChart.GetAxisLabel += new Steema.TeeChart.GetAxisLabelEventHandler(ContingencyTableChart_GetAxisLabel);
+            //this.ContingencyTableChart.GetAxisLabel += new Steema.TeeChart.GetAxisLabelEventHandler(ContingencyTableChart_GetAxisLabel);
             this.ContingencyTableChart.Axes.Depth.Visible = true;
             this.ContingencyTableChart.ContextMenuStrip = this.ContextMenuGraphRightClick;
             //   this.ContingencyTableChart.Page.MaxPointsPerPage = 8;
@@ -73,40 +75,39 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.Panel2.ResumeLayout(false);
             this.ResultBrowserSplit.ResumeLayout(false);
             this.ResumeLayout(false);
-             * */
         }
-
-
 
         #endregion
 
-
         #region Chart option handlers (modifying graph view)
 
+        //TODO comment
         private void TrackBar3d_Scroll(object sender, EventArgs e)
         {
-          //  this.ContingencyTableChart.Aspect.Chart3DPercent = this.TrackBar3d.Value;
+            this.ContingencyTableChart.Aspect.Chart3DPercent = this.TrackBar3d.Value;
         }
 
         private void TrackBarZoom_Scroll(object sender, EventArgs e)
         {
-           // this.ContingencyTableChart.Aspect.Zoom = this.TrackBarZoom.Value;
+            this.ContingencyTableChart.Aspect.Zoom = this.TrackBarZoom.Value;
         }
 
-
+        //TODO comment
         private void TrackBarHOffset_Scroll(object sender, EventArgs e)
         {
-          //  this.ContingencyTableChart.Aspect.HorizOffset = this.TrackBarHOffset.Value;
+            this.ContingencyTableChart.Aspect.HorizOffset = this.TrackBarHOffset.Value;
         }
 
+        //TODO comment
         private void TrackBarVOffset_Scroll(object sender, EventArgs e)
         {
-           // this.ContingencyTableChart.Aspect.VertOffset = this.TrackBarVOffset.Value;
+            this.ContingencyTableChart.Aspect.VertOffset = this.TrackBarVOffset.Value;
         }
 
+        //TODO comment
         private void CheckBoxShowLabels_CheckedChanged(object sender, EventArgs e)
         {
-           // ShowLabels(this.ContingencyTableChart);
+            ShowLabels(this.ContingencyTableChart);
         }
 
         #endregion
@@ -387,6 +388,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 j = 0;
             }
         }
+        */
 
         /// <summary>
         /// Method which toggles labels on/off for chart.
@@ -407,6 +409,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
         }
 
+        /*
         /// <summary>
         /// Handles copying the chart to clipboard
         /// </summary>

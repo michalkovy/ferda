@@ -54,24 +54,24 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit = new System.Windows.Forms.SplitContainer();
             this.HypothesesListView = new System.Windows.Forms.ListView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.contingencyTablesPanel = new System.Windows.Forms.Panel();
             this.RadioSecondTable = new System.Windows.Forms.RadioButton();
             this.RadioFirstTable = new System.Windows.Forms.RadioButton();
-            this.LabelQuantifiersToDisplay = new System.Windows.Forms.Label();
-            this.CheckedListQuantifiers = new System.Windows.Forms.CheckedListBox();
+            this.LQuantifiersToDisplay = new System.Windows.Forms.Label();
+            this.CHLQuantifiers = new System.Windows.Forms.CheckedListBox();
             this.ButtonSubmitColumnChange = new System.Windows.Forms.Button();
-            this.LabelColumnsToDisplay = new System.Windows.Forms.Label();
-            this.CheckedListMarks = new System.Windows.Forms.CheckedListBox();
+            this.LColumnsToDisplay = new System.Windows.Forms.Label();
+            this.CHLMarks = new System.Windows.Forms.CheckedListBox();
             this.ButtonHelp = new System.Windows.Forms.Button();
             this.LabelCount = new System.Windows.Forms.Label();
             this.LabelHypothesesTotal = new System.Windows.Forms.Label();
             this.ButtonSubmitFilter = new System.Windows.Forms.Button();
-            this.LabelConditionFilter = new System.Windows.Forms.Label();
-            this.LabelSuccedentFilter = new System.Windows.Forms.Label();
-            this.LabelAntecedentFilter = new System.Windows.Forms.Label();
-            this.CheckedListBoxConditions = new System.Windows.Forms.CheckedListBox();
-            this.CheckedListBoxSuccedents = new System.Windows.Forms.CheckedListBox();
-            this.CheckedListBoxAntecedents = new System.Windows.Forms.CheckedListBox();
+            this.LConditionFilter = new System.Windows.Forms.Label();
+            this.LSuccedentFilter = new System.Windows.Forms.Label();
+            this.LAntecedentFilter = new System.Windows.Forms.Label();
+            this.CHLBoxConditions = new System.Windows.Forms.CheckedListBox();
+            this.CHLBoxSuccedents = new System.Windows.Forms.CheckedListBox();
+            this.CHLBoxAntecedents = new System.Windows.Forms.CheckedListBox();
             this.LabelNumeric = new System.Windows.Forms.Label();
             this.NumericUpDownDecimals = new System.Windows.Forms.NumericUpDown();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
@@ -95,7 +95,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.Panel2.SuspendLayout();
             this.ResultBrowserSplit.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.contingencyTablesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDecimals)).BeginInit();
             this.StatusStrip.SuspendLayout();
             this.GroupBoxChangeGraph.SuspendLayout();
@@ -142,22 +142,22 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.LabelQuantifiersToDisplay);
-            this.panel1.Controls.Add(this.CheckedListQuantifiers);
+            this.panel1.Controls.Add(this.contingencyTablesPanel);
+            this.panel1.Controls.Add(this.LQuantifiersToDisplay);
+            this.panel1.Controls.Add(this.CHLQuantifiers);
             this.panel1.Controls.Add(this.ButtonSubmitColumnChange);
-            this.panel1.Controls.Add(this.LabelColumnsToDisplay);
-            this.panel1.Controls.Add(this.CheckedListMarks);
+            this.panel1.Controls.Add(this.LColumnsToDisplay);
+            this.panel1.Controls.Add(this.CHLMarks);
             this.panel1.Controls.Add(this.ButtonHelp);
             this.panel1.Controls.Add(this.LabelCount);
             this.panel1.Controls.Add(this.LabelHypothesesTotal);
             this.panel1.Controls.Add(this.ButtonSubmitFilter);
-            this.panel1.Controls.Add(this.LabelConditionFilter);
-            this.panel1.Controls.Add(this.LabelSuccedentFilter);
-            this.panel1.Controls.Add(this.LabelAntecedentFilter);
-            this.panel1.Controls.Add(this.CheckedListBoxConditions);
-            this.panel1.Controls.Add(this.CheckedListBoxSuccedents);
-            this.panel1.Controls.Add(this.CheckedListBoxAntecedents);
+            this.panel1.Controls.Add(this.LConditionFilter);
+            this.panel1.Controls.Add(this.LSuccedentFilter);
+            this.panel1.Controls.Add(this.LAntecedentFilter);
+            this.panel1.Controls.Add(this.CHLBoxConditions);
+            this.panel1.Controls.Add(this.CHLBoxSuccedents);
+            this.panel1.Controls.Add(this.CHLBoxAntecedents);
             this.panel1.Controls.Add(this.LabelNumeric);
             this.panel1.Controls.Add(this.NumericUpDownDecimals);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -166,14 +166,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.panel1.Size = new System.Drawing.Size(1064, 99);
             this.panel1.TabIndex = 2;
             // 
-            // panel2
+            // contingencyTablesPanel
             // 
-            this.panel2.Controls.Add(this.RadioSecondTable);
-            this.panel2.Controls.Add(this.RadioFirstTable);
-            this.panel2.Location = new System.Drawing.Point(6, 48);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(213, 45);
-            this.panel2.TabIndex = 21;
+            this.contingencyTablesPanel.Controls.Add(this.RadioSecondTable);
+            this.contingencyTablesPanel.Controls.Add(this.RadioFirstTable);
+            this.contingencyTablesPanel.Location = new System.Drawing.Point(6, 48);
+            this.contingencyTablesPanel.Name = "contingencyTablesPanel";
+            this.contingencyTablesPanel.Size = new System.Drawing.Size(213, 45);
+            this.contingencyTablesPanel.TabIndex = 21;
             // 
             // RadioSecondTable
             // 
@@ -197,28 +197,29 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.RadioFirstTable.Text = "radioButton1";
             this.RadioFirstTable.UseVisualStyleBackColor = true;
             // 
-            // LabelQuantifiersToDisplay
+            // LQuantifiersToDisplay
             // 
-            this.LabelQuantifiersToDisplay.AutoSize = true;
-            this.LabelQuantifiersToDisplay.Location = new System.Drawing.Point(357, 5);
-            this.LabelQuantifiersToDisplay.Name = "LabelQuantifiersToDisplay";
-            this.LabelQuantifiersToDisplay.Size = new System.Drawing.Size(104, 13);
-            this.LabelQuantifiersToDisplay.TabIndex = 20;
-            this.LabelQuantifiersToDisplay.Text = "Quantifiers to display";
+            this.LQuantifiersToDisplay.AutoSize = true;
+            this.LQuantifiersToDisplay.Location = new System.Drawing.Point(348, 5);
+            this.LQuantifiersToDisplay.Name = "LQuantifiersToDisplay";
+            this.LQuantifiersToDisplay.Size = new System.Drawing.Size(104, 13);
+            this.LQuantifiersToDisplay.TabIndex = 20;
+            this.LQuantifiersToDisplay.Text = "Quantifiers to display";
             // 
-            // CheckedListQuantifiers
+            // CHLQuantifiers
             // 
-            this.CheckedListQuantifiers.CheckOnClick = true;
-            this.CheckedListQuantifiers.FormattingEnabled = true;
-            this.CheckedListQuantifiers.Location = new System.Drawing.Point(360, 22);
-            this.CheckedListQuantifiers.Name = "CheckedListQuantifiers";
-            this.CheckedListQuantifiers.Size = new System.Drawing.Size(120, 49);
-            this.CheckedListQuantifiers.TabIndex = 19;
+            this.CHLQuantifiers.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CHLQuantifiers.CheckOnClick = true;
+            this.CHLQuantifiers.FormattingEnabled = true;
+            this.CHLQuantifiers.Location = new System.Drawing.Point(350, 22);
+            this.CHLQuantifiers.Name = "CHLQuantifiers";
+            this.CHLQuantifiers.Size = new System.Drawing.Size(120, 47);
+            this.CHLQuantifiers.TabIndex = 19;
             // 
             // ButtonSubmitColumnChange
             // 
             this.ButtonSubmitColumnChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonSubmitColumnChange.Location = new System.Drawing.Point(312, 73);
+            this.ButtonSubmitColumnChange.Location = new System.Drawing.Point(225, 70);
             this.ButtonSubmitColumnChange.Name = "ButtonSubmitColumnChange";
             this.ButtonSubmitColumnChange.Size = new System.Drawing.Size(75, 23);
             this.ButtonSubmitColumnChange.TabIndex = 18;
@@ -226,28 +227,29 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ButtonSubmitColumnChange.UseVisualStyleBackColor = true;
             this.ButtonSubmitColumnChange.Click += new System.EventHandler(this.ButtonSubmitColumnChange_Click);
             // 
-            // LabelColumnsToDisplay
+            // LColumnsToDisplay
             // 
-            this.LabelColumnsToDisplay.AutoSize = true;
-            this.LabelColumnsToDisplay.Location = new System.Drawing.Point(222, 5);
-            this.LabelColumnsToDisplay.Name = "LabelColumnsToDisplay";
-            this.LabelColumnsToDisplay.Size = new System.Drawing.Size(94, 13);
-            this.LabelColumnsToDisplay.TabIndex = 17;
-            this.LabelColumnsToDisplay.Text = "Columns to display";
+            this.LColumnsToDisplay.AutoSize = true;
+            this.LColumnsToDisplay.Location = new System.Drawing.Point(222, 5);
+            this.LColumnsToDisplay.Name = "LColumnsToDisplay";
+            this.LColumnsToDisplay.Size = new System.Drawing.Size(94, 13);
+            this.LColumnsToDisplay.TabIndex = 17;
+            this.LColumnsToDisplay.Text = "Columns to display";
             // 
-            // CheckedListMarks
+            // CHLMarks
             // 
-            this.CheckedListMarks.CheckOnClick = true;
-            this.CheckedListMarks.FormattingEnabled = true;
-            this.CheckedListMarks.Location = new System.Drawing.Point(225, 22);
-            this.CheckedListMarks.Name = "CheckedListMarks";
-            this.CheckedListMarks.Size = new System.Drawing.Size(120, 49);
-            this.CheckedListMarks.TabIndex = 16;
+            this.CHLMarks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CHLMarks.CheckOnClick = true;
+            this.CHLMarks.FormattingEnabled = true;
+            this.CHLMarks.Location = new System.Drawing.Point(225, 22);
+            this.CHLMarks.Name = "CHLMarks";
+            this.CHLMarks.Size = new System.Drawing.Size(120, 47);
+            this.CHLMarks.TabIndex = 16;
             // 
             // ButtonHelp
             // 
             this.ButtonHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonHelp.Location = new System.Drawing.Point(682, 74);
+            this.ButtonHelp.Location = new System.Drawing.Point(387, 71);
             this.ButtonHelp.Name = "ButtonHelp";
             this.ButtonHelp.Size = new System.Drawing.Size(75, 22);
             this.ButtonHelp.TabIndex = 15;
@@ -278,7 +280,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             this.ButtonSubmitFilter.Enabled = false;
             this.ButtonSubmitFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonSubmitFilter.Location = new System.Drawing.Point(592, 74);
+            this.ButtonSubmitFilter.Location = new System.Drawing.Point(306, 71);
             this.ButtonSubmitFilter.Name = "ButtonSubmitFilter";
             this.ButtonSubmitFilter.Size = new System.Drawing.Size(75, 22);
             this.ButtonSubmitFilter.TabIndex = 12;
@@ -286,65 +288,65 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ButtonSubmitFilter.UseVisualStyleBackColor = true;
             this.ButtonSubmitFilter.Click += new System.EventHandler(this.ButtonSubmitFilter_Click);
             // 
-            // LabelConditionFilter
+            // LConditionFilter
             // 
-            this.LabelConditionFilter.AutoSize = true;
-            this.LabelConditionFilter.Location = new System.Drawing.Point(787, 5);
-            this.LabelConditionFilter.Name = "LabelConditionFilter";
-            this.LabelConditionFilter.Size = new System.Drawing.Size(73, 13);
-            this.LabelConditionFilter.TabIndex = 11;
-            this.LabelConditionFilter.Text = "Condition filter";
+            this.LConditionFilter.AutoSize = true;
+            this.LConditionFilter.Location = new System.Drawing.Point(726, 5);
+            this.LConditionFilter.Name = "LConditionFilter";
+            this.LConditionFilter.Size = new System.Drawing.Size(73, 13);
+            this.LConditionFilter.TabIndex = 11;
+            this.LConditionFilter.Text = "Condition filter";
             // 
-            // LabelSuccedentFilter
+            // LSuccedentFilter
             // 
-            this.LabelSuccedentFilter.AutoSize = true;
-            this.LabelSuccedentFilter.Location = new System.Drawing.Point(651, 5);
-            this.LabelSuccedentFilter.Name = "LabelSuccedentFilter";
-            this.LabelSuccedentFilter.Size = new System.Drawing.Size(81, 13);
-            this.LabelSuccedentFilter.TabIndex = 10;
-            this.LabelSuccedentFilter.Text = "Succedent filter";
+            this.LSuccedentFilter.AutoSize = true;
+            this.LSuccedentFilter.Location = new System.Drawing.Point(600, 5);
+            this.LSuccedentFilter.Name = "LSuccedentFilter";
+            this.LSuccedentFilter.Size = new System.Drawing.Size(81, 13);
+            this.LSuccedentFilter.TabIndex = 10;
+            this.LSuccedentFilter.Text = "Succedent filter";
             // 
-            // LabelAntecedentFilter
+            // LAntecedentFilter
             // 
-            this.LabelAntecedentFilter.AutoSize = true;
-            this.LabelAntecedentFilter.Location = new System.Drawing.Point(506, 5);
-            this.LabelAntecedentFilter.Name = "LabelAntecedentFilter";
-            this.LabelAntecedentFilter.Size = new System.Drawing.Size(84, 13);
-            this.LabelAntecedentFilter.TabIndex = 9;
-            this.LabelAntecedentFilter.Text = "Antecedent filter";
+            this.LAntecedentFilter.AutoSize = true;
+            this.LAntecedentFilter.Location = new System.Drawing.Point(474, 5);
+            this.LAntecedentFilter.Name = "LAntecedentFilter";
+            this.LAntecedentFilter.Size = new System.Drawing.Size(84, 13);
+            this.LAntecedentFilter.TabIndex = 9;
+            this.LAntecedentFilter.Text = "Antecedent filter";
             // 
-            // CheckedListBoxConditions
+            // CHLBoxConditions
             // 
-            this.CheckedListBoxConditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.CheckedListBoxConditions.CheckOnClick = true;
-            this.CheckedListBoxConditions.Enabled = false;
-            this.CheckedListBoxConditions.FormattingEnabled = true;
-            this.CheckedListBoxConditions.Location = new System.Drawing.Point(790, 22);
-            this.CheckedListBoxConditions.Name = "CheckedListBoxConditions";
-            this.CheckedListBoxConditions.Size = new System.Drawing.Size(120, 47);
-            this.CheckedListBoxConditions.TabIndex = 8;
+            this.CHLBoxConditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CHLBoxConditions.CheckOnClick = true;
+            this.CHLBoxConditions.Enabled = false;
+            this.CHLBoxConditions.FormattingEnabled = true;
+            this.CHLBoxConditions.Location = new System.Drawing.Point(725, 22);
+            this.CHLBoxConditions.Name = "CHLBoxConditions";
+            this.CHLBoxConditions.Size = new System.Drawing.Size(120, 47);
+            this.CHLBoxConditions.TabIndex = 8;
             // 
-            // CheckedListBoxSuccedents
+            // CHLBoxSuccedents
             // 
-            this.CheckedListBoxSuccedents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.CheckedListBoxSuccedents.CheckOnClick = true;
-            this.CheckedListBoxSuccedents.Enabled = false;
-            this.CheckedListBoxSuccedents.FormattingEnabled = true;
-            this.CheckedListBoxSuccedents.Location = new System.Drawing.Point(654, 22);
-            this.CheckedListBoxSuccedents.Name = "CheckedListBoxSuccedents";
-            this.CheckedListBoxSuccedents.Size = new System.Drawing.Size(120, 47);
-            this.CheckedListBoxSuccedents.TabIndex = 7;
+            this.CHLBoxSuccedents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CHLBoxSuccedents.CheckOnClick = true;
+            this.CHLBoxSuccedents.Enabled = false;
+            this.CHLBoxSuccedents.FormattingEnabled = true;
+            this.CHLBoxSuccedents.Location = new System.Drawing.Point(600, 22);
+            this.CHLBoxSuccedents.Name = "CHLBoxSuccedents";
+            this.CHLBoxSuccedents.Size = new System.Drawing.Size(120, 47);
+            this.CHLBoxSuccedents.TabIndex = 7;
             // 
-            // CheckedListBoxAntecedents
+            // CHLBoxAntecedents
             // 
-            this.CheckedListBoxAntecedents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.CheckedListBoxAntecedents.CheckOnClick = true;
-            this.CheckedListBoxAntecedents.Enabled = false;
-            this.CheckedListBoxAntecedents.FormattingEnabled = true;
-            this.CheckedListBoxAntecedents.Location = new System.Drawing.Point(509, 22);
-            this.CheckedListBoxAntecedents.Name = "CheckedListBoxAntecedents";
-            this.CheckedListBoxAntecedents.Size = new System.Drawing.Size(120, 47);
-            this.CheckedListBoxAntecedents.TabIndex = 6;
+            this.CHLBoxAntecedents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CHLBoxAntecedents.CheckOnClick = true;
+            this.CHLBoxAntecedents.Enabled = false;
+            this.CHLBoxAntecedents.FormattingEnabled = true;
+            this.CHLBoxAntecedents.Location = new System.Drawing.Point(475, 22);
+            this.CHLBoxAntecedents.Name = "CHLBoxAntecedents";
+            this.CHLBoxAntecedents.Size = new System.Drawing.Size(120, 47);
+            this.CHLBoxAntecedents.TabIndex = 6;
             // 
             // LabelNumeric
             // 
@@ -564,8 +566,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.contingencyTablesPanel.ResumeLayout(false);
+            this.contingencyTablesPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDecimals)).EndInit();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
@@ -607,20 +609,20 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.Label LabelCount;
         private System.Windows.Forms.Label LabelHypothesesTotal;
         private System.Windows.Forms.Button ButtonSubmitFilter;
-        private System.Windows.Forms.Label LabelConditionFilter;
-        private System.Windows.Forms.Label LabelSuccedentFilter;
-        private System.Windows.Forms.Label LabelAntecedentFilter;
-        private System.Windows.Forms.CheckedListBox CheckedListBoxConditions;
-        private System.Windows.Forms.CheckedListBox CheckedListBoxSuccedents;
-        private System.Windows.Forms.CheckedListBox CheckedListBoxAntecedents;
+        private System.Windows.Forms.Label LConditionFilter;
+        private System.Windows.Forms.Label LSuccedentFilter;
+        private System.Windows.Forms.Label LAntecedentFilter;
+        private System.Windows.Forms.CheckedListBox CHLBoxConditions;
+        private System.Windows.Forms.CheckedListBox CHLBoxSuccedents;
+        private System.Windows.Forms.CheckedListBox CHLBoxAntecedents;
         private System.Windows.Forms.Label LabelNumeric;
         private System.Windows.Forms.NumericUpDown NumericUpDownDecimals;
-        private System.Windows.Forms.Label LabelColumnsToDisplay;
-        private System.Windows.Forms.CheckedListBox CheckedListMarks;
+        private System.Windows.Forms.Label LColumnsToDisplay;
+        private System.Windows.Forms.CheckedListBox CHLMarks;
         private System.Windows.Forms.Button ButtonSubmitColumnChange;
-        private System.Windows.Forms.Label LabelQuantifiersToDisplay;
-        private System.Windows.Forms.CheckedListBox CheckedListQuantifiers;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label LQuantifiersToDisplay;
+        private System.Windows.Forms.CheckedListBox CHLQuantifiers;
+        private System.Windows.Forms.Panel contingencyTablesPanel;
         private System.Windows.Forms.RadioButton RadioSecondTable;
         private System.Windows.Forms.RadioButton RadioFirstTable;
     }

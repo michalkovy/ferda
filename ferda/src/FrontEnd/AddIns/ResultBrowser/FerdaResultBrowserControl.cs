@@ -1,8 +1,9 @@
 // FerdaResultBrowserControl.cs - UserControl class for displaying results
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Author:   Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//           Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,8 +18,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-#region using...
 
 using System;
 using System.Collections.Generic;
@@ -41,9 +40,6 @@ using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 
-#endregion
-
-
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
     
@@ -63,11 +59,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// Resource manager
         /// </summary>
         private ResourceManager resManager;
-
-        /// <summary>
-        /// Localization string, en-US or cs-CZ for now.
-        /// </summary>
-        private string localizationString;
 
         /// <summary>
         /// Implementation of propertygrid
@@ -114,8 +105,18 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         BitStringGeneratorProviderPrx taskProxy;
 
-        #endregion
+        /// <summary>
+        /// Determines the space between two filters when resizing in pixels.
+        /// </summary>
+        private int resizeFilterOffset = 5;
 
+        /// <summary>
+        /// Determines number of filter controls in the upper part
+        /// of the component
+        /// </summary>
+        private int numberOfFilters = 5;
+
+        #endregion
 
         #region Constructor
 
@@ -127,23 +128,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="quantifiers">quantifiers</param>
         /// <param name="Displayer">Propertygrid</param>
         /// <param name="ownerOfAddIn">Ownerofaddin</param>
-        public FerdaResultBrowserControl(string[] localePrefs, string result, Quantifiers quantifiers, BitStringGeneratorProviderPrx taskProxy, IOtherObjectDisplayer Displayer, IOwnerOfAddIn ownerOfAddIn)
+        public FerdaResultBrowserControl(ResourceManager resManager, string result, 
+            Quantifiers quantifiers, BitStringGeneratorProviderPrx taskProxy, 
+            IOtherObjectDisplayer Displayer, IOwnerOfAddIn ownerOfAddIn)
         {
-            //setting the ResManager resource manager and localization string
-            string locale;
-            try
-            {
-                locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.ResultBrowser.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch
-            {
-                resManager = new ResourceManager("Ferda.FrontEnd.AddIns.ResultBrowser.Localization_en-US",
-            Assembly.GetExecutingAssembly());
-                localizationString = "en-US";
-            }
+            this.resManager = resManager;
+
             this.taskProxy = taskProxy;
             this.ownerOfAddIn = ownerOfAddIn;
             columnSorter.column = 0;
@@ -159,14 +149,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             resultBrowser.IceComplete += new LongRunCompleted(resultBrowser_IceComplete);
             resultBrowser.Initialize();
             this.hypothesesCount = resultBrowser.AllHypothesesCount;
-            
-            this.ChangeLocale(this.resManager);
+
+            this.Resize += new EventHandler(FerdaResultBrowserControl_Resize);
+            this.ChangeLocale();
             this.displayer = Displayer;
             this.displayer.Reset();
         }
 
         #endregion
-
 
         #region Initialization methods
 
@@ -185,10 +175,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             usedColumn1.Selected = true;
             usedColumn1.width = 200;
             this.columns[0] = usedColumn1;
-            this.CheckedListMarks.Items.Add(this.resManager.GetString("HypothesisId"), true);
+            this.CHLMarks.Items.Add(this.resManager.GetString("HypothesisId"), true);
             foreach (MarkEnum mark in marks)
             {
-                this.CheckedListMarks.Items.Add(mark.ToString(), false);
+                this.CHLMarks.Items.Add(mark.ToString(), false);
                 UsedMark usedColumn = new UsedMark();
                 usedColumn.id = i;
                 usedColumn.ColumnType = mark;
@@ -210,7 +200,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             quantifiers = new UsedQuantifier[labels.Length];
             for (int i = 0; i < labels.Length; i++)
             {
-                this.CheckedListQuantifiers.Items.Add(labels[i] + "(" + userLabels[i] + ")", false);
+                this.CHLQuantifiers.Items.Add(labels[i] + "(" + userLabels[i] + ")", false);
                 UsedQuantifier usedQuantifier = new UsedQuantifier();
                 usedQuantifier.id = i;
                 usedQuantifier.QuantifierLabel = labels[i];
@@ -268,7 +258,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         }
 
         #endregion
-
 
         #region Private methods
 
@@ -346,9 +335,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private void ChangeColumnCheck()
         {
-            for (int i = 0; i < CheckedListMarks.Items.Count; i++)
+            for (int i = 0; i < CHLMarks.Items.Count; i++)
             {
-                if (CheckedListMarks.CheckedItems.IndexOf(CheckedListMarks.Items[i]) != -1)
+                if (CHLMarks.CheckedItems.IndexOf(CHLMarks.Items[i]) != -1)
                 {
                     columns[i].Selected = true;
                 }
@@ -364,9 +353,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private void ChangeQuantifierCheck()
         {
-            for (int i = 0; i < CheckedListQuantifiers.Items.Count; i++)
+            for (int i = 0; i < CHLQuantifiers.Items.Count; i++)
             {
-                if (CheckedListQuantifiers.CheckedItems.IndexOf(CheckedListQuantifiers.Items[i]) != -1)
+                if (CHLQuantifiers.CheckedItems.IndexOf(CHLQuantifiers.Items[i]) != -1)
                 {
                     quantifiers[i].Selected = true;
                 }
@@ -383,11 +372,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private void PreloadDisable()
         {
             // this.HypothesesListView.Visible = false;
-            this.CheckedListMarks.Enabled = false;
-            this.CheckedListQuantifiers.Enabled = false;
-            this.CheckedListBoxAntecedents.Enabled = false;
-            this.CheckedListBoxConditions.Enabled = false;
-            this.CheckedListBoxSuccedents.Enabled = false;
+            this.CHLMarks.Enabled = false;
+            this.CHLQuantifiers.Enabled = false;
+            this.CHLBoxAntecedents.Enabled = false;
+            this.CHLBoxConditions.Enabled = false;
+            this.CHLBoxSuccedents.Enabled = false;
             this.ButtonSubmitFilter.Enabled = false;
             this.NumericUpDownDecimals.Enabled = false;
         }
@@ -399,11 +388,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         {
             this.HypothesesListView.Enabled = true;
             this.HypothesesListView.Visible = true;
-            this.CheckedListMarks.Enabled = true;
-            this.CheckedListQuantifiers.Enabled = true;
-            this.CheckedListBoxAntecedents.Enabled = true;
-            this.CheckedListBoxConditions.Enabled = true;
-            this.CheckedListBoxSuccedents.Enabled = true;
+            this.CHLMarks.Enabled = true;
+            this.CHLQuantifiers.Enabled = true;
+            this.CHLBoxAntecedents.Enabled = true;
+            this.CHLBoxConditions.Enabled = true;
+            this.CHLBoxSuccedents.Enabled = true;
             this.ButtonSubmitFilter.Enabled = true;
             this.NumericUpDownDecimals.Enabled = true;
         }
@@ -434,7 +423,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         */
         #endregion
         #endregion
-
 
         #region Handlers
 
@@ -484,8 +472,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 this.ToolStripShowGraphEdit.Checked = false;
             }
         }
-
-
 
         /// <summary>
         /// Method to check the chart displaying
@@ -1232,8 +1218,41 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             } 
         }
 
-        #endregion
+        /// <summary>
+        /// Forces the whole control to resize
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        void FerdaResultBrowserControl_Resize(object sender, EventArgs e)
+        {
+            Control control = (Control)sender;
+            int newControlWidth = control.Width;
+            //magic constant :) This is where the area to place all the
+            //filters starts. It should not be moved.
+            int zero = 225;
 
+            //computing the size of individual filters after resize
+            int newSize = (newControlWidth - zero - numberOfFilters * 
+                resizeFilterOffset) / numberOfFilters;
+
+            //resizing the individual filters
+            CHLMarks.Left = zero;
+            CHLMarks.Width = newSize;
+            LQuantifiersToDisplay.Left = CHLMarks.Right + resizeFilterOffset;
+            CHLQuantifiers.Left = CHLMarks.Right + resizeFilterOffset;
+            CHLQuantifiers.Width = newSize;
+            CHLBoxAntecedents.Left = CHLQuantifiers.Right + resizeFilterOffset;
+            LAntecedentFilter.Left = CHLQuantifiers.Right + resizeFilterOffset;
+            CHLBoxAntecedents.Width = newSize;
+            LSuccedentFilter.Left = CHLBoxAntecedents.Right + resizeFilterOffset;
+            CHLBoxSuccedents.Left = CHLBoxAntecedents.Right + resizeFilterOffset;
+            CHLBoxSuccedents.Width = newSize;
+            LConditionFilter.Left = CHLBoxSuccedents.Right + resizeFilterOffset;
+            CHLBoxConditions.Left = CHLBoxSuccedents.Right + resizeFilterOffset;
+            CHLBoxConditions.Width = newSize;
+        }
+
+        #endregion
 
         #region Localization
 
@@ -1249,51 +1268,38 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
         }
 
-
-        /// <summary>
-        /// Localization string of the application, possible values are "en-US" and "cs-CZ"
-        /// </summary>
-        public string LocalizationString
-        {
-            get
-            {
-                return localizationString;
-            }
-        }
-
         /// <summary>
         /// Method to change l10n.
         /// </summary>
         /// <param name="rm">Resource manager to handle new l10n resource</param>
-        private void ChangeLocale(ResourceManager rm)
+        private void ChangeLocale()
         {
-            GroupBoxChangeGraph.Text = rm.GetString("GraphViewOptions");
-            ButtonSubmitColumnChange.Text = rm.GetString("SubmitColumnChange");
-            ToolStripShowGraphEdit.Text = rm.GetString("GraphViewOptions");
-            this.Label3dpercent.Text = rm.GetString("3dpercent");
+            GroupBoxChangeGraph.Text = resManager.GetString("GraphViewOptions");
+            ButtonSubmitColumnChange.Text = resManager.GetString("SubmitColumnChange");
+            ToolStripShowGraphEdit.Text = resManager.GetString("GraphViewOptions");
+            this.Label3dpercent.Text = resManager.GetString("3dpercent");
             //     this.ContingencyTableChart.Header.Lines = new string[] { rm.GetString("ContingencyTable") };
-            LabelHOffset.Text = rm.GetString("LabelHOffset");
-            LabelVOffset.Text = rm.GetString("LabelVOffset");
-            LabelZoom.Text = rm.GetString("LabelZoom");
-            ToolStripCopyChart.Text = rm.GetString("CopyChart");
-            CheckBoxShowLabels.Text = rm.GetString("ShowLabels");
+            LabelHOffset.Text = resManager.GetString("LabelHOffset");
+            LabelVOffset.Text = resManager.GetString("LabelVOffset");
+            LabelZoom.Text = resManager.GetString("LabelZoom");
+            ToolStripCopyChart.Text = resManager.GetString("CopyChart");
+            CheckBoxShowLabels.Text = resManager.GetString("ShowLabels");
 
-            LabelNumeric.Text = rm.GetString("LabelNumeric");
-            LabelProgressBar.Text = rm.GetString("HypothesesLoading");
-            LabelAntecedentFilter.Text = rm.GetString("AntecedentFilter");
-            LabelSuccedentFilter.Text = rm.GetString("SuccedentFilter");
-            LabelConditionFilter.Text = rm.GetString("ConditionFilter");
-            LabelColumnsToDisplay.Text = rm.GetString("LabelColumnsToDisplay");
-            LabelQuantifiersToDisplay.Text = rm.GetString("LabelQuantifiersToDisplay");
-            ButtonSubmitFilter.Text = rm.GetString("ButtonFilter");
-            LabelHypothesesTotal.Text = rm.GetString("HypothesesCount");
-            RadioFirstTable.Text = rm.GetString("RadioFirst");
-            RadioSecondTable.Text = rm.GetString("RadioSecond");
-            ButtonHelp.Text = rm.GetString("Help");
+            LabelNumeric.Text = resManager.GetString("LabelNumeric");
+            LabelProgressBar.Text = resManager.GetString("HypothesesLoading");
+            LAntecedentFilter.Text = resManager.GetString("AntecedentFilter");
+            LSuccedentFilter.Text = resManager.GetString("SuccedentFilter");
+            LConditionFilter.Text = resManager.GetString("ConditionFilter");
+            LColumnsToDisplay.Text = resManager.GetString("LabelColumnsToDisplay");
+            LQuantifiersToDisplay.Text = resManager.GetString("LabelQuantifiersToDisplay");
+            ButtonSubmitFilter.Text = resManager.GetString("ButtonFilter");
+            LabelHypothesesTotal.Text = resManager.GetString("HypothesesCount");
+            RadioFirstTable.Text = resManager.GetString("RadioFirst");
+            RadioSecondTable.Text = resManager.GetString("RadioSecond");
+            ButtonHelp.Text = resManager.GetString("Help");
         }
 
         #endregion
-
 
         #region Events
 
@@ -1329,7 +1335,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         public MarkEnum ColumnType;
         public string ColumnName;
     }
-
     public class UsedQuantifier : UsedColumn
     {
         public string QuantifierLabel;
