@@ -154,6 +154,8 @@
     <Compile Include="Tasks\TwoDimensional\Functions.cs" />
     <Compile Include="VirtualAttributes\VirtualFFTBooleanAttribute\BoxInfo.cs" />
     <Compile Include="VirtualAttributes\VirtualFFTBooleanAttribute\Functions.cs" />
+    <Compile Include="VirtualAttributes\VirtualSDFFTBooleanAttribute\BoxInfo.cs" />
+    <Compile Include="VirtualAttributes\VirtualSDFFTBooleanAttribute\Functions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Quantifiers\Notes.txt" />

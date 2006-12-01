@@ -544,7 +544,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         public static IEnumerable<BitStringIceWithCategoryId> RunTaskNoResult(
             BoxModuleI boxModule, ITask taskFunctions,
             TaskTypeEnum taskType, ResultTypeEnum resultType,
-            int[] countVector, GuidStruct attributeGuid, MiningProcessorFunctions miningFunctions)
+            int[] countVector, GuidStruct attributeGuid, MiningProcessorFunctions miningFunctions,
+            Ice.Current _current)
         {
             //validate
             //boxModule.Manager.getBoxModuleValidator().validate(boxModule.StringIceIdentity);
@@ -644,19 +645,40 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                     );
             */
             string statistics;
-            string result =
-    miningProcessor.Run(
-        boxModule.MyProxy,
-        GetBooleanAttributes(boxModule, taskFunctions),
-        GetCategorialAttributes(boxModule, taskFunctions),
-        GetQuantifierBaseFunctions(boxModule, true).ToArray(),
-        taskRunParams,
-        bsProvider,
-        boxModule.Output,
-        attributeGuid,
-        countVector,
-        out statistics
-        );
+            string result;
+            if (_current == null)
+            {
+                result =
+        miningProcessor.Run(
+            boxModule.MyProxy,
+            GetBooleanAttributes(boxModule, taskFunctions),
+            GetCategorialAttributes(boxModule, taskFunctions),
+            GetQuantifierBaseFunctions(boxModule, true).ToArray(),
+            taskRunParams,
+            bsProvider,
+            boxModule.Output,
+            attributeGuid,
+            countVector,
+            out statistics
+            );
+            }
+            else
+            {
+                result =
+        miningProcessor.Run(
+            boxModule.MyProxy,
+            GetBooleanAttributes(boxModule, taskFunctions),
+            GetCategorialAttributes(boxModule, taskFunctions),
+            GetQuantifierBaseFunctions(boxModule, true).ToArray(),
+            taskRunParams,
+            bsProvider,
+            boxModule.Output,
+            attributeGuid,
+            countVector,
+            out statistics,
+            _current
+            );
+            }
 
             while (true)
             {

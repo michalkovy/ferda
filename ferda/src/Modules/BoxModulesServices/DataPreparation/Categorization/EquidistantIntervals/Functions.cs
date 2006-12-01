@@ -782,8 +782,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 
         public override bool GetNextBitString(out BitStringIceWithCategoryId bitString, Current current__)
         {
-            bitString = null;
+            bitString = new BitStringIceWithCategoryId();
             return false;
+        }
+
+        public override long GetMaxBitStringCount(Current current__)
+        {
+            return 0;
         }
 
         #region IFunctions Members
