@@ -171,12 +171,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
             resultFinish();
         }
 
-        private const int _blockSize = 64;
-        private const long _one = 1;
-        private void setTrueBit(int index, long[] array)
-        {
-            array[index / _blockSize] |= _one << (index % _blockSize);
-        }
+        
+
+
 
         #region Testing
         private long _relevantQuestionsCount = 0;
@@ -195,11 +192,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         }
         #endregion
 
-        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, GuidStruct attributeGuid)
+        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, GuidStruct attributeGuid)
         {
             //  if (!ProgressSetValue(-1, "Beginning of attributes trace."))
             //       return false;
             resultInit();
+            CountVector = countVector;
 
             
             IEvaluator evaluator;
@@ -216,34 +214,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IBitString xC;
             nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
 
-            //produce mask bitstrings from countvector
-            BitString[] masks = new BitString[CountVector.Length];
-            int marker = 0;
-            int length = 0;           
-           
-            for (int i = 0; i < CountVector.Length; i++)
-            {
-                length += CountVector[i];
-            }
-
-            int arraySize = (length + _blockSize - 1) / _blockSize;
-
-            for (int i = 0; i < masks.Length; i++)
-            {
-                long[] tmpString = new long[arraySize];
-                tmpString.Initialize();
-                masks[i] = new BitString(new BitStringIdentifier(attributeGuid.value, i.ToString()),
-                    length, tmpString);
-            }
-
-            for (int i = 0; i < masks.Length; i++)
-            {
-                for (int k = marker; k < marker + CountVector[i]; k++)
-                {
-                    masks[i].SetBit(k, true);
-                }
-                marker += CountVector[i];
-            }
+            
 
             foreach (IBitString pC in _condition)
             {
@@ -293,29 +264,29 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             //for every missing record from the MT we add an empty contingency table
                             if (CountVector[i] > 0)
                             {
-                                fft.f111 = nineFT.pApB.And(pA.And(masks[i])).Sum;
-                                fft.f1x1 = nineFT.pAxB.And(pA.And(masks[i])).Sum;
-                                fft.f101 = nineFT.pAnB.And(pA.And(masks[i])).Sum;
+                                fft.f111 = nineFT.pApB.And(pA.And(Masks[i])).Sum;
+                                fft.f1x1 = nineFT.pAxB.And(pA.And(Masks[i])).Sum;
+                                fft.f101 = nineFT.pAnB.And(pA.And(Masks[i])).Sum;
 
-                                fft.fx11 = nineFT.pApB.And(xA.And(masks[i])).Sum;
-                                fft.fxx1 = nineFT.pAxB.And(xA.And(masks[i])).Sum;
-                                fft.fx01 = nineFT.pAnB.And(xA.And(masks[i])).Sum;
+                                fft.fx11 = nineFT.pApB.And(xA.And(Masks[i])).Sum;
+                                fft.fxx1 = nineFT.pAxB.And(xA.And(Masks[i])).Sum;
+                                fft.fx01 = nineFT.pAnB.And(xA.And(Masks[i])).Sum;
 
-                                fft.f011 = nineFT.pApB.And(nA.And(masks[i])).Sum;
-                                fft.f0x1 = nineFT.pAxB.And(nA.And(masks[i])).Sum;
-                                fft.f001 = nineFT.pAnB.And(nA.And(masks[i])).Sum;
+                                fft.f011 = nineFT.pApB.And(nA.And(Masks[i])).Sum;
+                                fft.f0x1 = nineFT.pAxB.And(nA.And(Masks[i])).Sum;
+                                fft.f001 = nineFT.pAnB.And(nA.And(Masks[i])).Sum;
 
-                                fft.f11x = nineFT.xApB.And(pA.And(masks[i])).Sum;
-                                fft.f1xx = nineFT.xAxB.And(pA.And(masks[i])).Sum;
-                                fft.f10x = nineFT.xAnB.And(pA.And(masks[i])).Sum;
+                                fft.f11x = nineFT.xApB.And(pA.And(Masks[i])).Sum;
+                                fft.f1xx = nineFT.xAxB.And(pA.And(Masks[i])).Sum;
+                                fft.f10x = nineFT.xAnB.And(pA.And(Masks[i])).Sum;
 
-                                fft.fx1x = nineFT.xApB.And(xA.And(masks[i])).Sum;
-                                fft.fxxx = nineFT.xAxB.And(xA.And(masks[i])).Sum;
-                                fft.fx0x = nineFT.xAnB.And(xA.And(masks[i])).Sum;
+                                fft.fx1x = nineFT.xApB.And(xA.And(Masks[i])).Sum;
+                                fft.fxxx = nineFT.xAxB.And(xA.And(Masks[i])).Sum;
+                                fft.fx0x = nineFT.xAnB.And(xA.And(Masks[i])).Sum;
 
-                                fft.f01x = nineFT.xApB.And(nA.And(masks[i])).Sum;
-                                fft.f0xx = nineFT.xAxB.And(nA.And(masks[i])).Sum;
-                                fft.f00x = nineFT.xAnB.And(nA.And(masks[i])).Sum;                                
+                                fft.f01x = nineFT.xApB.And(nA.And(Masks[i])).Sum;
+                                fft.f0xx = nineFT.xAxB.And(nA.And(Masks[i])).Sum;
+                                fft.f00x = nineFT.xAnB.And(nA.And(Masks[i])).Sum;                                
                             }
                             ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
                                     fft.ContingencyTable,

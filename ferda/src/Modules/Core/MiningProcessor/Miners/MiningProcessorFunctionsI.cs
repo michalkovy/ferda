@@ -23,7 +23,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return _tmpTuple;
             }
             else
+            {
+                if (progressBarPrx != null)
+                {
+                    progressBarPrx.done();
+                    System.Threading.Thread.Sleep(100);
+                    ProgressTaskI.Destroy(_current.adapter, progressPrx);
+                }
                 return null;
+            }
         }
 
         // private static bool firstRun = true;
@@ -53,7 +61,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
         }
 
-        private IEnumerator<KeyValuePair<string, BitStringIce>> _booleanTraceEnumerator;
+        private IEnumerator<KeyValuePair<string, BitStringIce>> _booleanTraceEnumerator = null;
+        ProgressTaskPrx progressPrx = null;
+        ProgressBarPrx progressBarPrx = null;
+        Ice.Current _current = null;
 
         public override string Run(
             BoxModulePrx boxModule,
@@ -77,23 +88,32 @@ namespace Ferda.Guha.MiningProcessor.Miners
             long before = DateTime.Now.Ticks;
 
             ProgressTaskListener progressListener = null;
-            ProgressTaskPrx progressPrx = null;
-            ProgressBarPrx progressBarPrx = null;
-            string label = taskTypeToString(taskParams.taskType) + "-Task";
+
+            string label = String.Empty;
             string result = String.Empty;
+
+            _current = current__;
 
             switch (taskParams.resultType)
             {
                 case ResultTypeEnum.Trace:
+                    label = taskTypeToString(taskParams.taskType) + "-Task";
                     progressListener = new ProgressTaskListener();
                     progressPrx =
-                        ProgressTaskI.Create(current__.adapter, progressListener);
+                        ProgressTaskI.Create(_current.adapter, progressListener);
                     progressBarPrx =
                         output.startProgress(progressPrx, label, label + " running...");
                     progressBarPrx.setValue(-1, "Loading ...");
                     break;
 
                 case ResultTypeEnum.TraceBoolean:
+                    label = taskTypeToString(taskParams.taskType) + "-SubTask";
+                    progressListener = new ProgressTaskListener();
+                    progressPrx =
+                        ProgressTaskI.Create(_current.adapter, progressListener);
+                    progressBarPrx =
+                        output.startProgress(progressPrx, label, label + " running...");
+                    progressBarPrx.setValue(-1, "Loading ...");
                     break;
 
                 case ResultTypeEnum.TraceReal:
@@ -223,11 +243,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
             finally
             {
-                if (progressBarPrx != null)
+                if ((progressBarPrx != null) && (_booleanTraceEnumerator == null))
                 {
                     progressBarPrx.done();
                     System.Threading.Thread.Sleep(100);
-                    ProgressTaskI.Destroy(current__.adapter, progressPrx);
+                    ProgressTaskI.Destroy(_current.adapter, progressPrx);
                 }
             }
         }

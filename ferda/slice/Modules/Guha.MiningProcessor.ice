@@ -84,12 +84,18 @@ module Ferda {
 
 					Ferda::Modules::StringOpt GetMissingInformationCategoryId()
 						throws Ferda::Modules::BoxRuntimeError;
-						
-					//vraci countvector pro relacni DM	
+					
+					//---relacni DM informace	
+					//vraci countvector
 					Ferda::Modules::IntSeq GetCountVector(string masterIdColumn, string masterDataTableName)
 						throws Ferda::Modules::BoxRuntimeError;
 						
+				     //da dalsi bitstring
 					 bool GetNextBitString(out BitStringIceWithCategoryId bitString)
+						throws Ferda::Modules::BoxRuntimeError;
+						
+					//maximalni # bs, ktere podminer vygeneruje
+					long GetMaxBitStringCount()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 

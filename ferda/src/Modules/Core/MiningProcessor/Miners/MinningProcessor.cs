@@ -276,6 +276,77 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         #endregion
 
+        #region RelMining
+
+        protected const int _blockSize = 64;
+        private const long _one = 1;
+        protected void setTrueBit(int index, long[] array)
+        {
+            array[index / _blockSize] |= _one << (index % _blockSize);
+        }
+
+        private int[] _countVector = null;
+
+        protected int[] CountVector
+        {
+            get
+            {
+                return _countVector;
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    _countVector = value;
+                }
+            }
+        }
+
+        private BitString[] _masks = null;
+        protected BitString[] Masks
+        {
+            get
+            {
+                if (_masks == null)
+                {
+                    //produce mask bitstrings from countvector
+                    _masks = new BitString[CountVector.Length];
+                    int marker = 0;
+                    int length = 0;
+
+                    for (int i = 0; i < CountVector.Length; i++)
+                    {
+                        length += CountVector[i];
+                    }
+
+                    int arraySize = (length + _blockSize - 1) / _blockSize;
+
+                    for (int i = 0; i < _masks.Length; i++)
+                    {
+                        long[] tmpString = new long[arraySize];
+                        tmpString.Initialize();
+                        _masks[i] = new BitString(new BitStringIdentifier(
+                            "123", i.ToString()),
+                            length, tmpString);
+                    }
+
+                    for (int i = 0; i < _masks.Length; i++)
+                    {
+                        for (int k = marker; k < marker + CountVector[i]; k++)
+                        {
+                            _masks[i].SetBit(k, true);
+                        }
+                        marker += CountVector[i];
+                    }
+                }
+                return _masks;
+            }
+        }
+
+        #endregion
+
+
         #region Progress
 
         private readonly ProgressTaskListener _progressListener;

@@ -510,6 +510,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             _setting = setting;
             _attributeGuid = setting.generator.GetAttributeId().value;
+            _totalCount = setting.generator.GetMaxBitStringCount();
             
         }
 
@@ -527,8 +528,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
                             _setting.generator.GetAttributeId().value, tempString.categoryId),
                             tempString.bitString.length,
                             tempString.bitString.value);
-
-                        //IBitString result = Helpers.GetBitString(null, null, null, BitwiseOperation.And);
 
                         SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
                         if (parentSkipSetting != null)

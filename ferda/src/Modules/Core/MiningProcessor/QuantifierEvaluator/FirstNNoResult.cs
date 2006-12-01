@@ -108,8 +108,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         break;
                     }
                 }
-            }*/
-
+            }
+            */
             bool shouldStop = !_miningProcessor.ProgressSetValue(
                 progress(), progressMessage()
                 );
