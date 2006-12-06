@@ -211,6 +211,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
         }
 
+        /// <summary>
+        /// Inits the control when the loading loading of the hypotheses is
+        /// finished
+        /// </summary>
         private void AllInit()
         {
             ColumnsInit(resultBrowser.SemanticMarks);
@@ -314,7 +318,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
             HypothesesListView.Items.Add(item);
         }
-
 
         /// <summary>
         /// Adds all hypotheses to listview
@@ -431,14 +434,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         void resultBrowser_IceComplete()
         {
-            //  this.Initialize();
-            AllInit();
+            this.AllInit();
             this.LabelProgressBar.Visible = false;
             this.ProgressBarIceTicks.Visible = false;
             this.StatusStrip.Visible = false;
             this.AfterLoadEnable();
         }
-
 
         /// <summary>
         /// Method for handling one IceTick, refreshes the progress bar
@@ -539,43 +540,38 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Method for filling the chart and propertygrid with the hypothese data.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void ItemSelectHandler(object sender, EventArgs e)
         {
-
             ListView view = (ListView)sender;
             int index = 0;
-            //  HypothesisStruct hypothesis;
-            try
-            {
-                index = (int)view.SelectedItems[0].Tag;
-                if (index == previousIndex)
-                {
-                    return;
-                }
-                else
-                {
-                    // hypothesis = this.resultBrowser.GetHypothese(index);
-                    previousIndex = index;
-                }
-            }
 
-            catch
+            //getting the index of the new selected row
+            index = (int)view.SelectedItems[0].Tag;
+            if (index == previousIndex)
             {
                 return;
             }
-            this.FillPropertyGrid(index);
-            /*
+            else
+            {
+                // hypothesis = this.resultBrowser.GetHypothese(index);
+                previousIndex = index;
+            }
+
+            //getting the actual hypothesis from the index of the hypothesis
+            Hypothesis hypothesis = this.resultBrowser.GetHypothese(index);
+            //filling the property grid
+            this.FillPropertyGrid(hypothesis, index);
+
             if (this.RadioFirstTable.Checked)
             {
-                this.DrawBarsFromFirstTable(hypothesis, this.ContingencyTableChart);
+                this.DrawBarsFromFirstTable(hypothesis);
             }
             else
             {
-                this.DrawBarsFromSecondTable(hypothesis, this.ContingencyTableChart);
+                //this.DrawBarsFromSecondTable(hypothesis);
             }
-             * */
         }
 
         /// <summary>
@@ -602,10 +598,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Fills propertgrid with the data of the selected hypothesis
         /// </summary>
-        /// <param name="hypothesisId">Id of the hypothesis to take data from</param>
-        private void FillPropertyGrid(int hypothesisId)
+        /// <param name="hypothesis">Hypothesis to take the data from</param>
+        /// <param name="hypothesisId">Index of the hypothese</param>
+        private void FillPropertyGrid(Hypothesis hypothesis, int hypothesisId)
         {
-            Hypothesis hypothesis = this.resultBrowser.GetHypothese(hypothesisId);
             PropertyTable table = new PropertyTable();
             string antecedentText = string.Empty;
             string succedentText = string.Empty;
@@ -624,7 +620,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                        typeof(string),
                        column.ColumnName,
                        column.ColumnName,
-                       resultBrowser.GetFormulaString(column.ColumnType, hypothesisId)
+                       resultBrowser.GetFormulaString(column.ColumnType, hypothesis)
                        );
                         tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(tName);
@@ -637,7 +633,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                         typeof(string),
                         column.ColumnName,
                         column.ColumnName,
-                        resultBrowser.GetFormulaString(column.ColumnType, hypothesisId)
+                        resultBrowser.GetFormulaString(column.ColumnType, hypothesis)
                         );
                         tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(tName);
@@ -646,13 +642,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
             }
 
-            #region PG commented out
-
-           
-
             #endregion
-            #endregion
-
 
             #region Used quantifiers and their values
 
@@ -691,7 +681,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
 
             #endregion
-
 
             #region Contingency tables
 
@@ -808,264 +797,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     j1 = 1;
                 }
             }
-
-            /*
-                foreach (int[] row in hypothesis.quantifierSetting.firstContingencyTableRows)
-                {
-                    foreach (int value in row)
-                    {
-                        string temp = String.Empty;
-                        switch (i1)
-                        {
-                            case 1:
-                                if (j1 == 1)
-                                {
-                                    temp = "a";
-                                }
-                                else
-                                {
-                                    temp = "b";
-                                }
-                                break;
-
-                            default:
-                                if (j1 == 1)
-                                {
-                                    temp = "c";
-                                }
-                                else
-                                {
-                                    temp = "d";
-                                }
-
-                                break;
-                        }
-                        PropertySpec hValue = new PropertySpec(
-                        temp,
-                        typeof(int),
-                        "1. " + resManager.GetString("ContingencyTable"),
-                        "1. " + resManager.GetString("ContingencyTable"),
-                        value
-                        );
-                        hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                        table.Properties.Add(hValue);
-                        table[temp] = value;
-                        j1++;
-                    }
-                    j1 = 1;
-                    i1++;
-                }
-
-                i1 = 1;
-                j1 = 1;
-
-                foreach (int[] row in hypothesis.quantifierSetting.secondContingencyTableRows)
-                {
-                    foreach (int value in row)
-                    {
-                        string temp = String.Empty;
-                        switch (i1)
-                        {
-                            case 1:
-                                if (j1 == 1)
-                                {
-                                    temp = "a";
-                                }
-                                else
-                                {
-                                    temp = "b";
-                                }
-                                break;
-
-                            default:
-                                if (j1 == 1)
-                                {
-                                    temp = "c";
-                                }
-                                else
-                                {
-                                    temp = "d";
-                                }
-
-                                break;
-                        }
-                        PropertySpec hValue = new PropertySpec(
-                        temp,
-                        typeof(int),
-                        "2. " + resManager.GetString("ContingencyTable"),
-                        "2. " + resManager.GetString("ContingencyTable"),
-                        value
-                        );
-                        hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                        table.Properties.Add(hValue);
-                        table[temp] = value;
-                        j1++;
-                    }
-                    j1 = 1;
-                    i1++;
-                }
-
-                foreach (int[] row in hypothesis.quantifierSetting.firstContingencyTableRows)
-                {
-                    foreach (int value in row)
-                    {
-                        string antName = i1.ToString();
-                        string sucName = j1.ToString();
-                        if ((this.taskType == "LISpMinerTasks.SDKLTask") || (this.taskType == "LISpMinerTasks.KLTask"))
-                        {
-                            foreach (LiteralStruct literal in hypothesis.literals)
-                            {
-                                if (literal.cedentType == CedentEnum.Antecedent)
-                                {
-                                    if (literal.categoriesNames.Length > (i1-1))
-                                    {
-                                        antName = literal.categoriesNames[(i1-1)];
-                                    }
-                                    break;
-                                }
-                            }
-
-                            foreach (LiteralStruct literal in hypothesis.literals)
-                            {
-                                if (literal.cedentType == CedentEnum.Succedent)
-                                {
-                                    if (literal.categoriesNames.Length > (j1-1))
-                                    {
-                                        sucName = literal.categoriesNames[(j1-1)];
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                        else if ((this.taskType == "LISpMinerTasks.SDCFTask") || (this.taskType == "LISpMinerTasks.CFTask"))
-                        {
-                            foreach (LiteralStruct literal in hypothesis.literals)
-                            {
-                                if (literal.cedentType == CedentEnum.Antecedent)
-                                {
-                                    if (literal.categoriesNames.Length > (j1-1))
-                                    {
-                                        antName = literal.categoriesNames[(j1-1)];
-                                    }
-                                    break;
-                                }
-                            }
-                            sucName = String.Empty;
-                        }
-                        if (sucName != String.Empty)
-                        {
-                            PropertySpec hValue = new PropertySpec(
-                            antName.ToString() + "-" + sucName.ToString(),
-                            typeof(int),
-                            "1. " + resManager.GetString("ContingencyTable"),
-                            "1. " + resManager.GetString("ContingencyTable"),
-                            value
-                            );
-                            hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                            table.Properties.Add(hValue);
-                            table[antName.ToString() + "-" + sucName.ToString()] = value;
-                        }
-                        else
-                        {
-                            PropertySpec hValue = new PropertySpec(
-                            antName.ToString(),
-                            typeof(int),
-                            "1. " + resManager.GetString("ContingencyTable"),
-                            "1. " + resManager.GetString("ContingencyTable"),
-                            value
-                            );
-                            hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                            table.Properties.Add(hValue);
-                            table[antName.ToString()] = value;
-                        }
-                        j1++;
-                    }
-                    j1 = 1;
-                    i1++;
-                }
-
-            /*
-                i1 = 1;
-                j1 = 1;
-                foreach (int[] row in hypothesis.quantifierSetting.secondContingencyTableRows)
-                {
-                    foreach (int value in row)
-                    {
-                        string antName = i1.ToString();
-                        string sucName = j1.ToString();
-                        if ((this.taskType == "LISpMinerTasks.SDKLTask") || (this.taskType == "LISpMinerTasks.KLTask"))
-                        {
-                            foreach (LiteralStruct literal in hypothesis.literals)
-                            {
-                                if (literal.cedentType == CedentEnum.Antecedent)
-                                {
-                                    if (literal.categoriesNames.Length > (i1 - 1))
-                                    {
-                                        antName = literal.categoriesNames[(i1 - 1)];
-                                    }
-                                    break;
-                                }
-                            }
-
-                            foreach (LiteralStruct literal in hypothesis.literals)
-                            {
-                                if (literal.cedentType == CedentEnum.Succedent)
-                                {
-                                    if (literal.categoriesNames.Length > (j1 - 1))
-                                    {
-                                        sucName = literal.categoriesNames[(j1 - 1)];
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                        else if ((this.taskType == "LISpMinerTasks.SDCFTask") || (this.taskType == "LISpMinerTasks.CFTask"))
-                        {
-                            foreach (LiteralStruct literal in hypothesis.literals)
-                            {
-                                if (literal.cedentType == CedentEnum.Antecedent)
-                                {
-                                    if (literal.categoriesNames.Length > (j1 - 1))
-                                    {
-                                        antName = literal.categoriesNames[(j1 - 1)];
-                                    }
-                                    break;
-                                }
-                            }
-                            sucName = String.Empty;
-                        }
-                        if (sucName != String.Empty)
-                        {
-                            PropertySpec hValue = new PropertySpec(
-                            antName.ToString() + "-" + sucName.ToString(),
-                            typeof(int),
-                            "1. " + resManager.GetString("ContingencyTable"),
-                            "1. " + resManager.GetString("ContingencyTable"),
-                            value
-                            );
-                            hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                            table.Properties.Add(hValue);
-                            table[antName.ToString() + "-" + sucName.ToString()] = value;
-                        }
-                        else
-                        {
-                            PropertySpec hValue = new PropertySpec(
-                            antName.ToString(),
-                            typeof(int),
-                            "2. " + resManager.GetString("ContingencyTable"),
-                            "2. " + resManager.GetString("ContingencyTable"),
-                            value
-                            );
-                            hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                            table.Properties.Add(hValue);
-                            table[antName.ToString()] = value;
-                        }
-                        j1++;
-                    }
-                    j1 = 1;
-                    i1++;
-                }
-            */
             #endregion
 
             this.displayer.Reset();
@@ -1148,9 +879,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.resultBrowser.SuccedentFilter = sucFilter;
             this.resultBrowser.ConditionFilter = condFilter;
             this.ReReadItems();
-             * */
+            */
         }
 
+        /// <summary>
+        /// Opens a PDF file with the help about the ResultBrowser module
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void ButtonHelp_Click(object sender, EventArgs e)
         {
             ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ResultBrowser.pdf");

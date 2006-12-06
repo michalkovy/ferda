@@ -182,13 +182,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.RadioSecondTable.Name = "RadioSecondTable";
             this.RadioSecondTable.Size = new System.Drawing.Size(85, 17);
             this.RadioSecondTable.TabIndex = 1;
-            this.RadioSecondTable.TabStop = true;
             this.RadioSecondTable.Text = "radioButton2";
             this.RadioSecondTable.UseVisualStyleBackColor = true;
             // 
             // RadioFirstTable
             // 
             this.RadioFirstTable.AutoSize = true;
+            this.RadioFirstTable.Checked = true;
             this.RadioFirstTable.Location = new System.Drawing.Point(3, 6);
             this.RadioFirstTable.Name = "RadioFirstTable";
             this.RadioFirstTable.Size = new System.Drawing.Size(85, 17);

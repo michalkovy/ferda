@@ -271,7 +271,7 @@ module Ferda {
 				{
 					None,
 					Cedent2,
-		    	Cedent1AndCedent2
+		    	          Cedent1AndCedent2
 				};
 
 				struct TaskRunParams
