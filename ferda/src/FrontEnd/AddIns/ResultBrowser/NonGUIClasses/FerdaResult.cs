@@ -1,8 +1,9 @@
 // FerdaResult.cs - class for working with results of the taskrun
 //
-// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+// Authors:   Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//           Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Alexander Kuzmin
+// Copyright (c) 2005 Alexander Kuzmin, Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -92,7 +93,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
     };
 
-    
     /// <summary>
     /// Struct for saving counted values
     /// </summary>
@@ -204,7 +204,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
     #endregion
 
-
     /// <summary>
     /// Structure for storing cached quantifiers
     /// </summary>
@@ -226,11 +225,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Resource manager
         /// </summary>
         private ResourceManager resManager;
-
-        /// <summary>
-        /// Localization string, en-US or cs-CZ for now.
-        /// </summary>
-        private string localizationString;
 
         /// <summary>
         /// Hypotheses to display
@@ -264,7 +258,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         private string[] quantifiersUserLabels = new string [0];
 
-
         /// <summary>
         /// Deserialized result
         /// </summary>
@@ -293,7 +286,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         #endregion
         #endregion
-
 
         #region Properties
 
@@ -401,7 +393,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="mark">MarkEnum to get String value for</param>
         /// <param name="hypothesisId">Hypothesis id</param>
-        /// <returns></returns>
+        /// <returns>The string value of MarkEnums for hypothesis</returns>
         public string GetFormulaString(MarkEnum mark, int hypothesisId)
         {
             try
@@ -412,6 +404,17 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             {
                 return String.Empty;
             }
+        }
+
+        /// <summary>
+        /// Method to get string value of MarkEnums for the given hypothesis
+        /// </summary>
+        /// <param name="mark">MarkEnum to get String value for</param>
+        /// <param name="hypothesis">The hypothesis</param>
+        /// <returns>The string value of MarkEnums for hypothesis</returns>
+        public string GetFormulaString(MarkEnum mark, Hypothesis hypothesis)
+        {
+            return hypothesis.GetFormula(mark).ToString();
         }
 
         public CategorialAttributeFormula GetFormula(MarkEnum mark, int hypothesisId)
@@ -474,7 +477,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         #endregion
 
-
         #region Constructor
 
         /// <summary>
@@ -502,7 +504,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         #endregion
 
-
         #region Initialization methods
 
         /// <summary>
@@ -511,7 +512,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <param name="hypotheses"></param>
         public void Initialize()
         {
-
             #region Caching
 
             //initializing hypotheses cache
@@ -542,7 +542,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
 
         #endregion
-
 
         #region Column methods
 
@@ -636,7 +635,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
 
         #endregion
 
-
         #region Methods for composing various strings
 
         #region commented
@@ -711,7 +709,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         #endregion
         #endregion
 
-
         #region Events
 
         public event LongRunTick IceTicked;
@@ -733,7 +730,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
 
         #endregion
-
 
         #region Quantifier functions
 
@@ -822,7 +818,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         */
         #endregion
 
-
         #region Hypotheses methods
 
         /// <summary>
@@ -836,7 +831,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
 
         #endregion
-
 
         #region Caching methods
         #region commented
@@ -864,30 +858,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         #endregion
 
         #endregion
-
-
-        #region Other methods
-
-        /*
-        /// <summary>
-        /// Method to decide whether the hypothesis is of 4-ft miner
-        /// </summary>
-        /// <param name="hypothesis">Hypothesis to check</param>
-        /// <returns>True if hypothesis is from 4ft</returns>
-        public static bool IsFFT(HypothesisStruct hypothesis)
-        {
-            foreach (BooleanLiteralStruct booleanLiteral in hypothesis.booleanLiterals)
-            {
-                if ((booleanLiteral.cedentType == CedentEnum.Antecedent) || (booleanLiteral.cedentType == CedentEnum.Succedent))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        */
-        #endregion
-
 
         #region Filtering methods
         #region commented
@@ -1087,7 +1057,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         #endregion
         #endregion
 
-
         #region Localization
 
         public void ChangeRm(ResourceManager rm)
@@ -1098,4 +1067,3 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         #endregion
     }
 }
-
