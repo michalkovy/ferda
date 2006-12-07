@@ -91,7 +91,7 @@ module Ferda {
 						throws Ferda::Modules::BoxRuntimeError;
 						
 				     //da dalsi bitstring
-					 bool GetNextBitString(out BitStringIceWithCategoryId bitString)
+					 bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString)
 						throws Ferda::Modules::BoxRuntimeError;
 						
 					//maximalni # bs, ktere podminer vygeneruje
@@ -280,6 +280,7 @@ module Ferda {
 					ResultTypeEnum resultType;
 					TaskEvaluationTypeEnum evaluationType;
 					long maxSizeOfResult; // N from FirstN or TopN
+					int skipFirstN; //skip first N hypotheses for Rel DM purposes
 					WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode; // for SD tasks only
 				};
 

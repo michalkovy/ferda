@@ -13,7 +13,7 @@ using Ferda.Modules.Boxes.GuhaMining.Tasks;
 
 //using Ferda.Modules.Boxes.DataPreparation.DataSource;
 
-namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttribute
+namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAttribute
 {
     internal class MiningFunctions : MiningProcessorFunctionsDisp_
     {
@@ -72,6 +72,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         private bool _minerInitialized = false;
         private IEnumerator<BitStringIceWithCategoryId> _bitStringEnumerator;
         private int[] _countVector = null;
+        private int _skipFirstN = -1;
 
         private IEnumerator<BitStringIceWithCategoryId> BitStringEnumerator
         {
@@ -84,7 +85,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                         TaskTypeEnum.FourFold,
                         ResultTypeEnum.TraceBoolean,
                         CountVector,
-                        Guid, miningFunctions, _current).GetEnumerator();
+                        Guid, miningFunctions, _skipFirstN, _current).GetEnumerator();
 
                     _minerInitialized = true;
                     return _bitStringEnumerator;
@@ -202,7 +203,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                 fallOnError);
         }
 
-        private const int _bufferSize = 10;
+        private const int _bufferSize = 100;
         private BitStringIceWithCategoryId[] bitStringCache =
             new BitStringIceWithCategoryId[_bufferSize];
         private int _bufferFlag = 0;
@@ -319,8 +320,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         }
 
         private Ice.Current _current = null;
-        public override bool GetNextBitString(out BitStringIceWithCategoryId bitString, Current current__)
+        public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
+            if (_skipFirstN == -1)
+            {
+                _skipFirstN = skipFirstN;
+            }
             _current = current__;
             bitString =
                 GetNextBitStringFromBuffer();

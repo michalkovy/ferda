@@ -33,7 +33,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         public abstract void Trace();
 
-        public abstract IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, GuidStruct attributeGuid);
+        public abstract IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, GuidStruct attributeGuid, int skipFirstN);
 
         //  public abstract IEnumerable<IBitString> GetBooleanTraceEnumerator();
 

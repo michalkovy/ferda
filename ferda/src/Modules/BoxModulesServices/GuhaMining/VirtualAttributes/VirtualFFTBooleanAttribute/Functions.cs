@@ -13,7 +13,7 @@ using Ferda.Modules.Boxes.GuhaMining.Tasks;
 
 //using Ferda.Modules.Boxes.DataPreparation.DataSource;
 
-namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAttribute
+namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttribute
 {
     internal class MiningFunctions : MiningProcessorFunctionsDisp_
     {
@@ -62,10 +62,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         public const string PropCardinality = "Cardinality";
         public const string SockMasterDataTable = "MasterDataTable";
         public const string PropImportance = "Importance";
+        public const string PropMaxNumberOfHypotheses = "MaxNumberOfHypotheses";
+
+        private long MaxNumberOfHypotheses
+        {
+            get { return _boxModule.GetPropertyLong(PropMaxNumberOfHypotheses); }
+        }
 
         private bool _minerInitialized = false;
         private IEnumerator<BitStringIceWithCategoryId> _bitStringEnumerator;
         private int[] _countVector = null;
+        private int _skipFirstN = -1;
 
         private IEnumerator<BitStringIceWithCategoryId> BitStringEnumerator
         {
@@ -73,13 +80,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
             {
                 if (!_minerInitialized)
                 {
-
-                        _bitStringEnumerator = Common.RunTaskNoResult(
+                      _bitStringEnumerator = Common.RunTaskNoResult(
                             _boxModule, this,
                             TaskTypeEnum.FourFold,
                             ResultTypeEnum.TraceBoolean,
                             CountVector,
-                            Guid, miningFunctions, _current).GetEnumerator();
+                            Guid, miningFunctions, _skipFirstN, _current).GetEnumerator();
 
                     _minerInitialized = true;
                     return _bitStringEnumerator;
@@ -314,8 +320,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         }
 
         private Ice.Current _current = null;
-        public override bool GetNextBitString(out BitStringIceWithCategoryId bitString, Current current__)
+        public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
+            if (_skipFirstN == -1)
+            {
+                _skipFirstN = skipFirstN;
+            }
             _current = current__;
             bitString =
                 GetNextBitStringFromBuffer();
@@ -409,7 +419,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
 
         public override long GetMaxBitStringCount(Current current__)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return MaxNumberOfHypotheses;
         }
     }
 }

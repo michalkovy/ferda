@@ -513,6 +513,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 resultType,
                 ExecutionType(boxModule),
                 MaxNumberOfHypotheses(boxModule),
+                -1,
                 secondSetWorking
                 );
 
@@ -545,6 +546,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             BoxModuleI boxModule, ITask taskFunctions,
             TaskTypeEnum taskType, ResultTypeEnum resultType,
             int[] countVector, GuidStruct attributeGuid, MiningProcessorFunctions miningFunctions,
+            int skipFirstN,
             Ice.Current _current)
         {
             //validate
@@ -587,63 +589,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 resultType,
                 ExecutionType(boxModule),
                 MaxNumberOfHypotheses(boxModule),
+                skipFirstN,
                 secondSetWorking
                 );
 
-            //    SetResult(boxModule, null);
-            //    SetResultInfo(boxModule, null);
-            /*
-            string adapterId =
-                miningProcessorWithProgressBar.ice_getAdapterId();
-
-            Ice.ObjectPrx objectPrx =
-                miningProcessorWithProgressBar.ice_getLocator().findAdapterById(adapterId);
-
-            Ice.Communicator communicator = objectPrx.ice_getCommunicator();
-            
-
-            
-
-            Ice.Connection connection = miningProcessorWithProgressBar.ice_getConnection();
-            
-            Ice.Connection connection1 = objectPrx.ice_getConnection();
-            
-            Ice.ObjectAdapter adapter =
-               connection1.getAdapter();
-
-            miningProcessorWithProgressBar.ice_getCommunicator().findObjectFactory("");
-            
-            Ice.Identity identity = miningProcessorWithProgressBar.ice_getIdentity();
-            string facet = miningProcessorWithProgressBar.ice_getFacet();
-            Ice.Context context = miningProcessorWithProgressBar.ice_getContext();
-
-            
-
-            Ice.Current current = new Ice.Current(
-                adapter,
-                connection,
-                identity,
-                facet,
-                null,
-                Ice.OperationMode.Normal,
-                context,
-                0);
-            
-            string result =
-                miningProcessor.Run(
-                    boxModule.MyProxy,
-                    GetBooleanAttributes(boxModule, taskFunctions),
-                    GetCategorialAttributes(boxModule, taskFunctions),
-                    GetQuantifierBaseFunctions(boxModule, true).ToArray(),
-                    taskRunParams,
-                    bsProvider,
-                    boxModule.Output,
-                    attributeGuid,
-                    countVector,
-                    out statistics,
-                    current
-                    );
-            */
             string statistics;
             string result;
             if (_current == null)
@@ -686,22 +635,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 if (tmpString != null)
                 {
                     yield return tmpString;
-                    // yield return new BitString(new BitStringIdentifier("123", tmpString.categoryId), tmpString.bitString.length, tmpString.bitString.value);
                 }
                 else
                 {
                     yield break;
                 }
-
             }
-
-            //miningProcessor.
-
-            //SerializableResultInfo deserealized = SerializableResultInfo.Deserialize(statistics);
-            //boxModule.Output.writeMsg(MsgType.Info, "Peformance info", deserealized.OtherInfo);
-
-            //SetResult(boxModule, result);
-            // SetResultInfo(boxModule, statistics);
         }
     }
 }
