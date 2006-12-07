@@ -697,7 +697,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return result;
         }
 
-        public override bool GetNextBitString(out BitStringIceWithCategoryId bitString, Current current__)
+        public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
             bitString = new BitStringIceWithCategoryId();
             return false;

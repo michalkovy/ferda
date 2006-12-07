@@ -192,7 +192,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         }
         #endregion
 
-        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, GuidStruct attributeGuid)
+        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, GuidStruct attributeGuid, int skipFirstN)
         {
             //  if (!ProgressSetValue(-1, "Beginning of attributes trace."))
             //       return false;
@@ -214,7 +214,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IBitString xC;
             nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
 
-            
+            int step = 0;
 
             foreach (IBitString pC in _condition)
             {
@@ -229,7 +229,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     ActConditionCountOfObjects = (int)_result.AllObjectsCount;
                 else
                     ActConditionCountOfObjects = pC.Sum;
-
+           
                 foreach (IBitString pS in _succedent)
                 {
                     if (pS is IEmptyBitString)
@@ -251,6 +251,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         {
                             yield break;
                         }
+
+                        if (step < skipFirstN)
+                        {
+                            step++;
+                            continue;
+                        }
+                        step++;
                         GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
 
                         //cycle through countvector-based masks

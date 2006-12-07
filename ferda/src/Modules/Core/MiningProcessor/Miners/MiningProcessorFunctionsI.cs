@@ -210,7 +210,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             AttributeNameProviderPrxHelper.checkedCast(boxModule.getFunctions());
                         Ferda.Guha.MiningProcessor.Formulas.AttributeNameInLiteralsProvider.Init(nameProvider);
 
-                        _booleanTraceEnumerator = miningProcessor.TraceBoolean(_countVector, _attributeId).GetEnumerator();
+                        _booleanTraceEnumerator = miningProcessor.TraceBoolean(
+                            _countVector, _attributeId, taskParams.skipFirstN).GetEnumerator();
                         break;
 
                     case ResultTypeEnum.TraceReal:

@@ -36,6 +36,16 @@ vlastnostmi a vzájemnými vztahy. Cílem relaèního dataminingu je odstranìní
 omezení na jednu tabulku dat a umožnìní dobývání znalostí z více relaènì
 propojených datových tabulek.
 \section{GUHA}
+\paragraph{}
+GUHA je zkratka pro General Unary Hypotheses Automaton.
+Tuto metodu poprvé formuloval Hájek a kol. již v roce 1966,
+detailnìji pak Hájek a Havránek (1978).
+\paragraph{}
+GUHA je druh automatizované explorativní analýzy dat.
+Základní princip GUHA metody je v generovaní všech možných relevantních otázek
+specifikovaných uživatelem, ovìøení každé z nich oproti datùm a reportování
+pouze prostých hypotéz. Hypotéza je prostá, jestliže je pravdivá 
+v analyzované datové matici a zároveò nevyplývá z jiných, jednodušších hypotéz. 
 \subsection{Metody DM}
 \paragraph{}
 Pøi tvorbì dataminingového modelu lze použít více metod. Dobrých výsledkù
@@ -46,9 +56,40 @@ podrobnìjší pøehled metod pro tvorbu dataminingového modelu viz napøíklad
 \cite{duchacek}.
 \subsection{Asociaèní pravidla}
 \label{asociacnipravidla}
+\subsubsection{Apriori}
+\paragraph{}
+Asociaèní pravidla mùžeme rozdìlit na dvì skupiny. První se vztahuje k analýze
+nákupního koše. Takové pravidlo je ve tvaru $X \to Y$, kde $X$ a $Y$ znaèí
+dvì množiny pøedmìtù, které se mohou nacházet v nakupních koších a má
+následující význam: když nákupní koš obsahuje množinu pøedmìtù $X$, 
+pravdìpodobnì bude obsahovat množinu pøedmìtù $Y$. Napøíklad klienti, kteøí
+nakoupí víno, èasto nakupují také sýry. Analýzou transakcí supermarkety mohou
+optimalizovat rozmístìní zboží v prodejnì a zajistit rychlejší a výnosnìjší
+nakupování. Pro dobývání znalostí za využití takových pravidel byl navržen
+algoritmus Apriori, viz \cite{apriori}.
+\subsubsection{GUHA}
+\paragraph{}
+Druhou skupinou asociaèních pravidel popisuje metoda GUHA. Je obecnìjší než
+Apriori. Tato metoda byla poprvé formulována v roce 1966 a byla vydana v 1978
+ - viz \cite{guhabasic}. Asociaèní pravidlo má tvar $\phi \approx \psi$,
+kde $\phi$ a $\psi$ znaèí boolské atributy odvozené z hodnot sloupcù
+analyzované matice dat. Symbol $\approx$ znaèí obecný kvantifikátor, jenž
+popisuje vztah (asociaci) mezi $\phi$ a $\psi$. Tento mùže být napøíklad
+ve formì implikace nebo ve formì statistického testu.
+\paragraph{}
+Metoda GUHA pracuje pouze s kategoriálními daty,
+protože vzhledem ke zpùsobu generování hypotéz je nutné, aby byl prostor
+hypotéz koneèný. Data, která nejsou diskrétní, musí být diskretizovány
+pøedem (ve fázi pøípravy dat). Obvykle tak, že se vytvoøí nìkolik 
+nepøekrývajících se intervalù, které pokryjí všechny hodnoty v databázi.
+\paragraph{}
+Typická efektivní realizace GUHA procedury používá "vertikální" reprezentaci
+databáze, kde každá hodnota každého atributu je reprezentována øetìzcem bitù
+(viz. kapitola \ref{bitstrings}). Každý bit v øetìzci popisuje jeden objekt.
+Bit 1 reprezentuje "objekt má tuto hodnotu", zatímco bit 0 znamená
+"objekt nemá tuto hodnotu".
 
-
-\section{LISp-Miner}
+\subsection{Relaèní asociaèní pravidla}
 
 \section{Ferda Dataminer}
 \subsection{Vztah diplomové práce ''Experimentální GUHA procedury'' k této práci}

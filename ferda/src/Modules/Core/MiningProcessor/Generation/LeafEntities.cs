@@ -28,7 +28,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 _attributeGuid,
                 _setting.categoriesIds,
                 BitwiseOperation.Or);
-            
+
             SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
             if (parentSkipSetting != null)
             {
@@ -90,7 +90,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     prolongCoefficient(_categoriesNames[i]);
                     if (_actualLength < _effectiveMinLength)
                         continue;
-                    
+
                     SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
                     if (parentSkipSetting != null)
                     {
@@ -101,7 +101,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         yield return _currentBitString;
                     }
-                    
+
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
@@ -156,7 +156,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         yield return _currentBitString;
                     }
-                    
+
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
@@ -214,7 +214,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         yield return _currentBitString;
                     }
-                    
+
                     if (_actualLength + 1 > _effectiveMaxLength)
                         break;
                 }
@@ -257,9 +257,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
             get
             {
                 if (_effectiveMaxLength == _categoriesNames.Length)
-                    return ((_effectiveMaxLength - _effectiveMinLength + 1)*2) - 1;
+                    return ((_effectiveMaxLength - _effectiveMinLength + 1) * 2) - 1;
                 else
-                    return (_effectiveMaxLength - _effectiveMinLength + 1)*2;
+                    return (_effectiveMaxLength - _effectiveMinLength + 1) * 2;
             }
         }
 
@@ -290,7 +290,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
             int start = 0;
-            restart:
+        restart:
             if (_effectiveMinLength <= _categoriesNames.Length - start
                 && start < _categoriesNames.Length)
                 for (int i = start; true; i++)
@@ -309,7 +309,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         yield return _currentBitString;
                     }
-                    
+
                     if ((_actualLength + 1 > _effectiveMaxLength)
                         || (i + 1 >= _categoriesNames.Length))
                     {
@@ -363,12 +363,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
             int start = -1;
-            restart:
+        restart:
             start++;
             if (start < _categoriesNames.Length)
                 for (int i = start; true; i++)
                 {
-                    prolongCoefficient(_categoriesNames[i%_categoriesNames.Length]);
+                    prolongCoefficient(_categoriesNames[i % _categoriesNames.Length]);
                     if (_actualLength < _effectiveMinLength)
                         continue;
                     if (_actualLength == _categoriesNames.Length && start > 0)
@@ -376,7 +376,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         resetCoefficient();
                         goto restart;
                     }
-                    
+
                     SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
                     if (parentSkipSetting != null)
                     {
@@ -387,7 +387,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         yield return _currentBitString;
                     }
-                    
+
                     if (_actualLength + 1 > _effectiveMaxLength)
                     {
                         resetCoefficient();
@@ -403,11 +403,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
             {
                 if (_effectiveMaxLength < _categoriesNames.Length)
                 {
-                    return (_effectiveMaxLength - _effectiveMinLength + 1)*_categoriesNames.Length;
+                    return (_effectiveMaxLength - _effectiveMinLength + 1) * _categoriesNames.Length;
                 }
                 else
                 {
-                    return (_effectiveMaxLength - _effectiveMinLength)*_categoriesNames.Length + 1;
+                    return (_effectiveMaxLength - _effectiveMinLength) * _categoriesNames.Length + 1;
                 }
             }
         }
@@ -495,15 +495,19 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         #endregion
     }
-    
+
     public class SubsetsOneOne : EntityEnumerable
     {
-     
         private readonly CoefficientSetting _setting;
 
         private long _totalCount = 2;
 
         private string _attributeGuid;
+
+        private bool bufferAvailable = false;
+
+        private int bufferedCount = 0;
+        BitStringBuffer _bufferInstance = null;
 
         public SubsetsOneOne(CoefficientSetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
             : base(setting.id, skipOptimalization, cedentType)
@@ -511,50 +515,82 @@ namespace Ferda.Guha.MiningProcessor.Generation
             _setting = setting;
             _attributeGuid = setting.generator.GetAttributeId().value;
             _totalCount = setting.generator.GetMaxBitStringCount();
-            
+             _bufferInstance = BitStringBuffer.GetInstance();
+
+            if (!_bufferInstance.GuidPresent(_attributeGuid))
+            {
+                _bufferInstance.Reset();
+                _bufferInstance.AddGuid(_attributeGuid);
+            }
+            else
+            {
+                bufferAvailable = true;
+                bufferedCount = _bufferInstance.Count;
+            }
+
         }
 
         public override IEnumerator<IBitString> GetBitStringEnumerator()
-        { 
+        {
+            int currentBitString = 0;
             while (true)
             {
-                BitStringIceWithCategoryId tempString = null;
-                if (_setting.generator.GetNextBitString(out tempString))
+                if (currentBitString < bufferedCount)
                 {
-                    if (tempString != null)
-                    {
-                        IBitString result = new BitString(
-                            new BitStringIdentifier(
-                            _setting.generator.GetAttributeId().value, tempString.categoryId),
-                            tempString.bitString.length,
-                            tempString.bitString.value);
-
-                        SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
-                        if (parentSkipSetting != null)
-                        {
-                            if (Common.Compare(parentSkipSetting.Relation, result.Sum, parentSkipSetting.Treshold))
-                                yield return result;
-                        }
-                        else
-                        {
-                            yield return result;
-                        }
-                        _totalCount++;
-                    }
+                    BitStringIceWithCategoryId _bs = 
+                        _bufferInstance.GetBitString(currentBitString);
+                    yield return new BitString(
+                                new BitStringIdentifier(
+                                _attributeGuid, _bs.categoryId),
+                                _bs.bitString.length,
+                                _bs.bitString.value);
+                    
+                    currentBitString++;
                 }
                 else
                 {
-                    yield break;
+                    BitStringIceWithCategoryId tempString = null;
+                    if (_setting.generator.GetNextBitString(bufferedCount, out tempString))
+                    {
+                        if (tempString != null)
+                        {
+                            IBitString result = new BitString(
+                                new BitStringIdentifier(
+                                _attributeGuid, tempString.categoryId),
+                                tempString.bitString.length,
+                                tempString.bitString.value);
+
+                            SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                            if (parentSkipSetting != null)
+                            {
+                                if (Common.Compare(parentSkipSetting.Relation, result.Sum, parentSkipSetting.Treshold))
+                                    yield return result;
+                            }
+                            else
+                            {
+                                yield return result;
+                            }
+                            if (_bufferInstance != null)
+                            {
+                                _bufferInstance.AddBitString(tempString);
+                            }
+                            _totalCount++;
+                        }
+                    }
+                    else
+                    {
+                        yield break;
+                    }
                 }
             }
-        
+
         }
 
         public override long TotalCount
         {
             get { return _totalCount; }
         }
-        
+
         public override string ToString()
         {
             string result = "";
@@ -568,7 +604,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             result += "Virtual attribute - subsets [1-1]";
             return result;
         }
-        
+
         public override Set<string> UsedAttributes
         {
             get { return new Set<string>(_attributeGuid); }
