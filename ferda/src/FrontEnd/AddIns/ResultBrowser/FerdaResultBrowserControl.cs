@@ -616,12 +616,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     if (column.id == 0)
                     {
                         PropertySpec tName = new PropertySpec(
-                       column.ColumnName,
-                       typeof(string),
-                       column.ColumnName,
-                       column.ColumnName,
-                       resultBrowser.GetFormulaString(column.ColumnType, hypothesis)
-                       );
+                            column.ColumnName,
+                            typeof(string),
+                            column.ColumnName,
+                            ResManager.GetString("IDDescription"),
+                            String.Empty);
                         tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(tName);
                         table[column.ColumnName] = hypothesisId.ToString();
@@ -629,12 +628,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     else
                     {
                         PropertySpec tName = new PropertySpec(
-                        column.ColumnName,
-                        typeof(string),
-                        column.ColumnName,
-                        column.ColumnName,
-                        resultBrowser.GetFormulaString(column.ColumnType, hypothesis)
-                        );
+                            column.ColumnName,
+                            typeof(string),
+                            column.ColumnName,
+                            ResManager.GetString("IDDescription"),
+                            String.Empty);
                         tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(tName);
                         table[column.ColumnName] = resultBrowser.GetFormulaString(column.ColumnType, hypothesisId);
@@ -646,23 +644,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             #region Used quantifiers and their values
 
-            
             //used quantifiers and their values
             double[] quantifiers;
 
             quantifiers = resultBrowser.ReadQuantifiersFromCache(hypothesisId,
                     Convert.ToInt32(this.NumericUpDownDecimals.Value));
-            /*
-            if (this.RadioFirstTable.Checked)
-            {
-                quantifiers = resultBrowser.ReadQuantifiersFromCache(hypothesisId,
-                    Convert.ToInt32(this.NumericUpDownDecimals.Value));
-            }
-            else
-            {
-                quantifiers = resultBrowser.ReadQuantifiersFromCacheSecondTable(hypothesisId,
-                    Convert.ToInt32(this.NumericUpDownDecimals.Value));
-            }*/
 
             for (int i = 0; i < quantifiers.Length; i++)
             {
@@ -684,119 +670,48 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             #region Contingency tables
 
-            CategorialAttributeFormula formulaX = null;
-            GuidStruct guidX = null;
-            GuidAttributeNamePair[] rowCategories = null;
+            //for miners with boolean antecedents and succedents - for now only 4FT
+            Formula form = hypothesis.GetFormula(MarkEnum.Antecedent);
+            if (form != null)
+            {
+                //antecedent AND succedent
+                PropertySpec value = new PropertySpec("AntSucc", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("AntSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["AntSucc"] = hypothesis.ContingencyTableA[0][0];
 
-            CategorialAttributeFormula formulaY = null;
-            GuidStruct guidY = null;
-            GuidAttributeNamePair[] columnCategories = null;
+                //antecedent AND NOT succedent
+                value = new PropertySpec("Ant" + '\u00AC' + "Succ", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("AntNOTSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["Ant" + '\u00AC' + "Succ"] = hypothesis.ContingencyTableA[0][2];
 
-            if ((formulaX = resultBrowser.GetFormula(MarkEnum.RowAttribute, hypothesisId)) != null)
-            {
-                guidX = new GuidStruct(formulaX.AttributeGuid);
-            }
-            else
-            {
-                if ((formulaX = resultBrowser.GetFormula(MarkEnum.Antecedent, hypothesisId)) != null)
-                {
-                    guidX = new GuidStruct(formulaX.AttributeGuid);
-                }
-            }
+                //NOT antecedent AND succedent
+                value = new PropertySpec('\u00AC' + "AntSucc", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("NOTAntSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table['\u00AC' + "AntSucc"] = hypothesis.ContingencyTableA[2][0];
 
-            if (guidX != null)
-            {
-                rowCategories =
-                taskProxy.GetBitStringGenerator(guidX).GetAttributeNames();
-            }
-
-            if ((formulaY = resultBrowser.GetFormula(MarkEnum.ColumnAttribute, hypothesisId)) != null)
-            {
-                guidY = new GuidStruct(formulaY.AttributeGuid);
-            }
-            else
-            {
-                if ((formulaY = resultBrowser.GetFormula(MarkEnum.Succedent, hypothesisId)) != null)
-                {
-                    guidY = new GuidStruct(formulaY.AttributeGuid);
-                }
-            }
-
-            if (guidY != null)
-            {
-                columnCategories =
-                taskProxy.GetBitStringGenerator(guidY).GetAttributeNames();
+                //NOT antecedent AND NOT succedent
+                value = new PropertySpec('\u00AC' + "Ant" + '\u00AC' + "Succ", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("NOTAntNOTSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table['\u00AC' + "Ant" + '\u00AC' + "Succ"] = 
+                    hypothesis.ContingencyTableA[2][2];
             }
 
-            
-            int i1 = 1;
-            int j1 = 1;
-            //hypothesis.
-            
-            string nameX = String.Empty;
-            string nameY = String.Empty;
-            foreach (double[] row in hypothesis.ContingencyTableA)
-            {
-                foreach (double value in row)
-                {
-                    if (guidX != null)
-                    {
-                        nameX = rowCategories[i1 - 1].attributeName;
-                    }
-                    else
-                    {
-                        nameX = i1.ToString();
-                    }
-
-                    if (guidY != null)
-                    {
-                        nameY = columnCategories[j1 - 1].attributeName;
-                    }
-                    else
-                    {
-                        nameY = j1.ToString();
-                    }
-                    PropertySpec hValue = new PropertySpec(
-                        nameX + "-" + nameY,
-                        typeof(int),
-                        "1. " + resManager.GetString("ContingencyTable"),
-                        "1. " + resManager.GetString("ContingencyTable"),
-                        value
-                        );
-                    hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                    table.Properties.Add(hValue);
-                    table[nameX + "-" + nameY] = value;
-                    j1++;
-                }
-                i1++;
-                j1 = 1;
-            }
-
-            i1 = 1;
-            j1 = 1;
-
-            if (this.resultBrowser.TwoContingencyTables)
-            {
-                foreach (double[] row in hypothesis.ContingencyTableB)
-                {
-                    foreach (double value in row)
-                    {
-                        PropertySpec hValue = new PropertySpec(
-                            i1.ToString() + "-" + j1.ToString(),
-                            typeof(int),
-                            "2. " + resManager.GetString("ContingencyTable"),
-                            "2. " + resManager.GetString("ContingencyTable"),
-                            value
-                            );
-                        hValue.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                        table.Properties.Add(hValue);
-                        table[i1.ToString() + "-" + j1.ToString()] = value;
-                        j1++;
-                    }
-                    i1++;
-                    j1 = 1;
-                }
-            }
             #endregion
 
             this.displayer.Reset();

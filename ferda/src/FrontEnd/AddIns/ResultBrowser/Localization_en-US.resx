@@ -123,6 +123,12 @@
   <data name="AntecedentFilter" xml:space="preserve">
     <value>Antecedent filter</value>
   </data>
+  <data name="AntNOTSuccDescription" xml:space="preserve">
+    <value>Number of rows with antecedent AND NOT succedent</value>
+  </data>
+  <data name="AntSuccDescription" xml:space="preserve">
+    <value>Number of rows with antecedent AND succedent</value>
+  </data>
   <data name="AppliedQuantifiers" xml:space="preserve">
     <value>Applied quantifiers</value>
   </data>
@@ -201,6 +207,9 @@
   <data name="HypothesisId" xml:space="preserve">
     <value>ID</value>
   </data>
+  <data name="IDDescription" xml:space="preserve">
+    <value>Identification number of the hypothesis</value>
+  </data>
   <data name="LabelColumnsToDisplay" xml:space="preserve">
     <value>Columns to display</value>
   </data>
@@ -227,6 +236,12 @@
   </data>
   <data name="NoRestriction" xml:space="preserve">
     <value>No restriction</value>
+  </data>
+  <data name="NOTAntNOTSuccDescription" xml:space="preserve">
+    <value>Number of rows with NOT antecedent AND NOT succedent</value>
+  </data>
+  <data name="NOTAntSuccDescription" xml:space="preserve">
+    <value>Number of rows with NOT antecedent AND succedent</value>
   </data>
   <data name="PointsPerPage" xml:space="preserve">
     <value>Per page</value>
