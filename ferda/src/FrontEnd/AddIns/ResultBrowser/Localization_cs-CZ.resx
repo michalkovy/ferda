@@ -123,6 +123,12 @@
   <data name="AntecedentFilter" xml:space="preserve">
     <value>Filtr pro antecedent</value>
   </data>
+  <data name="AntNOTSuccDescription" xml:space="preserve">
+    <value>Počet řádků splňujících antecedent a nesplňujících sukcedent</value>
+  </data>
+  <data name="AntSuccDescription" xml:space="preserve">
+    <value>Počet řádků splňujících antecedent i sukcedent</value>
+  </data>
   <data name="AppliedQuantifiers" xml:space="preserve">
     <value>Použité kvantifikátory</value>
   </data>
@@ -198,6 +204,9 @@
   <data name="HypothesisId" xml:space="preserve">
     <value>ID</value>
   </data>
+  <data name="IDDescription" xml:space="preserve">
+    <value>Identifikační číslo hypotézy</value>
+  </data>
   <data name="LabelColumnsToDisplay" xml:space="preserve">
     <value>Zobrazené sloupce</value>
   </data>
@@ -224,6 +233,12 @@
   </data>
   <data name="NoRestriction" xml:space="preserve">
     <value>Bez omezení</value>
+  </data>
+  <data name="NOTAntNOTSuccDescription" xml:space="preserve">
+    <value>Počet řádků neslňujících antecedent ani sukcedent</value>
+  </data>
+  <data name="NOTAntSuccDescription" xml:space="preserve">
+    <value>Počet řádků nesplňujících antecedent a splňujících sukcedent</value>
   </data>
   <data name="PointsPerPage" xml:space="preserve">
     <value>Na stránku</value>
