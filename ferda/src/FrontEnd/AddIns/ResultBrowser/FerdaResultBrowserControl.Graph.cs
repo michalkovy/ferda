@@ -74,6 +74,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ContingencyTableChart.ContextMenuStrip = this.ContextMenuGraphRightClick;
             //this.ContingencyTableChart.Page.MaxPointsPerPage = 8;
 
+            this.ToolStripShowGraphEdit.Click += new EventHandler(ToolStripShowGraphEdit_Click);
+
             this.ResultBrowserSplit.Panel2.Controls.Add(ContingencyTableChart);
             this.ResultBrowserSplit.Panel2.ResumeLayout(false);
             this.ResultBrowserSplit.ResumeLayout(false);
@@ -84,32 +86,52 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         #region Chart option handlers (modifying graph view)
 
-        //TODO comment
+        /// <summary>
+        /// Scrolls the graph in 3D
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void TrackBar3d_Scroll(object sender, EventArgs e)
         {
             this.ContingencyTableChart.Aspect.Chart3DPercent = 
                 this.TrackBar3d.Value;
         }
 
-        //TODO comment
+        /// <summary>
+        /// Zooms the graph
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void TrackBarZoom_Scroll(object sender, EventArgs e)
         {
             this.ContingencyTableChart.Aspect.Zoom = this.TrackBarZoom.Value;
         }
 
-        //TODO comment
+        /// <summary>
+        /// Moves the graph horizontally
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>>
         private void TrackBarHOffset_Scroll(object sender, EventArgs e)
         {
             this.ContingencyTableChart.Aspect.HorizOffset = this.TrackBarHOffset.Value;
         }
 
-        //TODO comment
+        /// <summary>
+        /// Moves the graph vertically
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void TrackBarVOffset_Scroll(object sender, EventArgs e)
         {
             this.ContingencyTableChart.Aspect.VertOffset = this.TrackBarVOffset.Value;
         }
 
-        //TODO comment
+        /// <summary>
+        /// Shows the labels on bars of the graph
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void CheckBoxShowLabels_CheckedChanged(object sender, EventArgs e)
         {
             ShowLabels(this.ContingencyTableChart);
@@ -281,119 +303,61 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="hypothese">Hypothese to take contingency table from</param>
         private void DrawBarsFromFirstTable(Hypothesis hypothesis)
         {
+            //clearing the graph
             ContingencyTableChart.Series.Clear();
-            ContingencyTableChart.Header.Text = 
-                resManager.GetString("FirstContingencyTable");
 
             //for miners with boolean antecedents and succedents - for now only 4ft
-            Formula form = hypothesis.GetFormula(MarkEnum.Antecedent);
-            if (form != null)
+            Formula antecedent = hypothesis.GetFormula(MarkEnum.Antecedent);
+            if (antecedent != null)
             {
+                //drawing the titles, name of the table, antecedents and
+                //succedents names
+                ContingencyTableChart.Header.Text =
+                    "4FT " + resManager.GetString("ContingencyTable");
+                ContingencyTableChart.SubFooter.Text = antecedent.ToString();
                 DrawFFT(hypothesis);
             }
 
-            /*
-            int j = 0;
+            Formula rowAttributes = hypothesis.GetFormula(MarkEnum.ColumnAttribute);
 
-            //getting the transpoded table
-            double[][] transpondedTable = 
-                FerdaResultBrowserControl.Transpose(hypothesis.ContingencyTableA);
-
-            for (int k = transpondedTable.GetUpperBound(0); k >= 0; k--)
+            if (rowAttributes != null)
             {
-                //initializing a new bar (to the graph)
-                Bar ant = new Bar();
-                ant.Color = System.Drawing.Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
-                ant.MultiBar = MultiBars.None;
-                ant.Marks.Style = MarksStyles.LabelValue;
-
-                //If the preferences are set to show the labels
-                if (this.CheckBoxShowLabels.Checked)
-                {
-                    ant.Marks.Visible = true;
-                }
-                else
-                {
-                    ant.Marks.Visible = false;
-                }
-
-                foreach (int number in transpondedTable[k])
-                {
-                    if ((fft) && (j == 0))
-                    {
-                        ant.Add(number, resManager.GetString("ColumnAntecedent"));
-                    }
-                    else
-                    {
-                        if ((fft) && (j == 1))
-                        {
-                            ant.Add(number, '\u00AC' + resManager.GetString("ColumnAntecedent"));
-                        }
-                        else
-                        {
-                            string seriesTitle = String.Empty;
-                            foreach (LiteralStruct literal in hypothesis.literals)
-                            {
-                                if (literal.cedentType == CedentEnum.Antecedent)
-                                {
-                                    if (literal.categoriesNames.Length > j)
-                                    {
-                                        seriesTitle = literal.categoriesNames[j];
-                                    }
-                                }
-                            }
-                            ant.Add(number, seriesTitle);
-                        }
-                    }
-                    j++;
-                }
-
-                //Determining the title fo the series
-                if (fft)
-                {
-                    if (k == 0)
-                    {
-                        ant.Title = this.resManager.GetString("ColumnSuccedent");
-                    }
-                    else
-                    {
-                        ant.Title = '\u00AC' + this.resManager.GetString("ColumnSuccedent");
-                    }
-                }
-                else
-                {
-                    string seriesTitle = String.Empty;
-                    foreach (LiteralStruct literal in hypothesis.literals)
-                    {
-                        if (literal.cedentType == CedentEnum.Succedent)
-                        {
-                            if (literal.categoriesNames.Length > k)
-                            {
-                                seriesTitle = literal.categoriesNames[k];
-                            }
-                            break;
-                        }
-                    }
-                    if (seriesTitle == String.Empty)
-                    {
-                        foreach (LiteralStruct literal in hypothesis.literals)
-                        {
-                            if (literal.cedentType == CedentEnum.Antecedent)
-                            {
-                                if (literal.categoriesNames.Length > k)
-                                {
-                                    seriesTitle = literal.categoriesNames[k];
-                                }
-                            }
-                        }
-                    }
-
-                    ant.Title = seriesTitle;
-                }
-                ContingencyTableChart.Series.Add(ant);
-                j = 0;
+                ContingencyTableChart.Header.Text =
+                    "KL " + resManager.GetString("ContingencyTable");
+                DrawKL(hypothesis, rowAttributes);
             }
-            */
+        }
+
+        /// <summary>
+        /// The method draws the KL contingency table on
+        /// the ContingencyTable chart
+        /// </summary>
+        /// <param name="hypothesis">Hypothesis to be drawn</param>
+        private void DrawKL(Hypothesis hypothesis, Formula f)
+        {
+            double[][] transposed = Transpose(hypothesis.ContingencyTableA);
+
+            Bar bar;
+            Random random;
+            for (int i = 0; i <= transposed.GetUpperBound(0); i++)
+            {
+                bar = new Bar();
+                random = new Random();
+                bar.Color = Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
+                bar.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
+                bar.Marks.Style = MarksStyles.LabelValue;
+
+                //TODO name of the category
+                bar.Title = i.ToString();
+
+                //adding the columns to the row
+                foreach (int value in transposed[i])
+                {
+                    bar.Add(value, value.ToString());
+                }
+
+                ContingencyTableChart.Series.Add(bar);
+            }
         }
 
         /// <summary>

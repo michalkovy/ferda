@@ -28,6 +28,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 using Ferda.FrontEnd.AddIns.Common.MyIce;
 
@@ -150,7 +151,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             AttributeNameProviderPrx nameProvider =
                 AttributeNameProviderPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
-            Ferda.Guha.MiningProcessor.Formulas.AttributeNameInLiteralsProvider.Init(nameProvider);
+            AttributeNameInLiteralsProvider.Init(nameProvider);
 
             string statistics = String.Empty;
 

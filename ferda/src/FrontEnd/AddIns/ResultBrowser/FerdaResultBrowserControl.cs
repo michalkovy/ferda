@@ -258,6 +258,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
             }
             int j = AddAllHypothesesToListView();
+            //displaying the first hypothese (if there is any)
+            if (j > 0)
+            {
+                Hypothesis hypothesis = this.resultBrowser.GetHypothese(0);
+                DrawBarsFromFirstTable(hypothesis);
+            }
+
             this.LabelCount.Text = "(" + j + "/" + hypothesesCount + ")";
         }
 
@@ -619,7 +626,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                             column.ColumnName,
                             typeof(string),
                             column.ColumnName,
-                            ResManager.GetString("IDDescription"),
+                            resManager.GetString("IDDescription"),
                             String.Empty);
                         tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(tName);
@@ -631,7 +638,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                             column.ColumnName,
                             typeof(string),
                             column.ColumnName,
-                            ResManager.GetString("IDDescription"),
+                            resManager.GetString("IDDescription"),
                             String.Empty);
                         tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                         table.Properties.Add(tName);
@@ -906,18 +913,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         #endregion
 
         #region Localization
-
-        /// <summary>
-        /// Resource manager of the application, it is filled according to the
-        /// current localization
-        /// </summary>
-        public ResourceManager ResManager
-        {
-            get
-            {
-                return resManager;
-            }
-        }
 
         /// <summary>
         /// Method to change l10n.
