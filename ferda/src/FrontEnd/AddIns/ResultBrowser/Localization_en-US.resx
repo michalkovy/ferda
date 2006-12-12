@@ -243,6 +243,9 @@
   <data name="NOTAntSuccDescription" xml:space="preserve">
     <value>Number of rows with NOT antecedent AND succedent</value>
   </data>
+  <data name="NotProvidingValues" xml:space="preserve">
+    <value>The quantifier does not provide numerical values</value>
+  </data>
   <data name="PointsPerPage" xml:space="preserve">
     <value>Per page</value>
   </data>

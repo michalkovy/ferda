@@ -90,6 +90,7 @@
     <Compile Include="NonGUIClasses\FerdaResult.cs" />
     <Compile Include="NonGUIClasses\LongRunCompleted.cs" />
     <Compile Include="NonGUIClasses\LongRunTick.cs" />
+    <Compile Include="NonGUIClasses\Specifiers.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FerdaResultBrowserControl.resx">
