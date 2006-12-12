@@ -210,6 +210,9 @@
   <data name="IDDescription" xml:space="preserve">
     <value>Identification number of the hypothesis</value>
   </data>
+  <data name="KLTableDescription" xml:space="preserve">
+    <value>The value of the table on position</value>
+  </data>
   <data name="LabelColumnsToDisplay" xml:space="preserve">
     <value>Columns to display</value>
   </data>

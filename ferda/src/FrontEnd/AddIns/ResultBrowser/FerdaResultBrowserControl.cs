@@ -557,8 +557,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             #region Contingency tables
 
             //for miners with boolean antecedents and succedents - for now only 4FT
-            Formula form = hypothesis.GetFormula(MarkEnum.Antecedent);
-            if (form != null)
+            if (resultBrowser.TaskType == TaskTypeEnum.FourFold)
             {
                 //antecedent AND succedent
                 PropertySpec value = new PropertySpec("a", typeof(double),
@@ -595,6 +594,43 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
                 table.Properties.Add(value);
                 table["d"] = hypothesis.ContingencyTableA[2][2];
+            }
+
+            if (resultBrowser.TaskType == TaskTypeEnum.KL)
+            {
+                double[][] transposed = Transpose(hypothesis.ContingencyTableA);
+
+                for (int i = 0; i <= transposed.GetUpperBound(0); i++)
+                {
+                    for (int j = 0; j < transposed[i].Length; j++)
+                    {
+                        PropertySpec value = new PropertySpec(
+                            i.ToString() + '-' + j.ToString(), 
+                            typeof(double),
+                            resManager.GetString("ContingencyTable"),
+                            resManager.GetString("KLTableDescription") + ' ' + i.ToString() + ", " + j.ToString(),
+                            0);
+                        value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                        table.Properties.Add(value);
+                        table[i.ToString() + '-' + j.ToString()] = transposed[i][j];
+                    }
+                }
+            }
+
+            if (resultBrowser.TaskType == TaskTypeEnum.CF)
+            {
+                for (int i = 0; i < hypothesis.ContingencyTableA[0].Length; i++)
+                {
+                    PropertySpec value = new PropertySpec(
+                        i.ToString(),
+                        typeof(double),
+                        resManager.GetString("ContingencyTable"),
+                        resManager.GetString("KLTableDescription") + ' ' + i.ToString(),
+                        0);
+                    value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                    table.Properties.Add(value);
+                    table[i.ToString()] = hypothesis.ContingencyTableA[0][i];
+                }
             }
 
             #endregion
