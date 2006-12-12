@@ -207,6 +207,9 @@
   <data name="IDDescription" xml:space="preserve">
     <value>Identifikační číslo hypotézy</value>
   </data>
+  <data name="KLTableDescription" xml:space="preserve">
+    <value>Hodnota v tabulce na pozici</value>
+  </data>
   <data name="LabelColumnsToDisplay" xml:space="preserve">
     <value>Zobrazené sloupce</value>
   </data>

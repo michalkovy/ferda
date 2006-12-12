@@ -320,13 +320,48 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //for the KL miner
             if (resultBrowser.TaskType == TaskTypeEnum.KL)
             {
-                Formula rowAttributes = 
-                    hypothesis.GetFormula(MarkEnum.ColumnAttribute);
-
                 ContingencyTableChart.Header.Text =
                     "KL " + resManager.GetString("ContingencyTable");
-                DrawKL(hypothesis, rowAttributes);
+                DrawKL(hypothesis);
             }
+
+            if (resultBrowser.TaskType == TaskTypeEnum.CF)
+            {
+                ContingencyTableChart.Header.Text =
+                    "CF " + resManager.GetString("ContingencyTable");
+                DrawCF(hypothesis);
+            }
+        }
+
+        /// <summary>
+        /// Draws the CF contingency table on the ContingencyTable chart
+        /// </summary>
+        /// <param name="hypothesis">Hypothesis to be drawn</param>
+        private void DrawCF(Hypothesis hypothesis)
+        {
+            Bar bar = new Bar();
+            Random random = new Random();
+            bar.Color = Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
+            bar.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
+            bar.Marks.Style = MarksStyles.LabelValue;
+
+            if (CheckBoxShowLabels.Checked)
+            {
+                bar.Marks.Visible = false;
+            }
+            else
+            {
+                bar.Marks.Visible = true;
+            }
+
+            bar.Title = hypothesis.GetFormula(MarkEnum.Attribute).ToString();
+
+            for (int i = 0; i < hypothesis.ContingencyTableA[0].Length; i++)
+            {
+                bar.Add(hypothesis.ContingencyTableA[0][i], i.ToString());
+            }
+
+            ContingencyTableChart.Series.Add(bar);
         }
 
         /// <summary>
@@ -334,13 +369,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// the ContingencyTable chart
         /// </summary>
         /// <param name="hypothesis">Hypothesis to be drawn</param>
-        private void DrawKL(Hypothesis hypothesis, Formula f)
+        private void DrawKL(Hypothesis hypothesis)
         {
             double[][] transposed = Transpose(hypothesis.ContingencyTableA);
 
             Bar bar;
             Random random;
-            for (int i = 0; i <= transposed.GetUpperBound(0); i++)
+            for (int i = transposed.GetUpperBound(0); i>= 0 ; i--)
             {
                 bar = new Bar();
                 random = new Random();
@@ -350,6 +385,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
                 //TODO name of the category
                 bar.Title = i.ToString();
+
+                if (CheckBoxShowLabels.Checked)
+                {
+                    bar.Marks.Visible = false;
+                }
+                else
+                {
+                    bar.Marks.Visible = true;
+                }
 
                 //adding the columns to the row
                 foreach (int value in transposed[i])
