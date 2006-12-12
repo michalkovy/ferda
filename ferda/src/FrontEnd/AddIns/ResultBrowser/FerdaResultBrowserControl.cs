@@ -86,9 +86,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private IOwnerOfAddIn ownerOfAddIn;
 
         /// <summary>
-        /// Columns
+        /// Columns to be displayed in the CHLMarks list
+        /// (for 4FT the marks are Antecedent, Succedent and Condition).
         /// </summary>
-        private UsedMark[] columns;
+        private UsedMark[] marks;
 
         /// <summary>
         /// Quantifiers
@@ -112,9 +113,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
         /// <summary>
         /// Determines number of filter controls in the upper part
-        /// of the component
+        /// of the component for the FFT tasks
         /// </summary>
-        private int numberOfFilters = 5;
+        private int numberOfFFTFilters = 5;
+
+        /// <summary>
+        /// Determines number of filter controls in the upper part
+        /// of the component for the non FFT tasks
+        /// </summary>
+        private int numberOfOtherFilters = 3;
 
         #endregion
 
@@ -124,7 +131,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// Class constructor
         /// </summary>
         /// <param name="localePrefs">Localeprefs</param>
-        /// <param name="result">Result to display</param>
+        /// <param name="result">Identifier of the result to display</param>
         /// <param name="quantifiers">quantifiers</param>
         /// <param name="Displayer">Propertygrid</param>
         /// <param name="ownerOfAddIn">Ownerofaddin</param>
@@ -144,7 +151,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 throw new Ferda.Modules.BadValueError();
             }
-            resultBrowser = new FerdaResult(resManager, result, quantifiers);
+            resultBrowser = new FerdaResult(result, quantifiers);
             resultBrowser.IceTicked += new LongRunTick(resultBrowser_IceTicked);
             resultBrowser.IceComplete += new LongRunCompleted(resultBrowser_IceComplete);
             resultBrowser.Initialize();
@@ -161,46 +168,61 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         #region Initialization methods
 
         /// <summary>
-        /// Inits column display checkbox and internal columns list
+        /// The method fills the ColumnList (CHLMarks) with the names of
+        /// the marks that are present in the task type
+        /// (for 4FT the marks are Antecedent, Succedent and Condition).
+        /// The method also fills the internal <code>columns</code> structure 
+        /// that holds these marks.
         /// </summary>
-        /// <param name="marks"></param>
-        private void ColumnsInit(MarkEnum[] marks)
+        private void ColumnsInit()
         {
+            //The marks to be displayed (for 4FT the marks are Antecedent, 
+            //Succedent and Condition)
+            MarkEnum[] enums = resultBrowser.SemanticMarks;
+
+            //The ID mark
             int i = 1;
-            columns = new UsedMark[marks.Length + 1];
+            marks = new UsedMark[enums.Length + 1];
             UsedMark usedColumn1 = new UsedMark();
             usedColumn1.id = 0;
-            usedColumn1.ColumnType = MarkEnum.Antecedent;
+            usedColumn1.MarkType = MarkEnum.Antecedent;
             usedColumn1.ColumnName = this.resManager.GetString("HypothesisId");
             usedColumn1.Selected = true;
             usedColumn1.width = 200;
-            this.columns[0] = usedColumn1;
+            this.marks[0] = usedColumn1;
             this.CHLMarks.Items.Add(this.resManager.GetString("HypothesisId"), true);
-            foreach (MarkEnum mark in marks)
+
+            //The rest of the marks (for 4FT the marks are Antecedent, Succedent and
+            //Condition)
+            foreach (MarkEnum mark in enums)
             {
                 this.CHLMarks.Items.Add(mark.ToString(), false);
                 UsedMark usedColumn = new UsedMark();
                 usedColumn.id = i;
-                usedColumn.ColumnType = mark;
+                usedColumn.MarkType = mark;
                 usedColumn.ColumnName = mark.ToString();
                 usedColumn.Selected = false;
                 usedColumn.width = 200;
-                this.columns[i] = usedColumn;
+                this.marks[i] = usedColumn;
                 i++;
             }
         }
 
         /// <summary>
-        /// Inits quantifiers display checkbox and internal quantifiers list
+        /// The method fills the quantifiers list (CHLQuantifiers) with
+        /// the names of the quantifiers that are connected to the task.
+        /// It also fills the internal <code>quantifiers</code> structure
+        /// that holds the information
         /// </summary>
-        /// <param name="labels"></param>
-        /// <param name="userLabels"></param>
-        private void QuantifiersInit(string[] labels, string [] userLabels)
+        private void QuantifiersInit()
         {
+            string[] labels = resultBrowser.QuantifiersLabels;
+            string[] userLabels = resultBrowser.QuantifiersUserLabels;
+
             quantifiers = new UsedQuantifier[labels.Length];
             for (int i = 0; i < labels.Length; i++)
             {
-                this.CHLQuantifiers.Items.Add(labels[i] + "(" + userLabels[i] + ")", false);
+                this.CHLQuantifiers.Items.Add(userLabels[i], false);
                 UsedQuantifier usedQuantifier = new UsedQuantifier();
                 usedQuantifier.id = i;
                 usedQuantifier.QuantifierLabel = labels[i];
@@ -212,15 +234,62 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         }
 
         /// <summary>
+        /// For the FFT and SD4FT tasks, the method displays a list of
+        /// atoms, that are contained in the antecedent. Otherwise, it
+        /// hides the <code>LAntecedentFilter</code> and the
+        /// <code>CHLBoxAntecedents</code> components.
+        /// </summary>
+        private void AntecedentInit()
+        {
+            if (resultBrowser.TaskType == TaskTypeEnum.FourFold ||
+                resultBrowser.TaskType == TaskTypeEnum.SDFourFold)
+            {
+                //showing the controls
+                LAntecedentFilter.Visible = true;
+                CHLBoxAntecedents.Visible = true;
+            }
+            else
+            {
+                //hiding the controls
+                LAntecedentFilter.Visible = false;
+                CHLBoxAntecedents.Visible = false;
+            }
+        }
+
+        /// <summary>
+        /// For the FFT and SD4FT tasks, the method displays a list of
+        /// atoms, that are contained in the succedent. Otherwise, it
+        /// hides the <code>LSuccedentFilter</code> and the
+        /// <code>CHLBoxSuccedents</code> components.
+        /// </summary>
+        private void SuccedentInit()
+        {
+            if (resultBrowser.TaskType == TaskTypeEnum.FourFold ||
+                resultBrowser.TaskType == TaskTypeEnum.SDFourFold)
+            {
+                //showing the controls
+                LSuccedentFilter.Visible = true;
+                CHLBoxSuccedents.Visible = true;
+            }
+            else
+            {
+                //hiding the controls
+                LSuccedentFilter.Visible = false;
+                CHLBoxSuccedents.Visible = false;
+            }
+        }
+
+        /// <summary>
         /// Inits the control when the loading loading of the hypotheses is
         /// finished
         /// </summary>
         private void AllInit()
         {
-            ColumnsInit(resultBrowser.SemanticMarks);
-            QuantifiersInit(resultBrowser.QuantifiersLabels, resultBrowser.QuantifiersUserLabels);
+            ColumnsInit();
+            QuantifiersInit();
+            AntecedentInit();
+            SuccedentInit();
             //TODO: Filters init
-            //TODO: Hypotheses count init
             
             HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
             
@@ -233,13 +302,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             HypothesesListView.ColumnWidthChanged += new ColumnWidthChangedEventHandler(HypothesesListView_ColumnWidthChanged);
 
-            for (int i = 0; i < columns.Length; i++)
+            for (int i = 0; i < marks.Length; i++)
             {
-                if (columns[i].Selected)
+                if (marks[i].Selected)
                 {
                     ColumnHeader markHeader = new ColumnHeader();
-                    markHeader.Text = columns[i].ColumnName;
-                    markHeader.Width = columns[i].width;
+                    markHeader.Text = marks[i].ColumnName;
+                    markHeader.Width = marks[i].width;
                     markHeader.Tag = "c" + i.ToString();
                     this.HypothesesListView.Columns.Add(markHeader);
                 }
@@ -258,13 +327,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
             }
             int j = AddAllHypothesesToListView();
-            //displaying the first hypothese (if there is any)
-            if (j > 0)
-            {
-                Hypothesis hypothesis = this.resultBrowser.GetHypothese(0);
-                DrawBarsFromFirstTable(hypothesis);
-            }
-
             this.LabelCount.Text = "(" + j + "/" + hypothesesCount + ")";
         }
 
@@ -281,17 +343,18 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             int j = 0;
             bool itemSet = false;
             ListViewItem item = new ListViewItem();
-            for (int i = 0; i < this.columns.Length; i++ )
+            for (int i = 0; i < this.marks.Length; i++ )
             {
-                if (this.columns[i].Selected)
+                if (this.marks[i].Selected)
                 {
-                    if (this.columns[i].id == 0)
+                    if (this.marks[i].id == 0)
                     {
                         item.Text = hypothesisId.ToString();
                     }
                     else
                     {
-                        item.Text = resultBrowser.GetFormulaString(this.columns[i].ColumnType, hypothesisId);
+                        item.Text = resultBrowser.GetFormulaString(
+                            this.marks[i].MarkType, hypothesisId);
                     }
                     item.Tag = hypothesisId;
                     j = i;
@@ -300,27 +363,38 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
             }
 
-            //TODO: Check filters
-
-            for (int i = j + 1; i < this.columns.Length; i++)
+            for (int i = j + 1; i < this.marks.Length; i++)
             {
-                if (this.columns[i].Selected)
+                if (this.marks[i].Selected)
                 {
-                    item.SubItems.Add(resultBrowser.GetFormulaString(this.columns[i].ColumnType, hypothesisId));
+                    item.SubItems.Add(resultBrowser.GetFormulaString(
+                        this.marks[i].MarkType, hypothesisId));
                 }
             }
             if (!itemSet)
             {
                 return;
             }
+
+            //the quantifiers
             double [] quantifiersValues;
-            quantifiersValues = resultBrowser.ReadQuantifiersFromCache(hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
+            quantifiersValues = resultBrowser.ReadQuantifiersFromCache(
+                hypothesisId, Convert.ToInt32(this.NumericUpDownDecimals.Value));
             
-            for (int i = 0; i < quantifiersValues.Length; i++)
+            for (int i = 0; i < quantifiers.Length; i++)
             {
                 if (quantifiers[i].Selected)
                 {
-                    item.SubItems.Add(quantifiersValues[i].ToString());
+                    //we use the positive infinity when the quantifier does
+                    //not provide numerical values
+                    if (Double.IsNaN(quantifiersValues[i]))
+                    {
+                        item.SubItems.Add(resManager.GetString("NotProvidingValues"));
+                    }
+                    else
+                    {
+                        item.SubItems.Add(quantifiersValues[i].ToString());
+                    }
                 }
             }
             HypothesesListView.Items.Add(item);
@@ -349,11 +423,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 if (CHLMarks.CheckedItems.IndexOf(CHLMarks.Items[i]) != -1)
                 {
-                    columns[i].Selected = true;
+                    marks[i].Selected = true;
                 }
                 else
                 {
-                    columns[i].Selected = false;
+                    marks[i].Selected = false;
                 }
             }
         }
@@ -407,6 +481,139 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.NumericUpDownDecimals.Enabled = true;
         }
 
+        /// <summary>
+        /// Fills propertgrid with the data of the selected hypothesis
+        /// </summary>
+        /// <param name="hypothesis">Hypothesis to take the data from</param>
+        /// <param name="hypothesisId">Index of the hypothese</param>
+        private void FillPropertyGrid(Hypothesis hypothesis, int hypothesisId)
+        {
+            PropertyTable table = new PropertyTable();
+            string antecedentText = string.Empty;
+            string succedentText = string.Empty;
+
+            #region Filling in marks according to columns selected
+
+            foreach (UsedMark column in this.marks)
+            {
+                if (column.Selected)
+                {
+                    //if it's id column, don't run getformula
+                    if (column.id == 0)
+                    {
+                        PropertySpec tName = new PropertySpec(
+                            column.ColumnName,
+                            typeof(string),
+                            column.ColumnName,
+                            resManager.GetString("IDDescription"),
+                            String.Empty);
+                        tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                        table.Properties.Add(tName);
+                        table[column.ColumnName] = hypothesisId.ToString();
+                    }
+                    else
+                    {
+                        PropertySpec tName = new PropertySpec(
+                            column.ColumnName,
+                            typeof(string),
+                            column.ColumnName,
+                            resManager.GetString("IDDescription"),
+                            String.Empty);
+                        tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                        table.Properties.Add(tName);
+                        table[column.ColumnName] = resultBrowser.GetFormulaString(column.MarkType, hypothesisId);
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Used quantifiers and their values
+
+            //used quantifiers and their values
+            double[] quantifiers;
+
+            quantifiers = resultBrowser.ReadQuantifiersFromCache(hypothesisId,
+                    Convert.ToInt32(this.NumericUpDownDecimals.Value));
+
+            for (int i = 0; i < quantifiers.Length; i++)
+            {
+                PropertySpec hQuantifier = new PropertySpec(
+                resultBrowser.QuantifiersLabels[i]
+                    + "(" + resultBrowser.QuantifiersUserLabels[i] + ")",
+                typeof(double),
+                resManager.GetString("AppliedQuantifiers"),
+                resManager.GetString("AppliedQuantifiers"),
+                quantifiers[i]
+                );
+                hQuantifier.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(hQuantifier);
+                table[resultBrowser.QuantifiersLabels[i]
+                    + "(" + resultBrowser.QuantifiersUserLabels[i] + ")"] = quantifiers[i];
+            }
+
+            #endregion
+
+            #region Contingency tables
+
+            //for miners with boolean antecedents and succedents - for now only 4FT
+            Formula form = hypothesis.GetFormula(MarkEnum.Antecedent);
+            if (form != null)
+            {
+                //antecedent AND succedent
+                PropertySpec value = new PropertySpec("a", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("AntSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["a"] = hypothesis.ContingencyTableA[0][0];
+
+                //antecedent AND NOT succedent
+                value = new PropertySpec("b", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("AntNOTSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["b"] = hypothesis.ContingencyTableA[0][2];
+
+                //NOT antecedent AND succedent
+                value = new PropertySpec("c", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("NOTAntSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["c"] = hypothesis.ContingencyTableA[2][0];
+
+                //NOT antecedent AND NOT succedent
+                value = new PropertySpec("d", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("NOTAntNOTSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["d"] = hypothesis.ContingencyTableA[2][2];
+            }
+
+            #endregion
+
+            this.displayer.Reset();
+            this.displayer.OtherObjectAdapt(table);
+        }
+
+        /// <summary>
+        /// Displays the graph of the fiest hypothesis
+        /// </summary>
+        private void LoadFirstHypothesis()
+        {
+            if (resultBrowser.AllHypothesesCount > 0)
+            {
+                DrawBarsFromFirstTable(resultBrowser.AllHypotheses[0]);
+            }
+        }
+
         #region Commented
         /*
          
@@ -441,11 +648,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         void resultBrowser_IceComplete()
         {
-            this.AllInit();
             this.LabelProgressBar.Visible = false;
             this.ProgressBarIceTicks.Visible = false;
             this.StatusStrip.Visible = false;
             this.AfterLoadEnable();
+            this.AllInit();
+            this.LoadFirstHypothesis();
         }
 
         /// <summary>
@@ -463,8 +671,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Right-click on chart handler
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         void ToolStripShowGraphEdit_Click(object sender, EventArgs e)
         {
             if (!ToolStripShowGraphEdit.Checked)
@@ -494,7 +702,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             try
             {
                 index = (int)HypothesesListView.SelectedItems[0].Tag;
-                hypothesis = this.resultBrowser.GetHypothese(index);
+                hypothesis = this.resultBrowser.GetHypothesis(index);
             }
 
             catch
@@ -526,7 +734,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 
                 index = (int)HypothesesListView.SelectedItems[0].Tag;
-                hypothesis = this.resultBrowser.GetHypothese(index);
+                hypothesis = this.resultBrowser.GetHypothesis(index);
             }
 
             catch
@@ -562,12 +770,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
             else
             {
-                // hypothesis = this.resultBrowser.GetHypothese(index);
+                // hypothesis = this.resultBrowser.GetHypothesis(index);
                 previousIndex = index;
             }
 
             //getting the actual hypothesis from the index of the hypothesis
-            Hypothesis hypothesis = this.resultBrowser.GetHypothese(index);
+            Hypothesis hypothesis = this.resultBrowser.AllHypotheses[index];
             //filling the property grid
             this.FillPropertyGrid(hypothesis, index);
 
@@ -600,129 +808,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 HypothesesListView.Sorting = SortOrder.Ascending;
             }
             HypothesesListView.ListViewItemSorter = columnSorter;
-        }
-
-        /// <summary>
-        /// Fills propertgrid with the data of the selected hypothesis
-        /// </summary>
-        /// <param name="hypothesis">Hypothesis to take the data from</param>
-        /// <param name="hypothesisId">Index of the hypothese</param>
-        private void FillPropertyGrid(Hypothesis hypothesis, int hypothesisId)
-        {
-            PropertyTable table = new PropertyTable();
-            string antecedentText = string.Empty;
-            string succedentText = string.Empty;
-
-            #region Filling in marks according to columns selected
-
-            foreach (UsedMark column in this.columns)
-            {
-                if (column.Selected)
-                {
-                    //if it's id column, don't run getformula
-                    if (column.id == 0)
-                    {
-                        PropertySpec tName = new PropertySpec(
-                            column.ColumnName,
-                            typeof(string),
-                            column.ColumnName,
-                            resManager.GetString("IDDescription"),
-                            String.Empty);
-                        tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                        table.Properties.Add(tName);
-                        table[column.ColumnName] = hypothesisId.ToString();
-                    }
-                    else
-                    {
-                        PropertySpec tName = new PropertySpec(
-                            column.ColumnName,
-                            typeof(string),
-                            column.ColumnName,
-                            resManager.GetString("IDDescription"),
-                            String.Empty);
-                        tName.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                        table.Properties.Add(tName);
-                        table[column.ColumnName] = resultBrowser.GetFormulaString(column.ColumnType, hypothesisId);
-                    }
-                }
-            }
-
-            #endregion
-
-            #region Used quantifiers and their values
-
-            //used quantifiers and their values
-            double[] quantifiers;
-
-            quantifiers = resultBrowser.ReadQuantifiersFromCache(hypothesisId,
-                    Convert.ToInt32(this.NumericUpDownDecimals.Value));
-
-            for (int i = 0; i < quantifiers.Length; i++)
-            {
-                PropertySpec hQuantifier = new PropertySpec(
-                resultBrowser.QuantifiersLabels[i]
-                    + "(" + resultBrowser.QuantifiersUserLabels[i] + ")",
-                typeof(double),
-                resManager.GetString("AppliedQuantifiers"),
-                resManager.GetString("AppliedQuantifiers"),
-                quantifiers[i]
-                );
-                hQuantifier.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(hQuantifier);
-                table[resultBrowser.QuantifiersLabels[i]
-                    + "(" + resultBrowser.QuantifiersUserLabels[i]+")"] = quantifiers[i];
-            }
-
-            #endregion
-
-            #region Contingency tables
-
-            //for miners with boolean antecedents and succedents - for now only 4FT
-            Formula form = hypothesis.GetFormula(MarkEnum.Antecedent);
-            if (form != null)
-            {
-                //antecedent AND succedent
-                PropertySpec value = new PropertySpec("AntSucc", typeof(double),
-                    resManager.GetString("ContingencyTable"),
-                    resManager.GetString("AntSuccDescription"),
-                    0);
-                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(value);
-                table["AntSucc"] = hypothesis.ContingencyTableA[0][0];
-
-                //antecedent AND NOT succedent
-                value = new PropertySpec("Ant" + '\u00AC' + "Succ", typeof(double),
-                    resManager.GetString("ContingencyTable"),
-                    resManager.GetString("AntNOTSuccDescription"),
-                    0);
-                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(value);
-                table["Ant" + '\u00AC' + "Succ"] = hypothesis.ContingencyTableA[0][2];
-
-                //NOT antecedent AND succedent
-                value = new PropertySpec('\u00AC' + "AntSucc", typeof(double),
-                    resManager.GetString("ContingencyTable"),
-                    resManager.GetString("NOTAntSuccDescription"),
-                    0);
-                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(value);
-                table['\u00AC' + "AntSucc"] = hypothesis.ContingencyTableA[2][0];
-
-                //NOT antecedent AND NOT succedent
-                value = new PropertySpec('\u00AC' + "Ant" + '\u00AC' + "Succ", typeof(double),
-                    resManager.GetString("ContingencyTable"),
-                    resManager.GetString("NOTAntNOTSuccDescription"),
-                    0);
-                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(value);
-                table['\u00AC' + "Ant" + '\u00AC' + "Succ"] = 
-                    hypothesis.ContingencyTableA[2][2];
-            }
-
-            #endregion
-
-            this.displayer.Reset();
-            this.displayer.OtherObjectAdapt(table);
         }
 
         /// <summary>
@@ -829,13 +914,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             HypothesesListView.ListViewItemSorter = null;
             this.HypothesesListView.Columns.Clear();
 
-            for (int i = 0; i < columns.Length; i++)
+            for (int i = 0; i < marks.Length; i++)
             {
-                if (columns[i].Selected)
+                if (marks[i].Selected)
                 {
                     ColumnHeader markHeader = new ColumnHeader();
-                    markHeader.Text = columns[i].ColumnName;
-                    markHeader.Width = columns[i].width;
+                    markHeader.Text = marks[i].ColumnName;
+                    markHeader.Width = marks[i].width;
                     markHeader.Tag = "c" + i.ToString();
                     this.HypothesesListView.Columns.Add(markHeader);
                 }
@@ -846,8 +931,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 if (quantifiers[i].Selected)
                 {
                     ColumnHeader quantifierHeader = new ColumnHeader();
-                    quantifierHeader.Text = quantifiers[i].QuantifierLabel +
-                        "(" + quantifiers[i].QuantifierUserLabel + ")";
+                    quantifierHeader.Text = quantifiers[i].QuantifierUserLabel;
                     quantifierHeader.Width = quantifiers[i].width;
                     quantifierHeader.Tag = "q" + i.ToString();
                     this.HypothesesListView.Columns.Add(quantifierHeader);
@@ -866,7 +950,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //it is a column
             if (key.Substring(0, 1).CompareTo("c") == 0)
             {
-                this.columns[index].width = HypothesesListView.Columns[e.ColumnIndex].Width;
+                this.marks[index].width = HypothesesListView.Columns[e.ColumnIndex].Width;
             }
 
             //it is a quantifier column
@@ -888,26 +972,48 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //magic constant :) This is where the area to place all the
             //filters starts. It should not be moved.
             int zero = 225;
+            int newSize;
+            CHLMarks.Left = zero;
+
+            //resizing the filters for the 4FT and SD4FT tasks
+            if (resultBrowser != null)
+            {
+                if (resultBrowser.TaskType != TaskTypeEnum.FourFold &&
+                    resultBrowser.TaskType != TaskTypeEnum.SDFourFold)
+                {
+                    //computing the size of individual filters after resize
+                    newSize = (newControlWidth - zero - numberOfFFTFilters *
+                        resizeFilterOffset) / numberOfOtherFilters;
+
+                    CHLMarks.Width = newSize;
+                    LQuantifiersToDisplay.Left = CHLMarks.Right + resizeFilterOffset;
+                    CHLQuantifiers.Left = CHLMarks.Right + resizeFilterOffset;
+                    CHLQuantifiers.Width = newSize;
+                    LConditionFilter.Left = CHLQuantifiers.Right + resizeFilterOffset;
+                    CHLBoxConditions.Left = CHLQuantifiers.Right + resizeFilterOffset;
+                    CHLBoxConditions.Width = newSize;
+                    return;
+                }
+            }
 
             //computing the size of individual filters after resize
-            int newSize = (newControlWidth - zero - numberOfFilters * 
-                resizeFilterOffset) / numberOfFilters;
+            newSize = (newControlWidth - zero - numberOfFFTFilters *
+                resizeFilterOffset) / numberOfFFTFilters;
 
-            //resizing the individual filters
-            CHLMarks.Left = zero;
+            //resizing the individual filters for the rest of the procedures
             CHLMarks.Width = newSize;
             LQuantifiersToDisplay.Left = CHLMarks.Right + resizeFilterOffset;
             CHLQuantifiers.Left = CHLMarks.Right + resizeFilterOffset;
             CHLQuantifiers.Width = newSize;
-            CHLBoxAntecedents.Left = CHLQuantifiers.Right + resizeFilterOffset;
-            LAntecedentFilter.Left = CHLQuantifiers.Right + resizeFilterOffset;
+            LConditionFilter.Left = CHLQuantifiers.Right + resizeFilterOffset;
+            CHLBoxConditions.Left = CHLQuantifiers.Right + resizeFilterOffset;
+            CHLBoxConditions.Width = newSize;
+            CHLBoxAntecedents.Left = CHLBoxConditions.Right + resizeFilterOffset;
+            LAntecedentFilter.Left = CHLBoxConditions.Right + resizeFilterOffset;
             CHLBoxAntecedents.Width = newSize;
             LSuccedentFilter.Left = CHLBoxAntecedents.Right + resizeFilterOffset;
             CHLBoxSuccedents.Left = CHLBoxAntecedents.Right + resizeFilterOffset;
             CHLBoxSuccedents.Width = newSize;
-            LConditionFilter.Left = CHLBoxSuccedents.Right + resizeFilterOffset;
-            CHLBoxConditions.Left = CHLBoxSuccedents.Right + resizeFilterOffset;
-            CHLBoxConditions.Width = newSize;
         }
 
         #endregion
@@ -968,22 +1074,5 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         }
 
         #endregion
-    }
-
-    public class UsedColumn
-    {
-        public int id;
-        public bool Selected;
-        public int width;
-    }
-    public class UsedMark : UsedColumn
-    {
-        public MarkEnum ColumnType;
-        public string ColumnName;
-    }
-    public class UsedQuantifier : UsedColumn
-    {
-        public string QuantifierLabel;
-        public string QuantifierUserLabel;
     }
 }

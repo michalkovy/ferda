@@ -240,6 +240,9 @@
   <data name="NOTAntSuccDescription" xml:space="preserve">
     <value>Počet řádků nesplňujících antecedent a splňujících sukcedent</value>
   </data>
+  <data name="NotProvidingValues" xml:space="preserve">
+    <value>Kvantifikátor neposkytuje numerické hodnoty</value>
+  </data>
   <data name="PointsPerPage" xml:space="preserve">
     <value>Na stránku</value>
   </data>

@@ -260,9 +260,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LabelCount
             // 
             this.LabelCount.AutoSize = true;
-            this.LabelCount.Location = new System.Drawing.Point(189, 32);
+            this.LabelCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.LabelCount.Location = new System.Drawing.Point(160, 32);
             this.LabelCount.Name = "LabelCount";
-            this.LabelCount.Size = new System.Drawing.Size(30, 13);
+            this.LabelCount.Size = new System.Drawing.Size(24, 12);
             this.LabelCount.TabIndex = 14;
             this.LabelCount.Text = "(0/0)";
             this.LabelCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -270,9 +271,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LabelHypothesesTotal
             // 
             this.LabelHypothesesTotal.AutoSize = true;
+            this.LabelHypothesesTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.LabelHypothesesTotal.Location = new System.Drawing.Point(3, 32);
             this.LabelHypothesesTotal.Name = "LabelHypothesesTotal";
-            this.LabelHypothesesTotal.Size = new System.Drawing.Size(174, 13);
+            this.LabelHypothesesTotal.Size = new System.Drawing.Size(151, 12);
             this.LabelHypothesesTotal.TabIndex = 13;
             this.LabelHypothesesTotal.Text = "Hypotheses count (displayed/total):";
             // 
@@ -291,7 +293,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LConditionFilter
             // 
             this.LConditionFilter.AutoSize = true;
-            this.LConditionFilter.Location = new System.Drawing.Point(726, 5);
+            this.LConditionFilter.Location = new System.Drawing.Point(471, 5);
             this.LConditionFilter.Name = "LConditionFilter";
             this.LConditionFilter.Size = new System.Drawing.Size(73, 13);
             this.LConditionFilter.TabIndex = 11;
@@ -300,7 +302,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LSuccedentFilter
             // 
             this.LSuccedentFilter.AutoSize = true;
-            this.LSuccedentFilter.Location = new System.Drawing.Point(600, 5);
+            this.LSuccedentFilter.Location = new System.Drawing.Point(725, 5);
             this.LSuccedentFilter.Name = "LSuccedentFilter";
             this.LSuccedentFilter.Size = new System.Drawing.Size(81, 13);
             this.LSuccedentFilter.TabIndex = 10;
@@ -309,7 +311,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // LAntecedentFilter
             // 
             this.LAntecedentFilter.AutoSize = true;
-            this.LAntecedentFilter.Location = new System.Drawing.Point(474, 5);
+            this.LAntecedentFilter.Location = new System.Drawing.Point(600, 5);
             this.LAntecedentFilter.Name = "LAntecedentFilter";
             this.LAntecedentFilter.Size = new System.Drawing.Size(84, 13);
             this.LAntecedentFilter.TabIndex = 9;
@@ -321,7 +323,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.CHLBoxConditions.CheckOnClick = true;
             this.CHLBoxConditions.Enabled = false;
             this.CHLBoxConditions.FormattingEnabled = true;
-            this.CHLBoxConditions.Location = new System.Drawing.Point(725, 22);
+            this.CHLBoxConditions.Location = new System.Drawing.Point(475, 22);
             this.CHLBoxConditions.Name = "CHLBoxConditions";
             this.CHLBoxConditions.Size = new System.Drawing.Size(120, 47);
             this.CHLBoxConditions.TabIndex = 8;
@@ -332,7 +334,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.CHLBoxSuccedents.CheckOnClick = true;
             this.CHLBoxSuccedents.Enabled = false;
             this.CHLBoxSuccedents.FormattingEnabled = true;
-            this.CHLBoxSuccedents.Location = new System.Drawing.Point(600, 22);
+            this.CHLBoxSuccedents.Location = new System.Drawing.Point(725, 22);
             this.CHLBoxSuccedents.Name = "CHLBoxSuccedents";
             this.CHLBoxSuccedents.Size = new System.Drawing.Size(120, 47);
             this.CHLBoxSuccedents.TabIndex = 7;
@@ -343,7 +345,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.CHLBoxAntecedents.CheckOnClick = true;
             this.CHLBoxAntecedents.Enabled = false;
             this.CHLBoxAntecedents.FormattingEnabled = true;
-            this.CHLBoxAntecedents.Location = new System.Drawing.Point(475, 22);
+            this.CHLBoxAntecedents.Location = new System.Drawing.Point(600, 22);
             this.CHLBoxAntecedents.Name = "CHLBoxAntecedents";
             this.CHLBoxAntecedents.Size = new System.Drawing.Size(120, 47);
             this.CHLBoxAntecedents.TabIndex = 6;

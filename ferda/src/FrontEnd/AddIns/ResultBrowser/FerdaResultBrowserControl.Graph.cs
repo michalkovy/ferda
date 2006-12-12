@@ -306,22 +306,23 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //clearing the graph
             ContingencyTableChart.Series.Clear();
 
-            //for miners with boolean antecedents and succedents - for now only 4ft
-            Formula antecedent = hypothesis.GetFormula(MarkEnum.Antecedent);
-            if (antecedent != null)
+            //for the 4FT miner
+            if (resultBrowser.TaskType == TaskTypeEnum.FourFold)
             {
                 //drawing the titles, name of the table, antecedents and
                 //succedents names
+                ContingencyTableChart.Legend.Visible = false;
                 ContingencyTableChart.Header.Text =
                     "4FT " + resManager.GetString("ContingencyTable");
-                ContingencyTableChart.SubFooter.Text = antecedent.ToString();
                 DrawFFT(hypothesis);
             }
 
-            Formula rowAttributes = hypothesis.GetFormula(MarkEnum.ColumnAttribute);
-
-            if (rowAttributes != null)
+            //for the KL miner
+            if (resultBrowser.TaskType == TaskTypeEnum.KL)
             {
+                Formula rowAttributes = 
+                    hypothesis.GetFormula(MarkEnum.ColumnAttribute);
+
                 ContingencyTableChart.Header.Text =
                     "KL " + resManager.GetString("ContingencyTable");
                 DrawKL(hypothesis, rowAttributes);
@@ -373,14 +374,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             ant.Color = Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
             ant.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
             ant.Marks.Style = MarksStyles.LabelValue;
-            ant.Title = resManager.GetString("ColumnAntecedent");
+            ant.Title = hypothesis.GetFormula(MarkEnum.Antecedent).ToString();
 
             //initializing the not antecednet bar (row)
             Bar notant = new Bar();
             notant.Color = Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
             notant.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
             notant.Marks.Style = MarksStyles.LabelValue;
-            notant.Title = '\u00AC' + resManager.GetString("ColumnAntecedent");
+            notant.Title = '\u00AC' + 
+                hypothesis.GetFormula(MarkEnum.Antecedent).ToString();
 
             //If the preferences are set to show the labels
             if (this.CheckBoxShowLabels.Checked)
@@ -398,13 +400,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //the contingency table where the actual numbers are
             //(I don't know why it is this way)
             ant.Add(hypothesis.ContingencyTableA[0][0],
-                resManager.GetString("ColumnSuccedent"));
+                hypothesis.GetFormula(MarkEnum.Succedent).ToString());
             ant.Add(hypothesis.ContingencyTableA[0][2],
-                '\u00AC' + resManager.GetString("ColumnSuccedent"));
+                '\u00AC' + hypothesis.GetFormula(MarkEnum.Succedent).ToString());
             notant.Add(hypothesis.ContingencyTableA[2][0],
-                resManager.GetString("ColumnSuccedent"));
+                hypothesis.GetFormula(MarkEnum.Succedent).ToString());
             notant.Add(hypothesis.ContingencyTableA[2][2],
-                '\u00AC' + resManager.GetString("ColumnSuccedent"));
+                '\u00AC' + hypothesis.GetFormula(MarkEnum.Succedent).ToString());
 
             ContingencyTableChart.Series.Add(ant);
             ContingencyTableChart.Series.Add(notant);
