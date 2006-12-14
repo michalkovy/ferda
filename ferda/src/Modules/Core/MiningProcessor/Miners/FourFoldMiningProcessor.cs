@@ -194,7 +194,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, GuidStruct attributeGuid, int skipFirstN)
         {
-            //  if (!ProgressSetValue(-1, "Beginning of attributes trace."))
+            if (skipFirstN >= this.TaskParams.maxSizeOfResult)
+            {
+                ProgressSetValue(100, "Reading " + skipFirstN.ToString() + " bitstrings from cache");
+                yield break;
+            }
+            ProgressSetValue(-1, "Beginning of attributes trace.");
             //       return false;
             resultInit();
             CountVector = countVector;
@@ -257,6 +262,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             step++;
                             continue;
                         }
+                        if (skipFirstN > 0)
+                        {
+                            if (this.TaskParams.maxSizeOfResult > 0)
+                            {
+                                ProgressSetValue((float)step / (float)this.TaskParams.maxSizeOfResult,
+                                    "Skipped " + step.ToString() + " steps, using cache");
+                            }
+                        }
                         step++;
                         GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
 
@@ -309,6 +322,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                         //here we create virtual attribute name
                         //based on relevant question parameters
+
                         bool[] evalVector = evaluator.GetEvaluationVector();
 
                         int _arraySize = (CountVector.Length + _blockSize - 1) / _blockSize;
@@ -330,9 +344,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             {
                                 _yieldStringName = _yieldStringName + ", ";
                             }
-                            _yieldStringName = _yieldStringName +
-                                MarkEnum.Succedent.ToString() +
-                            ": " + pS.Identifier;
+                                _yieldStringName = _yieldStringName +
+                                    MarkEnum.Succedent.ToString() +
+                                ": " + pS.Identifier;
                         }
 
                         if (!(pC.Identifier is IEmptyBitString))
