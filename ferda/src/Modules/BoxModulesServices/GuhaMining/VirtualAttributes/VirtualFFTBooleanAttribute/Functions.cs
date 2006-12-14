@@ -73,6 +73,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         private IEnumerator<BitStringIceWithCategoryId> _bitStringEnumerator;
         private int[] _countVector = null;
         private int _skipFirstN = -1;
+        private int bitStringsYielded = 0;
 
         private IEnumerator<BitStringIceWithCategoryId> BitStringEnumerator
         {
@@ -80,12 +81,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             {
                 if (!_minerInitialized)
                 {
-                      _bitStringEnumerator = Common.RunTaskNoResult(
-                            _boxModule, this,
-                            TaskTypeEnum.FourFold,
-                            ResultTypeEnum.TraceBoolean,
-                            CountVector,
-                            Guid, miningFunctions, _skipFirstN, _current).GetEnumerator();
+                    _bitStringEnumerator = Common.RunTaskNoResult(
+                          _boxModule, this,
+                          TaskTypeEnum.FourFold,
+                          ResultTypeEnum.TraceBoolean,
+                          CountVector,
+                          Guid, miningFunctions, _skipFirstN, _current).GetEnumerator();
 
                     _minerInitialized = true;
                     return _bitStringEnumerator;
@@ -237,7 +238,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         /// <returns></returns>
         private BitStringIceWithCategoryId GetNextBitStringFromBuffer()
         {
-            
+
             if ((!_bufferInitialized) || (_bufferFlag == 0))
             {
                 FillBitStringCache();
@@ -322,21 +323,31 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         private Ice.Current _current = null;
         public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
-            if (_skipFirstN == -1)
+            if (bitStringsYielded < MaxNumberOfHypotheses)
             {
                 _skipFirstN = skipFirstN;
+
+                _current = current__;
+                bitString =
+                    GetNextBitStringFromBuffer();
+                if (bitString == null)
+                {
+                    bitString = new
+                        BitStringIceWithCategoryId();
+                    _minerInitialized = false;
+                    bitStringsYielded = 0;
+                    return false;
+                }
+                return true;
             }
-            _current = current__;
-            bitString =
-                GetNextBitStringFromBuffer();
-            if (bitString == null)
+            else
             {
                 bitString = new
-                    BitStringIceWithCategoryId();
+                        BitStringIceWithCategoryId();
                 _minerInitialized = false;
+                bitStringsYielded = 0;
                 return false;
             }
-            return true;
         }
 
         public override double[] GetCategoriesNumericValues(Current current__)
@@ -346,10 +357,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
-            List<GuidAttributeNamePair>_result = new List<GuidAttributeNamePair>();
-                _result.AddRange(Common.GetAttributeNames(_boxModule, this));
+            List<GuidAttributeNamePair> _result = new List<GuidAttributeNamePair>();
+            _result.AddRange(Common.GetAttributeNames(_boxModule, this));
 
-            _result.Add(new GuidAttributeNamePair(Guid,"VirtualFFTBooleanAttribute"));
+            _result.Add(new GuidAttributeNamePair(Guid, "VirtualFFTBooleanAttribute"));
 
             return _result.ToArray();
         }

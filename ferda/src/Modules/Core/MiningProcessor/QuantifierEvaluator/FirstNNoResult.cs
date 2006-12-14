@@ -86,32 +86,21 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             if (_actBufferUsed == 0)
                 return false;
 
-            List<ContingencyTableHelper> tables = new List<ContingencyTableHelper>(_actBufferUsed);
+            ContingencyTableHelper [] tables = new ContingencyTableHelper[_actBufferUsed];
+
             for (int i = 0; i < _actBufferUsed; i++)
             {
-                tables.Insert(i, _buffer[i].ContingencyTable);
+                tables[i] =_buffer[i].ContingencyTable;
             }
             _rInfo.NumberOfVerifications += _actBufferUsed;
+            _miningProcessor.ProgressSetValue(
+                progress(), "Counting quantifiers..."
+                );
             evalVector.AddRange(_quantifiers.Valid(tables));
             bool finalResult = false;
-
-            /*
-            for (int i = 0; i < result.Count; i++)
-            {
-                if (result[i])
-                {
-                    _rInfo.NumberOfHypotheses++;
-                    _result.Hypotheses.Add(_buffer[i].Hypothesis);
-                    if (_result.Hypotheses.Count >= _n)
-                    {
-                        finalResult = true;
-                        break;
-                    }
-                }
-            }
-            */
             bool shouldStop = !_miningProcessor.ProgressSetValue(
-                progress(), progressMessage()
+                progress(), "Counting quantifiers...done, \n" + 
+                progressMessage()
                 );
 
             _actBufferUsed = 0;
@@ -166,7 +155,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         private string progressMessage()
         {
-            return string.Format("Number of Relevant Questions: {0}",
+            return string.Format("# of relevant questions: {0}",
                                  _rInfo.TotalNumberOfRelevantQuestions);
         }
     }

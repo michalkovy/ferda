@@ -572,9 +572,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
                             }
                             if (_bufferInstance != null)
                             {
-                                _bufferInstance.AddBitString(tempString);
+                                if (_bufferInstance.AddBitString(tempString))
+                                {
+                                    bufferedCount++;
+                                }
+
                             }
                             _totalCount++;
+                            currentBitString++;
                         }
                     }
                     else
