@@ -596,6 +596,45 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 table["d"] = hypothesis.ContingencyTableA[2][2];
             }
 
+            if (resultBrowser.TaskType == TaskTypeEnum.SDFourFold)
+            {
+                //antecedent AND succedent
+                PropertySpec value = new PropertySpec("a", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("AntSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["a"] = hypothesis.ContingencyTableA[0][0];
+
+                //antecedent AND NOT succedent
+                value = new PropertySpec("b", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("AntNOTSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["b"] = hypothesis.ContingencyTableA[0][2];
+
+                //NOT antecedent AND succedent
+                value = new PropertySpec("c", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("NOTAntSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["c"] = hypothesis.ContingencyTableA[2][0];
+
+                //NOT antecedent AND NOT succedent
+                value = new PropertySpec("d", typeof(double),
+                    resManager.GetString("ContingencyTable"),
+                    resManager.GetString("NOTAntNOTSuccDescription"),
+                    0);
+                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+                table.Properties.Add(value);
+                table["d"] = hypothesis.ContingencyTableA[2][2];
+            }
+
             if (resultBrowser.TaskType == TaskTypeEnum.KL)
             {
                 double[][] transposed = Transpose(hypothesis.ContingencyTableA);
@@ -640,13 +679,73 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         }
 
         /// <summary>
+        /// Fills the property table <paramref name="table"/> with the
+        /// one of the contingency tables of the SD4FT task. Which contingency
+        /// table is determined by the <paramref name="firstTable"/>
+        /// </summary>
+        /// <param name="hypothesis">Hypothesis containing the contingency
+        /// tables</param>
+        /// <param name="firstTable">Which table should be filled</param>
+        private void FillPropertySDFFTContingency(Hypothesis hypothesis, 
+            PropertyTable table, bool firstTable)
+        {
+            string category = firstTable ?
+                resManager.GetString("FirstContingencyTable") :
+                resManager.GetString("SecondContingencyTable");
+
+            //antecedent AND succedent
+            PropertySpec value = new PropertySpec("a", typeof(double),
+                category,
+                resManager.GetString("AntSuccDescription"),
+                0);
+            value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+            table.Properties.Add(value);
+            table["a"] = firstTable ?
+                hypothesis.ContingencyTableA[0][0] :
+                hypothesis.ContingencyTableB[0][0];
+
+            //antecedent AND NOT succedent
+            value = new PropertySpec("b", typeof(double),
+                category,
+                resManager.GetString("AntNOTSuccDescription"),
+                0);
+            value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+            table.Properties.Add(value);
+            table["b"] = firstTable ?
+                hypothesis.ContingencyTableA[0][1] :
+                hypothesis.ContingencyTableB[0][1];
+
+            //NOT antecedent AND succedent
+            value = new PropertySpec("c", typeof(double),
+                category,
+                resManager.GetString("NOTAntSuccDescription"),
+                0);
+            value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+            table.Properties.Add(value);
+            table["c"] = firstTable ?
+                hypothesis.ContingencyTableA[1][0] :
+                hypothesis.ContingencyTableB[1][0];
+
+            //NOT antecedent AND NOT succedent
+            value = new PropertySpec("d", typeof(double),
+                category,
+                resManager.GetString("NOTAntNOTSuccDescription"),
+                0);
+            value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
+            table.Properties.Add(value);
+            table["d"] = firstTable ?
+                hypothesis.ContingencyTableA[1][1] :
+                hypothesis.ContingencyTableB[1][1];
+        }
+
+        /// <summary>
         /// Displays the graph of the fiest hypothesis
         /// </summary>
         private void LoadFirstHypothesis()
         {
             if (resultBrowser.AllHypothesesCount > 0)
             {
-                DrawBarsFromFirstTable(resultBrowser.AllHypotheses[0]);
+                DrawBars(resultBrowser.AllHypotheses[0]);
             }
         }
 
@@ -747,7 +846,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
             if (this.RadioFirstTable.Checked)
             {
-                this.DrawBarsFromFirstTable(hypothesis, this.ContingencyTableChart);
+                this.DrawBars(hypothesis, this.ContingencyTableChart);
             }
             else
             {
@@ -779,7 +878,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
             if (this.RadioFirstTable.Checked)
             {
-                this.DrawBarsFromFirstTable(hypothesis, this.ContingencyTableChart);
+                this.DrawBars(hypothesis, this.ContingencyTableChart);
             }
             else
             {
@@ -814,15 +913,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             Hypothesis hypothesis = this.resultBrowser.AllHypotheses[index];
             //filling the property grid
             this.FillPropertyGrid(hypothesis, index);
-
-            if (this.RadioFirstTable.Checked)
-            {
-                this.DrawBarsFromFirstTable(hypothesis);
-            }
-            else
-            {
-                //this.DrawBarsFromSecondTable(hypothesis);
-            }
+            this.DrawBars(hypothesis);
         }
 
         /// <summary>
@@ -1071,7 +1162,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             LabelVOffset.Text = resManager.GetString("LabelVOffset");
             LabelZoom.Text = resManager.GetString("LabelZoom");
             ToolStripCopyChart.Text = resManager.GetString("CopyChart");
-            CheckBoxShowLabels.Text = resManager.GetString("ShowLabels");
+            CHBShowLabels.Text = resManager.GetString("ShowLabels");
 
             LabelNumeric.Text = resManager.GetString("LabelNumeric");
             LabelProgressBar.Text = resManager.GetString("HypothesesLoading");

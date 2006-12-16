@@ -78,7 +78,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.LabelProgressBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressBarIceTicks = new System.Windows.Forms.ToolStripProgressBar();
             this.GroupBoxChangeGraph = new System.Windows.Forms.GroupBox();
-            this.CheckBoxShowLabels = new System.Windows.Forms.CheckBox();
+            this.CHBShowLabels = new System.Windows.Forms.CheckBox();
             this.LabelVOffset = new System.Windows.Forms.Label();
             this.LabelHOffset = new System.Windows.Forms.Label();
             this.TrackBarVOffset = new System.Windows.Forms.TrackBar();
@@ -411,7 +411,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // GroupBoxChangeGraph
             // 
             this.GroupBoxChangeGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GroupBoxChangeGraph.Controls.Add(this.CheckBoxShowLabels);
+            this.GroupBoxChangeGraph.Controls.Add(this.CHBShowLabels);
             this.GroupBoxChangeGraph.Controls.Add(this.LabelVOffset);
             this.GroupBoxChangeGraph.Controls.Add(this.LabelHOffset);
             this.GroupBoxChangeGraph.Controls.Add(this.TrackBarVOffset);
@@ -428,16 +428,16 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.GroupBoxChangeGraph.Text = "View options";
             this.GroupBoxChangeGraph.Visible = false;
             // 
-            // CheckBoxShowLabels
+            // CHBShowLabels
             // 
-            this.CheckBoxShowLabels.AutoSize = true;
-            this.CheckBoxShowLabels.Location = new System.Drawing.Point(9, 145);
-            this.CheckBoxShowLabels.Name = "CheckBoxShowLabels";
-            this.CheckBoxShowLabels.Size = new System.Drawing.Size(83, 17);
-            this.CheckBoxShowLabels.TabIndex = 8;
-            this.CheckBoxShowLabels.Text = "Show labels";
-            this.CheckBoxShowLabels.UseVisualStyleBackColor = true;
-            this.CheckBoxShowLabels.CheckedChanged += new System.EventHandler(this.CheckBoxShowLabels_CheckedChanged);
+            this.CHBShowLabels.AutoSize = true;
+            this.CHBShowLabels.Location = new System.Drawing.Point(9, 145);
+            this.CHBShowLabels.Name = "CHBShowLabels";
+            this.CHBShowLabels.Size = new System.Drawing.Size(83, 17);
+            this.CHBShowLabels.TabIndex = 8;
+            this.CHBShowLabels.Text = "Show labels";
+            this.CHBShowLabels.UseVisualStyleBackColor = true;
+            this.CHBShowLabels.CheckedChanged += new System.EventHandler(this.CheckBoxShowLabels_CheckedChanged);
             // 
             // LabelVOffset
             // 
@@ -602,7 +602,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.TrackBar TrackBarHOffset;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ToolStripCopyChart;
-        private System.Windows.Forms.CheckBox CheckBoxShowLabels;
+        private System.Windows.Forms.CheckBox CHBShowLabels;
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ToolStripProgressBar ProgressBarIceTicks;
         private System.Windows.Forms.ToolStripStatusLabel LabelProgressBar;
