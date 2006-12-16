@@ -134,7 +134,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="e">Event parameters</param>
         private void CheckBoxShowLabels_CheckedChanged(object sender, EventArgs e)
         {
-            ShowLabels(this.ContingencyTableChart);
+            ShowLabels();
         }
 
         #endregion
@@ -179,152 +179,49 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// Drawing first contingency table to chart
         /// </summary>
         /// <param name="hypothese">Hypothese to take contingency table from</param>
-        private void DrawBarsFromSecondTable(Hypothesis hypothese)
-        {
-            /*
-            chart.Series.Clear();
-            Random random = new Random();
-            bool fft = false;
-
-            this.ContingencyTableChart.Header.Text = this.resManager.GetString("SecondContingencyTable");
-
-            //for miners with boolean antecedents and succedents - for now only 4ft
-            foreach (BooleanLiteralStruct booleanLiteral in hypothese.booleanLiterals)
-            {
-                if ((booleanLiteral.cedentType == CedentEnum.Antecedent) || (booleanLiteral.cedentType == CedentEnum.Succedent))
-                {
-                    fft = true;
-                    break;
-                }
-            }
-            int i = 0;
-            int j = 0;
-
-            /*
-            int[][] transpondedTable = FerdaResultBrowserControl.Transpose(hypothese.quantifierSetting.secondContingencyTableRows);
-
-            for (int k = transpondedTable.GetUpperBound(0); k >=0; k--)
-            {
-                Steema.TeeChart.Styles.Bar ant = new Steema.TeeChart.Styles.Bar();
-                ant.Color = System.Drawing.Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
-                ant.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
-
-                foreach (int number in transpondedTable[k])
-                {
-                    if ((fft) && (j == 0))
-                    {
-                        ant.Add(number, this.resManager.GetString("ColumnAntecedent"));
-                    }
-                    else
-                    {
-                        if ((fft) && (j == 1))
-                        {
-                            ant.Add(number, '\u00AC' + this.resManager.GetString("ColumnAntecedent"));
-                        }
-                        else
-                        {
-                            string seriesTitle = String.Empty;
-                            foreach (LiteralStruct literal in hypothese.literals)
-                            {
-                                if (literal.cedentType == CedentEnum.Antecedent)
-                                {
-                                    if (literal.categoriesNames.Length > j)
-                                    {
-                                        seriesTitle = literal.categoriesNames[j];
-                                    }
-                                }
-                            }
-                            ant.Add(number, seriesTitle);
-                        }
-                    }
-                    j++;
-                }
-
-                if (this.CheckBoxShowLabels.Checked)
-                {
-                    ant.Marks.Visible = true;
-                }
-                else
-                {
-                    ant.Marks.Visible = false;
-                }
-                ant.Marks.Style = Steema.TeeChart.Styles.MarksStyles.LabelValue;
-                if (fft)
-                {
-                    if (k == 0)
-                    {
-                        ant.Title = this.resManager.GetString("ColumnSuccedent");
-                    }
-                    else
-                    {
-                        ant.Title = '\u00AC' + this.resManager.GetString("ColumnSuccedent");
-                    }
-                }
-                else
-                {
-                    string seriesTitle = String.Empty;
-                    foreach (LiteralStruct literal in hypothese.literals)
-                    {
-                        if (literal.cedentType == CedentEnum.Succedent)
-                        {
-                            if (literal.categoriesNames.Length > k)
-                            {
-                                seriesTitle = literal.categoriesNames[k];
-                            }
-                            break;
-                        }
-                    }
-                    if (seriesTitle == String.Empty)
-                    {
-                        foreach (LiteralStruct literal in hypothese.literals)
-                        {
-                            if (literal.cedentType == CedentEnum.Antecedent)
-                            {
-                                if (literal.categoriesNames.Length > k)
-                                {
-                                    seriesTitle = literal.categoriesNames[k];
-                                }
-                            }
-                        }
-                    }
-
-                    ant.Title = seriesTitle;
-                }
-                chart.Series.Add(ant);
-             //   i++;
-                j = 0;
-            }
-            */
-        }
-
-        /// <summary>
-        /// Drawing first contingency table to chart
-        /// </summary>
-        /// <param name="hypothese">Hypothese to take contingency table from</param>
-        private void DrawBarsFromFirstTable(Hypothesis hypothesis)
+        private void DrawBars(Hypothesis hypothesis)
         {
             //clearing the graph
             ContingencyTableChart.Series.Clear();
 
-            //for the 4FT miner
+            //for the 4FT task
             if (resultBrowser.TaskType == TaskTypeEnum.FourFold)
             {
-                //drawing the titles, name of the table, antecedents and
-                //succedents names
+                //drawing the title
                 ContingencyTableChart.Legend.Visible = false;
                 ContingencyTableChart.Header.Text =
                     "4FT " + resManager.GetString("ContingencyTable");
                 DrawFFT(hypothesis);
             }
 
-            //for the KL miner
+            //for the SD4FT task
+            if (resultBrowser.TaskType == TaskTypeEnum.SDFourFold)
+            {
+                ContingencyTableChart.Legend.Visible = false;
+                if (RadioFirstTable.Checked)
+                {
+                    ContingencyTableChart.Header.Text =
+                        "SD4FT " + resManager.GetString("FirstContingencyTable");
+                    DrawSDFFT(hypothesis, true);
+                }
+                else
+                {
+                    ContingencyTableChart.Header.Text =
+                        "SD4FT " + resManager.GetString("SecondContingencyTable");
+                    DrawSDFFT(hypothesis, false);
+                }
+            }
+
+            //for the KL task
             if (resultBrowser.TaskType == TaskTypeEnum.KL)
             {
+                //drawing the title
                 ContingencyTableChart.Header.Text =
                     "KL " + resManager.GetString("ContingencyTable");
                 DrawKL(hypothesis);
             }
 
+            //for the CF task
             if (resultBrowser.TaskType == TaskTypeEnum.CF)
             {
                 ContingencyTableChart.Header.Text =
@@ -341,27 +238,20 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         {
             Bar bar = new Bar();
             Random random = new Random();
-            bar.Color = Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
             bar.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
             bar.Marks.Style = MarksStyles.LabelValue;
-
-            if (CheckBoxShowLabels.Checked)
-            {
-                bar.Marks.Visible = false;
-            }
-            else
-            {
-                bar.Marks.Visible = true;
-            }
 
             bar.Title = hypothesis.GetFormula(MarkEnum.Attribute).ToString();
 
             for (int i = 0; i < hypothesis.ContingencyTableA[0].Length; i++)
             {
-                bar.Add(hypothesis.ContingencyTableA[0][i], i.ToString());
+                bar.Add(hypothesis.ContingencyTableA[0][i], i.ToString(),
+                    Color.FromArgb(random.Next(255), random.Next(255),
+                    random.Next(255)));
             }
 
             ContingencyTableChart.Series.Add(bar);
+            ShowLabels();
         }
 
         /// <summary>
@@ -374,26 +264,17 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             double[][] transposed = Transpose(hypothesis.ContingencyTableA);
 
             Bar bar;
-            Random random;
+            Random random = new Random();
             for (int i = transposed.GetUpperBound(0); i>= 0 ; i--)
             {
                 bar = new Bar();
-                random = new Random();
-                bar.Color = Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
+                bar.Color = Color.FromArgb(random.Next(255), 
+                    random.Next(255), random.Next(255));
                 bar.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
                 bar.Marks.Style = MarksStyles.LabelValue;
 
                 //TODO name of the category
                 bar.Title = i.ToString();
-
-                if (CheckBoxShowLabels.Checked)
-                {
-                    bar.Marks.Visible = false;
-                }
-                else
-                {
-                    bar.Marks.Visible = true;
-                }
 
                 //adding the columns to the row
                 foreach (int value in transposed[i])
@@ -402,12 +283,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 }
 
                 ContingencyTableChart.Series.Add(bar);
+                ShowLabels();
             }
         }
 
         /// <summary>
         /// The method draws the FFT contingency table on the 
-        /// ContingencyTableCart
+        /// ContingencyTableChart. 
         /// </summary>
         /// <param name="hypothesis">Hypothesis to be drawn</param>
         private void DrawFFT(Hypothesis hypothesis)
@@ -429,7 +311,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 hypothesis.GetFormula(MarkEnum.Antecedent).ToString();
 
             //If the preferences are set to show the labels
-            if (this.CheckBoxShowLabels.Checked)
+            if (this.CHBShowLabels.Checked)
             {
                 ant.Marks.Visible = true;
                 notant.Marks.Visible = true;
@@ -440,16 +322,76 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 notant.Marks.Visible = false;
             }
 
+            //getting the right contingency table
+            double[][] table = hypothesis.ContingencyTableA;
+
             //filling the contingency table according to the values in 
             //the contingency table where the actual numbers are
             //(I don't know why it is this way)
-            ant.Add(hypothesis.ContingencyTableA[0][0],
-                hypothesis.GetFormula(MarkEnum.Succedent).ToString());
-            ant.Add(hypothesis.ContingencyTableA[0][2],
+            ant.Add(table[0][0], hypothesis.GetFormula(MarkEnum.Succedent).ToString());
+            ant.Add(table[0][2],
                 '\u00AC' + hypothesis.GetFormula(MarkEnum.Succedent).ToString());
-            notant.Add(hypothesis.ContingencyTableA[2][0],
+            notant.Add(table[2][0],
                 hypothesis.GetFormula(MarkEnum.Succedent).ToString());
-            notant.Add(hypothesis.ContingencyTableA[2][2],
+            notant.Add(table[2][2],
+                '\u00AC' + hypothesis.GetFormula(MarkEnum.Succedent).ToString());
+
+            ContingencyTableChart.Series.Add(ant);
+            ContingencyTableChart.Series.Add(notant);
+        }
+
+        /// <summary>
+        /// The method draws the first or second four-fold contingency
+        /// table on the ContingencyTableChart depending on the parameter
+        /// <paramref name="firstTable"/>
+        /// </summary>
+        /// <param name="hypothesis">Hypothesis to be drawn</param>
+        /// <param name="firstTable">Determines if it is first or
+        /// second contingency table of the SD4FT task</param>
+        private void DrawSDFFT(Hypothesis hypothesis, bool firstTable)
+        {
+            //initializing the antecedent bar (row)
+            Bar ant = new Bar();
+            Random random = new Random();
+            ant.Color = Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
+            ant.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
+            ant.Marks.Style = MarksStyles.LabelValue;
+            ant.Title = hypothesis.GetFormula(MarkEnum.Antecedent).ToString();
+
+            //initializing the not antecednet bar (row)
+            Bar notant = new Bar();
+            notant.Color = Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
+            notant.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
+            notant.Marks.Style = MarksStyles.LabelValue;
+            notant.Title = '\u00AC' +
+                hypothesis.GetFormula(MarkEnum.Antecedent).ToString();
+
+            //If the preferences are set to show the labels
+            if (this.CHBShowLabels.Checked)
+            {
+                ant.Marks.Visible = true;
+                notant.Marks.Visible = true;
+            }
+            else
+            {
+                ant.Marks.Visible = false;
+                notant.Marks.Visible = false;
+            }
+
+            //getting the right contingency table
+            double[][] table;
+            table = firstTable ? hypothesis.ContingencyTableA : 
+                                 hypothesis.ContingencyTableB;
+
+            //filling the contingency table according to the values in 
+            //the contingency table where the actual numbers are
+            //(I don't know why it is this way)
+            ant.Add(table[0][0], hypothesis.GetFormula(MarkEnum.Succedent).ToString());
+            ant.Add(table[0][1],
+                '\u00AC' + hypothesis.GetFormula(MarkEnum.Succedent).ToString());
+            notant.Add(table[1][0],
+                hypothesis.GetFormula(MarkEnum.Succedent).ToString());
+            notant.Add(table[1][1],
                 '\u00AC' + hypothesis.GetFormula(MarkEnum.Succedent).ToString());
 
             ContingencyTableChart.Series.Add(ant);
@@ -459,12 +401,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Method which toggles labels on/off for chart.
         /// </summary>
-        /// <param name="chart">Chart to toggle lables for</param>
-        private void ShowLabels(TChart chart)
+        private void ShowLabels()
         {
-            foreach (Steema.TeeChart.Styles.Series serie in chart.Series)
+            foreach (Steema.TeeChart.Styles.Series serie 
+                in ContingencyTableChart.Series)
             {
-                if (this.CheckBoxShowLabels.Checked)
+                if (this.CHBShowLabels.Checked)
                 {
                     serie.Marks.Visible = true;
                 }
