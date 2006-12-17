@@ -598,41 +598,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             if (resultBrowser.TaskType == TaskTypeEnum.SDFourFold)
             {
-                //antecedent AND succedent
-                PropertySpec value = new PropertySpec("a", typeof(double),
-                    resManager.GetString("ContingencyTable"),
-                    resManager.GetString("AntSuccDescription"),
-                    0);
-                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(value);
-                table["a"] = hypothesis.ContingencyTableA[0][0];
-
-                //antecedent AND NOT succedent
-                value = new PropertySpec("b", typeof(double),
-                    resManager.GetString("ContingencyTable"),
-                    resManager.GetString("AntNOTSuccDescription"),
-                    0);
-                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(value);
-                table["b"] = hypothesis.ContingencyTableA[0][2];
-
-                //NOT antecedent AND succedent
-                value = new PropertySpec("c", typeof(double),
-                    resManager.GetString("ContingencyTable"),
-                    resManager.GetString("NOTAntSuccDescription"),
-                    0);
-                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(value);
-                table["c"] = hypothesis.ContingencyTableA[2][0];
-
-                //NOT antecedent AND NOT succedent
-                value = new PropertySpec("d", typeof(double),
-                    resManager.GetString("ContingencyTable"),
-                    resManager.GetString("NOTAntNOTSuccDescription"),
-                    0);
-                value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
-                table.Properties.Add(value);
-                table["d"] = hypothesis.ContingencyTableA[2][2];
+                FillPropertySDFFTContingency(hypothesis, table, true);
+                FillPropertySDFFTContingency(hypothesis, table, false);
             }
 
             if (resultBrowser.TaskType == TaskTypeEnum.KL)
@@ -693,47 +660,51 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 resManager.GetString("FirstContingencyTable") :
                 resManager.GetString("SecondContingencyTable");
 
+            string name = firstTable ?
+                "1. " :
+                "2. ";
+
             //antecedent AND succedent
-            PropertySpec value = new PropertySpec("a", typeof(double),
+            PropertySpec value = new PropertySpec(name + "a", typeof(double),
                 category,
                 resManager.GetString("AntSuccDescription"),
                 0);
             value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
             table.Properties.Add(value);
-            table["a"] = firstTable ?
+            table[name + "a"] = firstTable ?
                 hypothesis.ContingencyTableA[0][0] :
                 hypothesis.ContingencyTableB[0][0];
 
             //antecedent AND NOT succedent
-            value = new PropertySpec("b", typeof(double),
+            value = new PropertySpec(name + "b", typeof(double),
                 category,
                 resManager.GetString("AntNOTSuccDescription"),
                 0);
             value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
             table.Properties.Add(value);
-            table["b"] = firstTable ?
+            table[name + "b"] = firstTable ?
                 hypothesis.ContingencyTableA[0][1] :
                 hypothesis.ContingencyTableB[0][1];
 
             //NOT antecedent AND succedent
-            value = new PropertySpec("c", typeof(double),
+            value = new PropertySpec(name + "c", typeof(double),
                 category,
                 resManager.GetString("NOTAntSuccDescription"),
                 0);
             value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
             table.Properties.Add(value);
-            table["c"] = firstTable ?
+            table[name + "c"] = firstTable ?
                 hypothesis.ContingencyTableA[1][0] :
                 hypothesis.ContingencyTableB[1][0];
 
             //NOT antecedent AND NOT succedent
-            value = new PropertySpec("d", typeof(double),
+            value = new PropertySpec(name + "d", typeof(double),
                 category,
                 resManager.GetString("NOTAntNOTSuccDescription"),
                 0);
             value.Attributes = new Attribute[] { ReadOnlyAttribute.Yes };
             table.Properties.Add(value);
-            table["d"] = firstTable ?
+            table[name + "d"] = firstTable ?
                 hypothesis.ContingencyTableA[1][1] :
                 hypothesis.ContingencyTableB[1][1];
         }
