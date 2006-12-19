@@ -44,7 +44,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
     
     /// <summary>
-    /// UserControl class for displaying results
+    /// UserControl class for displaying results of the GUHA tasks
+    /// in Ferda
     /// </summary>
     public partial class FerdaResultBrowserControl : UserControl
     {
@@ -128,16 +129,33 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         #region Constructor
 
         /// <summary>
-        /// Class constructor
+        /// Default constructor of the class. The parameters contain all the data
+        /// structures needed for correct functionality of the class.
         /// </summary>
-        /// <param name="localePrefs">Localeprefs</param>
         /// <param name="result">Identifier of the result to display</param>
-        /// <param name="quantifiers">quantifiers</param>
-        /// <param name="Displayer">Propertygrid</param>
-        /// <param name="ownerOfAddIn">Ownerofaddin</param>
+        /// <param name="quantifiers">Quantifiers connected to the task</param>
+        /// <param name="Displayer">
+        /// The property grid that displays the
+        /// details of selected hypotheses (part of the FrontEnd envinronment)
+        /// </param>
+        /// <param name="ownerOfAddIn">
+        /// Owner of the addin (usually the FrontEnd environment). The control can
+        /// be drawn and docked into the owner
+        /// </param>
+        /// <param name="resManager">
+        /// Manager of the localized resources
+        /// </param>
+        /// <param name="taskProxy">
+        /// BoxModule proxy of the task. It is used to get info about the task
+        /// </param>
+        /// <param name="bitStringProvider">
+        /// Provider of the bit strings to identify the names of categories
+        /// for the KL and CF tasks
+        /// </param>
         public FerdaResultBrowserControl(ResourceManager resManager, string result, 
             Quantifiers quantifiers, BitStringGeneratorProviderPrx taskProxy, 
-            IOtherObjectDisplayer Displayer, IOwnerOfAddIn ownerOfAddIn)
+            IOtherObjectDisplayer Displayer, IOwnerOfAddIn ownerOfAddIn,
+            BitStringGeneratorProviderPrx bitStringProvider)
         {
             this.resManager = resManager;
 
@@ -151,7 +169,18 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 throw new Ferda.Modules.BadValueError();
             }
-            resultBrowser = new FerdaResult(result, quantifiers);
+            resultBrowser = new FerdaResult(result, quantifiers, bitStringProvider);
+
+            //if it is not a SD hypothesis, the combo box switching first and
+            //second contingency tables is hidden
+            if (resultBrowser.TaskType != TaskTypeEnum.SDFourFold &&
+                resultBrowser.TaskType != TaskTypeEnum.SDKL &&
+                resultBrowser.TaskType != TaskTypeEnum.SDCF)
+            {
+                contingencyTablesPanel.Visible = false;
+            }
+
+            //loading the hypotheses in a separate thread via resultBrowser
             resultBrowser.IceTicked += new LongRunTick(resultBrowser_IceTicked);
             resultBrowser.IceComplete += new LongRunCompleted(resultBrowser_IceComplete);
             resultBrowser.Initialize();
@@ -720,31 +749,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             }
         }
 
-        #region Commented
-        /*
-         
-        /// <summary>
-        /// Method which fills in all the available values for filters
-        /// </summary>
-        private void InitFiltersCombos()
-        {
-            foreach (KeyValuePair<string, LiteralFilter> filter in this.resultBrowser.AntecedentFilter)
-            {
-                this.CheckedListBoxAntecedents.Items.Add(filter.Key, true);
-            }
-
-            foreach (KeyValuePair<string, LiteralFilter> filter in this.resultBrowser.SuccedentFilter)
-            {
-                this.CheckedListBoxSuccedents.Items.Add(filter.Key, true);
-            }
-
-            foreach (KeyValuePair<string, LiteralFilter> filter in this.resultBrowser.ConditionFilter)
-            {
-                this.CheckedListBoxConditions.Items.Add(filter.Key, true);
-            }
-        }
-        */
-        #endregion
         #endregion
 
         #region Handlers
@@ -759,7 +763,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.StatusStrip.Visible = false;
             this.AfterLoadEnable();
             this.AllInit();
-            this.LoadFirstHypothesis();
+            //Because of some loading synchronization problems we prefer not to load
+            //the first hypothesis after everygthing is complete
+            //this.LoadFirstHypothesis();
         }
 
         /// <summary>

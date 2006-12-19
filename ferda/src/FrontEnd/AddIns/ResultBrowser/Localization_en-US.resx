@@ -144,6 +144,9 @@
   <data name="ButtonFilter" xml:space="preserve">
     <value>Re-filter</value>
   </data>
+  <data name="ClickInto" xml:space="preserve">
+    <value>In order to display the graph of the hypothesis select a hypothesis from the list</value>
+  </data>
   <data name="ColumnAntecedent" xml:space="preserve">
     <value>Antecedent</value>
   </data>

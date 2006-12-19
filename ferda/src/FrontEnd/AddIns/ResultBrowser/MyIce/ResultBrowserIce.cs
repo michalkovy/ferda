@@ -150,8 +150,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         
             AttributeNameProviderPrx nameProvider =
                 AttributeNameProviderPrxHelper.checkedCast(boxModuleParam.getFunctions());
-
             AttributeNameInLiteralsProvider.Init(nameProvider);
+
+            BitStringGeneratorProviderPrx bitStringProvider =
+                BitStringGeneratorProviderPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
             string statistics = String.Empty;
 
@@ -160,7 +162,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = 
                 new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(
                 resManager, taskProxy1.GetResult(out statistics), quantifiers, 
-                taskProxy, displayer, ownerOfAddIn);
+                taskProxy, displayer, ownerOfAddIn, bitStringProvider);
             this.ownerOfAddIn.ShowDockableControl(control, 
                 taskLabel + " - " + resManager.GetString("ResultBrowserControl"));
         }

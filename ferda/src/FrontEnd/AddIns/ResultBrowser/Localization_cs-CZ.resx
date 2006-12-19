@@ -144,6 +144,9 @@
   <data name="ButtonFilter" xml:space="preserve">
     <value>Filtrovat</value>
   </data>
+  <data name="ClickInto" xml:space="preserve">
+    <value>K zobrazení grafu hypotézy vyberte hypotézu ze seznamu</value>
+  </data>
   <data name="ColumnAntecedent" xml:space="preserve">
     <value>Antecedent</value>
   </data>

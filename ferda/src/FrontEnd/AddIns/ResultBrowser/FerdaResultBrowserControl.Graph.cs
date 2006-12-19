@@ -59,27 +59,28 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private void InitializeGraph()
         {
-            this.ResultBrowserSplit.Panel2.SuspendLayout();
-            this.ResultBrowserSplit.SuspendLayout();
-            this.SuspendLayout();
-            this.ContingencyTableChart = new Steema.TeeChart.TChart();
-            this.ContingencyTableChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContingencyTableChart.Header.Lines = new string[] {"tChart1"};
-            this.ContingencyTableChart.Location = new System.Drawing.Point(0, 0);
-            this.ContingencyTableChart.Name = "tChart1";
-            this.ContingencyTableChart.Header.Visible = true;
+            ResultBrowserSplit.Panel2.SuspendLayout();
+            ResultBrowserSplit.SuspendLayout();
+            SuspendLayout();
+            ContingencyTableChart = new Steema.TeeChart.TChart();
+            ContingencyTableChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            ContingencyTableChart.Header.Lines = new string[] {"tChart1"};
+            ContingencyTableChart.Location = new System.Drawing.Point(0, 0);
+            ContingencyTableChart.Name = "tChart1";
+            ContingencyTableChart.Header.Visible = true;
+            ContingencyTableChart.Header.Text = resManager.GetString("ClickInto");
+
+            ContingencyTableChart.Legend.Visible = false;
+            ContingencyTableChart.Size = new System.Drawing.Size(466, 286);
+            ContingencyTableChart.Axes.Depth.Visible = true;
+            ContingencyTableChart.ContextMenuStrip = this.ContextMenuGraphRightClick;
             
-            this.ContingencyTableChart.Size = new System.Drawing.Size(466, 286);
-            this.ContingencyTableChart.Axes.Depth.Visible = true;
-            this.ContingencyTableChart.ContextMenuStrip = this.ContextMenuGraphRightClick;
-            //this.ContingencyTableChart.Page.MaxPointsPerPage = 8;
+            ToolStripShowGraphEdit.Click += new EventHandler(ToolStripShowGraphEdit_Click);
 
-            this.ToolStripShowGraphEdit.Click += new EventHandler(ToolStripShowGraphEdit_Click);
-
-            this.ResultBrowserSplit.Panel2.Controls.Add(ContingencyTableChart);
-            this.ResultBrowserSplit.Panel2.ResumeLayout(false);
-            this.ResultBrowserSplit.ResumeLayout(false);
-            this.ResumeLayout(false);
+            ResultBrowserSplit.Panel2.Controls.Add(ContingencyTableChart);
+            ResultBrowserSplit.Panel2.ResumeLayout(false);
+            ResultBrowserSplit.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
@@ -188,7 +189,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             if (resultBrowser.TaskType == TaskTypeEnum.FourFold)
             {
                 //drawing the title
-                ContingencyTableChart.Legend.Visible = false;
                 ContingencyTableChart.Header.Text =
                     "4FT " + resManager.GetString("ContingencyTable");
                 DrawFFT(hypothesis);
@@ -197,7 +197,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //for the SD4FT task
             if (resultBrowser.TaskType == TaskTypeEnum.SDFourFold)
             {
-                ContingencyTableChart.Legend.Visible = false;
                 if (RadioFirstTable.Checked)
                 {
                     ContingencyTableChart.Header.Text =
@@ -241,11 +240,15 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             bar.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
             bar.Marks.Style = MarksStyles.LabelValue;
 
-            bar.Title = hypothesis.GetFormula(MarkEnum.Attribute).ToString();
+            Formula f = hypothesis.GetFormula(MarkEnum.Attribute);
+            bar.Title = f.ToString();
+
+            //getting the names of the categories (should be in right order)
+            string[] categoryNames = resultBrowser.GetCategoryNames(f);
 
             for (int i = 0; i < hypothesis.ContingencyTableA[0].Length; i++)
             {
-                bar.Add(hypothesis.ContingencyTableA[0][i], i.ToString(),
+                bar.Add(hypothesis.ContingencyTableA[0][i], categoryNames[i],
                     Color.FromArgb(random.Next(255), random.Next(255),
                     random.Next(255)));
             }
@@ -263,6 +266,14 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         {
             double[][] transposed = Transpose(hypothesis.ContingencyTableA);
 
+            //getting the names of the column attribute
+            Formula f = hypothesis.GetFormula(MarkEnum.ColumnAttribute);
+            string [] colAttrNames = resultBrowser.GetCategoryNames(f);
+
+            //getting the names of the row attributes
+            f = hypothesis.GetFormula(MarkEnum.RowAttribute);
+            string[] rowAttrNames = resultBrowser.GetCategoryNames(f);
+
             Bar bar;
             Random random = new Random();
             for (int i = transposed.GetUpperBound(0); i>= 0 ; i--)
@@ -272,14 +283,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     random.Next(255), random.Next(255));
                 bar.MultiBar = Steema.TeeChart.Styles.MultiBars.None;
                 bar.Marks.Style = MarksStyles.LabelValue;
-
-                //TODO name of the category
-                bar.Title = i.ToString();
+                bar.Title = colAttrNames[i];
 
                 //adding the columns to the row
-                foreach (int value in transposed[i])
+                for (int j = 0; j < transposed[i].Length; j++)
                 {
-                    bar.Add(value, value.ToString());
+                    bar.Add(transposed[i][j], rowAttrNames[j]);
                 }
 
                 ContingencyTableChart.Series.Add(bar);
