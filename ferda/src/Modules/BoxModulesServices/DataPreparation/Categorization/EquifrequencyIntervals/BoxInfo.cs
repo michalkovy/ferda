@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Ferda.Guha.Data;
 using Object = Ice.Object;
+using FixedAtom = Ferda.Modules.Boxes.GuhaMining.FixedAtom;
+using AtomSetting = Ferda.Modules.Boxes.GuhaMining.AtomSetting;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyIntervals
 {
@@ -25,9 +27,73 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
         }
 
+        /// <summary>
+        /// Gets the box modules asking for creation.
+        /// </summary>
+        /// <param name="localePrefs">The localization preferences.</param>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// Array of <see cref="T:Ferda.Modules.ModuleAskingForCreation">
+        /// Modules Asking For Creation</see>.
+        /// </returns>
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
         {
-            return new ModulesAskingForCreation[0];
+            //getting the information what is in the config files
+            Dictionary<string, ModulesAskingForCreation> modulesAFC =
+                getModulesAskingForCreationNonDynamic(localePrefs);
+            //creating the structure that will be returned
+            List<ModulesAskingForCreation> result =
+                new List<ModulesAskingForCreation>();
+
+            ModulesConnection moduleConnection;
+            ModuleAskingForCreation singleModule;
+
+            foreach (string moduleAFCname in modulesAFC.Keys)
+            {
+                singleModule = new ModuleAskingForCreation();
+                moduleConnection = new ModulesConnection();
+                //no need to set any property
+                singleModule.propertySetting = new PropertySetting[] { };
+
+                switch (moduleAFCname)
+                {
+                    case "FixedAtom":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            FixedAtom.Functions.SockBitStringGenerator;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            FixedAtom.BoxInfo.typeIdentifier;
+                        break;
+
+                    case "AtomSetting":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            AtomSetting.Functions.SockBitStringGenerator;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            AtomSetting.BoxInfo.typeIdentifier;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                //setting the newModules property of each modules for intearction
+                modulesAFC[moduleAFCname].newModules =
+                    new ModuleAskingForCreation[] { singleModule };
+                result.Add(modulesAFC[moduleAFCname]);
+            }
+
+            return result.ToArray();
         }
 
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)

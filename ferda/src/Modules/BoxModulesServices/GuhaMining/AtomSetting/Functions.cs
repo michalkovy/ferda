@@ -5,7 +5,7 @@ using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
 {
-    internal class Functions : BooleanAttributeSettingFunctionsDisp_, IFunctions
+    public class Functions : BooleanAttributeSettingFunctionsDisp_, IFunctions
     {
         /// <summary>
         /// The box module.

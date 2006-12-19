@@ -1,4 +1,4 @@
-// BoxModule.cs - BoxInfo class for the database box
+// BoxInfo.cs - BoxInfo class for the column box
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>,
 //          Martin Ralbovský <martin.ralbovsky@gmail.com> (modulesAFC)

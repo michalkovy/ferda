@@ -6,6 +6,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{080262C5-D4FC-4722-B1E7-46E927D34507}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataPreparation", "DataPreparation\DataPreparation.csproj", "{AE98C890-A6CE-461C-A245-54E87F383CD0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9D598D8A-0393-4E99-9842-49D120C06881} = {9D598D8A-0393-4E99-9842-49D120C06881}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic", "Basic\Basic.csproj", "{CAA9E684-F8AD-4B24-A871-B5215C38EB95}"
 EndProject
