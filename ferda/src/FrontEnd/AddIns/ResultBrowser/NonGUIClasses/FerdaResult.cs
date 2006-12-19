@@ -165,6 +165,12 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         private Result result;
 
+        /// <summary>
+        /// Provider of the bit strings to identify the names of categories
+        /// for the KL and CF tasks
+        /// </summary>
+        private BitStringGeneratorProviderPrx bitStringProvider;
+
         #endregion
 
         #region Properties
@@ -270,10 +276,16 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         /// <param name="quantifiers">Applied quantifiers</param>
         /// <param name="result">String identifier of the result</param>
-        public FerdaResult(string result, Quantifiers quantifiers)
+        /// <param name="bitStringProvider">
+        /// Provider of the bit strings to identify the names of categories
+        /// for the KL and CF tasks
+        /// </param>
+        public FerdaResult(string result, Quantifiers quantifiers, 
+            BitStringGeneratorProviderPrx bitStringProvider)
         {
             this.quantifiers = quantifiers;
             this.result = SerializableResult.Deserialize(result);
+            this.bitStringProvider = bitStringProvider;
 
             List<string> temp = new List<string>();
             List<string> temp1 = new List<string>();
@@ -456,16 +468,27 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         }
 
         /// <summary>
-        /// Unfolds the hypothesis (for the FFT and SDFFT tasks). The method
-        /// takes all the hypothesis and tries to unfold the antecedent and
-        /// succedent and condition into individual atoms.
+        /// Returns names of categories of an attribute. To be used when displaying
+        /// the KL and CF contingency tables
         /// </summary>
-        /// <param name="hypothesisID">ID of the hypothesis</param>
-        //private void UnfoldHypothesis(int hypothesisID)
-        //{
-        //    Formula formula = result.Hypotheses[hypothesisID].
-        //        GetFormula(MarkEnum.Antecedent);
-        //}
+        /// <param name="formula">Formula to retrieve information from</param>
+        /// <returns></returns>
+        public string[] GetCategoryNames(Formula formula)
+        {
+            //The formula should be a categorial attribute formula
+            CategorialAttributeFormula f = formula as CategorialAttributeFormula;
+            if (f == null)
+            {
+                return null;
+            }
+
+            //getting the BitStringGenerator
+            GuidStruct guid = new GuidStruct(f.AttributeGuid);
+            BitStringGeneratorPrx categoriesGenerator = 
+                bitStringProvider.GetBitStringGenerator(guid);
+
+            return categoriesGenerator.GetCategoriesIds();
+        }
 
         #endregion
     }
