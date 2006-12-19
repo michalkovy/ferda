@@ -161,9 +161,6 @@
     <Content Include="Quantifiers\Notes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Quantifiers\FourFold\DistributionSignificance\ChiSquare\" />
     <Folder Include="Quantifiers\FourFold\DistributionSignificance\Fisher\" />
     <Folder Include="Quantifiers\FourFold\DistributionSignificance\SimpleDeviation\" />

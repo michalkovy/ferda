@@ -3,7 +3,7 @@ using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
 {
-    internal class BoxInfo : Boxes.BoxInfo
+    public class BoxInfo : Boxes.BoxInfo
     {
         public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
         {
