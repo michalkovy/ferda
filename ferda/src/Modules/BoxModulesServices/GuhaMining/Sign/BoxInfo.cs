@@ -47,12 +47,29 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
 
             string inputBoxLabel = Func.GetInputBoxLabel();
 
+            string result;
+
+            //if there has to be parenthesis around
             if (inputBoxLabel == null)
                 return null;
             else if (inputBoxLabel.Contains(FormulaHelper.SeparatorAnd) || inputBoxLabel.Contains(FormulaHelper.SeparatorOr))
-                return FormulaHelper.NegationSign + "(" + inputBoxLabel + ")";
+                result =  "(" + inputBoxLabel + ")";
             else
-                return FormulaHelper.NegationSign + inputBoxLabel;
+                result = inputBoxLabel;
+
+            //determining the negation sign
+            string temp = boxModule.GetPropertyString("SignType");
+            switch (temp)
+            {
+                case "Positive":
+                    return result;
+                case "Negative":
+                    return FormulaHelper.NegationSign + result;
+                case "Both":
+                    return "(" + FormulaHelper.NegationSign + ")" + result;
+                default:
+                    return result;
+            }
         }
 
         /// <summary>
