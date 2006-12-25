@@ -5,18 +5,24 @@
   <articleinfo>
     <authorgroup>
       <author>
-        <firstname>Martin</firstname>        
-        <surname>Ralbovský</surname>
+        <personname>
+          <firstname>Martin</firstname>
+          <surname>Ralbovský</surname>
+        </personname>
         <email>martin.ralbovsky@gmail.com</email>
       </author>
       <othercredit>
-        <firstname>Tomáš</firstname>
-        <surname>Kuchař</surname>
+        <personname>
+          <firstname>Tomáš</firstname>
+          <surname>Kuchař</surname>
+        </personname>
         <email>tomas.kuchar@gmail.com</email>
       </othercredit>
       <othercredit>
-        <firstname>Michal</firstname>
-        <surname>Kováč</surname>
+        <personname>
+          <firstname>Michal</firstname>
+          <surname>Kováč</surname>
+        </personname>
         <email>michal.kovac.develop@centrum.cz</email>
       </othercredit>      
     </authorgroup>
@@ -29,6 +35,15 @@
     </titleabbrev>
     <!--
     <revhistory>
+      <revision>
+        <revnumber>2.2</revnumber>
+        <date>2006-12-25</date>
+        <revdescription>
+          <para>
+            Changes according to the 2.0 version of the system
+          </para>
+        </revdescription>
+      </revision>
       <revision>
         <revnumber>2.1</revnumber>
         <date>2006-06-07</date>
@@ -392,7 +407,7 @@
         Visual representation of the archive
         <mediaobject>
           <imageobject>
-            <imagedata fileref="archiveEN.png" format="PNG" />
+            <imagedata fileref="environmentArchive.png" format="PNG" />
           </imageobject>
         </mediaobject>
       </para>
@@ -580,7 +595,7 @@
       <para>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="propertiesEN.png" format="PNG" />
+            <imagedata fileref="environmentPropertyGrid.png" format="PNG" />
           </imageobject>
         </mediaobject>
       </para>
@@ -627,6 +642,54 @@
         structure. User creates new boxes by dragging a selected box type
         from the New box component and dropping it into the desktop.
       </para>
+      <para>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="environmentNewBox.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </para>
+    </section>
+    <section>
+      <title>Progress Bars</title>
+      <para>
+        Whenever box executes an action that takes longer to complete
+        (usually running individual tasks), the progress of this action
+        is displayed as one item in the progress bar.
+      </para>
+      <para>
+        A running progress bar
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="environmentProgress.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </para>
+      <section>
+        <title>User work with the Progress bar</title>
+        <itemizedlist mark="bullet">
+          <listitem>
+            <formalpara>
+              <title>Hiding a progress bar</title>
+              <para>
+                User can hide a progress bar clicking on the <classname>Hide</classname>
+                link on the right side of a progress bar. The system hides the
+                progress bar, however the action is still being executed.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Stoping a action</title>
+              <para>
+                User can stop the action that is represented by a progress bar
+                by clicking on the <classname>Stop</classname> link.
+                The system stops the action represented by the progress bar.
+              </para>
+            </formalpara>
+          </listitem>
+        </itemizedlist>
+      </section>
     </section>
     <section>
       <title>Context help</title>
