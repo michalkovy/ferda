@@ -4,17 +4,29 @@
 <article lang="en">
   <articleinfo>
     <author>
-      <firstname>Martin</firstname>
-      <surname>Ralbovský</surname>
+      <personname>
+        <firstname>Martin</firstname>
+        <surname>Ralbovský</surname>
+      </personname>
       <email>martin.ralbovsky@gmail.com</email>
     </author>
     <pubdate>2006-03-11</pubdate>
     <title>Ferda's tutorial for creating first project</title>
     <titleabbrev>FerdasTutorial</titleabbrev>
+
     <!--
     <revhistory>
       <revision>
-        <revnumber>0.2<revnumber>
+        <revnumber>2.0</revnumber>
+        <date>2006-12-25</date>
+        <revdescription>
+          <para>
+            The document is addapted to the 2.0 version of the system. 
+          </para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>0.2</revnumber>
         <date>2006-3-22</date>
         <revdescription>
           <para>
@@ -30,9 +42,10 @@
             The actions run through the Module for interaction
           </para>
         </revdescription>
-      </revision>       
+      </revision>
     </revhistory>
     -->
+    
   </articleinfo>
   <abstract>
     <para>
@@ -67,7 +80,7 @@
     <para>
       In this tutorial we try to mine some knowledge from a fictional Barbora bank
       data containing information about loan profitability. We use the most known
-      GUHA procedure implemented in LISp-Miner, the 4ft. This procedure uses a fourfold contingency table
+      GUHA procedure implemented in Ferda, the 4FT. This procedure uses a fourfold contingency table
       of individual hypotheses verifies its value against defined quantifiers.
       You will find more about the procedure and its parameters later in this 
       tutorial.
@@ -90,7 +103,7 @@
     </para>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="make1boxEN.png" format="PNG"/>
+        <imagedata fileref="tutorialMake1Box.png" format="PNG"/>
       </imageobject>
     </mediaobject>
   </section>
@@ -119,7 +132,7 @@
     </para>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="odbcEN.png" format="PNG"/>
+        <imagedata fileref="tutorialOdbc.png" format="PNG"/>
       </imageobject>
     </mediaobject>
     <para>
@@ -167,7 +180,7 @@
     </para>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="boxesAskingEN.png" format="PNG"/>
+        <imagedata fileref="tutorialBoxesAsking.png" format="PNG"/>
       </imageobject>
     </mediaobject>
     <para>
@@ -224,44 +237,32 @@
     </para>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="attributesEN.png" format="PNG"/>
+        <imagedata fileref="tutorialAttributes.png" format="PNG"/>
       </imageobject>
     </mediaobject>
   </section>
   <section>
-    <title>6. The task creation up to the Boolean partial cedent setting</title>
+    <title>6. The 4FT task completion</title>
     <para>
-      Let us continue creating our task. We will now create more boxes needed
-      for the partial cedent setting, which is input of the 4ft procedure. 
-      We will again rely on the Boxes asking for creation. Firstly, we create
-      an <classname>Atom setting</classname>. This box expresses how categories
-      will group in the latter literal. We can leave all the implicit values for 
-      our task. Then we create a <classname>Literal setting</classname>. Literal
-      consists of atoms and it is a basic building block in cedent creation.
-      We can set the literal type of sign. Finally we create a
-      <classname>Boolean partial cedent setting</classname> from the
-      <classname>Literal setting</classname>. Cedent is a literal conjunction
-      and it is one of the 4ft parameters. The length of the cedent could be 
-      set in the properties of the box, but we can leave here the preset values.
+      Let us continue creating our task. We need to define the atoms, which
+      are the basic building blocks for creation of <emphasis>boolean
+      attributes</emphasis> that serve as an input for the 4FT procedure.
+      We choose the <classname>Atom setting</classname> out of the
+      <classname>Boxes asking for creation</classname> menu of both of the
+      attributes. We can leave the default setting of the properties.
     </para>
-    <mediaobject>
-      <imageobject>
-        <imagedata fileref="cedentsEN.png" format="PNG"/>
-      </imageobject>
-    </mediaobject>
-  </section>
-  <section>
-    <title>7. The 4ft task completion</title>
     <para>
+      With the atoms created, let us explain the 4FT procedure a little more.
       The 4ft procedure is the most widely used and the most intuitive procedure
-      out of all the LISp-Miner procedures. There are 3 cedents named
+      out of all the GUHA procedures implemented in Ferda. There are 3 boolean
+      attributes named
       <classname>antecedent</classname>, <classname>succedent</classname> and
       <classname>condition</classname> coming into the procedure as parameters.
       The procedure examines the relation between antecedent and succedent under
-      a given condition. We also use a <classname>4ft quantifier</classname> for
+      a given condition. We also use a <classname>4FT quantifier</classname> for
       the task. It is a formula defined on the fourfold table and the hypotheses
       are verified against this formula. We use the most common
-      <classname>Founded implication</classname> 4ft quantifier. This quantifier
+      <classname>Founded implication</classname> 4F quantifier. This quantifier
       contains one input parameter <classname>p</classname> and test if at least
       <classname>p</classname> percent of objects that satisfies the antecedent
       satisfies also the succedent. In other words, if when the object satisfies
@@ -271,19 +272,19 @@
     <para>
       Now we have everything set for completing our task. From the 
       <classname>New boxes</classname> component from the
-      <classname>4ft-Miner</classname> we drag the box
-      <classname>4ft Task</classname> behind the already constructed partial
-      cedents on the desktop. This box has four input sockets:
-      <classname>Antecedent setting</classname>
-      <classname>Succedent setting</classname>
-      <classname>Condition setting</classname> and the 
-      <classname>4ft Quantifier</classname>. We connect into the 
-      <classname>Antecedent setting</classname> the partial cedent setting
+      <classname>GUHA Mining->Tasks</classname> we drag the box
+      <classname>4FT-Task</classname> behind the already constructed atoms
+      on the desktop. This box has four input sockets:
+      <classname>Antecedent</classname>
+      <classname>Succedent</classname>
+      <classname>Condition</classname> and the 
+      <classname>Quantifiers</classname>. We connect into the 
+      <classname>Antecedent</classname> the atom setting box
       created from the <classname>Salary</classname> column, into the
-      <classname>Succedent setting</classname> we connect the 
-      partial cedent setting created from the <classname>status</classname>
+      <classname>Succedent</classname> we connect the 
+      atom setting box created from the <classname>status</classname>
       column. We won't use the condition in our task. Finally we connect a
-      quantifier into the last socket. We connect there the 
+      quantifier into the first socket. We connect there the 
       <classname>Founded implication</classname> quantifier that can be
       found in the <classname>Quantifiers</classname> folder of the
       <classname>4ft-Miner</classname> folder. The task is ready to
@@ -291,40 +292,37 @@
     </para>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="4ftTaskCZ.png" format="PNG"/>
+        <imagedata fileref="tutorial4FTTask.png" format="PNG"/>
       </imageobject>
     </mediaobject>    
   </section>
   <section>
-    <title>8. Running the 4ft and Modules for interaction</title>
+    <title>7. Running the 4FT and Actions</title>
     <para>
       Executing the action of boxes is yet another usage of the box.
       Actions of the box are accessible from the <classname>Actions</classname>
-      item of the box context menu. Unfortunately, in recent Ferda implementation
-      it is needed to run the boxes actions through 
-      <classname>Modules for interaction</classname> (more natural usage of these
-      modules will be explained in the next point of the tutorial). Let us
+      item of the box context menu.  Let us
       choose the <classname>Run</classname> item from the
-      <classname>Modules for Interaction</classname> submenu.
+      <classname>Actions</classname> submenu of the box.
     </para>
     <para>
-      When we run the task, a dialog with generating information
+      When we run the task, a progress bar with generating information
       is shown. Then we select the <classname>4ft Task</classname>
       box on the desktop once again.
       As one can notice, the property values of the box have changed. The
       <classname>State</classname> property shows the <classname>Completed</classname>
-      value. Unfortunately, none of the 16 verifications passed the quantifier
+      value. Unfortunately, none of the 20 verifications passed the quantifier
       conditions. We change the quantifier parameter <classname>p</classname>
       little from 0,9 to 0,8 and run the task again. Great we got a hypothesis.
     </para>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="hypotheses.png" format="PNG"/>
+        <imagedata fileref="tutorialProgress.png" format="PNG"/>
       </imageobject>
     </mediaobject>    
   </section>
   <section>
-    <title>9. Displaying the results</title>
+    <title>8. Displaying the results and the Modules for Interaction</title>
     <para>
       With the aid of <classname>Modules for interaction</classname> the 
       boxes show their content to the user. Therefore, in order to display 
@@ -338,12 +336,12 @@
     </para>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="contingencyCZ.png" format="PNG"/>
+        <imagedata fileref="tutorialContingency.png" format="PNG"/>
       </imageobject>
     </mediaobject>    
   </section>
   <section>
-    <title>10. Result interpretation</title>
+    <title>9. Result interpretation</title>
     <para>
       Out hypothesis says that the couple antecedent (salary between 11110 and
       12110) and succedent (status C) satisfies the founded implication quantifier
