@@ -240,6 +240,9 @@
   <data name="LabelZoom" xml:space="preserve">
     <value>Zoom</value>
   </data>
+  <data name="NoHypotheses" xml:space="preserve">
+    <value>There are no hypotheses in the task box.</value>
+  </data>
   <data name="NoRestriction" xml:space="preserve">
     <value>No restriction</value>
   </data>

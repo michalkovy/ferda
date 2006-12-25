@@ -237,6 +237,9 @@
   <data name="LabelZoom" xml:space="preserve">
     <value>Zoom</value>
   </data>
+  <data name="NoHypotheses" xml:space="preserve">
+    <value>V krabičce úlohy nejsou žádné hypotézy.</value>
+  </data>
   <data name="NoRestriction" xml:space="preserve">
     <value>Bez omezení</value>
   </data>
