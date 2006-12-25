@@ -165,10 +165,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             InitializeComponent();
             InitializeGraph();
 
-            if (String.IsNullOrEmpty(result))
-            {
-                throw new Ferda.Modules.BadValueError();
-            }
             resultBrowser = new FerdaResult(result, quantifiers, 
                 bitStringProvider, ownerOfAddIn);
 

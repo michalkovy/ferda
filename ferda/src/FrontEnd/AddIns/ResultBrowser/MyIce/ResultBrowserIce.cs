@@ -155,13 +155,23 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             BitStringGeneratorProviderPrx bitStringProvider =
                 BitStringGeneratorProviderPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
+            //getting the serialized task result (in order to avoid tasks with no results)
             string statistics = String.Empty;
+            string serializedResult = taskProxy1.GetResult(out statistics);
+
+            if (string.IsNullOrEmpty(serializedResult))
+            {
+                Ferda.Modules.BadParamsError e = new BadParamsError();
+                e.userMessage = resManager.GetString("NoHypotheses");
+                ownerOfAddIn.ShowBoxException(e);
+                return;
+            }
 
             Quantifiers quantifiers = new Quantifiers(taskProxy1.GetQuantifiers(), taskProxy, localePrefs);
 
             FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = 
                 new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(
-                resManager, taskProxy1.GetResult(out statistics), quantifiers, 
+                resManager, serializedResult, quantifiers, 
                 taskProxy, displayer, ownerOfAddIn, bitStringProvider);
             this.ownerOfAddIn.ShowDockableControl(control, 
                 taskLabel + " - " + resManager.GetString("ResultBrowserControl"));
