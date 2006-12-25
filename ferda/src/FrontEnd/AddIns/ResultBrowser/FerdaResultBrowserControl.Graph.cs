@@ -246,6 +246,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //getting the names of the categories (should be in right order)
             string[] categoryNames = resultBrowser.GetCategoryNames(f);
 
+            if (categoryNames == null)
+            {
+                return;
+            }
+
             for (int i = 0; i < hypothesis.ContingencyTableA[0].Length; i++)
             {
                 bar.Add(hypothesis.ContingencyTableA[0][i], categoryNames[i],
@@ -273,6 +278,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //getting the names of the row attributes
             f = hypothesis.GetFormula(MarkEnum.RowAttribute);
             string[] rowAttrNames = resultBrowser.GetCategoryNames(f);
+
+            if (colAttrNames == null || rowAttrNames == null)
+            {
+                return;
+            }
 
             Bar bar;
             Random random = new Random();

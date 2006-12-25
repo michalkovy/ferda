@@ -169,7 +169,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 throw new Ferda.Modules.BadValueError();
             }
-            resultBrowser = new FerdaResult(result, quantifiers, bitStringProvider);
+            resultBrowser = new FerdaResult(result, quantifiers, 
+                bitStringProvider, ownerOfAddIn);
 
             //if it is not a SD hypothesis, the combo box switching first and
             //second contingency tables is hidden
