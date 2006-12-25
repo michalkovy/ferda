@@ -5,20 +5,27 @@
   <articleinfo>
     <authorgroup>
       <author>
-        <firstname>Alexander</firstname>
-
-        <surname>Kuzmin</surname>
-
+        <personname>
+          <firstname>Alexander</firstname>
+          <surname>Kuzmin</surname>
+        </personname>
         <email>alexander.kuzmin@gmail.com</email>
+      </author>
+      <author>
+        <personname>
+          <firstname>Martin</firstname>
+          <surname>Ralbovský</surname>
+        </personname>
+        <email>martin.ralbovsky@gmail.com</email>
       </author>
     </authorgroup>
 
     <pubdate>2006-03-21</pubdate>
 
-    <title>ResultBrowser module - Module for displaying the results of the gen
-    run</title>
+    <title>ResultBrowser module - Module for displaying the results of a
+    procedure run</title>
 
-    <titleabbrev>AttributeFrequency</titleabbrev>
+    <titleabbrev>ResultBrowser</titleabbrev>
 
     <!--
     <revhistory>
@@ -28,8 +35,16 @@
         <revremark>Initial version of the document
         </revremark>
       </revision>
+      <revision>
+        <revnumber>2.0</revnumber>
+        <date>2006-12-24</date>
+        <revremark>
+          Adaptation to the 2.0 version of the system
+        </revremark>
+      </revision>
     </revhistory>
     -->
+
   </articleinfo>
 
   <abstract>
@@ -54,8 +69,8 @@
       <title>Main window</title>
 
       <para>Main dialog window contains a list of generated hypotheses. When
-      starting the module, ResultBrowser loads all the hypotheses, quantifiers'
-      values and statistics in cache to make further work with the hypotheses
+      starting the module, ResultBrowser loads all the hypotheses and quantifiers'
+      values into cache to make further work with the hypotheses
       quicker. Preloading could take same time, so please be patient until the
       module starts.</para>
 
@@ -65,72 +80,13 @@
         </imageobject>
       </mediaobject>
 
-      <itemizedlist>
-        <listitem>
-          <formalpara>
-            <title>Columns</title>
-
-            <para>You can sort the hypotheses list by clicking on one of the
-            columns. This is not the only way you can sort this list - see
-            also <link linkend="sortingbystatistics">sorting by
-            statistics</link>. Columns of this list are the
-            following:</para>
-          </formalpara>
-
-          <itemizedlist>
-            <listitem>
-              <formalpara>
-                <title>Hypothesis</title>
-
-                <para>This view column contains the hypothesis composed on the
-                basis of the antecedent, succedent and condition or on the
-                basis of row and column attributes.</para>
-              </formalpara>
-            </listitem>
-
-            <listitem>
-              <formalpara>
-                <title>Antecedent / Row attribute</title>
-
-                <para>This view column contains the antecedent or the row
-                attribute for corresponding task types for the
-                hypothesis.</para>
-              </formalpara>
-            </listitem>
-
-            <listitem>
-              <formalpara>
-                <title>Succedent / Column attribute</title>
-
-                <para>This view column contains the succedent or the column
-                attribute for corresponding task types for the hypothesis.
-                This column is empty for CF and SDCF hypotheses</para>
-              </formalpara>
-            </listitem>
-
-            <listitem>
-              <formalpara>
-                <title>Condition</title>
-
-                <para>This view column contains the condition of the given
-                hypothesis.</para>
-              </formalpara>
-            </listitem>
-
-            <listitem>
-              <formalpara id="quantifiercolumns">
-                <title>Quantifiers columns</title>
-
-                <para>These view columns contain counted quantifier values for
-                the hypothesis. The columns for used quantifiers are optional
-                and can be added to hypotheses listview using the <link
-                linkend="mainrightclick">right-click menu</link> on the
-                hypotheses list.</para>
-              </formalpara>
-            </listitem>
-          </itemizedlist>
-        </listitem>
-      </itemizedlist>
+      <para>
+        The most important part of the environment is this list of hypotheses.
+        When you click on a particular hypothesis, the graph and details of
+        the hypothesis are displayed.
+        You can sort the hypotheses by clicking on the column header. Adding 
+        and removing columns will be described further. 
+      </para>
     </section>
 
     <section>
@@ -140,34 +96,15 @@
       hypotheses list:</para>
 
       <section>
-        <title>Sorting by statistics</title>
-
-        <para>This dropdown menu is designed for sorting hypotheses list by
-        the statistics counted on the hypotheses contingency tables. The list
-        is sorted every time you select the desired statistics from the
-        dropdown menu. <mediaobject>
-            <imageobject>
-              <imagedata fileref="resultBrowserSortingStatistics.png"
-                         format="PNG" />
-            </imageobject>
-          </mediaobject>ResultBrowser will then display by which statistics
-        the list is sorted.</para>
-
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="resultBrowserPrecision2.png" format="PNG" />
-          </imageobject>
-        </mediaobject>
-      </section>
-
-      <section>
         <title>Precision</title>
 
-        <para>This element allows you to choose the number of decimal places
-        for displaying the counted quantifiers values in the columns and also
-        counted quantifiers and statistics values in the <link
-        linkend="propertygrid">property grid</link>. Hypotheses list will
-        automatically update itself when the precision is changed.</para>
+        <para>
+          This element allows you to choose the number of decimal places
+          for displaying the quantifiers values in the columns and also values in the 
+          <link linkend="propertygrid">property grid</link>. In order to change
+          the precision in the list of hypotheses, you need to click on the
+          <emphasis>Refresh</emphasis> button.
+        </para>
 
         <mediaobject>
           <imageobject>
@@ -182,7 +119,7 @@
         <para>Here the hypotheses count is displayed. Value shows total count
         of generated hypotheses and displayed number of the generated
         hypotheses. You can limit the displayed hypotheses using <link
-        linkend="filter">filter</link>.</para>
+        linkend="filter">filters</link>.</para>
 
         <mediaobject>
           <imageobject>
@@ -191,42 +128,63 @@
         </mediaobject>
       </section>
 
-      <section id="filter">
-        <title>Filter</title>
+      <section>
+        <title>Columns and quantifiers to display</title>
+        <para>
+          You can add and remove the columns displayed in the list by determining
+          the columns and quantifiers to display. The <emphasis>Columns to display
+          </emphasis> list includes all the parts of the task that can be displayed
+          (antecedent, succedent and condition for 4FT, row attributes, column
+          attributes and condition for KL, attribute and condition for CF and 
+          antecedent, succedent, condition, first set and second set for SD4FT)
+          and ID of the hypothesis. The <emphasis>Quantifiers to display</emphasis>
+          includes all the quantifiers connected to the task. Simply select the columns
+          you want to display and then click on the <emphasis>Refresh</emphasis>
+          button.
+        </para>
 
-        <para>Filter allows you to limit the displayed hypotheses by the
-        literals in antecedent, succedent and condition. By default, all the
-        hypotheses are displayed - every literal is checked. By unchecking
-        literals from the antecedent, succedent and condition you can limit
-        the displayed hypotheses to only those that contain only the selected
-        literals. For submitting the changed filter condition you should click
-        on Re-filter button. The hypotheses list will be refilled according to
-        filter and displayed <link linkend="hypothesescount">hypotheses count
-        </link>will be updated accordingly.</para>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="resultBrowserColumns.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+        
       </section>
-    </section>
 
-    <section id="mainrightclick">
-      <title>Right-click menu on the hypotheses list</title>
+      <section>
+        <title>Contingency table switcher</title>
+        <para>
+          In this part of the environment (as shown on the picture), you
+          can switch between displyaing the first and second contingency
+          tables (available only for SD procedures).
+        </para>
 
-      <para>This right-click menu is designed for adding and removing columns
-      from the hypotheses list. You can add and remove <link
-      linkend="quantifiercolumns">quantifier colums</link>.</para>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="resultBrowserSwitcher.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+        
+      </section>
+      
+      <section id="filter">
+        <title>Filters</title>
 
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="resultBrowserMainWindowRightClick.png"
-                     format="PNG" />
-        </imageobject>
-      </mediaobject>
+        <para>
+          Filter allows you to limit the displayed hypotheses by the
+          atoms in antecedent, succedent and condition. The feature is
+          not yet implemented.
+        </para>
+        
+      </section>
     </section>
 
     <section>
       <title id="propertygrid">Property grid</title>
 
       <para>Property grid is designed to display all of the hypothesis data.
-      It includes contingency tables, quantifiers values, hypothesis data and
-      statistics values, grouped by appropriate categories. Data for
+      It includes contingency tables, quantifiers values and hypothesis data, 
+      grouped by appropriate categories. Data for
       hypothesis is displayed in the property grid when the hypothesis is
       selected. You can adjust view parameters of the property grid such as
       width. Separate values can be copied to clipboard from the property

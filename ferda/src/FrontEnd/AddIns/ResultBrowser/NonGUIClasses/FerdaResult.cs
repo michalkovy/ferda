@@ -171,6 +171,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// </summary>
         private BitStringGeneratorProviderPrx bitStringProvider;
 
+        /// <summary>
+        /// The owner of addin to display the box runtime errors
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAddIn;
+
         #endregion
 
         #region Properties
@@ -280,12 +285,17 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// Provider of the bit strings to identify the names of categories
         /// for the KL and CF tasks
         /// </param>
+        /// <param name="owner">
+        /// The owner of addin to display the box runtime errors
+        /// </param>
         public FerdaResult(string result, Quantifiers quantifiers, 
-            BitStringGeneratorProviderPrx bitStringProvider)
+            BitStringGeneratorProviderPrx bitStringProvider, 
+            IOwnerOfAddIn owner)
         {
             this.quantifiers = quantifiers;
             this.result = SerializableResult.Deserialize(result);
             this.bitStringProvider = bitStringProvider;
+            this.ownerOfAddIn = owner;
 
             List<string> temp = new List<string>();
             List<string> temp1 = new List<string>();
@@ -475,6 +485,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
         /// <returns></returns>
         public string[] GetCategoryNames(Formula formula)
         {
+            string[] result = null;
+
             //The formula should be a categorial attribute formula
             CategorialAttributeFormula f = formula as CategorialAttributeFormula;
             if (f == null)
@@ -487,7 +499,18 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser.NonGUIClasses
             BitStringGeneratorPrx categoriesGenerator = 
                 bitStringProvider.GetBitStringGenerator(guid);
 
-            return categoriesGenerator.GetCategoriesIds();
+            //getting the categories names - must be in a try block
+            //(i.e. bad connection string)
+            try
+            {
+                result = categoriesGenerator.GetCategoriesIds();
+            }
+            catch (Ferda.Modules.BoxRuntimeError e)
+            {
+                ownerOfAddIn.ShowBoxException(e);
+            }
+
+            return result;
         }
 
         #endregion
