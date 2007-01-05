@@ -126,13 +126,9 @@
 		</asminfo>
 	</target>
 	<target name="UtilsBuild" depends="ModulesBuild">
-		<if test="${platform::is-win32()}">
-			<nant buildfile="Utils/default.build" target="build"/>
-		</if>
+		<nant buildfile="Utils/default.build" target="build"/>
 	</target>
 	<target name="UtilsClean">
-		<if test="${platform::is-win32()}">
-			<nant buildfile="Utils/default.build" target="clean"/>
-		</if>
+		<nant buildfile="Utils/default.build" target="clean"/>
 	</target>
 </project>
