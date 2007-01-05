@@ -18,6 +18,8 @@
 			</sources>
 			<references>
 				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Design.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Drawing.dll"/>
 			</references>
