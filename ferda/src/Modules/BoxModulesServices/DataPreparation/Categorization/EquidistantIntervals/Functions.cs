@@ -118,7 +118,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 
         #endregion
 
-
         #region Methods
 
         /// <summary>

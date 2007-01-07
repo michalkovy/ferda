@@ -810,6 +810,15 @@ namespace Ferda
             }
             #endregion
 
+            /// <summary>
+            /// Information about modules for interaction which can be run
+            /// on top of this box
+            /// </summary>
+            /// <value>
+            /// An array of <see cref="T:Ferda.ModulesManager.ModuleForInteractionInfo"/>
+            /// representing information about modules for interaction
+            /// which can be run on top of this box
+            /// </value>
             public override Ferda.Modules.ModulesAskingForCreation[] ModulesAskingForCreation
             {
                 get
@@ -818,6 +827,11 @@ namespace Ferda
                 }
             }
 
+            /// <summary>
+            /// Dynamic help
+            /// </summary>
+            /// <value>An array of <see cref="T:Ferda.Modules.DynamicHelpItem"/>
+            /// representing items in dynamic help</value>
             public override Ferda.Modules.DynamicHelpItem[] DynamicHelpItems
             {
                 get

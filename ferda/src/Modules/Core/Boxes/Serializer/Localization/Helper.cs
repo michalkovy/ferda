@@ -334,7 +334,7 @@ namespace Ferda.Modules.Boxes.Serializer.Localization
                 foreach (DynamicHelpItem dynamicHelpItem in dynamicHelpItems)
                 {
                     Modules.DynamicHelpItem item = new Modules.DynamicHelpItem();
-                    item.identifier = localeId + dynamicHelpItem.Identifier;
+                    item.identifier = dynamicHelpItem.Identifier; //+ localeId;
                     item.label = dynamicHelpItem.Label;
                     item.url = dynamicHelpItem.Url;
                     result.Add(item);

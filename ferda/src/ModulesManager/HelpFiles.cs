@@ -207,18 +207,16 @@ namespace Ferda.ModulesManager
         /// </summary>
         public void SaveHelpFilesConfig()
         {
-            // TODO uncomment
-
-            //List<HelpKeyValue> helpFilesCopy =
-            //    new List<HelpKeyValue>(helpFiles.Count);
-            //foreach(KeyValuePair<string, HelpFileManagersInfo> pair in helpFiles)
-            //{
-            //    helpFilesCopy.Add(new HelpKeyValue(pair.Key, pair.Value));
-            //}
-            //XmlSerializer s = new XmlSerializer(typeof(HelpKeyValue[]));
-            //TextWriter w = new StreamWriter(System.IO.Path.Combine(savePath, helpFilesConfigFileName));
-            //s.Serialize(w, helpFilesCopy.ToArray());
-            //w.Close();
+            List<HelpKeyValue> helpFilesCopy =
+                new List<HelpKeyValue>(helpFiles.Count);
+            foreach (KeyValuePair<string, HelpFileManagersInfo> pair in helpFiles)
+            {
+                helpFilesCopy.Add(new HelpKeyValue(pair.Key, pair.Value));
+            }
+            XmlSerializer s = new XmlSerializer(typeof(HelpKeyValue[]));
+            TextWriter w = new StreamWriter(System.IO.Path.Combine(savePath, helpFilesConfigFileName));
+            s.Serialize(w, helpFilesCopy.ToArray());
+            w.Close();
         }
 		
 		private Dictionary<string,HelpFileManagersInfo> helpFiles =

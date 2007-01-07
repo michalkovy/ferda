@@ -204,9 +204,11 @@ namespace Ferda.FrontEnd.ContextHelp
                 label.Name = item.identifier;
                 label.Text = item.label;
                 label.Location = new Point(0, y);
+                label.Click += new EventHandler(DynamicLabelClick);
                 label.Visible = true;
                 y += 16;
                 dynamicLabels[i] = label;
+
                 i++;
             }
             Controls.AddRange(dynamicLabels);
@@ -328,6 +330,23 @@ namespace Ferda.FrontEnd.ContextHelp
         #endregion
 
         #region Events
+
+        /// <summary>
+        /// Reacts on a click of a dynamic item, opens a pdf on
+        /// a specified location
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void DynamicLabelClick(object sender, EventArgs e)
+        {
+            LinkLabel ll = sender as LinkLabel;
+            string path = SelectedBox.MadeInCreator.GetHelpFilePath(ll.Name);
+
+            //TODO udelat
+            // cesta k PDF
+            //selectedBox.MadeInCreator.GetHelpFilePath(item.identifier);
+            //item.url; //kam mam skocit
+        }
 
         /// <summary>
         /// Event when the context help receives focus. It forces the menu and toolbar
