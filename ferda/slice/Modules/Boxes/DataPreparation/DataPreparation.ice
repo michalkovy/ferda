@@ -102,6 +102,7 @@ module Ferda {
 					interface AttributeFunctions extends Ferda::Guha::MiningProcessor::BitStringGenerator {
 						nonmutating	string getAttribute()
 							throws Ferda::Modules::BoxRuntimeError;
+						// Returns the names of the categories and their frequencies
 						nonmutating Ferda::Guha::Data::ValuesAndFrequencies getCategoriesAndFrequencies()
 							throws Ferda::Modules::BoxRuntimeError;
 					};
