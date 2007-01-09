@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <article lang="en" >
@@ -35,6 +35,16 @@
     </titleabbrev>
     <!--
     <revhistory>
+		<revision>
+			<revnumber>2.3</revnumber>
+			<date>2006-01-09</date>
+			<revdescription>
+				<para>
+					Added the ability to hide/show the Visible sockets group
+					of properties in the Property grid. 
+				</para>
+			</revdescription>
+		</revision>
       <revision>
         <revnumber>2.2</revnumber>
         <date>2006-12-25</date>
@@ -320,10 +330,13 @@
             user. There will be the localization of the application, some
             advanced settings of the environment, maybe the ICE Pack Server address
             or dynamic modules loading into the application present in this 
-            section. For now, it contains the item <emphasis>Preferences
-            </emphasis> that displays the incomplete <emphasis>Preferences</emphasis>
-            dialog. In this dialog, user can change the localization of the 
-            application.
+            section. 
+          </para>
+          <para>
+			For now it contains the <emphasis>Properties</emphasis> item, that shows the 
+			<emphasis>Properties</emphasis> dialog. In this dialog, user can choose the program
+			localization and the ability to see the <emphasis>Visible sockets</emphasis>
+			group in the <emphasis>Property Grid</emphasis>.
           </para>
         </section>
         <section>
@@ -624,7 +637,12 @@
         in the property grid. Socket can be removed after resetting the value
         of the property in the <emphasis>Visible sockets</emphasis> to <emphasis>
         false</emphasis>.
-      </para>
+     </para>   
+      <para>
+		  The default setting of the <emphasis>Visible sockets</emphasis> group visibility
+		  can be changed in the <emphasis>Tools</emphasis>, <emphasis>Preferences</emphasis>
+		  part of the main application menu.
+      </para>        
       <section>
         <title>User work with the Property grid</title>
         <para>

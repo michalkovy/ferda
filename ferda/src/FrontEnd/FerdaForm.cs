@@ -645,7 +645,7 @@ using Ferda.ModulesManager;
         protected void SetupProgessBar()
         {
             //creating the progress bar control and its content
-            progressBarControl = new ProgressBar.ProgressBarsManager();
+            progressBarControl = new ProgressBar.ProgressBarsManager(ResManager);
             progressBarContent = new DockWindow();
 
             //I dont really know how this works, but putting there a smaller number

@@ -27,6 +27,7 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using System.Resources;
 
 namespace Ferda.FrontEnd.ProgressBar
 {
@@ -47,11 +48,17 @@ namespace Ferda.FrontEnd.ProgressBar
         delegate void SetHintDelegate(string hint);
         delegate void SetValueDelegate(float value);
         delegate void SetProgressBarStyleDelegate(ProgressBarStyle value);
+        delegate void LocalizeDelegate(ResourceManager resManager);
 
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Resource manager from the FerdaForm
+        /// </summary>
+        public ResourceManager resManager;
 
         #endregion
 
@@ -230,6 +237,24 @@ namespace Ferda.FrontEnd.ProgressBar
             else
             {
                 LHint.Text = hint;
+            }
+        }
+
+        /// <summary>
+        /// Localizing the progress bar (possibly from another thread)
+        /// </summary>
+        /// <param name="resManager">ResourceManager to localize from</param>
+        public void Localize(ResourceManager resManager)
+        {
+            if (InvokeRequired)
+            {
+                LocalizeDelegate d = new LocalizeDelegate(Localize);
+                Invoke(d, new object[] {resManager});
+            }
+            else
+            {
+                LLHide.Text = resManager.GetString("ProgressBarHide");
+                LLStop.Text = resManager.GetString("ProgressBarStop");
             }
         }
 

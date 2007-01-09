@@ -429,8 +429,14 @@
   <data name="PreferencesDialogCaption" xml:space="preserve">
     <value>Možnosti</value>
   </data>
+  <data name="ProgressBarHide" xml:space="preserve">
+    <value>Skrýt</value>
+  </data>
   <data name="ProgressBarsCaption" xml:space="preserve">
     <value>Progress bary:)</value>
+  </data>
+  <data name="ProgressBarStop" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="ProjectLoadErrorCaption" xml:space="preserve">
     <value>Při nahrávání projektu nastaly chyby</value>

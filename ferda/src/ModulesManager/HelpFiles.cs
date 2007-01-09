@@ -171,21 +171,21 @@ namespace Ferda.ModulesManager
         /// <param name="file">Data with help file</param>
 		public void SaveHelpFile(string identifier, int version ,byte[] file)
 		{
-			string path = GetHelpFilePath(identifier);
+            string path = GetHelpFilePath(identifier);
             if (!string.IsNullOrEmpty(path) && File.Exists(path))
                 File.Delete(path);
-			path = Path.GetFullPath(Path.Combine(savePath,identifier + ".pdf"));
-			FileStream stream = new FileStream(path,FileMode.Create);
-			try{
-				stream.Write(file, 0, file.Length);
-			}
-			finally
-			{
-				stream.Close();
-			}
-			helpFiles[identifier] = new HelpFileManagersInfo(identifier,
-															 version,
-															 path);
+            path = Path.GetFullPath(Path.Combine(savePath,identifier + ".pdf"));
+            FileStream stream = new FileStream(path,FileMode.Create);
+            try{
+                stream.Write(file, 0, file.Length);
+            }
+            finally
+            {
+                stream.Close();
+            }
+            helpFiles[identifier] = new HelpFileManagersInfo(identifier,
+                                                             version,
+                                                             path);
 		}
 
         /// <summary>
@@ -207,16 +207,16 @@ namespace Ferda.ModulesManager
         /// </summary>
         public void SaveHelpFilesConfig()
         {
-            List<HelpKeyValue> helpFilesCopy =
-                new List<HelpKeyValue>(helpFiles.Count);
-            foreach (KeyValuePair<string, HelpFileManagersInfo> pair in helpFiles)
-            {
-                helpFilesCopy.Add(new HelpKeyValue(pair.Key, pair.Value));
-            }
-            XmlSerializer s = new XmlSerializer(typeof(HelpKeyValue[]));
-            TextWriter w = new StreamWriter(System.IO.Path.Combine(savePath, helpFilesConfigFileName));
-            s.Serialize(w, helpFilesCopy.ToArray());
-            w.Close();
+            //List<HelpKeyValue> helpFilesCopy =
+            //    new List<HelpKeyValue>(helpFiles.Count);
+            //foreach (KeyValuePair<string, HelpFileManagersInfo> pair in helpFiles)
+            //{
+            //    helpFilesCopy.Add(new HelpKeyValue(pair.Key, pair.Value));
+            //}
+            //XmlSerializer s = new XmlSerializer(typeof(HelpKeyValue[]));
+            //TextWriter w = new StreamWriter(System.IO.Path.Combine(savePath, helpFilesConfigFileName));
+            //s.Serialize(w, helpFilesCopy.ToArray());
+            //w.Close();
         }
 		
 		private Dictionary<string,HelpFileManagersInfo> helpFiles =

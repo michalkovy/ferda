@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <article lang="en">
@@ -19,8 +19,28 @@
     <titleabbrev>
       FrontEndProgrammersDocumentation
     </titleabbrev>
+    <!--
     <revhistory>
+		<revision>
+			<revnumber>1.0</revnumber>
+			<date>2006-02-20</date>
+			<revdescription>
+				  <para>
+					Initial version of the document
+				  </para>
+			</revdescription>
+		</revision>
+		<revision>
+			<revnumber>1.1</revnumber>
+			<date>2007-01-9</date>
+			<revdescription>
+				  <para>
+					Changed ILocalizationManager to IPreferencesManager + revalidation
+				  </para>
+			</revdescription>
+		</revision>
     </revhistory>
+	-->
   </articleinfo>
   <abstract>
     <para>
@@ -351,10 +371,11 @@ Events ...
         </listitem>
         <listitem>
           <formalpara>
-            <title>ILocalizationManager</title>
+            <title>IPreferencesManager</title>
             <para>
-              Interface presents functionality for all the controls to be able
-              to change their localizations
+                Interface presents functionality for all the controls to be able
+				view the preferences of the application. The most important preference
+				is the localization, but there are others to appear.
             </para>
           </formalpara>
         </listitem>
@@ -549,13 +570,13 @@ Events ...
               Class will provide additional functionality for extracting GDI+
               classname from svg.
             </para>
-            <para>
+         </formalpara>
+         <para>
               The recent implementation is without svg support, although the
               classname that turns svg into gdi+ is already written. It is because
               the external SVG library that we use does not support all the
               SVG versions and moreover, it slows the program a lot.
-            </para>
-          </formalpara>
+         </para>
         </listitem>
         <listitem>
           <formalpara>

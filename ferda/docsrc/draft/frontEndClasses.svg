@@ -13,7 +13,7 @@
    id="svg1306"
    sodipodi:version="0.32"
    inkscape:version="0.43"
-   sodipodi:docbase="C:\Make\Projekt\berlios\ferda\docsrc\draft"
+   sodipodi:docbase="C:\Make\Projekt\novasvn\ferda\docsrc\draft"
    sodipodi:docname="frontEndClasses.svg"
    inkscape:export-filename="C:\frontEndClasses.png"
    inkscape:export-xdpi="90"
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.78350265"
-     inkscape:cx="516.56545"
-     inkscape:cy="315.61684"
+     inkscape:zoom="3.1340106"
+     inkscape:cx="300.56229"
+     inkscape:cy="70.263357"
      inkscape:current-layer="layer4"
      id="namedview1310"
      fill="#dcdcdc"
@@ -1036,7 +1036,7 @@
          sodipodi:role="line"
          x="193.51064"
          y="622.01294"
-         id="tspan4206">ILocalizationManager</tspan></text>
+         id="tspan4206">IPreferencesManager</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:15.18092155px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
