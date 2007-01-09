@@ -23,20 +23,20 @@ using System;
 using System.Windows.Forms;
 using System.Resources;
 
-
-
 namespace Ferda.FrontEnd.Menu
 {
     /// <summary>
 	/// Class represents all the settings available in the project.
 	/// </summary>
     /// <remarks>
-    /// There is not complete documentation of this class (should be public but
-    /// is internal), because it will be remaked in the short future.
+    /// There are plans to add functionality for this tab. Right now it contains
+    /// only the localization and little other options,
     /// </remarks>
 	/// <stereotype>control</stereotype>
     internal class FerdaPreferencesDialog : Form
-	{
+    {
+        #region Internal class fields
+
         /// <summary>
         /// A tab control
         /// </summary>
@@ -45,14 +45,38 @@ namespace Ferda.FrontEnd.Menu
         /// Page that concerns localization
         /// </summary>
         private TabPage TPLocalization;
+        /// <summary>
+        /// Tab that contains property grid settings
+        /// </summary>
+        private TabPage TPPropertyGrid;
+        /// <summary>
+        /// The OK button
+        /// </summary>
         private Button BOK;
+        /// <summary>
+        /// The Cancel button
+        /// </summary>
         private Button BCancel;
-        //private TabPage tabPage2;
+        /// <summary>
+        /// Label informing about localization
+        /// </summary>
         private Label LLocalization;
-        private ListBox LBLokalizace;
+        /// <summary>
+        /// List box where user can select his localization
+        /// </summary>
+        private ListBox LBLocalization;
+        /// <summary>
+        /// With this checkbox user determines whether to show the
+        /// <code>Visible sockets</code> group in the property grid.
+        /// </summary>
+        private CheckBox CHBShowVisibleSockets;
 
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Retrieves an array of localization strings,
@@ -63,23 +87,23 @@ namespace Ferda.FrontEnd.Menu
         {
             get
             {
-                if (LBLokalizace.SelectedIndex != 0)
+                if (LBLocalization.SelectedIndex != 0)
                 {
                     int j = 0;
                     //rearanging the localePrefs - the new localization is the 0th categoriesIndex,
                     //others stay the same
-                    string[] result = new string[LBLokalizace.Items.Count];
-                    result[j] = LBLokalizace.Items[LBLokalizace.SelectedIndex].ToString();
+                    string[] result = new string[LBLocalization.Items.Count];
+                    result[j] = LBLocalization.Items[LBLocalization.SelectedIndex].ToString();
                     j++;
                     for (int i = 0; i < result.Length; i++)
                     {
-                        if (i == LBLokalizace.SelectedIndex)
+                        if (i == LBLocalization.SelectedIndex)
                         {
                             continue;
                         }
                         else
                         {
-                            result[j] = LBLokalizace.Items[i].ToString();
+                            result[j] = LBLocalization.Items[i].ToString();
                             j++;
                         }
                     }
@@ -88,10 +112,10 @@ namespace Ferda.FrontEnd.Menu
                 }
                 else
                 {
-                    string[] result = new string[LBLokalizace.Items.Count];
+                    string[] result = new string[LBLocalization.Items.Count];
                     for (int i = 0; i < result.Length; i++)
                     {
-                        result[i] = LBLokalizace.Items[i].ToString();
+                        result[i] = LBLocalization.Items[i].ToString();
                     }
                     return result;
                 }
@@ -119,17 +143,31 @@ namespace Ferda.FrontEnd.Menu
             }
         }
 
+        /// <summary>
+        /// User determines whether to show the
+        /// <code>Visible sockets</code> group in the property grid.
+        /// </summary>
+        public bool ShowVisibleSockets
+        {
+            get
+            {
+                return CHBShowVisibleSockets.Checked;
+            }
+        }
+
+        #endregion
+
         #region Constructor
 
         ///<summary>
         /// Default constructor for FerdaView class.
         ///</summary>
-        public FerdaPreferencesDialog(ResourceManager resources, ILocalizationManager manager)
+        public FerdaPreferencesDialog(ResourceManager resources, IPreferencesManager manager)
             : base()
         {
             resManager = resources;
             InitializeComponent();
-            FillLocalizationValues(manager);
+            FillPreferencesValues(manager);
 
             //localizing the application
             Text = ResManager.GetString("PreferencesDialogCaption");
@@ -137,7 +175,8 @@ namespace Ferda.FrontEnd.Menu
             BCancel.Text = ResManager.GetString("CancelButton");
             TPLocalization.Text = ResManager.GetString("LocalizationTab");
             LLocalization.Text = ResManager.GetString("LocalizationLabel");
-            //LLocalization2.Text = ResManager.GetString("LocalizationLabel2");
+            TPPropertyGrid.Text = ResManager.GetString("MenuViewPropertyGrid");
+            CHBShowVisibleSockets.Text = ResManager.GetString("ShowVisibleSockets");
         }
 
         #endregion
@@ -145,19 +184,20 @@ namespace Ferda.FrontEnd.Menu
         #region Methods
 
         /// <summary>
-        /// Fills the listbox with localization values
+        /// Fills the control with the preferences values
         /// </summary>
-        /// <param name="manager">Localization manager that contains
-        /// the localization details</param>
-        private void FillLocalizationValues(ILocalizationManager manager)
+        /// <param name="manager">Preferences manager that contains
+        /// the preferences details</param>
+        private void FillPreferencesValues(IPreferencesManager manager)
         {
             foreach (string s in manager.LocalePrefs)
             {
-                LBLokalizace.Items.Add(s);
+                LBLocalization.Items.Add(s);
             }
 
             //selects the first value on the list
-            LBLokalizace.SelectedIndex = 0;
+            LBLocalization.SelectedIndex = 0;
+            CHBShowVisibleSockets.Checked = manager.ShowVisibleSockets;
         }
 
         /// <summary>
@@ -167,17 +207,21 @@ namespace Ferda.FrontEnd.Menu
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TPLocalization = new System.Windows.Forms.TabPage();
-            this.LBLokalizace = new System.Windows.Forms.ListBox();
+            this.LBLocalization = new System.Windows.Forms.ListBox();
             this.LLocalization = new System.Windows.Forms.Label();
+            this.TPPropertyGrid = new System.Windows.Forms.TabPage();
             this.BOK = new System.Windows.Forms.Button();
             this.BCancel = new System.Windows.Forms.Button();
+            this.CHBShowVisibleSockets = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.TPLocalization.SuspendLayout();
+            this.TPPropertyGrid.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.TPLocalization);
+            this.tabControl1.Controls.Add(this.TPPropertyGrid);
             this.tabControl1.Location = new System.Drawing.Point(4, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -186,7 +230,7 @@ namespace Ferda.FrontEnd.Menu
             // 
             // TPLocalization
             // 
-            this.TPLocalization.Controls.Add(this.LBLokalizace);
+            this.TPLocalization.Controls.Add(this.LBLocalization);
             this.TPLocalization.Controls.Add(this.LLocalization);
             this.TPLocalization.Location = new System.Drawing.Point(4, 22);
             this.TPLocalization.Name = "TPLocalization";
@@ -194,14 +238,15 @@ namespace Ferda.FrontEnd.Menu
             this.TPLocalization.Size = new System.Drawing.Size(363, 198);
             this.TPLocalization.TabIndex = 0;
             this.TPLocalization.Text = "tabPage1";
+            this.TPLocalization.UseVisualStyleBackColor = true;
             // 
-            // LBLokalizace
+            // LBLocalization
             // 
-            this.LBLokalizace.FormattingEnabled = true;
-            this.LBLokalizace.Location = new System.Drawing.Point(7, 48);
-            this.LBLokalizace.Name = "LBLokalizace";
-            this.LBLokalizace.Size = new System.Drawing.Size(350, 134);
-            this.LBLokalizace.TabIndex = 1;
+            this.LBLocalization.FormattingEnabled = true;
+            this.LBLocalization.Location = new System.Drawing.Point(7, 48);
+            this.LBLocalization.Name = "LBLokalizace";
+            this.LBLocalization.Size = new System.Drawing.Size(350, 134);
+            this.LBLocalization.TabIndex = 1;
             // 
             // LLocalization
             // 
@@ -211,6 +256,16 @@ namespace Ferda.FrontEnd.Menu
             this.LLocalization.Size = new System.Drawing.Size(35, 13);
             this.LLocalization.TabIndex = 0;
             this.LLocalization.Text = "label1";
+            // 
+            // TPPropertyGrid
+            // 
+            this.TPPropertyGrid.Controls.Add(this.CHBShowVisibleSockets);
+            this.TPPropertyGrid.Location = new System.Drawing.Point(4, 22);
+            this.TPPropertyGrid.Name = "TPPropertyGrid";
+            this.TPPropertyGrid.Size = new System.Drawing.Size(363, 198);
+            this.TPPropertyGrid.TabIndex = 1;
+            this.TPPropertyGrid.Text = "TPPropertyGrid";
+            this.TPPropertyGrid.UseVisualStyleBackColor = true;
             // 
             // BOK
             // 
@@ -230,6 +285,16 @@ namespace Ferda.FrontEnd.Menu
             this.BCancel.TabIndex = 2;
             this.BCancel.Text = "Storno";
             // 
+            // CHBShowVisibleSockets
+            // 
+            this.CHBShowVisibleSockets.AutoSize = true;
+            this.CHBShowVisibleSockets.Location = new System.Drawing.Point(5, 13);
+            this.CHBShowVisibleSockets.Name = "CHBVisibleSockets";
+            this.CHBShowVisibleSockets.Size = new System.Drawing.Size(80, 17);
+            this.CHBShowVisibleSockets.TabIndex = 0;
+            this.CHBShowVisibleSockets.Text = "checkBox1";
+            this.CHBShowVisibleSockets.UseVisualStyleBackColor = true;
+            // 
             // FerdaPreferencesDialog
             // 
             this.AcceptButton = this.BOK;
@@ -247,6 +312,8 @@ namespace Ferda.FrontEnd.Menu
             this.tabControl1.ResumeLayout(false);
             this.TPLocalization.ResumeLayout(false);
             this.TPLocalization.PerformLayout();
+            this.TPPropertyGrid.ResumeLayout(false);
+            this.TPPropertyGrid.PerformLayout();
             this.ResumeLayout(false);
 
         }
