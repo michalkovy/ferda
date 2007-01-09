@@ -27,6 +27,10 @@
   LangString AddIns ${LANG_CZECH} "Pøídavné moduly"
   LangString FerdaBaseFiles ${LANG_CZECH} "Základní soubory Ferda"
 
+  LangString ShowTable ${LANG_CZECH} "Zobrazit tabulku"
+  LangString FrequencyDisplayer ${LANG_CZECH} "Zobrazení frekvencí"
+  LangString ExplainTable ${LANG_CZECH} "Informace o tabulce"
+  LangString DatabaseInfo ${LANG_CZECH} "Informace o databázi"
   LangString ResultBrowser ${LANG_CZECH} "Prohlížení výsledkù"
   LangString ODBCConnectionString ${LANG_CZECH} "Pøipojovací øetìzec ODBC"
   LangString MultiSelectStrings ${LANG_CZECH} "Nastavení parametrù"

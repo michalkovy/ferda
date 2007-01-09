@@ -4,6 +4,24 @@ Section
 CreateDirectory "$INSTDIR\FrontEnd\AddIns"
 SectionEnd
 
+Section "$(DatabaseInfo)" DatabaseInfo
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\DatabaseInfo.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "DatabaseInfo" "" 
+SectionEnd
+
+Section "$(ExplainTable)" ExplainTable
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\ExplainTable.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ExplainTable" "" 
+SectionEnd
+
+Section "$(FrequencyDisplayer)" FrequencyDisplayer
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\FrequencyDisplayer.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "FrequencyDisplayer" "" 
+SectionEnd
+
 Section "$(ResultBrowser)" ResultBrowser
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
   File ..\bin\FrontEnd\AddIns\ResultBrowser.* 
@@ -20,6 +38,12 @@ Section "$(MultiSelectStrings)" MultiSelectStrings
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
   File ..\bin\FrontEnd\AddIns\MultiSelectStrings.*
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "MultiSelectStrings" "" 
+SectionEnd
+
+Section "$(ShowTable)" ShowTable
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\ShowTable.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ShowTable" "" 
 SectionEnd
 
 ;addins help
