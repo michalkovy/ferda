@@ -1141,6 +1141,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zobrazit skupinu &apos;Viditelné zásuvky&apos; v panelu vlastností.
+        /// </summary>
+        internal static string ShowVisibleSockets {
+            get {
+                return ResourceManager.GetString("ShowVisibleSockets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nastavit do vlastnosti jinou hodnotu.
         /// </summary>
         internal static string StringComboAddingControlButtonText {

@@ -17,6 +17,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,10 +46,11 @@ namespace Ferda.FrontEnd.NewBox
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        ///<summary>
-        ///Localization manager of the application
-        ///</summary>
-        protected Menu.ILocalizationManager localizationManager;
+        /// <summary>
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization
+        /// </summary>
+        protected Menu.IPreferencesManager preferencesManager;
         /// <summary>
         /// Menu of the application
         /// </summary>
@@ -115,12 +117,15 @@ namespace Ferda.FrontEnd.NewBox
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="locManager">Localization manager of the application</param>
+        /// <param name="prefManager">
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization
+        ///</param>
         /// <param name="menuDisp">Menu of the application</param>
         /// <param name="modManager">Modules manager</param>
         /// <param name="iconProvider">Provider of the icons for the component</param>
         /// <param name="toolBar">ToolBar of the application</param>
-        public NewBoxTreeView(Menu.ILocalizationManager locManager, 
+        public NewBoxTreeView(Menu.IPreferencesManager prefManager, 
             Menu.IMenuDisplayer menuDisp, ModulesManager.ModulesManager modManager, 
             IIconProvider iconProvider, Menu.IMenuDisplayer toolBar)
             : base()
@@ -129,7 +134,7 @@ namespace Ferda.FrontEnd.NewBox
             naIcon = iconProvider.GetIcon("NAIcon");
             folderIcon = iconProvider.GetIcon("FolderIcon");
 
-            localizationManager = locManager;
+            preferencesManager = prefManager;
             menuDisplayer = menuDisp;
             this.toolBar = toolBar;
             modulesManager = modManager;

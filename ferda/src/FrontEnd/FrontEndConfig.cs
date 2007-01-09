@@ -27,8 +27,9 @@ using System.Text;
 namespace Ferda.FrontEnd
 {
     /// <summary>
-    /// Structure, that holds information about the ice configuration of the
-    /// Ferda application
+    /// Class deals with the configuration of the Ferda FrontEnd environment.
+    /// It includes fields that are filled with the options for the Project
+    /// Manager and other configuration of the FrontEnd
     /// </summary>
 	public struct FrontEndConfig
 	{
@@ -46,6 +47,12 @@ namespace Ferda.FrontEnd
         /// FrontEnd ICE objects
         /// </summary>
 		public string[] FrontEndIceObjects;
+
+        /// <summary>
+        /// Determines if the PropertyGrid should show the VisibleSockets group
+        /// of properties that should be shown as sockets
+        /// </summary>
+        public bool ShowVisibleSockets;
 		
         /// <summary>
         /// Loads the FrontEndConfig.xml file from the directory, where

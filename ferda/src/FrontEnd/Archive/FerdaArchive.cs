@@ -43,9 +43,10 @@ namespace Ferda.FrontEnd.Archive
         #region Fields
 
         /// <summary>
-        /// The localization manager - takes care of localizing
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization
         /// </summary>
-        protected Menu.ILocalizationManager localizationManager;
+        protected Menu.IPreferencesManager preferencesManager;
         /// <summary>
         /// Menu of the application
         /// </summary>
@@ -283,7 +284,7 @@ namespace Ferda.FrontEnd.Archive
         ///<summary>
         /// Default constructor for FerdaArchive class.
         ///</summary>
-        public FerdaArchive(Menu.ILocalizationManager locManager,
+        public FerdaArchive(Menu.IPreferencesManager locManager,
             Menu.IMenuDisplayer menuDisp, IFerdaClipboard clipboard,
             ProjectManager.Archive arch, IIconProvider iconProvider,
             Menu.IMenuDisplayer toolBar,
@@ -295,8 +296,8 @@ namespace Ferda.FrontEnd.Archive
             this.iconProvider = iconProvider;
 
             //setting the localization
-            localizationManager = locManager;
-            ResManager = localizationManager.ResManager;
+            preferencesManager = locManager;
+            ResManager = preferencesManager.ResManager;
 
             //setting the menu displayer
             menuDisplayer = menuDisp;
@@ -661,7 +662,7 @@ namespace Ferda.FrontEnd.Archive
         public void ChangeLocalization()
         {
             //updating the resource manager
-            ResManager = localizationManager.ResManager;
+            ResManager = preferencesManager.ResManager;
 
             //Setting the texts of the radiobuttons
             RBAlong.Text = ResManager.GetString("ArchiveAlongText");

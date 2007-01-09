@@ -166,8 +166,8 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Menu\IDockingManager.cs" />
-    <Compile Include="Menu\ILocalizationManager.cs" />
     <Compile Include="Menu\IMenuDisplayer.cs" />
+    <Compile Include="Menu\IPreferencesManager.cs" />
     <Compile Include="NewBox\IBoxModuleFactoryCreatorComparer.cs" />
     <Compile Include="NewBox\NewBoxControl.cs">
       <SubType>UserControl</SubType>

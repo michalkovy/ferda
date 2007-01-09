@@ -43,9 +43,10 @@ namespace Ferda.FrontEnd.ContextHelp
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
         /// <summary>
-        /// Localization manager of the application
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization
         /// </summary>
-        private ILocalizationManager localizationManager;
+        private IPreferencesManager preferencesManager;
 
         /// <summary>
         /// The menu of the application
@@ -117,16 +118,16 @@ namespace Ferda.FrontEnd.ContextHelp
         ///<summary>
 		/// Default constructor for FerdaContextHelp class.
 		///</summary>
-        ///<param name="locManager">Manager of the localization of the application</param>
+        ///<param name="prefManager">Manager of the localization of the application</param>
         ///<param name="menuDisp">The displayer of the menu</param>
         ///<param name="toolBar">The toolbar of the application</param>
-        public FerdaContextHelp(ILocalizationManager locManager, IMenuDisplayer menuDisp, 
+        public FerdaContextHelp(IPreferencesManager prefManager, IMenuDisplayer menuDisp, 
             IMenuDisplayer toolBar)
             : base()
 		{
             //setting the localization
-            localizationManager = locManager;
-            ResManager = localizationManager.ResManager;
+            preferencesManager = prefManager;
+            ResManager = preferencesManager.ResManager;
 
             //setting the menu displayer
             menuDisplayer = menuDisp;

@@ -17,6 +17,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Resources;
 using System.Collections.Generic;
@@ -76,9 +77,10 @@ namespace Ferda.FrontEnd.Properties
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
         /// <summary>
-        /// Localization manager of the application
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization
         /// </summary>
-        protected Menu.ILocalizationManager localizationManager;
+        protected Menu.IPreferencesManager preferencesManager;
 
         /// <summary>
         /// Menu of the application
@@ -258,17 +260,20 @@ namespace Ferda.FrontEnd.Properties
         ///<summary>
         /// Default constructor for FerdaPropertyGrid class.
         ///</summary>
-        ///<param name="locManager">Localization manager of the application</param>
+        ///<param name="prefManager">
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization
+        /// </param>
         ///<param name="menuDisp">Menu of the application</param>
         ///<param name="toolBar">Toolbar of the application</param>
-        public FerdaPropertyGrid(Menu.ILocalizationManager locManager,
+        public FerdaPropertyGrid(Menu.IPreferencesManager prefManager,
             IMenuDisplayer menuDisp, IMenuDisplayer toolBar)
             : base()
         {
             viewDisplayers = new List<IViewDisplayer>();
 
-            localizationManager = locManager;
-            ResManager = localizationManager.ResManager;
+            preferencesManager = prefManager;
+            ResManager = preferencesManager.ResManager;
 
             //setting the menu displayer
             menuDisplayer = menuDisp;
@@ -279,7 +284,6 @@ namespace Ferda.FrontEnd.Properties
 
             //setting the focus
             Enter += new EventHandler(FerdaPropertyGrid_Enter);
-
         }
 
         #endregion
@@ -309,7 +313,12 @@ namespace Ferda.FrontEnd.Properties
                 PropertyTable prop = CreatePropertiesFromBox(SelectedBox);
                 propertyBag = prop;
                 CreateAsyncCatchersOneBox();
-                AddSocketProperties(propertyBag, SelectedBox);
+                
+                //showing the visible sockets only when supported by the configuration
+                if (preferencesManager.ShowVisibleSockets)
+                {
+                    AddVisibleSocketsProperties(propertyBag, SelectedBox);
+                }
 
                 this.SelectedObject = propertyBag;
             }
@@ -329,7 +338,7 @@ namespace Ferda.FrontEnd.Properties
         public void ChangeLocalization()
         {
             //updating the resource manager
-            ResManager = localizationManager.ResManager;
+            ResManager = preferencesManager.ResManager;
         }
 
         /// <summary>
@@ -1301,7 +1310,7 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         /// <param name="propertyTable">Table to put the properties</param>
         /// <param name="box">Box from where to get the properties</param>
-        protected PropertyTable AddSocketProperties(PropertyTable propertyTable, IBoxModule box)
+        protected PropertyTable AddVisibleSocketsProperties(PropertyTable propertyTable, IBoxModule box)
         {
             IBoxModuleFactoryCreator creator = box.MadeInCreator;
             FerdaPropertySpec ps;
