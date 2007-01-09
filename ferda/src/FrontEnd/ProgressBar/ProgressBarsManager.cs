@@ -26,6 +26,7 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using System.Resources;
 
 namespace Ferda.FrontEnd.ProgressBar
 {
@@ -39,6 +40,9 @@ namespace Ferda.FrontEnd.ProgressBar
 
         delegate void MyDelegate(BoxProgressBar progressBar);
 
+        //Resource manager from the FerdaForm
+        private ResourceManager resManager = null;
+
         #endregion
 
         #region Constructor
@@ -46,13 +50,16 @@ namespace Ferda.FrontEnd.ProgressBar
         /// <summary>
         /// Default consturctor for the class
         /// </summary>
-        public ProgressBarsManager()
+        /// <param name="rm">Resource manager of the application</param>
+        public ProgressBarsManager(ResourceManager rm)
         {
             InitializeComponent();
 
             //Initialize components things
             components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+
+            this.resManager = rm;
         }
 
         #endregion
@@ -123,8 +130,10 @@ namespace Ferda.FrontEnd.ProgressBar
                 if (Controls.Count != 0)
                 {
                     int controlHeight = Controls[0].Height;
-                    progressBar.Location = new Point(0, Controls.Count * controlHeight);
+                    progressBar.Location = 
+                        new Point(0, Controls.Count * controlHeight);
                 }
+                progressBar.Localize(resManager);
                 this.Controls.Add(progressBar);
 
                 ChangeSize();

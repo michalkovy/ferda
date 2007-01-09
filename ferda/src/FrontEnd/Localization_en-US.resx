@@ -436,8 +436,14 @@
   <data name="PreferencesDialogCaption" xml:space="preserve">
     <value>Preferences</value>
   </data>
+  <data name="ProgressBarHide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
   <data name="ProgressBarsCaption" xml:space="preserve">
     <value>Progress Bars</value>
+  </data>
+  <data name="ProgressBarStop" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="ProjectLoadErrorCaption" xml:space="preserve">
     <value>Errors have occured while loading the project</value>

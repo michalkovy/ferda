@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <article lang="cs">
@@ -25,6 +25,15 @@
 		<titleabbrev>UzivatelskeRozhrani</titleabbrev>
     <!--
     <revhistory>
+		<revision>
+			<revnumber>4.2<revnumber>
+			<date>2007-01-09</date>
+			<revdescription>
+				<para>
+					Přidání možnosti zobrazení viditelných zásuvek + progress bary
+				</para>
+			</revdescription>
+		</revision>
       <revision>
         <revnumber>4.1</revnumber>
         <date>2006-06-07</date>
@@ -522,9 +531,10 @@
 						se bude určitě nastavovat lokalizace programu, některé vyspělé nastavení pracovního
 						prostředí, možná adresa ICE Pack Serveru
 						nebo dynamické načítání modulů do aplikace. 
-            Skupina příkazů Nástroje obsahuje nástroje na konfiguraci aplikace. Prozatím obsahuje
-            příkaz <emphasis>Možnosti</emphasis>, který zobrazuje dialog <emphasis>Možnosti</emphasis>,
-            kde si může uživatel vybírat například lokalizaci programu.
+						Skupina příkazů Nástroje obsahuje nástroje na konfiguraci aplikace. Prozatím obsahuje
+						příkaz <emphasis>Možnosti</emphasis>, který zobrazuje dialog <emphasis>Možnosti</emphasis>,
+						kde si může uživatel vybírat lokalizaci programu a možnost zobrazení skupiny vlastností
+						<emphasis>Viditelné zásuvky</emphasis> v <emphasis>Panelu vlastností</emphasis>
 					</para>
 				</section>
 				<section>
@@ -772,7 +782,7 @@
 			</section>
 		
 		</section>
-    <section>
+		<section>
       <title>Uživatelská poznámka</title>
       <para>
         Uživatel si může poznamenat poznámku ke každé krabičce, kterou má v projektu.
@@ -821,7 +831,12 @@
         se dá daná vlastnost nastavovat pouze pomocí krabiček na ploše, v panelu 
         vlastností bude vlastnost jenom pro čtení. Zásuvka se dá odebrat po zpětném 
         nastavení hodnoty vlastnosti ve <emphasis>Viditelné zásuvky</emphasis> na 
-        <emphasis>false</emphasis>.
+        <emphasis>false</emphasis>. 
+      </para>
+      <para>
+		  Výchozí nastavení zobrazení skupiny <emphasis>Viditelné zásuvky</emphasis>
+		  lze změnit v části <emphasis>Nástroje</emphasis>, <emphasis>Možnosti</emphasis>
+		  hlavního menu aplikace.
       </para>
 			<section>
 				<title>Uživatelská práce s Panelem vlastností</title>
@@ -832,14 +847,55 @@
 				</para>
 			</section>
 		</section>
-    <section>
-      <title>Nová krabička</title>
+		<section>
+		  <title>Nová krabička</title>
+		  <para>
+			Komponenta Nová krabička slouží ke tvorbě nových krabiček v systému Ferda.
+			Obsahuje krabičky rozdělené tématicky rozdělené do stromové struktury. 
+			Uživatel tvoří nové krabičky přetažením zvoleného typu krabičky na pracovní plochu.
+		  </para>
+		</section>
+		<section>
+      <title>Progress Bary</title>
       <para>
-        Komponenta Nová krabička slouží ke tvorbě nových krabiček v systému Ferda.
-        Obsahuje krabičky rozdělené tématicky rozdělené do stromové struktury. 
-        Uživatel tvoří nové krabičky přetažením zvoleného typu krabičky na pracovní plochu.
+        Vždy, když krabička provádí dlouhotrvající akci (obvykle spouštění 
+        jednotlivých úloh), stav této akce se zobrazí na komponentě
+        <emphasis>Progress bary</emphasis>
       </para>
-    </section>
+      <para>
+        Běžící progress bar
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="environmentProgressCZ.png" format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </para>
+      <section>
+        <title>Uživatelská práce s progress bary</title>
+        <itemizedlist mark="bullet">
+          <listitem>
+            <formalpara>
+              <title>Skrýt progress bar</title>
+              <para>
+                Uživatel může skrýt progress bar, když klikne na odkaz
+                <classname>Skrýt</classname> na pravé straně progress baru.
+                Systém skryje progress bar, nicméně akce krabičky se stále provádí.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Zastavení akce</title>
+              <para>
+                Uživatel může zastavit akci reprezentovanou progress barem,
+                jestliže klikne na odkaz <classname>Stop</classname>. Systém
+                zastaví akci reprezentovanou progress barem.
+              </para>
+            </formalpara>
+          </listitem>
+        </itemizedlist>
+      </section>
+		</section>
 		<section>
 			<title>Kontextová nápověda</title>
 			<para>

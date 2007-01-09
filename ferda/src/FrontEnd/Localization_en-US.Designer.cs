@@ -1011,11 +1011,29 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hide.
+        /// </summary>
+        internal static string ProgressBarHide {
+            get {
+                return ResourceManager.GetString("ProgressBarHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Progress Bars.
         /// </summary>
         internal static string ProgressBarsCaption {
             get {
                 return ResourceManager.GetString("ProgressBarsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        internal static string ProgressBarStop {
+            get {
+                return ResourceManager.GetString("ProgressBarStop", resourceCulture);
             }
         }
         
