@@ -40,8 +40,11 @@
   LangString GuhaMining ${LANG_ENGLISH} "GUHA mining"
   LangString Sample ${LANG_ENGLISH} "Sample"
 
-  
- LangString ResultBrowser ${LANG_ENGLISH} "Result browser"
+  LangString ShowTable ${LANG_ENGLISH} "Show table"
+  LangString FrequencyDisplayer ${LANG_ENGLISH} "Frequency displayer"
+  LangString ExplainTable ${LANG_ENGLISH} "Explain table"
+  LangString DatabaseInfo ${LANG_ENGLISH} "Database info"
+  LangString ResultBrowser ${LANG_ENGLISH} "Result browser"
   LangString ODBCConnectionString ${LANG_ENGLISH} "ODBC Connection string"
   LangString MultiSelectStrings ${LANG_ENGLISH} "Multiple selection"
   
