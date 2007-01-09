@@ -431,7 +431,6 @@
   </data>
   <data name="ProgressBarsCaption" xml:space="preserve">
     <value>Progress bary:)</value>
-    <comment> </comment>
   </data>
   <data name="ProjectLoadErrorCaption" xml:space="preserve">
     <value>Při nahrávání projektu nastaly chyby</value>
@@ -477,6 +476,9 @@
   </data>
   <data name="RenameDialogCaption" xml:space="preserve">
     <value>Zadejte nové jméno krabičky</value>
+  </data>
+  <data name="ShowVisibleSockets" xml:space="preserve">
+    <value>Zobrazit skupinu 'Viditelné zásuvky' v panelu vlastností</value>
   </data>
   <data name="StringComboAddingControlButtonText" xml:space="preserve">
     <value>Nastavit do vlastnosti jinou hodnotu</value>

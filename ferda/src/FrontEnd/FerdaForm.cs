@@ -43,7 +43,7 @@ using Ferda.ModulesManager;
 	/// Main form for the Ferda application
 	/// </summary>
 	public class FerdaForm : System.Windows.Forms.Form, Menu.IDockingManager,
-        Menu.ILocalizationManager, IFerdaClipboard, IControlsManager, IOwnerOfAddIn,
+        Menu.IPreferencesManager, IFerdaClipboard, IControlsManager, IOwnerOfAddIn,
         IIconProvider
     {
         #region Class fields
@@ -80,6 +80,11 @@ using Ferda.ModulesManager;
         /// Progress bar control
         /// </summary>
         private ProgressBar.ProgressBarsManager progressBarControl;
+        /// <summary>
+        /// User determines whether to show the
+        /// <code>Visible sockets</code> group in the property grid.
+        /// </summary>
+        private bool showVisibleSockets;
 
         /// <summary>
         /// All view controls
@@ -226,6 +231,8 @@ using Ferda.ModulesManager;
 
         #endregion
 
+        #region IPreferencesManager implementation
+
         /// <summary>
         /// Localization strings (application is able to load these localizations)
         /// The application uses always the first string
@@ -241,6 +248,24 @@ using Ferda.ModulesManager;
                 iceConfig.ProjectManagerOptions.LocalePrefs = value;
             }
         }
+
+        /// <summary>
+        /// User determines whether to show the
+        /// <code>Visible sockets</code> group in the property grid.
+        /// </summary>
+        public bool ShowVisibleSockets
+        {
+            set
+            {
+                showVisibleSockets = value;
+            }
+            get
+            {
+                return showVisibleSockets;
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -337,6 +362,7 @@ using Ferda.ModulesManager;
             //setting the ResManager resource manager and localization string
             string locString = "Ferda.FrontEnd.Localization_" + config.ProjectManagerOptions.LocalePrefs[0];
             resManager = new ResourceManager(locString, Assembly.GetExecutingAssembly());
+            showVisibleSockets = config.ShowVisibleSockets;
         }
 
         /// <summary>
@@ -790,6 +816,7 @@ using Ferda.ModulesManager;
             //tries to save the config
             try
             {
+                iceConfig.ShowVisibleSockets = form.ShowVisibleSockets;
                 FrontEndConfig.Save(iceConfig);
             }
             catch
@@ -1083,7 +1110,7 @@ using Ferda.ModulesManager;
         #region Localization related functions
 
         /// <summary>
-        /// Part of the ILocalizationManager interface, forces the whole application
+        /// Part of the IPreferencesManager interface, forces the whole application
         /// to change its localization according to the new resource Manager
         /// </summary>
         /// <remarks>

@@ -55,9 +55,11 @@ namespace Ferda.FrontEnd.Desktop
         #region Private fields
 
         /// <summary>
-        /// Manager of localization in the application
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization
         /// </summary>
-        protected ILocalizationManager localizationManager;
+        protected IPreferencesManager preferencesManager;
+
 		private ProjectManager.View view;
         /// <summary>
         /// ProjectManager of the application
@@ -327,9 +329,9 @@ namespace Ferda.FrontEnd.Desktop
         ///<summary>
 		/// Default constructor for FerdaView class.
 		///</summary>
-        ///<param name="locManager">
-        /// Interface that takes care of the 
-        ///localizacion in the application
+        ///<param name="prefManager">
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization
         /// </param>
         ///<param name="svgMan">
         /// Interface for providing SVG graphics
@@ -340,7 +342,7 @@ namespace Ferda.FrontEnd.Desktop
         ///<param name="arch">Control that displays the archive</param>
         ///<param name="provider">Provider of the icons</param>
         ///<param name="toolBar">Toolbar control</param>
-		public FerdaDesktop(Menu.ILocalizationManager locManager,
+		public FerdaDesktop(Menu.IPreferencesManager prefManager,
             SVGManager svgMan, IMenuDisplayer menuDisp, ProjectManager.View view,
             ProjectManager.ProjectManager pm, Archive.IArchiveDisplayer arch, 
             IIconProvider provider, IMenuDisplayer toolBar)
@@ -350,8 +352,8 @@ namespace Ferda.FrontEnd.Desktop
             this.provider = provider;
 
             //adding the localization
-            localizationManager = locManager;
-            ResManager = localizationManager.ResManager;
+            preferencesManager = prefManager;
+            ResManager = preferencesManager.ResManager;
 
             //adding the svgManager
             svgManager = svgMan;
@@ -468,7 +470,7 @@ namespace Ferda.FrontEnd.Desktop
         public void ChangeLocalization()
         {
             //updating the resource manager
-            ResManager = localizationManager.ResManager;
+            ResManager = preferencesManager.ResManager;
 
             Adapt();
         }

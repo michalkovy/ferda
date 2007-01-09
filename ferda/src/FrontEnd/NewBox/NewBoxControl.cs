@@ -63,16 +63,16 @@ namespace Ferda.FrontEnd.NewBox
         /// <summary>
         /// Default constructor for the class
         /// </summary>
-        /// <param name="locManager">Interface that takes care of the localization</param>
+        /// <param name="prefManager">Interface that takes care of the localization</param>
         /// <param name="menuDisp">Menu displayer</param>
         /// <param name="modManager">Modules Manager</param>
         /// <param name="iconProvider">Provider of the icons</param>
         /// <param name="toolBar">ToolBar of the application</param>
-        public NewBoxControl(Menu.ILocalizationManager locManager,
+        public NewBoxControl(Menu.IPreferencesManager prefManager,
             Menu.IMenuDisplayer menuDisp, ModulesManager.ModulesManager modManager,
             IIconProvider iconProvider, Menu.IMenuDisplayer toolBar)
         {
-            treeView = new NewBoxTreeView(locManager, menuDisp, modManager, iconProvider, toolBar);
+            treeView = new NewBoxTreeView(prefManager, menuDisp, modManager, iconProvider, toolBar);
             treeView.WidthConstant = this.heightConstant;
             treeView.BorderStyle = BorderStyle.FixedSingle;
             textBox = new RichTextBox();

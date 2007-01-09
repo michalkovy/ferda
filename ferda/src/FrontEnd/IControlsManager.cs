@@ -25,8 +25,8 @@ using System.Text;
 namespace Ferda.FrontEnd
 {
     /// <summary>
-    /// Interface to do global adapts, setting the caption of the application
-    /// or writing messages on the status bar
+    /// Interface to do global adapts, setting the caption of the application, 
+    /// providing information about opened views and recent projects handling
     /// </summary>
     public interface IControlsManager
     {

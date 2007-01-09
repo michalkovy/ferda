@@ -484,6 +484,9 @@
   <data name="RenameDialogCaption" xml:space="preserve">
     <value>Set a new box name</value>
   </data>
+  <data name="ShowVisibleSockets" xml:space="preserve">
+    <value>Show the 'Visible sockets' group in the Property grid</value>
+  </data>
   <data name="StringComboAddingControlButtonText" xml:space="preserve">
     <value>Set the property to another value</value>
   </data>

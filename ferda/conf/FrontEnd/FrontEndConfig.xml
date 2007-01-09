@@ -15,4 +15,5 @@
     </LocalePrefs>
   </ProjectManagerOptions>
   <FrontEndIceObjects />
+  <ShowVisibleSockets>false</ShowVisibleSockets>
 </FrontEndConfig>

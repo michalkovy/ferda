@@ -45,7 +45,7 @@ namespace Ferda.FrontEnd
         /// <summary>
         /// Localization manager
         /// </summary>
-        protected ILocalizationManager localizationManager;
+        protected IPreferencesManager localizationManager;
         /// <summary>
         /// Provider of the icons for the toolbar
         /// </summary>
@@ -113,7 +113,7 @@ namespace Ferda.FrontEnd
         ///<summary>
         /// Default constructor for FerdaToolBar class.
         ///</summary>
-        public FerdaToolBar(ILocalizationManager lockManager, IIconProvider provider, 
+        public FerdaToolBar(IPreferencesManager lockManager, IIconProvider provider, 
             Menu.FerdaMenu menu)
             : base()
         {
