@@ -50,7 +50,11 @@ namespace Ferda.FrontEnd.Menu
         //Interfaces needed for control to have all the functionality
         private ProjectManager.ProjectManager projectManager;
         private IDockingManager dockingManager;
-        private ILocalizationManager localizationManager;
+        /// <summary>
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization
+        /// </summary>
+        private IPreferencesManager preferencesManager;
         private IControlsManager controlsManager;
         private IArchiveDisplayer archiveDisplayer;
         private IIconProvider iconProvider;
@@ -179,8 +183,20 @@ namespace Ferda.FrontEnd.Menu
         /// Default constructor for FerdaArchive class. Initializes all menu controls
         /// and adds them to the menu.
         ///</summary>
+        ///<param name="contMan">Interface to do global adapts, setting the 
+        ///caption of the application</param>
+        ///<param name="dockManager">Interface that takes care about the
+        ///docking of individual windows.</param>
+        ///<param name="pm">The project manager</param>
+        ///<param name="prefManager">
+        /// The prefernces manager - informs about preferences of the environment,
+        /// mainly localization.
+        ///</param>
+        ///<param name="provider">
+        ///The provider of the icons.
+        ///</param>
         public FerdaMenu(
-            IDockingManager dockManager, ILocalizationManager lockManager,
+            IDockingManager dockManager, IPreferencesManager prefManager,
             ProjectManager.ProjectManager pm, IControlsManager contMan, 
             IIconProvider provider)
             : base()
@@ -190,8 +206,8 @@ namespace Ferda.FrontEnd.Menu
 
             //filling the private fields
             dockingManager = dockManager;
-            localizationManager = lockManager;
-            ResManager = localizationManager.ResManager;
+            preferencesManager = prefManager;
+            ResManager = preferencesManager.ResManager;
             projectManager = pm;
             controlsManager = contMan;
 
@@ -485,7 +501,7 @@ namespace Ferda.FrontEnd.Menu
         public void ChangeLocalization()
         {
             //updating the resource manager
-            ResManager = localizationManager.ResManager;
+            ResManager = preferencesManager.ResManager;
 
             //renaming all static menu items
             file.Text = ResManager.GetString("MenuFile");
@@ -1213,15 +1229,23 @@ namespace Ferda.FrontEnd.Menu
         /// </remarks>
         public void preferences_Click(object sender, EventArgs e)
         {
-            FerdaPreferencesDialog prefDialog = new FerdaPreferencesDialog(ResManager, this.localizationManager);
+            string[] temp = preferencesManager.LocalePrefs;
+
+            FerdaPreferencesDialog prefDialog = 
+                new FerdaPreferencesDialog(ResManager, this.preferencesManager);
             prefDialog.ShowDialog();
             if (prefDialog.DialogResult == DialogResult.OK)
             {
-                localizationManager.LocalePrefs = prefDialog.LocalePrefs;
+                preferencesManager.ShowVisibleSockets = prefDialog.ShowVisibleSockets;
 
-                MessageBox.Show(ResManager.GetString("LocalizationLabel2"),
-                    ResManager.GetString("LocalizationTab"), MessageBoxButtons.OK, 
-                    MessageBoxIcon.Exclamation);
+                //comparing the change of localization
+                if (temp[0] != prefDialog.LocalePrefs[0])
+                {
+                    MessageBox.Show(ResManager.GetString("LocalizationLabel2"),
+                        ResManager.GetString("LocalizationTab"), MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+                    preferencesManager.LocalePrefs = prefDialog.LocalePrefs;
+                }
             }
         }
 
