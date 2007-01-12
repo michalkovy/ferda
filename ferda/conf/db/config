@@ -14,6 +14,8 @@ IceGrid.Registry.Server.Endpoints=tcp -h 127.0.0.1
 IceGrid.Registry.Internal.Endpoints=tcp -h 127.0.0.1
 IceGrid.Registry.Admin.Endpoints=tcp -h 127.0.0.1
 
+IceGrid.Registry.AdminPermissionsVerifier=IceGrid/NullPermissionsVerifier
+
 #IceGrid.Registry.AdminSessionTimeout=120
 #IceGrid administrative clients might establish a session with the registry to receive
 #updates on the state of the IceGrid registry and nodes. This session must be
