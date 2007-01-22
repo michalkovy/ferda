@@ -26,6 +26,7 @@ namespace Ferda.Modules.Boxes.GuhaMining
             registerBox(FixedAtom.BoxInfo.typeIdentifier, new FixedAtom.BoxInfo());
             registerBox(Sign.BoxInfo.typeIdentifier, new Sign.BoxInfo());
             registerBox(VirtualAttributes.VirtualFFTBooleanAttribute.BoxInfo.typeIdentifier, new VirtualAttributes.VirtualFFTBooleanAttribute.BoxInfo());
+          //  registerBox(VirtualAttributes.VirtualSDFFTBooleanAttribute.BoxInfo.typeIdentifier, new VirtualAttributes.VirtualSDFFTBooleanAttribute.BoxInfo());
 
             // guha task boxes
             registerBox(Tasks.FourFold.BoxInfo.typeIdentifier, new Tasks.FourFold.BoxInfo());

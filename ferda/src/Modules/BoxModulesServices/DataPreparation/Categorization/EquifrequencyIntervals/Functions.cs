@@ -14,6 +14,18 @@ using System.Data.Common;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyIntervals
 {
+    internal static class Retyper<T>
+    {
+        public static object[] Retype(T[] input)
+        {
+            object[] result = new object[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                result[i] = (object)input[i];
+            }
+            return result;
+        }
+    }
     internal class Functions : AttributeFunctionsDisp_, IFunctions
     {
         /// <summary>
@@ -626,11 +638,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
 
         #endregion
 
-        private object[] TypeToInt(object [] array)
+        private object[] TypeToInt(object[] array)
         {
             object[] returnArray = new object[array.Length];
-            
-            for(int i=0; i < array.Length; i++)
+
+            for (int i = 0; i < array.Length; i++)
             {
                 returnArray[i] = (int)array[i];
             }
@@ -865,7 +877,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         //DbSimpleDataTypeEnum simpleDbDataType = GenericColumn.GetSimpleDataType(df.dataType);
 
                         // get primary key
-                        string[] pks = tmp.dataTable.primaryKeyColumns;
+                        //string[] pks = tmp.dataTable.primaryKeyColumns;
 
                         System.Data.DataTable dt;
                         string _min;
@@ -878,70 +890,160 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                             parseFromTo(column.Explain.dataType, out from, out to);
                             _min = (string)from;
                             _max = (string)to;
-                            //   string columnSelectExpression = column.GetQuotedQueryIdentifier();
-                            dt = column.GetSelect(pks);
+                            string columnSelectExpression =
+                                column.GetQuotedQueryIdentifier();
+
+                            dt = column.GetDistinctsAndFrequencies(
+                                columnSelectExpression + ">='" + from + "' AND " + columnSelectExpression + "<='" + to + "'"
+                                );
 
                             //dt = column.GetDistincts(columnSelectExpression + ">='" + from + "' AND " + columnSelectExpression + "<='" + to + "'");
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {
-                            dt = column.GetSelect(pks);
+                            dt = column.GetDistinctsAndFrequencies(String.Empty);
+                            //dt = column.GetSelect(pks);
                             _min = column.Statistics.valueMin;
                             _max = column.Statistics.valueMax;
                         }
                         else
                             throw new NotImplementedException();
-                  //      bool containsNull = false;
-                 //           if (dt.Rows[0][0] is DBNull)
-                 //              containsNull = true;
 
-                              List<object> enumeration = new List<object>(dt.Rows.Count);
-                               foreach (System.Data.DataRow row in dt.Rows)
-                                {
-                                    object v = row[0];
-                                    if (v == null || v is DBNull)
-                                        continue;
-                              enumeration.Add(row[0]);
-                                }
+                       // object[] enumeration =
+                       //     new object[dt.Rows.Count];
 
-                                enumeration.Sort();
-
+                        // enumeration.Sort();
 
                         //  bool containsNull = false;
                         object[] _divisionPoints;
-                        _divisionPoints = GenerateIntervals((int)CountOfCategories,enumeration.ToArray());
+                        int i = 0;
+                        //  _divisionPoints = GenerateIntervals((int)CountOfCategories, enumeration.ToArray());
                         IComparable __min;
                         IComparable __max;
-                        
+
                         switch (column.Explain.dataType)
                         {
                             case DbDataTypeEnum.DoubleType:
                             case DbDataTypeEnum.FloatType:
+                            case DbDataTypeEnum.DecimalType:
                                 double _dmin = Convert.ToDouble(_min);
                                 double _dmax = Convert.ToDouble(_max);
                                 __min = _dmin;
                                 __max = _dmax;
-                                _divisionPoints = TypeToDouble(_divisionPoints);
+
+                                Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<double>[] enumeration =
+                                    new Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<double>[dt.Rows.Count];
+                                foreach (System.Data.DataRow row in dt.Rows)
+                                {
+                                    object v = row[0];
+                                    if (v == null || v is DBNull)
+                                        continue;
+                                    Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<double> tmpItem =
+                                        new Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<double>(
+                                        Convert.ToDouble(row[0].ToString()),
+                                        Convert.ToInt32(row[1]));
+                                    enumeration[i] = tmpItem;
+                                    i++;
+                                }
+                                i = 0;
+                                _divisionPoints =
+                                    Retyper<double>.Retype(
+                                Ferda.Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals
+                            ((int)CountOfCategories, enumeration)
+                                );
                                 break;
 
                             case DbDataTypeEnum.IntegerType:
-                            case DbDataTypeEnum.LongIntegerType:
                             case DbDataTypeEnum.ShortIntegerType:
+                            case DbDataTypeEnum.UnsignedIntegerType:
+                            case DbDataTypeEnum.UnsignedShortIntegerType:
                                 int _imin = Convert.ToInt32(_min);
                                 int _imax = Convert.ToInt32(_max);
+
+                                Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<int>[] enumeration1 =
+    new Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<int>[dt.Rows.Count];
+                                foreach (System.Data.DataRow row in dt.Rows)
+                                {
+                                    object v = row[0];
+                                    if (v == null || v is DBNull)
+                                        continue;
+                                    Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<int> tmpItem1 =
+                                        new Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<int>(
+                                        Convert.ToInt32(row[0].ToString()),
+                                        Convert.ToInt32(row[1]));
+                                    enumeration1[i] = tmpItem1;
+                                    i++;
+                                }
+                                i = 0;
+                                _divisionPoints =
+                                    Retyper<int>.Retype(
+                                Ferda.Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals
+                            ((int)CountOfCategories, enumeration1)
+                                );
+
                                 __min = _imin;
                                 __max = _imax;
-                                _divisionPoints = TypeToInt(_divisionPoints);
+                               // _divisionPoints = TypeToInt(_divisionPoints);
                                 break;
 
-                            case DbDataTypeEnum.UnsignedIntegerType:
+                            case DbDataTypeEnum.LongIntegerType:
                             case DbDataTypeEnum.UnsignedLongIntegerType:
-                            case DbDataTypeEnum.UnsignedShortIntegerType:
-                                uint _umin = Convert.ToUInt32(_min);
-                                uint _umax = Convert.ToUInt32(_max);
-                                __min = _umin;
-                                __max = _umax;
-                                 _divisionPoints = TypeToUInt(_divisionPoints); 
+                                long _lmin = Convert.ToInt64(_min);
+                                long _lmax = Convert.ToInt64(_max);
+
+                                Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<long>[] enumeration3 =
+    new Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<long>[dt.Rows.Count];
+                                foreach (System.Data.DataRow row in dt.Rows)
+                                {
+                                    object v = row[0];
+                                    if (v == null || v is DBNull)
+                                        continue;
+                                    Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<long> tmpItem3 =
+                                        new Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<long>(
+                                        Convert.ToInt64(row[0].ToString()),
+                                        Convert.ToInt32(row[1]));
+                                    enumeration3[i] = tmpItem3;
+                                    i++;
+                                }
+                                i = 0;
+                                _divisionPoints =
+                                    Retyper<long>.Retype(
+                                Ferda.Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals
+                            ((int)CountOfCategories, enumeration3)
+                                );
+
+                                __min = _lmin;
+                                __max = _lmax;
+                                // _divisionPoints = TypeToInt(_divisionPoints);
+                                break;
+
+                            case DbDataTypeEnum.DateTimeType:
+                                DateTime _dtmin = Convert.ToDateTime(_min);
+                                DateTime _dtmax = Convert.ToDateTime(_max);
+
+                                Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<DateTime>[] enumeration2 =
+    new Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<DateTime>[dt.Rows.Count];
+                                foreach (System.Data.DataRow row in dt.Rows)
+                                {
+                                    object v = row[0];
+                                    if (v == null || v is DBNull)
+                                        continue;
+                                    Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<DateTime> tmpItem2 =
+                                        new Ferda.Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<DateTime>(
+                                        Convert.ToDateTime(row[0].ToString()),
+                                        Convert.ToInt32(row[1]));
+                                    enumeration2[i] = tmpItem2;
+                                    i++;
+                                }
+                                i = 0;
+                                _divisionPoints =
+                                    Retyper<DateTime>.Retype(
+                                Ferda.Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals
+                            ((int)CountOfCategories, enumeration2)
+                                );
+
+                                __min = _dtmin;
+                                __max = _dtmax;
                                 break;
 
                             default:
@@ -952,8 +1054,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         result.CreateIntervals(BoundaryEnum.Closed, __min, _divisionPoints,
                                     ClosedFrom, __max, BoundaryEnum.Closed, false);
 
-                       
-                      //  _nullCategoryName = result.NullContainingCategory;
+
+                        //  _nullCategoryName = result.NullContainingCategory;
 
                         return result;
                     },

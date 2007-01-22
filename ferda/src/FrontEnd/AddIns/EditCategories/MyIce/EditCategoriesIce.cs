@@ -27,6 +27,7 @@ using Ferda.ModulesManager;
 using System.Resources;
 using System.Reflection;
 using System.Windows.Forms;
+using Ferda.Guha.Data;
 
 namespace Ferda.FrontEnd.AddIns.EditCategories
 {
@@ -55,7 +56,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <summary>
         /// Categories structure
         /// </summary>
-        CategoriesStruct categories;
+        string categories;
 
         #endregion
 
@@ -103,7 +104,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
         public override string getIdentifier(Ice.Current current__)
         {
-            return "CategoriesT";
+            return "EditCategories";
         }
 
         #endregion
@@ -121,7 +122,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="about"></param>
         /// <param name="__current"></param>
         /// <returns>New property value</returns>
-        public override PropertyValue run(PropertyValue valueBefore, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, Ice.Current __current)
+        public override PropertyValue run(PropertyValue valueBefore, string propertyName, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, Ice.Current current__)
         {
             PropertyValue propertyValue = valueBefore;
             string locale;
@@ -138,29 +139,31 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             about = resManager.GetString("EditCategoriesAbout");
             try
             {
-                Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeFunctionsPrx prx =
-               Ferda.Modules.Boxes.DataMiningCommon.Attributes.AbstractAttributeFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
-                String[] distinctValues;
+                Ferda.Modules.Boxes.DataPreparation.AttributeFunctionsPrx prx =
+                Ferda.Modules.Boxes.DataPreparation.AttributeFunctionsPrxHelper.checkedCast(
+                boxModuleParam.getFunctions()
+                );
+                ValuesAndFrequencies distinctValues;
                 PropertyValue returnValue = new PropertyValue();
-                CategoriesT categories = (CategoriesT)valueBefore;
+                string serializedAttribute = valueBefore.ToString();
                 try
                 {
                     BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("ColumnOrDerivedColumn")[0];
-                    Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnFunctionsPrx prx1 =
-                        Ferda.Modules.Boxes.DataMiningCommon.Column.ColumnFunctionsPrxHelper.checkedCast(boxModuleParamNew.getFunctions());
-                    distinctValues = prx1.getDistinctValues();
+                    Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx1 =
+                        Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(boxModuleParamNew.getFunctions());
+                    distinctValues = prx1.getDistinctsAndFrequencies();
                 }
                 catch
                 {
                     distinctValues = null;
                 }
-                Ferda.FrontEnd.AddIns.EditCategories.MainListView listView = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(localePrefs, categories.categoriesValue, distinctValues, ownerOfAddIn);
+                Ferda.FrontEnd.AddIns.EditCategories.MainListView listView = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(localePrefs, serializedAttribute, distinctValues, ownerOfAddIn);
                 listView.ShowInTaskbar = false;
                 listView.Disposed += new EventHandler(SetCategories);
                 System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
-                    PropertyValue resultValue = new CategoriesTI(this.categories);
+                    PropertyValue resultValue = new PropertyValue();// = new CategoriesTI(this.categories);
                     about = this.getPropertyAbout(resultValue);
                     propertyValue = resultValue;
                 }
@@ -171,17 +174,17 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             }
             catch (Ferda.Modules.BadParamsError ex)
             {
-                if (ex.restrictionType == Ferda.Modules.restrictionTypeEnum.DbConnectionString)
+                if (ex.restrictionType == Ferda.Modules.restrictionTypeEnum.DbConnectionStringError)
                 {
                     MessageBox.Show(resManager.GetString("BadConnectionString"), resManager.GetString("Error"),
                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else if (ex.restrictionType == Ferda.Modules.restrictionTypeEnum.DbTable)
+                else if (ex.restrictionType == Ferda.Modules.restrictionTypeEnum.DbDataTableNameError)
                 {
                     MessageBox.Show(resManager.GetString("NoDataMatrix"), resManager.GetString("Error"),
                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else if (ex.restrictionType == Ferda.Modules.restrictionTypeEnum.DbColumn)
+                else if (ex.restrictionType == Ferda.Modules.restrictionTypeEnum.DbColumnNameError)
                 {
                     MessageBox.Show(resManager.GetString("BadColumnSelectExpression"), resManager.GetString("Error"),
                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

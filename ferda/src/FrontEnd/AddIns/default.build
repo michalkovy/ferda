@@ -180,7 +180,7 @@
      		 </fileset>
     		</copy>
     		
-<!--
+
 		<csc target="library" output="${path::combine(addInsBuild.dir,'EditCategories.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="EditCategories/**.cs"/>
@@ -213,7 +213,7 @@
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
--->
+
 		<csc target="library" output="${path::combine(addInsBuild.dir,'ODBCConnectionString.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ODBCConnectionString/**.cs"/>

@@ -1,3 +1,4 @@
+
 <icegrid>
 	<application name="FerdaModulesApplication">
 		<replica-group id="FerdaDataPreparationBoxesReplicaAdapter">
@@ -10,7 +11,8 @@
       <object identity="DataPreparation.DataSource.VirtualColumn" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
       <object identity="DataPreparation.Categorization.EquidistantIntervals" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
       <object identity="DataPreparation.Categorization.EquifrequencyIntervals" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <!-- <object identity="DataPreparation.Categorization.Attribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/> -->
+      <object identity="DataPreparation.Categorization.StaticAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+
 		</replica-group>
 		<replica-group id="FerdaBasicBoxesReplicaAdapter">
 			<object identity="BoolT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
@@ -45,7 +47,9 @@
 			<object identity="GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Equivalence.FoundedEquivalence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-<!--			<object identity="GuhaMining.Quantifiers.FourFold.Others.AboveBelowAverageImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/> -->
+<!--
+			<object identity="GuhaMining.Quantifiers.FourFold.Others.AboveBelowAverageImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+-->
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.Base" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.E" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
@@ -67,8 +71,11 @@
 			<object identity="GuhaMining.Quantifiers.TwoDimensional.InformationTheory.ConditionalEntropy" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.TwoDimensional.InformationTheory.InformationDependence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-<!--			<object identity="GuhaMining.Quantifiers.TwoDimensional.OrdinalDependence.Kendall" type="::Ferda::Modules::BoxModuleFactoryCreator"/> -->
+<!--
+			<object identity="GuhaMining.Quantifiers.TwoDimensional.OrdinalDependence.Kendall" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+-->
       <object identity="GuhaMining.VirtualAttributes.VirtualFFTBooleanAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+      <!--     <object identity="GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>-->
       
 		</replica-group>
 		<replica-group id="FerdaGuhaMiningProcessorReplicaAdapter">

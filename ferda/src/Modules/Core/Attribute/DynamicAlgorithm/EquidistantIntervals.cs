@@ -40,7 +40,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
             double separator = from + stepSize;
             result[0] = (long) separator;
             int countOfGeneratedSeparators = 1;
-            while (countOfGeneratedSeparators < requestedNumberOfIntervals)
+            while (countOfGeneratedSeparators < requestedNumberOfIntervals - 1)
             {
                 separator += stepSize;
                 result[countOfGeneratedSeparators] = (long) separator;
