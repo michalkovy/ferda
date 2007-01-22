@@ -9,9 +9,33 @@ using Common = Ferda.Guha.Attribute.Common;
 using Exception = System.Exception;
 using System.Data;
 using System.Data.Common;
+using Ferda.Guha.Attribute.DynamicAlgorithm;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantIntervals
 {
+    internal static class Retyper<T>
+    {
+        public static object [] Retype(T[] input)
+        {
+            object[] result = new object[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                result[i] = (object)input[i];
+            }
+            return result;
+        }
+
+        public static int[] RetypeToInt(long[] input)
+        {
+            int[] result = new int[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                result[i] = (int)input[i];
+            }
+            return result;
+        }
+    }
+
     internal class Functions : AttributeFunctionsDisp_, IFunctions
     {
         /// <summary>
@@ -54,11 +78,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
-        public long Length
+        public long Count
         {
             get
             {
-                return _boxModule.GetPropertyLong(PropLength);
+                return _boxModule.GetPropertyLong(PropCountOfCategories);
             }
         }
 
@@ -120,6 +144,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 
         #region Methods
 
+        /*
         /// <summary>
         /// Creates equidistant intervals from the given range of values.
         /// </summary>
@@ -184,7 +209,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 index++;
             }
             return intervalsArray;
-        }
+        }*/
 
         private void parseFromTo(DbDataTypeEnum dataType, out IComparable from, out IComparable to)
         {
@@ -216,6 +241,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     restrictionTypeEnum.BadFormat
                     );
             }
+        }
+
+        private object[] Retype(int [] input)
+        {
+            object [] result = new object[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                result[i] = (object)input[i];
+            }
+            return result;
         }
 
         private Guid _cachesReloadFlag = System.Guid.NewGuid();
@@ -368,7 +403,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropLength, Length);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropLength, Count);
 
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
@@ -416,47 +451,81 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                             throw new NotImplementedException();
 
                       //  bool containsNull = false;
-                        object [] _divisionPoints;
+                        //double[] _divisionPointsDouble = null;
+                        //long[] _divisionPointLong = null;
                         IComparable __min;
                         IComparable __max;
                         switch (column.Explain.dataType)
                         {
                             case DbDataTypeEnum.DoubleType:
-                                case DbDataTypeEnum.FloatType:
+                            case DbDataTypeEnum.FloatType:
+                            case DbDataTypeEnum.DecimalType:
                                 double _dmin = Convert.ToDouble(_min);
                                 double _dmax = Convert.ToDouble(_max);
                                 __min = _dmin;
                                 __max = _dmax;
-                                _divisionPoints = GenerateIntevals(_dmin, _dmax, (int)Length);
+                                double[] _divisionPointsDouble = 
+                                    Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
+                                    _dmin, _dmax, (int)Count);
+                                result.CreateIntervals(BoundaryEnum.Closed, __min, Retyper<double>.Retype(
+                                    _divisionPointsDouble),
+                                    ClosedFrom, __max, BoundaryEnum.Closed, false);
                                 break;
 
                             case DbDataTypeEnum.IntegerType:
-                            case DbDataTypeEnum.LongIntegerType:
                             case DbDataTypeEnum.ShortIntegerType:
+                            case DbDataTypeEnum.UnsignedIntegerType:
+                            case DbDataTypeEnum.UnsignedShortIntegerType:
                                 int _imin = Convert.ToInt32(_min);
                                 int _imax = Convert.ToInt32(_max);
                                 __min = _imin;
                                 __max = _imax;
-                                _divisionPoints = GenerateIntevals(_imin, _imax, (int)Length);
+                                long[] _divisionPointsInt =
+                                    Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
+                                    _imin, _imax, (int)Count);
+                                result.CreateIntervals(BoundaryEnum.Closed, __min, Retyper<int>.Retype(
+                                    Retyper<object>.RetypeToInt(_divisionPointsInt)),
+                                    ClosedFrom, __max, BoundaryEnum.Closed, false);
                                 break;
 
-                            case DbDataTypeEnum.UnsignedIntegerType:
+                            case DbDataTypeEnum.LongIntegerType:
                             case DbDataTypeEnum.UnsignedLongIntegerType:
-                            case DbDataTypeEnum.UnsignedShortIntegerType:
-                                uint _umin = Convert.ToUInt32(_min);
-                                uint _umax = Convert.ToUInt32(_max);
-                                __min = _umin;
-                                __max = _umax;
-                                _divisionPoints = GenerateIntevals(_umin, _umax, (uint)Length);
+                                long _lmin = Convert.ToInt64(_min);
+                                long _lmax = Convert.ToInt64(_max);
+                                __min = _lmin;
+                                __max = _lmax;
+                                long[] _divisionPointsLong =
+                                    Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
+                                    _lmin, _lmax, (int)Count);
+                                result.CreateIntervals(BoundaryEnum.Closed, __min, Retyper<long>.Retype(
+                                    _divisionPointsLong),
+                                    ClosedFrom, __max, BoundaryEnum.Closed, false);
                                 break;
+
+                            case DbDataTypeEnum.DateTimeType:
+                                DateTime _datemin = Convert.ToDateTime(_min);
+                                DateTime _datemax = Convert.ToDateTime(_max);
+                                __min = _datemin;
+                                __max = _datemax;
+                                DateTime[] _divisionPointsDateTime =
+                                    Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
+                                    _datemin, _datemax, (int)Count, false);
+                                result.CreateIntervals(BoundaryEnum.Closed, __min, Retyper<DateTime>.Retype(_divisionPointsDateTime),
+                                    ClosedFrom, __max, BoundaryEnum.Closed, false);
+                                break;
+
+                          //  case DbDataTypeEnum.TimeType:
+                         //       TimeSpan _timemin = Convert.
+                           //     break;
+
 
                             default:
                                 throw new ArgumentException("Type not supported");
 
                         }
 
-                        result.CreateIntervals(BoundaryEnum.Closed, __min, _divisionPoints,
-                                    ClosedFrom, __max, BoundaryEnum.Closed, false);
+                   //     result.CreateIntervals(BoundaryEnum.Closed, __min, _divisionPoints,
+                   //                 ClosedFrom, __max, BoundaryEnum.Closed, false);
 
                     //    if (dt.Rows[0][0] is DBNull)
                      //       containsNull = true;

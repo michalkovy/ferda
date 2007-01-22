@@ -71,6 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Categorization\StaticAttribute\BoxInfo.cs" />
+    <Compile Include="Categorization\StaticAttribute\Functions.cs" />
     <Compile Include="Categorization\EachValueOneCategory\BoxInfo.cs" />
     <Compile Include="Categorization\EachValueOneCategory\Functions.cs" />
     <Compile Include="Categorization\EquidistantIntervals\BoxInfo.cs" />

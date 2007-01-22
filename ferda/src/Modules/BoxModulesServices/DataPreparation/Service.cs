@@ -29,6 +29,8 @@ namespace Ferda.Modules.Boxes.DataPreparation
                         new DataPreparation.Categorization.EquifrequencyIntervals.BoxInfo());
             registerBox(Categorization.EachValueOneCategory.BoxInfo.typeIdentifier,
                        new Categorization.EachValueOneCategory.BoxInfo());
+            registerBox(Categorization.StaticAttribute.BoxInfo.typeIdentifier,
+                       new Categorization.StaticAttribute.BoxInfo());
             registerBox(Datasource.VirtualColumn.BoxInfo.typeIdentifier,
                         new Datasource.VirtualColumn.BoxInfo());
 

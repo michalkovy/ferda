@@ -193,9 +193,128 @@ namespace Ferda.Guha.MiningProcessor.Miners
             resultFinish();
         }
 
-        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
+        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
         {
-            throw new Exception("The method or operation is not implemented.");
+            if (skipFirstN >= this.TaskParams.maxSizeOfResult)
+            {
+                ProgressSetValue(100, "Reading " + skipFirstN.ToString() + " bitstrings from cache");
+                yield break;
+            }
+            ProgressSetValue(-1, "Beginning of attributes trace.");
+            //       return false;
+            resultInit();
+            CountVector = countVector;
+
+
+            IEvaluator evaluator;
+            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
+                evaluator = new FirstNNoResult(this);
+            else
+                throw new NotImplementedException();
+
+            int step = 0;
+
+            //MissingInformation missingInformation = new MissingInformation();
+            //IBitString xS;
+            IBitString nS;
+            //IBitString xA;
+            IBitString nA;
+            //IBitString xC;
+            IBitString fSF; // first set
+            IBitString sSF; // second set
+
+            fourFoldTableOfBitStrings fourFT = new fourFoldTableOfBitStrings();
+            FourFoldContingencyTable fourFoldCT1;
+            FourFoldContingencyTable fourFoldCT2;
+            ContingencyTableHelper contingencyTable1;
+            ContingencyTableHelper contingencyTable2;
+
+            foreach (IBitString pS in _succedent)
+            {
+                if (pS is EmptyBitString)
+                    continue;
+                GetNegation(pS, out nS);
+                foreach (IBitString pA in _antecedent)
+                {
+                    GetNegation(pA, out nA);
+
+                    fourFT.pSpA = pS.And(pA);
+                    fourFT.pSnA = pS.And(nA);
+
+                    fourFT.nSpA = nS.And(pA);
+                    fourFT.nSnA = nS.And(nA);
+
+                    foreach (IBitString pC in _condition)
+                    {
+                        foreach (IBitString fS in _firstSet)
+                        {
+                            #region SD first set contingency table
+                            fSF = fS.And(pC);
+                            fourFoldCT1 = new FourFoldContingencyTable();
+
+                            fourFoldCT1.a = fourFT.pSpA.And(fSF).Sum;
+                            fourFoldCT1.c = fourFT.pSnA.And(fSF).Sum;
+
+                            fourFoldCT1.b = fourFT.nSpA.And(fSF).Sum;
+                            fourFoldCT1.d = fourFT.nSnA.And(fSF).Sum;
+
+                            contingencyTable1 = new ContingencyTableHelper(
+                                fourFoldCT1.ContingencyTable,
+                                _result.AllObjectsCount
+                                );
+                            #endregion
+
+                            double[] sDFirstSetValues = evaluator.SDFirstSetValues(contingencyTable1);
+
+                            foreach (IBitString sS in _secondSet)
+                            {
+                                #region SD second set contingency table
+                                switch (TaskParams.sdWorkingWithSecondSetMode)
+                                {
+                                    case WorkingWithSecondSetModeEnum.Cedent1AndCedent2:
+                                        sSF = sS.And(fS).And(pC);
+                                        break;
+                                    case WorkingWithSecondSetModeEnum.Cedent2:
+                                        sSF = sS.And(pC);
+                                        break;
+                                    case WorkingWithSecondSetModeEnum.None:
+                                    default:
+                                        throw new NotImplementedException();
+                                }
+
+                                fourFoldCT2 = new FourFoldContingencyTable();
+
+                                fourFoldCT2.a = fourFT.pSpA.And(sSF).Sum;
+                                fourFoldCT2.c = fourFT.pSnA.And(sSF).Sum;
+
+                                fourFoldCT2.b = fourFT.nSpA.And(sSF).Sum;
+                                fourFoldCT2.d = fourFT.nSnA.And(sSF).Sum;
+
+                                contingencyTable2 = new ContingencyTableHelper(
+                                    fourFoldCT2.ContingencyTable,
+                                    _result.AllObjectsCount
+                                    );
+                                #endregion
+
+                                Hypothesis hypothesis = new Hypothesis();
+                                hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
+                                hypothesis.SetFormula(MarkEnum.Antecedent, pA.Identifier);
+                                hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
+                                hypothesis.SetFormula(MarkEnum.FirstSet, fS.Identifier);
+                                hypothesis.SetFormula(MarkEnum.SecondSet, sS.Identifier);
+                                hypothesis.ContingencyTableA = contingencyTable1.ContingencyTable;
+                                hypothesis.ContingencyTableB = contingencyTable2.ContingencyTable;
+
+                                if (evaluator.VerifyIsCompleteSDSecondSet(contingencyTable2, sDFirstSetValues, hypothesis))
+                                    goto finish;
+                            }
+                        }
+                    }
+                }
+            }
+        finish:
+            evaluator.Flush();
+            resultFinish();
         }
     }
 }

@@ -36,6 +36,7 @@ using Ferda.FrontEnd.AddIns;
 using Ferda.FrontEnd.AddIns.EditCategories.EditExisting;
 using System.Resources;
 using System.Reflection;
+using Ferda.Guha.Data;
 
 #endregion
 
@@ -56,7 +57,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <summary>
         /// Categories to put in the datalist
         /// </summary>
-        CategoriesStruct returnCategories = new CategoriesStruct();
+       // CategoriesStruct returnCategories = new CategoriesStruct();
 
         /// <summary>
         /// Resource manager
@@ -71,7 +72,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <summary>
         /// All the possible values for the datalist
         /// </summary>
-        private string[] distinctValues;
+        private ValuesAndFrequencies distinctValues;
 
         /// <summary>
         /// Private variable indicating that a category is being edited
@@ -107,7 +108,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="localePrefs">Current locale</param>
         /// <param name="categories">Categories to edit</param>
         /// <param name="distinctValues">Distinct values for enum categories</param>
-        public MainListView(string[] localePrefs, CategoriesStruct categories, string[] distinctValues, IOwnerOfAddIn ownerOfAddin)
+        public MainListView(string[] localePrefs, string categories, ValuesAndFrequencies distinctValues, IOwnerOfAddIn ownerOfAddin)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -331,7 +332,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="e"></param>
         private void SaveAndQuit_Click(object sender, EventArgs e)
         {
-            CategoriesStruct categories = new CategoriesStruct();
+           /* CategoriesStruct categories = new CategoriesStruct();
             try
             {
                 this.returnCategories = this.MyIceRunOut(this.bigDataList);
@@ -345,7 +346,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             }
             categories = this.returnCategories;
             DialogResult = DialogResult.OK;
-            this.Dispose();
+            this.Dispose();*/
         }
 
         /// <summary>
@@ -558,20 +559,20 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// </summary>
         /// <param name="existingCategories">Categories to fill in FerdaSmartDataList</param>
         /// <returns>FerdaSmartDataList with categories</returns>
-        private FerdaSmartDataList MyIceRun(Modules.CategoriesStruct existingCategories)
+        private FerdaSmartDataList MyIceRun(string existingCategories)
         {
             //here we need to fill our data structure with data from ice
             ArrayList allValues = new ArrayList();
             if (this.distinctValues != null)
             {
-                foreach (string value in this.distinctValues)
+                /*foreach (string value in this.distinctValues)
                 {
                     allValues.Add(value);
-                }
+                }*/
             }
 
             FerdaSmartDataList returnList = new FerdaSmartDataList(allValues, new ArrayList());
-            foreach (DictionaryEntry myEnumCategorySeq in existingCategories.enums)
+            /*foreach (DictionaryEntry myEnumCategorySeq in existingCategories.enums)
             {
                 Category newMultiset = new Category();
                 newMultiset.CatType = CategoryType.Enumeration;
@@ -686,7 +687,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     }
                     returnList.AddNewCategoryDirect(newMultiset);
                 }
-            }
+            }*/
             return returnList;
         }
 
@@ -695,15 +696,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// </summary>
         /// <param name="dataList"></param>
         /// <returns></returns>
-        private CategoriesStruct MyIceRunOut(FerdaSmartDataList dataList)
+        private string MyIceRunOut(FerdaSmartDataList dataList)
         {
-            CategoriesStruct myCategoriesStruct = new CategoriesStruct();
+            /*CategoriesStruct myCategoriesStruct = new CategoriesStruct();
             myCategoriesStruct.dateTimeIntervals = new DateTimeIntervalCategorySeq();
             myCategoriesStruct.enums = new EnumCategorySeq();
             myCategoriesStruct.floatIntervals = new FloatIntervalCategorySeq();
-            myCategoriesStruct.longIntervals = new LongIntervalCategorySeq();
+            myCategoriesStruct.longIntervals = new LongIntervalCategorySeq();*/
             ArrayList tempArray = new ArrayList();
-            foreach (Category multiSet in dataList.Categories)
+            /*foreach (Category multiSet in dataList.Categories)
             {
                 switch (multiSet.CatType)
                 {
@@ -822,17 +823,19 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     default:
                         break;
                 }
-            }
-            return myCategoriesStruct;
+            }*/
+          //  return myCategoriesStruct;
+            return "";
         }
 
         /// <summary>
         /// Method which returns updated categories
         /// </summary>
         /// <returns></returns>
-        public CategoriesStruct GetUpdatedCategories()
+        public string GetUpdatedCategories()
         {
-            return this.returnCategories;
+            //return this.returnCategories;
+            return "";
         }
 
         #endregion

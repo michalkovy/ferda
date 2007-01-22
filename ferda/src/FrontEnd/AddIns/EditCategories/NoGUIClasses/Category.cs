@@ -595,6 +595,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
         #region Public static methods
 
+        /*
         /// <summary>
         /// Method which checks whether the categories are disjunct
         /// </summary>
@@ -671,7 +672,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             {
                 return true;
             }
-        }
+        }*/
 
         #endregion
     }

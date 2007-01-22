@@ -168,14 +168,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             dummy = Func.GetBitStrings(true);
             Debug.Assert(dummy == null);
             
-            if (String.IsNullOrEmpty(Func.NameInLiterals))
+          /*  if (String.IsNullOrEmpty(Func.NameInLiterals))
                 throw Exceptions.BadValueError(
                     null,
                     boxModule.StringIceIdentity,
                     "Property \"Name in literals\" can not be empty string.",
                     new string[] { Functions.PropNameInLiterals },
                     restrictionTypeEnum.OtherReason
-                    );
+                    );*/
 
             CardinalityEnum potentiallyCardinality = Func.PotentiallyCardinality(true);
             

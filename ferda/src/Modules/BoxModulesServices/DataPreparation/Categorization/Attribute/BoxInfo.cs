@@ -6,7 +6,7 @@ using Object = Ice.Object;
 using FixedAtom = Ferda.Modules.Boxes.GuhaMining.FixedAtom;
 using AtomSetting = Ferda.Modules.Boxes.GuhaMining.AtomSetting;
 
-namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyIntervals
+namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 {
     internal class BoxInfo : Boxes.BoxInfo
     {
@@ -27,15 +27,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
         }
 
-        /// <summary>
-        /// Gets the box modules asking for creation.
-        /// </summary>
-        /// <param name="localePrefs">The localization preferences.</param>
-        /// <param name="boxModule">The box module.</param>
-        /// <returns>
-        /// Array of <see cref="T:Ferda.Modules.ModuleAskingForCreation">
-        /// Modules Asking For Creation</see>.
-        /// </returns>
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
         {
             //getting the information what is in the config files
@@ -96,18 +87,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             return result.ToArray();
         }
 
-        public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
-        {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
-            switch (propertyName)
-            {
-                case Functions.PropIncludeNullCategory:
-                    return Func.IncludeNullCategory;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
@@ -118,67 +97,32 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                     return BoxInfoHelper.GetSelectStringArray(
                         Func.GetCategoriesNames(false)
                         );
+
+              //  case Functions.PropAttribute:
+             //       return BoxInfoHelper.
                 default:
                     return null;
             }
         }
 
-        public const string typeIdentifier = "DataPreparation.Categorization.EquifrequencyIntervals";
+        public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
+        {
+            switch (propertyName)
+            {
+                case Functions.PropAttribute:
+                    break;
+
+                default:
+                    break;
+            }
+            return base.GetReadOnlyPropertyValue(propertyName, boxModule);
+        }
+
+        public const string typeIdentifier = "DataPreparation.Categorization.StaticAttribute";
 
         protected override string identifier
         {
             get { return typeIdentifier; }
-        }
-
-        public override void Validate(BoxModuleI boxModule)
-        {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
-
-            // try to invoke methods
-            object dummy = Func.GetColumnFunctionsPrx(true);
-            dummy = Func.GetAttributeId();
-            dummy = Func.GetAttributeNames();
-            dummy = Func.GetAttribute(true);
-            dummy = Func.GetCategoriesNames(true);
-            dummy = Func.GetCategoriesAndFrequencies(true);
-            dummy = Func.GetBitStrings(true);
-            Debug.Assert(dummy == null);
-
-            /*  if (String.IsNullOrEmpty(Func.NameInLiterals))
-                  throw Exceptions.BadValueError(
-                      null,
-                      boxModule.StringIceIdentity,
-                      "Property \"Name in literals\" can not be empty string.",
-                      new string[] { Functions.PropNameInLiterals },
-                      restrictionTypeEnum.OtherReason
-                      );*/
-
-            CardinalityEnum potentiallyCardinality = Func.PotentiallyCardinality(true);
-
-            if (Common.CompareCardinalityEnums(
-                    Func.Cardinality,
-                    potentiallyCardinality
-                    ) > 1)
-            {
-                throw Exceptions.BadValueError(
-                    null,
-                    boxModule.StringIceIdentity,
-                    "Unsupported cardinality type for current attribute setting.",
-                    new string[] { Functions.PropCardinality },
-                    restrictionTypeEnum.OtherReason
-                    );
-            }
-
-            if (Func.Cardinality == CardinalityEnum.Nominal)
-            {
-                throw Exceptions.BadValueError(
-                    null,
-                    boxModule.StringIceIdentity,
-                    "Unsupported cardinality type for current attribute setting.",
-                    new string[] { Functions.PropCardinality },
-                    restrictionTypeEnum.OtherReason
-                    );
-            }
         }
     }
 }

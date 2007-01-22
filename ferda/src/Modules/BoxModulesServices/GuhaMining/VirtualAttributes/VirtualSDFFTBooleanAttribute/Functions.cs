@@ -82,7 +82,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
                 {
                     _bitStringEnumerator = Common.RunTaskNoResult(
                         _boxModule, this,
-                        TaskTypeEnum.FourFold,
+                        TaskTypeEnum.SDFourFold,
                         ResultTypeEnum.TraceBoolean,
                         CountVector,
                         Guid, miningFunctions, _skipFirstN, _current).GetEnumerator();
