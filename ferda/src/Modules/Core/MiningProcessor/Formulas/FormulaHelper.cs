@@ -29,18 +29,22 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         }
 
         /// <summary>
-        /// Unicode Character 'LOGICAL AND' (U+2227)
+        /// Should be the unicode Character 'LOGICAL AND' (U+2227)
         /// http://www.fileformat.info/info/unicode/char/2227/index.htm
+        /// but it is the normal & instead. The reason is, that the fonts
+        /// that support unicode are in normal windows installation
         /// </summary>
-        public const string SeparatorAnd = " & "; //better \u2227
+        public const string SeparatorAnd = " & ";
 
         //public const string SeparatorAnd = "&";
 
         /// <summary>
-        /// Unicode Character 'LOGICAL OR' (U+2228)
+        /// Should be the unicode Character 'LOGICAL OR' (U+2228)
         /// http://www.fileformat.info/info/unicode/char/2228/index.htm
+        /// but it is the normal | instead. The reason is, that the fonts
+        /// that support unicode are in normal windows installation
         /// </summary>
-        public const string SeparatorOr = " | "; //better \u2228
+        public const string SeparatorOr = " | ";
 
         //public const string SeparatorOr = "|";
 
