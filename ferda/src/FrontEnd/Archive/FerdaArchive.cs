@@ -79,22 +79,34 @@ namespace Ferda.FrontEnd.Archive
         /// </summary>
         protected ComboBox CBCategories;
 
-        //ProjectManger to display the messages about the box to the user
+        ///<summary>
+        ///ProjectManger to display the messages about the box to the user
+        ///</summary>
         private ProjectManager.ProjectManager projectManager;
 
-        //the selected box in the archive
+        ///<summary>
+        ///the selected box in the archive
+        ///</summary>
         private ModulesManager.IBoxModule selectedBox;
 
-        //Resource manager from the FerdaForm
+        ///<summary>
+        ///Resource manager from the FerdaForm
+        ///</summary>
         private ResourceManager resManager;
 
-        //Clipboard
+        ///<summary>
+        ///Clipboard
+        ///</summary>
         private IFerdaClipboard clipboard;
 
-        //Selected node for the drag&drop operations
+        ///<summary>
+        ///Selected node for the drag&drop operations
+        ///</summary>
         private FerdaTreeNode mySelectedNode;
 
-        //All the views of the project
+        ///<summary>
+        ///All the views of the project
+        ///</summary>
         private List<FerdaDesktop> views;
         
         /// <summary>
@@ -102,7 +114,10 @@ namespace Ferda.FrontEnd.Archive
         /// </summary>
         protected Icon naIcon;
 
-        //userNote control
+        ///<summary>
+        /// userNote control (user can display and edit user notes in this
+        /// control).
+        ///</summary>
         private UserNote.IUserNoteDisplayer userNote;
 
         /// <summary>
@@ -865,7 +880,7 @@ namespace Ferda.FrontEnd.Archive
         /// <param name="box">box to be deleted</param>
         public void Delete(ModulesManager.IBoxModule box)
         {
-            if (!this.Focused)
+            if (!TVArchive.Focused)
             {
                 return;
             }

@@ -76,7 +76,7 @@ namespace Netron.GraphLib
 		/// <summary>
 		/// the font family
 		/// </summary>
-		protected string mFontFamily = "Verdana";
+        protected string mFontFamily = "Verdana";
 		/// <summary>
 		/// whether the entity is selected
 		/// </summary>
