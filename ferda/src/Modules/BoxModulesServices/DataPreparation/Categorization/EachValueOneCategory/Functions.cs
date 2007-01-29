@@ -47,6 +47,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         public const string PropFrom = "From";
         public const string PropTo = "To";
         public const string PropCardinality = "Cardinality";
+        public const string PropCategories = "Categories";
         public const string SockColumn = "Column";
 
         public GuidStruct Guid
