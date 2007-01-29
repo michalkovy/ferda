@@ -23,7 +23,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         public const string PropDomain = "Domain";
         public const string PropFrom = "From";
         public const string PropTo = "To";
-        public const string PropAttribute = "EditCategories";
+        public const string PropAttribute = "Categories";
         public const string SockColumn = "Column";
         public const string SockBSGen = "BitStringGenerator";
 
@@ -194,8 +194,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         public override string getAttribute(Current current__)
         {
-            return Guha.Attribute.Serializer.Serialize(GetAttributeFromProperty);
-            //return Guha.Attribute.Serializer.Serialize(GetAttribute(true).Export());
+            return this._boxModule.GetPropertyOther(PropAttribute).ToString();
         }
 
         public override ValuesAndFrequencies getCategoriesAndFrequencies(Current current__)

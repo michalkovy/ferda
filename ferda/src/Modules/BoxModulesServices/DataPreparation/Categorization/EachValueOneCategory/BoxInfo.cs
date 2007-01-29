@@ -74,9 +74,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             {
                 singleModule = new ModuleAskingForCreation();
                 moduleConnection = new ModulesConnection();
-                //no need to set any property
-                singleModule.propertySetting = new PropertySetting[] { };
-
+                            
                 switch (moduleAFCname)
                 {
                     case "FixedAtom" :
@@ -90,6 +88,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                             new ModulesConnection[] { moduleConnection };
                         singleModule.newBoxModuleIdentifier =
                             FixedAtom.BoxInfo.typeIdentifier;
+                        singleModule.propertySetting = new PropertySetting[] { };
                         break;
 
                     case "AtomSetting" :
@@ -103,6 +102,27 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                             new ModulesConnection[] { moduleConnection };
                         singleModule.newBoxModuleIdentifier =
                             AtomSetting.BoxInfo.typeIdentifier;
+                        singleModule.propertySetting = new PropertySetting[] { };
+                        break;
+
+                    case "StaticAttribute":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            StaticAttribute.Functions.SockBSGen;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            StaticAttribute.BoxInfo.typeIdentifier;
+
+                        PropertySetting setting =
+                            new PropertySetting(Functions.PropCategories, new StringTI(Guha.Attribute.Serializer.Serialize(
+                            ((Functions)boxModule.FunctionsIObj).GetAttribute(true).Export())));
+
+                        singleModule.propertySetting = new PropertySetting[] { setting };
+
                         break;
 
                     default:

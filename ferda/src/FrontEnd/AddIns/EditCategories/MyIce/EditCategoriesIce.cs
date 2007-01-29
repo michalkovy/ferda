@@ -137,27 +137,29 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             {
             }
             about = resManager.GetString("EditCategoriesAbout");
+            ValuesAndFrequencies distinctValues;
+            PropertyValue returnValue = new PropertyValue();
             try
             {
                 Ferda.Modules.Boxes.DataPreparation.AttributeFunctionsPrx prx =
                 Ferda.Modules.Boxes.DataPreparation.AttributeFunctionsPrxHelper.checkedCast(
                 boxModuleParam.getFunctions()
                 );
-                ValuesAndFrequencies distinctValues;
-                PropertyValue returnValue = new PropertyValue();
-                string serializedAttribute = valueBefore.ToString();
+
+                distinctValues = prx.getCategoriesAndFrequencies();            
                 try
                 {
-                    BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("ColumnOrDerivedColumn")[0];
+                    distinctValues = prx.getCategoriesAndFrequencies();
+                    /*BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("ColumnOrDerivedColumn")[0];
                     Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx1 =
-                        Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(boxModuleParamNew.getFunctions());
-                    distinctValues = prx1.getDistinctsAndFrequencies();
+                        Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(boxModuleParamNew.getFunctions());*/
+
                 }
                 catch
                 {
                     distinctValues = null;
                 }
-                Ferda.FrontEnd.AddIns.EditCategories.MainListView listView = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(localePrefs, serializedAttribute, distinctValues, ownerOfAddIn);
+                Ferda.FrontEnd.AddIns.EditCategories.MainListView listView = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(localePrefs, propertyValue.ToString(), distinctValues, ownerOfAddIn);
                 listView.ShowInTaskbar = false;
                 listView.Disposed += new EventHandler(SetCategories);
                 System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);
