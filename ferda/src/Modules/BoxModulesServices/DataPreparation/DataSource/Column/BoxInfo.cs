@@ -140,6 +140,27 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                         singleModule.propertySetting =
                             new PropertySetting[] { propSetting };
                         break;
+                    
+                    case "StaticAttribute":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            Categorization.StaticAttribute.Functions.SockColumn;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //the property setting - here setting the "nameInLiterals" 
+                        //property of the attribute to the name of the column
+                        propSetting.propertyName =
+                            Categorization.StaticAttribute.Functions.PropNameInLiterals;
+                        propSetting.value = nameInLiteralsValue;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            Categorization.StaticAttribute.BoxInfo.typeIdentifier;
+                        singleModule.propertySetting =
+                            new PropertySetting[] { propSetting };
+                        break;
 
                     default:
                         throw new NotImplementedException();

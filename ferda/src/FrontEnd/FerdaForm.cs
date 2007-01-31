@@ -530,6 +530,7 @@ using Ferda.ModulesManager;
                 viewContents.Add(desktopContent);
 
                 //other desktop initializations
+                desktop.MyContent = desktopContent;
                 desktop.Dock = DockStyle.Fill;
                 desktopContent.DockType = DockContainerType.Document;
                 desktopContent.Text = view.Name;
@@ -542,7 +543,8 @@ using Ferda.ModulesManager;
                 //event for changing names
                 desktopContent.TextChanged += new EventHandler(desktopContent_TextChanged);
                 //the closing event
-                desktopContent.Closed += new EventHandler(desktopContent_Closed);
+                desktopContent.FormClosed += 
+                    new FormClosedEventHandler(desktopContent_Closed);
 
                 desktopContent.Controls.Add(desktop);
                 desktopContent.ResumeLayout(false);
@@ -1251,11 +1253,13 @@ using Ferda.ModulesManager;
             viewContents.Add(desktopContent);
 
             //other desktop initializations
+            newDesktop.MyContent = desktopContent;
             newDesktop.Dock = DockStyle.Fill;
             desktopContent.DockType = DockContainerType.Document;
             desktopContent.Text = newView.Name;
             desktopContent.TextChanged += new EventHandler(desktopContent_TextChanged);
-            desktopContent.Closed += new EventHandler(desktopContent_Closed);
+            desktopContent.FormClosed += 
+                new FormClosedEventHandler(desktopContent_Closed);
             desktopContent.Activated += new EventHandler(desktopContent_Activated);
             newDesktop.ResManager = this.ResManager;
             newDesktop.Clipboard = this;
@@ -1311,11 +1315,13 @@ using Ferda.ModulesManager;
             viewContents.Add(desktopContent);
 
             //other desktop initializations
+            newDesktop.MyContent = desktopContent;
             newDesktop.Dock = DockStyle.Fill;
             desktopContent.DockType = DockContainerType.Document;
             desktopContent.Text = newView.Name;
             desktopContent.TextChanged += new EventHandler(desktopContent_TextChanged);
-            desktopContent.Closed += new EventHandler(desktopContent_Closed);
+            desktopContent.FormClosed += 
+                new FormClosedEventHandler(desktopContent_Closed);
             desktopContent.Activated += new EventHandler(desktopContent_Activated);
             newDesktop.ResManager = this.ResManager;
             newDesktop.Clipboard = this;

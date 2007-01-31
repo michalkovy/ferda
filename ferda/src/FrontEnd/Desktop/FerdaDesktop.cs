@@ -34,6 +34,7 @@ using Ferda.FrontEnd.NewBox;
 
 using Netron.GraphLib.UI;
 using Netron.GraphLib;
+using DockDotNET;
 
 namespace Ferda.FrontEnd.Desktop
 {
@@ -98,9 +99,23 @@ namespace Ferda.FrontEnd.Desktop
         ///</summary>
         protected IIconProvider provider;
 
+        /// <summary>
+        /// The content where desktop is displayed (for closing)
+        /// </summary>
+        private DockWindow myContent;
+
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// The content where desktop is displayed (for closing)
+        /// </summary>
+        public DockWindow MyContent
+        {
+            get { return myContent; }
+            set { myContent = value; }
+        }
 
         /// <summary>
         /// SVGManager of the Desktop, it should be the global SVGManager
@@ -393,6 +408,7 @@ namespace Ferda.FrontEnd.Desktop
             OnContextMenu += new MouseEventHandler(FerdaDesktop_ContextMenu);
             OnNewConnection += new NewConnection(FerdaDesktop_OnNewConnection);
             KeyPress += new KeyPressEventHandler(FerdaDesktop_KeyPress);
+            KeyUp += new KeyEventHandler(FerdaDesktop_KeyUp);
             OnFerdaMouseUp += new MouseEventHandler(FerdaDesktop_OnFerdaMouseUp);
             OnFerdaDeleteConnection += new FerdaConnection(FerdaDesktop_OnFerdaDeleteConnection);
             OnShapeRemoved += new NewShape(FerdaDesktop_OnShapeRemoved);
@@ -1755,6 +1771,21 @@ namespace Ferda.FrontEnd.Desktop
         #endregion
 
         #region Events
+
+        /// <summary>
+        /// Event that is raised, when user raises a key
+        /// (currently only Ctrl+F4 handling - to close the active
+        /// desktop). 
+        /// </summary>
+        /// <param name="sender">Sender of the argument</param>
+        /// <param name="e">Event arguments - information about the key</param>
+        void FerdaDesktop_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F4 && (e.Control))
+            {
+                myContent.Close();
+            }
+        }
 
         /// <summary>
         /// Handles a keypress, updates selected boxes for the inteface. This allows
