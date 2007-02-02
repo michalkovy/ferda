@@ -1,8 +1,8 @@
-// Saple.cs - Sample IceBox service
+// Service.cs - Sample IceBox service
 //
-// Author: Tomáš Kuchař <tomas.kuchar@gmail.com>
+// Author: Martin Ralbovsky <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Tomáš Kuchař
+// Copyright (c) 2007 Martin Ralbovsky
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,9 +19,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
-using Ferda.Modules.Boxes.Sample.BodyMassIndex;
+using Ferda.Modules.Boxes.Wizards.Wizard;
+using Ice;
 
-namespace Ferda.Modules.Boxes.Sample
+namespace Ferda.Modules.Boxes.Wizards
 {
     /// <summary>
     /// Sample IceBox service with BodyMassIndex box 
@@ -33,8 +34,7 @@ namespace Ferda.Modules.Boxes.Sample
         /// </summary>
         protected override void registerBoxes()
         {
-            registerBox(BodyMassIndexBoxInfo.typeIdentifier, new BodyMassIndexBoxInfo());
-            // if more boxes should be provided by this service, register them here ...
+            registerBox(Wizard.BoxInfo.typeIdentifier, new Wizard.BoxInfo());
         }
     }
 }

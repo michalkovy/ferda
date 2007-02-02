@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic", "Basic\Basic.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuhaMining", "GuhaMining\GuhaMining.csproj", "{9D598D8A-0393-4E99-9842-49D120C06881}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wizards", "Wizards\Wizards.csproj", "{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{9D598D8A-0393-4E99-9842-49D120C06881}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D598D8A-0393-4E99-9842-49D120C06881}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D598D8A-0393-4E99-9842-49D120C06881}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
