@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <personname>
+          <firstname>Martin</firstname>
+          <surname>Ralbovský</surname>
+        </personname>
+        <email>martin.ralbovsky@gmail.com</email>
+      </author>
+      <othercredit>
+        <personname>
+          <firstname>Tomáš</firstname>
+          <surname>Kuchař</surname>
+        </personname>
+        <email>tomas.kuchar@gmail.com</email>
+      </othercredit>
+    </authorgroup>
+    <pubdate>2007-02-03</pubdate>
+    <title>Jak přidat do Ferdy novou krabičku</title>
+    <titleabbrev>Jak přidat krabičku</titleabbrev>
+
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2006-03-22</date>
+        <revremark>První verze dokumentu
+        </revremark>
+      </revision>
+    </revhistory>
+    -->
+  </articleinfo>
+
+  <abstract>
+    <para>
+      Tento dokument popisuje, jak vytvořit novou krabičku pro systém Ferda.
+      Informuje také o doporučených nástrojích a postupech, které tvůrci
+      Ferdy používají pro tvorbu krabiček. Ukazuje také, jak vytvořit novou
+      knihovnu, do které může uživatel umístnit nové krabičky.
+    </para>
+  </abstract>
+
+  <section>
+    <title>Potřebné a doporučené nástroje</title>
+    <section>
+      <title>Ice</title>
+      <para>
+        Ice je middleware, který používá Ferda pro komunikaci mezi modely. 
+        To umožňuje spouštět systém distribovaně po síti a další věci. Částečně
+        je funkce vysvětlena v dokumentech 
+        <classname>implementaceKrabicek</classname> a
+        <classname>implementaceFerdy</classname>. V tomo dokumentu se budeme
+        zabývat funkcemi Ice z hlediska vytvoření nových krabiček.
+      </para>
+      <para>
+        Instalační balíček Ice je volně ke stažení na adrese 
+        <ulink url="http://www.zeroc.com">http://www.zeroc.com</ulink>.
+        Ferda používá verzi 3.1.1.
+      </para>
+    </section>
+    <section>
+      <title>NAnt</title>
+      <para>
+        Utilitu NAnt používáme pro kompilaci a sestavování spustitelných souborů
+        Ferdy. Můžete si ji stáhnout na 
+        <ulink url="http://nant.sourceforge.net">http://nant.sourceforge.net</ulink>.
+        Pro projekt Ferda používáme verzi 0.84 a vyšší.
+      </para>
+    </section>
+    <section>
+      <title>.NET 2.0 a Visual Studio</title>
+      <para>
+        Ačkoli middleware Ice podporuje řadu programovacích jazyků, tvůrci Ferdy
+        si vybrali a doporučují jazyk C#. V tomto dokumentu budeme dále
+        předpokládat pouze kódy v jazyce C#. Platforma pro (nejen) tento jazyk se
+        jmenuje .NET Framework a je dostupná ve verzi od Microsoftu, či Open source
+        implementace Mono.
+      </para>
+      <para>
+        Ferda používá .NET Framework verze 2. Můžete si ji stáhnout i s SDK na adrese
+        <ulink url="http://www.microsoft.com/downloads">www.microsoft.com/downloads</ulink>.
+        Doporučujeme ji však používat i s vývojovým softwarem Microsoft Visual Studio
+        2005. Tento software je však komerční.
+      </para>
+      <para>
+        Alternativou ke komerčnímu Visual Studiu je volně dostupný Visual C# Express 
+        Edition 2005 taktéž od Microsoftu, ke stažení na 
+        <ulink url="http://msdn.microsoft.com/vstudio/express/visualcsharp/">
+          zde
+        </ulink>. Dále je k dispozici open source nástroj SharpDevelop na adrese
+        <ulink url="http://www.icsharpcode.net/OpenSource/SD/">
+          zde</ulink>. Alternativou k platformě
+        .NET Framework je open source platforma Mono, <ulink url="http://www.mono-project.com/">
+          domovská stránka</ulink> umožňující spouštění Ferdy například na
+          systému Linux. 
+          Pro tuto platformu však v součastné době nejsou doimplementovány části Windows.Form,
+          tudíž uživatelské prostředí pod Monem nebude běhat. Doporučujeme proto 
+          .NET verzi 2.
+      </para>
+    </section>
+  </section>
+  <section>
+    <title>Nezávislé knihovny a krabičky v nich</title>
+    <para>
+      Programátor, který chce přidat krabičku do Ferdy může buď přidat krabičku do
+      existující knihovny, anebo pro ni vytvořit novou dynamickou knihovnu. Preferujeme
+      první případ, pokud přidávaná krabička je součástí nějakého většího konceptu
+      krabiček a uživatel pouze rozšiřuje tento koncept. Dobrým příkladem
+      je přidání dalšího kvantifikátoru pro určitou GUHA proceduru. 
+    </para>
+    <para>
+      Jestliže však programátor chce vytvořit pomocí krabičky (či krabiček) úplně
+      novou funkcionalitu, je možno vytvořit pro tyto krabičky novou dynamickou
+      knihovnu (dll). Kromě výhod z hlediska návrhu systému ma tento způsob i 
+      další modulární výhodu: při instalaci Ferdy je možno označit části, které 
+      se budou instalovat. Toto probíhá pomocí kopírování příslušných knihoven.
+      Programátor může tedy vytvořit zcela modulární součást systému. 
+    </para>
+  </section>
+  <section>
+    <title>Tvorba nové dynamické knihovny</title>
+    <section>
+      <title>1. Vytvoření adresáře pro novou knihovnu</title>
+      <para>
+        Nejdříve musí programátor vytvořit nový adresář pro svoji knihovnu.
+        Nechť se naše knihovna jmenuje <classname>SampleBoxModules</classname>. 
+        Vytvoříme tedy adresář 
+        <classname>src\Modules\BoxModulesServices\SampleBoxModules</classname> pro budoucí
+        zdrojové kódy krabiček. Dále vytvoříme adresář 
+        <classname>slice\Modules\Boxes\SampleBoxModules</classname> pro slice návrh
+        budoucích krabiček.
+      </para>
+    </section>
+    <section>
+      <title>2. Referenční knihovny potřebné pro kompilaci krabiček</title>
+      <para>
+        Dříve než přistoupíme k vytvoření konfiguračních souborů a projektů pro
+        novou krabičku, obeznámíme programátora s knihovnami potřebnými k vytvoření
+        krabičky.
+      </para>
+      <formalpara>
+        <title>FerdaBase.dll</title>
+        <para>
+          Obsahuje kód (datové struktury, …) vygenerovaný ze slice návrhů 
+          Ferda.Modules a Ferda.ModulesManager, běžné typy vlastností (Basic 
+          property types) a ve třídě Ferda.Modules.Exceptions pomocné funkce
+          pro výjimky.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>FerdaServerBase.dll</title>
+        <para>
+          Obsahuje třídy BoxModuleFactoryCreatorI, BoxModuleFactoryI, 
+          BoxModuleI. Pro implementaci nových krabiček rozhodující interface
+          IBoxInfo a třídu BoxInfo (implementující tento interface). Dále
+          pomocné třídy ve Ferda.Modules.Serializer, které deserealizují 
+          konfigurační xml soubory pro potřeby třídy BoxInfo. Třída 
+          Ferda.Modules.Boxes.SocketConnections usnadňuje práci se zásuvkami
+          (socket) krabiček.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>FerdaBoxInterfaces.dll</title>
+        <para>
+          Kód vygenerovaný ze slice návrhů krabiček distribuovaných s Ferdou.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>icecs.dll</title>
+        <para>Knihovna pro práci s Ice (C#).</para>
+      </formalpara>
+      <formalpara>
+        <title>iceboxcs.dll</title>
+        <para>
+          Píšete-li vlastní službu, v niž poběží vlastní krabičky (bude probráno dále)
+          implementujete abstraktní třídu Ferda.Modules.FerdaServiceI, která zase
+          implementuje interface IceBox.Service. (Ten je definován v iceboxcs.dll)
+        </para>
+      </formalpara>
+    </section>
+    <section>
+      <title>3. Vytvoření build souborů pro novou knihovnu</title>
+      <para>
+        V tomto návodu používáme pro kompilaci krabiček soubor nástroj NAnt.
+        Tento nástroj kompiluje pomocí konfiguračních xml souborů. Proto musíme
+        obohatit příslušné soubory o komplaci nové knihovny. Soubor, který má
+        na starosti kompilaci knihoven se jmenuje 
+        <classname>src\Modules\BoxModulesServices\default.build</classname>.
+        Tento soubor definuje kompilaci jednotlivých knihoven pomocí NAntu.
+        NAnt blíže nebudeme rozebírat, má k dispozici vlastní dobrou uživatelskou
+        dokumentaci. Kód, který musíme přidat pro úspěšnou kompilaci do tohoto
+        souboru je:
+      </para>
+      <para>
+        <programlisting>
+          &lt;target name="SampleBoxModules"&gt;
+            &lt;csc target="library" 
+                 output="${path::combine(build.dir,'SampleBoxModules.dll')}" 
+                 doc="${path::combine(build.dir,'SampleBoxModules.xml')}" 
+                 debug="${debug}" optimize="${optimize}"&gt;
+              &lt;nowarn&gt;
+                &lt;warning number="1591"/&gt;
+              &lt;/nowarn&gt;
+              &lt;sources&gt;
+                &lt;include name="SampleBoxModules/**.cs"/&gt;
+                &lt;exclude name="SampleBoxModules/**/generated/**.cs"/&gt;
+              &lt;/sources&gt;
+              &lt;references&gt;
+                &lt;include name="${path::combine(build.dir,'FerdaBase.dll')}"/&gt;
+                &lt;include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/&gt;
+                &lt;include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/&gt;
+                &lt;include name="${path::combine(lib.dir,'icecs.dll')}"/&gt;
+                &lt;include name="${path::combine(lib.dir,'iceboxcs.dll')}"/&gt;
+                &lt;include name="System.dll"/&gt;
+                &lt;include name="System.Data.dll"/&gt;
+                &lt;include name="System.Xml.dll"/&gt;
+              &lt;/references&gt;
+            &lt;/csc&gt;
+          &lt;/target&gt;
+          </programlisting>
+        Vysvětleme si tento kód. Tag <classname>target</classname> znamená 
+        jednu úlohu v NAntu, pojmenujeme ji SampleBoxModules. Tag <classname>csc</classname>
+        volá kompilátor C#. Atribut <classname>target</classname> nastavuje
+        typ výsledku kompilace (dll či exe), <classname>output</classname>
+        nastavuje kam se má výsledek uložit. Slova začínající dolarem jsou 
+        proměnné, které dostává tento kompilační xml z nadřazených souborů 
+        či z příkazové řádky. Tag <classname>sources</classname> označuje 
+        zdrojové vstupy, vynechané Ice generované soubory ve složce 
+        <classname>generated</classname> se automaticky kompilují do jiné
+        knihovny. Tag <classname>references</classname> označuje reference,
+        vždy když se tyto požadované referenční knihovny obohatí o nějakou
+        další, je ji třeba přidat i do tohoto kompilačního xml.
+      </para>
+      <para>
+        Výše zobrazený kód definuje jednu úlohu v NAntu. Tato úloha se
+        sama o sobě neprovede, pokud se nezavolá. Toho docílíme přidáním
+        závislosti v hlavní úloze kompilačního souboru. Řádek 
+        <programlisting>
+          &lt;target name="build" description="Build Module Services" 
+       depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaGuhaMiningBoxes"&gt;
+        </programlisting>
+        změníme na 
+        <programlisting>
+        &lt;target name="build" description="Build Module Services"
+        depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaGuhaMiningBoxes,SampleBoxModules"&gt;
+      </programlisting>
+        Nyní při spuštění celoferdovských kompilačních příkazů NAntu
+        (<classname>nant fullinstall</classname> se již bude nová 
+        knihovna kompilovat a bude umístěna v <classname>bin\server</classname>.
+      </para>
+    </section>
+    <section>
+      <title>4. Vytvoření projektu ve Visual Studiu</title>
+      <para>
+        Pro pohodlnou práci doporučujeme pro novou knihovnu vytvořit
+        nový projekt ve Visual Studiu. Nejdříve otevřeme solution
+        <classname>src\Modules\BoxModulesServices\BoxModulesServices.sln</classname>.
+        V tomto solution přidáme nový prázdný C# projekt, který umístníme
+        do vytvořeného adresáře pro krabičky (krok 1.). Do referencí přidáme
+        všechny reference z kroku 2. Tento projekt můžeme kompilovat i v
+        rámci vizuálního prostředí a nemusíme to dělat složitě přes NAnt.
+      </para>
+    </section>
+    <section>
+      <title>5. Změny v application.xml</title>
+      <para>
+        Posledním krokem je přidání nově vzniklé knihovny do 
+        aplikačního souboru <classname>application.xml</classname>, 
+        který konfiguruje celého Ferdu. Jedná se zde o přidání instance
+        služby knihovny do služby Icebox. Tato služba obsahuje klientské
+        aplikace všech modulů v systému Ferda. Do tagu serveru s identifikátorem
+        <classname>FerdaServerTemplate</classname>, do části icebox přidáme
+        řádek
+        <programlisting>
+          &lt;service-instance template="FerdaServiceTemplate" name="SampleBoxModules" 
+          entry="SampleBoxModules.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${endpoints}" /&gt;
+        </programlisting>
+      </para>
+    </section>
+    <section>
+      <title>Registrace do GAC</title>
+      <para>
+        Tohle dodělat...
+      </para>
+    </section>
+  </section>
+  <!--
+  <section>
+    <title>Introduction</title>
+
+    <para>This document describes how to add a new module for interaction to
+    Ferda. In this description we will use examples written in C# 2.0 using
+    Microsoft Visual Studio 2005. You can use other languages supported by
+    .NET in the same fashion. If you want to use some other languages
+    supported by middleware <ulink url="http://www.zeroc.com">Ice</ulink>, you
+    will need to do more - for detailed information please read
+    „implementaceKrabicek.xdb“ and „implementaceFerdy.xdb“.</para>
+  </section>
+
+  <section>
+    <title>Necessary tools</title>
+
+    <para>You will need the following to implement module for
+    interaction:</para>
+
+    <itemizedlist>
+      <listitem>
+        <formalpara>
+          <title><ulink url="http://www.zeroc.com">Ice</ulink></title>
+
+          <para>Ice must be installed on the machine where the Ferda is
+          launched. You will also need some Ice libraries in order to build
+          your module.</para>
+        </formalpara>
+      </listitem>
+
+      <listitem>
+        <formalpara>
+          <title>Needed libraries</title>
+
+          <para><itemizedlist>
+              <listitem>
+                <formalpara>
+                  <title>FerdaBase.dll</title>
+
+                  <para>This library contains the necessary data structures
+                  and data types which Ferda works with. It also contains
+                  abstract classes
+                  <emphasis>Ferda.Modules.ModuleForInteractionDisp_</emphasis>
+                  and <emphasis>Ferda.Modules.SettingModuleDisp_</emphasis>.
+                  You will need to inherit one of them in order to create your
+                  module for interaction.</para>
+                </formalpara>
+              </listitem>
+
+              <listitem>
+                <formalpara>
+                  <title>FerdaBoxInterfaces.dll</title>
+
+                  <para>This library contains code generated from slice design
+                  of boxes distributed with Ferda, so if you want to call
+                  boxes functions (e.g. some basic functions as detecting the
+                  name of the box), you will need this library.</para>
+                </formalpara>
+              </listitem>
+
+              <listitem>
+                <formalpara>
+                  <title>FrontEndAddInHelper.dll</title>
+
+                  <para>This library contains the class
+                  <emphasis>AbstractMain.cs</emphasis> which you need to
+                  inherit from in order to create an AddIn which will be
+                  called by FrontEnd</para>
+                </formalpara>
+              </listitem>
+
+              <listitem>
+                <formalpara>
+                  <title>icecs.dll</title>
+
+                  <para>Library for working with ice in C#. This library is
+                  contained in Ice distribution.</para>
+                </formalpara>
+              </listitem>
+            </itemizedlist></para>
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+  -->
+</article>
