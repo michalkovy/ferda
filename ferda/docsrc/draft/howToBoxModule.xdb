@@ -124,7 +124,7 @@
   <section>
     <title>Tvorba nové dynamické knihovny</title>
     <section>
-      <title>1. Vytvoření adresáře pro novou knihovnu</title>
+      <title>1. Vytvoření adresářů pro novou knihovnu</title>
       <para>
         Nejdříve musí programátor vytvořit nový adresář pro svoji knihovnu.
         Nechť se naše knihovna jmenuje <classname>SampleBoxModules</classname>. 
@@ -197,30 +197,30 @@
       </para>
       <para>
         <programlisting>
-          &lt;target name="SampleBoxModules"&gt;
-            &lt;csc target="library" 
-                 output="${path::combine(build.dir,'SampleBoxModules.dll')}" 
-                 doc="${path::combine(build.dir,'SampleBoxModules.xml')}" 
-                 debug="${debug}" optimize="${optimize}"&gt;
-              &lt;nowarn&gt;
-                &lt;warning number="1591"/&gt;
-              &lt;/nowarn&gt;
-              &lt;sources&gt;
-                &lt;include name="SampleBoxModules/**.cs"/&gt;
-                &lt;exclude name="SampleBoxModules/**/generated/**.cs"/&gt;
-              &lt;/sources&gt;
-              &lt;references&gt;
-                &lt;include name="${path::combine(build.dir,'FerdaBase.dll')}"/&gt;
-                &lt;include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/&gt;
-                &lt;include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/&gt;
-                &lt;include name="${path::combine(lib.dir,'icecs.dll')}"/&gt;
-                &lt;include name="${path::combine(lib.dir,'iceboxcs.dll')}"/&gt;
-                &lt;include name="System.dll"/&gt;
-                &lt;include name="System.Data.dll"/&gt;
-                &lt;include name="System.Xml.dll"/&gt;
-              &lt;/references&gt;
-            &lt;/csc&gt;
-          &lt;/target&gt;
+&lt;target name="SampleBoxModules"&gt;
+  &lt;csc target="library" 
+       output="${path::combine(build.dir,'SampleBoxModules.dll')}" 
+       doc="${path::combine(build.dir,'SampleBoxModules.xml')}" 
+       debug="${debug}" optimize="${optimize}"&gt;
+    &lt;nowarn&gt;
+      &lt;warning number="1591"/&gt;
+    &lt;/nowarn&gt;
+    &lt;sources&gt;
+      &lt;include name="SampleBoxModules/**.cs"/&gt;
+      &lt;exclude name="SampleBoxModules/**/generated/**.cs"/&gt;
+    &lt;/sources&gt;
+    &lt;references&gt;
+      &lt;include name="${path::combine(build.dir,'FerdaBase.dll')}"/&gt;
+      &lt;include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/&gt;
+      &lt;include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/&gt;
+      &lt;include name="${path::combine(lib.dir,'icecs.dll')}"/&gt;
+      &lt;include name="${path::combine(lib.dir,'iceboxcs.dll')}"/&gt;
+      &lt;include name="System.dll"/&gt;
+      &lt;include name="System.Data.dll"/&gt;
+      &lt;include name="System.Xml.dll"/&gt;
+    &lt;/references&gt;
+  &lt;/csc&gt;
+&lt;/target&gt;
           </programlisting>
         Vysvětleme si tento kód. Tag <classname>target</classname> znamená 
         jednu úlohu v NAntu, pojmenujeme ji SampleBoxModules. Tag <classname>csc</classname>
@@ -240,13 +240,13 @@
         sama o sobě neprovede, pokud se nezavolá. Toho docílíme přidáním
         závislosti v hlavní úloze kompilačního souboru. Řádek 
         <programlisting>
-          &lt;target name="build" description="Build Module Services" 
-       depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaGuhaMiningBoxes"&gt;
+&lt;target name="build" description="Build Module Services" 
+depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaGuhaMiningBoxes"&gt;
         </programlisting>
         změníme na 
         <programlisting>
-        &lt;target name="build" description="Build Module Services"
-        depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaGuhaMiningBoxes,SampleBoxModules"&gt;
+&lt;target name="b uild" description="Build Module Services"
+depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaGuhaMiningBoxes,SampleBoxModules"&gt;
       </programlisting>
         Nyní při spuštění celoferdovských kompilačních příkazů NAntu
         (<classname>nant fullinstall</classname> se již bude nová 
@@ -266,7 +266,50 @@
       </para>
     </section>
     <section>
-      <title>5. Změny v application.xml</title>
+      <title>5. Tvorba třídy service.cs</title>
+      <para>
+        Aby se knihovna mohla zaregistrovat u služby IceGrid, potřebuje
+        implementovat abstraktní třídu <classname>Ferda.Modules.FerdaServiceI </classname>.
+        Následuje kód se vzorovou implementací třídy.
+      </para>
+      <programlisting>
+using Ferda.Modules.Boxes.SampleBoxModules.*;
+using Ice;
+
+namespace Ferda.Modules.Boxes.SampleBoxModules
+{
+    /// &lt;summary&gt;
+    /// Sample IceBox service
+    /// &lt;/summary&gt;
+    public class Service : FerdaServiceI
+    {
+      /// &lt;summary&gt;
+      /// Registers box to ice object adapter
+      /// &lt;/summary&gt;
+      protected override void registerBoxes()
+      {
+      }
+    }
+}
+      </programlisting>
+      <para>
+        Třída <classname>Service</classname> slouží k registrace jednotlivých
+        typů krabiček. Většinu potřebného obstarává abstraktní třída
+        <classname>FerdaServiceI</classname>. Do metody <classname>registerBoxes</classname>
+        budeme později psát kód pro registraci jednotlivých krabiček. 
+      </para>
+      <para>
+        Zmíníme se ještě o části using: namespace
+        <classname>Ferda.Modules.Boxes.SampleBoxModules</classname> odpovídá namespacu
+        všech pozdějších krabiček této knihovny (vyjádřeno hvězdičkou). Název namespacu
+        přesně odpovídá cestě uložení zdrojových kódů ja v 
+        <classname>src\Modules\BoxModulesServices</classname>, tak v
+        <classname>slice\Modules\Boxes</classname> a to z důvodu přehlednosti a
+        automatického generování slice tříd.
+      </para>
+    </section>
+    <section>
+      <title>6. Změny v application.xml</title>
       <para>
         Posledním krokem je přidání nově vzniklé knihovny do 
         aplikačního souboru <classname>application.xml</classname>, 
@@ -276,8 +319,13 @@
         <classname>FerdaServerTemplate</classname>, do části icebox přidáme
         řádek
         <programlisting>
-          &lt;service-instance template="FerdaServiceTemplate" name="SampleBoxModules" 
-          entry="SampleBoxModules.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${endpoints}" /&gt;
+&lt;service-instance template="FerdaServiceTemplate" name="SampleBoxModules" 
+entry="SampleBoxModules.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${endpoints}" /&gt;
+        </programlisting>
+        Dále vytvoříme nový adaptér replik přidáním řádku:
+        <programlisting>
+&lt;replica-group id="SampleBoxModulesReplicaAdapter"&gt;
+&lt;/replica-group&gt;
         </programlisting>
       </para>
     </section>
@@ -288,89 +336,439 @@
       </para>
     </section>
   </section>
-  <!--
   <section>
-    <title>Introduction</title>
+    <title>Tvorba nové krabičky</title>
+    <section>
+      <title>1. Vytvoření adresářů pro novou krabičku</title>
+      <para>
+        Podobně jako u knihovny je prvním krokem vytvoření adresářů
+        pro novou krabičku. Budeme tvořit krabičku <classname>SampleBoxModule</classname>
+        v již vytvořené knihovně <classname>SampleBoxModules</classname>.
+        Vytvoříme tedy adresář 
+        <classname>src\Modules\BoxModulesServices\SampleBoxModules\SampleBoxModule</classname>
+        pro zdrojový kód krabičky (a další věci) a adresář
+        <classname>slice\Modules\Boxes\SampleBoxModules\SampleBoxModule</classname>
+        pro slice návrh. krabičky. 
+      </para>
+    </section>
+    <section>
+      <title>2. Vytvoření slice návrhu krabičky</title>
+      <para>
+        Middleware Ice podporuje řadu programovacích jazyků, mezi nimi 
+        například C#, C++, Java, Python a další. Aby mohl všechny tyto
+        jazyky používat, definuje svůj vlastní zjednodušený deklarativní
+        jazyk Slice. Ice pomocí svých nástrojů potom z deklarací slice
+        tvoří kód v určeném cílovém jazyku, který se posléze kompiluje
+        standardním způsobem.
+      </para>
+      <para>
+        Ferda používá Ice pro komunikaci mezi moduly, zejména mezi komunikaci
+        mezi krabičkami a managerem modulů (více v dokumentech
+        <classname>registraceModulu</classname> a 
+        <classname>implementaceFerdy</classname>. Krabičku ve Ferdovi
+        si lze představit jako funkci, která má vstupní parametry (zásuvky)
+        a vrací definované výstupy. Právě výstupy krabičky definujeme
+        pomocí slice, neboť tak jsou viditelné pro ostatní krabičky.
+      </para>
+      <para>
+        Kód slice zobrazený níže uložíme do adresáře vytvořeném v kroku 1
+        pod názvem krabičky, tedy pod názvem 
+        <classname>SampleBoxModule.ice</classname>.
+      </para>
+      <programlisting>
+/*
+SLICE DOCUMENTATION
+-------------------
+www.zeroc.com
 
-    <para>This document describes how to add a new module for interaction to
-    Ferda. In this description we will use examples written in C# 2.0 using
-    Microsoft Visual Studio 2005. You can use other languages supported by
-    .NET in the same fashion. If you want to use some other languages
-    supported by middleware <ulink url="http://www.zeroc.com">Ice</ulink>, you
-    will need to do more - for detailed information please read
-    „implementaceKrabicek.xdb“ and „implementaceFerdy.xdb“.</para>
+Some general keywords
+---------------------
+nonmutating
+Operations that use the Slice Nonmutating keyword must not modify object state.
+idempotent
+Operations that use the Slice Idempotent keyword can modify object state, but invoking an operation twice in a row must result in the same object state as invoking it once.
+
+HOW TO GENERATE *.cs FROM *.ice
+-------------------------------
+Path to Ice/bin directory (e.g. "c:\Ice-2.1.2\bin\") is in PATH.
+Execute following command in solution root directory.
+
+$ slice2cs -I../../../slice/ --output-dir ./SampleBoxModules/SampleBoxes/SampleBoxModule/generated ./SampleBoxModules/SampleBoxes/SampleBoxModule/slice/SampleBoxModule.ice
+
+- Path in argument -I is path to "slice" subdirectory of Ferda project.
+- Path in argument --output-dir is place for generated *.cs files.
+- Following arguments are slice-files to proceed.
+
+See also
+$ slice2cs --help
+*/
+
+#ifndef	SampleBoxes_SampleBoxModule
+#define SampleBoxes_SampleBoxModule
+
+#include &lt;Modules/Common.ice&gt; //some common enumerations and structures
+#include &lt;Modules/Exceptions.ice&gt; //some exceptions defined
+#include &lt;Modules/BuiltinSequences.ice&gt; //sequences of basic types
+
+module Ferda
+{
+  module Modules
+  {
+    module Boxes
+    {
+      module SampleBoxModules 
+      {
+        module SampleBoxes
+        {
+          module SampleBoxModule 
+          {
+            interface SampleBoxModuleFunctions
+            {
+              nonmutating string HelloWorld();
+            };
+          };
+        };
+      };
+    };
+  };
+};
+#endif;
+      </programlisting>
+      <para>
+        První zakomentovaná část kódu popisuje slice (který má v podstatě syntaxi
+        jazyka C++ a dává informace o vytvoření C# kódu ze slice. Druhá část už
+        je definice rozhraní výstupu krabičky Ferdy.
+      </para>
+      <para>
+        Nejdříve se definuje podobně jako v C++ proměnná 
+        <classname>SampleBoxes_SampleBoxModule</classname>. Poté část
+        <classname>#include</classname> definuje jiné slice soubory
+        použité v tomto souboru. Konečně poslední část definuje interface
+        krabičky (funkce poskytované krabičkou). V našem případě je tam pouze
+        jedna funkce vracející string.
+      </para>
+      <para>
+        Klíčové slovo <classname>module</classname> definuje modul, ve kterém
+        se bude rozhraní nacházet. Je to analogie namespace v C# a proto použijeme
+        shodnou strukturu, jak u zdrojových kódů krabiček (použijeme dále).
+      </para>
+    </section>
+    <section>
+      <title>3. Zdrojové kódy krabičky</title>
+      <para>
+        Slice návrh obecné krabičky (všech funkcí které musí krabička
+        mít) si můžeme přečíst v <classname>slice\Modules\Modules.ice</classname>.
+        Je to řada funkcí, které by měl programátor krabičky impelmentovat.
+        Pro usnadnění nabízí Ferda možnost použití pomocných tříd, které
+        většinu z těchto funkcí implementují pomocí konfiguračních souborů
+        (část 4). Náš postup používá tyto třídy: má to výhodu v obrovském
+        usnadnění práce programátora, musíme se však omezit pouze na jazyk C#.
+      </para>
+      <section>
+        <title>BoxInfo</title>
+        <para>
+          První pomocnou třídou je <classname>BoxInfo</classname>. Tato třída
+          implementuje rozhraní <classname>IBoxInfo</classname>, které zahrnuje
+          veškeré funkce, které od krabičky požaduje manager modulů a manager
+          projektů. Jsou to informace o zásuvkách, vlastnostech či modulech pro
+          interakci krabičky. Třída <classname>BoxInfo</classname> větší část
+          funkcí načítá z konfiguračních souborů (část 4). Programátor však
+          některé funkce implementovat musí:
+        </para>
+        <programlisting>
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Ferda.Modules.Boxes;
+
+namespace Ferda.Modules.Boxes.SampleBoxModules.SampleBoxModule
+{
+  /// &lt;summary&gt;
+  /// This class implements most of functions used by &lt;see cref="T:Ferda.ModulesManager"/&gt;.
+  /// For more information &lt;see cref="T:Ferda.Modules.Boxes.BoxInfo"/&gt;.
+  /// &lt;/summary&gt;
+  /// &lt;seealso cref="T:Ferda.Modules.BoxModuleI"/&gt;
+  /// &lt;seealso cref="T:Ferda.Modules.BoxModuleFactoryI"/&gt;
+  /// &lt;seealso cref="T:Ferda.Modules.BoxModuleFactoryCreatorI"/&gt;
+  internal class BoxInfo : Boxes.BoxInfo
+  {
+    /// &lt;summary&gt;
+    /// Functions creates an object of &lt;see cref="T:Ferda.Modules.IFunctions"&gt;IFuntions&lt;/see&gt;
+    /// type that provides functionality of the box
+    /// &lt;/summary&gt;
+    /// &lt;param name="boxModule"&gt;Current box module&lt;/param&gt;
+    /// &lt;param name="iceObject"&gt;ICE stuff&lt;/param&gt;
+    /// &lt;param name="functions"&gt;The new created functions object&lt;/param&gt;
+    public override void CreateFunctions(Ferda.Modules.BoxModuleI boxModule, out Ice.Object iceObject, out Ferda.Modules.IFunctions functions)
+    {
+      Functions result = new Functions();
+      iceObject = result;
+      functions = result;
+    }
+
+    /// &lt;summary&gt;
+    /// Gets function`s Ice identifiers of the box module.
+    /// &lt;/summary&gt;
+    /// &lt;returns&gt;
+    /// An array of strings representing Ice identifiers
+    /// of the box module`s functions.
+    /// &lt;/returns&gt;
+    /// &lt;example&gt;
+    /// Please see an example for &lt;see cref="T:Ferda.Modules.Boxes.IBoxInfo"&gt;IBoxInfo`s&lt;/see&gt;
+    /// &lt;see cref="M:Ferda.Modules.Boxes.IBoxInfo.GetBoxModuleFunctionsIceIds()"/&gt;.
+    /// &lt;/example&gt;
+    public override string[] GetBoxModuleFunctionsIceIds()
+    {
+      return Functions.ids__;
+    }
+
+    /// &lt;summary&gt;
+    /// Gets default value for box module user label.
+    /// &lt;/summary&gt;
+    /// &lt;param name="boxModule"&gt;A module that returns the label&lt;/param&gt;
+    /// &lt;returns&gt;The user label&lt;/returns&gt;
+    public override string GetDefaultUserLabel(Ferda.Modules.BoxModuleI boxModule)
+    {
+      return null;
+    }
+
+    /// &lt;summary&gt;
+    /// Gets the box modules asking for creation.
+    /// &lt;/summary&gt;
+    /// &lt;param name="localePrefs"&gt;The localization preferences.&lt;/param&gt;
+    /// &lt;param name="boxModule"&gt;The box module.&lt;/param&gt;
+    /// &lt;returns&gt;
+    /// Array of &lt;see cref="T:Ferda.Modules.ModuleAskingForCreation"&gt;
+    /// Modules Asking For Creation&lt;/see&gt;.
+    /// &lt;/returns&gt;
+    public override Ferda.Modules.ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, Ferda.Modules.BoxModuleI boxModule)
+    {
+      return new ModulesAskingForCreation[] { };
+    }
+
+    /// &lt;summary&gt;
+    /// Gets array of &lt;see cref="T:Ferda.Modules.SelectString"/&gt; as
+    /// options for property, whose options are dynamically variable.
+    /// &lt;/summary&gt;
+    /// &lt;param name="boxModule"&gt;The current module&lt;/param&gt;
+    /// &lt;param name="propertyName"&gt;Name of the property&lt;/param&gt;
+    /// &lt;returns&gt;String options of the property&lt;/returns&gt;
+    public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
+    {
+      return null;
+    }
+
+    #region Type Identifier
+
+    /// &lt;summary&gt;
+    /// This is recomended (not required) to have &lt;c&gt;public const string&lt;/c&gt;
+    /// field in the BoxInfo implementation which holds the identifier
+    /// of type of the box module.
+    /// &lt;/summary&gt;
+    public const string typeIdentifier = "SampleBoxModules.SampleBoxModule";
+
+    /// &lt;summary&gt;
+    /// Unique identifier of type of Box module
+    /// &lt;/summary&gt;
+    /// &lt;value&gt;&lt;/value&gt;
+    /// &lt;remarks&gt;
+    /// This string identifier is parsed i.e. dots (".") are
+    /// replaced by &lt;see cref="P:System.IO.Path.DirectorySeparatorChar"/&gt;.
+    /// Returned path is combined with application directory`s
+    /// &lt;see cref="F:Ferda.Modules.Boxes.BoxInfo.configFilesFolderName"&gt;subdirectory&lt;/see&gt;
+    /// and final path is used for getting stored configuration [localization] XML files.
+    /// &lt;/remarks&gt;
+    protected override string identifier
+    {
+      get { return typeIdentifier; }
+    }
+
+    #endregion
+
+    /* Other functions to override
+    * public virtual PropertyValue GetPropertyObjectFromInterface(string propertyName, Ice.ObjectPrx objectPrx)
+    * public virtual PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
+    * public virtual bool IsPropertySet(string propertyName, PropertyValue propertyValue)
+    * public virtual DynamicHelpItem[] GetDynamicHelpItems(string[] localePrefs, BoxModuleI boxModule)
+    * public virtual void RunAction(string actionName, BoxModuleI boxModule)
+    * */
+  }
+}
+        </programlisting>
+        <para>
+          V dlouhý kus kódu obsahuje vše potřebné (i s popisky) pro přetížení třídy
+          <classname>BoxInfo</classname> tak, aby nová krabička fungovala.
+          Uložíme ho (nejčastěji s názvem <classname>BoxInfo.cs</classname> ale může být i jiný)
+          do adresáře <classname>src\Modules\BoxModulesServices\SampleBoxModules\SampleBoxModule</classname>.
+          Zkontrolujte si zejména namespace a také identifikátor
+          <classname>typeIdentifier</classname>. Každá krabička musí mít
+          jedinečný identifikátor, jinak systém Ferda nenastartuje a vyhodí
+          výjimku.
+        </para>
+      </section>
+      <section>
+        <title>Functions</title>
+        <para>
+          Druhou pomocnou třídou je třída <classname>Functions</classname>.
+          Tato třída implementuje dvě rozhraní, <classname>IFunctions</classname>
+          a rozhraní určené slice návrhem. <classname>IFunctions</classname>
+          je jednoduché rozhraní, které informuje krabičku o jejich skutečných
+          datech. Rozhraní určené slice návrhem generuje Ice ze slice souborů
+          definovaných v kroku 2. Pro naše slice rozhraní 
+          <classname>SampleBoxModuleFunctions</classname> vygeneruje Ice
+          abstraktní třídu <classname>SampleBoxModuleFunctionsDisp_</classname>.
+          Následující kód určuje třídu implementující obě rozhraní.
+        </para>
+        <programlisting>
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Ferda.Modules.Boxes.SampleBoxModules.SampleBoxModule
+{
+  /// &lt;summary&gt;
+  /// Class is providing ICE functionality of the SampleBoxModule
+  /// box module
+  /// &lt;/summary&gt;
+  class Functions : SampleBoxModuleFunctionsDisp_, Ferda.Modules.IFunctions
+  {
+    #region ICE functions
+
+    public override string HelloWorld(Ice.Current __current)
+    {
+      return "Hello World!";
+    }
+
+    #endregion
+
+    protected Ferda.Modules.BoxModuleI boxModule;
+    protected Ferda.Modules.Boxes.IBoxInfo boxInfo;
+
+    #region IFunctions Members
+
+    /// &lt;summary&gt;
+    /// Sets the &lt;see cref="T:Ferda.Modules.BoxModuleI"&gt;box module&lt;/see&gt;
+    /// and the &lt;see cref="T:Ferda.Modules.Boxes.IBoxInfo"&gt;box info&lt;/see&gt;.
+    /// &lt;/summary&gt;
+    /// &lt;param name="boxModule"&gt;The box module.&lt;/param&gt;
+    /// &lt;param name="boxInfo"&gt;The box info.&lt;/param&gt;
+    void Ferda.Modules.IFunctions.setBoxModuleInfo(Ferda.Modules.BoxModuleI boxModule, Ferda.Modules.Boxes.IBoxInfo boxInfo)
+    {
+      this.boxModule = boxModule;
+      this.boxInfo = boxInfo;
+    }
+
+    #endregion
+  }
+}
+        </programlisting>
+        <para>
+          Tento kód uložíme na do stejného adresáře pod názvem 
+          <classname>Functions.cs</classname>.
+        </para>
+      </section>
+    </section>
+    <section>
+      <title>4. Vytvoření konfigurace a lokalizace krabičky</title>
+      <para>
+        Kód vytvořený v kroku 3 ještě nebude fungovat správně, neboť chybí
+        konfigurace a lokalizace krabičky, se kterou pracuje třída
+        <classname>BoxInfo</classname>. Musíme teda vytvořit konfiguraci.
+        Kod níže zobrazuje konfiguraci jednoduché krabičky mající pouze
+        jednu zásuvku typu integer. 
+      </para>
+      <programlisting>
+&lt;Box&gt;
+  &lt;Identifier&gt;SampleBoxModules.SampleBoxModule&lt;/Identifier&gt;
+  &lt;IconPath&gt;boxIcon.ico&lt;/IconPath&gt;
+  &lt;DesignPath&gt;boxDesign.svg&lt;/DesignPath&gt;
+  &lt;Categories&gt;
+    &lt;string&gt;Sample&lt;/string&gt;
+  &lt;/Categories&gt;
+  &lt;Sockets&gt;
+    &lt;Socket&gt;
+    &lt;Name&gt;IntSocket&lt;/Name&gt;
+    &lt;SocketTypes&gt;
+    &lt;BoxType&gt;
+      &lt;FunctionIceId&gt;::Ferda::Modules::LongTInterface&lt;/FunctionIceId&gt;
+    &lt;/BoxType&gt;
+    &lt;/SocketTypes&gt;
+      &lt;MoreThanOne&gt;false&lt;/MoreThanOne&gt;
+    &lt;/Socket&gt;
+  &lt;/Sockets&gt;
+&lt;/Box&gt;
+      </programlisting>
+      <para>
+        Všechny možnosti konfigurace krabiček jsou popsány v 
+        <classname>src\Modules\Core\Boxes\box.xsd</classname>.
+        K této krabičce je třeba také nastavit lokalizaci:
+      </para>
+      <programlisting>
+&lt;BoxLocalization&gt;
+  &lt;Identifier&gt;SampleBoxModules.SampleBoxModule&lt;/Identifier&gt;
+  &lt;Label&gt;Sample box&lt;/Label&gt;
+  &lt;Hint&gt;A simple sample box&lt;/Hint&gt;
+  &lt;Categories&gt;
+    &lt;Category&gt;
+      &lt;Name&gt;Sample&lt;/Name&gt;
+     &lt;Label&gt;Sample boxes&lt;/Label&gt;
+    &lt;/Category&gt;
+  &lt;/Categories&gt;
+  &lt;Sockets&gt;
+    &lt;Socket&gt;
+      &lt;Name&gt;IntSocket&lt;/Name&gt;
+      &lt;Label&gt;Integer socket&lt;/Label&gt;
+      &lt;Hint&gt;An integer socket&lt;/Hint&gt;
+    &lt;/Socket&gt;
+  &lt;/Sockets&gt;
+&lt;/BoxLocalization&gt;
+      </programlisting>
+      <para>
+        Všechny možnosti konfigurace lokalizace krabiček
+        jsou popsány v <classname>src\Modules\Core\Boxes\boxLocalization.xsd</classname>.
+        Konfiguraci a lokalizaci je poté třeba nahrát na správné místo. 
+        Preferovaný postup je přidat konfiguraci do souboru
+        <classname>src\Modules\BoxModulesServices\boxes.xml</classname> a
+        lokalizaci do souborů
+        <classname>src\Modules\BoxModulesServices\boxesLocalization.cs-CZ.xml</classname> a
+        <classname>src\Modules\BoxModulesServices\boxesLocalization.en-US.xml</classname>.
+        K správnému fungování programu jsou nutné obě lokalizace.
+      </para>
+      <section>
+        <title>Upozornění</title>
+        <para>
+          Z důvodu špatného fungování utility kompilačního programu je nutné
+          vytvořit pro krabičku ikonu a umístnit ji do adresáře se zdrojovým
+          kódem krabičky (krok 1). Jinak se nevytvoří v serverové části instalace
+          adresář krabičky.
+        </para>
+      </section>
+    </section>
+    <section>
+      <title>5. Registrace krabičky</title>
+      <para>
+        Konečně posledním krokem je registrace krabičky. Tu je nutné provést na dvou
+        místech. Prvním místem je soubor <classname>Service.cs</classname>.
+        Zde je nutné do funkce <classname>registerBoxes</classname> napsat následující
+        kód:
+        <programlisting>
+registerBox(SampleBoxModule.BoxInfo.typeIdentifier, new SampleBoxModule.BoxInfo());
+        </programlisting>
+        Druhým místem je soubor <classname>application.xml</classname>. Zde je nutné
+        přidat do adaptéru replik <classname>SampleBoxModulesReplicaAdapter</classname>
+        vytvořeným dříve řádek
+        <programlisting>
+&lt;object identity="SampleBoxModules.SampleBoxModule" type="::Ferda::Modules::BoxModuleFactoryCreator" /&gt;
+        </programlisting>
+        Identita objektu musí být shodná s identitou třídy <classname>BoxInfo</classname>,
+        jinak se krabička nezobrazí.
+      </para>
+    </section>
   </section>
-
   <section>
-    <title>Necessary tools</title>
-
-    <para>You will need the following to implement module for
-    interaction:</para>
-
-    <itemizedlist>
-      <listitem>
-        <formalpara>
-          <title><ulink url="http://www.zeroc.com">Ice</ulink></title>
-
-          <para>Ice must be installed on the machine where the Ferda is
-          launched. You will also need some Ice libraries in order to build
-          your module.</para>
-        </formalpara>
-      </listitem>
-
-      <listitem>
-        <formalpara>
-          <title>Needed libraries</title>
-
-          <para><itemizedlist>
-              <listitem>
-                <formalpara>
-                  <title>FerdaBase.dll</title>
-
-                  <para>This library contains the necessary data structures
-                  and data types which Ferda works with. It also contains
-                  abstract classes
-                  <emphasis>Ferda.Modules.ModuleForInteractionDisp_</emphasis>
-                  and <emphasis>Ferda.Modules.SettingModuleDisp_</emphasis>.
-                  You will need to inherit one of them in order to create your
-                  module for interaction.</para>
-                </formalpara>
-              </listitem>
-
-              <listitem>
-                <formalpara>
-                  <title>FerdaBoxInterfaces.dll</title>
-
-                  <para>This library contains code generated from slice design
-                  of boxes distributed with Ferda, so if you want to call
-                  boxes functions (e.g. some basic functions as detecting the
-                  name of the box), you will need this library.</para>
-                </formalpara>
-              </listitem>
-
-              <listitem>
-                <formalpara>
-                  <title>FrontEndAddInHelper.dll</title>
-
-                  <para>This library contains the class
-                  <emphasis>AbstractMain.cs</emphasis> which you need to
-                  inherit from in order to create an AddIn which will be
-                  called by FrontEnd</para>
-                </formalpara>
-              </listitem>
-
-              <listitem>
-                <formalpara>
-                  <title>icecs.dll</title>
-
-                  <para>Library for working with ice in C#. This library is
-                  contained in Ice distribution.</para>
-                </formalpara>
-              </listitem>
-            </itemizedlist></para>
-        </formalpara>
-      </listitem>
-    </itemizedlist>
+    <title>Ladění tvorby krabiček</title>
+    <para>
+      Tomášova diplomka TODO.
+    </para>
   </section>
-  -->
 </article>
