@@ -15,10 +15,11 @@
 
     <pubdate>2006-03-21</pubdate>
 
-    <title>ColumnFrequency module - Module for displaying the frequency of the
-    values in table column</title>
+    <title>Frequency displayer - Module for displaying the frequencies
+      (attribute or column)
+    </title>
 
-    <titleabbrev>ColumnFrequency</titleabbrev>
+    <titleabbrev>FrequencyDisplayer</titleabbrev>
 
     <!--
     <revhistory>
@@ -33,7 +34,7 @@
   </articleinfo>
 
   <abstract>
-    <para>This document describes the user interface for the ColumnFrequency
+    <para>This document describes the user interface for the FrequencyDisplayer
     module. It contains some simple examples and screenshots for the users to
     make using of this module easier.</para>
   </abstract>
@@ -41,9 +42,9 @@
   <section>
     <title>Introduction</title>
 
-    <para>Welcome to ColumnFrequency module. This is a module designed for
-    displaying the frequency of column values in the table column. You can
-    sort the displayed column values frequencies, view the charts based on
+    <para>Welcome to FrequencyDisplayer module. This is a module designed for
+    displaying the frequency of column values of attribute categories. You can
+    sort the displayed frequencies, view the charts based on
     their values and copy data and charts to clipboard.</para>
   </section>
 
@@ -59,7 +60,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="ColumnFrequencyMain.png" format="PNG" />
+          <imagedata fileref="FrequencyDisplayerMain.png" format="PNG" />
         </imageobject>
       </mediaobject>
 
@@ -109,7 +110,7 @@
     <section>
       <title>Charts</title>
 
-      <para>ColumnFrequency module displays three different types of charts
+      <para>FrequencyDisplayer module displays three different types of charts
       for better visual representation of the values frequencies for column.
       Charts can be switched by clicking on corresponding tabs. The chart
       types are:</para>
@@ -155,7 +156,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="columnFrequencyChartRightClick.png" format="PNG" />
+          <imagedata fileref="FrequencyDisplayerChartRightClick.png" format="PNG" />
         </imageobject>
       </mediaobject>
 
@@ -197,7 +198,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="columnFrequencyRightClick.png" format="PNG" />
+          <imagedata fileref="FrequencyDisplayerRightClick.png" format="PNG" />
         </imageobject>
       </mediaobject>
 
@@ -207,7 +208,7 @@
             <title>Copy all items to clipboard</title>
 
             <para>When this option is selected, all items from the
-            ColumnFrequency list are copied to the clipboard as tab separated
+            FrequencyDisplayer list are copied to the clipboard as tab separated
             values.</para>
           </formalpara>
         </listitem>
@@ -217,7 +218,7 @@
             <title>Copy selected items to clipboard</title>
 
             <para>When this option is selected, the currently items from the
-            ColumnFrequency list are copied to the clipboard as tab separated
+            FrequencyDisplayer list are copied to the clipboard as tab separated
             values.</para>
           </formalpara>
         </listitem>
