@@ -340,7 +340,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         /// <param name="e">Event arguments</param>
         private void ToolStripHelp_Click(object sender, EventArgs e)
         {
-            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ColumnFrequency.pdf");
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\FrequencyDisplayer.pdf");
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         /// <param name="e">Event arguments</param>
         private void ToolStripChartHelp_Click(object sender, EventArgs e)
         {
-            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\ColumnFrequency.pdf");
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\FrequencyDisplayer.pdf");
         }
 
         #endregion
