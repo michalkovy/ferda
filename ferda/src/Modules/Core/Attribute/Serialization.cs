@@ -579,12 +579,6 @@ namespace Ferda.Guha.Attribute
     public class AttributeSerializable<T>
         where T : IComparable
     {
-
-        /// <summary>
-        /// Exact datatype - needed for serialization
-        /// </summary>
-        public Type dataType;
-
         /// <summary>
         /// Array of categories.
         /// </summary>

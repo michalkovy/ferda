@@ -56,6 +56,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         public const string PropTo = "To";
         public const string PropCardinality = "Cardinality";
         public const string SockColumn = "Column";
+        public const string PropCategories = "Categories";
 
         public GuidStruct Guid
         {
