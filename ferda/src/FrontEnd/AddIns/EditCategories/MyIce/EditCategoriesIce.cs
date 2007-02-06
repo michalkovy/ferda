@@ -125,6 +125,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         public override PropertyValue run(PropertyValue valueBefore, string propertyName, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, Ice.Current current__)
         {
             PropertyValue propertyValue = valueBefore;
+           // Box
+            StringTI pv = new StringTI();
+            pv = (StringTI)propertyValue;
             string locale;
             try
             {
@@ -137,8 +140,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             {
             }
             about = resManager.GetString("EditCategoriesAbout");
-            ValuesAndFrequencies distinctValues;
+            ValuesAndFrequencies distinctValues = new ValuesAndFrequencies();
+            DbDataTypeEnum columnDataType = new DbDataTypeEnum();
             PropertyValue returnValue = new PropertyValue();
+
             try
             {
                 Ferda.Modules.Boxes.DataPreparation.AttributeFunctionsPrx prx =
@@ -146,20 +151,27 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 boxModuleParam.getFunctions()
                 );
 
-                distinctValues = prx.getCategoriesAndFrequencies();            
+                
+                distinctValues = new ValuesAndFrequencies();//prx.getCategoriesAndFrequencies();            
                 try
-                {
-                    distinctValues = prx.getCategoriesAndFrequencies();
-                    /*BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("ColumnOrDerivedColumn")[0];
-                    Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx1 =
-                        Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(boxModuleParamNew.getFunctions());*/
+                {  
+                    BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("BitStringGenerator")[0];
+                    BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
+                    BoxModulePrx boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
+                  
+                    Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
+                        Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(boxModuleParam1.getFunctions());
+                    Ferda.Modules.Boxes.DataPreparation.AttributeFunctionsPrx prx1 = 
+                        Ferda.Modules.Boxes.DataPreparation.AttributeFunctionsPrxHelper.checkedCast(boxModuleParamNew.getFunctions());
+                    columnDataType = prx2.getColumnInfo().dataType;
+                    distinctValues = prx2.getDistinctsAndFrequencies();
 
                 }
                 catch
                 {
                     distinctValues = null;
                 }
-                Ferda.FrontEnd.AddIns.EditCategories.MainListView listView = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(localePrefs, propertyValue.ToString(), distinctValues, ownerOfAddIn);
+                Ferda.FrontEnd.AddIns.EditCategories.MainListView listView = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(localePrefs, pv, distinctValues, columnDataType, ownerOfAddIn);
                 listView.ShowInTaskbar = false;
                 listView.Disposed += new EventHandler(SetCategories);
                 System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);

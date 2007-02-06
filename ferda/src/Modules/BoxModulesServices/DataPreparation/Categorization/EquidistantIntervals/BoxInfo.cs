@@ -94,8 +94,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                             new ModulesConnection[] { moduleConnection };
                         singleModule.newBoxModuleIdentifier =
                             StaticAttribute.BoxInfo.typeIdentifier;
+                        Guha.Attribute.Attribute<IComparable> attribute =
+                           ((Functions)boxModule.FunctionsIObj).GetAttribute(true);
 
-                        singleModule.propertySetting = new PropertySetting[] { };
+                        PropertySetting editCategories =
+                            new PropertySetting(Functions.PropCategories, new StringTI(
+                            Guha.Attribute.Serializer.Serialize(
+                            (attribute.Export()))));
+
+                        singleModule.propertySetting = new PropertySetting[] { editCategories };
                         break;
 
 

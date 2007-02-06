@@ -23,6 +23,7 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Ferda.Guha.Data;
+//using Ferda.Guha.Attribute;
 using Object=Ice.Object;
 using FixedAtom = Ferda.Modules.Boxes.GuhaMining.FixedAtom;
 using AtomSetting = Ferda.Modules.Boxes.GuhaMining.AtomSetting;
@@ -117,11 +118,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                         singleModule.newBoxModuleIdentifier =
                             StaticAttribute.BoxInfo.typeIdentifier;
 
-                        PropertySetting setting =
-                            new PropertySetting(Functions.PropCategories, new StringTI(Guha.Attribute.Serializer.Serialize(
-                            ((Functions)boxModule.FunctionsIObj).GetAttribute(true).Export())));
+                        Guha.Attribute.Attribute<IComparable> attribute = 
+                            ((Functions)boxModule.FunctionsIObj).GetAttribute(true);
 
-                        singleModule.propertySetting = new PropertySetting[] { setting };
+                        PropertySetting editCategories =
+                            new PropertySetting(Functions.PropCategories, new StringTI(
+                            Guha.Attribute.Serializer.Serialize(
+                            (attribute.Export()))));
+
+                        singleModule.propertySetting = new PropertySetting[] { editCategories };
 
                         break;
 

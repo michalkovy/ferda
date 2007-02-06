@@ -37,6 +37,7 @@ using Ferda.FrontEnd.AddIns.EditCategories.EditExisting;
 using System.Resources;
 using System.Reflection;
 using Ferda.Guha.Data;
+using Ferda.Guha.Attribute;
 
 #endregion
 
@@ -96,6 +97,16 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// </summary>
         private IOwnerOfAddIn ownerOfAdd;
 
+        /// <summary>
+        /// Edited attribute
+        /// </summary>
+        private object attribute;
+
+        /// <summary>
+        /// Attribute datatype
+        /// </summary>
+        private DbSimpleDataTypeEnum attributeDataType;
+
 
         #endregion
 
@@ -108,7 +119,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="localePrefs">Current locale</param>
         /// <param name="categories">Categories to edit</param>
         /// <param name="distinctValues">Distinct values for enum categories</param>
-        public MainListView(string[] localePrefs, string categories, ValuesAndFrequencies distinctValues, IOwnerOfAddIn ownerOfAddin)
+        public MainListView(string[] localePrefs, string categories, ValuesAndFrequencies distinctValues, DbDataTypeEnum columnDataType, IOwnerOfAddIn ownerOfAddin)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -125,6 +136,85 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
+
+            #region Switch
+            switch (columnDataType)
+            {
+                case DbDataTypeEnum.BooleanType:
+                    attribute =
+                        (object)new Attribute<Boolean>(
+                        DbSimpleDataTypeEnum.BooleanSimpleType,
+                        Guha.Attribute.Serializer.Deserialize<Boolean>(categories), true);
+                    attributeDataType = DbSimpleDataTypeEnum.BooleanSimpleType;
+                    break;
+
+                case DbDataTypeEnum.DateTimeType:
+                    attribute =
+                        (object)new Attribute<DateTime>(
+                        DbSimpleDataTypeEnum.DateTimeSimpleType,
+                        Guha.Attribute.Serializer.Deserialize<DateTime>(categories), true);
+                    attributeDataType = DbSimpleDataTypeEnum.DateTimeSimpleType;
+                    break;
+
+                case DbDataTypeEnum.DoubleType:
+                    attribute =
+                        (object)new Attribute<Double>(
+                        DbSimpleDataTypeEnum.DoubleSimpleType,
+                        Guha.Attribute.Serializer.Deserialize<Double>(categories), true);
+                    attributeDataType = DbSimpleDataTypeEnum.DoubleSimpleType;
+                    break;
+
+                case DbDataTypeEnum.FloatType:
+                case DbDataTypeEnum.DecimalType:
+                    attribute =
+                        (object)new Attribute<Single>(
+                        DbSimpleDataTypeEnum.FloatSimpleType,
+                        Guha.Attribute.Serializer.Deserialize<Single>(categories), true);
+                    attributeDataType = DbSimpleDataTypeEnum.FloatSimpleType;
+                    break;
+
+
+                case DbDataTypeEnum.IntegerType:
+                case DbDataTypeEnum.UnsignedIntegerType:
+                    attribute =
+                       (object)new Attribute<Int32>(
+                       DbSimpleDataTypeEnum.IntegerSimpleType,
+                       Guha.Attribute.Serializer.Deserialize<Int32>(categories), true);
+                    attributeDataType = DbSimpleDataTypeEnum.IntegerSimpleType;
+                    break;
+
+                case DbDataTypeEnum.ShortIntegerType:
+                case DbDataTypeEnum.UnsignedShortIntegerType:
+                    attribute =
+                       (object)new Attribute<Int16>(
+                       DbSimpleDataTypeEnum.ShortSimpleType,
+                       Guha.Attribute.Serializer.Deserialize<Int16>(categories), true);
+                    attributeDataType = DbSimpleDataTypeEnum.ShortSimpleType;
+                    break;
+
+                case DbDataTypeEnum.LongIntegerType:
+                case DbDataTypeEnum.UnsignedLongIntegerType:
+                    attribute =
+                       (object)new Attribute<Int64>(
+                       DbSimpleDataTypeEnum.LongSimpleType,
+                       Guha.Attribute.Serializer.Deserialize<Int64>(categories), true);
+                    attributeDataType = DbSimpleDataTypeEnum.LongSimpleType;
+                    break;
+
+                case DbDataTypeEnum.StringType:
+                    attribute =
+                        (object)new Attribute<String>(
+                       DbSimpleDataTypeEnum.StringSimpleType,
+                       Guha.Attribute.Serializer.Deserialize<String>(categories), true);
+                    attributeDataType = DbSimpleDataTypeEnum.StringSimpleType;
+                    break;              
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            #endregion
+
             this.distinctValues = distinctValues;
             this.ownerOfAdd = ownerOfAddin;
             this.path = Assembly.GetExecutingAssembly().Location;
@@ -196,43 +286,149 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         private void FillEditCategoriesListView(ListView listView)
         {
             ContextMenuToolStripHandlers();
-            FerdaSmartDataList dataList = bigDataList;
+            //FerdaSmartDataList dataList = bigDataList;
             // this.splitContainer1.Panel2MinSize = 0;
-            dataList.StructureChange += new FerdaEvent(RefreshList);
+           // dataList.StructureChange += new FerdaEvent(RefreshList);
             listView.MouseDoubleClick += new MouseEventHandler(EditItem);
-            SmartDataListToListView(dataList, CategoriesListView);
+            AttributeToListView(this.attribute, CategoriesListView);
         }
 
         #endregion
 
 
-        #region Datalist to ListView methods
+        #region Attribute to ListView methods
 
         /// <summary>
         /// Method to display FerdaSmartDataList using a ListView component
         /// </summary>
         /// <param name="smartList">SmartDataList to display</param>
         /// <param name="form">Form to display the SmartDataList in</param>
-        public void SmartDataListToListView(FerdaSmartDataList smartList, ListView listView)
+        public void AttributeToListView(object _attribute, ListView listView)
         {
-            foreach (Category multiSet in smartList.Categories)
+            switch(this.attributeDataType)
             {
-                ListViewItem item = new ListViewItem(multiSet.Name, 1);
-                switch (multiSet.CatType)
-                {
-                    case CategoryType.Interval:
-                        item.SubItems.Add(this.resManager.GetString("TypeInterval"));
-                        break;
-                    case CategoryType.Enumeration:
-                        item.SubItems.Add(this.resManager.GetString("TypeSet"));
-                        break;
-                    default:
-                        throw new Exception("Switch branch not implemented");
-                }
-                item.SubItems.Add(multiSet.ToString());
-                //tag contains index of the value in the array of multisets
-                item.Tag = smartList.GetIndex(multiSet);
-                listView.Items.Add(item);
+                case DbSimpleDataTypeEnum.BooleanSimpleType:
+                    {
+                        Ferda.Guha.Attribute.Attribute<Boolean> attribute =
+                    (Ferda.Guha.Attribute.Attribute<Boolean>)_attribute;
+                        foreach (string categoryName in attribute.Keys)
+                        {
+                            ListViewItem item = new ListViewItem(categoryName, 1);
+                            item.SubItems.Add(categoryName);
+                            //tag contains index of the value in the array of multisets
+                            item.Tag = categoryName;
+                            listView.Items.Add(item);
+                        }
+                    }
+                    break;
+
+                case DbSimpleDataTypeEnum.DateTimeSimpleType:
+                    {
+                        Ferda.Guha.Attribute.Attribute<DateTime> attribute =
+                    (Ferda.Guha.Attribute.Attribute<DateTime>)_attribute;
+                        foreach (string categoryName in attribute.Keys)
+                        {
+                            ListViewItem item = new ListViewItem(categoryName, 1);
+                            item.SubItems.Add(categoryName);
+                            //tag contains index of the value in the array of multisets
+                            item.Tag = categoryName;
+                            listView.Items.Add(item);
+                        }
+                    }
+                    break;
+
+                case DbSimpleDataTypeEnum.DoubleSimpleType:
+                    {
+                        Ferda.Guha.Attribute.Attribute<Double> attribute =
+                    (Ferda.Guha.Attribute.Attribute<Double>)_attribute;
+                        foreach (string categoryName in attribute.Keys)
+                        {
+                            ListViewItem item = new ListViewItem(categoryName, 1);
+                            item.SubItems.Add(categoryName);
+                            //tag contains index of the value in the array of multisets
+                            item.Tag = categoryName;
+                            listView.Items.Add(item);
+                        }
+                    }
+                    break;
+
+                case DbSimpleDataTypeEnum.FloatSimpleType:
+                    {
+                        Ferda.Guha.Attribute.Attribute<Single> attribute =
+                    (Ferda.Guha.Attribute.Attribute<Single>)_attribute;
+                        foreach (string categoryName in attribute.Keys)
+                        {
+                            ListViewItem item = new ListViewItem(categoryName, 1);
+                            item.SubItems.Add(categoryName);
+                            //tag contains index of the value in the array of multisets
+                            item.Tag = categoryName;
+                            listView.Items.Add(item);
+                        }
+                    }
+                    break;
+
+                case DbSimpleDataTypeEnum.IntegerSimpleType:
+                    {
+                        Ferda.Guha.Attribute.Attribute<Int32> attribute =
+                    (Ferda.Guha.Attribute.Attribute<Int32>)_attribute;
+                        foreach (string categoryName in attribute.Keys)
+                        {
+                            ListViewItem item = new ListViewItem(categoryName, 1);
+                            item.SubItems.Add(categoryName);
+                            //tag contains index of the value in the array of multisets
+                            item.Tag = categoryName;
+                            listView.Items.Add(item);
+                        }
+                    }
+                    break;
+
+                case DbSimpleDataTypeEnum.LongSimpleType:
+                    {
+                        Ferda.Guha.Attribute.Attribute<Int64> attribute =
+                    (Ferda.Guha.Attribute.Attribute<Int64>)_attribute;
+                        foreach (string categoryName in attribute.Keys)
+                        {
+                            ListViewItem item = new ListViewItem(categoryName, 1);
+                            item.SubItems.Add(categoryName);
+                            //tag contains index of the value in the array of multisets
+                            item.Tag = categoryName;
+                            listView.Items.Add(item);
+                        }
+                    }
+                    break;
+
+                case DbSimpleDataTypeEnum.ShortSimpleType:
+                    {
+                        Ferda.Guha.Attribute.Attribute<Int16> attribute =
+                    (Ferda.Guha.Attribute.Attribute<Int16>)_attribute;
+                        foreach (string categoryName in attribute.Keys)
+                        {
+                            ListViewItem item = new ListViewItem(categoryName, 1);
+                            item.SubItems.Add(categoryName);
+                            //tag contains index of the value in the array of multisets
+                            item.Tag = categoryName;
+                            listView.Items.Add(item);
+                        }
+                    }
+                    break;
+
+                case DbSimpleDataTypeEnum.StringSimpleType:
+                    {
+                        Ferda.Guha.Attribute.Attribute<String> attribute =
+                    (Ferda.Guha.Attribute.Attribute<String>)_attribute;
+                        foreach (string categoryName in attribute.Keys)
+                        {
+                            ListViewItem item = new ListViewItem(categoryName, 1);
+                            item.SubItems.Add(categoryName);
+                            //tag contains index of the value in the array of multisets
+                            item.Tag = categoryName;
+                            listView.Items.Add(item);
+                        }
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -242,7 +438,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         private void RefreshList()
         {
             CategoriesListView.Items.Clear();
-            SmartDataListToListView(bigDataList, CategoriesListView);
+           // AttributeToListView(this.attribute, CategoriesListView);
         }
 
         #endregion

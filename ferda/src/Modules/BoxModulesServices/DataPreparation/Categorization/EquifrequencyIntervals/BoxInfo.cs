@@ -95,7 +95,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         singleModule.newBoxModuleIdentifier =
                             StaticAttribute.BoxInfo.typeIdentifier;
 
-                        singleModule.propertySetting = new PropertySetting[] { };
+                        Guha.Attribute.Attribute<IComparable> attribute =
+                           ((Functions)boxModule.FunctionsIObj).GetAttribute(true);
+
+                        PropertySetting editCategories =
+                            new PropertySetting(Functions.PropCategories, new StringTI(
+                            Guha.Attribute.Serializer.Serialize(
+                            (attribute.Export()))));
+
+                        singleModule.propertySetting = new PropertySetting[] { editCategories };
                         break;
 
                     default:

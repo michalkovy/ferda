@@ -215,7 +215,6 @@ namespace Ferda.Guha.Attribute
                 result.NullContainingCategoryName = NullContainingCategory;
                 result.IntervalsAllowed = IntervalsAllowed;
                 result.DbDataType = DbDataType;
-                result.dataType = typeof(T);
 
                 List<CategorySerializable<T>> categories = new List<CategorySerializable<T>>();
                 foreach (KeyValuePair<string, Category<T>> pair in _categories)
