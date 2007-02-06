@@ -313,11 +313,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     (Ferda.Guha.Attribute.Attribute<Boolean>)_attribute;
                         foreach (string categoryName in attribute.Keys)
                         {
-                            ListViewItem item = new ListViewItem(categoryName, 1);
-                            item.SubItems.Add(categoryName);
-                            //tag contains index of the value in the array of multisets
-                            item.Tag = categoryName;
-                            listView.Items.Add(item);
+                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
                         }
                     }
                     break;
@@ -328,11 +324,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     (Ferda.Guha.Attribute.Attribute<DateTime>)_attribute;
                         foreach (string categoryName in attribute.Keys)
                         {
-                            ListViewItem item = new ListViewItem(categoryName, 1);
-                            item.SubItems.Add(categoryName);
-                            //tag contains index of the value in the array of multisets
-                            item.Tag = categoryName;
-                            listView.Items.Add(item);
+                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
                         }
                     }
                     break;
@@ -343,11 +335,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     (Ferda.Guha.Attribute.Attribute<Double>)_attribute;
                         foreach (string categoryName in attribute.Keys)
                         {
-                            ListViewItem item = new ListViewItem(categoryName, 1);
-                            item.SubItems.Add(categoryName);
-                            //tag contains index of the value in the array of multisets
-                            item.Tag = categoryName;
-                            listView.Items.Add(item);
+                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
                         }
                     }
                     break;
@@ -358,11 +346,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     (Ferda.Guha.Attribute.Attribute<Single>)_attribute;
                         foreach (string categoryName in attribute.Keys)
                         {
-                            ListViewItem item = new ListViewItem(categoryName, 1);
-                            item.SubItems.Add(categoryName);
-                            //tag contains index of the value in the array of multisets
-                            item.Tag = categoryName;
-                            listView.Items.Add(item);
+                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
                         }
                     }
                     break;
@@ -373,11 +357,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     (Ferda.Guha.Attribute.Attribute<Int32>)_attribute;
                         foreach (string categoryName in attribute.Keys)
                         {
-                            ListViewItem item = new ListViewItem(categoryName, 1);
-                            item.SubItems.Add(categoryName);
-                            //tag contains index of the value in the array of multisets
-                            item.Tag = categoryName;
-                            listView.Items.Add(item);
+                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
                         }
                     }
                     break;
@@ -388,11 +368,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     (Ferda.Guha.Attribute.Attribute<Int64>)_attribute;
                         foreach (string categoryName in attribute.Keys)
                         {
-                            ListViewItem item = new ListViewItem(categoryName, 1);
-                            item.SubItems.Add(categoryName);
-                            //tag contains index of the value in the array of multisets
-                            item.Tag = categoryName;
-                            listView.Items.Add(item);
+                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
                         }
                     }
                     break;
@@ -403,11 +379,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     (Ferda.Guha.Attribute.Attribute<Int16>)_attribute;
                         foreach (string categoryName in attribute.Keys)
                         {
-                            ListViewItem item = new ListViewItem(categoryName, 1);
-                            item.SubItems.Add(categoryName);
-                            //tag contains index of the value in the array of multisets
-                            item.Tag = categoryName;
-                            listView.Items.Add(item);
+                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
                         }
                     }
                     break;
@@ -418,11 +390,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     (Ferda.Guha.Attribute.Attribute<String>)_attribute;
                         foreach (string categoryName in attribute.Keys)
                         {
-                            ListViewItem item = new ListViewItem(categoryName, 1);
-                            item.SubItems.Add(categoryName);
-                            //tag contains index of the value in the array of multisets
-                            item.Tag = categoryName;
-                            listView.Items.Add(item);
+                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
                         }
                     }
                     break;
@@ -432,13 +400,22 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             }
         }
 
+        private void AddCategoryToListView(string categoryName, string categoryCaption, ListView listView)
+        {
+            ListViewItem item = new ListViewItem(categoryName, 1);
+            item.SubItems.Add(categoryCaption);
+            //tag contains index of the value in the array of multisets
+            item.Tag = categoryName;
+            listView.Items.Add(item);
+        }
+
         /// <summary>
         /// Method to refresh items in the EditCategoriesListView
         /// </summary>
         private void RefreshList()
         {
             CategoriesListView.Items.Clear();
-           // AttributeToListView(this.attribute, CategoriesListView);
+            AttributeToListView(this.attribute, CategoriesListView);
         }
 
         #endregion

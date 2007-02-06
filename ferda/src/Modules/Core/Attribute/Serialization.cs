@@ -48,6 +48,7 @@ namespace Ferda.Guha.Attribute
                 i = 0;
                 foreach (IntervalSerializable<T> _interval in cat.Intervals)
                 {
+                    _cat.Intervals[i] = new IntervalSerializable<bool>();
                     _cat.Intervals[i].LeftBoundary = _interval.LeftBoundary;
                     _cat.Intervals[i].RightBoundary = _interval.RightBoundary;
                     _cat.Intervals[i].LeftValue = Convert.ToBoolean(_interval.LeftValue);
@@ -98,6 +99,7 @@ namespace Ferda.Guha.Attribute
                 i = 0;
                 foreach (IntervalSerializable<T> _interval in cat.Intervals)
                 {
+                    _cat.Intervals[i] = new IntervalSerializable<short>();
                     _cat.Intervals[i].LeftBoundary = _interval.LeftBoundary;
                     _cat.Intervals[i].RightBoundary = _interval.RightBoundary;
                     _cat.Intervals[i].LeftValue = Convert.ToInt16(_interval.LeftValue);
@@ -150,6 +152,7 @@ namespace Ferda.Guha.Attribute
                 i = 0;
                 foreach (IntervalSerializable<T> _interval in cat.Intervals)
                 {
+                    _cat.Intervals[i] = new IntervalSerializable<int>();
                     _cat.Intervals[i].LeftBoundary = _interval.LeftBoundary;
                     _cat.Intervals[i].RightBoundary = _interval.RightBoundary;
                     _cat.Intervals[i].LeftValue = Convert.ToInt32(_interval.LeftValue);
@@ -202,6 +205,7 @@ namespace Ferda.Guha.Attribute
                 i = 0;
                 foreach (IntervalSerializable<T> _interval in cat.Intervals)
                 {
+                    _cat.Intervals[i] = new IntervalSerializable<long>();
                     _cat.Intervals[i].LeftBoundary = _interval.LeftBoundary;
                     _cat.Intervals[i].RightBoundary = _interval.RightBoundary;
                     _cat.Intervals[i].LeftValue = Convert.ToInt64(_interval.LeftValue);
@@ -254,6 +258,7 @@ namespace Ferda.Guha.Attribute
                 i = 0;
                 foreach (IntervalSerializable<T> _interval in cat.Intervals)
                 {
+                    _cat.Intervals[i] = new IntervalSerializable<float>();
                     _cat.Intervals[i].LeftBoundary = _interval.LeftBoundary;
                     _cat.Intervals[i].RightBoundary = _interval.RightBoundary;
                     _cat.Intervals[i].LeftValue = Convert.ToSingle(_interval.LeftValue);
@@ -306,6 +311,7 @@ namespace Ferda.Guha.Attribute
                 i = 0;
                 foreach (IntervalSerializable<T> _interval in cat.Intervals)
                 {
+                    _cat.Intervals[i] = new IntervalSerializable<double>();
                     _cat.Intervals[i].LeftBoundary = _interval.LeftBoundary;
                     _cat.Intervals[i].RightBoundary = _interval.RightBoundary;
                     _cat.Intervals[i].LeftValue = Convert.ToDouble(_interval.LeftValue);
@@ -358,6 +364,7 @@ namespace Ferda.Guha.Attribute
                 i = 0;
                 foreach (IntervalSerializable<T> _interval in cat.Intervals)
                 {
+                    _cat.Intervals[i] = new IntervalSerializable<string>();
                     _cat.Intervals[i].LeftBoundary = _interval.LeftBoundary;
                     _cat.Intervals[i].RightBoundary = _interval.RightBoundary;
                     _cat.Intervals[i].LeftValue = _interval.LeftValue.ToString();
@@ -410,6 +417,7 @@ namespace Ferda.Guha.Attribute
                 i = 0;
                 foreach (IntervalSerializable<T> _interval in cat.Intervals)
                 {
+                    _cat.Intervals[i] = new IntervalSerializable<DateTime>();
                     _cat.Intervals[i].LeftBoundary = _interval.LeftBoundary;
                     _cat.Intervals[i].RightBoundary = _interval.RightBoundary;
                     _cat.Intervals[i].LeftValue = Convert.ToDateTime(_interval.LeftValue);
