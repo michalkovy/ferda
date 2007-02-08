@@ -56,33 +56,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
             : base(attribute, rm)
         {
             this.attribute = attribute;
-           /* this.interval = new Category();
-            this.interval.CatType = CategoryType.Interval;
-            this.interval.Name = editedInterval.Name;
-            this.interval.Frequency = editedInterval.Frequency;
-            foreach (Interval inter in editedInterval.GetIntervals())
-            {
-                this.interval.AddInterval(inter);
-            }
-            this.currentCategory = editedInterval;
-            this.index = datalist.GetIndex(this.currentCategory);
-            this.TextBoxCategoryName.Text = editedInterval.Name;
-            Interval tempInterval = (Interval)editedInterval.GetIntervals()[0];
-            switch (tempInterval.intervalType)
-            {
-                case IntervalType.Long:
-                    this.TextBoxLeftBound.Text = tempInterval.lowerBound.ToString();
-                    this.TextBoxRightBound.Text = tempInterval.upperBound.ToString();
-                    break;
-
-                case IntervalType.Float:
-                    this.TextBoxLeftBound.Text = tempInterval.lowerBoundFl.ToString();
-                    this.TextBoxRightBound.Text = tempInterval.upperBoundFl.ToString();
-                    break;
-
-                default:
-                    throw new Exception("Switch branch not implemented");
-            }*/
+            this.currentCategory = attribute[index];
 
             Interval<IComparable> tempInterval = attribute[index].Intervals[0];
             foreach (Interval<IComparable> inter in attribute[index].Intervals)
@@ -93,7 +67,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
                     this.ListBoxIntervals.SelectedIndex = 0;
                 }
             }
-           // this.CheckIntervalTypesConsistency();
             this.ButtonCancel.Click -= new System.EventHandler(this.CancelButton_Click);
             this.ButtonCancel.Click += new System.EventHandler(this.ButtonNewCancel_Click);
 

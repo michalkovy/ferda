@@ -367,6 +367,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nepodporovaný typ intervalu.
+        /// </summary>
+        internal static string InvalidIntervalType {
+            get {
+                return ResourceManager.GetString("InvalidIntervalType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Přípustné hodnoty.
         /// </summary>
         internal static string LabelAvailableValues {
