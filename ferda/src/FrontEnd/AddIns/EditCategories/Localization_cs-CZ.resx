@@ -276,4 +276,7 @@
   <data name="IntervalsNotAllowed" xml:space="preserve">
     <value>Tato kategorie nemůže obsahovat intervaly</value>
   </data>
+  <data name="InvalidIntervalType" xml:space="preserve">
+    <value>Nepodporovaný typ intervalu</value>
+  </data>
 </root>

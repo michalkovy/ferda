@@ -219,6 +219,9 @@
   <data name="InvalidIntervalError" xml:space="preserve">
     <value>Invalid interval</value>
   </data>
+  <data name="InvalidIntervalType" xml:space="preserve">
+    <value>Interval type not supported</value>
+  </data>
   <data name="LabelAvailableValues" xml:space="preserve">
     <value>Available values</value>
   </data>

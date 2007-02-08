@@ -74,7 +74,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             InitializeComponent();
             this.ChangeLocale(this.resManager);
             this.AddHandlers();
-            //Initializing temp category
             this.currentCategory = new Category<IComparable>(attribute);
         }
 
@@ -257,6 +256,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             try
             {
                 TryAddInterval();
+                this.ListBoxIntervals.Items.Clear();
+                foreach (Interval<IComparable> inter in currentCategory.Intervals)
+                {
+                    this.ListBoxIntervals.Items.Add(inter.ToString());
+                    if (this.ListBoxIntervals.Items.Count > 0)
+                    {
+                        this.ListBoxIntervals.SelectedIndex = 0;
+                    }
+                }
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -401,6 +409,14 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                                 return false;
                         }
                         break;
+                    case DbSimpleDataTypeEnum.StringSimpleType:
+                        {
+                            string left = TextBoxLeftBound.Text;
+                            string right = TextBoxRightBound.Text;
+                            if (left.CompareTo(right)>1)
+                                return false;
+                        }
+                        break;
 
                     default:
                         return true;
@@ -437,7 +453,42 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                 }
                 try
                 {
-                    leftBound = (IComparable)TextBoxLeftBound.Text;
+                    switch (attribute.DbDataType)
+                    {
+                        case DbSimpleDataTypeEnum.BooleanSimpleType:
+                            leftBound = (IComparable)Convert.ToBoolean(TextBoxLeftBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.DateTimeSimpleType:
+                            leftBound = (IComparable)Convert.ToDateTime(TextBoxLeftBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.DoubleSimpleType:
+                        case DbSimpleDataTypeEnum.FloatSimpleType:
+                            leftBound = (IComparable)Convert.ToDouble(TextBoxLeftBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.IntegerSimpleType:
+                            leftBound = (IComparable)Convert.ToInt32(TextBoxLeftBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.LongSimpleType:
+                            leftBound = (IComparable)Convert.ToInt64(TextBoxLeftBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.ShortSimpleType:
+                            leftBound = (IComparable)Convert.ToInt16(TextBoxLeftBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.StringSimpleType:
+                            leftBound = (IComparable)TextBoxLeftBound.Text;
+                            break;
+
+                        default:
+                            MessageBox.Show(this.resManager.GetString("InvalidIntervalType"), this.resManager.GetString("InvalidIntervalError"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            break;
+                    }
                 }
                 catch
                 {
@@ -460,7 +511,42 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                 }
                 try
                 {
-                    rightBound = (IComparable)TextBoxRightBound.Text;
+                    switch (attribute.DbDataType)
+                    {
+                        case DbSimpleDataTypeEnum.BooleanSimpleType:
+                            rightBound = (IComparable)Convert.ToBoolean(TextBoxRightBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.DateTimeSimpleType:
+                            rightBound = (IComparable)Convert.ToDateTime(TextBoxRightBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.DoubleSimpleType:
+                        case DbSimpleDataTypeEnum.FloatSimpleType:
+                            rightBound = (IComparable)Convert.ToDouble(TextBoxRightBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.IntegerSimpleType:
+                            rightBound = (IComparable)Convert.ToInt32(TextBoxRightBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.LongSimpleType:
+                            rightBound = (IComparable)Convert.ToInt64(TextBoxRightBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.ShortSimpleType:
+                            rightBound = (IComparable)Convert.ToInt16(TextBoxRightBound.Text);
+                            break;
+
+                        case DbSimpleDataTypeEnum.StringSimpleType:
+                            rightBound = (IComparable)TextBoxRightBound.Text;
+                            break;
+
+                        default:
+                            MessageBox.Show(this.resManager.GetString("InvalidIntervalType"), this.resManager.GetString("InvalidIntervalError"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            break;
+                    }
                 }
                 catch
                 {
