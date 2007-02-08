@@ -16,7 +16,7 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartWorkingDirectory>c:\Make\Projekt\novasvn\ferda\bin\FrontEnd\</StartWorkingDirectory>
+    <StartWorkingDirectory>c:\Make\Projekt\svn\ferda\bin\FrontEnd\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <StartWorkingDirectory>C:\Make\Projekt\subversion\bin\</StartWorkingDirectory>
