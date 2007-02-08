@@ -349,6 +349,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tato kategorie nemůže obsahovat intervaly.
+        /// </summary>
+        internal static string IntervalsNotAllowed {
+            get {
+                return ResourceManager.GetString("IntervalsNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Neplatný interval.
         /// </summary>
         internal static string InvalidIntervalError {

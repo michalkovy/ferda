@@ -100,7 +100,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <summary>
         /// Edited attribute
         /// </summary>
-        private object attribute;
+        private Attribute<IComparable> attribute;
 
         /// <summary>
         /// Attribute datatype
@@ -141,72 +141,56 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             switch (columnDataType)
             {
                 case DbDataTypeEnum.BooleanType:
-                    attribute =
-                        (object)new Attribute<Boolean>(
-                        DbSimpleDataTypeEnum.BooleanSimpleType,
-                        Guha.Attribute.Serializer.Deserialize<Boolean>(categories), true);
-                    attributeDataType = DbSimpleDataTypeEnum.BooleanSimpleType;
+                    attribute = 
+                        Retyper<IComparable, Boolean>.ToIComparable(
+                        Guha.Attribute.Serializer.Deserialize<Boolean>(categories));
                     break;
 
                 case DbDataTypeEnum.DateTimeType:
                     attribute =
-                        (object)new Attribute<DateTime>(
-                        DbSimpleDataTypeEnum.DateTimeSimpleType,
-                        Guha.Attribute.Serializer.Deserialize<DateTime>(categories), true);
-                    attributeDataType = DbSimpleDataTypeEnum.DateTimeSimpleType;
+                        Retyper<IComparable, DateTime>.ToIComparable(
+                        Guha.Attribute.Serializer.Deserialize<DateTime>(categories));
                     break;
 
                 case DbDataTypeEnum.DoubleType:
                     attribute =
-                        (object)new Attribute<Double>(
-                        DbSimpleDataTypeEnum.DoubleSimpleType,
-                        Guha.Attribute.Serializer.Deserialize<Double>(categories), true);
-                    attributeDataType = DbSimpleDataTypeEnum.DoubleSimpleType;
+                        Retyper<IComparable, Double>.ToIComparable(
+                        Guha.Attribute.Serializer.Deserialize<Double>(categories));
                     break;
 
                 case DbDataTypeEnum.FloatType:
                 case DbDataTypeEnum.DecimalType:
                     attribute =
-                        (object)new Attribute<Single>(
-                        DbSimpleDataTypeEnum.FloatSimpleType,
-                        Guha.Attribute.Serializer.Deserialize<Single>(categories), true);
-                    attributeDataType = DbSimpleDataTypeEnum.FloatSimpleType;
+                        Retyper<IComparable, Single>.ToIComparable(
+                        Guha.Attribute.Serializer.Deserialize<Single>(categories));
                     break;
 
 
                 case DbDataTypeEnum.IntegerType:
                 case DbDataTypeEnum.UnsignedIntegerType:
                     attribute =
-                       (object)new Attribute<Int32>(
-                       DbSimpleDataTypeEnum.IntegerSimpleType,
-                       Guha.Attribute.Serializer.Deserialize<Int32>(categories), true);
-                    attributeDataType = DbSimpleDataTypeEnum.IntegerSimpleType;
+                       Retyper<IComparable, Int32>.ToIComparable(
+                        Guha.Attribute.Serializer.Deserialize<Int32>(categories));
                     break;
 
                 case DbDataTypeEnum.ShortIntegerType:
                 case DbDataTypeEnum.UnsignedShortIntegerType:
                     attribute =
-                       (object)new Attribute<Int16>(
-                       DbSimpleDataTypeEnum.ShortSimpleType,
-                       Guha.Attribute.Serializer.Deserialize<Int16>(categories), true);
-                    attributeDataType = DbSimpleDataTypeEnum.ShortSimpleType;
+                       Retyper<IComparable, Int16>.ToIComparable(
+                        Guha.Attribute.Serializer.Deserialize<Int16>(categories));
                     break;
 
                 case DbDataTypeEnum.LongIntegerType:
                 case DbDataTypeEnum.UnsignedLongIntegerType:
                     attribute =
-                       (object)new Attribute<Int64>(
-                       DbSimpleDataTypeEnum.LongSimpleType,
-                       Guha.Attribute.Serializer.Deserialize<Int64>(categories), true);
-                    attributeDataType = DbSimpleDataTypeEnum.LongSimpleType;
+                       Retyper<IComparable, Int64>.ToIComparable(
+                        Guha.Attribute.Serializer.Deserialize<Int64>(categories));
                     break;
 
                 case DbDataTypeEnum.StringType:
                     attribute =
-                        (object)new Attribute<String>(
-                       DbSimpleDataTypeEnum.StringSimpleType,
-                       Guha.Attribute.Serializer.Deserialize<String>(categories), true);
-                    attributeDataType = DbSimpleDataTypeEnum.StringSimpleType;
+                       Retyper<IComparable, String>.ToIComparable(
+                        Guha.Attribute.Serializer.Deserialize<String>(categories));
                     break;              
 
                 default:
@@ -303,110 +287,16 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// </summary>
         /// <param name="smartList">SmartDataList to display</param>
         /// <param name="form">Form to display the SmartDataList in</param>
-        public void AttributeToListView(object _attribute, ListView listView)
+        public void AttributeToListView(Attribute<IComparable> _attribute, ListView listView)
         {
-            switch(this.attributeDataType)
+            foreach (string categoryName in attribute.Keys)
             {
-                case DbSimpleDataTypeEnum.BooleanSimpleType:
-                    {
-                        Ferda.Guha.Attribute.Attribute<Boolean> attribute =
-                    (Ferda.Guha.Attribute.Attribute<Boolean>)_attribute;
-                        foreach (string categoryName in attribute.Keys)
-                        {
-                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
-                        }
-                    }
-                    break;
-
-                case DbSimpleDataTypeEnum.DateTimeSimpleType:
-                    {
-                        Ferda.Guha.Attribute.Attribute<DateTime> attribute =
-                    (Ferda.Guha.Attribute.Attribute<DateTime>)_attribute;
-                        foreach (string categoryName in attribute.Keys)
-                        {
-                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
-                        }
-                    }
-                    break;
-
-                case DbSimpleDataTypeEnum.DoubleSimpleType:
-                    {
-                        Ferda.Guha.Attribute.Attribute<Double> attribute =
-                    (Ferda.Guha.Attribute.Attribute<Double>)_attribute;
-                        foreach (string categoryName in attribute.Keys)
-                        {
-                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
-                        }
-                    }
-                    break;
-
-                case DbSimpleDataTypeEnum.FloatSimpleType:
-                    {
-                        Ferda.Guha.Attribute.Attribute<Single> attribute =
-                    (Ferda.Guha.Attribute.Attribute<Single>)_attribute;
-                        foreach (string categoryName in attribute.Keys)
-                        {
-                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
-                        }
-                    }
-                    break;
-
-                case DbSimpleDataTypeEnum.IntegerSimpleType:
-                    {
-                        Ferda.Guha.Attribute.Attribute<Int32> attribute =
-                    (Ferda.Guha.Attribute.Attribute<Int32>)_attribute;
-                        foreach (string categoryName in attribute.Keys)
-                        {
-                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
-                        }
-                    }
-                    break;
-
-                case DbSimpleDataTypeEnum.LongSimpleType:
-                    {
-                        Ferda.Guha.Attribute.Attribute<Int64> attribute =
-                    (Ferda.Guha.Attribute.Attribute<Int64>)_attribute;
-                        foreach (string categoryName in attribute.Keys)
-                        {
-                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
-                        }
-                    }
-                    break;
-
-                case DbSimpleDataTypeEnum.ShortSimpleType:
-                    {
-                        Ferda.Guha.Attribute.Attribute<Int16> attribute =
-                    (Ferda.Guha.Attribute.Attribute<Int16>)_attribute;
-                        foreach (string categoryName in attribute.Keys)
-                        {
-                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
-                        }
-                    }
-                    break;
-
-                case DbSimpleDataTypeEnum.StringSimpleType:
-                    {
-                        Ferda.Guha.Attribute.Attribute<String> attribute =
-                    (Ferda.Guha.Attribute.Attribute<String>)_attribute;
-                        foreach (string categoryName in attribute.Keys)
-                        {
-                            AddCategoryToListView(categoryName, attribute[categoryName].ToString(), listView);
-                        }
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private void AddCategoryToListView(string categoryName, string categoryCaption, ListView listView)
-        {
-            ListViewItem item = new ListViewItem(categoryName, 1);
-            item.SubItems.Add(categoryCaption);
-            //tag contains index of the value in the array of multisets
-            item.Tag = categoryName;
-            listView.Items.Add(item);
+                ListViewItem item = new ListViewItem(categoryName, 1);
+                item.SubItems.Add(attribute[categoryName].ToString());
+                //tag contains index of the value in the array of multisets
+                item.Tag = categoryName;
+                listView.Items.Add(item);
+            }  
         }
 
         /// <summary>
@@ -449,29 +339,12 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 if (view.SelectedItems.Count > 1)
                 {
                     //two and more items are selected, thus nothing can be splitted, only joined,
-                    //if the type is the same
                     this.ButtonDelete.Enabled = false;
+                    this.ButtonJoin.Enabled = true;
                     this.ButtonEdit.Enabled = false;
                     this.MenuItemRename.Enabled = false;
                     this.MenuItemDelete.Enabled = false;
                     this.MenuItemEdit.Enabled = false;
-                    int[] indexes = new int[view.SelectedItems.Count];
-                    for (int i = 0; i < view.SelectedItems.Count; i++)
-                    {
-                        try
-                        {
-                            indexes[i] = (int)view.SelectedItems[i].Tag;
-                        }
-                        catch
-                        {
-                            return;
-                        }
-                    }
-                    if (bigDataList.SameTypeCategories(indexes))
-                    {
-                        this.ButtonJoin.Enabled = true;
-                        this.MenuItemJoin.Enabled = true;
-                    }
                 }
                 else
                 {
@@ -540,14 +413,18 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="e"></param>
         private void Join_Click(object sender, EventArgs e)
         {
-            ArrayList selected = new ArrayList();
+            List<string>categoriesToJoin = new List<string>();
+
             if (this.CategoriesListView.SelectedItems.Count > 1)
             {
                 foreach (int index in this.CategoriesListView.SelectedIndices)
                 {
-                    selected.Add((int)this.CategoriesListView.Items[index].Tag);
+                    categoriesToJoin.Add((string)this.CategoriesListView.Items[index].Tag);
                 }
-                bigDataList.JoinCategories(selected);
+                string tmp = String.Empty;
+                attribute.JoinCategories(categoriesToJoin.ToArray(), NewCategoryName.JoinPreviousNames,
+                    String.Empty, out tmp);
+                RefreshList();
             }
         }
 
@@ -569,10 +446,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             if (!EditInProgress)
             {
                 EditInProgress = true;
-                int index = 0;
+                string index = String.Empty;
                 try
                 {
-                    index = (int)this.CategoriesListView.SelectedItems[0].Tag;
+                    index = (string)this.CategoriesListView.SelectedItems[0].Tag;
                     this.ButtonDelete.Enabled = false;
                     this.ButtonJoin.Enabled = false;
                     this.ButtonNew.Enabled = false;
@@ -581,7 +458,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     this.MenuItemJoin.Enabled = false;
                     this.MenuItemNew.Enabled = false;
                     this.MenuItemEdit.Enabled = false;
-                    EditExistingCategory editCategory = new EditExistingCategory(index, bigDataList, this, this.resManager);
+                    EditExistingCategory editCategory = new EditExistingCategory(index, attribute, this, this.resManager);
                 }
                 catch
                 {
@@ -621,7 +498,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         {
             foreach (ListViewItem item in CategoriesListView.SelectedItems)
             {
-                this.bigDataList.RemoveCategory((int)item.Tag);
+                this.attribute.Remove((string)item.Tag);
                 item.Remove();
             }
             CategoriesListView.SelectedItems.Clear();
@@ -634,7 +511,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="e"></param>
         private void AddNewEnumeration_Click(object sender, EventArgs e)
         {
-            CreateNewCategory.CreateSetWizard newEnum = new CreateSetWizard(bigDataList, this.resManager);
+            CreateNewCategory.CreateSetWizard newEnum = new CreateSetWizard(attribute, this.resManager);
             this.SuspendLayout();
             newEnum.Name = "CreateSetWizard";
             newEnum.TabIndex = 2;
@@ -658,21 +535,29 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="e"></param>
         private void AddNewInterval_Click(object sender, EventArgs e)
         {
-            CreateIntervalWizard newInterval1 = new CreateIntervalWizard(bigDataList, this.resManager);
-            this.SuspendLayout();
-            newInterval1.Name = "CreateIntervalWizard";
-            newInterval1.TabIndex = 2;
-            newInterval1.Disposed += new EventHandler(ListViewReinitSize);
-            newInterval1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitContainer1.Panel2Collapsed = false;
-            this.splitContainer1.Panel2.Controls.Add(newInterval1);
-            this.MenuItemNew.Enabled = false;
-            this.ButtonNew.Enabled = false;
-            this.ButtonEdit.Enabled = false;
-            this.MenuItemEdit.Enabled = false;
-            this.DoubleClick -= new EventHandler(EditItem);
-            this.ResumeLayout();
-            newInterval1.BringToFront();
+            if (attribute.IntervalsAllowed)
+            {
+                CreateIntervalWizard newInterval1 = new CreateIntervalWizard(attribute, this.resManager);
+                this.SuspendLayout();
+                newInterval1.Name = "CreateIntervalWizard";
+                newInterval1.TabIndex = 2;
+                newInterval1.Disposed += new EventHandler(ListViewReinitSize);
+                newInterval1.Dock = System.Windows.Forms.DockStyle.Right;
+                this.splitContainer1.Panel2Collapsed = false;
+                this.splitContainer1.Panel2.Controls.Add(newInterval1);
+                this.MenuItemNew.Enabled = false;
+                this.ButtonNew.Enabled = false;
+                this.ButtonEdit.Enabled = false;
+                this.MenuItemEdit.Enabled = false;
+                this.DoubleClick -= new EventHandler(EditItem);
+                this.ResumeLayout();
+                newInterval1.BringToFront();
+            }
+            else
+            {
+                MessageBox.Show(this.resManager.GetString("IntervalsNotAllowed"), this.resManager.GetString("Error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
 
@@ -1045,7 +930,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         private void ChangeLocale(ResourceManager rm)
         {
             this.ColumnCategoryName.Text = rm.GetString("ColumnCategoryName");
-            this.ColumnCategoryType.Text = rm.GetString("ColumnCategoryType");
+         //   this.ColumnCategoryType.Text = rm.GetString("ColumnCategoryType");
             this.ColumnCategoryValue.Text = rm.GetString("ColumnCategoryValue");
             this.ColumnFrequency.Text = rm.GetString("ColumnFrequency");
             this.ButtonDelete.Text = rm.GetString("ButtonDelete");

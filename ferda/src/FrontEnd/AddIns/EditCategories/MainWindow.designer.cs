@@ -52,7 +52,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.CategoriesListView = new System.Windows.Forms.ListView();
             this.ColumnCategoryName = new System.Windows.Forms.ColumnHeader();
-            this.ColumnCategoryType = new System.Windows.Forms.ColumnHeader();
             this.ColumnCategoryValue = new System.Windows.Forms.ColumnHeader();
             this.ColumnFrequency = new System.Windows.Forms.ColumnHeader();
             this.CategoriesContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -111,7 +110,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             // 
             this.CategoriesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColumnCategoryName,
-            this.ColumnCategoryType,
             this.ColumnCategoryValue,
             this.ColumnFrequency});
             this.CategoriesListView.ContextMenuStrip = this.CategoriesContextMenu;
@@ -130,10 +128,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             // ColumnCategoryName
             // 
             this.ColumnCategoryName.Width = 178;
-            // 
-            // ColumnCategoryType
-            // 
-            this.ColumnCategoryType.Width = 99;
             // 
             // ColumnCategoryValue
             // 
@@ -323,7 +317,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             // 
             // ButtonJoin
             // 
-            this.ButtonJoin.Enabled = false;
             this.ButtonJoin.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonJoin.Name = "ButtonJoin";
             this.ButtonJoin.Size = new System.Drawing.Size(62, 22);
@@ -399,7 +392,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         private System.Windows.Forms.ToolStripMenuItem MenuItemDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ColumnHeader ColumnCategoryName;
-        private System.Windows.Forms.ColumnHeader ColumnCategoryType;
         private System.Windows.Forms.ColumnHeader ColumnCategoryValue;
         private System.Windows.Forms.ColumnHeader ColumnFrequency;
         internal System.Windows.Forms.SplitContainer splitContainer1;

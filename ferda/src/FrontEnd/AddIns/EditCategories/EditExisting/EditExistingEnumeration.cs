@@ -26,6 +26,7 @@ using System.Windows.Forms;
 using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using System.Resources;
 using System.Reflection;
+using Ferda.Guha.Attribute;
 
 namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
 {
@@ -45,39 +46,34 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         /// <summary>
         /// DataList to work with
         /// </summary>
-        FerdaSmartDataList datalist;
+        Attribute<IComparable> attribute;
 
         /// <summary>
-        /// Edited enumeration.
+        /// Edited category.
         /// </summary>
-        Category enumeration;
-
-        /// <summary>
-        /// Edited enumeration index
-        /// </summary>
-        int index = 0;
+        Category<IComparable> category;
 
         #endregion
 
 
         #region Constructor
 
-        /// <summary>
-        /// Class constructor
-        /// </summary>
-        /// <param name="dataList">Datalist to work with</param>
-        /// <param name="Enumeration">Enumeration to edit</param>
-        /// <param name="rm"></param>
-        public EditExistingEnumeration(FerdaSmartDataList dataList, Category Enumeration, ResourceManager rm)
-            : base(dataList, rm)
+    /// <summary>
+    /// Classs constructor
+    /// </summary>
+    /// <param name="attribute">Edited attribute</param>
+    /// <param name="index">Index of edited category</param>
+    /// <param name="rm">Resource manager</param>
+        public EditExistingEnumeration(Attribute<IComparable> attribute, string index, ResourceManager rm)
+            : base(attribute, rm)
         {
-            this.datalist = dataList;
-            this.enumeration = Enumeration;
+            this.attribute = attribute;
+            this.category = attribute[index];
             this.ButtonSubmit.Click -= new EventHandler(Submit_Click);
             this.ButtonSubmit.Click += new EventHandler(Submit_Click_New);
-            index = this.datalist.GetIndex(this.enumeration);
-            this.TextBoxNewName.Text = this.enumeration.Name;
-            foreach (object value in this.enumeration.Set.Values)
+
+            this.TextBoxNewName.Text = this.category.Name;
+            foreach (object value in this.category.Enumeration)
             {
                 this.ListBoxExistingValues.Items.Add(value);
             }
@@ -98,17 +94,21 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         /// <param name="e"></param>
         private void Submit_Click_New(object sender, EventArgs e)
         {
-            this.enumeration.RemoveSetValues();
-            ArrayList tempList = new ArrayList();
+            for (int i = 0; i < this.category.Enumeration.Count; i++)
+            {
+                this.category.Enumeration.RemoveAt(i);
+            }
+
+            //TODO: catch exception when collison occurs
             foreach (object item in ListBoxExistingValues.Items)
             {
-                tempList.Add(item);
+                this.category.Enumeration.Add((IComparable)item, false);
             }
-            SingleSet newSet = new SingleSet(tempList);
-            this.enumeration.AddSingleSet(newSet);
+          /* SingleSet newSet = new SingleSet(tempList);
+            this.category.AddSingleSet(newSet);
             this.datalist.RemoveCategory(this.index);
-            this.enumeration.Name = this.TextBoxNewName.Text;
-            this.datalist.AddNewCategoryDirect(this.enumeration);
+            this.category.Name = this.TextBoxNewName.Text;
+            this.datalist.AddNewCategoryDirect(this.category);*/
             this.Dispose();
         }
 
