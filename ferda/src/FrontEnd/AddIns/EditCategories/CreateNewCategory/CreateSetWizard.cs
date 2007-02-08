@@ -30,6 +30,7 @@ using Ferda;
 using Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory;
 using System.Resources;
 using System.Reflection;
+using Ferda.Guha.Attribute;
 
 namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
 {
@@ -41,9 +42,14 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         #region Private variables
 
         /// <summary>
-        /// Datalist to work with
+        /// Edited attribute
         /// </summary>
-        private FerdaSmartDataList dataList;
+        private Attribute<IComparable> attribute;
+
+        /// <summary>
+        /// Category being added
+        /// </summary>
+        protected Category<IComparable> currentCategory;
 
         /// <summary>
         /// Resource manager
@@ -60,13 +66,14 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// </summary>
         /// <param name="dataList">Datalist to work with</param>
         /// <param name="rm">Resource manager</param>
-        public CreateSetWizard(FerdaSmartDataList dataList, ResourceManager rm)
+        public CreateSetWizard(Attribute<IComparable> attribute, ResourceManager rm)
         {
             //setting the ResManager resource manager and localization string
             this.resManager = rm;
-            this.dataList = dataList;
+            this.attribute = attribute;
             InitializeComponent();
-            this.FillAvailableValues(ListBoxAvailableValues, this.dataList);
+            this.currentCategory = new Category<IComparable>(attribute);
+            this.FillAvailableValues(ListBoxAvailableValues, this.attribute);
             this.ChangeLocale(this.resManager);
         }
 
@@ -106,17 +113,20 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <param name="e"></param>
         protected void Submit_Click(object sender, EventArgs e)
         {
-            ArrayList arrayList = new ArrayList();
+            //TODO: catch exception when in collision
             foreach (object item in ListBoxExistingValues.Items)
             {
-                arrayList.Add(item);
+                this.currentCategory.Enumeration.Add((IComparable)item, false);
             }
-            Category tempSet = new Category();
+            /*Category tempSet = new Category();
             tempSet.CatType = CategoryType.Enumeration;
             tempSet.Name = this.TextBoxNewName.Text;
             SingleSet tempSingle = new SingleSet(arrayList);
             tempSet.AddSingleSet(tempSingle);
             dataList.AddNewCategoryDirect(tempSet);
+
+            this.currentCategory.Enumeration.Add*/
+
             this.Dispose();
         }
 
@@ -165,9 +175,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// </summary>
         /// <param name="listBox">Listbox to fill</param>
         /// <param name="dataList">Used datalist</param>
-        private void FillAvailableValues(ListBox listBox, FerdaSmartDataList dataList)
+        private void FillAvailableValues(ListBox listBox, Attribute<IComparable> attribute)
         {
-            foreach (object value in dataList.GetAvailableValues())
+            //TODO!!! get uncovered values
+            foreach (object value in attribute.GetUncoveredValues(new DataTable()))
             {
                 ListBoxAvailableValues.Items.Add(value);
             }

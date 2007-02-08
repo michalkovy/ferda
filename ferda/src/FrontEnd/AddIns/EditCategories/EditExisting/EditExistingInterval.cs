@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using System.Resources;
 using System.Reflection;
+using Ferda.Guha.Attribute;
 
 namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
 {
@@ -38,20 +39,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
     {
         #region Private variables
 
-        /// <summary>
-        /// Datalist to work with
-        /// </summary>
-        FerdaSmartDataList datalist;
 
-        /// <summary>
-        /// Edited interval
-        /// </summary>
-        Category interval;
-
-        /// <summary>
-        /// Edited category index
-        /// </summary>
-        int index = 0;
 
         #endregion
 
@@ -64,11 +52,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         /// <param name="dataList">Datalist to work with</param>
         /// <param name="editedInterval">Edited interval category</param>
         /// <param name="rm">resource manager</param>
-        public EditExistingInterval(FerdaSmartDataList dataList, Category editedInterval, ResourceManager rm)
-            : base(dataList, rm)
+        public EditExistingInterval(Attribute<IComparable> attribute, string index, ResourceManager rm)
+            : base(attribute, rm)
         {
-            this.datalist = dataList;
-            this.interval = new Category();
+            this.attribute = attribute;
+           /* this.interval = new Category();
             this.interval.CatType = CategoryType.Interval;
             this.interval.Name = editedInterval.Name;
             this.interval.Frequency = editedInterval.Frequency;
@@ -94,9 +82,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
 
                 default:
                     throw new Exception("Switch branch not implemented");
-            }
+            }*/
 
-            foreach (Interval inter in editedInterval.GetIntervals())
+            Interval<IComparable> tempInterval = attribute[index].Intervals[0];
+            foreach (Interval<IComparable> inter in attribute[index].Intervals)
             {
                 this.ListBoxIntervals.Items.Add(inter.ToString());
                 if (this.ListBoxIntervals.Items.Count > 0)
@@ -104,18 +93,18 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
                     this.ListBoxIntervals.SelectedIndex = 0;
                 }
             }
-            this.CheckIntervalTypesConsistency();
+           // this.CheckIntervalTypesConsistency();
             this.ButtonCancel.Click -= new System.EventHandler(this.CancelButton_Click);
             this.ButtonCancel.Click += new System.EventHandler(this.ButtonNewCancel_Click);
 
             //initialiazing controls according to the interval
-            if (tempInterval.lowerBoundType == IntervalBoundType.Infinity)
+            if (tempInterval.LeftBoundary == BoundaryEnum.Infinity)
             {
                 this.RadioMinusInfinity.Checked = true;
             }
             else
             {
-                if (tempInterval.lowerBoundType == IntervalBoundType.Round)
+                if (tempInterval.LeftBoundary == BoundaryEnum.Open)
                 {
                     this.RadioLeftBoundRound.Checked = true;
                 }
@@ -125,13 +114,13 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
                 }
             }
 
-            if (tempInterval.upperBoundType == IntervalBoundType.Infinity)
+            if (tempInterval.RightBoundary == BoundaryEnum.Infinity)
             {
                 this.RadioPlusInfinity.Checked = true;
             }
             else
             {
-                if (tempInterval.upperBoundType == IntervalBoundType.Round)
+                if (tempInterval.RightBoundary == BoundaryEnum.Open)
                 {
                     this.RadioRightBoundRound.Checked = true;
                 }
@@ -140,7 +129,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
                     this.RadioRightBoundSharp.Checked = true;
                 }
             }
-            this.datalist.RemoveCategory(index);
+     //       this.datalist.RemoveCategory(index);
             InitializeComponent();
         }
 
@@ -156,7 +145,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         /// <param name="e"></param>
         protected void ButtonNewCancel_Click(object sender, EventArgs e)
         {
-            this.datalist.AddNewCategoryDirect(this.interval);
+          //  this.datalist.AddNewCategoryDirect(this.interval);
             this.Dispose();
         }
 

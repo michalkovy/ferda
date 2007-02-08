@@ -273,4 +273,7 @@
   <data name="Help" xml:space="preserve">
     <value>Nápověda</value>
   </data>
+  <data name="IntervalsNotAllowed" xml:space="preserve">
+    <value>Tato kategorie nemůže obsahovat intervaly</value>
+  </data>
 </root>

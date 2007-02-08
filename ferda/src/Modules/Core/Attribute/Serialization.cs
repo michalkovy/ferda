@@ -10,10 +10,65 @@ namespace Ferda.Guha.Attribute
     /// <summary>
     /// Class with methods for retyping AttributeSerializable IComparable to the explicit type
     /// </summary>
-    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute`1"/></typeparam></typeparam>
-    public class Retyper<T>
+    /// <typeparam name="T">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute`1"/></typeparam>
+    /// <typeparam name="U">See typeparam in <see cref="T:Ferda.Guha.Attribute.Attribute`1"/></typeparam>
+    public class Retyper<T, U>
         where T : IComparable
+        where U : IComparable
     {
+        /// <summary>
+        /// Method for retyping attribute to IComparable
+        /// </summary>
+        /// <param name="attribute">Attribute to retype</param>
+        /// <returns>Retyped attribute</returns>
+        public static Attribute<IComparable> ToIComparable(AttributeSerializable<U> attribute)
+        {
+            AttributeSerializable<IComparable> result =
+                new AttributeSerializable<IComparable>();
+            result.NullContainingCategoryName
+                        = attribute.NullContainingCategoryName;
+            result.IntervalsAllowed = attribute.IntervalsAllowed;
+            result.DbDataType = attribute.DbDataType;
+            List<CategorySerializable<IComparable>> categories
+                = new List<CategorySerializable<IComparable>>();
+            foreach (CategorySerializable<U> cat in attribute.Categories)
+            {
+                CategorySerializable<IComparable> _cat =
+                    new CategorySerializable<IComparable>();
+
+                _cat.Enumeration = new IComparable[cat.Enumeration.Length];
+                _cat.Intervals = new IntervalSerializable<IComparable>[cat.Intervals.Length];
+
+                int i = 0;
+                foreach (U value in cat.Enumeration)
+                {
+                    _cat.Enumeration[i] = (IComparable)value;
+                    i++;
+                }
+                i = 0;
+                foreach (IntervalSerializable<U> _interval in cat.Intervals)
+                {
+                    _cat.Intervals[i] = new IntervalSerializable<IComparable>();
+                    _cat.Intervals[i].LeftBoundary = _interval.LeftBoundary;
+                    _cat.Intervals[i].RightBoundary = _interval.RightBoundary;
+                    _cat.Intervals[i].LeftValue = (IComparable)_interval.LeftValue;
+                    _cat.Intervals[i].RightValue = (IComparable)_interval.RightValue;
+                    i++;
+                }
+
+                _cat.Name = cat.Name;
+                _cat.OrdNumber = cat.OrdNumber;
+                categories.Add(_cat);
+            }
+            result.Categories = categories.ToArray();
+
+            Attribute<IComparable> returnAttribute =
+                new Attribute<IComparable>(attribute.DbDataType, result, true);
+
+            return returnAttribute;
+        }
+
+
         /// <summary>
         /// Retypes to boolean
         /// </summary>
@@ -658,7 +713,7 @@ namespace Ferda.Guha.Attribute
                     )
                     {
                         serializer.Serialize(writer,
-                            Retyper<T>.RetypeToBool(attributeSerializable));
+                            Retyper<T, T>.RetypeToBool(attributeSerializable));
                         return sb.ToString();
                     }
 
@@ -669,7 +724,7 @@ namespace Ferda.Guha.Attribute
                     )
                     {
                         serializer.Serialize(writer,
-                            Retyper<T>.RetypeToShort(attributeSerializable));
+                            Retyper<T, T>.RetypeToShort(attributeSerializable));
                         return sb.ToString();
                     }
 
@@ -680,7 +735,7 @@ namespace Ferda.Guha.Attribute
                     )
                     {
                         serializer.Serialize(writer,
-                            Retyper<T>.RetypeToInt(attributeSerializable));
+                            Retyper<T, T>.RetypeToInt(attributeSerializable));
                         return sb.ToString();
                     }
 
@@ -691,7 +746,7 @@ namespace Ferda.Guha.Attribute
                     )
                     {
                         serializer.Serialize(writer,
-                            Retyper<T>.RetypeToDouble(attributeSerializable));
+                            Retyper<T, T>.RetypeToDouble(attributeSerializable));
                         return sb.ToString();
                     }
 
@@ -702,7 +757,7 @@ namespace Ferda.Guha.Attribute
                     )
                     {
                         serializer.Serialize(writer,
-                            Retyper<T>.RetypeToSingle(attributeSerializable));
+                            Retyper<T, T>.RetypeToSingle(attributeSerializable));
                         return sb.ToString();
                     }
 
@@ -713,7 +768,7 @@ namespace Ferda.Guha.Attribute
                     )
                     {
                         serializer.Serialize(writer,
-                            Retyper<T>.RetypeToLong(attributeSerializable));
+                            Retyper<T, T>.RetypeToLong(attributeSerializable));
                         return sb.ToString();
                     }
 
@@ -724,7 +779,7 @@ namespace Ferda.Guha.Attribute
                     )
                     {
                         serializer.Serialize(writer,
-                            Retyper<T>.RetypeToString(attributeSerializable));
+                            Retyper<T, T>.RetypeToString(attributeSerializable));
                         return sb.ToString();
                     }
 
@@ -735,7 +790,7 @@ namespace Ferda.Guha.Attribute
                     )
                     {
                         serializer.Serialize(writer,
-                            Retyper<T>.RetypeToDateTime(attributeSerializable));
+                            Retyper<T, T>.RetypeToDateTime(attributeSerializable));
                         return sb.ToString();
                     }
 

@@ -213,6 +213,9 @@
   <data name="IntervalIsNotDisjunct" xml:space="preserve">
     <value>Interval is not disjunct</value>
   </data>
+  <data name="IntervalsNotAllowed" xml:space="preserve">
+    <value>Intervals are not allowed for this category</value>
+  </data>
   <data name="InvalidIntervalError" xml:space="preserve">
     <value>Invalid interval</value>
   </data>

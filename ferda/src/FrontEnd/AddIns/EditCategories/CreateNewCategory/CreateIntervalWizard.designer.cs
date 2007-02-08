@@ -69,13 +69,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.panel2 = new System.Windows.Forms.Panel();
             this.ListBoxIntervals = new System.Windows.Forms.ListBox();
             this.LabelIntervals = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.RadioFloat = new System.Windows.Forms.RadioButton();
-            this.RadioLong = new System.Windows.Forms.RadioButton();
-            this.LabelIntervalType = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // ButtonAddInterval
@@ -271,53 +266,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.LabelIntervals.TabIndex = 38;
             this.LabelIntervals.Text = "Intervals in the category";
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.RadioFloat);
-            this.panel3.Controls.Add(this.RadioLong);
-            this.panel3.Location = new System.Drawing.Point(19, 138);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(177, 22);
-            this.panel3.TabIndex = 36;
-            // 
-            // RadioFloat
-            // 
-            this.RadioFloat.AutoSize = true;
-            this.RadioFloat.Location = new System.Drawing.Point(125, 3);
-            this.RadioFloat.Name = "RadioFloat";
-            this.RadioFloat.Size = new System.Drawing.Size(48, 17);
-            this.RadioFloat.TabIndex = 5;
-            this.RadioFloat.Text = "Float";
-            this.RadioFloat.UseVisualStyleBackColor = true;
-            // 
-            // RadioLong
-            // 
-            this.RadioLong.AutoSize = true;
-            this.RadioLong.Checked = true;
-            this.RadioLong.Location = new System.Drawing.Point(3, 3);
-            this.RadioLong.Name = "RadioLong";
-            this.RadioLong.Size = new System.Drawing.Size(49, 17);
-            this.RadioLong.TabIndex = 4;
-            this.RadioLong.TabStop = true;
-            this.RadioLong.Text = "Long";
-            this.RadioLong.UseVisualStyleBackColor = true;
-            // 
-            // LabelIntervalType
-            // 
-            this.LabelIntervalType.AutoSize = true;
-            this.LabelIntervalType.Location = new System.Drawing.Point(19, 122);
-            this.LabelIntervalType.Name = "LabelIntervalType";
-            this.LabelIntervalType.Size = new System.Drawing.Size(65, 13);
-            this.LabelIntervalType.TabIndex = 39;
-            this.LabelIntervalType.Text = "Interval type";
-            // 
             // CreateIntervalWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.LabelIntervalType);
-            this.Controls.Add(this.panel3);
             this.Controls.Add(this.LabelIntervals);
             this.Controls.Add(this.ListBoxIntervals);
             this.Controls.Add(this.LabelNewName);
@@ -339,8 +292,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -370,9 +321,5 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         private System.Windows.Forms.Panel panel2;
         protected System.Windows.Forms.ListBox ListBoxIntervals;
         protected System.Windows.Forms.Label LabelIntervals;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label LabelIntervalType;
-        protected System.Windows.Forms.RadioButton RadioFloat;
-        protected System.Windows.Forms.RadioButton RadioLong;
     }
 }

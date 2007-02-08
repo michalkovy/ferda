@@ -28,6 +28,8 @@ using System.Windows.Forms;
 using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using System.Resources;
 using System.Reflection;
+using Ferda.Guha.Attribute;
+using Ferda.Guha.Data;
 
 namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
 {
@@ -40,9 +42,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         #region Private variables
 
         /// <summary>
-        /// Datalist to work with
+        /// Edited attribute
         /// </summary>
-        protected FerdaSmartDataList dataList;
+        protected Attribute<IComparable> attribute;
 
         /// <summary>
         /// Resource manager
@@ -50,9 +52,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         protected ResourceManager resManager;
 
         /// <summary>
-        /// Temp variable for the multiset being created
+        /// Category being added
         /// </summary>
-        protected Category currentCategory;
+        protected Category<IComparable> currentCategory;
 
         #endregion
 
@@ -64,17 +66,16 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// </summary>
         /// <param name="dataList">Datalist</param>
         /// <param name="rm">Resource manager</param>
-        public CreateIntervalWizard(FerdaSmartDataList dataList, ResourceManager rm)
+        public CreateIntervalWizard(Attribute<IComparable> attribute, ResourceManager rm)
         {
             //setting the ResManager resource manager and localization string
             this.resManager = rm;
-            this.dataList = dataList;
+            this.attribute = attribute;
             InitializeComponent();
             this.ChangeLocale(this.resManager);
             this.AddHandlers();
             //Initializing temp category
-            this.currentCategory = new Category();
-            currentCategory.CatType = CategoryType.Interval;
+            this.currentCategory = new Category<IComparable>(attribute);
         }
 
         #endregion
@@ -185,10 +186,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         {
             if (this.ListBoxIntervals.SelectedIndices.Count > 0)
             {
-                try
+                 /*try
                 {
-                    Interval tempInterval = this.currentCategory.GetInterval(this.ListBoxIntervals.SelectedIndex);
-                    switch (tempInterval.intervalType)
+                    Interval<IComparable> tempInterval =
+                        this.attribute[index].Intervals[(this.ListBoxIntervals.SelectedIndex)];
+                   switch (tempInterval.intervalType)
                     {
                         case IntervalType.Long:
                             this.TextBoxLeftBound.Text = tempInterval.lowerBound.ToString();
@@ -209,6 +211,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                 catch
                 {
                 }
+            */
             }
         }
 
@@ -223,14 +226,13 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             {
                 try
                 {
-                    this.currentCategory.RemoveInterval(this.ListBoxIntervals.SelectedIndex);
+                    this.currentCategory.Intervals.RemoveAt(this.ListBoxIntervals.SelectedIndex);
                     this.ListBoxIntervals.Items.RemoveAt(this.ListBoxIntervals.SelectedIndex);
                 }
                 catch
                 {
                 }
             }
-            this.CheckIntervalTypesConsistency();
         }
 
 
@@ -252,45 +254,33 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            CheckIntervalTypesConsistency();
-            Interval interval;
-            if (this.RadioFloat.Checked)
+            try
             {
-                try
-                {
-                    interval = this.MakeInterval(IntervalType.Float);
-                }
-                catch
-                {
-                    MessageBox.Show(this.resManager.GetString("BadIntervalType"), this.resManager.GetString("InvalidIntervalError"),
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
+                TryAddInterval();
             }
-            else
+            catch (ArgumentOutOfRangeException ex)
             {
-                try
-                {
-                    interval = this.MakeInterval(IntervalType.Long);
-                }
-                catch
-                {
-                    MessageBox.Show(this.resManager.GetString("BadIntervalType"), this.resManager.GetString("InvalidIntervalError"),
-                       MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
+                MessageBox.Show(ex.Message, this.resManager.GetString("Error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Generic exception",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
 
-            if ((this.dataList.IntervalIsDisjunct(interval)) && (this.dataList.IntervalDisjunctWithCurrentEnums(interval)) && (this.IsIntervalDisjuctWithCurrent(interval)))
+           /* try
             {
-                this.ListBoxIntervals.Items.Add(interval.ToString());
-                this.currentCategory.AddInterval(interval);
+                
             }
-            else
+
+            catch
             {
                 MessageBox.Show(this.resManager.GetString("IntervalIsNotDisjunct"), this.resManager.GetString("InvalidIntervalError"),
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            }*/
         }
 
         /// <summary>
@@ -300,18 +290,18 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <param name="e"></param>
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
-            if (currentCategory.GetIntervals().Count > 0)
-            {
-                currentCategory.Name = TextBoxCategoryName.Text.ToString();
-                currentCategory.Frequency = 12345;
-                this.dataList.AddNewCategoryDirect(currentCategory);
+           /* if (currentCategory.GetIntervals().Count > 0)
+            {*/
+                currentCategory.Reduce();
+               // currentCategory.Frequency = 12345;
+               // this.dataList.AddNewCategoryDirect(currentCategory);
                 this.Dispose();
-            }
+         /*   }
             else
             {
                 MessageBox.Show(this.resManager.GetString("NoEmptyCategoryAllowed"), this.resManager.GetString("InvalidIntervalError"),
                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            }*/
         }
 
         /// <summary>
@@ -328,7 +318,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
 
 
         #region Other private methods
-
+        /*
         /// <summary>
         /// Method which ensures that all intervals in the category are of the same type
         /// </summary>
@@ -360,7 +350,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                 this.RadioFloat.Enabled = true;
                 this.RadioLong.Enabled = true;
             }
-        }
+        }*/
 
         /// <summary>
         /// Method to check whether all interval parameters were entered.
@@ -387,10 +377,34 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             //we expect lower bound to be smaller than upper bound
             try
             {
-                double left = Convert.ToDouble(TextBoxLeftBound.Text);
-                double right = Convert.ToDouble(TextBoxRightBound.Text);
-                if (left >= right)
-                    return false;
+                switch (attribute.DbDataType)
+                {
+                    case DbSimpleDataTypeEnum.BooleanSimpleType:
+                    case DbSimpleDataTypeEnum.DoubleSimpleType:
+                    case DbSimpleDataTypeEnum.FloatSimpleType:
+                    case DbSimpleDataTypeEnum.IntegerSimpleType:
+                    case DbSimpleDataTypeEnum.LongSimpleType:
+                    case DbSimpleDataTypeEnum.ShortSimpleType:
+                        {
+                            double left = Convert.ToDouble(TextBoxLeftBound.Text);
+                            double right = Convert.ToDouble(TextBoxRightBound.Text);
+                            if (left >= right)
+                                return false;
+                        }
+                        break;
+
+                    case DbSimpleDataTypeEnum.DateTimeSimpleType:
+                        {
+                            DateTime left = Convert.ToDateTime(TextBoxLeftBound.Text);
+                            DateTime right = Convert.ToDateTime(TextBoxRightBound.Text);
+                            if (left >= right)
+                                return false;
+                        }
+                        break;
+
+                    default:
+                        return true;
+                }
             }
             catch
             {
@@ -404,125 +418,65 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// </summary>
         /// <param name="intervalType"></param>
         /// <returns></returns>
-        protected Interval MakeInterval(IntervalType intervalType)
+        protected void TryAddInterval()
         {
-            IntervalBoundType leftBoundType = new IntervalBoundType();
-            IntervalBoundType rightBoundType = new IntervalBoundType();
-            int leftBound = 0;
-            int rightBound = 0;
-            bool isint = true;
-            float leftDoubleBound = 0;
-            float rightDoubleBound = 0;
+            BoundaryEnum leftBoundType = new BoundaryEnum();
+            BoundaryEnum rightBoundType = new BoundaryEnum();
+            IComparable leftBound = 0;
+            IComparable rightBound = 0;
+
             if (!RadioMinusInfinity.Checked)
             {
                 if (RadioLeftBoundRound.Checked)
                 {
-                    leftBoundType = IntervalBoundType.Round;
+                    leftBoundType = BoundaryEnum.Open;
                 }
                 else
                 {
-                    leftBoundType = IntervalBoundType.Sharp;
+                    leftBoundType = BoundaryEnum.Closed;
                 }
-                switch (intervalType)
+                try
                 {
-                    case IntervalType.Long:
-                        try
-                        {
-                            leftBound = Convert.ToInt32(TextBoxLeftBound.Text);
-                        }
-                        catch
-                        {
-                            throw new ArgumentOutOfRangeException();
-                        }
-                        break;
-                    case IntervalType.Float:
-                        try
-                        {
-                            isint = false;
-                            leftDoubleBound = (float)Convert.ToDouble(TextBoxLeftBound.Text);
-                        }
-                        catch
-                        {
-                            throw new ArgumentOutOfRangeException();
-                        }
-                        break;
-                    default:
-                        throw new Exception("Switch branch not implemented");
+                    leftBound = (IComparable)TextBoxLeftBound.Text;
+                }
+                catch
+                {
+                    throw new ArgumentOutOfRangeException();
                 }
             }
             else
             {
-                leftBoundType = IntervalBoundType.Infinity;
+                leftBoundType = BoundaryEnum.Infinity;
             }
             if (!RadioPlusInfinity.Checked)
             {
                 if (RadioRightBoundRound.Checked)
                 {
-                    rightBoundType = IntervalBoundType.Round;
+                    rightBoundType = BoundaryEnum.Open;
                 }
                 else
                 {
-                    rightBoundType = IntervalBoundType.Sharp;
+                    rightBoundType = BoundaryEnum.Closed;
                 }
-
-                switch (intervalType)
+                try
                 {
-                    case IntervalType.Long:
-                        try
-                        {
-                            rightBound = Convert.ToInt32(TextBoxRightBound.Text);
-                        }
-                        catch
-                        {
-                            throw new ArgumentOutOfRangeException();
-                        }
-                        break;
-
-                    case IntervalType.Float:
-                        try
-                        {
-                            isint = false;
-                            rightDoubleBound = (float)Convert.ToDouble(TextBoxRightBound.Text);
-                        }
-                        catch
-                        {
-                            throw new ArgumentOutOfRangeException();
-                        }
-                        break;
-
-                    default:
-                        throw new Exception("Switch branch not implemented");
+                    rightBound = (IComparable)TextBoxRightBound.Text;
                 }
+                catch
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
             }
             else
             {
-                rightBoundType = IntervalBoundType.Infinity;
+                rightBoundType = BoundaryEnum.Infinity;
             }
-
-            Interval interval;
-            if (isint)
-            {
-                interval = new Interval(IntervalType.Long);
-                interval.lowerBound = leftBound;
-                interval.upperBound = rightBound;
-                interval.lowerBoundType = leftBoundType;
-                interval.upperBoundType = rightBoundType;
-                //interval = new Interval(leftBound, rightBound, leftBoundType, rightBoundType);
-            }
-            else
-            {
-                interval = new Interval(IntervalType.Float);
-                interval.lowerBoundFl = leftDoubleBound;
-                interval.upperBoundFl = rightDoubleBound;
-                interval.lowerBoundType = leftBoundType;
-                interval.upperBoundType = rightBoundType;
-                //interval = new Interval(leftDoubleBound, rightDoubleBound, leftBoundType, rightBoundType);
-            }
-
-            return interval;
+            this.currentCategory.Intervals.Add(leftBound, leftBoundType,
+                rightBound, rightBoundType, false);
         }
 
-        /// <summary>
+       /* /// <summary>
         /// Method to check whether the interval is disjunct with currently available intervals in the category.
         /// </summary>
         /// <param name="interval">Interval to check for disjunctivity</param>
@@ -536,7 +490,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                     return false;
             }
             return true;
-        }
+        }*/
 
         #endregion
 
@@ -551,8 +505,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         {
             this.RadioMinusInfinity.Text = rm.GetString("RadioMinusInfinity");
             this.RadioPlusInfinity.Text = rm.GetString("RadioPlusInfinity");
-            this.RadioFloat.Text = rm.GetString("Float");
-            this.RadioLong.Text = rm.GetString("Long");
+            //this.RadioFloat.Text = rm.GetString("Float");
+           // this.RadioLong.Text = rm.GetString("Long");
             this.ButtonCancel.Text = rm.GetString("ButtonCancel");
             this.ButtonAddInterval.Text = rm.GetString("ButtonCheck");
             this.ButtonSubmit.Text = rm.GetString("ButtonSubmit");

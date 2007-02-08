@@ -349,6 +349,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Intervals are not allowed for this category.
+        /// </summary>
+        internal static string IntervalsNotAllowed {
+            get {
+                return ResourceManager.GetString("IntervalsNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid interval.
         /// </summary>
         internal static string InvalidIntervalError {
