@@ -84,6 +84,8 @@
     <Compile Include="Quantifiers\Common.cs" />
     <Compile Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\Equivalence\AboveNegation\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\Equivalence\AboveNegation\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Equivalence\FoundedEquivalence\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Equivalence\FoundedEquivalence\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\FourFoldQuantifiers.cs" />
@@ -160,6 +162,8 @@
     <Compile Include="VirtualAttributes\VirtualSDFFTBooleanAttribute\Functions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Quantifiers\FourFold\Equivalence\AboveNegation\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\Equivalence\AboveNegation\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\Others\AboveAverageDependence\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\Others\AboveAverageDependence\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\Others\BelowAverageDependence\boxDesign.svg" />

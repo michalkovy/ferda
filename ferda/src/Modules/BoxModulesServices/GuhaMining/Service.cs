@@ -43,6 +43,8 @@ namespace Ferda.Modules.Boxes.GuhaMining
                         new Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo());
             registerBox(Quantifiers.FourFold.Equivalence.FoundedEquivalence.BoxInfo.typeIdentifier,
                         new Quantifiers.FourFold.Equivalence.FoundedEquivalence.BoxInfo());
+            registerBox(Quantifiers.FourFold.Equivalence.AboveNegation.BoxInfo.typeIdentifier,
+                        new Quantifiers.FourFold.Equivalence.AboveNegation.BoxInfo());
             registerBox(Quantifiers.FourFold.Implicational.FoundedImplication.BoxInfo.typeIdentifier,
                         new Quantifiers.FourFold.Implicational.FoundedImplication.BoxInfo());
             registerBox(Quantifiers.FourFold.Others.AboveAverageDependence.BoxInfo.typeIdentifier,
