@@ -113,12 +113,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
 
         public RelationEnum Relation
         {
+            //get
+            //{
+            //    return (RelationEnum) Enum.Parse(
+            //                              typeof (RelationEnum),
+            //                              _boxModule.GetPropertyString(Common.PropRelation)
+            //                              );
+            //}
+            //New implementation - only greater or equal
             get
             {
-                return (RelationEnum) Enum.Parse(
-                                          typeof (RelationEnum),
-                                          _boxModule.GetPropertyString(Common.PropRelation)
-                                          );
+                return RelationEnum.GreaterOrEqual;
             }
         }
 
@@ -197,18 +202,52 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
             get { return true; }
         }
 
+        /// <summary>
+        /// Determines if the contingency table determined by
+        /// <paramref name="param"/> satisfies the quantifier
+        /// </summary>
+        /// <param name="param">
+        /// The quantifier setting includes the
+        /// contingency table and other information
+        /// </param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>If the settings satisfies the quantifier</returns>
         public override bool Compute(QuantifierEvaluateSetting param, Current current__)
         {
             double value = ComputeValue(param);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
+        /// <summary>
+        /// The function determines if the contingency table determined by
+        /// <paramref name="param"/> satisfies the quantifier. If it does
+        /// and if the quantifier provides significant numerical value,
+        /// the value is stored in the <paramref name="value"/> parameter.
+        /// </summary>
+        /// <param name="param">
+        /// The quantifier setting includes the
+        /// contingency table and other information
+        /// </param>
+        /// <param name="value">
+        /// The numerical value of the quantifier
+        /// </param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>If the settings satisfies the quantifier</returns>
         public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__)
         {
             value = ComputeValue(param);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
+        /// <summary>
+        /// Computes the value of the quantifier
+        /// </summary>
+        /// <param name="param">
+        /// The quantifier setting includes the
+        /// contingency table and other information
+        /// </param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>The value of the quantifier</returns>
         public override double ComputeValue(QuantifierEvaluateSetting param, Current current__)
         {
             return ExceptionsHandler.TryCatchMethodThrow<double>(
@@ -220,7 +259,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
                         else if (table.A == 0)
                             return Double.NegativeInfinity;
                         else
-                            return (table.A*table.N)/(table.R*table.K);
+                            return (table.A*table.N)/(table.R*table.K) - 1;
                     },
                 _boxModule.StringIceIdentity
                 );
