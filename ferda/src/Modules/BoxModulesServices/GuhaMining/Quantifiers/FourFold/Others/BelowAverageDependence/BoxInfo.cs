@@ -1,9 +1,8 @@
 // BoxModule.cs - BoxInfo class for the Above Average dependence quantifier box
 //
-// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
-// Documented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+// Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2006 Tomáš Kuchaø, Martin Ralbovský
+// Copyright (c) 2007 Martin Ralbovský
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,12 +19,12 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using Object=Ice.Object;
+using Object = Ice.Object;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverageDependence
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.BelowAverageDependence
 {
     /// <summary>
-    /// Class that provides info about boxes of the AboveAverageDependence type
+    /// Class that provides info about boxes of the BelowAverageDependence type
     /// </summary>
     internal class BoxInfo : Boxes.BoxInfo
     {
@@ -102,7 +101,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
         /// <param name="boxModule">box instance to be validated</param>
         public override void Validate(BoxModuleI boxModule)
         {
-            //Functions Func = (Functions) boxModule.FunctionsIObj;
+            Functions Func = (Functions) boxModule.FunctionsIObj;
         }
 
         /// <summary>
@@ -116,7 +115,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
         /// </returns>
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions) boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (propertyName)
             {
                 case Common.PropFromRowBoundary:
@@ -160,7 +159,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
         /// field in the BoxInfo implementation which holds the identifier 
         /// of type of the box module.
         /// </summary>
-        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.Others.AboveAverageDependence";
+        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.Others.BelowAverageDependence";
 
         /// <summary>
         /// Unique identifier of type of Box module

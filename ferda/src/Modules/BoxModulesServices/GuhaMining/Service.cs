@@ -47,6 +47,8 @@ namespace Ferda.Modules.Boxes.GuhaMining
                         new Quantifiers.FourFold.Implicational.FoundedImplication.BoxInfo());
             registerBox(Quantifiers.FourFold.Others.AboveAverageDependence.BoxInfo.typeIdentifier,
                         new Quantifiers.FourFold.Others.AboveAverageDependence.BoxInfo());
+            registerBox(Quantifiers.FourFold.Others.BelowAverageDependence.BoxInfo.typeIdentifier,
+                        new Quantifiers.FourFold.Others.BelowAverageDependence.BoxInfo());
             registerBox(Quantifiers.FourFold.Others.Base.BoxInfo.typeIdentifier,
                         new Quantifiers.FourFold.Others.Base.BoxInfo());
             registerBox(Quantifiers.FourFold.Others.E.BoxInfo.typeIdentifier,
