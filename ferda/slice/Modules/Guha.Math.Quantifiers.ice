@@ -9,13 +9,16 @@
 #include <Modules/Guha.Math.ice>
 #include <Modules/Guha.MiningProcessor.ice>
 
+/*
+THE DOCUMENTATION FOR MAJORITY OF STRUCTURES DEFINED BY THIS FILE CAN BE FOUND
+IN src\Modules\Core\Math\Quantifiers\IceDesignDocumentation
+*/
 
 module Ferda {
 	module Guha {
 		module MiningProcessor {
 
 				//FORWARD DECLARATION
-
 				interface BitStringGenerator;
 		};
 	};
@@ -41,13 +44,6 @@ module Ferda {
 					DifferenceOfFrequencies,
 					DifferenceOfQuantifierValues
 				};
-
-				//enum EvaluationPropertiesEnum
-				//{
-				//	HasValue,
-				//	GeneratesSignificantNumber,
-				//	HasNoValue
-				//};
 
 				enum BoundTypeEnum
 				{
@@ -100,7 +96,7 @@ module Ferda {
 
 					MissingInformationHandlingEnum missingInformationHandling;
 					OperationModeEnum operationMode;
-					//EvaluationPropertiesEnum evaluationProperty; fictive can be determined from functions interface
+
 					Ferda::Guha::Math::RelationEnum relation;
 					double treshold;
 
@@ -129,16 +125,40 @@ module Ferda {
 				};
 				sequence<QuantifierEvaluateSetting> QuantifierEvaluateSettingSeq;
 
+
+        /*
+        Basic functionality of a quantifier
+        */
 				interface QuantifierBaseFunctions
 				{
+				  /*
+				  Returns a structure giving information about the quantifier
+				  */
 					nonmutating QuantifierSetting GetQuantifierSetting()
 						throws Ferda::Modules::BoxRuntimeError;
+						
+					/*
+					Returns the localized label of the box (for showing in result browser...)
+					*/
 					nonmutating string GetLocalizedBoxLabel(Ferda::Modules::StringSeq localePrefs)
 						throws Ferda::Modules::BoxRuntimeError;
+						
+					/*
+					Returns the user label of the box
+					*/
 					nonmutating string GetLocalizedUserBoxLabel(Ferda::Modules::StringSeq localePrefs)
 						throws Ferda::Modules::BoxRuntimeError;
+						
+					/*
+					Determines if the contingency table determined by param satisfies the
+					quantifier
+					*/
 					nonmutating bool Compute(QuantifierEvaluateSetting param)
 						throws Ferda::Modules::BoxRuntimeError;
+						
+					/*
+					Method to compute more quantifier testing
+					*/
 					nonmutating Ferda::Modules::BoolSeq ComputeBatch(QuantifierEvaluateSettingSeq param)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
@@ -157,6 +177,9 @@ module Ferda {
 				{
 				};
 
+        /*
+        Interface for quantifiers that provide significant numeric value
+        */
 				interface QuantifierValueFunctions extends QuantifierBaseFunctions, QuantifierValueBaseFunctions
 				{
 					nonmutating double ComputeValue(QuantifierEvaluateSetting param)

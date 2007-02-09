@@ -1,7 +1,6 @@
-// Functions.cs - Function objects for the Above average dependence box module
+// Functions.cs - Function objects for the Below average dependence box module
 //
-// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
-// Documented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+// Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
 // Copyright (c) 2006 Tomáš Kuchaø, Martin Ralbovský
 //
@@ -25,7 +24,7 @@ using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
 using Ice;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverageDependence
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.BelowAverageDependence
 {
     /// <summary>
     /// Computes the above/below average difference.
@@ -118,8 +117,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
         {
             get
             {
-                return (OperationModeEnum) Enum.Parse(
-                                               typeof (OperationModeEnum),
+                return (OperationModeEnum)Enum.Parse(
+                                               typeof(OperationModeEnum),
                                                _boxModule.GetPropertyString(Common.PropOperationMode)
                                                );
             }
@@ -129,8 +128,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
         {
             get
             {
-                return (MissingInformationHandlingEnum) Enum.Parse(
-                                                            typeof (MissingInformationHandlingEnum),
+                return (MissingInformationHandlingEnum)Enum.Parse(
+                                                            typeof(MissingInformationHandlingEnum),
                                                             _boxModule.GetPropertyString(
                                                                 Common.PropMissingInformationHandling)
                                                             );
@@ -139,14 +138,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
 
         public RelationEnum Relation
         {
-            //get
-            //{
-            //    return (RelationEnum) Enum.Parse(
-            //                              typeof (RelationEnum),
-            //                              _boxModule.GetPropertyString(Common.PropRelation)
-            //                              );
-            //}
-            //New implementation - only greater or equal
             get
             {
                 return RelationEnum.GreaterOrEqual;
@@ -200,7 +191,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
 
         public QuantifierClassEnum[] QuantifierClasses
         {
-            get { return new QuantifierClassEnum[] {}; }
+            get { return new QuantifierClassEnum[] { }; }
         }
 
         public PerformanceDifficultyEnum PerformanceDifficulty
@@ -266,15 +257,15 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
         {
             return ExceptionsHandler.TryCatchMethodThrow<double>(
                 delegate
-                    {
-                        FourFoldContingencyTable table = new FourFoldContingencyTable(param);
-                        if ((table.A + table.C) == 0)
-                            return Double.NaN;
-                        else if (table.A == 0)
-                            return Double.NegativeInfinity;
-                        else
-                            return (table.A*table.N)/(table.R*table.K) - 1;
-                    },
+                {
+                    FourFoldContingencyTable table = new FourFoldContingencyTable(param);
+                    if ((table.A + table.C) == 0)
+                        return Double.NaN;
+                    else if (table.A == 0)
+                        return Double.NegativeInfinity;
+                    else
+                        return 1 - ((table.A * table.N) / (table.R * table.K));
+                },
                 _boxModule.StringIceIdentity
                 );
         }

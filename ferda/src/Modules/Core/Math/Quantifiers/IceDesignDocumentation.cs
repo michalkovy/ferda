@@ -7,6 +7,11 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
     /// Specifies type of handling missing information in analyzed data.
     /// Now is supported deleting for all tasks and specially for 4ft 
     /// (but not SD) tasks is allowed other setting.
+    /// <para>
+    /// There are 3 possible handling of incomplete information in GUHA
+    /// (as defined in Tomáš Kuchaø: Experimentální GUHA procedury, Diplomová
+    /// práce, Matematicko-fyzikální fakulta, Univerzita Karlova, 2006) part 8.3        
+    /// </para>
     /// </summary>
     public enum MissingInformationHandlingEnum
     {
@@ -27,11 +32,16 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
         Secured
     }
 
-
-    /// <summary>
-    /// Key information for SD*-Miners. This specifies how
-    /// the SD*-Miner will serve contingecy tables to quantifiers.
-    /// </summary>
+    ///<summary>
+    /// Determines the operation mode for the SD quantifiers
+        
+    /// By setting of the operation mode, the quantifier can be used both
+    /// for the SD and nonSD tasks. 
+    /// SD4FT, SDKL and SDCF tasks examine differences between two disjunct
+    /// sets determined by boolean attributes. There are contingency tables
+    /// created above each of the sets and subsequently, the quantifier 
+    /// examines the differences in the tables.
+    ///</summary>
     public enum OperationModeEnum
     {
         /// <summary>
@@ -70,6 +80,9 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
     /// And of course there are also quantifiers with has neither
     /// defined value nor other sighnificant value (see E-Quantifier). 
     /// </summary>
+    /// <remarks>
+    /// This enum is obsolete in the current version
+    /// </remarks>
     enum EvaluationPropertiesEnum
     {
         /// <summary>
@@ -131,6 +144,15 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
     /// <summary>
     /// Hold type of the boundary (in some dirrection) for specification 
     /// of submatrix of contingecy table to be used by the quantifier.
+    /// <para>
+    /// In some cases, user could restrict the size of contingency table
+    /// (for categorial attributes used in KL and CF procedures). 
+    /// User (or programmer) determines the size of contingency table
+    /// by setting this enum. When the 'All' option is selected, the whole
+    /// contingency table is taken into consideration. When the 'Half' option
+    /// is selected, the table is split into two parts. When the 'Number'
+    /// option is selected, user selects the starting and ending number of
+    /// rows and columns.
     /// </summary>
     public struct Bound
     {
@@ -151,6 +173,10 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
     /// TCP means: if quantifier is satsisfied for (four fold) contigency table 
     /// (a, b, c, d) than it is satisfied for (four fold) contingecy table 
     /// (a', b', c', d'). 
+    /// Defines the classes of quantifiers. The classes of quantifiers have
+    /// similar properties. The classes are defined in: 
+    /// Rauch J. (2005): Logic of Association Rules, Applied Inteligence, 
+    /// Vol. 22, Issue 1, pp. 9-28
     /// </summary>
     public enum QuantifierClassEnum
     {

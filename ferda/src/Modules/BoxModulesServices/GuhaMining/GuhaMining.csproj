@@ -93,6 +93,8 @@
     <Compile Include="Quantifiers\FourFold\Others\AboveAverageDependence\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Others\Base\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Others\Base\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\BelowAverageDependence\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\BelowAverageDependence\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Others\E\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Others\E\Functions.cs" />
     <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\AritmeticAverage\BoxInfo.cs" />
@@ -160,6 +162,8 @@
   <ItemGroup>
     <Content Include="Quantifiers\FourFold\Others\AboveAverageDependence\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\Others\AboveAverageDependence\boxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\Others\BelowAverageDependence\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\Others\BelowAverageDependence\boxIcon.ico" />
     <Content Include="Quantifiers\Notes.txt" />
   </ItemGroup>
   <ItemGroup>
