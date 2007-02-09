@@ -75,6 +75,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
                     return new BoolTI(Func.NeedsNumericValues);
                 case Common.PropSupportedData:
                     return new StringTI(Func.SupportedData.ToString());
+
+                case Common.PropRelation:
+                    return new StringTI(Func.Relation.ToString());
+
                 default:
                     throw new NotImplementedException();
             }
