@@ -99,6 +99,8 @@
     <Compile Include="Quantifiers\FourFold\Others\BelowAverageDependence\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Others\E\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Others\E\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\Pairing\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\Pairing\Functions.cs" />
     <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\AritmeticAverage\BoxInfo.cs" />
     <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\AritmeticAverage\Functions.cs" />
     <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Asymetry\BoxInfo.cs" />
@@ -168,6 +170,8 @@
     <Content Include="Quantifiers\FourFold\Others\AboveAverageDependence\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\Others\BelowAverageDependence\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\Others\BelowAverageDependence\boxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\Others\Pairing\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\Others\Pairing\boxIcon.ico" />
     <Content Include="Quantifiers\Notes.txt" />
   </ItemGroup>
   <ItemGroup>

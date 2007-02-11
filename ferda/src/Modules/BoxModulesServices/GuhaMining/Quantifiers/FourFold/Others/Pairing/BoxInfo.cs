@@ -1,4 +1,4 @@
-// Functions.cs - Function objects for the Above negation quantifier box module
+// Functions.cs - Function objects for the Pairing quantifier box module
 //
 // Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
@@ -21,7 +21,7 @@
 using System;
 using Object = Ice.Object;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Equivalence.AboveNegation
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
 {
     /// <summary>
     /// Class that provides info about boxes of the BelowAverageDependence type
@@ -156,7 +156,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Equivalence.AboveN
         /// field in the BoxInfo implementation which holds the identifier 
         /// of type of the box module.
         /// </summary>
-        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.Equivalence.AboveNegation";
+        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.Others.Pairing";
 
         /// <summary>
         /// Unique identifier of type of Box module
