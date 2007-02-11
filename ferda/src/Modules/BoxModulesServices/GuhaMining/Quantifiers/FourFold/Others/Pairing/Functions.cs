@@ -33,7 +33,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
     /// <remarks>
     /// The quantifier finds pairing between the a and d field of the
     /// contingency table. The formula for the quantifier is 
-    /// 2(a^2*d^2)/(a^4 + b^4).
+    /// 2(a^2*d^2)/(a^4 + d^4).
     /// </remarks>
     public class Functions : FourFoldValueDisp_, IFunctions
     {
@@ -219,7 +219,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
                     else
                     {
                         double up = Math.Pow(table.A, 2) * Math.Pow(table.D, 2);
-                        double down = Math.Pow(table.A, 4) + Math.Pow(table.B, 4);
+                        double down = Math.Pow(table.A, 4) + Math.Pow(table.D, 4);
                         return 2 * up / down;
                     }
                 },
