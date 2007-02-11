@@ -56,6 +56,7 @@
 			<object identity="GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.AboveAverageDependence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
       <object identity="GuhaMining.Quantifiers.FourFold.Others.BelowAverageDependence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+      <object identity="GuhaMining.Quantifiers.FourFold.Others.Pairing" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.Base" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.E" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
