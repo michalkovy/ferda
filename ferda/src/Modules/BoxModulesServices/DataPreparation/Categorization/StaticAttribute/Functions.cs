@@ -18,6 +18,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         public const string PropCardinality = "Cardinality";
         public const string PropNameInLiterals = "NameInLiterals";
+        public const string PropCountOfCategories = "CountOfCategories";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
         public const string PropDomain = "Domain";
@@ -84,6 +85,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                                         typeof(DomainEnum),
                                         _boxModule.GetPropertyString(PropDomain)
                                         );
+            }
+        }
+
+        public LongTI CountOfCategories
+        {
+            get
+            {
+                return GetAttribute(false).Count;
             }
         }
 
@@ -645,16 +654,26 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
         {
-            BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("BitStringGenerator")[0];
-            BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
-            //boxModuleParam1.
-         //   Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
-                    return Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(boxModuleParam1.getFunctions());
-           /* return SocketConnections.GetPrx<ColumnFunctionsPrx>(
-                _boxModule,
-                SockColumn,
-                ColumnFunctionsPrxHelper.checkedCast,
-                fallOnError);*/
+            BoxModulePrx boxModuleParam1;
+            try
+            {
+                BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("BitStringGenerator")[0];
+                boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
+            }
+            catch
+            {
+                try
+                {
+                    boxModuleParam1 = _boxModule.MyProxy.getConnections("Column")[0];
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            return DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
+                boxModuleParam1.getFunctions());
+
         }
 
         public BitStringGeneratorPrx GetBitStringGeneratorPrx(bool fallOnError)
@@ -688,7 +707,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             //_boxInfo = boxInfo;
         }
 
-       
+
         #endregion
     }
 }
