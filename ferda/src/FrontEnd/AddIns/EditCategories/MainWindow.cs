@@ -38,27 +38,55 @@ using System.Resources;
 using System.Reflection;
 using Ferda.Guha.Data;
 using Ferda.Guha.Attribute;
+using System.Security.Cryptography;
 
 #endregion
 
 namespace Ferda.FrontEnd.AddIns.EditCategories
 {
     /// <summary>
+    /// Classs for random string generation
+    /// </summary>
+    public static class RandomString
+    {
+        /// <summary>
+        /// Method to create a random string of the specified length
+        /// </summary>
+        /// <param name="numBytes">String length</param>
+        /// <returns>Created random string</returns>
+        public static String CreateKey(int numBytes)
+        {
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            byte[] buff = new byte[numBytes];
+
+            rng.GetBytes(buff);
+            return BytesToHexString(buff);
+        }
+
+        /// <summary>
+        /// Converts bytes to hexstring
+        /// </summary>
+        /// <param name="bytes">Byte array to convert</param>
+        /// <returns>Converted string</returns>
+        static String BytesToHexString(byte[] bytes)
+        {
+            StringBuilder hexString = new StringBuilder(64);
+
+            for (int counter = 0; counter < bytes.Length; counter++)
+            {
+                hexString.Append(String.Format("{0:X2}", bytes[counter]));
+            }
+            return hexString.ToString();
+        }
+    }
+
+
+    /// <summary>
     /// Class which displays categories and tools to work with them
     /// </summary>
     public partial class MainListView : System.Windows.Forms.Form, Ferda.FrontEnd.IIconProvider
     {
         #region Private variables
-
-        /// <summary>
-        /// Datalist which is displayed in the EditCategoriesListView
-        /// </summary>
-        FerdaSmartDataList bigDataList;
-
-        /// <summary>
-        /// Categories to put in the datalist
-        /// </summary>
-       // CategoriesStruct returnCategories = new CategoriesStruct();
 
         /// <summary>
         /// Resource manager
@@ -103,9 +131,14 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         private Attribute<IComparable> attribute;
 
         /// <summary>
-        /// Attribute datatype
+        /// Unchanged serialized attribute
         /// </summary>
-        private DbSimpleDataTypeEnum attributeDataType;
+        private string oldAttribute;
+
+        /// <summary>
+        /// Datatable on which the attribute is applied
+        /// </summary>
+        private DataTable table;
 
 
         #endregion
@@ -119,7 +152,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="localePrefs">Current locale</param>
         /// <param name="categories">Categories to edit</param>
         /// <param name="distinctValues">Distinct values for enum categories</param>
-        public MainListView(string[] localePrefs, string categories, ValuesAndFrequencies distinctValues, DbDataTypeEnum columnDataType, IOwnerOfAddIn ownerOfAddin)
+        public MainListView(string[] localePrefs, string categories, DataTable table,
+            DbDataTypeEnum columnDataType, IOwnerOfAddIn ownerOfAddin)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -132,7 +166,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             }
             catch
             {
-                this.resManager = new ResourceManager("Ferda.FrontEnd.AddIns.EditCategories.Localization_en-US",
+                this.resManager = new ResourceManager(
+                    "Ferda.FrontEnd.AddIns.EditCategories.Localization_en-US",
             Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
@@ -197,19 +232,23 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     throw new ArgumentOutOfRangeException();
             }
 
+            
+
             #endregion
 
-            this.distinctValues = distinctValues;
+            this.table = table;
+            this.oldAttribute = categories;
             this.ownerOfAdd = ownerOfAddin;
             this.path = Assembly.GetExecutingAssembly().Location;
             InitializeComponent();
             this.ChangeLocale(this.resManager);
-            bigDataList = this.MyIceRun(categories);
             FillEditCategoriesListView(CategoriesListView);
             //adding a handling method for column sorting
-            this.CategoriesListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
+            this.CategoriesListView.ColumnClick += 
+                new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
             this.LoadIcons();
             this.InitIcons();
+
         }
 
         #endregion
@@ -378,21 +417,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="e"></param>
         private void SaveAndQuit_Click(object sender, EventArgs e)
         {
-           /* CategoriesStruct categories = new CategoriesStruct();
-            try
-            {
-                this.returnCategories = this.MyIceRunOut(this.bigDataList);
-            }
-            catch (System.ApplicationException)
-            {
-                MessageBox.Show(resManager.GetString("SameCategoryNames"), resManager.GetString("Error"),
-
-                          MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            categories = this.returnCategories;
-            DialogResult = DialogResult.OK;
-            this.Dispose();*/
+            this.DialogResult = DialogResult.OK;
+            this.Dispose();
+            return;
         }
 
         /// <summary>
@@ -458,7 +485,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     this.MenuItemJoin.Enabled = false;
                     this.MenuItemNew.Enabled = false;
                     this.MenuItemEdit.Enabled = false;
-                    EditExistingCategory editCategory = new EditExistingCategory(index, attribute, this, this.resManager);
+                    EditExistingCategory editCategory = new EditExistingCategory(
+                        index, attribute, this.table, this, this.resManager, new EventHandler(Refr_Click));
                 }
                 catch
                 {
@@ -476,15 +504,25 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="e"></param>
         private void EditLabelHandler(object sender, LabelEditEventArgs e)
         {
-            int index = 0;
-            try
+            string index = String.Empty;
+            index = (string)this.CategoriesListView.Items[e.Item].Tag;
+            e.CancelEdit = true;
+
+            //name has not been changed yet
+            if ((index == e.Label) || (e.Label == String.Empty))
             {
-                index = (int)this.CategoriesListView.Items[e.Item].Tag;
-                e.CancelEdit = true;
-                this.bigDataList.SetName(index, e.Label);
+                return;
+            }
+
+            try
+            {   
+                this.attribute.RenameCategory(index, e.Label);
+                this.RefreshList();
             }
             catch
             {
+                MessageBox.Show(this.resManager.GetString("SameCategoryNames"), this.resManager.GetString("Error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
         }
@@ -511,7 +549,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="e"></param>
         private void AddNewEnumeration_Click(object sender, EventArgs e)
         {
-            CreateNewCategory.CreateSetWizard newEnum = new CreateSetWizard(attribute, this.resManager);
+            CreateNewCategory.CreateSetWizard newEnum 
+                = new CreateSetWizard(attribute, String.Empty, this.table,
+                this.resManager, new EventHandler(Refr_Click));
             this.SuspendLayout();
             newEnum.Name = "CreateSetWizard";
             newEnum.TabIndex = 2;
@@ -537,7 +577,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         {
             if (attribute.IntervalsAllowed)
             {
-                CreateIntervalWizard newInterval1 = new CreateIntervalWizard(attribute, this.resManager);
+                CreateIntervalWizard newInterval1 = new CreateIntervalWizard(
+                    attribute, String.Empty, this.resManager, new EventHandler(Refr_Click));
                 this.SuspendLayout();
                 newInterval1.Name = "CreateIntervalWizard";
                 newInterval1.TabIndex = 2;
@@ -612,279 +653,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
         #region Conversion methods
 
-        /// <summary>
-        /// Method to initialize listview using ice structures
-        /// </summary>
-        /// <param name="existingCategories">Categories to fill in FerdaSmartDataList</param>
-        /// <returns>FerdaSmartDataList with categories</returns>
-        private FerdaSmartDataList MyIceRun(string existingCategories)
-        {
-            //here we need to fill our data structure with data from ice
-            ArrayList allValues = new ArrayList();
-            if (this.distinctValues != null)
-            {
-                /*foreach (string value in this.distinctValues)
-                {
-                    allValues.Add(value);
-                }*/
-            }
-
-            FerdaSmartDataList returnList = new FerdaSmartDataList(allValues, new ArrayList());
-            /*foreach (DictionaryEntry myEnumCategorySeq in existingCategories.enums)
-            {
-                Category newMultiset = new Category();
-                newMultiset.CatType = CategoryType.Enumeration;
-                newMultiset.Name = myEnumCategorySeq.Key.ToString();
-                ArrayList tempArray = new ArrayList();
-                String[] StringSeq = (String[])myEnumCategorySeq.Value;
-                foreach (string entry in StringSeq)
-                {
-                    tempArray.Add(entry);
-                }
-                SingleSet newSet = new SingleSet(tempArray);
-                newMultiset.AddSingleSet(newSet);
-                returnList.AddNewCategoryDirect(newMultiset);
-            }
-
-            foreach (DictionaryEntry myLongIntervalCategorySeq in existingCategories.longIntervals)
-            {
-                Category newMultiset = new Category();
-                newMultiset.CatType = CategoryType.Interval;
-                newMultiset.Name = myLongIntervalCategorySeq.Key.ToString();
-                LongIntervalStruct[] myLongIntervalStructSeq = (LongIntervalStruct[])myLongIntervalCategorySeq.Value;
-                foreach (LongIntervalStruct myLongIntervalStruct in myLongIntervalStructSeq)
-                {
-                    IntervalBoundType ubt, lbt;
-                    if (myLongIntervalStruct.leftBoundType == BoundaryEnum.Infinity)
-                    {
-                        lbt = IntervalBoundType.Infinity;
-                    }
-                    else
-                    {
-                        if (myLongIntervalStruct.leftBoundType == BoundaryEnum.Round)
-                        {
-                            lbt = IntervalBoundType.Round;
-                        }
-                        else
-                        {
-                            lbt = IntervalBoundType.Sharp;
-                        }
-                    }
-                    if (myLongIntervalStruct.rightBoundType == BoundaryEnum.Infinity)
-                    {
-                        ubt = IntervalBoundType.Infinity;
-                    }
-                    else
-                    {
-                        if (myLongIntervalStruct.rightBoundType == BoundaryEnum.Round)
-                        {
-                            ubt = IntervalBoundType.Round;
-                        }
-                        else
-                        {
-                            ubt = IntervalBoundType.Sharp;
-                        }
-                        Interval newInterval = new Interval(IntervalType.Long);
-                        newInterval.lowerBound = myLongIntervalStruct.leftBound;
-                        newInterval.upperBound = myLongIntervalStruct.rightBound;
-                        newInterval.lowerBoundType = lbt;
-                        newInterval.upperBoundType = ubt;
-                        //Interval newInterval = new Interval((int)myLongIntervalStruct.leftBound, (int)myLongIntervalStruct.rightBound, lbt, ubt);
-                        //  newInterval.intervalType = IntervalType.Long
-                        newMultiset.AddInterval(newInterval);
-                    }
-                    returnList.AddNewCategoryDirect(newMultiset);
-                }
-            }
-
-            foreach (DictionaryEntry myFloatIntervalCategorySeq in existingCategories.floatIntervals)
-            {
-                Category newMultiset = new Category();
-                newMultiset.CatType = CategoryType.Interval;
-                newMultiset.Name = myFloatIntervalCategorySeq.Key.ToString();
-                FloatIntervalStruct[] myFloatIntervalStructSeq = (FloatIntervalStruct[])myFloatIntervalCategorySeq.Value;
-                foreach (FloatIntervalStruct myFloatIntervalStruct in myFloatIntervalStructSeq)
-                {
-                    IntervalBoundType ubt, lbt;
-                    if (myFloatIntervalStruct.leftBoundType == BoundaryEnum.Infinity)
-                    {
-                        lbt = IntervalBoundType.Infinity;
-                    }
-                    else
-                    {
-                        if (myFloatIntervalStruct.leftBoundType == BoundaryEnum.Round)
-                        {
-                            lbt = IntervalBoundType.Round;
-                        }
-                        else
-                        {
-                            lbt = IntervalBoundType.Sharp;
-                        }
-                    }
-                    if (myFloatIntervalStruct.rightBoundType == BoundaryEnum.Infinity)
-                    {
-                        ubt = IntervalBoundType.Infinity;
-                    }
-                    else
-                    {
-                        if (myFloatIntervalStruct.rightBoundType == BoundaryEnum.Round)
-                        {
-                            ubt = IntervalBoundType.Round;
-                        }
-                        else
-                        {
-                            ubt = IntervalBoundType.Sharp;
-                        }
-                        Interval newInterval = new Interval(IntervalType.Float);
-                        newInterval.lowerBoundFl = myFloatIntervalStruct.leftBound;
-                        newInterval.upperBoundFl = myFloatIntervalStruct.rightBound;
-                        newInterval.lowerBoundType = lbt;
-                        newInterval.upperBoundType = ubt;
-                        //     Interval newInterval = new Interval(myFloatIntervalStruct.leftBound, myFloatIntervalStruct.rightBound, lbt, ubt);
-                        newMultiset.AddInterval(newInterval);
-                    }
-                    returnList.AddNewCategoryDirect(newMultiset);
-                }
-            }*/
-            return returnList;
-        }
-
-        /// <summary>
-        /// Method to convert SmartDataList to CategoriesStruct structure.
-        /// </summary>
-        /// <param name="dataList"></param>
-        /// <returns></returns>
-        private string MyIceRunOut(FerdaSmartDataList dataList)
-        {
-            /*CategoriesStruct myCategoriesStruct = new CategoriesStruct();
-            myCategoriesStruct.dateTimeIntervals = new DateTimeIntervalCategorySeq();
-            myCategoriesStruct.enums = new EnumCategorySeq();
-            myCategoriesStruct.floatIntervals = new FloatIntervalCategorySeq();
-            myCategoriesStruct.longIntervals = new LongIntervalCategorySeq();*/
-            ArrayList tempArray = new ArrayList();
-            /*foreach (Category multiSet in dataList.Categories)
-            {
-                switch (multiSet.CatType)
-                {
-                    case CategoryType.Interval:
-                        foreach (Interval interval in multiSet.GetIntervals())
-                        {
-                            if (interval.intervalType == IntervalType.Long)
-                            {
-                                LongIntervalStruct newLong = new LongIntervalStruct();
-                                newLong.leftBound = interval.lowerBound;
-                                newLong.rightBound = interval.upperBound;
-                                if (interval.lowerBoundType == IntervalBoundType.Round)
-                                {
-                                    newLong.leftBoundType = BoundaryEnum.Round;
-                                }
-                                else
-                                {
-                                    if (interval.lowerBoundType == IntervalBoundType.Sharp)
-                                    {
-                                        newLong.leftBoundType = BoundaryEnum.Sharp;
-                                    }
-                                    else
-                                    {
-                                        newLong.leftBoundType = BoundaryEnum.Infinity;
-                                    }
-                                }
-                                if (interval.upperBoundType == IntervalBoundType.Round)
-                                {
-                                    newLong.rightBoundType = BoundaryEnum.Round;
-                                }
-                                else
-                                {
-                                    if (interval.upperBoundType == IntervalBoundType.Sharp)
-                                    {
-                                        newLong.rightBoundType = BoundaryEnum.Sharp;
-                                    }
-                                    else
-                                    {
-                                        newLong.rightBoundType = BoundaryEnum.Infinity;
-                                    }
-                                }
-                                tempArray.Add(newLong);
-                            }
-                            else
-                            {
-                                if (interval.intervalType == IntervalType.Float)
-                                {
-                                    FloatIntervalStruct newFloat = new FloatIntervalStruct();
-                                    newFloat.leftBound = interval.lowerBoundFl;
-                                    newFloat.rightBound = interval.upperBoundFl;
-                                    if (interval.lowerBoundType == IntervalBoundType.Round)
-                                    {
-                                        newFloat.leftBoundType = BoundaryEnum.Round;
-                                    }
-                                    else
-                                    {
-                                        if (interval.lowerBoundType == IntervalBoundType.Sharp)
-                                        {
-                                            newFloat.leftBoundType = BoundaryEnum.Sharp;
-                                        }
-                                        else
-                                        {
-                                            newFloat.leftBoundType = BoundaryEnum.Infinity;
-                                        }
-                                    }
-                                    if (interval.upperBoundType == IntervalBoundType.Round)
-                                    {
-                                        newFloat.rightBoundType = BoundaryEnum.Round;
-                                    }
-                                    else
-                                    {
-                                        if (interval.upperBoundType == IntervalBoundType.Sharp)
-                                        {
-                                            newFloat.rightBoundType = BoundaryEnum.Sharp;
-                                        }
-                                        else
-                                        {
-                                            newFloat.rightBoundType = BoundaryEnum.Infinity;
-                                        }
-                                    }
-                                    tempArray.Add(newFloat);
-                                }
-                            }
-                        }
-                        if (multiSet.GetIntervalType() == IntervalType.Long)
-                        {
-                            myCategoriesStruct.longIntervals.Add(multiSet.Name, (LongIntervalStruct[])tempArray.ToArray(typeof(LongIntervalStruct)));
-                            tempArray.Clear();
-                        }
-                        else
-                        {
-                            if (multiSet.GetIntervalType() == IntervalType.Float)
-                            {
-                                myCategoriesStruct.floatIntervals.Add(multiSet.Name, (FloatIntervalStruct[])tempArray.ToArray(typeof(FloatIntervalStruct)));
-                                tempArray.Clear();
-                            }
-                        }
-                        break;
-                    case CategoryType.Enumeration:
-                        tempArray = multiSet.Set.Values;
-                        String[] tempString = new String[tempArray.Count];
-                        for (int i = 0; i < tempArray.Count; i++)
-                        {
-                            tempString[i] = tempArray[i].ToString();
-                        }
-                        try
-                        {
-                            myCategoriesStruct.enums.Add(multiSet.Name, tempString);
-                        }
-                        catch (System.ArgumentException)
-                        {
-                            throw (new System.ApplicationException());
-                        }
-                        tempArray.Clear();
-                        break;
-                    default:
-                        break;
-                }
-            }*/
-          //  return myCategoriesStruct;
-            return "";
-        }
+       
 
         /// <summary>
         /// Method which returns updated categories
@@ -892,8 +661,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <returns></returns>
         public string GetUpdatedCategories()
         {
-            //return this.returnCategories;
-            return "";
+            return Guha.Attribute.Serializer.Serialize<IComparable>(this.attribute.Export());
         }
 
         #endregion

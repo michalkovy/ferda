@@ -255,7 +255,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.ListBoxIntervals.Size = new System.Drawing.Size(180, 82);
             this.ListBoxIntervals.TabIndex = 13;
             this.ListBoxIntervals.DoubleClick += new System.EventHandler(this.ListBoxIntervals_DoubleClick);
-            this.ListBoxIntervals.SelectedIndexChanged += new System.EventHandler(this.ListBoxIntervals_SelectedIndexChanged);
+          //  this.ListBoxIntervals.SelectedIndexChanged += new System.EventHandler(this.ListBoxIntervals_SelectedIndexChanged);
             // 
             // LabelIntervals
             // 

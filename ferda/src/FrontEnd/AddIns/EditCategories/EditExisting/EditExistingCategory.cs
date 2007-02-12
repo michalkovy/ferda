@@ -28,6 +28,7 @@ using System.Resources;
 using System.Reflection;
 using System.Windows.Forms;
 using Ferda.Guha.Attribute;
+using System.Data;
 
 namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
 {
@@ -45,12 +46,12 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         /// <param name="dataList">Datalist to work with</param>
         /// <param name="listView">Listview to display categories</param>
         /// <param name="rm">Resource manager</param>
-        public EditExistingCategory(string index, Attribute<IComparable> attribute, MainListView listView, ResourceManager rm)
+        public EditExistingCategory(string index, Attribute<IComparable> attribute, DataTable table, MainListView listView, ResourceManager rm, EventHandler closeHandler)
         {
             if(attribute[index].Intervals.Count > 0)
             //if (dataList.GetCategory(index).CatType == Ferda.FrontEnd.AddIns.EditCategories.CategoryType.Interval)
             {
-                EditExistingInterval editedInterval = new EditExistingInterval(attribute, index, rm);
+                EditExistingInterval editedInterval = new EditExistingInterval(attribute, index, rm, closeHandler);
                 listView.SuspendLayout();
                 editedInterval.Name = "EditIntervalWizard";
                 editedInterval.TabIndex = 2;
@@ -68,7 +69,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
             }
             else
             {
-                EditExistingEnumeration editedEnum = new EditExistingEnumeration(attribute, index, rm);
+                EditExistingEnumeration editedEnum = new EditExistingEnumeration(attribute, index, table, rm, closeHandler);
                 listView.SuspendLayout();
                 editedEnum.Name = "EditSetWizard";
                 editedEnum.TabIndex = 2;

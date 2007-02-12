@@ -54,11 +54,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.ButtonCancel = new System.Windows.Forms.Button();
             this.ButtonSubmit = new System.Windows.Forms.Button();
             this.LabelExistingValues = new System.Windows.Forms.Label();
-            this.LabelAvailableValues = new System.Windows.Forms.Label();
+            this.LabelUncoveredValues = new System.Windows.Forms.Label();
             this.ListBoxExistingValues = new System.Windows.Forms.ListBox();
             this.ButtonAdd = new System.Windows.Forms.Button();
             this.ButtonRemove = new System.Windows.Forms.Button();
-            this.ListBoxAvailableValues = new System.Windows.Forms.ListBox();
+            this.ListBoxUncoveredValues = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // LabelNewName
@@ -107,12 +107,12 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // 
             // LabelAvailableValues
             // 
-            this.LabelAvailableValues.AutoSize = true;
-            this.LabelAvailableValues.Location = new System.Drawing.Point(3, 66);
-            this.LabelAvailableValues.Name = "LabelAvailableValues";
-            this.LabelAvailableValues.Size = new System.Drawing.Size(84, 13);
-            this.LabelAvailableValues.TabIndex = 48;
-            this.LabelAvailableValues.Text = "Available values";
+            this.LabelUncoveredValues.AutoSize = true;
+            this.LabelUncoveredValues.Location = new System.Drawing.Point(3, 66);
+            this.LabelUncoveredValues.Name = "LabelAvailableValues";
+            this.LabelUncoveredValues.Size = new System.Drawing.Size(84, 13);
+            this.LabelUncoveredValues.TabIndex = 48;
+            this.LabelUncoveredValues.Text = "Available values";
             // 
             // ListBoxExistingValues
             // 
@@ -140,13 +140,13 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.ButtonRemove.Text = "<";
             this.ButtonRemove.Click += new System.EventHandler(this.Remove_Click);
             // 
-            // ListBoxAvailableValues
+            // ListBoxUncoveredValues
             // 
-            this.ListBoxAvailableValues.FormattingEnabled = true;
-            this.ListBoxAvailableValues.Location = new System.Drawing.Point(3, 83);
-            this.ListBoxAvailableValues.Name = "ListBoxAvailableValues";
-            this.ListBoxAvailableValues.Size = new System.Drawing.Size(96, 212);
-            this.ListBoxAvailableValues.TabIndex = 2;
+            this.ListBoxUncoveredValues.FormattingEnabled = true;
+            this.ListBoxUncoveredValues.Location = new System.Drawing.Point(3, 83);
+            this.ListBoxUncoveredValues.Name = "ListBoxUncoveredValues";
+            this.ListBoxUncoveredValues.Size = new System.Drawing.Size(96, 212);
+            this.ListBoxUncoveredValues.TabIndex = 2;
             // 
             // CreateSetWizard
             // 
@@ -157,11 +157,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonSubmit);
             this.Controls.Add(this.LabelExistingValues);
-            this.Controls.Add(this.LabelAvailableValues);
+            this.Controls.Add(this.LabelUncoveredValues);
             this.Controls.Add(this.ListBoxExistingValues);
             this.Controls.Add(this.ButtonAdd);
             this.Controls.Add(this.ButtonRemove);
-            this.Controls.Add(this.ListBoxAvailableValues);
+            this.Controls.Add(this.ListBoxUncoveredValues);
             this.Name = "CreateSetWizard";
             this.Size = new System.Drawing.Size(228, 370);
             this.ResumeLayout(false);
@@ -173,13 +173,13 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
 
         private System.Windows.Forms.Label LabelNewName;
         private System.Windows.Forms.Label LabelExistingValues;
-        private System.Windows.Forms.Label LabelAvailableValues;
+        private System.Windows.Forms.Label LabelUncoveredValues;
         internal System.Windows.Forms.Button ButtonCancel;
         internal System.Windows.Forms.Button ButtonSubmit;
         internal System.Windows.Forms.ListBox ListBoxExistingValues;
         internal System.Windows.Forms.Button ButtonAdd;
         internal System.Windows.Forms.Button ButtonRemove;
-        internal System.Windows.Forms.ListBox ListBoxAvailableValues;
+        internal System.Windows.Forms.ListBox ListBoxUncoveredValues;
         internal System.Windows.Forms.TextBox TextBoxNewName;
     }
 }

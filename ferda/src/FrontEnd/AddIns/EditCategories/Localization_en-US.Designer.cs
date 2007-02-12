@@ -358,6 +358,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid enumeration value type.
+        /// </summary>
+        internal static string InvalidEnumerationType {
+            get {
+                return ResourceManager.GetString("InvalidEnumerationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid interval.
         /// </summary>
         internal static string InvalidIntervalError {

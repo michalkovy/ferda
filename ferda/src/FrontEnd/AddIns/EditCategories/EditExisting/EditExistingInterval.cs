@@ -52,11 +52,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         /// <param name="dataList">Datalist to work with</param>
         /// <param name="editedInterval">Edited interval category</param>
         /// <param name="rm">resource manager</param>
-        public EditExistingInterval(Attribute<IComparable> attribute, string index, ResourceManager rm)
-            : base(attribute, rm)
+        public EditExistingInterval(Attribute<IComparable> attribute, string index, ResourceManager rm, EventHandler closeHandler)
+            : base(attribute, index, rm, closeHandler)
         {
             this.attribute = attribute;
-            this.currentCategory = attribute[index];
+            this.tempName = index;
 
             Interval<IComparable> tempInterval = attribute[index].Intervals[0];
             foreach (Interval<IComparable> inter in attribute[index].Intervals)
@@ -68,42 +68,13 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
                 }
             }
             this.ButtonCancel.Click -= new System.EventHandler(this.CancelButton_Click);
-            this.ButtonCancel.Click += new System.EventHandler(this.ButtonNewCancel_Click);
-
-            //initialiazing controls according to the interval
-            if (tempInterval.LeftBoundary == BoundaryEnum.Infinity)
-            {
-                this.RadioMinusInfinity.Checked = true;
-            }
-            else
-            {
-                if (tempInterval.LeftBoundary == BoundaryEnum.Open)
-                {
-                    this.RadioLeftBoundRound.Checked = true;
-                }
-                else
-                {
-                    this.RadioLeftBoundSharp.Checked = true;
-                }
-            }
-
-            if (tempInterval.RightBoundary == BoundaryEnum.Infinity)
-            {
-                this.RadioPlusInfinity.Checked = true;
-            }
-            else
-            {
-                if (tempInterval.RightBoundary == BoundaryEnum.Open)
-                {
-                    this.RadioRightBoundRound.Checked = true;
-                }
-                else
-                {
-                    this.RadioRightBoundSharp.Checked = true;
-                }
-            }
-     //       this.datalist.RemoveCategory(index);
+            this.ButtonSubmit.Click -= new System.EventHandler(this.SubmitButton_Click);
+            this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click_New);
+            this.ButtonSubmit.Click += new System.EventHandler(this.ButtonSubmit_Click_New);
             InitializeComponent();
+            this.TextBoxCategoryName.Text =
+                index;
+            this.TextBoxCategoryName.Enabled = false;
         }
 
         #endregion
@@ -111,14 +82,25 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
 
         #region Button handlers
 
+
         /// <summary>
-        /// Cancel click handler
+        /// Handler for submitting the changed interval to categories list
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void ButtonNewCancel_Click(object sender, EventArgs e)
+        protected void ButtonSubmit_Click_New(object sender, EventArgs e)
         {
-          //  this.datalist.AddNewCategoryDirect(this.interval);
+            this.attribute[tempName].Reduce();
+            this.Dispose();
+        }
+
+        /// <summary>
+        /// Handler for cancel button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void ButtonCancel_Click_New(object sender, EventArgs e)
+        {
             this.Dispose();
         }
 

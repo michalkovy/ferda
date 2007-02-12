@@ -27,6 +27,7 @@ using System.Text;
 using System.Windows.Forms;
 using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using Ferda;
+using Ferda.Guha.Data;
 using Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory;
 using System.Resources;
 using System.Reflection;
@@ -47,14 +48,19 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         private Attribute<IComparable> attribute;
 
         /// <summary>
-        /// Category being added
-        /// </summary>
-        protected Category<IComparable> currentCategory;
-
-        /// <summary>
         /// Resource manager
         /// </summary>
         private ResourceManager resManager;
+
+        /// <summary>
+        /// Temporary category name
+        /// </summary>
+        protected string tempName;
+
+        /// <summary>
+        /// Datatable on which the attribute is applied
+        /// </summary>
+        DataTable table;
 
         #endregion
 
@@ -66,15 +72,27 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// </summary>
         /// <param name="dataList">Datalist to work with</param>
         /// <param name="rm">Resource manager</param>
-        public CreateSetWizard(Attribute<IComparable> attribute, ResourceManager rm)
+        public CreateSetWizard(Attribute<IComparable> attribute,
+            string tempname, DataTable table, ResourceManager rm, EventHandler closeHandler)
         {
             //setting the ResManager resource manager and localization string
             this.resManager = rm;
             this.attribute = attribute;
+            this.table = table;
             InitializeComponent();
-            this.currentCategory = new Category<IComparable>(attribute);
-            this.FillAvailableValues(ListBoxAvailableValues, this.attribute);
+            if (tempname != String.Empty)
+            {
+                tempName = tempname;
+            }
+            else
+            {
+                tempName = RandomString.CreateKey(64);
+                this.attribute.Add(tempName);
+            }
+            
+            this.FillAvailableValues(ListBoxUncoveredValues, this.attribute);
             this.ChangeLocale(this.resManager);
+            this.Disposed += closeHandler;
         }
 
         #endregion
@@ -88,21 +106,65 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <param name="e"></param>
         protected void Add_Click(object sender, EventArgs e)
         {
+            IComparable itemToAdd;
             ArrayList arrayList = new ArrayList();
-            foreach (object item in ListBoxExistingValues.Items)
+
+            if (ListBoxUncoveredValues.SelectedIndices.Count > 0)
             {
+                object item = ListBoxUncoveredValues.SelectedItem;
+                switch (attribute.DbDataType)
+                {
+                    case DbSimpleDataTypeEnum.BooleanSimpleType:
+                        itemToAdd = (IComparable)Convert.ToBoolean(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.DateTimeSimpleType:
+                        itemToAdd = (IComparable)Convert.ToDateTime(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.DoubleSimpleType:
+                    case DbSimpleDataTypeEnum.FloatSimpleType:
+                        itemToAdd = (IComparable)Convert.ToDouble(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.IntegerSimpleType:
+                        itemToAdd = (IComparable)Convert.ToInt32(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.LongSimpleType:
+                        itemToAdd = (IComparable)Convert.ToInt64(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.ShortSimpleType:
+                        itemToAdd = (IComparable)Convert.ToInt16(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.StringSimpleType:
+                        itemToAdd = (IComparable)item.ToString();
+                        break;
+
+                    default:
+                        MessageBox.Show(this.resManager.GetString("InvalidEnumerationType"),
+                            this.resManager.GetString("Error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
+                }
+                try
+                {
+                    this.attribute[tempName].Enumeration.Add(itemToAdd, false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Generic exception",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
                 arrayList.Add(item);
-            }
-            if (ListBoxAvailableValues.SelectedIndices.Count > 0)
-            {
-                arrayList.Add(ListBoxAvailableValues.SelectedItem);
-                ListBoxAvailableValues.Items.RemoveAt(ListBoxAvailableValues.SelectedIndex);
+                arrayList.AddRange(ListBoxExistingValues.Items);
+                ListBoxUncoveredValues.Items.RemoveAt(ListBoxUncoveredValues.SelectedIndex);
                 arrayList.Sort();
                 ListBoxExistingValues.Items.Clear();
-                foreach (object item in arrayList)
-                {
-                    ListBoxExistingValues.Items.Add(item);
-                }
+                ListBoxExistingValues.Items.AddRange(arrayList.ToArray());
             }
         }
 
@@ -113,20 +175,18 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <param name="e"></param>
         protected void Submit_Click(object sender, EventArgs e)
         {
-            //TODO: catch exception when in collision
-            foreach (object item in ListBoxExistingValues.Items)
+            attribute[tempName].Reduce();
+            try
             {
-                this.currentCategory.Enumeration.Add((IComparable)item, false);
+                this.attribute.RenameCategory(tempName, this.TextBoxNewName.Text);
             }
-            /*Category tempSet = new Category();
-            tempSet.CatType = CategoryType.Enumeration;
-            tempSet.Name = this.TextBoxNewName.Text;
-            SingleSet tempSingle = new SingleSet(arrayList);
-            tempSet.AddSingleSet(tempSingle);
-            dataList.AddNewCategoryDirect(tempSet);
-
-            this.currentCategory.Enumeration.Add*/
-
+            catch
+            {
+                MessageBox.Show(this.resManager.GetString("SameCategoryNames"), 
+                    this.resManager.GetString("Error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
             this.Dispose();
         }
 
@@ -139,19 +199,63 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         {
             if (ListBoxExistingValues.SelectedIndices.Count > 0)
             {
-                ArrayList arrayList = new ArrayList();
-                foreach (object item in ListBoxAvailableValues.Items)
+                IComparable itemToRemove;
+
+                object item = ListBoxExistingValues.SelectedItem;
+                switch (attribute.DbDataType)
                 {
-                    arrayList.Add(item);
+                    case DbSimpleDataTypeEnum.BooleanSimpleType:
+                        itemToRemove = (IComparable)Convert.ToBoolean(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.DateTimeSimpleType:
+                        itemToRemove = (IComparable)Convert.ToDateTime(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.DoubleSimpleType:
+                    case DbSimpleDataTypeEnum.FloatSimpleType:
+                        itemToRemove = (IComparable)Convert.ToDouble(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.IntegerSimpleType:
+                        itemToRemove = (IComparable)Convert.ToInt32(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.LongSimpleType:
+                        itemToRemove = (IComparable)Convert.ToInt64(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.ShortSimpleType:
+                        itemToRemove = (IComparable)Convert.ToInt16(item);
+                        break;
+
+                    case DbSimpleDataTypeEnum.StringSimpleType:
+                        itemToRemove = (IComparable)item.ToString();
+                        break;
+
+                    default:
+                        MessageBox.Show(this.resManager.GetString("InvalidEnumerationType"),
+                            this.resManager.GetString("Error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
                 }
-                arrayList.Add(ListBoxExistingValues.SelectedItem);
+                try
+                {
+                    this.attribute[tempName].Enumeration.Remove(itemToRemove);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Generic exception",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                ArrayList arrayList = new ArrayList();
+                arrayList.AddRange(ListBoxUncoveredValues.Items);
+                arrayList.Add(item);
                 ListBoxExistingValues.Items.RemoveAt(ListBoxExistingValues.SelectedIndex);
                 arrayList.Sort();
-                ListBoxAvailableValues.Items.Clear();
-                foreach (object item in arrayList)
-                {
-                    ListBoxAvailableValues.Items.Add(item);
-                }
+                ListBoxUncoveredValues.Items.Clear();
+                ListBoxUncoveredValues.Items.AddRange(arrayList.ToArray());
             }
         }
 
@@ -162,6 +266,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <param name="e"></param>
         protected void Cancel_Click(object sender, EventArgs e)
         {
+            this.attribute.Remove(tempName);
             this.Dispose();
         }
 
@@ -177,10 +282,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <param name="dataList">Used datalist</param>
         private void FillAvailableValues(ListBox listBox, Attribute<IComparable> attribute)
         {
-            //TODO!!! get uncovered values
-            foreach (object value in attribute.GetUncoveredValues(new DataTable()))
+            foreach (object value in attribute.GetUncoveredValues(this.table))
             {
-                ListBoxAvailableValues.Items.Add(value);
+                ListBoxUncoveredValues.Items.Add(value);
             }
         }
 
@@ -195,7 +299,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <param name="rm">Resource manager</param>
         private void ChangeLocale(ResourceManager rm)
         {
-            this.LabelAvailableValues.Text = rm.GetString("LabelAvailableValues");
+            this.LabelUncoveredValues.Text = rm.GetString("LabelAvailableValues");
             this.LabelExistingValues.Text = rm.GetString("LabelExistingValues");
             this.LabelNewName.Text = rm.GetString("LabelNewName");
             this.ButtonAdd.Text = rm.GetString("ButtonAddText");

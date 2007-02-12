@@ -27,6 +27,7 @@ using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using System.Resources;
 using System.Reflection;
 using Ferda.Guha.Attribute;
+using System.Data;
 
 namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
 {
@@ -48,10 +49,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         /// </summary>
         Attribute<IComparable> attribute;
 
-        /// <summary>
-        /// Edited category.
-        /// </summary>
-        Category<IComparable> category;
 
         #endregion
 
@@ -64,16 +61,20 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
     /// <param name="attribute">Edited attribute</param>
     /// <param name="index">Index of edited category</param>
     /// <param name="rm">Resource manager</param>
-        public EditExistingEnumeration(Attribute<IComparable> attribute, string index, ResourceManager rm)
-            : base(attribute, rm)
+        public EditExistingEnumeration(Attribute<IComparable> attribute, string index, DataTable table,
+            ResourceManager rm, EventHandler closeHandler)
+            : base(attribute, index, table, rm, closeHandler)
         {
             this.attribute = attribute;
-            this.category = attribute[index];
+            this.tempName = index;
             this.ButtonSubmit.Click -= new EventHandler(Submit_Click);
             this.ButtonSubmit.Click += new EventHandler(Submit_Click_New);
 
-            this.TextBoxNewName.Text = this.category.Name;
-            foreach (object value in this.category.Enumeration)
+            this.ButtonCancel.Click -= new EventHandler(Cancel_Click);
+            this.ButtonCancel.Click += new EventHandler(Cancel_Click_New);
+
+            this.TextBoxNewName.Text = index;
+            foreach (object value in this.attribute[index].Enumeration)
             {
                 this.ListBoxExistingValues.Items.Add(value);
             }
@@ -94,21 +95,17 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         /// <param name="e"></param>
         private void Submit_Click_New(object sender, EventArgs e)
         {
-            for (int i = 0; i < this.category.Enumeration.Count; i++)
-            {
-                this.category.Enumeration.RemoveAt(i);
-            }
+            this.attribute[tempName].Reduce();
+            this.Dispose();
+        }
 
-            //TODO: catch exception when collison occurs
-            foreach (object item in ListBoxExistingValues.Items)
-            {
-                this.category.Enumeration.Add((IComparable)item, false);
-            }
-          /* SingleSet newSet = new SingleSet(tempList);
-            this.category.AddSingleSet(newSet);
-            this.datalist.RemoveCategory(this.index);
-            this.category.Name = this.TextBoxNewName.Text;
-            this.datalist.AddNewCategoryDirect(this.category);*/
+        /// <summary>
+        /// Cancel handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void Cancel_Click_New(object sender, EventArgs e)
+        {
             this.Dispose();
         }
 
