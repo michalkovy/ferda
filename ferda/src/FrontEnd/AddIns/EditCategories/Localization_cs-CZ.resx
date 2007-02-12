@@ -148,7 +148,7 @@
     <value>Interval může být přidán</value>
   </data>
   <data name="ButtonEdit" xml:space="preserve">
-    <value>Upravit</value>
+    <value>Upravit výčet</value>
   </data>
   <data name="IntervalIsNotDisjunct" xml:space="preserve">
     <value>Interval není disjunktní</value>
@@ -217,7 +217,7 @@
     <value>Smazat</value>
   </data>
   <data name="LabelAvailableValues" xml:space="preserve">
-    <value>Přípustné hodnoty</value>
+    <value>Hodnoty nepokryté žádnou kategorií</value>
   </data>
   <data name="NewInterval" xml:space="preserve">
     <value>Nový interval</value>
@@ -244,7 +244,7 @@
     <value>Chyba</value>
   </data>
   <data name="LabelExistingValues" xml:space="preserve">
-    <value>Obsažené hodnoty</value>
+    <value>Hodnoty pokryté danou kategorií</value>
   </data>
   <data name="TypeInterval" xml:space="preserve">
     <value>Interval</value>
@@ -281,5 +281,11 @@
   </data>
   <data name="InvalidEnumerationType" xml:space="preserve">
     <value>Nepodporovaný typ výčtu</value>
+  </data>
+  <data name="ButtonEditInterval" xml:space="preserve">
+    <value>Upravit interval</value>
+  </data>
+  <data name="TypeNotSupported" xml:space="preserve">
+    <value>Datový typ není podporován</value>
   </data>
 </root>

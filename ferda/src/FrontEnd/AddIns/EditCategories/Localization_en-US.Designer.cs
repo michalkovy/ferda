@@ -133,11 +133,20 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to Edit enum.
         /// </summary>
         internal static string ButtonEdit {
             get {
                 return ResourceManager.GetString("ButtonEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit interval.
+        /// </summary>
+        internal static string ButtonEditInterval {
+            get {
+                return ResourceManager.GetString("ButtonEditInterval", resourceCulture);
             }
         }
         
@@ -385,7 +394,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Available values.
+        ///   Looks up a localized string similar to Values uncovered by category.
         /// </summary>
         internal static string LabelAvailableValues {
             get {
@@ -394,7 +403,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Existing values.
+        ///   Looks up a localized string similar to Values covered by category.
         /// </summary>
         internal static string LabelExistingValues {
             get {
@@ -543,6 +552,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         internal static string TypeInterval {
             get {
                 return ResourceManager.GetString("TypeInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data type is not supported.
+        /// </summary>
+        internal static string TypeNotSupported {
+            get {
+                return ResourceManager.GetString("TypeNotSupported", resourceCulture);
             }
         }
         

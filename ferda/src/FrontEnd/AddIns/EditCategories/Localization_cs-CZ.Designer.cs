@@ -133,11 +133,20 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upravit.
+        ///   Looks up a localized string similar to Upravit výčet.
         /// </summary>
         internal static string ButtonEdit {
             get {
                 return ResourceManager.GetString("ButtonEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upravit interval.
+        /// </summary>
+        internal static string ButtonEditInterval {
+            get {
+                return ResourceManager.GetString("ButtonEditInterval", resourceCulture);
             }
         }
         
@@ -385,7 +394,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Přípustné hodnoty.
+        ///   Looks up a localized string similar to Hodnoty nepokryté žádnou kategorií.
         /// </summary>
         internal static string LabelAvailableValues {
             get {
@@ -394,7 +403,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Obsažené hodnoty.
+        ///   Looks up a localized string similar to Hodnoty pokryté danou kategorií.
         /// </summary>
         internal static string LabelExistingValues {
             get {
@@ -543,6 +552,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         internal static string TypeInterval {
             get {
                 return ResourceManager.GetString("TypeInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datový typ není podporován.
+        /// </summary>
+        internal static string TypeNotSupported {
+            get {
+                return ResourceManager.GetString("TypeNotSupported", resourceCulture);
             }
         }
         

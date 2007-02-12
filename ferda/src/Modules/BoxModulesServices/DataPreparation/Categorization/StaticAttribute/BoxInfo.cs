@@ -109,9 +109,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         {
             switch (propertyName)
             {
-                case Functions.PropAttribute:
-                    break;
-
                 default:
                     break;
             }

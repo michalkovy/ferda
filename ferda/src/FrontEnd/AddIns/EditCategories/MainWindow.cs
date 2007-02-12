@@ -44,41 +44,7 @@ using System.Security.Cryptography;
 
 namespace Ferda.FrontEnd.AddIns.EditCategories
 {
-    /// <summary>
-    /// Classs for random string generation
-    /// </summary>
-    public static class RandomString
-    {
-        /// <summary>
-        /// Method to create a random string of the specified length
-        /// </summary>
-        /// <param name="numBytes">String length</param>
-        /// <returns>Created random string</returns>
-        public static String CreateKey(int numBytes)
-        {
-            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-            byte[] buff = new byte[numBytes];
-
-            rng.GetBytes(buff);
-            return BytesToHexString(buff);
-        }
-
-        /// <summary>
-        /// Converts bytes to hexstring
-        /// </summary>
-        /// <param name="bytes">Byte array to convert</param>
-        /// <returns>Converted string</returns>
-        static String BytesToHexString(byte[] bytes)
-        {
-            StringBuilder hexString = new StringBuilder(64);
-
-            for (int counter = 0; counter < bytes.Length; counter++)
-            {
-                hexString.Append(String.Format("{0:X2}", bytes[counter]));
-            }
-            return hexString.ToString();
-        }
-    }
+    
 
 
     /// <summary>
@@ -172,69 +138,136 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 localizationString = "en-US";
             }
 
-            #region Switch
-            switch (columnDataType)
+            if (categories == String.Empty)
             {
-                case DbDataTypeEnum.BooleanType:
-                    attribute = 
-                        Retyper<IComparable, Boolean>.ToIComparable(
-                        Guha.Attribute.Serializer.Deserialize<Boolean>(categories));
-                    break;
+                switch(columnDataType)
+                {
+                    case DbDataTypeEnum.BooleanType:
+                        this.attribute = new Attribute<IComparable>(
+                            DbSimpleDataTypeEnum.BooleanSimpleType, true);
+                        break;
 
-                case DbDataTypeEnum.DateTimeType:
-                    attribute =
-                        Retyper<IComparable, DateTime>.ToIComparable(
-                        Guha.Attribute.Serializer.Deserialize<DateTime>(categories));
-                    break;
+                    case DbDataTypeEnum.DateTimeType:
+                        this.attribute = new Attribute<IComparable>(
+                            DbSimpleDataTypeEnum.DateTimeSimpleType, true);
+                        break;
 
-                case DbDataTypeEnum.DoubleType:
-                    attribute =
-                        Retyper<IComparable, Double>.ToIComparable(
-                        Guha.Attribute.Serializer.Deserialize<Double>(categories));
-                    break;
+                    
+                    case DbDataTypeEnum.DoubleType:
+                        this.attribute = new Attribute<IComparable>(
+                            DbSimpleDataTypeEnum.DoubleSimpleType, true);
+                        break;
 
-                case DbDataTypeEnum.FloatType:
-                case DbDataTypeEnum.DecimalType:
-                    attribute =
-                        Retyper<IComparable, Single>.ToIComparable(
-                        Guha.Attribute.Serializer.Deserialize<Single>(categories));
-                    break;
+                    case DbDataTypeEnum.DecimalType:
+                    case DbDataTypeEnum.FloatType:
+                        this.attribute = new Attribute<IComparable>(
+                            DbSimpleDataTypeEnum.FloatSimpleType, true);
+                        break;
 
+                    case DbDataTypeEnum.IntegerType:
+                    case DbDataTypeEnum.UnsignedIntegerType:
+                        this.attribute = new Attribute<IComparable>(
+                            DbSimpleDataTypeEnum.IntegerSimpleType, true);
+                        break;
 
-                case DbDataTypeEnum.IntegerType:
-                case DbDataTypeEnum.UnsignedIntegerType:
-                    attribute =
-                       Retyper<IComparable, Int32>.ToIComparable(
-                        Guha.Attribute.Serializer.Deserialize<Int32>(categories));
-                    break;
+                    case DbDataTypeEnum.LongIntegerType:
+                    case DbDataTypeEnum.UnsignedLongIntegerType:
+                        this.attribute = new Attribute<IComparable>(
+                            DbSimpleDataTypeEnum.LongSimpleType, true);
+                        break;
 
-                case DbDataTypeEnum.ShortIntegerType:
-                case DbDataTypeEnum.UnsignedShortIntegerType:
-                    attribute =
-                       Retyper<IComparable, Int16>.ToIComparable(
-                        Guha.Attribute.Serializer.Deserialize<Int16>(categories));
-                    break;
+                    case DbDataTypeEnum.ShortIntegerType:
+                    case DbDataTypeEnum.UnsignedShortIntegerType:
+                        this.attribute = new Attribute<IComparable>(
+                            DbSimpleDataTypeEnum.ShortSimpleType, true);
+                        break;
 
-                case DbDataTypeEnum.LongIntegerType:
-                case DbDataTypeEnum.UnsignedLongIntegerType:
-                    attribute =
-                       Retyper<IComparable, Int64>.ToIComparable(
-                        Guha.Attribute.Serializer.Deserialize<Int64>(categories));
-                    break;
+                    case DbDataTypeEnum.StringType:
+                        this.attribute = new Attribute<IComparable>(
+                            DbSimpleDataTypeEnum.StringSimpleType, false);
+                        break;
 
-                case DbDataTypeEnum.StringType:
-                    attribute =
-                       Retyper<IComparable, String>.ToIComparable(
-                        Guha.Attribute.Serializer.Deserialize<String>(categories));
-                    break;              
+                    case DbDataTypeEnum.TimeType:
+                        this.attribute = new Attribute<IComparable>(
+                            DbSimpleDataTypeEnum.TimeSimpleType, true);
+                        break;
 
-                default:
-                    throw new ArgumentOutOfRangeException();
+                    default:
+                        MessageBox.Show(this.resManager.GetString("TypeNotSupported"),
+                           this.resManager.GetString("Error"),
+                   MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        this.Dispose();
+                        return;
+                
+                }
             }
+            else
+            {
 
-            
+                #region Switch
+                switch (columnDataType)
+                {
+                    case DbDataTypeEnum.BooleanType:
+                        attribute =
+                            Retyper<IComparable, Boolean>.ToIComparable(
+                            Guha.Attribute.Serializer.Deserialize<Boolean>(categories));
+                        break;
 
-            #endregion
+                    case DbDataTypeEnum.DateTimeType:
+                        attribute =
+                            Retyper<IComparable, DateTime>.ToIComparable(
+                            Guha.Attribute.Serializer.Deserialize<DateTime>(categories));
+                        break;
+
+                    case DbDataTypeEnum.DoubleType:
+                        attribute =
+                            Retyper<IComparable, Double>.ToIComparable(
+                            Guha.Attribute.Serializer.Deserialize<Double>(categories));
+                        break;
+
+                    case DbDataTypeEnum.FloatType:
+                    case DbDataTypeEnum.DecimalType:
+                        attribute =
+                            Retyper<IComparable, Single>.ToIComparable(
+                            Guha.Attribute.Serializer.Deserialize<Single>(categories));
+                        break;
+
+
+                    case DbDataTypeEnum.IntegerType:
+                    case DbDataTypeEnum.UnsignedIntegerType:
+                        attribute =
+                           Retyper<IComparable, Int32>.ToIComparable(
+                            Guha.Attribute.Serializer.Deserialize<Int32>(categories));
+                        break;
+
+                    case DbDataTypeEnum.ShortIntegerType:
+                    case DbDataTypeEnum.UnsignedShortIntegerType:
+                        attribute =
+                           Retyper<IComparable, Int16>.ToIComparable(
+                            Guha.Attribute.Serializer.Deserialize<Int16>(categories));
+                        break;
+
+                    case DbDataTypeEnum.LongIntegerType:
+                    case DbDataTypeEnum.UnsignedLongIntegerType:
+                        attribute =
+                           Retyper<IComparable, Int64>.ToIComparable(
+                            Guha.Attribute.Serializer.Deserialize<Int64>(categories));
+                        break;
+
+                    case DbDataTypeEnum.StringType:
+                        attribute =
+                           Retyper<IComparable, String>.ToIComparable(
+                            Guha.Attribute.Serializer.Deserialize<String>(categories));
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+
+
+                #endregion
+            }
 
             this.table = table;
             this.oldAttribute = categories;
@@ -248,7 +281,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
             this.LoadIcons();
             this.InitIcons();
-
+            this.MenuItemEditInterval.Enabled = this.attribute.IntervalsAllowed;
         }
 
         #endregion
@@ -275,8 +308,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.ToolMenuItemNewEnumeration.Click += new EventHandler(AddNewEnumeration_Click);
             this.ToolMenuItemNewInterval.Click += new EventHandler(AddNewInterval_Click);
             this.CategoriesListView.AfterLabelEdit += new LabelEditEventHandler(EditLabelHandler);
-            this.MenuItemEdit.Click += new EventHandler(EditItem);
-            this.ButtonEdit.Click += new EventHandler(EditItem);
+            this.MenuItemEdit.Click += new EventHandler(EditItemEnum);
+            this.MenuItemEditInterval.Click += new EventHandler(EditItemInterval);
+            this.ButtonEditEnum.Click += new EventHandler(EditItemEnum);
+            this.ButtonEditInterval.Click += new EventHandler(EditItemInterval);
             this.CategoriesListView.SelectedIndexChanged += new EventHandler(OnSelectedIndexChanged);
             this.MenuItemRename.Click += new EventHandler(Rename_Click);
         }
@@ -289,8 +324,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.Icon = iconProvider["FerdaIcon"];
             this.ButtonDelete.Image = iconProvider["DeleteIcon"].ToBitmap();
             this.MenuItemDelete.Image = iconProvider["DeleteIcon"].ToBitmap();
-            this.ButtonEdit.Image = iconProvider["EditIcon"].ToBitmap();
+            this.ButtonEditEnum.Image = iconProvider["EditIcon"].ToBitmap();
+            this.ButtonEditInterval.Image = iconProvider["EditIcon"].ToBitmap();
             this.MenuItemEdit.Image = iconProvider["EditIcon"].ToBitmap();
+            this.MenuItemEditInterval.Image = iconProvider["EditIcon"].ToBitmap();
             this.ButtonJoin.Image = iconProvider["JoinIcon"].ToBitmap();
             this.MenuItemJoin.Image = iconProvider["JoinIcon"].ToBitmap();
             this.ButtonNew.Image = iconProvider["NewIcon"].ToBitmap();
@@ -312,7 +349,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             //FerdaSmartDataList dataList = bigDataList;
             // this.splitContainer1.Panel2MinSize = 0;
            // dataList.StructureChange += new FerdaEvent(RefreshList);
-            listView.MouseDoubleClick += new MouseEventHandler(EditItem);
+            listView.MouseDoubleClick += new MouseEventHandler(EditItemEnum);
             AttributeToListView(this.attribute, CategoriesListView);
         }
 
@@ -380,32 +417,38 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     //two and more items are selected, thus nothing can be splitted, only joined,
                     this.ButtonDelete.Enabled = false;
                     this.ButtonJoin.Enabled = true;
-                    this.ButtonEdit.Enabled = false;
+                    this.ButtonEditEnum.Enabled = false;
+                    this.ButtonEditInterval.Enabled = false;
                     this.MenuItemRename.Enabled = false;
                     this.MenuItemDelete.Enabled = false;
                     this.MenuItemEdit.Enabled = false;
+                    this.MenuItemEditInterval.Enabled = false;
                 }
                 else
                 {
                     //only one item is selected, check if it can be splitted
                     this.ButtonDelete.Enabled = true;
-                    this.ButtonEdit.Enabled = true;
+                    this.ButtonEditEnum.Enabled = true;
+                    this.ButtonEditInterval.Enabled = this.attribute.IntervalsAllowed;
                     this.ButtonJoin.Enabled = false;
                     this.MenuItemDelete.Enabled = true;
                     this.MenuItemEdit.Enabled = true;
+                    this.MenuItemEditInterval.Enabled = this.attribute.IntervalsAllowed;
                     this.MenuItemJoin.Enabled = false;
                     this.MenuItemRename.Enabled = true;
                 }
             }
             else
             {
-                //if nothing is selected, only save&quit, nosave&quit, new and flatten actions have sense
+                //if nothing is selected, only save&quit, nosave&quit, new actions have sense
                 this.ButtonDelete.Enabled = false;
-                this.ButtonEdit.Enabled = false;
+                this.ButtonEditEnum.Enabled = false;
+                this.ButtonEditInterval.Enabled = false;
                 this.ButtonJoin.Enabled = false;
                 this.MenuItemRename.Enabled = false;
                 this.MenuItemDelete.Enabled = false;
                 this.MenuItemEdit.Enabled = false;
+                this.MenuItemEditInterval.Enabled = false;
                 this.MenuItemJoin.Enabled = false;
             }
         }
@@ -466,9 +509,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         }
 
         /// <summary>
-        /// Method will handle a request to edit the selected category.
+        /// Method will handle a request to edit the selected category's enumeration.
         /// </summary>
-        internal void EditItem(object sender, EventArgs e)
+        internal void EditItemEnum(object sender, EventArgs e)
         {
             if (!EditInProgress)
             {
@@ -480,12 +523,47 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     this.ButtonDelete.Enabled = false;
                     this.ButtonJoin.Enabled = false;
                     this.ButtonNew.Enabled = false;
-                    this.ButtonEdit.Enabled = false;
+                    this.ButtonEditEnum.Enabled = false;
+                    this.ButtonEditInterval.Enabled = false;
                     this.MenuItemDelete.Enabled = false;
                     this.MenuItemJoin.Enabled = false;
                     this.MenuItemNew.Enabled = false;
                     this.MenuItemEdit.Enabled = false;
-                    EditExistingCategory editCategory = new EditExistingCategory(
+                    this.MenuItemEditInterval.Enabled = false;
+                    EditExistingCategory editCategory = new EditExistingCategory(false,
+                        index, attribute, this.table, this, this.resManager, new EventHandler(Refr_Click));
+                }
+                catch
+                {
+                    EditInProgress = false;
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method will handle a request to edit the selected category's enumeration.
+        /// </summary>
+        internal void EditItemInterval(object sender, EventArgs e)
+        {
+            if (!EditInProgress)
+            {
+                EditInProgress = true;
+                string index = String.Empty;
+                try
+                {
+                    index = (string)this.CategoriesListView.SelectedItems[0].Tag;
+                    this.ButtonDelete.Enabled = false;
+                    this.ButtonJoin.Enabled = false;
+                    this.ButtonNew.Enabled = false;
+                    this.ButtonEditEnum.Enabled = false;
+                    this.ButtonEditInterval.Enabled = false;
+                    this.MenuItemDelete.Enabled = false;
+                    this.MenuItemJoin.Enabled = false;
+                    this.MenuItemNew.Enabled = false;
+                    this.MenuItemEdit.Enabled = false;
+                    this.MenuItemEditInterval.Enabled = false;
+                    EditExistingCategory editCategory = new EditExistingCategory(true,
                         index, attribute, this.table, this, this.resManager, new EventHandler(Refr_Click));
                 }
                 catch
@@ -561,9 +639,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.splitContainer1.Panel2.Controls.Add(newEnum);
             this.MenuItemNew.Enabled = false;
             this.ButtonNew.Enabled = false;
-            this.ButtonEdit.Enabled = false;
+            this.ButtonEditEnum.Enabled = false;
             this.MenuItemEdit.Enabled = false;
-            this.DoubleClick -= new EventHandler(EditItem);
+            this.DoubleClick -= new EventHandler(EditItemEnum);
             this.ResumeLayout();
             newEnum.BringToFront();
         }
@@ -588,9 +666,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 this.splitContainer1.Panel2.Controls.Add(newInterval1);
                 this.MenuItemNew.Enabled = false;
                 this.ButtonNew.Enabled = false;
-                this.ButtonEdit.Enabled = false;
+                this.ButtonEditEnum.Enabled = false;
                 this.MenuItemEdit.Enabled = false;
-                this.DoubleClick -= new EventHandler(EditItem);
+                this.DoubleClick -= new EventHandler(EditItemEnum);
                 this.ResumeLayout();
                 newInterval1.BringToFront();
             }
@@ -704,11 +782,13 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.ButtonDelete.Text = rm.GetString("ButtonDelete");
             this.ButtonJoin.Text = rm.GetString("ButtonJoin");
             this.ButtonNew.Text = rm.GetString("ButtonNew");
+            this.ButtonEditEnum.Text = rm.GetString("ButtonEdit");
+            this.ButtonEditInterval.Text = rm.GetString("ButtonEditInterval");
             this.ButtonQuitWithoutSave.Text = rm.GetString("ButtonQuitWithoutSave");
             this.ButtonSaveAndQuit.Text = rm.GetString("ButtonSaveAndQuit");
             this.ToolMenuItemNewEnumeration.Text = rm.GetString("NewEnumeration");
             this.ToolMenuItemNewInterval.Text = rm.GetString("NewInterval");
-            this.ButtonEdit.Text = rm.GetString("ButtonEdit");
+            this.ButtonEditEnum.Text = rm.GetString("ButtonEdit");
             this.Text = rm.GetString("EditCategoriesAbout");
             this.MenuItemJoin.Text = rm.GetString("ButtonJoin");
             this.MenuItemNew.Text = rm.GetString("ButtonNew");
@@ -718,6 +798,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.MenuItemSaveAndQuit.Text = rm.GetString("ButtonSaveAndQuit");
             this.MenuItemDelete.Text = rm.GetString("ButtonDelete");
             this.MenuItemEdit.Text = rm.GetString("ButtonEdit");
+            this.MenuItemEditInterval.Text = rm.GetString("ButtonEditInterval");
             this.MenuItemRename.Text = rm.GetString("ButtonRename");
             this.ToolStripButtonHelp.Text = rm.GetString("Help");
         }
@@ -790,5 +871,41 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Classs for random string generation
+    /// </summary>
+    public static class RandomString
+    {
+        /// <summary>
+        /// Method to create a random string of the specified length
+        /// </summary>
+        /// <param name="numBytes">String length</param>
+        /// <returns>Created random string</returns>
+        public static String CreateKey(int numBytes)
+        {
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            byte[] buff = new byte[numBytes];
+
+            rng.GetBytes(buff);
+            return BytesToHexString(buff);
+        }
+
+        /// <summary>
+        /// Converts bytes to hexstring
+        /// </summary>
+        /// <param name="bytes">Byte array to convert</param>
+        /// <returns>Converted string</returns>
+        static String BytesToHexString(byte[] bytes)
+        {
+            StringBuilder hexString = new StringBuilder(64);
+
+            for (int counter = 0; counter < bytes.Length; counter++)
+            {
+                hexString.Append(String.Format("{0:X2}", bytes[counter]));
+            }
+            return hexString.ToString();
+        }
     }
 }

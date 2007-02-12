@@ -59,6 +59,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.MenuItemNewEnum = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemNewInterval = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemEditInterval = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemRename = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuItemJoin = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +76,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.ButtonNew = new System.Windows.Forms.ToolStripSplitButton();
             this.ToolMenuItemNewEnumeration = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolMenuItemNewInterval = new System.Windows.Forms.ToolStripMenuItem();
-            this.ButtonEdit = new System.Windows.Forms.ToolStripButton();
+            this.ButtonEditEnum = new System.Windows.Forms.ToolStripButton();
+            this.ButtonEditInterval = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ButtonJoin = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -138,6 +140,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.CategoriesContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItemNew,
             this.MenuItemEdit,
+            this.MenuItemEditInterval,
             this.MenuItemRename,
             this.toolStripSeparator8,
             this.MenuItemJoin,
@@ -147,7 +150,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.MenuItemSaveAndQuit,
             this.MenuItemQuitWithoutSave});
             this.CategoriesContextMenu.Name = "NewCategoryContextMenu";
-            this.CategoriesContextMenu.Size = new System.Drawing.Size(220, 176);
+            this.CategoriesContextMenu.Size = new System.Drawing.Size(220, 198);
             // 
             // MenuItemNew
             // 
@@ -179,6 +182,12 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.MenuItemEdit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
             this.MenuItemEdit.Size = new System.Drawing.Size(219, 22);
             this.MenuItemEdit.Text = "toolStripMenuItem1";
+            // 
+            // MenuItemEditInterval
+            // 
+            this.MenuItemEditInterval.Name = "MenuItemEditInterval";
+            this.MenuItemEditInterval.Size = new System.Drawing.Size(219, 22);
+            this.MenuItemEditInterval.Text = "toolStripMenuItem1";
             // 
             // MenuItemRename
             // 
@@ -241,7 +250,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.ButtonQuitWithoutSave,
             this.toolStripSeparator5,
             this.ButtonNew,
-            this.ButtonEdit,
+            this.ButtonEditEnum,
+            this.ButtonEditInterval,
             this.toolStripSeparator6,
             this.ButtonJoin,
             this.toolStripSeparator7,
@@ -302,13 +312,21 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             this.ToolMenuItemNewInterval.Size = new System.Drawing.Size(272, 22);
             this.ToolMenuItemNewInterval.Text = "ToolMenuItemNewInterval";
             // 
-            // ButtonEdit
+            // ButtonEditEnum
             // 
-            this.ButtonEdit.Enabled = false;
-            this.ButtonEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ButtonEdit.Name = "ButtonEdit";
-            this.ButtonEdit.Size = new System.Drawing.Size(61, 22);
-            this.ButtonEdit.Text = "ButtonEdit";
+            this.ButtonEditEnum.Enabled = false;
+            this.ButtonEditEnum.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonEditEnum.Name = "ButtonEditEnum";
+            this.ButtonEditEnum.Size = new System.Drawing.Size(87, 22);
+            this.ButtonEditEnum.Text = "ButtonEditEnum";
+            // 
+            // ButtonEditInterval
+            // 
+            this.ButtonEditInterval.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ButtonEditInterval.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonEditInterval.Name = "ButtonEditInterval";
+            this.ButtonEditInterval.Size = new System.Drawing.Size(99, 22);
+            this.ButtonEditInterval.Text = "ButtonEditInterval";
             // 
             // toolStripSeparator6
             // 
@@ -398,9 +416,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         internal System.Windows.Forms.ToolStripSplitButton ButtonNew;
         internal System.Windows.Forms.ToolStripMenuItem MenuItemNew;
         internal System.Windows.Forms.ToolStripMenuItem MenuItemEdit;
-        internal System.Windows.Forms.ToolStripButton ButtonEdit;
+        internal System.Windows.Forms.ToolStripButton ButtonEditEnum;
         private System.Windows.Forms.ToolStripMenuItem MenuItemRename;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton ToolStripButtonHelp;
+        private System.Windows.Forms.ToolStripButton ButtonEditInterval;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemEditInterval;
     }
 }

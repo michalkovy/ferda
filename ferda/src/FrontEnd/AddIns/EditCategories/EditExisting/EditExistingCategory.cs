@@ -46,9 +46,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         /// <param name="dataList">Datalist to work with</param>
         /// <param name="listView">Listview to display categories</param>
         /// <param name="rm">Resource manager</param>
-        public EditExistingCategory(string index, Attribute<IComparable> attribute, DataTable table, MainListView listView, ResourceManager rm, EventHandler closeHandler)
+        public EditExistingCategory(bool interval, string index, Attribute<IComparable> attribute, DataTable table, MainListView listView, ResourceManager rm, EventHandler closeHandler)
         {
-            if(attribute[index].Intervals.Count > 0)
+            if(interval)
             //if (dataList.GetCategory(index).CatType == Ferda.FrontEnd.AddIns.EditCategories.CategoryType.Interval)
             {
                 EditExistingInterval editedInterval = new EditExistingInterval(attribute, index, rm, closeHandler);
@@ -60,9 +60,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
                 listView.splitContainer1.Panel2.Controls.Add(editedInterval);
                 listView.MenuItemNew.Enabled = false;
                 listView.ButtonNew.Enabled = false;
-                listView.ButtonEdit.Enabled = false;
+                listView.ButtonEditEnum.Enabled = false;
                 listView.MenuItemEdit.Enabled = false;
-                listView.DoubleClick -= new EventHandler(listView.EditItem);
+                listView.DoubleClick -= new EventHandler(listView.EditItemEnum);
                 editedInterval.Disposed += new EventHandler(listView.ListViewReinitSize);
                 listView.ResumeLayout();
                 editedInterval.BringToFront();
@@ -78,7 +78,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
                 listView.splitContainer1.Panel2.Controls.Add(editedEnum);
                 listView.MenuItemNew.Enabled = false;
                 listView.ButtonNew.Enabled = false;
-                listView.ButtonEdit.Enabled = false;
+                listView.ButtonEditEnum.Enabled = false;
                 listView.MenuItemEdit.Enabled = false;
                 editedEnum.Disposed += new EventHandler(listView.ListViewReinitSize);
                 listView.ResumeLayout();

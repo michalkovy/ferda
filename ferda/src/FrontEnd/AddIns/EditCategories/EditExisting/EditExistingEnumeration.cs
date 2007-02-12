@@ -81,6 +81,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
 
             // This call is required by the Windows Form Designer.
             InitializeComponent();
+            this.TextBoxNewName.Enabled = false;
         }
 
         #endregion
