@@ -84,7 +84,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             get
             {
                 long count = _boxModule.GetPropertyLong(PropCountOfCategories);
-                if (count < 0) return count * (-1);
+                if (count <= 0)
+                {
+                    throw Exceptions.BadValueError(
+                    null,
+                    _boxModule.StringIceIdentity,
+                    "Value has to be greater than 0.",
+                    new string[] { Functions.PropCountOfCategories },
+                    restrictionTypeEnum.OtherReason
+                    );
+                }
                 else return count;
             }
         }

@@ -144,6 +144,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             DbDataTypeEnum columnDataType = new DbDataTypeEnum();
             PropertyValue returnValue = new PropertyValue();
             DataTable table = new DataTable();
+            CardinalityEnum cardinality = new CardinalityEnum();
 
             try
             {
@@ -174,6 +175,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                         GenericDatabaseCache.GetGenericDatabase(
                         connSetting)[info.dataTable.dataTableName];
                     table = genericDataTable.Select();
+                    cardinality = info.cardinality;
                 }
 
                 catch
@@ -201,6 +203,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                             GenericDatabaseCache.GetGenericDatabase(
                             connSetting)[info.dataTable.dataTableName];
                         table = genericDataTable.Select();
+                        cardinality = info.cardinality;
                     }
                     catch(Exception e)
                     {
@@ -211,7 +214,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
                 Ferda.FrontEnd.AddIns.EditCategories.MainListView listView
                     = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(
-                    localePrefs, pv, table, columnDataType, ownerOfAddIn);
+                    localePrefs, pv, table, cardinality, columnDataType, ownerOfAddIn);
                 listView.ShowInTaskbar = false;
                 listView.Disposed += new EventHandler(SetCategories);
                 System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);

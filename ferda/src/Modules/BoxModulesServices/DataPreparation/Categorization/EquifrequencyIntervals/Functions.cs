@@ -73,7 +73,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             get
             {
                 long count = _boxModule.GetPropertyLong(PropCountOfCategories);
-                if (count < 0) return count * (-1);
+                if (count <= 0)
+                {
+                    throw Exceptions.BadValueError(
+                    null,
+                    _boxModule.StringIceIdentity,
+                    "Value has to be greater than 0.",
+                    new string[] { Functions.PropCountOfCategories },
+                    restrictionTypeEnum.OtherReason
+                    );
+                }
                 else return count;
             }
         }
@@ -1061,7 +1070,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                                     ClosedFrom, __max, BoundaryEnum.Closed, false);
 
 
-                        //  _nullCategoryName = result.NullContainingCategory;
+                          _nullCategoryName = result.NullContainingCategory;
 
                         return result;
                     },

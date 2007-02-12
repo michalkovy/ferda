@@ -50,13 +50,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         }
 
 
-        protected string IncludeNullCategory
+       /* protected string IncludeNullCategory
         {
             get
             {
                 return this._boxModule.GetPropertyString(PropIncludeNullCategory);
             }
-        }
+        }*/
 
 
         protected string XCategory
@@ -94,6 +94,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             {
                 return GetAttribute(false).Count;
             }
+        }
+
+        private string _nullCategoryName = null;
+
+        public StringTI IncludeNullCategory
+        {
+            get { return _nullCategoryName; }
         }
 
         #endregion
@@ -612,6 +619,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                         }
                         #endregion
 
+                        _nullCategoryName = attribute.NullContainingCategory;
+                       
                         return attribute;
                     },
                     delegate
