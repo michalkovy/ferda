@@ -107,8 +107,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (propertyName)
             {
+                case Functions.PropCountOfCategories:
+                    return Func.CountOfCategories;
                 default:
                     break;
             }

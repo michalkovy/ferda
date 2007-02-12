@@ -179,8 +179,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 catch
                 {
                     //static attribute is connected to column
-             //       try
-             //       {
+                    try
+                    {
                         BoxModulePrx boxModuleParam1 = boxModuleParam.getConnections("Column")[0];
                         BoxModulePrx boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
 
@@ -201,11 +201,12 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                             GenericDatabaseCache.GetGenericDatabase(
                             connSetting)[info.dataTable.dataTableName];
                         table = genericDataTable.Select();
-                 //   }
-                //    catch
-                //    {
+                    }
+                    catch(Exception e)
+                    {
                         //static attribute is not connected to anything
-               //     }
+                        throw e;
+                    }
                 }
 
                 Ferda.FrontEnd.AddIns.EditCategories.MainListView listView
