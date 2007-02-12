@@ -72,7 +72,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         {
             get
             {
-                return _boxModule.GetPropertyLong(PropCountOfCategories);
+                long count = _boxModule.GetPropertyLong(PropCountOfCategories);
+                if (count < 0) return count * (-1);
+                else return count;
             }
         }
 
@@ -916,11 +918,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         // enumeration.Sort();
 
                         //  bool containsNull = false;
-                        object[] _divisionPoints;
+                        object[] _divisionPoints = null;
                         int i = 0;
                         //  _divisionPoints = GenerateIntervals((int)CountOfCategories, enumeration.ToArray());
-                        IComparable __min;
-                        IComparable __max;
+                        IComparable __min = null;
+                        IComparable __max = null;
 
                         switch (column.Explain.dataType)
                         {
@@ -1048,7 +1050,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                                 break;
 
                             default:
-                                throw new ArgumentException("Type not supported");
+                            //    if (fallOnError)
+                                    throw new ArgumentException("Type not supported");
+                            //    else
+                           //         break;
 
                         }
 

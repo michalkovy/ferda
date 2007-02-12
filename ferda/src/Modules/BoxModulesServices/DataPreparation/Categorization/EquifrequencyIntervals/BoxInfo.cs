@@ -24,7 +24,24 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            string label = String.Empty;
+            try
+            {
+                label = Func.GetColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
+            }
+            catch
+            {
+                return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
+            }
+            if (label == String.Empty)
+            {
+                return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
+            }
+            else
+            {
+                return label;
+            }
         }
 
         /// <summary>
@@ -95,13 +112,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         singleModule.newBoxModuleIdentifier =
                             StaticAttribute.BoxInfo.typeIdentifier;
 
-                        Guha.Attribute.Attribute<IComparable> attribute =
-                           ((Functions)boxModule.FunctionsIObj).GetAttribute(true);
-
-                        PropertySetting editCategories =
-                            new PropertySetting(Functions.PropCategories, new StringTI(
-                            Guha.Attribute.Serializer.Serialize(
-                            (attribute.Export()))));
+                        Guha.Attribute.Attribute<IComparable> attribute = null;
+                        PropertySetting editCategories = null;
+                        try
+                        {
+                            attribute = ((Functions)boxModule.FunctionsIObj).GetAttribute(false);
+                            editCategories =
+                           new PropertySetting(Functions.PropCategories, new StringTI(
+                           Guha.Attribute.Serializer.Serialize(
+                           (attribute.Export()))));
+                        }
+                        catch
+                        {
+                            editCategories = new PropertySetting();
+                        }
 
                         singleModule.propertySetting = new PropertySetting[] { editCategories };
                         break;
@@ -161,7 +185,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             object dummy = Func.GetColumnFunctionsPrx(true);
             dummy = Func.GetAttributeId();
             dummy = Func.GetAttributeNames();
-            dummy = Func.GetAttribute(true);
+            try
+            {
+                dummy = Func.GetAttribute(true);
+            }
+            catch (Exception e)
+            {
+                throw Exceptions.BadValueError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Data type not supported",
+                    new string[] { Functions.SockColumn },
+                    restrictionTypeEnum.OtherReason
+                    );
+            }
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);
@@ -192,7 +229,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                     );
             }
 
-            if (Func.Cardinality == CardinalityEnum.Nominal)
+            if (potentiallyCardinality == CardinalityEnum.Nominal)
             {
                 throw Exceptions.BadValueError(
                     null,
