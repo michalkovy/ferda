@@ -142,7 +142,10 @@
     <value>Delete</value>
   </data>
   <data name="ButtonEdit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Edit enum</value>
+  </data>
+  <data name="ButtonEditInterval" xml:space="preserve">
+    <value>Edit interval</value>
   </data>
   <data name="ButtonFlatten" xml:space="preserve">
     <value>Split recursive all</value>
@@ -226,10 +229,10 @@
     <value>Interval type not supported</value>
   </data>
   <data name="LabelAvailableValues" xml:space="preserve">
-    <value>Available values</value>
+    <value>Values uncovered by category</value>
   </data>
   <data name="LabelExistingValues" xml:space="preserve">
-    <value>Existing values</value>
+    <value>Values covered by category</value>
   </data>
   <data name="LabelIntervals" xml:space="preserve">
     <value>Intervals (double-click to delete)</value>
@@ -278,6 +281,9 @@
   </data>
   <data name="TypeInterval" xml:space="preserve">
     <value>Interval</value>
+  </data>
+  <data name="TypeNotSupported" xml:space="preserve">
+    <value>Data type is not supported</value>
   </data>
   <data name="TypeSet" xml:space="preserve">
     <value>Enumeration</value>

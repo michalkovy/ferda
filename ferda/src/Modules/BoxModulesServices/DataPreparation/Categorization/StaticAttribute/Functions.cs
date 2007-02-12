@@ -87,24 +87,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             }
         }
 
-        public AttributeSerializable<IComparable> GetAttributeFromProperty
-        {
-            get {
-                PropertyValue serializedAttribute
-                    = this._boxModule.GetPropertyOther(PropAttribute);
-                return Guha.Attribute.Serializer.Deserialize<IComparable>(serializedAttribute.ToString());
-            }
-        }
-
-       /* public string GetAttribute
-        {
-            get
-            {
-                AttributeFunctionsPrx prx = 
-                    
-            }
-        }*/
-
         #endregion
 
 
@@ -539,13 +521,26 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                     delegate
                     {
                         Attribute<IComparable> attribute;
-                        
-                        BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("BitStringGenerator")[0];
-                        BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
-                        Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
-                                   Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
-                                   boxModuleParam1.getFunctions());
-                        DbDataTypeEnum columnDataType = prx2.getColumnInfo().dataType;
+                        DbDataTypeEnum columnDataType;
+                        //static attribute connected to attribute
+                        try
+                        {
+                            BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("BitStringGenerator")[0];
+                            BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
+                            Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
+                                       Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
+                                       boxModuleParam1.getFunctions());
+                            columnDataType = prx2.getColumnInfo().dataType;
+                        }
+                        catch
+                        {
+                            //static attribute connected to column
+                            BoxModulePrx boxModuleParam1 = _boxModule.MyProxy.getConnections("Column")[0];
+                            Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
+                                       Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
+                                       boxModuleParam1.getFunctions());
+                            columnDataType = prx2.getColumnInfo().dataType;
+                        }
 
                         #region datatype switch
                         switch (columnDataType)
@@ -607,14 +602,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                                 throw new ArgumentOutOfRangeException();
                         }
                         #endregion
-                    /*    GenericColumn column = GetGenericColumn(fallOnError);
-                        if (column == null)
-                            return null;
-
-                        Attribute<IComparable> result =
-                            (Attribute<IComparable>)Common.GetAttributeObject(column.DbSimpleDataType, false);
-
-                        return result;*/
 
                         return attribute;
                     },

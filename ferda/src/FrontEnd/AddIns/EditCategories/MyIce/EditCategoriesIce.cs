@@ -178,7 +178,34 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
                 catch
                 {
-                    //TODO: if column is connected to static attribute
+                    //static attribute is connected to column
+             //       try
+             //       {
+                        BoxModulePrx boxModuleParam1 = boxModuleParam.getConnections("Column")[0];
+                        BoxModulePrx boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
+
+                        Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
+                            Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
+                            boxModuleParam1.getFunctions());
+
+                        Modules.Boxes.DataPreparation.DataTableFunctionsPrx prx3 =
+                            Modules.Boxes.DataPreparation.DataTableFunctionsPrxHelper.checkedCast(
+                            boxModuleParam2.getFunctions());
+
+                        Modules.Boxes.DataPreparation.ColumnInfo info = prx2.getColumnInfo();
+                        columnDataType = info.dataType;
+                        DatabaseConnectionSettingHelper connSetting =
+                            new DatabaseConnectionSettingHelper(
+                            info.dataTable.databaseConnectionSetting);
+                        GenericDataTable genericDataTable =
+                            GenericDatabaseCache.GetGenericDatabase(
+                            connSetting)[info.dataTable.dataTableName];
+                        table = genericDataTable.Select();
+                 //   }
+                //    catch
+                //    {
+                        //static attribute is not connected to anything
+               //     }
                 }
 
                 Ferda.FrontEnd.AddIns.EditCategories.MainListView listView
