@@ -194,7 +194,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         public override string getAttribute(Current current__)
         {
-            return this._boxModule.GetPropertyOther(PropAttribute).ToString();
+            return this._boxModule.GetPropertyString(PropAttribute);
         }
 
         public override ValuesAndFrequencies getCategoriesAndFrequencies(Current current__)
@@ -512,6 +512,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             DatabaseConnectionSettingHelper connSetting =
                 new DatabaseConnectionSettingHelper(tmp.dataTable.databaseConnectionSetting);
 
+            string categories = getAttribute();
+
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
             cacheSetting.Add(
                 Datasource.Database.BoxInfo.typeIdentifier + Datasource.Database.Functions.PropConnectionString,
@@ -526,6 +528,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
+            cacheSetting.Add("SerializedAttribute", categories);
 
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
@@ -535,14 +538,85 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                     fallOnError,
                     delegate
                     {
-                        GenericColumn column = GetGenericColumn(fallOnError);
+                        Attribute<IComparable> attribute;
+                        
+                        BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("BitStringGenerator")[0];
+                        BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
+                        Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
+                                   Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
+                                   boxModuleParam1.getFunctions());
+                        DbDataTypeEnum columnDataType = prx2.getColumnInfo().dataType;
+
+                        #region datatype switch
+                        switch (columnDataType)
+                        {
+                            case DbDataTypeEnum.BooleanType:
+                                attribute =
+                                    Retyper<IComparable, Boolean>.ToIComparable(
+                                    Guha.Attribute.Serializer.Deserialize<Boolean>(categories));
+                                break;
+
+                            case DbDataTypeEnum.DateTimeType:
+                                attribute =
+                                    Retyper<IComparable, DateTime>.ToIComparable(
+                                    Guha.Attribute.Serializer.Deserialize<DateTime>(categories));
+                                break;
+
+                            case DbDataTypeEnum.DoubleType:
+                                attribute =
+                                    Retyper<IComparable, Double>.ToIComparable(
+                                    Guha.Attribute.Serializer.Deserialize<Double>(categories));
+                                break;
+
+                            case DbDataTypeEnum.FloatType:
+                            case DbDataTypeEnum.DecimalType:
+                                attribute =
+                                    Retyper<IComparable, Single>.ToIComparable(
+                                    Guha.Attribute.Serializer.Deserialize<Single>(categories));
+                                break;
+
+
+                            case DbDataTypeEnum.IntegerType:
+                            case DbDataTypeEnum.UnsignedIntegerType:
+                                attribute =
+                                   Retyper<IComparable, Int32>.ToIComparable(
+                                    Guha.Attribute.Serializer.Deserialize<Int32>(categories));
+                                break;
+
+                            case DbDataTypeEnum.ShortIntegerType:
+                            case DbDataTypeEnum.UnsignedShortIntegerType:
+                                attribute =
+                                   Retyper<IComparable, Int16>.ToIComparable(
+                                    Guha.Attribute.Serializer.Deserialize<Int16>(categories));
+                                break;
+
+                            case DbDataTypeEnum.LongIntegerType:
+                            case DbDataTypeEnum.UnsignedLongIntegerType:
+                                attribute =
+                                   Retyper<IComparable, Int64>.ToIComparable(
+                                    Guha.Attribute.Serializer.Deserialize<Int64>(categories));
+                                break;
+
+                            case DbDataTypeEnum.StringType:
+                                attribute =
+                                   Retyper<IComparable, String>.ToIComparable(
+                                    Guha.Attribute.Serializer.Deserialize<String>(categories));
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                        #endregion
+                    /*    GenericColumn column = GetGenericColumn(fallOnError);
                         if (column == null)
                             return null;
 
                         Attribute<IComparable> result =
                             (Attribute<IComparable>)Common.GetAttributeObject(column.DbSimpleDataType, false);
 
-                        return result;
+                        return result;*/
+
+                        return attribute;
                     },
                     delegate
                     {
@@ -584,10 +658,22 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
         {
-            return SocketConnections.GetPrx<ColumnFunctionsPrx>(
+            BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("BitStringGenerator")[0];
+            BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
+            //boxModuleParam1.
+         //   Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
+                    return Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(boxModuleParam1.getFunctions());
+           /* return SocketConnections.GetPrx<ColumnFunctionsPrx>(
                 _boxModule,
                 SockColumn,
                 ColumnFunctionsPrxHelper.checkedCast,
+                fallOnError);*/
+        }
+
+        public BitStringGeneratorPrx GetBitStringGeneratorPrx(bool fallOnError)
+        {
+            return SocketConnections.GetPrx<BitStringGeneratorPrx>(
+                _boxModule, SockBSGen, BitStringGeneratorPrxHelper.checkedCast,
                 fallOnError);
         }
 

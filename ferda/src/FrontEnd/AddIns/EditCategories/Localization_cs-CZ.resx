@@ -279,4 +279,7 @@
   <data name="InvalidIntervalType" xml:space="preserve">
     <value>Nepodporovaný typ intervalu</value>
   </data>
+  <data name="InvalidEnumerationType" xml:space="preserve">
+    <value>Nepodporovaný typ výčtu</value>
+  </data>
 </root>

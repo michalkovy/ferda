@@ -203,6 +203,7 @@
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
 				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaData.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>

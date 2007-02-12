@@ -31,6 +31,7 @@ using System.Reflection;
 using Ferda.Guha.Attribute;
 using Ferda.Guha.Data;
 
+
 namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
 {
     /// <summary>
@@ -52,9 +53,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         protected ResourceManager resManager;
 
         /// <summary>
-        /// Category being added
+        /// Temporary category name
         /// </summary>
-        protected Category<IComparable> currentCategory;
+        protected string tempName;
 
         #endregion
 
@@ -66,15 +67,27 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// </summary>
         /// <param name="dataList">Datalist</param>
         /// <param name="rm">Resource manager</param>
-        public CreateIntervalWizard(Attribute<IComparable> attribute, ResourceManager rm)
+        public CreateIntervalWizard(Attribute<IComparable> attribute, 
+            string tempname, ResourceManager rm, EventHandler closeHandler)
         {
             //setting the ResManager resource manager and localization string
             this.resManager = rm;
             this.attribute = attribute;
             InitializeComponent();
             this.ChangeLocale(this.resManager);
-            this.AddHandlers();
-            this.currentCategory = new Category<IComparable>(attribute);
+            this.TextBoxLeftBound.LostFocus += new EventHandler(TextBoxLeftBound_TextEntered);
+            this.TextBoxRightBound.LostFocus += new EventHandler(TextBoxRightBound_TextEntered);
+            this.Disposed += closeHandler;
+
+            if (tempname != String.Empty)
+            {
+                tempName = tempname;
+            }
+            else
+            {
+                tempName = RandomString.CreateKey(64);
+                this.attribute.Add(tempName);
+            }
         }
 
         #endregion
@@ -82,14 +95,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
 
         #region Initialization
 
-        /// <summary>
-        /// Method for adding handlers to controls
-        /// </summary>
-        private void AddHandlers()
-        {
-            this.TextBoxLeftBound.LostFocus += new EventHandler(TextBoxLeftBound_TextEntered);
-            this.TextBoxRightBound.LostFocus += new EventHandler(TextBoxRightBound_TextEntered);
-        }
 
         #endregion
 
@@ -176,8 +181,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
 
         #region ListBox handlers
 
+        /*
         /// <summary>
-        /// Method which fills the UI elements accroding to the selected interval
+        /// Method which fills the UI elements according to the selected interval
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -185,34 +191,47 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         {
             if (this.ListBoxIntervals.SelectedIndices.Count > 0)
             {
-                 /*try
+                Interval<IComparable> tempInterval;
+                try
                 {
-                    Interval<IComparable> tempInterval =
-                        this.attribute[index].Intervals[(this.ListBoxIntervals.SelectedIndex)];
-                   switch (tempInterval.intervalType)
-                    {
-                        case IntervalType.Long:
-                            this.TextBoxLeftBound.Text = tempInterval.lowerBound.ToString();
-                            this.TextBoxRightBound.Text = tempInterval.upperBound.ToString();
-                            break;
-
-                        case IntervalType.Float:
-                            this.TextBoxLeftBound.Text = tempInterval.lowerBoundFl.ToString();
-                            this.TextBoxRightBound.Text = tempInterval.upperBoundFl.ToString();
-                            break;
-
-                        default:
-                            throw new Exception("Switch branch not implemented");
-
-                    }
-
+                    tempInterval =
+                        this.currentCategory.Intervals[(this.ListBoxIntervals.SelectedIndex)];
                 }
+
                 catch
                 {
+                    return;
                 }
-            */
+                this.TextBoxLeftBound.Text = tempInterval.LeftValue.ToString();
+                this.TextBoxRightBound.Text = tempInterval.RightValue.ToString();
+
+                if (tempInterval.LeftBoundary = BoundaryEnum.Closed)
+                {
+                    this.RadioLeftBoundSharp.Checked = true;
+                }
+                else if (tempInterval.LeftBoundary == BoundaryEnum.Infinity)
+                {
+                    this.RadioMinusInfinity.Checked = true;
+                }
+                else
+                {
+                    this.RadioLeftBoundRound.Checked = true;
+                }
+
+                if (tempInterval.RightBoundary = BoundaryEnum.Closed)
+                {
+                    this.RadioRightBoundSharp.Checked = true;
+                }
+                else if (tempInterval.RightBoundary == BoundaryEnum.Infinity)
+                {
+                    this.RadioPlusInfinity.Checked = true;
+                }
+                else
+                {
+                    this.RadioRightBoundRound.Checked = true;
+                }
             }
-        }
+        }*/
 
         /// <summary>
         /// Handler for double-click which deletes the interval clicked on
@@ -225,7 +244,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             {
                 try
                 {
-                    this.currentCategory.Intervals.RemoveAt(this.ListBoxIntervals.SelectedIndex);
+                    this.attribute[tempName].Intervals.RemoveAt(this.ListBoxIntervals.SelectedIndex);
                     this.ListBoxIntervals.Items.RemoveAt(this.ListBoxIntervals.SelectedIndex);
                 }
                 catch
@@ -257,7 +276,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             {
                 TryAddInterval();
                 this.ListBoxIntervals.Items.Clear();
-                foreach (Interval<IComparable> inter in currentCategory.Intervals)
+                foreach (Interval<IComparable> inter in attribute[tempName].Intervals)
                 {
                     this.ListBoxIntervals.Items.Add(inter.ToString());
                     if (this.ListBoxIntervals.Items.Count > 0)
@@ -278,17 +297,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-
-           /* try
-            {
-                
-            }
-
-            catch
-            {
-                MessageBox.Show(this.resManager.GetString("IntervalIsNotDisjunct"), this.resManager.GetString("InvalidIntervalError"),
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }*/
         }
 
         /// <summary>
@@ -298,18 +306,18 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <param name="e"></param>
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
-           /* if (currentCategory.GetIntervals().Count > 0)
-            {*/
-                currentCategory.Reduce();
-               // currentCategory.Frequency = 12345;
-               // this.dataList.AddNewCategoryDirect(currentCategory);
-                this.Dispose();
-         /*   }
-            else
+            attribute[tempName].Reduce();
+            try
             {
-                MessageBox.Show(this.resManager.GetString("NoEmptyCategoryAllowed"), this.resManager.GetString("InvalidIntervalError"),
-                       MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }*/
+                this.attribute.RenameCategory(tempName, this.TextBoxCategoryName.Text);
+            }
+            catch
+            {
+                MessageBox.Show(this.resManager.GetString("SameCategoryNames"), this.resManager.GetString("Error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            this.Dispose();
         }
 
         /// <summary>
@@ -319,6 +327,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <param name="e"></param>
         protected void CancelButton_Click(object sender, EventArgs e)
         {
+            this.attribute.Remove(tempName);
             this.Dispose();
         }
 
@@ -326,39 +335,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
 
 
         #region Other private methods
-        /*
-        /// <summary>
-        /// Method which ensures that all intervals in the category are of the same type
-        /// </summary>
-        protected void CheckIntervalTypesConsistency()
-        {
-            if (currentCategory.GetIntervals().Count > 0)
-            {
-                Interval temp = (Interval)currentCategory.GetIntervals()[0];
-                switch (temp.intervalType)
-                {
-                    case IntervalType.Long:
-                        this.RadioLong.Checked = true;
-                        this.RadioFloat.Enabled = false;
-                        this.RadioLong.Enabled = false;
-                        break;
-
-                    case IntervalType.Float:
-                        this.RadioFloat.Checked = true;
-                        this.RadioFloat.Enabled = false;
-                        this.RadioLong.Enabled = false;
-                        break;
-
-                    default:
-                        throw new Exception("Switch branch not implemented");
-                }
-            }
-            else
-            {
-                this.RadioFloat.Enabled = true;
-                this.RadioLong.Enabled = true;
-            }
-        }*/
 
         /// <summary>
         /// Method to check whether all interval parameters were entered.
@@ -413,7 +389,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                         {
                             string left = TextBoxLeftBound.Text;
                             string right = TextBoxRightBound.Text;
-                            if (left.CompareTo(right)>1)
+                            if (left.CompareTo(right) > 1)
                                 return false;
                         }
                         break;
@@ -558,25 +534,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             {
                 rightBoundType = BoundaryEnum.Infinity;
             }
-            this.currentCategory.Intervals.Add(leftBound, leftBoundType,
+            this.attribute[tempName].Intervals.Add(leftBound, leftBoundType,
                 rightBound, rightBoundType, false);
         }
-
-       /* /// <summary>
-        /// Method to check whether the interval is disjunct with currently available intervals in the category.
-        /// </summary>
-        /// <param name="interval">Interval to check for disjunctivity</param>
-        /// <returns>True if the interval is disjunct</returns>
-        protected bool IsIntervalDisjuctWithCurrent(Interval interval)
-        {
-            foreach (Interval inter in this.currentCategory.GetIntervals())
-            {
-                if (!inter.IntervalIsDisjunct(interval))
-
-                    return false;
-            }
-            return true;
-        }*/
 
         #endregion
 
@@ -592,7 +552,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.RadioMinusInfinity.Text = rm.GetString("RadioMinusInfinity");
             this.RadioPlusInfinity.Text = rm.GetString("RadioPlusInfinity");
             //this.RadioFloat.Text = rm.GetString("Float");
-           // this.RadioLong.Text = rm.GetString("Long");
+            // this.RadioLong.Text = rm.GetString("Long");
             this.ButtonCancel.Text = rm.GetString("ButtonCancel");
             this.ButtonAddInterval.Text = rm.GetString("ButtonCheck");
             this.ButtonSubmit.Text = rm.GetString("ButtonSubmit");
