@@ -119,7 +119,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="categories">Categories to edit</param>
         /// <param name="distinctValues">Distinct values for enum categories</param>
         public MainListView(string[] localePrefs, string categories, DataTable table,
-            DbDataTypeEnum columnDataType, IOwnerOfAddIn ownerOfAddin)
+            CardinalityEnum cardinality, DbDataTypeEnum columnDataType, IOwnerOfAddIn ownerOfAddin)
         {
             //setting the ResManager resource manager and localization string
             string locale;
@@ -138,48 +138,54 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 localizationString = "en-US";
             }
 
+            bool intervalsAllowed = false;
+            if (cardinality == CardinalityEnum.Cardinal)
+            {
+                intervalsAllowed = true;
+            }
+
             if (categories == String.Empty)
             {
                 switch(columnDataType)
                 {
                     case DbDataTypeEnum.BooleanType:
                         this.attribute = new Attribute<IComparable>(
-                            DbSimpleDataTypeEnum.BooleanSimpleType, true);
+                            DbSimpleDataTypeEnum.BooleanSimpleType, intervalsAllowed);
                         break;
 
                     case DbDataTypeEnum.DateTimeType:
                         this.attribute = new Attribute<IComparable>(
-                            DbSimpleDataTypeEnum.DateTimeSimpleType, true);
+                            DbSimpleDataTypeEnum.DateTimeSimpleType, intervalsAllowed);
                         break;
 
                     
                     case DbDataTypeEnum.DoubleType:
                         this.attribute = new Attribute<IComparable>(
-                            DbSimpleDataTypeEnum.DoubleSimpleType, true);
+                            DbSimpleDataTypeEnum.DoubleSimpleType, intervalsAllowed);
                         break;
 
                     case DbDataTypeEnum.DecimalType:
                     case DbDataTypeEnum.FloatType:
                         this.attribute = new Attribute<IComparable>(
-                            DbSimpleDataTypeEnum.FloatSimpleType, true);
+                            DbSimpleDataTypeEnum.FloatSimpleType, intervalsAllowed);
                         break;
 
                     case DbDataTypeEnum.IntegerType:
                     case DbDataTypeEnum.UnsignedIntegerType:
                         this.attribute = new Attribute<IComparable>(
-                            DbSimpleDataTypeEnum.IntegerSimpleType, true);
+                            DbSimpleDataTypeEnum.IntegerSimpleType, intervalsAllowed);
                         break;
 
                     case DbDataTypeEnum.LongIntegerType:
                     case DbDataTypeEnum.UnsignedLongIntegerType:
                         this.attribute = new Attribute<IComparable>(
-                            DbSimpleDataTypeEnum.LongSimpleType, true);
+                            DbSimpleDataTypeEnum.LongSimpleType, intervalsAllowed);
                         break;
 
                     case DbDataTypeEnum.ShortIntegerType:
                     case DbDataTypeEnum.UnsignedShortIntegerType:
                         this.attribute = new Attribute<IComparable>(
-                            DbSimpleDataTypeEnum.ShortSimpleType, true);
+                            DbSimpleDataTypeEnum.ShortSimpleType, intervalsAllowed);
                         break;
 
                     case DbDataTypeEnum.StringType:
@@ -189,7 +195,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
                     case DbDataTypeEnum.TimeType:
                         this.attribute = new Attribute<IComparable>(
-                            DbSimpleDataTypeEnum.TimeSimpleType, true);
+                            DbSimpleDataTypeEnum.TimeSimpleType, intervalsAllowed);
                         break;
 
                     default:

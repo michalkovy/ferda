@@ -97,9 +97,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                     return BoxInfoHelper.GetSelectStringArray(
                         Func.GetCategoriesNames(false)
                         );
-
-              //  case Functions.PropAttribute:
-             //       return BoxInfoHelper.
                 default:
                     return null;
             }
@@ -112,6 +109,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             {
                 case Functions.PropCountOfCategories:
                     return Func.CountOfCategories;
+                case Functions.PropIncludeNullCategory:
+                    return Func.IncludeNullCategory;
                 default:
                     break;
             }
