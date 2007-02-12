@@ -27,6 +27,7 @@ using Ferda.Guha.Data;
 using Object=Ice.Object;
 using FixedAtom = Ferda.Modules.Boxes.GuhaMining.FixedAtom;
 using AtomSetting = Ferda.Modules.Boxes.GuhaMining.AtomSetting;
+using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategory
 {
@@ -46,7 +47,24 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return ((Functions) boxModule.FunctionsIObj).NameInLiterals;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            string label = String.Empty;
+            try
+            {
+                label = Func.GetColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
+            }
+            catch
+            {
+                return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
+            }
+            if (label == String.Empty)
+            {
+                return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
+            }
+            else
+            {
+                return label;
+            }            
         }
 
         /// <summary>

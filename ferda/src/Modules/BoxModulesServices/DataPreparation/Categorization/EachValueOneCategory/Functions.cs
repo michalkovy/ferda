@@ -58,7 +58,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public string NameInLiterals
         {
-            get { return _boxModule.GetPropertyString(PropNameInLiterals); }
+            get {
+                return _boxModule.GetPropertyString(PropNameInLiterals);
+            }
         }
 
         public LongTI CountOfCategories

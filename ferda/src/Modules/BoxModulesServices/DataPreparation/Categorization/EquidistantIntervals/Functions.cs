@@ -83,7 +83,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         {
             get
             {
-                return _boxModule.GetPropertyLong(PropCountOfCategories);
+                long count = _boxModule.GetPropertyLong(PropCountOfCategories);
+                if (count < 0) return count * (-1);
+                else return count;
             }
         }
 
@@ -515,33 +517,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                     ClosedFrom, __max, BoundaryEnum.Closed, false);
                                 break;
 
-                          //  case DbDataTypeEnum.TimeType:
-                         //       TimeSpan _timemin = Convert.
-                           //     break;
-
-
                             default:
-                                throw new ArgumentException("Type not supported");
+                             //   if (fallOnError)
+                                    throw new ArgumentException("Data type not supported");
+                             //   else
+                             //       break;
 
                         }
-
-                   //     result.CreateIntervals(BoundaryEnum.Closed, __min, _divisionPoints,
-                   //                 ClosedFrom, __max, BoundaryEnum.Closed, false);
-
-                    //    if (dt.Rows[0][0] is DBNull)
-                     //       containsNull = true;
-
-                  //      List<object> enumeration = new List<object>(dt.Rows.Count);
-                 //       foreach (System.Data.DataRow row in dt.Rows)
-                //        {
-                //            object v = row[0];
-                //            if (v == null || v is DBNull)
-                //                continue;
-                      //      enumeration.Add(row[0]);
-                //        }
-
-                    //    result.CreateEnums(enumeration.ToArray(), containsNull, true);
-
                         _nullCategoryName = result.NullContainingCategory;
 
                         return result;
