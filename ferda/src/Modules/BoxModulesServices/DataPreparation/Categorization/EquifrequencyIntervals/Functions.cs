@@ -1223,6 +1223,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                             return null;
                         List<IComparable> partialResult =
                             tmp.GetSingleValues(tmp.GetNotMissingsCategorieIds(XCategory));
+                        if (partialResult == null)
+                            return null;
                         List<double> result = new List<double>(partialResult.Count);
                         foreach (IComparable comparable in partialResult)
                         {

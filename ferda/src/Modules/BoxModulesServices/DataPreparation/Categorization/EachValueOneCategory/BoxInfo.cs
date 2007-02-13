@@ -55,20 +55,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             }
             catch
             {
-                return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
+                return Func.NameInLiterals;
             }
             if (label == String.Empty)
             {
-                return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
+                return Func.NameInLiterals;
             }
             else
             {
-                if (((Functions)boxModule.FunctionsIObj).NameInLiterals != String.Empty)
+                if (Func.NameInLiterals != String.Empty)
                     return label +
-                        " - " + ((Functions)boxModule.FunctionsIObj).NameInLiterals;
+                        " - " + Func.NameInLiterals;
                 else
                     return label;
-            }            
+            }      
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     case "StaticAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
-                            StaticAttribute.Functions.SockBSGen;
+                            StaticAttribute.Functions.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
                         //creating the new (single) module

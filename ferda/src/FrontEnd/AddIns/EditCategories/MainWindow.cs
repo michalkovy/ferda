@@ -157,8 +157,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                         this.attribute = new Attribute<IComparable>(
                             DbSimpleDataTypeEnum.DateTimeSimpleType, intervalsAllowed);
                         break;
-
-                    
+            
                     case DbDataTypeEnum.DoubleType:
                         this.attribute = new Attribute<IComparable>(
                             DbSimpleDataTypeEnum.DoubleSimpleType, intervalsAllowed);
@@ -287,7 +286,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
             this.LoadIcons();
             this.InitIcons();
-            this.MenuItemEditInterval.Enabled = this.attribute.IntervalsAllowed;
+            this.MenuItemNewInterval.Enabled = this.attribute.IntervalsAllowed;
+            this.ToolMenuItemNewInterval.Enabled = this.attribute.IntervalsAllowed;
         }
 
         #endregion
