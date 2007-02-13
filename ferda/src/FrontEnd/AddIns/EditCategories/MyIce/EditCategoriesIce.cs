@@ -125,6 +125,18 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <returns>New property value</returns>
         public override PropertyValue run(PropertyValue valueBefore, string propertyName, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, Ice.Current current__)
         {
+            about = resManager.GetString("EditCategoriesAbout");
+            //validation
+           /* try
+            {
+                boxModuleParam.validate();
+            }
+            catch (Ferda.Modules.BoxRuntimeError e)
+            {
+                ownerOfAddIn.ShowBoxException(e);
+                return valueBefore;
+            }*/
+
             PropertyValue propertyValue = valueBefore;
             // Box
             StringTI pv = new StringTI();
@@ -140,27 +152,25 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             catch
             {
             }
-            about = resManager.GetString("EditCategoriesAbout");
+            
             DbDataTypeEnum columnDataType = new DbDataTypeEnum();
             PropertyValue returnValue = new PropertyValue();
             DataTable table = new DataTable();
             CardinalityEnum cardinality = new CardinalityEnum();
 
-            try
+            /*List<string> iceIds = new List<string>(boxModuleParam.getFunctionsIceIds());
+
+            if (iceIds.Contains(
+                "::Ferda::Modules::Boxes::DataPreparation::ColumnFunctions"))
             {
-                //if attribute is connected to static attribute
                 try
                 {
-                    BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("Column")[0];
-                    BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
+                    BoxModulePrx boxModuleParam1 = boxModuleParam.getConnections("Column")[0];
                     BoxModulePrx boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
 
                     Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
                         Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
                         boxModuleParam1.getFunctions());
-                    //      Modules.Boxes.DataPreparation.AttributeFunctionsPrx prx1 =
-                    //        Modules.Boxes.DataPreparation.AttributeFunctionsPrxHelper.checkedCast(
-                    //      boxModuleParamNew.getFunctions());
 
                     Modules.Boxes.DataPreparation.DataTableFunctionsPrx prx3 =
                         Modules.Boxes.DataPreparation.DataTableFunctionsPrxHelper.checkedCast(
@@ -168,7 +178,104 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
                     Modules.Boxes.DataPreparation.ColumnInfo info = prx2.getColumnInfo();
                     columnDataType = info.dataType;
-                    DatabaseConnectionSettingHelper connSetting = 
+                    DatabaseConnectionSettingHelper connSetting =
+                        new DatabaseConnectionSettingHelper(
+                        info.dataTable.databaseConnectionSetting);
+                    GenericDataTable genericDataTable =
+                        GenericDatabaseCache.GetGenericDatabase(
+                        connSetting)[info.dataTable.dataTableName];
+                    table = genericDataTable.GetGenericColumn(
+                        info.columnSelectExpression).GetDistincts(String.Empty);
+                    //table = genericDataTable.Select();
+                    cardinality = info.cardinality;
+                }
+                catch
+                {
+                    return valueBefore;
+                }
+            }
+            else
+            {
+                //the box has attribute functionality
+                if (iceIds.Contains(
+                    "::Ferda::Modules::Boxes::DataPreparation::AttributeFunctions"))
+                {
+                    try
+                    {
+                        BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("Column")[0];
+                        BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
+                        BoxModulePrx boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
+
+                        Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
+                            Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
+                            boxModuleParam1.getFunctions());
+
+                        Modules.Boxes.DataPreparation.DataTableFunctionsPrx prx3 =
+                            Modules.Boxes.DataPreparation.DataTableFunctionsPrxHelper.checkedCast(
+                            boxModuleParam2.getFunctions());
+
+                        Modules.Boxes.DataPreparation.ColumnInfo info = prx2.getColumnInfo();
+                        columnDataType = info.dataType;
+                        DatabaseConnectionSettingHelper connSetting =
+                            new DatabaseConnectionSettingHelper(
+                            info.dataTable.databaseConnectionSetting);
+                        GenericDataTable genericDataTable =
+                            GenericDatabaseCache.GetGenericDatabase(
+                            connSetting)[info.dataTable.dataTableName];
+                        table = genericDataTable.GetGenericColumn(
+                                info.columnSelectExpression).GetDistincts(String.Empty);
+                        //table = genericDataTable.Select();
+                        cardinality = info.cardinality;
+                    }
+                    catch
+                    {
+                        return valueBefore;
+                    }
+                }
+                else
+                {
+                    return valueBefore;
+                }
+            }*/
+
+            try
+            {
+                
+                //if attribute is connected to static attribute
+                try
+                {
+                    BoxModulePrx boxModuleParamNew;
+                    BoxModulePrx boxModuleParam1;
+                    BoxModulePrx boxModuleParam2;
+
+                    if (boxModuleParam.getConnections("Column").Length > 0)
+                        boxModuleParamNew = boxModuleParam.getConnections("Column")[0];
+                    else
+                        return valueBefore;
+
+                    if (boxModuleParamNew.getConnections("Column").Length > 0)
+                        boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
+                    else
+                        return valueBefore;
+
+                    if (boxModuleParam1.getConnections("DataTable").Length > 0)
+                        boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
+                    else
+                        return valueBefore;
+                    
+                    
+
+                    Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
+                        Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
+                        boxModuleParam1.getFunctions());
+
+                    Modules.Boxes.DataPreparation.DataTableFunctionsPrx prx3 =
+                        Modules.Boxes.DataPreparation.DataTableFunctionsPrxHelper.checkedCast(
+                        boxModuleParam2.getFunctions());
+
+                    Modules.Boxes.DataPreparation.ColumnInfo info = prx2.getColumnInfo();
+                    columnDataType = info.dataType;
+                    DatabaseConnectionSettingHelper connSetting =
                         new DatabaseConnectionSettingHelper(
                         info.dataTable.databaseConnectionSetting);
                     GenericDataTable genericDataTable =
@@ -185,8 +292,20 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     //static attribute is connected to column
                     try
                     {
-                        BoxModulePrx boxModuleParam1 = boxModuleParam.getConnections("Column")[0];
-                        BoxModulePrx boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
+                        BoxModulePrx boxModuleParam1;
+                        BoxModulePrx boxModuleParam2;
+
+
+                        if (boxModuleParam.getConnections("Column").Length > 0)
+                            boxModuleParam1 = boxModuleParam.getConnections("Column")[0];
+                        else
+                            return valueBefore;
+
+                        if (boxModuleParam1.getConnections("DataTable").Length > 0)
+                            boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
+                        else
+                            return valueBefore;
+
 
                         Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
                             Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
@@ -209,7 +328,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                         //table = genericDataTable.Select();
                         cardinality = info.cardinality;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         //static attribute is not connected to anything
                         throw e;
