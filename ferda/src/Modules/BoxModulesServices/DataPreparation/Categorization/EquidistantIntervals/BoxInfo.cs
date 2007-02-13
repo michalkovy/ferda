@@ -187,7 +187,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         public override void Validate(BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
-
+            if (Func.Count <= 0)
+            {
+                throw Exceptions.BadValueError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Count of intervals has to be greater than 0.",
+                    new string[] { Functions.PropCountOfCategories },
+                    restrictionTypeEnum.OtherReason
+                    );
+            }
             // try to invoke methods
             object dummy = Func.GetColumnFunctionsPrx(true);
             dummy = Func.GetAttributeId();
@@ -196,7 +205,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             {
                 dummy = Func.GetAttribute(true);
             }
-            catch (Exception e)
+            catch
             {
                 throw Exceptions.BadValueError(
                     null,
