@@ -97,10 +97,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             {
                 singleModule = new ModuleAskingForCreation();
                 moduleConnection = new ModulesConnection();
-                            
+
                 switch (moduleAFCname)
                 {
-                    case "FixedAtom" :
+                    case "FixedAtom":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
                             FixedAtom.Functions.SockBitStringGenerator;
@@ -114,7 +114,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                         singleModule.propertySetting = new PropertySetting[] { };
                         break;
 
-                    case "AtomSetting" :
+                    case "AtomSetting":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
                             AtomSetting.Functions.SockBitStringGenerator;
@@ -140,8 +140,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                         singleModule.newBoxModuleIdentifier =
                             StaticAttribute.BoxInfo.typeIdentifier;
 
-                        Guha.Attribute.Attribute<IComparable> attribute = 
-                            ((Functions)boxModule.FunctionsIObj).GetAttribute(true);
+                        //getting and testing the attribute (doens't have to be connected)
+                        Guha.Attribute.Attribute<IComparable> attribute =
+                            ((Functions)boxModule.FunctionsIObj).GetAttribute(false);
+                        if (attribute == null)
+                        {
+                            break;
+                        }
 
                         PropertySetting editCategories =
                             new PropertySetting(Functions.PropCategories, new StringTI(

@@ -116,20 +116,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         singleModule.newBoxModuleIdentifier =
                             StaticAttribute.BoxInfo.typeIdentifier;
 
-                        Guha.Attribute.Attribute<IComparable> attribute = null;
-                        PropertySetting editCategories = null;
-                        try
+                        //getting and testing the attribute (doens't have to be connected)
+                        Guha.Attribute.Attribute<IComparable> attribute =
+                            ((Functions)boxModule.FunctionsIObj).GetAttribute(false);
+                        if (attribute == null)
                         {
-                            attribute = ((Functions)boxModule.FunctionsIObj).GetAttribute(false);
-                            editCategories =
-                           new PropertySetting(Functions.PropCategories, new StringTI(
-                           Guha.Attribute.Serializer.Serialize(
-                           (attribute.Export()))));
+                            break;
                         }
-                        catch
-                        {
-                            editCategories = new PropertySetting();
-                        }
+
+                        PropertySetting editCategories =
+                            new PropertySetting(Functions.PropCategories, new StringTI(
+                            Guha.Attribute.Serializer.Serialize(
+                            (attribute.Export()))));
                       
                         singleModule.propertySetting = new PropertySetting[] { editCategories };
                         break;
