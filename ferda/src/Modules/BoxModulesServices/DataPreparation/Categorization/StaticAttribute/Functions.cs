@@ -511,6 +511,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 new DatabaseConnectionSettingHelper(tmp.dataTable.databaseConnectionSetting);
 
             string categories = getAttribute();
+            if (String.IsNullOrEmpty(categories))
+            {
+                return null;
+            }
 
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
             cacheSetting.Add(
