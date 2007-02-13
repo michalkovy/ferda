@@ -541,7 +541,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                         //static attribute connected to attribute
                         try
                         {
-                            BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("BitStringGenerator")[0];
+                            BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("Column")[0];
                             BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
                             Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
                                        Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
@@ -666,7 +666,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             BoxModulePrx boxModuleParam1;
             try
             {
-                BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("BitStringGenerator")[0];
+                BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("Column")[0];
                 boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
             }
             catch

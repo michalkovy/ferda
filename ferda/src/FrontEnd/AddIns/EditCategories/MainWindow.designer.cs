@@ -323,6 +323,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             // ButtonEditInterval
             // 
             this.ButtonEditInterval.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ButtonEditInterval.Enabled = false;
             this.ButtonEditInterval.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonEditInterval.Name = "ButtonEditInterval";
             this.ButtonEditInterval.Size = new System.Drawing.Size(99, 22);

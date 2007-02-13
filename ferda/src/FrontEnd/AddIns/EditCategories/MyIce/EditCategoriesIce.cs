@@ -151,7 +151,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 //if attribute is connected to static attribute
                 try
                 {
-                    BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("BitStringGenerator")[0];
+                    BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("Column")[0];
                     BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
                     BoxModulePrx boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
 
@@ -174,7 +174,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     GenericDataTable genericDataTable =
                         GenericDatabaseCache.GetGenericDatabase(
                         connSetting)[info.dataTable.dataTableName];
-                    table = genericDataTable.Select();
+                    table = genericDataTable.GetGenericColumn(
+                            info.columnSelectExpression).GetSelect(
+                            info.dataTable.primaryKeyColumns);
+                    //table = genericDataTable.Select();
                     cardinality = info.cardinality;
                 }
 
@@ -202,7 +205,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                         GenericDataTable genericDataTable =
                             GenericDatabaseCache.GetGenericDatabase(
                             connSetting)[info.dataTable.dataTableName];
-                        table = genericDataTable.Select();
+                        table = genericDataTable.GetGenericColumn(
+                            info.columnSelectExpression).GetSelect(
+                            info.dataTable.primaryKeyColumns);
+                        //table = genericDataTable.Select();
                         cardinality = info.cardinality;
                     }
                     catch(Exception e)

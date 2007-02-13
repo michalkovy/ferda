@@ -24,7 +24,28 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return ((Functions)boxModule.FunctionsIObj).NameInLiterals;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            string label = String.Empty;
+            try
+            {
+                label = Func.GetColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
+            }
+            catch
+            {
+                return Func.NameInLiterals;
+            }
+            if (label == String.Empty)
+            {
+                return Func.NameInLiterals;
+            }
+            else
+            {
+                if (Func.NameInLiterals != String.Empty)
+                    return label +
+                        " - " + Func.NameInLiterals;
+                else
+                    return label;
+            }
         }
 
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, BoxModuleI boxModule)
