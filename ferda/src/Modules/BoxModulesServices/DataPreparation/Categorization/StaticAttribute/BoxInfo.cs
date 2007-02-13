@@ -144,5 +144,45 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         {
             get { return typeIdentifier; }
         }
+
+        public override void Validate(BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            
+            // try to invoke methods
+            object dummy = Func.GetColumnFunctionsPrx(true);
+            dummy = Func.GetAttributeId();
+            dummy = Func.GetAttributeNames();
+            
+            dummy = Func.GetCategoriesNames(true);
+            dummy = Func.GetCategoriesAndFrequencies(true);
+            dummy = Func.GetBitStrings(true);
+            Debug.Assert(dummy == null);
+
+            if (String.IsNullOrEmpty(Func.NameInLiterals))
+                throw Exceptions.BadValueError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Property \"Name in literals\" can not be empty string.",
+                    new string[] { Functions.PropNameInLiterals },
+                    restrictionTypeEnum.OtherReason
+                    );
+
+            CardinalityEnum potentiallyCardinality = Func.PotentiallyCardinality(true);
+
+            if (Common.CompareCardinalityEnums(
+                    Func.Cardinality,
+                    potentiallyCardinality
+                    ) > 1)
+            {
+                throw Exceptions.BadValueError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Unsupported cardinality type for current attribute setting.",
+                    new string[] { Functions.PropCardinality },
+                    restrictionTypeEnum.OtherReason
+                    );
+            }
+        }
     }
 }

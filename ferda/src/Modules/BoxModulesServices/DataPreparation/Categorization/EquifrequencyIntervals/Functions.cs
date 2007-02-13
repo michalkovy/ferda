@@ -68,22 +68,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             }
         }
 
-        public LongTI CountOfCategories
+        public LongTI Count
         {
             get
             {
-                long count = _boxModule.GetPropertyLong(PropCountOfCategories);
-                if (count <= 0)
-                {
-                    throw Exceptions.BadValueError(
-                    null,
-                    _boxModule.StringIceIdentity,
-                    "Value has to be greater than 0.",
-                    new string[] { Functions.PropCountOfCategories },
-                    restrictionTypeEnum.OtherReason
-                    );
-                }
-                else return count;
+                return _boxModule.GetPropertyLong(PropCountOfCategories);
             }
         }
 
@@ -865,8 +854,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropCountOfCategories, (long)CountOfCategories);
-
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropCountOfCategories, (long)Count);
+            int count = (int)Count;
+            if (count <= 0)
+            {
+                count = 1;
+            }
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
             {
@@ -882,14 +875,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
 
                         Attribute<IComparable> result =
                             (Attribute<IComparable>)Common.GetAttributeObject(column.DbSimpleDataType, true);
-
-                        //DbDataTypeEnum dataType = prx.getColumnInfo().dataType;
-                        //ValuesAndFrequencies df = prx.getDistinctsAndFrequencies();
-                        //Debug.Assert(df.dataType == dataType);
-                        //DbSimpleDataTypeEnum simpleDbDataType = GenericColumn.GetSimpleDataType(df.dataType);
-
-                        // get primary key
-                        //string[] pks = tmp.dataTable.primaryKeyColumns;
 
                         System.Data.DataTable dt;
                         string _min;
@@ -908,8 +893,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                             dt = column.GetDistinctsAndFrequencies(
                                 columnSelectExpression + ">='" + from + "' AND " + columnSelectExpression + "<='" + to + "'"
                                 );
-
-                            //dt = column.GetDistincts(columnSelectExpression + ">='" + from + "' AND " + columnSelectExpression + "<='" + to + "'");
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {
@@ -929,7 +912,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         //  bool containsNull = false;
                         object[] _divisionPoints = null;
                         int i = 0;
-                        //  _divisionPoints = GenerateIntervals((int)CountOfCategories, enumeration.ToArray());
                         IComparable __min = null;
                         IComparable __max = null;
 
@@ -961,7 +943,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                                 _divisionPoints =
                                     Retyper<double>.Retype(
                                 Ferda.Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals
-                            ((int)CountOfCategories, enumeration)
+                            (count, enumeration)
                                 );
                                 break;
 
@@ -990,7 +972,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                                 _divisionPoints =
                                     Retyper<int>.Retype(
                                 Ferda.Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals
-                            ((int)CountOfCategories, enumeration1)
+                            (count, enumeration1)
                                 );
 
                                 __min = _imin;
@@ -1021,7 +1003,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                                 _divisionPoints =
                                     Retyper<long>.Retype(
                                 Ferda.Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals
-                            ((int)CountOfCategories, enumeration3)
+                            (count, enumeration3)
                                 );
 
                                 __min = _lmin;
@@ -1051,7 +1033,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                                 _divisionPoints =
                                     Retyper<DateTime>.Retype(
                                 Ferda.Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals
-                            ((int)CountOfCategories, enumeration2)
+                            (count, enumeration2)
                                 );
 
                                 __min = _dtmin;

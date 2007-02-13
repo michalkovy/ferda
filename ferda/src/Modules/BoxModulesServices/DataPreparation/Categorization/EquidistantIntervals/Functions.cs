@@ -83,18 +83,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         {
             get
             {
-                long count = _boxModule.GetPropertyLong(PropCountOfCategories);
-                if (count <= 0)
-                {
-                    throw Exceptions.BadValueError(
-                    null,
-                    _boxModule.StringIceIdentity,
-                    "Value has to be greater than 0.",
-                    new string[] { Functions.PropCountOfCategories },
-                    restrictionTypeEnum.OtherReason
-                    );
-                }
-                else return count;
+                return  _boxModule.GetPropertyLong(PropCountOfCategories);
             }
         }
 
@@ -417,6 +406,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropLength, Count);
 
+            int count = (int)Count;
+            if (count <= 0)
+            {
+                count = 1;
+            }
+
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
             {
@@ -478,7 +473,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                 __max = _dmax;
                                 double[] _divisionPointsDouble = 
                                     Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
-                                    _dmin, _dmax, (int)Count);
+                                    _dmin, _dmax, count);
                                 result.CreateIntervals(BoundaryEnum.Closed, __min, Retyper<double>.Retype(
                                     _divisionPointsDouble),
                                     ClosedFrom, __max, BoundaryEnum.Closed, false);
@@ -494,7 +489,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                 __max = _imax;
                                 long[] _divisionPointsInt =
                                     Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
-                                    _imin, _imax, (int)Count);
+                                    _imin, _imax, count);
                                 result.CreateIntervals(BoundaryEnum.Closed, __min, Retyper<int>.Retype(
                                     Retyper<object>.RetypeToInt(_divisionPointsInt)),
                                     ClosedFrom, __max, BoundaryEnum.Closed, false);
@@ -508,7 +503,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                 __max = _lmax;
                                 long[] _divisionPointsLong =
                                     Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
-                                    _lmin, _lmax, (int)Count);
+                                    _lmin, _lmax, count);
                                 result.CreateIntervals(BoundaryEnum.Closed, __min, Retyper<long>.Retype(
                                     _divisionPointsLong),
                                     ClosedFrom, __max, BoundaryEnum.Closed, false);
@@ -521,7 +516,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                 __max = _datemax;
                                 DateTime[] _divisionPointsDateTime =
                                     Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
-                                    _datemin, _datemax, (int)Count, false);
+                                    _datemin, _datemax, count, false);
                                 result.CreateIntervals(BoundaryEnum.Closed, __min, Retyper<DateTime>.Retype(_divisionPointsDateTime),
                                     ClosedFrom, __max, BoundaryEnum.Closed, false);
                                 break;
