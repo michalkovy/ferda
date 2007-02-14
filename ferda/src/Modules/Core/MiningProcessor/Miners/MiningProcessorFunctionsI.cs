@@ -244,6 +244,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
             finally
             {
+                System.Threading.Thread.Sleep(200);
                 if ((progressBarPrx != null) && (_booleanTraceEnumerator == null))
                 {
                     progressBarPrx.done();

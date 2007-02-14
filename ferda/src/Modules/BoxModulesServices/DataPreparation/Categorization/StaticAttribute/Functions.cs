@@ -50,13 +50,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         }
 
 
-       /* protected string IncludeNullCategory
-        {
-            get
-            {
-                return this._boxModule.GetPropertyString(PropIncludeNullCategory);
-            }
-        }*/
+        /* protected string IncludeNullCategory
+         {
+             get
+             {
+                 return this._boxModule.GetPropertyString(PropIncludeNullCategory);
+             }
+         }*/
 
 
         protected string XCategory
@@ -511,10 +511,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 new DatabaseConnectionSettingHelper(tmp.dataTable.databaseConnectionSetting);
 
             string categories = getAttribute();
-            if (String.IsNullOrEmpty(categories))
-            {
-                return null;
-            }
+
 
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
             cacheSetting.Add(
@@ -530,7 +527,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
-            cacheSetting.Add("SerializedAttribute", categories);
+
+            if (!String.IsNullOrEmpty(categories))
+                cacheSetting.Add("SerializedAttribute", categories);
+
 
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
@@ -545,19 +545,40 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                         //static attribute connected to attribute
                         try
                         {
-                            BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("Column")[0];
-                            BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
-                            Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
-                                       Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
+                            BoxModulePrx boxModuleParamNew =
+                                _boxModule.MyProxy.getConnections("Column")[0];
+                            BoxModulePrx boxModuleParam1 =
+                                boxModuleParamNew.getConnections("Column")[0];
+                            ColumnFunctionsPrx prx2 =
+                                       ColumnFunctionsPrxHelper.checkedCast(
                                        boxModuleParam1.getFunctions());
                             columnDataType = prx2.getColumnInfo().dataType;
+                            if (String.IsNullOrEmpty(categories))
+                            {
+                                AttributeFunctionsPrx prx3 =
+                                       AttributeFunctionsPrxHelper.checkedCast(
+                                       boxModuleParam1.getFunctions());
+                                try
+                                {
+                                    categories = prx3.getAttribute();
+                                }
+                                catch
+                                {
+                                    return null;
+                                }
+                            }
                         }
                         catch
                         {
+                            if (String.IsNullOrEmpty(categories))
+                            {
+                                return null;
+                            }
                             //static attribute connected to column
-                            BoxModulePrx boxModuleParam1 = _boxModule.MyProxy.getConnections("Column")[0];
-                            Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
-                                       Ferda.Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
+                            BoxModulePrx boxModuleParam1 =
+                                _boxModule.MyProxy.getConnections("Column")[0];
+                            ColumnFunctionsPrx prx2 =
+                                       ColumnFunctionsPrxHelper.checkedCast(
                                        boxModuleParam1.getFunctions());
                             columnDataType = prx2.getColumnInfo().dataType;
                         }
@@ -624,7 +645,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                         #endregion
 
                         _nullCategoryName = attribute.NullContainingCategory;
-                       
+
                         return attribute;
                     },
                     delegate

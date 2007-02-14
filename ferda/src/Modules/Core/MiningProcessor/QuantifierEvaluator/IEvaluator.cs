@@ -12,6 +12,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         /// </summary>
         /// <returns>Boolean vector</returns>
         bool[] GetEvaluationVector();
+
+        /// <summary>
+        /// Returns boolean vector of verification results on contingency tables for SD miners
+        /// </summary>
+        /// <returns>Boolean vector</returns>
+        bool[] GetEvaluationVectorSD();
         
         //tohle bude validovat zbytek bufferu
         void Flush();

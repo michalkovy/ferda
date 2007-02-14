@@ -16,7 +16,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
     /// </summary>
     public class BitStringBuffer
     {
-        private const int maxSize = 30;
+        private const int maxSize = 1000;
         private static readonly BitStringBuffer _instance = new BitStringBuffer();
         private static List<BitStringIceWithCategoryId> _buffer =
             new List<BitStringIceWithCategoryId>();

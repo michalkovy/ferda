@@ -73,6 +73,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         private IEnumerator<BitStringIceWithCategoryId> _bitStringEnumerator;
         private int[] _countVector = null;
         private int _skipFirstN = -1;
+        private int bitStringsYielded = 0;
 
         private IEnumerator<BitStringIceWithCategoryId> BitStringEnumerator
         {
@@ -203,7 +204,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
                 fallOnError);
         }
 
-        private const int _bufferSize = 100;
+        private const int _bufferSize = 200;
         private BitStringIceWithCategoryId[] bitStringCache =
             new BitStringIceWithCategoryId[_bufferSize];
         private int _bufferFlag = 0;
@@ -322,21 +323,31 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         private Ice.Current _current = null;
         public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
-            if (_skipFirstN == -1)
+            if (bitStringsYielded < MaxNumberOfHypotheses)
             {
                 _skipFirstN = skipFirstN;
+
+                _current = current__;
+                bitString =
+                    GetNextBitStringFromBuffer();
+                if (bitString == null)
+                {
+                    bitString = new
+                        BitStringIceWithCategoryId();
+                    _minerInitialized = false;
+                    bitStringsYielded = 0;
+                    return false;
+                }
+                return true;
             }
-            _current = current__;
-            bitString =
-                GetNextBitStringFromBuffer();
-            if (bitString == null)
+            else
             {
                 bitString = new
-                    BitStringIceWithCategoryId();
+                        BitStringIceWithCategoryId();
                 _minerInitialized = false;
+                bitStringsYielded = 0;
                 return false;
             }
-            return true;
         }
 
         public override double[] GetCategoriesNumericValues(Current current__)
@@ -349,7 +360,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
             List<GuidAttributeNamePair>_result = new List<GuidAttributeNamePair>();
                 _result.AddRange(Common.GetAttributeNames(_boxModule, this));
 
-            _result.Add(new GuidAttributeNamePair(Guid,"VirtualFFTBooleanAttribute"));
+            _result.Add(new GuidAttributeNamePair(Guid,"VirtualSDFFTBooleanAttribute"));
 
             return _result.ToArray();
         }
@@ -400,13 +411,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
                 {
                     Common.SockSuccedent,
                     Common.SockAntecedent,
-                    Common.SockCondition
+                    Common.SockCondition,
+                    Common.SockSDCedent1,
+                    Common.SockSDCedent2
                 };
         }
 
         public bool IsRequiredOneAtMinimumAttributeInSocket(string socketName)
         {
-            if (socketName == Common.SockSuccedent)
+            if (socketName == Common.SockSuccedent
+                || socketName == Common.SockSDCedent1
+                || socketName == Common.SockSDCedent2)
                 return true;
             return false;
         }
