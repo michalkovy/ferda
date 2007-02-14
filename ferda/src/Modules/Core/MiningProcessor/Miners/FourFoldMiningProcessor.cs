@@ -177,7 +177,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         #region Testing
         private long _relevantQuestionsCount = 0;
-      //  private const long _maxRelevantQuestionsCount = this.TaskParams.maxSizeOfResult;
+
         private bool MustStop()
         {
             if (_relevantQuestionsCount > this.TaskParams.maxSizeOfResult)
@@ -279,7 +279,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
 
                             //if countvector contains zero, it means that there is a record
-                            //in the master table which has no correspon ding record in the detail table
+                            //in the master table which has no corresponding record in the detail table
                             //in order to keep the correct length of the yielded bitstring
                             //for every missing record from the MT we add an empty contingency table
                             if (CountVector[i] > 0)
@@ -318,17 +318,21 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             //generated and verified, will stop yielding bitstrings
                             if (evaluator.VerifyIsComplete(contingencyTable, new Hypothesis()))
                                 break;
-                        }
+                        }                       
 
-                        //here we create virtual attribute name
-                        //based on relevant question parameters
-
+                        //vector to be yielded as bitstring
                         bool[] evalVector = evaluator.GetEvaluationVector();
 
                         int _arraySize = (CountVector.Length + _blockSize - 1) / _blockSize;
 
                         long[] _tmpString = new long[_arraySize];
                         _tmpString.Initialize();
+
+                        //here we create virtual attribute name
+                        //based on relevant question parameters
+
+                        #region Compose virtual attribute name
+
                         string _yieldStringName = String.Empty;
 
                         if (!(pA.Identifier is IEmptyBitString))
@@ -359,6 +363,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                 MarkEnum.Condition.ToString() +
                             ": " + pC.Identifier;
                         }
+
+                        #endregion
 
                         for (int i = 0; i < evalVector.Length; i++)
                         {

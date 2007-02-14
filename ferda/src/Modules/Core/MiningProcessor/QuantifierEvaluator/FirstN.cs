@@ -187,5 +187,15 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                                  _rInfo.NumberOfVerifications,
                                  _rInfo.NumberOfHypotheses);
         }
+
+        #region IEvaluator Members
+
+
+        public bool[] GetEvaluationVectorSD()
+        {
+            return new bool[0];
+        }
+
+        #endregion
     }
 }

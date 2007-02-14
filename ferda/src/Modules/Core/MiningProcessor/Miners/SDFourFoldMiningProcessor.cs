@@ -98,130 +98,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             //IBitString xC;
             IBitString fSF; // first set
             IBitString sSF; // second set
-            
-            fourFoldTableOfBitStrings fourFT = new fourFoldTableOfBitStrings();
-            FourFoldContingencyTable fourFoldCT1;
-            FourFoldContingencyTable fourFoldCT2;
-            ContingencyTableHelper contingencyTable1;
-            ContingencyTableHelper contingencyTable2;
-
-            foreach (IBitString pS in _succedent)
-            {
-                if (pS is EmptyBitString)
-                    continue;
-                GetNegation(pS, out nS);
-                foreach (IBitString pA in _antecedent)
-                {
-                    GetNegation(pA, out nA);
-
-                    fourFT.pSpA = pS.And(pA);
-                    fourFT.pSnA = pS.And(nA);
-
-                    fourFT.nSpA = nS.And(pA);
-                    fourFT.nSnA = nS.And(nA);
-
-                    foreach (IBitString pC in _condition)
-                    {
-                        foreach (IBitString fS in _firstSet)
-                        {
-                            #region SD first set contingency table
-                            fSF = fS.And(pC);
-                            fourFoldCT1 = new FourFoldContingencyTable();
-
-                            fourFoldCT1.a = fourFT.pSpA.And(fSF).Sum;
-                            fourFoldCT1.c = fourFT.pSnA.And(fSF).Sum;
-
-                            fourFoldCT1.b = fourFT.nSpA.And(fSF).Sum;
-                            fourFoldCT1.d = fourFT.nSnA.And(fSF).Sum;
-
-                            contingencyTable1 = new ContingencyTableHelper(
-                                fourFoldCT1.ContingencyTable,
-                                _result.AllObjectsCount
-                                ); 
-                            #endregion
-
-                            double[] sDFirstSetValues = evaluator.SDFirstSetValues(contingencyTable1);
-
-                            foreach (IBitString sS in _secondSet)
-                            {
-                                #region SD second set contingency table
-                                switch (TaskParams.sdWorkingWithSecondSetMode)
-                                {
-                                    case WorkingWithSecondSetModeEnum.Cedent1AndCedent2:
-                                        sSF = sS.And(fS).And(pC);
-                                        break;
-                                    case WorkingWithSecondSetModeEnum.Cedent2:
-                                        sSF = sS.And(pC);
-                                        break;
-                                    case WorkingWithSecondSetModeEnum.None:
-                                    default:
-                                        throw new NotImplementedException();
-                                }
-
-                                fourFoldCT2 = new FourFoldContingencyTable();
-
-                                fourFoldCT2.a = fourFT.pSpA.And(sSF).Sum;
-                                fourFoldCT2.c = fourFT.pSnA.And(sSF).Sum;
-
-                                fourFoldCT2.b = fourFT.nSpA.And(sSF).Sum;
-                                fourFoldCT2.d = fourFT.nSnA.And(sSF).Sum;
-
-                                contingencyTable2 = new ContingencyTableHelper(
-                                    fourFoldCT2.ContingencyTable,
-                                    _result.AllObjectsCount
-                                    );
-                                #endregion
-
-                                Hypothesis hypothesis = new Hypothesis();
-                                hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
-                                hypothesis.SetFormula(MarkEnum.Antecedent, pA.Identifier);
-                                hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
-                                hypothesis.SetFormula(MarkEnum.FirstSet, fS.Identifier);
-                                hypothesis.SetFormula(MarkEnum.SecondSet, sS.Identifier);
-                                hypothesis.ContingencyTableA = contingencyTable1.ContingencyTable;
-                                hypothesis.ContingencyTableB = contingencyTable2.ContingencyTable;
-                                
-                                if (evaluator.VerifyIsCompleteSDSecondSet(contingencyTable2, sDFirstSetValues, hypothesis))
-                                    goto finish;
-                            }
-                        }
-                    }
-                }
-            }
-        finish:
-            evaluator.Flush();
-            resultFinish();
-        }
-
-        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
-        {
-            if (skipFirstN >= this.TaskParams.maxSizeOfResult)
-            {
-                ProgressSetValue(100, "Reading " + skipFirstN.ToString() + " bitstrings from cache");
-                yield break;
-            }
-            ProgressSetValue(-1, "Beginning of attributes trace.");
-            //       return false;
-            resultInit();
-            CountVector = countVector;
-
-
-            IEvaluator evaluator;
-            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
-                evaluator = new FirstNNoResult(this);
-            else
-                throw new NotImplementedException();
-
-            int step = 0;
-
-            //MissingInformation missingInformation = new MissingInformation();
-            //IBitString xS;
-            IBitString nS;
-            //IBitString xA;
-            IBitString nA;
-            //IBitString xC;
-            IBitString fSF; // first set
-            IBitString sSF; // second set
 
             fourFoldTableOfBitStrings fourFT = new fourFoldTableOfBitStrings();
             FourFoldContingencyTable fourFoldCT1;
@@ -315,6 +191,236 @@ namespace Ferda.Guha.MiningProcessor.Miners
         finish:
             evaluator.Flush();
             resultFinish();
+        }
+
+        #region Testing
+        private long _relevantQuestionsCount = 0;
+
+        private bool MustStop()
+        {
+            if (_relevantQuestionsCount > this.TaskParams.maxSizeOfResult)
+            {
+                return true;
+            }
+            else
+            {
+                _relevantQuestionsCount++;
+                return false;
+            }
+        }
+        #endregion
+
+        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
+        {
+            if (skipFirstN >= this.TaskParams.maxSizeOfResult)
+            {
+                ProgressSetValue(100, "Reading " + skipFirstN.ToString() + " bitstrings from cache");
+                yield break;
+            }
+            ProgressSetValue(-1, "Beginning of attributes trace.");
+            //       return false;
+            resultInit();
+            CountVector = countVector;
+
+
+            IEvaluator evaluator;
+            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
+                evaluator = new FirstNNoResult(this);
+            else
+                throw new NotImplementedException();
+
+            int step = 0;
+
+            //MissingInformation missingInformation = new MissingInformation();
+            //IBitString xS;
+            IBitString nS;
+            //IBitString xA;
+            IBitString nA;
+            //IBitString xC;
+            IBitString fSF; // first set
+            IBitString sSF; // second set
+
+            fourFoldTableOfBitStrings fourFT = new fourFoldTableOfBitStrings();
+            FourFoldContingencyTable fourFoldCT1;
+            FourFoldContingencyTable fourFoldCT2;
+            ContingencyTableHelper contingencyTable1;
+            ContingencyTableHelper contingencyTable2;
+
+            foreach (IBitString pS in _succedent)
+            {
+                if (pS is EmptyBitString)
+                    continue;
+                GetNegation(pS, out nS);
+                foreach (IBitString pA in _antecedent)
+                {
+                    GetNegation(pA, out nA);
+
+                    fourFT.pSpA = pS.And(pA);
+                    fourFT.pSnA = pS.And(nA);
+
+                    fourFT.nSpA = nS.And(pA);
+                    fourFT.nSnA = nS.And(nA);
+
+                    foreach (IBitString pC in _condition)
+                    {
+                        foreach (IBitString fS in _firstSet)
+                        {
+                            if (MustStop())
+                            {
+                                yield break;
+                            }
+
+                            if (step < skipFirstN)
+                            {
+                                step++;
+                                continue;
+                            }
+                            if (skipFirstN > 0)
+                            {
+                                if (this.TaskParams.maxSizeOfResult > 0)
+                                {
+                                    ProgressSetValue((float)step / (float)this.TaskParams.maxSizeOfResult,
+                                        "Skipped " + step.ToString() + " steps, using cache");
+                                }
+                            }
+                            step++;
+
+                            fSF = fS.And(pC);
+                            //cycle through countvector-based masks
+                            for (int i = 0; i < CountVector.Length; i++)
+                            {
+                                #region SD first set contingency table                                
+                                fourFoldCT1 = new FourFoldContingencyTable();
+
+                                //if countvector contains zero, it means that there is a record
+                                //in the master table which has no corresponding record in the detail table
+                                //in order to keep the correct length of the yielded bitstring
+                                //for every missing record from the MT we add an empty contingency table
+                                if (CountVector[i] > 0)
+                                {
+                                    fourFoldCT1.a = fourFT.pSpA.And(fSF.And(Masks[i])).Sum;
+                                    fourFoldCT1.c = fourFT.pSnA.And(fSF.And(Masks[i])).Sum;
+
+                                    fourFoldCT1.b = fourFT.nSpA.And(fSF.And(Masks[i])).Sum;
+                                    fourFoldCT1.d = fourFT.nSnA.And(fSF.And(Masks[i])).Sum;
+                                }
+                                contingencyTable1 = new ContingencyTableHelper(
+                                    fourFoldCT1.ContingencyTable,
+                                    _result.AllObjectsCount
+                                    );
+                                #endregion
+
+                                double[] sDFirstSetValues
+                                    = evaluator.SDFirstSetValues(contingencyTable1);
+
+                                foreach (IBitString sS in _secondSet)
+                                {
+                                    #region SD second set contingency table
+                                    switch (TaskParams.sdWorkingWithSecondSetMode)
+                                    {
+                                        case WorkingWithSecondSetModeEnum.Cedent1AndCedent2:
+                                            sSF = sS.And(fS).And(pC);
+                                            break;
+                                        case WorkingWithSecondSetModeEnum.Cedent2:
+                                            sSF = sS.And(pC);
+                                            break;
+                                        case WorkingWithSecondSetModeEnum.None:
+                                        default:
+                                            throw new NotImplementedException();
+                                    }
+
+                                    fourFoldCT2 = new FourFoldContingencyTable();
+
+                                    //if countvector contains zero, it means that there is a record
+                                    //in the master table which has no corresponding record in the detail table
+                                    //in order to keep the correct length of the yielded bitstring
+                                    //for every missing record from the MT we add an empty contingency table
+                                    if (CountVector[i] > 0)
+                                    {
+                                        fourFoldCT2.a = fourFT.pSpA.And(sSF.And(Masks[i])).Sum;
+                                        fourFoldCT2.c = fourFT.pSnA.And(sSF.And(Masks[i])).Sum;
+
+                                        fourFoldCT2.b = fourFT.nSpA.And(sSF.And(Masks[i])).Sum;
+                                        fourFoldCT2.d = fourFT.nSnA.And(sSF.And(Masks[i])).Sum;
+                                    }
+
+                                    contingencyTable2 = new ContingencyTableHelper(
+                                        fourFoldCT2.ContingencyTable,
+                                        _result.AllObjectsCount
+                                        );
+                                    #endregion
+
+                                    //VerifyIsComplete means no buffer is left.
+                                    //If not all relevant questions have been
+                                    //generated and verified, will stop yielding bitstrings
+                                    if (evaluator.VerifyIsCompleteSDSecondSet(
+                                        contingencyTable2, sDFirstSetValues, new Hypothesis()))
+                                        break;
+                                }
+                                //vector to be yielded as bitstring
+                                bool[] evalVector = evaluator.GetEvaluationVectorSD();
+
+                                int _arraySize = (CountVector.Length + _blockSize - 1) / _blockSize;
+
+                                long[] _tmpString = new long[_arraySize];
+                                _tmpString.Initialize();
+
+                                //here we create virtual attribute name
+                                //based on relevant question parameters
+
+                                #region Compose virtual attribute name
+
+                                string _yieldStringName = String.Empty;
+
+                                if (!(pA.Identifier is IEmptyBitString))
+                                {
+                                    _yieldStringName =
+                                        MarkEnum.Antecedent.ToString() +
+                                    ": " + pA.Identifier;
+                                }
+
+                                if (!(pS.Identifier is IEmptyBitString))
+                                {
+                                    if (!String.IsNullOrEmpty(_yieldStringName))
+                                    {
+                                        _yieldStringName = _yieldStringName + ", ";
+                                    }
+                                    _yieldStringName = _yieldStringName +
+                                        MarkEnum.Succedent.ToString() +
+                                    ": " + pS.Identifier;
+                                }
+
+                                if (!(pC.Identifier is IEmptyBitString))
+                                {
+                                    if (!String.IsNullOrEmpty(_yieldStringName))
+                                    {
+                                        _yieldStringName = _yieldStringName + ", ";
+                                    }
+                                    _yieldStringName = _yieldStringName +
+                                        MarkEnum.Condition.ToString() +
+                                    ": " + pC.Identifier;
+                                }
+
+                                #endregion
+
+                                for (int k = 0; k < evalVector.Length; k++)
+                                {
+                                    if (evalVector[k])
+                                        setTrueBit(k, _tmpString);
+                                }
+
+                                yield return new KeyValuePair<string, BitStringIce>(
+                                _yieldStringName,
+                                new BitStringIce(_tmpString, CountVector.Length));
+                                evaluator.Flush();
+                            }
+                        }
+                    }
+                }
+            }
+            //       finish:
+            //          evaluator.Flush();
+            //          resultFinish();
         }
     }
 }
