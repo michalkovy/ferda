@@ -71,11 +71,16 @@ algoritmus Apriori, viz \cite{apriori}.
 \paragraph{}
 Druhou skupinou asociaèních pravidel popisuje metoda GUHA. Je obecnìjší než
 Apriori. Tato metoda byla poprvé formulována v roce 1966 a byla vydana v 1978
- - viz \cite{guhabasic}. Asociaèní pravidlo má tvar $\phi \approx \psi$,
-kde $\phi$ a $\psi$ znaèí boolské atributy odvozené z hodnot sloupcù
+ - viz \cite{guhabasic}. Asociaèní pravidlo má tvar $\phi \approx \psi$, pøípadnì
+ $\phi \approx \psi / \chi$ pro podmínìná asociaèní pravidla,
+kde $\phi$, $\psi$ a $\chi$ znaèí konjunkce boolských atributù odvozené
+z hodnot sloupcù
 analyzované matice dat. Symbol $\approx$ znaèí obecný kvantifikátor, jenž
 popisuje vztah (asociaci) mezi $\phi$ a $\psi$. Tento mùže být napøíklad
-ve formì implikace nebo ve formì statistického testu.
+ve formì implikace nebo ve formì statistického testu. Asociaèní pravidlo
+$\phi \approx \psi$ tedy znamená, že $\phi$ a $\psi$ spolu souvisí ve smyslu
+použitého kvantifikatoru $\approx$, pøípadnì souvisí za pøedpokladu splnìní
+podmínky $\chi$ na analyzované matici dat.
 \paragraph{}
 Metoda GUHA pracuje pouze s kategoriálními daty,
 protože vzhledem ke zpùsobu generování hypotéz je nutné, aby byl prostor
@@ -89,11 +94,54 @@ databáze, kde každá hodnota každého atributu je reprezentována øetìzcem bitù
 Bit 1 reprezentuje "objekt má tuto hodnotu", zatímco bit 0 znamená
 "objekt nemá tuto hodnotu".
 
-\subsection{Relaèní asociaèní pravidla}
+\section{Relaèní asociaèní pravidla a virtuální atributy}
+\subsection{Úvod}
+Zde bude krátce popsáno rozšíøení asociaèních pravidel pro práci s vícero datovými
+tabulkami takové, aby byly zachovány všechny vlastnosti metody GUHA a zároveò
+aby se umožnil popis zajímavých vzorcù nalazených na více datových tabulkách.
+Vlastnosti metody GUHA, zejména zadávání úlohy pro datamining a implementace
+pomocí práce s bitovými øetízky zùstanou zachovány. Pro podrobnìjší popis
+teorie rozšíøení metody GUHA o pravidla pro relaèní datamining doporuèujeme
+prostudovat \cite{relminer}. Protože cílem dané diplomové práce je konkrétní
+implementace postupu relaèního dataminingu, zde se zamìøíme pouze na nìkteré
+nejdùležitìjší aspekty kritické pro pochopení implementace v rámci prostøedí
+Ferda.
+\subsection{Virtuální atributy}
+Asociáèní pravidla se rozšíøí o možnost práce s více datovými tabulkami.
+Datová matice, která byla zkoumána pomocí pùvodních asociaèních pravidel, 
+bude hlavní. Další datové tabulky budou rozšíøením hlavní tabulky o nìjaký atribut
+a mohou být obecnì ve vztahu 1:N ke hlavní datové matici. Jako pøíklad mùže
+posloužit databáze klientù banky, kde v hlavní tabulce máme uloženy osobní
+údaje klientù a napøíklad v tabulce transakce jsou uloženy transakce pro úèty
+klientù. Dalším pøíkladem je databáze pacientù, kde v rozšíøující tabulce jsou
+uložená mìøení krevního tlaku pro jednotlivé pacienty.
+\paragraph{}
+Základním pojmem, o který se rozšíøí pùvodní asociaèní pravidla, je
+\emph{virtuální atribut}. Virtuální atributy jsou novì pøidané sloupce
+k analyzované datové matici. Tyto sloupce se do pùvodné datové matice zpìtnì
+neukládají, avšak dolování dat probíhá, jakoby tyto novì vytvoøené sloupce
+v pùvodní matici byly - vytváøejí se (nebo v pøípadì konkrétní implementace
+v rámci dané diplomové práce se vytváøí pouze jejich reprezentace za pomocí
+bitových øetízkù) za bìhu.
+\paragraph{}
+Virtuální atributy mùžeme rozdìlit na dva základní druhy, jak jsou chápany
+v \cite{relminer}. Oba druhy atributù jsou v rámci dané práce implementovány
+do prostøedí Ferda.
+\paragraph{}
+První skupinou jsou sloupce vzniklé jako výsledek pøedzpracování dat z databáze.
+Jmenují se agregaèní atributy. Druhou skupinou jsou virtuální atributy vzniklé
+jako výsledek bìhu nìkteré z dataminingových úloh - konkrétnì napøíklad mùžeme
+použít míru platnosti hypotéz pro jednotlivé záznamy v hlavní tabulce jako
+nový datový sloupec.
+\subsubsection{Agregaèní atributy}
+\subsubsection{Hypotézové atributy}
 
 \section{Ferda Dataminer}
 \subsection{Vztah diplomové práce ''Experimentální GUHA procedury'' k této práci}
 
 \section{Cíle této práce a jejich naplnìní}
 \subsection{Zadání práce}
+\subsubsection{Relaèní datamining}
+\subsubsection{Expertní systém}
+\subsubsection{Implementace chybìjících atributù}
 \subsection{Cíle a jejich naplnìní}
