@@ -175,8 +175,8 @@ namespace Ferda.Utils.ConfigGenerator
 
                     if (!System.IO.Directory.Exists(outputDirectory))
                     {
-                        Console.WriteLine("_Warning: Directory " + subDirectory + " not exists");
-                        continue;
+                        Console.WriteLine("_Error: Directory " + subDirectory + " not exists");
+                        Environment.Exit(1);
                     }
                     try
                     {
@@ -187,7 +187,8 @@ namespace Ferda.Utils.ConfigGenerator
                     }
                     catch
                     {
-                        Console.WriteLine("_Warning: Exporting " + consoleSubString + " for: " + xmlItemName + " FAILED");
+                        Console.WriteLine("_Error: Exporting " + consoleSubString + " for: " + xmlItemName + " FAILED");
+                        Environment.Exit(1);
                     }
                     if (this.generateBoxInfo)
                         generateBoxInfo.CreateBoxInfoFile(outputDirectory, xmlItemName);
@@ -204,7 +205,8 @@ namespace Ferda.Utils.ConfigGenerator
                     }
                     catch
                     {
-                        Console.WriteLine("_Warning: Deserializing " + consoleSubString + " for: " + xmlItemName + " FAILED");
+                        Console.WriteLine("_Error: Deserializing " + consoleSubString + " for: " + xmlItemName + " FAILED");
+                        Environment.Exit(1);
                     }
                 }
                 Console.WriteLine(filesGenerated + " files generated.");
