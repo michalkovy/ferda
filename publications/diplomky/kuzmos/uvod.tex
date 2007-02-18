@@ -134,7 +134,31 @@ jako výsledek bìhu nìkteré z dataminingových úloh - konkrétnì napøíklad mùžeme
 použít míru platnosti hypotéz pro jednotlivé záznamy v hlavní tabulce jako
 nový datový sloupec.
 \subsubsection{Agregaèní atributy}
+Agregaèní atribut se reprezentuje novým virtuálním sloupcem (který se
+kvùli samotné podstatì principu vituálního atributu neukládá do databáze),
+Ten vzniká jako výsledek funkce nad daty z více datových tabulek, pøièemž
+zmínìná funkce pøiøadí každému objektu v hlavní datové matici reálné èíslo
+vypoèítané na základì hodnot v odpovídajících sloupcích z vedlejších datových 
+matic.
+\paragraph{}
+Jako pøíklady takto uvažovaných funkcí mùže posloužit mimo jiné
+množina SQL agregaèních funkcí, která vyhovuje výše uvedené definici. Dále mùžeme
+uvažovat množinu obecnìjších funkci zpracovávajících data z vedlejších
+datových tabulek. Pøíklad implementace takových funkcí mùžeme naleznout v
+\cite{duchacek} - jedná se o implementaci ve formì interpretovaného C\#
+pøímo za bìhu. Takto lze implementovat i obecnìjší agregaèní atributy než
+pouze za použití SQL agregaèních funkcí.
+
 \subsubsection{Hypotézové atributy}
+Narozdíl od agregaèních atributù, hypotézové atributy nelze získat za pomocí
+agregaèních funkcí nad daty z hhlavní a vedlejších datových tabulek. Tyto 
+atributy vzníkají jako výsledek bìhu dataminingových úloh nad vedlejšími
+datovými tabulkami a dále se používají pøi bìhu dataminingových úloh nad
+hlavní datovou tabulkou. Ústøední myšlenkou je zavést definici atributu
+se semantikou hypotézy (ve smyslu metody GUHA), jehož hodnotou by byla konkrétnì
+síla nebo platnost hypotézy nad vedlejšími datovými tabulkami a takto
+nadefinovaný sloupec by se použil "o úroveò výše" - pro generaci hypotéz
+pøi bìhu další dataminingové úlohy.
 
 \section{Ferda Dataminer}
 \subsection{Vztah diplomové práce ''Experimentální GUHA procedury'' k této práci}
