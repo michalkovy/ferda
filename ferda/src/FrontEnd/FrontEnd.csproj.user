@@ -16,7 +16,7 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartWorkingDirectory>D:\Make\Projekt\novesvn\bin\FrontEnd\</StartWorkingDirectory>
+    <StartWorkingDirectory>c:\Make\Projekt\svn\bin\FrontEnd\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <StartWorkingDirectory>C:\Make\Projekt\subversion\bin\</StartWorkingDirectory>
