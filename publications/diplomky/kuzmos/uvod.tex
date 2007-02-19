@@ -124,7 +124,29 @@ v pùvodní matici byly - vytváøejí se (nebo v pøípadì konkrétní implementace
 v rámci dané diplomové práce se vytváøí pouze jejich reprezentace za pomocí
 bitových øetízkù) za bìhu.
 \paragraph{}
-Virtuální atributy mùžeme rozdìlit na dva základní druhy, jak jsou chápany
+Pro názornost uveïme nìkolik pøíkladù virtuálních atributù. Použijeme
+databázi klientù fiktivní banky Barbora, kde hlavní tabulka obsahuje
+základní data o klientech a tabulka transakcí obsahuje pohyb na jejich úètech.
+Zkoumejme následující hypotézu:
+\begin{eqnarray}
+\label{eq:aggrattributeexample}
+TYPE="PRIJEM" \& AMOUNT > AVG(AMOUNT)*2 \Rightarrow_{80\%} \nonumber\\
+OPERATION="PREVOD NA UCET"
+\end{eqnarray}
+Zde jsme použili jeden virtuální atribut $AVG(AMOUNT)*2$, kde $AVG$ je
+agregaèní funkce SQL. Hypotéza mùže znamenat zjednodušenì øeèeno,
+pøedpoklad o faktu, že vyšší pøísuny penìz na úèet probíhají spíše
+bezhotovostnì. Tato hypotéza mùže a nemusí mít smysl - autor neaspiruje
+na odborníka v bankovnictví.
+Uvažme další hypotézu:
+\begin{eqnarray}
+\label{eq:hyprattributeexample}
+TYPE="PRIJEM" \& AMOUNT > AVG(AMOUNT)*2 \Rightarrow_{80\%} \nonumber\\
+OPERATION="PREVOD NA UCET"
+\end{eqnarray}
+\paragraph{}
+Z výše uvedeného lze vidìt, jak rozdìlujeme virtuální atributy. Uvažujeme
+dva základní druhy, jak jsou chápany
 v \cite{relminer}. Oba druhy atributù jsou v rámci dané práce implementovány
 do prostøedí Ferda.
 \paragraph{}
@@ -145,7 +167,8 @@ Jako pøíklady takto uvažovaných funkcí mùže posloužit mimo jiné
 množina SQL agregaèních funkcí, která vyhovuje výše uvedené definici. Dále mùžeme
 uvažovat množinu obecnìjších funkci zpracovávajících data z vedlejších
 datových tabulek. Pøíklad implementace takových funkcí mùžeme naleznout v
-\cite{duchacek} - jedná se o implementaci ve formì interpretovaného C\#
+\cite{duchacek} - jedná se o implementaci ve formì skriptu napsaného
+v jazyce C\# interpretovaného
 pøímo za bìhu. Takto lze implementovat i obecnìjší agregaèní atributy než
 pouze za použití SQL agregaèních funkcí.
 
