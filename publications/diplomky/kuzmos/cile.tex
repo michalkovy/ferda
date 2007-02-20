@@ -1,0 +1,83 @@
+\chapter{Cíle této práce a jejich naplnìní}
+\section{Zadání práce}
+\subsection{Pùvodní zadání práce}
+Níže je uvedeno zadání diplomové práce, jak je uvedeno ve Studijním informaèním
+systému:
+\paragraph{}
+Východiskem pro diplomovou práci jsou zkušenosti s GUHA procedurami implementovanými
+v systému LISp-Miner \cite{guha} a s relaèním rozšíøením procedury 4ft-Miner,
+které je implementováno v rámci disertaèní práce T. Karbana \cite{relminer}, 
+viz též \cite{mlrules,altrules}. Zkušenosti ukazují, že má smysl rozšíøit
+obdobným zpùsobemi další ze zmínìných GUHA procedur. Práce s relaèním rozšíøením
+procedur
+však bude vyžadovat zadávání pomìrnì rozsáhlé sady vstupních parametrù,
+k èemuž bude zapotøebí rùzných netriviálních znalostí.
+Je proto tøeba zajistit možnost využití metod znalostního inženýrství
+pøi urèování hodnot vstupních parametrù relaèních GUHA procedur. 
+Pøíkladem je využití zabudovaného expertního systému pro definici množiny
+pøípustných literálù. Pøedpokládá se pøitom, že uživatel bude mít možnost
+modifikovat bázi znalostí tohoto expertního systému.
+
+Jedná se o diplomovou práci kategorie "implementace"
+Jejím cílem je navrhnout a implementovat relaèní rozšíøení
+vybraných procedur z GUHA procedur implementovaných v systému LISp-Miner.
+Implementované procedury budou zahrnovat možnosti využití metod
+znalostního inženýrství pøi zadávání jejich vstupních parametrù. 
+Procedury budou implementovány v rámci prostøedí Ferda \cite{ferda}. 
+Výbìr procedur k rozšíøení a jejich specifikace budou podrobnì konzultovány
+s vedoucím práce.
+\section{Zmìna zadání}
+V prùbìhu diplomové práce se však ukázalo, že bude vhodné zadání práce
+upravit, upøesnit a rozšíøit. Toto se stalo po konzultacích s vedoucím diplomové 
+práce Doc. RNDr. Janem Rauchem, CSc. V zadání došlo tedy k následujícím zmìnám.
+\subsection{Relaèní datamining}
+Zde byly upøesnìny procedury, pro které se bude implementovat relaèní
+rozšíøení. Protože systém
+Ferda DataMiner je používán primárnì v akademickém prostøedí, jak
+pro výuku studentù, tak i pro zpracování zajímavých úloh obecnì,
+rozhodlo se pro implementaci 4ft Miner a SD4ft miner z dùvodù
+jejich výrazné pøevahy nad ostatními minery pøi využití v dataminingových
+úlohách právì v akademickém prostøedí.
+\paragraph{}
+Také byl implementován základní agregaèní atribut ve formì krabièky Virtuální 
+sloupec.
+\subsection{Expertní systém}
+Požadavky na využití zabudovaného expertního systému pro urèování hodnot
+vstupních parametrù GUHA procedur nebyly naplnìny z následujících dùvodù.
+Pøedpokládalo se, že expertní systém bude implementován do prostøe\-dí Ferda
+v rámci diplomové práce Tomáše Kuchaøe \cite{kuchar}. K tomu bohužel nedošlo
+z dùvodù zmínìných ve výše uvedené prací, proto bylo nutné rozšíøit zadání
+o jiný úkol.
+\subsection{Atributy}
+Protože v rámci \cite{kuchar} nebyly z èasových dùvodù
+implementovány nìkteré podstatné krabièky atributù pro øešení dataminingových
+úloh (aèkoliv je nutné se zmínit, že vìtšina pøíslušných základních algoritmù
+již byla pøipravena), ukázalo se jako vhodné chybìjící atributy implementovat.
+Implementace tìchto krabièek pøispìla nejen ke zkvalitnìní systému Ferda obecnì,
+ale rovnìž umožnila autorovi této práce podstatnì rozšíøit okruh úloh,
+které mohou øešit novì implementovaná relaèní rozšíøení pùvodních
+dataminingových procedur. Byly implementovány následující krabièky pro práci
+s atributy v systému Ferda.
+\subsubsection{Ekvidistanèní intervaly}
+Tato krabièka umožní uživateli definovat atribut skládající se ze zadaného
+poètu tzv. ekvidistanèních intervalù - ty rozdìlí vstupní množinu na stejnì
+dlouhé úseky. Pøíkladem je rozdìlení klientù banky dle výši pøíjmu napøíklad
+vytvoøením následujících intervalù \mbox{$<5000,8000)$}, \mbox{$<8000,12000)$} a
+\mbox{$<12000,15000)$}.
+\subsubsection{Ekvifrekvenèní intervaly}
+Tato krabièka umožní uživateli definovat atribut skládající se ze zadaného
+poètu tzv. ekvifrekvenèních intervalù - ty rozdìlí vstupní množinu na takové
+úseky, že každý z nich obsahuje skoro stejný poèet prvkù ze vstupní množiny.
+Tento atribut má využití pro zajištìní rovnomìrného rozdìlení dle poètu
+množin hodnot, které nejsou pùvodnì rozdìleny rovnomìrnì. Pøíkladem opìt
+poslouží rozdìlení klientù na zhruba stejnì velké skupiny dle výše jejich
+pøíjmu napøíklad vytvoøením následujících intervalù \mbox{$<5000,10000)$},
+\mbox{$<10000,14000)$}
+,\mbox{$<14000,18000)$} a \mbox{$<18000,25000)$}.
+\subsubsection{Statický atribut}
+Tato krabièka umožní uživateli buï upravovat již vytvoøený atribut (napøíklad
+za pomocí krabièky ekvidistanèních intervalù) anebo ruènì vytvoøit zcela nový
+atribut. Umožòuje upravovat kategorie v atributù, výèty a intervaly patøící
+ke každé kategorii a výsledek se samozøejmì mùže dále použít pro definici
+dataminingové úlohy v prostøedí Ferda.
+\section{Naplnìní cílù}
