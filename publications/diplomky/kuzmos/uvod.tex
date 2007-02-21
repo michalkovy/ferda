@@ -82,6 +82,7 @@ $\phi \approx \psi$ tedy znamená, e $\phi$ a $\psi$ spolu souvisí ve smyslu
 pouitého kvantifikatoru $\approx$, pøípadnì souvisí za pøedpokladu splnìní
 podmínky $\chi$ na analyzované matici dat.
 \paragraph{}
+\label{categorization}
 Metoda GUHA pracuje pouze s kategoriálními daty,
 protoe vzhledem ke zpùsobu generování hypotéz je nutné, aby byl prostor
 hypotéz koneènı. Data, která nejsou diskrétní, musí bıt diskretizovány
@@ -93,6 +94,70 @@ databáze, kde kadá hodnota kadého atributu je reprezentována øetìzcem bitù
 (viz. kapitola \ref{bitstrings}). Kadı bit v øetìzci popisuje jeden objekt.
 Bit 1 reprezentuje "objekt má tuto hodnotu", zatímco bit 0 znamená
 "objekt nemá tuto hodnotu".
+
+\section{Dùleité pojmy metody GUHA}
+Zde bude následovat struènı pøehled principù dataminingu dle metody GUHA,
+které jsou nezbytné k pochopení popisu samotné problematiky a implementace
+zadání dané diplomové práce. Tyto principy jsou obecné a byly ve vìtší èi
+menší míøe implementovány v dataminingovıch systémech pracujících na principu
+GUHA - viz \ref{implementations}. Pro zevrubnìjší popis autor doporuèuje
+prostudování zejména zdrojù \cite{guha} a \cite{kuchar}.
+\subsection{Princip zadání úlohy}
+Jak je zmínìno v \ref{categorization}, GUHA pracuje s kategoriálními daty.
+Smyslem zadání úlohy je zejména urèení zpùsobu kategorizace tak, aby byl
+co nejvhodnìjší a nejrelevantnìjší jak vzhledem k poadované úloze ke zpracování,
+tak i ke zkoumanım datùm. Pro tento úèel byly nadefinovány následující pojmy
+a prostøedky.
+\subsubsection{Datovı zdroj}
+GUHA pracuje s daty z datovıch matic. Ty jsou ziskávány pøevánì jako databázové
+tabulky èi vısledky operací nad nimi z databází. Pro tento úèel je nutné 
+pøi zadávaní úlohy definovat datovı zdroj (momentálnì nejèastìji ve formì
+pøípojení k databázi pøes rozhraní ODBC) a alespoò jednu datovou matici.
+V relaèním rozšíøení dataminigovıch procedur GUHA se pracuje nad více tabulkami,
+které jsou mezi sebou ve vztahu 1:N. Pro pohodlí se o nich zmiòujeme jako
+o hlavní (master) a vedlejších (detail) tabulkách.
+\paragraph{}
+Dále se z datovıch matic vybírají datové sloupce, ze kterıch se budou vytváøet
+atributy obsahující kategorie pro potøebné rozdìlení vstupních dat. Data mohou
+patøit do rùznıch datovıch typù. Tyto dále ovlivní monosti kategorizace.
+Stojí za zmínku, e zatím nejkomplexnìjší implementace práce s jednotlivımi
+sémantickımi typy byla realizována v práci \cite{kuchar} - "Experimentální
+GUHA procedury".
+\subsubsection{Datová sémantika}
+Z pohledu datové sémantiky se mohou vyskytovat tyto ètyøi druhy dat:
+
+
+\begin{description}
+\item[Nominální data] Hodnoty nejsou vzájemnì porovnatelné, napøíklad,
+pohlaví nebo oblíbená pøíchu zmrzliny.
+\item[Ordinální data] Hodnoty jsou vzájemnì porovnatelné, napøíklad, vıše
+dosaeného vzdìlání.
+\item[Cyklická ordinální data] U tohoto sémantického typu se vychází ze
+zkuše\-nosti, e pøi zadá\-vaní koeficientu typu \emph{cyklické intervaly}
+(viz \ref{coefficients}) si èasto nevysta\-èíme pouze s ordinál\-ními daty.
+Potøebujeme další vlastnost a to, aby první kategorie pøirozenì ná\-sledo\-vala
+po poslední. Jako pøíklad mohou po\-slouit dny v tıdnu nebo mìsíce v roce.
+\item[Kardinální data] Tato data jsou reprezentována èíselnımi typy,
+napøíklad, reálnımi èísly. Jako pøíklad lze zvolit vıši pøíjmu,
+vzdalenost od místa bydlištì, vıši krevního tlaku a podobnì.
+\end{description}
+
+
+\subsubsection{Kategorie}
+\subsubsection{Koeficienty}
+\label{coefficients}
+\subsection{Generování boolskıch atributù}
+\subsection{Generování relevantních otázek}
+\subsection{Princip bitovıch øetízkù}
+\label{bitstrings}
+
+\subsection{Dataminingové procedury}
+
+\subsection{Existující implementace}
+\label{implementations}
+\subsubsection{Lisp-Miner}
+\subsubsection{Rel-Miner}
+\subsubsection{Ferda DataMiner}
 
 \section{Relaèní asociaèní pravidla a virtuální atributy}
 \subsection{Úvod}
@@ -183,4 +248,4 @@ síla nebo platnost hypotézy nad vedlejšími datovımi tabulkami a takto
 nadefinovanı sloupec by se pouil "o úroveò vıše" - pro generaci hypotéz
 pøi bìhu další dataminingové úlohy.
 
-\section{Dùleité pojmy metody GUHA}
+

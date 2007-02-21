@@ -36,7 +36,7 @@ rozšíøení. Protože systém
 Ferda DataMiner je používán primárnì v akademickém prostøedí, jak
 pro výuku studentù, tak i pro zpracování zajímavých úloh obecnì,
 rozhodlo se pro implementaci 4ft Miner a SD4ft miner z dùvodù
-jejich výrazné pøevahy nad ostatními minery pøi využití v dataminingových
+jejich výrazné pøevahy nad ostatními minery pøi využití v data\-miningových
 úlohách právì v akademickém prostøedí.
 \paragraph{}
 Také byl implementován základní agregaèní atribut ve formì krabièky Virtuální 
@@ -50,25 +50,25 @@ z dùvodù zmínìných ve výše uvedené prací, proto bylo nutné rozšíøit zadání
 o jiný úkol.
 \subsection{Atributy}
 Protože v rámci \cite{kuchar} nebyly z èasových dùvodù
-implementovány nìkteré podstatné krabièky atributù pro øešení dataminingových
+implementovány nìkteré podstatné krabièky atributù pro øešení data\-miningových
 úloh (aèkoliv je nutné se zmínit, že vìtšina pøíslušných základních algoritmù
 již byla pøipravena), ukázalo se jako vhodné chybìjící atributy implementovat.
 Implementace tìchto krabièek pøispìla nejen ke zkvalitnìní systému Ferda obecnì,
 ale rovnìž umožnila autorovi této práce podstatnì rozšíøit okruh úloh,
 které mohou øešit novì implementovaná relaèní rozšíøení pùvodních
-dataminingových procedur. Byly implementovány následující krabièky pro práci
+dataminingových procedur. Byly implementovány násle\-dující krabièky pro práci
 s atributy v systému Ferda.
 \subsubsection{Ekvidistanèní intervaly}
 Tato krabièka umožní uživateli definovat atribut skládající se ze zadaného
-poètu tzv. ekvidistanèních intervalù - ty rozdìlí vstupní množinu na stejnì
+poètu tzv. ekvi\-distanèních intervalù - ty rozdìlí vstupní množinu na stejnì
 dlouhé úseky. Pøíkladem je rozdìlení klientù banky dle výši pøíjmu napøíklad
 vytvoøením následujících intervalù \mbox{$<5000,8000)$}, \mbox{$<8000,12000)$} a
 \mbox{$<12000,15000)$}.
 \subsubsection{Ekvifrekvenèní intervaly}
 Tato krabièka umožní uživateli definovat atribut skládající se ze zadaného
-poètu tzv. ekvifrekvenèních intervalù - ty rozdìlí vstupní množinu na takové
+poètu tzv. ekvi\-frekvenèních intervalù - ty rozdìlí vstupní množinu na takové
 úseky, že každý z nich obsahuje skoro stejný poèet prvkù ze vstupní množiny.
-Tento atribut má využití pro zajištìní rovnomìrného rozdìlení dle poètu
+Tento atribut má využití pro zajištìní rovno\-mìrného rozdìlení dle poètu
 množin hodnot, které nejsou pùvodnì rozdìleny rovnomìrnì. Pøíkladem opìt
 poslouží rozdìlení klientù na zhruba stejnì velké skupiny dle výše jejich
 pøíjmu napøíklad vytvoøením následujících intervalù \mbox{$<5000,10000)$},
@@ -81,3 +81,46 @@ atribut. Umožòuje upravovat kategorie v atributù, výèty a intervaly patøící
 ke každé kategorii a výsledek se samozøejmì mùže dále použít pro definici
 dataminingové úlohy v prostøedí Ferda.
 \section{Naplnìní cílù}
+K naplnìní cílù dané diplomové práce bylo nezbytné vycházet z existující
+implementace data\-miningových procedur, zpùsobù zadávání úloh pro práci
+s tìmito procedurami a celkovì z prostøedí Ferda DataMiner, na kterém
+probìhla implementace relaèních rozšíøení. Pøipomeòme zde, že prostøedí
+Ferda DataMiner vzniklo v rámci studentského softwarového projektu
+pod vedením Doc. RNDr. Jana Raucha, CSc.
+ - podrobnìji viz \cite{ferda} a je nadále vyvíjeno jak úèastníky pùvodního
+ projektu v rámci diplomových a dizertaèních prací, tak i jinými zájemci.
+\paragraph{}
+Klíèovou diplomovou práci pro prostøedí Ferda DataMiner se stala práce
+"Experimentální GUHA procedury" Tomáše Kuchaøe, která je uvedena v seznamu
+použité literatury jako \cite{kuchar}. Tomáš implementoval nej\-dùleži\-tìjší
+prvky pro práci s dataminingovými úlohami (mj. 6 minerù) a pøípravil
+programátorské rozhraní pro další implementaci konkrétnì metod GUHA.
+Tato informace je zde uvedena z dùvodu toho, že autor dané diplomové
+práce se musel pro úspìšné øešení zevrubnì seznámit s diplomovou práci
+\cite{kuchar}, zejména s její implementaèní èásti a nejen naimplementovat
+vlastní øešení, ale zajistit jeho plnou integraci a kompatibilitu
+s již existujícím prostøedím. Proto v prùbìhu práce byla navržena takové 
+zmìny stávajícich jednotlivých prvkù systému Ferda DataMiner, aby relaèní
+rozšíøení mohla být relativnì snadno implementována i pro jiné dataminingové
+procedury, než pro ty, které implementoval autor této práce. Jinými slovy,
+cílem a pøinosem dané diplomové práce byla i pøíprava prostøedí Ferda
+DataMiner pro snadnìjší další vývoj. Autor práce tedy tvrdí, že tento cíl, který
+ (by ne explicitnì) vychází ze zadání a byl v dané diplomové práce splnìn.
+\paragraph{}
+Jak již bylo zmínìno výše, byly tedy naimplementovány tzv. hypotézové atributy
+ve smyslu relaèního dataminingu "Virtuální 4ft atribut" a
+"Virtuální SD4ft atribut", které pøímo splòují zadání práce.
+\paragraph{}
+Dále byl implementován agregaèní virtuální atribut "Virtuální sloupec", který
+také pøímo splòuje zadání práce.
+\paragraph{}
+Také byly implementovány krabièky atributù pro vytvoøení ekvi\-distanè\-ních 
+intervalù,
+ekvi\-frekvenè\-ních intervalù a krabièka pro pøímou úpravu atributu. Tyto úlohy
+pùvodnì nepatøily do zadání, avšak v odevzdáné diplomové praci Tomáše Kuchaøe
+\cite{kuchar} tyto typy atributù nebyly rovnìž z rùzných dùvodù pøítomny a
+ukázalo se, že by bylo velmi žádoucí je mít naimplementované co nejdøíve. Umožòují
+podstatné rozšíøení zpùsobù zadávaní data\-miningových úloh a tímto výraznì
+pøispìly k lepším výsledkùm i této diplomové práce. Proto se autor domnívá, že
+rozšíøení zadání jeho diplomové práce o implementaci výše uvedených modulù byla
+na místì a nepøímo pøispìla ke splnìní primárních cílù této diplomové práce.
