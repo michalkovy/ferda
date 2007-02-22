@@ -126,7 +126,7 @@ GUHA procedury".
 \subsubsection{Datová sémantika}
 Z pohledu datové sémantiky se mohou vyskytovat tyto ètyøi druhy dat:
 
-
+\label{datasemantics}
 \begin{description}
 \item[Nominální data] Hodnoty nejsou vzájemnì porovnatelné, napøíklad,
 pohlaví nebo oblíbená pøíchu zmrzliny.
@@ -144,15 +144,170 @@ vzdalenost od místa bydlištì, vıši krevního tlaku a podobnì.
 
 
 \subsubsection{Kategorie}
-\subsubsection{Koeficienty}
+Jak ji bylo øeèeno vıše, metoda GUHA pracuje s diskrétními daty. Data, která
+tuto podmínku nesplòují, musí bıt diskretizována. Diskretizovanı sloupec
+se oznaèuje jako atribut a jeho hodnoty jsou kategorie..
+\paragraph{}
+Pojem kategorie se postupnì vyvíjel v implementacích systému GUHA. Kategorie
+mùe bıt dvojího typu: buï intervalová - obsahuje koneènı poèet intervalù,
+kterı pokrıvá zkoumanou mnoinu dat, anebo vıètová, kde vıèet opìt pokrıvá
+zkoumanou mnoinu dat. V systémech Lisp-Miner a Rel-Miner kategorie
+mùe obsahovat buï jenom intervaly anebo jenom vıèet. A v rámci diplomové
+práce \cite{kuchar} pojem kategorie byl pøi\-rozenì zobecnìn a imple\-mentován
+do systému Ferda DataMiner tak, aby mohl obsahovat jak intervaly, tak i vıèet.
+Kategorie tedy obsahuje hodnoty, které jsou pokryty sjednocením vıètu
+a intervalù v kategorii. Podmínkou pro monost vytváøení intervalù v kategorii
+je práce nad daty, které mají sémantickı typ ordinální, cyklickı ordinální
+nebo kardinální (viz \ref{datasemantics}).
+\paragraph{}
+V rámci diplomové práce \cite{kuchar} byly vytvoøeny prostøedky pro práci
+s atributy a kategorii, avšak pro uivatelskou práci byl z dùvodu pracnosti
+implementován pouze atribut typu "Each value one category", kterı, jak plyne
+z názvu, umí vytvoøit ze zkoumaného datového sloupce atribut obsahující
+vıètové kategorie pro kadou hodnotu ve sloupci.
+\paragraph{}
+Atributy "Ekvidistanèní intervaly" a "Ekvifrekvenèní intervaly" ve formì
+krabièek pro uivatelskou práci v systému Ferda DataMiner byly implemen\-továny
+autorem této diplomové práce, jedná se o pøínos autora. Takté byla autorem
+implen\-tována krabièka "Statickı atribut", která umoòuje pøímou editaci
+atributu, vèetnì editace vıètu a intervalù u jednotlivıch kategorii.
+
+\subsection{Definování mnoiny relevantních otázek}
+Principem metody GUHA je monost jednoduchého zadání mnoiny relevantních
+otázek. Tyto otázky jsou poté generovány tzv. minerem a postupnì
+verifikovány na základì kvantifikátorù, které jsou souèástí zadání úlohy GUHA.
+Lze zadat generování boolskıch a kategoriálních atributù. Zde se podrobnìji
+zamìøíme na ty boolské, protoe autorem implementována relaèní rozšíøení
+4ft a SD4ft minerù vystupují jako jistı druh právì boolskıch atributù.
+Pro zevrubnìjší pochopení tìchto pojmù GUHA autor doporuèuje k prostudování
+buï pøímo systém Ferda DataMiner, kterı se ostatnì od zaèátku vyvíjel pøímo
+pro vyuití k vıuce data\-miningu anebo z pouité literatury 
+\cite{guhabasic}.
+\subsection{Boolské atributy}
+Následuje definice boolského atributu, jak je uvedena v \cite{guha}.
+
+\newtheorem{booleanattributedef}{Definice booleovského atributu}
+\begin{booleanattributedef}
+Booleovskı atribut je formule splòující následující podmínky.
+\paragraph{}
+Pokud \emph{a} je atribut a $\alpha$ je neprázdná podmnoina mnoiny
+\{$a_{1},\ldots,a_{k}$\}, pak $A(\alpha)$ je \emph{základní booleovskı atribut}.
+$\alpha$ je koeficient (podrobnìji v \ref{coefficients}) základního booleovského
+atributu $A(\alpha)$. Kadı základní booleovskı atribut je booleovskı atribut.
+Pokud $\phi$ a $\psi$ jsou booleovské atributy, pak $\phi \wedge \psi$,
+$\phi \vee \psi$ a $\neg\phi$ jsou odvozené booleovské atributy. Kadı
+\emph{odvozenı booleovskı atribut} je booleovskı atribut.
+\end{booleanattributedef}
+Dále GUHA pracuje s pojmem \emph{dílèí booleovskı atribut}, kterım oznaèuje
+booleovské atributy, které vystupují jako operandy v konjunkcích a disjunkcích
+booleovskıch atributù.
+\paragraph{}
+Základní booleovskı atribut $A(\alpha)$ nabıvá hodnoty \emph{true} na øádku
+\emph{o} matice \emph{M}, pokud $\emph{a}\in\alpha$, kde \emph{a} je hodnota
+atributu \emph{a} na øádku \emph{o} - dle odstavce 2 v \cite{guha}.
+Hodnota odvozenıch booleovskıch atributù se definuje obvyklım zpùsobem
+dle následující tabulky:
+\paragraph{Hodnoty odvozenıch boolskıch atributù}
+\paragraph{}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$\phi$ & $\psi$ & $\phi \wedge \psi$ & $\phi \vee \psi$ & $\neg\phi$ \\
+\hline
+true & true & true & true & false \\
+\hline
+true & false & false & true & false \\
+\hline
+false & true & false & true & true \\
+\hline
+false & false & false & false & true \\
+\hline
+\end{tabular}
+\paragraph{}
+Hodnota booleovského atributu $\phi$ v øádku o matice \emph{M} se znaèí
+$\phi(o,\emph{M})$. Platí, e $\phi(o,\emph{M})=true$, pokud $\phi$ je pravdivı
+na øádku \emph{o} matice \emph{M}, jinak $\phi(o,\emph{M})=false$.
+\subsection{Zadání mnoiny relevantních otázek}
+Zde popíšeme monosti nastavení dùleitosti jednotlivıch sloek zadání
+booleovského atributu, jak byly prvnì popsány T.Karbanem v \cite{relminer}
+a implementovány do prostøedí Ferda DataMiner T.Kuchaøem v \cite{kuchar}.
+\begin{description}
+\item[Forced]Booleovskı atribut musí bıt pøítomen v kadé relevantní otázce.
+Aby bylo dosaeno této podmínky, musí zøejmì kadı booleovskı atribut
+odvozenı od jiného \emph{Forced} booleovského atributu (negací, konjunkcí, apod.)
+bıt rovnì typu \emph{Forced}. Této vlastnosti lze elegantnì vyuít pøi dìlení
+úlohy na disjunktní èásti, které lze øešit oddìlenì a tedy vıhodnì distribuovat.
+\item[Basic]Má stejnı vıznam jako termín \emph{Basic} pro literál v LISp Mineru.
+\emph{Basic} booleovskı atribut mùe bıt pouíván volnì, tj. mùe, ale nemusí bıt
+pouit v konjunkci (resp. disjunkci).
+\item[Auxiliary]Má odlišnı vıznam ne termín \emph{Remaining} pro literál
+v LISp Mineru. \emph{Auxiliary} booleovskı atribut smí bıt pouit pouze 
+v pøípadì, pokud ji byl v konjunkci (resp. disjunkci) pouit nìjakı
+\emph{Forced} nebo \emph{Basic} booleovskı atribut. To znamená, e není moné
+vytváøet konjunkce (resp. disjunkce) pouze z \emph{auxiliary} dílèích
+booleovskıch atributù. Booleovské atributy vystupující jako jediné operandy
+v rámci jinıch booleovskıch atributù (napø. negace, konjunkce, $\ldots$)
+proto nesmí bıt typu \emph{auxiliary}.
+\end{description}
+Pro podrobnìjší popis všech moností zadání boolskıch atributù autor
+doporuèuje prostudovat \cite{kuchar}.
+\subsection{Koeficienty}
 \label{coefficients}
+Koeficient je vlastní neprázdná podmnoina všech kategorií základního atributu,
+které mohou bıt pouity pøi zpracování úlohy. V prostøedí \mbox{Ferda DataMiner}
+pouiváme koeficienty následujících typù (pro zjednodušení zápisu místo 
+$A(\{1\})$ píšeme zkrácenì pouze $A(1)$ a místo $A(\{1,2\})$ píšeme
+pouze $A(1,2)$ apod.).
+\begin{description}
+\item[Podmnoiny]
+Uivatel definuje její minimální a maximální délku. Mìjme napøíklad atribut
+\emph{a} s kategoriemi $\{1, 2, 3, 4\}$, pokud chceme vy\-generovat podmnoiny
+velikosti 1-2, vıstupem budou následující základní booleov\-ské atri\-buty
+(v tomto poøadí): $A(1)$, $A(1,2)$, $A(1,3)$, $A(1,4$), $A(2)$, $A(2,3)$,
+$A(2,4)$, $A(3)$, $A(3,4$) a $A(4)$.
+\item[Intervaly]
+Uivatel definuje jejich minimální a maximální délku. Poadavkem je,
+aby kategorie byly sousední. Pro atribut \emph{a} s kategoriemi
+$\{1, 2, 3, 4, 5\}$ budou intervaly délek 2–3 v základních booleovs\-kıch
+atri\-butech vypadat takto: $A(1,2)$, $A(1,2,3)$, $A(2,3)$, $A(2,3,4)$,
+$A(3,4)$, $A(3,4,5)$ a $A(4,5)$.
+\item[Cyklické intervaly]
+Podobají se bìnım intervalùm, ale kategorie jsou cyklické. V našem pøíkladì
+budou cyklické intervaly délky 3 dávat základní booleovské atributy:
+$A(1,2,3)$, $A(2,3,4)$, $A(3,4,5)$, $A(4,5,1)$ a $A(5,1,2)$. Tento typ 
+má vıznam u typu ordinálních dat, kde první kategorie pøirozenì následuje
+po poslední. Pøíkladem mohou bıt dny v tıdnu nebo mìsíce v roce.
+\item[Levé øezy]
+Jde o intervaly s levou hranicí pevnì fixovanou na první kategorii. V našem
+pøíkladì levé øezy délky 3 budou základní booleovské atributy:
+$A(1)$, $A(1,2)$ a $A(1,2,3)$.
+\item[Pravé øezy]
+Analogicky k levım øezùm lze definovat pravé øezy. Na stejném pøíkladu pùjde
+o základní booleovské atributy: $A(5)$, $A(5,4)$ a $A(5,4,3)$.
+\item[Øezy]
+Øezy jsou sjednocením levıch a pravıch øezù, tedy v našem pøíkladu jde 
+o základní booleovské atributy: $A(1)$, $A(1,2)$, $A(1,2,3)$, $A(3,4,5)$,
+$A(4,5)$ a $A(5)$.
+\item[Pevná podmnoina]
+Jde o speciální pøípad koeficientu, kde uivatel vybere kategorie, které
+budou tvoøit konkrétní základní booleovskı atribut. V našem pøíkladu,
+vybere-li uivatel kategorie $2$, $3$ a $5$, bude jedinım základním 
+booleovskım atributem na vıstupu $A(2,3,5)$. Tento typ koeficientu se objevuje
+ji v systému Rel Miner a zobecòuje koeficient typu Jedna dílèí kategorie
+známı v systému LISp-Miner. Je rovnì implementován v prostøedí 
+\mbox{Ferda DataMiner} T.Kuchaøem v \cite{kuchar}.
+\end{description}
+Délka pevnì zvoleného koeficientu je dána poètem pouitıch kategorií.
+
+\subsection{Kategoriální atributy}
+S kategoriálními atributy pracují nìkteré dataminigové procedury. Více o pouití
+kategoriálních atributù se lze doèíst v \ref{miners}.
 \subsection{Generování boolskıch atributù}
-\subsection{Generování relevantních otázek}
+
 \subsection{Princip bitovıch øetízkù}
 \label{bitstrings}
 
 \subsection{Dataminingové procedury}
-
+\label{miners}
 \subsection{Existující implementace}
 \label{implementations}
 \subsubsection{Lisp-Miner}
