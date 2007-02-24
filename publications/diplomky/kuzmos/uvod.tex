@@ -301,11 +301,117 @@ Délka pevnì zvoleného koeficientu je dána poètem použitých kategorií.
 \subsection{Kategoriální atributy}
 S kategoriálními atributy pracují nìkteré dataminigové procedury. Více o použití
 kategoriálních atributù se lze doèíst v \ref{miners}.
-\subsection{Generování boolských atributù}
 
 \subsection{Princip bitových øetízkù}
 \label{bitstrings}
 
+Jak už bylo naznaèeno v \ref{categorization}, pro práci metoda GUHA používá
+tzv. vertikální reprezentaci databáze. Každá hodnota atributu je reprezentována
+øetìzcem bitù. Pro zevrubnìjší popis bitových øetízkù odkazuje autor na
+\cite{guha}.
+\paragraph{}
+Bitový øetìzec mùžeme chápat jako bitmapový index databáze. Pøi klasické
+implementaci atributù se bitové øetìzce vytváøejí pøi prvním prùchodu daty
+a poté není tøeba k tìmto datù pøistupovat. Zde vyvstává otázka, jak efektivnì
+uchovávat potøební bistringy v pamìti. Toto bylo vyøešeno v rámci diplomové
+práce T.Kuchaøe \cite{kuchar} pomocí cache bitových øetízkù.
+\paragraph{}
+Pøi implementaci relaèního rozšíøení pro existující dataminingové procedury
+se tento princip modifikoval z dùvodù toho, že virtuální atributy nejsou
+vytváøeny pøímo ze sloupcù datové matice, ale za bìhu - podrobnìji pojem
+virtuálního atributu je rozebrán v kapitole \ref{vattributes}.
+\paragraph{}
+Jako ukázku použijeme následující datovou tabulku.
+\paragraph{Vzorová datová matice}
+\paragraph{}
+\begin{tabular}{|c|c|c|}
+\hline
+ID & A & B \\
+\hline
+1 & 1 & 1 \\
+\hline
+2 & 2 & 2 \\
+\hline
+3 & 1 & 3 \\
+\hline
+4 & 1 & 1 \\
+\hline
+5 & 2 & 3 \\
+\hline
+6 & 2 & 3 \\
+\hline
+\end{tabular}
+
+\paragraph{}
+Bitový øetìzec $A(\alpha)$ má hodnotu 1 na pozici $i$ právì tehdy, když objekt 
+s ID $i$ má hodnotu $\alpha$ ve sloupci $A$, jinak má bitový øetìzec 
+na pozici $i$ hodnotu 0.
+Bitové øetìzce základních booleovských a booleovských atributù
+mohou vypadat následovnì. 
+\paragraph{Bitové øetìzce atributù}
+\paragraph{}
+\begin{tabular}{*{7}{|c}|}
+\hline
+ & \multicolumn{2}{|c|}{Atributy} 
+ & \multicolumn{2}{|c|}{Základní booleovské atributy} 
+ & \multicolumn{2}{|c|}{Booleovské atributy}
+   \\
+\hline
+$ID$ & $A$ & $B$ &$A(1)$ & $B(1,2)$ & $A(1)\wedge B(1,2)$ & $\neg B(1,2)$ \\
+\hline
+1 & 1 & 1 & 1 & 1 & 1 & 0 \\
+\hline
+2 & 2 & 2 & 0 & 1 & 0 & 0 \\
+\hline
+3 & 1 & 3 & 1 & 0 & 0 & 1 \\
+\hline
+4 & 1 & 1 & 1 & 1 & 1 & 0 \\
+\hline
+5 & 2 & 3 & 0 & 0 & 0 & 1 \\
+\hline
+6 & 2 & 3 & 0 & 0 & 0 & 1 \\
+\hline
+\end{tabular}
+\subsection{Generování relevantních otázek}
+Následující odstavec velmi pøibližnì popisuje zpùsob generování relevantních
+otázek. Podrobnìji se s principem generování lze seznámit v disertaèní práci
+T.Karbana \cite{relminer}, pro konkrétní implementaci v prostøedí 
+Ferda DataMiner v diplomové práci T.Kuchaøe \cite{kuchar} a taktéž
+v \cite{guha}.
+\paragraph{}
+Dataminingové procedury GUHA generují relevantní otázky na základì vstupní
+datové matice a zadaných parametrù úlohy, které poté ovìøují na datech
+z datové matice. Relevantní otázky, které jsou pøi ovìøení na vstupních
+datech pravdivé, se nazývají hypotézy a posílají se na výstup.
+\paragraph{}
+Na následujícím pseudokódu lze nahlédnout na zpùsob generování relevantních
+otázek u dataminingové procedury 4ft miner.
+\begin{verbatim}
+foreach(BitString condition in Conditions)
+{
+    foreach(BitString antecedent in Antecedents)
+    {
+        foreach(BitString succedent in Succedents)
+        {
+            ContingencyTable table = 
+                ComputeTable(succedent, antecedent, condition);
+            if (VerifyQuantifiers(table))
+                result.Add(succedent, antecedent, condition);
+        }
+    }
+}
+
+\end{verbatim}
+
+Objekty \verb+Antecedents+, \verb+Succedents+ a \verb+Conditions+ jsou
+iterátory bitových øetìzcù umožòující prùchod pøes všechny možné hodnoty
+zadání booleovských atributù. Ústøední implentaèní úlohou autora dané
+diplomové práce byla právì implementace iterátoru bitových øetìzcù, který by
+poskytoval bitové øetízky odpovídající virtuálním atributùm.
+\subsection{Generování boolských atributù}
+Zde pouze struènì naznaèíme zpùsob generování booleovských atributù a
+poznamenejtme, že tento zpùsob uživaný metodou GUHA se podstatnì liší
+od zpùsobu, který používá algoritmus APRIORI posaného v \cite{apriori}.
 \subsection{Dataminingové procedury}
 \label{miners}
 \subsection{Existující implementace}
@@ -327,6 +433,7 @@ implementace postupu relaèního dataminingu, zde se zamìøíme pouze na nìkteré
 nejdùležitìjší aspekty kritické pro pochopení implementace v rámci prostøedí
 Ferda.
 \subsection{Virtuální atributy}
+\label{vattributes}
 Asociáèní pravidla se rozšíøí o možnost práce s více datovými tabulkami.
 Datová matice, která byla zkoumána pomocí pùvodních asociaèních pravidel, 
 bude hlavní. Další datové tabulky budou rozšíøením hlavní tabulky o nìjaký atribut
