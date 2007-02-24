@@ -69,6 +69,7 @@ nakupování. Pro dobývání znalostí za využití takových pravidel byl navržen
 algoritmus Apriori, viz \cite{apriori}.
 \subsubsection{GUHA}
 \paragraph{}
+\label{assocrules}
 Druhou skupinou asociaèních pravidel popisuje metoda GUHA. Je obecnìjší než
 Apriori. Tato metoda byla poprvé formulována v roce 1966 a byla vydana v 1978
  - viz \cite{guhabasic}. Asociaèní pravidlo má tvar $\phi \approx \psi$, pøípadnì
@@ -411,15 +412,86 @@ poskytoval bitové øetízky odpovídající virtuálním atributùm.
 \subsection{Generování boolských atributù}
 Zde pouze struènì naznaèíme zpùsob generování booleovských atributù a
 poznamenejtme, že tento zpùsob uživaný metodou GUHA se podstatnì liší
-od zpùsobu, který používá algoritmus APRIORI posaného v \cite{apriori}.
-\subsection{Dataminingové procedury}
-\label{miners}
-\subsection{Existující implementace}
-\label{implementations}
-\subsubsection{Lisp-Miner}
-\subsubsection{Rel-Miner}
-\subsubsection{Ferda DataMiner}
+od zpùsobu, který používá algoritmus APRIORI popsaného v \cite{apriori}.
 
+
+\subsection{Dataminingové procedury}
+Zde popíšeme dataminingové procedury 4ft a SD4ft miner, protože v dané diplomové práci
+byly implementována relaèní rozšíøení právì tìchto dvou procedur. Dálší
+implementované dataminingové procedury jsou KL Miner, CF Miner, SD4CF Miner, SD4KL Miner,
+a procedura strojového uèení KEX. Tyto procedury jsou implementovány
+v prostøedí LISp-Miner a taktéž v prostøedí Ferda DataMiner (kromì
+procedury KEX).
+\label{miners}
+\subsubsection{4ft Miner}
+4ft miner je
+dataminingová procedura, která hledá právì vztahy tvaru $Ant \approx Succ / Cond$.
+$Ant$, $Succ$, a $Cond$ jsou zde booleovské atributy odvozené ze sloupcù
+ vstupní datové matice.Jak bylo naznaèeno pøi popisu asociaèních
+  pravidel v \ref{assocrules}, intuitivní význam vztahu $Ant \approx Succ / Cond$
+je ten, že atributy $Ant$ a $Succ$ jsou ve vztahu $\approx$, je-li splnìna
+podmínka zadaná booleovským atributem $Cond$ na analyzované datové matici.
+
+\subsubsection{SD4ft Miner}
+SD4ft miner je
+dataminingová procedura, která hledá právì vztahy tvaru $Ant \approx Succ / 
+(\alpha, \beta, Cond)$.
+$Ant$, $Succ$, $\alpha$, $\beta$ a $Cond$ jsou zde booleovské atributy odvozené ze sloupcù
+ vstupní datové matice. Intuitivní význam vztahu $Ant \approx Succ / (\alpha, \beta, Cond)$
+je ten, že vztah $\approx$ atributù $Ant$ a $Succ$ na množinì $\alpha$ se liší od vztahu
+$Ant$ a $Succ$ na množinì $\beta$, je-li splnìna podmínka zadaná booleovským
+ atributem $Cond$ na analyzované datové matici.
+
+\subsection{Existující implementace a jejich vztah k dané diplomové práci}
+\label{implementations}
+Pro úplnost zde uvedeme krátký popis doposud existujících implementací metody GUHA
+a jejich vztah k autorovì práci.
+\subsubsection{LISp-Miner}
+Nejrozsáhlejší implementací metody GUHA až do nedávné doby byl systém LISp-Miner
+(http://lispminer.vse.cz/). Momentálnì se vývoj soustøeïuje do systému Ferda
+DataMiner, který díky otevøenému návrhu, jenž od zaèátku poèítal se spolupráci
+více vývojáøù, se rychle stává nejrozsahlejší implementaci metody GUHA.
+\paragraph{}
+Historie systému LISp-Miner  sahá do roku 1996, kdy byl navržen. 
+Jde o akademický softwarový systém pro výuku (zejména na Fakultì informatiky a statistiky
+Vysoké školy ekonomické v Praze a Matematicko-fyzikální fakultì Univerzity Karlovy
+v Praze) a výzkum v oblasti dobývání znalostí z databází. Systém obsahuje øadu modulù,
+které umožòují potøebným zpùsobem transformovat prvotní data, provádìt vlastní analýzy
+a vhodným zpùsobem prezentovat výsledky.
+\paragraph{}
+Podrobné infromace o systému LISp-Miner lze nalézet v \cite{guha}.
+\subsubsection{Rel-Miner}
+Systém Rel-Miner je softwarový projekt vznikající v rámci disertaèní práce (viz. \cite{relminer} )
+Mgr. Tomáše Karbana na Matematicko-fyzikální fakultì Univerzity Karlovy.
+Cílem je vytvoøení systému pro dobývání asociaèních pravidel z relaèních dat nad hvìzdicovým schématem (dále jen relaèní), což vyžaduje rozšíøení jazyka asociaèních pravidel pro pokrytí více než jedné datové matice. Základní implementaèní techniky (napø. princip bitových øetìzcù),  zùstávají stejné jako døíve v systému LISp-Miner
+a nyní systému Ferda DataMiner. Jak je vidìt, tento projekt má nìkteré podobné cíle jako daná diplomová práce.
+\paragraph{}
+Rozdíly jsou zejména ve vìtším teoretickém pøínosu projektu Rel-Miner, také v zamìøení
+T.Karbana spíše na možnost distribuovanosti bìhu relaèních i obecnì nerelaèních dataminingových
+procedur. Podstatným rozdílem je zpùsob implementace: Rel-Miner byl od poèátku vyvíjen
+jako samostatné softwarové dílo, které je zamìøeno spíše na teoretické aspekty relaèního
+dataminingu a implementace je spíše vzorová a obsahuje relaèní rozšíøení pouze 4ft Mineru,
+kdyžto implementace relaèních rozšíøení v rámci dané diplomové práce je zamìøená na práci
+v prostøedí Ferda DataMiner, na využití veškerých jeho uživatelských i programatorských
+výhod a již implementovaných prostøedkù. Mìla za cíl kromì dvou implementovaných procedur 
+relaèního dataminingu položit základy pro snažší pøidávání relaèních rozšíøení pro zbývající
+ procedury v rámci systému Ferda DataMiner.
+\paragraph{}
+Rel-Miner mìl být prvotní implementací v oblasti relaèního data-miningu a principu bitových øetìzcù.
+Momentálnì je projekt ve stádiu dokonèení, nicménì ještì není hotov a autorovi této práce není
+známo, zda již existuje ve spustitelné podobì umožòující bìh relaèních dataminingových úloh.
+Podobnì jako systém LISp-Miner je i systém Rel-Miner vytváøen pøedevším pro výzkumné úèely
+a bude tedy vhodný pro malé a støednì velké projekty, pøedevším pak pro výuku studentù.
+
+\subsubsection{Ferda DataMiner}
+Ferda DataMiner (http://sourceforge.net/projects/ferda)
+vznikl jako softwarový projekt na Matematicko-fyzikální fakultì Univerzity Karlovy.
+\paragraph{}
+Jak je uvedeno v \cite{ferda}, Ferda pøedstavuje spoleèné vizuální prostøedí pro šestici
+výše uvedených procedur systému LISp-Miner, pøináší vizuální model postupu dobývání
+znalostí podobný modelùm v komerèních systémech SPSS Clementine, SAS Enterprise Miner apod.
+Srovnání s tìmito systémy je rovnìž uvedeno v \cite{ferda}.
+\
 \section{Relaèní asociaèní pravidla a virtuální atributy}
 \subsection{Úvod}
 Zde bude krátce popsáno rozšíøení asociaèních pravidel pro práci s vícero datovými
@@ -444,7 +516,7 @@ klientù. Dalším pøíkladem je databáze pacientù, kde v rozšíøující tabulce jsou
 uložená mìøení krevního tlaku pro jednotlivé pacienty.
 \paragraph{}
 Základním pojmem, o který se rozšíøí pùvodní asociaèní pravidla, je
-\emph{virtuální atribut}. Virtuální atributy jsou novì pøidané sloupce
+\emph{vir\-tuální atribut}. Virtuální atributy jsou novì pøidané sloupce
 k analyzované datové matici. Tyto sloupce se do pùvodné datové matice zpìtnì
 neukládají, avšak dolování dat probíhá, jakoby tyto novì vytvoøené sloupce
 v pùvodní matici byly - vytváøejí se (nebo v pøípadì konkrétní implementace
@@ -464,13 +536,24 @@ Zde jsme použili jeden virtuální atribut $AVG(AMOUNT)*2$, kde $AVG$ je
 agregaèní funkce SQL. Hypotéza mùže znamenat zjednodušenì øeèeno,
 pøedpoklad o faktu, že vyšší pøísuny penìz na úèet probíhají spíše
 bezhotovostnì. Tato hypotéza mùže a nemusí mít smysl - autor neaspiruje
-na odborníka v bankovnictví.
+na odborníka v oblasti bankovnictví.
 Uvažme další hypotézu:
 \begin{eqnarray}
 \label{eq:hyprattributeexample}
-TYPE="PRIJEM" \& AMOUNT > AVG(AMOUNT)*2 \Rightarrow_{80\%} \nonumber\\
-OPERATION="PREVOD NA UCET"
+JEDENPRIJEM < 10000 \& BYDLISTE="Beroun" \Rightarrow_{80\%} \nonumber\\
+STATUSUVERU="D"
 \end{eqnarray}
+Hypotéza tvrdí, že klienti se jedním zdrojem pøíjmu pod 10000 mìsíènì s
+bydlištìm v okrese Beroun mají z 80\% špatné úvìry.
+Zde jsme použili jeden virtuální atribut $JEDENPRIJEM$ . Virtuální
+atribut $JEDENPRIJEM$ mùže vypadat následovnì:
+\begin{eqnarray}
+TYPE="PRIJEM" \& AMOUNT > 1000 \Rightarrow_{90\%} \nonumber\\
+ACCOUNT(A) / KLIENT (B)
+\end{eqnarray}
+Jinými slovy, klient má jeden zdroj pøíjmu, pokud výšší pøíchozí platba
+z 90\% pøíjde ze stejního úètu (mùže se stát, že se jednorázovì vyplatí peníze
+napø. ze stavebního spoøení, tudíž jistota nemùže být 100\%).
 \paragraph{}
 Z výše uvedeného lze vidìt, jak rozdìlujeme virtuální atributy. Uvažujeme
 dva základní druhy, jak jsou chápany
@@ -509,5 +592,38 @@ se semantikou hypotézy (ve smyslu metody GUHA), jehož hodnotou by byla konkrétnì
 síla nebo platnost hypotézy nad vedlejšími datovými tabulkami a takto
 nadefinovaný sloupec by se použil "o úroveò výše" - pro generaci hypotéz
 pøi bìhu další dataminingové úlohy.
-
-
+\paragraph{}
+Uvedli jsme pøíklad \ref{eq:hyprattributeexample}. Na základì platnosti hypotézy
+$JEDENPRIJEM$ mùžeme rozdìlit množinu klientù a zkoumat další souvislosti
+pouze na té podmnožinì klientù, kde platí hypotéza $JEDENPRIJEM$. Uvažujeme-li
+platnost hypotézy $JEDENPRIJEM$ jako (virtuální) atribut, mùžeme ho zapojit
+do zadání nové úlohy napøíklad pro 4ft miner jako antecedent nebo sukcedent.
+Je-li atribut zapojen jako antecedent, omezuje množinu zkoumaných objektù
+na ty, pro které daná hypotéza z virtuálního atributu platí a zy dále zkoumá.
+Zaøadíme-li tento atribut do sukcedentu, úloha bude spoèívat v nalezení pøedpokladu
+pro platnost hypotéz z virtuálního atributu.
+\paragraph{}
+Z pøíkladu \ref{eq:hyprattributeexample} vyplývá, že zadání virtuálního
+atributu je vlastnì výsledkem bìhu dataminingové úlohy nad vedlejší datovou
+matici. Tato úloha nad vedlejší datovou matici (budeme jí øíkat podúloha)
+musí probìhnout vícekrát, vždy nad øádky z vedlejší matice, které se vztahují
+ke hlavní matici. Jinými slovy, zkoumá-li hlavní dataminingová úloha objekty
+hlavní datové matice po jednom (v našem pøíkladì klienty banky), potom podúloha
+musí vracet hypotézy jen pro ty øádky vedlejší datové matice, které odpovídají
+zkoumanému øádku v hlavní datové matici.
+\paragraph{}
+Výsledkem bìhu podúlohy je obvykle množina nových virtuálních sloupcù,
+které jsou pøidány za bìhu k hlavní datové matici a hlavní dataminingová úloha
+s nimi pracuje jako s ostatními sloupci.
+\paragraph{}
+Podíváme-li se na analogii s klasickým zadáním úlohy nad jednou datovou matici,
+uvidíme, že je to v podstatì stejný princip. Výsledkem klasického zadání
+je nìjaká množina relevantních otýzek a ta se ovìøí nad datovou matici - u každé otázky
+se prozkoumá, zda platí pro zadaná data a pokud ano, je to hypotéza a jde do výsledku.
+\paragraph{}
+Stejnì to funguje i pro relevantní otázky z hypotézového atributu - pro každý
+objekt z hlavní datové matice se ovìøí, zda hypotéza pro nìj platí. Pokud ano,
+do nového virtuálního sloupce pro tento objekt se pøidá hodnota $true$.
+Také je možné virtuální atribut pojmout obecnìji a jako výstup neposkytovat
+pouze pravdivostní hodnoty o platnosti hypotéze, ale napøíklad sílu
+dané hypotézy, èímž dostaneme virtuální sloupec s reálnými hodnotami.
