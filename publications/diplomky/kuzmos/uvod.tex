@@ -414,6 +414,12 @@ Zde pouze struènì naznaèíme zpùsob generování booleovských atributù a
 poznamenejtme, že tento zpùsob uživaný metodou GUHA se podstatnì liší
 od zpùsobu, který používá algoritmus APRIORI popsaného v \cite{apriori}.
 
+%\begin{figure}[h]
+%	\centering
+%		\includegraphics{battr.eps}
+%	\label{fig:battr}
+%\end{figure}
+
 
 \subsection{Dataminingové procedury}
 Zde popíšeme dataminingové procedury 4ft a SD4ft miner, protože v dané diplomové práci
@@ -484,6 +490,7 @@ Podobnì jako systém LISp-Miner je i systém Rel-Miner vytváøen pøedevším pro výzk
 a bude tedy vhodný pro malé a støednì velké projekty, pøedevším pak pro výuku studentù.
 
 \subsubsection{Ferda DataMiner}
+\label{ferdaproject}
 Ferda DataMiner (http://sourceforge.net/projects/ferda)
 vznikl jako softwarový projekt na Matematicko-fyzikální fakultì Univerzity Karlovy.
 \paragraph{}
@@ -491,7 +498,12 @@ Jak je uvedeno v \cite{ferda}, Ferda pøedstavuje spoleèné vizuální prostøedí pro
 výše uvedených procedur systému LISp-Miner, pøináší vizuální model postupu dobývání
 znalostí podobný modelùm v komerèních systémech SPSS Clementine, SAS Enterprise Miner apod.
 Srovnání s tìmito systémy je rovnìž uvedeno v \cite{ferda}.
-\
+\paragraph{}
+Protože daná diplomová práce je implementována v prostøedí Ferda DataMiner,
+popis její provázanosti se systémem Ferda DataMiner a konkrétnì
+s novou implementaci dataminingových procedur od T.Kuchaøe v rámci jeho
+diplomové práce \cite{kuchar} je souèástí popisu implementace a patøí
+do kapitoly \ref{implementation}.
 \section{Relaèní asociaèní pravidla a virtuální atributy}
 \subsection{Úvod}
 Zde bude krátce popsáno rozšíøení asociaèních pravidel pro práci s vícero datovými
@@ -548,6 +560,7 @@ bydlištìm v okrese Beroun mají z 80\% špatné úvìry.
 Zde jsme použili jeden virtuální atribut $JEDENPRIJEM$ . Virtuální
 atribut $JEDENPRIJEM$ mùže vypadat následovnì:
 \begin{eqnarray}
+\label{eq:hyprattributeexample1}
 TYPE="PRIJEM" \& AMOUNT > 1000 \Rightarrow_{90\%} \nonumber\\
 ACCOUNT(A) / KLIENT (B)
 \end{eqnarray}
@@ -583,12 +596,13 @@ pøímo za bìhu. Takto lze implementovat i obecnìjší agregaèní atributy než
 pouze za použití SQL agregaèních funkcí.
 
 \subsubsection{Hypotézové atributy}
+\label{hypattr}
 Narozdíl od agregaèních atributù, hypotézové atributy nelze získat za pomocí
-agregaèních funkcí nad daty z hhlavní a vedlejších datových tabulek. Tyto 
-atributy vzníkají jako výsledek bìhu dataminingových úloh nad vedlejšími
+agregaèních funkcí nad daty z hhlavní a vedlej\-ších datových tabulek. Tyto 
+atributy vzníkají jako výsledek bìhu data\-miningových úloh nad vedlejšími
 datovými tabulkami a dále se používají pøi bìhu dataminingových úloh nad
 hlavní datovou tabulkou. Ústøední myšlenkou je zavést definici atributu
-se semantikou hypotézy (ve smyslu metody GUHA), jehož hodnotou by byla konkrétnì
+se sémantikou hypotézy (ve smyslu metody GUHA), jehož hodnotou by byla konkrétnì
 síla nebo platnost hypotézy nad vedlejšími datovými tabulkami a takto
 nadefinovaný sloupec by se použil "o úroveò výše" - pro generaci hypotéz
 pøi bìhu další dataminingové úlohy.
@@ -600,11 +614,11 @@ platnost hypotézy $JEDENPRIJEM$ jako (virtuální) atribut, mùžeme ho zapojit
 do zadání nové úlohy napøíklad pro 4ft miner jako antecedent nebo sukcedent.
 Je-li atribut zapojen jako antecedent, omezuje množinu zkoumaných objektù
 na ty, pro které daná hypotéza z virtuálního atributu platí a zy dále zkoumá.
-Zaøadíme-li tento atribut do sukcedentu, úloha bude spoèívat v nalezení pøedpokladu
+Zaøadíme-li tento atribut do sukcedentu, úloha bude spoèívat v nalezení pøed\-pokladu
 pro platnost hypotéz z virtuálního atributu.
 \paragraph{}
 Z pøíkladu \ref{eq:hyprattributeexample} vyplývá, že zadání virtuálního
-atributu je vlastnì výsledkem bìhu dataminingové úlohy nad vedlejší datovou
+atributu je vlastnì výsledkem bìhu dataminingové úlohy nad vedlej\-ší datovou
 matici. Tato úloha nad vedlejší datovou matici (budeme jí øíkat podúloha)
 musí probìhnout vícekrát, vždy nad øádky z vedlejší matice, které se vztahují
 ke hlavní matici. Jinými slovy, zkoumá-li hlavní dataminingová úloha objekty
@@ -627,3 +641,77 @@ do nového virtuálního sloupce pro tento objekt se pøidá hodnota $true$.
 Také je možné virtuální atribut pojmout obecnìji a jako výstup neposkytovat
 pouze pravdivostní hodnoty o platnosti hypotéze, ale napøíklad sílu
 dané hypotézy, èímž dostaneme virtuální sloupec s reálnými hodnotami.
+\subsubsection{Hypothesis space explosion}
+Zvolíme-li jako druh koeficientu v zadání poúlohy napøíklad øezy (viz
+\ref{coefficients}), poèet relevantních otázek se snadno znásobí, protože
+se znásobí poèet možných cedentù. Toto vede ve výsledku ke generování
+mnoha hypotéz v hlavní úloze, které mají hodnoty hypotézového atributu
+velmi podobné mezi sebou. Výhodou je vìtší granularita úlohy a 
+možnost nalezení nejpøesnìjšího zadání virtuálního atributu tak,
+any platil na co nejvìtší podmnožinì zkoumaných dat. Nevýhodou je
+generování velkého množství hypotéz, které øíkají skoro totéž.
+\subsection{Omezení na hvìzdicové schéma}
+V dané diplomové práci se autor rozhodl pro omezení akcep\-tovaného
+data\-bázového schématu na hvìz\-dicový, kde máme pouze jednu
+hlavní datovou matici (databázovou tabulku) a ved\-lejší datové
+matice (tabulky), které jsou v relaci 1:N s hlavní data\-bázovou tabulkou.
+Rovnìž je zakázána rekuze virtuálních atributù - tj. nelze
+hypotézový atribut zapojít opìt za hypotézový atribut.
+\paragraph{}
+Teoretické dùvody daných omezení jsou podrobnìji rozebrány v \cite{relminer}. Zde
+se uvede krátké shrnutí z dùvodu lepšího porozumìní zpùsobu imple\-mentace,
+který je popsán dále v dané diplomové práci, konkrétnì v kapitole \ref{implementation}.
+
+\begin{description}
+\item[Význam] takto generovaných hypotéz lze jen tìžko popsat v pøirozeném jazyce.
+Obtížnì se interpretují závislosti nalezené na zkoumaných datech.
+Autor dané práce se proto domnívá, že hypotézy vzniklé z úlohy obsahující rekurzivní
+virtuální atributy sice mohou mít dobrý teoretický smysl, avšak vzhledem
+k celkovému zamìøení prostøedí Ferda DataMiner na výuku dataminingu pro studenty
+se nehodí do celkové koncepce tohoto prostøedí, aè mohou jsou v tomto
+prostøedí implementovatelné a jsou pro nì autorem vytvoøeny programovací
+prostøedky.
+\item[Zobrazení] výsledkù úloh obsahujících rekurzivní virtuální atributy
+se stává sámo o sobì obtížným. Pro každou výslednou hypotézu se musí zobrazit
+její atributy, které mohou být tvoøeny opìt hypotézami, které mají své atributy atd.
+Tento dùvod souvisí s pøedchozím - nejasný význam výsledkù vede k potížím jak
+pøi interpretaci, tak i pøi pouhém zobrazení.
+\item[Rychlost] zpracování úlohy s rekurzivnì zapojenými relaèními atributy
+bude velmi rychle klesat. Podrobnìji se o tomto pojednává v \cite{relminer}.
+Zde uvedeme pouze nástin problému.
+\paragraph{}
+Již pøi práci se systémem LISp-Miner se ukázalo, že
+nevhodným nastavením úlohy pro datamining lze velmi lehce
+meze použitelnosti takové úlohy ve smyslu doby poèítání.
+Poèet vygenerovaných relevan\-tních otázek totiž závisí na mnoha nastaveních.
+Jsou to nastavení délek cedentù, poètu kategorií v atributu, poètu atributù atd.
+Nevhodné nastavení parametrù se mùže snadno znásobit díky velkému poètu
+nastavovaných parametrù a doba výpoètu se stane neúnosnou.
+\paragraph{}
+V pøípadì virtuálních atributù je celkový poèet relevan\-tních otázek
+potencionálnì podstatnì vyšší a to z dùvodu toho, že pro každou
+relevantní otázku z podúlohy nad vedlejší datovou tabulkou vlastnì
+vzníká nový virtuální sloupec v hlavní datové tabulce. Jak jsme vidìli
+v \ref{hypattr}, i jednoduché zadání úlohy znamená generování velkého
+poètu relevantních otázek (a tím i mnoha nových sloupcù),
+což vede k problému pojmenovanému
+"Hypothesis space explosion", jak o nìm pojednává T.Karban v \cite{relminer}.
+Lze lehce nahlédnout, že i nerekur\-zivní zadání relaèního atributù s sebou
+pøináší nebezpeèí toho,
+že úloha snadno "uteèe" co se týèe poètu vygene\-rovaných relevan\-tních otázek
+a tím i celkové doby bìhu. Navíc pøináší další problémy, o kterých
+se podrobnì diskutuje v kapitole \ref{implementation}.
+\end{description}
+\paragraph{}
+Z výše uvedených dùvodù
+a dosavadních pokusù s funkèní implemen\-taci relaè\-ního roz\-šíøení dvou
+minerù bylo rozhod\-nuto ponechat možnost rekur\-zivního zapojení
+virtuál\-ních atributù pro budoucí vývoj.
+\subsection{Jiné metody relaèního dataminingu}
+Zde se pouze krátce zmíníme o existujících pøís\-tupech k data\-miningem
+nad více tabulkami dat.
+\paragraph{}
+Významným zástupcem metod relaèního data\-miningu je metoda
+WARMR. Detailní porovnání relaèního rozšíøení metody GUHA
+a metody WARMR provádí T.Karban jako souèást své dizer\-taèní práce
+\cite{relminer}.

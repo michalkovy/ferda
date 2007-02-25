@@ -1,2 +1,72 @@
 \chapter{Øešení}
+\label{implementation}
 \section{Vztah diplomové práce ''Experimentální GUHA procedury'' k této práci}
+Zde se podrobnì uvede vztah diplomové práce T.Kuchaøe ''Experimentální GUHA procedury''
+uvedené v seznamu použité literatury jako \cite{kuchar}.
+\subsection{GUHA v prostøedí Ferda DataMiner}
+Jak se už podrobnìji uvedlo v kapitole \ref{ferdaproject}, Ferda DataMiner
+vznikl jako studentský projekt s cílem implementace obecnìjší platformy
+pro datamining se základním prvkem pojmenovaným krabièka, viz \cite{ferda}
+pro podrobnìjší informace.
+\paragraph{}
+V dobì jeho vzniku již byly získány rozsáhlé uživatelské
+zkušenosti se systémem LISp-Miner a Ferda DataMiner byl navržen s ohledem
+na tyto zkušenosti. Projektový tým se zamìøil na vìtší obecnost prostøedí,
+kde by bylo možné implementovat i jiné dataminingové metody než GUHA. Zároveò
+v rámci téhož projektu byla implementována metoda GUHA s použitím již
+existujících modulù prostøedí LISp-Miner. To pøináslo øadu potíží podrobnì
+popsaných T.Kuchaøem v \cite{kuchar} a proto bylo evidentní, že GUHA
+se musí v prostøedí Ferda DataMiner implementovat bez využití modulù
+z LISp-Mineru. Pouze tak mohly být využity všechny výhody prostøedí Ferda DataMiner.
+\paragraph{}
+Implementaci šesti GUHA procedur a modulù pro zadání úlohy implementoval
+T.Kuchaø ve své diplomové práci ''Experimentální GUHA procedury'',
+jak už zde bylo nìkolikkrát zmínìno.
+\paragraph{}
+Daná diplomová práce je rozšíøením existujících (tzn. v prostøedí
+Ferda DataMiner implementovaných) dataminingových procedur. Sdílí
+jak zpùsob zadávání úlohy, tak i nìkteré èásti procedur. Vzhledem
+k odlišné povaze generování relevantních otázek nebylo
+možné využit jedné z hlavních výhod existující implementace
+GUHA procedur v prostøedí Ferda DataMiner a to cache bitových
+øetízkù. Dále existující implementace musela být rozšíøena
+o možnost práce s bitovými øetízky na odlišném principu
+než bylo dosud implementováno.
+\section{Zásady implementace}
+Zde bude popsán obecný programátorský pøístup k øešení implementace.
+\subsection{License}
+Protože prostøedí Ferda DataMiner je vývíjeno pod licensi
+GNU Public License (GPL), implementace v rámci dané diplomové práce
+je rovnìž vyvíjeno pod licensi GPL. Daná license umožòuje
+nejen volné použití programu, ale také zaruèuje volný pøístup
+ke zdrojovému kódu programu a jeho rozšíøování pod podmínkou,
+že výsledný kód bude rovnìž pod GPL licensi. Plný text GNU
+Public License lze nalézt na \verb+http://www.gnu.org/licenses/gpl.txt+.
+\subsection{Platforma}
+Implementace v rámci dané diplomové práce byla napsána
+v jazyce C\# stejnì jako stávající implementace prostøedí
+Ferda DataMiner. Jedním z cílù (už od doby studentského projektu)
+je spustitelnost prostøedí Ferda DataMiner na více platformách.
+Pod OS Windows lze využít platformu Microsoft .NET Framework
+(\verb+http://www.microsoft.com/cze/net/+),
+na jiných operaèních systémech (napøíklad Linux nebo
+MacOS) pak prostøedí Mono (\verb+http://www.mono-project.com+).
+\paragraph{}
+Prostøedí Ferda DataMiner bylo navrženo modulárnì. Jeho jednotlivé
+èásti mezi sebou komunikují pøes middleware Internet Communications
+Engine ICE (\verb+http://www.zeroc.com+), což je moderní alternativa
+podobnému frameworku CORBA a podporuje nìkolik rozšíøených programovacích
+jazykù, mezi které patøí také C\#.
+\subsection{Výkonnostní testy}
+Souèástí dané diplomové práce je øada testù
+relaèních rozšíøení dataminingových procedur. Testy
+se zamìøí na hranice únosnosti zadání úlohy
+ve smyslu doby bìhu, na vliv velikosti zpracovávané
+datové matice na bìh relaèních rozšíøení a také
+na dùležitost využití cache pro generované bitové
+øetízky virtuálním atributem. V úplnì pùvodním
+návrhu implementace se s cache vùbec nepoèítalo
+z dùvodù uvedených dále, proto testy zahrnují
+i bìh úlohy s vypnutou cache pro ilustraci zdùvodnìní
+její zavedení navzdory pùvodnímu návrhu.
+\subsection{Dokumentace}
