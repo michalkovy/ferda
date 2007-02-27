@@ -70,3 +70,115 @@ z dùvodù uvedenıch dále, proto testy zahrnují
 i bìh úlohy s vypnutou cache pro ilustraci zdùvodnìní
 její zavedení navzdory pùvodnímu návrhu.
 \subsection{Dokumentace}
+\subsubsection{Uivatelská dokumentace}
+Uivatelská dokumentace je zahrnutá v daném textu
+jako popis implentovanıch krabièek.
+\subsubsection{Programátorská dokumentace}
+Obecnı návrh øešení je souèástí textu dané diplomové práce.
+Poznámky pøímo k detailem implementaci jsou souèástí zdrojového kódu.
+\section{Agregaèní atribut}
+\subsection{Popis úlohy}
+\subsection{Diskuze nad implementaci}
+\section{Hypotézovı atribut}
+Zde bude popsána podstata úlohy, kterou bylo nutné
+vyøešit pro implementaci hypotézového atributu v prostøedí
+Ferda DataMiner. Protoe vısledná idea implementace byla
+nalezena a upøesnìna a bìhem nìkolika schùzí s vedoucím diplomové
+práce, autor povauje za nezbytné tuto diskuzi zde krátce uvést,
+co dle jeho názoru pomùe k lepšímu pochopení dùvodù
+volby návrhu, kterı nakonec pøevládl a byl tedy v rámci dané
+diplomové práce implementován. Bude následovat rozbor
+dopadu zvoleného zpùsobu pro stávající i budoucí aspekty
+implementace relaèních rozšíøení v prostøedí Ferda DataMiner.
+\subsection{Popis úlohy}
+Jak u bylo podrobnì popsáno v sekci \ref{vattributes}, hypotézovı
+virtuální atribut (kterému budeme také øíkat podúloha)
+pracuje nad vedlejší datovou matici, ve které
+zkoumá zajímavé vztahy pro øádky dané datové matice patøící k objektu
+v hlavní datové matici. Podúloha se spustí mnohokrát a pokadé
+vygeneruje relevantní otázku pouze pro èást vedlejší datové matice.
+Vısledkem pro hlavní úlohu, do které je takovı virtuální atribut zapojen,
+bude síla hypotézy vzniklé ze zmínìné relevantní otázky aplikací
+kvantifikátoru zapojeného do podúlohy.
+\paragraph{}
+Podúloha se vdy spouští pro ty øádky vedlejší datové matice, které
+jsou v relaci s objektem z hlavní datové matice. Jako pøíklad
+uvedeme podúlohu, která bìí na tabulce transakcí. Vdy se spustí
+pouze pro øádky transakcí patøící urèitému klientovi. Nad tìmi probìhne
+verifikace nìjaké (poøadí generování se bude odvíjet od zpùsobu implementace)
+relevantní otázky generované podúlohou a jako vısledek podúloha vydá obecnì
+reálné èíslo znamenající validitu dané hypotézy na zkoumané podmnoinì
+øádkù vedlejší datové matice.
+\paragraph{}
+To znamená, e pro kadı objekt z hlavní datové matice podúloha zkoumající
+vedlejší datovou matici vrátí právì jedno reálné èíslo. Takto vzniklı
+sloupec se pro nadúlohu nebude nijak líšit od regulerního sloupce hlavní datové matice
+a bude tedy zahrnut do generování relevantních otázek a potamo i hypotéz v nadúloze.
+\subsection{Diskuze nad implementaci}
+Z vıše popsaného je jasné, e implementace musí vyøešit nìkolik problému.
+Jejich øešení bylo podrobnì diskutováno s vedoucím diplomové práce Doc. RNDr. Janem Rauchem, CSc.
+pøiblinì v následujících bodech.
+\subsubsection{Zpùsob bìhu podúlohy}
+Bìhem diskuze se vykrystalizovaly následující tøi pøístupy, jak mùe podúloha bìet.
+\begin{description}
+\item[Pøedbìné generování]
+Podúloha by se spouštìla pøedem na vedlejší datové matici. Vısledky ve formì
+buï virtuálních sloupcù a(nebo) bitovıch øetízkù by se pøechodnì skladovaly
+v pamìti èi ve formì serializovanıch objektù a pøi následném bìhu nadúlohy
+by se této pøedloily. Podobnım zpùsobem jsou implementovány napøíklad
+stávající nevirtuální atributy - ''Each value one category'', ''Ekvidistanèní intervaly''
+a ''Ekvifrekvenèní intervaly''.
+\paragraph{}
+Vıhodou takového pøístupu by byla monost vyuít stávající vıhody implementace
+metody GUHA v prostøedí Ferda DataMiner a to zejména cache bitovıch øetízkù.
+Dále by se mohly bez vìtších zmìn pouít dataminingové procedury jako podúlohy,
+v podstatì by se jednalo o jejich spuštìní na podmnoinì datové matice místo
+na celé mnoinì øádkù. Také takto implementovanı virtuální atribut by šel
+zapojít do zadání pro všechny dosud implementované GUHA dataminingové
+procedury v prostøedí Ferda DataMiner.
+\paragraph{}
+Hlavním dùvodem napsání pøedchozího odstavce v podmíòovacím zpùsobu
+se stala nemonost škálovatelnosti takového øešení. U i pro existující
+vzorová data virtuální banky Barbora mohl nastat problém se zabíranou
+pamìti pro vygenerované bitstringy. Poèet relevantních otázek v zadané
+dataminingové úloze v øádu tisícù èi desetitisícù je bìnou záleitostí.
+Protoe kadá relevantní otázka v podúloze znamená novı virtuální sloupec
+v hlavní tabulce, nad kterou bìí hlavní dataminingová úloha, pøi úvaze
+o velikosti poadované operaèní pamìti (protoe bitové øetízky krabièky
+atributù ve Ferda DataMiner drejí právì tam) se musí poèet sloupcù
+vynásobit poètem øádku hlavní datové matice.
+\paragraph{}
+Pøi úvaze s matici banky Barbora o velikosti øádovì kolem 5000 øádku
+a poètem relevantních otázek v podúloze kolem 10000 nám vzníká ještì vcelku
+pøijatelná velikost zabírané RAM, nicménì je tøeba si uvìdomit, e velikost
+zkoumané datové tabulky pro úlohy blíící se reálné situaci je spíše v øádech
+statisícù a miliónù záznamù. Toto je zásadní omezení pro budoucí aplikace
+prostøedí Ferda DataMiner a takto navrenı zpùsob implementace by omezil nejen
+relaèní rozšíøení procedur implementovanıch v rámci dané diplomové práce,
+ale i pøípad\-nıch dalších implementací relaèních rozšíøení v budounu.
+\paragraph{}
+Z vıše uvedenıch dùvodù bylo tedy od tohoto zpùsobu implementace upuštìno.
+\item[Èekající vlákna]Po zavrení pøedchozího pøístupu bylo jasné, e øešení
+pøedgenerovat si bitstringy do pamìti nepøipadá v úvahu. Zaèal se hledat
+zpùsob, jak virtuální sloupce a tedy i bitové øetízky, generovat prùbìnì,
+vdy na pokyn nadúlohy.
+\paragraph{}
+Vznikla následující úvaha: protoe nadúloha potøebovala ke zpracování celı
+sloupec hlavní datové matice najednou, podúloha by mohla bìet
+jako dataminingová procedura v samostatném vláknì, která by jako vstup mìla
+právì jednu podmnoinu øádkù vedlejší datové matice pro jeden obejkt z hlavní
+datové matice. Tedy pro kadı objekt z hlavní datové matice by bìelo
+jedno vlákno podúlohy, které by postupnì vracelo reálná èísla, která by se formovala
+do virtuálních sloupcù.
+\paragraph{}
+Skoro na první pohled je však jasné, e by muselo bıt spuštìn stejnı poèet vláken
+jako poèet øádkù v hlavní datové matici. Idea nutnosti øádovì tisíce vláken pro vıpoèet
+by jednoduché úlohy (i nad tabulkou virtuální banky Barbory) se autorovi dané
+diplomové práce zdala jako velmi špatnì navrena z dùvodù pøíliš velké
+reie operaèního systému na pøepínaní takového poètu vláken. Z dosavadních
+zkušeností je vidìt, e na bìnì dostupném osobním poèítaèi øádovì i stovka vláken
+vìtšinou pøedstavuje velké vytíení komponent systému.
+\paragraph{}
+Z vıše uvedenıch dùvodù bylo tedy od tohoto zpùsobu implementace upuštìno.
+\end{description}
+\subsection{Dùsledky zvoleného zpùsobu}
