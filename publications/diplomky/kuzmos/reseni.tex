@@ -118,6 +118,26 @@ a bude tedy zahrnut do generování relevantních otázek a potamo i hypotéz v nadú
 Z vıše popsaného je jasné, e implementace musí vyøešit nìkolik problému.
 Jejich øešení bylo podrobnì diskutováno s vedoucím diplomové práce Doc. RNDr. Janem Rauchem, CSc.
 pøiblinì v následujících bodech.
+\paragraph{}
+Pro zaèátek si ještì jednou pøipomeneme základní algoritmus generování
+relevantních otázek a ovìøování hypotéz pro dataminingovou proceduru 4ft miner.
+\begin{verbatim}
+foreach(BitString condition in Conditions)
+{
+    foreach(BitString antecedent in Antecedents)
+    {
+        foreach(BitString succedent in Succedents)
+        {
+            ContingencyTable table = 
+                ComputeTable(succedent, antecedent, condition);
+            if (VerifyQuantifiers(table))
+                result.Add(succedent, antecedent, condition);
+        }
+    }
+}
+
+\end{verbatim}
+
 \subsubsection{Zpùsob bìhu podúlohy}
 Bìhem diskuze se vykrystalizovaly následující tøi pøístupy, jak mùe podúloha bìet.
 \begin{description}
@@ -180,5 +200,97 @@ zkušeností je vidìt, e na bìnì dostupném osobním poèítaèi øádovì i stovka vlák
 vìtšinou pøedstavuje velké vytíení komponent systému.
 \paragraph{}
 Z vıše uvedenıch dùvodù bylo tedy od tohoto zpùsobu implementace upuštìno.
+\item[Generování po krocích]
+Pøedchozí úvaha však inspirovala autora práce k jinému pøístupu k øešení. Jak je vidìt
+z algoritmu generování relevantních otázek, kterı je uveden na poèátku této sekce,
+dataminingová úloha (v tomto pøípadì nadúloha) potøebuje v jednotlivıch krocích svıch cyklù pouze
+\emph{jeden bitovı øetízek}. Z tohoto vznikla idea navrhnout dataminingovou proceduru pro podúlohu tak, aby umìla
+poskytnout na poádání ne nìjakı konkrétní sloupec nebo bitovı øetízek, nıbr \emph{další} sloupec
+a \emph{další} bitovı øetízek anebo nic v pøípadì vyèerpání monıch sloupcù.
+\paragraph{}
+Zásadní rozdíl oproti dosud existujícím (nevirtuálním) atributùm byl ten, e tyto mìly
+celou mnoinu svıch bitovıch øetízkù v okamiku pøed zaèátkem generování známou. Bitové
+øetízky jsou v tìchto atributech identifikovatelné dle klíèe skladájíciho se z id atributu a názvu
+kategorie. Je znám celkovı poèet bitovıch øetízkù, tudí lze stanovit poèet celkovì vygenerovanıch
+relevantních otázek. Je moné pøistoupit k jakémukoliv bitovému øetízku na základì klíèe.
+\paragraph{}
+Oproti tomu navrhovanı zpùsob implementace hypotézového atributu zaruèoval pouze to,
+e takovı atribut v okamiku zavolání pøíslušné metody buï vydá další bitovı øetízek
+nebo oznámí, e bitové øetízky u vydávat nebude. Není tedy známá a snadno pøístupná
+celá mnoina bitovıch øetízku pøed zaèátkem generování (nadúlohou) relevantních otázek.
+Tudí nelze spoèítat ani pøedpokládanı poèet vygenerovanıch relevantních otátek,
+protoe hypotézovı atribut jednoduše reaguje buï tím, e dá další bitovı øetízek
+nebo oznámí, e øetízky došly.
+\paragraph{}
+Vıhody tohoto øešení ve smyslu škálovatelnosti jsou zøejmé. Podúloha bìí synchronnì
+s nadúlohou a v pamìti se uchovává a pøedává pouze jeden bitovı øetízek v jednom okamiku.
+Poté, co nadúloha pøejde na další krok generování a poádá virtuální atribut o další bitovı øetízek,
+tento zavolá svoji metodu MoveNext a vydá další øetízek. Pøedchozí vygenerované øetízky
+se nikde neukládají a nezabírají pamì.
+\paragraph{}
+Nevıhody tohoto øešení jsou ji naznaèeny
+vıše a budou podrobnìji probrány dále. Po diskuzi s vedoucím diplomové práce se autor rozhodl
+implementovat relaèní rozšíøení dataminingovıch procedur právì tímto zpùsobem,
+protoe pøípadné nevıhody a jinı pøístup k øešení znamenaly spíše nepohodlí pro programátora, avšak
+nijak nenarušovaly princip metody GUHA jako takové. Navíc poskytovaly základní vıhodu
+škálovatelnosti -- z principu návrhu lze zaruèit, e úloha skonèí i na velkıch tabulkách,
+nevyèerpá RAM nebo poèet povolenıch bìicích vláken v systému. Mùe se stát, e
+pobìí delší dobu, ale skonèí korektnì.
 \end{description}
 \subsection{Dùsledky zvoleného zpùsobu}
+Zde budou popsány dùsledky, které mìlo zvolené øešení implementaci a spolupráci
+s ji existujícími moduly metody GUHA v prostøedí Ferda DataMiner.
+\subsubsection{Vypnutí cache bitovıch øetízku}
+Nejpodstatnìjším dùsledkem byla nemonost pouívat stávající cache bitovıch
+øetízkù. Ta totí funguje tak, e uchovává bitové øetízky pro atributy
+(pro všechny atributy je spoleèná) a v pøípadì potøeby vyøazuje z cache
+málo pouívané bitové øetízky na základì nìjaké strategie. V pøípadì,
+e v cache potøebnı bitovı øetízek neexistuje, poádá o nìj pøímo
+potøebnı atribut na základì jednoznaèného identifikátoru.
+\paragraph{}
+Jak u bylo zmínìno vıše, takovı pøístup by se zvolenım zpùsobem implementace
+nefungoval -- pøedpokládá totí monost pøístupu ke všem bitovım øetízkùm
+atributu. Návrh hypotézového virtuálního atributu s tímto nepoèítá -- umí
+dát pouze ''další'' bitovı øetízek bez monosti zjistit, kterı další to bude, jakı
+bude mít identifikátor, ke které kategorii bude patøit atd. Z tìchto dùvodù
+nešlo stávající cache pro hypotézovı virtuální atribut pouit. Pouití
+cache bitovıch øetízkù u ostatních buï existujících nebo novì implementovanıch
+krabièek atributù zùstalo beze zmìny, protoe se pro tyto krabièky nic nezmìnilo.
+\subsubsection{Rozdìlení na krabièky}
+Další úvahou bylo, zda implementovat hypotézovı virtuální atribut
+jako dvì krabièky nebo jednu spoleènou. Stávající nevirtuální
+atributy se v pøípadì potøeby generování boolskıch atributù zapojují do krabièky
+''AtomSetting''. Ta zajistí generování koeficientù pro booleovskı atribut.
+\paragraph{}
+V pøípadì hypotézového virtuálního atributu by nešla pouít stávající krabièka
+pro generování koeficientù ''AtomSetting'', protoe pracuje s poadavkem ''poskytni
+pøesnì tento bitovı øetízek'', kdyto hypotézovı atribut by umìl zpracovat pouze
+poadavek ''poskytni další bitovı øetízek''. Tudí krabièka pro generování koeficientù
+vyuitelná pouze pro hypotézovı virtuální atribut by se se musela také naprogramovat.
+\paragraph{}
+Po úvaze se autor rozhodl neimplementovat zvláštní krabièku pro generování
+koeficientù pro hypotézovı virtuální atribut z následujících dùvodù.
+\begin{description}
+\item[Potøeba pouze jednoho koeficientu] Po diskuzi s vedoucím práce
+bylo rozhodnuto, e pøi generování koeficientù pro booleovskı atribut
+bude potøeba implementovat pouze podmnoiny délky jedna -- viz \ref{coefficients}.
+Krabièka ''AtomSetting'' pro hypotézoví virtuální atribut by byla nadbyteèná,
+protoe by tam chybìlo uivatelské nastavení, vše se odehrávalo ''pod kapotou''.
+Nebyl tedy dùvod tuto krabièku vytváøet.
+\item[Nadbyteèná komunikace krabièek pøes ICE] Navíc by tato krabièka, která
+by se napojila za hypotézovı virtuální atribut, znamenala komunikaci pøes ICE.
+Protoe idea implementace spoèívá v synchronním bìhu nad- a podúlohy, kde
+nadúloha uvnitø svıch cyklù (napøíklad pro sukcedent) volá podúlohu, která jí
+pøedává bistringy, je potøeba zajistit toto pøedávání plynule, aby
+se hlavní úloha pøíliš nezpomalovala èekáním na bitstring od podúlohy. Protoe
+ze zkušeností získanıch pøi programování prostøedí Ferda DataMiner ještì
+jako studentského projektu autor vìdìl, e komunikace krabièek pøes
+rozhraní ICE je pomalá, bylo rozhodnuto zajistit generování atributu
+a koeficientu v jedné krabièce a tím zrychlit bìh hypotézového
+virtuálního atributu.
+\end{description}
+\subsubsection{Buffer bitovıch øetízkù}
+Pøi ladìní prvotní implementace hypotézového virtuálního atributu
+se zjistilo, e aèkoliv zvolenı návrh zaruèí škálovatelnost
+a jistotu toho, e úloha by za delší dobu dobìhne a nezabere
+zbyteènou pamì, doba bìhu celkové úlohy je neúmìrnì dlouhá.
