@@ -332,6 +332,59 @@
         <include name="${path::combine(lib.dir,'icecs.dll')}"/>
       </references>
     </csc>
+    
+		<csc target="library" output="${path::combine(addInsBuild.dir,'FormEditor.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="FormEditor/**.cs"/>
+				<include name="FormEditor/MyIce/**.cs"/>
+				<exclude name="FormEditor/bin/**.*"/>
+				<exclude name="FormEditor/obj/**.*"/>
+			</sources>
+			<resources prefix="Ferda.FrontEnd.AddIns.FormEditor">
+				<include name="FormEditor/**.resx"/>
+				<exclude name="FormEditor/FormEdito.resx"/>
+			</resources>
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+			</references>
+		</csc>
+		<csc target="library" output="${path::combine(addInsBuild.dir,'RegEditor.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="RegEditor/**.cs"/>
+				<include name="RegEditor/MyIce/**.cs"/>
+				<exclude name="RegEditor/bin/**.*"/>
+				<exclude name="RegEditor/obj/**.*"/>
+			</sources>
+			<resources prefix="Ferda.FrontEnd.AddIns.RegEditor">
+				<include name="RegEditor/**.resx"/>
+				<exclude name="RegEditor/RegEditor.resx"/>
+			</resources>
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+			</references>
+		</csc>
+    
+    
     <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
       <fileset basedir="MultiSelectStrings/Help">
         <include name="*.*" />
