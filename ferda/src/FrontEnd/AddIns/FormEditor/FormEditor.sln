@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual C# Express 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormEditor", "FormEditor\FormEditor.csproj", "{72CBB50B-39F3-43E4-B099-27E72F6415C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormEditor", "FormEditor.csproj", "{72CBB50B-39F3-43E4-B099-27E72F6415C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

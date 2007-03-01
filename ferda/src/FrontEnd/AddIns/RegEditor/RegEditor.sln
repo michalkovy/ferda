@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual C# Express 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegEditor", "RegEditor\RegEditor.csproj", "{C3053EF8-B8B1-4C51-BA73-1E82B315EB66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegEditor", "RegEditor.csproj", "{C3053EF8-B8B1-4C51-BA73-1E82B315EB66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
