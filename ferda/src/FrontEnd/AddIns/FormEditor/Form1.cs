@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Resources;
 using System.Data;
 using System.Drawing;
 using System.Text;
@@ -85,6 +86,11 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         /// </summary>
         private bool isDragging = false;
 
+        /// <summary>
+        /// Resulting XML string
+        /// </summary>
+        private string returnString;
+
         //System.Collections.ArrayList buttons;
         public String selectedtext = "";
 
@@ -138,6 +144,19 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
 
         public System.Collections.Hashtable variables;
 
+
+        /// <summary>
+        /// Resulting XML string
+        /// </summary>
+        public string ReturnString
+        {
+            get
+            {
+                return returnString;
+            }
+        }
+
+
         /// <summary>
         /// Class constructor
         /// </summary>
@@ -157,15 +176,17 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
             RButtonState = ButtonState.unpressed;
             AButtonState = ButtonState.unpressed;
 
+            this.returnString = ContentToLoad;
+
             Initialize();
 
-            /*if (ContentToLoad != "")
+            if (ContentToLoad != "")
               {
                   LoadFormFromXMLString(ContentToLoad);
 
                   for (int i = 0; i < 5; i++)
                       FormHihglighter(boxes[i]);
-              }*/
+              }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -816,14 +837,20 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         /// </summary>
         private void OK_Click(object sender, EventArgs e)
         {
-            string XMLString = SaveFormToXMLString("1");
+            //string XMLString = SaveFormToXMLString("1");
+
+            this.DialogResult = DialogResult.OK;
+
+            this.returnString = this.SaveFormToXMLString("1");
 
            // MessageBox.Show(XMLString);
 
            // WizardFormGenerator generated_form = new WizardFormGenerator(XMLString, 100);
             
             //LoadFormFromXMLString(XMLString);
-            this.Close();
+            //this.Close();
+            this.Dispose();
+
         }
 
         /// <summary>
@@ -831,7 +858,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         /// </summary>
         private void Cancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.DialogResult = DialogResult.Cancel;
+ 
+            //this.Close();
+            this.Dispose();
         }
 
         private void WizardFormEditor_HelpRequested(object sender, HelpEventArgs hlpevent)
@@ -863,7 +893,6 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         {
 
         }
-
 
 
     }
