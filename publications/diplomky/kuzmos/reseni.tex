@@ -1,4 +1,6 @@
 \chapter{Øešení}
+V této kapitole budou popsané obecné charakteristiky programátorské
+implementace v rámci dané diplomové práce.
 \label{implementation}
 \section{Vztah diplomové práce ''Experimentální GUHA procedury'' k této práci}
 Zde se podrobnì uvede vztah diplomové práce T.Kuchaøe ''Experimentální GUHA procedury''
@@ -76,12 +78,44 @@ jako popis implentovanıch krabièek.
 \subsubsection{Programátorská dokumentace}
 Obecnı návrh øešení je souèástí textu dané diplomové práce.
 Poznámky pøímo k detailem implementaci jsou souèástí zdrojového kódu.
+Tato dokumentace mùe bıt kdykoliv vygenerována ve zvláštním souboru.
 \section{Agregaèní atribut}
 \subsection{Popis úlohy}
-\subsection{Diskuze nad implementaci}
+Zde bude popsána podstata úlohy, kterou bylo nutné
+vyøešit pro implementaci virtuálního agregaèního atributu v prostøedí
+Ferda DataMiner.
+\paragraph{}
+Jak u bylo podrobnì popsáno v sekci \ref{vattributes}, agregaèní
+virtuální atribut pracuje nad vedlejší datovou matici, kde provádí
+jednoduché vıpoèty, které jsou nejèastìji implementovány jako agregaèní
+funkce jazyka SQL (proto název agregaèní) pro øádky dané datové matice patøící k objektu
+v hlavní datové matici.
+\paragraph{}
+Pøi rozhodování o rozsahu implementované funkènosti agregaèního virtuálního
+atribitu se bral v potaz fakt, e daleko zajímavìjším atributem pro vyuití
+v relaèním dataminingu je atribut hypotézovı. Proto po dohodì s vedoucím práce bylo
+rozhodnuto naimplementovat pouze základní funkènost agregaèního virtuálního atributu.
+\paragraph{}
+Autor dané diplomové práce si uvìdomuje fakt, e tento atribut mùe bıt obecnìjší
+ne pouze spojení dvou databazovıch tabulek dle klíèe a spoustìní pouze SQL agergaèních funkcí.
+V diplomové práci M.Ducháèka uvedené v seznamu pouité literatury jako \cite{duchacek} je
+implementován obecnìjší pøístup k agregaènímu virtuálnímu atributu. Ve zmínìné práci
+je umonìno na tomto atributu spouštìt nejen agregaèní funkce jazyka SQL, ale obecnì
+lze provádìt jakoukoliv úpravu dat pomocí procedur napsanıch v jazyce C\#, kterı je
+interpretován za bìhu.
+\paragraph{}
+Nicménì si autor také uvìdomoval, e vıše uvedená implementace funkènosti tvoøí
+velmi podstatnou èást diplomové práce M.Ducháèka. Vzhledem k faktu, e autor dané
+diplomové práce mìl pøed sebou implementaci jak hypotézového atributu, tak i tøí
+dalších atributovıch krabièek a jednoho modulu pro úpravu atributu, bylo rozhodnuto
+naimplementovat v rámci agregaèního hypotézového atributu pouze fuknènost, která je podrobnìji
+popsaná v kapitole \ref{implementationdetails}.
+
+
+
 \section{Hypotézovı atribut}
 Zde bude popsána podstata úlohy, kterou bylo nutné
-vyøešit pro implementaci hypotézového atributu v prostøedí
+vyøešit pro implementaci virtuálního hypotézového atributu v prostøedí
 Ferda DataMiner. Protoe vısledná idea implementace byla
 nalezena a upøesnìna a bìhem nìkolika schùzí s vedoucím diplomové
 práce, autor povauje za nezbytné tuto diskuzi zde krátce uvést,
@@ -285,7 +319,9 @@ pøedává bistringy, je potøeba zajistit toto pøedávání plynule, aby
 se hlavní úloha pøíliš nezpomalovala èekáním na bitstring od podúlohy. Protoe
 ze zkušeností získanıch pøi programování prostøedí Ferda DataMiner ještì
 jako studentského projektu autor vìdìl, e komunikace krabièek pøes
-rozhraní ICE je pomalá, bylo rozhodnuto zajistit generování atributu
+rozhraní ICE je relativnì pomalá (s ohledem na skuteènost, e na komunikaci
+pøes ICE bylo bylo tøeba èekat pøi kadém kroku  \verb+foreach+ cyklu),
+bylo rozhodnuto zajistit generování atributu
 a koeficientu v jedné krabièce a tím zrychlit bìh hypotézového
 virtuálního atributu.
 \end{description}
@@ -294,3 +330,74 @@ Pøi ladìní prvotní implementace hypotézového virtuálního atributu
 se zjistilo, e aèkoliv zvolenı návrh zaruèí škálovatelnost
 a jistotu toho, e úloha by za delší dobu dobìhne a nezabere
 zbyteènou pamì, doba bìhu celkové úlohy je neúmìrnì dlouhá.
+\paragraph{}
+Dùvod dlouhého bìhu úlohy s virtuálním atributem celkem logicky spoèíval
+v neexistenci jakéhokoliv cacheování bitovıch øetízkù poskytovanıch
+virtuálním hypotézovım atributem. Pøi prvotním návrhu autor a vedoucí
+diplomové práce na tento fakt nebrali pøíliš ohled, protoe spíše diskutovali
+o dlouho\-dobìjších dopadech zvoleného zpùsobu implementace. Velkı rozdíl v rychlostech bìhu
+úlohy byl ještì umocnìn faktem, e všechny dosavadní GUHA procedury byly implementovány
+s pouitím cache bitovıch øetízkù a generování bitovıch øetízkù pøi bìhu úlohy probìhlo
+pouze poprvé a poté se naèítaly z cache. Proto hypotézovı atribut, kterı ádnou cache
+nepouíval, zpùsoboval opravdu velké zpomalení bìhu úlohy, byl-li do ni zapojen.
+\paragraph{}
+Podíváme-li se na algoritmus 4ft mineru uvedeného vıše a pøedstavíme-li si ho
+jako nadúlohu, do které bude zapojen minimálnì jeden virtuální hypotézovı atribut
+(napøíklad jako sukcedent), tak bude jasné, e tento algoritmus pobìí opravdu pomalu.
+Zapojení virtuálního atributu do sukcedentu je pro tento miner ''nejhorší pøípad'',
+protoe bitstringy jim generované jsou pouívany ve vnitøním \verb+foreach+ cyklu,
+a v pøípadì nepouívaní cache to znamená, e uvnitø tohoto cyklu se \emph{pokadé} spustí
+podúloha (vnitøní miner), aby mohla nadúloze poskytnout bitstring.
+\paragraph{}
+Pøi vší snaze autora dané práce jakkoliv urychlit bìh úlohy se zapojenım hypotézovım
+atributem vycházelo najevo, e od pùvodnì plánované implementace prosté jakéhokoliv
+cacheování bude nutné upustit. Pøi krátkém otestování a optimalizaci dosud naimplementovaného
+kódu krabièky autor byl schopen dosáhnout rozumné doby bìhu úlohy (v øádu desítek minut)
+pøi omezení maximálního poètu virtuálních sloupcù a potamo i bitovıch øetízkù vygenerovanıch
+krabièkou virtuálního atributu na 15-20. Pøi zvıšení maximálního poètu virtuálních sloupcù
+na 50 doba bìhu jednoduché úlohy se pohybovala v øádu hodin.
+\paragraph{}
+Protoe bìné poèty vygenerovanıch relevantních otázek v procedurách GUHA se pohybují v øádech
+tisícù a desetitisícù pøi potøebné dobì bìhu spíše v øádu minut, bylo zøejmé, e
+zpomalujícím faktorem byla právì absence cacheování bitovıch øetízkù pro virtuální atribut.
+Bylo tedy rozhodnuto upustit od kanonického implementaèního øešení a autor naimplementoval
+cache i pro virtuální atributy.
+\section{Atributy}
+Zde bude popsána podstata úlohy, kterou bylo nutné
+vyøešit pro implementaci atributù v prostøedí
+Ferda DataMiner. Podrobnìjší popis principù fungování danıch
+atributù je uveden v dané diplomové práci v sekci \ref{cileatributy}.
+\subsection{Ekvidistanèní intervaly}
+V rámci implementace funkènosti tohoto atributu byly vyuity algoritmy
+pro vytvoøení ekvidistanèních intervalù pøipravené T.Kuchaøem
+v rámci jeho diplomové práce uvedené jako \cite{kuchar}. Tyto algoritmy
+byly adaptovány z prostøedí projektu Rel-Miner T.Karbana a pøipraveny
+pro vyuití v prostøedí Ferda DataMiner. Autor dané diplomové práce
+vytvoøil pro danı atribut krabièku v prostøedí Ferda DataMiner,
+její funkènost bude detailnì popsána v kapitole \ref{implementationdetails}.
+
+\subsection{Ekvifrekvenèní intervaly}
+V rámci implementace funkènosti tohoto atributu byly vyuity algoritmy
+pro vytvoøení ekvifrekvenèních intervalù pøipravené T.Kuchaøem
+v rámci jeho diplomové práce uvedené jako \cite{kuchar}. Tyto algoritmy
+byly adaptovány z prostøedí projektu Rel-Miner T.Karbana a pøipraveny
+pro vyuití v prostøedí Ferda DataMiner. Autor dané diplomové práce
+vytvoøil pro danı atribut krabièku v prostøedí Ferda DataMiner,
+její funkènost bude detailnì popsána v kapitole \ref{implementationdetails}.
+\subsection{Statickı atribut}
+V rámci implementace funkènosti tohoto atributu byla vytvoøena krabièka,
+která umoòovala spouštìní modulu pro ruèní úpravu atributu. Atribut
+(pøesnìji kategorie v atributu) mohly bıt pøedem vytvoøeny napøíklad
+vıše uvedenımi krabièkami ekvidistanèních nebo ekvifrekvenèních intervalù.
+\subsection{Modul pro úpravu atributu}
+Tento modul je spouštìn nad krabièkou ''Statickı atribut'' a umoòuje
+ruèní úpravu kategorií v atributu. Pøi ní uivatel mùe jak upravovat
+ji pøedpøipravené kategorie, tak i vytváøet kategorie nové. Upravovanı
+atribut mùe bıt i zcela prázdnı a kategorie mohou bıt vytvoøeny
+uivatelem kompletnì od zaèátku.
+\paragraph{}
+Modul zaruèuje korektnost ruènì pøidanıch kategorií (zaruèí napøíklad
+disjunktnost intervalù, jak je poadováno pøi tvorbì úlohy pro dataminingovou
+proceduru). Vyuívá algoritmù ji implementovanıch v rámci diplomové práce
+T.Kuchaøe uvedené jako \cite{kuchar}. Funkènost tohoto modulu bude detailnì popsána
+v kapitole \ref{implementationdetails}.
