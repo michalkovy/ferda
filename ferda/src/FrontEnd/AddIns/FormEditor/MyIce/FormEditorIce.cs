@@ -54,9 +54,9 @@ namespace Ferda.FrontEnd.AddIns.FormEditor.MyIce
         private string localizationString;
 
         /// <summary>
-        /// Resulting string with selected tables
+        /// Resulting string with XML content
         /// </summary>
-        string [] returnStrings;
+        string  returnString;
 
         #endregion
 
@@ -72,9 +72,9 @@ namespace Ferda.FrontEnd.AddIns.FormEditor.MyIce
             this.ownerOfAddIn = ownerOfAddIn;
 
             //setting the ResManager resource manager and localization string
-            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.MultiSelectStrings.Localization_en-US",
-            Assembly.GetExecutingAssembly());
-            localizationString = "en-US";
+           // resManager = new ResourceManager("Ferda.FrontEnd.AddIns.MultiSelectStrings.Localization_en-US",
+           // Assembly.GetExecutingAssembly());
+            //localizationString = "en-US";
         }
 
         #endregion
@@ -127,15 +127,37 @@ namespace Ferda.FrontEnd.AddIns.FormEditor.MyIce
         {
             string locale;
 
+          //  about = resManager.GetString("FormEditorAbout");
+            StringT XMLString = (StringT)valueBefore;
+            PropertyValue returnValue = new PropertyValue();
+            PropertyValue propertyValue = valueBefore;
+
+            
 
             FormEditor.WizardFormEditor control =
-                new FormEditor.WizardFormEditor("");
+                new FormEditor.WizardFormEditor(XMLString.getStringValue());
 
+            control.Disposed += new EventHandler(control_Disposed);
             System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(control);
 
-            PropertyValue propertyValue = null;
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                XMLString.stringValue = this.returnString;
+                PropertyValue resultValue = XMLString;
+               // about = this.getPropertyAbout(resultValue);
+                about = "Form editor about";
+                propertyValue = resultValue;
+            }
+            else
+            {
+                //about = this.getPropertyAbout(valueBefore);
+                about = "form";
+                return valueBefore;
+            }
 
-            about = "Form editor about";
+            //PropertyValue propertyValue = null;
+
+            
 
             //propertyValue = result;
            /* try
@@ -200,12 +222,12 @@ namespace Ferda.FrontEnd.AddIns.FormEditor.MyIce
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void listView_Disposed(object sender, EventArgs e)
+        void control_Disposed(object sender, EventArgs e)
         {
-           /* Ferda.FrontEnd.AddIns.MultiSelectStrings.MultiSelectStringsControl listView =
-                (Ferda.FrontEnd.AddIns.MultiSelectStrings.MultiSelectStringsControl)sender;
+            Ferda.FrontEnd.AddIns.FormEditor.WizardFormEditor control =
+                (Ferda.FrontEnd.AddIns.FormEditor.WizardFormEditor)sender;
 
-            this.returnStrings = listView.ReturnStrings;*/
+            this.returnString = control.ReturnString;
         }
 
         #endregion
