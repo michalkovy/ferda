@@ -26,26 +26,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
             string label = String.Empty;
-            try
-            {
-                label = Func.GetColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
-            }
-            catch
-            {
-                return Func.NameInLiterals;
-            }
-            if (label == String.Empty)
+            if (Func.NameInLiterals != string.Empty && Func.NameInLiterals != null)
             {
                 return Func.NameInLiterals;
             }
             else
             {
-                if (Func.NameInLiterals != String.Empty)
-                    return label +
-                        " - " + Func.NameInLiterals;
-                else
-                    return label;
-            }
+                try
+                {
+                    label =
+                    Func.GetColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
+                }
+                catch { }
+                return label;
+            }  
         }
 
         /// <summary>
@@ -199,20 +193,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             object dummy = Func.GetColumnFunctionsPrx(true);
             dummy = Func.GetAttributeId();
             dummy = Func.GetAttributeNames();
-            try
-            {
+            //try
+            //{
                 dummy = Func.GetAttribute(true);
-            }
-            catch
-            {
-                throw Exceptions.BadValueError(
-                    null,
-                    boxModule.StringIceIdentity,
-                    "Equidistant interval supports only nominal and higher column semantics",
-                    new string[] { Functions.SockColumn },
-                    restrictionTypeEnum.OtherReason
-                    );
-            }
+            //}
+            //catch
+            //{
+            //    throw Exceptions.BadValueError(
+            //        null,
+            //        boxModule.StringIceIdentity,
+            //        "Equidistant interval supports only nominal and higher column semantics",
+            //        new string[] { Functions.SockColumn },
+            //        restrictionTypeEnum.OtherReason
+            //        );
+            //}
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);
@@ -226,6 +220,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     new string[] { Functions.PropNameInLiterals },
                     restrictionTypeEnum.OtherReason
                     );
+
 
             CardinalityEnum potentiallyCardinality = Func.PotentiallyCardinality(true);
 
@@ -242,6 +237,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     restrictionTypeEnum.OtherReason
                     );
             }
+
             /*
             if (potentiallyCardinality != CardinalityEnum.Cardinal)
             {
@@ -252,7 +248,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     new string[] { Functions.PropCardinality },
                     restrictionTypeEnum.OtherReason
                     );
-            }*/
+            }
+            */
         }
     }
 }

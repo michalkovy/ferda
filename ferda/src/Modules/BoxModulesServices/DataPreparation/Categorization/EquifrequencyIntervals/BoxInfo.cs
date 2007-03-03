@@ -26,26 +26,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
             string label = String.Empty;
-            try
-            {
-                label = Func.GetColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
-            }
-            catch
-            {
-                return Func.NameInLiterals;
-            }
-            if (label == String.Empty)
+            if (Func.NameInLiterals != string.Empty && Func.NameInLiterals != null)
             {
                 return Func.NameInLiterals;
             }
             else
             {
-                if (Func.NameInLiterals != String.Empty)
-                    return label +
-                        " - " + Func.NameInLiterals;
-                else
-                    return label;
-            }
+                try
+                {
+                    label =
+                    Func.GetColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
+                }
+                catch { }
+                return label;
+            }  
         }
 
         /// <summary>
