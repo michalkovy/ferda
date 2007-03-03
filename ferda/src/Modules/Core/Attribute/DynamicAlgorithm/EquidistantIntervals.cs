@@ -80,7 +80,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
             double separator = from + stepSize;
             result[0] = separator;
             int countOfGeneratedSeparators = 1;
-            while (countOfGeneratedSeparators < requestedNumberOfIntervals)
+            while (countOfGeneratedSeparators < requestedNumberOfIntervals - 1)
             {
                 separator += stepSize;
                 result[countOfGeneratedSeparators] = separator;
@@ -124,7 +124,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
             DateTime current;
             result[0] = previous;
             int countOfGeneratedSeparators = 1;
-            while (countOfGeneratedSeparators < requestedNumberOfIntervals)
+            while (countOfGeneratedSeparators < requestedNumberOfIntervals - 1)
             {
                 addingStepSize += stepSize;
                 current = new DateTime(from.Ticks + (long) addingStepSize);
@@ -176,7 +176,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
             TimeSpan current;
             result[0] = previous;
             int countOfGeneratedSeparators = 1;
-            while (countOfGeneratedSeparators < requestedNumberOfIntervals)
+            while (countOfGeneratedSeparators < requestedNumberOfIntervals - 1)
             {
                 addingStepSize += stepSize;
                 current = new TimeSpan(from.Ticks + (long) addingStepSize);
