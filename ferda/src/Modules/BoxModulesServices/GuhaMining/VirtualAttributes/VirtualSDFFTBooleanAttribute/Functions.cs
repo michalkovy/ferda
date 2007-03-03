@@ -385,7 +385,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
 
         public override string[] GetCategoriesIds(Current current__)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return new string[0];
+            //throw new Exception("The method or operation is not implemented.");
         }
 
         public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, Current current__)

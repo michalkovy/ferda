@@ -318,12 +318,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
 
                     newer = prx.GetSourceDataTableId();
                     if (String.IsNullOrEmpty(last))
-                        last = newer;
+                        last = newer;/*
                     else if (last != newer)
                         throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
                                                        "Mining over only source data table is supported.",
                                                        new string[] { s },
-                                                       restrictionTypeEnum.OtherReason);
+                                                       restrictionTypeEnum.OtherReason);*/
                 }
 
             // categorial attributes
@@ -344,11 +344,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                             newer = generatorPrx.GetSourceDataTableId();
                             if (String.IsNullOrEmpty(last))
                                 last = newer;
-                            else if (last != newer)
+                            /*else if (last != newer)
                                 throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
                                                                "Mining over only source data table is supported.",
                                                                new string[] { s },
-                                                               restrictionTypeEnum.OtherReason);
+                                                               restrictionTypeEnum.OtherReason);*/
                         }
                 }
             return last;

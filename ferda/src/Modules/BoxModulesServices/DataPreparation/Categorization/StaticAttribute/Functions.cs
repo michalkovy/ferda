@@ -197,7 +197,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         public override ValuesAndFrequencies getCategoriesAndFrequencies(Current current__)
         {
-            return GetCategoriesAndFrequencies(true);
+            return GetCategoriesAndFrequencies(false);
         }
 
         #region Methods
@@ -674,6 +674,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                         return new ValuesAndFrequencies(
                             tmp2.Explain.dataType,
                             BoxInfoHelper.GetValueFrequencyPairArray(categoriesFrequencies)
+                            );
+                    }
+
+                    if (tmp == null)
+                    {
+                        return new ValuesAndFrequencies(
+                            tmp2.Explain.dataType,
+                            BoxInfoHelper.GetValueFrequencyPairArray(new Dictionary<string,int>())
                             );
                     }
                     return null;
