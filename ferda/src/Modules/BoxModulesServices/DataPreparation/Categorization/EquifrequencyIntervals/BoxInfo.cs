@@ -221,7 +221,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                       );
 
             CardinalityEnum potentiallyCardinality = Func.PotentiallyCardinality(true);
-
+            /*
             if (Common.CompareCardinalityEnums(
                     Func.Cardinality,
                     potentiallyCardinality
@@ -245,7 +245,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                     new string[] { Functions.PropCardinality },
                     restrictionTypeEnum.OtherReason
                     );
-            }
+            }*/
         }
     }
 }
