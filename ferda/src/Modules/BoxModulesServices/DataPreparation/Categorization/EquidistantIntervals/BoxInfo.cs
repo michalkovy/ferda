@@ -193,20 +193,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             object dummy = Func.GetColumnFunctionsPrx(true);
             dummy = Func.GetAttributeId();
             dummy = Func.GetAttributeNames();
-            //try
-            //{
-                dummy = Func.GetAttribute(true);
-            //}
-            //catch
-            //{
-            //    throw Exceptions.BadValueError(
-            //        null,
-            //        boxModule.StringIceIdentity,
-            //        "Equidistant interval supports only nominal and higher column semantics",
-            //        new string[] { Functions.SockColumn },
-            //        restrictionTypeEnum.OtherReason
-            //        );
-            //}
+            dummy = Func.GetAttribute(true);
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);
