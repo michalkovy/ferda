@@ -1,8 +1,185 @@
 \chapter{Implementace}
+V této kapitole budou uvedeny a popsány implementované
+procedury a krabièky vèetnì uvedení nìkterých nejdùležitìjších
+detailù implementace.
+
 \label{implementationdetails}
 \section{Agregaèní atribut}
+Podrobnìjší popis úèelu virtuálního agregaèního atributu
+byl uveden v pøed\-chozích kapitolách. Zde podrobnì probereme
+naimplementovanou funkènost vèetnì popisu vytvoøené krabièky.
+\subsection{Detaily implementace}
+Agregaèní virtuální atribut poskytuje možnost spojit dvì
+datové matice (databázové tabulky) na základì zadaného klíèe
+a volby výsledného sloupce z vedlejší datové matice.
+Výsledný sloupec lze zapojit do dataminingové úlohy GUHA stejnì jako
+výsledný sloupec, který poskytuje krabièka ''Sloupec''.
+\paragraph{}
+Dále daný atribut mùže v budoucnu využívat možnosti práce s SQL funkcemi
+díky použití stejného postupu jako pøi nadefinování odvozeného sloupce.
+Tato funkènost však nebyla implementována z dùvodu pracnosti, ale
+mùže být lehce doplnìna pozdìji -- pravdìpodobnì autorem dané diplomové práce
+mimo diplomovou práci, ale v rámci dalšího rozšíøování prostøedí
+Ferda DataMiner.
+\subsection{Krabièka}
+Daná krabièka reprezentuje výše popsaný agregaèní
+virtuální atribut z uživatelského hlediska.
+\subsubsection{Seznam zásuvek}
+\begin{description}
+\item[Hlavní datová tabulka] 
+Do této zásuvky se zapojuje krabièka reprezentující hlavní
+datovou matici.
+\item[Vedlejší datová tabulka]
+Do této zásuvky se zapojuje krabièka reprezentující vedlejší
+datovou matici.
+\end{description}
+\subsubsection{Seznam vlastností}
+\begin{description}
+\item[Sémantika] 
+Umožní vybrat sémantiku sloupce. Sémantika v prostøedí Ferda DataMiner
+byla podrobnìji popsána v \ref{datasemantics}. Uživatel mùže tedy vybrat
+z možností \emph{Nominální, Ordinální, Cyklický ordinální, Kardinální}.
+\item[Id sloupec hlavní datové tabulky] 
+Zde se vybere sloupec ze seznamu na\-bízených sloupcù hlavní datové tabulky.
+Záznamy z daného sloupce budou použíty jako klíèe pro záznamy z hlavní datové tabulky
+pøi spojení hlavní a vedlejší datové tabulky.
+\item[Id sloupec vedlejší datové tabulky] 
+Zde se vybere sloupec ze seznamu na\-bízených sloupcù hlavní datové tabulky.
+Záznamy z daného sloupce budou použíty jako klíèe pro záznamy z vedlejší datové tabulky
+pøi spojení hlavní a vedlejší datové tabulky.
+\end{description}
+\subsubsection{Seznam vlastností pouze pro ètení}
+Vlastnosti pouze pro ètení obecnì v prostøedí Ferda DataMiner
+slouží k informování uživatele o vlastnostech zkoumané krabièky.
+\paragraph{}
+Vlastnosti pouze pro ètení pro danou krabièku jsou shodné s vlastnostmi pro ètení
+krabièky ''Sloupec''.
+\begin{description}
+\item[Datový typ] 
+Zobrazí datový typ hodnot záznamù ve sloupci.
+\item[Prùmìr] 
+Zobrazí prùmìr hodnot záznamù ve sloupci.
+\item[Navzájem rùzné hodnoty] 
+Zobrazí poèet záznamù s navzájem rùznými hodnotami ve sloupci.
+\item[Maximum] 
+Zobrazí maximální hodnotu ze všech hodnot záznamù ve sloupci.
+\item[Minimum] 
+Zobrazí minimální hodnotu ze všech hodnot záznamù ve sloupci.
+\item[Standardní odchylka] 
+Zobrazí hodnotu standardní odchylky ze všech hodnot záznamù ve sloupci.
+\item[Variabilita] 
+Zobrazí hodnotu variability ze všech hodnot záznamù ve sloupci.
+\end{description}
+
 \section{Hypotézový atribut}
+Podrobnìjší popis úèelu virtuálního hypotézového atributu
+byl uveden v pøed\-chozích kapitolách. Zde podrobnì probereme
+naimplementovanou funkènost vèetnì popisu vytvoøených krabièek.
+\subsection{Detaily implementace}
+Hypotézový virtuální atribut generuje virtuální sloupce (pøesnìji pøímo 
+bitové øetízky) na základì zadání podúlohy. Tato se zadává obdobnì jako
+bìžná dataminingová úloha pro již existující procedury. Rozdílem
+je pøedevším poskytovaný výsledek. Hypotézový virtuální atribut
+neposkytuje výsledek pro prohlížení uživatelem (narozdíl od bìžných
+nerelaèních minerù), ale pro nerelaèní dataminingovou proceduru,
+do které je zapojen jako booleovský atribut.
+\paragraph{}
+Jako souèást implementace hypotézového virtuálního atributu v prostøedí
+Ferda DataMiner byly vytvoøeny krabièky pro 4ft virtuální atribut a 
+SD4ft virtuální atribut. Rovnìž byly provedeny rozsáhlé úpravy backendu.
+\paragraph{}
+Jak už bylo zmínìno v \ref{subtaskimplementation}, krabièky 4ft- a SD4ft
+virtuálního atributu generují rovnou bitové øetízky pro druh koeficientu
+''jednoprvková podmnožina''. V prostøedí Ferda DataMiner proto vystupují na místì
+krabièky jak ''AtomSetting'', tak krabièky atributu.
+\subsubsection{Generování kolekce}
+Pøi implementování dle návrhu z \ref{subtaskimplementation} se autor rozhodl využít
+nových vlastností, které nabízel jazyk C\# ve verzi 2.0 a to konkrétnì zavedení
+klíèovího slova \verb+yield+ pro velmi snadné implementování
+iterátoru (více viz na\-pøí\-klad na \verb+http://msdn2.microsoft.com/en-us/library/9k7k7cf0.aspx+).
+\paragraph{}
+Tato vlastnost nového C\# usnadnila implementování pøístupu ''poskytni další bitový øetízek'',
+protože velmi zjednodušenì øeèeno umožòuje vrátit kolekci prvkù, kterou lze procházet
+pomocí cyklu foreach, aniž by byly dopøedu známé prvky v dané kolekci. Ta se
+totíž generuje dynamicky, což se nám hodí právì pøi implementaci kolekce bitových øetízkù,
+které jsou ziskávany metodou ''poskytni další bitový øetízek''.
+
+\subsubsection{Count vector}
+Pro generování bitového øetízku správné délky (tzn. stejné délky jako bitové
+øetízky v nadúloze) je nutné vìdìt, kolik øádkù z vedlejší datové matice se váže
+k objektu z hlavní datové matice. Potom bude možné generovat virtuální sloupec
+správné délky - viz \ref{subtaskimplementation}.
+\paragraph{}
+Tato informace je ziskávana pomocí tzv. \emph{CountVectoru}, který na $i$-té pozici
+obsahuje poèet øádkù vedlejší datové matice patøicích $i$-tému objektu z hlavní
+datové matice (to samozøejmì pøedpokládá setøídìní obou matic dle stejného klíèe).
+\paragraph{}
+Za použití \emph{CountVectoru} lze generovat celý virtuální sloupec, potažmo odpovídajicí
+bitový øetízek, již pomìrnì snadno.
+\subsubsection{Cache bitových øetízkù}
+Z dùvodù zmínìných v \ref{subtaskimplementation} byla naimplementována jiná caché
+pro bitové øetízky generované hypotézovými atributy. Dle principu fungování
+je to spíše buffer než cache -- uchová prvních N bitových øetízkù vygenerovaných
+hypotézovým atributem, které mohou být poté použity pro bìh nadúlohy. Velikost N
+byla stanovena po øadì, protože, jak bylo zjištìno pøi implementaci dané diplomové práce,
+ani pùvodní cache pro bitové øetízky neobsahuje žádnou logiku pro stanovení své velikosti.
+\subsubsection{Úprava existujících dataminingových procedur}
+Existující dataminingové procedury musely být rozšíøeny o metody umožòující
+generování a verifikaci relevantních otázek, bez generování hypotéz a s implementaci
+výše zmínìného enumerátoru. Rovnìž bylo nutné rozšíøit dataminingové procedury
+o možnost práce s jiným druhém cache pro bitové øetízky.
+\subsubsection{Pøínos pro budoucí implementace}
+Výše uvedené postupy jsou navrženy a implementovány co nejobecnìji. Autorùm implementace
+relaèních rozšíøení dalších datamingových procedur se tímto velmi ulehèuje práce.
+Mohou používat cache pro bitové øetízky virtuálních atributù, CountVector a další
+navržené postupy.
+
+\subsection{Krabièky}
+\subsubsection{Krabièka 4ft virtuální booleovský atribut}
+Daná krabièka reprezentuje výše popsaný hypotézový
+virtuální atribut z uživatelského hlediska.
+\subsubsection{Seznam zásuvek}
+Zásuvky jsou shodné s krabièkou ''4ft Miner'' až na výjimky, jejichž popis následuje.
+\begin{description}
+\item[Hlavní datová tabulka] 
+Do této zásuvky se zapojuje krabièka reprezentující hlavní
+datovou matici.
+\end{description}
+\subsubsection{Seznam vlastností}
+Vlastnosti jsou shodné s krabièkou ''4ft Miner'' až na výjimky, jejichž popis následuje.
+\begin{description}
+\item[Maximální poèet relevantních otázek]
+Zde se zadává maximální poèet relevantních otázek, které mùže virtuální atribut vygenerovat.
+\end{description}
+
+\subsubsection{Krabièka SD4ft virtuální booleovský atribut}
+Daná krabièka reprezentuje výše popsaný hypotézový
+virtuální atribut z uživatelského hlediska.
+\subsubsection{Seznam zásuvek}
+Zásuvky jsou shodné s krabièkou ''SD4ft Miner'' až na výjimky, jejichž popis následuje.
+\begin{description}
+\item[Hlavní datová tabulka] 
+Do této zásuvky se zapojuje krabièka reprezentující hlavní
+datovou matici.
+\end{description}
+\subsubsection{Seznam vlastností}
+Vlastnosti jsou shodné s krabièkou ''SD4ft Miner'' až na výjimky, jejichž popis následuje.
+\begin{description}
+\item[Maximální poèet relevantních otázek]
+Zde se zadává maximální poèet relevantních otázek, které mùže virtuální atribut vygenerovat.
+\end{description}
 \section{Ekvidistanèní intervaly}
+Z dùvodù popsaných v \ref{zmenazadani} byla implementována krabièka atributu
+pro generování ekvidistanèních intervalù.
+\subsection{Detaily implementace}
+Implementace krabièky využívá algoritmù, které byly pøipraveny T.Kucharem
+v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana - viz
+\cite{relminer}. Autor se proto soustøedil na implementování samotné krabièky.
+\subsection{Krabièka}
 \section{Ekvifrekvenèní intervaly}
+\subsection{Detaily implementace}
+\subsection{Krabièka}
 \section{Statický atribut}
+\subsection{Detaily implementace}
+\subsection{Krabièka}
 \section{Modul pro úpravu atributu}
