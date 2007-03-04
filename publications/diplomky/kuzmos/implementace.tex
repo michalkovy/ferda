@@ -168,6 +168,8 @@ Vlastnosti jsou shodné s krabièkou ''SD4ft Miner'' a na vıjimky, jejich popis 
 \item[Maximální poèet relevantních otázek]
 Zde se zadává maximální poèet relevantních otázek, které mùe virtuální atribut vygenerovat.
 \end{description}
+
+
 \section{Ekvidistanèní intervaly}
 Z dùvodù popsanıch v \ref{zmenazadani} byla implementována krabièka atributu
 pro generování ekvidistanèních intervalù.
@@ -176,10 +178,193 @@ Implementace krabièky vyuívá algoritmù, které byly pøipraveny T.Kucharem
 v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana - viz
 \cite{relminer}. Autor se proto soustøedil na implementování samotné krabièky.
 \subsection{Krabièka}
+\subsubsection{Seznam zásuvek}
+
+\begin{description}
+\item[Sloupec] 
+Do této zásuvky se zapojuje krabièka reprezentující sloupec dat, nad kterım budou
+vytvoøeny ekvidistanèní intervaly.
+\end{description}
+\subsubsection{Seznam vlastností}
+\begin{description}
+\item[Poèet kategorií]
+Zde se zadává poèet intervalù, které má atribut vygenerovat.
+\item[X kategorie]
+Zde se zadává kategorie chybìjící informace.
+\item[Doména]
+Zde se zadává typ vybrané domény sloupce transformováné do kategorií. 
+Uivatel mùe vybrat z monosti ''Celá aktuální doména'' a ''Uivatelem definována doména''.
+První monost nastaví vytváøení kategorie pro kadou hodnotu z aktuální domény sloupce,
+druhá monost nastaví omezení pro pouitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
+\item[Od]
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou vìtší nebo rovny hodnotì dané vlastnosti.
+\item[Do]
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou menší nebo rovny hodnotì dané vlastnosti.
+\item[Název v literálech] Atribut je uveden v hypotézách pod danım názvem.
+\item[Sémantika] 
+Umoní vybrat sémantiku sloupce. Sémantika v prostøedí Ferda DataMiner
+byla podrobnìji popsána v \ref{datasemantics}. Uivatel mùe tedy vybrat
+z moností \emph{Nominální, Ordinální, Cyklickı ordinální, Kardinální}.
+\end{description}
+
+
 \section{Ekvifrekvenèní intervaly}
+Z dùvodù popsanıch v \ref{zmenazadani} byla implementována krabièka atributu
+pro generování ekvifrekvenèních intervalù.
 \subsection{Detaily implementace}
+Implementace krabièky vyuívá algoritmù, které byly pøipraveny T.Kucharem
+v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana - viz
+\cite{relminer}. Autor se proto soustøedil na implementování samotné krabièky.
 \subsection{Krabièka}
+\subsubsection{Seznam zásuvek}
+
+\begin{description}
+\item[Sloupec] 
+Do této zásuvky se zapojuje krabièka reprezentující sloupec dat, nad kterım budou
+vytvoøeny ekvifrekvenèní intervaly.
+\end{description}
+\subsubsection{Seznam vlastností}
+\begin{description}
+\item[Poèet kategorií]
+Zde se zadává poèet intervalù, které má atribut vygenerovat.
+\item[X kategorie]
+Zde se zadává kategorie chybìjící informace.
+\item[Doména]
+Zde se zadává typ vybrané domény sloupce transformováné do kategorií. 
+Uivatel mùe vybrat z monosti ''Celá aktuální doména'' a ''Uivatelem definována doména''.
+První monost nastaví vytváøení kategorie pro kadou hodnotu z aktuální domény sloupce,
+druhá monost nastaví omezení pro pouitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
+\item[Od]
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou vìtší nebo rovny hodnotì dané vlastnosti.
+\item[Do]
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou menší nebo rovny hodnotì dané vlastnosti.
+\item[Název v literálech] Atribut je uveden v hypotézách pod danım názvem.
+\item[Sémantika] 
+Umoní vybrat sémantiku sloupce. Sémantika v prostøedí Ferda DataMiner
+byla podrobnìji popsána v \ref{datasemantics}. Uivatel mùe tedy vybrat
+z moností \emph{Nominální, Ordinální, Cyklickı ordinální, Kardinální}.
+\end{description}
+
 \section{Statickı atribut}
+Z dùvodù popsanıch v \ref{zmenazadani} byla implementována krabièka
+statického atributu, která umoní ruèní úpravu kategorií v atributu.
 \subsection{Detaily implementace}
+Daná krabièka v podstaté zajišuje spouštìní modulu pro úpravu atributu
+a pøedává upravenı atribut pro další vyuití v prostøedí Ferda DataMiner.
+Podstatná funkènost je soustøedìná v modulu pro úpravu atributu.
 \subsection{Krabièka}
+\subsubsection{Seznam zásuvek}
+
+\begin{description}
+\item[Sloupec nebo atribut] 
+Do této zásuvky se zapojuje buï krabièka reprezentující sloupec dat nebo krabièka
+nìkterého z atributù. Pøi zapojení krabièky atributu budou pro modul pro úpravu kategorií
+poskytnuty ji vytvoøené kategorie ze zapojené krabièky.
+\paragraph{}
+Pøi zapojení krabièky reprezentující
+sloupec není pøedem vytvoøena ádná kategorie, tudí uivatel musí pouít
+modul pro úpravu kategorií pro vytvoøení kategorií. Krabièka reprezentující sloupec v tomto pøípadì
+poskytuje informace o datech ve sloupci (dùleité jsou napøíklad všechny navzájem rùzné hodnoty
+ze zapojeného sloupec, ale i jiné informace a vlastnosti).
+\end{description}
+\subsubsection{Seznam vlastností}
+\begin{description}
+
+\item[Úprava kategorií]
+Pøi kliknutí na tlaèítko spustí modul pro úpravu kategorií.
+
+\item[X kategorie]
+Zde se zadává kategorie chybìjící informace.
+\item[Doména]
+Zde se zadává typ vybrané domény sloupce transformováné do kategorií. 
+Uivatel mùe vybrat z monosti ''Celá aktuální doména'' a ''Uivatelem definována doména''.
+První monost nastaví vytváøení kategorie pro kadou hodnotu z aktuální domény sloupce,
+druhá monost nastaví omezení pro pouitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
+\item[Od]
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou vìtší nebo rovny hodnotì dané vlastnosti.
+\item[Do]
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou menší nebo rovny hodnotì dané vlastnosti.
+\item[Název v literálech] Atribut je uveden v hypotézách pod danım názvem.
+\item[Sémantika] 
+Umoní vybrat sémantiku sloupce. Sémantika v prostøedí Ferda DataMiner
+byla podrobnìji popsána v \ref{datasemantics}. Uivatel mùe tedy vybrat
+z moností \emph{Nominální, Ordinální, Cyklickı ordinální, Kardinální}.
+
+\end{description}
+
+
+\subsubsection{Seznam vlastností pouze pro ètení}
+\begin{description}
+\item[Poèet kategorií]
+Zobrazí aktuální poèet kategorií v daném atributu.
+\end{description}
+
+
 \section{Modul pro úpravu atributu}
+Tento modul se spouští nad krabièkou ''Statickı atribut''. Ta mu poskytuje
+ji existující kategorie v atributu pro úpravu a po skonèení práce
+modulu opìt uloí úpravené kategorie pro další vyuití v prostøedí Ferda DataMiner.
+
+\subsection{Funkènost}
+\subsubsection{Hlavní obrazovka}
+\begin{center}
+\includegraphics[width=14cm]{pics/editcategories_main.eps}
+\end{center}
+Zde je zobrazen seznam existujících kategorií. Kategorie mùe bı pøejmenována 
+standardním postupem pro pøejmenování poloky v seznamu GUI MS Windows, tj. dvojím pomalım
+kliknutím na její název, pøípadnì kliknutím na název a stisknutím klavesy F2 a poté zadáním nového názvu.
+Protoe kategorie musí mít navzájem rùzné názvy, po zadání nesprávného (ji existujícího názvu)
+bude oznámena chyba a kategorie se nepøejmenuje.
+\begin{center}
+\includegraphics[width=14cm]{pics/editcategories_rename.eps}
+\end{center}
+\paragraph{}
+Více kategorií mùe bıt spojeno do jedné tak, e s podrením tlaèítka Control pøípadnì Shift
+a kliknutím na poadované kategorie se vybere více kategorií a pak kliknutím na tlaèítko ''Spojit''
+se spojí do jedné kategorie.
+\paragraph{}
+Kategorie mùe bıt odstranìna z atributu vybraním a následnım kliknutím na tlaèítko ''Odstranit''.
+\paragraph{}
+Provedené zmìny v seznamu kategorié se uloí kliknutím na tlaèítko ''Uloit a zavøit''. Pokud
+je potøeba ukonèit práci modulu bez uloení zmìn, pouije se tlaèítko ''Zavøit bez uloení''.
+\subsubsection{Obrazovka pro pøidání a úpravu intervalù}
+\begin{center}
+\includegraphics[width=14cm]{pics/editcategories_intervals.eps}
+\end{center}
+Uivatel mùe pøidat novou kategorií do seznamu kategorií v atributu. Z definice kategorie v metodì GUHA
+a její následného rozšíøení T.Kuchaøem v \cite{kuchar} plyne, e kategorie mùe obsahovat
+intervaly a vıèet hodnot.
+\paragraph{}
+Pøi vyvolání obrazovky pro pøidání intervalù se uivatel dostane rovnou na pøidání intervalù
+do novì vytvoøené kategorie. Ve formuláøí uivatel vybere typy hranic intervalu a hodnoty krajních bodù,
+poté kliknutím na tlaèítko ''Pøidat do kategorie'' pøidá interval do kategorie. Tento se poté zobrazí
+v seznamu intervalù dané kategorie a mùe bıt odebrán dvojitım kliknutím na nìm.
+\paragraph{}
+Pøi pøidávání se kontroluje validita kategorie v atributu. Pro pøidávanı interval to tedy znamená,
+e se zkontroluje jeho disjunktnost se stávajícimi intervaly v kategoriích a také s hodnotami ve
+vıètech kategorií. Pokud by pøidávanı interval nebyl disjunktní s prvky existujících kategorií,
+modul oznámí chybu a nedovolí takovı interval do kategorie pøidat.
+\paragraph{}
+Po pøidání intervalù do novì vytváøené kategorie lze potvrdit pøidání kategorie tlaèítkem ''OK''.
+Pro zrušení pøidání kategorie se pouije tlaèítko ''Storno''.
+\paragraph{}
+Obrazovka pro úpravu intervalù v ji existující kategorii se liší tím, e nelze zmìnit název kategorie
+(ten lze zmìnit v hlavní obrazovce). Logika pøi úpravì intervalù v kategorii je stejná jako je popsáno vıše.
+\subsubsection{Obrazovka pro pøidání a úpravu vıètu}
+\begin{center}
+\includegraphics[width=14cm]{pics/editcategories_enum.eps}
+\end{center}
+Pøi vyvolání obrazovky pro pøidání vıètu se uivatel dostane rovnou na pøidání hodnot do vıètu
+novì vytvoøené kategorie. Ve formuláøí uivatel mùe vybrat zatím nepokryté hodnoty ve sloupci
+a pøidat je do vıètu novì vytváøené kategorie kliknutím na pøíslušné tlaèítko. Hodnota
+se poté objeví ve vıètu hodnot dané kategorie. Odtud mùe bıt odstranìna kliknuím na pøíslušné
+tlaèítko.
+\paragraph{}
+Po pøidání intervalù do novì vytváøené kategorie lze potvrdit pøidání kategorie tlaèítkem ''OK''.
+Pro zrušení pøidání kategorie se pouije tlaèítko ''Storno''.
