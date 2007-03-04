@@ -274,16 +274,40 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                             result.dataType = tmp2.dataType;
                             List<ValueFrequencyPair> data = new List<ValueFrequencyPair>();
 
+                            //fetching values via dictionary to ensure uniqueness
+                            //because sql query in GenericColumn fails to return unique rows
+                            //with complex expression (e.g. including arithmetic operations)
+                            Dictionary<string, int> data1 = new Dictionary<string, int>();
+
                             foreach (DataRow row in dt.Rows)
                             {
                                 if (row[0] == DBNull.Value)
                                 {
-                                    data.Add(new ValueFrequencyPair(nullValueConstant.value, Convert.ToInt32(row[1])));
+                                    try
+                                    {
+                                        data1.Add(nullValueConstant.value, Convert.ToInt32(row[1]));
+                                    }
+                                    catch
+                                    {
+                                    }
+                                //    data.Add(new ValueFrequencyPair(nullValueConstant.value, Convert.ToInt32(row[1])));
                                 }
                                 else
                                 {
-                                    data.Add(new ValueFrequencyPair(row[0].ToString(), Convert.ToInt32(row[1])));
+                                    try
+                                    {
+                                        data1.Add(row[0].ToString(), Convert.ToInt32(row[1]));
+                                    }
+                                    catch
+                                    {
+                                    }
+                                 //   data.Add(new ValueFrequencyPair(row[0].ToString(), Convert.ToInt32(row[1])));
                                 }
+                            }
+
+                            foreach (KeyValuePair<string, int> pair in data1)
+                            {
+                                data.Add(new ValueFrequencyPair(pair.Key, pair.Value));
                             }
 
                             result.data = data.ToArray();
