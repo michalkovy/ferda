@@ -34,6 +34,7 @@
   LangString ResultBrowser ${LANG_CZECH} "Prohlížení výsledkù"
   LangString ODBCConnectionString ${LANG_CZECH} "Pøipojovací øetìzec ODBC"
   LangString MultiSelectStrings ${LANG_CZECH} "Nastavení parametrù"
+  LangString EditCategories ${LANG_CZECH} "Editace kategorií atributù"
   
   LangString DataPreparation ${LANG_CZECH} "Pøíprava dat"
   LangString GuhaMining ${LANG_CZECH} "GUHA mining"

@@ -46,6 +46,12 @@ Section "$(ShowTable)" ShowTable
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ShowTable" "" 
 SectionEnd
 
+Section "$(EditCategories)" EditCategories
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\EditCategories.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "EditCategories" "" 
+SectionEnd
+
 ;addins help
 Section
 	SetOutPath "$INSTDIR\FrontEnd\AddIns\Help"

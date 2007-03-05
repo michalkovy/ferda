@@ -47,6 +47,7 @@
   LangString ResultBrowser ${LANG_ENGLISH} "Result browser"
   LangString ODBCConnectionString ${LANG_ENGLISH} "ODBC Connection string"
   LangString MultiSelectStrings ${LANG_ENGLISH} "Multiple selection"
+  LangString EditCategories ${LANG_ENGLISH} "Edit categories of attributes"
   
   LangString Integration ${LANG_ENGLISH} "Integration"
   LangString StartMenu ${LANG_ENGLISH} "Add to Start menu"
