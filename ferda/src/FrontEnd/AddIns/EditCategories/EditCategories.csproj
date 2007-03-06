@@ -28,6 +28,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AddInsCommon, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\AddInsCommon.dll</HintPath>
+    </Reference>
     <Reference Include="FerdaAttribute, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2239880c8aa560e6, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaAttribute.dll</HintPath>
@@ -100,8 +104,6 @@
     <Compile Include="CreateNewCategory\CreateSetWizard.Designer.cs">
       <DependentUpon>CreateSetWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="NoGUIClasses\Category.cs" />
-    <Compile Include="NoGUIClasses\DataStructureChange.cs" />
     <Compile Include="EditExisting\EditExistingCategory.cs" />
     <Compile Include="EditExisting\EditExistingEnumeration.cs">
       <SubType>UserControl</SubType>
@@ -112,11 +114,7 @@
     <Compile Include="EditExisting\EditExistingInterval.Designer.cs">
       <DependentUpon>EditExistingInterval.cs</DependentUpon>
     </Compile>
-    <Compile Include="NoGUIClasses\FerdaSmartDataList.cs" />
-    <Compile Include="NoGUIClasses\Interval.cs" />
-    <Compile Include="NoGUIClasses\ListViewItemComparer.cs" />
     <Compile Include="MyIce\EditCategoriesIce.cs" />
-    <Compile Include="NoGUIClasses\SingleSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CreateNewCategory\CreateIntervalWizard.resx">
@@ -141,6 +139,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="NoGUIClasses\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

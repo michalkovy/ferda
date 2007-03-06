@@ -22,7 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
+//using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using Ferda.FrontEnd.AddIns.EditCategories.EditExisting;
 using System.Resources;
 using System.Reflection;
