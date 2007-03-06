@@ -1117,6 +1117,51 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             CHLBoxSuccedents.Width = newSize;
         }
 
+        /// <summary>
+        /// Copies all the hypotheses form the list view to the clipboard
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void copyAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string result = string.Empty;
+            foreach (ListViewItem item in HypothesesListView.Items)
+            {
+                //adding the subitems
+                for (int i = 0; i < item.SubItems.Count; i++)
+                {
+                    result += item.SubItems[i].Text;
+                    result += '\t';
+                }
+                result += '\n';
+            }
+            Clipboard.SetText(result);
+        }
+
+        /// <summary>
+        /// Copies only one selected hypothesis from the list view to the clipboard
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void copySelectedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (HypothesesListView.SelectedItems.Count != 0)
+            {
+                string result = string.Empty;
+                foreach (ListViewItem item in HypothesesListView.SelectedItems)
+                {
+                    //adding the subitems
+                    for (int i = 0; i < item.SubItems.Count; i++)
+                    {
+                        result += item.SubItems[i].Text;
+                        result += '\t';
+                    }
+                    result += '\n';
+                }
+                Clipboard.SetText(result);
+            }
+        }
+
         #endregion
 
         #region Localization
@@ -1150,6 +1195,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             RadioFirstTable.Text = resManager.GetString("RadioFirst");
             RadioSecondTable.Text = resManager.GetString("RadioSecond");
             ButtonHelp.Text = resManager.GetString("Help");
+
+            copyAllToolStripMenuItem.Text = resManager.GetString("CopyAll");
+            copySelectedToolStripMenuItem.Text = resManager.GetString("CopyOne");
         }
 
         #endregion

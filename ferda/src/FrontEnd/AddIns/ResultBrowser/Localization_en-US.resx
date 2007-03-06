@@ -168,8 +168,14 @@
   <data name="ContingencyTable" xml:space="preserve">
     <value>Contingency table</value>
   </data>
+  <data name="CopyAll" xml:space="preserve">
+    <value>Copy all hypotheses to clipboard</value>
+  </data>
   <data name="CopyChart" xml:space="preserve">
     <value>Copy chart to clipboard</value>
+  </data>
+  <data name="CopyOne" xml:space="preserve">
+    <value>Copy selected hypothesis to clipboard</value>
   </data>
   <data name="DecimalForQuantifier" xml:space="preserve">
     <value>Quantifier's value precision (decimal places):</value>
