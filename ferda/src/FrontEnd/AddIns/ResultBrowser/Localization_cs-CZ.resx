@@ -168,8 +168,14 @@
   <data name="ContingencyTable" xml:space="preserve">
     <value>Kontingenční tabulka</value>
   </data>
+  <data name="CopyAll" xml:space="preserve">
+    <value>Kopírovat všechny hypotézy do schránky</value>
+  </data>
   <data name="CopyChart" xml:space="preserve">
     <value>Zkopírovat graf do schránky</value>
+  </data>
+  <data name="CopyOne" xml:space="preserve">
+    <value>Kopírovat vyznačenou hypotézu do schránky</value>
   </data>
   <data name="Empty" xml:space="preserve">
     <value>Prázdná hodnota</value>
