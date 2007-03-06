@@ -185,7 +185,7 @@
 			<sources>
 				<include name="EditCategories/**.cs"/>
 				<include name="EditCategories/MyIce/**.cs"/>
-				<include name="EditCategories/NoGUIClasses/**.cs"/>
+			<!--	<include name="EditCategories/NoGUIClasses/**.cs"/>-->
 				<include name="EditCategories/EditExisting/**.cs"/>
 				<include name="EditCategories/CreateNewCategory/**.cs"/>
 				<exclude name="EditCategories/bin/**.*"/>

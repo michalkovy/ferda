@@ -28,7 +28,7 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
+//using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory;
 using Ferda;
 using Ferda.Modules;
@@ -39,14 +39,12 @@ using System.Reflection;
 using Ferda.Guha.Data;
 using Ferda.Guha.Attribute;
 using System.Security.Cryptography;
+using Ferda.FrontEnd.AddIns.Common.ListView;
 
 #endregion
 
 namespace Ferda.FrontEnd.AddIns.EditCategories
 {
-    
-
-
     /// <summary>
     /// Class which displays categories and tools to work with them
     /// </summary>
@@ -67,7 +65,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <summary>
         /// All the possible values for the datalist
         /// </summary>
-        private ValuesAndFrequencies distinctValues;
+   //     private ValuesAndFrequencies distinctValues;
 
         /// <summary>
         /// Private variable indicating that a category is being edited
@@ -106,6 +104,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// </summary>
         private DataTable table;
 
+
+        /// <summary>
+        /// Comparer for the listview items
+        /// </summary>
+        private ListViewItemComparer comparer = new ListViewItemComparer();
 
         #endregion
 
@@ -283,7 +286,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             FillEditCategoriesListView(CategoriesListView);
             //adding a handling method for column sorting
             this.CategoriesListView.ColumnClick += 
-                new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
+                new System.Windows.Forms.ColumnClickEventHandler(this.ColumnListView_ColumnClick);
             this.LoadIcons();
             this.InitIcons();
             this.MenuItemNewInterval.Enabled = this.attribute.IntervalsAllowed;
@@ -371,11 +374,12 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <param name="form">Form to display the SmartDataList in</param>
         public void AttributeToListView(Attribute<IComparable> _attribute, ListView listView)
         {
+            Dictionary<string, int> frequencies = _attribute.GetFrequencies(table);
             foreach (string categoryName in attribute.Keys)
             {
                 ListViewItem item = new ListViewItem(categoryName, 1);
                 item.SubItems.Add(attribute[categoryName].ToString());
-                //tag contains index of the value in the array of multisets
+                item.SubItems.Add(frequencies[categoryName].ToString());
                 item.Tag = categoryName;
                 listView.Items.Add(item);
             }  
@@ -692,6 +696,28 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         #region Other handlers and ListView methods
 
         /// <summary>
+        /// Handler for column click - sorts a listview.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ColumnListView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
+        {
+            comparer.column = e.Column;
+            if (CategoriesListView.Sorting == SortOrder.Ascending)
+            {
+                comparer.bAscending = false;
+                CategoriesListView.Sorting = SortOrder.Descending;
+            }
+            else
+            {
+                comparer.bAscending = true;
+                CategoriesListView.Sorting = SortOrder.Ascending;
+            }
+            CategoriesListView.ListViewItemSorter = comparer;
+        }
+
+        /*
+        /// <summary>
         /// ColumnClick handler - sorting
         /// </summary>
         /// <param name="sender"></param>
@@ -708,7 +734,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
             CategoriesListView.ListViewItemSorter = columnSorter;
         }
-
+        */
         /// <summary>
         /// Method for re-instating the EditCategoriesListView size and menus status
         /// </summary>

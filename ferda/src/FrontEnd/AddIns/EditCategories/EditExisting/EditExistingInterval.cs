@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
+//using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using System.Resources;
 using System.Reflection;
 using Ferda.Guha.Attribute;

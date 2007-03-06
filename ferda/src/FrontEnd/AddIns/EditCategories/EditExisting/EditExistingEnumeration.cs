@@ -23,7 +23,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
+//using Ferda.FrontEnd.AddIns.EditCategories.NoGUIclasses;
 using System.Resources;
 using System.Reflection;
 using Ferda.Guha.Attribute;
