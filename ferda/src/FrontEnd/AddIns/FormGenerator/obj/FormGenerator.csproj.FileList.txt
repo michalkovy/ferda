@@ -1,0 +1,14 @@
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\FormGenerator.Properties.Resources.resources
+obj\Release\FormGenerator.csproj.GenerateResource.Cache
+bin\Release\FormGenerator.exe
+bin\Release\FormGenerator.pdb
+obj\Release\FormGenerator.exe
+obj\Release\FormGenerator.pdb
+bin\Debug\FormGenerator.exe
+bin\Debug\FormGenerator.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\FormGenerator.Properties.Resources.resources
+obj\Debug\FormGenerator.csproj.GenerateResource.Cache
+obj\Debug\FormGenerator.exe
+obj\Debug\FormGenerator.pdb
