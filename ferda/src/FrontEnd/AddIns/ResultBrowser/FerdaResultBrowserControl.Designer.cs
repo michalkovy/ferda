@@ -53,6 +53,13 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.components = new System.ComponentModel.Container();
             this.ResultBrowserSplit = new System.Windows.Forms.SplitContainer();
             this.HypothesesListView = new System.Windows.Forms.ListView();
+            this.ContextMenuGraphRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripShowGraphEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripCopyChart = new System.Windows.Forms.ToolStripMenuItem();
+            this.HypothesesTableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.contingencyTablesPanel = new System.Windows.Forms.Panel();
             this.RadioSecondTable = new System.Windows.Forms.RadioButton();
@@ -87,13 +94,11 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBarZoom = new System.Windows.Forms.TrackBar();
             this.Label3dpercent = new System.Windows.Forms.Label();
             this.TrackBar3d = new System.Windows.Forms.TrackBar();
-            this.ContextMenuGraphRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripShowGraphEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ToolStripCopyChart = new System.Windows.Forms.ToolStripMenuItem();
             this.ResultBrowserSplit.Panel1.SuspendLayout();
             this.ResultBrowserSplit.Panel2.SuspendLayout();
             this.ResultBrowserSplit.SuspendLayout();
+            this.ContextMenuGraphRightClick.SuspendLayout();
+            this.HypothesesTableContextMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.contingencyTablesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDecimals)).BeginInit();
@@ -103,7 +108,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarHOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBar3d)).BeginInit();
-            this.ContextMenuGraphRightClick.SuspendLayout();
             this.SuspendLayout();
             // 
             // ResultBrowserSplit
@@ -129,6 +133,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             // HypothesesListView
             // 
+            this.HypothesesListView.ContextMenuStrip = this.HypothesesTableContextMenu;
             this.HypothesesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HypothesesListView.FullRowSelect = true;
             this.HypothesesListView.GridLines = true;
@@ -139,6 +144,54 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.HypothesesListView.TabIndex = 3;
             this.HypothesesListView.UseCompatibleStateImageBehavior = false;
             this.HypothesesListView.View = System.Windows.Forms.View.Details;
+            // 
+            // ContextMenuGraphRightClick
+            // 
+            this.ContextMenuGraphRightClick.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripShowGraphEdit,
+            this.toolStripSeparator1,
+            this.ToolStripCopyChart});
+            this.ContextMenuGraphRightClick.Name = "ContextMenuGraphRightClick";
+            this.ContextMenuGraphRightClick.Size = new System.Drawing.Size(180, 54);
+            // 
+            // ToolStripShowGraphEdit
+            // 
+            this.ToolStripShowGraphEdit.Name = "ToolStripShowGraphEdit";
+            this.ToolStripShowGraphEdit.Size = new System.Drawing.Size(179, 22);
+            this.ToolStripShowGraphEdit.Text = "toolStripMenuItem1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
+            // 
+            // ToolStripCopyChart
+            // 
+            this.ToolStripCopyChart.Name = "ToolStripCopyChart";
+            this.ToolStripCopyChart.Size = new System.Drawing.Size(179, 22);
+            this.ToolStripCopyChart.Text = "toolStripMenuItem1";
+            // 
+            // HypothesesTableContextMenu
+            // 
+            this.HypothesesTableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyAllToolStripMenuItem,
+            this.copySelectedToolStripMenuItem});
+            this.HypothesesTableContextMenu.Name = "HypothesesTableContextMenu";
+            this.HypothesesTableContextMenu.Size = new System.Drawing.Size(153, 70);
+            // 
+            // copyAllToolStripMenuItem
+            // 
+            this.copyAllToolStripMenuItem.Name = "copyAllToolStripMenuItem";
+            this.copyAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyAllToolStripMenuItem.Text = "copyAll";
+            this.copyAllToolStripMenuItem.Click += new System.EventHandler(this.copyAllToolStripMenuItem_Click);
+            // 
+            // copySelectedToolStripMenuItem
+            // 
+            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
+            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copySelectedToolStripMenuItem.Text = "copySelected";
+            this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
             // 
             // panel1
             // 
@@ -528,32 +581,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.TrackBar3d.Value = 15;
             this.TrackBar3d.Scroll += new System.EventHandler(this.TrackBar3d_Scroll);
             // 
-            // ContextMenuGraphRightClick
-            // 
-            this.ContextMenuGraphRightClick.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripShowGraphEdit,
-            this.toolStripSeparator1,
-            this.ToolStripCopyChart});
-            this.ContextMenuGraphRightClick.Name = "ContextMenuGraphRightClick";
-            this.ContextMenuGraphRightClick.Size = new System.Drawing.Size(180, 54);
-            // 
-            // ToolStripShowGraphEdit
-            // 
-            this.ToolStripShowGraphEdit.Name = "ToolStripShowGraphEdit";
-            this.ToolStripShowGraphEdit.Size = new System.Drawing.Size(179, 22);
-            this.ToolStripShowGraphEdit.Text = "toolStripMenuItem1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
-            // 
-            // ToolStripCopyChart
-            // 
-            this.ToolStripCopyChart.Name = "ToolStripCopyChart";
-            this.ToolStripCopyChart.Size = new System.Drawing.Size(179, 22);
-            this.ToolStripCopyChart.Text = "toolStripMenuItem1";
-            // 
             // FerdaResultBrowserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -566,6 +593,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.ResultBrowserSplit.Panel2.ResumeLayout(false);
             this.ResultBrowserSplit.Panel2.PerformLayout();
             this.ResultBrowserSplit.ResumeLayout(false);
+            this.ContextMenuGraphRightClick.ResumeLayout(false);
+            this.HypothesesTableContextMenu.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.contingencyTablesPanel.ResumeLayout(false);
@@ -579,7 +608,6 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarHOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBar3d)).EndInit();
-            this.ContextMenuGraphRightClick.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -627,6 +655,9 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         private System.Windows.Forms.Panel contingencyTablesPanel;
         private System.Windows.Forms.RadioButton RadioSecondTable;
         private System.Windows.Forms.RadioButton RadioFirstTable;
+        private System.Windows.Forms.ContextMenuStrip HypothesesTableContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem copyAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copySelectedToolStripMenuItem;
     }
 }
 
