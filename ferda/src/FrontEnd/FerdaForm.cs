@@ -1327,6 +1327,7 @@ using Ferda.ModulesManager;
             newDesktop.Clipboard = this;
             newDesktop.PropertiesDisplayer = propertyGrid;
             newDesktop.ContextHelpDisplayer = contextHelp;
+            newDesktop.UserNote = userNote;
 
             //adding the views
             newDesktop.Views = views;
