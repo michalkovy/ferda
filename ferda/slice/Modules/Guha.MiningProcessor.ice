@@ -87,7 +87,7 @@ module Ferda {
 					
 					//---relacni DM informace	
 					//vraci countvector
-					Ferda::Modules::IntSeq GetCountVector(string masterIdColumn, string masterDataTableName)
+					Ferda::Modules::IntSeq GetCountVector(string masterIdColumn, string masterDataTableName, string detailIdColumn)
 						throws Ferda::Modules::BoxRuntimeError;
 						
 				     //da dalsi bitstring

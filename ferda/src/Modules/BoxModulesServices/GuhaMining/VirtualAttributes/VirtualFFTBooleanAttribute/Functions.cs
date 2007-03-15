@@ -58,12 +58,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         #region Properties
 
         public const string PropMasterIdColumn = "MasterIdColumn";
+        public const string PropDetailIdColumn = "DetailIdColumn";
         public const string PropDataType = "DataType";
         public const string PropCardinality = "Cardinality";
         public const string SockMasterDataTable = "MasterDataTable";
+       // public const string SockDetailDataTable = "DetailDataTable";
         public const string PropImportance = "Importance";
         public const string PropMaxNumberOfHypotheses = "MaxNumberOfHypotheses";
 
+        /// <summary>
+        /// Maximum of generated relevant questions
+        /// </summary>
         private long MaxNumberOfHypotheses
         {
             get { return _boxModule.GetPropertyLong(PropMaxNumberOfHypotheses); }
@@ -75,6 +80,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         private int _skipFirstN = -1;
         private int bitStringsYielded = 0;
 
+        /// <summary>
+        /// Enumerator for bitstrings yielded by virtual attribute
+        /// </summary>
         private IEnumerator<BitStringIceWithCategoryId> BitStringEnumerator
         {
             get
@@ -98,6 +106,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             }
         }
 
+        /// <summary>
+        /// Countvector
+        /// </summary>
         internal int[] CountVector
         {
             get
@@ -113,6 +124,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                         _prxs[i] = Common.GetBooleanAttributePrx(_boxModule, s, false);
                         i++;
                     }
+
+                    //proxy of master data table
                     DataTableFunctionsPrx _dtPrx = GetMasterDataTableFunctionsPrx(true);
                     if (_dtPrx != null)
                     {
@@ -135,12 +148,13 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                         if (_primaryKeyColumns.Length > 0)
                         {
                             string _dataTableName = _dtPrx.getDataTableInfo().dataTableName;
-                            _countVector = __prx.GetCountVector(_primaryKeyColumns[0], _dataTableName);
+                            _countVector = __prx.GetCountVector(
+                                _primaryKeyColumns[0], _dataTableName, String.Empty);
                             return _countVector;
                         }
                         else
                         {
-                            throw Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity, "No unique key selected");
+                            throw Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity, "No primary key selected");
                         }
 
                     }
@@ -153,6 +167,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             }
         }
 
+        /// <summary>
+        /// Attribute cardinality
+        /// </summary>
         public CardinalityEnum Cardinality
         {
             get
@@ -161,11 +178,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             }
         }
 
+        /// <summary>
+        /// Guid
+        /// </summary>
         public GuidStruct Guid
         {
             get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
 
+        /// <summary>
+        /// Master datatable id column (for CountVector)
+        /// </summary>
         public string MasterTableIdColumn
         {
             get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
@@ -176,6 +199,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
         }
 
+        /// <summary>
+        /// Literal importance
+        /// </summary>
         public ImportanceEnum Importance
         {
             get
@@ -192,10 +218,63 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 
         #region Private methods
 
-        private CacheFlag _cacheFlagColumn = new CacheFlag();
-        private GenericColumn _cachedValueColumn = null;
+        /// <summary>
+        /// Gets column names for master datatable
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>Array with column names</returns>
+        public string[] GetMasterColumnsNames(bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    DataTableFunctionsPrx tmp1 = GetMasterDataTableFunctionsPrx(fallOnError);
 
-        internal DataTableFunctionsPrx GetMasterDataTableFunctionsPrx(bool fallOnError)
+                    if (tmp1 != null)
+                        return tmp1.getColumnsNames();
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+/*
+        /// <summary>
+        /// Gets column names for detail datatable
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>Array with column names</returns>
+        public string[] GetDetailColumnsNames(bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    DataTableFunctionsPrx tmp1 = GetDetailDataTableFunctionsPrx(fallOnError);
+
+                    if (tmp1 != null)
+                        return tmp1.getColumnsNames();
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+        */
+
+        /// <summary>
+        /// Gets proxy of master datatable
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>Datatable proxy</returns>
+        public DataTableFunctionsPrx GetMasterDataTableFunctionsPrx(bool fallOnError)
         {
             return SocketConnections.GetPrx<DataTableFunctionsPrx>(
                 _boxModule,
@@ -203,6 +282,24 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                 DataTableFunctionsPrxHelper.checkedCast,
                 fallOnError);
         }
+        /*
+        /// <summary>
+        /// Gets proxy of detail datatable
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>Datatable proxy</returns>
+        public DataTableFunctionsPrx GetDetailDataTableFunctionsPrx(bool fallOnError)
+        {
+            return SocketConnections.GetPrx<DataTableFunctionsPrx>(
+                _boxModule,
+                SockDetailDataTable,
+                DataTableFunctionsPrxHelper.checkedCast,
+                fallOnError);
+        }*/
+
+
+        private CacheFlag _cacheFlagColumn = new CacheFlag();
+        private GenericColumn _cachedValueColumn = null;
 
         private const int _bufferSize = 200;
         private BitStringIceWithCategoryId[] bitStringCache =
@@ -370,6 +467,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             return Common.GetSourceDataTableId(_boxModule, this);
         }
 
+        public override string[] GetCategoriesIds(Current current__)
+        {
+            return new string[0];
+            //throw new Exception("The method or operation is not implemented.");
+        }
+
 
         #region Not implemented
 
@@ -378,13 +481,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override string[] GetCategoriesIds(Current current__)
-        {
-            return new string[0];
-            //throw new Exception("The method or operation is not implemented.");
-        }
-
-        public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, Current current__)
+        public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }

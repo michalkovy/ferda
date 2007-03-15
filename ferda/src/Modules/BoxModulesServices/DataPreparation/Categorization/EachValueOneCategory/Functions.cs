@@ -689,10 +689,17 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return null;
         }
 
-        public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, Current current__)
+        public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
+            string detailId = String.Empty;
+            if (String.IsNullOrEmpty(detailIdColumn))
+                detailId =
+            GetColumnFunctionsPrx(true).getColumnInfo().dataTable.primaryKeyColumns[0];
+            else
+                detailId = detailIdColumn;
             GenericColumn _column = GetGenericColumn(true);
-            DataTable _table = _column.GetCountVector(masterIdColumn, masterDatatableName);
+            DataTable _table = _column.GetCountVector(
+                masterIdColumn, masterDatatableName, detailId);
             int[] result = new int[_table.Rows.Count];
             for (int i = 0; i < _table.Rows.Count; i++)
             {

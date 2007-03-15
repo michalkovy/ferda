@@ -38,6 +38,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 
             switch (propertyName)
             {
+               // case Functions.PropMasterIdColumn:
+              //      return BoxInfoHelper.GetSelectStringArray(
+               //         Func.GetMasterColumnsNames(false)
+               //         );
+
+               // case Functions.PropDetailIdColumn:
+              //      return BoxInfoHelper.GetSelectStringArray(
+              //          Func.GetDetailColumnsNames(false)
+              //          );
+
                 default:
                     return null;
             }
