@@ -853,15 +853,28 @@ namespace Ferda.Guha.Data
             }
         }
 
+
+        
         /// <summary>
         /// Gets the count vector for the bitstring generation for relational datamining
         /// </summary>
-        /// <returns></returns>
-        public DataTable GetCountVector(string masterIdColumn, string masterDatatableName)
+        /// <param name="masterIdColumn">Join key column from master table</param>
+        /// <param name="masterDatatableName">Master datatable name</param>
+        /// <param name="detailIdColumn">Join key column from detail table</param>
+        /// <returns>Countvector table</returns>
+        public DataTable GetCountVector(
+            string masterIdColumn,
+            string masterDatatableName,
+            string detailIdColumn)
         {
-            string _detailTableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name); ;
-            string _columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterIdColumn);
-            string _masterDatatableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterDatatableName);
+            string _detailTableName =
+                GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+            string _masterTableIdQuoted = 
+                GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterIdColumn);
+            string _detailTableIdQuoted =
+                GenericDataTable.GenericDatabase.QuoteQueryIdentifier(detailIdColumn);
+            string _masterDatatableName = 
+                GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterDatatableName);
 
             if (masterDatatableName.CompareTo(GenericDataTable.Explain.name)==0)
             {
@@ -871,15 +884,15 @@ namespace Ferda.Guha.Data
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
             command.CommandText =
                 "SELECT COUNT(" + _detailTableName + "." 
-                + _columnQuotedIdentifier + ") FROM "
+                + _masterTableIdQuoted + ") FROM "
                 + _masterDatatableName
                 + " LEFT JOIN " + _detailTableName
                 + " ON "
-                + masterDatatableName + "." + _columnQuotedIdentifier
+                + _masterDatatableName + "." + _masterTableIdQuoted
                 + "="
-                + GenericDataTable.Explain.name + "." + _columnQuotedIdentifier
-                + " GROUP BY " + masterDatatableName + "." + _columnQuotedIdentifier
-                + " ORDER BY " + masterDatatableName + "." + _columnQuotedIdentifier;
+                + _detailTableName + "." + _detailTableIdQuoted
+                + " GROUP BY " + _masterDatatableName + "." + _masterTableIdQuoted
+                + " ORDER BY " + _masterDatatableName + "." + _masterTableIdQuoted;
 
             DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
             dataAdapter.SelectCommand = command;
@@ -910,7 +923,12 @@ namespace Ferda.Guha.Data
         public DataTable GetSelect(string[] uniqueKeyForSort)
         {
             // test the unique key
-            GenericDataTable.TestUniqueKey(uniqueKeyForSort);
+          //  GenericDataTable.TestUniqueKey(uniqueKeyForSort);
+
+            if (uniqueKeyForSort.Length == 0)
+            {
+                throw Exceptions.DbUniqueKeyError(null, null);
+            }
 
             string columnQuotedIdentifier;
 

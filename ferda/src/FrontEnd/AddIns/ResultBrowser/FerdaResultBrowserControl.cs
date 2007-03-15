@@ -1196,8 +1196,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             RadioSecondTable.Text = resManager.GetString("RadioSecond");
             ButtonHelp.Text = resManager.GetString("Help");
 
-            copyAllToolStripMenuItem.Text = resManager.GetString("CopyAll");
-            copySelectedToolStripMenuItem.Text = resManager.GetString("CopyOne");
+          //  copyAllToolStripMenuItem.Text = resManager.GetString("CopyAll");
+         //   copySelectedToolStripMenuItem.Text = resManager.GetString("CopyOne");
         }
 
         #endregion

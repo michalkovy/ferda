@@ -135,7 +135,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
                         if (_primaryKeyColumns.Length > 0)
                         {
                             string _dataTableName = _dtPrx.getDataTableInfo().dataTableName;
-                            _countVector = __prx.GetCountVector(_primaryKeyColumns[0], _dataTableName);
+                            _countVector = __prx.GetCountVector(MasterTableIdColumn, _dataTableName,_primaryKeyColumns[0]);
                             return _countVector;
                         }
                         else
@@ -389,7 +389,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
             //throw new Exception("The method or operation is not implemented.");
         }
 
-        public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, Current current__)
+        public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }

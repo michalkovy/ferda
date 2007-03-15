@@ -241,9 +241,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
 
 
         #region Functions
-        
 
 
+        /// <summary>
+        /// Gets proxy of master datatable
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>Datatable proxy</returns>
         public DataTableFunctionsPrx GetMasterDataTableFunctionsPrx(bool fallOnError)
         {
             return SocketConnections.GetPrx<DataTableFunctionsPrx>(
@@ -253,6 +257,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 fallOnError);
         }
 
+        /// <summary>
+        /// Gets proxy of detail datatable
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>Datatable proxy</returns>
         public DataTableFunctionsPrx GetDetailDataTableFunctionsPrx(bool fallOnError)
         {
             return SocketConnections.GetPrx<DataTableFunctionsPrx>(
@@ -262,6 +271,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 fallOnError);
         }
 
+        /// <summary>
+        /// Gets column statistics
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>column statistics</returns>
         public ColumnStatistics GetColumnStatistics(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<ColumnStatistics>(
@@ -281,6 +295,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 );
         }
 
+        /// <summary>
+        /// Gets distinct values and their frequencies
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public ValuesAndFrequencies GetDistinctsAndFrequencies(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<ValuesAndFrequencies>(
@@ -321,6 +340,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 );
         }
 
+        /// <summary>
+        /// Gets virtual column
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public GenericColumn GetGenericColumn(bool fallOnError)
         {
             DataTableFunctionsPrx prx = GetMasterDataTableFunctionsPrx(fallOnError);
@@ -392,6 +416,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             return _cachedValue;
         }
 
+        /// <summary>
+        /// Gets column EXPLAIN information
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public ColumnExplain GetColumnExplain(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<ColumnExplain>(
@@ -411,16 +440,28 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 );
         }
 
+        /// <summary>
+        /// Id column of master datatable (for JOIN)
+        /// </summary>
         public string MasterIdColumn
         {
             get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
         }
 
+        /// <summary>
+        /// Id column of detail datatable (for JOIN)
+        /// </summary>
         public string DetailIdColumn
         {
             get { return _boxModule.GetPropertyString(PropDetailIdColumn); }
         }
 
+
+        /// <summary>
+        /// Gets column names for master datatable
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>Array with column names</returns>
         public string[] GetMasterColumnsNames(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(
@@ -441,6 +482,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 );
         }
 
+        /// <summary>
+        /// Gets column names for detail datatable
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>Array with column names</returns>
         public string[] GetDetailColumnsNames(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(
@@ -490,6 +536,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 return MasterTableIdColumn;
         }*/
 
+        /// <summary>
+        /// Gets ColumnInfo information
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public ColumnInfo GetColumnInfo(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<ColumnInfo>(
