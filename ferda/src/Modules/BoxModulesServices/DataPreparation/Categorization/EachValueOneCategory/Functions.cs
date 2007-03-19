@@ -1,3 +1,23 @@
+// Functions.cs - functionality for Each value one category box
+//
+// Author:  Tomáš Kuchaø <tomas.kuchar@gmail.com>
+//          Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2007 Tomáš Kuchaø, Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.Attribute;
@@ -193,8 +213,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     fallOnError,
                     delegate
                     {
-                        return
-                            GenericDatabaseCache.GetGenericDatabase(connSetting)[column.dataTable.dataTableName].GetGenericColumn(column.columnSelectExpression);
+                            return
+                                GenericDatabaseCache.GetGenericDatabase(connSetting)
+                                [column.dataTable.dataTableName].GetGenericColumn(
+                                column.columnSelectExpression, column);
+
                     },
                     delegate
                     {
@@ -263,11 +286,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                         Attribute<IComparable> result =
                             (Attribute<IComparable>)Common.GetAttributeObject(column.DbSimpleDataType, false);
 
-                        //DbDataTypeEnum dataType = prx.getColumnInfo().dataType;
-                        //ValuesAndFrequencies df = prx.getDistinctsAndFrequencies();
-                        //Debug.Assert(df.dataType == dataType);
-                        //DbSimpleDataTypeEnum simpleDbDataType = GenericColumn.GetSimpleDataType(df.dataType);
-
                         System.Data.DataTable dt;
                         if (Domain == DomainEnum.SubDomain)
                         {
@@ -276,7 +294,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                             parseFromTo(column.Explain.dataType, out from, out to);
                             string columnSelectExpression = column.GetQuotedQueryIdentifier();
 
-                            dt = column.GetDistincts(columnSelectExpression + ">='" + from + "' AND " + columnSelectExpression + "<='" + to + "'");
+                            dt = column.GetDistincts(columnSelectExpression + ">='" +
+                                from +
+                                "' AND " + columnSelectExpression + "<='" + to + "'");
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {

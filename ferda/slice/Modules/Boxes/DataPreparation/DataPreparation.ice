@@ -64,7 +64,7 @@ module Ferda {
 					};
 
 					interface DataTableFunctions extends Ferda::Guha::MiningProcessor::SourceDataTableIdProvider {
-						nonmutating	DataTableInfo	getDataTableInfo()
+						nonmutating	DataTableInfo getDataTableInfo()
 							throws Ferda::Modules::BoxRuntimeError;
 						nonmutating Ferda::Guha::Data::ColumnExplainSeq getColumnExplainSeq()
 							throws Ferda::Modules::BoxRuntimeError;
@@ -73,13 +73,24 @@ module Ferda {
 					};
 					
 					
+					
 					// COLUMN
+					
+					enum ColumnTypeEnum
+					{
+					   SimpleColumn,
+					   VirtualColumn					   					 
+					};
 					
 					struct ColumnInfo {
 						DataTableInfo dataTable;
 						string columnSelectExpression; // normally it is the name of the column but for derived columns it is stroger
 						Ferda::Guha::Data::DbDataTypeEnum dataType;
 						Ferda::Guha::Data::CardinalityEnum cardinality;
+						ColumnTypeEnum columnType;
+						string detailTableName;
+						string detailTableIdColumn;
+						string masterTableIdColumn;
 					};
 					
 					interface ColumnFunctions extends Ferda::Guha::MiningProcessor::SourceDataTableIdProvider {

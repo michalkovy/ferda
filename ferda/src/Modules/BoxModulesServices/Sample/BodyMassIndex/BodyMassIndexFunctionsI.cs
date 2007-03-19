@@ -403,7 +403,8 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
                     GetColumnFunctionsPrx(true, "Height").getColumnInfo().dataTable,
                     "(" + weightInKilograms + ") / (" + heightInMeters + " * " + heightInMeters + ")",
                     DbDataTypeEnum.DoubleType,
-                    CardinalityEnum.Cardinal
+                    CardinalityEnum.Cardinal, ColumnTypeEnum.SimpleColumn, String.Empty,String.Empty,
+                    String.Empty
                     );
             }
             finally

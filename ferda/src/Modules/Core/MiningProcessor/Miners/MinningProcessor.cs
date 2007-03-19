@@ -1,3 +1,24 @@
+// MinningProcessor.cs - interface and abstract class for mining processor
+//
+// Author:  Tomáš Kuchaø <tomas.kuchar@gmail.com>
+//          Alexander Kuzmin <alexander.kuzmin@gmail.com> (Virtual attribute functionality)
+//
+// Copyright (c) 2007 Tomáš Kuchaø, Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -315,8 +336,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     int marker = 0;
                     int length = 0;
 
+                    //counting length of the bitstring
+                    //zero value on i-th position of the countvector means
+                    //that no record in the detail table corresponds
+                    //to one in the master table
                     for (int i = 0; i < CountVector.Length; i++)
                     {
+                      //  length += System.Math.Max(1, CountVector[i]);
                         length += CountVector[i];
                     }
 
@@ -329,10 +355,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         _masks[i] = new BitString(new BitStringIdentifier(
                             "123", i.ToString()),
                             length, tmpString);
-                    }
 
-                    for (int i = 0; i < _masks.Length; i++)
-                    {
                         for (int k = marker; k < marker + CountVector[i]; k++)
                         {
                             _masks[i].SetBit(k, true);

@@ -1,3 +1,24 @@
+// Functions.cs - functionality for Virtual column box
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2007 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,8 +45,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
         public const string PropMasterIdColumn = "MasterIdColumn";
         public const string PropDetailIdColumn = "DetailIdColumn";
         public const string PropDetailResultColumn = "DetailResultColumn";
-       // public const string PropSelectExpression = "SelectExpression";
-     //   public const string PropJoinKey = "JoinKey";
+        // public const string PropSelectExpression = "SelectExpression";
+        //   public const string PropJoinKey = "JoinKey";
         public const string PropDataType = "DataType";
         public const string PropCardinality = "Cardinality";
         public const string PropValueMin = "ValueMin";
@@ -37,11 +58,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
         public const string SockMasterDataTable = "MasterDataTable";
         public const string SockDetailDataTable = "DetailDataTable";
 
-        public string MasterTableIdColumn
-        {
-            get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
-        }
-
         public string DetailTableIdColumn
         {
             get { return _boxModule.GetPropertyString(PropDetailIdColumn); }
@@ -52,7 +68,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             get { return _boxModule.GetPropertyString(PropDetailResultColumn); }
         }
 
-        
+
         public string Name
         {
             get { return _boxModule.GetPropertyString(PropName); }
@@ -215,7 +231,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
 
         #endregion
 
-        
+
         public override string GetSourceDataTableId(Current current__)
         {
             DataTableFunctionsPrx prx = GetMasterDataTableFunctionsPrx(true);
@@ -390,29 +406,34 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             cacheSetting.Add(Database.BoxInfo.typeIdentifier + Database.Functions.PropConnectionString, connSetting);
             cacheSetting.Add(DataTable.BoxInfo.typeIdentifier + DataTable.Functions.PropName + "Master", tmp.dataTableName);
             cacheSetting.Add(DataTable.BoxInfo.typeIdentifier + DataTable.Functions.PropName + "Detail", tmp1.dataTableName);
-       //     cacheSetting.Add(BoxInfo.typeIdentifier + PropSelectExpression, SelectExpression);
+            //     cacheSetting.Add(BoxInfo.typeIdentifier + PropSelectExpression, SelectExpression);
 
- //           if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
- //               || (_cachedValue == null && fallOnError))
- //           {
-                _cachedValue = ExceptionsHandler.GetResult<GenericColumn>(
-                    fallOnError,
-                    delegate
-                    {
-                       // FOR FUTURE IMPLEMENTATION: result column here does not have to be
-                       // given as a name, a select expression can be applied
-                       // string selectExpression = GetSelectExpression(fallOnError);
-                        return
-                            GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTableName].GetVirtualColumn
-                                (DetailTableResultColumn, tmp1.dataTableName, MasterTableIdColumn, DetailTableIdColumn);
-                    },
-                    delegate
-                    {
-                        return null;
-                    },
-                    _boxModule.StringIceIdentity
-                    );
-    //        }
+            //           if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
+            //               || (_cachedValue == null && fallOnError))
+            //           {
+            _cachedValue = ExceptionsHandler.GetResult<GenericColumn>(
+                fallOnError,
+                delegate
+                {
+                    // FOR FUTURE IMPLEMENTATION: result column here does not have to be
+                    // given as a name, a select expression can be applied
+                    // string selectExpression = GetSelectExpression(fallOnError);
+                    ColumnInfo info = new ColumnInfo(
+                        tmp1,
+                        DetailTableResultColumn,
+                        DbDataTypeEnum.UnknownType, CardinalityEnum.Nominal, ColumnTypeEnum.VirtualColumn,
+                        tmp1.dataTableName, DetailTableIdColumn, MasterTableIdColumn);
+                    return
+                        GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTableName].GetGenericColumn
+                            (DetailTableResultColumn, info);
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
+            //        }
             return _cachedValue;
         }
 
@@ -443,7 +464,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
         /// <summary>
         /// Id column of master datatable (for JOIN)
         /// </summary>
-        public string MasterIdColumn
+        public string MasterTableIdColumn
         {
             get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
         }
@@ -548,14 +569,33 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 delegate
                 {
                     DataTableFunctionsPrx tmp1 = GetMasterDataTableFunctionsPrx(fallOnError);
+
+                    DataTableFunctionsPrx prx1 = GetDetailDataTableFunctionsPrx(fallOnError);
+                    if (prx1 == null)
+                        return null;
+
+                    DataTableInfo tmp =
+                        ExceptionsHandler.GetResult<DataTableInfo>(
+                            fallOnError,
+                            prx1.getDataTableInfo,
+                            delegate
+                            {
+                                return null;
+                            },
+                            _boxModule.StringIceIdentity
+                            );
+
                     ColumnExplain tmp2 = GetColumnExplain(fallOnError);
                    // string selectExpression = GetSelectExpression(fallOnError);
                     if (tmp1 != null && tmp2 != null)
                         return new ColumnInfo(tmp1.getDataTableInfo(),
                                               DetailTableResultColumn,
                                               tmp2.dataType,
-                                              Cardinality
-                            );
+                                              Cardinality,
+                                              ColumnTypeEnum.VirtualColumn,
+                                              tmp.dataTableName,
+                                              DetailTableIdColumn,
+                                              MasterTableIdColumn);
                     return null;
                 },
                 delegate
