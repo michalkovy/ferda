@@ -1,3 +1,23 @@
+// Functions.cs - functionality for Equidistant intervals box
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2007 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.Attribute;
@@ -10,32 +30,10 @@ using Exception = System.Exception;
 using System.Data;
 using System.Data.Common;
 using Ferda.Guha.Attribute.DynamicAlgorithm;
+using Ferda.Modules.Boxes.DataPreparation.Categorization;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantIntervals
 {
-    internal static class Retyper<T>
-    {
-        public static object [] Retype(T[] input)
-        {
-            object[] result = new object[input.Length];
-            for (int i = 0; i < input.Length; i++)
-            {
-                result[i] = (object)input[i];
-            }
-            return result;
-        }
-
-        public static int[] RetypeToInt(long[] input)
-        {
-            int[] result = new int[input.Length];
-            for (int i = 0; i < input.Length; i++)
-            {
-                result[i] = (int)input[i];
-            }
-            return result;
-        }
-    }
-
     internal class Functions : AttributeFunctionsDisp_, IFunctions
     {
         /// <summary>
@@ -83,7 +81,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         {
             get
             {
-                return  _boxModule.GetPropertyLong(PropCountOfCategories);
+                return _boxModule.GetPropertyLong(PropCountOfCategories);
             }
         }
 
@@ -244,9 +242,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
-        private object[] Retype(int [] input)
+        private object[] Retype(int[] input)
         {
-            object [] result = new object[input.Length];
+            object[] result = new object[input.Length];
             for (int i = 0; i < input.Length; i++)
             {
                 result[i] = (object)input[i];
@@ -351,7 +349,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     delegate
                     {
                         return
-                            GenericDatabaseCache.GetGenericDatabase(connSetting)[column.dataTable.dataTableName].GetGenericColumn(column.columnSelectExpression);
+                            GenericDatabaseCache.GetGenericDatabase(connSetting)
+                            [column.dataTable.dataTableName].GetGenericColumn(
+                            column.columnSelectExpression, column);
                     },
                     delegate
                     {
@@ -435,7 +435,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     {
                         //zatim nechapu
                         _nullCategoryName = null;
-                        
+
                         //getting the column
                         GenericColumn column = GetGenericColumn(fallOnError);
                         if (column == null)
@@ -469,54 +469,95 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         //creating intervals for individual data types
                         IComparable comparableMin;
                         IComparable comparableMax;
-                        switch (column.Explain.dataType)
+
+                        switch (column.DbSimpleDataType)
                         {
-                            case DbDataTypeEnum.DoubleType:
-                            case DbDataTypeEnum.FloatType:
-                            case DbDataTypeEnum.DecimalType:
+                            case DbSimpleDataTypeEnum.FloatSimpleType:
+                            case DbSimpleDataTypeEnum.DoubleSimpleType:
                                 double _dmin = Convert.ToDouble(stringMin);
                                 double _dmax = Convert.ToDouble(stringMax);
-                                comparableMin = _dmin;
-                                comparableMax = _dmax;
-                                double[] _divisionPointsDouble = 
+
+                                double[] _divisionPointsDouble =
                                     Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
                                     _dmin, _dmax, count);
-                                result.CreateIntervals(BoundaryEnum.Closed, comparableMin, Retyper<double>.Retype(
-                                    _divisionPointsDouble),
-                                    ClosedFrom, comparableMax, BoundaryEnum.Closed, false);
+
+                                if (column.DbSimpleDataType == DbSimpleDataTypeEnum.FloatSimpleType)
+                                {
+                                    comparableMin = (float)_dmin;
+                                    comparableMax = (float)_dmax;
+                                    float[] _divisionPointsFloat =
+                                        Retyper<object>.RetypeDoubleToFloat(_divisionPointsDouble);
+                                    result.CreateIntervals(
+                                        BoundaryEnum.Closed, comparableMin,
+                                        Retyper<float>.Retype(_divisionPointsFloat),
+                                        ClosedFrom, comparableMax, BoundaryEnum.Closed,
+                                        false
+                                        );
+                                }
+                                else
+                                {
+                                    comparableMin = _dmin;
+                                    comparableMax = _dmax;
+                                    result.CreateIntervals(
+                                        BoundaryEnum.Closed, comparableMin,
+                                        Retyper<double>.Retype(_divisionPointsDouble),
+                                        ClosedFrom, comparableMax,
+                                        BoundaryEnum.Closed, false
+                                        );
+                                }
                                 break;
 
-                            case DbDataTypeEnum.IntegerType:
-                            case DbDataTypeEnum.ShortIntegerType:
-                            case DbDataTypeEnum.UnsignedIntegerType:
-                            case DbDataTypeEnum.UnsignedShortIntegerType:
-                                int _imin = Convert.ToInt32(stringMin);
-                                int _imax = Convert.ToInt32(stringMax);
-                                comparableMin = _imin;
-                                comparableMax = _imax;
-                                long[] _divisionPointsInt =
-                                    Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
-                                    _imin, _imax, count);
-                                result.CreateIntervals(BoundaryEnum.Closed, comparableMin, Retyper<int>.Retype(
-                                    Retyper<object>.RetypeToInt(_divisionPointsInt)),
-                                    ClosedFrom, comparableMax, BoundaryEnum.Closed, false);
-                                break;
-
-                            case DbDataTypeEnum.LongIntegerType:
-                            case DbDataTypeEnum.UnsignedLongIntegerType:
+                            case DbSimpleDataTypeEnum.ShortSimpleType:
+                            case DbSimpleDataTypeEnum.IntegerSimpleType:
+                            case DbSimpleDataTypeEnum.LongSimpleType:
                                 long _lmin = Convert.ToInt64(stringMin);
                                 long _lmax = Convert.ToInt64(stringMax);
-                                comparableMin = _lmin;
-                                comparableMax = _lmax;
                                 long[] _divisionPointsLong =
                                     Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
                                     _lmin, _lmax, count);
-                                result.CreateIntervals(BoundaryEnum.Closed, comparableMin, Retyper<long>.Retype(
-                                    _divisionPointsLong),
-                                    ClosedFrom, comparableMax, BoundaryEnum.Closed, false);
+
+                                if (column.DbSimpleDataType == DbSimpleDataTypeEnum.ShortSimpleType)
+                                {
+                                    comparableMin = (short)_lmin;
+                                    comparableMax = (short)_lmax;
+                                    short[] _divisionPointsShort =
+                                        Retyper<object>.RetypeLongToShort(_divisionPointsLong);
+                                    result.CreateIntervals(
+                                        BoundaryEnum.Closed, comparableMin,
+                                        Retyper<short>.Retype(_divisionPointsShort),
+                                        ClosedFrom, comparableMax,
+                                        BoundaryEnum.Closed, false
+                                        );
+                                }
+                                else
+
+                                    if (column.DbSimpleDataType == DbSimpleDataTypeEnum.IntegerSimpleType)
+                                    {
+                                        comparableMin = (int)_lmin;
+                                        comparableMax = (int)_lmax;
+                                        int[] _divisionPointsInt =
+                                            Retyper<object>.RetypeLongToInt(_divisionPointsLong);
+                                        result.CreateIntervals(
+                                            BoundaryEnum.Closed, comparableMin,
+                                            Retyper<int>.Retype(_divisionPointsInt),
+                                            ClosedFrom, comparableMax, 
+                                            BoundaryEnum.Closed, false
+                                            );
+                                    }
+                                    else
+                                    {
+                                        comparableMin = (long)_lmin;
+                                        comparableMax = (long)_lmax;
+                                        result.CreateIntervals(
+                                            BoundaryEnum.Closed, comparableMin,
+                                            Retyper<long>.Retype(_divisionPointsLong),
+                                            ClosedFrom, comparableMax,
+                                            BoundaryEnum.Closed, false
+                                            );
+                                    }
                                 break;
 
-                            case DbDataTypeEnum.DateTimeType:
+                            case DbSimpleDataTypeEnum.DateTimeSimpleType:
                                 DateTime _datemin = Convert.ToDateTime(stringMin);
                                 DateTime _datemax = Convert.ToDateTime(stringMax);
                                 comparableMin = _datemin;
@@ -524,8 +565,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                 DateTime[] _divisionPointsDateTime =
                                     Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
                                     _datemin, _datemax, count, false);
-                                result.CreateIntervals(BoundaryEnum.Closed, comparableMin, Retyper<DateTime>.Retype(_divisionPointsDateTime),
-                                    ClosedFrom, comparableMax, BoundaryEnum.Closed, false);
+                                result.CreateIntervals(
+                                    BoundaryEnum.Closed, comparableMin,
+                                    Retyper<DateTime>.Retype(_divisionPointsDateTime),
+                                    ClosedFrom, comparableMax,
+                                    BoundaryEnum.Closed, false
+                                    );
                                 break;
 
                             default:
@@ -545,10 +590,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             return _cachedValue;
         }
 
- //       private Guid _cachesReloadFlag = System.Guid.NewGuid();
-  //      private Guid _lastReloadFlag;
-   //     private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
-   //     private long _lastBSQueryTicks = 0;
+        //       private Guid _cachesReloadFlag = System.Guid.NewGuid();
+        //      private Guid _lastReloadFlag;
+        //     private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
+        //     private long _lastBSQueryTicks = 0;
         public Dictionary<string, BitStringIce> GetBitStrings(bool fallOnError)
         {
             lock (this)
@@ -787,20 +832,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     new GuidAttributeNamePair(Guid, NameInLiterals),
                 };
         }
-        
+
         public override BitStringIce GetBitString(string categoryId, Current current__)
         {
-          return GetBitString(categoryId, true);
+            return GetBitString(categoryId, true);
         }
 
         public override string[] GetCategoriesIds(Current current__)
         {
-          return GetCategoriesIds(true);
+            return GetCategoriesIds(true);
         }
 
         public override double[] GetCategoriesNumericValues(Current current__)
         {
-           return GetCategoriesNumericValues(true);
+            return GetCategoriesNumericValues(true);
         }
 
         public override string[] GetMissingInformationCategoryId(Current current__)
@@ -810,7 +855,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             else
                 return new string[] { XCategory }; ;
         }
-        
+
         public override string GetSourceDataTableId(Current current__)
         {
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(true);
@@ -840,7 +885,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             else
                 detailId = detailIdColumn;
 
-            DataTable _table = 
+            DataTable _table =
                 _column.GetCountVector(masterIdColumn, masterDatatableName, detailId);
             int[] result = new int[_table.Rows.Count];
             for (int i = 0; i < _table.Rows.Count; i++)

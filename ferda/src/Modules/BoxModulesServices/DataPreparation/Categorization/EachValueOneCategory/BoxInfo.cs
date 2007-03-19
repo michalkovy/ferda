@@ -2,6 +2,7 @@
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>,
 //          Martin Ralbovský <martin.ralbovsky@gmail.com> (modulesAFC)
+//          Alexander Kuzmin <alexander.kuzmin@gmail.com>
 //
 // Copyright (c) 2006 Tomáš Kuchaø, Martin Ralbovský
 //

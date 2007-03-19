@@ -282,7 +282,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                         GenericDatabaseCache.GetGenericDatabase(
                         connSetting)[info.dataTable.dataTableName];
                     table = genericDataTable.GetGenericColumn(
-                            info.columnSelectExpression).GetDistinctsAndFrequencies(String.Empty);
+                            info.columnSelectExpression,info).GetDistinctsAndFrequencies(String.Empty);
                     //table = genericDataTable.Select();
                     cardinality = info.cardinality;
                 }
@@ -324,7 +324,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                             GenericDatabaseCache.GetGenericDatabase(
                             connSetting)[info.dataTable.dataTableName];
                         table = genericDataTable.GetGenericColumn(
-                            info.columnSelectExpression).GetDistinctsAndFrequencies(String.Empty);
+                            info.columnSelectExpression, info).GetDistinctsAndFrequencies(String.Empty);
                         //table = genericDataTable.Select();
                         cardinality = info.cardinality;
                     }

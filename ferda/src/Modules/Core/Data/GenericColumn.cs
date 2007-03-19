@@ -1,3 +1,24 @@
+// GenericColumn.cs - methods for working with data column
+//
+// Author:  Tomáš Kuchaø <tomas.kuchar@gmail.com>
+//          Alexander Kuzmin <alexander.kuzmin@gmail.com> (Virtual column functionality)
+//
+// Copyright (c) 2007 Tomáš Kuchaø, Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Data;
 using System.Data.Common;
@@ -61,6 +82,40 @@ namespace Ferda.Guha.Data
             get { return _isVirtual; }
         }
 
+        private string _detailDataTableName;
+
+        /// <summary>
+        /// Detail DataTable name
+        /// </summary>
+        public string DetailDataTableName
+        {
+            get { return _detailDataTableName; }
+            set { _detailDataTableName=value; }
+        }
+
+        private string _masterTableIdColumn = String.Empty;
+
+        /// <summary>
+        /// Master table id column
+        /// </summary>
+        public string MasterTableIdColumn
+        {
+            get { return _masterTableIdColumn; }
+            set { _masterTableIdColumn=value; }
+        }
+
+        private string _detailTableIdColumn = String.Empty;
+
+        /// <summary>
+        /// Detail table id column
+        /// </summary>
+        public string DetailTableIdColumn
+        {
+            get { return _detailTableIdColumn; }
+            set { _detailTableIdColumn = value; }
+        }
+
+
         private ColumnStatistics _statistics = null;
 
         /// <summary>
@@ -95,18 +150,20 @@ namespace Ferda.Guha.Data
                         }
                         else
                         {
-                            dataTableQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                            dataTableQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                                 + ","
                                 + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
                                 + " WHERE "
-                                + GenericDataTable.DetailDataTableName
+                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                                 + "."
-                                + GenericDataTable.MasterTableIdColumn
+                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(MasterTableIdColumn)
                                 + "="
-                                + GenericDataTable.Explain.name
+                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
                                 + "."
-                                + GenericDataTable.MasterTableIdColumn;
-                            columnQuotedIdentifier = GenericDataTable.DetailDataTableName + "." + GetQuotedQueryIdentifier();
+                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(MasterTableIdColumn);
+                            columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
+                                DetailDataTableName)
+                                + "." + GetQuotedQueryIdentifier();
                         }
 
                         try
@@ -492,20 +549,21 @@ namespace Ferda.Guha.Data
         /// </summary>
         public DbDataTypeEnum DetermineVirtualColumnDbDataType(string detailTableName, string masterTableIdColumn, string detailTableIdColumn)
         {
-            string columnQuotedIdentifier = detailTableName + "." + GetQuotedQueryIdentifier();
+            string columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(detailTableName)
+                + "." + GetQuotedQueryIdentifier();
             string dataTableQuotedIdentifier =
                 GenericDataTable.GenericDatabase.QuoteQueryIdentifier(detailTableName)
             + ","
             + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
 
             string whereQuotedIdentifier =
-                detailTableName
+                GenericDataTable.GenericDatabase.QuoteQueryIdentifier(detailTableName)
             + "."
-            + detailTableIdColumn
+            + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(detailTableIdColumn)
             + "="
-            + GenericDataTable.Explain.name
+            + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
             + "."
-            + masterTableIdColumn;
+            + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterTableIdColumn);
 
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
 
@@ -734,18 +792,19 @@ namespace Ferda.Guha.Data
                     where = where + " AND ";
                 }
                 where = where
-                    + GenericDataTable.DetailDataTableName
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                     + "."
-                    + GenericDataTable.DetailTableIdColumn
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailTableIdColumn)
                     + "="
-                    + GenericDataTable.Explain.name
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
                     + "."
-                    + GenericDataTable.MasterTableIdColumn;
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(MasterTableIdColumn);
 
-                tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                 + ","
                 + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
-                columnQuotedIdentifier = GenericDataTable.DetailDataTableName + "." + GetQuotedQueryIdentifier();
+                columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
+                    DetailDataTableName) + "." + GetQuotedQueryIdentifier();
             }
             else
             {
@@ -809,17 +868,18 @@ namespace Ferda.Guha.Data
                     where = where + " AND ";
                 }
                 where = where
-                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                     + "."
-                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailTableIdColumn)
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailTableIdColumn)
                     + "="
                     + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
                     + "."
-                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.MasterTableIdColumn);
-                tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(MasterTableIdColumn);
+                tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                     + ","
                     + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
-                columnQuotedIdentifier = GenericDataTable.DetailDataTableName + "." + GetQuotedQueryIdentifier();
+                columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
+                    DetailDataTableName) + "." + GetQuotedQueryIdentifier();
             }
             else
             {
@@ -933,32 +993,35 @@ namespace Ferda.Guha.Data
             string columnQuotedIdentifier;
 
             string dataTableQuotedIdentifier;
+            string uniqueKeyQuotedIdentifier;
             if (!IsVirtual)
             {
                 dataTableQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
                 columnQuotedIdentifier = GetQuotedQueryIdentifier();
+                uniqueKeyQuotedIdentifier = GenericDataTable.getQuotedColumnsNames(uniqueKeyForSort);
             }
             else
             {
+                uniqueKeyQuotedIdentifier = 
+                    GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
+                    + "." +
+                    GenericDataTable.getQuotedColumnsNames(uniqueKeyForSort);
+
                 dataTableQuotedIdentifier = 
-                    GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.DetailDataTableName)
+                    GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                     + ","
                     + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
                     + " WHERE "
-                    + GenericDataTable.DetailDataTableName
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                     + "."
-                    + GenericDataTable.DetailTableIdColumn
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailTableIdColumn)
                     + "="
-                    + GenericDataTable.Explain.name
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
                     + "."
-                    + GenericDataTable.MasterTableIdColumn;
-                columnQuotedIdentifier = GenericDataTable.DetailDataTableName + "." + GetQuotedQueryIdentifier();
+                    + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(MasterTableIdColumn);
+                columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
+                    DetailDataTableName) + "." + GetQuotedQueryIdentifier();
             }
-
-
-          //  string dataTableQuotedIdentifier =
-        //        GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
-            string uniqueKeyQuotedIdentifier = GenericDataTable.getQuotedColumnsNames(uniqueKeyForSort);
 
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
 

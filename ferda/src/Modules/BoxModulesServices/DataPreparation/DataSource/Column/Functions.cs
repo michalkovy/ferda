@@ -188,9 +188,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                     delegate
                         {
                             string selectExpression = GetSelectExpression(fallOnError);
+                            ColumnInfo info = new ColumnInfo(
+                                tmp,
+                                selectExpression,
+                                DbDataTypeEnum.UnknownType, CardinalityEnum.Nominal, ColumnTypeEnum.SimpleColumn,
+                                String.Empty, String.Empty, String.Empty);
                             return
                                 GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTableName].GetGenericColumn
-                                    (selectExpression);
+                                    (selectExpression, info);
                         },
                     delegate
                         {
@@ -336,8 +341,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                             return new ColumnInfo(tmp1.getDataTableInfo(),
                                                   selectExpression,
                                                   tmp2.dataType,
-                                                  Cardinality
-                                );
+                                                  Cardinality,
+                                                  ColumnTypeEnum.SimpleColumn,
+                                                  String.Empty,
+                                                  String.Empty,
+                                                  String.Empty);
                         return null;
                     },
                 delegate
