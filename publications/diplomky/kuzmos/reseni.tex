@@ -16,33 +16,48 @@ zkušenosti se systémem LISp-Miner a Ferda DataMiner byl navren s ohledem
 na tyto zkušenosti. Projektovı tım se zamìøil na vìtší obecnost prostøedí,
 kde by bylo moné implementovat i jiné dataminingové metody ne GUHA. Zároveò
 v rámci tého projektu byla implementována metoda GUHA s pouitím ji
-existujících modulù prostøedí LISp-Miner. To pøináslo øadu potíí podrobnì
+existujících modulù prostøedí LISp-Miner. To pøineslo øadu potíí podrobnì
 popsanıch T.Kuchaøem v \cite{kuchar} a proto bylo evidentní, e GUHA
 se musí v prostøedí Ferda DataMiner implementovat bez vyuití modulù
 z LISp-Mineru. Pouze tak mohly bıt vyuity všechny vıhody prostøedí Ferda DataMiner.
 \paragraph{}
 Implementaci šesti GUHA procedur a modulù pro zadání úlohy implementoval
 T.Kuchaø ve své diplomové práci ''Experimentální GUHA procedury'',
-jak u zde bylo nìkolikkrát zmínìno.
+jak u zde bylo nìkolikrát zmínìno.
 \paragraph{}
 Daná diplomová práce je rozšíøením existujících (tzn. v prostøedí
 Ferda DataMiner implementovanıch) dataminingovıch procedur. Sdílí
-jak zpùsob zadávání úlohy, tak i nìkteré èásti procedur. Vzhledem
-k odlišné povaze generování relevantních otázek nebylo
-moné vyuit jedné z hlavních vıhod existující implementace
+jak zpùsob zadávání úlohy, tak i nìkteré èásti procedur. Z uivatelského hlediska se
+do relaèní procedury zapojí úloha stejnì jako do nerelaèní a vıstup se zapojuje stejnì
+jako z existujících booleovskıch atributù. Z programátorského hlediska se vyuívá
+prostøedkù jako získávaní bitovıch øetízkù ze zapojenıch atributù,
+inicializace samotné relaèní procedury
+a dalších pøedpøipravenıch prostøedkù, jako jsou interfacy, abstraktní tøídy apod.
+Mnoho z tìchto prostøedkù byly v prùbìhu implementace uzpùsobeny pro
+relaèní datamining, jak bude podrobnìji popsáno v kapitole \ref{implementationdetails}.
+Na druhou stranu pøi implementaci autor vytvoøil další prostøedky usnadòující
+implementaci relaèních rozšíøení pro zbıvající dataminingové procedury.
+Vzhledem k odlišné povaze generování relevantních otázek nebylo
+moné vyuít jedné z hlavních vıhod existující implementace
 GUHA procedur v prostøedí Ferda DataMiner a to cache bitovıch
 øetízkù. Dále existující implementace musela bıt rozšíøena
 o monost práce s bitovımi øetízky na odlišném principu
 ne bylo dosud implementováno.
+\paragraph{}
+Monost snadné integrace a vyuití existujících prostøedkù byla od zaèátku jedním
+z hlavních cílù projektu Ferda DataMiner, protoe takovı pøístup umoòuje rychlejší
+a prùhlednìjší vıvoj a také lepší kvalitu kódu a menší poèet chyb. Z tohoto a dalších dùvodù
+uvedenıch vıše se odvíjely zásady implementace.
+
 \section{Zásady implementace}
 Zde bude popsán obecnı programátorskı pøístup k øešení implementace.
-\subsection{License}
-Protoe prostøedí Ferda DataMiner je vıvíjeno pod licensi
+\subsection{Licence}
+Protoe prostøedí Ferda DataMiner je vyvíjeno pod licenci
 GNU Public License (GPL), implementace v rámci dané diplomové práce
-je rovnì vyvíjeno pod licensi GPL. Daná license umoòuje
+je rovnì vyvíjeno pod licenci GPL. Daná licence umoòuje
 nejen volné pouití programu, ale také zaruèuje volnı pøístup
-ke zdrojovému kódu programu a jeho rozšíøování pod podmínkou,
-e vıslednı kód bude rovnì pod GPL licensi. Plnı text GNU
+ke zdrojovému kódu programu a jeho rozšiøování pod podmínkou,
+e vıslednı kód bude rovnì pod GPL licenci. Plnı text GNU
 Public License lze nalézt na \verb+http://www.gnu.org/licenses/gpl.txt+.
 \subsection{Platforma}
 Implementace v rámci dané diplomové práce byla napsána
@@ -108,7 +123,7 @@ Nicménì si autor také uvìdomoval, e vıše uvedená implementace funkènosti tvoøí
 velmi podstatnou èást diplomové práce M.Ducháèka. Vzhledem k faktu, e autor dané
 diplomové práce mìl pøed sebou implementaci jak hypotézového atributu, tak i tøí
 dalších atributovıch krabièek a jednoho modulu pro úpravu atributu, bylo rozhodnuto
-naimplementovat v rámci agregaèního hypotézového atributu pouze fuknènost, která je podrobnìji
+naimplementovat v rámci agregaèního hypotézového atributu pouze funkènost, která je podrobnìji
 popsaná v kapitole \ref{implementationdetails}.
 
 
@@ -146,7 +161,7 @@ reálné èíslo znamenající validitu dané hypotézy na zkoumané podmnoinì
 \paragraph{}
 To znamená, e pro kadı objekt z hlavní datové matice podúloha zkoumající
 vedlejší datovou matici vrátí právì jedno reálné èíslo. Takto vzniklı
-sloupec se pro nadúlohu nebude nijak líšit od regulerního sloupce hlavní datové matice
+sloupec se pro nadúlohu nebude nijak lišit od regulérního sloupce hlavní datové matice
 a bude tedy zahrnut do generování relevantních otázek a potamo i hypotéz v nadúloze.
 \subsection{Diskuze nad implementaci}
 Z vıše popsaného je jasné, e implementace musí vyøešit nìkolik problému.
@@ -192,7 +207,7 @@ na celé mnoinì øádkù. Také takto implementovanı virtuální atribut by šel
 zapojít do zadání pro všechny dosud implementované GUHA dataminingové
 procedury v prostøedí Ferda DataMiner.
 \paragraph{}
-Hlavním dùvodem napsání pøedchozího odstavce v podmíòovacím zpùsobu
+Hlavním dùvodem napsání pøedchozího odstavce v podmiòovacím zpùsobu
 se stala nemonost škálovatelnosti takového øešení. U i pro existující
 vzorová data virtuální banky Barbora mohl nastat problém se zabíranou
 pamìti pro vygenerované bitstringy. Poèet relevantních otázek v zadané
@@ -221,7 +236,7 @@ vdy na pokyn nadúlohy.
 Vznikla následující úvaha: protoe nadúloha potøebovala ke zpracování celı
 sloupec hlavní datové matice najednou, podúloha by mohla bìet
 jako dataminingová procedura v samostatném vláknì, která by jako vstup mìla
-právì jednu podmnoinu øádkù vedlejší datové matice pro jeden obejkt z hlavní
+právì jednu podmnoinu øádkù vedlejší datové matice pro jeden objekt z hlavní
 datové matice. Tedy pro kadı objekt z hlavní datové matice by bìelo
 jedno vlákno podúlohy, které by postupnì vracelo reálná èísla, která by se formovala
 do virtuálních sloupcù.
@@ -229,7 +244,7 @@ do virtuálních sloupcù.
 Skoro na první pohled je však jasné, e by muselo bıt spuštìn stejnı poèet vláken
 jako poèet øádkù v hlavní datové matici. Idea nutnosti øádovì tisíce vláken pro vıpoèet
 by jednoduché úlohy (i nad tabulkou virtuální banky Barbory) se autorovi dané
-diplomové práce zdala jako velmi špatnì navrena z dùvodù pøíliš velké
+diplomové práce zdála jako velmi špatnì navrena z dùvodù pøíliš velké
 reie operaèního systému na pøepínaní takového poètu vláken. Z dosavadních
 zkušeností je vidìt, e na bìnì dostupném osobním poèítaèi øádovì i stovka vláken
 vìtšinou pøedstavuje velké vytíení komponent systému.
@@ -269,7 +284,7 @@ implementovat relaèní rozšíøení dataminingovıch procedur právì tímto zpùsobem,
 protoe pøípadné nevıhody a jinı pøístup k øešení znamenaly spíše nepohodlí pro programátora, avšak
 nijak nenarušovaly princip metody GUHA jako takové. Navíc poskytovaly základní vıhodu
 škálovatelnosti -- z principu návrhu lze zaruèit, e úloha skonèí i na velkıch tabulkách,
-nevyèerpá RAM nebo poèet povolenıch bìicích vláken v systému. Mùe se stát, e
+nevyèerpá RAM nebo poèet povolenıch bìících vláken v systému. Mùe se stát, e
 pobìí delší dobu, ale skonèí korektnì.
 \end{description}
 \subsection{Dùsledky zvoleného zpùsobu}
@@ -284,7 +299,7 @@ málo pouívané bitové øetízky na základì nìjaké strategie. V pøípadì,
 potøebnı atribut na základì jednoznaèného identifikátoru.
 \paragraph{}
 Jak u bylo zmínìno vıše, takovı pøístup by se zvolenım zpùsobem implementace
-nefungoval -- pøedpokládá totí monost pøístupu ke všem bitovım øetízkùm
+nefungoval -- pøedpokládá toti monost pøístupu ke všem bitovım øetízkùm
 atributu. Návrh hypotézového virtuálního atributu s tímto nepoèítá -- umí
 dát pouze ''další'' bitovı øetízek bez monosti zjistit, kterı další to bude, jakı
 bude mít identifikátor, ke které kategorii bude patøit atd. Z tìchto dùvodù
