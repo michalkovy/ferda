@@ -3,7 +3,9 @@
 \usepackage[czech]{babel}
 \usepackage{quotes}
 \usepackage[cp1250]{inputenc}
+%%\usepackage{ifpdf}
 \usepackage[dvips]{graphicx}
+%%\usepackage{graphicx}
 
 \title{Relaèní GUHA procedury}
 \author{Alexander Kuzmin}
@@ -25,8 +27,8 @@
 %% Fonts for pdfLaTeX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Only needed, if cm-super-fonts are not installed
 %%\ifpdf
-	%\usepackage{ae}       %%Use only just one of these packages:
-	%\usepackage{zefonts}  %%depends on your installation.
+%%	\usepackage{ae}       %%Use only just one of these packages:
+%%	\usepackage{zefonts}  %%depends on your installation.
 %%\else
 	%%Normal LaTeX - no special packages for fonts required
 %%\fi
@@ -35,12 +37,14 @@
 %% Packages for Graphics & Figures %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%\ifpdf %%Inclusion of graphics via \includegraphics{file}
 %%	\usepackage[pdftex]{graphicx} %%graphics in pdfLaTeX
+%%	\DeclareGraphicsExtensions{.eps}
 %%\else
 %%	\usepackage[dvips]{graphicx} %%graphics and normal LaTeX
+%%	\DeclareGraphicsExtensions{.eps}
 %%\fi
 %\usepackage[hang,tight,raggedright]{subfigure} %%Subfigures inside a figure
 %\usepackage{pst-all} %%PSTricks - not useable with pdfLaTeX
-
+\DeclareGraphicsExtensions{.eps}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -78,7 +82,8 @@
 \input{testy.tex}
 \input{zaver.tex}
 \input{bib.tex}
-
+\listoftables
+\listoffigures
 
 
 \end{document}

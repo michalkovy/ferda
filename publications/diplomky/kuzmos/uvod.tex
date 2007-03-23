@@ -1,77 +1,106 @@
 \chapter{Úvod}
+V této kapitole jsou uvedeny základní pojmy dataminingu. Je popsána
+metoda GUHA a jiné metody, jejich implementace. Podrobnìji je
+popsán relaèní datamining
 \label{uvod}
-\section{Úvod do dataminingu}
+\section[Úvod do dobývání znalostí]{Úvod do dobývání znalostí z dat}
 
 \subsection{Pøehled}
 \paragraph{}
-Datamining (DM), èesky také jako Dobývání znalostí z dat,
+Datamining (DM), èesky také jako dobývání znalostí z dat,
 rovnìž známý jako KDD (Knowledge-Discovery in Databases)
-je strojové ziskávání netriviálních, døíve neznámých
-skrytých vzorcù z dat získaných pozorováním nebo velkých databází.
-Takto nalezené vzorce mohou být reprezentovány ve srozumitelné
+je strojové získávání netriviálních, døíve neznámých
+skrytých vztahù z dat získaných pozorováním nebo z libovolnì velkých databází.
+Takto nalezené vztahy mohou být reprezentovány ve srozumitelné
 podobì s cílem dalšího jejich použití. Zde se budeme zabývat
-nalezením vzorcù v podobì asociaèních pravidel (podrobnìji viz
-\ref{asociacnipravidla})
+nalezením vzorcù v podobì asociaèních pravidel a asociaèních pravidel SDS
+(podrobnìji viz \ref{asociacnipravidla}).
 \paragraph{}
-Datamining stojí na pomezí vypoèetních
+Dobývání znalostí stojí na pomezí výpoèetních
 statistických metod, databázových technologii a strojového uèení.
 Metodami dobývání znalostí se dají øešit úlohy deskripce dat, sumarizace,
 segmentace, deskripce konceptù, klasifikace, predikce a analýzy závislostí
 v celé øadì aplikaèních oblastí.
 
-\subsection{Relaèní datamining}
+\subsection{Metody dobývání znalostí}
 \paragraph{}
-Existující metody dobývání znalostí byly pøevážnì navrženy pro data uložena
-v jedné datové matici (tzv. flat-file). Pøi takové organizaci dat øádky datové
-matice reprezentují pozorování (objekty studia, osoby, záznamy, pøedmìty apod.)
-a sloupce datové matice reprezentují promìnné (vlastnosti, atributy nebo
-charakteristky). Aèkoliv takový pohled na zkoumaná data zjednoduší metody
-používané pro dobývání znalostí, v praxi se taková jednoduchá reprezentace dat
-nevyskytuje èasto. Je sice možné data dostat do této podoby, avšak takový úkon
-je èasovì velmi nároèný a èasto se musí provést manuálnì.
-\paragraph{}
-Nìkteré úlohy pro dobývání znalostí navíc nejdou jednoduše provést nad "plochou"
-reprezentaci, obzvláštì v pøípadì, kde uvažujeme mnoho rùzných objektù s jejich
-vlastnostmi a vzájemnými vztahy. Cílem relaèního dataminingu je odstranìní
-omezení na jednu tabulku dat a umožnìní dobývání znalostí z více relaènì
-propojených datových tabulek.
+Pøi dobývání znalostí z dat lze použít více metod. Dobrých výsledkù
+lze dosáhnout pøi kombinaci více druhù. Jako pøíklad mùžeme uvést statistické
+procedury, rozhodovací stromy, neuronové sítì nebo asociaèní pravidla, se
+kterými pracuje metoda GUHA a kterými se zde budeme podrobnìji zabývat.
+Podrobnìjší pøehled metod je uvedený napøíklad v diplomové práci M.Ducháèka \cite{duchacek}.
+
 \section{GUHA}
 \paragraph{}
 GUHA je zkratka pro General Unary Hypotheses Automaton.
-Tuto metodu poprvé formuloval Hájek a kol. již v roce 1966,
-detailnìji pak Hájek a Havránek (1978).
+Tuto metodu poprvé formuloval Hájek již v roce 1966 (podrobnìji viz \cite{guha66}),
+detailnìji pak v \cite{guhabasic}.
 \paragraph{}
-GUHA je druh automatizované explorativní analýzy dat.
-Základní princip GUHA metody je v generovaní všech možných relevantních otázek
-specifikovaných uživatelem, ovìøení každé z nich oproti datùm a reportování
+Jednou z nejdùležitìjších procedur GUHA je procedura ASSOC (podrobnìji v \cite{guhabasic}),
+která hledá asociaèní pravidla, která odpovídají statistickým testùm hypotéz. Tyto vznikají
+generováním všech možných relevantních otázek specifikovaných uživatelem pomocí zadání úlohy,
+ovìøením každé z nich oproti datùm a reportováním
 pouze prostých hypotéz. Hypotéza je prostá, jestliže je pravdivá 
-v analyzované datové matici a zároveò nevyplývá z jiných, jednodušších hypotéz. 
-\subsection{Metody DM}
+v analyzované datové matici a zároveò nevyplývá z jiných, jednodušších hypotéz.
 \paragraph{}
-Pøi tvorbì dataminingového modelu lze použít více metod. Dobrých výsledkù
-dosahují modely kombinující více metod. Jako pøíklad mùžeme uvést statistické
-procedury, rozhodovacé stromy, neuronové sítì nebo asociaèní pravidla, se
-kterými pracuje metoda GUHA a kterými se zde budeme podrobnìji zabývat. Pro
-podrobnìjší pøehled metod pro tvorbu dataminingového modelu viz napøíklad 
-\cite{duchacek}.
+Tyto pravidla jsou daleko obecnìjší než ''klasická'' asociaèní pravidla 
+definovaná v souvislosti s analýzou nákupních košíkù 
 \subsection{Asociaèní pravidla}
 \label{asociacnipravidla}
-\subsubsection{Apriori}
+\subsubsection{Analýza nákupních košíkù}
 \paragraph{}
-Asociaèní pravidla mùžeme rozdìlit na dvì skupiny. První se vztahuje k analýze
-nákupního koše. Takové pravidlo je ve tvaru $X \to Y$, kde $X$ a $Y$ znaèí
-dvì množiny pøedmìtù, které se mohou nacházet v nakupních koších a má
-následující význam: když nákupní koš obsahuje množinu pøedmìtù $X$, 
+''Klasické'' asociaèní pravidlo je definováno Aggravalem (\cite{aggraval})
+v souvislosti s analýzou nákupního košíku.
+\paragraph{}
+Jak uvádí J.Rauch v \cite{skripta},
+klasické asociaèní pravidlo je ve tvaru $X \to Y$, kde $X$ a $Y$ znaèí
+dvì množiny prvkù. Toto pravidlo nám øíká, že transakce obsahující prvky z $X$,
+mají tendenci obsahovat prvky z $Y$.
+\paragraph{}
+Analogie s nákupními košíky øíká, že
+když nákupní koš obsahuje množinu pøedmìtù $X$, 
 pravdìpodobnì bude obsahovat množinu pøedmìtù $Y$. Napøíklad klienti, kteøí
-nakoupí víno, èasto nakupují také sýry. Analýzou transakcí supermarkety mohou
+nakoupí víno, èasto nakupují také sýry.
+Každý z nákupních košíku $b_{1},\ldots, b_{n}$ tedy obsahuje
+nìkteré z položek $P_{1},P_{2},\ldots,P_{K}$.
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Nákupní košík & Položky \\
+\hline
+$b_{1}$ & $P_{1},P_{2},P_{3},P_{4},P_{5}$ \\
+\hline
+$b_{2}$ & $P_{2},P_{3},P_{4},P_{5},P_{K}$ \\
+\hline
+$b_{3}$ & $P_{1},P_{3},P_{12}$ \\
+\hline
+$b_{4}$ & $P_{1},P_{3}$ \\
+\hline
+\vdots & \vdots \\
+\hline
+$b_{n-1}$ & $P_{2},P_{4},P_{7},P_{7},P_{107}$ \\
+\hline
+$b_{n}$ & $P_{2},P_{4},P_{K}$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Pøíklad množiny transakcí}
+\end{table}
+\paragraph{}
+Výraz $P_{2}, P_{5} \to P_{2}, P_{3}$ je pøíklad asociaèního pravidla, které øíká, že
+nákupní košíky obsahující položky $P_{2}$ a $P_{5}$, èasto obsahují i položky $P_{1}$ a $P_{3}$.
+\paragraph{}
+Analýzou transakcí supermarkety mohou
 optimalizovat rozmístìní zboží v prodejnì a zajistit rychlejší a výnosnìjší
-nakupování. Pro dobývání znalostí za využití takových pravidel byl navržen
-algoritmus Apriori, viz \cite{apriori}.
+prodej. Pro dobývání znalostí za využití takových pravidel byl navržen
+algoritmus Apriori, viz \cite{aggraval}.
 \subsubsection{GUHA}
 \paragraph{}
 \label{assocrules}
-Druhou skupinou asociaèních pravidel popisuje metoda GUHA. Je obecnìjší než
-Apriori. Tato metoda byla poprvé formulována v roce 1966 a byla vydana v 1978
+Další skupinu asociaèních pravidel popisuje metoda GUHA. Ty jsou obecnìjší než
+''klasická'' asociaèní pravidla analyzující nákupní košíky.
+Tato metoda byla poprvé formulována v roce 1966 a byla vydána v 1978
  - viz \cite{guhabasic}. Asociaèní pravidlo má tvar $\phi \approx \psi$, pøípadnì
  $\phi \approx \psi / \chi$ pro podmínìná asociaèní pravidla,
 kde $\phi$, $\psi$ a $\chi$ znaèí konjunkce boolských atributù odvozené
@@ -80,7 +109,7 @@ analyzované matice dat. Symbol $\approx$ znaèí obecný kvantifikátor, jenž
 popisuje vztah (asociaci) mezi $\phi$ a $\psi$. Tento mùže být napøíklad
 ve formì implikace nebo ve formì statistického testu. Asociaèní pravidlo
 $\phi \approx \psi$ tedy znamená, že $\phi$ a $\psi$ spolu souvisí ve smyslu
-použitého kvantifikatoru $\approx$, pøípadnì souvisí za pøedpokladu splnìní
+použitého kvantifikátoru $\approx$, pøípadnì souvisí za pøedpokladu splnìní
 podmínky $\chi$ na analyzované matici dat.
 \paragraph{}
 \label{categorization}
@@ -90,11 +119,43 @@ hypotéz koneèný. Data, která nejsou diskrétní, musí být diskretizovány
 pøedem (ve fázi pøípravy dat). Obvykle tak, že se vytvoøí nìkolik 
 nepøekrývajících se intervalù, které pokryjí všechny hodnoty v databázi.
 \paragraph{}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=8cm]{pics/guha.eps}
+\end{center}
+\caption{Práce metody GUHA}
+\end{figure}
+\paragraph{}
 Typická efektivní realizace GUHA procedury používá "vertikální" reprezentaci
 databáze, kde každá hodnota každého atributu je reprezentována øetìzcem bitù
 (viz. kapitola \ref{bitstrings}). Každý bit v øetìzci popisuje jeden objekt.
 Bit 1 reprezentuje "objekt má tuto hodnotu", zatímco bit 0 znamená
 "objekt nemá tuto hodnotu".
+
+
+
+\subsection{Relaèní dobývání znalostí}
+\paragraph{}
+Existující metody dobývání znalostí byly pøevážnì navrženy pro data uložena
+v jedné datové matici (tzv. flat-file). Pøi takové organizaci dat øádky datové
+matice reprezentují pozorování (objekty studia, osoby, záznamy, pøedmìty apod.)
+a sloupce datové matice reprezentují promìnné (vlastnosti, atributy nebo
+charakteristiky). Aèkoliv takový pohled na zkoumaná data zjednoduší metody
+používané pro dobývání znalostí, v praxi se velmi èasto vyskytují data ve složitìjší
+reprezentaci, napøíklad, ve vícero datových maticích, které jsou mezi sebou
+v relaci.
+\paragraph{}
+Je samozøejmì možné požadovaná data spojit do jedné datové matice, avšak takový úkon
+je èasovì velmi nároèný a èasto se musí provést manuálnì pro každou úlohu, chceme-li
+zkoumat napøíklad jiné atributy objektù z matice.
+\paragraph{}
+Nìkteré úlohy pro dobývání znalostí navíc nejdou jednoduše provést nad ''plochou''
+reprezentaci, obzvláštì v pøípadì, kde uvažujeme mnoho rùzných objektù s jejich
+vlastnostmi a vzájemnými vztahy. Cílem relaèního dataminingu je odstranìní
+omezení na jednu tabulku dat a umožnìní dobývání znalostí z více relaènì
+propojených datových tabulek. Navíc, jak uvádí T.Karban v \cite{dateso2005},
+ponechání dat v relaèním tvaru mùže zachovat informace, které mohou být
+vyjádøeny ve formì relaèních vztahù.
 
 \section{Dùležité pojmy metody GUHA}
 Zde bude následovat struèný pøehled principù dataminingu dle metody GUHA,
@@ -208,8 +269,8 @@ Základní booleovský atribut $A(\alpha)$ nabývá hodnoty \emph{true} na øádku
 atributu \emph{a} na øádku \emph{o} - dle odstavce 2 v \cite{guha}.
 Hodnota odvozených booleovských atributù se definuje obvyklým zpùsobem
 dle následující tabulky:
-\paragraph{Hodnoty odvozených boolských atributù}
-\paragraph{}
+\begin{table}[!h]
+\begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 $\phi$ & $\psi$ & $\phi \wedge \psi$ & $\phi \vee \psi$ & $\neg\phi$ \\
@@ -223,6 +284,9 @@ false & true & false & true & true \\
 false & false & false & false & true \\
 \hline
 \end{tabular}
+\end{center}
+\caption{Hodnoty odvozených boolských atributù}
+\end{table}
 \paragraph{}
 Hodnota booleovského atributu $\phi$ v øádku o matice \emph{M} se znaèí
 $\phi(o,\emph{M})$. Platí, že $\phi(o,\emph{M})=true$, pokud $\phi$ je pravdivý
@@ -323,8 +387,8 @@ vytváøeny pøímo ze sloupcù datové matice, ale za bìhu - podrobnìji pojem
 virtuálního atributu je rozebrán v kapitole \ref{vattributes}.
 \paragraph{}
 Jako ukázku použijeme následující datovou tabulku.
-\paragraph{Vzorová datová matice}
-\paragraph{}
+\begin{table}[!h]
+\begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
 ID & A & B \\
@@ -342,6 +406,9 @@ ID & A & B \\
 6 & 2 & 3 \\
 \hline
 \end{tabular}
+\end{center}
+\caption{Vzorová datová matice}
+\end{table}
 
 \paragraph{}
 Bitový øetìzec $A(\alpha)$ má hodnotu 1 na pozici $i$ právì tehdy, když objekt 
@@ -349,8 +416,8 @@ s ID $i$ má hodnotu $\alpha$ ve sloupci $A$, jinak má bitový øetìzec
 na pozici $i$ hodnotu 0.
 Bitové øetìzce základních booleovských a booleovských atributù
 mohou vypadat následovnì. 
-\paragraph{Bitové øetìzce atributù}
-\paragraph{}
+\begin{table}[!h]
+\begin{center}
 \begin{tabular}{*{7}{|c}|}
 \hline
  & \multicolumn{2}{|c|}{Atributy} 
@@ -373,6 +440,10 @@ $ID$ & $A$ & $B$ &$A(1)$ & $B(1,2)$ & $A(1)\wedge B(1,2)$ & $\neg B(1,2)$ \\
 6 & 2 & 3 & 0 & 0 & 0 & 1 \\
 \hline
 \end{tabular}
+\end{center}
+\caption{Bitové øetìzce atributù}
+
+\end{table}
 \subsection{Generování relevantních otázek}
 Následující odstavec velmi pøibližnì popisuje zpùsob generování relevantních
 otázek. Podrobnìji se s principem generování lze seznámit v disertaèní práci
@@ -406,24 +477,20 @@ foreach(BitString condition in Conditions)
 
 Objekty \verb+Antecedents+, \verb+Succedents+ a \verb+Conditions+ jsou
 iterátory bitových øetìzcù umožòující prùchod pøes všechny možné hodnoty
-zadání booleovských atributù. Ústøední implentaèní úlohou autora dané
+zadání booleovských atributù. Ústøední implementaèní úlohou autora dané
 diplomové práce byla právì implementace iterátoru bitových øetìzcù, který by
 poskytoval bitové øetízky odpovídající virtuálním atributùm.
 \subsection{Generování boolských atributù}
 Zde pouze struènì naznaèíme zpùsob generování booleovských atributù a
-poznamenejtme, že tento zpùsob uživaný metodou GUHA se podstatnì liší
-od zpùsobu, který používá algoritmus APRIORI popsaného v \cite{apriori}.
+poznamenejme, že tento zpùsob užívaný metodou GUHA se podstatnì liší
+od zpùsobu, který používá algoritmus APRIORI popsaného v \cite{aggraval}.
 
+\begin{figure}[!h]
 \begin{center}
-\includegraphics[width=12.7cm]{pics/battr.eps}
+\includegraphics[width=10cm]{pics/battr.eps}
 \end{center}
-
-%\begin{figure}[h]
-%	\centering
-%		\includegraphics{battr.eps}
-%	\label{fig:battr}
-%\end{figure}
-
+\caption{Generování booleovských attributù}
+\end{figure}
 
 \subsection{Dataminingové procedury}
 Zde popíšeme dataminingové procedury 4ft a SD4ft miner, protože v dané diplomové práci
@@ -522,7 +589,7 @@ nejdùležitìjší aspekty kritické pro pochopení implementace v rámci prostøedí
 Ferda.
 \subsection{Virtuální atributy}
 \label{vattributes}
-Asociáèní pravidla se rozšíøí o možnost práce s více datovými tabulkami.
+Asociaèní pravidla se rozšíøí o možnost práce s více datovými tabulkami.
 Datová matice, která byla zkoumána pomocí pùvodních asociaèních pravidel, 
 bude hlavní. Další datové tabulky budou rozšíøením hlavní tabulky o nìjaký atribut
 a mohou být obecnì ve vztahu 1:N ke hlavní datové matici. Jako pøíklad mùže
@@ -533,7 +600,7 @@ uložená mìøení krevního tlaku pro jednotlivé pacienty.
 \paragraph{}
 Základním pojmem, o který se rozšíøí pùvodní asociaèní pravidla, je
 \emph{vir\-tuální atribut}. Virtuální atributy jsou novì pøidané sloupce
-k analyzované datové matici. Tyto sloupce se do pùvodné datové matice zpìtnì
+k analyzované datové matici. Tyto sloupce se do pùvodní datové matice zpìtnì
 neukládají, avšak dolování dat probíhá, jakoby tyto novì vytvoøené sloupce
 v pùvodní matici byly - vytváøejí se (nebo v pøípadì konkrétní implementace
 v rámci dané diplomové práce se vytváøí pouze jejich reprezentace za pomocí
@@ -545,7 +612,7 @@ základní data o klientech a tabulka transakcí obsahuje pohyb na jejich úètech.
 Zkoumejme následující hypotézu:
 \begin{eqnarray}
 \label{eq:aggrattributeexample}
-TYPE="PRIJEM" \& AMOUNT > AVG(AMOUNT)*2 \Rightarrow_{80\%} \nonumber\\
+TYPE="VKLAD" \& AMOUNT > AVG(AMOUNT)*2 \Rightarrow_{80\%} \nonumber\\
 OPERATION="PREVOD NA UCET"
 \end{eqnarray}
 Zde jsme použili jeden virtuální atribut $AVG(AMOUNT)*2$, kde $AVG$ je
@@ -556,21 +623,22 @@ na odborníka v oblasti bankovnictví.
 Uvažme další hypotézu:
 \begin{eqnarray}
 \label{eq:hyprattributeexample}
-JEDENPRIJEM < 10000 \& BYDLISTE="Beroun" \Rightarrow_{80\%} \nonumber\\
-STATUSUVERU="D"
+VYSOKEINKASO \& SALARY(>15000) \& BYDLISTE="Praha" \Rightarrow_{80\%} \nonumber\\
+STATUSUVERU="Dobry"
 \end{eqnarray}
-Hypotéza tvrdí, že klienti se jedním zdrojem pøíjmu pod 10000 mìsíènì s
-bydlištìm v okrese Beroun mají z 80\% špatné úvìry.
-Zde jsme použili jeden virtuální atribut $JEDENPRIJEM$ . Virtuální
-atribut $JEDENPRIJEM$ mùže vypadat následovnì:
+Hypotéza tvrdí, že klienti, kteøí mají vyšší plat a platí vysoké inkaso
+v okrese Praha, mají z 80\% dobré úvìry.
+Zde jsme použili jeden virtuální atribut $VYSOKEINKASO$ , který
+mùže vypadat následovnì:
 \begin{eqnarray}
 \label{eq:hyprattributeexample1}
-TYPE="PRIJEM" \& AMOUNT > 1000 \Rightarrow_{90\%} \nonumber\\
-ACCOUNT(A) / KLIENT (B)
+TYPE="INKASO"  \Rightarrow_{90\%} \nonumber\\
+AMOUNT > 5000
 \end{eqnarray}
-Jinými slovy, klient má jeden zdroj pøíjmu, pokud výšší pøíchozí platba
-z 90\% pøíjde ze stejního úètu (mùže se stát, že se jednorázovì vyplatí peníze
-napø. ze stavebního spoøení, tudíž jistota nemùže být 100\%).
+Jinými slovy, pokud typ transakce je INKASO, je z 90\% vysoké.
+\paragraph{}
+Zde data s informacemi o klientech a data s informacemi o jejich transakcích
+jsou dvì samostatné datové matice.
 \paragraph{}
 Z výše uvedeného lze vidìt, jak rozdìlujeme virtuální atributy. Uvažujeme
 dva základní druhy, jak jsou chápany
@@ -584,7 +652,7 @@ použít míru platnosti hypotéz pro jednotlivé záznamy v hlavní tabulce jako
 nový datový sloupec.
 \subsubsection{Agregaèní atributy}
 Agregaèní atribut se reprezentuje novým virtuálním sloupcem (který se
-kvùli samotné podstatì principu vituálního atributu neukládá do databáze),
+kvùli samotné podstatì principu virtuálního atributu neukládá do databáze),
 Ten vzniká jako výsledek funkce nad daty z více datových tabulek, pøièemž
 zmínìná funkce pøiøadí každému objektu v hlavní datové matici reálné èíslo
 vypoèítané na základì hodnot v odpovídajících sloupcích z vedlejších datových 
@@ -601,9 +669,9 @@ pouze za použití SQL agregaèních funkcí.
 
 \subsubsection{Hypotézové atributy}
 \label{hypattr}
-Narozdíl od agregaèních atributù, hypotézové atributy nelze získat za pomocí
-agregaèních funkcí nad daty z hhlavní a vedlej\-ších datových tabulek. Tyto 
-atributy vzníkají jako výsledek bìhu data\-miningových úloh nad vedlejšími
+Na rozdíl od agregaèních atributù, hypotézové atributy nelze získat za pomocí
+agregaèních funkcí nad daty z hlavní a vedlej\-ších datových tabulek. Tyto 
+atributy vznikají jako výsledek bìhu data\-miningových úloh nad vedlejšími
 datovými tabulkami a dále se používají pøi bìhu dataminingových úloh nad
 hlavní datovou tabulkou. Ústøední myšlenkou je zavést definici atributu
 se sémantikou hypotézy (ve smyslu metody GUHA), jehož hodnotou by byla konkrétnì
@@ -612,9 +680,9 @@ nadefinovaný sloupec by se použil "o úroveò výše" - pro generaci hypotéz
 pøi bìhu další dataminingové úlohy.
 \paragraph{}
 Uvedli jsme pøíklad \ref{eq:hyprattributeexample}. Na základì platnosti hypotézy
-$JEDENPRIJEM$ mùžeme rozdìlit množinu klientù a zkoumat další souvislosti
-pouze na té podmnožinì klientù, kde platí hypotéza $JEDENPRIJEM$. Uvažujeme-li
-platnost hypotézy $JEDENPRIJEM$ jako (virtuální) atribut, mùžeme ho zapojit
+$VYSOKEINKASO$ mùžeme rozdìlit množinu klientù a zkoumat další souvislosti
+pouze na té podmnožinì klientù, kde platí hypotéza $VYSOKEINKASO$. Uvažujeme-li
+platnost hypotézy $VYSOKEINKASO$ jako (virtuální) atribut, mùžeme ho zapojit
 do zadání nové úlohy napøíklad pro 4ft miner jako antecedent nebo sukcedent.
 Je-li atribut zapojen jako antecedent, omezuje množinu zkoumaných objektù
 na ty, pro které daná hypotéza z virtuálního atributu platí a zy dále zkoumá.
@@ -636,7 +704,7 @@ s nimi pracuje jako s ostatními sloupci.
 \paragraph{}
 Podíváme-li se na analogii s klasickým zadáním úlohy nad jednou datovou matici,
 uvidíme, že je to v podstatì stejný princip. Výsledkem klasického zadání
-je nìjaká množina relevantních otýzek a ta se ovìøí nad datovou matici - u každé otázky
+je nìjaká množina relevantních otázek a ta se ovìøí nad datovou matici - u každé otázky
 se prozkoumá, zda platí pro zadaná data a pokud ano, je to hypotéza a jde do výsledku.
 \paragraph{}
 Stejnì to funguje i pro relevantní otázky z hypotézového atributu - pro každý
@@ -676,7 +744,7 @@ se nehodí do celkové koncepce tohoto prostøedí, aè mohou jsou v tomto
 prostøedí implementovatelné a jsou pro nì autorem vytvoøeny programovací
 prostøedky.
 \item[Zobrazení] výsledkù úloh obsahujících rekurzivní virtuální atributy
-se stává sámo o sobì obtížným. Pro každou výslednou hypotézu se musí zobrazit
+se stává samo o sobì obtížným. Pro každou výslednou hypotézu se musí zobrazit
 její atributy, které mohou být tvoøeny opìt hypotézami, které mají své atributy atd.
 Tento dùvod souvisí s pøedchozím - nejasný význam výsledkù vede k potížím jak
 pøi interpretaci, tak i pøi pouhém zobrazení.
