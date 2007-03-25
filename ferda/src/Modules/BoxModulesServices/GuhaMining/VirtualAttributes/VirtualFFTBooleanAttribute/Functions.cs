@@ -457,7 +457,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             List<GuidAttributeNamePair> _result = new List<GuidAttributeNamePair>();
             _result.AddRange(Common.GetAttributeNames(_boxModule, this));
 
-            _result.Add(new GuidAttributeNamePair(Guid, "VirtualFFTBooleanAttribute"));
+            _result.Add(new GuidAttributeNamePair(Guid, "V-FFT-Bool"));
 
             return _result.ToArray();
         }

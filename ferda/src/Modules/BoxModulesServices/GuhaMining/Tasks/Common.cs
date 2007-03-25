@@ -209,6 +209,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         public const string PropNumberOfHypotheses = "NumberOfHypotheses";
         public const string PropStartTime = "StartTime";
         public const string PropEndTime = "EndTime";
+        public const string PropTotalTime = "TotalTime";
 
         public static double TotalNumberOfRelevantQuestions(ITask task)
         {
