@@ -360,7 +360,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
             List<GuidAttributeNamePair>_result = new List<GuidAttributeNamePair>();
                 _result.AddRange(Common.GetAttributeNames(_boxModule, this));
 
-            _result.Add(new GuidAttributeNamePair(Guid,"VirtualSDFFTBooleanAttribute"));
+            _result.Add(new GuidAttributeNamePair(Guid,"V-SDFFT-Bool"));
 
             return _result.ToArray();
         }

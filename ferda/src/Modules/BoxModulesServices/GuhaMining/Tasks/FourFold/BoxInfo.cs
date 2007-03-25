@@ -52,9 +52,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
                 case Common.PropNumberOfHypotheses:
                     return new LongTI(Common.NumberOfHypotheses(Func));
                 case Common.PropStartTime:
-                    return new DateTimeTI(Common.StartTime(Func));
+                    return new StringTI(Common.StartTime(Func).ToString());
                 case Common.PropEndTime:
-                    return new DateTimeTI(Common.EndTime(Func));
+                    return new StringTI(Common.EndTime(Func).ToString());
+                case Common.PropTotalTime:
+                    TimeSpan _ts = (TimeSpan)((Common.EndTime(Func) - Common.StartTime(Func)));
+                    return new StringTI(_ts.ToString());
                 default:
                     throw new NotImplementedException();
             }
