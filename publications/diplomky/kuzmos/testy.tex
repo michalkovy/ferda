@@ -1,2 +1,158 @@
 \chapter{Testy}
 \label{tests}
+V této kapitole bude prozkoumán vliv rùzných faktorù na bìh
+úlohy s použitím relaèního rozšíøení dataminingové procedury.
+Autor bude zkoumat vliv zejména velikosti dat a poètu vygenerovaných
+virtuálních sloupcù. 
+\paragraph{}
+Protože implementace relaèních rozšíøení
+je v prostøedí Ferda DataMiner vùbec první, bude se testovat i
+celkový vliv relaèního atributu na rychlost bìhu úlohy (tj.
+bude se zkoumat doba bìhu úloh totožných až na pøítomnost
+virtuálního atributu v zadání úlohy). Také se ukáže, že použití
+bufferu pro bitové øetízky vygenerované virtuálním atributem je z hlediska
+výkonu nezbytné.
+
+\section[Zkoumaná data]{Zkoumané datové matice}
+Zkoumaná data vychází z databáze fiktivní banky ''Barbora'' použivané
+pùvodnì v projektu LISp-Miner a dále Ferda DataMiner. Databáze obsahuje
+data o fiktivních klientech, jejich pohlaví, místa bydlištì, transakcích, pùjèkách atd.
+\subsection[Hlavní matice]{Hlavní datová matice}
+Hlavní datová matice s názvem ''Client\_Loans'' obsahuje údaje o jednotlivých klientech.
+Následující tabulka obsahuje popis sloupcù hlavní datové matice.
+
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Název sloupce & Typ sloupce & Popis sloupce \\
+\hline
+client\_id & Dlouhé celé èíslo & Identifikátor klienta  \\
+\hline
+loan\_id & Dlouhé celé èíslo & Identifikátor pùjèky klienta  \\
+															&&	(modelována situace, \\
+															&&	 kde každý klient má jednu pùjèku)\\
+\hline
+account\_id & Dlouhé celé èíslo & Identifikátor úètu klienta  \\
+															&&	(modelována situace, \\
+															&&   kde každý klient má jeden úèet)\\
+\hline
+date & Dlouhé celé èíslo & Datum založení úètu  \\
+\hline
+amount & Dlouhé celé èíslo & Velikost pùjèky  \\
+\hline
+duration & Dlouhé celé èíslo & Doba pùjèky  \\
+\hline
+payments & Dlouhé celé èíslo & Výše splátky  \\
+\hline
+status & text & Kvalita dluhu (subjektivní hodnocení)  \\
+\hline
+birth\_number & Dlouhé celé èíslo & Rodné èíslo  \\
+\hline
+DistrictID & Dlouhé celé èíslo & Identifikátor bydlištì  \\
+\hline
+District & text & Bydlištì \\
+\hline
+Region & text & Region \\
+\hline
+Inhabitants & Dlouhé celé èíslo & Poèet obyvatel  \\
+\hline
+Muni499 & Dlouhé celé èíslo & Poèet obcí v regionù  \\
+														&& s maximálnì 499 obyvatelí \\
+\hline
+Muni1999 & Dlouhé celé èíslo & Poèet obcí v regionù  \\
+														&& s maximálnì 1999 obyvatelí \\
+\hline
+Muni9999 & Dlouhé celé èíslo & Poèet obcí v regionù  \\
+														&& s maximálnì 9999 obyvatelí \\
+\hline
+MuniOver & Dlouhé celé èíslo & Poèet obcí v regionù  \\
+														&& s více než 9999 obyvatelí \\
+
+\hline
+Cities & Dlouhé celé èíslo & Poèet mìst v regionu \\
+\hline
+PopulationRation & Dlouhé celé èíslo &??\\
+\hline
+Salary & Dlouhé celé èíslo & Prùmìrný plat v regionu\\
+\hline
+Unemployment95 & Dlouhé celé èíslo & Nezamìstnanost v regionu v roce 1995\\
+\hline
+Unemployment96 & Dlouhé celé èíslo & Nezamìstnanost v regionu v roce 1996\\
+\hline
+EnterpreneursRation & Dlouhé celé èíslo & Podnikatelé v regionu \\
+\hline
+Crimes95 & Dlouhé celé èíslo & Kriminalita v regionu v roce 1995\\
+\hline
+Crimes96 & Dlouhé celé èíslo & Kriminalita v regionu v roce 1996\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Sloupce hlavní datové matice ''Client\_Loans''}
+\end{table}
+\clearpage
+
+
+
+\subsection[Vedlejší matice]{Vedlejší datová matice}
+Vedlejší datová matice ''trans\_pro\_client\_loan'' obsahuje transakce pro klienty
+z tabulky ''Client\_Loans''. Pro úèely testování je tato tabulka obsažena
+v databází ve tøech verzích: malá, støední a velká, kde poèet øádkù pro jednotlivé verze je
+5000, 10000 a 50000.
+\paragraph{}
+Následující tabulka obsahuje popis sloupcù vedlejší datové matice.
+
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Název sloupce & Typ sloupce & Popis sloupce \\
+\hline
+trans\_id & Dlouhé celé èíslo & Identifikátor transakce  \\
+\hline
+client\_id & Dlouhé celé èíslo & Identifikátor klienta  \\
+\hline
+account\_id & Dlouhé celé èíslo & Identifikátor úètu  \\
+\hline
+date & Dlouhé celé èíslo & Datum transakce  \\
+\hline
+type & text & Typ transakce (pøíjem, výdej nebo výbìr)  \\
+\hline
+operation & text & Typ operace (pøevod z / na úèet, výbìr,  \\
+&&vklad nebo výbìr kartou)  \\
+\hline
+Amount & Dlouhé celé èíslo & Velikost transakce  \\
+\hline
+Balance & Dlouhé celé èíslo & Zùstatek ??  \\
+\hline
+k\_symbol & Dlouhé celé èíslo & Kostatní symbol (úèel transakce, napø. inkaso)  \\
+\hline
+bank & text & Zdrojová nebo cílová banka transakce  \\
+\hline
+account & Dlouhé celé èíslo & Zdrojový nebo cílový úèet transakce  \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Sloupce vedlejší datové matice ''trans\_pro\_client\_loan''}
+\end{table}
+
+
+\section[4FT atribut]{4FT virtuální boolský atribut}
+\subsection[Úloha]{Vychodiska zadání a zadaná úloha}
+Základní inspirací pro úlohu pro relaèní 4FT bylo zjistit nìjaké údaje
+o objektech z hlavní datové matice na základì údajù z vedleší datové matice.
+V našem pøípadì hledáme nìjaké vztahy v matici klientù na zákldì údajù
+jak v hlavní matici klientù, tak i ve velejší matici jejich transakcí.
+\paragraph{}
+Ná základì údajù obsažených ve zkoumaných datových maticích a po diskuzi
+s vedoucím práce bylo rozhodnuto sestavit co nejjednoduší úlohu pro
+relaèní proceduru a zapojit ji do úlohy pro bìžný 4ft Miner.
+\subsection[Výsledky testù]{Výsledky testù}
+\subsection{Závìr}
+
+
+
+\section[SD4FT atribut]{SD4FT virtuální boolský atribut}
+\subsection[Úloha]{Vychodiska zadání a zadaná úloha}
+\subsection[Výsledky testù]{Výsledky testù}
+\subsection{Závìr}

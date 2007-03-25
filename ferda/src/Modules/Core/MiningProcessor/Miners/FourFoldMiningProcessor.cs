@@ -358,32 +358,35 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                         string _yieldStringName = String.Empty;
 
-                        if (!(pA.Identifier is IEmptyBitString))
+                        if (!(pA.Identifier is IEmptyBitString) && !(String.IsNullOrEmpty(pA.Identifier.ToString())))
                         {
                             _yieldStringName = 
-                                MarkEnum.Antecedent.ToString() +
+                                //MarkEnum.Antecedent.ToString() +
+                                "[ant]" + 
                             ": " + pA.Identifier;
                         }
 
-                        if (!(pS.Identifier is IEmptyBitString))
+                        if (!(pS.Identifier is IEmptyBitString) && !(String.IsNullOrEmpty(pS.Identifier.ToString())))
                         {
                             if (!String.IsNullOrEmpty(_yieldStringName))
                             {
                                 _yieldStringName = _yieldStringName + ", ";
                             }
                                 _yieldStringName = _yieldStringName +
-                                    MarkEnum.Succedent.ToString() +
+                                //    MarkEnum.Succedent.ToString() +
+                                " *** [succ]" + 
                                 ": " + pS.Identifier;
                         }
 
-                        if (!(pC.Identifier is IEmptyBitString))
+                        if (!(pC.Identifier is IEmptyBitString) && !(String.IsNullOrEmpty(pC.Identifier.ToString())))
                         {
                             if (!String.IsNullOrEmpty(_yieldStringName))
                             {
                                 _yieldStringName = _yieldStringName + ", ";
                             }
                             _yieldStringName = _yieldStringName +
-                                MarkEnum.Condition.ToString() +
+                                //MarkEnum.Condition.ToString() +
+                                " / [cond]" + 
                             ": " + pC.Identifier;
                         }
 
