@@ -137,18 +137,19 @@ account & Dlouhé celé èíslo & Zdrojový nebo cílový úèet transakce  \\
 \caption{Sloupce vedlejší datové matice ''trans\_pro\_client\_loan''}
 \end{table}
 
-
-\section[4FT atribut]{4FT virtuální boolský atribut}
-\subsection[Úloha]{Východiska zadání a zadaná úloha}
-Základní inspirací pro úlohu pro relaèní 4FT bylo zjistit nìjaké údaje
+\section[Úloha]{Východiska zadání a zadaná úloha}
+Základní inspirací pro úlohu pro relaèní 4FT a SD4FT bylo zjistit nìjaké údaje
 o objektech z hlavní datové matice na základì údajù z vedlejší datové matice.
 V našem pøípadì hledáme nìjaké vztahy v matici klientù na základì údajù
 jak v hlavní matici klientù, tak i ve vedlejší matici jejich transakcí.
+Pro SD4FT zkoumáme rozdíly mezi dvìma množinami.
 \paragraph{}
 Na základì údajù obsažených ve zkoumaných datových maticích a po diskuzi
 s vedoucím práce bylo rozhodnuto zaèít od jednodušších úloh pro
-relaèní proceduru a zapojovat je do úlohy pro bìžný 4ft Miner. Zkoumá se
+relaèní proceduru a zapojovat je do úlohy pro bìžný 4ft Miner. V úlohách se zkoumá
 status úvìru v závislosti na rùzných parametrech.
+
+\subsection[4FT atribut]{4FT virtuální boolský atribut}
 \subsubsection[Úloha 1]{Úloha 1}
 Úloha je zadaná pro 4ft miner následujícím zpùsobem:
 
@@ -171,6 +172,10 @@ fundované implikace $Founded implication$.
 V následujících tabulkách jsou uvedeny doby bìhu úloh
 s rùznými velikostmi vedlejší datové matice a poètem relevantních
 otázek vygenerovaných relaèním 4ft booleovským atributem.
+\paragraph{}
+Každý test se pouštìl tøikrát a výsledný èas se zprùmìroval. Mezi každým spuštìním
+Ferda DataMiner byl znovu spuštìn, aby byly zachovány stejné podmínky pro jednotlivé
+bìhy (bez tohoto by se pøi druhém a dalším spuštìní naèítaly informace pro krabièky z cache).
 \subsubsection{Úloha 1}
 \begin{table}[!h]
 \begin{center}
@@ -179,18 +184,18 @@ otázek vygenerovaných relaèním 4ft booleovským atributem.
 Transakce / & malé & støední &  velké  & bez rel. atributu \\
 \# rel.otazek&&&&\\
 \hline
-16 &&&&\\
+16 & 14s & 25s & 1m 10s&\\
 \hline
-100 &&&&\\
+50 & 15s & 25s & 1m 32s &\\
 \hline
-1000 &&&&\\
+80 & 9m 2s & 11m 11s& 12m 2s&\\
+\hline
+100 & 12m & 24m & 1h 3m &\\
 \hline
 \end{tabular}
 \end{center}
 \caption{Test relaèního 4ft mineru: úloha 1}
 \end{table}
-\subsection{Závìr}
-
 
 
 \section[SD4FT atribut]{SD4FT virtuální boolský atribut}
@@ -217,4 +222,12 @@ Transakce / & malé & støední &  velké  & bez rel. atributu \\
 \end{center}
 \caption{Test relaèního SD4ft mineru: úloha 1}
 \end{table}
-\subsection{Závìr}
+
+\section{Závìr}
+Z provedených testù plyne, že doba bìhu pro obì úlohy záleží hlavnì
+na poètu vygenerovaných virtuálních sloupcù. Velikost vedlejší datové matice
+sice má na úlohu vliv, ale zøejmì není ani lineární. To vyplývá ze zpùsobu,
+jakým virtuální atribut funguje: pøi prvním generování spoèítá bitové øetízky
+a uloží si je do bufferu, pøi dalších voláních se pracuje s bufferem. Proto
+pøi rùzných velikostech vedlejší datové matice se úmìrnì mìní pouze
+doba prvního generování.
