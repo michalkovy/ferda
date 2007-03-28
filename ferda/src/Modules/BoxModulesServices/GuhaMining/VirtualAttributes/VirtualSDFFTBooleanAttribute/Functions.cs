@@ -57,7 +57,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
 
         #region Properties
 
-        public const string PropMasterIdColumn = "MasterIdColumn";
+     //   public const string PropMasterIdColumn = "MasterIdColumn";
         public const string PropDataType = "DataType";
         public const string PropCardinality = "Cardinality";
         public const string SockMasterDataTable = "MasterDataTable";
@@ -75,6 +75,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         private int _skipFirstN = -1;
         private int bitStringsYielded = 0;
 
+        /// <summary>
+        /// Enumerator for bitstrings yielded by virtual attribute
+        /// </summary>
         private IEnumerator<BitStringIceWithCategoryId> BitStringEnumerator
         {
             get
@@ -135,7 +138,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
                         if (_primaryKeyColumns.Length > 0)
                         {
                             string _dataTableName = _dtPrx.getDataTableInfo().dataTableName;
-                            _countVector = __prx.GetCountVector(MasterTableIdColumn, _dataTableName,_primaryKeyColumns[0]);
+                            _countVector = __prx.GetCountVector(
+                                _primaryKeyColumns[0], _dataTableName, String.Empty);
                             return _countVector;
                         }
                         else
@@ -166,7 +170,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
             get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
 
-        public string MasterTableIdColumn
+      /*  public string MasterTableIdColumn
         {
             get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
         }
@@ -174,7 +178,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         public string MasterDataTable
         {
             get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
-        }
+        }*/
 
         public ImportanceEnum Importance
         {

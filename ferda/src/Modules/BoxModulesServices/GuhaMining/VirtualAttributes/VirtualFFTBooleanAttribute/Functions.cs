@@ -57,8 +57,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 
         #region Properties
 
-        public const string PropMasterIdColumn = "MasterIdColumn";
-        public const string PropDetailIdColumn = "DetailIdColumn";
+     //   public const string PropMasterIdColumn = "MasterIdColumn";
+    //    public const string PropDetailIdColumn = "DetailIdColumn";
         public const string PropDataType = "DataType";
         public const string PropCardinality = "Cardinality";
         public const string SockMasterDataTable = "MasterDataTable";
@@ -90,11 +90,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                 if (!_minerInitialized)
                 {
                     _bitStringEnumerator = Common.RunTaskNoResult(
-                          _boxModule, this,
-                          TaskTypeEnum.FourFold,
-                          ResultTypeEnum.TraceBoolean,
-                          CountVector,
-                          Guid, miningFunctions, _skipFirstN, _current).GetEnumerator();
+                        _boxModule, this,
+                        TaskTypeEnum.FourFold,
+                        ResultTypeEnum.TraceBoolean,
+                        CountVector,
+                        Guid, miningFunctions, _skipFirstN, _current).GetEnumerator();
 
                     _minerInitialized = true;
                     return _bitStringEnumerator;
@@ -189,7 +189,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         /// <summary>
         /// Master datatable id column (for CountVector)
         /// </summary>
-        public string MasterTableIdColumn
+      /*  public string MasterTableIdColumn
         {
             get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
         }
@@ -197,7 +197,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         public string MasterDataTable
         {
             get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
-        }
+        }*/
 
         /// <summary>
         /// Literal importance

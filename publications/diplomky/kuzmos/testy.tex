@@ -200,6 +200,21 @@ Transakce / & malé & støední &  velké  & bez rel. atributu \\
 
 \section[SD4FT atribut]{SD4FT virtuální boolský atribut}
 \subsection[Úloha]{Východiska zadání a zadaná úloha}
+Úloha je zadaná pro 4ft miner následujícím zpùsobem:
+
+\begin{equation*}
+District \& Salary \& \emph{TypeImplAmountBank} \Rightarrow_{90\%} LoanStatus
+\end{equation*}
+
+$\Rightarrow_{90\%}$ je v tomto pøípadì kvantifikátor fundované implikace $Founded implication$
+a \emph{TypeImplAmountBank} je virtuální SD4ft atribut s následujícím zadáním:
+
+\begin{equation*}
+Type \Rightarrow_{?} Amount (Bank)
+\end{equation*}
+
+$\Rightarrow$ je v tomto pøípadì rovnìž kvantifikátor
+fundované implikace $Founded implication$.
 \subsection[Výsledky testù]{Výsledky testù}
 V následujících tabulkách jsou uvedeny doby bìhu úloh
 s rùznými velikostmi vedlejší datové matice a poètem relevantních
