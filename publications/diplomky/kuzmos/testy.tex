@@ -227,11 +227,11 @@ otázek vygenerovaných relaèním SD4ft booleovským atributem.
 Transakce / & malé & støední &  velké  & bez rel. atributu \\
 \# rel.otazek&&&&\\
 \hline
-16 &&&&\\
+16 &4m30s&8m01s&12m30s&\\
 \hline
-100 &&&&\\
+30 &&&&\\
 \hline
-1000 &&&&\\
+50 &&&&\\
 \hline
 \end{tabular}
 \end{center}
@@ -241,7 +241,8 @@ Transakce / & malé & støední &  velké  & bez rel. atributu \\
 \section{Závìr}
 Z provedených testù plyne, že doba bìhu pro obì úlohy záleží hlavnì
 na poètu vygenerovaných virtuálních sloupcù. Velikost vedlejší datové matice
-sice má na úlohu vliv, ale zøejmì není ani lineární. To vyplývá ze zpùsobu,
+sice má na úlohu vliv, rozhodujícím faktorem však zùstává právì poèet vygenerovaných
+sloupcù. To vyplývá ze zpùsobu,
 jakým virtuální atribut funguje: pøi prvním generování spoèítá bitové øetízky
 a uloží si je do bufferu, pøi dalších voláních se pracuje s bufferem. Proto
 pøi rùzných velikostech vedlejší datové matice se úmìrnì mìní pouze
