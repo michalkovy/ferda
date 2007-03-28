@@ -313,17 +313,24 @@ modulu opìt uloží úpravené kategorie pro další využití v prostøedí Ferda DataMin
 
 \subsection{Funkènost}
 \subsubsection{Hlavní obrazovka}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=14cm]{pics/editcategories_main.eps}
+\caption{Úprava kategorií - hlavní obrazovka}
 \end{center}
+\end{figure}
+
 Zde je zobrazen seznam existujících kategorií. Kategorie mùže býž pøejmenována 
 standardním postupem pro pøejmenování položky v seznamu GUI MS Windows, tj. dvojím pomalým
 kliknutím na její název, pøípadnì kliknutím na název a stisknutím klavesy F2 a poté zadáním nového názvu.
 Protože kategorie musí mít navzájem rùzné názvy, po zadání nesprávného (již existujícího názvu)
 bude oznámena chyba a kategorie se nepøejmenuje.
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=14cm]{pics/editcategories_rename.eps}
+\caption{Úprava kategorií - pøejmenování kategorie}
 \end{center}
+\end{figure}
 \paragraph{}
 Více kategorií mùže být spojeno do jedné tak, že s podržením tlaèítka Control pøípadnì Shift
 a kliknutím na požadované kategorie se vybere více kategorií a pak kliknutím na tlaèítko ''Spojit''
@@ -331,23 +338,26 @@ se spojí do jedné kategorie.
 \paragraph{}
 Kategorie mùže být odstranìna z atributu vybraním a následným kliknutím na tlaèítko ''Odstranit''.
 \paragraph{}
-Provedené zmìny v seznamu kategorié se uloží kliknutím na tlaèítko ''Uložit a zavøit''. Pokud
-je potøeba ukonèit práci modulu bez uložení zmìn, použije se tlaèítko ''Zavøit bez uložení''.
+Provedené zmìny v seznamu kategorié se uloží kliknutím na tlaèítko ''Uložit a zavøít''. Pokud
+je potøeba ukonèit práci modulu bez uložení zmìn, použije se tlaèítko ''Zavøít bez uložení''.
 \subsubsection{Obrazovka pro pøidání a úpravu intervalù}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=14cm]{pics/editcategories_intervals.eps}
+\caption{Úprava kategorií - práce s intervaly}
 \end{center}
+\end{figure}
 Uživatel mùže pøidat novou kategorií do seznamu kategorií v atributu. Z definice kategorie v metodì GUHA
 a její následného rozšíøení T.Kuchaøem v \cite{kuchar} plyne, že kategorie mùže obsahovat
 intervaly a výèet hodnot.
 \paragraph{}
 Pøi vyvolání obrazovky pro pøidání intervalù se uživatel dostane rovnou na pøidání intervalù
-do novì vytvoøené kategorie. Ve formuláøí uživatel vybere typy hranic intervalu a hodnoty krajních bodù,
+do novì vytvoøené kategorie. Ve formuláøi uživatel vybere typy hranic intervalu a hodnoty krajních bodù,
 poté kliknutím na tlaèítko ''Pøidat do kategorie'' pøidá interval do kategorie. Tento se poté zobrazí
 v seznamu intervalù dané kategorie a mùže být odebrán dvojitým kliknutím na nìm.
 \paragraph{}
 Pøi pøidávání se kontroluje validita kategorie v atributu. Pro pøidávaný interval to tedy znamená,
-že se zkontroluje jeho disjunktnost se stávajícimi intervaly v kategoriích a také s hodnotami ve
+že se zkontroluje jeho disjunktnost se stávajícími intervaly v kategoriích a také s hodnotami ve
 výètech kategorií. Pokud by pøidávaný interval nebyl disjunktní s prvky existujících kategorií,
 modul oznámí chybu a nedovolí takový interval do kategorie pøidat.
 \paragraph{}
@@ -357,13 +367,16 @@ Pro zrušení pøidání kategorie se použije tlaèítko ''Storno''.
 Obrazovka pro úpravu intervalù v již existující kategorii se liší tím, že nelze zmìnit název kategorie
 (ten lze zmìnit v hlavní obrazovce). Logika pøi úpravì intervalù v kategorii je stejná jako je popsáno výše.
 \subsubsection{Obrazovka pro pøidání a úpravu výètu}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=14cm]{pics/editcategories_enum.eps}
+\caption{Úprava kategorií - práce s výètem}
 \end{center}
+\end{figure}
 Pøi vyvolání obrazovky pro pøidání výètu se uživatel dostane rovnou na pøidání hodnot do výètu
-novì vytvoøené kategorie. Ve formuláøí uživatel mùže vybrat zatím nepokryté hodnoty ve sloupci
+novì vytvoøené kategorie. Ve formuláøi uživatel mùže vybrat zatím nepokryté hodnoty ve sloupci
 a pøidat je do výètu novì vytváøené kategorie kliknutím na pøíslušné tlaèítko. Hodnota
-se poté objeví ve výètu hodnot dané kategorie. Odtud mùže být odstranìna kliknuím na pøíslušné
+se poté objeví ve výètu hodnot dané kategorie. Odtud mùže být odstranìna kliknutím na pøíslušné
 tlaèítko.
 \paragraph{}
 Po pøidání intervalù do novì vytváøené kategorie lze potvrdit pøidání kategorie tlaèítkem ''OK''.

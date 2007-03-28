@@ -1,2 +1,78 @@
 \chapter{Zdrojové kódy}
-%\appendix{Zdrojové kódy}
+\section[Seznam souborù]{Seznam zmìnìných a vytvoøených souborù}
+Jako souèást dané diplomové práce byly vytvoøeny nebo upraveny
+soubory se zdrojovými kódy. Na projektu Ferda DataMiner pracuje
+v souèasné dobì více lidí. Zdrojové kódy jsou proto spravovány
+systémem Subversion a nacházejí se
+na \verb+https://svn.sourceforge.net/svnroot/ferda+.  K diplomové práci autora
+se vztahují zmìny provedené autorem \emph{kuzmos} od èísla revize 292.
+
+\paragraph{}
+\begin{itemize}
+\item \verb+ferda/slice/Modules/Guha.MiningProcessor.ice+
+\item \verb+ferda/slice/Modules/Boxes/DataPreparation/DataPreparation.ice+
+\item \verb+ferda/slice/Modules/Common.ice+
+\item \verb+ferda/src/FrontEnd/AddIns/ResultBrowser/+
+\item \verb+ferda/src/FrontEnd/AddIns/EditCategories/+
+\item \verb+ferda/src/Modules/BoxModulesServices/Boxes/+
+\newline
+\verb+*.xml+
+\newline
+Drobné zmìny pro práci s novými atributy.
+\item \verb+ferda/src/Modules/BoxModulesServices/DataPreparation/+
+\newline
+\verb+Categorization/Common.cs+
+\item \verb+ferda/src/Modules/BoxModulesServices/DataPreparation/+
+\newline
+\verb+Categorization/EachValueOneCategory/+
+\newline
+Drobné zmìny existujícího kódu pro práci s virtuálním agregaèním atributem.
+\item \verb+ferda/src/Modules/BoxModulesServices/DataPreparation/+
+\newline
+\verb+Categorization/EquidistantIntervals+
+\item \verb+ferda/src/Modules/BoxModulesServices/DataPreparation/+
+\newline
+\verb+Categorization/EquifrequencyIntervals+
+\item \verb+ferda/src/Modules/BoxModulesServices/DataPreparation/+
+\newline
+\verb+Categorization/StaticAttribute+
+\item \verb+ferda/src/Modules/BoxModulesServices/DataPreparation/+
+\newline
+\verb+DataSource/VirtualColumn+
+\item \verb+ferda/src/Modules/BoxModulesServices/GuhaMining/+
+\newline
+\verb+VirtualAttributes/VirtualFFTBooleanAttribute+
+\item \verb+ferda/src/Modules/BoxModulesServices/GuhaMining/+
+\newline
+\verb+VirtualAttributes/VirtualSDFFTBooleanAttribute+
+\item \verb+ferda/src/Modules/Core/MiningProcessor/Miners/+
+\newline
+Úpravy v souborech \verb+FourFoldMiningProcessor.cs+ a \verb+SDFourFoldMiningProcessor.cs+,
+kde byly vytvoøeny samotné procedury pro relaèní mining. Úpravy v souborech \verb+MinningProcessor.cs+ a \verb+MiningProcessorFunctionsI.cs+ pro zajištìní funkènosti práve vytvoøených a v budoucnu
+vytváøených relaèních rozšíøení.
+\item \verb+ferda/src/Modules/Core/MiningProcessor/+
+\newline
+\verb+QuantifierEvaluator/FirstNNoResult.cs+
+\item \verb+ferda/src/Modules/Core/MiningProcessor/+
+\newline
+\verb+Generation/LeafEntities.cs+
+\newline
+Pøidána procedura pro generování bitových øetízkù pro relaèní rozšíøení.
+\end{itemize}
+
+\section[Pøidání nových relaèních rozšíøení]{Postup pro pøidání nových relaèních rozšíøení}
+\subsection[Krabièka]{Vytvoøení krabièky}
+Pro uživatelské rozhraní se musí vytvoøit krabièka pro systém Ferda DataMiner. Obecný návod
+pro tento postup je popsán v dokumentu ''Implementace krabièek'', který se nachází v repozitáøi
+zdrojových kódu prostøedí Ferda DataMiner jako \verb+ferda/docsrc/draft/implementaceKrabicek.xdb+.
+Jako vzorovou krabièku pro implementaci relaèních rozšíøení se mùže použít jedna z krabièek
+\verb+VirtualFFTBooleanAttribute+ nebo \verb+VirtualSDFFTBooleanAttribute+. Nesmí se zapomenout
+na úpravu souborù \newline \verb+ferda/src/Modules/BoxModulesServices/Boxes/*.xml+
+\subsection[Backend]{Úprava procedur v backendu}
+Zde se v podstatì jedná o implementaci procedury \verb+TraceBoolean+ vracející enumerátor
+bitových øetízkù v jednotlivých procedurách, které se nacházejí v
+\verb+ferda/src/Modules/Core/MiningProcessor/Miners+. Jako vzor implementace mùže opìt
+posloužit dotyèná procedura implementována pro \newline \verb+FourFoldMiningProcessor.cs+ nebo
+\verb+SDFourFoldMiningProcessor.cs+. Zbývající úpravy pro zajištìní funkènosti relaèních rozšíøení
+byly implementovány autorem dané diplomové práce pro ulehèení pøidávání rozšíøení
+dalších procedur.
