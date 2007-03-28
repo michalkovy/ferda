@@ -424,6 +424,29 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                     ": " + pC.Identifier;
                                 }
 
+                                //first set identifier
+                                if (!(fS is EmptyBitString) && !(String.IsNullOrEmpty(fS.Identifier.ToString())))
+                                {
+                                    if (!String.IsNullOrEmpty(_yieldStringName))
+                                    {
+                                        _yieldStringName = _yieldStringName + ", ";
+                                    }
+                                    _yieldStringName = _yieldStringName +
+                                        " ::: " +
+                                        fS.Identifier;
+                                }
+
+                                //second set identifier
+                              /*  if (!(sS is EmptyBitString) && !(String.IsNullOrEmpty(sS.Identifier.ToString())))
+                                {
+                                    if (!String.IsNullOrEmpty(_yieldStringName))
+                                    {
+                                        _yieldStringName = _yieldStringName + " \u00D7 ";
+                                    }
+                                    _yieldStringName = _yieldStringName +
+                                        sS.Identifier;
+                                }*/
+
                                 #endregion
 
                                 for (int k = 0; k < evalVector.Length; k++)

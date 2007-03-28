@@ -27,9 +27,13 @@ jak už zde bylo nìkolikrát zmínìno.
 \paragraph{}
 Daná diplomová práce je rozšíøením existujících (tzn. v prostøedí
 Ferda DataMiner implementovaných) dataminingových procedur. Sdílí
-jak zpùsob zadávání úlohy, tak i nìkteré èásti procedur. Z uživatelského hlediska se
+jak zpùsob zadávání úlohy, tak i nìkteré èásti procedur. 
+\paragraph{}
+Z uživatelského hlediska se
 do relaèní procedury zapojí úloha stejnì jako do nerelaèní a výstup se zapojuje stejnì
-jako z existujících booleovských atributù. Z programátorského hlediska se využívá
+jako z existujících booleovských atributù.
+\paragraph{}
+ Z programátorského hlediska se využívá
 prostøedkù jako získávaní bitových øetízkù ze zapojených atributù,
 inicializace samotné relaèní procedury
 a dalších pøedpøipravených prostøedkù, jako jsou interfacy, abstraktní tøídy apod.
@@ -37,6 +41,7 @@ Mnoho z tìchto prostøedkù byly v prùbìhu implementace uzpùsobeny pro
 relaèní datamining, jak bude podrobnìji popsáno v kapitole \ref{implementationdetails}.
 Na druhou stranu pøi implementaci autor vytvoøil další prostøedky usnadòující
 implementaci relaèních rozšíøení pro zbývající dataminingové procedury.
+\paragraph{}
 Vzhledem k odlišné povaze generování relevantních otázek nebylo
 možné využít jedné z hlavních výhod existující implementace
 GUHA procedur v prostøedí Ferda DataMiner a to cache bitových
@@ -148,7 +153,16 @@ v hlavní datové matici. Podúloha se spustí mnohokrát a pokaždé
 vygeneruje relevantní otázku pouze pro èást vedlejší datové matice.
 Výsledkem pro hlavní úlohu, do které je takový virtuální atribut zapojen,
 bude síla hypotézy vzniklé ze zmínìné relevantní otázky aplikací
-kvantifikátoru zapojeného do podúlohy.
+kvantifikátoru zapojeného do podúlohy - viz obrázek.
+
+\paragraph{}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=8cm]{pics/master_detail.eps}
+\end{center}
+\caption{Master-detail tabulka}
+\end{figure}
+
 \paragraph{}
 Podúloha se vždy spouští pro ty øádky vedlejší datové matice, které
 jsou v relaci s objektem z hlavní datové matice. Jako pøíklad
@@ -170,6 +184,7 @@ pøibližnì v následujících bodech.
 \paragraph{}
 Pro zaèátek si ještì jednou pøipomeneme základní algoritmus generování
 relevantních otázek a ovìøování hypotéz pro dataminingovou proceduru 4ft miner.
+%\clearpage
 \begin{verbatim}
 foreach(BitString condition in Conditions)
 {
@@ -332,7 +347,9 @@ by se napojila za hypotézový virtuální atribut, znamenala komunikaci pøes ICE.
 Protože idea implementace spoèívá v synchronním bìhu nad- a podúlohy, kde
 nadúloha uvnitø svých cyklù (napøíklad pro sukcedent) volá podúlohu, která jí
 pøedává bistringy, je potøeba zajistit toto pøedávání plynule, aby
-se hlavní úloha pøíliš nezpomalovala èekáním na bitstring od podúlohy. Protože
+se hlavní úloha pøíliš nezpomalovala èekáním na bitstring od podúlohy.
+\paragraph{}
+ Protože
 ze zkušeností získaných pøi programování prostøedí Ferda DataMiner ještì
 jako studentského projektu autor vìdìl, že komunikace krabièek pøes
 rozhraní ICE je relativnì pomalá (s ohledem na skuteènost, že na komunikaci

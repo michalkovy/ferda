@@ -458,6 +458,7 @@ datech pravdivé, se nazývají hypotézy a posílají se na výstup.
 \paragraph{}
 Na následujícím pseudokódu lze nahlédnout na zpùsob generování relevantních
 otázek u dataminingové procedury 4ft miner.
+\clearpage
 \begin{verbatim}
 foreach(BitString condition in Conditions)
 {
@@ -592,7 +593,9 @@ Ferda.
 Asociaèní pravidla se rozšíøí o možnost práce s více datovými tabulkami.
 Datová matice, která byla zkoumána pomocí pùvodních asociaèních pravidel, 
 bude hlavní. Další datové tabulky budou rozšíøením hlavní tabulky o nìjaký atribut
-a mohou být obecnì ve vztahu 1:N ke hlavní datové matici. Jako pøíklad mùže
+a mohou být obecnì ve vztahu 1:N ke hlavní datové matici. 
+\paragraph{}
+Jako pøíklad mùže
 posloužit databáze klientù banky, kde v hlavní tabulce máme uloženy osobní
 údaje klientù a napøíklad v tabulce transakce jsou uloženy transakce pro úèty
 klientù. Dalším pøíkladem je databáze pacientù, kde v rozšíøující tabulce jsou
@@ -612,8 +615,8 @@ základní data o klientech a tabulka transakcí obsahuje pohyb na jejich úètech.
 Zkoumejme následující hypotézu:
 \begin{eqnarray}
 \label{eq:aggrattributeexample}
-TYPE="VKLAD" \& AMOUNT > AVG(AMOUNT)*2 \Rightarrow_{80\%} \nonumber\\
-OPERATION="PREVOD NA UCET"
+TYPE="VKLAD" \& AMOUNT > AVG(AMOUNT)*2 \nonumber\\
+\Rightarrow_{80\%} OPERATION="PREVOD NA UCET"
 \end{eqnarray}
 Zde jsme použili jeden virtuální atribut $AVG(AMOUNT)*2$, kde $AVG$ je
 agregaèní funkce SQL. Hypotéza mùže znamenat zjednodušenì øeèeno,
@@ -623,8 +626,8 @@ na odborníka v oblasti bankovnictví.
 Uvažme další hypotézu:
 \begin{eqnarray}
 \label{eq:hyprattributeexample}
-VYSOKEINKASO \& SALARY(>15000) \& BYDLISTE="Praha" \Rightarrow_{80\%} \nonumber\\
-STATUSUVERU="Dobry"
+VYSOKEINKASO \& SALARY(>15000) \& BYDLISTE="Praha"  \nonumber\\
+\Rightarrow_{80\%} STATUSUVERU="Dobry"
 \end{eqnarray}
 Hypotéza tvrdí, že klienti, kteøí mají vyšší plat a platí vysoké inkaso
 v okrese Praha, mají z 80\% dobré úvìry.
@@ -696,7 +699,16 @@ musí probìhnout vícekrát, vždy nad øádky z vedlejší matice, které se vztahují
 ke hlavní matici. Jinými slovy, zkoumá-li hlavní dataminingová úloha objekty
 hlavní datové matice po jednom (v našem pøíkladì klienty banky), potom podúloha
 musí vracet hypotézy jen pro ty øádky vedlejší datové matice, které odpovídají
-zkoumanému øádku v hlavní datové matici.
+zkoumanému øádku v hlavní datové matici. Toto lze ilustrovat následujícím obrázkem:
+
+\paragraph{}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=8cm]{pics/master_detail.eps}
+\end{center}
+\caption{Master-detail tabulka}
+\end{figure}
+
 \paragraph{}
 Výsledkem bìhu podúlohy je obvykle množina nových virtuálních sloupcù,
 které jsou pøidány za bìhu k hlavní datové matici a hlavní dataminingová úloha

@@ -186,7 +186,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         evalVector.Add(false);
                     }
                 }
-                _rInfo.NumberOfVerifications += _buffer[j].FirstSetValues.Length;
+                _rInfo.NumberOfVerifications += 1;//_buffer[j].FirstSetValues.Length;
             }
            
             bool finalResult = false;
