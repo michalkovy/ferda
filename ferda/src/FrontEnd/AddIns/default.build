@@ -406,6 +406,8 @@
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+        <include name="${path::combine(build.dir,'FerdaProjectManager.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>

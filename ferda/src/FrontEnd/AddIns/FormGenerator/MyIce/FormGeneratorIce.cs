@@ -138,9 +138,6 @@ namespace Ferda.FrontEnd.AddIns.FormGenerator.MyIce
 
         }
 
-
-
-
         #region Icerun
 
         /// <summary>
@@ -153,46 +150,17 @@ namespace Ferda.FrontEnd.AddIns.FormGenerator.MyIce
         /// <param name="__current">Ice context</param>
         public override void run(Ferda.Modules.BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, Ice.Current __current)
         {
-            Ice.ObjectPrx prx2 = boxModuleParam.getMyFactory();
-
-
-            Modules.BoxModuleFactoryPrx tprx2 =
-            Modules.BoxModuleFactoryPrxHelper.checkedCast(prx2);
-
-
-            //getting proxy for hypotheses and quantifiers
-            Ice.ObjectPrx prx = boxModuleParam.getFunctions();
-
             string label =
                 manager.getProjectInformation().getUserLabel(
                 Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
 
-          // string[] str = boxModuleParam.getDefaultUserLabel();
-           //ModulesManager module = new ModulesManager({ }, { });
-            //IBoxModule module = new IBoxModule();
-         //   IBoxModule module = new IBoxModule();
-            //checking the validity of the box
-/*            try
-            {
-                boxModuleParam.validate();
-            }
-            catch (Ferda.Modules.BoxRuntimeError e)
-            {
-                ownerOfAddIn.ShowBoxException(e);
-                return;
-            }
+            string id = Ice.Util.identityToString(boxModuleParam.ice_getIdentity());
 
-            Localize(localePrefs);
+            IBoxModule box = 
+                ownerOfAddIn.ProjectManager.ModulesManager.GetIBoxModuleByIdentity(id);
 
-            DatabaseFunctionsPrx prx =
-                DatabaseFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
-
-            string label = manager.getProjectInformation().getUserLabel(
-                Ice.Util.identityToString(boxModuleParam.ice_getIdentity()));
-            DataBaseInfo control = new DataBaseInfo(resManager,
-                prx.getDataTableExplainSeq(), ownerOfAddIn);
-            this.ownerOfAddIn.ShowDockableControl(control, label + " " +
-                resManager.GetString("DataBaseInfo"));*/
+            IBoxModule form = (box.ConnectedTo())[0];
+            string editor = form.GetPropertyString("FormEditor");
         }
 
 
