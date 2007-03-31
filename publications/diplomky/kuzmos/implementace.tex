@@ -108,7 +108,7 @@ které jsou ziskávany metodou ''poskytni další bitový øetízek''.
 Pro generování bitového øetízku správné délky (tzn. stejné délky jako bitové
 øetízky v nadúloze) je nutné vìdìt, kolik øádkù z vedlejší datové matice se váže
 k objektu z hlavní datové matice. Potom bude možné generovat virtuální sloupec
-správné délky - viz \ref{subtaskimplementation}.
+správné délky -- viz \ref{subtaskimplementation}.
 \paragraph{}
 Tato informace je ziskávana pomocí tzv. \emph{CountVectoru}, který na $i$-té pozici
 obsahuje poèet øádkù vedlejší datové matice patøicích $i$-tému objektu z hlavní
@@ -137,7 +137,8 @@ navržené postupy.
 \subsection{Krabièky}
 \subsubsection{Krabièka 4ft virtuální booleovský atribut}
 Daná krabièka reprezentuje výše popsaný hypotézový
-virtuální atribut z uživatelského hlediska.
+virtuální atribut z uživatelského hlediska. V souèasné dobì lze do zadání
+úlohy zapojit pouze jednou krabièku hypotézového atributu.
 \subsubsection{Seznam zásuvek}
 Zásuvky jsou shodné s krabièkou ''4ft Miner'' až na výjimky, jejichž popis následuje.
 \begin{description}
@@ -175,7 +176,7 @@ Z dùvodù popsaných v \ref{zmenazadani} byla implementována krabièka atributu
 pro generování ekvidistanèních intervalù.
 \subsection{Detaily implementace}
 Implementace krabièky využívá algoritmù, které byly pøipraveny T.Kucharem
-v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana - viz
+v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana -- viz
 \cite{relminer}. Autor se proto soustøedil na implementování samotné krabièky.
 \subsection{Krabièka}
 \subsubsection{Seznam zásuvek}
@@ -215,7 +216,7 @@ Z dùvodù popsaných v \ref{zmenazadani} byla implementována krabièka atributu
 pro generování ekvifrekvenèních intervalù.
 \subsection{Detaily implementace}
 Implementace krabièky využívá algoritmù, které byly pøipraveny T.Kucharem
-v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana - viz
+v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana -- viz
 \cite{relminer}. Autor se proto soustøedil na implementování samotné krabièky.
 \subsection{Krabièka}
 \subsubsection{Seznam zásuvek}
@@ -316,7 +317,7 @@ modulu opìt uloží úpravené kategorie pro další využití v prostøedí Ferda DataMin
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=14cm]{pics/editcategories_main.eps}
-\caption{Úprava kategorií - hlavní obrazovka}
+\caption{Úprava kategorií -- hlavní obrazovka}
 \end{center}
 \end{figure}
 
@@ -328,7 +329,7 @@ bude oznámena chyba a kategorie se nepøejmenuje.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=14cm]{pics/editcategories_rename.eps}
-\caption{Úprava kategorií - pøejmenování kategorie}
+\caption{Úprava kategorií -- pøejmenování kategorie}
 \end{center}
 \end{figure}
 \paragraph{}
@@ -344,7 +345,7 @@ je potøeba ukonèit práci modulu bez uložení zmìn, použije se tlaèítko ''Zavøít b
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=14cm]{pics/editcategories_intervals.eps}
-\caption{Úprava kategorií - práce s intervaly}
+\caption{Úprava kategorií -- práce s intervaly}
 \end{center}
 \end{figure}
 Uživatel mùže pøidat novou kategorií do seznamu kategorií v atributu. Z definice kategorie v metodì GUHA
@@ -370,7 +371,7 @@ Obrazovka pro úpravu intervalù v již existující kategorii se liší tím, že nelze 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=14cm]{pics/editcategories_enum.eps}
-\caption{Úprava kategorií - práce s výètem}
+\caption{Úprava kategorií -- práce s výètem}
 \end{center}
 \end{figure}
 Pøi vyvolání obrazovky pro pøidání výètu se uživatel dostane rovnou na pøidání hodnot do výètu

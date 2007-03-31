@@ -112,12 +112,12 @@ funkce jazyka SQL (proto název agregaèní) pro øádky dané datové matice patøící k
 v hlavní datové matici.
 \paragraph{}
 Pøi rozhodování o rozsahu implementované funkènosti agregaèního virtuálního
-atribitu se bral v potaz fakt, že daleko zajímavìjším atributem pro využití
+atributu se bral v potaz fakt, že daleko zajímavìjším atributem pro využití
 v relaèním dataminingu je atribut hypotézový. Proto po dohodì s vedoucím práce bylo
 rozhodnuto naimplementovat pouze základní funkènost agregaèního virtuálního atributu.
 \paragraph{}
 Autor dané diplomové práce si uvìdomuje fakt, že tento atribut mùže být obecnìjší
-než pouze spojení dvou databazových tabulek dle klíèe a spoustìní pouze SQL agergaèních funkcí.
+než pouze spojení dvou databázových tabulek dle klíèe a spoustìní pouze SQL agregaèních funkcí.
 V diplomové práci M.Ducháèka uvedené v seznamu použité literatury jako \cite{duchacek} je
 implementován obecnìjší pøístup k agregaènímu virtuálnímu atributu. Ve zmínìné práci
 je umožnìno na tomto atributu spouštìt nejen agregaèní funkce jazyka SQL, ale obecnì
@@ -127,8 +127,8 @@ interpretován za bìhu.
 Nicménì si autor také uvìdomoval, že výše uvedená implementace funkènosti tvoøí
 velmi podstatnou èást diplomové práce M.Ducháèka. Vzhledem k faktu, že autor dané
 diplomové práce mìl pøed sebou implementaci jak hypotézového atributu, tak i tøí
-dalších atributových krabièek a jednoho modulu pro úpravu atributu, bylo rozhodnuto
-naimplementovat v rámci agregaèního hypotézového atributu pouze funkènost, která je podrobnìji
+dalších modulù pro dynamickou transformaci atributu a jednoho modulu pro statickou úpravu atributu,
+bylo rozhodnuto naimplementovat v rámci agregaèního hypotézového atributu pouze funkènost, která je podrobnìji
 popsaná v kapitole \ref{implementationdetails}.
 
 
@@ -153,7 +153,7 @@ v hlavní datové matici. Podúloha se spustí mnohokrát a pokaždé
 vygeneruje relevantní otázku pouze pro èást vedlejší datové matice.
 Výsledkem pro hlavní úlohu, do které je takový virtuální atribut zapojen,
 bude síla hypotézy vzniklé ze zmínìné relevantní otázky aplikací
-kvantifikátoru zapojeného do podúlohy - viz obrázek.
+kvantifikátoru zapojeného do podúlohy -- viz obrázek.
 
 \paragraph{}
 \begin{figure}[!h]
@@ -211,7 +211,7 @@ Podúloha by se spouštìla pøedem na vedlejší datové matici. Výsledky ve formì
 buï virtuálních sloupcù a(nebo) bitových øetízkù by se pøechodnì skladovaly
 v pamìti èi ve formì serializovaných objektù a pøi následném bìhu nadúlohy
 by se této pøedložily. Podobným zpùsobem jsou implementovány napøíklad
-stávající nevirtuální atributy - ''Each value one category'', ''Ekvidistanèní intervaly''
+stávající nevirtuální atributy -- ''Each value one category'', ''Ekvidistanèní intervaly''
 a ''Ekvifrekvenèní intervaly''.
 \paragraph{}
 Výhodou takového pøístupu by byla možnost využít stávající výhody implementace
@@ -225,26 +225,26 @@ procedury v prostøedí Ferda DataMiner.
 Hlavním dùvodem napsání pøedchozího odstavce v podmiòovacím zpùsobu
 se stala nemožnost škálovatelnosti takového øešení. Už i pro existující
 vzorová data virtuální banky Barbora mohl nastat problém se zabíranou
-pamìti pro vygenerované bitstringy. Poèet relevantních otázek v zadané
+pamìti pro vygenerované bitové øetízky. Poèet relevantních otázek v zadané
 dataminingové úloze v øádu tisícù èi desetitisícù je bìžnou záležitostí.
 Protože každá relevantní otázka v podúloze znamená nový virtuální sloupec
 v hlavní tabulce, nad kterou bìží hlavní dataminingová úloha, pøi úvaze
 o velikosti požadované operaèní pamìti (protože bitové øetízky krabièky
-atributù ve Ferda DataMiner držejí právì tam) se musí poèet sloupcù
+atributù ve Ferda DataMiner uchovávají právì tam) se musí poèet sloupcù
 vynásobit poètem øádku hlavní datové matice.
 \paragraph{}
 Pøi úvaze s matici banky Barbora o velikosti øádovì kolem 5000 øádku
-a poètem relevantních otázek v podúloze kolem 10000 nám vzníká ještì vcelku
+a poètem relevantních otázek v podúloze kolem 10000 nám vzniká ještì vcelku
 pøijatelná velikost zabírané RAM, nicménì je tøeba si uvìdomit, že velikost
 zkoumané datové tabulky pro úlohy blížící se reálné situaci je spíše v øádech
 statisícù až miliónù záznamù. Toto je zásadní omezení pro budoucí aplikace
 prostøedí Ferda DataMiner a takto navržený zpùsob implementace by omezil nejen
 relaèní rozšíøení procedur implementovaných v rámci dané diplomové práce,
-ale i pøípad\-ných dalších implementací relaèních rozšíøení v budounu.
+ale i pøípad\-ných dalších implementací relaèních rozšíøení v budoucnu.
 \paragraph{}
 Z výše uvedených dùvodù bylo tedy od tohoto zpùsobu implementace upuštìno.
 \item[Èekající vlákna]Po zavržení pøedchozího pøístupu bylo jasné, že øešení
-pøedgenerovat si bitstringy do pamìti nepøipadá v úvahu. Zaèal se hledat
+pøedgenerovat si bitové øetízky do pamìti nepøipadá v úvahu. Zaèal se hledat
 zpùsob, jak virtuální sloupce a tedy i bitové øetízky, generovat prùbìžnì,
 vždy na pokyn nadúlohy.
 \paragraph{}
@@ -318,7 +318,7 @@ nefungoval -- pøedpokládá totiž možnost pøístupu ke všem bitovým øetízkùm
 atributu. Návrh hypotézového virtuálního atributu s tímto nepoèítá -- umí
 dát pouze ''další'' bitový øetízek bez možnosti zjistit, který další to bude, jaký
 bude mít identifikátor, ke které kategorii bude patøit atd. Z tìchto dùvodù
-nešlo stávající cache pro hypotézový virtuální atribut použit. Použití
+nešlo stávající cache pro hypotézový virtuální atribut použít. Použití
 cache bitových øetízkù u ostatních buï existujících nebo novì implementovaných
 krabièek atributù zùstalo beze zmìny, protože se pro tyto krabièky nic nezmìnilo.
 \subsubsection{Rozdìlení na krabièky}
@@ -329,7 +329,7 @@ atributy se v pøípadì potøeby generování boolských atributù zapojují do krabièky
 \paragraph{}
 V pøípadì hypotézového virtuálního atributu by nešla použít stávající krabièka
 pro generování koeficientù ''AtomSetting'', protože pracuje s požadavkem ''poskytni
-pøesnì tento bitový øetízek'', kdyžto hypotézový atribut by umìl zpracovat pouze
+pøesnì tento bitový øetízek'', kdežto hypotézový atribut by umìl zpracovat pouze
 požadavek ''poskytni další bitový øetízek''. Tudíž krabièka pro generování koeficientù
 využitelná pouze pro hypotézový virtuální atribut by se se musela také naprogramovat.
 \paragraph{}
@@ -339,7 +339,7 @@ koeficientù pro hypotézový virtuální atribut z následujících dùvodù.
 \item[Potøeba pouze jednoho koeficientu] Po diskuzi s vedoucím práce
 bylo rozhodnuto, že pøi generování koeficientù pro booleovský atribut
 bude potøeba implementovat pouze podmnožiny délky jedna -- viz \ref{coefficients}.
-Krabièka ''AtomSetting'' pro hypotézoví virtuální atribut by byla nadbyteèná,
+Krabièka ''AtomSetting'' pro hypotézový virtuální atribut by byla nadbyteèná,
 protože by tam chybìlo uživatelské nastavení, vše se odehrávalo ''pod kapotou''.
 Nebyl tedy dùvod tuto krabièku vytváøet.
 \item[Nadbyteèná komunikace krabièek pøes ICE] Navíc by tato krabièka, která
@@ -347,13 +347,13 @@ by se napojila za hypotézový virtuální atribut, znamenala komunikaci pøes ICE.
 Protože idea implementace spoèívá v synchronním bìhu nad- a podúlohy, kde
 nadúloha uvnitø svých cyklù (napøíklad pro sukcedent) volá podúlohu, která jí
 pøedává bistringy, je potøeba zajistit toto pøedávání plynule, aby
-se hlavní úloha pøíliš nezpomalovala èekáním na bitstring od podúlohy.
+se hlavní úloha pøíliš nezpomalovala èekáním na bitový øetízek od podúlohy.
 \paragraph{}
  Protože
 ze zkušeností získaných pøi programování prostøedí Ferda DataMiner ještì
 jako studentského projektu autor vìdìl, že komunikace krabièek pøes
 rozhraní ICE je relativnì pomalá (s ohledem na skuteènost, že na komunikaci
-pøes ICE bylo bylo tøeba èekat pøi každém kroku  \verb+foreach+ cyklu),
+pøes ICE by bylo tøeba èekat pøi každém kroku  \verb+foreach+ cyklu),
 bylo rozhodnuto zajistit generování atributu
 a koeficientu v jedné krabièce a tím zrychlit bìh hypotézového
 virtuálního atributu.

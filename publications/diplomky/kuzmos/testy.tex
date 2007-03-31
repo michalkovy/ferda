@@ -3,13 +3,7 @@
 V této kapitole bude prozkoumán vliv rùzných faktorù na bìh
 úlohy s použitím relaèního rozšíøení dataminingové procedury.
 Autor bude zkoumat vliv zejména velikosti dat a poètu vygenerovaných
-virtuálních sloupcù. 
-\paragraph{}
-Protože implementace relaèních rozšíøení
-je v prostøedí Ferda DataMiner vùbec první, bude se testovat i
-celkový vliv relaèního atributu na rychlost bìhu úlohy (tj.
-bude se zkoumat doba bìhu úloh totožných až na pøítomnost
-virtuálního atributu v zadání úlohy). Také se ukáže, že použití
+virtuálních sloupcù. Také se ukáže, že použití
 bufferu pro bitové øetízky vygenerované virtuálním atributem je z hlediska
 výkonu nezbytné.
 
@@ -179,27 +173,48 @@ bìhy (bez tohoto by se pøi druhém a dalším spuštìní naèítaly informace pro krabi
 \subsubsection{Úloha 1}
 \begin{table}[!h]
 \begin{center}
-\begin{tabular}{|l|l|l|l|l|}
+\begin{tabular}{|l|l|l|l|}
 \hline
-Transakce / & malé & støední &  velké  & bez rel. atributu \\
-\# rel.otazek&&&&\\
+Transakce / & malé & støední &  velké  \\
+\# rel.otazek&&&\\
 \hline
-16 & 14s & 25s & 1m 10s&\\
+16 & 14s & 25s & 1m 10s\\
 \hline
-50 & 15s & 25s & 1m 32s &\\
+50 & 15s & 25s & 1m 32s \\
 \hline
-80 & 9m 2s & 11m 11s& 12m 2s&\\
+80 & 9m 2s & 11m 11s& 12m 2s\\
 \hline
-100 & 12m & 24m & 1h 3m &\\
+100 & 12m & 24m & 1h 3m \\
 \hline
 \end{tabular}
 \end{center}
 \caption{Test relaèního 4ft mineru: úloha 1}
 \end{table}
 
+\subsubsection{Úloha 1 -- bez cache}
+Zde byla zkoumána rychlost práce bez cache. Porovnáním s pøedchozí tabulkou lze zjistit
+èasové rozdíly bìhu úlohy.
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Transakce / & malé & støední &  velké   \\
+\# rel.otazek&&&\\
+\hline
+16 & 21s & 1m8s & 6m 45s\\
+\hline
+50 & 45s & 3m 5s & 26m 33s \\
+\hline
+100 & 50m 30s & &  \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Test relaèního 4ft mineru: úloha 1 -- bez cache}
+\end{table}
 
-\section[SD4FT atribut]{SD4FT virtuální boolský atribut}
-\subsection[Úloha]{Východiska zadání a zadaná úloha}
+
+\subsection[SD4FT atribut]{SD4FT virtuální boolský atribut}
+\subsubsection[Úloha]{Východiska zadání a zadaná úloha}
 Úloha je zadaná pro 4ft miner následujícím zpùsobem:
 
 \begin{equation*}
@@ -222,16 +237,18 @@ otázek vygenerovaných relaèním SD4ft booleovským atributem.
 \subsubsection{Úloha 1}
 \begin{table}[!h]
 \begin{center}
-\begin{tabular}{|l|l|l|l|l|}
+\begin{tabular}{|l|l|l|l|}
 \hline
-Transakce / & malé & støední &  velké  & bez rel. atributu \\
-\# rel.otazek&&&&\\
+Transakce / & malé & støední &  velké \\
+\# rel.otazek&&&\\
 \hline
-16 &4m30s&8m01s&12m30s&\\
+16 &8m01s&13m05s&21m30s\\
 \hline
-30 &&&&\\
+40 &16m12s&28m57s&29m30s\\
 \hline
-50 &&&&\\
+80 &25m40s&35m20s&58m05s\\
+\hline
+100 &30m34s&55m50s&1h13m50s\\
 \hline
 \end{tabular}
 \end{center}
@@ -247,3 +264,13 @@ jakým virtuální atribut funguje: pøi prvním generování spoèítá bitové øetízky
 a uloží si je do bufferu, pøi dalších voláních se pracuje s bufferem. Proto
 pøi rùzných velikostech vedlejší datové matice se úmìrnì mìní pouze
 doba prvního generování.
+\paragraph{}
+Dále se názornì ukazuje potøeba bufferu pro bitové øetízky generované
+virtuálním atributem. Lze to zjistit jak z èasù v tabulce,
+tak i z faktu, že pøi testování s vypnutou cache byl testovací
+poèítaè pøi bìhu úlohy vytížen o poznání více.
+\paragraph{}
+Také je potøeba uvést, že implementace relaèních rozšíøení v rámci dané práce
+je pilotní a chování úloh s hypotézovým virtuálním atributem vyžaduje další
+zkoušení a zkoumání, stejnì jako tomu bylo v pøípadì jíž implementovaných
+dataminingových úloh.

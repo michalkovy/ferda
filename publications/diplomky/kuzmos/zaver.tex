@@ -46,4 +46,27 @@ pøispìly k lepším výsledkùm i této diplomové práce.
  Proto se autor domnívá, že
 rozšíøení zadání jeho diplomové práce o implementaci výše uvedených modulù byla
 na místì a nepøímo pøispìla ke splnìní primárních cílù této diplomové práce.
+\section{Doporuèení dalšího smìru práce}
+V této kapitole bude naznaèen možný smìr dalšího vývoje relaèních rozšíøení pro
+dataminingové procedury v prostøedí Ferda DataMiner.
+\subsection{Rozšíøení pro zbývající procedury}
+Jak jíž bylo zmínìno, lze pomìrnì snadno naimplementovat relaèní rozšíøení
+pro zbývající dataminingové procedury z prostøedí Ferda DataMiner. K okamžiku
+odevzdání diplomové práce je v prostøedí naimplementováno 6 procedur, lze
+tedy uvažovat o relaèních rozšíøeních pro KL- a SDKL miner, dále pro CF- a SDCF miner.
+Tyto autorem nebyly implementovány z dùvodù toho, že cílem práce bylo spíše
+vytvoøit základ pro relaèní rozšíøení v prostøedí Ferda DataMiner, vyøešit obecné
+problémy, které pøi implementaci vznikly a otestovat chování implementovaných
+rozšíøení. Navíc zpùsob implementace je stejný jako pro jíž naimplementována
+rozšíøení, nejednalo by se tedy o podstatný pøínos k práci.
+\subsection{Reálný hypotézový atribut}
+Logickým smìrem dalšího rozšiøování se jeví implementace
+obecnìjšího hypotézového atributu, který produkuje virtuální sloupce
+skládající se z reálných èísel (a ne pouze z hodnot \emph{true} a \emph{false}).
+Takový atribut mùže dávat na výstup tyto sloupce buï rovnou jako fuzzy
+bitové øetìzce anebo je bude pøedávat dalším modulùm ke zpracování. Fuzzy bitové
+øetìzce sice zatím nejsou v prostøedí Ferda DataMiner implementovány,
+avšak dle T.Kuchare (\cite{kuchar}) systém generování mùže být o nì rozšíøen.
+Totéž platí i pro relaèní rozšíøení -- systém generování virtuálních sloupcù
+mùže být pomìrnì snadno upraven pro sloupce reálných èísel.
 \section{Závìr}
