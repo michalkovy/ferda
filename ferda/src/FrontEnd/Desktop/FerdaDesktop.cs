@@ -1233,8 +1233,13 @@ namespace Ferda.FrontEnd.Desktop
                     CreateModulesForCreationMoreBoxes(creation);
                     ToolStripSeparator sep = new ToolStripSeparator();
 
-                    cMenu.Items.Add(creation);
-                    cMenu.Items.Add(sep);
+                    //this makes sense only if there are some modules asking for
+                    //creation to be created
+                    if (creation.DropDownItems.Count > 0)
+                    {
+                        cMenu.Items.Add(creation);
+                        cMenu.Items.Add(sep);
+                    }
                 }
             }
 
