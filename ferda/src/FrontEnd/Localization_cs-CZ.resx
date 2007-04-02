@@ -426,6 +426,9 @@
   <data name="OpenDesktopDialogOK" xml:space="preserve">
     <value>Otevřít</value>
   </data>
+  <data name="OtherTab" xml:space="preserve">
+    <value>Jiné</value>
+  </data>
   <data name="PreferencesDialogCaption" xml:space="preserve">
     <value>Možnosti</value>
   </data>
