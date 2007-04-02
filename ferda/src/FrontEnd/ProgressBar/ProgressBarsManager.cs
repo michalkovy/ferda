@@ -27,6 +27,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Resources;
+using Ferda.FrontEnd.Menu;
 
 namespace Ferda.FrontEnd.ProgressBar
 {
@@ -42,6 +43,7 @@ namespace Ferda.FrontEnd.ProgressBar
 
         //Resource manager from the FerdaForm
         private ResourceManager resManager = null;
+        public IPreferencesManager preferences;
 
         #endregion
 
@@ -51,7 +53,8 @@ namespace Ferda.FrontEnd.ProgressBar
         /// Default consturctor for the class
         /// </summary>
         /// <param name="rm">Resource manager of the application</param>
-        public ProgressBarsManager(ResourceManager rm)
+        /// <param name="preferences">Preferences of the application</param>
+        public ProgressBarsManager(ResourceManager rm, IPreferencesManager preferences)
         {
             InitializeComponent();
 
@@ -60,6 +63,7 @@ namespace Ferda.FrontEnd.ProgressBar
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 
             this.resManager = rm;
+            this.preferences = preferences;
         }
 
         #endregion

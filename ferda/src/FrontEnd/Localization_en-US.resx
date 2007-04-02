@@ -490,6 +490,9 @@
   <data name="RenameDialogCaption" xml:space="preserve">
     <value>Set a new box name</value>
   </data>
+  <data name="ShowDisplayTiming" xml:space="preserve">
+    <value>Show exact timing of running of progress bars</value>
+  </data>
   <data name="ShowVisibleSockets" xml:space="preserve">
     <value>Show the 'Visible sockets' group in the Property grid</value>
   </data>

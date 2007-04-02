@@ -64,5 +64,17 @@ namespace Ferda.FrontEnd.Menu
             set;
             get;
         }
+
+        /// <summary>
+        /// User determines if the progress bars should display a 
+        /// dialog showing exact time elapsed for each progress bar
+        /// running. This can be useful i.e. when timing hypotheses 
+        /// generation.
+        /// </summary>
+        bool DisplayTiming
+        {
+            set;
+            get;
+        }
     }
 }

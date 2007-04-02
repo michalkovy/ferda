@@ -80,11 +80,6 @@ using Ferda.ModulesManager;
         /// Progress bar control
         /// </summary>
         private ProgressBar.ProgressBarsManager progressBarControl;
-        /// <summary>
-        /// User determines whether to show the
-        /// <code>Visible sockets</code> group in the property grid.
-        /// </summary>
-        private bool showVisibleSockets;
 
         /// <summary>
         /// All view controls
@@ -257,11 +252,29 @@ using Ferda.ModulesManager;
         {
             set
             {
-                showVisibleSockets = value;
+                iceConfig.ShowVisibleSockets = value;
             }
             get
             {
-                return showVisibleSockets;
+                return iceConfig.ShowVisibleSockets;
+            }
+        }
+
+        /// <summary>
+        /// User determines if the progress bars should display a 
+        /// dialog showing exact time elapsed for each progress bar
+        /// running. This can be useful i.e. when timing hypotheses 
+        /// generation.
+        /// </summary>        
+        public bool DisplayTiming
+        {
+            set
+            {
+                iceConfig.DisplayTiming = value;
+            }
+            get
+            {
+                return iceConfig.DisplayTiming;
             }
         }
 
@@ -362,7 +375,6 @@ using Ferda.ModulesManager;
             //setting the ResManager resource manager and localization string
             string locString = "Ferda.FrontEnd.Localization_" + config.ProjectManagerOptions.LocalePrefs[0];
             resManager = new ResourceManager(locString, Assembly.GetExecutingAssembly());
-            showVisibleSockets = config.ShowVisibleSockets;
         }
 
         /// <summary>
@@ -647,7 +659,7 @@ using Ferda.ModulesManager;
         protected void SetupProgessBar()
         {
             //creating the progress bar control and its content
-            progressBarControl = new ProgressBar.ProgressBarsManager(ResManager);
+            progressBarControl = new ProgressBar.ProgressBarsManager(ResManager, this);
             progressBarContent = new DockWindow();
 
             //I dont really know how this works, but putting there a smaller number
@@ -818,7 +830,8 @@ using Ferda.ModulesManager;
             //tries to save the config
             try
             {
-                iceConfig.ShowVisibleSockets = form.ShowVisibleSockets;
+                //iceConfig.ShowVisibleSockets = form.ShowVisibleSockets;
+                //iceConfig.DisplayTiming = form.displayTiming;
                 FrontEndConfig.Save(iceConfig);
             }
             catch

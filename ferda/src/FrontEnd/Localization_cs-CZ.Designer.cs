@@ -1159,6 +1159,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zobrazit přesnou dobu trvání jednotlivých progress barů.
+        /// </summary>
+        internal static string ShowDisplayTiming {
+            get {
+                return ResourceManager.GetString("ShowDisplayTiming", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zobrazit skupinu &apos;Viditelné zásuvky&apos; v panelu vlastností.
         /// </summary>
         internal static string ShowVisibleSockets {
