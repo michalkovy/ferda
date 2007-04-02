@@ -194,7 +194,7 @@ namespace Ferda.FrontEnd.Menu
             BCancel.Text = ResManager.GetString("CancelButton");
             TPLocalization.Text = ResManager.GetString("LocalizationTab");
             LLocalization.Text = ResManager.GetString("LocalizationLabel");
-            TPPropertyGrid.Text = ResManager.GetString("MenuViewPropertyGrid");
+            TPPropertyGrid.Text = ResManager.GetString("OtherTab");
             CHBShowVisibleSockets.Text = ResManager.GetString("ShowVisibleSockets");
             CHBDisplayTiming.Text = ResManager.GetString("ShowDisplayTiming");
         }

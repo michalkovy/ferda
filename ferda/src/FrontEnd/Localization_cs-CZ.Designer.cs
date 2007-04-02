@@ -988,6 +988,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jiné.
+        /// </summary>
+        internal static string OtherTab {
+            get {
+                return ResourceManager.GetString("OtherTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Možnosti.
         /// </summary>
         internal static string PreferencesDialogCaption {

@@ -433,6 +433,9 @@
   <data name="OpenDesktopDialogOK" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="OtherTab" xml:space="preserve">
+    <value>Other</value>
+  </data>
   <data name="PreferencesDialogCaption" xml:space="preserve">
     <value>Preferences</value>
   </data>
