@@ -1237,6 +1237,7 @@ namespace Ferda.FrontEnd.Menu
             if (prefDialog.DialogResult == DialogResult.OK)
             {
                 preferencesManager.ShowVisibleSockets = prefDialog.ShowVisibleSockets;
+                preferencesManager.DisplayTiming = prefDialog.DisplayTiming;
 
                 //comparing the change of localization
                 if (temp[0] != prefDialog.LocalePrefs[0])

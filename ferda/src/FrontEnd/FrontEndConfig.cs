@@ -53,7 +53,15 @@ namespace Ferda.FrontEnd
         /// of properties that should be shown as sockets
         /// </summary>
         public bool ShowVisibleSockets;
-		
+
+        /// <summary>
+        /// User determines if the progress bars should display a 
+        /// dialog showing exact time elapsed for each progress bar
+        /// running. This can be useful i.e. when timing hypotheses 
+        /// generation.
+        /// </summary>
+        public bool DisplayTiming;
+
         /// <summary>
         /// Loads the FrontEndConfig.xml file from the directory, where
         /// the FerdaFrontEnd.exe file is located

@@ -483,6 +483,9 @@
   <data name="RenameDialogCaption" xml:space="preserve">
     <value>Zadejte nové jméno krabičky</value>
   </data>
+  <data name="ShowDisplayTiming" xml:space="preserve">
+    <value>Zobrazit přesnou dobu trvání jednotlivých progress barů</value>
+  </data>
   <data name="ShowVisibleSockets" xml:space="preserve">
     <value>Zobrazit skupinu 'Viditelné zásuvky' v panelu vlastností</value>
   </data>

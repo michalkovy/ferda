@@ -70,6 +70,11 @@ namespace Ferda.FrontEnd.Menu
         /// <code>Visible sockets</code> group in the property grid.
         /// </summary>
         private CheckBox CHBShowVisibleSockets;
+        /// <summary>
+        /// With this checkbox user determines whether to use display
+        /// the timing of indivdual progress bars' timing.
+        /// </summary>
+        private CheckBox CHBDisplayTiming;
 
         //Resource manager from the FerdaForm
         private ResourceManager resManager;
@@ -155,6 +160,20 @@ namespace Ferda.FrontEnd.Menu
             }
         }
 
+        /// <summary>
+        /// User determines if the progress bars should display a 
+        /// dialog showing exact time elapsed for each progress bar
+        /// running. This can be useful i.e. when timing hypotheses 
+        /// generation.
+        /// </summary>
+        public bool DisplayTiming
+        {
+            get
+            {
+                return CHBDisplayTiming.Checked;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -177,6 +196,7 @@ namespace Ferda.FrontEnd.Menu
             LLocalization.Text = ResManager.GetString("LocalizationLabel");
             TPPropertyGrid.Text = ResManager.GetString("MenuViewPropertyGrid");
             CHBShowVisibleSockets.Text = ResManager.GetString("ShowVisibleSockets");
+            CHBDisplayTiming.Text = ResManager.GetString("ShowDisplayTiming");
         }
 
         #endregion
@@ -198,6 +218,7 @@ namespace Ferda.FrontEnd.Menu
             //selects the first value on the list
             LBLocalization.SelectedIndex = 0;
             CHBShowVisibleSockets.Checked = manager.ShowVisibleSockets;
+            CHBDisplayTiming.Checked = manager.DisplayTiming;
         }
 
         /// <summary>
@@ -210,9 +231,10 @@ namespace Ferda.FrontEnd.Menu
             this.LBLocalization = new System.Windows.Forms.ListBox();
             this.LLocalization = new System.Windows.Forms.Label();
             this.TPPropertyGrid = new System.Windows.Forms.TabPage();
+            this.CHBShowVisibleSockets = new System.Windows.Forms.CheckBox();
             this.BOK = new System.Windows.Forms.Button();
             this.BCancel = new System.Windows.Forms.Button();
-            this.CHBShowVisibleSockets = new System.Windows.Forms.CheckBox();
+            this.CHBDisplayTiming = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.TPLocalization.SuspendLayout();
             this.TPPropertyGrid.SuspendLayout();
@@ -244,7 +266,7 @@ namespace Ferda.FrontEnd.Menu
             // 
             this.LBLocalization.FormattingEnabled = true;
             this.LBLocalization.Location = new System.Drawing.Point(7, 48);
-            this.LBLocalization.Name = "LBLokalizace";
+            this.LBLocalization.Name = "LBLocalization";
             this.LBLocalization.Size = new System.Drawing.Size(350, 134);
             this.LBLocalization.TabIndex = 1;
             // 
@@ -259,6 +281,7 @@ namespace Ferda.FrontEnd.Menu
             // 
             // TPPropertyGrid
             // 
+            this.TPPropertyGrid.Controls.Add(this.CHBDisplayTiming);
             this.TPPropertyGrid.Controls.Add(this.CHBShowVisibleSockets);
             this.TPPropertyGrid.Location = new System.Drawing.Point(4, 22);
             this.TPPropertyGrid.Name = "TPPropertyGrid";
@@ -266,6 +289,16 @@ namespace Ferda.FrontEnd.Menu
             this.TPPropertyGrid.TabIndex = 1;
             this.TPPropertyGrid.Text = "TPPropertyGrid";
             this.TPPropertyGrid.UseVisualStyleBackColor = true;
+            // 
+            // CHBShowVisibleSockets
+            // 
+            this.CHBShowVisibleSockets.AutoSize = true;
+            this.CHBShowVisibleSockets.Location = new System.Drawing.Point(5, 13);
+            this.CHBShowVisibleSockets.Name = "CHBShowVisibleSockets";
+            this.CHBShowVisibleSockets.Size = new System.Drawing.Size(80, 17);
+            this.CHBShowVisibleSockets.TabIndex = 0;
+            this.CHBShowVisibleSockets.Text = "checkBox1";
+            this.CHBShowVisibleSockets.UseVisualStyleBackColor = true;
             // 
             // BOK
             // 
@@ -285,15 +318,15 @@ namespace Ferda.FrontEnd.Menu
             this.BCancel.TabIndex = 2;
             this.BCancel.Text = "Storno";
             // 
-            // CHBShowVisibleSockets
+            // CHBDisplayTiming
             // 
-            this.CHBShowVisibleSockets.AutoSize = true;
-            this.CHBShowVisibleSockets.Location = new System.Drawing.Point(5, 13);
-            this.CHBShowVisibleSockets.Name = "CHBVisibleSockets";
-            this.CHBShowVisibleSockets.Size = new System.Drawing.Size(80, 17);
-            this.CHBShowVisibleSockets.TabIndex = 0;
-            this.CHBShowVisibleSockets.Text = "checkBox1";
-            this.CHBShowVisibleSockets.UseVisualStyleBackColor = true;
+            this.CHBDisplayTiming.AutoSize = true;
+            this.CHBDisplayTiming.Location = new System.Drawing.Point(5, 37);
+            this.CHBDisplayTiming.Name = "CHBDisplayTiming";
+            this.CHBDisplayTiming.Size = new System.Drawing.Size(80, 17);
+            this.CHBDisplayTiming.TabIndex = 1;
+            this.CHBDisplayTiming.Text = "checkBox1";
+            this.CHBDisplayTiming.UseVisualStyleBackColor = true;
             // 
             // FerdaPreferencesDialog
             // 

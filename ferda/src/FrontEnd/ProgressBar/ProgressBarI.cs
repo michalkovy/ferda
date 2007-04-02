@@ -44,6 +44,7 @@ namespace Ferda.FrontEnd.ProgressBar
         protected BoxProgressBar myControl;
         protected ProgressBarsManager parentControl;
 
+        protected DateTime counter;
 
         /// <summary>
         /// Default constructor for the class
@@ -53,7 +54,8 @@ namespace Ferda.FrontEnd.ProgressBar
         /// <param name="hint">hint to be displayed</param>
         /// <param name="parentControl">parent control where all the viewing should
         /// be done</param>
-        public ProgressBarI(ProgressTaskPrx task, string name, string hint, ProgressBarsManager parentControl)
+        public ProgressBarI(ProgressTaskPrx task, string name, string hint, 
+            ProgressBarsManager parentControl)
         {
             this.task = task;
             this.name = name;
@@ -66,6 +68,9 @@ namespace Ferda.FrontEnd.ProgressBar
             myControl.SetHint(hint);
 
             parentControl.AddBoxProgressBar(myControl);
+
+            //setting counter to time the hypotheses
+            counter = DateTime.Now;
         }
 
         /// <summary>
@@ -79,6 +84,15 @@ namespace Ferda.FrontEnd.ProgressBar
 
             //removing the control from the 
             parentControl.RemoveBoxProgressBar(myControl);
+
+            //timing the hypotheses
+            if (parentControl.preferences.DisplayTiming)
+            {
+                TimeSpan timing = DateTime.Now - counter;
+                MessageBox.Show(timing.Minutes.ToString() + "Minutes, " +
+                    timing.Seconds.ToString() + "Seconds, " +
+                    timing.Milliseconds.ToString() + "Miliseconds", "Time elapsed");
+            }
         }
 
         /// <summary>
@@ -88,7 +102,8 @@ namespace Ferda.FrontEnd.ProgressBar
         /// -1 stands for scrolling progress bar</param>
         /// <param name="message">message??</param>
         /// <param name="current__">some ICE stuff</param>
-        public override void setValue(float value, string message, Ice.Current current__)
+        public override void setValue(float value, string message, 
+            Ice.Current current__)
         {
             if (value < 0) // == -1
             {

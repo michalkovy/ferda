@@ -1173,6 +1173,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show exact timing of running of progress bars.
+        /// </summary>
+        internal static string ShowDisplayTiming {
+            get {
+                return ResourceManager.GetString("ShowDisplayTiming", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show the &apos;Visible sockets&apos; group in the Property grid.
         /// </summary>
         internal static string ShowVisibleSockets {
