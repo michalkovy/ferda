@@ -17,6 +17,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
     public class BitStringBuffer
     {
         private const int maxSize = 1000;
+        //private const int maxSize = 0;
         private static readonly BitStringBuffer _instance = new BitStringBuffer();
         private static List<BitStringIceWithCategoryId> _buffer =
             new List<BitStringIceWithCategoryId>();
@@ -24,6 +25,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private List<string> _guids =
             new List<string>();
 
+        /// <summary>
+        /// Count of currently buffered strings
+        /// </summary>
         public int Count
         {
             get
@@ -32,6 +36,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
         }
 
+        /// <summary>
+        /// Checks for cached attribute using its guid
+        /// </summary>
+        /// <param name="guid">Guid of checked attribute</param>
+        /// <returns>True if guid present</returns>
         public bool GuidPresent(string guid)
         {
             return _guids.Contains(guid);
@@ -45,6 +54,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
         }
             
+        
         private BitStringBuffer()
         { }
 
@@ -53,6 +63,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return _instance;
         }
 
+        /// <summary>
+        /// Adds bitstring to buffer
+        /// </summary>
+        /// <param name="bitString">bitstring to add</param>
+        /// <returns>True if successful</returns>
         public bool AddBitString(BitStringIceWithCategoryId bitString)
         {
             if (_instance.Count < maxSize)
@@ -63,11 +78,19 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return false;
         }
 
+        /// <summary>
+        /// Gets the bitstring at the specified index
+        /// </summary>
+        /// <param name="index">Index to get bitstring at</param>
+        /// <returns>Bitstring</returns>
         public BitStringIceWithCategoryId GetBitString(int index)
         {
             return _buffer[index];
         }
 
+        /// <summary>
+        /// Resets the buffer
+        /// </summary>
         public void Reset()
         {
             _guids.Clear();

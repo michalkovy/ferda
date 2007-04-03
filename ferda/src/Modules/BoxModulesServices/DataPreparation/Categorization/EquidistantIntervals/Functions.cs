@@ -56,16 +56,25 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         public const string SockColumn = "Column";
         public const string PropCategories = "Categories";
 
+        /// <summary>
+        /// Guid
+        /// </summary>
         public GuidStruct Guid
         {
             get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
 
+        /// <summary>
+        /// Name in literals
+        /// </summary>
         public string NameInLiterals
         {
             get { return _boxModule.GetPropertyString(PropNameInLiterals); }
         }
 
+        /// <summary>
+        /// Intervals closed from
+        /// </summary>
         public Side ClosedFrom
         {
             get
@@ -77,6 +86,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+        /// <summary>
+        /// Count of intervals
+        /// </summary>
         public long Count
         {
             get
@@ -85,6 +97,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+        /// <summary>
+        /// Count of intervals
+        /// </summary>
         public LongTI CountOfCategories
         {
             get
@@ -95,6 +110,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+        /// <summary>
+        /// Attribute domain
+        /// </summary>
         public DomainEnum Domain
         {
             get
@@ -106,6 +124,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+        /// <summary>
+        /// Attribute cardinality
+        /// </summary>
         public CardinalityEnum Cardinality
         {
             get
@@ -117,6 +138,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+        /// <summary>
+        /// Xcategory
+        /// </summary>
         public string XCategory
         {
             get { return _boxModule.GetPropertyString(PropXCategory); }
@@ -124,16 +148,25 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 
         private string _nullCategoryName = null;
 
+        /// <summary>
+        /// Null category name
+        /// </summary>
         public StringTI IncludeNullCategory
         {
             get { return _nullCategoryName; }
         }
 
+        /// <summary>
+        /// "From" restriction
+        /// </summary>
         public string From
         {
             get { return _boxModule.GetPropertyString(PropFrom); }
         }
 
+        /// <summary>
+        /// "To" restriction
+        /// </summary>
         public string To
         {
             get { return _boxModule.GetPropertyString(PropTo); }
@@ -210,6 +243,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             return intervalsArray;
         }*/
 
+        /// <summary>
+        /// Parses from and to values
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         private void parseFromTo(DbDataTypeEnum dataType, out IComparable from, out IComparable to)
         {
             try
@@ -242,6 +281,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+
         private object[] Retype(int[] input)
         {
             object[] result = new object[input.Length];
@@ -257,6 +297,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
         private long _lastBSQueryTicks = 0;
 
+        /// <summary>
+        /// Gets categories and frequencies
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public ValuesAndFrequencies GetCategoriesAndFrequencies(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<ValuesAndFrequencies>(
@@ -285,6 +330,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 );
         }
 
+        /// <summary>
+        /// Gets proxy of the connected column box
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
         {
             return SocketConnections.GetPrx<ColumnFunctionsPrx>(
@@ -294,6 +344,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 fallOnError);
         }
 
+        /// <summary>
+        /// Gets categories names
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public string[] GetCategoriesNames(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(
@@ -320,6 +375,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         private CacheFlag _cacheFlagColumn = new CacheFlag();
         private GenericColumn _cachedValueColumn = null;
 
+        /// <summary>
+        /// Gets generic column connected to the attribute
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public GenericColumn GetGenericColumn(bool fallOnError)
         {
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
@@ -594,6 +654,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         //      private Guid _lastReloadFlag;
         //     private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
         //     private long _lastBSQueryTicks = 0;
+
+        /// <summary>
+        /// Gets bitstring of the attribute
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public Dictionary<string, BitStringIce> GetBitStrings(bool fallOnError)
         {
             lock (this)
@@ -645,6 +711,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+        /// <summary>
+        /// Gets bitstring with specified category name
+        /// </summary>
+        /// <param name="categoryName">Category name to get bitstring for</param>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public BitStringIce GetBitString(string categoryName, bool fallOnError)
         {
             // categoryName is "" if it should be null (throught middleware)
@@ -693,6 +765,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+
+        /// <summary>
+        /// Gets categories ids
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public string[] GetCategoriesIds(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(
@@ -715,6 +793,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 );
         }
 
+
+        /// <summary>
+        /// Returns categories numeric values
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public double[] GetCategoriesNumericValues(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<double[]>(
@@ -748,6 +832,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 );
         }
 
+        /// <summary>
+        /// Counts potential cardinality
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public CardinalityEnum PotentiallyCardinality(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<CardinalityEnum>(
@@ -802,6 +891,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 
         #region ICE functions
 
+        /// <summary>
+        /// Gets attribute cardinality
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns>Attribute cardinality</returns>
         public override CardinalityEnum GetAttributeCardinality(Current current__)
         {
             if (Guha.Data.Common.CompareCardinalityEnums(
@@ -820,11 +914,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             return Cardinality;
         }
 
+        /// <summary>
+        /// Gets attribute id
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override GuidStruct GetAttributeId(Current current__)
         {
             return Guid;
         }
 
+        /// <summary>
+        /// Gets attribute names
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
             return new GuidAttributeNamePair[]
@@ -833,21 +937,42 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 };
         }
 
+        /// <summary>
+        /// Gets bitstring for specified category id
+        /// </summary>
+        /// <param name="categoryId">Categoryid of the required bitstring</param>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override BitStringIce GetBitString(string categoryId, Current current__)
         {
             return GetBitString(categoryId, true);
         }
 
+        /// <summary>
+        /// Gets categories ids
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string[] GetCategoriesIds(Current current__)
         {
             return GetCategoriesIds(true);
         }
 
+        /// <summary>
+        /// Gets categories numeric values
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override double[] GetCategoriesNumericValues(Current current__)
         {
             return GetCategoriesNumericValues(true);
         }
 
+        /// <summary>
+        /// Gets missing information category id
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string[] GetMissingInformationCategoryId(Current current__)
         {
             if (String.IsNullOrEmpty(XCategory))
@@ -856,6 +981,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 return new string[] { XCategory }; ;
         }
 
+        /// <summary>
+        /// Gets source datatable id
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(true);
@@ -864,16 +994,34 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             return null;
         }
 
+        /// <summary>
+        /// Gets serialized attribute
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string getAttribute(Current current__)
         {
             return Guha.Attribute.Serializer.Serialize(GetAttribute(true).Export());
         }
 
+        /// <summary>
+        /// Gets categories and their frequencies in the attribute
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override ValuesAndFrequencies getCategoriesAndFrequencies(Current current__)
         {
             return GetCategoriesAndFrequencies(true);
         }
 
+        /// <summary>
+        /// Gets count vector for the relational DM purposes
+        /// </summary>
+        /// <param name="masterIdColumn">Master table id column</param>
+        /// <param name="masterDatatableName">Master table name</param>
+        /// <param name="detailIdColumn">Detail table id column</param>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
             GenericColumn _column = GetGenericColumn(true);
@@ -895,12 +1043,24 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             return result;
         }
 
+        /// <summary>
+        /// Gets next bitstring for virtual column - not implemented here, as the attribute is not virtual
+        /// </summary>
+        /// <param name="skipFirstN"></param>
+        /// <param name="bitString"></param>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
             bitString = new BitStringIceWithCategoryId();
             return false;
         }
 
+        /// <summary>
+        /// Gets maximal bitstring count (for the relational DM purposes)
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override long GetMaxBitStringCount(Current current__)
         {
             return 0;
