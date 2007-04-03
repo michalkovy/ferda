@@ -48,11 +48,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         public const string SockColumn = "Column";
         public const string SockBSGen = "BitStringGenerator";
 
+
+        /// <summary>
+        /// Guid
+        /// </summary>
         public GuidStruct Guid
         {
             get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
 
+        /// <summary>
+        /// Attribute cardinality
+        /// </summary>
         public CardinalityEnum Cardinality
         {
             get
@@ -64,6 +71,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             }
         }
 
+        /// <summary>
+        /// Name in literals
+        /// </summary>
         public string NameInLiterals
         {
             get { return _boxModule.GetPropertyString(PropNameInLiterals); }
@@ -78,7 +88,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
              }
          }*/
 
-
+        /// <summary>
+        /// Xcategory
+        /// </summary>
         protected string XCategory
         {
             get
@@ -87,16 +99,25 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             }
         }
 
+        /// <summary>
+        /// "From" restriction
+        /// </summary>
         public string From
         {
             get { return _boxModule.GetPropertyString(PropFrom); }
         }
 
+        /// <summary>
+        /// "To" restriction
+        /// </summary>
         public string To
         {
             get { return _boxModule.GetPropertyString(PropTo); }
         }
 
+        /// <summary>
+        /// Attribute domain
+        /// </summary>
         public DomainEnum Domain
         {
             get
@@ -108,6 +129,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             }
         }
 
+        /// <summary>
+        /// Count of categories
+        /// </summary>
         public LongTI CountOfCategories
         {
             get
@@ -118,6 +142,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         private string _nullCategoryName = null;
 
+        /// <summary>
+        /// Null category name
+        /// </summary>
         public StringTI IncludeNullCategory
         {
             get { return _nullCategoryName; }
@@ -125,7 +152,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         #endregion
 
-
+        /// <summary>
+        /// Gets attribute cardinality
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns>Attribute cardinality</returns>
         public override CardinalityEnum GetAttributeCardinality(Current current__)
         {
             if (Guha.Data.Common.CompareCardinalityEnums(
@@ -144,11 +175,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             return Cardinality;
         }
 
+        /// <summary>
+        /// Gets attribute id
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override GuidStruct GetAttributeId(Current current__)
         {
             return Guid;
         }
 
+        /// <summary>
+        /// Gets attribute names
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
             return new GuidAttributeNamePair[]
@@ -157,21 +198,45 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 };
         }
 
+        /// <summary>
+        /// Gets bitstring for specified category id
+        /// </summary>
+        /// <param name="categoryId">Categoryid of the required bitstring</param>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override BitStringIce GetBitString(string categoryId, Current current__)
         {
             return GetBitString(categoryId, true);
         }
 
+        /// <summary>
+        /// Gets categories ids
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string[] GetCategoriesIds(Current current__)
         {
             return GetCategoriesIds(true);
         }
 
+        /// <summary>
+        /// Gets categories numeric values
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override double[] GetCategoriesNumericValues(Current current__)
         {
             return GetCategoriesNumericValues(true);
         }
 
+        /// <summary>
+        /// Gets count vector for the relational DM purposes
+        /// </summary>
+        /// <param name="masterIdColumn">Master table id column</param>
+        /// <param name="masterDatatableName">Master table name</param>
+        /// <param name="detailIdColumn">Detail table id column</param>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
             string detailId = String.Empty;
@@ -191,11 +256,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             return result;
         }
 
+        /// <summary>
+        /// Gets maximal bitstring count (for the relational DM purposes)
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override long GetMaxBitStringCount(Current current__)
         {
             return 0;
         }
 
+        /// <summary>
+        /// Gets missing information category id
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string[] GetMissingInformationCategoryId(Current current__)
         {
             if (String.IsNullOrEmpty(XCategory))
@@ -204,11 +279,23 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 return new string[] { XCategory }; ;
         }
 
+        /// <summary>
+        /// Gets next bitstring for virtual column - not implemented here, as the attribute is not virtual
+        /// </summary>
+        /// <param name="skipFirstN"></param>
+        /// <param name="bitString"></param>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
+        /// <summary>
+        /// Gets source datatable id
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(true);
@@ -217,11 +304,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             return null;
         }
 
+        /// <summary>
+        /// Gets serialized attribute
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string getAttribute(Current current__)
         {
             return this._boxModule.GetPropertyString(PropAttribute);
         }
 
+        /// <summary>
+        /// Gets categories and their frequencies in the attribute
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override ValuesAndFrequencies getCategoriesAndFrequencies(Current current__)
         {
             return GetCategoriesAndFrequencies(false);
@@ -238,6 +335,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 fallOnError);
         }*/
 
+        /// <summary>
+        /// Counts potential cardinality
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public CardinalityEnum PotentiallyCardinality(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<CardinalityEnum>(
@@ -288,6 +390,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 );
         }
 
+        /// <summary>
+        /// Returns categories numeric values
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public double[] GetCategoriesNumericValues(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<double[]>(
@@ -322,6 +429,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         private CacheFlag _cacheFlagColumn = new CacheFlag();
         private GenericColumn _cachedValueColumn = null;
 
+        /// <summary>
+        /// Gets generic column connected to the attribute
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public GenericColumn GetGenericColumn(bool fallOnError)
         {
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
@@ -370,6 +482,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         private Guid _lastReloadFlag;
         private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
         private long _lastBSQueryTicks = 0;
+
+        /// <summary>
+        /// Gets bitstring of the attribute
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public Dictionary<string, BitStringIce> GetBitStrings(bool fallOnError)
         {
             lock (this)
@@ -421,6 +539,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             }
         }
 
+        /// <summary>
+        /// Gets bitstring with specified category name
+        /// </summary>
+        /// <param name="categoryName">Category name to get bitstring for</param>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public BitStringIce GetBitString(string categoryName, bool fallOnError)
         {
             // categoryName is "" if it should be null (throught middleware)
@@ -469,6 +593,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             }
         }
 
+        /// <summary>
+        /// Gets categories names
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public string[] GetCategoriesNames(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(
@@ -492,6 +621,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 );
         }
 
+        /// <summary>
+        /// Gets categories ids
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public string[] GetCategoriesIds(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(
@@ -517,6 +651,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         private CacheFlag _cacheFlag = new CacheFlag();
         private Attribute<IComparable> _cachedValue = null;
 
+        /// <summary>
+        /// Gets attribute
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public Attribute<IComparable> GetAttribute(bool fallOnError)
         {
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
@@ -688,6 +827,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             return _cachedValue;
         }
 
+        /// <summary>
+        /// Gets categories and frequencies
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public ValuesAndFrequencies GetCategoriesAndFrequencies(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<ValuesAndFrequencies>(
@@ -724,6 +868,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 );
         }
 
+        /// <summary>
+        /// Gets proxy of the connected column box
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
         {
             BoxModulePrx boxModuleParam1;
@@ -748,6 +897,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         }
 
+        /// <summary>
+        /// Returns connected bitstring generator
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public BitStringGeneratorPrx GetBitStringGeneratorPrx(bool fallOnError)
         {
             return SocketConnections.GetPrx<BitStringGeneratorPrx>(

@@ -308,6 +308,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         private int[] _countVector = null;
 
+        /// <summary>
+        /// CountVector
+        /// </summary>
         protected int[] CountVector
         {
             get
@@ -325,6 +328,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
         }
 
         private BitString[] _masks = null;
+
+        /// <summary>
+        /// Gets masks for relational Trace method to count virtual columns
+        /// </summary>
         protected BitString[] Masks
         {
             get

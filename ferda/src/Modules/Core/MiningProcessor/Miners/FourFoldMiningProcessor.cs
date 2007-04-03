@@ -213,6 +213,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
         }
         #endregion
 
+        /// <summary>
+        /// Method that yields bitstrings for virtual 4ft attribute
+        /// </summary>
+        /// <param name="countVector">CountVector</param>
+        /// <param name="attributeGuid">Guid of the virtual attribute box</param>
+        /// <param name="skipFirstN">Number of virtual columns to skip</param>
+        /// <returns>Enumerable collection</returns>
         public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, GuidStruct attributeGuid, int skipFirstN)
         {
             if (skipFirstN >= this.TaskParams.maxSizeOfResult)

@@ -25,6 +25,11 @@ using Ferda.Guha.MiningProcessor.Results;
 
 namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 {
+    /// <summary>
+    /// Evaluator for relational DM - works with result differently
+    /// no hypotheses are added to the result
+    /// bool vector is constructed instead
+    /// </summary>
     class FirstNNoResult : IEvaluator
     {
         /// <summary>

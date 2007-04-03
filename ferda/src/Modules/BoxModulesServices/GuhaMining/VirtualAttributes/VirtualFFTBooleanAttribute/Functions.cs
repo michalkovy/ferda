@@ -363,6 +363,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 
         #region BooleanAttributeSettingWithBSGenerationAbilityFunctionsDisp_ members
 
+        /// <summary>
+        /// Gets the connected bitstring generator
+        /// </summary>
+        /// <param name="attributeId">Attribute id</param>
+        /// <param name="current__"></param>
+        /// <returns>Bitstring generator proxy</returns>
         public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Current current__)
         {
             if (attributeId.value == Guid.value)
@@ -372,6 +378,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             return null;
         }
 
+        /// <summary>
+        /// Gets entity setting
+        /// </summary>
+        /// <param name="fallOnError">Whether to fall on error</param>
+        /// <returns>Entity setting</returns>
         public IEntitySetting GetEntitySetting(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<IEntitySetting>(
@@ -396,28 +407,55 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                 );
         }
 
+        /// <summary>
+        /// Gets entity setting
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns>Entity setting</returns>
         public override IEntitySetting GetEntitySetting(Current current__)
         {
             return GetEntitySetting(true);
         }
 
-
+        /// <summary>
+        /// Gets attribute cardinality
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns>Attribute cardinality</returns>
         public override CardinalityEnum GetAttributeCardinality(Current current__)
         {
             return Cardinality;
         }
 
+        /// <summary>
+        /// Gets attribute id
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns>Attribute id</returns>
         public override GuidStruct GetAttributeId(Current current__)
         {
             return Guid;
         }
 
+        /// <summary>
+        /// Gets missing information categoryid
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns>Missing information categoryid</returns>
         public override string[] GetMissingInformationCategoryId(Current current__)
         {
             return new string[0];
         }
 
         private Ice.Current _current = null;
+
+        /// <summary>
+        /// Gets next bitstring for the virtual columns
+        /// </summary>
+        /// <param name="skipFirstN">Skips first bistrings</param>
+        /// <param name="bitString">Returned bitstring</param>
+        /// <param name="current__"></param>
+        /// <returns>True if more bitstrings can be returned</returns>
         public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
             if (bitStringsYielded < MaxNumberOfHypotheses)
@@ -447,11 +485,21 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             }
         }
 
+        /// <summary>
+        /// Gets category numeric values - for future implementations
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns>Category numeric values</returns>
         public override double[] GetCategoriesNumericValues(Current current__)
         {
             return new double[0];
         }
 
+        /// <summary>
+        /// Gets attribute name
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
             List<GuidAttributeNamePair> _result = new List<GuidAttributeNamePair>();
@@ -462,11 +510,21 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             return _result.ToArray();
         }
 
+        /// <summary>
+        /// Gets source datatable id
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
             return Common.GetSourceDataTableId(_boxModule, this);
         }
 
+        /// <summary>
+        /// Gets categories ids
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns></returns>
         public override string[] GetCategoriesIds(Current current__)
         {
             return new string[0];
@@ -526,6 +584,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 
         #endregion
 
+        /// <summary>
+        /// Gets maximal count of generated bitstrings for virtual columns
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns>Maximal count of generated bistrings</returns>
         public override long GetMaxBitStringCount(Current current__)
         {
             return MaxNumberOfHypotheses;
