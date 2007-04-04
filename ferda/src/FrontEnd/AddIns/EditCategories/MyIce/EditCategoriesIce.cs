@@ -327,6 +327,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                             info.columnSelectExpression, info).GetDistinctsAndFrequencies(String.Empty);
                         //table = genericDataTable.Select();
                         cardinality = info.cardinality;
+                    //    pv.stringValue = String.Empty;
                     }
                     catch (Exception e)
                     {
@@ -337,7 +338,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
 
                 Ferda.FrontEnd.AddIns.EditCategories.MainListView listView
                     = new Ferda.FrontEnd.AddIns.EditCategories.MainListView(
-                    localePrefs, pv, table, cardinality, columnDataType, ownerOfAddIn);
+                    localePrefs, pv.stringValue, table, cardinality, columnDataType, ownerOfAddIn);
                 listView.ShowInTaskbar = false;
                 listView.Disposed += new EventHandler(SetCategories);
                 System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);

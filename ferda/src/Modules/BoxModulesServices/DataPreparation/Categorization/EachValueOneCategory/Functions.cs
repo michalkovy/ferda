@@ -283,8 +283,26 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                         if (column == null)
                             return null;
 
-                        Attribute<IComparable> result =
+                        Attribute<IComparable> result;
+
+                        switch (column.DbSimpleDataType)
+                        {
+                            case DbSimpleDataTypeEnum.DateTimeSimpleType:
+                            case DbSimpleDataTypeEnum.DoubleSimpleType:
+                            case DbSimpleDataTypeEnum.FloatSimpleType:
+                            case DbSimpleDataTypeEnum.IntegerSimpleType:
+                            case DbSimpleDataTypeEnum.LongSimpleType:
+                            case DbSimpleDataTypeEnum.ShortSimpleType:
+                            case DbSimpleDataTypeEnum.TimeSimpleType:
+                                result =
+                            (Attribute<IComparable>)Common.GetAttributeObject(column.DbSimpleDataType, true);
+                                break;
+
+                            default:
+                                result =
                             (Attribute<IComparable>)Common.GetAttributeObject(column.DbSimpleDataType, false);
+                                break;
+                        }
 
                         System.Data.DataTable dt;
                         if (Domain == DomainEnum.SubDomain)

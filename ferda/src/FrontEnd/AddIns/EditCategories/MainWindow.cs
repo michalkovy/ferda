@@ -289,8 +289,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 new System.Windows.Forms.ColumnClickEventHandler(this.ColumnListView_ColumnClick);
             this.LoadIcons();
             this.InitIcons();
-            this.MenuItemNewInterval.Enabled = this.attribute.IntervalsAllowed;
-            this.ToolMenuItemNewInterval.Enabled = this.attribute.IntervalsAllowed;
+            this.MenuItemNewInterval.Enabled = intervalsAllowed;
+            this.ToolMenuItemNewInterval.Enabled = intervalsAllowed;
         }
 
         #endregion
