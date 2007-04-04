@@ -142,7 +142,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit interval.
+        ///   Looks up a localized string similar to Edit intervals.
         /// </summary>
         internal static string ButtonEditInterval {
             get {

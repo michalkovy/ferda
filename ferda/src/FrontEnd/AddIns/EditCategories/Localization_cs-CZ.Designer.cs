@@ -142,7 +142,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upravit interval.
+        ///   Looks up a localized string similar to Upravit intervaly.
         /// </summary>
         internal static string ButtonEditInterval {
             get {
