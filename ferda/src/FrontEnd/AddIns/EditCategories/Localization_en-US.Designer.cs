@@ -295,6 +295,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Empty category is not allowed.
+        /// </summary>
+        internal static string EmptyCategory {
+            get {
+                return ResourceManager.GetString("EmptyCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {

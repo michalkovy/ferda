@@ -307,6 +307,13 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
             attribute[tempName].Reduce();
+            if ((attribute[tempName].Enumeration.Count == 0) && (attribute[tempName].Intervals.Count == 0))
+            {
+                MessageBox.Show(this.resManager.GetString("EmptyCategory"),
+                   this.resManager.GetString("Error"),
+                   MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
             try
             {
                 this.attribute.RenameCategory(tempName, this.TextBoxCategoryName.Text);

@@ -295,6 +295,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nelze přidat prázdnou kategorii.
+        /// </summary>
+        internal static string EmptyCategory {
+            get {
+                return ResourceManager.GetString("EmptyCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chyba.
         /// </summary>
         internal static string Error {

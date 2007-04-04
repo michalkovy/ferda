@@ -288,4 +288,7 @@
   <data name="TypeNotSupported" xml:space="preserve">
     <value>Datový typ není podporován</value>
   </data>
+  <data name="EmptyCategory" xml:space="preserve">
+    <value>Nelze přidat prázdnou kategorii</value>
+  </data>
 </root>
