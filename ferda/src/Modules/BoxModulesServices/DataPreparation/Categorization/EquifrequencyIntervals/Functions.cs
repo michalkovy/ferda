@@ -942,6 +942,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropCountOfCategories, (long)Count);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropClosedFrom, ClosedFrom);
             int count = (int)Count;
             if (count <= 0)
             {

@@ -95,8 +95,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
 
         public static T[] PrepareForEquifrequency(System.Data.DataTable dt, ToTypeDelegate converter, int count)
         {
-            Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<T>[] enumeration =
-                new Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<T>[dt.Rows.Count];
+            List<
+            Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<T>> enumeration =
+                new List<Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<T>>();
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -107,12 +108,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
                     new Guha.Attribute.DynamicAlgorithm.ValueFrequencyPair<T>(
                     converter(dt.Rows[i][0].ToString()),
                     Convert.ToInt32(dt.Rows[i][1]));
-                enumeration[i] = tmpItem;
+                enumeration.Add(tmpItem);
             }
 
             T[] divisionPoints =
                 Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals(
-                count, enumeration);
+                count, enumeration.ToArray());
 
             return divisionPoints;
 

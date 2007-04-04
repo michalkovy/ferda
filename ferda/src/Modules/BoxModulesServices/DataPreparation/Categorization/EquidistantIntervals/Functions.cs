@@ -399,6 +399,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             cacheSetting.Add(
                 Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropSelectExpression,
                 column.columnSelectExpression);
+            cacheSetting.Add(Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropCardinality,
+                 column.cardinality);
 
             if (_cacheFlagColumn.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValueColumn == null && fallOnError))
@@ -479,7 +481,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropLength, Count);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropLength, (long)Count);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropClosedFrom, ClosedFrom);
 
             //count of categories
             int count = (int)Count;
