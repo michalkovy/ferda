@@ -177,7 +177,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 throw Exceptions.BadValueError(
                     null,
                     boxModule.StringIceIdentity,
-                    "Property \"Name in literals\" can not be empty string.",
+                    "Property \"Name in result\" can not be empty string.",
                     new string[] { Functions.PropNameInLiterals },
                     restrictionTypeEnum.OtherReason
                     );
