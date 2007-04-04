@@ -145,7 +145,7 @@
     <value>Edit enum</value>
   </data>
   <data name="ButtonEditInterval" xml:space="preserve">
-    <value>Edit interval</value>
+    <value>Edit intervals</value>
   </data>
   <data name="ButtonFlatten" xml:space="preserve">
     <value>Split recursive all</value>

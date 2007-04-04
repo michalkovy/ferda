@@ -283,7 +283,7 @@
     <value>Nepodporovaný typ výčtu</value>
   </data>
   <data name="ButtonEditInterval" xml:space="preserve">
-    <value>Upravit interval</value>
+    <value>Upravit intervaly</value>
   </data>
   <data name="TypeNotSupported" xml:space="preserve">
     <value>Datový typ není podporován</value>
