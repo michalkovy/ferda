@@ -97,6 +97,13 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.EditExisting
         private void Submit_Click_New(object sender, EventArgs e)
         {
             this.attribute[tempName].Reduce();
+            if ((attribute[tempName].Enumeration.Count == 0) && (attribute[tempName].Intervals.Count == 0))
+            {
+                MessageBox.Show(this.resManager.GetString("EmptyCategory"),
+                   this.resManager.GetString("Error"),
+                   MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
             this.Dispose();
         }
 
