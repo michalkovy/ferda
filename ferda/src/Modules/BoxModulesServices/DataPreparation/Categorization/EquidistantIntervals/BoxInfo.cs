@@ -212,7 +212,19 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             object dummy = Func.GetColumnFunctionsPrx(true);
             dummy = Func.GetAttributeId();
             dummy = Func.GetAttributeNames();
-            dummy = Func.GetAttribute(true);
+            try
+            {
+                dummy = Func.GetAttribute(true);
+            }
+            catch
+            {
+                throw Exceptions.BadParamsError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Requested number of intervals is either 0 or exceeds count of values",
+                    restrictionTypeEnum.OtherReason
+                    );
+            }
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);
