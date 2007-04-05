@@ -253,7 +253,7 @@
     <value>Výčet</value>
   </data>
   <data name="LabelIntervals" xml:space="preserve">
-    <value>Intervaly (dvojklik pro smazání)</value>
+    <value>Intervaly</value>
   </data>
   <data name="NoEmptyCategoryAllowed" xml:space="preserve">
     <value>Kategorie nemůže být prázdná</value>
@@ -290,5 +290,20 @@
   </data>
   <data name="EmptyCategory" xml:space="preserve">
     <value>Nelze přidat prázdnou kategorii</value>
+  </data>
+  <data name="ButtonDeleteInterval" xml:space="preserve">
+    <value>Odstranit z kategorie</value>
+  </data>
+  <data name="ButtonEditSelectedInterval" xml:space="preserve">
+    <value>Upravit zvolený inerval</value>
+  </data>
+  <data name="RadioAdd" xml:space="preserve">
+    <value>Nový</value>
+  </data>
+  <data name="RadioEdit" xml:space="preserve">
+    <value>Úprava</value>
+  </data>
+  <data name="CheckBoxReduce" xml:space="preserve">
+    <value>Zredukovat intervaly při přidání</value>
   </data>
 </root>

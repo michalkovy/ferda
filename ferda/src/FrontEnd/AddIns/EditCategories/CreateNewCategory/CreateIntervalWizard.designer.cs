@@ -69,15 +69,20 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.panel2 = new System.Windows.Forms.Panel();
             this.ListBoxIntervals = new System.Windows.Forms.ListBox();
             this.LabelIntervals = new System.Windows.Forms.Label();
+            this.ButtonDeleteInterval = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.RadioEdit = new System.Windows.Forms.RadioButton();
+            this.RadioAddNew = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // ButtonAddInterval
             // 
-            this.ButtonAddInterval.Location = new System.Drawing.Point(51, 313);
+            this.ButtonAddInterval.Location = new System.Drawing.Point(19, 241);
             this.ButtonAddInterval.Name = "ButtonAddInterval";
-            this.ButtonAddInterval.Size = new System.Drawing.Size(102, 23);
+            this.ButtonAddInterval.Size = new System.Drawing.Size(177, 23);
             this.ButtonAddInterval.TabIndex = 12;
             this.ButtonAddInterval.Text = "Add to category";
             this.ButtonAddInterval.Click += new System.EventHandler(this.AddToCategoryButton_Click);
@@ -103,7 +108,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // LabelLeftBoundType
             // 
             this.LabelLeftBoundType.AutoSize = true;
-            this.LabelLeftBoundType.Location = new System.Drawing.Point(15, 175);
+            this.LabelLeftBoundType.Location = new System.Drawing.Point(15, 113);
             this.LabelLeftBoundType.Name = "LabelLeftBoundType";
             this.LabelLeftBoundType.Size = new System.Drawing.Size(81, 13);
             this.LabelLeftBoundType.TabIndex = 32;
@@ -121,7 +126,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // RadioLeftBoundSharp
             // 
             this.RadioLeftBoundSharp.AutoSize = true;
-            this.RadioLeftBoundSharp.Location = new System.Drawing.Point(3, 77);
+            this.RadioLeftBoundSharp.Location = new System.Drawing.Point(3, 49);
             this.RadioLeftBoundSharp.Name = "RadioLeftBoundSharp";
             this.RadioLeftBoundSharp.Size = new System.Drawing.Size(31, 17);
             this.RadioLeftBoundSharp.TabIndex = 8;
@@ -131,7 +136,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // 
             this.RadioLeftBoundRound.AutoSize = true;
             this.RadioLeftBoundRound.Checked = true;
-            this.RadioLeftBoundRound.Location = new System.Drawing.Point(3, 38);
+            this.RadioLeftBoundRound.Location = new System.Drawing.Point(3, 25);
             this.RadioLeftBoundRound.Name = "RadioLeftBoundRound";
             this.RadioLeftBoundRound.Size = new System.Drawing.Size(28, 17);
             this.RadioLeftBoundRound.TabIndex = 7;
@@ -148,7 +153,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // LabelRightBoundType
             // 
             this.LabelRightBoundType.AutoSize = true;
-            this.LabelRightBoundType.Location = new System.Drawing.Point(131, 175);
+            this.LabelRightBoundType.Location = new System.Drawing.Point(131, 113);
             this.LabelRightBoundType.Name = "LabelRightBoundType";
             this.LabelRightBoundType.Size = new System.Drawing.Size(88, 13);
             this.LabelRightBoundType.TabIndex = 26;
@@ -166,7 +171,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // RadioRightBoundSharp
             // 
             this.RadioRightBoundSharp.AutoSize = true;
-            this.RadioRightBoundSharp.Location = new System.Drawing.Point(3, 77);
+            this.RadioRightBoundSharp.Location = new System.Drawing.Point(3, 49);
             this.RadioRightBoundSharp.Name = "RadioRightBoundSharp";
             this.RadioRightBoundSharp.Size = new System.Drawing.Size(31, 17);
             this.RadioRightBoundSharp.TabIndex = 11;
@@ -176,7 +181,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // 
             this.RadioRightBoundRound.AutoSize = true;
             this.RadioRightBoundRound.Checked = true;
-            this.RadioRightBoundRound.Location = new System.Drawing.Point(3, 38);
+            this.RadioRightBoundRound.Location = new System.Drawing.Point(3, 25);
             this.RadioRightBoundRound.Name = "RadioRightBoundRound";
             this.RadioRightBoundRound.Size = new System.Drawing.Size(28, 17);
             this.RadioRightBoundRound.TabIndex = 10;
@@ -232,9 +237,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.panel1.Controls.Add(this.RadioLeftBoundRound);
             this.panel1.Controls.Add(this.RadioMinusInfinity);
             this.panel1.Controls.Add(this.RadioLeftBoundSharp);
-            this.panel1.Location = new System.Drawing.Point(16, 199);
+            this.panel1.Location = new System.Drawing.Point(16, 137);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(64, 97);
+            this.panel1.Size = new System.Drawing.Size(83, 74);
             this.panel1.TabIndex = 35;
             // 
             // panel2
@@ -242,35 +247,77 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.panel2.Controls.Add(this.RadioPlusInfinity);
             this.panel2.Controls.Add(this.RadioRightBoundRound);
             this.panel2.Controls.Add(this.RadioRightBoundSharp);
-            this.panel2.Location = new System.Drawing.Point(132, 199);
+            this.panel2.Location = new System.Drawing.Point(132, 137);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(64, 97);
+            this.panel2.Size = new System.Drawing.Size(87, 74);
             this.panel2.TabIndex = 36;
             // 
             // ListBoxIntervals
             // 
             this.ListBoxIntervals.FormattingEnabled = true;
-            this.ListBoxIntervals.Location = new System.Drawing.Point(16, 374);
+            this.ListBoxIntervals.Location = new System.Drawing.Point(16, 328);
             this.ListBoxIntervals.Name = "ListBoxIntervals";
             this.ListBoxIntervals.Size = new System.Drawing.Size(180, 82);
             this.ListBoxIntervals.TabIndex = 13;
-            this.ListBoxIntervals.DoubleClick += new System.EventHandler(this.ListBoxIntervals_DoubleClick);
-          //  this.ListBoxIntervals.SelectedIndexChanged += new System.EventHandler(this.ListBoxIntervals_SelectedIndexChanged);
+            this.ListBoxIntervals.SelectedIndexChanged += new System.EventHandler(this.ListBoxIntervals_SelectedIndexChanged);
             // 
             // LabelIntervals
             // 
             this.LabelIntervals.AutoSize = true;
-            this.LabelIntervals.Location = new System.Drawing.Point(16, 357);
+            this.LabelIntervals.Location = new System.Drawing.Point(16, 311);
             this.LabelIntervals.Name = "LabelIntervals";
             this.LabelIntervals.Size = new System.Drawing.Size(120, 13);
             this.LabelIntervals.TabIndex = 38;
             this.LabelIntervals.Text = "Intervals in the category";
+            // 
+            // ButtonDeleteInterval
+            // 
+            this.ButtonDeleteInterval.Location = new System.Drawing.Point(19, 416);
+            this.ButtonDeleteInterval.Name = "ButtonDeleteInterval";
+            this.ButtonDeleteInterval.Size = new System.Drawing.Size(177, 23);
+            this.ButtonDeleteInterval.TabIndex = 39;
+            this.ButtonDeleteInterval.Text = "Delete from category";
+            this.ButtonDeleteInterval.Click += new System.EventHandler(this.ButtonDeleteInterval_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.RadioEdit);
+            this.panel3.Controls.Add(this.RadioAddNew);
+            this.panel3.Location = new System.Drawing.Point(19, 276);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(177, 30);
+            this.panel3.TabIndex = 40;
+            // 
+            // RadioEdit
+            // 
+            this.RadioEdit.AutoSize = true;
+            this.RadioEdit.Enabled = false;
+            this.RadioEdit.Location = new System.Drawing.Point(113, 3);
+            this.RadioEdit.Name = "RadioEdit";
+            this.RadioEdit.Size = new System.Drawing.Size(43, 17);
+            this.RadioEdit.TabIndex = 10;
+            this.RadioEdit.Text = "Edit";
+            this.RadioEdit.CheckedChanged += new System.EventHandler(this.RadioAddEdit_CheckedChanged);
+            // 
+            // RadioAddNew
+            // 
+            this.RadioAddNew.AutoSize = true;
+            this.RadioAddNew.Checked = true;
+            this.RadioAddNew.Location = new System.Drawing.Point(3, 3);
+            this.RadioAddNew.Name = "RadioAddNew";
+            this.RadioAddNew.Size = new System.Drawing.Size(44, 17);
+            this.RadioAddNew.TabIndex = 9;
+            this.RadioAddNew.TabStop = true;
+            this.RadioAddNew.Text = "Add";
+            this.RadioAddNew.CheckedChanged += new System.EventHandler(this.RadioAddEdit_CheckedChanged);
             // 
             // CreateIntervalWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.ButtonDeleteInterval);
             this.Controls.Add(this.LabelIntervals);
             this.Controls.Add(this.ListBoxIntervals);
             this.Controls.Add(this.LabelNewName);
@@ -292,10 +339,13 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+
 
         #endregion
 
@@ -321,5 +371,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         private System.Windows.Forms.Panel panel2;
         protected System.Windows.Forms.ListBox ListBoxIntervals;
         protected System.Windows.Forms.Label LabelIntervals;
+        internal System.Windows.Forms.Button ButtonDeleteInterval;
+        private System.Windows.Forms.Panel panel3;
+        internal System.Windows.Forms.RadioButton RadioAddNew;
+        internal System.Windows.Forms.RadioButton RadioEdit;
     }
 }

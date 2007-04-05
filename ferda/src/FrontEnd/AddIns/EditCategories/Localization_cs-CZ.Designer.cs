@@ -133,6 +133,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Odstranit z kategorie.
+        /// </summary>
+        internal static string ButtonDeleteInterval {
+            get {
+                return ResourceManager.GetString("ButtonDeleteInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upravit výčet.
         /// </summary>
         internal static string ButtonEdit {
@@ -147,6 +156,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         internal static string ButtonEditInterval {
             get {
                 return ResourceManager.GetString("ButtonEditInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upravit zvolený inerval.
+        /// </summary>
+        internal static string ButtonEditSelectedInterval {
+            get {
+                return ResourceManager.GetString("ButtonEditSelectedInterval", resourceCulture);
             }
         }
         
@@ -237,6 +255,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         internal static string ButtonSubmit {
             get {
                 return ResourceManager.GetString("ButtonSubmit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zredukovat intervaly při přidání.
+        /// </summary>
+        internal static string CheckBoxReduce {
+            get {
+                return ResourceManager.GetString("CheckBoxReduce", resourceCulture);
             }
         }
         
@@ -421,7 +448,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Intervaly (dvojklik pro smazání).
+        ///   Looks up a localized string similar to Intervaly.
         /// </summary>
         internal static string LabelIntervals {
             get {
@@ -525,6 +552,24 @@ namespace Ferda.FrontEnd.AddIns.EditCategories {
         internal static string NoEmptyCategoryAllowed {
             get {
                 return ResourceManager.GetString("NoEmptyCategoryAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nový.
+        /// </summary>
+        internal static string RadioAdd {
+            get {
+                return ResourceManager.GetString("RadioAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Úprava.
+        /// </summary>
+        internal static string RadioEdit {
+            get {
+                return ResourceManager.GetString("RadioEdit", resourceCulture);
             }
         }
         
