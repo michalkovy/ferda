@@ -298,7 +298,7 @@ namespace Ferda.Guha.Attribute
             StringBuilder result = new StringBuilder();
             while (iIndex < _intervals.Count || eIndex < _enumeration.Count)
             {
-                if (iIndex > 0 && eIndex > 0)
+                if (iIndex > 0 || eIndex > 0)
                     result.Append(Common.CategoryMembersSeparator);
 
                 if (iIndex == _intervals.Count)
