@@ -219,7 +219,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 throw Exceptions.BadValueError(
                     null,
                     boxModule.StringIceIdentity,
-                    "Property \"Name in result\" can not be empty string.",
+                    "Property \"Name in results\" can not be empty string.",
                     new string[] { Functions.PropNameInLiterals },
                     restrictionTypeEnum.OtherReason
                     );

@@ -143,6 +143,7 @@ namespace Ferda.Guha.Data
 
                         string columnQuotedIdentifier;
                         string dataTableQuotedIdentifier;
+                        string whereQuotedIdentifier = "1";
                         if(!IsVirtual)
                         {
                             dataTableQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
@@ -150,20 +151,25 @@ namespace Ferda.Guha.Data
                         }
                         else
                         {
+
+                            columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
+                                DetailDataTableName)
+                                + "." + GetQuotedQueryIdentifier();
+
+
                             dataTableQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                                 + ","
-                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
-                                + " WHERE "
-                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
+                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
+               
+                            whereQuotedIdentifier =
+                                GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                                 + "."
-                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(MasterTableIdColumn)
+                                + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailTableIdColumn)
                                 + "="
                                 + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
                                 + "."
                                 + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(MasterTableIdColumn);
-                            columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
-                                DetailDataTableName)
-                                + "." + GetQuotedQueryIdentifier();
+         
                         }
 
                         try
@@ -172,7 +178,8 @@ namespace Ferda.Guha.Data
 
                             {
                                 command.CommandText =
-                                    "SELECT DISTINCT " + columnQuotedIdentifier + " FROM " + dataTableQuotedIdentifier;
+                                    "SELECT DISTINCT " + columnQuotedIdentifier + " FROM " 
+                                    + dataTableQuotedIdentifier + " WHERE " + whereQuotedIdentifier;
 
                                 DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
                                 dataAdapter.SelectCommand = command;
@@ -750,7 +757,7 @@ namespace Ferda.Guha.Data
         /// <returns>Quoted query identifier of the column</returns>
         public string GetQuotedQueryIdentifier()
         {
-            if ((IsDerived) || (IsVirtual))
+            if ((IsDerived))
                 return _explain.name;
             else
                 return GenericDataTable.GenericDatabase.QuoteQueryIdentifier(_explain.name);
