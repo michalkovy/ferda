@@ -141,11 +141,17 @@
   <data name="ButtonDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ButtonDeleteInterval" xml:space="preserve">
+    <value>Delete from category</value>
+  </data>
   <data name="ButtonEdit" xml:space="preserve">
     <value>Edit enum</value>
   </data>
   <data name="ButtonEditInterval" xml:space="preserve">
     <value>Edit intervals</value>
+  </data>
+  <data name="ButtonEditSelectedInterval" xml:space="preserve">
+    <value>Edit selected interval</value>
   </data>
   <data name="ButtonFlatten" xml:space="preserve">
     <value>Split recursive all</value>
@@ -176,6 +182,9 @@
   </data>
   <data name="ButtonSubmit" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="CheckBoxReduce" xml:space="preserve">
+    <value>Reduce intervals when adding</value>
   </data>
   <data name="ColumnCategoryName" xml:space="preserve">
     <value>Category name</value>
@@ -238,7 +247,7 @@
     <value>Values covered by category</value>
   </data>
   <data name="LabelIntervals" xml:space="preserve">
-    <value>Intervals (double-click to delete)</value>
+    <value>Intervals</value>
   </data>
   <data name="LabelIntervalType" xml:space="preserve">
     <value>Interval type</value>
@@ -272,6 +281,12 @@
   </data>
   <data name="NoEmptyCategoryAllowed" xml:space="preserve">
     <value>Category cannot be empty</value>
+  </data>
+  <data name="RadioAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="RadioEdit" xml:space="preserve">
+    <value>Edit</value>
   </data>
   <data name="RadioMinusInfinity" xml:space="preserve">
     <value>- inf</value>

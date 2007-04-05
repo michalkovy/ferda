@@ -57,6 +57,11 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// </summary>
         protected string tempName;
 
+        /// <summary>
+        /// Flag whether an interval is being edited
+        /// </summary>
+        protected bool editingInterval = false;
+
         #endregion
 
 
@@ -67,7 +72,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// </summary>
         /// <param name="dataList">Datalist</param>
         /// <param name="rm">Resource manager</param>
-        public CreateIntervalWizard(Attribute<IComparable> attribute, 
+        public CreateIntervalWizard(Attribute<IComparable> attribute,
             string tempname, ResourceManager rm, EventHandler closeHandler)
         {
             //setting the ResManager resource manager and localization string
@@ -181,64 +186,87 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
 
         #region ListBox handlers
 
-        /*
-        /// <summary>
-        /// Method which fills the UI elements according to the selected interval
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void ListBoxIntervals_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBoxIntervals_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.ListBoxIntervals.SelectedIndices.Count > 0)
             {
-                Interval<IComparable> tempInterval;
-                try
-                {
-                    tempInterval =
-                        this.currentCategory.Intervals[(this.ListBoxIntervals.SelectedIndex)];
-                }
+                RadioEdit.Enabled = true;
+            }
+            else
+            {
+                RadioEdit.Enabled = false;
+            }
+        }
 
-                catch
+        private void RadioAddEdit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (RadioAddNew.Checked)
+            {
+                editingInterval = false;
+                ResetIntervalUI();
+            }
+            else
+            {
+                if (this.ListBoxIntervals.SelectedIndices.Count > 0)
                 {
-                    return;
-                }
-                this.TextBoxLeftBound.Text = tempInterval.LeftValue.ToString();
-                this.TextBoxRightBound.Text = tempInterval.RightValue.ToString();
+                    editingInterval = true;
+                    Interval<IComparable> tempInterval;
+                    try
+                    {
+                        tempInterval =
+                            this.attribute[tempName].Intervals[(this.ListBoxIntervals.SelectedIndex)];
+                    }
 
-                if (tempInterval.LeftBoundary = BoundaryEnum.Closed)
-                {
-                    this.RadioLeftBoundSharp.Checked = true;
-                }
-                else if (tempInterval.LeftBoundary == BoundaryEnum.Infinity)
-                {
-                    this.RadioMinusInfinity.Checked = true;
+                    catch
+                    {
+                        return;
+                    }
+                    this.TextBoxLeftBound.Text = tempInterval.LeftValue.ToString();
+                    this.TextBoxRightBound.Text = tempInterval.RightValue.ToString();
+
+                    if (tempInterval.LeftBoundary == BoundaryEnum.Closed)
+                    {
+                        this.RadioLeftBoundSharp.Checked = true;
+                    }
+                    else if (tempInterval.LeftBoundary == BoundaryEnum.Infinity)
+                    {
+                        this.RadioMinusInfinity.Checked = true;
+                    }
+                    else
+                    {
+                        this.RadioLeftBoundRound.Checked = true;
+                    }
+
+                    if (tempInterval.RightBoundary == BoundaryEnum.Closed)
+                    {
+                        this.RadioRightBoundSharp.Checked = true;
+                    }
+                    else if (tempInterval.RightBoundary == BoundaryEnum.Infinity)
+                    {
+                        this.RadioPlusInfinity.Checked = true;
+                    }
+                    else
+                    {
+                        this.RadioRightBoundRound.Checked = true;
+                    }
+                    this.ButtonAddInterval.Text = resManager.GetString("ButtonEditSelectedInterval");
                 }
                 else
                 {
-                    this.RadioLeftBoundRound.Checked = true;
-                }
-
-                if (tempInterval.RightBoundary = BoundaryEnum.Closed)
-                {
-                    this.RadioRightBoundSharp.Checked = true;
-                }
-                else if (tempInterval.RightBoundary == BoundaryEnum.Infinity)
-                {
-                    this.RadioPlusInfinity.Checked = true;
-                }
-                else
-                {
-                    this.RadioRightBoundRound.Checked = true;
+                    editingInterval = false;
+                    this.ButtonAddInterval.Text = resManager.GetString("ButtonCheck");
+                    RadioEdit.Enabled = false;
                 }
             }
-        }*/
+        }
+
 
         /// <summary>
-        /// Handler for double-click which deletes the interval clicked on
+        /// Deletes the selected intervals from the category
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void ListBoxIntervals_DoubleClick(object sender, System.EventArgs e)
+        private void ButtonDeleteInterval_Click(object sender, EventArgs e)
         {
             if (this.ListBoxIntervals.SelectedIndices.Count > 0)
             {
@@ -272,32 +300,86 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            try
+
+            if (editingInterval)
             {
-                TryAddInterval();
-                this.ListBoxIntervals.Items.Clear();
-                foreach (Interval<IComparable> inter in attribute[tempName].Intervals)
+                Interval<IComparable> tempInterval;
+                tempInterval =
+                      this.attribute[tempName].Intervals[(this.ListBoxIntervals.SelectedIndex)];
+                this.attribute[tempName].Intervals.RemoveAt(this.ListBoxIntervals.SelectedIndex);
+
+                try
                 {
-                    this.ListBoxIntervals.Items.Add(inter.ToString());
-                    if (this.ListBoxIntervals.Items.Count > 0)
+                    //try to add an edited interval
+                    TryAddInterval();
+                    editingInterval = false;
+                    ResetIntervalUI();
+                }
+                catch
+                {
+                    //if not successful, return the old interval back
+                    this.attribute[tempName].Intervals.Add(tempInterval.LeftValue,
+                        tempInterval.LeftBoundary,
+                tempInterval.RightValue, tempInterval.RightBoundary, false);
+                }
+                finally
+                {
+                    this.ListBoxIntervals.Items.Clear();
+                    foreach (Interval<IComparable> inter in attribute[tempName].Intervals)
                     {
-                        this.ListBoxIntervals.SelectedIndex = 0;
+                        this.ListBoxIntervals.Items.Add(inter.ToString());
+                        if (this.ListBoxIntervals.Items.Count > 0)
+                        {
+                            this.ListBoxIntervals.SelectedIndex = 0;
+                        }
                     }
                 }
             }
-            catch (ArgumentOutOfRangeException ex)
+            else
             {
-                MessageBox.Show(ex.Message, this.resManager.GetString("Error"),
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+                try
+                {
+                    TryAddInterval();
+                    ResetIntervalUI();
+                    this.ListBoxIntervals.Items.Clear();
+                    foreach (Interval<IComparable> inter in attribute[tempName].Intervals)
+                    {
+                        this.ListBoxIntervals.Items.Add(inter.ToString());
+                        if (this.ListBoxIntervals.Items.Count > 0)
+                        {
+                            this.ListBoxIntervals.SelectedIndex = 0;
+                        }
+                    }
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    MessageBox.Show(ex.Message, this.resManager.GetString("Error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Generic exception",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Generic exception",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
+            this.ListBoxIntervals.SelectedItems.Clear();
         }
+
+        /// <summary>
+        /// Resets interval ui to default values
+        /// </summary>
+        void ResetIntervalUI()
+        {
+            this.TextBoxLeftBound.Text = String.Empty;
+            this.TextBoxRightBound.Text = String.Empty;
+            this.RadioLeftBoundRound.Checked = true;
+            this.RadioRightBoundRound.Checked = true;
+            this.ButtonAddInterval.Text = resManager.GetString("ButtonCheck");
+            this.RadioAddNew.Checked = true;
+        }
+
 
         /// <summary>
         /// Handler for submitting the changed interval to categories list
@@ -349,6 +431,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
         /// <returns></returns>
         protected bool DataIsValid()
         {
+            if ((RadioMinusInfinity.Checked) && (RadioPlusInfinity.Checked))
+                return true;
             //we expect the value and the type of the left bound, if it is not infinity
             if (!RadioMinusInfinity.Checked)
             {
@@ -377,27 +461,65 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                     case DbSimpleDataTypeEnum.LongSimpleType:
                     case DbSimpleDataTypeEnum.ShortSimpleType:
                         {
-                            double left = Convert.ToDouble(TextBoxLeftBound.Text);
-                            double right = Convert.ToDouble(TextBoxRightBound.Text);
-                            if (left >= right)
-                                return false;
+                            double left = 0;
+                            double right = 0;
+                            if (!RadioMinusInfinity.Checked)
+                                left = Convert.ToDouble(TextBoxLeftBound.Text);
+
+                            if (!RadioPlusInfinity.Checked)
+                                right = Convert.ToDouble(TextBoxRightBound.Text);
+
+                            if ((!RadioMinusInfinity.Checked) && (!RadioPlusInfinity.Checked))
+                            {
+                                if (left >= right)
+                                    return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
                         }
                         break;
 
                     case DbSimpleDataTypeEnum.DateTimeSimpleType:
                         {
-                            DateTime left = Convert.ToDateTime(TextBoxLeftBound.Text);
-                            DateTime right = Convert.ToDateTime(TextBoxRightBound.Text);
-                            if (left >= right)
-                                return false;
+                            DateTime left = new DateTime();
+                            DateTime right = new DateTime();
+                            if (!RadioMinusInfinity.Checked)
+                                left = Convert.ToDateTime(TextBoxLeftBound.Text);
+                            if (!RadioPlusInfinity.Checked)
+                                right = Convert.ToDateTime(TextBoxRightBound.Text);
+
+                            if ((!RadioMinusInfinity.Checked) && (!RadioPlusInfinity.Checked))
+                            {
+                                if (left >= right)
+                                    return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
                         }
                         break;
                     case DbSimpleDataTypeEnum.StringSimpleType:
                         {
-                            string left = TextBoxLeftBound.Text;
-                            string right = TextBoxRightBound.Text;
-                            if (left.CompareTo(right) > 1)
-                                return false;
+                            string left = String.Empty;
+                            string right = String.Empty;
+                            if (!RadioMinusInfinity.Checked)
+                                left = TextBoxLeftBound.Text;
+
+                            if (!RadioPlusInfinity.Checked)
+                                right = TextBoxRightBound.Text;
+                            if ((!RadioMinusInfinity.Checked) && (!RadioPlusInfinity.Checked))
+                            {
+                                if (left.CompareTo(right) > 1)
+                                    return false;
+
+                            }
+                            else
+                            {
+                                return true;
+                            }
                         }
                         break;
 
@@ -481,6 +603,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             else
             {
                 leftBoundType = BoundaryEnum.Infinity;
+                leftBound = (IComparable)1;
             }
             if (!RadioPlusInfinity.Checked)
             {
@@ -562,11 +685,15 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
             // this.RadioLong.Text = rm.GetString("Long");
             this.ButtonCancel.Text = rm.GetString("ButtonCancel");
             this.ButtonAddInterval.Text = rm.GetString("ButtonCheck");
+            this.ButtonDeleteInterval.Text = rm.GetString("ButtonDeleteInterval");
             this.ButtonSubmit.Text = rm.GetString("ButtonSubmit");
             this.LabelLeftBoundType.Text = rm.GetString("LabelLeftBoundType");
             this.LabelLeftBoundValue.Text = rm.GetString("LabelLeftBoundValue");
             this.LabelRightBoundType.Text = rm.GetString("LabelRightBoundType");
             this.LabelRightBoundValue.Text = rm.GetString("LabelRightBoundValue");
+            this.RadioAddNew.Text = rm.GetString("RadioAdd");
+            this.RadioEdit.Text = rm.GetString("RadioEdit");
+
             this.LabelNewName.Text = rm.GetString("LabelNewName");
             this.TextBoxCategoryName.Text = rm.GetString("NewName");
             this.LabelIntervals.Text = rm.GetString("LabelIntervals");
