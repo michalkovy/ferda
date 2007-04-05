@@ -212,11 +212,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             object dummy = Func.GetColumnFunctionsPrx(true);
             dummy = Func.GetAttributeId();
             dummy = Func.GetAttributeNames();
+
             try
             {
                 dummy = Func.GetAttribute(true);
             }
-            catch(Exception e)
+            catch
+            {
+                throw Exceptions.BadParamsError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Requested number of intervals is either 0 or exceeds count of values",
+                    restrictionTypeEnum.OtherReason
+                    );
+            }
+         /*   catch(Exception e)
             {
                 throw Exceptions.BadValueError(
                     null,
@@ -225,7 +235,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                     new string[] { Functions.SockColumn },
                     restrictionTypeEnum.OtherReason
                     );
-            }
+            }*/
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);

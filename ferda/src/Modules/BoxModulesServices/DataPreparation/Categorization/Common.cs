@@ -111,9 +111,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
                 enumeration.Add(tmpItem);
             }
 
-            T[] divisionPoints =
-                Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals(
-                count, enumeration.ToArray());
+            T[] divisionPoints;
+
+                divisionPoints =
+                    Guha.Attribute.DynamicAlgorithm.EquifrequencyIntervals.GenerateIntervals(
+                    count, enumeration.ToArray());
 
             return divisionPoints;
 

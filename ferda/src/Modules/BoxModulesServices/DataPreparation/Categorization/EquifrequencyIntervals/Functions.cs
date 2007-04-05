@@ -1008,9 +1008,17 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                                     Categorization.Retyper<float>.ToTypeDelegate dg =
                                     new Categorization.Retyper<float>.ToTypeDelegate(ConvertToFloat);
 
-                                    float[] _divisionPoints =
-                                        Categorization.Retyper<float>.PrepareForEquifrequency(dt, dg, count);
+                                    float[] _divisionPoints;
 
+                                    try
+                                    {
+                                        _divisionPoints =
+                                            Categorization.Retyper<float>.PrepareForEquifrequency(dt, dg, count);
+                                    }
+                                    catch
+                                    {
+                                        throw new ArgumentOutOfRangeException();
+                                    }
                                     result.CreateIntervals(
                                         BoundaryEnum.Closed, __min,
                                         Categorization.Retyper<float>.Retype(_divisionPoints),
@@ -1025,8 +1033,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                                     Categorization.Retyper<double>.ToTypeDelegate dg =
                                     new Categorization.Retyper<double>.ToTypeDelegate(Convert.ToDouble);
 
-                                    double[] _divisionPoints =
-                                        Categorization.Retyper<double>.PrepareForEquifrequency(dt, dg, count);
+                                    double[] _divisionPoints;
+                                    try
+                                    {
+                                        _divisionPoints =
+                                            Categorization.Retyper<double>.PrepareForEquifrequency(dt, dg, count);
+                                    }
+                                    catch
+                                    {
+                                        throw new ArgumentOutOfRangeException();
+                                    }
 
                                     result.CreateIntervals(
                                         BoundaryEnum.Closed, __min,
