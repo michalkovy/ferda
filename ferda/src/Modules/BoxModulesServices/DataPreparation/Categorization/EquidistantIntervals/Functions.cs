@@ -517,8 +517,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                             IComparable from;
                             IComparable to;
                             parseFromTo(column.Explain.dataType, out from, out to);
-                            stringMin = (string)from;
-                            stringMax = (string)to;
+                            stringMin = from.ToString();
+                            stringMax = to.ToString();
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {

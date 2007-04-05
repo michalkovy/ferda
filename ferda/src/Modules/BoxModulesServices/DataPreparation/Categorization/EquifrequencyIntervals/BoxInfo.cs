@@ -222,7 +222,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                 throw Exceptions.BadParamsError(
                     null,
                     boxModule.StringIceIdentity,
-                    "Requested number of intervals is either 0 or exceeds count of values",
+                    "Requested number of intervals is either 0, exceeds count of values or domain is set incorrectly",
                     restrictionTypeEnum.OtherReason
                     );
             }

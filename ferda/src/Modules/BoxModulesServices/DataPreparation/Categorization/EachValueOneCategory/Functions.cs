@@ -312,9 +312,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                             parseFromTo(column.Explain.dataType, out from, out to);
                             string columnSelectExpression = column.GetQuotedQueryIdentifier();
 
-                            dt = column.GetDistincts(columnSelectExpression + ">='" +
+                            dt = column.GetDistincts(columnSelectExpression + ">=" +
                                 from +
-                                "' AND " + columnSelectExpression + "<='" + to + "'");
+                                " AND " + columnSelectExpression + "<=" + to);
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {
