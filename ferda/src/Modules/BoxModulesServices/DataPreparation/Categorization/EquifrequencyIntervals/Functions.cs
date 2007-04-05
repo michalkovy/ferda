@@ -973,13 +973,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                             IComparable from;
                             IComparable to;
                             parseFromTo(column.Explain.dataType, out from, out to);
-                            _min = (string)from;
-                            _max = (string)to;
+                            _min = from.ToString();
+                            _max = to.ToString();
                             string columnSelectExpression =
                                 column.GetQuotedQueryIdentifier();
 
                             dt = column.GetDistinctsAndFrequencies(
-                                columnSelectExpression + ">='" + from + "' AND " + columnSelectExpression + "<='" + to + "'"
+                                columnSelectExpression + ">=" + from + " AND " + columnSelectExpression + "<=" + to
                                 );
                         }
                         else if (Domain == DomainEnum.WholeDomain)
