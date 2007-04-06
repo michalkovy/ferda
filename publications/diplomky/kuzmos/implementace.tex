@@ -152,6 +152,20 @@ Vlastnosti jsou shodné s krabièkou ''4ft Miner'' až na výjimky, jejichž popis ná
 \item[Maximální poèet relevantních otázek]
 Zde se zadává maximální poèet relevantních otázek, které mùže virtuální atribut vygenerovat.
 \end{description}
+Pro úspìšné spuštìní úlohy, do níž je zapojena tato relaèní procedura, je nutné
+zvolit klíè, podle kterého se budou identifikovat záznamy ve vedlejší datové matici
+oproti záznamùm v hlavní datové matici. Pro hlavní datovou matici, která je zapojena
+do zásuvky se stejným jménem, se zvolí její primární klíè pomocí vlastností krabièky
+''Tabulka'' se jménem ''Sloupce primárního klíèe''. Pro vedlejší datovou matici,
+ze které se vytváøejí atributy pro zapojení do krabièky relaèní procedury, se zvolí
+sloupec obsahující záznamy již vybraného v pøedchozím kroku klíèe z hlavní datové matice.
+\paragraph{}
+Úloha poèítá s integritou dat: existuje-li ve vedlejší datové matici záznam, kterému
+neodpovídá žádný záznam hlavní datové matice, úloha skonèi chybou. Význam mùžeme chápat
+následujícím zpùsobem: máme-li databázi banky a v ní tabulky pro klienty a transakce
+identifikované napøíklad dle id klienta, lze poèítat s tím, že pro každou transakci bude
+existovat klient, který ji provedl. Pøípad existence klienta, který žádné transakce neprovedl,
+mùže být naopak bìžný a pøi takové situaci úloha probìhne korektnì.
 
 \subsubsection{Krabièka SD4ft virtuální booleovský atribut}
 Daná krabièka reprezentuje výše popsaný hypotézový
@@ -169,7 +183,8 @@ Vlastnosti jsou shodné s krabièkou ''SD4ft Miner'' až na výjimky, jejichž popis 
 \item[Maximální poèet relevantních otázek]
 Zde se zadává maximální poèet relevantních otázek, které mùže virtuální atribut vygenerovat.
 \end{description}
-
+Pro úspìšné spuštìní úlohy je požadováno správná volba klíèù hlavní a vedlejší datové matice
+stejnì jako v pøípadì 4FT virtuálního boolovského atributu - viz výše.
 
 \section{Ekvidistanèní intervaly}
 Z dùvodù popsaných v \ref{zmenazadani} byla implementována krabièka atributu

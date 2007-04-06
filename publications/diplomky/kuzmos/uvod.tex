@@ -1,59 +1,43 @@
 \chapter{Úvod}
 V této kapitole jsou uvedeny základní pojmy dataminingu. Je popsána
 metoda GUHA a jiné metody, jejich implementace. Podrobnìji je
-popsán relaèní datamining
+popsán relaèní datamining. Také je zde pøedstaveno prostøedí
+Ferda DataMiner, pro které probìhla implementace relaèních rozšíøení.
 \label{uvod}
 \section[Úvod do dobıvání znalostí]{Úvod do dobıvání znalostí z dat}
 
 \subsection{Pøehled}
-\paragraph{}
-Datamining (DM), èesky také jako dobıvání znalostí z dat,
-rovnì známı jako KDD (Knowledge-Discovery in Databases)
-je strojové získávání ne\-tri\-viálních, døíve neznámıch
-skrytıch vztahù z dat získanıch pozorováním nebo z libo\-volnì vel\-kıch data\-bází.
-Takto nalezené vztahy mohou bıt re\-pre\-zentovány ve sro\-zumi\-telné
-podobì s cílem dalšího jejich pouití. Zde se budeme zabıvat
-nalezením vzorcù v podobì asociaèních pravidel a asociaèních pravidel SDS
+Data mining (DM) je analytická metodologie získávání
+netriviálních skrytıch a potenciálnì uiteènıch informací z dat.
+Nìkdy se chápe jako analytická souèást dobıvání znalostí z databází
+(Knowledge Discovery in Databases, KDD), jindy se tato dvì oznaèení chápou jako souznaèná.\footnotemark{}
+
+\footnotetext{Definice je pøevzata z http://cs.wikipedia.org/wiki/Data\_mining}
+Zde se budeme zabıvat
+nalezením vzorù nebo vztahù (z anglického slova \emph{patterns})
+v podobì asociaèních pravidel a asociaèních pravidel SDS
 (podrobnìji viz \ref{asociacnipravidla}).
 \paragraph{}
-Dobıvání znalostí stojí na pomezí vıpoèetních
-statistickıch metod, databázovıch technologii a strojového uèení.
-Metodami dobıvání znalostí se dají øešit úlohy deskripce dat, sumarizace,
+Dobıvání znalostí stojí na po\-mezí vıpoèetních
+statis\-tickıch metod, data\-bázovıch techno\-logii a strojo\-vého uèení.
+Meto\-dami dobıvání zna\-lostí se dají øešit úlohy desk\-ripce dat, suma\-rizace,
 segmentace, deskripce konceptù, klasifikace, predikce a analızy závislostí
 v celé øadì aplikaèních oblastí.
 
 \subsection{Metody dobıvání znalostí}
 \paragraph{}
 Pøi dobıvání znalostí z dat lze pouít více metod. Dobrıch vısledkù
-lze dosáhnout pøi kombinaci více druhù. Jako pøíklad mùeme uvést statistické
+lze dosáhnout pøi jejich kombinaci. Jako pøíklad mùeme uvést statistické
 procedury, rozhodovací stromy, neuronové sítì nebo asociaèní pravidla, se
 kterımi pracuje metoda GUHA a kterımi se zde budeme podrobnìji zabıvat.
-Podrobnìjší pøehled metod je uvedenı napøíklad v diplomové práci M.Ducháèka \cite{duchacek}.
 
-\section{GUHA}
-\paragraph{}
-GUHA je zkratka pro General Unary Hypotheses Automaton.
-Tuto metodu poprvé formuloval Hájek ji v roce 1966 (podrobnìji viz \cite{guha66}),
-detailnìji pak v \cite{guhabasic}.
-\paragraph{}
-Jednou z nejdùleitìjších procedur GUHA je procedura ASSOC (podrobnìji v \cite{guhabasic}),
-která hledá asociaèní pravidla, která odpovídají statistickım testùm hypotéz. Tyto vznikají
-generováním všech monıch relevantních otázek specifikovanıch uivatelem pomocí zadání úlohy,
-ovìøením kadé z nich oproti datùm a reportováním
-pouze prostıch hypotéz. Hypotéza je prostá, jestlie je pravdivá 
-v analyzované datové matici a zároveò nevyplıvá z jinıch, jednodušších hypotéz.
-\paragraph{}
-Tyto pravidla jsou daleko obecnìjší ne ''klasická'' asociaèní pravidla 
-definovaná v souvislosti s analızou nákupních košíkù 
-\subsection{Asociaèní pravidla}
+\subsection[Asociaèní pravidla ''nákupních košíkù'']{Asociaèní pravidla -- analıza nákupních košíkù}
 \label{asociacnipravidla}
-\subsubsection{Analıza nákupních košíkù}
 \paragraph{}
 ''Klasické'' asociaèní pravidlo je definováno Aggravalem (\cite{aggraval})
 v souvislosti s analızou nákupního košíku.
 \paragraph{}
-Jak uvádí J.Rauch v \cite{skripta},
-klasické asociaèní pravidlo je ve tvaru $X \to Y$, kde $X$ a $Y$ znaèí
+Klasické asociaèní pravidlo je ve tvaru $X \to Y$, kde $X$ a $Y$ znaèí
 dvì mnoiny prvkù. Toto pravidlo nám øíká, e transakce obsahující prvky z $X$,
 mají tendenci obsahovat prvky z $Y$.
 \paragraph{}
@@ -88,51 +72,40 @@ $b_{n}$ & $P_{2},P_{4},P_{K}$ \\
 \caption{Pøíklad mnoiny transakcí}
 \end{table}
 \paragraph{}
-Vıraz $P_{2}, P_{5} \to P_{2}, P_{3}$ je pøíklad asociaèního pravidla, které øíká, e
+Vıraz $P_{2}, P_{5} \to P_{1}, P_{3}$ je pøíklad asociaèního pravidla, které øíká, e
 nákupní košíky obsahující poloky $P_{2}$ a $P_{5}$, èasto obsahují i poloky $P_{1}$ a $P_{3}$.
 \paragraph{}
 Analızou transakcí supermarkety mohou
 optimalizovat rozmístìní zboí v prodejnì a zajistit rychlejší a vınosnìjší
 prodej. Pro dobıvání znalostí za vyuití takovıch pravidel byl navren
 algoritmus Apriori, viz \cite{aggraval}.
-\subsubsection{GUHA}
-\paragraph{}
-\label{assocrules}
-Další skupinu asociaèních pravidel popisuje metoda GUHA. Ty jsou obecnìjší ne
-''klasická'' asociaèní pravidla analyzující nákupní košíky.
-Tato metoda byla poprvé formulována v roce 1966 a byla vydána v 1978
- -- viz \cite{guhabasic}. Asociaèní pravidlo má tvar $\phi \approx \psi$, pøípadnì
- $\phi \approx \psi / \chi$ pro podmínìná asociaèní pravidla,
-kde $\phi$, $\psi$ a $\chi$ znaèí konjunkce boolskıch atributù odvozené
-z hodnot sloupcù
-analyzované matice dat. Symbol $\approx$ znaèí obecnı kvantifikátor, jen
-popisuje vztah (asociaci) mezi $\phi$ a $\psi$. Tento mùe bıt napøíklad
-ve formì implikace nebo ve formì statistického testu. Asociaèní pravidlo
-$\phi \approx \psi$ tedy znamená, e $\phi$ a $\psi$ spolu souvisí ve smyslu
-pouitého kvantifikátoru $\approx$, pøípadnì souvisí za pøedpokladu splnìní
-podmínky $\chi$ na analyzované matici dat.
-\paragraph{}
-\label{categorization}
-Metoda GUHA pracuje pouze s kategoriálními daty,
-protoe vzhledem ke zpùsobu generování hypotéz je nutné, aby byl prostor
-hypotéz koneènı. Data, která nejsou diskrétní, musí bıt diskretizovány
-pøedem (ve fázi pøípravy dat). Obvykle tak, e se vytvoøí nìkolik 
-nepøekrıvajících se intervalù, které pokryjí všechny hodnoty v databázi.
+\subsection{GUHA}
+GUHA je zkratka pro General Unary Hypotheses Automaton. Teoretickı základ byl
+formulován Hájkem v roce 1966 (podrobnìji viz \cite{guha66}),
+detailnìji pak v \cite{guhabasic}.
+Pro ilustraci uvádíme obrázek \ref{fig:praceguha}.
 \paragraph{}
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=10cm]{pics/guha.eps}
+\includegraphics[width=9cm]{pics/guha.eps}
 \end{center}
 \caption{Práce metody GUHA}
+\label{fig:praceguha}
 \end{figure}
 \paragraph{}
-Typická efektivní realizace GUHA procedury pouívá "vertikální" reprezentaci
-databáze, kde kadá hodnota kadého atributu je reprezentována øetìzcem bitù
-(viz. kapitola \ref{bitstrings}). Kadı bit v øetìzci popisuje jeden objekt.
-Bit 1 reprezentuje "objekt má tuto hodnotu", zatímco bit 0 znamená
-"objekt nemá tuto hodnotu".
-
-
+Metoda GUHA je realizována procedurami GUHA. Procedura je program, kterı na základì
+vstupu, kterı je tvoøen analyzovanımi daty a jednoduchım zadáním relevantních vztahù,
+generuje zadané vztahy (rovnì se pouívá termín relevantní otázky) a ovìøuje je
+oproti vstupním datùm. Vıstupem jsou pak všechny vztahy (také hypotézy), které jsou prosté.
+Hypotéza je prostá, jestlie je pravdivá 
+v analyzované datové matici a zároveò nevyplıvá z jinıch, jednodušších hypotéz.
+\paragraph{}
+Jednou z nejdùleitìjších procedur GUHA je procedura ASSOC (podrobnìji v \cite{guhabasic}),
+která hledá asociaèní pravidla. Mùe vybírat i jiná ne klasická asociaèní pravidla, 
+napøíklad pravidla, která odpovídají statistickım testùm hypotéz.
+Tato pravidla jsou daleko obecnìjší ne ''klasická'' asociaèní pravidla 
+definovaná v souvislosti s analızou nákupních košíkù.
+\paragraph{}
 
 \subsection{Relaèní dobıvání znalostí}
 \paragraph{}
@@ -151,110 +124,119 @@ zkoumat napøíklad jiné atributy objektù z matice.
 \paragraph{}
 Nìkteré úlohy pro dobıvání znalostí navíc nejdou jednoduše provést nad ''plochou''
 reprezentaci, obzvláštì v pøípadì, kde uvaujeme mnoho rùznıch objektù s jejich
-vlastnostmi a vzájemnımi vztahy. Cílem relaèního dataminingu je odstranìní
+vlastnostmi a vzájemnımi vztahy. Cílem zavedení relaèního dataminingu je odstranìní
 omezení na jednu tabulku dat a umonìní dobıvání znalostí z více relaènì
-propojenıch datovıch tabulek. Navíc, jak uvádí T.Karban v \cite{dateso2005},
+propojenıch datovıch tabulek. Navíc, jak uvádí T.Kar\-ban v \cite{dateso2005},
 ponechání dat v relaèním tvaru mùe zachovat informace, které mohou bıt
 vyjádøeny ve formì relaèních vztahù.
 
-\section{Dùleité pojmy metody GUHA}
-Zde bude následovat struènı pøehled principù dataminingu dle metody GUHA,
+\section{Ferda DataMiner a další implementace metody GUHA}
+\label{ferdaproject}
+
+\subsection{LISp-Miner}
+Od roku 1996 se na praské VŠE vyvíjí systém LISp-Miner.
+Jde o akademickı softwarovı systém pro vıuku (zejména na Fakultì informatiky a statistiky
+Vysoké školy ekonomické v Praze a Matematicko-fyzikální fakultì Univerzity Karlovy
+v Praze) a vızkum v oblasti dobıvání znalostí z databází. Systém obsahuje øadu modulù,
+které umoòují potøebnım zpùsobem transformovat prvotní data, provádìt vlastní analızy
+a vhodnım zpùsobem prezentovat vısledky.
+Systém je stále ve vıvoji, kterı pokrıvá jak implementaci novıch modulù, tak i~prohlubování
+a~rozšiøování modulù ji implementovanıch. Vedlejším dùsledkem tohoto vıvoje jsou stále
+vìtší nároky na uivatele systému,
+pokud chce vyuít všech moností systému LISp-Miner.
+Podrobné informace o systému LISp-Miner lze nalézt v \cite{guha}.
+\subsection{Rel-Miner}
+Systém Rel-Miner je softwarovı projekt vznikající v rámci disertaèní práce (viz. \cite{relminer} )
+Mgr. Tomáše Karbana na Matematicko-fyzikální fakultì Univerzity Karlovy.
+Cílem je vytvoøení systému pro dobıvání asociaèních pravidel z relaèních dat nad hvìzdicovım schématem (dále jen relaèní), co vyaduje rozšíøení jazyka asociaèních pravidel pro pokrytí více ne jedné datové matice. Základní implementaèní techniky (napø. princip bitovıch øetìzcù),  zùstávají stejné jako døíve v systému LISp-Miner
+a nyní systému Ferda DataMiner. Stávající implementace dataminingovıch procedur a parametrù zadávání úlohy,
+které vznikly v rámci diplomové práce T.Kuchaøe, jsou inspirovány právì systémem Rel-Miner. Rovnì
+tato diplomová práce má nìkteré podobné cíle jako Rel-Miner.
+\paragraph{}
+Rozdíly jsou zejména ve vìtším teoretickém pøínosu projektu Rel-Miner, také v zamìøení
+T.Karbana hlavnì na monost distribuovanosti bìhu relaèních i obecnì nerelaèních dataminingovıch
+procedur. Podstatnım rozdílem je zpùsob implementace: Rel-Miner byl od poèátku vyvíjen
+jako samostatné softwarové dílo, které je zamìøeno na teoretické aspekty relaèního
+dobıvání dat a implementace je spíše vzorová a obsahuje relaèní rozšíøení pouze procedury 4ft-Miner,
+kdyto implementace relaèních rozšíøení v rámci této diplomové práce je zamìøená na práci
+v prostøedí Ferda DataMiner, na vyuití veškerıch jeho uivatelskıch i programátorskıch
+vıhod a ji implementovanıch prostøedkù. Mìla za cíl kromì dvou implementovanıch procedur 
+relaèního dataminingu poloit základy pro snazší pøidávání relaèních rozšíøení pro zbıvající
+ procedury v rámci systému Ferda DataMiner.
+\paragraph{}
+Rel-Miner mìl bıt prvotní implementací v oblasti relaèního dataminingu a principu bitovıch øetìzcù.
+Momentálnì je projekt ve stádiu dokonèení, nicménì ještì není hotov a autorovi této práce není
+známo, zda ji existuje ve spustitelné podobì umoòující bìh relaèních dataminingovıch úloh.
+Podobnì jako systém LISp-Miner je i systém Rel-Miner vytváøen pøedevším pro vızkumné úèely
+a bude tedy vhodnı pro malé a støednì velké projekty, pøedevším pak pro vıuku studentù.
+\subsection{Ferda DataMiner}
+Ferda DataMiner (\verb+http://sourceforge.net/projects/ferda+)
+vznikl jako softwarovı projekt na Matematicko-fyzikální fakultì Univerzity Karlovy.
+Mìl odstranit nejvìtší nedostatky systému LISp-Miner zejména v oblasti modularity
+a jednoduchosti uivatelské práce.
+Pøedstavuje spoleèné vizuální prostøedí pro šestici
+vıše uvedenıch procedur systému LISp-Miner, pøináší vizuální model postupu dobıvání
+znalostí podobnı modelùm v komerèních systémech SPSS Clementine, SAS Enterprise Miner apod.
+Srovnání s tìmito systémy je rovnì uvedeno v \cite{ferda}.
+
+\subsection{Krabièky}
+Ferda pøináší pohled na zadání úlohy dobıvání znalostí jako na zapsání funkce
+pomocí jistıch vizuálních objektu -- tzv. krabièek. Kadá krabièka zastává také
+roli funkce nebo nìkolika funkcí. Krabièky mají parametry a vyhodnocují své
+funkce nad hodnotami tìchto parametru. Parametrùm se u~krabièek øíká zásuvky.
+Do zásuvek se zapojují jiné krabièky. Krabièky jsou rozdìleny podle typu a do
+kadé zásuvky lze zapojit pouze nìkteré typy krabièek.
+
+Pomocí rady jednoduchıch krabièek je uivateli umonìno sestavovat vlastní
+algoritmy. Ferda tedy rovnì pøedstavuje nìco jako uivatelskı programovací
+jazyk. Na krabièky se lze však také dívat jako na konstrukce logiky èi
+sémantiky, ke které existuje lambda-kategoriální gramatika. Pro ilustraci prostøedí
+uvedeme obrazovku z prostøedí Ferda jako obrázek \ref{fig:ferdatutorial}.
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=12cm]{pics/ferda-tutorial.eps}
+\end{center}
+\caption{Hlavní obrazovka prostøedí Ferda DataMiner}
+\label{fig:ferdatutorial}
+\end{figure}
+\paragraph{}
+Krabièkovı model je povaován za nejvìtší pøínos prostøedí Ferda DataMiner. Nová funkcionalita
+se do prostøedí mùe pøidat ve formì krabièky zapojitelné mezi stávající krabièky. V této diplomové práci
+autor implementuje metody uvedené v kapitole \ref{cile} ve formì krabièek, které se zapojují 
+do stávajícího zadání úlohy.
+
+\subsection{Diplomová práce ''Experimentální GUHA procedury''}
+Zásadním pøínosem pro prostøedí Ferda DataMiner se stala diplomová práce T.Kuchaøe
+''Experimentální GUHA procedury'', která pøinesla novou implementaci krabièek šesti
+procedur pro dobıvání znalostí a zobecnìní nìkterıch prvkù zadání úlohy oproti jejich
+stávající implementaci v systému LISp-Miner. 
+\paragraph{}
+Pøi implementaci relaèních rozšíøení procedur autor vycházel z jejich nové implementace
+v rámci vıše uvedené práce. 
+Popis provázanosti se systémem Ferda DataMiner a konkrétnì
+s novou implementaci dataminingovıch procedur od T.Kuchaøe v rámci jeho
+diplomové práce \cite{kuchar} je souèástí popisu implementace a patøí
+do kapitoly \ref{implementation}.
+
+
+\section{Dùleité rysy metody GUHA}
+Zde bude následovat struènı pøehled principù dobıvání znalostí dle metody GUHA,
 které jsou nezbytné k pochopení popisu samotné problematiky a implementace
-zadání dané diplomové práce. Tyto principy jsou obecné a byly ve vìtší èi
-menší míøe implementovány v dataminingovıch systémech pracujících na principu
+zadání dané diplomové práce. Tyto principy jsou obecné a byly vyuity pøi implementaci
+v systémech pro dobıvání znalostí pracujících na principu
 GUHA -- viz \ref{implementations}. Pro zevrubnìjší popis autor doporuèuje
 prostudování zejména zdrojù \cite{guha} a \cite{kuchar}.
-\subsection{Princip zadání úlohy}
-Jak je zmínìno v \ref{categorization}, GUHA pracuje s kategoriálními daty.
-Smyslem zadání úlohy je zejména urèení zpùsobu kategorizace tak, aby byl
-co nejvhodnìjší a nejrelevantnìjší jak vzhledem k poadované úloze ke zpracování,
-tak i ke zkoumanım datùm. Pro tento úèel byly nadefinovány následující pojmy
-a prostøedky.
-\subsubsection{Datovı zdroj}
-GUHA pracuje s daty z datovıch matic. Ty jsou ziskávány pøevánì jako databázové
-tabulky èi vısledky operací nad nimi z databází. Pro tento úèel je nutné 
-pøi zadávaní úlohy definovat datovı zdroj (momentálnì nejèastìji ve formì
-pøípojení k databázi pøes rozhraní ODBC) a alespoò jednu datovou matici.
-V relaèním rozšíøení dataminigovıch procedur GUHA se pracuje nad více tabulkami,
-které jsou mezi sebou ve vztahu 1:N. Pro pohodlí se o nich zmiòujeme jako
-o hlavní (master) a vedlejších (detail) tabulkách.
-\paragraph{}
-Dále se z datovıch matic vybírají datové sloupce, ze kterıch se budou vytváøet
-atributy obsahující kategorie pro potøebné rozdìlení vstupních dat. Data mohou
-patøit do rùznıch datovıch typù. Tyto dále ovlivní monosti kategorizace.
-Stojí za zmínku, e zatím nejkomplexnìjší implementace práce s jednotlivımi
-sémantickımi typy byla realizována v práci \cite{kuchar} -- "Experimentální
-GUHA procedury".
-\subsubsection{Datová sémantika}
-Z pohledu datové sémantiky se mohou vyskytovat tyto ètyøi druhy dat:
 
-\label{datasemantics}
-\begin{description}
-\item[Nominální data] Hodnoty nejsou vzájemnì porovnatelné, napøíklad,
-pohlaví nebo oblíbená pøíchu zmrzliny.
-\item[Ordinální data] Hodnoty jsou vzájemnì porovnatelné, napøíklad, vıše
-dosaeného vzdìlání.
-\item[Cyklická ordinální data] U tohoto sémantického typu se vychází ze
-zkuše\-nosti, e pøi zadá\-vaní koeficientu typu \emph{cyklické intervaly}
-(viz \ref{coefficients}) si èasto nevysta\-èíme pouze s ordinál\-ními daty.
-Potøebujeme další vlastnost a to, aby první kategorie pøirozenì ná\-sledo\-vala
-po poslední. Jako pøíklad mohou po\-slouit dny v tıdnu nebo mìsíce v roce.
-\item[Kardinální data] Tato data jsou reprezentována èíselnımi typy,
-napøíklad, reálnımi èísly. Jako pøíklad lze zvolit vıši pøíjmu,
-vzdalenost od místa bydlištì, vıši krevního tlaku a podobnì.
-\end{description}
-
-
-\subsubsection{Kategorie}
-Jak ji bylo øeèeno vıše, metoda GUHA pracuje s diskrétními daty. Data, která
-tuto podmínku nesplòují, musí bıt diskretizována. Diskretizovanı sloupec
-se oznaèuje jako atribut a jeho hodnoty jsou kategorie..
-\paragraph{}
-Pojem kategorie se postupnì vyvíjel v implementacích systému GUHA. Kategorie
-mùe bıt dvojího typu: buï intervalová -- obsahuje koneènı poèet intervalù,
-kterı pokrıvá zkoumanou mnoinu dat, anebo vıètová, kde vıèet opìt pokrıvá
-zkoumanou mnoinu dat. V systémech Lisp-Miner a Rel-Miner kategorie
-mùe obsahovat buï jenom intervaly anebo jenom vıèet. A v rámci diplomové
-práce \cite{kuchar} pojem kategorie byl pøi\-rozenì zobecnìn a imple\-mentován
-do systému Ferda DataMiner tak, aby mohl obsahovat jak intervaly, tak i vıèet.
-Kategorie tedy obsahuje hodnoty, které jsou pokryty sjednocením vıètu
-a intervalù v kategorii. Podmínkou pro monost vytváøení intervalù v kategorii
-je práce nad daty, které mají sémantickı typ ordinální, cyklickı ordinální
-nebo kardinální (viz \ref{datasemantics}).
-\paragraph{}
-V rámci diplomové práce \cite{kuchar} byly vytvoøeny prostøedky pro práci
-s atributy a kategorii, avšak pro uivatelskou práci byl z dùvodu pracnosti
-implementován pouze atribut typu "Each value one category", kterı, jak plyne
-z názvu, umí vytvoøit ze zkoumaného datového sloupce atribut obsahující
-vıètové kategorie pro kadou hodnotu ve sloupci.
-\paragraph{}
-Atributy "Ekvidistanèní intervaly" a "Ekvifrekvenèní intervaly" ve formì
-krabièek pro uivatelskou práci v systému Ferda DataMiner byly implemen\-továny
-autorem této diplomové práce, jedná se o pøínos autora. Takté byla autorem
-implen\-tována krabièka "Statickı atribut", která umoòuje pøímou editaci
-atributu, vèetnì editace vıètu a intervalù u jednotlivıch kategorii.
-
-\subsection{Definování mnoiny relevantních otázek}
-Principem metody GUHA je monost jednoduchého zadání mnoiny relevantních
-otázek. Tyto otázky jsou poté generovány tzv. minerem a postupnì
-verifikovány na základì kvantifikátorù, které jsou souèástí zadání úlohy GUHA.
-Lze zadat generování boolskıch a kategoriálních atributù. Zde se podrobnìji
-zamìøíme na ty boolské, protoe autorem implementována relaèní rozšíøení
-4ft a SD4ft minerù vystupují jako jistı druh právì boolskıch atributù.
-Pro zevrubnìjší pochopení tìchto pojmù GUHA autor doporuèuje k prostudování
-buï pøímo systém Ferda DataMiner, kterı se ostatnì od zaèátku vyvíjel pøímo
-pro vyuití k vıuce data\-miningu anebo z pouité literatury 
-\cite{guhabasic}.
-\subsection{Boolské atributy}
-Následuje definice boolského atributu, jak je uvedena v \cite{guha}.
+\subsection{Booleovské atributy}
+Následuje definice booleovského atributu, jak je uvedena v \cite{guha}.
 
 \newtheorem{booleanattributedef}{Definice booleovského atributu}
 \begin{booleanattributedef}
 Booleovskı atribut je formule splòující následující podmínky.
 \paragraph{}
-Pokud \emph{a} je atribut a $\alpha$ je neprázdná podmnoina mnoiny
+Pokud \emph{A} je atribut a $\alpha$ je neprázdná podmnoina mnoiny
 \{$a_{1},\ldots,a_{k}$\}, pak $A(\alpha)$ je \emph{základní booleovskı atribut}.
-$\alpha$ je koeficient (podrobnìji v \ref{coefficients}) základního booleovského
+$\alpha$ je koeficient základního booleovského
 atributu $A(\alpha)$. Kadı základní booleovskı atribut je booleovskı atribut.
 Pokud $\phi$ a $\psi$ jsou booleovské atributy, pak $\phi \wedge \psi$,
 $\phi \vee \psi$ a $\neg\phi$ jsou odvozené booleovské atributy. Kadı
@@ -291,94 +273,69 @@ false & false & false & false & true \\
 Hodnota booleovského atributu $\phi$ v øádku o matice \emph{M} se znaèí
 $\phi(o,\emph{M})$. Platí, e $\phi(o,\emph{M})=true$, pokud $\phi$ je pravdivı
 na øádku \emph{o} matice \emph{M}, jinak $\phi(o,\emph{M})=false$.
+
+
 \subsection{Zadání mnoiny relevantních otázek}
-Zde popíšeme monosti nastavení dùleitosti jednotlivıch sloek zadání
-booleovského atributu, jak byly prvnì popsány T.Karbanem v \cite{relminer}
+Podrobné monosti nastavení jednotlivıch sloek zadání
+booleovského atributu jsou popsány T.Karbanem v \cite{relminer}
 a implementovány do prostøedí Ferda DataMiner T.Kuchaøem v \cite{kuchar}.
-\begin{description}
-\item[Forced]Booleovskı atribut musí bıt pøítomen v kadé relevantní otázce.
-Aby bylo dosaeno této podmínky, musí zøejmì kadı booleovskı atribut
-odvozenı od jiného \emph{Forced} booleovského atributu (negací, konjunkcí, apod.)
-bıt rovnì typu \emph{Forced}. Této vlastnosti lze elegantnì vyuít pøi dìlení
-úlohy na disjunktní èásti, které lze øešit oddìlenì a tedy vıhodnì distribuovat.
-\item[Basic]Má stejnı vıznam jako termín \emph{Basic} pro literál v LISp Mineru.
-\emph{Basic} booleovskı atribut mùe bıt pouíván volnì, tj. mùe, ale nemusí bıt
-pouit v konjunkci (resp. disjunkci).
-\item[Auxiliary]Má odlišnı vıznam ne termín \emph{Remaining} pro literál
-v LISp Mineru. \emph{Auxiliary} booleovskı atribut smí bıt pouit pouze 
-v pøípadì, pokud ji byl v konjunkci (resp. disjunkci) pouit nìjakı
-\emph{Forced} nebo \emph{Basic} booleovskı atribut. To znamená, e není moné
-vytváøet konjunkce (resp. disjunkce) pouze z \emph{auxiliary} dílèích
-booleovskıch atributù. Booleovské atributy vystupující jako jediné operandy
-v rámci jinıch booleovskıch atributù (napø. negace, konjunkce, $\ldots$)
-proto nesmí bıt typu \emph{auxiliary}.
-\end{description}
-Pro podrobnìjší popis všech moností zadání boolskıch atributù autor
-doporuèuje prostudovat \cite{kuchar}.
-\subsection{Koeficienty}
-\label{coefficients}
-Koeficient je vlastní neprázdná podmnoina všech kategorií základního atributu,
-které mohou bıt pouity pøi zpracování úlohy. V prostøedí \mbox{Ferda DataMiner}
-pouiváme koeficienty následujících typù (pro zjednodušení zápisu místo 
-$A(\{1\})$ píšeme zkrácenì pouze $A(1)$ a místo $A(\{1,2\})$ píšeme
-pouze $A(1,2)$ apod.).
-\begin{description}
-\item[Podmnoiny]
-Uivatel definuje její minimální a maximální délku. Mìjme napøíklad atribut
-\emph{a} s kategoriemi $\{1, 2, 3, 4\}$, pokud chceme vy\-generovat podmnoiny
-velikosti 1-2, vıstupem budou následující základní booleov\-ské atri\-buty
-(v tomto poøadí): $A(1)$, $A(1,2)$, $A(1,3)$, $A(1,4$), $A(2)$, $A(2,3)$,
-$A(2,4)$, $A(3)$, $A(3,4$) a $A(4)$.
-\item[Intervaly]
-Uivatel definuje jejich minimální a maximální délku. Poadavkem je,
-aby kategorie byly sousední. Pro atribut \emph{a} s kategoriemi
-$\{1, 2, 3, 4, 5\}$ budou intervaly délek 2–3 v základních booleovs\-kıch
-atri\-butech vypadat takto: $A(1,2)$, $A(1,2,3)$, $A(2,3)$, $A(2,3,4)$,
-$A(3,4)$, $A(3,4,5)$ a $A(4,5)$.
-\item[Cyklické intervaly]
-Podobají se bìnım intervalùm, ale kategorie jsou cyklické. V našem pøíkladì
-budou cyklické intervaly délky 3 dávat základní booleovské atributy:
-$A(1,2,3)$, $A(2,3,4)$, $A(3,4,5)$, $A(4,5,1)$ a $A(5,1,2)$. Tento typ 
-má vıznam u typu ordinálních dat, kde první kategorie pøirozenì následuje
-po poslední. Pøíkladem mohou bıt dny v tıdnu nebo mìsíce v roce.
-\item[Levé øezy]
-Jde o intervaly s levou hranicí pevnì fixovanou na první kategorii. V našem
-pøíkladì levé øezy délky 3 budou základní booleovské atributy:
-$A(1)$, $A(1,2)$ a $A(1,2,3)$.
-\item[Pravé øezy]
-Analogicky k levım øezùm lze definovat pravé øezy. Na stejném pøíkladu pùjde
-o základní booleovské atributy: $A(5)$, $A(5,4)$ a $A(5,4,3)$.
-\item[Øezy]
-Øezy jsou sjednocením levıch a pravıch øezù, tedy v našem pøíkladu jde 
-o základní booleovské atributy: $A(1)$, $A(1,2)$, $A(1,2,3)$, $A(3,4,5)$,
-$A(4,5)$ a $A(5)$.
-\item[Pevná podmnoina]
-Jde o speciální pøípad koeficientu, kde uivatel vybere kategorie, které
-budou tvoøit konkrétní základní booleovskı atribut. V našem pøíkladu,
-vybere-li uivatel kategorie $2$, $3$ a $5$, bude jedinım základním 
-booleovskım atributem na vıstupu $A(2,3,5)$. Tento typ koeficientu se objevuje
-ji v systému Rel Miner a zobecòuje koeficient typu Jedna dílèí kategorie
-známı v systému LISp-Miner. Je rovnì implementován v prostøedí 
-\mbox{Ferda DataMiner} T.Kuchaøem v \cite{kuchar}.
-\end{description}
-Délka pevnì zvoleného koeficientu je dána poètem pouitıch kategorií.
+V prostøedí Ferda DataMiner byly v rámci diplomové práce \cite{kuchar}
+naimplementovány krabièky, pomocí kterıch 
+lze zadávat základní booleovské atributy, jejich negaci, konjunkci a disjunkci.
+U tìch lze zadávat typ koeficientu, dùleitost, u konjunkce a disjunkce navíc
+tøídy ekvivalence a délku. Podrobnı popis zadávání mnoiny relevantních otázek
+je uveden v práci T.Kuchaøe \cite{kuchar}. Zde pouze uvedeme, e
+monosti zadávání mnoiny relevantních otázek v prostøedí Ferda byly rozšíøeny
+ve srovnání s monostmi v LISp-Mineru.
 
 \subsection{Kategoriální atributy}
 S kategoriálními atributy pracují nìkteré dataminigové procedury. Více o pouití
 kategoriálních atributù se lze doèíst v \ref{miners}.
 
+
+\section{Dataminingové procedury}
+Zde popíšeme dataminingové procedury 4ft-Miner a SD4ft-Miner, protoe v dané diplomové práci
+byly implementována relaèní rozšíøení právì tìchto dvou procedur. Další
+implementované procedury jsou KL-Miner, CF-Miner, SD4CF-Miner, SD4KL-Miner,
+a procedura strojového uèení KEX. Tyto procedury jsou implementovány
+v prostøedí LISp-Miner a takté v prostøedí Ferda DataMiner (kromì
+procedury KEX).
+\label{miners}
+\subsection{4ft-Miner}
+4ft-Miner je
+dataminingová procedura, která hledá právì vztahy tvaru $Ant \approx Succ / Cond$.
+$Ant$, $Succ$, a $Cond$ jsou zde booleovské atributy odvozené ze sloupcù
+ vstupní datové matice. Intuitivní vıznam vztahu $Ant \approx Succ / Cond$
+je ten, e atributy $Ant$ a $Succ$ jsou ve vztahu daném $\approx$, je-li splnìna
+podmínka zadaná booleovskım atributem $Cond$ na analyzované datové matici.
+
+\subsection{SD4ft-Miner}
+SD4ft-Miner je
+dataminingová procedura, která hledá právì vztahy tvaru $Ant \approx Succ / 
+(\alpha, \beta, Cond)$.
+$Ant$, $Succ$, $\alpha$, $\beta$ a $Cond$ jsou zde booleovské atributy odvozené ze sloupcù
+ vstupní datové matice. Intuitivní vıznam vztahu $Ant \approx Succ / (\alpha, \beta, Cond)$
+je ten, e vztah danı $\approx$ atributù $Ant$ a $Succ$ na mnoinì $\alpha$ se liší od vztahu
+$Ant$ a $Succ$ na mnoinì $\beta$, je-li splnìna podmínka zadaná booleovskım
+ atributem $Cond$ na analyzované datové matici.
+
+
+\section{Dùleité rysy implementace metody GUHA}
+
 \subsection{Princip bitovıch øetízkù}
 \label{bitstrings}
 
-Jak u bylo naznaèeno v \ref{categorization}, pro práci metoda GUHA pouívá
-tzv. vertikální reprezentaci databáze. Kadá hodnota atributu je reprezentována
-øetìzcem bitù. Pro zevrubnìjší popis bitovıch øetízkù odkazuje autor na
-\cite{guha}.
+\paragraph{}
+Typická efektivní realizace GUHA procedury pouívá ''vertikální'' reprezentaci
+databáze, kde kadá hodnota kadého atributu je reprezentována øetìzcem bitù
+(viz. kapitola \ref{bitstrings}). Kadı bit v øetìzci popisuje jeden objekt.
+Bit 1 reprezentuje ''objekt má tuto hodnotu'', zatímco bit 0 znamená
+''objekt nemá tuto hodnotu''.
 \paragraph{}
 Bitovı øetìzec mùeme chápat jako bitmapovı index databáze. Pøi klasické
-implementaci atributù se bitové øetìzce vytváøejí pøi prvním prùchodu daty
+implementaci atributù se bitové øetízky vytváøejí pøi prvním prùchodu daty
 a poté není tøeba k tìmto datù pøistupovat. Zde vyvstává otázka, jak efektivnì
-uchovávat potøební bistringy v pamìti. Toto bylo vyøešeno v rámci diplomové
+uchovávat potøebné bitové øetízky v pamìti. Toto bylo vyøešeno v rámci diplomové
 práce T.Kuchaøe \cite{kuchar} pomocí cache bitovıch øetízkù.
 \paragraph{}
 Pøi implementaci relaèního rozšíøení pro existující dataminingové procedury
@@ -442,10 +399,85 @@ $ID$ & $A$ & $B$ &$A(1)$ & $B(1,2)$ & $A(1)\wedge B(1,2)$ & $\neg B(1,2)$ \\
 \end{tabular}
 \end{center}
 \caption{Bitové øetìzce atributù}
-
 \end{table}
+
+\subsection{Zadání úlohy}
+Metoda GUHA pracuje s kategoriálními daty.
+Smyslem zadání úlohy je zejména urèení zpùsobu kategorizace tak, aby byl
+co nejvhodnìjší a nejrelevantnìjší jak vzhledem k poadované úloze ke zpracování,
+tak i ke zkoumanım datùm.
+Bude následovat popis práce s nìkterımi parametry zadání úlohy v prostøedí Ferda DataMiner.
+Vìtšina následujícího popisu se vztahuje i na systém LISp-Miner.
+\subsubsection{Datovı zdroj}
+GUHA pracuje s daty z datovıch matic. Ty jsou získávány pøevánì jako databázové
+tabulky èi vısledky operací nad nimi z databází. Pro tento úèel je nutné 
+pøi zadávaní úlohy definovat datovı zdroj (momentálnì nejèastìji ve formì
+pøípojení k databázi pøes rozhraní ODBC) a alespoò jednu datovou matici.
+V relaèním rozšíøení dataminigovıch procedur GUHA se pracuje nad více tabulkami,
+které jsou mezi sebou ve vztahu 1:N. Pro pohodlí se o nich zmiòujeme jako
+o hlavní (master) a vedlejších (detail) tabulkách.
+\paragraph{}
+Dále se z datovıch matic vybírají datové sloupce, ze kterıch se budou vytváøet
+atributy obsahující kategorie pro potøebné rozdìlení vstupních dat. Data mohou
+patøit do rùznıch datovıch typù. Tyto dále ovlivní monosti kategorizace.
+Stojí za zmínku, e zatím nejkomplexnìjší implementace práce s jednotlivımi
+sémantickımi typy byla realizována v práci \cite{kuchar} -- "Experimentální
+GUHA procedury".
+\subsubsection{Datová sémantika}
+Z pohledu datové sémantiky se mohou vyskytovat tyto ètyøi druhy dat:
+
+\label{datasemantics}
+\begin{description}
+\item[Nominální data] Hodnoty nejsou vzájemnì porovnatelné, napøíklad,
+pohlaví nebo oblíbená pøíchu zmrzliny.
+\item[Ordinální data] Hodnoty jsou vzájemnì porovnatelné, napøíklad, vıše
+dosaeného vzdìlání.
+\item[Cyklická ordinální data] U tohoto sémantického typu se vychází ze
+zkuše\-nosti, e pøi zadá\-vaní koeficientu typu \emph{cyklické intervaly}
+(viz \ref{coefficients}) si èasto nevysta\-èíme pouze s ordinál\-ními daty.
+Potøebujeme další vlastnost a to, aby první kategorie pøirozenì ná\-sledo\-vala
+po poslední. Jako pøíklad mohou po\-slouit dny v tıdnu nebo mìsíce v roce.
+\item[Kardinální data] Tato data jsou reprezentována èíselnımi typy,
+napøíklad, reálnımi èísly. Jako pøíklad lze zvolit vıši pøíjmu,
+vzdalenost od místa bydlištì, vıši krevního tlaku a podobnì.
+\end{description}
+
+
+\subsubsection{Kategorie}
+Metoda GUHA pracuje s diskrétními daty. Data, která
+tuto podmínku nesplòují, musí bıt diskretizována. Diskretizovanı sloupec
+se oznaèuje jako atribut a jeho hodnoty jsou kategorie..
+\paragraph{}
+Monosti práce s kategoriemi se postupnì vyvíjely v implementacích metody GUHA. Kategorie
+mùe bıt dvojího typu: buï intervalová -- obsahuje koneènı poèet intervalù,
+kterı pokrıvá zkoumanou mnoinu dat, anebo vıètová, kde vıèet opìt pokrıvá
+zkoumanou mnoinu dat. V systémech LISp-Miner a Rel-Miner kategorie
+mùe obsahovat buï jenom intervaly anebo jenom vıèet. A v rámci diplomové
+práce \cite{kuchar} monosti zadávání kategorie byly pøi\-rozenì rozšíøeny a imple\-mentovány
+do systému Ferda DataMiner tak, aby mohla obsahovat jak intervaly, tak i vıèet.
+Kategorie tedy obsahuje hodnoty, které jsou pokryty sjednocením vıètu
+a intervalù v kategorii. Podmínkou pro monost vytváøení intervalù v kategorii
+je práce nad daty, které mají sémantickı typ ordinální, cyklickı ordinální
+nebo kardinální (viz \ref{datasemantics}).
+\paragraph{}
+V rámci diplomové práce \cite{kuchar} byly vytvoøeny prostøedky pro práci
+s atributy a kategorii, avšak pro uivatelskou práci byl z dùvodu pracnosti
+implementován pouze krabièka pro transformaci atributu ''Each value one category'', která, jak plyne
+z názvu, umí vytvoøit ze zkoumaného datového sloupce atribut obsahující
+vıètové kategorie pro kadou hodnotu ve sloupci.
+\paragraph{}
+Krabièky pro atributy ''Ekvidistanèní intervaly'' a ''Ekvifrekvenèní intervaly'' ve formì
+krabièek pro uivatelskou práci v systému Ferda DataMiner byly implemen\-továny
+autorem této diplomové práce, jedná se o pøínos autora. Takté byla autorem
+implen\-tována krabièka ''Statickı atribut'', která umoòuje pøímou úpravu
+atributu, vèetnì editace vıètu a intervalù u jednotlivıch kategorii.
+\paragraph{}
+Vıše uvedené krabièky pro transformaci atributu byly pøítomny v první verzi
+Ferdy, avšak diplomová práce T.Kuchaøe ''Experimentální procedury'' podstatnì zmìnila
+práci se zadáváním úlohy pro procedury GUHA, proto se krabièky musely implementovat znovu.
+
 \subsection{Generování relevantních otázek}
-Následující odstavec velmi pøiblinì popisuje zpùsob generování relevantních
+Následující odstavec naznaèuje zpùsob generování relevantních
 otázek. Podrobnìji se s principem generování lze seznámit v disertaèní práci
 T.Karbana \cite{relminer}, pro konkrétní implementaci v prostøedí 
 Ferda DataMiner v diplomové práci T.Kuchaøe \cite{kuchar} a takté
@@ -457,8 +489,8 @@ z datové matice. Relevantní otázky, které jsou pøi ovìøení na vstupních
 datech pravdivé, se nazıvají hypotézy a posílají se na vıstup.
 \paragraph{}
 Na následujícím pseudokódu lze nahlédnout na zpùsob generování relevantních
-otázek u dataminingové procedury 4ft miner.
-\clearpage
+otázek u dataminingové procedury 4ft-Miner.
+
 \begin{verbatim}
 foreach(BitString condition in Conditions)
 {
@@ -481,101 +513,23 @@ iterátory bitovıch øetìzcù umoòující prùchod pøes všechny moné hodnoty
 zadání booleovskıch atributù. Ústøední implementaèní úlohou autora dané
 diplomové práce byla právì implementace iterátoru bitovıch øetìzcù, kterı by
 poskytoval bitové øetízky odpovídající virtuálním atributùm.
-\subsection{Generování boolskıch atributù}
+\subsection{Generování booleovskıch atributù}
 Zde pouze struènì naznaèíme zpùsob generování booleovskıch atributù a
 poznamenejme, e tento zpùsob uívanı metodou GUHA se podstatnì liší
 od zpùsobu, kterı pouívá algoritmus APRIORI popsaného v \cite{aggraval}.
+Zpùsob generování naznaèuje obrázek \ref{fig:boolattrgen}.
 
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=10cm]{pics/battr.eps}
+\includegraphics[width=8cm]{pics/battr.eps}
 \end{center}
+
 \caption{Generování booleovskıch attributù}
+\label{fig:boolattrgen}
 \end{figure}
+Podrobnı popis generování booleovskıch atributù v prostøedí Ferda DataMiner
+je uveden v \cite{kuchar}
 
-\subsection{Dataminingové procedury}
-Zde popíšeme dataminingové procedury 4ft a SD4ft miner, protoe v dané diplomové práci
-byly implementována relaèní rozšíøení právì tìchto dvou procedur. Dálší
-implementované dataminingové procedury jsou KL Miner, CF Miner, SD4CF Miner, SD4KL Miner,
-a procedura strojového uèení KEX. Tyto procedury jsou implementovány
-v prostøedí LISp-Miner a takté v prostøedí Ferda DataMiner (kromì
-procedury KEX).
-\label{miners}
-\subsubsection{4ft Miner}
-4ft miner je
-dataminingová procedura, která hledá právì vztahy tvaru $Ant \approx Succ / Cond$.
-$Ant$, $Succ$, a $Cond$ jsou zde booleovské atributy odvozené ze sloupcù
- vstupní datové matice. Jak bylo naznaèeno pøi popisu asociaèních
-  pravidel v \ref{assocrules}, intuitivní vıznam vztahu $Ant \approx Succ / Cond$
-je ten, e atributy $Ant$ a $Succ$ jsou ve vztahu $\approx$, je-li splnìna
-podmínka zadaná booleovskım atributem $Cond$ na analyzované datové matici.
-
-\subsubsection{SD4ft Miner}
-SD4ft miner je
-dataminingová procedura, která hledá právì vztahy tvaru $Ant \approx Succ / 
-(\alpha, \beta, Cond)$.
-$Ant$, $Succ$, $\alpha$, $\beta$ a $Cond$ jsou zde booleovské atributy odvozené ze sloupcù
- vstupní datové matice. Intuitivní vıznam vztahu $Ant \approx Succ / (\alpha, \beta, Cond)$
-je ten, e vztah $\approx$ atributù $Ant$ a $Succ$ na mnoinì $\alpha$ se liší od vztahu
-$Ant$ a $Succ$ na mnoinì $\beta$, je-li splnìna podmínka zadaná booleovskım
- atributem $Cond$ na analyzované datové matici.
-
-\section[Existující implementace]{Existující implementace a jejich vztah k dané diplomové práci}
-\label{implementations}
-Pro úplnost zde uvedeme krátkı popis doposud existujících implementací metody GUHA
-a jejich vztah k autorovì práci.
-\subsection{LISp-Miner}
-Nejrozsáhlejší implementací metody GUHA a do nedávné doby byl systém LISp-Miner
-(http://lispminer.vse.cz/). Momentálnì se vıvoj soustøeïuje do systému Ferda
-DataMiner, kterı díky otevøenému návrhu, jen od zaèátku poèítal se spolupráci
-více vıvojáøù, se rychle stává nejrozsáhlejší implementaci metody GUHA.
-\paragraph{}
-Historie systému LISp-Miner  sahá do roku 1996, kdy byl navren. 
-Jde o akademickı softwarovı systém pro vıuku (zejména na Fakultì informatiky a statistiky
-Vysoké školy ekonomické v Praze a Matematicko-fyzikální fakultì Univerzity Karlovy
-v Praze) a vızkum v oblasti dobıvání znalostí z databází. Systém obsahuje øadu modulù,
-které umoòují potøebnım zpùsobem transformovat prvotní data, provádìt vlastní analızy
-a vhodnım zpùsobem prezentovat vısledky.
-\paragraph{}
-Podrobné infromace o systému LISp-Miner lze nalézet v \cite{guha}.
-\subsection{Rel-Miner}
-Systém Rel-Miner je softwarovı projekt vznikající v rámci disertaèní práce (viz. \cite{relminer} )
-Mgr. Tomáše Karbana na Matematicko-fyzikální fakultì Univerzity Karlovy.
-Cílem je vytvoøení systému pro dobıvání asociaèních pravidel z relaèních dat nad hvìzdicovım schématem (dále jen relaèní), co vyaduje rozšíøení jazyka asociaèních pravidel pro pokrytí více ne jedné datové matice. Základní implementaèní techniky (napø. princip bitovıch øetìzcù),  zùstávají stejné jako døíve v systému LISp-Miner
-a nyní systému Ferda DataMiner. Jak je vidìt, tento projekt má nìkteré podobné cíle jako daná diplomová práce.
-\paragraph{}
-Rozdíly jsou zejména ve vìtším teoretickém pøínosu projektu Rel-Miner, také v zamìøení
-T.Karbana spíše na monost distribuovanosti bìhu relaèních i obecnì nerelaèních dataminingovıch
-procedur. Podstatnım rozdílem je zpùsob implementace: Rel-Miner byl od poèátku vyvíjen
-jako samostatné softwarové dílo, které je zamìøeno spíše na teoretické aspekty relaèního
-dataminingu a implementace je spíše vzorová a obsahuje relaèní rozšíøení pouze 4ft Mineru,
-kdyto implementace relaèních rozšíøení v rámci dané diplomové práce je zamìøená na práci
-v prostøedí Ferda DataMiner, na vyuití veškerıch jeho uivatelskıch i programátorskıch
-vıhod a ji implementovanıch prostøedkù. Mìla za cíl kromì dvou implementovanıch procedur 
-relaèního dataminingu poloit základy pro snazší pøidávání relaèních rozšíøení pro zbıvající
- procedury v rámci systému Ferda DataMiner.
-\paragraph{}
-Rel-Miner mìl bıt prvotní implementací v oblasti relaèního dataminingu a principu bitovıch øetìzcù.
-Momentálnì je projekt ve stádiu dokonèení, nicménì ještì není hotov a autorovi této práce není
-známo, zda ji existuje ve spustitelné podobì umoòující bìh relaèních dataminingovıch úloh.
-Podobnì jako systém LISp-Miner je i systém Rel-Miner vytváøen pøedevším pro vızkumné úèely
-a bude tedy vhodnı pro malé a støednì velké projekty, pøedevším pak pro vıuku studentù.
-
-\subsection{Ferda DataMiner}
-\label{ferdaproject}
-Ferda DataMiner (http://sourceforge.net/projects/ferda)
-vznikl jako softwarovı projekt na Matematicko-fyzikální fakultì Univerzity Karlovy.
-\paragraph{}
-Jak je uvedeno v \cite{ferda}, Ferda pøedstavuje spoleèné vizuální prostøedí pro šestici
-vıše uvedenıch procedur systému LISp-Miner, pøináší vizuální model postupu dobıvání
-znalostí podobnı modelùm v komerèních systémech SPSS Clementine, SAS Enterprise Miner apod.
-Srovnání s tìmito systémy je rovnì uvedeno v \cite{ferda}.
-\paragraph{}
-Protoe daná diplomová práce je implementována v prostøedí Ferda DataMiner,
-popis její provázanosti se systémem Ferda DataMiner a konkrétnì
-s novou implementaci dataminingovıch procedur od T.Kuchaøe v rámci jeho
-diplomové práce \cite{kuchar} je souèástí popisu implementace a patøí
-do kapitoly \ref{implementation}.
 \section{Relaèní asociaèní pravidla a virtuální atributy}
 \subsection{Úvod}
 Zde bude krátce popsáno rozšíøení asociaèních pravidel pro práci s vícero datovımi
