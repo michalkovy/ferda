@@ -267,14 +267,17 @@ false & false & false & false & true \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Hodnoty odvozených boolských atributù}
+\caption{Hodnoty odvozených booleovských atributù}
 \end{table}
 \paragraph{}
 Hodnota booleovského atributu $\phi$ v øádku o matice \emph{M} se znaèí
 $\phi(o,\emph{M})$. Platí, že $\phi(o,\emph{M})=true$, pokud $\phi$ je pravdivý
 na øádku \emph{o} matice \emph{M}, jinak $\phi(o,\emph{M})=false$.
 
-
+\subsection{Relevantní otázky}
+Asociaèní pravidla, která mají být vygenerována a ovìøená v souvislosti s metodou GUHA,
+se nazývají \emph{relevantní otázky}. Tvary asociaèních pravidel pro procedury 4ft-Miner a SD4ft-Miner
+jsou uvedeny v \ref{miners}.
 \subsection{Zadání množiny relevantních otázek}
 Podrobné možnosti nastavení jednotlivých složek zadání
 booleovského atributu jsou popsány T.Karbanem v \cite{relminer}
@@ -476,43 +479,6 @@ Výše uvedené krabièky pro transformaci atributu byly pøítomny v první verzi
 Ferdy, avšak diplomová práce T.Kuchaøe ''Experimentální procedury'' podstatnì zmìnila
 práci se zadáváním úlohy pro procedury GUHA, proto se krabièky musely implementovat znovu.
 
-\subsection{Generování relevantních otázek}
-Následující odstavec naznaèuje zpùsob generování relevantních
-otázek. Podrobnìji se s principem generování lze seznámit v disertaèní práci
-T.Karbana \cite{relminer}, pro konkrétní implementaci v prostøedí 
-Ferda DataMiner v diplomové práci T.Kuchaøe \cite{kuchar} a taktéž
-v \cite{guha}.
-\paragraph{}
-Dataminingové procedury GUHA generují relevantní otázky na základì vstupní
-datové matice a zadaných parametrù úlohy, které poté ovìøují na datech
-z datové matice. Relevantní otázky, které jsou pøi ovìøení na vstupních
-datech pravdivé, se nazývají hypotézy a posílají se na výstup.
-\paragraph{}
-Na následujícím pseudokódu lze nahlédnout na zpùsob generování relevantních
-otázek u dataminingové procedury 4ft-Miner.
-
-\begin{verbatim}
-foreach(BitString condition in Conditions)
-{
-    foreach(BitString antecedent in Antecedents)
-    {
-        foreach(BitString succedent in Succedents)
-        {
-            ContingencyTable table = 
-                ComputeTable(succedent, antecedent, condition);
-            if (VerifyQuantifiers(table))
-                result.Add(succedent, antecedent, condition);
-        }
-    }
-}
-
-\end{verbatim}
-
-Objekty \verb+Antecedents+, \verb+Succedents+ a \verb+Conditions+ jsou
-iterátory bitových øetìzcù umožòující prùchod pøes všechny možné hodnoty
-zadání booleovských atributù. Ústøední implementaèní úlohou autora dané
-diplomové práce byla právì implementace iterátoru bitových øetìzcù, který by
-poskytoval bitové øetízky odpovídající virtuálním atributùm.
 \subsection{Generování booleovských atributù}
 Zde pouze struènì naznaèíme zpùsob generování booleovských atributù a
 poznamenejme, že tento zpùsob užívaný metodou GUHA se podstatnì liší
@@ -530,14 +496,125 @@ Zpùsob generování naznaèuje obrázek \ref{fig:boolattrgen}.
 Podrobný popis generování booleovských atributù v prostøedí Ferda DataMiner
 je uveden v \cite{kuchar}
 
+
+\subsection{Ovìøování relevantních otázek}
+
+Dataminingové procedury GUHA generují relevantní otázky na základì vstupní
+datové matice a zadaných parametrù úlohy, které poté ovìøují na datech
+z datové matice. Relevantní otázky, které jsou pøi ovìøení na vstupních
+datech pravdivé, se nazývají hypotézy a posílají se na výstup.
+\paragraph{}
+Podmínka platnosti relevantních otázek je dána tzv. kvantifikátory. 
+Kvantifikátor odpovídá podmínce na tzv. kontingenèní tabulku. Vysvìtlíme oba pojmy
+pro proceduru 4ft-Miner.
+\subsubsection{Kontingenèní tabulka}
+Asociaèní pravidlo pro 4ft-Miner má tvar $\phi \approx \psi$, pøípadnì
+ $\phi \approx \psi / \chi$ pro podmínìná asociaèní pravidla,
+kde $\phi$, $\psi$ a $\chi$ jsou booleovské atributy. Asociaèní pravidlo
+$\phi \approx \psi$ se týká matice $M$. $\phi$ je antecedent, $\psi$ je sukcedent
+a $\chi$ je podmínka.
+\paragraph{}
+Pro verifikaci (podmínìných) asociaèních pravidel úloh procedury 4ft-Miner
+je využívaná tzv. ètyøpolní kontingenèní tabulka (four fold contingency table, 
+zkrácenì 4ft -- odtud název procedury 4ft-Miner). Ta zachycuje poèty 
+(frekvence) objektù, které splòují antecedent i sukcedent, splòují pouze jeden,
+pøípadnì ani jeden z nich.
+Pro pevnì zvolený antecedent $\phi$, sukcedent $\psi$ a podmínku $\chi$
+mùžeme spoèítat frekvence objektù v matici dat $M/\chi$
+(matice dat splòujících podmínku $\chi$) splòujících antecedent, sukcedent, antecedent i sukcedent
+nebo ani antecedent ani sukcedent. 
+Frekvence tìchto objektù mùžeme reprezentovat ètyøpolní kontingenèní tabulkou.
+
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$M/\chi$ & $\psi$ & $\neg\psi$ & $\sum{}$\\
+\hline
+$\phi$ & $a$ & $b$ & $r$\\
+\hline
+$\neg\phi$ & $c$ & $d$ & $s$\\
+\hline
+$\sum{}$ & $k$ & $l$ & $n$\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Ètyøpolní kontingenèní tabulka pro antecedent $\phi$, sukcedent $\psi$ a podmínku $\chi$ na matici dat $M$}
+\label{tab:fourfoldtable}
+\end{table}
+
+V tabulce \ref{tab:fourfoldtable} je $a$ poèet objektù (øádkù) analyzované matice dat 
+(splòujících podmínku $\chi$) splòujících jak antecedent, tak sukcedent, $b$ je poèet objektù
+splòujících antecedent a nesplòujících sukcedent, $c$ je poèet objektù nesplòujících antecedent
+a splòujících sukcedent a $d$ je poèet objektù nesplòujících ani antecedent ani sukcedent. 
+Poznamenejme, že $r=a+b$ znaèí poèet objektù splòujících antecedent, $s=c+d$ je poèet objektù,
+které nesplòují antecedent. Souèty sloupcù $a+c=k$  resp. $b+d=l$ odpovídají poètu objektù, které splòují resp. nesplòují sukcedent. Navíc $n=r+s=k+l=a+b+c+d$ je poèet všech objektù v matici dat $M/\chi$.
+
+\subsubsection{Kvantifikátory}
+
+Symbol $\approx$ se nazývá 4ft-kvantifikátor. 4ft-kvantifikátory 
+odpovídají podmínce na ètyøpolní tabulku. Na základì ètyøpolní tabulky se urèuje,
+zda relevantní otázka je èi není relevantním tvrzením tj. hypotézou. 4ft-kvantifikátor pøiøazuje
+ètyøpolní tabulce $\langle a, b, c, d\rangle$ èíslo z množiny  $\{0, 1\}$.
+Relevantní otázka $\phi \approx \psi / \chi$ je relevantním tvrzením právì tehdy, 
+když  $\approx(a, b, c, d)=1$.
+4ft-kvantifikátory mohou vyjadøovat rùzné vztahy, napøíklad implikaèní, ekvivalenèní,
+mohou mít formu statistického testu atd. Jako pøíklad uvedeme 4ft kvantifikátor
+\emph{fundované implikace}.
+\paragraph{Fundovaná implikace}
+4ft-kvantifikátor $\Rightarrow_{p, Base}$ \emph{fundované implikace} pro 
+$0<p\leq 1$ a $Base>0$: platí, že $\Rightarrow_{p, Base}(a,b,c,d)=1$ právì když
+$\frac{a}{a+b}\geq p$ a $a\geq Base$.
+
+Asociaèní pravidlo  $\phi \Rightarrow_{p, Base} \psi$ je pravdivé právì tehdy,
+pokud je splnìna podmínka výše. Fundovaná implikace mùže být interpretována napøíklad takto:
+''100\% zkoumaných objektù splòujících $\phi$ splòuje také $\psi$'' 
+nebo ménì formálnì ''$\phi$ implikuje $\psi$ na 100\%''. 
+Podmínka na $a$ zajišuje, že v datové matici $M$ (resp. $M/\chi$) je dostateèný poèet 
+objektù splòujících  $\phi$ a $\psi$  (tedy že pravidlo má dostateènou podporu v datech matice $M$).
+
+\subsection{Generování relevantních otázek}
+Následující odstavec naznaèuje zpùsob generování a verifikace relevantních
+otázek. Podrobnìji se s principem generování lze seznámit v disertaèní práci
+T.Karbana \cite{relminer}, pro konkrétní implementaci v prostøedí 
+Ferda DataMiner v diplomové práci T.Kuchaøe \cite{kuchar} a taktéž
+v \cite{guha}.
+
+
+\paragraph{}
+Na následujícím pseudokódu lze nahlédnout na zpùsob generování relevantních
+otázek u dataminingové procedury 4ft-Miner.
+\clearpage
+\begin{verbatim}
+foreach(BitString condition in Conditions)
+{
+    foreach(BitString antecedent in Antecedents)
+    {
+        foreach(BitString succedent in Succedents)
+        {
+            ContingencyTable table = 
+                ComputeTable(succedent, antecedent, condition);
+            if (VerifyQuantifiers(table))
+                result.Add(succedent, antecedent, condition);
+        }
+    }
+}
+\end{verbatim}
+
+Objekty \verb+Antecedents+, \verb+Succedents+ a \verb+Conditions+ jsou
+iterátory bitových øetìzcù umožòující prùchod pøes všechny možné hodnoty
+zadání booleovských atributù. Ústøední implementaèní úlohou autora dané
+diplomové práce byla právì implementace iterátoru bitových øetìzcù, který by
+poskytoval bitové øetízky odpovídající virtuálním atributùm.
+
 \section{Relaèní asociaèní pravidla a virtuální atributy}
 \subsection{Úvod}
 Zde bude krátce popsáno rozšíøení asociaèních pravidel pro práci s vícero datovými
 tabulkami takové, aby byly zachovány všechny vlastnosti metody GUHA a zároveò
-aby se umožnil popis zajímavých vzorcù nalazených na více datových tabulkách.
-Vlastnosti metody GUHA, zejména zadávání úlohy pro datamining a implementace
+aby se umožnil popis zajímavých vztahù nalezených na více datových tabulkách.
+Vlastnosti metody GUHA, zejména zadávání úlohy a implementace
 pomocí práce s bitovými øetízky zùstanou zachovány. Pro podrobnìjší popis
-teorie rozšíøení metody GUHA o pravidla pro relaèní datamining doporuèujeme
+teorie rozšíøení metody GUHA o pravidla pro relaèní dobývání dat autor doporuèuje
 prostudovat \cite{relminer}. Protože cílem dané diplomové práce je konkrétní
 implementace postupu relaèního dataminingu, zde se zamìøíme pouze na nìkteré
 nejdùležitìjší aspekty kritické pro pochopení implementace v rámci prostøedí
@@ -565,23 +642,30 @@ bitových øetízkù) za bìhu.
 \paragraph{}
 Pro názornost uveïme nìkolik pøíkladù virtuálních atributù. Použijeme
 databázi klientù fiktivní banky Barbora, kde hlavní tabulka obsahuje
-základní data o klientech a tabulka transakcí obsahuje pohyb na jejich úètech.
-Zkoumejme následující hypotézu:
+základní data o klientech a tabulka transakcí obsahuje pohyb na jejich úètech
+(použité tabulky jsou podrobnì popsány v kapitole \ref{tests}).
+Zkoumejme následující asociaèní pravidlo:
 \begin{eqnarray}
 \label{eq:aggrattributeexample}
-TYPE="VKLAD" \& AMOUNT > AVG(AMOUNT)*2 \nonumber\\
-\Rightarrow_{80\%} OPERATION="PREVOD NA UCET"
+(TYPE="VKLAD") \& (AVGAMO{}UNT > 5000) \nonumber\\
+\Rightarrow_{80\%} OPERATION="PREVOD NA{}UCET"
 \end{eqnarray}
-Zde jsme použili jeden virtuální atribut $AVG(AMOUNT)*2$, kde $AVG$ je
-agregaèní funkce SQL. Hypotéza mùže znamenat zjednodušenì øeèeno,
+Typ transakce je VKLAD, a velikost je 2x vìtší než prùmìrná velikost transakce.
+Zde jsme použili jeden virtuální atribut $AVGAM{O}UNT$, který je odvozený jako:
+
+\begin{eqnarray}
+AVG(amount)
+\end{eqnarray}
+ kde $AVG$ je
+agregaèní funkce SQL. Hypotéza mùže znamenat zjednodušenì øeèeno
 pøedpoklad o faktu, že vyšší pøísuny penìz na úèet probíhají spíše
 bezhotovostnì. Tato hypotéza mùže a nemusí mít smysl -- autor neaspiruje
 na odborníka v oblasti bankovnictví.
 Uvažme další hypotézu:
 \begin{eqnarray}
 \label{eq:hyprattributeexample}
-VYSOKEINKASO \& SALARY(>15000) \& BYDLISTE="Praha"  \nonumber\\
-\Rightarrow_{80\%} STATUSUVERU="Dobry"
+(VYSOKEINKASO) \& (SALARY(>15000)) \&   \nonumber\\
+(BYDLISTE="Praha")\Rightarrow_{80\%} STATUSUVERU="Dobry"
 \end{eqnarray}
 Hypotéza tvrdí, že klienti, kteøí mají vyšší plat a platí vysoké inkaso
 v okrese Praha, mají z 80\% dobré úvìry.
@@ -589,8 +673,7 @@ Zde jsme použili jeden virtuální atribut $VYSOKEINKASO$ , který
 mùže vypadat následovnì:
 \begin{eqnarray}
 \label{eq:hyprattributeexample1}
-TYPE="INKASO"  \Rightarrow_{90\%} \nonumber\\
-AMOUNT > 5000
+TYPE="INKASO"  \Rightarrow_{90\%} AMOUNT > 5000
 \end{eqnarray}
 Jinými slovy, pokud typ transakce je INKASO, je z 90\% vysoké.
 \paragraph{}
