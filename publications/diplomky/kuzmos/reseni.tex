@@ -1,63 +1,62 @@
 \chapter{Øešení}
 V této kapitole budou popsané obecné charakteristiky programátorské
-implementace v rámci dané diplomové práce.
+implementace v rámci této diplomové práce.
 \label{implementation}
-\section{Vztah diplomové práce ''Experimentální GUHA procedury'' k této práci}
+\section{Vztah k práci ''Experimentální GUHA procedury''}
 Zde se podrobnì uvede vztah diplomové práce T.Kuchaøe ''Experimentální GUHA procedury''
 uvedené v seznamu pouité literatury jako \cite{kuchar}.
-\subsection{GUHA v prostøedí Ferda DataMiner}
-Jak se u podrobnìji uvedlo v kapitole \ref{ferdaproject}, Ferda DataMiner
+\paragraph{}
+Jak bylo podrobnì popsáno v kapitole \ref{ferdaproject}, Ferda Data\-Miner
 vznikl jako studentskı projekt s cílem implementace obecnìjší platformy
-pro datamining se základním prvkem pojmenovanım krabièka, viz \cite{ferda}
+pro data\-mining se základním prvkem pojmenovanım krabièka, viz \cite{ferda}
 pro podrobnìjší informace.
 \paragraph{}
 V dobì jeho vzniku ji byly získány rozsáhlé uivatelské
-zkušenosti se systémem LISp-Miner a Ferda DataMiner byl navren s ohledem
-na tyto zkušenosti. Projektovı tım se zamìøil na vìtší obecnost prostøedí,
-kde by bylo moné implementovat i jiné dataminingové metody ne GUHA. Zároveò
-v rámci tého projektu byla implementována metoda GUHA s pouitím ji
-existujících modulù prostøedí LISp-Miner. To pøineslo øadu potíí podrobnì
-popsanıch T.Kuchaøem v \cite{kuchar} a proto bylo evidentní, e GUHA
-se musí v prostøedí Ferda DataMiner implementovat bez vyuití modulù
-z LISp-Mineru. Pouze tak mohly bıt vyuity všechny vıhody prostøedí Ferda DataMiner.
+zkušenosti se systémem LISp-Miner a Ferda Data\-Miner byl navren s ohledem
+na tyto zkušenosti. V rámci studentského projektu byly implementovány procedury metody
+GUHA s pouitím
+existujících modulù prostøedí LISp-Miner. To pøineslo øadu potíi podrobnì
+popsanıch T.Kuchaøem v \cite{kuchar} a proto bylo evidentní, e procedury GUHA
+se musí do prostøedí Ferda Data\-Miner pøidat bez vyuití LISp-Mineru.
 \paragraph{}
 Implementaci šesti GUHA procedur a modulù pro zadání úlohy implementoval
 T.Kuchaø ve své diplomové práci ''Experimentální GUHA procedury'',
 jak u zde bylo nìkolikrát zmínìno.
 \paragraph{}
-Daná diplomová práce je rozšíøením existujících (tzn. v prostøedí
-Ferda DataMiner implementovanıch) dataminingovıch procedur. Sdílí
+Tato diplomová práce je rozšíøením existujících (tzn. v prostøedí
+Ferda Data\-Miner implementovanıch) data\-miningovıch procedur. Sdílí
 jak zpùsob zadávání úlohy, tak i nìkteré èásti procedur. 
 \paragraph{}
-Z uivatelského hlediska se
-do relaèní procedury zapojí úloha stejnì jako do nerelaèní a vıstup se zapojuje stejnì
-jako z existujících booleovskıch atributù.
+Z uivatelského hlediska se relaèní rozšíøení procedur implementovaly jako
+krabièky. Pøesnı popis pøidanıch krabièek je uveden v kapitole \ref{implementationdetails}.
+Do relaèní procedury ve formì krabièky se zapojí zadání úlohy stejnì jako do nerelaèní
+a vıstup se zapojuje do krabièek data\-miningovıch procedur stejnì jako z existujících krabièek
+booleovskıch atributù.
 \paragraph{}
  Z programátorského hlediska se vyuívá
-prostøedkù jako získávaní bitovıch øetízkù ze zapojenıch atributù,
+prostøedkù jako získávaní bitovıch øetízkù ze zapojenıch krabièek atributù,
 inicializace samotné relaèní procedury
-a dalších pøedpøipravenıch prostøedkù, jako jsou rozhraní, abstraktní tøídy apod.
-Mnoho z tìchto prostøedkù byly v prùbìhu implementace uzpùsobeny pro
-relaèní datamining, jak bude podrobnìji popsáno v kapitole \ref{implementationdetails}.
-Na druhou stranu pøi implementaci autor vytvoøil další prostøedky usnadòující
-implementaci relaèních rozšíøení pro zbıvající dataminingové procedury.
+a dalších pøedpøipravenıch prostøedkù, jako jsou roz\-hraní, abstrak\-tní tøídy apod.
+Mnoho z tìchto prostøedkù bylo v prùbìhu imple\-mentace uzpùsobeno pro
+relaèní data\-mining, jak bude podrob\-nìji popsáno v kapitole \ref{implementationdetails}.
+Na druhou stranu pøi implementaci autor vy\-tvoøil další pro\-støedky usnad\-òující
+implementaci relaè\-ních roz\-šíøení pro zbıvající data\-miningové procedury.
 \paragraph{}
-Vzhledem k odlišné povaze generování relevantních otázek nebylo
-moné vyuít jedné z hlavních vıhod existující implementace
-GUHA procedur v prostøedí Ferda DataMiner a to cache bitovıch
-øetízkù. Dále existující implementace musela bıt rozšíøena
-o monost práce s bitovımi øetízky na odlišném principu
+Vzhledem k od\-lišné povaze generování relevan\-tních otázek ne\-bylo
+mo\-né vyuít jedné z hlav\-ních vıhod existující imple\-mentace
+GUHA procedur v pro\-støedí Ferda Data\-Miner a to cache bitovıch
+øetízkù. Dále existující imple\-mentace musela bıt roz\-šíøena
+o monost práce s bitovımi øetízky na odlišném principu,
 ne bylo dosud implementováno.
 \paragraph{}
 Monost snadné integrace a vyuití existujících prostøedkù byla od zaèátku jedním
-z hlavních cílù projektu Ferda DataMiner, protoe takovı pøístup umoòuje rychlejší
-a prùhlednìjší vıvoj a také lepší kvalitu kódu a menší poèet chyb. Z tohoto a dalších dùvodù
+z hlavních cílù projektu Ferda Data\-Miner. Z tohoto a dalších dùvodù
 uvedenıch vıše se odvíjely zásady implementace.
 
 \section{Zásady implementace}
 Zde bude popsán obecnı programátorskı pøístup k øešení implementace.
 \subsection{Licence}
-Protoe prostøedí Ferda DataMiner je vyvíjeno pod licenci
+Protoe prostøedí Ferda Data\-Miner je vyvíjeno pod licenci
 GNU Public License (GPL), implementace v rámci dané diplomové práce
 je rovnì vyvíjeno pod licenci GPL. Daná licence umoòuje
 nejen volné pouití programu, ale také zaruèuje volnı pøístup
@@ -67,123 +66,125 @@ Public License lze nalézt na \verb+http://www.gnu.org/licenses/gpl.txt+.
 \subsection{Platforma}
 Implementace v rámci dané diplomové práce byla napsána
 v jazyce C\# stejnì jako stávající implementace prostøedí
-Ferda DataMiner. Jedním z cílù (u od doby studentského projektu)
-je spustitelnost prostøedí Ferda DataMiner na více platformách.
+Ferda Data\-Miner. Jedním z cílù (u od doby studentského projektu)
+je monost práce s prostøedím Ferda Data\-Miner na více platformách.
 Pod OS Windows lze vyuít platformu Microsoft .NET Framework
 (\verb+http://www.microsoft.com/cze/net/+),
 na jinıch operaèních systémech (napøíklad Linux nebo
 MacOS) pak prostøedí Mono (\verb+http://www.mono-project.com+).
 \paragraph{}
-Prostøedí Ferda DataMiner bylo navreno modulárnì. Jeho jednotlivé
+Prostøedí Ferda Data\-Miner bylo navreno modulárnì. Jeho jednotlivé
 èásti mezi sebou komunikují pøes middleware Internet Communications
 Engine ICE (\verb+http://www.zeroc.com+), co je moderní alternativa
-podobnému frameworku CORBA a podporuje nìkolik rozšíøenıch programovacích
+podobnému frameworku CORBA a podporuje nìkolik rozšíøenıch prog\-ramovacích
 jazykù, mezi které patøí také C\#.
 \subsection{Vıkonnostní testy}
-Souèástí dané diplomové práce je øada testù
-relaèních rozšíøení dataminingovıch procedur. Testy
-se zamìøí na hranice únosnosti zadání úlohy
-ve smyslu doby bìhu, na vliv velikosti zpracovávané
-datové matice na bìh relaèních rozšíøení a také
-na dùleitost vyuití cache pro generované bitové
-øetízky virtuálním atributem. V úplnì pùvodním
-návrhu implementace se s cache vùbec nepoèítalo
-z dùvodù uvedenıch dále, proto testy zahrnují
-i bìh úlohy s vypnutou cache pro ilustraci zdùvodnìní
-její zavedení navzdory pùvodnímu návrhu.
+Souèástí dané dip\-lomové práce je øa\-da tes\-tù
+re\-laè\-ních roz\-šíøe\-ní da\-ta\-miningo\-vıch pro\-ce\-dur. Tes\-ty
+se za\-mìøí na hranice únos\-nosti zadání úlohy
+ve smyslu doby bìhu, na vliv veli\-kosti zpraco\-vávané
+datové matice na bìh relaè\-ních roz\-šíøení a také
+na dùle\-itost vyuití cache pro ge\-ne\-ro\-va\-né bi\-tové
+øetízky vir\-tuálním atri\-butem. V úplnì pùvodním
+návrhu implemen\-tace se s cache vùbec ne\-poèítalo
+z dùvodù uvedenıch dále, proto testy za\-hrnují
+i bìh úlohy s vyp\-nutou cache pro ilustraci zdùvod\-nìní
+její zavedení na\-vzdory pùvod\-nímu návrhu. Testy jsou popsány
+v kapitole \ref{tests}.
 \subsection{Dokumentace}
 \subsubsection{Uivatelská dokumentace}
-Uivatelská dokumentace je zahrnutá v daném textu
-jako popis implentovanıch krabièek.
+Uivatelská dokumentace je zahrnutá v textu práce
+jako popis implentovanıch krabièek v kapitole \ref{implementationdetails} .
 \subsubsection{Programátorská dokumentace}
-Obecnı návrh øešení je souèástí textu dané diplomové práce.
-Poznámky pøímo k detailem implementaci jsou souèástí zdrojového kódu.
+Obecnı návrh øešení je souèástí textu této diplomové práce.
+Poznámky pøímo k detailùm implementace jsou souèástí zdrojového kódu.
 Tato dokumentace mùe bıt kdykoliv vygenerována ve zvláštním souboru.
 \section{Agregaèní atribut}
 \subsection{Popis úlohy}
 Zde bude popsána podstata úlohy, kterou bylo nutné
 vyøešit pro implementaci virtuálního agregaèního atributu v prostøedí
-Ferda DataMiner.
+Ferda Data\-Miner.
 \paragraph{}
 Jak u bylo podrobnì popsáno v sekci \ref{vattributes}, agregaèní
 virtuální atribut pracuje nad vedlejší datovou matici, kde provádí
-jednoduché vıpoèty, které jsou nejèastìji implementovány jako agregaèní
-funkce jazyka SQL (proto název agregaèní) pro øádky dané datové matice patøící k objektu
-v hlavní datové matici.
-\paragraph{}
-Pøi rozhodování o rozsahu implementované funkènosti agregaèního virtuálního
-atributu se bral v potaz fakt, e daleko zajímavìjším atributem pro vyuití
-v relaèním dataminingu je atribut hypotézovı. Proto po dohodì s vedoucím práce bylo
+jednoduché transformace, které jsou nejèastìji implementovány jako agregaèní
+funkce jazyka SQL (proto název agregaèní) pro øádky vedlejší datové matice vztahující se
+k objektu v hlavní datové matici.
+\subsection{Diskuze nad implementaci}
+Pøi roz\-ho\-do\-vá\-ní o rozsahu imple\-men\-tova\-né funkè\-nosti agre\-gaè\-ního vir\-tuál\-ního
+atri\-butu se bral v potaz fakt, e da\-le\-ko za\-jímavìjším at\-ri\-butem pro vy\-ui\-tí
+v re\-laè\-ním data\-miningu je atri\-but hypotézovı. Proto po dohodì s vedoucím práce bylo
 rozhodnuto naimplementovat pouze základní funkènost agregaèního virtuálního atributu.
+Základní funkènost zde znamená pouze monost projekce vybraného sloupce z vedlejší datové matice
+na základì zadanıch klíèù pro spojení hlavní a vedlejší datové tabulky. Není implementována
+monost aplikace napøíklad agregaèních funkcí SQL.
 \paragraph{}
 Autor dané diplomové práce si uvìdomuje fakt, e tento atribut mùe bıt obecnìjší
-ne pouze spojení dvou databázovıch tabulek dle klíèe a spoustìní pouze SQL agregaèních funkcí.
+ne pouze spojení dvou databázovıch tabulek dle klíèe.
 V diplomové práci M.Ducháèka uvedené v seznamu pouité literatury jako \cite{duchacek} je
 implementován obecnìjší pøístup k agregaènímu virtuálnímu atributu. Ve zmínìné práci
 je umonìno na tomto atributu spouštìt nejen agregaèní funkce jazyka SQL, ale obecnì
-lze provádìt jakoukoliv úpravu dat pomocí procedur napsanıch v jazyce C\#, kterı je
+lze provádìt jakoukoliv úpravu dat pomocí procedur napsanıch v jazyce C\#, jejich kód je
 interpretován za bìhu.
 \paragraph{}
-Nicménì si autor také uvìdomoval, e vıše uvedená implementace funkènosti tvoøí
-velmi podstatnou èást diplomové práce M.Ducháèka. Vzhledem k faktu, e autor dané
-diplomové práce mìl pøed sebou implementaci jak hypotézového atributu, tak i tøí
-dalších modulù pro dynamickou transformaci atributu a jednoho modulu pro statickou úpravu atributu,
-bylo rozhodnuto naimplementovat v rámci agregaèního hypotézového atributu pouze funkènost, která je podrobnìji
-popsaná v kapitole \ref{implementationdetails}.
+Musí\-me si však také uvìdo\-mit, e vıše uvede\-ná funk\-ènost tvoøí
+velmi pod\-stat\-nou èást dip\-lomové práce M.Ducháèka. Vzhledem k fak\-tu, e autor této
+dip\-lomové práce mìl pøed sebou implemen\-taci jak hypotézového atributu, tak i tøí
+dalších modulù pro dynamickou trans\-formaci atributu a jednoho modulu pro static\-kou úpravu atri\-butu,
+bylo rozhodnuto naprogramovat v rámci agregaèního hypotézového atributu pouze vlastnosti, které jsou
+podrobnìji popsané v kapitole \ref{implementationdetails}.
 
 
 
 \section{Hypotézovı atribut}
 Zde bude popsána podstata úlohy, kterou bylo nutné
 vyøešit pro implementaci virtuálního hypotézového atributu v prostøedí
-Ferda DataMiner. Protoe vısledná idea implementace byla
+Ferda Data\-Miner. Protoe vısledná idea implementace byla
 nalezena a upøesnìna a bìhem nìkolika schùzí s vedoucím diplomové
 práce, autor povauje za nezbytné tuto diskuzi zde krátce uvést,
 co dle jeho názoru pomùe k lepšímu pochopení dùvodù
 volby návrhu, kterı nakonec pøevládl a byl tedy v rámci dané
-diplomové práce implementován. Bude následovat rozbor
+diplomové práce naprogramován. Bude následovat rozbor
 dopadu zvoleného zpùsobu pro stávající i budoucí aspekty
-implementace relaèních rozšíøení v prostøedí Ferda DataMiner.
+implementace relaèních rozšíøení v prostøedí Ferda Data\-Miner.
 \subsection{Popis úlohy}
 Jak u bylo podrobnì popsáno v sekci \ref{vattributes}, hypotézovı
-virtuální atribut (kterému budeme také øíkat podúloha)
+virtuální atribut (kterému také øíkáme podúloha)
 pracuje nad vedlejší datovou matici, ve které
 zkoumá zajímavé vztahy pro øádky dané datové matice patøící k objektu
-v hlavní datové matici. Podúloha se spustí mnohokrát a pokadé
-vygeneruje relevantní otázku pouze pro èást vedlejší datové matice.
+v hlavní datové matici. Podúloha se spustí jednou pro kadı objekt
+z hlavní datové matice a hledá zajímavé vztahy nad objekty z vedlejší datové tabulky,
+které se vztahují ke zkoumanému objektu z hlavní datové tabulky.
 Vısledkem pro hlavní úlohu, do které je takovı virtuální atribut zapojen,
-bude síla hypotézy vzniklé ze zmínìné relevantní otázky aplikací
-kvantifikátoru zapojeného do podúlohy -- viz obrázek.
+bude mnoina sloupcù obsahujících sílu nebo platnost relevantního tvrzení
+pro podmnoinu øádkù z vedlejší datové tabulky -- viz obrázek \ref{fig:masterclient}.
 
 \paragraph{}
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=8cm]{pics/master_detail.eps}
+\includegraphics[width=8cm]{pics/master_client1.eps}
 \end{center}
 \caption{Master-detail tabulka}
+\label{fig:masterclient}
 \end{figure}
-
 \paragraph{}
-Podúloha se vdy spouští pro ty øádky vedlejší datové matice, které
-jsou v relaci s objektem z hlavní datové matice. Jako pøíklad
-uvedeme podúlohu, která bìí na tabulce transakcí. Vdy se spustí
-pouze pro øádky transakcí patøící urèitému klientovi. Nad tìmi probìhne
-verifikace nìjaké (poøadí generování se bude odvíjet od zpùsobu implementace)
-relevantní otázky generované podúlohou a jako vısledek podúloha vydá obecnì
-reálné èíslo znamenající validitu dané hypotézy na zkoumané podmnoinì
-øádkù vedlejší datové matice.
+Zde podúloha probìhne nad transakcemi 1 a 2, vısledek (reálné èíslo) pøidá
+do nového virtuálního sloupce na pozici pro klienta ABC. Dále podúloha probìhne znovu
+nad transakcemi 3 a 4, pøidá na pozici pro klienta DEF další reálné èíslo a obdobnım zpùsobem
+pokraèuje pro zbytek matice.
 \paragraph{}
-To znamená, e pro kadı objekt z hlavní datové matice podúloha zkoumající
-vedlejší datovou matici vrátí právì jedno reálné èíslo. Takto vzniklı
-sloupec se pro nadúlohu nebude nijak lišit od regulérního sloupce hlavní datové matice
-a bude tedy zahrnut do generování relevantních otázek a potamo i hypotéz v nadúloze.
+V této diplomové práci bylo implementováno relaèní rozšíøení procedur 4ft-Miner
+a SD4ft-Miner. Jako vıstup úloh tìchto virtuálních atributù se generují virtuální sloupce
+obsahující hodnoty \emph{true} a \emph{false}. Do prostøedí Ferda Data\-Miner však lze pøidat
+i relaèní rozšíøení procedur, která budou generovat sloupce reálnıch hodnot. V následujícím popisu
+implementace se takováto varianta rovnì diskutuje.
 \subsection{Diskuze nad implementaci}
 Z vıše popsaného je jasné, e implementace musí vyøešit nìkolik problému.
-Jejich øešení bylo podrobnì diskutováno s vedoucím diplomové práce Doc. RNDr. Janem Rauchem, CSc.
+Jejich øešení bylo podrobnì diskutováno s vedoucím diplomové práce
 pøiblinì v následujících bodech.
 \paragraph{}
 Pro zaèátek si ještì jednou pøipomeneme základní algoritmus generování
-relevantních otázek a ovìøování hypotéz pro dataminingovou proceduru 4ft miner.
+relevantních otázek a ovìøování hypotéz pro data\-miningovou proceduru 4ft-Miner.
 %\clearpage
 \begin{verbatim}
 foreach(BitString condition in Conditions)
@@ -201,156 +202,169 @@ foreach(BitString condition in Conditions)
 }
 
 \end{verbatim}
-
+Objekty \verb+Antecedents+, \verb+Succedents+ a \verb+Conditions+ jsou
+v pro\-støedí Ferda Data\-Miner na\-prog\-ramovány jako iterátory pos\-kytující bi\-to\-vé øe\-tíz\-ky
+a tím umo\-òují prùchod pøes všech\-ny mo\-né hod\-noty za\-dání booleovskıch atri\-butù.
+Pøi implemen\-taci relaè\-ních roz\-šíøení stávajících pro\-cedur by\-lo nut\-né za\-jistit
+po\-skyto\-vání bi\-tovıch øe\-tízkù pro tyto iterátory (zde uvedenı pseudo\-kód lze chápat
+jako bìh nad\-úlohy). Pod\-úloha ge\-neruje vir\-tuální sloup\-ce a je pot\-øeba je na\-pojit
+na vıše zmínìné iterátory.
 \subsubsection{Zpùsob bìhu podúlohy}
 \label{subtaskimplementation}
-Bìhem diskuze se vykrystalizovaly následující tøi pøístupy, jak mùe podúloha bìet.
+Bìhem diskuze se diskutovaly následující tøi pøístupy, jak mùe podúloha bìet.
 \begin{description}
 \item[Pøedbìné generování]
-Podúloha by se spouštìla pøedem na vedlejší datové matici. Vısledky ve formì
-buï virtuálních sloupcù a(nebo) bitovıch øetízkù by se pøechodnì skladovaly
-v pamìti èi ve formì serializovanıch objektù a pøi následném bìhu nadúlohy
-by se této pøedloily. Podobnım zpùsobem jsou implementovány napøíklad
-stávající nevirtuální atributy -- ''Each value one category'', ''Ekvidistanèní intervaly''
+Podúloha by se spouštìla pøedem na ved\-lejší dato\-vé ma\-ti\-ci. Vıs\-led\-ky ve for\-mì
+buï vir\-tuál\-ních sloup\-cù a(nebo) bitovıch øe\-tíz\-kù by se pøe\-chodnì skla\-do\-valy
+v pamìti èi ve for\-mì serializovanıch objek\-tù a pøi nás\-led\-ném bìhu nad\-úlohy
+by se této pøed\-loily. Podob\-nım zpù\-sobem jsou implemen\-továny na\-pøík\-lad
+stávající pro\-ce\-dury pro trans\-formaci atri\-butu -- ''Each value one category'', ''Ekvidistanèní intervaly''
 a ''Ekvifrekvenèní intervaly''.
 \paragraph{}
-Vıhodou takového pøístupu by byla monost vyuít stávající vıhody implementace
-metody GUHA v prostøedí Ferda DataMiner a to zejména cache bitovıch øetízkù.
-Dále by se mohly bez vìtších zmìn pouít dataminingové procedury jako podúlohy,
-v podstatì by se jednalo o jejich spuštìní na podmnoinì datové matice místo
-na celé mnoinì øádkù. Také takto implementovanı virtuální atribut by šel
-zapojít do zadání pro všechny dosud implementované GUHA dataminingové
-procedury v prostøedí Ferda DataMiner.
+Vıhodou takového pøís\-tupu by by\-la mo\-nost vyuít stávající vı\-hody imple\-men\-tace
+me\-tody GUHA v pro\-støedí Ferda Data\-Miner a to zejména cache bi\-tovıch øe\-tízkù.
+Dále by se mohly bez vìt\-ších zmìn pouít data\-miningové pro\-cedury jako pod\-úlohy,
+v pod\-statì by se jed\-nalo o jejich spuštìní na pod\-mnoinì datové matice mís\-to
+na celé mno\-inì øádkù. Také takto implemen\-tovanı vir\-tuální atri\-but by šel
+vy\-uit pro zadání pro všechny dosud implementované GUHA data\-miningové
+procedury v prostøedí Ferda Data\-Miner.
 \paragraph{}
-Hlavním dùvodem napsání pøedchozího odstavce v podmiòovacím zpùsobu
+Hlavním dùvodem napsání pøed\-chozího odstavce v pod\-miòovacím zpùsobu
 se stala nemonost škálovatelnosti takového øešení. U i pro existující
 vzorová data virtuální banky Barbora mohl nastat problém se zabíranou
-pamìti pro vygenerované bitové øetízky. Poèet relevantních otázek v zadané
-dataminingové úloze v øádu tisícù èi desetitisícù je bìnou záleitostí.
-Protoe kadá relevantní otázka v podúloze znamená novı virtuální sloupec
-v hlavní tabulce, nad kterou bìí hlavní dataminingová úloha, pøi úvaze
-o velikosti poadované operaèní pamìti (protoe bitové øetízky krabièky
-atributù ve Ferda DataMiner uchovávají právì tam) se musí poèet sloupcù
-vynásobit poètem øádku hlavní datové matice.
+pamìti pro vy\-generované bi\-tové øe\-tízky. Poèet re\-levantních otázek v za\-dané
+data\-miningové úloze v øádu tisícù èi deseti\-tisícù je bì\-nou zá\-leitostí.
+Protoe kadá rele\-vantní otázka v pod\-úloze znamená novı vir\-tuální sloupec
+v hlavní tabulce, nad kterou bìí hlavní data\-miningová úloha, pøi úvaze
+o veli\-kosti po\-a\-do\-vané operaèní pamìti (protoe bi\-tové øe\-tíz\-ky kra\-bièky
+atri\-butù ve Fer\-da Data\-Miner ucho\-vávají právì tam) se mu\-sí po\-èet sloup\-cù
+vy\-násobit poè\-tem øádkù hlavní datové matice. V relaè\-ních roz\-šíøeních
+procedur v této diplomové práci se generují vir\-tuální sloupce s hod\-notami
+\emph{true} nebo \emph{false}, proto vıše spoèítané èíslo by zna\-menalo
+poèet bitù potøebnıch pro uchování virtuálních sloupcù, ale obecnì vir\-tuální
+atributy mohou generovat sloupce s reál\-nımi hodnotami a ve\-likost pot\-øebné
+pamìti se tak zvıší.
 \paragraph{}
 Pøi úvaze s matici banky Barbora o velikosti øádovì kolem 5000 øádku
-a poètem relevantních otázek v podúloze kolem 10000 nám vzniká ještì vcelku
+a poètem re\-le\-vantních otázek v pod\-úloze kolem 10000 nám vzniká ještì vcelku
 pøijatelná velikost zabírané RAM, nicménì je tøeba si uvìdomit, e velikost
 zkoumané datové tabulky pro úlohy blíící se reálné situaci je spíše v øádech
 statisícù a miliónù záznamù. Toto je zásadní omezení pro budoucí aplikace
-prostøedí Ferda DataMiner a takto navrenı zpùsob implementace by omezil nejen
+prostøedí Ferda Data\-Miner a takto navrenı zpùsob implementace by omezil nejen
 relaèní rozšíøení procedur implementovanıch v rámci dané diplomové práce,
 ale i pøípad\-nıch dalších implementací relaèních rozšíøení v budoucnu.
 \paragraph{}
 Z vıše uvedenıch dùvodù bylo tedy od tohoto zpùsobu implementace upuštìno.
-\item[Èekající vlákna]Po zavrení pøedchozího pøístupu bylo jasné, e øešení
-pøedgenerovat si bitové øetízky do pamìti nepøipadá v úvahu. Zaèal se hledat
-zpùsob, jak virtuální sloupce a tedy i bitové øetízky, generovat prùbìnì,
-vdy na pokyn nadúlohy.
+\item[Èekající procedury]Po zavrení pøedchozího pøístupu bylo jasné, e øešení
+pøed\-gene\-rovat si bi\-tové øetízky do pamìti ne\-pøipadá v úvahu. Zaèal se hledat
+zpùsob, jak vir\-tuální sloup\-ce a tedy i bitové øetízky, gene\-rovat prùbìnì,
+vdy na pokyn nad\-úlohy.
 \paragraph{}
-Vznikla následující úvaha: protoe nadúloha potøebovala ke zpracování celı
-sloupec hlavní datové matice najednou, podúloha by mohla bìet
-jako dataminingová procedura v samostatném vláknì, která by jako vstup mìla
-právì jednu podmnoinu øádkù vedlejší datové matice pro jeden objekt z hlavní
-datové matice. Tedy pro kadı objekt z hlavní datové matice by bìelo
-jedno vlákno podúlohy, které by postupnì vracelo reálná èísla, která by se formovala
-do virtuálních sloupcù.
+Vznik\-la následující úvaha: protoe nad\-úloha pot\-øebo\-vala ke zpra\-cování ce\-lı
+sloupec hlavní datové matice najednou, cyklus pod\-úlohy pos\-kytující bi\-to\-vé øe\-tíz\-ky
+by mohl bìet v samostatném vláknì. Pod\-úloha by jako vstup\-ní ma\-ti\-ci obdrela
+podmnoinu øádkù ved\-lejší datové ma\-tice pro jeden objekt z hlavní
+datové matice. Tedy pro kadı objekt z hlav\-ní datové matice by bìelo
+jedno vlákno pod\-úlohy, které by pos\-tupnì vra\-celo hodnoty \emph{true} nebo \emph{false}
+(nebo obecnì reálná) èísla, ze kterıch by se skládaly virtuální sloupce.
 \paragraph{}
-Skoro na první pohled je však jasné, e by muselo bıt spuštìn stejnı poèet vláken
-jako poèet øádkù v hlavní datové matici. Idea nutnosti øádovì tisíce vláken pro vıpoèet
-by jednoduché úlohy (i nad tabulkou virtuální banky Barbory) se autorovi dané
-diplomové práce zdála jako velmi špatnì navrena z dùvodù pøíliš velké
-reie operaèního systému na pøepínaní takového poètu vláken. Z dosavadních
-zkušeností je vidìt, e na bìnì dostupném osobním poèítaèi øádovì i stovka vláken
+Na první poh\-led je však jas\-né, e by mu\-sel bìet po\-èet vláken stej\-nı 
+jako po\-èet øádkù v hlav\-ní datové matici. Idea øá\-dovì tisíce vlá\-ken pro vı\-po\-èet
+by jedno\-duché úlohy (i nad tabulkou vir\-tuální banky Barbory -- viz ka\-pi\-to\-la \ref{tests})
+se auto\-rovi zdála jako vel\-mi špatnı návrh z dù\-vodu pøí\-liš vel\-ké
+reie operaè\-ního systému na pøe\-pínaní tako\-vého poè\-tu vlá\-ken. Z do\-savad\-ních
+zkuše\-ností by\-lo vy\-po\-zo\-ro\-vá\-no, e na bìnì dostupném osobním poèítaèi øádovì i stovka vláken
 vìtšinou pøedstavuje velké vytíení komponent systému.
 \paragraph{}
 Z vıše uvedenıch dùvodù bylo tedy od tohoto zpùsobu implementace upuštìno.
 \item[Generování po krocích]
 Pøedchozí úvaha však inspirovala autora práce k jinému pøístupu k øešení. Jak je vidìt
-z algoritmu generování relevantních otázek, kterı je uveden na poèátku této sekce,
-dataminingová úloha (v tomto pøípadì nadúloha) potøebuje v jednotlivıch krocích svıch cyklù pouze
-\emph{jeden bitovı øetízek}. Z tohoto vznikla idea navrhnout dataminingovou proceduru pro podúlohu tak, aby umìla
-poskytnout na poádání ne nìjakı konkrétní sloupec nebo bitovı øetízek, nıbr \emph{další} sloupec
-a \emph{další} bitovı øetízek anebo nic v pøípadì vyèerpání monıch sloupcù.
+z algoritmu generování re\-le\-vantních otázek, kterı je uveden na poèátku této sekce,
+data\-miningová procedura (v tomto pøípadì nad\-úloha) potøebuje v jednot\-livıch kro\-cích svıch cyklù pouze
+\emph{jeden bitovı øetízek}. Z tohoto vznikla idea navrhnout data\-miningovou proceduru pro pod\-úlohu tak, aby umìla
+pos\-kytnout na poádání ne nìjakı konkrétní sloupec nebo bi\-tovı øe\-tízek, nıbr \emph{další} sloupec
+a \emph{další} bitovı øetízek anebo nic v pøípadì vyèerpání monıch re\-le\-vant\-ních otázek (a tím
+i vir\-tuál\-ních sloupcù).
 \paragraph{}
-Zásadní rozdíl oproti dosud existujícím (nevirtuálním) atributùm byl ten, e tyto mìly
-celou mnoinu svıch bitovıch øetízkù v okamiku pøed zaèátkem generování známou. Bitové
-øetízky jsou v tìchto atributech identifikovatelné dle klíèe skladájíciho se z id atributu a názvu
-kategorie. Je znám celkovı poèet bitovıch øetízkù, tudí lze stanovit poèet celkovì vygenerovanıch
-relevantních otázek. Je moné pøistoupit k jakémukoliv bitovému øetízku na základì klíèe.
+Zásadní rozdíl oproti dosud existujícím (ne\-vir\-tuálním) atri\-butùm byl ten, e tyto mìly
+celou mnoinu svıch bi\-tovıch øe\-tízkù v okam\-iku pøed zaèátkem gene\-rování známou. Bitové
+øetízky jsou v tìchto atri\-butech iden\-ti\-fi\-ko\-va\-tel\-né dle klíèe
+skladájíciho se z id atributu a názvu
+ka\-te\-go\-rie. Je znám cel\-kovı po\-èet bi\-tovıch øe\-tízkù, tudí lze sta\-novit poèet cel\-kovì vy\-ge\-ne\-ro\-va\-nıch re\-le\-vantních otázek. Je moné pøistoupit 
+k jakémukoliv bitovému øetízku na základì klíèe.
 \paragraph{}
-Oproti tomu navrhovanı zpùsob implementace hypotézového atributu zaruèoval pouze to,
-e takovı atribut v okamiku zavolání pøíslušné metody buï vydá další bitovı øetízek
-nebo oznámí, e bitové øetízky u vydávat nebude. Není tedy známá a snadno pøístupná
-celá mnoina bitovıch øetízku pøed zaèátkem generování (nadúlohou) relevantních otázek.
-Tudí nelze spoèítat ani pøedpokládanı poèet vygenerovanıch relevantních otátek,
-protoe hypotézovı atribut jednoduše reaguje buï tím, e dá další bitovı øetízek
-nebo oznámí, e øetízky došly.
+Oproti tomu navrhovanı zpùsob implementace hypo\-tézo\-vého atri\-butu za\-ruèo\-val pouze to,
+e ta\-kovı atribut v okam\-iku za\-vo\-lání pøís\-lušné metody buï vy\-dá dal\-ší bi\-tovı øe\-tízek
+nebo oznámí, e bi\-tové øetízky u vy\-dávat nebude. Není tedy známá a snadno pøís\-tupná
+celá mnoina bi\-tovıch øetízku pøed za\-èátkem gene\-rování (nad\-úlohou) re\-le\-vantních otázek.
+Tudí nelze spo\-èítat ani pøed\-pokládanı poèet vy\-gene\-rovanıch re\-le\-vantních otátek,
+protoe hypo\-tézovı atribut jedno\-duše reaguje buï tím, e dá dal\-ší bitovı øetízek
+nebo oznámí, e øe\-tízky došly.
 \paragraph{}
-Vıhody tohoto øešení ve smyslu škálovatelnosti jsou zøejmé. Podúloha bìí synchronnì
-s nadúlohou a v pamìti se uchovává a pøedává pouze jeden bitovı øetízek v jednom okamiku.
-Poté, co nadúloha pøejde na další krok generování a poádá virtuální atribut o další bitovı øetízek,
-tento zavolá svoji metodu MoveNext a vydá další øetízek. Pøedchozí vygenerované øetízky
-se nikde neukládají a nezabírají pamì.
+Vıhody tohoto øešení ve smyslu škálo\-vatel\-nosti jsou zøejmé. Pod\-úloha bìí syn\-chron\-nì
+s nad\-úlohou a v pamìti se uchovává a pøedává pouze jeden vir\-tuální sloupec a jeho bi\-tovı øe\-tízek v jednom okamiku.
+Poté, co nad\-úloha pøejde na další krok ge\-nerování a po\-ádá vir\-tuální atri\-but o dal\-ší bi\-tovı øe\-tízek,
+tento zavolá svoji me\-todu \emph{MoveNext} a vydá další øetízek. Pøed\-chozí vy\-gene\-rované øe\-tízky
+se nikde ne\-uklá\-dají a ne\-zabírají pa\-mì.
 \paragraph{}
 Nevıhody tohoto øešení jsou ji naznaèeny
-vıše a budou podrobnìji probrány dále. Po diskuzi s vedoucím diplomové práce se autor rozhodl
-implementovat relaèní rozšíøení dataminingovıch procedur právì tímto zpùsobem,
-protoe pøípadné nevıhody a jinı pøístup k øešení znamenaly spíše nepohodlí pro programátora, avšak
-nijak nenarušovaly princip metody GUHA jako takové. Navíc poskytovaly základní vıhodu
-škálovatelnosti -- z principu návrhu lze zaruèit, e úloha skonèí i na velkıch tabulkách,
-nevyèerpá RAM nebo poèet povolenıch bìících vláken v systému. Mùe se stát, e
-pobìí delší dobu, ale skonèí korektnì.
+vıše a budou pod\-robnìji probrány dále. Po dis\-kuzi s ve\-doucím diplomové práce se autor rozhodl
+implementovat re\-laèní rozšíøení data\-miningovıch procedur právì tím\-to zpùsobem,
+protoe pøípadné nevıhody a jinı pøís\-tup k øešení znamenaly spíše nepohodlí pro pro\-gramátora, avšak
+nijak nenarušovaly princip metody GUHA jako takové. Navíc pos\-kytovaly zák\-ladní vı\-hodu
+škálova\-tel\-nosti -- z principu návrhu lze za\-ruèit, e úloha skonèí i na velkıch tabulkách,
+ne\-vyèerpá RAM nebo poèet po\-vole\-nıch bìících vlá\-ken v systému. Mùe se stát, e
+po\-bìí delší dobu, ale skonèí ko\-rektnì.
 \end{description}
 \subsection{Dùsledky zvoleného zpùsobu}
-Zde budou popsány dùsledky, které mìlo zvolené øešení implementaci a spolupráci
-s ji existujícími moduly metody GUHA v prostøedí Ferda DataMiner.
+Zde budou pop\-sány dùsledky, které mìlo zvo\-lené øešení implemen\-taci a spolu\-práci
+s ji existujícími moduly me\-tody GUHA v pros\-tøedí Ferda Data\-Miner.
 \subsubsection{Vypnutí cache bitovıch øetízku}
-Nejpodstatnìjším dùsledkem byla nemonost pouívat stávající cache bitovıch
-øetízkù. Ta totí funguje tak, e uchovává bitové øetízky pro atributy
-(pro všechny atributy je spoleèná) a v pøípadì potøeby vyøazuje z cache
-málo pouívané bitové øetízky na základì nìjaké strategie. V pøípadì,
-e v cache potøebnı bitovı øetízek neexistuje, poádá o nìj pøímo
-potøebnı atribut na základì jednoznaèného identifikátoru.
+Nej\-podstat\-nìjším dùsledkem byla nemonost pouívat stávající cache bi\-tovıch
+øetízkù. Ta to\-ti fun\-guje tak, e ucho\-vává bitové øetízky pro atributy
+(pro všechny atributy je spoleèná) a v pøí\-padì potøeby vyøazuje z cache
+málo pouívané bitové øe\-tízky na základì nìjaké strategie. V pøí\-padì,
+e v cache potøebnı bitovı øetízek ne\-existuje, poádá o nìj pøímo
+potøebnı at\-ribut na základì jedno\-znaèného iden\-tifi\-kátoru.
 \paragraph{}
-Jak u bylo zmínìno vıše, takovı pøístup by se zvolenım zpùsobem implementace
-nefungoval -- pøedpokládá toti monost pøístupu ke všem bitovım øetízkùm
-atributu. Návrh hypotézového virtuálního atributu s tímto nepoèítá -- umí
-dát pouze ''další'' bitovı øetízek bez monosti zjistit, kterı další to bude, jakı
-bude mít identifikátor, ke které kategorii bude patøit atd. Z tìchto dùvodù
-nešlo stávající cache pro hypotézovı virtuální atribut pouít. Pouití
-cache bitovıch øetízkù u ostatních buï existujících nebo novì implementovanıch
-krabièek atributù zùstalo beze zmìny, protoe se pro tyto krabièky nic nezmìnilo.
+Jak u bylo zmínìno vıše, takovı pøís\-tup by se zvolenım zpù\-sobem implemen\-tace
+ne\-fun\-goval -- pøed\-pok\-ládá to\-ti mo\-nost pøís\-tupu ke všem bi\-tovım øe\-tízkùm
+atributu. Návrh hy\-potézo\-vého vir\-tuálního atri\-butu s tímto ne\-poèítá -- umí
+dát pouze ''další'' bitovı øe\-tízek bez mo\-nosti zjis\-tit, kterı dal\-ší to bude, jakı
+bude mít iden\-ti\-fi\-kátor, ke které kate\-gorii bude patøit atd. Z tìch\-to dù\-vodù
+nešlo stávající cache pro hypo\-tézovı vir\-tuální atri\-but pouít. Pouití
+cache bitovıch øetízkù u ostatních buï exis\-tujících nebo novì implemen\-tovanıch
+krabièek atributù zùstalo beze zmìny, protoe se pro tyto krabièky nic ne\-zmì\-nilo.
 \subsubsection{Rozdìlení na krabièky}
-Další úvahou bylo, zda implementovat hypotézovı virtuální atribut
-jako dvì krabièky nebo jednu spoleènou. Stávající nevirtuální
-atributy se v pøípadì potøeby generování boolskıch atributù zapojují do krabièky
-''AtomSetting''. Ta zajistí generování koeficientù pro booleovskı atribut.
+Další otázkou bylo, zda implemen\-tovat hypo\-tézovı vir\-tuální atribut
+jako dvì krabièky nebo jednu spoleènou. Stávající ne\-virtuální
+atri\-buty se v pøípadì pot\-øeby gene\-rování booleovskıch atri\-butù zapojují do kra\-bièky
+''AtomSetting''. Ta zajistí gene\-rování koeficientù pro booleovskı atribut.
 \paragraph{}
-V pøípadì hypotézového virtuálního atributu by nešla pouít stávající krabièka
-pro generování koeficientù ''AtomSetting'', protoe pracuje s poadavkem ''poskytni
-pøesnì tento bitovı øetízek'', kdeto hypotézovı atribut by umìl zpracovat pouze
-poadavek ''poskytni další bitovı øetízek''. Tudí krabièka pro generování koeficientù
-vyuitelná pouze pro hypotézovı virtuální atribut by se se musela také naprogramovat.
+V pøípadì hypo\-tézového virtuál\-ního atributu by nebylo mo\-né pouít stávající krabièku
+pro generování koeficientù ''AtomSetting'', protoe pracuje s po\-adav\-kem ''poskytni
+pøes\-nì tento bitovı øetízek'', kdeto hypo\-tézovı atribut by umìl zpraco\-vat pouze
+po\-ada\-vek ''poskytni další bitovı øetízek''. Tudí kra\-bièka pro ge\-nero\-vání koeficientù
+vyuitelná pouze pro hypotézovı virtuální atribut by se musela také na\-programovat.
 \paragraph{}
-Po úvaze se autor rozhodl neimplementovat zvláštní krabièku pro generování
-koeficientù pro hypotézovı virtuální atribut z následujících dùvodù.
+Po úvaze se autor rozhodl ne\-implemen\-tovat zvláštní krabièku pro ge\-nero\-vání
+koeficientù pro hypo\-tézovı virtuální atribut z následujících dùvodù.
 \begin{description}
 \item[Potøeba pouze jednoho koeficientu] Po diskuzi s vedoucím práce
-bylo rozhodnuto, e pøi generování koeficientù pro booleovskı atribut
-bude potøeba implementovat pouze podmnoiny délky jedna -- viz \ref{coefficients}.
-Krabièka ''AtomSetting'' pro hypotézovı virtuální atribut by byla nadbyteèná,
-protoe by tam chybìlo uivatelské nastavení, vše se odehrávalo ''pod kapotou''.
-Nebyl tedy dùvod tuto krabièku vytváøet.
+bylo rozhodnuto, e pøi ge\-nero\-vání koeficientù pro booleovskı atribut
+bu\-de pot\-øeba imple\-men\-tovat pou\-ze pod\-mno\-i\-ny dél\-ky jed\-na.
+Kra\-biè\-ka ''Atom\-Set\-ting'' pro hy\-po\-tézovı vir\-tuální atri\-but by byla nad\-byteèná,
+pro\-toe by tam chybìlo uivatel\-ské nas\-tavení, vše se odehrávalo ''pod kapotou''.
+Nebyl tedy dùvod tuto krabièku vyt\-váøet.
 \item[Nadbyteèná komunikace krabièek pøes ICE] Navíc by tato krabièka, která
-by se napojila za hypotézovı virtuální atribut, znamenala komunikaci pøes ICE.
-Protoe idea implementace spoèívá v synchronním bìhu nad- a podúlohy, kde
-nadúloha uvnitø svıch cyklù (napøíklad pro sukcedent) volá podúlohu, která jí
+by se za\-pojila za hypotézovı virtuální atribut, znamenala komunikaci pøes ICE.
+Protoe idea implementace spoèívá v synchronním bìhu nad- a pod\-úlohy, kde
+nad\-úloha uvnitø svıch cyklù (napøíklad pro sukcedent) volá pod\-úlohu, která jí
 pøedává bistringy, je potøeba zajistit toto pøedávání plynule, aby
-se hlavní úloha pøíliš nezpomalovala èekáním na bitovı øetízek od podúlohy.
+se hlavní úloha pøíliš nezpomalovala èekáním na bitovı øetízek od pod\-úlohy.
 \paragraph{}
  Protoe
-ze zkušeností získanıch pøi programování prostøedí Ferda DataMiner ještì
+ze zkušeností získanıch pøi programování prostøedí Ferda Data\-Miner ještì
 jako studentského projektu autor vìdìl, e komunikace krabièek pøes
 rozhraní ICE je relativnì pomalá (s ohledem na skuteènost, e na komunikaci
 pøes ICE by bylo tøeba èekat pøi kadém kroku  \verb+foreach+ cyklu),
@@ -375,12 +389,12 @@ pouze poprvé a poté se naèítaly z cache. Proto hypotézovı atribut, kterı ádnou 
 nepouíval, zpùsoboval opravdu velké zpomalení bìhu úlohy, byl-li do ni zapojen.
 \paragraph{}
 Podíváme-li se na algoritmus 4ft mineru uvedeného vıše a pøedstavíme-li si ho
-jako nadúlohu, do které bude zapojen minimálnì jeden virtuální hypotézovı atribut
+jako nad\-úlohu, do které bude zapojen minimálnì jeden virtuální hypotézovı atribut
 (napøíklad jako sukcedent), tak bude jasné, e tento algoritmus pobìí opravdu pomalu.
 Zapojení virtuálního atributu do sukcedentu je pro tento miner ''nejhorší pøípad'',
 protoe bitstringy jim generované jsou pouívany ve vnitøním \verb+foreach+ cyklu,
 a v pøípadì nepouívaní cache to znamená, e uvnitø tohoto cyklu se \emph{pokadé} spustí
-podúloha (vnitøní miner), aby mohla nadúloze poskytnout bitstring.
+pod\-úloha (vnitøní miner), aby mohla nad\-úloze poskytnout bitstring.
 \paragraph{}
 Pøi vší snaze autora dané práce jakkoliv urychlit bìh úlohy se zapojenım hypotézovım
 atributem vycházelo najevo, e od pùvodnì plánované implementace prosté jakéhokoliv
@@ -390,7 +404,7 @@ pøi omezení maximálního poètu virtuálních sloupcù a potamo i bitovıch øetízkù v
 krabièkou virtuálního atributu na 15-20. Pøi zvıšení maximálního poètu virtuálních sloupcù
 na 50 doba bìhu jednoduché úlohy se pohybovala v øádu hodin.
 \paragraph{}
-Protoe bìné poèty vygenerovanıch relevantních otázek v procedurách GUHA se pohybují v øádech
+Protoe bìné poèty vygenerovanıch re\-le\-vantních otázek v procedurách GUHA se pohybují v øádech
 tisícù a desetitisícù pøi potøebné dobì bìhu spíše v øádu minut, bylo zøejmé, e
 zpomalujícím faktorem byla právì absence cacheování bitovıch øetízkù pro virtuální atribut.
 Bylo tedy rozhodnuto upustit od kanonického implementaèního øešení a autor naimplementoval
@@ -398,15 +412,15 @@ cache i pro virtuální atributy.
 \section{Atributy}
 Zde bude popsána podstata úlohy, kterou bylo nutné
 vyøešit pro implementaci atributù v prostøedí
-Ferda DataMiner. Podrobnìjší popis principù fungování danıch
+Ferda Data\-Miner. Podrobnìjší popis principù fungování danıch
 atributù je uveden v dané diplomové práci v sekci \ref{cileatributy}.
 \subsection{Ekvidistanèní intervaly}
 V rámci implementace funkènosti tohoto atributu byly vyuity algoritmy
 pro vytvoøení ekvidistanèních intervalù pøipravené T.Kuchaøem
 v rámci jeho diplomové práce uvedené jako \cite{kuchar}. Tyto algoritmy
 byly adaptovány z prostøedí projektu Rel-Miner T.Karbana a pøipraveny
-pro vyuití v prostøedí Ferda DataMiner. Autor dané diplomové práce
-vytvoøil pro danı atribut krabièku v prostøedí Ferda DataMiner,
+pro vyuití v prostøedí Ferda Data\-Miner. Autor dané diplomové práce
+vytvoøil pro danı atribut krabièku v prostøedí Ferda Data\-Miner,
 její funkènost bude detailnì popsána v kapitole \ref{implementationdetails}.
 
 \subsection{Ekvifrekvenèní intervaly}
@@ -414,8 +428,8 @@ V rámci implementace funkènosti tohoto atributu byly vyuity algoritmy
 pro vytvoøení ekvifrekvenèních intervalù pøipravené T.Kuchaøem
 v rámci jeho diplomové práce uvedené jako \cite{kuchar}. Tyto algoritmy
 byly adaptovány z prostøedí projektu Rel-Miner T.Karbana a pøipraveny
-pro vyuití v prostøedí Ferda DataMiner. Autor dané diplomové práce
-vytvoøil pro danı atribut krabièku v prostøedí Ferda DataMiner,
+pro vyuití v prostøedí Ferda Data\-Miner. Autor dané diplomové práce
+vytvoøil pro danı atribut krabièku v prostøedí Ferda Data\-Miner,
 její funkènost bude detailnì popsána v kapitole \ref{implementationdetails}.
 \subsection{Statickı atribut}
 V rámci implementace funkènosti tohoto atributu byla vytvoøena krabièka,
@@ -430,7 +444,7 @@ atribut mùe bıt i zcela prázdnı a kategorie mohou bıt vytvoøeny
 uivatelem kompletnì od zaèátku.
 \paragraph{}
 Modul zaruèuje korektnost ruènì pøidanıch kategorií (zaruèí napøíklad
-disjunktnost intervalù, jak je poadováno pøi tvorbì úlohy pro dataminingovou
+disjunktnost intervalù, jak je poadováno pøi tvorbì úlohy pro data\-miningovou
 proceduru). Vyuívá algoritmù ji implementovanıch v rámci diplomové práce
 T.Kuchaøe uvedené jako \cite{kuchar}. Funkènost tohoto modulu bude detailnì popsána
 v kapitole \ref{implementationdetails}.
