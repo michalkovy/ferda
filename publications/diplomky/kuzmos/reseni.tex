@@ -320,7 +320,7 @@ po\-bìí delší dobu, ale skonèí ko\-rektnì.
 Zde budou pop\-sány dùsledky, které mìlo zvo\-lené øešení implemen\-taci a spolu\-práci
 s ji existujícími moduly me\-tody GUHA v pros\-tøedí Ferda Data\-Miner.
 \subsubsection{Vypnutí cache bitovıch øetízku}
-Nej\-podstat\-nìjším dùsledkem byla nemonost pouívat stávající cache bi\-tovıch
+Nej\-podstat\-nìjším dùsledkem bylo ne\-umo\-nìní pouí\-vat stávající cache bi\-tovıch
 øetízkù. Ta to\-ti fun\-guje tak, e ucho\-vává bitové øetízky pro atributy
 (pro všechny atributy je spoleèná) a v pøí\-padì potøeby vyøazuje z cache
 málo pouívané bitové øe\-tízky na základì nìjaké strategie. V pøí\-padì,
@@ -338,8 +338,8 @@ krabièek atributù zùstalo beze zmìny, protoe se pro tyto krabièky nic ne\-zmì\-
 \subsubsection{Rozdìlení na krabièky}
 Další otázkou bylo, zda implemen\-tovat hypo\-tézovı vir\-tuální atribut
 jako dvì krabièky nebo jednu spoleènou. Stávající ne\-virtuální
-atri\-buty se v pøípadì pot\-øeby gene\-rování booleovskıch atri\-butù zapojují do kra\-bièky
-''AtomSetting''. Ta zajistí gene\-rování koeficientù pro booleovskı atribut.
+atri\-buty se v pøípadì pot\-øeby gene\-rování booleov\-skıch atri\-butù zapojují do kra\-bièky
+''AtomSetting''. Ta zajistí gene\-rování koeficientù pro booleovskı atri\-but.
 \paragraph{}
 V pøípadì hypo\-tézového virtuál\-ního atributu by nebylo mo\-né pouít stávající krabièku
 pro generování koeficientù ''AtomSetting'', protoe pracuje s po\-adav\-kem ''poskytni
@@ -350,27 +350,27 @@ vyuitelná pouze pro hypotézovı virtuální atribut by se musela také na\-programo
 Po úvaze se autor rozhodl ne\-implemen\-tovat zvláštní krabièku pro ge\-nero\-vání
 koeficientù pro hypo\-tézovı virtuální atribut z následujících dùvodù.
 \begin{description}
-\item[Potøeba pouze jednoho koeficientu] Po diskuzi s vedoucím práce
-bylo rozhodnuto, e pøi ge\-nero\-vání koeficientù pro booleovskı atribut
+\item[Potøeba pouze jednoho koeficientu]
+Bylo rozhodnuto, e pøi ge\-nero\-vání koeficientù pro booleovskı atribut
 bu\-de pot\-øeba imple\-men\-tovat pou\-ze pod\-mno\-i\-ny dél\-ky jed\-na.
 Kra\-biè\-ka ''Atom\-Set\-ting'' pro hy\-po\-tézovı vir\-tuální atri\-but by byla nad\-byteèná,
 pro\-toe by tam chybìlo uivatel\-ské nas\-tavení, vše se odehrávalo ''pod kapotou''.
 Nebyl tedy dùvod tuto krabièku vyt\-váøet.
-\item[Nadbyteèná komunikace krabièek pøes ICE] Navíc by tato krabièka, která
-by se za\-pojila za hypotézovı virtuální atribut, znamenala komunikaci pøes ICE.
-Protoe idea implementace spoèívá v synchronním bìhu nad- a pod\-úlohy, kde
+\item[Nadbyteèná komunikace krabièek pøes rozhraní ICE] Navíc by tato kra\-bièka, kte\-rá
+by se za\-pojila za hypo\-tézovı virtuální atribut, zna\-menala komu\-nikaci pøes roz\-hraní ICE.
+Protoe idea implemen\-tace spoèívá v synchron\-ním bìhu nad- a pod\-úlohy, kde
 nad\-úloha uvnitø svıch cyklù (napøíklad pro sukcedent) volá pod\-úlohu, která jí
-pøedává bistringy, je potøeba zajistit toto pøedávání plynule, aby
-se hlavní úloha pøíliš nezpomalovala èekáním na bitovı øetízek od pod\-úlohy.
+pøedává bi\-tové øe\-tíz\-ky, je pot\-øeba za\-jistit toto pøe\-dávání ply\-nule, aby
+se hlav\-ní úloha pøí\-liš ne\-zpoma\-lovala èe\-káním na bi\-tovı øetí\-zek od pod\-úlohy.
 \paragraph{}
  Protoe
-ze zkušeností získanıch pøi programování prostøedí Ferda Data\-Miner ještì
-jako studentského projektu autor vìdìl, e komunikace krabièek pøes
-rozhraní ICE je relativnì pomalá (s ohledem na skuteènost, e na komunikaci
-pøes ICE by bylo tøeba èekat pøi kadém kroku  \verb+foreach+ cyklu),
-bylo rozhodnuto zajistit generování atributu
-a koeficientu v jedné krabièce a tím zrychlit bìh hypotézového
-virtuálního atributu.
+ze zku\-šenos\-tí zís\-kanıch pøi prog\-ramování pro\-støedí Ferda Data\-Miner ještì
+v rám\-ci studen\-tského pro\-jektu autor vìdìl, e komu\-nikace kra\-bièek pøes
+rozhraní ICE je rela\-tivnì pomalá (s ohledem na sku\-teènost, e na ko\-munikaci
+pøes ICE by bylo tøe\-ba èekat pøi kadém kroku  \verb+foreach+ cyklu),
+bylo rozhodnuto zajistit ge\-nerování atri\-butu
+a koeficientu v jed\-né krabièce a tím zrych\-lit bìh hypo\-tézového
+virtuál\-ního atri\-butu.
 \end{description}
 \subsubsection{Buffer bitovıch øetízkù}
 Pøi ladìní prvotní implementace hypotézového virtuálního atributu
@@ -378,73 +378,74 @@ se zjistilo, e aèkoliv zvolenı návrh zaruèí škálovatelnost
 a jistotu toho, e úloha by za delší dobu dobìhne a nezabere
 zbyteènou pamì, doba bìhu celkové úlohy je neúmìrnì dlouhá.
 \paragraph{}
-Dùvod dlouhého bìhu úlohy s virtuálním atributem celkem logicky spoèíval
-v neexistenci jakéhokoliv cacheování bitovıch øetízkù poskytovanıch
-virtuálním hypotézovım atributem. Pøi prvotním návrhu autor a vedoucí
-diplomové práce na tento fakt nebrali pøíliš ohled, protoe spíše diskutovali
-o dlouho\-dobìjších dopadech zvoleného zpùsobu implementace. Velkı rozdíl v rychlostech bìhu
-úlohy byl ještì umocnìn faktem, e všechny dosavadní GUHA procedury byly implementovány
-s pouitím cache bitovıch øetízkù a generování bitovıch øetízkù pøi bìhu úlohy probìhlo
-pouze poprvé a poté se naèítaly z cache. Proto hypotézovı atribut, kterı ádnou cache
-nepouíval, zpùsoboval opravdu velké zpomalení bìhu úlohy, byl-li do ni zapojen.
+Dùvod dlouhého bì\-hu úlohy s vir\-tuálním atri\-butem cel\-kem logic\-ky spo\-èíval
+v ne\-existenci jaké\-hokoliv cache\-ování bi\-tovıch øetízkù pos\-kyto\-vanıch
+vir\-tuálním hypo\-tézovım atri\-butem. Pøi prvot\-ním návrhu autor a vedoucí
+diplomové práce na ten\-to fakt ne\-brali pøí\-liš ohled, protoe spíše dis\-kutovali
+o dlouho\-dobìjších dopadech zvo\-leného zpùsobu implemen\-tace. Velkı roz\-díl v rych\-lostech bìhu
+úlohy byl ještì umoc\-nìn faktem, e všech\-ny do\-savad\-ní GUHA proce\-dury v pro\-støe\-dí
+Fer\-da Data\-Miner byly implemen\-továny
+s pouitím cache bitovıch øetízkù a gene\-rování bi\-tovıch øetízkù pøi bìhu úlohy pro\-bìhlo
+pouze po\-prvé a poté se na\-èítaly z cache. Proto hypo\-tézovı atri\-but, kterı ádnou cache
+ne\-pouíval, zpùsoboval oprav\-du vel\-ké zpomalení bìhu úlohy, byl-li do ni za\-pojen.
 \paragraph{}
-Podíváme-li se na algoritmus 4ft mineru uvedeného vıše a pøedstavíme-li si ho
-jako nad\-úlohu, do které bude zapojen minimálnì jeden virtuální hypotézovı atribut
-(napøíklad jako sukcedent), tak bude jasné, e tento algoritmus pobìí opravdu pomalu.
-Zapojení virtuálního atributu do sukcedentu je pro tento miner ''nejhorší pøípad'',
-protoe bitstringy jim generované jsou pouívany ve vnitøním \verb+foreach+ cyklu,
-a v pøípadì nepouívaní cache to znamená, e uvnitø tohoto cyklu se \emph{pokadé} spustí
-pod\-úloha (vnitøní miner), aby mohla nad\-úloze poskytnout bitstring.
+Podíváme-li se na pseudo\-kód algo\-ritmu proce\-dury 4ft-Miner uvedenı vıše a pøedstavíme-li si ho
+jako nad\-úlohu, do které bude zapojen minimálnì jeden vir\-tuální hypo\-tézovı atribut
+(napøíklad jako sukcedent), tak bude jasné, e tento algo\-ritmus po\-bìí opravdu pomalu.
+Zapojení vir\-tuál\-ního atributu do sukcedentu je pro ten\-to miner ''nejhorší pøípad'',
+protoe bitstringy jim generované jsou pouívany ve vnitø\-ním \verb+foreach+ cyklu,
+a to v pøípadì ne\-pøítom\-nosti cache zna\-mená, e uvnitø to\-hoto cyklu se \emph{pokadé} spus\-tí
+pod\-úloha (vnitøní proce\-dura), aby mohla nad\-úloze pos\-kytnout bi\-to\-vı øe\-tí\-zek.
 \paragraph{}
 Pøi vší snaze autora dané práce jakkoliv urychlit bìh úlohy se zapojenım hypotézovım
-atributem vycházelo najevo, e od pùvodnì plánované implementace prosté jakéhokoliv
-cacheování bude nutné upustit. Pøi krátkém otestování a optimalizaci dosud naimplementovaného
+atributem vycházelo najevo, e od pù\-vodnì plánované implementace prosté jaké\-hokoliv
+cacheování bude nutné upustit. Pøi krátkém otestování a optimalizaci dosud naimplemen\-tovaného
 kódu krabièky autor byl schopen dosáhnout rozumné doby bìhu úlohy (v øádu desítek minut)
-pøi omezení maximálního poètu virtuálních sloupcù a potamo i bitovıch øetízkù vygenerovanıch
-krabièkou virtuálního atributu na 15-20. Pøi zvıšení maximálního poètu virtuálních sloupcù
+pøi omezení maximálního poètu virtuálních sloupcù a potamo i bi\-tovıch øetízkù vy\-genero\-vanıch
+krabièkou virtuálního atributu na 15-20. Pøi zvıšení maximál\-ního poètu virtuálních sloupcù
 na 50 doba bìhu jednoduché úlohy se pohybovala v øádu hodin.
 \paragraph{}
-Protoe bìné poèty vygenerovanıch re\-le\-vantních otázek v procedurách GUHA se pohybují v øádech
+Protoe bìné poè\-ty vygenerovanıch re\-le\-vantních otázek v procedurách GUHA se pohybují v øádech
 tisícù a desetitisícù pøi potøebné dobì bìhu spíše v øádu minut, bylo zøejmé, e
-zpomalujícím faktorem byla právì absence cacheování bitovıch øetízkù pro virtuální atribut.
-Bylo tedy rozhodnuto upustit od kanonického implementaèního øešení a autor naimplementoval
-cache i pro virtuální atributy.
+zpomalujícím faktorem byla právì absence cacheování bitovıch øetízkù pro vir\-tuální atribut.
+Bylo tedy rozhod\-nuto upustit od kanonického øešení a autor naimple\-men\-toval
+cache i pro vir\-tuální atributy.
 \section{Atributy}
-Zde bude popsána podstata úlohy, kterou bylo nutné
-vyøešit pro implementaci atributù v prostøedí
-Ferda Data\-Miner. Podrobnìjší popis principù fungování danıch
+Zde bude popsána pod\-stata úlohy, kterou bylo nutné
+vyøešit pro implemen\-taci atributù v prostøedí
+Ferda Data\-Miner. Podrob\-nìjší popis principù fungování danıch
 atributù je uveden v dané diplomové práci v sekci \ref{cileatributy}.
-\subsection{Ekvidistanèní intervaly}
-V rámci implementace funkènosti tohoto atributu byly vyuity algoritmy
-pro vytvoøení ekvidistanèních intervalù pøipravené T.Kuchaøem
-v rámci jeho diplomové práce uvedené jako \cite{kuchar}. Tyto algoritmy
-byly adaptovány z prostøedí projektu Rel-Miner T.Karbana a pøipraveny
-pro vyuití v prostøedí Ferda Data\-Miner. Autor dané diplomové práce
-vytvoøil pro danı atribut krabièku v prostøedí Ferda Data\-Miner,
-její funkènost bude detailnì popsána v kapitole \ref{implementationdetails}.
 
-\subsection{Ekvifrekvenèní intervaly}
-V rámci implementace funkènosti tohoto atributu byly vyuity algoritmy
-pro vytvoøení ekvifrekvenèních intervalù pøipravené T.Kuchaøem
-v rámci jeho diplomové práce uvedené jako \cite{kuchar}. Tyto algoritmy
-byly adaptovány z prostøedí projektu Rel-Miner T.Karbana a pøipraveny
-pro vyuití v prostøedí Ferda Data\-Miner. Autor dané diplomové práce
-vytvoøil pro danı atribut krabièku v prostøedí Ferda Data\-Miner,
+\subsection{Ekvidistanèní a ekvifrekvenèní intervaly}
+Pøi implemen\-taci toho\-to mo\-dulu pro trans\-formaci atri\-butu byly vyuity algoritmy
+pro vytvoøení ekvi\-frekven\-èních inter\-valù pøipravené T.Kuchaøem
+v rámci jeho dip\-lomové práce uvedené jako \cite{kuchar}. Tyto algo\-ritmy
+byly adap\-továny z prostøedí projek\-tu Rel-Miner T.Karbana a pøi\-praveny
+pro vyuití v prost\-øedí Ferda Data\-Miner. Autor této dip\-lomové práce
+vyt\-voøil pro dané moduly pro transformaci atri\-butu krabièku v pro\-støedí Fer\-da Data\-Miner,
 její funkènost bude detailnì popsána v kapitole \ref{implementationdetails}.
-\subsection{Statickı atribut}
-V rámci implementace funkènosti tohoto atributu byla vytvoøena krabièka,
-která umoòovala spouštìní modulu pro ruèní úpravu atributu. Atribut
-(pøesnìji kategorie v atributu) mohly bıt pøedem vytvoøeny napøíklad
-vıše uvedenımi krabièkami ekvidistanèních nebo ekvifrekvenèních intervalù.
-\subsection{Modul pro úpravu atributu}
-Tento modul je spouštìn nad krabièkou ''Statickı atribut'' a umoòuje
-ruèní úpravu kategorií v atributu. Pøi ní uivatel mùe jak upravovat
-ji pøedpøipravené kategorie, tak i vytváøet kategorie nové. Upravovanı
-atribut mùe bıt i zcela prázdnı a kategorie mohou bıt vytvoøeny
-uivatelem kompletnì od zaèátku.
 \paragraph{}
-Modul zaruèuje korektnost ruènì pøidanıch kategorií (zaruèí napøíklad
-disjunktnost intervalù, jak je poadováno pøi tvorbì úlohy pro data\-miningovou
-proceduru). Vyuívá algoritmù ji implementovanıch v rámci diplomové práce
-T.Kuchaøe uvedené jako \cite{kuchar}. Funkènost tohoto modulu bude detailnì popsána
-v kapitole \ref{implementationdetails}.
+Kra\-biè\-ka pro vyt\-váøení ekvi\-distanè\-ních inter\-va\-lù pra\-cuje
+mír\-nì odliš\-nım zpùsobem ne v sys\-tému LISp-Miner. In\-ter\-va\-ly
+se vy\-gene\-rují na zák\-ladì za\-dá\-ní po\-a\-do\-va\-né\-ho \emph{poè\-tu}
+in\-ter\-va\-lù a po\-èáteè\-ního a kon\-co\-vého bodù. V systému LISp-Miner
+se zadá  po\-a\-do\-va\-ná\ \emph{délka} intervalu a po\-èáteè\-ní a kon\-co\-vı body.
+\subsection{Statickı atribut}
+Pøi implemen\-taci toho\-to mo\-dulu pro trans\-formaci atri\-butu
+byla vyt\-voøena kra\-biè\-ka,
+která umo\-òovala spouštìní mo\-dulu pro ruè\-ní úp\-ravu atri\-butu. Atri\-but
+(pøesnìji kate\-gorie v atri\-butu) mohly bıt pøe\-dem vyt\-voøeny napøí\-klad
+vıše uvede\-nımi krabiè\-kami pro tvrobù ekvi\-dis\-tanè\-ních nebo ekvi\-frek\-venè\-ních inter\-valù.
+\subsection{Modul pro úpravu atributu}
+Tento modul je spouštìn nad krabiè\-kou ''Statickı atribut'' a umoòuje
+ruèní úp\-ravu kategorií v atri\-butu. Pøi ní uivatel mùe jak upra\-vovat
+ji pøed\-pøipravené kate\-gorie, tak i vyt\-váøet kate\-gorie nové. Upravovanı
+atri\-but mùe bıt i zcela práz\-dnı a kate\-gorie mohou bıt vyt\-voøeny
+ui\-vatelem komple\-tnì od za\-èátku.
+\paragraph{}
+Modul zaruèuje korek\-tnost ruènì pøi\-danıch kate\-gorií (zaruèí na\-pøíklad
+dis\-junk\-tnost intervalù v rámci ka\-te\-go\-rie, jak je poa\-dováno pøi tvor\-bì za\-dá\-ní
+úlohy pro data\-minin\-govou
+proce\-duru). Vyuívá algo\-ritmù ji implemen\-tovanıch v rámci diplomové práce
+T.Kuchaøe uvedené jako \cite{kuchar}. Funkènost toho\-to mo\-dulu bude detailnì pop\-sána
+v kapi\-tole \ref{implementationdetails}.
