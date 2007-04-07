@@ -37,16 +37,16 @@ kterımi pracuje metoda GUHA a kterımi se zde budeme podrobnìji zabıvat.
 ''Klasické'' asociaèní pravidlo je definováno Aggravalem (\cite{aggraval})
 v souvislosti s analızou nákupního košíku.
 \paragraph{}
-Klasické asociaèní pravidlo je ve tvaru $X \to Y$, kde $X$ a $Y$ znaèí
-dvì mnoiny prvkù. Toto pravidlo nám øíká, e transakce obsahující prvky z $X$,
-mají tendenci obsahovat prvky z $Y$.
+Klasické asociaèní pravid\-lo je ve tvaru $X \to Y$, kde $X$ a $Y$ znaèí
+dvì mnoiny prvkù. Toto pravid\-lo nám øíká, e tran\-sakce obsahující prvky z $X$,
+mají ten\-den\-ci obsahovat prvky z $Y$.
 \paragraph{}
-Analogie s nákupními košíky øíká, e
-kdy nákupní koš obsahuje mnoinu pøedmìtù $X$, 
-pravdìpodobnì bude obsahovat mnoinu pøedmìtù $Y$. Napøíklad klienti, kteøí
-nakoupí víno, èasto nakupují také sıry.
-Kadı z nákupních košíku $b_{1},\ldots, b_{n}$ tedy obsahuje
-nìkteré z poloek $P_{1},P_{2},\ldots,P_{K}$.
+Analogie s ná\-kupními košíky øíká, e
+kdy ná\-kupní koš obsahuje mnoinu pøed\-mìtù $X$, 
+pravdìpodobnì bude obsahovat mnoinu pøed\-mìtù $Y$. Na\-pøíklad klienti, kteøí
+na\-koupí víno, èasto na\-kupují také sıry.
+Kadı z ná\-kupních košíku $b_{1},\ldots, b_{n}$ tedy ob\-sahuje
+nìk\-teré z poloek $P_{1},P_{2},\ldots,P_{K}$.
 \begin{table}[!h]
 \begin{center}
 \begin{tabular}{|c|c|}
@@ -75,6 +75,11 @@ $b_{n}$ & $P_{2},P_{4},P_{K}$ \\
 Vıraz $P_{2}, P_{5} \to P_{1}, P_{3}$ je pøíklad asociaèního pravidla, které øíká, e
 nákupní košíky obsahující poloky $P_{2}$ a $P_{5}$, èasto obsahují i poloky $P_{1}$ a $P_{3}$.
 \paragraph{}
+Pouívají se dvì míry intenzity asociaèního pravidla -- \emph{podpora (support)} a \emph{konfidence (confidence)}.
+\emph{Podpora} asociaèního pravidla $X \to Y$ je podíl poètu transakcí obsahujících jak $X$, tak $Y$
+ku poètu všech transakcí. \emph{Konfidence} je podíl poètu transakcí obsahujících jak $X$, tak $Y$
+ku poètu transakcí obsahujících $X$.
+\paragraph{}
 Analızou transakcí supermarkety mohou
 optimalizovat rozmístìní zboí v prodejnì a zajistit rychlejší a vınosnìjší
 prodej. Pro dobıvání znalostí za vyuití takovıch pravidel byl navren
@@ -83,7 +88,7 @@ algoritmus Apriori, viz \cite{aggraval}.
 GUHA je zkratka pro General Unary Hypotheses Automaton. Teoretickı základ byl
 formulován Hájkem v roce 1966 (podrobnìji viz \cite{guha66}),
 detailnìji pak v \cite{guhabasic}.
-Pro ilustraci uvádíme obrázek \ref{fig:praceguha}.
+Pro ilustraci práce metody GUHA uvádíme obrázek \ref{fig:praceguha}.
 \paragraph{}
 \begin{figure}[!h]
 \begin{center}
@@ -94,26 +99,26 @@ Pro ilustraci uvádíme obrázek \ref{fig:praceguha}.
 \end{figure}
 \paragraph{}
 Metoda GUHA je realizována procedurami GUHA. Procedura je program, kterı na základì
-vstupu, kterı je tvoøen analyzovanımi daty a jednoduchım zadáním relevantních vztahù,
-generuje zadané vztahy (rovnì se pouívá termín relevantní otázky) a ovìøuje je
+vstupu, kterı je tvoøen analyzovanımi daty a jedno\-duchım zadáním rele\-vant\-ních vztahù,
+generuje zadané vztahy (rovnì se pouívá termín re\-levant\-ní otázky) a ovìøuje je
 oproti vstupním datùm. Vıstupem jsou pak všechny vztahy (také hypotézy), které jsou prosté.
 Hypotéza je prostá, jestlie je pravdivá 
-v analyzované datové matici a zároveò nevyplıvá z jinıch, jednodušších hypotéz.
+v analyzované datové matici a zároveò nevyplıvá z jinıch, jedno\-duš\-ších hypotéz.
 \paragraph{}
 Jednou z nejdùleitìjších procedur GUHA je procedura ASSOC (podrobnìji v \cite{guhabasic}),
-která hledá asociaèní pravidla. Mùe vybírat i jiná ne klasická asociaèní pravidla, 
-napøíklad pravidla, která odpovídají statistickım testùm hypotéz.
-Tato pravidla jsou daleko obecnìjší ne ''klasická'' asociaèní pravidla 
-definovaná v souvislosti s analızou nákupních košíkù.
+která hledá asociaèní pravid\-la. Mùe vybírat i jiná ne klasická asociaèní pra\-vidla, 
+na\-pøíklad pravid\-la, která od\-poví\-dají statis\-tickım testùm hypotéz.
+Tato pravidla jsou daleko obec\-nìjší ne ''klasická'' asociaèní pravidla 
+definovaná v sou\-vislosti s analızou ná\-kupních košíkù.
 \paragraph{}
 
 \subsection{Relaèní dobıvání znalostí}
 \paragraph{}
 Existující metody dobıvání znalostí byly pøevánì navreny pro data uloena
 v jedné datové matici (tzv. flat-file). Pøi takové organizaci dat øádky datové
-matice reprezentují pozorování (objekty studia, osoby, záznamy, pøedmìty apod.)
-a sloupce datové matice reprezentují promìnné (vlastnosti, atributy nebo
-charakteristiky). Aèkoliv takovı pohled na zkoumaná data zjednoduší metody
+matice reprezentují pozorování (ob\-jekty stu\-dia, osoby, záz\-namy, pøed\-mìty apod.)
+a sloupce datové matice rep\-re\-zentují promìn\-né (vlast\-nosti, at\-ributy nebo
+charak\-teri\-stiky). Aèkoliv takovı pohled na zkoumaná data zjednoduší metody
 pouívané pro dobıvání znalostí, v praxi se velmi èasto vyskytují data ve sloitìjší
 reprezentaci, napøíklad, ve vícero datovıch maticích, které jsou mezi sebou
 v relaci.
@@ -148,7 +153,7 @@ Podrobné informace o systému LISp-Miner lze nalézt v \cite{guha}.
 \subsection{Rel-Miner}
 Systém Rel-Miner je softwarovı projekt vznikající v rámci disertaèní práce (viz. \cite{relminer} )
 Mgr. Tomáše Karbana na Matematicko-fyzikální fakultì Univerzity Karlovy.
-Cílem je vytvoøení systému pro dobıvání asociaèních pravidel z relaèních dat nad hvìzdicovım schématem (dále jen relaèní), co vyaduje rozšíøení jazyka asociaèních pravidel pro pokrytí více ne jedné datové matice. Základní implementaèní techniky (napø. princip bitovıch øetìzcù),  zùstávají stejné jako døíve v systému LISp-Miner
+Cílem je vytvoøení systému pro dobıvání asociaèních pravidel z relaèních dat nad hvìzdicovım schématem (dále jen relaèní), co vyaduje rozšíøení jazyka asociaèních pravidel pro pokrytí více ne jedné datové matice. Základní implementaèní techniky (napø. princip bitovıch øetìzcù), zùstávají stejné jako døíve v systému LISp-Miner
 a nyní systému Ferda DataMiner. Stávající implementace dataminingovıch procedur a parametrù zadávání úlohy,
 které vznikly v rámci diplomové práce T.Kuchaøe, jsou inspirovány právì systémem Rel-Miner. Rovnì
 tato diplomová práce má nìkteré podobné cíle jako Rel-Miner.
@@ -412,32 +417,32 @@ tak i ke zkoumanım datùm.
 Bude následovat popis práce s nìkterımi parametry zadání úlohy v prostøedí Ferda DataMiner.
 Vìtšina následujícího popisu se vztahuje i na systém LISp-Miner.
 \subsubsection{Datovı zdroj}
-GUHA pracuje s daty z datovıch matic. Ty jsou získávány pøevánì jako databázové
+GUHA pracuje s daty z datovıch matic. Ty jsou získávány pøe\-vánì jako data\-bázové
 tabulky èi vısledky operací nad nimi z databází. Pro tento úèel je nutné 
-pøi zadávaní úlohy definovat datovı zdroj (momentálnì nejèastìji ve formì
+pøi zadávaní úlohy definovat datovı zdroj (momentálnì nej\-èastìji ve formì
 pøípojení k databázi pøes rozhraní ODBC) a alespoò jednu datovou matici.
-V relaèním rozšíøení dataminigovıch procedur GUHA se pracuje nad více tabulkami,
+V relaèním rozšíøení data\-miningovıch procedur GUHA se pracuje nad více tabul\-kami,
 které jsou mezi sebou ve vztahu 1:N. Pro pohodlí se o nich zmiòujeme jako
-o hlavní (master) a vedlejších (detail) tabulkách.
+o hlavní (master) a ved\-lejších (detail) tabulkách.
 \paragraph{}
 Dále se z datovıch matic vybírají datové sloupce, ze kterıch se budou vytváøet
-atributy obsahující kategorie pro potøebné rozdìlení vstupních dat. Data mohou
-patøit do rùznıch datovıch typù. Tyto dále ovlivní monosti kategorizace.
-Stojí za zmínku, e zatím nejkomplexnìjší implementace práce s jednotlivımi
-sémantickımi typy byla realizována v práci \cite{kuchar} -- "Experimentální
-GUHA procedury".
+atributy obsahující kategorie pro pot\-øebné roz\-dìlení vstup\-ních dat. Data mohou
+patøit do rùznıch datovıch typù. Tyto dále ovliv\-ní mo\-nosti kate\-gorizace.
+Stojí za zmínku, e zatím nejkomplexnìjší imple\-mentace práce s jednot\-livımi
+sémantickımi typy byla realizována v práci \cite{kuchar} -- ''Experi\-mentál\-ní
+GUHA procedury''.
 \subsubsection{Datová sémantika}
 Z pohledu datové sémantiky se mohou vyskytovat tyto ètyøi druhy dat:
 
 \label{datasemantics}
 \begin{description}
-\item[Nominální data] Hodnoty nejsou vzájemnì porovnatelné, napøíklad,
+\item[Nominální data] Hodnoty nejsou vzájemnì porov\-natel\-né, napøíklad
 pohlaví nebo oblíbená pøíchu zmrzliny.
-\item[Ordinální data] Hodnoty jsou vzájemnì porovnatelné, napøíklad, vıše
-dosaeného vzdìlání.
+\item[Ordinální data] Hodnoty jsou vzájemnì porov\-natel\-né, napøíklad vıše
+dosa\-eného vzdìlání.
 \item[Cyklická ordinální data] U tohoto sémantického typu se vychází ze
 zkuše\-nosti, e pøi zadá\-vaní koeficientu typu \emph{cyklické intervaly}
-(viz \ref{coefficients}) si èasto nevysta\-èíme pouze s ordinál\-ními daty.
+si èasto nevysta\-èíme pouze s ordinál\-ními daty.
 Potøebujeme další vlastnost a to, aby první kategorie pøirozenì ná\-sledo\-vala
 po poslední. Jako pøíklad mohou po\-slouit dny v tıdnu nebo mìsíce v roce.
 \item[Kardinální data] Tato data jsou reprezentována èíselnımi typy,
@@ -448,24 +453,24 @@ vzdalenost od místa bydlištì, vıši krevního tlaku a podobnì.
 
 \subsubsection{Kategorie}
 Metoda GUHA pracuje s diskrétními daty. Data, která
-tuto podmínku nesplòují, musí bıt diskretizována. Diskretizovanı sloupec
+tuto podmínku nesplòují, musí bıt diskre\-tizována. Diskre\-tizovanı sloupec
 se oznaèuje jako atribut a jeho hodnoty jsou kategorie..
 \paragraph{}
-Monosti práce s kategoriemi se postupnì vyvíjely v implementacích metody GUHA. Kategorie
-mùe bıt dvojího typu: buï intervalová -- obsahuje koneènı poèet intervalù,
-kterı pokrıvá zkoumanou mnoinu dat, anebo vıètová, kde vıèet opìt pokrıvá
-zkoumanou mnoinu dat. V systémech LISp-Miner a Rel-Miner kategorie
-mùe obsahovat buï jenom intervaly anebo jenom vıèet. A v rámci diplomové
-práce \cite{kuchar} monosti zadávání kategorie byly pøi\-rozenì rozšíøeny a imple\-mentovány
-do systému Ferda DataMiner tak, aby mohla obsahovat jak intervaly, tak i vıèet.
-Kategorie tedy obsahuje hodnoty, které jsou pokryty sjednocením vıètu
-a intervalù v kategorii. Podmínkou pro monost vytváøení intervalù v kategorii
-je práce nad daty, které mají sémantickı typ ordinální, cyklickı ordinální
-nebo kardinální (viz \ref{datasemantics}).
+Monosti práce s kategoriemi se postupnì vyvíjely v implemen\-tacích metody GUHA. Kate\-gorie
+mùe bıt dvojího typu: buï interv\-alová -- obsahuje koneè\-nı poèet inter\-valù,
+kterı pokrıvá zkoumanou mnoinu dat, anebo vıè\-tová, kde vıèet opìt pok\-rıvá
+zkoumanou mnoinu dat. V sys\-témech LISp-Miner a Rel-Miner kate\-gorie
+mùe obsa\-hovat buï jenom inter\-valy anebo jenom vıèet. A v rámci dip\-lomové
+práce \cite{kuchar} mo\-nosti zadávání kate\-gorie byly pøi\-rozenì roz\-šíøeny a imple\-mentovány
+do systému Ferda DataMiner tak, aby mohla obsa\-hovat jak inter\-valy, tak i vıèet.
+Kategorie tedy obsahuje hodnoty, které jsou pokryty sjed\-nocením vıètu
+a intervalù v kategorii. Podmínkou pro monost vytváøení inter\-valù v kategorii
+je práce nad daty, které mají sémantickı typ ordi\-nální, cyk\-lickı ordi\-nální
+nebo kardi\-nální (viz \ref{datasemantics}).
 \paragraph{}
-V rámci diplomové práce \cite{kuchar} byly vytvoøeny prostøedky pro práci
-s atributy a kategorii, avšak pro uivatelskou práci byl z dùvodu pracnosti
-implementován pouze krabièka pro transformaci atributu ''Each value one category'', která, jak plyne
+V rámci diplomové práce \cite{kuchar} byly vyt\-voøeny pro\-støedky pro práci
+s atributy a kategorii, avšak pro uivatelskou práci byl z dùvodu prac\-nosti
+implementován pouze krabièka pro trans\-formaci atributu ''Each value one category'', která, jak plyne
 z názvu, umí vytvoøit ze zkoumaného datového sloupce atribut obsahující
 vıètové kategorie pro kadou hodnotu ve sloupci.
 \paragraph{}
@@ -562,6 +567,7 @@ kdy  $\approx(a, b, c, d)=1$.
 mohou mít formu statistického testu atd. Jako pøíklad uvedeme 4ft kvantifikátor
 \emph{fundované implikace}.
 \paragraph{Fundovaná implikace}
+\label{foundedimplication}
 4ft-kvantifikátor $\Rightarrow_{p, Base}$ \emph{fundované implikace} pro 
 $0<p\leq 1$ a $Base>0$: platí, e $\Rightarrow_{p, Base}(a,b,c,d)=1$ právì kdy
 $\frac{a}{a+b}\geq p$ a $a\geq Base$.
@@ -648,9 +654,11 @@ Zkoumejme následující asociaèní pravidlo:
 \begin{eqnarray}
 \label{eq:aggrattributeexample}
 (TYPE="VKLAD") \& (AVGAMO{}UNT > 5000) \nonumber\\
-\Rightarrow_{80\%} OPERATION="PREVOD NA{}UCET"
+\Rightarrow_{0,8;20} OPERATION="PREVOD NA{}UCET"
 \end{eqnarray}
-Typ transakce je VKLAD, a velikost je 2x vìtší ne prùmìrná velikost transakce.
+Typ transakce je VKLAD, jeho prùmìrná vıše je vìtší ne 5000.
+$\Rightarrow_{0,8;20}$ znaèí kvantifikátor fundované implikace, jak je
+uveden v \ref{foundedimplication}.
 Zde jsme pouili jeden virtuální atribut $AVGAM{O}UNT$, kterı je odvozenı jako:
 
 \begin{eqnarray}
@@ -665,7 +673,7 @@ Uvame další hypotézu:
 \begin{eqnarray}
 \label{eq:hyprattributeexample}
 (VYSOKEINKASO) \& (SALARY(>15000)) \&   \nonumber\\
-(BYDLISTE="Praha")\Rightarrow_{80\%} STATUSUVERU="Dobry"
+(BYDLISTE="Praha")\Rightarrow_{0,8;10} STATUSUVERU="Dobry"
 \end{eqnarray}
 Hypotéza tvrdí, e klienti, kteøí mají vyšší plat a platí vysoké inkaso
 v okrese Praha, mají z 80\% dobré úvìry.
@@ -673,30 +681,42 @@ Zde jsme pouili jeden virtuální atribut $VYSOKEINKASO$ , kterı
 mùe vypadat následovnì:
 \begin{eqnarray}
 \label{eq:hyprattributeexample1}
-TYPE="INKASO"  \Rightarrow_{90\%} AMOUNT > 5000
+TYPE="INKASO"  \Rightarrow_{0,9;10} AMOUNT > 5000
 \end{eqnarray}
 Jinımi slovy, pokud typ transakce je INKASO, je z 90\% vysoké.
 \paragraph{}
 Zde data s informacemi o klientech a data s informacemi o jejich transakcích
 jsou dvì samostatné datové matice.
 \paragraph{}
-Z vıše uvedeného lze vidìt, jak rozdìlujeme virtuální atributy. Uvaujeme
-dva základní druhy, jak jsou chápany
+Vıše uvedené pøíklady uvádí oba druhy virtuálních atributù, jak jsou chápany
 v \cite{relminer}. Oba druhy atributù jsou v rámci dané práce implementovány
 do prostøedí Ferda.
 \paragraph{}
-První skupinou jsou sloupce vzniklé jako vısledek pøedzpracování dat z databáze.
-Jmenují se agregaèní atributy. Druhou skupinou jsou virtuální atributy vzniklé
-jako vısledek bìhu nìkteré z dataminingovıch úloh -- konkrétnì napøíklad mùeme
-pouít míru platnosti hypotéz pro jednotlivé záznamy v hlavní tabulce jako
-novı datovı sloupec.
+První skupinou jsou sloupce vzniklé jako vısledek pøed\-zpraco\-vání dat z data\-báze.
+Jmenují se agre\-gaèní atri\-buty. Druhou sku\-pinou jsou vir\-tuální at\-ributy vznik\-lé
+jako vıs\-ledek bìhu nìk\-teré z data\-miningovıch úloh -- konkrét\-nì na\-pøíklad mùeme
+pouít míru plat\-nosti hypo\-téz pro jednot\-livé záz\-namy v hlav\-ní tabul\-ce jako
+novı datovı sloupec. Navenek oba druhy atributu pracují s daty z vedlejší datové matice,
+provádí na ní nìjaké transformace a jako vısledek vznikají nové ''virtuální'' sloupce
+skládající se obecnì z reálnıch èísel,
+které jsou pøidány do hlavní datové matice.
 \subsubsection{Agregaèní atributy}
-Agregaèní atribut se reprezentuje novım virtuálním sloupcem (kterı se
-kvùli samotné podstatì principu virtuálního atributu neukládá do databáze),
-Ten vzniká jako vısledek funkce nad daty z více datovıch tabulek, pøièem
-zmínìná funkce pøiøadí kadému objektu v hlavní datové matici reálné èíslo
+\emph{Agregaèní atribut} se reprezentuje novımi virtuálními sloupci (které se
+z definice virtuálního atributu neukládá do databáze),
+Tyto sloupce vznikají jako vısledek pøedzpracování dat z více datovıch tabulek. 
+Pro kadı objekt z hlavní datové matice se pøiøadí reálné èíslo
 vypoèítané na základì hodnot v odpovídajících sloupcích z vedlejších datovıch 
-matic.
+matic. Formálnìji lze agregaèní atribut definovat jako funkci nad relevantními sloupci
+vedlejší datové matice, která vrací reálné èíslo.
+\paragraph{}
+Pøínosem agregaè\-ního atributu je zjed\-no\-dušení zadá\-vání data\-miningové úlohy. Vıs\-ledku,
+kterı pøi\-náší agregaè\-ní atri\-but, lze dosáh\-nout i jinak -- na\-pøíklad pøed\-zpracováním
+dat pøed samotnou tìbou dat, pøidáním po\-a\-dova\-nıch sloupcù do hlavní datové matice apod.
+Agregaè\-ní atr\-ibut umoòuje pru\-nì mìnit zadání úlohy -- zjis\-tíme-li na\-pøíklad
+z vıs\-ledkù po dobìh\-nutí úlohy, e bychom potøe\-bovali zmìnit zadání a zkoumat jiná data,
+ne\-musíme ruè\-nì vytváøet pot\-øebné sloupce v hlav\-ní datové matici (které navíc
+budeme potøebovat pouze pro právì zpracovávanou úlohu a které se budou muset po do\-bìhnutí úlohy opìt smazat)
+a místo toho zmìníme pouze zadání agregaè\-ního atri\-butu.
 \paragraph{}
 Jako pøíklady takto uvaovanıch funkcí mùe poslouit mimo jiné
 mnoina SQL agregaèních funkcí, která vyhovuje vıše uvedené definici. Dále mùeme
@@ -709,119 +729,115 @@ pouze za pouití SQL agregaèních funkcí.
 
 \subsubsection{Hypotézové atributy}
 \label{hypattr}
-Na rozdíl od agregaèních atributù, hypotézové atributy nelze získat za pomocí
-agregaèních funkcí nad daty z hlavní a vedlej\-ších datovıch tabulek. Tyto 
+Na rozdíl od agregaèních atributù, \emph{hypotézové atributy} nelze získat za pomocí
+pøedzpracování dat z hlavní a vedlej\-ších datovıch tabulek. Tyto 
 atributy vznikají jako vısledek bìhu data\-miningovıch úloh nad vedlejšími
 datovımi tabulkami a dále se pouívají pøi bìhu dataminingovıch úloh nad
 hlavní datovou tabulkou. Ústøední myšlenkou je zavést definici atributu
 se sémantikou hypotézy (ve smyslu metody GUHA), jeho hodnotou by byla konkrétnì
 síla nebo platnost hypotézy nad vedlejšími datovımi tabulkami a takto
-nadefinovanı sloupec by se pouil "o úroveò vıše" -- pro generaci hypotéz
+nadefinovanı sloupec by se pouil ''o úroveò vıše'' -- pro generaci hypotéz
 pøi bìhu další dataminingové úlohy.
 \paragraph{}
 Uvedli jsme pøíklad \ref{eq:hyprattributeexample}. Na základì platnosti hypotézy
 $VYSOKEINKASO$ mùeme rozdìlit mnoinu klientù a zkoumat další souvislosti
 pouze na té podmnoinì klientù, kde platí hypotéza $VYSOKEINKASO$. Uvaujeme-li
 platnost hypotézy $VYSOKEINKASO$ jako (virtuální) atribut, mùeme ho zapojit
-do zadání nové úlohy napøíklad pro 4ft miner jako antecedent nebo sukcedent.
+do zadání nové úlohy napøíklad pro 4ft-Miner jako antecedent nebo sukcedent.
 Je-li atribut zapojen jako antecedent, omezuje mnoinu zkoumanıch objektù
-na ty, pro které daná hypotéza z virtuálního atributu platí a zy dále zkoumá.
+na ty, pro které daná hypotéza z virtuálního atributu platí a ty dále zkoumá.
 Zaøadíme-li tento atribut do sukcedentu, úloha bude spoèívat v nalezení pøed\-pokladu
 pro platnost hypotéz z virtuálního atributu.
 \paragraph{}
 Z pøíkladu \ref{eq:hyprattributeexample} vyplıvá, e zadání virtuálního
 atributu je vlastnì vısledkem bìhu dataminingové úlohy nad vedlej\-ší datovou
 matici. Tato úloha nad vedlejší datovou matici (budeme jí øíkat podúloha)
-musí probìhnout vícekrát, vdy nad øádky z vedlejší matice, které se vztahují
-ke hlavní matici. Jinımi slovy, zkoumá-li hlavní dataminingová úloha objekty
-hlavní datové matice po jednom (v našem pøíkladì klienty banky), potom podúloha
-musí vracet hypotézy jen pro ty øádky vedlejší datové matice, které odpovídají
-zkoumanému øádku v hlavní datové matici. Toto lze ilustrovat následujícím obrázkem:
+musí probìhnout vícekrát, vdy pouze nad tìmi øádky z vedlejší matice, které se vztahují
+ke zkoumanému objektu z hlavní matice. Toto lze ilustrovat obrázkem \ref{fig:master-client1}.
 
 \paragraph{}
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=8cm]{pics/master_detail.eps}
+\includegraphics[width=8cm]{pics/master_client1.eps}
 \end{center}
 \caption{Master-detail tabulka}
+\label{fig:master-client1}
 \end{figure}
 
 \paragraph{}
-Vısledkem bìhu podúlohy je obvykle mnoina novıch virtuálních sloupcù,
+Zde podúloha probìhne nad transakcemi 1 a 2, vısledek (reálné èíslo) pøidá
+do nového virtuálního sloupce na pozici pro klienta ABC. Dále podúloha probìhne znovu
+nad transakcemi 3 a 4, pøidá na pozici pro klienta DEF další reálné èíslo a obdobnım zpùsobem
+pokraèuje pro zbytek matice.
+\paragraph{}
+Uvaujeme-li o podúloze jako napøíklad o proceduøe 4ft-Miner, víme, e ta generuje relevantní
+otázky na základì zadání a ovìøuje na nich platnost zadanıch kvanitifikátorù oproti zkoumané
+datové matici. 4ft-Miner vrací jako vıstup pouze relevantní otázky, na kterıch platí
+takto zadané kvantifikátory.
+\paragraph{}
+Spustíme-li 4ft-Miner nad relevantními øádky vedlejší datové matice, dostaneme
+jako vıstup platné i neplatné relevantní otázky (uvaujme na chvíli, e 4ft-Miner
+je takto jednoduše upraven). V pøípadì procedury 4ft-Miner mùeme získat booleovskı
+vektor platností jednotlivıch relevantních otázek,
+obecnì procedury mohou vracet sílu platnosti jako reálné èíslo, dostaneme
+tedy vektor reálnıch èísel. Po prozkoumání celé vedlejší datové matice získáme poèet
+vektorù platnosti relevantních otázek rovnı poètu øádkù v hlavní datové matici --
+pro kadého klienta prozkoumáme relevantní otázky generované podúlohou,
+které platí na právì jeho transakcích. Poèet virtuálních sloupcù vygenerovanıch virtuálním atributem
+(podúlohou 4ft-Miner) je rovnı délce vektoru platnosti relevantních otázek. Chceme-li získat
+$i$-tı virtuální sloupec, vezmeme z kadého vektoru hodnotu na $i$-té pozici.
+\paragraph{}
+Vısledkem bìhu podúlohy je tedy mnoina novıch virtuálních sloupcù,
 které jsou pøidány za bìhu k hlavní datové matici a hlavní dataminingová úloha
 s nimi pracuje jako s ostatními sloupci.
-\paragraph{}
-Podíváme-li se na analogii s klasickım zadáním úlohy nad jednou datovou matici,
-uvidíme, e je to v podstatì stejnı princip. Vısledkem klasického zadání
-je nìjaká mnoina relevantních otázek a ta se ovìøí nad datovou matici -- u kadé otázky
-se prozkoumá, zda platí pro zadaná data a pokud ano, je to hypotéza a jde do vısledku.
-\paragraph{}
-Stejnì to funguje i pro relevantní otázky z hypotézového atributu -- pro kadı
-objekt z hlavní datové matice se ovìøí, zda hypotéza pro nìj platí. Pokud ano,
-do nového virtuálního sloupce pro tento objekt se pøidá hodnota $true$.
-Také je moné virtuální atribut pojmout obecnìji a jako vıstup neposkytovat
-pouze pravdivostní hodnoty o platnosti hypotéze, ale napøíklad sílu
-dané hypotézy, èím dostaneme virtuální sloupec s reálnımi hodnotami.
-\subsubsection{Hypothesis space explosion}
-Zvolíme-li jako druh koeficientu v zadání poúlohy napøíklad øezy (viz
-\ref{coefficients}), poèet relevantních otázek se snadno znásobí, protoe
-se znásobí poèet monıch cedentù. Toto vede ve vısledku ke generování
-mnoha hypotéz v hlavní úloze, které mají hodnoty hypotézového atributu
-velmi podobné mezi sebou. Vıhodou je vìtší granularita úlohy a 
+\subsection{Nárùst sloitosti vıpoètu}
+Z dosavadních zkušeností s prostøedím LISp-Miner a Ferda DataMiner víme, e
+zkoumané úlohy èasto produkují relevantní otázky v øádu tisícù. Z vıše uvedeného
+popisu získávání virtuálních sloupcù plyne, e pro kadou relevantní otázku
+se do hlavní datové matice pøidá virtuální sloupec. Je vidìt, e pøi pouívání
+hypotézového atributu v zadání úlohy pro dataminingovou proceduru lze velmi
+lehce dosáhnout vırazného zesloitìní pùvodní úlohy a rychlému nárùstu velikosti
+zkoumané datové matice. Tato skuteènost vede ke zpomalení bìhu úlohy a ke generování
+velkého poètu hypotéz, které øíkají skoro toté, protoe mají velmi podobné hodnoty
+hypotézového atributu. Vıhodou je vìtší granularita úlohy a 
 monost nalezení nejpøesnìjšího zadání virtuálního atributu tak,
-any platil na co nejvìtší podmnoinì zkoumanıch dat. Nevıhodou je
-generování velkého mnoství hypotéz, které øíkají skoro toté.
+aby platil na co nejvìtší podmnoinì zkoumanıch dat.
 \subsection{Omezení na hvìzdicové schéma}
 V dané diplomové práci se autor rozhodl pro omezení akcep\-tovaného
 data\-bázového schématu na hvìz\-dicovı, kde máme pouze jednu
 hlavní datovou matici (databázovou tabulku) a ved\-lejší datové
 matice (tabulky), které jsou v relaci 1:N s hlavní data\-bázovou tabulkou.
-Rovnì je zakázána rekuze virtuálních atributù -- tj. nelze
-hypotézovı atribut zapojít opìt za hypotézovı atribut.
+Rovnì je zakázána rekurze virtuálních atributù -- tj. nelze
+hypotézovı atribut pouít v zadání pro další hypotézovı atribut.
 \paragraph{}
 Teoretické dùvody danıch omezení jsou podrobnìji rozebrány v \cite{relminer}. Zde
 se uvede krátké shrnutí z dùvodu lepšího porozumìní zpùsobu imple\-mentace,
 kterı je popsán dále v dané diplomové práci, konkrétnì v kapitole \ref{implementation}.
 
 \begin{description}
-\item[Vıznam] takto generovanıch hypotéz lze jen tìko popsat v pøirozeném jazyce.
-Obtínì se interpretují závislosti nalezené na zkoumanıch datech.
-Autor dané práce se proto domnívá, e hypotézy vzniklé z úlohy obsahující rekurzivní
-virtuální atributy sice mohou mít dobrı teoretickı smysl, avšak vzhledem
-k celkovému zamìøení prostøedí Ferda DataMiner na vıuku dataminingu pro studenty
-se nehodí do celkové koncepce tohoto prostøedí, aè mohou jsou v tomto
-prostøedí implementovatelné a jsou pro nì autorem vytvoøeny programovací
-prostøedky.
+\item[Vıznam] hypotéz gene\-rovanıch pomocí rekur\-zivních hypo\-tézovıch atri\-butù
+lze jen tìko pop\-sat v pøi\-rozeném jazy\-ce.
+Obtínì se interpretují zá\-vislosti na\-lezené na zkou\-manıch datech.
+Autor dané práce se proto domnívá, e hypo\-tézy vzniklé z úlohy obsahující rekur\-zivní
+vir\-tuální atri\-buty sice mohou mít dobrı teore\-tickı smysl, avšak vzhledem
+k cel\-kovému zamìøení pro\-støedí Ferda DataMiner na vıuku data\-miningu pro stu\-denty
+se nehodí do celkové kon\-cepce tohoto prostøedí, aè jsou v tomto
+prostøedí implemen\-tovatelné a jsou pro nì autorem vy\-tvoøeny programo\-vací
+pro\-støedky.
 \item[Zobrazení] vısledkù úloh obsahujících rekurzivní virtuální atributy
 se stává samo o sobì obtínım. Pro kadou vıslednou hypotézu se musí zobrazit
 její atributy, které mohou bıt tvoøeny opìt hypotézami, které mají své atributy atd.
-Tento dùvod souvisí s pøedchozím -- nejasnı vıznam vısledkù vede k potíím jak
+Tento dùvod souvisí s pøedchozím -- nejasnı vıznam vısledkù vede k potíim jak
 pøi interpretaci, tak i pøi pouhém zobrazení.
-\item[Rychlost] zpracování úlohy s rekurzivnì zapojenımi relaèními atributy
-bude velmi rychle klesat. Podrobnìji se o tomto pojednává v \cite{relminer}.
-Zde uvedeme pouze nástin problému.
-\paragraph{}
-Ji pøi práci se systémem LISp-Miner se ukázalo, e
-nevhodnım nastavením úlohy pro datamining lze velmi lehce
-meze pouitelnosti takové úlohy ve smyslu doby poèítání.
-Poèet vygenerovanıch relevan\-tních otázek toti závisí na mnoha nastaveních.
-Jsou to nastavení délek cedentù, poètu kategorií v atributu, poètu atributù atd.
-Nevhodné nastavení parametrù se mùe snadno znásobit díky velkému poètu
-nastavovanıch parametrù a doba vıpoètu se stane neúnosnou.
-\paragraph{}
-V pøípadì virtuálních atributù je celkovı poèet relevan\-tních otázek
-potencionálnì podstatnì vyšší a to z dùvodu toho, e pro kadou
-relevantní otázku z podúlohy nad vedlejší datovou tabulkou vlastnì
-vzníká novı virtuální sloupec v hlavní datové tabulce. Jak jsme vidìli
-v \ref{hypattr}, i jednoduché zadání úlohy znamená generování velkého
-poètu relevantních otázek (a tím i mnoha novıch sloupcù),
-co vede k problému pojmenovanému
-"Hypothesis space explosion", jak o nìm pojednává T.Karban v \cite{relminer}.
-Lze lehce nahlédnout, e i nerekur\-zivní zadání relaèního atributù s sebou
-pøináší nebezpeèí toho,
-e úloha snadno "uteèe" co se tıèe poètu vygene\-rovanıch relevan\-tních otázek
-a tím i celkové doby bìhu. Navíc pøináší další problémy, o kterıch
-se podrobnì diskutuje v kapitole \ref{implementation}.
+\item[Rychlost] zpracování úlohy s rekur\-zivnì zapojenımi relaè\-ními atri\-buty
+bude velmi rychle klesat. Podrob\-nìji se o tomto po\-jednává v \cite{relminer}.
+Z uvedeného zpù\-sobu genero\-vání virtuálních sloupcù je vidìt, e jejich poèet mùe bıt velkı
+a proto úloha nad hlavní matici se zpomalí. Pøed\-stavíme-li si, e pouijeme v zadání
+hypo\-tézového atributu další hypo\-tézovı atribut, pak první pod\-úloha bude zkoumat vel\-kı poèet sloupcù
+vy\-ge\-ne\-rova\-nıch druhou podúlohou, a opìt vy\-generuje velkı poèet rele\-vant\-ních otázek pro nadúlohu.
+Kdy uváíme monost pouití v zadání vícero virtuálních atributu, je vidìt, e sloitost a doba
+vıpoètu znaènì stoupnou. Tento problém se nazıvá
+''Hypothesis space explosion'', jak o nìm pojednává T.Karban v \cite{relminer}.
 \end{description}
 \paragraph{}
 Z vıše uvedenıch dùvodù
@@ -832,7 +848,14 @@ virtuál\-ních atributù pro budoucí vıvoj.
 Zde se pouze krátce zmíníme o existujících pøís\-tupech k data\-miningem
 nad více tabulkami dat.
 \paragraph{}
-Vıznamnım zástupcem metod relaèního data\-miningu je metoda
-WARMR. Detailní porovnání relaèního rozšíøení metody GUHA
-a metody WARMR provádí T.Karban jako souèást své dizer\-taèní práce
+Nejrozšíøenìjším metodou relaèního dobıvání znalostí je metoda \emph{induktivního 
+logického programování (ILP)}. Prin\-cip ILP mùe bıt pop\-sán ná\-sledovnì: z data\-báze faktù
+a oèekávanıch vısledkù, které jsou roz\-dìleny na klad\-né a zápor\-né pøí\-klady, met\-ody
+pracující na základì ILP se snaí odvodit logickı program, kterı dokáe všechny kladné
+a ádnı zápornı pøíklad.
+\paragraph{}
+Vıznamnım zástupcem metod ILP, které pracují s metodami relaèního data\-miningu je algoritmus
+WARMR. Je rozšíøením algoritmu APRIORI pro hledání relaèních asociaèních pravidel.
+Detailní porovnání relaèního rozšíøení metody GUHA
+a metody WARMR provádí T.Karban jako souèást své diser\-taèní práce
 \cite{relminer}.

@@ -8,57 +8,57 @@ jejichž definice bude uvedena v kapitole \ref{uvod}.
 Níže je uvedeno zadání diplomové práce dle Studijního informaèního
 systému:
 \paragraph{}
-Východiskem pro diplomovou práci jsou zkušenosti s GUHA procedurami implementovanými
+Východiskem pro diplomovou práci jsou zkušenosti s GUHA procedurami implemen\-tovanými
 v systému LISp-Miner \cite{guha} a s relaèním rozšíøením procedury 4ft-Miner,
-které je implementováno v rámci disertaèní práce T. Karbana \cite{relminer}, 
-viz též \cite{mlrules,altrules}. Zkušenosti ukazují, že má smysl rozšíøit
-obdobným zpùsobem i další ze zmínìných GUHA procedur. Práce s relaèním rozšíøením
+které je implementováno v rámci diser\-taèní práce T. Karbana \cite{relminer}, 
+viz též \cite{mlrules,altrules}. Zkušenosti ukazují, že má smysl roz\-šíøit
+ob\-dobným zpùsobem i další ze zmínìných GUHA procedur. Práce s relaè\-ním roz\-šíøením
 procedur
-však bude vyžadovat zadávání pomìrnì rozsáhlé sady vstupních parametrù,
+však bude vyžadovat zadávání pomìrnì roz\-sáhlé sady vstup\-ních para\-metrù,
 k èemuž bude zapotøebí rùzných netriviálních znalostí.
-Je proto tøeba zajistit možnost využití metod znalostního inženýrství
+Je proto tøeba za\-jistit možnost využití metod znalost\-ního inženýrství
 pøi urèování hodnot vstupních parametrù relaèních GUHA procedur. 
 Pøíkladem je využití zabudovaného expertního systému pro definici množiny
 pøípustných literálù. Pøedpokládá se pøitom, že uživatel bude mít možnost
 modifikovat bázi znalostí tohoto expertního systému.
 
 Jedná se o diplomovou práci kategorie ''implementace''
-Jejím cílem je navrhnout a implementovat relaèní rozšíøení
+Jejím cílem je navrhnout a implemen\-tovat relaèní roz\-šíøení
 vybraných procedur z GUHA procedur implementovaných v systému LISp-Miner.
-Implementované procedury budou zahrnovat možnosti využití metod
+Implemen\-tované procedury budou za\-hrnovat mož\-nosti využití metod
 znalostního inženýrství pøi zadávání jejich vstupních parametrù. 
 Procedury budou implementovány v rámci prostøedí Ferda \cite{ferda}. 
-Výbìr procedur k rozšíøení a jejich specifikace budou podrobnì konzultovány
+Výbìr procedur k rozšíøení a jejich specifikace budou podrobnì kon\-zultovány
 s vedoucím práce.
 \section[Upøesnìní zadání]{Upøesnìní a rozšíøení zadání práce}
 \label{zmenazadani}
 V prùbìhu diplomové práce se však ukázalo, že bude vhodné zadání práce
-upravit, upøesnit a rozšíøit. Toto se stalo po konzultacích s vedoucím diplomové 
+upravit, upøesnit a rozšíøit. Toto se stalo po kon\-zultacích s vedoucím dip\-lomové 
 práce. V zadání došlo tedy k následujícím
 upøesnìním a zmìnám.
 \paragraph{}
-Byly upøesnìny procedury, pro které
-bude implementováno relaèní rozšíøení.
-Rovnìž bylo rozhodnuto nahradit implementaci
-a využití expertního systému za implementací dalších prostøedkù
-pro transformaci atributu.
+Byly upøes\-nìny procedury, pro které
+bude implemen\-továno relaè\-ní roz\-šíøení.
+Rovnìž bylo roz\-hodnuto na\-hradit implemen\-taci
+a využití expert\-ního systému za implemen\-tací dal\-ších pro\-støedkù
+pro trans\-formaci atributu.
 
 \subsection[Výbìr procedur]{Výbìr procedur pro relaèní datamining}
 Protože systém
-Ferda DataMiner je používán primárnì v akademickém prostøedí, jak
-pro výuku studentù, tak i pro zpracování zajímavých úloh obecnì,
-rozhodlo se pro implementaci relaèních rozšíøení procedur
+Ferda DataMiner je používán pri\-márnì v akademickém pro\-støedí, jak
+pro výuku studentù, tak i pro zpracování za\-jímavých úloh obec\-nì,
+roz\-hodlo se pro implemen\-taci relaèních roz\-šíøení procedur
 4ft-Miner a SD4ft-miner z dùvodù
-jejich výrazné pøevahy nad ostatními procedurami pøi využití v
+jejich výrazné pøevahy nad ostat\-ními procedurami pøi využití v
 úlohách dobývání znalostí.
 
 \subsection[Metody znalostního inženýrství]{Využití metod znalostního inženýrství}
-Od požadavkù na využití metod znalostního inženýrství, konkrétnì využití
+Od požadavkù na využití metod znalost\-ního inženýrství, konk\-rétnì využití
 zabudovaného expertního systému pro urèování hodnot
-vstupních parametrù GUHA procedur bylo po konzultaci s vedoucím diplomové
-práce upuštìno. Zjistilo se, že nároènost této úlohy výraznì
-pøesahuje náplò diplomové práce a proto by nebylo možné ji v rámci dané práce
-implementovat.
+vstup\-ních para\-metrù GUHA procedur bylo po kon\-zultaci s vedoucím dip\-lomové
+práce upuštìno. Zjistilo se, že nároè\-nost této úlohy vý\-raznì
+pøe\-sahuje náplò dip\-lomové práce a proto by ne\-bylo možné ji v rámci dané práce
+implemen\-tovat.
 
 \subsection{Atributy}
 \label{cileatributy}
@@ -76,19 +76,19 @@ které mohou øešit novì implementovaná relaèní rozšíøení pùvodních
 dataminingových procedur. Byly implementovány násle\-dující metody pro transformaci
 atributu v systému Ferda DataMiner.
 \subsubsection{Ekvidistanèní intervaly}
-Tato metoda umožní uživateli definovat atribut skládající se ze zadaného
-poètu tzv. ekvi\-distanèních intervalù -- ty mají stejnou velikost
-a pokrývají množinu hodnot atributu. Pøíkladem je rozdìlení klientù banky dle výši pøíjmu napøíklad
-vytvoøením následujících intervalù: \mbox{$\langle5000,8000)$}, \mbox{$\langle8000,12000)$} a
+Tato metoda umožní uživateli definovat atribut skládající se ze za\-daného
+poètu tzv. ekvi\-distan\-èních inter\-valù -- ty mají stejnou ve\-li\-kost
+a po\-krý\-vají mno\-žinu hod\-not atri\-butu. Pøí\-kladem je roz\-dìlení klientù banky dle výši pøíjmu na\-pøí\-klad
+vy\-tvoøe\-ním ná\-sledujících inter\-valù: \mbox{$\langle5000,8000)$}, \mbox{$\langle8000,12000)$} a
 \mbox{$\langle12000,15000)$}.
 \subsubsection{Ekvifrekvenèní intervaly}
-Tato metoda umožní uživateli definovat atribut skládající se ze zadaného
-poètu tzv. ekvi\-frekvenèních intervalù -- ty mají takovou velikost, aby
-poèet hodnot vstupní množiny atributu, který do každého z nich patøí, byl
-pøibližnì stejný.
-Tato metoda pro transformaci atributu má využití pro zajištìní rovno\-mìrného rozdìlení
-množin hodnot, které nejsou pùvodnì takto rozdìleny. Pøíkladem opìt
-poslouží rozdìlení klientù na zhruba stejnì velké skupiny dle výše jejich
+Tato metoda umožní uživateli de\-finovat atri\-but skládající se ze zadaného
+poètu tzv. ekvi\-frek\-venè\-ních intervalù -- ty mají takovou ve\-likost, aby
+poèet hodnot vstup\-ní mno\-žiny atri\-butu, který do kaž\-dého z nich patøí, byl
+pøi\-bliž\-nì stejný.
+Tato metoda pro trans\-formaci atri\-butu má využití pro za\-jištìní rovno\-mìr\-ného roz\-dìle\-ní
+množin hodnot, které nejsou pùvodnì takto roz\-dìle\-ny. Pøí\-kladem opìt
+po\-slouží roz\-dìlení klientù na zhruba stejnì velké skupiny dle výše jejich
 pøíjmu napøíklad vytvoøením následujících intervalù: \mbox{$\langle5000,10000)$},
 \mbox{$\langle10000,18000)$} a \mbox{$\langle18000,25000)$}. Znamená to,
 že klienty banky rozdìlíme do skupin, které znamenají, že klient má nízký, støední
