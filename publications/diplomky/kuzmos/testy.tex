@@ -1,18 +1,19 @@
 \chapter{Testy}
 \label{tests}
-V této kapitole bude prozkoumán vliv rùzných faktorù na bìh
+V této kapitole bude popsán vliv rùzných faktorù na bìh
 úlohy s použitím relaèního rozšíøení dataminingové procedury.
-Autor bude zkoumat vliv zejména velikosti dat a poètu vygenerovaných
+Autor bude zkoumat vliv zej\-mé\-na velikosti dat a poètu vygenerovaných
 virtuálních sloupcù. Také se ukáže, že použití
-bufferu pro bitové øetízky vygenerované virtuálním atributem je z hlediska
+bufferu pro bitové øetízky vygenerované virtuálním at\-ri\-bu\-tem je z hlediska
 výkonu nezbytné.
 
 \section[Zkoumaná data]{Zkoumané datové matice}
 Zkoumaná data vychází z databáze fiktivní banky ''Barbora'' používané
-pùvodnì v projektu LISp-Miner a dále Ferda DataMiner. Databáze obsahuje
-data o fiktivních klientech, jejich pohlaví, místa bydlištì, transakcích, pùjèkách atd.
+pù\-vod\-nì v projektu LISp-Miner a dále Ferda DataMiner. Databáze obsahuje
+data o fiktivních klientech, jejich pohlaví, místa bydlištì, transakcích, pùjè\-kách atd.
 \subsection[Hlavní matice]{Hlavní datová matice}
 Hlavní datová matice s názvem ''Client\_Loans'' obsahuje údaje o jednotlivých klientech.
+Velikost této datové matice je kolem 700 øádkù.
 Následující tabulka obsahuje popis sloupcù hlavní datové matice.
 
 \begin{table}[!h]
@@ -111,16 +112,18 @@ account\_id & Dlouhé celé èíslo & Identifikátor úètu  \\
 \hline
 date & Dlouhé celé èíslo & Datum transakce  \\
 \hline
-type & text & Typ transakce (pøíjem, výdej nebo výbìr)  \\
+type & text & Typ transakce (pøíjem, výdej   \\
+&&nebo výbìr)\\
 \hline
-operation & text & Typ operace (pøevod z / na úèet, výbìr,  \\
-&&vklad nebo výbìr kartou)  \\
+operation & text & Typ operace (pøevod z / na úèet,   \\
+&&výbìr, vklad nebo výbìr kartou)  \\
 \hline
 Amount & Dlouhé celé èíslo & Velikost transakce  \\
 \hline
-Balance & Dlouhé celé èíslo & Zùstatek ??  \\
+Balance & Dlouhé celé èíslo & Zùstatek  \\
 \hline
-k\_symbol & Dlouhé celé èíslo & Konstatní symbol (úèel transakce, napø. inkaso)  \\
+k\_symbol & Dlouhé celé èíslo & Konstantní symbol (úèel transakce,   \\
+&&napø. inkaso)\\
 \hline
 bank & text & Zdrojová nebo cílová banka transakce  \\
 \hline
@@ -132,34 +135,34 @@ account & Dlouhé celé èíslo & Zdrojový nebo cílový úèet transakce  \\
 \end{table}
 
 \section[Úloha]{Východiska zadání a zadaná úloha}
-Základní inspirací pro úlohu pro relaèní 4FT a SD4FT bylo zjistit nìjaké údaje
+Základní inspirací pro úlohu pro relaèní rozšíøení procedur 4ft-Miner a SD4ft-Miner bylo zjistit nìjaké údaje
 o objektech z hlavní datové matice na základì údajù z vedlejší datové matice.
 V našem pøípadì hledáme nìjaké vztahy v matici klientù na základì údajù
 jak v hlavní matici klientù, tak i ve vedlejší matici jejich transakcí.
-Pro SD4FT zkoumáme rozdíly mezi dvìma množinami.
+Pomocí procedury SD4ft-Miner zkoumáme rozdíly mezi dvìma množinami.
 \paragraph{}
 Na základì údajù obsažených ve zkoumaných datových maticích a po diskuzi
 s vedoucím práce bylo rozhodnuto zaèít od jednodušších úloh pro
-relaèní proceduru a zapojovat je do úlohy pro bìžný 4ft Miner. V úlohách se zkoumá
+relaèní proceduru a zapojovat je do úlohy pro (nerelaèní) 4ft-Miner. V úlohách se zkoumá
 status úvìru v závislosti na rùzných parametrech.
 
-\subsection[4FT atribut]{4FT virtuální boolský atribut}
+\subsection[4ft virtuální atribut]{4ft virtuální booleovský atribut}
 \subsubsection[Úloha 1]{Úloha 1}
-Úloha je zadaná pro 4ft miner následujícím zpùsobem:
+Úloha je zadaná pro proceduru 4ft-Miner následujícím zpùsobem:
 
 \begin{equation*}
-District \& Salary \& \emph{TypeImplAmount} \Rightarrow_{90\%} LoanStatus
+District \& Salary \& \emph{TypeImplAmount} \Rightarrow_{0,9;50} LoanStatus
 \end{equation*}
 
-$\Rightarrow_{90\%}$ je v tomto pøípadì kvantifikátor fundované implikace $Founded implication$
-a \emph{TypeImplAmount} je virtuální 4ft atribut s následujícím zadáním:
+$\Rightarrow_{0,9;50}$ je v tomto pøípadì kvantifikátor fundované implikace $Founded\-implication$
+a \emph{TypeImplAmount} je virtuální 4ft atribut s následujícím za\-dá\-ním:
 
 \begin{equation*}
-Type \Rightarrow_{?} Amount
+Type \Rightarrow_{0,9;5} Amount
 \end{equation*}
 
-$\Rightarrow$ je v tomto pøípadì rovnìž kvantifikátor
-fundované implikace $Founded implication$.
+$\Rightarrow_{0,9;5}$ je v tomto pøípadì rovnìž kvan\-ti\-fi\-ká\-tor
+fun\-do\-va\-né imp\-li\-ka\-ce $Found\-ed\-imp\-li\-ca\-tion$.
 
 
 \subsection[Výsledky testù]{Výsledky testù}
@@ -168,8 +171,11 @@ s rùznými velikostmi vedlejší datové matice a poètem relevantních
 otázek vygenerovaných relaèním 4ft booleovským atributem.
 \paragraph{}
 Každý test se pouštìl tøikrát a výsledný èas se zprùmìroval. Mezi každým spuštìním
-Ferda DataMiner byl znovu spuštìn, aby byly zachovány stejné podmínky pro jednotlivé
+Ferda DataMiner byl restartován, aby byly zachovány stejné pod\-mín\-ky pro jednotlivé
 bìhy (bez tohoto by se pøi druhém a dalším spuštìní naèítaly informace pro krabièky z cache).
+V uvedené tabulce \ref{tab:test4ft} \emph{Transakce} znamená bìh úlohy na vedlejší
+matici transakcí o rùzných velikostech a \emph{\#~rel.otazek} je poèet re\-le\-vant\-ních otázek
+(virtuálních sloupcù) vy\-ge\-ne\-ro\-va\-ných kra\-biè\-kou virtuálního atributu.
 \subsubsection{Úloha 1}
 \begin{table}[!h]
 \begin{center}
@@ -188,12 +194,13 @@ Transakce / & malé & støední &  velké  \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Test relaèního 4ft mineru: úloha 1}
+\caption{Test relaèní procedury 4ft-Miner: úloha 1}
+\label{tab:test4ft}
 \end{table}
 
 \subsubsection{Úloha 1 -- bez cache}
-Zde byla zkoumána rychlost práce bez cache. Porovnáním s pøedchozí tabulkou lze zjistit
-èasové rozdíly bìhu úlohy.
+Zde byla zkoumána rych\-lost práce bez cache. Porovnáním s pøed\-chozí tabul\-kou lze zjistit
+èasové roz\-díly bìhu úlohy.
 \begin{table}[!h]
 \begin{center}
 \begin{tabular}{|l|l|l|l|}
@@ -211,30 +218,29 @@ Transakce / & malé & støední &  velké   \\
 \end{center}
 \caption{Test relaèního 4ft mineru: úloha 1 -- bez cache}
 \end{table}
-\paragraph{}
-\paragraph{}
-\subsection[SD4FT atribut]{SD4FT virtuální boolský atribut}
+
+
+\subsection[SD4ft atribut]{SD4ft virtuální booleovský atribut}
 \subsubsection[Úloha]{Východiska zadání a zadaná úloha}
-Úloha je zadaná pro 4ft miner následujícím zpùsobem:
+Úloha je zadaná pro 4ft-Miner následujícím zpùsobem:
 
 \begin{equation*}
-District \& Salary \& \emph{TypeImplAmountBank} \Rightarrow_{90\%} LoanStatus
+District \& Salary \& \emph{TypeImplAmountBank} \Rightarrow_{0,9;50} LoanStatus
 \end{equation*}
 
-$\Rightarrow_{90\%}$ je v tomto pøípadì kvantifikátor fundované implikace $Founded implication$
+$\Rightarrow_{0,9;50}$ je v tomto pøípadì kvantifikátor fundované implikace $Founded\-implication$
 a \emph{TypeImplAmountBank} je virtuální SD4ft atribut s následujícím zadáním:
 
 \begin{equation*}
-Type \Rightarrow_{?} Amount (Bank)
+Type \Rightarrow_{0,9;5} Amount (Bank)
 \end{equation*}
 
-$\Rightarrow$ je v tomto pøípadì rovnìž kvantifikátor
-fundované implikace $Founded implication$.
+$\Rightarrow_{0,9;5}$ je v tomto pøípadì rovnìž kvan\-ti\-fi\-ká\-tor
+fun\-do\-va\-né imp\-li\-ka\-ce $Found\-ed\-imp\-li\-ca\-tion$.
 \subsection[Výsledky testù]{Výsledky testù}
 V následujících tabulkách jsou uvedeny doby bìhu úloh
 s rùznými velikostmi vedlejší datové matice a poètem relevantních
 otázek vygenerovaných relaèním SD4ft booleovským atributem.
-\subsubsection{Úloha 1}
 \begin{table}[!h]
 \begin{center}
 \begin{tabular}{|l|l|l|l|}
@@ -252,7 +258,7 @@ Transakce / & malé & støední &  velké \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Test relaèního SD4ft mineru: úloha 1}
+\caption{Test relaèní procedury SD4ft-Miner: úloha 1}
 \end{table}
 \footnotetext{Vzhledem k velmi dlouhé pøedpokládané dobì bìhu
 test nebyl spouštìn}
