@@ -5,8 +5,8 @@ SLICE DOCUMENTATION
 
 	Some general keywords
 	---------------------
-	nonmutating
-		Operations that use the Slice Nonmutating keyword must not modify object state.
+	idempotent
+		Operations that use the Slice idempotent keyword must not modify object state.
 	idempotent
 		Operations that use the Slice Idempotent keyword can modify object state, but invoking an operation twice in a row must result in the same object state as invoking it once.
 
@@ -44,7 +44,7 @@ module Ferda
                     {
                		interface WizardFormFunctions
                          {
-               			nonmutating string HelloWorld();
+               			idempotent string HelloWorld();
                		};
                	};
                };

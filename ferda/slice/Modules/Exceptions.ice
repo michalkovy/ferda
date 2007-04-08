@@ -16,7 +16,9 @@ module Ferda {
 
 		exception ConnectionNotExistError{};
 
-		exception NameNotExistError{};
+		exception NameNotExistError{
+		  string problem;
+    };
 
 		exception NeedConnectedSocketError {
 			string socketName;

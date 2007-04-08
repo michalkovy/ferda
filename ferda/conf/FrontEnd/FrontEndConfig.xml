@@ -6,7 +6,7 @@
     <IceGridAsService>false</IceGridAsService>
     <IceGridWorkingDirectory>../db</IceGridWorkingDirectory>
     <IceGridApplicationXmlFilePath>application.xml</IceGridApplicationXmlFilePath>
-    <SentenceForWait>[ icegridnode: Server: changed server `0' state to `Inactive' ]</SentenceForWait>
+    <SentenceForWait>Server: changed server `0' state to `Inactive' ]</SentenceForWait>
     <ServersToStop />
     <IceBinPath />
     <LocalePrefs>
@@ -15,5 +15,5 @@
     </LocalePrefs>
   </ProjectManagerOptions>
   <FrontEndIceObjects />
-  <ShowVisibleSockets>false</ShowVisibleSockets>
+  <ShowVisibleSockets>true</ShowVisibleSockets>
 </FrontEndConfig>

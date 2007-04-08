@@ -38,16 +38,16 @@ module Ferda {
 					
 					interface DatabaseFunctions {
 					     //Returns the connection string
-						nonmutating	Ferda::Guha::Data::DatabaseConnectionSetting	getDatabaseConnectionSetting()
+						idempotent	Ferda::Guha::Data::DatabaseConnectionSetting	getDatabaseConnectionSetting()
 							throws Ferda::Modules::BoxRuntimeError;
 						//Returns the connection info
-						nonmutating	Ferda::Guha::Data::ConnectionInfo getConnectionInfo()
+						idempotent	Ferda::Guha::Data::ConnectionInfo getConnectionInfo()
 							throws Ferda::Modules::BoxRuntimeError;
 						//Returns an array of structures describing the tables in the database
-						nonmutating Ferda::Guha::Data::DataTableExplainSeq getDataTableExplainSeq()
+						idempotent Ferda::Guha::Data::DataTableExplainSeq getDataTableExplainSeq()
 							throws Ferda::Modules::BoxRuntimeError;
 						//Returns the names of tables in the database
-						nonmutating StringSeq getDataTablesNames()
+						idempotent StringSeq getDataTablesNames()
 							throws Ferda::Modules::BoxRuntimeError;
 					};
 
@@ -64,11 +64,11 @@ module Ferda {
 					};
 
 					interface DataTableFunctions extends Ferda::Guha::MiningProcessor::SourceDataTableIdProvider {
-						nonmutating	DataTableInfo getDataTableInfo()
+						idempotent	DataTableInfo getDataTableInfo()
 							throws Ferda::Modules::BoxRuntimeError;
-						nonmutating Ferda::Guha::Data::ColumnExplainSeq getColumnExplainSeq()
+						idempotent Ferda::Guha::Data::ColumnExplainSeq getColumnExplainSeq()
 							throws Ferda::Modules::BoxRuntimeError;
-						nonmutating StringSeq getColumnsNames()
+						idempotent StringSeq getColumnsNames()
 							throws Ferda::Modules::BoxRuntimeError;
 					};
 					
@@ -94,11 +94,11 @@ module Ferda {
 					};
 					
 					interface ColumnFunctions extends Ferda::Guha::MiningProcessor::SourceDataTableIdProvider {
-						nonmutating	ColumnInfo getColumnInfo()
+						idempotent	ColumnInfo getColumnInfo()
 							throws Ferda::Modules::BoxRuntimeError;
-						nonmutating Ferda::Guha::Data::ColumnStatistics getColumnStatistics()
+						idempotent Ferda::Guha::Data::ColumnStatistics getColumnStatistics()
 							throws Ferda::Modules::BoxRuntimeError;
-						nonmutating Ferda::Guha::Data::ValuesAndFrequencies getDistinctsAndFrequencies()
+						idempotent Ferda::Guha::Data::ValuesAndFrequencies getDistinctsAndFrequencies()
 							throws Ferda::Modules::BoxRuntimeError;
 					};
 					
@@ -111,10 +111,10 @@ module Ferda {
 					};
 					
 					interface AttributeFunctions extends Ferda::Guha::MiningProcessor::BitStringGenerator {
-						nonmutating	string getAttribute()
+						idempotent	string getAttribute()
 							throws Ferda::Modules::BoxRuntimeError;
 						// Returns the names of the categories and their frequencies
-						nonmutating Ferda::Guha::Data::ValuesAndFrequencies getCategoriesAndFrequencies()
+						idempotent Ferda::Guha::Data::ValuesAndFrequencies getCategoriesAndFrequencies()
 							throws Ferda::Modules::BoxRuntimeError;
 					};
 

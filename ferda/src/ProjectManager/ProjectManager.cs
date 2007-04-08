@@ -115,7 +115,7 @@ namespace Ferda.ProjectManager {
 	            {
                     if (waitForStart)
                     {
-                        if (logContents.Equals(options.SentenceForWait))
+                        if (logContents.EndsWith(options.SentenceForWait))
                         {
                             lock (waitForStartObject)
                             {
@@ -184,6 +184,7 @@ namespace Ferda.ProjectManager {
 	            process.StartInfo.Arguments = "--start FerdaIceGridNode";
 	            process.StartInfo.RedirectStandardOutput = true;
 	            process.StartInfo.RedirectStandardError = true;
+	            process.StartInfo.RedirectStandardInput = true;
 	            process.StartInfo.UseShellExecute = false;
 	            process.StartInfo.CreateNoWindow = true;
 	            process.StartInfo.WorkingDirectory = System.IO.Directory.GetCurrentDirectory();
@@ -200,6 +201,8 @@ namespace Ferda.ProjectManager {
 	            _stdError = process.StandardError;
 	            outputThread.Start();
 	            errorThread.Start();
+	            process.StandardInput.WriteLine("ferda");
+	            process.StandardInput.WriteLine("ferda");
 	            outputThread.Join();
 	            errorThread.Join();
 	            process.WaitForExit();
@@ -209,9 +212,10 @@ namespace Ferda.ProjectManager {
                 waitForStart = true;
 	            process = new Process();
 	            process.StartInfo.FileName = "icegridnode";
-                process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy \"" + iceGridApplicationXmlFilePath + "\"";
+              process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy \"" + iceGridApplicationXmlFilePath + "\"";
 	            process.StartInfo.RedirectStandardOutput = true;
 	            process.StartInfo.RedirectStandardError = true;
+							process.StartInfo.RedirectStandardInput = true;
 	            process.StartInfo.UseShellExecute = false;
 	            process.StartInfo.CreateNoWindow = true;
 	            process.StartInfo.WorkingDirectory = iceGridWorkingDirectory;
@@ -222,6 +226,8 @@ namespace Ferda.ProjectManager {
 	            _stdError = process.StandardError;
 	            outputThread.Start();
 	            errorThread.Start();
+	            process.StandardInput.WriteLine("ferda");
+	            process.StandardInput.WriteLine("ferda");
                 lock (waitForStartObject)
                 {
                     if (waitForStart)
@@ -303,8 +309,13 @@ namespace Ferda.ProjectManager {
                 adminProcess.WaitForExit();
                 Debug.WriteLine("admin stoped...");*/
                 
+                RegistryPrx registryPrx = IceGrid.RegistryPrxHelper.checkedCast(
+                    this.ModulesManager.Helper.ObjectAdapter.getCommunicator().stringToProxy("IceGrid/Registry"));
+				AdminSessionPrx adminSessionPrx = registryPrx.createAdminSession( "ferda", "ferda");
+				AdminPrx adminPrx = adminSessionPrx.getAdmin();
+                /*
                 AdminPrx adminPrx = IceGrid.AdminPrxHelper.checkedCast(
-                    this.ModulesManager.Helper.ObjectAdapter.getCommunicator().stringToProxy("IceGrid/Admin"));
+                    this.ModulesManager.Helper.ObjectAdapter.getCommunicator().stringToProxy("IceGrid/Admin"));*/
                 Debug.WriteLine("stopping server...");
                 //TODO this is better to make as parameter
                 adminPrx.stopServer("0");
@@ -312,6 +323,8 @@ namespace Ferda.ProjectManager {
                 adminPrx.removeApplication("FerdaModulesApplication");
                 Debug.WriteLine("executing IceGrid shutdown...");
                 adminPrx.shutdown();
+                //Debug.WriteLine("Killing IceGridNode process...");
+                //process.Kill();
                 Debug.WriteLine("joining thread output...");
                 outputThread.Join();
                 Debug.WriteLine("joining thread error...");

@@ -1,7 +1,7 @@
 /*
 GENERAL KEYWORDS
-Nonmutating
-	 Operations that use the Slice Nonmutating keyword must not modify object
+idempotent
+	 Operations that use the Slice idempotent keyword must not modify object
 	 state.
 Idempotent
 	 Operations that use the Slice Idempotent keyword can modify object state,
@@ -548,14 +548,14 @@ module Ferda {
 			 * module`s property drives user label.
 			 *
 			 **/
-			nonmutating StringOpt getDefaultUserLabel();
+			idempotent StringOpt getDefaultUserLabel();
 
 			/**
 			 *
 			 * Dynamically returns box module`s sequence of help items.
 			 *
 			 **/
-			nonmutating DynamicHelpItemSeq getDynamicHelpItems();
+			idempotent DynamicHelpItemSeq getDynamicHelpItems();
 
 			/**
 			 *
@@ -573,7 +573,7 @@ module Ferda {
 			 * For lambda-like boxes
 			 *
 			 **/
-			nonmutating SocketInfoSeq getAdditionalSockets();
+			idempotent SocketInfoSeq getAdditionalSockets();
 
 			/**
 			 *
@@ -606,7 +606,7 @@ module Ferda {
 			 * not exist in this BoxModule.
 			 *
 			 **/
-			nonmutating BoxModulePrxSeq getConnections(string socketName)
+			idempotent BoxModulePrxSeq getConnections(string socketName)
 				throws NameNotExistError;
 
 			/**
@@ -659,7 +659,7 @@ module Ferda {
 			 * not exist in this BoxModule.
 			 *
 			 **/
-			["ami"] nonmutating PropertyValue getProperty(string propertyName)
+			["ami"] idempotent PropertyValue getProperty(string propertyName)
 				throws NameNotExistError;
 
 			/**
@@ -670,7 +670,7 @@ module Ferda {
 			 * not exist in this BoxModule.
 			 *
 			 **/
-			nonmutating SelectStringSeq getPropertyOptions(string propertyName)
+			idempotent SelectStringSeq getPropertyOptions(string propertyName)
 				throws NameNotExistError;
 
 			/**
@@ -684,7 +684,7 @@ module Ferda {
 			 * @return True if this property was set by SettingModule
 			 *
 			 **/
-			nonmutating bool isPropertySet(string propertyName)
+			idempotent bool isPropertySet(string propertyName)
 				throws NameNotExistError;
 
 			/**
@@ -692,7 +692,7 @@ module Ferda {
 			 * Gets sequence of possible modules asking for creation.
 			 *
 			 **/
-			nonmutating ModulesAskingForCreationSeq getModulesAskingForCreation();
+			idempotent ModulesAskingForCreationSeq getModulesAskingForCreation();
 
 			/**
 			 *
@@ -706,7 +706,7 @@ module Ferda {
 			 * @see BoxModuleFactoryCreator::getBoxModuleFunctionsIceIds
 			 *
 			 **/
-			nonmutating StringSeq getFunctionsIceIds();
+			idempotent StringSeq getFunctionsIceIds();
 
 			/**
 			 *
@@ -718,14 +718,14 @@ module Ferda {
 			 * @return Functions object proxy.
 			 *
 			 **/
-			nonmutating Object* getFunctions();
+			idempotent Object* getFunctions();
 
 			/**
 			 *
 			 * Gets proxy of factory of this box module.
 			 *
 			 **/
-			nonmutating BoxModuleFactory* getMyFactory();
+			idempotent BoxModuleFactory* getMyFactory();
 
 			/**
 			 *
@@ -734,13 +734,13 @@ module Ferda {
 			 * @throws BoxRuntimeError Is thrown if some runtime error ocured.
 			 *
 			 **/
-			nonmutating void validate()
+			idempotent void validate()
 				throws
 					BoxRuntimeError;
 		};
 
 		interface Entity {
-			nonmutating string getLabel(StringSeq localePrefs);
+			idempotent string getLabel(StringSeq localePrefs);
 		};
 
 		interface ModuleForInteraction extends Entity {
@@ -751,42 +751,42 @@ module Ferda {
 			 * satisfied before the module for interaction can run.
 			 *
 			 **/
-			nonmutating StringSeq getNeededConnectedSockets();
+			idempotent StringSeq getNeededConnectedSockets();
 
 			/**
 			 *
 			 * Gets array of box types, which can use this module for interaction.
 			 *
 			 **/
-			nonmutating BoxTypeSeq getAcceptedBoxTypes();
+			idempotent BoxTypeSeq getAcceptedBoxTypes();
 
 			/**
 			 *
 			 * Gets localized hint (short help) for this module for interaction.
 			 *
 			 **/
-			nonmutating string getHint(StringSeq localePrefs);
+			idempotent string getHint(StringSeq localePrefs);
 
 			/**
 			 *
 			 * Gets help file as aray of Bytes for this module for interaction.
 			 *
 			 **/
-			nonmutating ByteSeq getHelpFile(string identifier);
+			idempotent ByteSeq getHelpFile(string identifier);
 
 			/**
 			 *
 			 * Gets information about help files for this module for interaction.
 			 *
 			 **/
-			nonmutating HelpFileInfoSeq getHelpFileInfoSeq(StringSeq localePrefs);
+			idempotent HelpFileInfoSeq getHelpFileInfoSeq(StringSeq localePrefs);
 
 			/**
 			 *
 			 * Dynamically gets help item for this module for interaction.
 			 *
 			 **/
-			nonmutating DynamicHelpItemSeq getDynamicHelpItems(StringSeq localePrefs);
+			idempotent DynamicHelpItemSeq getDynamicHelpItems(StringSeq localePrefs);
 
 			/**
 			 *
@@ -816,12 +816,12 @@ module Ferda {
 			 * Gets icon (*.ico) as array of Bytes for this module for intraction.
 			 *
 		 	 **/
-			nonmutating ByteSeq getIcon();
+			idempotent ByteSeq getIcon();
 		};
 
 		interface SettingModule extends Entity {
 
-			nonmutating string getIdentifier();
+			idempotent string getIdentifier();
 
 			/**
 			 *
@@ -863,7 +863,7 @@ module Ferda {
 			 * PropertyValue as well as possible.
 			 *
 			 **/
-			nonmutating string getPropertyAbout(PropertyValue value);
+			idempotent string getPropertyAbout(PropertyValue value);
 		};
 
 		/**
@@ -935,14 +935,14 @@ module Ferda {
 			 * IMPORTANT: each property has to have equivalent socket.
 			 *
 			 **/
-			nonmutating SocketInfoSeq getSockets();
+			idempotent SocketInfoSeq getSockets();
 
 			/**
 			 *
 			 * Gets information about the actions of the box module.
 			 *
 			 **/
-			nonmutating ActionInfoSeq getActions();
+			idempotent ActionInfoSeq getActions();
 
 			/**
 			 *
@@ -950,21 +950,21 @@ module Ferda {
 			 * IMPORTANT: each property has to have equivalent socket.
 			 *
 			 **/
-			nonmutating PropertyInfoSeq getProperties();
+			idempotent PropertyInfoSeq getProperties();
 
 			/**
 			 *
 			 * Gets information about the help files of the box module.
 			 *
 			 **/
-			nonmutating HelpFileInfoSeq getHelpFileInfoSeq();
+			idempotent HelpFileInfoSeq getHelpFileInfoSeq();
 
 			/**
 			 *
 			 * Gets proxy of factory creator of this box module.
 			 *
 			 **/
-			nonmutating BoxModuleFactoryCreator* getMyFactoryCreator();
+			idempotent BoxModuleFactoryCreator* getMyFactoryCreator();
 		};
 
 		interface BoxModuleFactoryCreator extends Entity {
@@ -990,7 +990,7 @@ module Ferda {
 			 * BoxModuleFactory created by this BoxModuleFactoryCreator.
 			 *
 			 **/
-			nonmutating string getIdentifier();
+			idempotent string getIdentifier();
 
 			/**
 			 *
@@ -998,7 +998,7 @@ module Ferda {
 			 * by box module..
 			 *
 		 	 **/
-			nonmutating StringSeq getBoxModuleFunctionsIceIds();
+			idempotent StringSeq getBoxModuleFunctionsIceIds();
 
 			/**
 			 *
@@ -1006,7 +1006,7 @@ module Ferda {
 			 * module belongs to.
 			 *
 		 	 **/
-			nonmutating StringSeq getBoxCategories();
+			idempotent StringSeq getBoxCategories();
 
 			/**
 			 *
@@ -1017,7 +1017,7 @@ module Ferda {
 			 * @param categoryName Name of the category.
 			 *
 		 	 **/
-			nonmutating StringOpt getBoxCategoryLocalizedName(string locale, string categoryName);
+			idempotent StringOpt getBoxCategoryLocalizedName(string locale, string categoryName);
 
 			/**
 			 *
@@ -1026,7 +1026,7 @@ module Ferda {
 			 * @param localePrefs Localization preferences.
 			 *
 		 	 **/
-			nonmutating string getHint(StringSeq localePrefs);
+			idempotent string getHint(StringSeq localePrefs);
 
 			/**
 			 *
@@ -1035,21 +1035,21 @@ module Ferda {
 			 * @param identifier Identifier of the help file.
 			 *
 		 	 **/
-			nonmutating ByteSeq getHelpFile(string identifier);
+			idempotent ByteSeq getHelpFile(string identifier);
 
 			/**
 			 *
 			 * Gets box module`s icon (*.ico) as array of Bytes.
 			 *
 		 	 **/
-			nonmutating ByteSeq getIcon();
+			idempotent ByteSeq getIcon();
 
 			/**
 			 *
 			 * Gets box module`s design from SVG file as string.
 			 *
 		 	 **/
-			nonmutating string getDesign();
+			idempotent string getDesign();
 		};
 
 
@@ -1061,12 +1061,12 @@ module Ferda {
 		 *
 		 **/
 		interface PropertyBoxModuleFactoryCreator extends BoxModuleFactoryCreator {
-			nonmutating string getPropertyClassIceId();
+			idempotent string getPropertyClassIceId();
 		};
 		
 				
 		interface ProgressTask {
-			nonmutating float getValue(out string message);
+			idempotent float getValue(out string message);
 			void stop();
 		};
 	};
