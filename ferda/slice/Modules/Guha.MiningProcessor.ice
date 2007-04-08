@@ -185,13 +185,13 @@ module Ferda {
 
 				interface BitStringGeneratorProvider
 				{
-					nonmutating BitStringGenerator* GetBitStringGenerator(Ferda::Modules::GuidStruct attributeId)
+					idempotent BitStringGenerator* GetBitStringGenerator(Ferda::Modules::GuidStruct attributeId)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 
 				interface BooleanAttributeSettingFunctions extends AttributeNameProvider, BitStringGeneratorProvider
 				{
-					nonmutating IEntitySetting GetEntitySetting()
+					idempotent IEntitySetting GetEntitySetting()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 				
@@ -202,7 +202,7 @@ module Ferda {
 
 				interface EquivalenceClassFunctions
 				{
-					nonmutating Ferda::Modules::GuidStructSeq GetEquivalenceClass()
+					idempotent Ferda::Modules::GuidStructSeq GetEquivalenceClass()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 

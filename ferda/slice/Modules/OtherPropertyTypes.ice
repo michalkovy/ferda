@@ -11,7 +11,7 @@ module Ferda {
 	module Modules {
 
 		interface StringSeqTInterface {
-			nonmutating StringSeq getStringSeq();
+			idempotent StringSeq getStringSeq();
 		};
 
 		class StringSeqT extends PropertyValue implements StringSeqTInterface {

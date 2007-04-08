@@ -134,38 +134,38 @@ module Ferda {
 				  /*
 				  Returns a structure giving information about the quantifier
 				  */
-					nonmutating QuantifierSetting GetQuantifierSetting()
+					idempotent QuantifierSetting GetQuantifierSetting()
 						throws Ferda::Modules::BoxRuntimeError;
 						
 					/*
 					Returns the localized label of the box (for showing in result browser...)
 					*/
-					nonmutating string GetLocalizedBoxLabel(Ferda::Modules::StringSeq localePrefs)
+					idempotent string GetLocalizedBoxLabel(Ferda::Modules::StringSeq localePrefs)
 						throws Ferda::Modules::BoxRuntimeError;
 						
 					/*
 					Returns the user label of the box
 					*/
-					nonmutating string GetLocalizedUserBoxLabel(Ferda::Modules::StringSeq localePrefs)
+					idempotent string GetLocalizedUserBoxLabel(Ferda::Modules::StringSeq localePrefs)
 						throws Ferda::Modules::BoxRuntimeError;
 						
 					/*
 					Determines if the contingency table determined by param satisfies the
 					quantifier
 					*/
-					nonmutating bool Compute(QuantifierEvaluateSetting param)
+					idempotent bool Compute(QuantifierEvaluateSetting param)
 						throws Ferda::Modules::BoxRuntimeError;
 						
 					/*
 					Method to compute more quantifier testing
 					*/
-					nonmutating Ferda::Modules::BoolSeq ComputeBatch(QuantifierEvaluateSettingSeq param)
+					idempotent Ferda::Modules::BoolSeq ComputeBatch(QuantifierEvaluateSettingSeq param)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 
 				interface QuantifierValueBaseFunctions
 				{
-					nonmutating bool ComputeValidValue(QuantifierEvaluateSetting param, out double value)
+					idempotent bool ComputeValidValue(QuantifierEvaluateSetting param, out double value)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 
@@ -182,7 +182,7 @@ module Ferda {
         */
 				interface QuantifierValueFunctions extends QuantifierBaseFunctions, QuantifierValueBaseFunctions
 				{
-					nonmutating double ComputeValue(QuantifierEvaluateSetting param)
+					idempotent double ComputeValue(QuantifierEvaluateSetting param)
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 

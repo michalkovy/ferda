@@ -36,11 +36,11 @@ module Ferda {
 		};
 		
 		interface BoxModuleProjectInformation {
-			nonmutating string getUserLabel(string boxModuleIceIdentity)
+			idempotent string getUserLabel(string boxModuleIceIdentity)
 				throws BoxModuleNotExistError;
-			nonmutating string getUserHint(string boxModuleIceIdentity)
+			idempotent string getUserHint(string boxModuleIceIdentity)
 				throws BoxModuleNotExistError;
-			nonmutating int getProjectIdentifier(string boxModuleIceIdentity)
+			idempotent int getProjectIdentifier(string boxModuleIceIdentity)
 				throws BoxModuleNotExistError;
 		};
 
@@ -52,7 +52,7 @@ module Ferda {
 		};
 		
 		interface BoxModuleValidator {
-			nonmutating void validate(string boxModuleIceIdentity)
+			idempotent void validate(string boxModuleIceIdentity)
 				throws
 						Ferda::Modules::BoxRuntimeError,
 						Ferda::Modules::BadValueError,
@@ -72,22 +72,22 @@ module Ferda {
 		 *
 		 **/
 		interface ManagersLocator {
-			nonmutating Ferda::Modules::BoxModuleFactoryCreator* findBoxModuleCreatorByIdentifier(string identifier);
-			nonmutating Ferda::Modules::BoxModuleFactoryCreator* findBoxModuleCreatorByBoxType(Ferda::Modules::BoxType moduleType);
-			nonmutating BoxModuleFactoryCreatorSeq findAllBoxModuleCreatorsWithBoxType(Ferda::Modules::BoxType moduleType);
-			nonmutating Ferda::Modules::SettingModule* findSettingModule(string propertyIceId);
-			nonmutating Ferda::Modules::ModuleForInteraction* findModuleForInteraction(Ferda::Modules::BoxModuleFactoryCreator* creator);
-			nonmutating ModuleForInteractionSeq findAllModulesForInteraction(Ferda::Modules::BoxModuleFactoryCreator* creator);
-			nonmutating ObjectSeq findAllObjectsWithType(string type);
-			nonmutating Object* findObjectByType(string type);
+			idempotent Ferda::Modules::BoxModuleFactoryCreator* findBoxModuleCreatorByIdentifier(string identifier);
+			idempotent Ferda::Modules::BoxModuleFactoryCreator* findBoxModuleCreatorByBoxType(Ferda::Modules::BoxType moduleType);
+			idempotent BoxModuleFactoryCreatorSeq findAllBoxModuleCreatorsWithBoxType(Ferda::Modules::BoxType moduleType);
+			idempotent Ferda::Modules::SettingModule* findSettingModule(string propertyIceId);
+			idempotent Ferda::Modules::ModuleForInteraction* findModuleForInteraction(Ferda::Modules::BoxModuleFactoryCreator* creator);
+			idempotent ModuleForInteractionSeq findAllModulesForInteraction(Ferda::Modules::BoxModuleFactoryCreator* creator);
+			idempotent ObjectSeq findAllObjectsWithType(string type);
+			idempotent Object* findObjectByType(string type);
 		};
 
 		interface ManagersEngine {
-			nonmutating Output* getOutputInterface();
-			nonmutating BoxModuleProjectInformation* getProjectInformation();
-			nonmutating BoxModuleLocker* getBoxModuleLocker();
-			nonmutating BoxModuleValidator* getBoxModuleValidator();
-			nonmutating ManagersLocator* getManagersLocator();
+			idempotent Output* getOutputInterface();
+			idempotent BoxModuleProjectInformation* getProjectInformation();
+			idempotent BoxModuleLocker* getBoxModuleLocker();
+			idempotent BoxModuleValidator* getBoxModuleValidator();
+			idempotent ManagersLocator* getManagersLocator();
 		};
 	};
 };

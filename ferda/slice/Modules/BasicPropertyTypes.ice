@@ -25,7 +25,7 @@ module Ferda {
 		
 		//::Ferda::Modules::StringTInterface*
 		interface StringTInterface {
-			nonmutating string getStringValue();
+			idempotent string getStringValue();
 		};
 		
 		//::Ferda::Modules::StringT
@@ -34,7 +34,7 @@ module Ferda {
 		};
 		
 		interface DoubleTInterface extends StringTInterface {
-			nonmutating double getDoubleValue();
+			idempotent double getDoubleValue();
 		};
 
 		class DoubleT extends PropertyValue implements DoubleTInterface {
@@ -42,7 +42,7 @@ module Ferda {
 		};
 		
 		interface FloatTInterface extends DoubleTInterface {
-			nonmutating float getFloatValue();
+			idempotent float getFloatValue();
 		};
 
 		class FloatT extends PropertyValue implements FloatTInterface {
@@ -50,7 +50,7 @@ module Ferda {
 		};
 		
 		interface LongTInterface extends FloatTInterface {
-			nonmutating long getLongValue();
+			idempotent long getLongValue();
 		};
 
 		class LongT extends PropertyValue implements LongTInterface {
@@ -58,7 +58,7 @@ module Ferda {
 		};
 		
 		interface IntTInterface extends LongTInterface {
-			nonmutating int getIntValue();
+			idempotent int getIntValue();
 		};
 
 		class IntT extends PropertyValue implements IntTInterface {
@@ -66,7 +66,7 @@ module Ferda {
 		};
 		
 		interface ShortTInterface extends IntTInterface {
-			nonmutating short getShortValue();
+			idempotent short getShortValue();
 		};
 
 		class ShortT extends PropertyValue implements ShortTInterface {
@@ -74,7 +74,7 @@ module Ferda {
 		};
 		
 		interface BoolTInterface extends ShortTInterface {
-			nonmutating bool getBoolValue();
+			idempotent bool getBoolValue();
 		};
 
 		class BoolT extends PropertyValue implements BoolTInterface {
@@ -82,7 +82,7 @@ module Ferda {
 		};
 		
 		interface DateTimeTInterface extends StringTInterface {
-			nonmutating void getDateTimeValue(out int year, out short month, out short day,
+			idempotent void getDateTimeValue(out int year, out short month, out short day,
 				out short hour, out short minute, out short second);
 		};
 		class DateTimeT extends PropertyValue implements DateTimeTInterface {
@@ -95,7 +95,7 @@ module Ferda {
 		};
 
 		interface DateTInterface extends DateTimeTInterface {
-			nonmutating void getDateValue(out int year, out short month, out short day);
+			idempotent void getDateValue(out int year, out short month, out short day);
 		};
 		class DateT extends PropertyValue implements DateTInterface {
 			short day;
@@ -104,7 +104,7 @@ module Ferda {
 		};
 		
 		interface TimeTInterface extends StringTInterface {
-			nonmutating void getTimeValue(out short hour, out short minute, out short second);
+			idempotent void getTimeValue(out short hour, out short minute, out short second);
 		};
 		class TimeT extends PropertyValue implements TimeTInterface {
 			short hour;
