@@ -1,6 +1,6 @@
 \chapter{Úvod}
-V této kapitole jsou uvedeny základní pojmy dataminingu. Je popsána
-metoda GUHA a jiné metody, jejich implementace. Podrobnìji je
+V této kapitole jsou uve\-de\-ny zák\-lad\-ní poj\-my data\-minin\-gu. Je pop\-sá\-na
+me\-to\-da GUHA a jiné metody, jejich implementace. Podrobnìji je
 popsán relaèní datamining. Také je zde pøedstaveno prostøedí
 Ferda DataMiner, pro které probìhla implementace relaèních rozšíøení.
 \label{uvod}
@@ -29,7 +29,7 @@ v celé øadì aplikaèních oblastí.
 Pøi dobývání znalostí z dat lze použít více metod. Dobrých výsledkù
 lze dosáhnout pøi jejich kombinaci. Jako pøíklad mùžeme uvést statistické
 procedury, rozhodovací stromy, neuronové sítì nebo asociaèní pravidla, se
-kterými pracuje metoda GUHA a kterými se zde budeme podrobnìji zabývat.
+kte\-rý\-mi pracuje metoda GUHA a kterými se zde budeme podrobnìji zabývat.
 
 \subsection[Asociaèní pravidla ''nákupních košíkù'']{Asociaèní pravidla -- analýza nákupních košíkù}
 \label{asociacnipravidla}
@@ -73,7 +73,7 @@ $b_{n}$ & $P_{2},P_{4},P_{K}$ \\
 \end{table}
 \paragraph{}
 Výraz $P_{2}, P_{5} \to P_{1}, P_{3}$ je pøíklad asociaèního pravidla, které øíká, že
-nákupní košíky obsahující položky $P_{2}$ a $P_{5}$, èasto obsahují i položky $P_{1}$ a $P_{3}$.
+ná\-kup\-ní ko\-ší\-ky obsahující položky $P_{2}$ a $P_{5}$, èasto obsahují i položky $P_{1}$ a $P_{3}$.
 \paragraph{}
 Používají se dvì míry intenzity asociaèního pravidla -- \emph{podpora (support)} a \emph{konfidence (confidence)}.
 \emph{Podpora} asociaèního pravidla $X \to Y$ je podíl poètu transakcí obsahujících jak $X$, tak $Y$
@@ -105,7 +105,7 @@ oproti vstupním datùm. Výstupem jsou pak všechny vztahy (také hypotézy), které j
 Hypotéza je prostá, jestliže je pravdivá 
 v analyzované datové matici a zároveò nevyplývá z jiných, jedno\-duš\-ších hypotéz.
 \paragraph{}
-Jednou z nejdùležitìjších procedur GUHA je procedura ASSOC (podrobnìji v \cite{guhabasic}),
+Jednou z nejdùležitìjších procedur GUHA je procedura ASSOC (pod\-rob\-nì\-ji v \cite{guhabasic}),
 která hledá asociaèní pravid\-la. Mùže vybírat i jiná než klasická asociaèní pra\-vidla, 
 na\-pøíklad pravid\-la, která od\-poví\-dají statis\-tickým testùm hypotéz.
 Tato pravidla jsou daleko obec\-nìjší než ''klasická'' asociaèní pravidla 
@@ -114,11 +114,11 @@ definovaná v sou\-vislosti s analýzou ná\-kupních košíkù.
 
 \subsection{Relaèní dobývání znalostí}
 \paragraph{}
-Existující metody dobývání znalostí byly pøevážnì navrženy pro data uložena
+Existující metody dobývání znalostí byly pøevážnì navrženy pro data ulo\-že\-na
 v jedné datové matici (tzv. flat-file). Pøi takové organizaci dat øádky datové
 matice reprezentují pozorování (ob\-jekty stu\-dia, osoby, záz\-namy, pøed\-mìty apod.)
 a sloupce datové matice rep\-re\-zentují promìn\-né (vlast\-nosti, at\-ributy nebo
-charak\-teri\-stiky). Aèkoliv takový pohled na zkoumaná data zjednoduší metody
+charak\-teri\-stiky). Aèkoliv takový pohled na zkoumaná data zjed\-no\-du\-ší metody
 používané pro dobývání znalostí, v praxi se velmi èasto vyskytují data ve složitìjší
 reprezentaci, napøíklad, ve vícero datových maticích, které jsou mezi sebou
 v relaci.
@@ -130,7 +130,7 @@ zkoumat napøíklad jiné atributy objektù z matice.
 Nìkteré úlohy pro dobývání znalostí navíc nejdou jednoduše provést nad ''plochou''
 reprezentaci, obzvláštì v pøípadì, kde uvažujeme mnoho rùzných objektù s jejich
 vlastnostmi a vzájemnými vztahy. Cílem zavedení relaèního dataminingu je odstranìní
-omezení na jednu tabulku dat a umožnìní dobývání znalostí z více relaènì
+omezení na jednu tabulku dat a umožnìní do\-bý\-vá\-ní zna\-los\-tí z více relaènì
 propojených datových tabulek. Navíc, jak uvádí T.Kar\-ban v \cite{dateso2005},
 ponechání dat v relaèním tvaru mùže zachovat informace, které mohou být
 vyjádøeny ve formì relaèních vztahù.
@@ -147,7 +147,7 @@ které umožòují potøebným zpùsobem transformovat prvotní data, provádìt vlastní a
 a vhodným zpùsobem prezentovat výsledky.
 Systém je stále ve vývoji, který pokrývá jak implementaci nových modulù, tak i~prohlubování
 a~rozšiøování modulù již implementovaných. Vedlejším dùsledkem tohoto vývoje jsou stále
-vìtší nároky na uživatele systému,
+vìt\-ší ná\-ro\-ky na uži\-va\-te\-le sys\-té\-mu,
 pokud chce využít všech možností systému LISp-Miner.
 Podrobné informace o systému LISp-Miner lze nalézt v \cite{guha}.
 \subsection{Rel-Miner}
@@ -156,17 +156,17 @@ Mgr. Tomáše Karbana na Matematicko-fyzikální fakultì Univerzity Karlovy.
 Cílem je vytvoøení systému pro dobývání asociaèních pravidel z relaèních dat nad hvìzdicovým schématem (dále jen relaèní), což vyžaduje rozšíøení jazyka asociaèních pravidel pro pokrytí více než jedné datové matice. Základní implementaèní techniky (napø. princip bitových øetìzcù), zùstávají stejné jako døíve v systému LISp-Miner
 a nyní systému Ferda DataMiner. Stávající implementace dataminingových procedur a parametrù zadávání úlohy,
 které vznikly v rámci diplomové práce T.Kuchaøe, jsou inspirovány právì systémem Rel-Miner. Rovnìž
-tato diplomová práce má nìkteré podobné cíle jako Rel-Miner.
+tato diplomová práce má nìkteré po\-dob\-né cíle jako Rel-Miner.
 \paragraph{}
 Rozdíly jsou zejména ve vìtším teoretickém pøínosu projektu Rel-Miner, také v zamìøení
-T.Karbana hlavnì na možnost distribuovanosti bìhu relaèních i obecnì nerelaèních dataminingových
+T.Karbana hlavnì na možnost distribuovanosti bìhu re\-laè\-ních i obecnì nerelaèních dataminingových
 procedur. Podstatným rozdílem je zpùsob implementace: Rel-Miner byl od poèátku vyvíjen
 jako samostatné softwarové dílo, které je zamìøeno na teoretické aspekty relaèního
 dobývání dat a implementace je spíše vzorová a obsahuje relaèní rozšíøení pouze procedury 4ft-Miner,
 kdyžto implementace relaèních rozšíøení v rámci této diplomové práce je zamìøená na práci
 v prostøedí Ferda DataMiner, na využití veškerých jeho uživatelských i programátorských
 výhod a již implementovaných prostøedkù. Mìla za cíl kromì dvou implementovaných procedur 
-relaèního dataminingu položit základy pro snazší pøidávání relaèních rozšíøení pro zbývající
+re\-laè\-ní\-ho dataminingu položit základy pro snazší pøidávání relaèních rozšíøení pro zbývající
  procedury v rámci systému Ferda DataMiner.
 \paragraph{}
 Rel-Miner mìl být prvotní implementací v oblasti relaèního dataminingu a principu bitových øetìzcù.
@@ -179,8 +179,8 @@ Ferda DataMiner (\verb+http://sourceforge.net/projects/ferda+)
 vznikl jako softwarový projekt na Matematicko-fyzikální fakultì Univerzity Karlovy.
 Mìl odstranit nejvìtší nedostatky systému LISp-Miner zejména v oblasti modularity
 a jednoduchosti uživatelské práce.
-Pøedstavuje spoleèné vizuální prostøedí pro šestici
-výše uvedených procedur systému LISp-Miner, pøináší vizuální model postupu dobývání
+Pøedstavuje spo\-leè\-né vi\-zuál\-ní pro\-støe\-dí pro šestici
+výše uvedených procedur systému LISp-Miner, pøináší vi\-zuál\-ní mo\-del postupu dobývání
 znalostí podobný modelùm v komerèních systémech SPSS Clementine, SAS Enterprise Miner apod.
 Srovnání s tìmito systémy je rovnìž uvedeno v \cite{ferda}.
 
@@ -242,7 +242,7 @@ Zde bude následovat struèný pøehled principù dobývání znalostí dle metody GUHA,
 které jsou nezbytné k pochopení popisu samotné problematiky a implementace
 zadání dané diplomové práce. Tyto principy jsou obecné a byly využity pøi implementaci
 v systémech pro dobývání znalostí pracujících na principu
-GUHA -- viz \ref{implementations}. Pro zevrubnìjší popis autor doporuèuje
+GUHA. Pro zevrubnìjší popis autor doporuèuje
 prostudování zejména zdrojù \cite{guha} a \cite{kuchar}.
 
 \subsection{Booleovské atributy}
@@ -298,7 +298,7 @@ se nazývají \emph{relevantní otázky}. Tvary asociaèních pravidel pro procedury 4
 jsou uvedeny v \ref{miners}.
 \subsection{Zadání množiny relevantních otázek}
 Podrobné možnosti nastavení jednotlivých složek zadání
-booleovského atributu jsou popsány T.Karbanem v \cite{relminer}
+booleovského at\-ri\-bu\-tu jsou popsány T.Karbanem v \cite{relminer}
 a implementovány do prostøedí Ferda DataMiner T.Kuchaøem v \cite{kuchar}.
 V prostøedí Ferda DataMiner byly v rámci diplomové práce \cite{kuchar}
 naimplementovány krabièky, pomocí kterých 
@@ -338,16 +338,16 @@ $Ant$, $Succ$, $\alpha$, $\beta$ a $Cond$ jsou zde booleovské atributy odvozené 
  vstupní datové matice. Intuitivní význam vztahu $Ant \approx Succ / (\alpha, \beta, Cond)$
 je ten, že vztah daný $\approx$ atributù $Ant$ a $Succ$ na množinì $\alpha$ se liší od vztahu
 $Ant$ a $Succ$ na množinì $\beta$, je-li splnìna podmínka zadaná booleovským
- atributem $Cond$ na analyzované datové matici.
+ atributem $Cond$ na analyzované datové ma\-ti\-ci.
 
 
-\section{Dùležité rysy implementace metody GUHA}
+\section{Základy implementace metody GUHA}
 
 \subsection{Princip bitových øetízkù}
 \label{bitstrings}
 
 \paragraph{}
-Typická efektivní realizace GUHA procedury používá ''vertikální'' reprezentaci
+Typická efektivní realizace GUHA procedury používá ''vertikální'' rep\-re\-zen\-ta\-ci
 databáze, kde každá hodnota každého atributu je reprezentována øetìzcem bitù
 (viz. kapitola \ref{bitstrings}). Každý bit v øetìzci popisuje jeden objekt.
 Bit 1 reprezentuje ''objekt má tuto hodnotu'', zatímco bit 0 znamená
@@ -424,7 +424,7 @@ $ID$ & $A$ & $B$ &$A(1)$ & $B(1,2)$ & $A(1)\wedge B(1,2)$ & $\neg B(1,2)$ \\
 
 \subsection{Zadání úlohy}
 Metoda GUHA pracuje s kategoriálními daty.
-Smyslem zadání úlohy je zejména urèení zpùsobu kategorizace tak, aby byl
+Smyslem zadání úlohy je zej\-mé\-na urèení zpùsobu kategorizace tak, aby byl
 co nejvhodnìjší a nejrelevantnìjší jak vzhledem k požadované úloze ke zpracování,
 tak i ke zkoumaným datùm.
 Bude následovat popis práce s nìkterými parametry zadání úlohy v prostøedí Ferda DataMiner.
@@ -469,7 +469,7 @@ Metoda GUHA pracuje s diskrétními daty. Data, která
 tuto podmínku nesplòují, musí být diskre\-tizována. Diskre\-tizovaný sloupec
 se oznaèuje jako atribut a jeho hodnoty jsou kategorie..
 \paragraph{}
-Možnosti práce s kategoriemi se postupnì vyvíjely v implemen\-tacích metody GUHA. Kate\-gorie
+Možnosti práce s kategoriemi se postupnì vyvíjely v implemen\-tacích me\-to\-dy GUHA. Kate\-gorie
 mùže být dvojího typu: buï interv\-alová -- obsahuje koneè\-ný poèet inter\-valù,
 který pokrývá zkoumanou množinu dat, anebo výè\-tová, kde výèet opìt pok\-rývá
 zkoumanou množinu dat. V sys\-témech LISp-Miner a Rel-Miner kate\-gorie
@@ -562,8 +562,8 @@ $\sum{}$ & $k$ & $l$ & $n$\\
 \end{table}
 
 V tabulce \ref{tab:fourfoldtable} je $a$ poèet objektù (øádkù) analyzované matice dat 
-(splòujících podmínku $\chi$) splòujících jak antecedent, tak sukcedent, $b$ je poèet objektù
-splòujících antecedent a nesplòujících sukcedent, $c$ je poèet objektù nesplòujících antecedent
+(splòu\-jí\-cích podmínku $\chi$) splòu\-jí\-cích jak antecedent, tak sukcedent, $b$ je poèet objektù
+splòu\-jí\-cích antecedent a ne\-splòu\-jí\-cích sukcedent, $c$ je poèet objektù ne\-splòu\-jí\-cích antecedent
 a splòujících sukcedent a $d$ je poèet objektù nesplòujících ani antecedent ani sukcedent. 
 Poznamenejme, že $r=a+b$ znaèí poèet objektù splòujících antecedent, $s=c+d$ je poèet objektù,
 které nesplòují antecedent. Souèty sloupcù $a+c=k$  resp. $b+d=l$ odpovídají poètu objektù, které splòují resp. nesplòují sukcedent. Navíc $n=r+s=k+l=a+b+c+d$ je poèet všech objektù v matici dat $M/\chi$.
@@ -572,7 +572,7 @@ které nesplòují antecedent. Souèty sloupcù $a+c=k$  resp. $b+d=l$ odpovídají poè
 
 Symbol $\approx$ se nazývá 4ft-kvantifikátor. 4ft-kvantifikátory 
 odpovídají podmínce na ètyøpolní tabulku. Na základì ètyøpolní tabulky se urèuje,
-zda relevantní otázka je èi není relevantním tvrzením tj. hypotézou. 4ft-kvantifikátor pøiøazuje
+zda relevantní otázka je èi není relevantním tvrzením tj. hypotézou. 4ft-kvantifikátor pøi\-øa\-zu\-je
 ètyøpolní tabulce $\langle a, b, c, d\rangle$ èíslo z množiny  $\{0, 1\}$.
 Relevantní otázka $\phi \approx \psi / \chi$ je relevantním tvrzením právì tehdy, 
 když  $\approx(a, b, c, d)=1$.
@@ -626,7 +626,7 @@ zadání booleovských atributù. Ústøední implementaèní úlohou autora dané
 diplomové práce byla právì implementace iterátoru bitových øetìzcù, který by
 poskytoval bitové øetízky odpovídající virtuálním atributùm.
 
-\section{Relaèní asociaèní pravidla a virtuální atributy}
+\section{Relaèní asociaèní pravidla a vir\-tuál\-ní atri\-bu\-ty}
 \subsection{Úvod}
 Zde bude krátce popsáno rozšíøení asociaèních pravidel pro práci s vícero datovými
 tabulkami takové, aby byly zachovány všechny vlastnosti metody GUHA a zároveò
@@ -748,7 +748,7 @@ atributy vznikají jako výsledek bìhu data\-miningových úloh nad vedlejšími
 datovými tabulkami a dále se používají pøi bìhu dataminingových úloh nad
 hlavní datovou tabulkou. Ústøední myšlenkou je zavést definici atributu
 se sémantikou hypotézy (ve smyslu metody GUHA), jehož hodnotou by byla konkrétnì
-síla nebo platnost hypotézy nad vedlejšími datovými tabulkami a takto
+síla nebo platnost hypotézy nad ved\-lej\-ší\-mi datovými tabulkami a takto
 nadefinovaný sloupec by se použil ''o úroveò výše'' -- pro generaci hypotéz
 pøi bìhu další dataminingové úlohy.
 \paragraph{}
@@ -763,10 +763,10 @@ Zaøadíme-li tento atribut do sukcedentu, úloha bude spoèívat v nalezení pøed\-po
 pro platnost hypotéz z virtuálního atributu.
 \paragraph{}
 Z pøíkladu \ref{eq:hyprattributeexample} vyplývá, že zadání virtuálního
-atributu je vlastnì výsledkem bìhu dataminingové úlohy nad vedlej\-ší datovou
-matici. Tato úloha nad vedlejší datovou matici (budeme jí øíkat podúloha)
+atributu je vlastnì výsledkem bìhu dataminingové úlohy nad ved\-lej\-ší datovou
+matici. Tato úloha nad ved\-lej\-ší datovou matici (budeme jí øíkat podúloha)
 musí probìhnout vícekrát, vždy pouze nad tìmi øádky z vedlejší matice, které se vztahují
-ke zkoumanému objektu z hlavní matice. Toto lze ilustrovat obrázkem \ref{fig:master-client1}.
+ke zkou\-ma\-né\-mu objektu z hlavní matice. Toto lze ilustrovat obrázkem \ref{fig:master-client1}.
 
 \paragraph{}
 \begin{figure}[!h]
@@ -788,17 +788,17 @@ otázky na základì zadání a ovìøuje na nich platnost zadaných kvanitifikátorù opr
 datové matici. 4ft-Miner vrací jako výstup pouze relevantní otázky, na kterých platí
 takto zadané kvantifikátory.
 \paragraph{}
-Spustíme-li 4ft-Miner nad relevantními øádky vedlejší datové matice, dostaneme
+Spustíme-li 4ft-Miner nad relevantními øádky vedlejší datové matice, dos\-ta\-ne\-me
 jako výstup platné i neplatné relevantní otázky (uvažujme na chvíli, že 4ft-Miner
 je takto jednoduše upraven). V pøípadì procedury 4ft-Miner mùžeme získat booleovský
 vektor platností jednotlivých relevantních otázek,
 obecnì procedury mohou vracet sílu platnosti jako reálné èíslo, dostaneme
-tedy vektor reálných èísel. Po prozkoumání celé vedlejší datové matice získáme poèet
-vektorù platnosti relevantních otázek rovný poètu øádkù v hlavní datové matici --
+tedy vektor reálných èísel. Po prozkoumání celé vedlejší datové matice zís\-ká\-me poèet
+vektorù platnosti relevantních otázek rovný poètu øádkù v hlav\-ní datové matici --
 pro každého klienta prozkoumáme relevantní otázky generované podúlohou,
 které platí na právì jeho transakcích. Poèet virtuálních sloupcù vygenerovaných virtuálním atributem
-(podúlohou 4ft-Miner) je rovný délce vektoru platnosti relevantních otázek. Chceme-li získat
-$i$-tý virtuální sloupec, vezmeme z každého vektoru hodnotu na $i$-té pozici.
+(podúlohou 4ft-Miner) je rov\-ný délce vektoru platnosti relevantních otázek. Chceme-li získat
+$i$-tý vir\-tuál\-ní sloupec, vezmeme z každého vektoru hodnotu na $i$-té pozici.
 \paragraph{}
 Výsledkem bìhu podúlohy je tedy množina nových virtuálních sloupcù,
 které jsou pøidány za bìhu k hlavní datové matici a hlavní dataminingová úloha
@@ -840,7 +840,7 @@ pro\-støedky.
 \item[Zobrazení] výsledkù úloh obsahujících rekurzivní virtuální atributy
 se stává samo o sobì obtížným. Pro každou výslednou hypotézu se musí zobrazit
 její atributy, které mohou být tvoøeny opìt hypotézami, které mají své atributy atd.
-Tento dùvod souvisí s pøedchozím -- nejasný význam výsledkù vede k potížim jak
+Tento dùvod souvisí s pøedchozím -- ne\-jas\-ný výz\-nam výs\-led\-kù vede k potížim jak
 pøi interpretaci, tak i pøi pouhém zobrazení.
 \item[Rychlost] zpracování úlohy s rekur\-zivnì zapojenými relaè\-ními atri\-buty
 bude velmi rychle klesat. Podrob\-nìji se o tomto po\-jednává v \cite{relminer}.

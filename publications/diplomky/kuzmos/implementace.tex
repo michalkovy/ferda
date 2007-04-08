@@ -1,6 +1,6 @@
 \chapter{Implementace}
 V této kapitole budou uvedeny a popsány implementované
-procedury a krabièky vèetnì uvedení nìkterých nejdùležitìjších
+procedury a kra\-biè\-ky vèetnì uvedení nìkterých nejdùležitìjších
 detailù implementace.
 
 \label{implementationdetails}
@@ -10,12 +10,12 @@ byl uveden v pøed\-chozích kapitolách. Zde podrobnì probereme
 naimplementovanou funkènost vèetnì popisu vytvoøené krabièky.
 \subsection{Detaily implementace}
 Agregaèní virtuální atribut poskytuje možnost spojit dvì
-datové matice (databázové tabulky) na základì zadaného klíèe
+datové matice (da\-ta\-bá\-zo\-vé tabulky) na základì zadaného klíèe
 a volby výsledného sloupce z vedlejší datové matice.
 Výsledný sloupec lze zapojit do dataminingové úlohy GUHA stejnì jako
 výsledný sloupec, který poskytuje krabièka ''Sloupec''.
 \paragraph{}
-Dále daný atribut mùže v budoucnu využívat možnosti práce s SQL funkcemi
+Dále daný atribut mùže v budoucnu využívat možnosti práce s SQL funk\-ce\-mi
 díky použití stejného postupu jako pøi nadefinování odvozeného sloupce.
 Tato funkènost však nebyla implementována z dùvodu pracnosti, ale
 mùže být lehce doplnìna pozdìji -- pravdìpodobnì autorem dané diplomové práce
@@ -23,7 +23,7 @@ mimo diplomovou práci, ale v rámci dalšího rozšíøování prostøedí
 Ferda DataMiner.
 \subsection{Krabièka}
 Daná krabièka reprezentuje výše popsaný agregaèní
-virtuální atribut z uživatelského hlediska.
+virtuální atribut z uži\-va\-tel\-ské\-ho hlediska.
 \subsubsection{Seznam zásuvek}
 \begin{description}
 \item[Hlavní datová tabulka] 
@@ -101,7 +101,7 @@ iterátoru (více viz na\-pøí\-klad na \verb+http://msdn2.microsoft.com/en-us/libr
 \paragraph{}
 Tato vlastnost nového C\# usnadnila implementování pøístupu ''poskytni další bitový øetízek'',
 protože velmi zjednodušenì øeèeno umožòuje vrátit kolekci prvkù, kterou lze procházet
-pomocí cyklu foreach, aniž by byly dopøedu známé prvky v dané kolekci. Ta se
+pomocí cyklu foreach, aniž by byly do\-pøe\-du známé prvky v dané kolekci. Ta se
 totíž generuje dynamicky, což se nám hodí právì pøi implementaci kolekce bitových øetízkù,
 které jsou ziskávany metodou ''poskytni další bitový øetízek''.
 

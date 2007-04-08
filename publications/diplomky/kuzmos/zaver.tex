@@ -3,12 +3,12 @@
 \section{Splnìní cílù}
 V této kapitole probìhne shrnutí vısledkù dané diplomové práce.
 \subsection{Pilotní implementace}
-Implementace relaèních rozšíøení dataminingovıch procedur byla
-zcela novım úkolem pro prostøedí Ferda DataMiner. Pøedtím
-tato rozšíøení nebyla implementována ani v první verzi
-prostøedí Ferda DataMiner, ani v rámci systému LISp-Miner (aèkoliv
-existovala nìjaká pilotní implementace, se kterou autor nepøišel do styku
-a od jejího vıvoje a uívaní se upustilo).
+Implementace relaèních roz\-ší\-øe\-ní data\-miningovıch pro\-ce\-dur by\-la
+zce\-la no\-vım úkolem pro pro\-støedí Ferda Data\-Miner. Pøed\-tím
+tato roz\-šíøení ne\-byla realizována ani v první verzi
+pro\-støedí Ferda Data\-Miner, ani v rámci sys\-tému LISp-Miner (aè\-koliv
+exis\-tovala nìjaká pi\-lotní implementace, se kterou autor nepøišel do styku
+a od jejího rozvoje a uívaní se upustilo).
 \paragraph{}
 Teoretická pøíprava pro implementaci relaèních rozšíøení byla vykonána T.Karbanem
 ve své dizertaèní práci ''DATA MINING
@@ -18,55 +18,64 @@ práce dle informací pøímo od vedoucího dizertaèní práce J.Raucha
 nebyl k dispozici funkèní spustitelnı program. Proto implementaci v dané diplomové práci
 lze brát jako pilotní, v èem spoèívá jak její pøínos, tak i zjištìná omezení ji zmínìna
 v tomto textu.
+\subsection{Splnìné cíle ze zadání}
+Jak ji bylo zmínìno, byly naimplementovány relaèní rozšíøení
+stávajících dataminingovıch procedur 4ft-Miner a SD4ft-Miner. Odpovídající krabièky
+v prostøedí Ferda se jmenují ''Virtuální booleovskı 4ft atribut'' a
+''Virtuální booleovskı SD4ft atribut''. Implementují hypotézovı
+virtuální atribut, kterı je relaèním rozšíøením pro procedury 4ft-Miner a SD4ft-Miner
+a tím tedy pøímo splòují zadání práce. 
+\paragraph{}
+Dále byl implementován agregaèní virtuální atribut. Odpovídající krabièka v prostøedí Ferda
+se jmenuje ''Virtuální sloupec''. Tímto se splòuje zadání práce, protoe patøí do relaèních rozšíøení
+dataminingovıch procedur.
+\paragraph{}
+Také byly implementovány krabièky pro transformaci atributù pro vyt\-vo\-øe\-ní ekvi\-distanè\-ních 
+intervalù,
+ekvi\-frekvenè\-ních intervalù a krabièka pro pøí\-mou úp\-ra\-vu at\-ri\-bu\-tu. Tyto úlohy
+pùvodnì nepatøily do zadání, avšak v odevzdané diplomové práci Tomáše Kuchaøe
+\cite{kuchar} nebyly rovnì z rùznıch dùvodù pøítomny a
+ukázalo se, e by bylo velmi ádoucí je mít naimplementované co nejdøíve. Umoòují
+podstatné rozšíøení zpùsobù zadávaní data\-miningovıch úloh a tímto vıraznì
+pøispìly k lepším vısledkùm i této diplomové práce. Zadání práce bylo rozšíøeno o poadavek
+implementace tìchto metod, kterı byl splnìn. Jedná se tedy o naplnìní cílù práce.
 \subsection{Pøíprava pro budoucí implementace}
-V prùbìhu práce byla navrena takové 
+V prùbìhu práce byly navreny takové 
 zmìny stávajících jednotlivıch prvkù systému Ferda DataMiner, aby relaèní
 rozšíøení mohla bıt relativnì snadno implementována i pro jiné dataminingové
 procedury, ne pro ty, které implementoval autor této práce. Jinımi slovy,
 cílem a pøínosem dané diplomové práce byla i pøíprava prostøedí Ferda
 DataMiner pro snadnìjší další vıvoj. Autor práce tedy tvrdí, e tento cíl, kterı
  (by ne explicitnì) vychází ze zadání, byl v dané diplomové práci splnìn.
-\subsection{Splnìné cíle ze zadání}
-Jak ji bylo zmínìno, byly naimplementovány hypotézové atributy
-ve smyslu relaèního dataminingu "Virtuální 4ft atribut" a
-"Virtuální SD4ft atribut", které pøímo splòují zadání práce.
-\paragraph{}
-Dále byl implementován agregaèní virtuální atribut "Virtuální sloupec", kterı
-také pøímo splòuje zadání práce.
-\paragraph{}
-Také byly implementovány krabièky atributù pro vytvoøení ekvi\-distanè\-ních 
-intervalù,
-ekvi\-frekvenè\-ních intervalù a krabièka pro pøímou úpravu atributu. Tyto úlohy
-pùvodnì nepatøily do zadání, avšak v odevzdané diplomové práci Tomáše Kuchaøe
-\cite{kuchar} tyto typy atributù nebyly rovnì z rùznıch dùvodù pøítomny a
-ukázalo se, e by bylo velmi ádoucí je mít naimplementované co nejdøíve. Umoòují
-podstatné rozšíøení zpùsobù zadávaní data\-miningovıch úloh a tímto vıraznì
-pøispìly k lepším vısledkùm i této diplomové práce.
-\paragraph{}
- Proto se autor domnívá, e
-rozšíøení zadání jeho diplomové práce o implementaci vıše uvedenıch modulù byla
-na místì a nepøímo pøispìla ke splnìní primárních cílù této diplomové práce.
+\subsection{Závìr}
+Na základì vıše uvedeného autor prohlašuje cíle své diplomové práce za splnìné.
 \section{Doporuèení dalšího smìru práce}
 V této kapitole bude naznaèen monı smìr dalšího vıvoje relaèních rozšíøení pro
 dataminingové procedury v prostøedí Ferda DataMiner.
 \subsection{Rozšíøení pro zbıvající procedury}
 Jak jí bylo zmínìno, lze pomìrnì snadno naimplementovat relaèní rozšíøení
-pro zbıvající dataminingové procedury z prostøedí Ferda DataMiner. K okamiku
+pro zbıvající dataminingové procedury z prostøedí Ferda DataMiner. K okam\-i\-ku
 odevzdání diplomové práce je v prostøedí naimplementováno 6 procedur, lze
 tedy uvaovat o relaèních rozšíøeních pro KL- a SDKL miner, dále pro CF- a SDCF miner.
-Tyto autorem nebyly implementovány z dùvodù toho, e cílem práce bylo spíše
-vytvoøit základ pro relaèní rozšíøení v prostøedí Ferda DataMiner, vyøešit obecné
+Tyto autorem nebyly implementovány z dùvodù toho, e cílem práce bylo kromì samotné implementace také
+vytvoøení základu pro implementaci relaèních rozšíøení v prostøedí Ferda DataMiner, vyøešit obecné
 problémy, které pøi implementaci vznikly a otestovat chování implementovanıch
 rozšíøení. Navíc zpùsob implementace je stejnı jako pro jí naimplementována
 rozšíøení, nejednalo by se tedy o podstatnı pøínos k práci.
 \subsection{Reálnı hypotézovı atribut}
 Logickım smìrem dalšího rozšiøování se jeví implementace
 obecnìjšího hypotézového atributu, kterı produkuje virtuální sloupce
-skládající se z reálnıch èísel (a ne pouze z hodnot \emph{true} a \emph{false}).
+skládající se z reál\-nıch èísel (a ne pouze z hodnot \emph{true} a \emph{false}).
 Takovı atribut mùe dávat na vıstup tyto sloupce buï rovnou jako fuzzy
 bitové øetìzce anebo je bude pøedávat dalším modulùm ke zpracování. Fuzzy bitové
 øetìzce sice zatím nejsou v prostøedí Ferda DataMiner implementovány,
 avšak dle T.Kuchare (\cite{kuchar}) systém generování mùe bıt o nì rozšíøen.
 Toté platí i pro relaèní rozšíøení -- systém generování virtuálních sloupcù
 mùe bıt pomìrnì snadno upraven pro sloupce reálnıch èísel.
-\section{Závìr}
+\subsection{Novı modul pro prohlíení vısledkù}
+Pro lepší práci s hypotézami generovanımi z úloh, které pouívají
+novì vytvoøená relaèní rozšíøení procedur, je nutné rozšíøit
+monosti souèasného modulu pro prohlíení vısledkù. Ten zobrazuje atributy v hypotézách
+ve formì prostého textu, co dostaèuje pro prohlíení vısledkù s pouitím
+ne\-re\-laè\-ních atributù, avšak pro relaèní atributy by bylo vhodné mít monost pracovat s atributy ze zadání
+podúlohy zvláš  -- teï se zobrazí vcelku jako jeden textovı øetìzec.

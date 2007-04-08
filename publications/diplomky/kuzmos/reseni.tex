@@ -71,7 +71,7 @@ je možnost práce s prostøedím Ferda Data\-Miner na více platformách.
 Pod OS Windows lze využít platformu Microsoft .NET Framework
 (\verb+http://www.microsoft.com/cze/net/+),
 na jiných operaèních systémech (napøíklad Linux nebo
-MacOS) pak prostøedí Mono (\verb+http://www.mono-project.com+).
+MacOS) pak prostøedí Mono \newline (\verb+http://www.mono-project.com+) .
 \paragraph{}
 Prostøedí Ferda Data\-Miner bylo navrženo modulárnì. Jeho jednotlivé
 èásti mezi sebou komunikují pøes middleware Internet Communications
@@ -145,8 +145,8 @@ práce, autor považuje za nezbytné tuto diskuzi zde krátce uvést,
 což dle jeho názoru pomùže k lepšímu pochopení dùvodù
 volby návrhu, který nakonec pøevládl a byl tedy v rámci dané
 diplomové práce naprogramován. Bude následovat rozbor
-dopadu zvoleného zpùsobu pro stávající i budoucí aspekty
-implementace relaèních rozšíøení v prostøedí Ferda Data\-Miner.
+dopadu zvoleného zpù\-so\-bu pro stávající i budoucí aspekty
+implementace relaèních rozšíøení v pros\-tøe\-dí Ferda Data\-Miner.
 \subsection{Popis úlohy}
 Jak už bylo podrobnì popsáno v sekci \ref{vattributes}, hypotézový
 virtuální atribut (kterému také øíkáme podúloha)
@@ -241,7 +241,7 @@ atri\-butù ve Fer\-da Data\-Miner ucho\-vávají právì tam) se mu\-sí po\-èet slou
 vy\-násobit poè\-tem øádkù hlavní datové matice. V relaè\-ních roz\-šíøeních
 procedur v této diplomové práci se generují vir\-tuální sloupce s hod\-notami
 \emph{true} nebo \emph{false}, proto výše spoèítané èíslo by zna\-menalo
-poèet bitù potøebných pro uchování virtuálních sloupcù, ale obecnì vir\-tuální
+poèet bitù potøebných pro uchování vir\-tuál\-ních sloupcù, ale obecnì vir\-tuální
 atributy mohou generovat sloupce s reál\-nými hodnotami a ve\-likost pot\-øebné
 pamìti se tak zvýší.
 \paragraph{}
@@ -327,7 +327,7 @@ málo používané bitové øe\-tízky na základì nìjaké strategie. V pøí\-padì,
 že v cache potøebný bitový øetízek ne\-existuje, požádá o nìj pøímo
 potøebný at\-ribut na základì jedno\-znaèného iden\-tifi\-kátoru.
 \paragraph{}
-Jak už bylo zmínìno výše, takový pøís\-tup by se zvoleným zpù\-sobem implemen\-tace
+Jak už bylo zmínìno výše, takový pøís\-tup by se zvoleným zpù\-sobem im\-ple\-men\-ta\-ce
 ne\-fun\-goval -- pøed\-pok\-ládá to\-tiž mož\-nost pøís\-tupu ke všem bi\-tovým øe\-tízkùm
 atributu. Návrh hy\-potézo\-vého vir\-tuálního atri\-butu s tímto ne\-poèítá -- umí
 dát pouze ''další'' bitový øe\-tízek bez mož\-nosti zjis\-tit, který dal\-ší to bude, jaký
@@ -341,7 +341,7 @@ jako dvì krabièky nebo jednu spoleènou. Stávající ne\-virtuální
 atri\-buty se v pøípadì pot\-øeby gene\-rování booleov\-ských atri\-butù zapojují do kra\-bièky
 ''AtomSetting''. Ta zajistí gene\-rování koeficientù pro booleovský atri\-but.
 \paragraph{}
-V pøípadì hypo\-tézového virtuál\-ního atributu by nebylo mož\-né použít stávající krabièku
+V pøípadì hypo\-tézového virtuál\-ního atributu by nebylo mož\-né použít stá\-va\-jí\-cí krabièku
 pro generování koeficientù ''AtomSetting'', protože pracuje s po\-žadav\-kem ''poskytni
 pøes\-nì tento bitový øetízek'', kdežto hypo\-tézový atribut by umìl zpraco\-vat pouze
 po\-žada\-vek ''poskytni další bitový øetízek''. Tudíž kra\-bièka pro ge\-nero\-vání koeficientù
@@ -356,7 +356,7 @@ bu\-de pot\-øeba imple\-men\-tovat pou\-ze pod\-mno\-ži\-ny dél\-ky jed\-na.
 Kra\-biè\-ka ''Atom\-Set\-ting'' pro hy\-po\-tézový vir\-tuální atri\-but by byla nad\-byteèná,
 pro\-tože by tam chybìlo uživatel\-ské nas\-tavení, vše se odehrávalo ''pod kapotou''.
 Nebyl tedy dùvod tuto krabièku vyt\-váøet.
-\item[Nadbyteèná komunikace krabièek pøes rozhraní ICE] Navíc by tato kra\-bièka, kte\-rá
+\item[Zbyteèná komunikace krabièek pøes rozhraní ICE] Navíc by ta\-to kra\-biè\-ka, kte\-rá
 by se za\-pojila za hypo\-tézový virtuální atribut, zna\-menala komu\-nikaci pøes roz\-hraní ICE.
 Protože idea implemen\-tace spoèívá v synchron\-ním bìhu nad- a pod\-úlohy, kde
 nad\-úloha uvnitø svých cyklù (napøíklad pro sukcedent) volá pod\-úlohu, která jí
