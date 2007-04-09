@@ -55,8 +55,22 @@
   <ItemGroup>
     <Compile Include="Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WizardAction\BoxInfo.cs" />
+    <Compile Include="WizardAction\FunctionsI.cs" />
+    <Compile Include="WizardAction\generated\WizardAction.cs" />
+    <Compile Include="WizardForm\BoxInfo.cs" />
+    <Compile Include="WizardForm\FunctionsI.cs" />
+    <Compile Include="WizardForm\generated\WizardForm.cs" />
+    <Compile Include="WizardGenerated\BoxInfo.cs" />
+    <Compile Include="WizardGenerated\FunctionsI.cs" />
+    <Compile Include="WizardGenerated\generated\WizardGenerated.cs" />
     <Compile Include="Wizard\BoxInfo.cs" />
     <Compile Include="Wizard\FunctionsI.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WizardAction\wizardAction.ico" />
+    <Content Include="WizardForm\wizardForm.ico" />
+    <Content Include="WizardGenerated\wizardGenerated.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
