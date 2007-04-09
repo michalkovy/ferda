@@ -1,8 +1,6 @@
 /*
 GENERAL KEYWORDS
-idempotent
-	 Operations that use the Slice idempotent keyword must not modify object
-	 state.
+
 Idempotent
 	 Operations that use the Slice Idempotent keyword can modify object state,
 	 but invoking an operation twice in a row must result in the same object
