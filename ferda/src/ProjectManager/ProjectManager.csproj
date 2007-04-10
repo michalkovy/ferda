@@ -35,6 +35,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
     </Reference>
+    <Reference Include="FerdaNetworkArchive">
+      <HintPath>..\..\bin\Server\FerdaNetworkArchive.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="glacier2cs">
+      <HintPath>..\..\lib\glacier2cs.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="icecs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\icecs.dll</HintPath>
@@ -52,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Archive.cs" />
     <Compile Include="Connection.cs" />
+    <Compile Include="NetworkArchive.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectManager.cs" />
     <Compile Include="ProjectManagerOptions.cs" />

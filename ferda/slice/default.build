@@ -73,7 +73,7 @@
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
 				<arg value="${build.dir}/NetworkArchive/generated"/>
-				<arg file="NetworkArchive/NetworkArchive.ice"/>
+				<arg file="NetworkArchive/Archive.ice"/>
 			</exec>
 
 			<echo message="Generuji .cs z .ice souboru v adresari Modules/Boxes..."/>

@@ -19,52 +19,60 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using Ferda.ModulesManager;
 
-namespace Ferda.ModulesManager
+namespace Ferda.ProjectManager
 {
 	/// <summary>
 	/// Description of NetworkArchive.
 	/// </summary>
 	public class NetworkArchive
 	{
-		public NetworkArchive(Ice.ObjectAdapter adapter, ModulesManager modulesManager)
+		public NetworkArchive(Ferda.ModulesManager.ModulesManager modulesManager)
 		{
-			Ice.Communicator communicator =
-					adapter.getCommunicator();
-			archive = Ferda.NetworkArchive.ArchivePrxHelper.checkedCast(
-				communicator.stringToProxy("Ferda.NetworkArchive.Archive"));
 			this.modulesManager = modulesManager;
+			this.archive = modulesManager.Helper.NetworkArchive;
 		}
 		
-		public void AddBox(Ferda.NetworkArchive.Box box, string label)
+		public void AddBox(IBoxModule boxModule, string label)
 		{
-			archive.addBox(box, label);
+			archive.AddBox(createBoxFromBoxModule(boxModule), label);
 		}
 		
 		public void RemoveBox(string label)
 		{
-			archive.removeBox(label);
+			archive.RemoveBox(label);
 		}
 		
-		public Ferda.NetworkArchive.Box GetBox(string label)
+		public IBoxModule GetBox(string label)
 		{
-			return archive.getBox(label);
+			return createBoxModuleFromBox(archive.GetBox(label));
 		}
 		
 		public IBoxModuleFactoryCreator GetBoxModeleFactoryCreatorOfBox(string label)
 		{
-			return modulesManager.GetBoxModuleFactoryCreator(archive.getBox(label).creatorIdentifier);
+			return archive.GetBoxModeleFactoryCreatorOfBox(label);
 		}
 		
 		public string[] Labels
 		{
 			get
 			{
-				return archive.listLabels();
+				return archive.Labels;
 			}
 		}
 		
-		private Ferda.NetworkArchive.ArchivePrx archive;
-		private ModulesManager modulesManager;
+		private Ferda.NetworkArchive.Box createBoxFromBoxModule(IBoxModule boxModule)
+		{
+			return null;
+		}
+		
+		private IBoxModule createBoxModuleFromBox(Ferda.NetworkArchive.Box box)
+		{
+			return null;
+		}
+		
+		private Ferda.ModulesManager.ModulesManager modulesManager;
+		private Ferda.ModulesManager.NetworkArchive archive;
 	}
 }

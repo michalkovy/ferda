@@ -1,4 +1,4 @@
-// ProjectManager.cs - Main file of Project Manager
+﻿// ProjectManager.cs - Main file of Project Manager
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -35,6 +35,7 @@ namespace Ferda.ProjectManager {
     public class ProjectManager {
         private List<View> views = new List<View>();
         private Archive archive;
+        private Ferda.ProjectManager.NetworkArchive networkArchive;
         private Ferda.ModulesManager.ModulesManager modulesManager;
 
         private StreamReader _stdError;
@@ -70,6 +71,7 @@ namespace Ferda.ProjectManager {
             if(options.StartIceGridLocaly) StartIceGrid(options.IceBinPath, options.IceGridAsService, options.IceGridWorkingDirectory, options.IceGridApplicationXmlFilePath);
             modulesManager = new Ferda.ModulesManager.ModulesManager(args, options.LocalePrefs);
             archive = new Archive(views);
+            networkArchive = new Ferda.ProjectManager.NetworkArchive(modulesManager);
         }
 
         /// <summary>
@@ -714,6 +716,13 @@ namespace Ferda.ProjectManager {
             get {
 	            return modulesManager;
             }
+        }
+        
+        public Ferda.ProjectManager.NetworkArchive NetworkArchive
+        {
+        	get {
+        		return networkArchive;
+        	}
         }
     }
 }

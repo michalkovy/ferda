@@ -56,6 +56,19 @@ namespace Ferda.NetworkArchive
 			}
 		}
 		
+		public override Box getBox(string label, Ice.Current current__)
+		{
+			Box returnValue;
+			lock(archive)
+			{
+				if(!archive.TryGetValue(label, out returnValue))
+				{
+					throw new NameNotExistsError();
+				}
+			}
+			return returnValue;
+		}
+		
 		public override string[] listLabels(Ice.Current current__)
 		{
 			lock(archive)

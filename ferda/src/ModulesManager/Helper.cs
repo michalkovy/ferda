@@ -41,7 +41,7 @@ namespace Ferda {
 				this.managersEnginePrx = ManagersEnginePrxHelper.uncheckedCast(
 					adapter.addWithUUID(managersEngineI));
 				Debug.WriteLine("Creating NetworkArchive...");
-				this.networkArchive = new NetworkArchive(adapter);
+				this.networkArchive = new NetworkArchive(adapter, manager);
 			}
 			
 			public ObjectAdapter ObjectAdapter
@@ -76,6 +76,13 @@ namespace Ferda {
 			{
 				get {
 					return this.localePrefs;
+				}
+			}
+			
+			public Ferda.ModulesManager.NetworkArchive NetworkArchive
+			{
+				get {
+					return this.networkArchive;
 				}
 			}
 			

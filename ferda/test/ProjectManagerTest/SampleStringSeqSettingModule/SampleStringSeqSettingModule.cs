@@ -1,4 +1,4 @@
-// SampleStringSeqSettingModule.cs - example of Setting Module implementation
+﻿// SampleStringSeqSettingModule.cs - example of Setting Module implementation
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -63,7 +63,7 @@ namespace Ferda.Modules
 				return "";
 		}
 		
-		public override PropertyValue run(PropertyValue valueBefore, BoxModulePrx boxModuleParam, String[] localePrefs, ManagersEnginePrx manager, out String about, Ice.Current __current)
+		public override PropertyValue run(PropertyValue valueBefore, string propertyName, BoxModulePrx boxModuleParam, String[] localePrefs, ManagersEnginePrx manager, out String about, Ice.Current __current)
 		{
 			about = "ttt";
 			return new StringSeqTI(new string[]{"ttt"});
