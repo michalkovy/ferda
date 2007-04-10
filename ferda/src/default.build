@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <project name="Ferda sources" default="build" basedir=".">
 	<description>project Ferda sources</description>
-	<target name="build" description="Build sources" depends="FerdaBaseBuild,ProjectManagerBuild,ModulesManagerBuild,ModulesBuild,FrontEndBuild,UtilsBuild"/> <!-- ,FrontEndBuild -->
-	<target name="clean" description="Clean builds" depends="FerdaBaseClean,ProjectManagerClean,ModulesManagerClean,ModulesClean,FrontEndClean,UtilsClean"/>
+	<target name="build" description="Build sources" depends="FerdaBaseBuild,NetworkArchiveBuild,ProjectManagerBuild,ModulesManagerBuild,ModulesBuild,FrontEndBuild,UtilsBuild"/> <!-- ,FrontEndBuild -->
+	<target name="clean" description="Clean builds" depends="FerdaBaseClean,NetworkArchiveClean,ProjectManagerClean,ModulesManagerClean,ModulesClean,FrontEndClean,UtilsClean"/>
 	<target name="ProjectManagerBuild" depends="ModulesManagerBuild,FerdaBaseBuild">
 		<nant buildfile="ProjectManager/default.build" target="build">
 			<properties>
@@ -35,7 +35,7 @@
 			</properties>
 		</nant>
 	</target>
-	<target name="ModulesManagerBuild" depends="FerdaBaseBuild,ModulesBuild">
+	<target name="ModulesManagerBuild" depends="FerdaBaseBuild,ModulesBuild,NetworkArchiveBuild">
 		<nant buildfile="ModulesManager/default.build" target="build">
 			<properties>
 				<property name="build.dir" value="${frontendbin.dir}"/>
@@ -48,6 +48,30 @@
 				<property name="build.dir" value="${frontendbin.dir}"/>
 			</properties>
 		</nant>
+	</target>
+	<target name="NetworkArchiveBuild" depends="FerdaBaseBuild">
+		<nant buildfile="NetworkArchive/default.build" target="build">
+			<properties>
+				<property name="build.dir" value="${serverbin.dir}"/>
+			</properties>
+		</nant>
+		<copy todir="${frontendbin.dir}">
+			<fileset basedir="${serverbin.dir}">
+				<include name="FerdaNetworkArchive.*"/>
+			</fileset>
+		</copy>
+	</target>
+	<target name="NetworkArchiveClean">
+		<nant buildfile="NetworkArchive/default.build" target="clean">
+			<properties>
+				<property name="build.dir" value="${serverbin.dir}"/>
+			</properties>
+		</nant>
+		<delete failonerror="false">
+			<fileset basedir="${frontendbin.dir}">
+				<include name="FerdaNetworkArchive.*"/>
+			</fileset>
+		</delete>
 	</target>
 	<target name="ModulesBuild" depends="FerdaBaseBuild">
 		<nant buildfile="Modules/default.build" target="build">
