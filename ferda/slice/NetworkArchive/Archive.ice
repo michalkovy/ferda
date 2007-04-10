@@ -102,6 +102,14 @@ module Ferda {
 			 *
 			 *
 			 **/
+			Box getBox(string label)
+				throws NameNotExistsError;
+			
+			/**
+			 *
+			 *
+			 *
+			 **/
 			idempotent Ferda::Modules::StringSeq listLabels();
 		};
 	};
