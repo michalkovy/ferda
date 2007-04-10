@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <project name="Slice to C#" default="slice" basedir=".">
 	<description>Generates .cs files from slice</description>
 	<!--
@@ -30,7 +30,15 @@
 				<include name="${build.dir}/Modules/BoxModulesServices/**/generated/*.cs"/>
 			</targetfiles>
 		</uptodate>
-		<if test="${not(actual1) or not(actual2)}">
+		<uptodate property="actual3">
+			<sourcefiles>
+				<include name="NetworkArchive/*.ice"/>
+			</sourcefiles>
+			<targetfiles>
+				<include name="${build.dir}/NetworkArchive/generated/*.cs"/>
+			</targetfiles>
+		</uptodate>
+		<if test="${not(actual1) or not(actual2) or not(actual3)}">
 			<echo message="Generuji .cs z .ice souboru v adresari Modules..."/>
 			<mkdir dir="${build.dir}/Modules/Core/Base/generated"/>
 			<exec program="slice2cs">
@@ -57,6 +65,15 @@
 				<arg value="--output-dir"/>
 				<arg value="${build.dir}/ModulesManager/generated"/>
 				<arg file="ModulesManager/ManagersEngine.ice"/>
+			</exec>
+			
+			<echo message="Generuji .cs z .ice souboru v adresari NetworkArchive..."/>
+			<mkdir dir="${build.dir}/NetworkArchive/generated"/>
+			<exec program="slice2cs">
+				<arg value="-I."/>
+				<arg value="--output-dir"/>
+				<arg value="${build.dir}/NetworkArchive/generated"/>
+				<arg file="NetworkArchive/NetworkArchive.ice"/>
 			</exec>
 
 			<echo message="Generuji .cs z .ice souboru v adresari Modules/Boxes..."/>

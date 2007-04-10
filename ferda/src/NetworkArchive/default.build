@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<project name="Ferda Network Archive" default="build" basedir=".">
+	<description>Ferda Network Archive</description>
+	<target name="build" description="Build Network Archive" depends="create-common-assemblyinfo">
+		<csc target="library" output="${path::combine(build.dir,'FerdaNetworkArchive.dll')}" doc="${path::combine(build.dir,'FerdaNetworArchive.xml')}" debug="${debug}" optimize="${optimize}">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="*.cs"/>
+				<include name="generated/*.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+	</target>
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset basedir="${build.dir}">
+				<include name="FerdaNetworkArchive.*"/>
+			</fileset>
+		</delete>
+		<delete failonerror="false">
+			<fileset>
+				<include name="CommonAssemblyInfo.cs"/>
+			</fileset>
+		</delete>
+	</target>
+	<target name="create-common-assemblyinfo" if="${create.assemblyinfo}">
+        <!-- ensure src/CommonAssemblyInfo.cs is writable if it already exists -->
+        <attrib file="CommonAssemblyInfo.cs" readonly="false" if="${file::exists('CommonAssemblyInfo.cs')}" />
+        <!-- generate the source file holding the common assembly-level attributes -->
+        <asminfo output="CommonAssemblyInfo.cs" language="CSharp">
+            <imports>
+                <import namespace="System" />
+                <import namespace="System.Reflection" />
+                <import namespace="System.Runtime.InteropServices" />
+            </imports>
+            <attributes>
+                <attribute type="ComVisibleAttribute" value="false" />
+                <attribute type="CLSCompliantAttribute" value="false" />
+                <attribute type="AssemblyTitleAttribute" value="FerdaNetworkArchive" />
+                <attribute type="AssemblyDescriptionAttribute" value="Ferda Network Archive" />
+                <attribute type="AssemblyCompanyAttribute" value="http://ferda.sourceforge.com" />
+                <attribute type="AssemblyProductAttribute" value="Ferda" />
+                <attribute type="AssemblyCopyrightAttribute" value="Copyright (C) 2007-${datetime::get-year(datetime::now())} Michal Kovac" />
+                <attribute type="AssemblyTrademarkAttribute" value="" />
+                <attribute type="AssemblyCultureAttribute" value="" />
+                <!-- <attribute type="AssemblyVersionAttribute" value="${project.version}.${build.number}.0" /> -->
+                <!-- <attribute type="AssemblyInformationalVersionAttribute" value="${project.version}" /> -->
+            </attributes>
+        </asminfo>
+    </target>
+</project>

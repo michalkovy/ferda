@@ -1,4 +1,4 @@
-// 
+﻿// 
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -40,6 +40,8 @@ namespace Ferda {
 				this.managersEngineI = new ManagersEngineI(adapter,this, manager);
 				this.managersEnginePrx = ManagersEnginePrxHelper.uncheckedCast(
 					adapter.addWithUUID(managersEngineI));
+				Debug.WriteLine("Creating NetworkArchive...");
+				this.networkArchive = new NetworkArchive(adapter);
 			}
 			
 			public ObjectAdapter ObjectAdapter
@@ -82,6 +84,7 @@ namespace Ferda {
 			private BoxModuleIceFactories boxModuleIceFactories;
 			private ManagersEngineI managersEngineI;
 			private ManagersEnginePrx managersEnginePrx;
+			private NetworkArchive networkArchive;
 		}
 	}
 }

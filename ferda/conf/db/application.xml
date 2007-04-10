@@ -92,6 +92,9 @@
 		<replica-group id="FerdaGuhaMiningProcessorReplicaAdapter">
 			<object identity="Ferda.Guha.MiningProcessor.MiningProcessorFunctions" type="::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"/>
 		</replica-group>
+		<replica-group id="FerdaNetworkArchiveReplicaAdapter">
+			<object identity="Ferda.NetworkArchive.Archive" type="::Ferda::NetworkArchive::Archive"/>
+		</replica-group>
 		<service-template id="FerdaServiceTemplate">
 			<parameter name="name"/>
 			<parameter name="entry"/>
@@ -110,6 +113,7 @@
 				<service-instance template="FerdaServiceTemplate" name="FerdaSampleBoxes" entry="FerdaSampleBoxes.dll:Ferda.Modules.Boxes.Sample.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaGuhaMiningBoxes" entry="FerdaGuhaMiningBoxes.dll:Ferda.Modules.Boxes.GuhaMining.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaGuhaMiningProcessor" entry="FerdaMiningProcessor.dll:Ferda.Guha.MiningProcessor.Service" endpoints="${endpoints}"/>
+				<service-instance template="FerdaServiceTemplate" name="FerdaNetworkArchive" entry="FerdaNetworkArchive.dll:Ferda.NetworkArchive.Service" endpoints="${endpoints}"/>
         
         <service-instance template="FerdaServiceTemplate" 
                           name="FerdaWizards" 

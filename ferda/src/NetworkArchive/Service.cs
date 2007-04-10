@@ -19,7 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 using System.Diagnostics;
 using System.Threading;
-using Ferda.Modules.Boxes;
 using Ice;
 using IceBox;
 
@@ -28,7 +27,7 @@ namespace Ferda.NetworkArchive
     /// <summary>
     /// Represents a IceBox service, is created for inheriting
     /// </summary>
-    public class ServiceI : LocalObjectImpl, Service
+    public class Service : LocalObjectImpl, IceBox.Service
     {
         /// <summary>
         /// Service execution method
@@ -43,15 +42,17 @@ namespace Ferda.NetworkArchive
             Debug.AutoFlush = true;
             Debug.WriteLine("Starting service...");
             _adapter = communicator.createObjectAdapter(name);
-            ObjectFactoryForPropertyTypes factory =
-                new ObjectFactoryForPropertyTypes();
-            ObjectFactoryForPropertyTypes.addFactoryToCommunicator(
+            ObjectFactoryForBox factory =
+                new ObjectFactoryForBox();
+            ObjectFactoryForBox.addFactoryToCommunicator(
                 communicator, factory);
             Debug.WriteLine("Activating adapter...");
             _adapter.activate();
 
-            BoxModuleFactoryCreatorI boxModuleFactoryCreator = new BoxModuleFactoryCreatorI(boxInfo, reaper);
-            _adapter.add(boxModuleFactoryCreator, Util.stringToIdentity(identity));
+            ArchiveI archive = new ArchiveI();
+            _adapter.add(archive, Util.stringToIdentity("Ferda.NetworkArchive.Archive"));
+            
+            Debug.WriteLine("NetworkArchive service has started");
         }
 
         /// <summary>
