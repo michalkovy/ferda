@@ -1,4 +1,4 @@
-\chapter[Cíle práce]{Cíle této práce a jejich naplnìní}
+\chapter[Cíle práce]{Cíle práce}
 \label{cile}
 V této kapitole jsou popsány cíle diplomové práce, její zadání a jeho upøesnìní.
 Dále je popsána struktura textu dané diplomové práce. V textu budou se budou pouívat
@@ -33,32 +33,32 @@ s vedoucím práce.
 \section[Upøesnìní zadání]{Upøesnìní a rozšíøení zadání práce}
 \label{zmenazadani}
 V prùbìhu diplomové práce se však ukázalo, e bude vhodné zadání práce
-upravit, upøesnit a rozšíøit. Toto se stalo po kon\-zultacích s vedoucím dip\-lomové 
+upravit, upøesnit a rozšíøit. Toto se stalo po konzultacích s vedoucím diplomové 
 práce. V zadání došlo tedy k následujícím
 upøesnìním a zmìnám.
 \paragraph{}
-Byly upøes\-nìny procedury, pro které
-bude implemen\-továno relaè\-ní roz\-šíøení.
-Rovnì bylo roz\-hodnuto na\-hradit implemen\-taci
-a vyuití expert\-ního systému za implemen\-tací dal\-ších pro\-støedkù
+Byly upøesnìny procedury, pro které
+bude implementováno relaèní roz\-šíøení.
+Rovnì bylo rozhodnuto na\-hradit implementaci
+a vyuití expertního systému za implementací dalších prostøedkù
 pro trans\-formaci atributu.
 
 \subsection[Vıbìr procedur]{Vıbìr procedur pro relaèní datamining}
-Protoe systém
-Ferda DataMiner je pouíván pri\-márnì v akademickém pro\-støedí, jak
-pro vıuku studentù, tak i pro zpracování za\-jímavıch úloh obec\-nì,
-roz\-hodlo se pro implemen\-taci relaèních roz\-šíøení procedur
-4ft-Miner a SD4ft-miner z dùvodù
-jejich vırazné pøevahy nad ostat\-ními procedurami pøi vyuití v
-úlohách dobıvání znalostí.
+Systém
+Ferda DataMiner je pouíván primárnì v akademickém prostøedí, jak
+pro vıuku studentù, tak i pro zpracování zajímavıch úloh obecnì.
+Nejèastìji se pouívají procedury 4FT a SD4FT z dùvodù
+relativní jednoduchosti zadání úlohy a interpretace vısledkù.
+Proto se autor spolu s vedoucím práce rozhodli pro implementaci relaèních rozšíøení procedur
+4FT a SD4FT.
 
 \subsection[Metody znalostního inenırství]{Vyuití metod znalostního inenırství}
-Od poadavkù na vyuití metod znalost\-ního inenırství, konk\-rétnì vyuití
+Od poadavkù na vyuití metod znalostního inenırství, konkrétnì vyuití
 zabudovaného expertního systému pro urèování hodnot
-vstup\-ních para\-metrù GUHA procedur bylo po kon\-zultaci s vedoucím dip\-lomové
-práce upuštìno. Zjistilo se, e nároè\-nost této úlohy vı\-raznì
-pøe\-sahuje náplò dip\-lomové práce a proto by ne\-bylo moné ji v rámci dané práce
-implemen\-tovat.
+vstupních parametrù GUHA procedur bylo po konzultaci s vedoucím diplomové
+práce upuštìno. Zjistilo se, e nároènost této úlohy vıraznì
+pøesahuje náplò diplomové práce a proto by nebylo moné ji v rámci dané práce
+implementovat.
 
 \subsection{Atributy}
 \label{cileatributy}
@@ -73,22 +73,23 @@ ji byla pøipravena.
 Implementace tìchto metod pøispìla nejen ke zkvalitnìní systému Ferda obecnì,
 ale rovnì umonila autorovi této práce podstatnì rozšíøit okruh úloh,
 které mohou øešit novì implementovaná relaèní rozšíøení pùvodních
-dataminingovıch procedur. Byly implementovány násle\-dující metody pro transformaci
-atributu v systému Ferda DataMiner.
+dataminingovıch procedur. Proto bylo zadání diplomové práce rozšíøeno o metody pro transformaci atributu.
+ Následuje jejich krátkı popis, podrobné informace lze nalézt v kapitole
+\ref{implementationdetails}.
 \subsubsection{Ekvidistanèní intervaly}
-Tato metoda umoní uivateli definovat atribut skládající se ze za\-daného
-poètu tzv. ekvi\-distan\-èních inter\-valù -- ty mají stejnou ve\-li\-kost
-a po\-krı\-vají mno\-inu hod\-not atri\-butu. Pøí\-kladem je roz\-dìlení klientù banky dle vıši pøíjmu na\-pøí\-klad
-vy\-tvoøe\-ním ná\-sledujících inter\-valù: \mbox{$\langle5000,8000)$}, \mbox{$\langle8000,12000)$} a
+Tato metoda umoní uivateli definovat atribut skládající se ze zadaného
+poètu tzv. ekvi\-distan\-èních intervalù -- ty mají stejnou velikost
+a pokrıvají mnoinu hod\-not atributu. Pøí\-kladem je rozdìlení klientù banky dle vıši pøíjmu napøíklad
+vytvoøením následujících intervalù: \mbox{$\langle5000,8000)$}, \mbox{$\langle8000,12000)$} a
 \mbox{$\langle12000,15000)$}.
 \subsubsection{Ekvifrekvenèní intervaly}
-Tato metoda umoní uivateli de\-finovat atri\-but skládající se ze zadaného
-poètu tzv. ekvi\-frek\-venè\-ních intervalù -- ty mají takovou ve\-likost, aby
-poèet hodnot vstup\-ní mno\-iny atri\-butu, kterı do ka\-dého z nich patøí, byl
-pøi\-bli\-nì stejnı.
-Tato metoda pro trans\-formaci atri\-butu má vyuití pro za\-jištìní rovno\-mìr\-ného roz\-dìle\-ní
-mnoin hodnot, které nejsou pùvodnì takto roz\-dìle\-ny. Pøí\-kladem opìt
-po\-slouí roz\-dìlení klientù na zhruba stejnì velké skupiny dle vıše jejich
+Tato metoda umoní uivateli definovat atribut skládající se ze zadaného
+poètu tzv. ekvi\-frek\-venè\-ních intervalù -- ty mají takovou velikost, aby
+poèet hodnot vstupní mnoiny atributu, kterı do kadého z nich patøí, byl
+pøiblinì stejnı.
+Tato metoda pro transformaci atributu má vyuití pro zajištìní rovnomìrného rozdìlení
+mnoin hodnot, které nejsou pùvodnì takto rozdìleny. Pøíkladem opìt
+poslouí rozdìlení klientù na zhruba stejnì velké skupiny dle vıše jejich
 pøíjmu napøíklad vytvoøením následujících intervalù: \mbox{$\langle5000,10000)$},
 \mbox{$\langle10000,18000)$} a \mbox{$\langle18000,25000)$}. Znamená to,
 e klienty banky rozdìlíme do skupin, které znamenají, e klient má nízkı, støední
@@ -99,29 +100,32 @@ Tato metoda umoní uivateli buï upravovat ji vytvoøenı atribut (napøíklad
 za pomocí metody ekvidistanèních intervalù) anebo ruènì vytvoøit zcela novı
 atribut. Umoòuje upravovat kategorie v atributu, vıèty a intervaly patøící
 ke kadé kategorii a vısledek se samozøejmì mùe dále pouít pro definici
-dataminingové úlohy v prostøedí Ferda DataMiner.
+dataminingové úlohy v prostøedí Ferda DataMiner. Statickı atribut je podrobnìji popsán
+v èlánku \cite{ferda}.
 \section{Vıchodiska øešení}
 K naplnìní cílù dané diplomové práce bylo nezbytné vycházet z existující
-implementace data\-miningovıch procedur, zpùsobù zadávání úloh pro práci
+implementace dataminingovıch procedur, zpùsobù zadávání úloh pro práci
 s tìmito procedurami a celkovì z prostøedí Ferda DataMiner, na kterém
 probìhla implementace relaèních rozšíøení. Pøipomeòme zde, e prostøedí
 Ferda DataMiner vzniklo v rámci studentského softwarového projektu
 pod vedením Doc. RNDr. Jana Raucha, CSc.
- -- podrobnìji viz \ref{ferdaproject} anebo \cite{ferda} a je nadále vyvíjeno jak úèast\-níky pùvod\-ního
- projektu v rámci diplomovıch a diser\-taèních prací, tak i jinımi zájemci.
+ -- podrobnìji viz \ref{ferdaproject} anebo \cite{ferda} a je nadále vyvíjeno jak úèastníky pùvodního
+ projektu v rámci diplomovıch a disertaèních prací, tak i jinımi zájemci.
 \paragraph{}
 Klíèovou diplomovou práci pro prostøedí Ferda DataMiner se stala práce
 ''Experimentální GUHA procedury'' Tomáše Kuchaøe, která je uvedena v seznamu
-pouité literatury jako \cite{kuchar}. Tomáš implementoval nej\-dùlei\-tìjší
+pouité literatury jako \cite{kuchar}. Tomáš implementoval nejdùleitìjší
 prvky pro práci s úlohami dobıvání znalostí (mj. 6 dataminingovıch procedur) a pøipravil
 programátorské rozhraní pro další implementaci konkrétnì metod GUHA.
 \paragraph{}
 Tato informace je zde uvedena proto, e autor dané diplomové
 práce se musel pro úspìšné øešení zevrubnì seznámit s diplomovou práci
-\cite{kuchar}, zejména s její implementaèní èásti a nejen naimplementovat
-vlastní øešení, ale zajistit jeho plnou integraci do ji existujícího prostøedí
- -- toto se stalo dalším, by explicitnì neuvedenım
-cílem dané diplomové práce.
+\cite{kuchar}, zejména s její implementaèní èásti a nejen implementovat
+vlastní øešení, ale zajistit jeho škálovatelnost a pøipravit prostøedky
+pro budoucí implementace
+relaèních rozšíøení v rámci prostøedí Ferda DataMiner.
+Toto se stalo dalším, by explicitnì neuvedenım
+cílem diplomové práce.
 
 \section[Struktura práce]{Struktura diplomové práce}
 S ohledem na vıše stanovené cíle byla zvolena následující struktura diplomové práce.
@@ -129,10 +133,9 @@ S ohledem na vıše stanovené cíle byla zvolena následující struktura diplomové pr
 V dané kapitole byly uvedeny a popsány zadání, jeho upøesnìní a 
 cíle dané diplomové práce.
 \paragraph{}
-V kapitole \ref{uvod} budou popsány pojmy a metody
-procedur pro dobıvání znalostí, které jsou
+V kapitole \ref{uvod} budou popsány pojmy z oblasti dobıvání znalostí a prostøedí Ferda DataMiner, které jsou
 v dané diplomové práce pouívány. Také bude podrobnì rozebrán pojem relaèního
-dataminingu, jeho nìkteré procedury daná diplomová práce implementuje.
+dobıvání znalostí, jeho nìkteré procedury daná diplomová práce implementuje.
 \paragraph{}
 V kapitole \ref{implementation} bude popsán vztah dané diplomové práce k
 diplomové práci Tomáše Kuchaøe ''Experimentální GUHA procedury'' uvedené
@@ -144,7 +147,7 @@ V kapitole \ref{implementationdetails} jsou podrobnì popsány všechny implementov
 prvky z uivatelského hlediska. Rovnì jsou uvedeny nejdùleitìjší
 detaily implementace.
 \paragraph{}
-Kapitole \ref{tests} obsahuje vısledky testù zvoleného øešení
+V kapitole \ref{tests} obsahuje vısledky testù zvoleného øešení
 pro rùzná zadání úlohy a datové matice spolu s diskuzi nad nimi.
 \paragraph{}
 V kapitole \ref{sourcecode} je uveden podrobnı seznam vytvoøenıch a 

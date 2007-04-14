@@ -1,7 +1,7 @@
 \chapter{Úvod}
-V této kapitole jsou uve\-de\-ny zák\-lad\-ní poj\-my data\-minin\-gu. Je pop\-sá\-na
-me\-to\-da GUHA a jiné metody, jejich implementace. Podrobnìji je
-popsán relaèní datamining. Také je zde pøedstaveno prostøedí
+V této kapitole jsou uvedeny základní pojmy dobývání znalostí. Je popsána
+metoda GUHA a jiné metody a jejich implementace. Podrobnìji je
+uveden relaèní datamining. Také je zde pøedstaveno prostøedí
 Ferda DataMiner, pro které probìhla implementace relaèních rozšíøení.
 \label{uvod}
 \section[Úvod do dobývání znalostí]{Úvod do dobývání znalostí z dat}
@@ -11,42 +11,42 @@ Data mining (DM) je analytická metodologie získávání
 netriviálních skrytých a potenciálnì užiteèných informací z dat.
 Nìkdy se chápe jako analytická souèást dobývání znalostí z databází
 (Knowledge Discovery in Databases, KDD), jindy se tato dvì oznaèení chápou jako souznaèná.\footnotemark{}
-
+V èeštinì se používá pojem \emph{dobývání}, \emph{získávání}, \emph{dolování} nebo \emph{vytìžování dat}.
 \footnotetext{Definice je pøevzata z http://cs.wikipedia.org/wiki/Data\_mining}
 Zde se budeme zabývat
 nalezením vzorù nebo vztahù (z anglického slova \emph{patterns})
 v podobì asociaèních pravidel a asociaèních pravidel SDS
 (podrobnìji viz \ref{asociacnipravidla}).
 \paragraph{}
-Dobývání znalostí stojí na po\-mezí výpoèetních
-statis\-tických metod, data\-bázových techno\-logii a strojo\-vého uèení.
-Meto\-dami dobývání zna\-lostí se dají øešit úlohy desk\-ripce dat, suma\-rizace,
+Dobývání znalostí stojí na pomezí výpoèetních
+statistických metod, databázových technologii a strojového uèení.
+Metodami dobývání znalostí se dají øešit úlohy deskripce dat, sumarizace,
 segmentace, deskripce konceptù, klasifikace, predikce a analýzy závislostí
 v celé øadì aplikaèních oblastí.
 
 \subsection{Metody dobývání znalostí}
-\paragraph{}
 Pøi dobývání znalostí z dat lze použít více metod. Dobrých výsledkù
 lze dosáhnout pøi jejich kombinaci. Jako pøíklad mùžeme uvést statistické
 procedury, rozhodovací stromy, neuronové sítì nebo asociaèní pravidla, se
-kte\-rý\-mi pracuje metoda GUHA a kterými se zde budeme podrobnìji zabývat.
+kterými pracuje metoda GUHA a kterými se zde budeme podrobnìji zabývat.
 
 \subsection[Asociaèní pravidla ''nákupních košíkù'']{Asociaèní pravidla -- analýza nákupních košíkù}
 \label{asociacnipravidla}
 \paragraph{}
 ''Klasické'' asociaèní pravidlo je definováno Aggravalem (\cite{aggraval})
-v souvislosti s analýzou nákupního košíku.
+v souvislosti s analýzou nákupního košíku. Zde použijeme jeho popis, jak je uveden J.Rauchem
+v \cite{skripta}.
 \paragraph{}
-Klasické asociaèní pravid\-lo je ve tvaru $X \to Y$, kde $X$ a $Y$ znaèí
-dvì množiny prvkù. Toto pravid\-lo nám øíká, že tran\-sakce obsahující prvky z $X$,
-mají ten\-den\-ci obsahovat prvky z $Y$.
+Klasické asociaèní pravidlo je ve tvaru $X \to Y$, kde $X$ a $Y$ znaèí
+dvì množiny prvkù. Toto pravidlo nám øíká, že transakce obsahující prvky z $X$,
+mají tendenci obsahovat prvky z $Y$.
 \paragraph{}
-Analogie s ná\-kupními košíky øíká, že
-když ná\-kupní koš obsahuje množinu pøed\-mìtù $X$, 
-pravdìpodobnì bude obsahovat množinu pøed\-mìtù $Y$. Na\-pøíklad klienti, kteøí
-na\-koupí víno, èasto na\-kupují také sýry.
-Každý z ná\-kupních košíku $b_{1},\ldots, b_{n}$ tedy ob\-sahuje
-nìk\-teré z položek $P_{1},P_{2},\ldots,P_{K}$.
+Analogie s nákupními košíky øíká, že
+když nákupní koš obsahuje množinu pøedmìtù $X$, 
+pravdìpodobnì bude obsahovat množinu pøedmìtù $Y$. Na\-pøík\-lad klienti, kteøí
+nakoupí víno, èasto nakupují také sýry.
+Každý z nákupních košíku $b_{1},\ldots, b_{n}$ tedy obsahuje
+nìkteré z položek $P_{1},P_{2},\ldots,P_{K}$.
 \begin{table}[!h]
 \begin{center}
 \begin{tabular}{|c|c|}
@@ -73,12 +73,12 @@ $b_{n}$ & $P_{2},P_{4},P_{K}$ \\
 \end{table}
 \paragraph{}
 Výraz $P_{2}, P_{5} \to P_{1}, P_{3}$ je pøíklad asociaèního pravidla, které øíká, že
-ná\-kup\-ní ko\-ší\-ky obsahující položky $P_{2}$ a $P_{5}$, èasto obsahují i položky $P_{1}$ a $P_{3}$.
+nákupní košíky obsahující položky $P_{2}$ a $P_{5}$, èasto obsahují i položky $P_{1}$ a $P_{3}$.
 \paragraph{}
 Používají se dvì míry intenzity asociaèního pravidla -- \emph{podpora (support)} a \emph{konfidence (confidence)}.
 \emph{Podpora} asociaèního pravidla $X \to Y$ je podíl poètu transakcí obsahujících jak $X$, tak $Y$
-ku poètu všech transakcí. \emph{Konfidence} je podíl poètu transakcí obsahujících jak $X$, tak $Y$
-ku poètu transakcí obsahujících $X$.
+k poètu všech transakcí. \emph{Konfidence} je podíl poètu transakcí obsahujících jak $X$, tak $Y$
+k poètu transakcí obsahujících $X$.
 \paragraph{}
 Analýzou transakcí supermarkety mohou
 optimalizovat rozmístìní zboží v prodejnì a zajistit rychlejší a výnosnìjší
@@ -99,26 +99,25 @@ Pro ilustraci práce metody GUHA uvádíme obrázek \ref{fig:praceguha}.
 \end{figure}
 \paragraph{}
 Metoda GUHA je realizována procedurami GUHA. Procedura je program, který na základì
-vstupu, který je tvoøen analyzovanými daty a jedno\-duchým zadáním rele\-vant\-ních vztahù,
-generuje zadané vztahy (rovnìž se používá termín re\-levant\-ní otázky) a ovìøuje je
-oproti vstupním datùm. Výstupem jsou pak všechny vztahy (také hypotézy), které jsou prosté.
+vstupu, který je tvoøen analyzovanými daty a jednoduchým zadáním relevantních otázek,
+generuje zadané otázky a ovìøuje je
+oproti vstupním datùm. Výstupem jsou pak všechny relevantní otázky (také hypotézy), které jsou prosté.
 Hypotéza je prostá, jestliže je pravdivá 
-v analyzované datové matici a zároveò nevyplývá z jiných, jedno\-duš\-ších hypotéz.
+v analyzované datové matici a zároveò nevyplývá z jiných, jednodušších hypotéz.
 \paragraph{}
-Jednou z nejdùležitìjších procedur GUHA je procedura ASSOC (pod\-rob\-nì\-ji v \cite{guhabasic}),
-která hledá asociaèní pravid\-la. Mùže vybírat i jiná než klasická asociaèní pra\-vidla, 
-na\-pøíklad pravid\-la, která od\-poví\-dají statis\-tickým testùm hypotéz.
-Tato pravidla jsou daleko obec\-nìjší než ''klasická'' asociaèní pravidla 
-definovaná v sou\-vislosti s analýzou ná\-kupních košíkù.
-\paragraph{}
+Jednou z nejpoužívanìjších GUHA procedur je procedura ASSOC (podrobnìji v \cite{guhabasic}),
+která hledá vztahy, jenž jsou zobecnìním ''klasických'' asociaèních pravidel definovaných Aggravalem v \cite{aggraval}.
+Nejnovìjší implementací ASSOC je procedura 4FT, která je popsána dále v tomto textu.
 
 \subsection{Relaèní dobývání znalostí}
+Následující úvaha o relaèním dobývání znalostí byla pøevzata z disertaèní práce T.Karbana
+uvedené v seznamu použité literatury jako \cite{relminer}.
 \paragraph{}
 Existující metody dobývání znalostí byly pøevážnì navrženy pro data ulo\-že\-na
-v jedné datové matici (tzv. flat-file). Pøi takové organizaci dat øádky datové
-matice reprezentují pozorování (ob\-jekty stu\-dia, osoby, záz\-namy, pøed\-mìty apod.)
-a sloupce datové matice rep\-re\-zentují promìn\-né (vlast\-nosti, at\-ributy nebo
-charak\-teri\-stiky). Aèkoliv takový pohled na zkoumaná data zjed\-no\-du\-ší metody
+v jedné datové matici (tzv. \emph{plochá reprezentace}). Pøi takové organizaci dat øádky datové
+matice reprezentují pozorování (objekty studia, osoby, záznamy, pøedmìty apod.)
+a sloupce datové matice reprezentují promìnné (vlastnosti, atributy nebo
+charakteristiky). Aèkoliv takový pohled na zkoumaná data zjednoduší metody
 používané pro dobývání znalostí, v praxi se velmi èasto vyskytují data ve složitìjší
 reprezentaci, napøíklad, ve vícero datových maticích, které jsou mezi sebou
 v relaci.
@@ -130,43 +129,55 @@ zkoumat napøíklad jiné atributy objektù z matice.
 Nìkteré úlohy pro dobývání znalostí navíc nejdou jednoduše provést nad ''plochou''
 reprezentaci, obzvláštì v pøípadì, kde uvažujeme mnoho rùzných objektù s jejich
 vlastnostmi a vzájemnými vztahy. Cílem zavedení relaèního dataminingu je odstranìní
-omezení na jednu tabulku dat a umožnìní do\-bý\-vá\-ní zna\-los\-tí z více relaènì
+omezení na jednu tabulku dat a umožnìní dobývání znalostí z více relaènì
 propojených datových tabulek. Navíc, jak uvádí T.Kar\-ban v \cite{dateso2005},
 ponechání dat v relaèním tvaru mùže zachovat informace, které mohou být
 vyjádøeny ve formì relaèních vztahù.
 
-\section{Ferda DataMiner a další implementace metody GUHA}
-\label{ferdaproject}
+\section{Implementace metody GUHA}
 
 \subsection{LISp-Miner}
 Od roku 1996 se na pražské VŠE vyvíjí systém LISp-Miner.
-Jde o akademický softwarový systém pro výuku (zejména na Fakultì informatiky a statistiky
+Jak se uvádí na stránkách \verb+http://lispminer.vse.cz/+,
+\begin{quote}
+''LISp-Miner je akademický projekt pro podporu výzkumu a výuky dobývání znalostí z databází. Je vhodný zejména pro výuku studentù,
+pilotní a støednì velké projekty KDD.''
+\end{quote}
+Výuka probíhá zejména na Fakultì informatiky a statistiky
 Vysoké školy ekonomické v Praze a Matematicko-fyzikální fakultì Univerzity Karlovy
-v Praze) a výzkum v oblasti dobývání znalostí z databází. Systém obsahuje øadu modulù,
-které umožòují potøebným zpùsobem transformovat prvotní data, provádìt vlastní analýzy
-a vhodným zpùsobem prezentovat výsledky.
-Systém je stále ve vývoji, který pokrývá jak implementaci nových modulù, tak i~prohlubování
-a~rozšiøování modulù již implementovaných. Vedlejším dùsledkem tohoto vývoje jsou stále
-vìt\-ší ná\-ro\-ky na uži\-va\-te\-le sys\-té\-mu,
-pokud chce využít všech možností systému LISp-Miner.
+v Praze. LISp-Miner obsahuje implementaci nìkolika procedur pro dobývání znalostí spolu s moduly pro zadávání úlohy a prezentace výsledkù.
+Vzhledem k dlouhé dobì vývoje prostøedí (již od roku 1996) znaènì vzrostla komplexnost celého prostøedí
+z hlediska uživatelské práce -- každá dataminingová procedura se napøíklad skládá ze tøí modulù: pro zadání úlohy,
+pro samotné generování a pro prohlížení výsledkù. Za jeden z nejvìtších nedostatkù systému LISp-Miner lze považovat i fakt,
+že zadání úloh pro jednotlivé procedury lze sdílet mezi sebou pouze minimálnì -- v tom autor spatøuje jednu z velkých
+výhod prostøedí Ferda DataMiner popsaného dále, z uživatelského hlediska. Na druhou stranu je tøeba øíct, že vzhledem k nejdelší historii
+systému LISp-Miner procedury v nìm implementované jsou relativnì stabilní a odladìné a pøi jejich nových implementacích v jiných prostøedích pro dobývání znalostí
+lze výsledky ze systému LISp-Miner považovat za vzorové.
 Podrobné informace o systému LISp-Miner lze nalézt v \cite{guha}.
 \subsection{Rel-Miner}
-Systém Rel-Miner je softwarový projekt vznikající v rámci disertaèní práce (viz. \cite{relminer} )
+Systém Rel-Miner je softwarový projekt vznikající v rámci disertaèní práce (viz. \cite{relminer})
 Mgr. Tomáše Karbana na Matematicko-fyzikální fakultì Univerzity Karlovy.
-Cílem je vytvoøení systému pro dobývání asociaèních pravidel z relaèních dat nad hvìzdicovým schématem (dále jen relaèní), což vyžaduje rozšíøení jazyka asociaèních pravidel pro pokrytí více než jedné datové matice. Základní implementaèní techniky (napø. princip bitových øetìzcù), zùstávají stejné jako døíve v systému LISp-Miner
-a nyní systému Ferda DataMiner. Stávající implementace dataminingových procedur a parametrù zadávání úlohy,
-které vznikly v rámci diplomové práce T.Kuchaøe, jsou inspirovány právì systémem Rel-Miner. Rovnìž
-tato diplomová práce má nìkteré po\-dob\-né cíle jako Rel-Miner.
+T.Karban uvádí jako cílech své práce následující:
+\begin{itemize}
+\item	rozšíøit jazyk asociaèních pravidel pro relaèní dobývání znalostí,
+\item	implementovat systém Rel-Miner za použití bitových øetízkù,
+\item	experimentovat s  relaèním dataminingem, zkoumat efektivitu a po\-uži\-tel\-nost,
+\item	vytyèit možnosti dalšího vývoje.
+\end{itemize}
+
+Stávající implementace dataminingových procedur a parametrù zadávání úlohy,
+které vznikly v rámci diplomové práce T.Kuchaøe, jsou v nìkterých ohledech inspirovány právì systémem Rel-Miner. Rovnìž
+tato diplomová práce má nìkteré podobné cíle jako Rel-Miner.
 \paragraph{}
 Rozdíly jsou zejména ve vìtším teoretickém pøínosu projektu Rel-Miner, také v zamìøení
 T.Karbana hlavnì na možnost distribuovanosti bìhu re\-laè\-ních i obecnì nerelaèních dataminingových
 procedur. Podstatným rozdílem je zpùsob implementace: Rel-Miner byl od poèátku vyvíjen
-jako samostatné softwarové dílo, které je zamìøeno na teoretické aspekty relaèního
+jako samostatné softwarové dílo, které je zamìøeno na teoretické aspekty re\-laè\-ní\-ho
 dobývání dat a implementace je spíše vzorová a obsahuje relaèní rozšíøení pouze procedury 4ft-Miner,
-kdyžto implementace relaèních rozšíøení v rámci této diplomové práce je zamìøená na práci
+kdežto implementace relaèních rozšíøení v rámci této diplomové práce je zamìøená na práci
 v prostøedí Ferda DataMiner, na využití veškerých jeho uživatelských i programátorských
 výhod a již implementovaných prostøedkù. Mìla za cíl kromì dvou implementovaných procedur 
-re\-laè\-ní\-ho dataminingu položit základy pro snazší pøidávání relaèních rozšíøení pro zbývající
+re\-laè\-ní tìžby dat položit základy pro snazší pøidávání re\-laè\-ních rozšíøení pro zbývající
  procedury v rámci systému Ferda DataMiner.
 \paragraph{}
 Rel-Miner mìl být prvotní implementací v oblasti relaèního dataminingu a principu bitových øetìzcù.
@@ -175,31 +186,34 @@ známo, zda již existuje ve spustitelné podobì umožòující bìh relaèních dataminin
 Podobnì jako systém LISp-Miner je i systém Rel-Miner vytváøen pøedevším pro výzkumné úèely
 a bude tedy vhodný pro malé a støednì velké projekty, pøedevším pak pro výuku studentù.
 \subsection{Ferda DataMiner}
+\label{ferdaproject}
+Následuje popis prostøedí Ferda DataMiner, jak je uveden v èlánku \cite{ferda}.
+\paragraph{}
 Ferda DataMiner (\verb+http://sourceforge.net/projects/ferda+)
-vznikl jako softwarový projekt na Matematicko-fyzikální fakultì Univerzity Karlovy.
+vznikl ja\-ko softwarový projekt na Matematicko-fyzikální fakultì Univerzity Karlovy.
 Mìl odstranit nejvìtší nedostatky systému LISp-Miner zejména v oblasti modularity
 a jednoduchosti uživatelské práce.
-Pøedstavuje spo\-leè\-né vi\-zuál\-ní pro\-støe\-dí pro šestici
+Pøedstavuje spoleèné vizuální prostøedí pro šestici
 výše uvedených procedur systému LISp-Miner, pøináší vi\-zuál\-ní mo\-del postupu dobývání
 znalostí podobný modelùm v komerèních systémech SPSS Clementine, SAS Enterprise Miner apod.
 Srovnání s tìmito systémy je rovnìž uvedeno v \cite{ferda}.
 
-\subsection{Krabièky}
+\subsubsection{Krabièky}
 Ferda pøináší pohled na zadání úlohy dobývání znalostí jako na zapsání funkce
 pomocí jistých vizuálních objektu -- tzv. krabièek. Každá krabièka zastává také
 roli funkce nebo nìkolika funkcí. Krabièky mají parametry a vyhodnocují své
-funkce nad hodnotami tìchto parametru. Parametrùm se u~krabièek øíká zásuvky.
+funkce nad hodnotami tìchto parametrù. Parametrùm se u~krabièek øíká zásuvky.
 Do zásuvek se zapojují jiné krabièky. Krabièky jsou rozdìleny podle typu a do
 každé zásuvky lze zapojit pouze nìkteré typy krabièek.
 
-Pomocí rady jednoduchých krabièek je uživateli umožnìno sestavovat vlastní
+Pomocí øady jednoduchých krabièek je uživateli umožnìno sestavovat vlastní
 algoritmy. Ferda tedy rovnìž pøedstavuje nìco jako uživatelský programovací
 jazyk. Na krabièky se lze však také dívat jako na konstrukce logiky èi
 sémantiky, ke které existuje lambda-kategoriální gramatika. Pro ilustraci prostøedí
 uvedeme obrazovku z prostøedí Ferda jako obrázek \ref{fig:ferdatutorial}.
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=12cm]{pics/ferda-tutorial.eps}
+\includegraphics[width=15cm]{pics/ferda-tutorial.eps}
 \end{center}
 \caption{Hlavní obrazovka prostøedí Ferda DataMiner}
 \label{fig:ferdatutorial}
@@ -210,7 +224,7 @@ se do prostøedí mùže pøidat ve formì krabièky zapojitelné mezi stávající krabièk
 autor implementuje metody uvedené v kapitole \ref{cile} ve formì krabièek, které se zapojují 
 do stávajícího zadání úlohy.
 
-\subsection{Moduly}
+\subsubsection{Moduly}
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=12cm]{pics/ferda-design.eps}
