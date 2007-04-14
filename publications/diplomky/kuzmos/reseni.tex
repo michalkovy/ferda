@@ -8,44 +8,44 @@ uvedené v seznamu použité literatury jako \cite{kuchar}.
 \paragraph{}
 Jak bylo podrobnì popsáno v kapitole \ref{ferdaproject}, Ferda Data\-Miner
 vznikl jako studentský projekt s cílem implementace obecnìjší platformy
-pro data\-mining se základním prvkem pojmenovaným krabièka, viz \cite{ferda}
+pro datamining se základním prvkem pojmenovaným krabièka, viz \cite{ferda}
 pro podrobnìjší informace.
 \paragraph{}
 V dobì jeho vzniku již byly získány rozsáhlé uživatelské
-zkušenosti se systémem LISp-Miner a Ferda Data\-Miner byl navržen s ohledem
+zkušenosti se systémem LISp-Miner a Ferda DataMiner byl navržen s ohledem
 na tyto zkušenosti. V rámci studentského projektu byly implementovány procedury metody
 GUHA s použitím
 existujících modulù prostøedí LISp-Miner. To pøineslo øadu potíži podrobnì
 popsaných T.Kuchaøem v \cite{kuchar} a proto bylo evidentní, že procedury GUHA
-se musí do prostøedí Ferda Data\-Miner pøidat bez využití LISp-Mineru.
+se musí do prostøedí Ferda DataMiner pøidat bez využití LISp-Mineru.
 \paragraph{}
 Implementaci šesti GUHA procedur a modulù pro zadání úlohy implementoval
 T.Kuchaø ve své diplomové práci ''Experimentální GUHA procedury'',
 jak už zde bylo nìkolikrát zmínìno.
 \paragraph{}
 Tato diplomová práce je rozšíøením existujících (tzn. v prostøedí
-Ferda Data\-Miner implementovaných) data\-miningových procedur. Sdílí
+Ferda DataMiner implementovaných) dataminingových procedur. Sdílí
 jak zpùsob zadávání úlohy, tak i nìkteré èásti procedur. 
 \paragraph{}
 Z uživatelského hlediska se relaèní rozšíøení procedur implementovaly jako
 krabièky. Pøesný popis pøidaných krabièek je uveden v kapitole \ref{implementationdetails}.
 Do relaèní procedury ve formì krabièky se zapojí zadání úlohy stejnì jako do nerelaèní
-a výstup se zapojuje do krabièek data\-miningových procedur stejnì jako z existujících krabièek
+a výstup se zapojuje do krabièek dataminingových procedur stejnì jako z existujících krabièek
 booleovských atributù.
 \paragraph{}
  Z programátorského hlediska se využívá
 prostøedkù jako získávaní bitových øetízkù ze zapojených krabièek atributù,
 inicializace samotné relaèní procedury
-a dalších pøedpøipravených prostøedkù, jako jsou roz\-hraní, abstrak\-tní tøídy apod.
-Mnoho z tìchto prostøedkù bylo v prùbìhu imple\-mentace uzpùsobeno pro
-relaèní data\-mining, jak bude podrob\-nìji popsáno v kapitole \ref{implementationdetails}.
-Na druhou stranu pøi implementaci autor vy\-tvoøil další pro\-støedky usnad\-òující
+a dalších pøedem pøipravených prostøedkù, jako jsou rozhraní, abstraktní tøídy apod.
+Mnoho z tìchto prostøedkù bylo v prùbìhu implementace uzpùsobeno pro
+relaèní datamining, jak bude podrobnìji popsáno v kapitole \ref{implementationdetails}.
+Na druhou stranu pøi implementaci autor vy\-tvoøil další prostøedky usnad\-òující
 implementaci relaè\-ních roz\-šíøení pro zbývající data\-miningové procedury.
 \paragraph{}
-Vzhledem k od\-lišné povaze generování relevan\-tních otázek ne\-bylo
-mož\-né využít jedné z hlav\-ních výhod existující imple\-mentace
-GUHA procedur v pro\-støedí Ferda Data\-Miner a to cache bitových
-øetízkù. Dále existující imple\-mentace musela být roz\-šíøena
+Vzhledem k odlišné povaze generování relevantních otázek nebylo
+možné využít jedné z hlavních výhod existující implementace
+GUHA procedur v prostøedí Ferda DataMiner a to cache bitových
+øetízkù. Dále existující implementace musela být rozšíøena
 o možnost práce s bitovými øetízky na odlišném principu,
 než bylo dosud implementováno.
 \paragraph{}
@@ -66,8 +66,8 @@ Public License lze nalézt na \verb+http://www.gnu.org/licenses/gpl.txt+.
 \subsection{Platforma}
 Implementace v rámci dané diplomové práce byla napsána
 v jazyce C\# stejnì jako stávající implementace prostøedí
-Ferda Data\-Miner. Jedním z cílù (už od doby studentského projektu)
-je možnost práce s prostøedím Ferda Data\-Miner na více platformách.
+Ferda DataMiner. Jedním z cílù (už od doby studentského projektu)
+je možnost práce s prostøedím Ferda DataMiner na více platformách.
 Pod OS Windows lze využít platformu Microsoft .NET Framework
 (\verb+http://www.microsoft.com/cze/net/+),
 na jiných operaèních systémech (napøíklad Linux nebo
@@ -76,20 +76,20 @@ MacOS) pak prostøedí Mono \newline (\verb+http://www.mono-project.com+) .
 Prostøedí Ferda Data\-Miner bylo navrženo modulárnì. Jeho jednotlivé
 èásti mezi sebou komunikují pøes middleware Internet Communications
 Engine ICE (\verb+http://www.zeroc.com+), což je moderní alternativa
-podobnému frameworku CORBA a podporuje nìkolik rozšíøených prog\-ramovacích
+podobnému frameworku CORBA a podporuje nìkolik rozšíøených programovacích
 jazykù, mezi které patøí také C\#.
 \subsection{Výkonnostní testy}
-Souèástí dané dip\-lomové práce je øa\-da tes\-tù
-re\-laè\-ních roz\-šíøe\-ní da\-ta\-miningo\-vých pro\-ce\-dur. Tes\-ty
-se za\-mìøí na hranice únos\-nosti zadání úlohy
-ve smyslu doby bìhu, na vliv veli\-kosti zpraco\-vávané
-datové matice na bìh relaè\-ních roz\-šíøení a také
-na dùle\-žitost využití cache pro ge\-ne\-ro\-va\-né bi\-tové
-øetízky vir\-tuálním atri\-butem. V úplnì pùvodním
-návrhu implemen\-tace se s cache vùbec ne\-poèítalo
-z dùvodù uvedených dále, proto testy za\-hrnují
-i bìh úlohy s vyp\-nutou cache pro ilustraci zdùvod\-nìní
-její zavedení na\-vzdory pùvod\-nímu návrhu. Testy jsou popsány
+Souèástí dané diplomové práce jsou testy
+relaèních rozšíøení dataminingových procedur. Testy
+se zamìøí na hranice únosnosti zadání úlohy
+ve smyslu doby bìhu, na vliv velikosti zpracovávané
+datové matice na bìh relaèních rozšíøení a také
+na dùležitost využití cache pro generované bitové
+øetízky virtuálním atributem. V úplnì pùvodním
+návrhu implementace se s cache vùbec nepoèítalo
+z dùvodù uvedených dále, proto testy zahrnují
+i bìh úlohy s vypnutou cache pro ilustraci zdùvodnìní
+její zavedení navzdory pùvodnímu návrhu. Testy jsou popsány
 v kapitole \ref{tests}.
 \subsection{Dokumentace}
 \subsubsection{Uživatelská dokumentace}
@@ -100,16 +100,6 @@ Obecný návrh øešení je souèástí textu této diplomové práce.
 Poznámky pøímo k detailùm implementace jsou souèástí zdrojového kódu.
 Tato dokumentace mùže být kdykoliv vygenerována ve zvláštním souboru.
 \section{Agregaèní atribut}
-\subsection{Popis úlohy}
-Zde bude popsána podstata úlohy, kterou bylo nutné
-vyøešit pro implementaci virtuálního agregaèního atributu v prostøedí
-Ferda Data\-Miner.
-\paragraph{}
-Jak už bylo podrobnì popsáno v sekci \ref{vattributes}, agregaèní
-virtuální atribut pracuje nad vedlejší datovou matici, kde provádí
-jednoduché transformace, které jsou nejèastìji implementovány jako agregaèní
-funkce jazyka SQL (proto název agregaèní) pro øádky vedlejší datové matice vztahující se
-k objektu v hlavní datové matici.
 \subsection{Diskuze nad implementaci}
 Pøi roz\-ho\-do\-vá\-ní o rozsahu imple\-men\-tova\-né funkè\-nosti agre\-gaè\-ního vir\-tuál\-ního
 atri\-butu se bral v potaz fakt, že da\-le\-ko za\-jímavìjším at\-ri\-butem pro vy\-uži\-tí
@@ -137,49 +127,8 @@ podrobnìji popsané v kapitole \ref{implementationdetails}.
 
 
 \section{Hypotézový atribut}
-Zde bude popsána podstata úlohy, kterou bylo nutné
-vyøešit pro implementaci virtuálního hypotézového atributu v prostøedí
-Ferda Data\-Miner. Protože výsledná idea implementace byla
-nalezena a upøesnìna až bìhem nìkolika schùzí s vedoucím diplomové
-práce, autor považuje za nezbytné tuto diskuzi zde krátce uvést,
-což dle jeho názoru pomùže k lepšímu pochopení dùvodù
-volby návrhu, který nakonec pøevládl a byl tedy v rámci dané
-diplomové práce naprogramován. Bude následovat rozbor
-dopadu zvoleného zpù\-so\-bu pro stávající i budoucí aspekty
-implementace relaèních rozšíøení v pros\-tøe\-dí Ferda Data\-Miner.
-\subsection{Popis úlohy}
-Jak už bylo podrobnì popsáno v sekci \ref{vattributes}, hypotézový
-virtuální atribut (kterému také øíkáme podúloha)
-pracuje nad vedlejší datovou matici, ve které
-zkoumá zajímavé vztahy pro øádky dané datové matice patøící k objektu
-v hlavní datové matici. Podúloha se spustí jednou pro každý objekt
-z hlavní datové matice a hledá zajímavé vztahy nad objekty z vedlejší datové tabulky,
-které se vztahují ke zkoumanému objektu z hlavní datové tabulky.
-Výsledkem pro hlavní úlohu, do které je takový virtuální atribut zapojen,
-bude množina sloupcù obsahujících sílu nebo platnost relevantního tvrzení
-pro podmnožinu øádkù z vedlejší datové tabulky -- viz obrázek \ref{fig:masterclient}.
-
-\paragraph{}
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=8cm]{pics/master_client1.eps}
-\end{center}
-\caption{Master-detail tabulka}
-\label{fig:masterclient}
-\end{figure}
-\paragraph{}
-Zde podúloha probìhne nad transakcemi 1 a 2, výsledek (reálné èíslo) pøidá
-do nového virtuálního sloupce na pozici pro klienta ABC. Dále podúloha probìhne znovu
-nad transakcemi 3 a 4, pøidá na pozici pro klienta DEF další reálné èíslo a obdobným zpùsobem
-pokraèuje pro zbytek matice.
-\paragraph{}
-V této diplomové práci bylo implementováno relaèní rozšíøení procedur 4ft-Miner
-a SD4ft-Miner. Jako výstup úloh tìchto virtuálních atributù se generují virtuální sloupce
-obsahující hodnoty \emph{true} a \emph{false}. Do prostøedí Ferda Data\-Miner však lze pøidat
-i relaèní rozšíøení procedur, která budou generovat sloupce reálných hodnot. V následujícím popisu
-implementace se takováto varianta rovnìž diskutuje.
 \subsection{Diskuze nad implementaci}
-Z výše popsaného je jasné, že implementace musí vyøešit nìkolik problému.
+Pøi implementaci muselo být vyøešeno nìkolik problému.
 Jejich øešení bylo podrobnì diskutováno s vedoucím diplomové práce
 pøibližnì v následujících bodech.
 \paragraph{}
