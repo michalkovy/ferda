@@ -1,35 +1,41 @@
 \chapter{Implementace}
 V této kapitole budou uvedeny a popsány implementované
 procedury a kra\-biè\-ky vèetnì uvedení nìkterıch nejdùleitìjších
-detailù implementace.
+detailù implemen\-ta\-ce.
 
 \label{implementationdetails}
 \section{Agregaèní atribut}
 Podrobnìjší popis úèelu virtuálního agregaèního atributu
-byl uveden v pøed\-chozích kapitolách. Zde podrobnì probereme
-naimplementovanou funkènost vèetnì popisu vytvoøené krabièky.
+byl uveden v pøed\-cho\-zích kapitolách. Zde podrobnì probereme
+implementovanou funkènost vèetnì popisu vytvoøené krabièky.
 \subsection{Detaily implementace}
 Agregaèní virtuální atribut poskytuje monost spojit dvì
-datové matice (da\-ta\-bá\-zo\-vé tabulky) na základì zadaného klíèe
+datové matice (databázové tabulky) na základì zadaného klíèe
 a volby vısledného sloupce z vedlejší datové matice.
 Vıslednı sloupec lze zapojit do dataminingové úlohy GUHA stejnì jako
 vıslednı sloupec, kterı poskytuje krabièka ''Sloupec''.
-\paragraph{}
-Dále danı atribut mùe v budoucnu vyuívat monosti práce s SQL funk\-ce\-mi
+Dále danı atribut mùe vyuívat monosti práce s SQL funkcemi
 díky pouití stejného postupu jako pøi nadefinování odvozeného sloupce.
-Tato funkènost však nebyla implementována z dùvodu pracnosti, ale
-mùe bıt lehce doplnìna pozdìji -- pravdìpodobnì autorem dané diplomové práce
-mimo diplomovou práci, ale v rámci dalšího rozšíøování prostøedí
-Ferda DataMiner.
+Sloupec lze získat i jako vısledek SQL funkce, kterou lze zadat pøi volbì názvu sloupce.
 \subsection{Krabièka}
 Daná krabièka reprezentuje vıše popsanı agregaèní
-virtuální atribut z ui\-va\-tel\-ské\-ho hlediska.
+virtuální atribut z uivatel\-ské\-ho hlediska (obrázek \ref{fig:aggrcolumn}).
+
+\paragraph{}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=10cm]{pics/agregacni.eps}
+\end{center}
+\caption{Agregaèní virtuální sloupec}
+\label{fig:aggrcolumn}
+\end{figure}
+
 \subsubsection{Seznam zásuvek}
 \begin{description}
-\item[Hlavní datová tabulka] 
+\item[Hlavní datová matice] 
 Do této zásuvky se zapojuje krabièka reprezentující hlavní
 datovou matici.
-\item[Vedlejší datová tabulka]
+\item[Vedlejší datová matice]
 Do této zásuvky se zapojuje krabièka reprezentující vedlejší
 datovou matici.
 \end{description}
@@ -40,12 +46,12 @@ Umoní vybrat sémantiku sloupce. Sémantika v prostøedí Ferda DataMiner
 byla podrobnìji popsána v \ref{datasemantics}. Uivatel mùe tedy vybrat
 z moností \emph{Nominální, Ordinální, Cyklickı ordinální, Kardinální}.
 \item[Id sloupec hlavní datové tabulky] 
-Zde se vybere sloupec ze seznamu na\-bízenıch sloupcù hlavní datové tabulky.
-Záznamy z daného sloupce budou pouíty jako klíèe pro záznamy z hlavní datové tabulky
+Zde se vybere sloupec ze seznamu na\-bí\-ze\-nıch sloupcù hlavní datové tabulky.
+Záznamy z daného sloupce budou pouity jako klíèe pro záznamy z hlavní datové tabulky
 pøi spojení hlavní a vedlejší datové tabulky.
 \item[Id sloupec vedlejší datové tabulky] 
-Zde se vybere sloupec ze seznamu na\-bízenıch sloupcù hlavní datové tabulky.
-Záznamy z daného sloupce budou pouíty jako klíèe pro záznamy z vedlejší datové tabulky
+Zde se vybere sloupec ze seznamu nabízenıch sloupcù hlavní datové tabulky.
+Záznamy z daného sloupce budou pouity jako klíèe pro záznamy z vedlejší datové tabulky
 pøi spojení hlavní a vedlejší datové tabulky.
 \end{description}
 \subsubsection{Seznam vlastností pouze pro ètení}
@@ -60,50 +66,50 @@ Zobrazí datovı typ hodnot záznamù ve sloupci.
 \item[Prùmìr] 
 Zobrazí prùmìr hodnot záznamù ve sloupci.
 \item[Navzájem rùzné hodnoty] 
-Zobrazí poèet záznamù s navzájem rùznımi hodnotami ve sloupci.
+Zobrazí poèet záznamù s na\-vzá\-jem rùz\-nı\-mi hod\-no\-ta\-mi ve sloupci.
 \item[Maximum] 
 Zobrazí maximální hodnotu ze všech hodnot záznamù ve sloupci.
 \item[Minimum] 
 Zobrazí minimální hodnotu ze všech hodnot záznamù ve sloupci.
 \item[Standardní odchylka] 
 Zobrazí hodnotu standardní odchylky ze všech hodnot záznamù ve sloupci.
-\item[Variabilita] 
+\item[Rozptyl] 
 Zobrazí hodnotu variability ze všech hodnot záznamù ve sloupci.
 \end{description}
 
 \section{Hypotézovı atribut}
-Podrob\-nìjší po\-pis úèelu vir\-tuál\-ního hypo\-té\-zo\-vého atri\-bu\-tu
-byl uve\-den v pøed\-cho\-zích ka\-pi\-to\-lách. Zde ro\-ze\-be\-reme
-na\-implemen\-tovanou funkè\-nost vèet\-nì po\-pi\-su vyt\-vo\-øenıch kra\-bièek.
+Podrobnìjší popis úèelu virtuálního hypotézového atributu
+byl uveden v pøedchozích kapitolách. Zde rozebereme
+implementovanou funkènost, ob\-jas\-ní\-me pouité postupy a dále popíšeme vytvoøené krabièky.
 \subsection{Detaily implementace}
-Hypo\-tézovı vir\-tuální atribut ge\-ne\-ruje vir\-tuální sloupce (pøesnìji pøímo 
-bi\-tové øetízky) na zák\-ladì zadání pod\-úlohy. Tato se za\-dává ob\-dobnì jako
-bìná data\-mining\-ová úloha pro ji existující pro\-ce\-dury. Roz\-dílem
-je pøe\-devším pos\-kytovanı vıs\-ledek. Hypo\-tézovı virtuální atri\-but
-ne\-poskytuje vıs\-ledek pro pro\-hlíení ui\-vatelem (na\-rozdíl od bì\-nıch
-nerelaèních procedur), ale pro ne\-relaèní data\-miningovou pro\-ceduru,
+Hypotézovı virtuální atribut generuje virtuální sloupce (pøesnìji pøímo 
+bitové øetízky) na základì zadání podúlohy. Tato se zadává obdobnì jako
+bìná dataminingová úloha pro ji existující procedury. Rozdílem
+je pøedevším poskytovanı vısledek. Hypotézovı virtuální atribut
+neposkytuje vısledek pro prohlíení uivatelem (na rozdíl od bìnıch
+nerelaèních procedur), ale pro nerelaèní dataminingovou proceduru,
 do zadání které je zahrnut jako booleovskı atribut.
 \paragraph{}
-Jako souèást implementace hypo\-tézového virtuálního atri\-butu v pro\-støedí
-Ferda DataMiner byly vyt\-voøeny kra\-bièky pro 4ft vir\-tuální hypo\-tézovı atri\-but a 
-SD4ft virtuální hypo\-tézovı atribut. Rovnì byly pro\-ve\-deny úpravy nìk\-terıch modulù,
-které pouívají krabièky data\-minigovıch pro\-cedur.
+Jako souèást implementace hypotézového virtuálního atributu v prostøedí
+Ferda DataMiner byly vytvoøeny krabièky pro 4ft virtuální hypotézovı atribut a 
+SD4ft virtuální hypotézovı atribut. Rovnì byly provedeny úpravy nìkterıch modulù,
+které pouívají krabièky dataminigovıch procedur.
 \paragraph{}
-Jak u bylo zmínìno v \ref{subtaskimplementation}, kra\-bièky 4ft a SD4ft
-virtuál\-ního atributu gene\-rují rov\-nou bitové øetízky pro druh koeficientu
-''jedno\-prvková pod\-mnoina''. V prostøedí Ferda Data\-Miner pro\-to vystupují na místì
-kra\-bièky jak ''AtomSetting'', tak krabièky atri\-butu.
+Jak u bylo zmínìno v \ref{subtaskimplementation}, krabièky 4FT a SD4FT
+virtuálního atributu generují rovnou bitové øetízky pro druh koeficientu
+''jed\-no\-prvko\-vá pod\-mno\-i\-na''. V prostøedí Ferda DataMiner proto vystupují na místì
+krabièky jak ''AtomSetting'', tak krabièky atributu.
 \subsubsection{Generování kolekce}
 Pøi implementování dle návrhu z \ref{subtaskimplementation} se autor rozhodl vyuít
 novıch vlastností, které nabízel jazyk C\# ve verzi 2.0 a to konkrétnì zavedení
-klíèovího slova \verb+yield+ pro velmi snadné implementování
-iterátoru (více viz na\-pøí\-klad na \verb+http://msdn2.microsoft.com/en-us/library/9k7k7cf0.aspx+).
+klíèového slova \verb+yield+ pro velmi snadné implementování
+iterátoru (více viz napøíklad na \verb+http://msdn2.microsoft.com/en-us/library/9k7k7cf0.aspx+).
 \paragraph{}
 Tato vlastnost nového C\# usnadnila implementování pøístupu ''poskytni další bitovı øetízek'',
 protoe velmi zjednodušenì øeèeno umoòuje vrátit kolekci prvkù, kterou lze procházet
-pomocí cyklu foreach, ani by byly do\-pøe\-du známé prvky v dané kolekci. Ta se
-totí generuje dynamicky, co se nám hodí právì pøi implementaci kolekce bitovıch øetízkù,
-které jsou ziskávany metodou ''poskytni další bitovı øetízek''.
+pomocí cyklu \verb+foreach+, ani by byly dopøedu známé prvky v dané kolekci. Ta se
+toti generuje dynamicky, co se nám hodí právì pøi implementaci kolekce bitovıch øetízkù,
+které jsou získávány metodou ''poskytni další bitovı øetízek''.
 
 \subsubsection{Count vector}
 Pro generování bitového øetízku správné délky (tzn. stejné délky jako bitové
@@ -112,14 +118,14 @@ ke kadému objektu z hlavní datové matice. Potom bude moné generovat virtuální 
 správné délky -- viz \ref{subtaskimplementation}.
 \paragraph{}
 Tato informace je získávána pomocí tzv. \emph{CountVectoru}, kterı na $i$-té pozici
-obsahuje poèet øádkù vedlejší datové matice patøicích $i$-tému objektu z hlavní
+obsahuje poèet øádkù vedlejší datové matice patøících $i$-tému objektu z hlavní
 datové matice (to samozøejmì pøedpokládá setøídìní obou matic dle stejného klíèe).
 \paragraph{}
 Za pouití \emph{CountVectoru} lze generovat celı virtuální sloupec, potamo odpovídající
-bitovı øetízek, ji pomìrnì snadno. Podúloha gene\-rující vir\-tuální sloup\-ce
-jako vısledek platnosti rele\-vantních otázek, bude poèítat na pod\-mnoinì øádkù zjištìné
-z informace dané \emph{CountVectorem}. Pøed spuštìním gene\-rování rele\-vantních otázek se pro
-kadı objekt z hlavní datové matice vytvoøí tzv. \emph{masky}, co jsou bi\-tové øetìzce s dél\-kou rov\-nající se poètu záznamù ve vedlej\-ší da\-tové matici a jejich poèet odpo\-vídá poètu ob\-jektù v hlav\-ní datové matici. Kadı
+bitovı øetízek, ji pomìrnì snadno. Podúloha generující virtuální sloupce
+jako vısledek platnosti relevantních otázek, bude poèítat na pod\-mno\-i\-nì øádkù zjištìné
+z informace dané \emph{CountVectorem}. Pøed spuštìním generování relevantních otázek se pro
+kadı objekt z hlavní datové matice vytvoøí tzv. \emph{masky}, co jsou bitové øetìzce s délkou rovnající se poètu záznamù ve vedlejší datové matici a jejich poèet odpovídá poètu objektù v hlavní datové matici. Kadı
 objekt z hlavní datové matice má vytvoøenou svoji masku. Bitovı øetízek masky pro $i$-tı øádek
 hlavní datové matice obsahuje jednièky na pozicích odpovídajících umístìní záznamù z vedlejší
 datové matice vztahujících se k $i$-tému øádku hlavní datové matice. Napøíklad, máme-li v tabulce klientù dva klienty
@@ -127,83 +133,105 @@ a v tabulce transakcí 10 transakcí, 4 pro prvního klienta a 6 pro druhého, pak v
 o délce 10 bitù. Maska pro prvního klienta bude obsahovat jednièky na pozicích 0-3 a jinak nuly
 a maska pro druhého klienta bude obsahovat jednièky na pozicích 4-9 a jinak nuly.
 \paragraph{}
-Takto vygenerované masky se aplikují na bitové øetízky gene\-ro\-vané at\-ri\-bu\-ty v zadání pod\-úlohy ope\-rací AND,
-èím se vynulují hodnoty na pozicích bitového øetízku, které neodpovídají právì zkoumanému ob\-jektu z hlav\-ní ma\-tice. Pod\-úloha tedy vdyc\-ky pro\-bìhne pouze pro po\-adované øád\-ky ved\-lejší datové ma\-tice, jak je poa\-dováno.
+Takto vygenerované masky se aplikují na bitové øetízky generované atributy v zadání podúlohy operací AND,
+èím se vynulují hodnoty na pozicích bitového øetízku, které neodpovídají právì zkoumanému objektu z hlavní matice. Podúloha tedy vdycky probìhne pouze pro poadované øádky vedlejší datové matice, jak je poadováno.
 
 \subsubsection{Cache bitovıch øetízkù}
 Z dùvodù zmínìnıch v \ref{subtaskimplementation} byla naimplementována jiná cache
-pro bi\-tové øetízky generované hypotézovımi atributy. Dle principu fungování
-je to spíše buffer ne cache -- uchová prvních N bi\-tovıch øetízkù vy\-gene\-rovanıch
-hypo\-tézovım atributem, které mohou bıt poté pouity pro bìh nadúlohy. Velikost N
+pro bitové øetízky generované hypotézovımi atributy. Dle principu fungování
+je to spíše buffer ne cache -- uchová prvních N bitovıch øetízkù vygenerovanıch
+hypotézovım atributem, které mohou bıt poté pouity pro bìh nadúlohy. Velikost N
 byla stanovena konstantnì, protoe, jak bylo zjištìno pøi hlubším zkoumání zpùsobu implementace
 stávajících procedur pøi programování hypotézovıch atributù,
 ani pùvodní cache pro bitové øetízky neobsahuje ádnou logiku pro stanovení své velikosti.
 \subsubsection{Úprava existujících dataminingovıch procedur}
-Existující data\-miningové proce\-dury muse\-ly bıt roz\-šíøeny o me\-to\-dy umo\-òují\-cí
-gene\-rování a ve\-rifi\-kaci rele\-vantních otázek, bez ge\-ne\-rování hy\-potéz a s imple\-mentaci
-vıše zmínìného enumerátoru. Rovnì bylo nut\-né roz\-šíøit data\-miningové pro\-cedury
-o mo\-nost práce s jinım druhem cache pro bi\-tové øe\-tízky.
+Existující dataminingové procedury musely bıt rozšíøeny o metody umoòu\-jí\-cí
+generování a verifikaci relevantních otázek, bez generování hypotéz a s implementaci
+vıše zmínìného enumerátoru. Rovnì bylo nutné rozšíøit dataminingové procedury
+o monost práce s jinım druhem cache pro bitové øetízky.
 \subsubsection{Pøínos pro budoucí implementace}
-Vıše uvedené postupy jsou navreny a implementovány co nejobecnìji. Auto\-rùm imple\-mentace
+Vıše uvedené postupy jsou navreny a implementovány co nejobecnìji. Autorùm implementace
 relaèních rozšíøení dalších datamingovıch procedur se tímto mùe jejich práce velmi usnadnit.
 Mohou pouívat cache pro bitové øetízky virtuálních atributù, CountVector, masky a další
 navrené postupy.
 
 \subsection{Krabièky}
 \subsubsection{Krabièka 4ft virtuální booleovskı atribut}
-Daná krabièka reprezentuje vıše popsanı hypotézovı
-virtuální atribut z uivatelského hlediska. V souèasné dobì lze do zadání
-úlohy zapojit pouze jednou krabièku hypotézového atributu.
+Daná krabièka ilustrována obrázkem \ref{fig:4ftvirtualsmall} reprezentuje vıše popsanı hy\-po\-té\-zo\-vı
+virtuální atribut z uivatelského hlediska. Celková úloha se zapojenım 4FT virtuálním booleovskım atributem je uvedena
+na obrázku \ref{fig:4ftvirtualbig}
+
+\paragraph{}
+
+\paragraph{}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=6cm]{pics/v4ft-small.eps}
+\end{center}
+\caption{4FT virtuální booleovskı atribut -- detail}
+\label{fig:4ftvirtualsmall}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=15cm]{pics/v4ft-big.eps}
+\end{center}
+\caption{Úloha s 4FT virtuálním booleovskım atributem}
+\label{fig:4ftvirtualbig}
+\end{figure}
 \subsubsection{Seznam zásuvek}
-Zásuvky jsou shodné s krabièkou ''4ft-Miner'' a na vıjimky, jejich popis následuje.
+Zásuvky jsou shodné s krabièkou ''4FT'' a na vıjimky, jejich popis následuje.
 \begin{description}
-\item[Hlavní datová tabulka] 
+\item[Hlavní datová matice] 
 Do této zásuvky se zapojuje krabièka reprezentující hlavní
 datovou matici.
 \end{description}
 \subsubsection{Seznam vlastností}
-Vlastnosti jsou shodné s krabièkou ''4ft-Miner'' a na vıjimky, jejich popis následuje.
+Vlastnosti jsou shodné s krabièkou ''4FT'' a na vıjimky, jejich popis ná\-sle\-du\-je.
 \begin{description}
-\item[Maximální poèet relevantních otázek]
-Zde se zadává maximální poèet relevantních otázek, které mùe virtuální atribut vygenerovat.
+\item[Maximální poèet virtuálních sloupcù]
+Zde se zadává maximální poèet virtuálních sloupcù, které mùe virtuální atribut vygenerovat.
 \end{description}
 Pro úspìšné spuštìní úlohy, do ní je zapojena tato relaèní procedura, je nutné
 zvolit klíè, podle kterého se budou identifikovat záznamy ve vedlejší datové matici
 oproti záznamùm v hlavní datové matici. Pro hlavní datovou matici, která je zapojena
-do zásuvky se stejnım jménem, se zvolí její primární klíè pomocí vlast\-ností krabièky
+do zásuvky se stejnım jménem, se zvolí její primární klíè pomocí vlastností krabièky
 ''Tabulka'' se jménem ''Sloupce primárního klíèe''. Pro vedlejší datovou matici,
 ze které se vytváøejí atributy pro zapojení do krabièky relaèní procedury, se zvolí
-slou\-pec ob\-sahu\-jící záz\-namy ji vyb\-ra\-ného v pøed\-chozím kroku klíèe z hlavní datové matice.
+sloupec obsahující záznamy ji vybraného v pøedchozím kroku klíèe z hlavní datové matice.
 \paragraph{}
 Úloha poèítá s integritou dat: existuje-li ve vedlejší datové matici záznam, kterému
-neodpovídá ádnı záznam hlavní datové matice, úloha skonèi chybou. Vız\-nam mùeme chápat
-následujícím zpùsobem: máme-li data\-bázi banky a v ní tabul\-ky pro klienty a transakce
+neodpovídá ádnı záznam hlavní datové matice, úloha skonèi chybou. Vıznam uvedeného omezení mùeme chápat
+následujícím zpùsobem: máme-li databázi ban\-ky a v ní tabulky pro klienty a transakce
 identifikované napøíklad dle id klienta, lze poèítat s tím, e pro kadou transakci bude
 existovat klient, kterı ji provedl. Pøípad existence klienta, kterı ádné transakce neprovedl,
 mùe bıt naopak bìnı a pøi takové situaci úloha probìhne korektnì.
 
-\subsubsection{Krabièka SD4ft virtuální booleovskı atribut}
-Daná krabièka reprezentuje vıše popsanı hypotézovı
-virtuální atribut z uivatelského hlediska.
+\subsubsection{Krabièka SD4FT virtuální booleovskı atribut}
+Daná krabièka reprezentuje vıše popsanı hy\-po\-té\-zo\-vı
+virtuální atribut z uivatelského hlediska. Zpùsob zapojení do úlohy je obdobnı jako u krabièky ''4FT virtuální booleovskı atribut''.
 \subsubsection{Seznam zásuvek}
-Zásuvky jsou shodné s krabièkou ''SD4ft-Miner'' a na vıjimky, jejich popis následuje.
+Zásuvky jsou shodné s krabièkou ''SD4FT'' a na vıjimky, jejich popis následuje.
 \begin{description}
 \item[Hlavní datová tabulka] 
 Do této zásuvky se zapojuje krabièka reprezentující hlavní
 datovou matici.
 \end{description}
 \subsubsection{Seznam vlastností}
-Vlastnosti jsou shodné s krabièkou ''SD4ft-Miner'' a na vıjimky, jejich popis následuje.
+Vlastnosti jsou shodné s krabièkou ''SD4FT'' a na vıjimky, jejich popis následuje.
 \begin{description}
-\item[Maximální poèet relevantních otázek]
-Zde se zadává maximální poèet relevantních otázek, které mùe virtuální atribut vygenerovat.
+\item[Maximální poèet virtuálních sloupcù]
+Zde se zadává maximální poèet virtuálních sloupcù, které mùe virtuální atribut vygenerovat.
 \end{description}
 Pro úspìšné spuštìní úlohy je poadováno správná volba klíèù hlavní a vedlejší datové matice
 stejnì jako v pøípadì 4FT virtuálního boolovského atributu - viz vıše.
 
 \section{Ekvidistanèní intervaly}
-Z dùvodù popsanıch v \ref{zmenazadani} byla imple\-men\-tována kra\-biè\-ka atri\-butu
-pro ge\-ne\-rování ekvi\-dis\-tanè\-ních inter\-valù.
+Z dùvodù popsanıch v \ref{zmenazadani} byla implementovány krabièky atributu
+pro generování ekvidistanèních intervalù. Krabièky fungují skoro stejnì a na odlišnost
+zadaného parametru, podle kterého se mají intervaly generovat. Verze kra\-biè\-ky s názvem
+''Ekvidistanèní intervaly LISp'' vyaduje zadání délky generovaného intervalu místo celkového poadovaného
+poètu intervalù.
 \subsection{Detaily implementace}
 Implementace krabièky vyuívá algoritmù, které byly pøipraveny T.Kucharem
 v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana -- viz
@@ -218,22 +246,24 @@ vytvoøeny ekvidistanèní intervaly.
 \end{description}
 \subsubsection{Seznam vlastností}
 \begin{description}
-\item[Poèet kategorií]
-Zde se zadává poèet intervalù, které má atribut vy\-ge\-ne\-ro\-vat.
+\item[Poèet intervalù]
+Zde se zadává poèet intervalù, které má krabièka vygenerovat.
+\item[Délka intervalu]
+Vlastnost se zadává místo vlastnosti ''Poèet intervalù'' ve verzi krabièky ''Ekvidistanèní intervaly LISp''. Zde se zadává délka intervalu, které má krabièka vygenerovat.
 \item[X kategorie]
 Zde se zadává kategorie chybìjící informace.
 \item[Doména]
-Zde se zadává typ vybrané domény sloup\-ce trans\-formováné do kate\-gorií. 
-Uivatel mùe vyb\-rat z monosti ''Celá aktuální doména'' a ''Uivatelem definována doména''.
-První mo\-nost nas\-taví vyt\-váøení kate\-gorie pro kadou hod\-notu z aktuální do\-mény sloupce,
-druhá mo\-nost nas\-taví omezení pro pouitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
+Zde se zadává typ vybrané domény sloupce transformované do kategorií. 
+Uivatel mùe vybrat z monosti ''Celá aktuální doména'' a ''Uivatelem definována doména''.
+První monost nastaví vytváøení kategorie pro kadou hodnotu z aktuální domény sloupce,
+druhá monost nastaví omezení pro pouitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
 \item[Od]
-Pøi zvolení uiva\-telem defi\-nované domény kate\-gorie budou vyt\-voøeny pouze
-pro hodnoty z aktuální domény sloupce, které jsou vìt\-ší nebo rovny hod\-notì dané vlast\-nosti.
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou vìtší nebo rovny hodnotì dané vlastnosti.
 \item[Do]
-Pøi zvolení uivatelem defi\-nované domény kate\-gorie budou vyt\-voøeny pouze
-pro hodnoty z aktuální do\-mény sloupce, které jsou men\-ší nebo rovny hod\-notì dané vlast\-nosti.
-\item[Název ve vısledcích] Atri\-but je uveden v hypo\-tézách pod danım náz\-vem.
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou menší nebo rovny hodnotì dané vlastnosti.
+\item[Název ve vısledcích] Atribut je uveden v hypotézách pod danım názvem.
 \item[Sémantika] 
 Umoní vybrat sémantiku sloupce. Sémantika v prostøedí Ferda DataMiner
 byla podrobnìji popsána v \ref{datasemantics}. Uivatel mùe tedy vybrat
@@ -242,11 +272,11 @@ z moností \emph{Nominální, Ordinální, Cyklickı ordinální, Kardinální}.
 
 
 \section{Ekvifrekvenèní intervaly}
-Z dùvodù popsanıch v \ref{zmenazadani} byla implemen\-tována krabièka atributu
-pro ge\-ne\-ro\-vání ekvi\-frek\-venèních intervalù.
+Z dùvodù popsanıch v \ref{zmenazadani} byla implementována krabièka atributu
+pro generování ekvifrekvenèních intervalù.
 \subsection{Detaily implementace}
-Implementace krabièky vyuívá algoritmù, které byly pøip\-ra\-ve\-ny T.Ku\-cha\-øem
-v rámci dip\-lomové práce \cite{kuchar} a pù\-vod\-nì pocházejí od T.Kar\-bana -- viz
+Implementace krabièky vyuívá algoritmù, které byly pøipraveny T.Kuchaøem
+v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana -- viz
 \cite{relminer}. Autor se proto soustøedil na implementování samotné krabièky.
 \subsection{Krabièka}
 \subsubsection{Seznam zásuvek}
@@ -259,21 +289,21 @@ vytvoøeny ekvifrekvenèní intervaly.
 \subsubsection{Seznam vlastností}
 \begin{description}
 \item[Poèet kategorií]
-Zde se zadává poèet intervalù, které má atribut vy\-ge\-ne\-ro\-vat.
+Zde se zadává poèet intervalù, které má krabièka vygenerovat.
 \item[X kategorie]
 Zde se zadává kategorie chybìjící informace.
 \item[Doména]
-Zde se zadává typ vybrané domény sloup\-ce trans\-formováné do kate\-gorií. 
-Uivatel mùe vyb\-rat z monosti ''Celá aktuální doména'' a ''Uivatelem definována doména''.
-První mo\-nost nas\-taví vyt\-váøení kate\-gorie pro kadou hod\-notu z aktuální do\-mény sloupce,
-druhá mo\-nost nas\-taví omezení pro pouitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
+Zde se zadává typ vybrané domény sloupce transformované do kategorií. 
+Uivatel mùe vybrat z monosti ''Celá aktuální doména'' a ''Uivatelem definována doména''.
+První monost nastaví vytváøení kategorie pro kadou hodnotu z aktuální domény sloupce,
+druhá monost nastaví omezení pro pouitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
 \item[Od]
-Pøi zvolení uiva\-telem defi\-nované domény kate\-gorie budou vyt\-voøeny pouze
-pro hodnoty z aktuální domény sloupce, které jsou vìt\-ší nebo rovny hod\-notì dané vlast\-nosti.
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou vìtší nebo rovny hodnotì dané vlastnosti.
 \item[Do]
-Pøi zvolení uivatelem defi\-nované domény kate\-gorie budou vyt\-voøeny pouze
-pro hodnoty z aktuální do\-mény sloupce, které jsou men\-ší nebo rovny hod\-notì dané vlast\-nosti.
-\item[Název ve vısledcích] Atri\-but je uveden v hypo\-tézách pod danım náz\-vem.
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou menší nebo rovny hodnotì dané vlastnosti.
+\item[Název ve vısledcích] Atribut je uveden v hypotézách pod danım názvem.
 \item[Sémantika] 
 Umoní vybrat sémantiku sloupce. Sémantika v prostøedí Ferda DataMiner
 byla podrobnìji popsána v \ref{datasemantics}. Uivatel mùe tedy vybrat
@@ -284,7 +314,7 @@ z moností \emph{Nominální, Ordinální, Cyklickı ordinální, Kardinální}.
 Z dùvodù popsanıch v \ref{zmenazadani} byla implementována krabièka
 statického atributu, která umoní ruèní úpravu kategorií v atributu.
 \subsection{Detaily implementace}
-Daná krabièka v podstaté zajišuje spouštìní modulu pro úpravu atributu
+Daná krabièka v podstatì zajišuje spouštìní modulu pro úpravu atributu
 a pøedává upravenı atribut pro další vyuití v prostøedí Ferda DataMiner.
 Podstatná funkènost je soustøedìná v modulu pro úpravu atributu.
 \subsection{Krabièka}
@@ -292,15 +322,15 @@ Podstatná funkènost je soustøedìná v modulu pro úpravu atributu.
 
 \begin{description}
 \item[Sloupec nebo atribut] 
-Do této zásuvky se zapojuje buï krabièka repre\-zentující sloupec dat ne\-bo krabiè\-ka
-nìkterého z atributù. Pøi zapojení krabièky atributu budou pro modul pro úp\-ravu kate\-gorií
-poskytnuty ji vytvoøené kategorie ze za\-pojené krabièky.
+Do této zásuvky se zapojuje buï krabièka reprezentující sloupec dat nebo krabièka
+nìkterého z atributù. Pøi zapojení krabièky atributu budou pro modul pro úpravu kategorií
+poskytnuty ji vytvoøené kategorie ze zapojené krabièky.
 \paragraph{}
 Pøi zapojení krabièky reprezentující
 sloupec není pøedem vytvoøena ádná kategorie, tudí uivatel musí pouít
-modul pro úpravu kategorií pro vytvoøení kategorií. Krabièka rep\-re\-zentující sloupec v tomto pøípadì
-poskytuje informace o datech ve sloupci (dùleité jsou na\-pøík\-lad všech\-ny na\-vzájem rùz\-né hod\-no\-ty
-ze za\-po\-je\-né\-ho sloup\-ce, ale i ji\-né infor\-mace a vlast\-nosti).
+modul pro úpravu kategorií pro vytvoøení kategorií. Krabièka reprezentující sloupec v tomto pøípadì
+poskytuje informace o datech ve sloupci (dùleité jsou napøíklad všechny navzájem rùzné hodnoty
+ze zapojeného sloupce, ale i jiné informace a vlastnosti).
 \end{description}
 \subsubsection{Seznam vlastností}
 \begin{description}
@@ -311,17 +341,17 @@ Pøi kliknutí na tlaèítko spustí modul pro úpravu kategorií.
 \item[X kategorie]
 Zde se zadává kategorie chybìjící informace.
 \item[Doména]
-Zde se zadává typ vybrané domény sloup\-ce trans\-formováné do kate\-gorií. 
-Uivatel mùe vyb\-rat z monosti ''Celá aktuální doména'' a ''Uivatelem definována doména''.
-První mo\-nost nas\-taví vyt\-váøení kate\-gorie pro kadou hod\-notu z aktuální do\-mény sloupce,
-druhá mo\-nost nas\-taví omezení pro pouitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
+Zde se zadává typ vybrané domény sloupce transformované do kategorií. 
+Uivatel mùe vybrat z monosti ''Celá aktuální doména'' a ''Uivatelem definována doména''.
+První monost nastaví vytváøení kategorie pro kadou hodnotu z aktuální domény sloupce,
+druhá monost nastaví omezení pro pouitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
 \item[Od]
-Pøi zvolení uiva\-telem defi\-nované domény kate\-gorie budou vyt\-voøeny pouze
-pro hodnoty z aktuální domény sloupce, které jsou vìt\-ší nebo rovny hod\-notì dané vlast\-nosti.
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou vìtší nebo rovny hodnotì dané vlastnosti.
 \item[Do]
-Pøi zvolení uivatelem defi\-nované domény kate\-gorie budou vyt\-voøeny pouze
-pro hodnoty z aktuální do\-mény sloupce, které jsou men\-ší nebo rovny hod\-notì dané vlast\-nosti.
-\item[Název ve vısledcích] Atri\-but je uveden v hypo\-tézách pod danım náz\-vem.
+Pøi zvolení uivatelem definované domény kategorie budou vytvoøeny pouze
+pro hodnoty z aktuální domény sloupce, které jsou menší nebo rovny hodnotì dané vlastnosti.
+\item[Název ve vısledcích] Atribut je uveden v hypotézách pod danım názvem.
 \item[Sémantika] 
 Umoní vybrat sémantiku sloupce. Sémantika v prostøedí Ferda DataMiner
 byla podrobnìji popsána v \ref{datasemantics}. Uivatel mùe tedy vybrat
@@ -338,13 +368,13 @@ Zobrazí aktuální poèet kategorií v daném atributu.
 \section{Modul pro úpravu atributu}
 Tento modul se spouští nad krabièkou ''Statickı atribut''. Ta mu poskytuje
 ji existující kategorie v atributu pro úpravu a po skonèení práce
-modulu opìt uloí úpravené kategorie pro další vyuití v prostøedí Ferda DataMiner.
+modulu opìt uloí upravené kategorie pro další vyuití v prostøedí Ferda DataMiner.
 
 \subsection{Funkènost}
 \subsubsection{Hlavní obrazovka}
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=14cm]{pics/editcategories_main.eps}
+\includegraphics[width=15cm]{pics/editcategories_main.eps}
 \caption{Úprava kategorií -- hlavní obrazovka}
 \label{fig:editcategoriesmain}
 \end{center}
@@ -357,7 +387,7 @@ Protoe kategorie musí mít navzájem rùzné názvy, po zadání nesprávného (ji exis
 bude oznámena chyba a kategorie se nepøejmenuje.
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=14cm]{pics/editcategories_rename.eps}
+\includegraphics[width=15cm]{pics/editcategories_rename.eps}
 \caption{Úprava kategorií -- pøejmenování kategorie}
 \label{fig:editcategoriesrename}
 \end{center}
@@ -367,9 +397,9 @@ Více kategorií mùe bıt spojeno do jedné tak, e s podrením tlaèítka Control pø
 a kliknutím na poadované kategorie se vybere více kategorií a pak kliknutím na tlaèítko ''Spojit''
 se spojí do jedné kategorie.
 \paragraph{}
-Kategorie mùe bıt odstranìna z atributu vybraním a následnım klik\-nu\-tím na tlaèítko ''Odstranit''.
+Kategorie mùe bıt odstranìna z atributu vybraním a následnım kliknutím na tlaèítko ''Odstranit''.
 \paragraph{}
-Provedené zmìny v seznamu kategorié se uloí kliknutím na tlaèítko ''Uloit a zavøít''. Pokud
+Provedené zmìny v seznamu kategorie se uloí kliknutím na tlaèítko ''Uloit a zavøít''. Pokud
 je potøeba ukonèit práci modulu bez uloení zmìn, pouije se tlaèítko ''Zavøít bez uloení''.
 Uivatel mùe pøidat novou kategorií do seznamu kategorií v atributu. Z definice kategorie v metodì GUHA
 a její následného rozšíøení T.Kuchaøem v \cite{kuchar} plyne, e kategorie mùe obsahovat
@@ -377,7 +407,7 @@ intervaly a vıèet hodnot.
 \subsubsection{Obrazovka pro pøidání a úpravu intervalù}
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=14cm]{pics/editcategories_intervals.eps}
+\includegraphics[width=15cm]{pics/editcategories_intervals.eps}
 \caption{Úprava kategorií -- práce s intervaly}
 \label{fig:editcategoriesintervals}
 \end{center}
@@ -400,15 +430,15 @@ Obrazovka pro úpravu intervalù v ji existující kategorii se liší tím, e nelze 
 \subsubsection{Obrazovka pro pøidání a úpravu vıètu}
 \begin{figure}[!h]
 \begin{center}
-\includegraphics[width=14cm]{pics/editcategories_enum.eps}
+\includegraphics[width=15cm]{pics/editcategories_enum.eps}
 \caption{Úprava kategorií -- práce s vıètem}
 \label{fig:editcategoriesenums}
 \end{center}
 \end{figure}
 Ve formuláøi pro pøidání vıètu (na obrázku \ref{fig:editcategoriesenums}) uivatel mùe pøidávat hodnoty do vıètu
-novì vyt\-vo\-øené kate\-gorie. Ve formuláøi lze vybrat zatím nepokryté hodnoty v odpovídajícím sloupci
-a pøidat je do vıètu novì vyt\-váøe\-né kate\-gorie kliknutím na pøíslušné tlaèítko. Hodnota
-se poté objeví ve vıètu hodnot dané kategorie. Odtud mùe bıt odstranìna zvolìním a kliknutím na
+novì vytvoøené kategorie. Ve formuláøi lze vybrat zatím nepokryté hodnoty v odpovídajícím sloupci
+a pøidat je do vıètu novì vytváøené kategorie kliknutím na pøíslušné tlaèítko. Hodnota
+se poté objeví ve vıètu hodnot dané kategorie. Odtud mùe bıt odstranìna zvolením a kliknutím na
 tlaèítko pro odebrání hodnoty z vıètu.
 Po pøidání hodnot do vıètu novì vytváøené kategorie lze potvrdit pøidání kategorie tlaèítkem ''OK''.
 Pro zrušení pøidání kategorie se pouije tlaèítko ''Storno''.
