@@ -222,7 +222,7 @@ Transakce / & malé & støední &  velké   \\
 
 
 \subsection[SD4ft atribut]{SD4ft virtuální booleovský atribut}
-\subsubsection[Úloha]{Východiska zadání a zadaná úloha}
+\subsubsection[Úloha 2]{Východiska zadání a zadaná úloha 2}
 Úloha je zadaná pro 4FT následujícím zpùsobem:
 
 \begin{equation*}
@@ -258,10 +258,64 @@ Transakce / & malé & støední &  velké \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Test relaèní procedury SD4FT: úloha 1}
+\caption{Test relaèní procedury SD4FT: úloha 2}
 \end{table}
 \footnotetext{Vzhledem k velmi dlouhé pøedpokládané dobì bìhu
 test nebyl spouštìn}
+
+\section{Výsledky}
+Výsledkem úlohy byly 4FT (resp. SD4FT) hypotézy (obrázek \ref{fig:4ftresult}), kde vir\-tuál\-ní atribut byl souèásti zadání antecedentu
+úlohy pro proceduru 4FT. Jako hodnota virtuálního atributu je uvedeno znìní asociaèního pravidla, které platí na podmnožinì
+øádkù vedlejší datové matice (viz diskuzi v kapitole \ref{vattributes}). O zadání úlohy a zpùsobu interpretace získaných hypotéz probìhla krátká diskuze
+s vedoucím práce. Její výsledkem bylo konstatování faktu, že hypotézy nalezené s použitím relaèního atributu se obtížnì
+''pøekládají'' do pøirozeného jazyka. Ze zadání úlohy jsme získali nìjaká tvrzení o faktech, které platí pro klienty
+z hlavní datové tabulky, na základì faktù, která platí pro podmnožiny øádkù ve vedlejší datové tabulce.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=15cm]{pics/4ft-result}
+\end{center}
+\caption{Výsledky bìhu úlohy s použitím 4FT vrituálního atributu}
+\label{fig:4ftresult}
+\end{figure}
+\paragraph{}
+
+Zkoumejme získanou hypotézu s id 0 z výsledku bìhu úlohy 1, která zní:
+\begin{description}
+\item[Antecedent:] Salary($\langle 8110;8402)$) \& V-FFT-Bool([ant]: OP(PREVOD NA UCET),  *** [succ]: amount(Nizky vklad)) \& District(Vyskov)	
+\item[Sukcedent:] status(Good)
+\end{description}
+kde pro virtuální atribut platí:
+\begin{description}
+\item[Antecedent:] OP(PREVOD NA UCET)	
+\item[Sukcedent:] amount(Nizky vklad)
+\end{description}
+Tato hypotéza mùže znamenat, že pro klienty z Výškova, kteøí mají tendenci pøevádìt na úèet menší èástky a mají plat v rozmezí,
+$\langle 8110;8402)$, platí, že status jejich pùjèky je dobrý.
+\paragraph{}
+Hypotéza s id 73 øíká:
+
+\begin{description}
+\item[Antecedent:] Salary($\langle 8110;8402)$) \& V-FFT-Bool([ant]: OP(VKLAD),  *** [succ]: amount(Nizky vklad)) \& District(Jicin)
+\item[Sukcedent:] status(Bad)
+\end{description}
+kde pro virtuální atribut platí:
+\begin{description}
+\item[Antecedent:] OP(VKLAD)	
+\item[Sukcedent:] amount(Nizky vklad)
+\end{description}
+
+Tato hypotéza mùže znamenat, že pro klienty z Jièína, kteøí mají tendenci vkládat na úèet menší èástky a mají plat v rozmezí,
+$\langle 8110;8402)$, platí, že status jejich pùjèky je špatný.
+	
+\paragraph{}
+Pro lepší objasnìní takto nalezených hypotéz se musí novì implementované relaèní rozšíøení vyzkoušet na jiných typech úloh
+a dat. Databáze banky Barbora je fiktivní a navíc je pomìrnì malá -- autorovi se podaøilo pro testovací úèely vyrobit hlavní datovou matici
+s potøebnými daty o velikosti kolem 700 øádkù. To není moc rozsáhlý datový soubor a uvážíme-li navíc fiktivnost údajù v tìchto maticích,
+lze se domnívat, že výsledky úloh pro relaèní rozšíøení budou srozumitelnìjší a budou více odpovídat reálným faktùm pøi použití vìtších
+a korektnìjších dat.
+
+
 \section{Závìr}
 Z provedených testù plyne, že doba bìhu pro obì úlohy záleží hlavnì
 na poètu vygenerovaných virtuálních sloupcù. Velikost vedlejší datové matice
