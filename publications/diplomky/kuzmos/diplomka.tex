@@ -1,12 +1,10 @@
 
 \documentclass[a4paper,12pt,titlepage]{report}
 \usepackage[czech]{babel}
-%%\usepackage{czech}
+
 \usepackage{quotes}
 \usepackage[cp1250]{inputenc}
-%%\usepackage{ifpdf}
-\usepackage[dvips]{graphicx}
-%%\usepackage{graphicx}
+\usepackage{ifpdf}
 
 %%\title{Relaèní GUHA procedury}
 %%\author{Alexander Kuzmin}
@@ -16,13 +14,13 @@
 %% ==> The new if-Command "\ifpdf" will be used at some
 %% ==> places to ensure the compatibility between
 %% ==> LaTeX and pdfLaTeX.
-%%\newif\ifpdf
-%%\ifx\pdfoutput\undefined
-%%	\pdffalse              %%normal LaTeX is executed
-%%\else
-%%	\pdfoutput=1           
-%%	\pdftrue               %%pdfLaTeX is executed
-%%\fi
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+	\pdffalse              %%normal LaTeX is executed
+\else
+	\pdfoutput=1           
+	\pdftrue               %%pdfLaTeX is executed
+\fi
 
 
 %% Fonts for pdfLaTeX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,20 +34,19 @@
 
 
 %% Packages for Graphics & Figures %%%%%%%%%%%%%%%%%%%%%%%%%%
-%%\ifpdf %%Inclusion of graphics via \includegraphics{file}
-%%	\usepackage[pdftex]{graphicx} %%graphics in pdfLaTeX
-%%	\DeclareGraphicsExtensions{.eps}
-%%\else
-%%	\usepackage[dvips]{graphicx} %%graphics and normal LaTeX
-%%	\DeclareGraphicsExtensions{.eps}
-%%\fi
+\ifpdf %%Inclusion of graphics via \includegraphics{file}
+	\usepackage[pdftex]{graphicx} %%graphics in pdfLaTeX
+	%\DeclareGraphicsExtensions{.eps}
+\else
+	\usepackage[dvips]{graphicx} %%graphics and normal LaTeX
+	%\DeclareGraphicsExtensions{.eps}
+\fi
 %\usepackage[hang,tight,raggedright]{subfigure} %%Subfigures inside a figure
 %\usepackage{pst-all} %%PSTricks - not useable with pdfLaTeX
-\DeclareGraphicsExtensions{.eps}
+%\DeclareGraphicsExtensions{.eps}
 \usepackage{amsmath}
 %%\usepackage{amsthm}
 %%\usepackage{amsfonts}
-%\input{hyph.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DOCUMENT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -62,11 +59,11 @@
 %% ==> "title.eps" and "title.pdf", only the file processable by
 %% ==> your compiler will be used.
 %% ==> pdfLaTeX uses "title.pdf". LaTeX uses "title.eps".
-%%\ifpdf
-%%	\DeclareGraphicsExtensions{.pdf,.jpg,.png}
-%%\else
-%%	\DeclareGraphicsExtensions{.eps}
-%%\fi
+\ifpdf
+	\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\else
+	\DeclareGraphicsExtensions{.eps}
+\fi
 
 %\pagestyle{empty} %No headings for the first pages.
 
@@ -82,8 +79,8 @@
 \input{reseni.tex}
 \input{implementace.tex}
 \input{testy.tex}
-\input{zdrojaky.tex}
 \input{zaver.tex}
+\input{zdrojaky.tex}
 \input{bib.tex}
 \listoftables
 \listoffigures
