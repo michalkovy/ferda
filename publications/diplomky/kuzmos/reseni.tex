@@ -3,9 +3,9 @@
 V této kapitole budou popsané obecné charakteristiky programátorské
 implementace v rámci této diplomové práce.
 \label{implementation}
-\section{Vztah k práci ''Experimentální GUHA procedury''}
+\section{Vztah k práci \uv{Experimentální GUHA procedury}}
 \paragraph{}
-Zde se podrobnì uvede vztah diplomové práce T.Kuchaøe ''Experimentální GUHA procedury''
+Zde se podrobnì uvede vztah diplomové práce T.Kuchaøe \uv{Experimentální GUHA procedury}
 uvedené v seznamu použité literatury jako \cite{kuchar}.
 \paragraph{}
 Jak bylo podrobnì popsáno v kapitole \ref{ferdaproject}, Ferda DataMiner
@@ -22,7 +22,7 @@ popsaných T.Kuchaøem v \cite{kuchar} a proto bylo evidentní, že procedury GUHA
 se musí do prostøedí Ferda DataMiner pøidat bez využití LISp-Mineru.
 \paragraph{}
 Implementaci šesti GUHA procedur a modulù pro zadání úlohy implementoval
-T.Kuchaø ve své diplomové práci ''Experimentální GUHA procedury'',
+T.Kuchaø ve své diplomové práci \uv{Experimentální GUHA procedury},
 jak už zde bylo nìkolikrát zmínìno. Pro implementaci relaèních rozšíøení existujících procedur
 byly konkrétnì použity nebo upraveny následující prvky implementované T.Kuchaøem. Pro ilustraci uvádíme obrázek \ref{fig:ferdaarchitecture} ilustrující 
 architekturu systému Ferda DataMiner, jak ho uvádí T.Kuchaø v \cite{kuchar}.
@@ -41,14 +41,14 @@ architekturu systému Ferda DataMiner, jak ho uvádí T.Kuchaø v \cite{kuchar}.
 musely být upraveny pro použití s relaèními rozšíøeními. Byly mj. pøidány pro\-støed\-ky pro práci s tzv. \emph{agregaèním virtuálním sloupcem} ve smyslu
 sloupce generovaného pøi použití agregaèních funkcí a také prostøedky pro generování tzv. \emph{CountVectoru}, jehož význam je objasnìn pozdìji v kapitole
 \ref{implementationdetails}.
-\item[Prostøedky ''Mining Processor''] byly využity pro implementaci hy\-po\-té\-z\-ové\-ho atributu. Relaèní rozšíøení využívají zadání úlohy
+\item[Prostøedky \uv{Mining Processor}] byly využity pro implementaci hy\-po\-té\-z\-ové\-ho atributu. Relaèní rozšíøení využívají zadání úlohy
 stejnì jako nerelaèní procedury 4FT a SD4FT. Byla upravena vrstva generování výsledkù, aby místo pravdivých hypotéz poskytovala všechna asociaèní pravidla, jak
 je popsáno v úvodu v kapitole \ref{vattributes} a dále byla upravena mezivrstva poskytování bitových øetízkù, aby zajistila práci s vlastní cache bitových
 øetízkù pro virtuální atributy a aby zajistila získávání bitových øetízkù na odlišném principu, než byl implementován v \cite{kuchar}.
 Dále byly provedeny úpravy pro snazší implementaci relaèních rozšíøení zbývajících procedur.
 \item[BitString Cache] nebyl používán pro hy\-po\-té\-zo\-vé atributy, místo toho se pro nì implementoval odlišným zpùsobem, jak bude objasnìno v kapitole \ref{implementationdetails}.
-\item[Krabièky DAL] byly rozšíøeny o krabièku ''Agregaèní virtuální sloupec'', která implementuje agregaèní atribut ve smyslu relaèního dobývání znalostí.
-Krabièka má stejné vlastnosti a zásuvky jako krabièka ''Sloupec'' implementována v rámci \cite{kuchar} a pøidává nìkteré nové prvky, které jsou podrobnìji ukázány v kapitole \ref{implementationdetails}.
+\item[Krabièky DAL] byly rozšíøeny o krabièku \uv{Agregaèní virtuální sloupec}, která implementuje agregaèní atribut ve smyslu relaèního dobývání znalostí.
+Krabièka má stejné vlastnosti a zásuvky jako krabièka \uv{Sloupec} implementována v rámci \cite{kuchar} a pøidává nìkteré nové prvky, které jsou podrobnìji ukázány v kapitole \ref{implementationdetails}.
 
 \item[Krabièky ATT] byly rozšíøeny o krabiè\-ky pro transformaci atributu a kra\-biè\-ky hypotézových atributù. Krabièky pro transformaci atributu vy\-uží\-va\-jí
 algoritmù pro generování ekvidistaèních a ekvifrekvenèních intervalù implementovaných v rámci \cite{kuchar}.
@@ -164,6 +164,7 @@ foreach(BitString condition in Conditions)
 }
 
 \end{verbatim}
+\paragraph{}
 Objekty \verb+Antecedents+, \verb+Succedents+ a \verb+Conditions+ jsou
 v prostøedí Ferda DataMiner naprogramovány jako iterátory poskytující bitové øetízky
 a tím umožòují prùchod pøes všechny možné hodnoty zadání booleovských atributù.
@@ -181,8 +182,8 @@ Podúloha by se spouštìla pøedem na vedlejší datové matici. Výsledky ve formì
 buï virtuálních sloupcù a(nebo) bitových øetízkù by se pøechodnì skladovaly
 v pamìti èi ve formì serializovaných objektù a pøi následném bìhu nadúlohy
 by se této pøedložily. Podobným zpùsobem jsou implementovány napøíklad
-stávající procedury pro transformaci atributu -- ''Each value one category'', ''Ekvidistanèní intervaly''
-a ''Ekvifrekvenèní intervaly''.
+stávající procedury pro transformaci atributu -- \uv{Each value one category}, \uv{Ekvi\-dis\-tanè\-ní intervaly}
+a \uv{Ekvifrekvenèní intervaly}.
 \paragraph{}
 Výhodou takového pøístupu by byla možnost využít stávající výhody implementace
 metody GUHA v prostøedí Ferda DataMiner a to zejména cache bitových øetízkù.
@@ -295,7 +296,7 @@ potøebný atribut na základì jednoznaèného identifikátoru.
 Jak už bylo zmínìno výše, takový pøístup by se zvoleným zpùsobem implementace
 nefungoval -- pøedpokládá totiž možnost pøímého pøístupu ke všem bitovým øetízkùm
 atributu. Návrh hypotézového virtuálního atributu s tímto nepoèítá -- umí
-dát pouze ''další'' bitový øetízek bez možnosti zjistit, který další to bude, jaký
+dát pouze \uv{další} bitový øetízek bez možnosti zjistit, který další to bude, jaký
 bude mít identifikátor, ke které kategorii bude patøit atd. Z tìchto dùvodù
 nešlo stávající cache pro hypotézový virtuální atribut použít. Použití
 cache bitových øetízkù u ostatních buï existujících nebo novì implementovaných
@@ -305,12 +306,12 @@ krabièek atributù zùstalo beze zmìny, protože se pro tyto krabièky nic nezmìnilo
 Další otázkou bylo, zda implementovat hypotézový virtuální atribut
 jako dvì krabièky nebo jednu spoleènou. Stávající nevirtuální
 atributy se v pøípadì potøeby generování booleovských atributù zapojují do krabièky
-''Atom\-Set\-ting''. Ta zajistí generování koeficientù pro booleovský atribut.
+\uv{Atom\-Set\-ting}. Ta zajistí generování koeficientù pro booleovský atribut.
 \paragraph{}
 V pøípadì hypotézového virtuálního atributu by nebylo možné použít stá\-va\-jí\-cí krabièku
-pro generování koeficientù ''AtomSetting'', protože pracuje s po\-ža\-dav\-kem ''poskytni
-pøesnì tento bitový øetízek'', kdežto hypotézový atribut by umìl zpracovat pouze
-požadavek ''poskytni další bitový øetízek''. Tudíž krabièka pro generování koeficientù
+pro generování koeficientù \uv{AtomSetting}, protože pracuje s po\-ža\-dav\-kem \uv{poskytni
+pøesnì tento bitový øetízek}, kdežto hypotézový atribut by umìl zpracovat pouze
+požadavek \uv{poskytni další bitový øetízek}. Tudíž krabièka pro generování koeficientù
 využitelná pouze pro hypotézový vir\-tuál\-ní atribut by se musela také naprogramovat.
 \paragraph{}
 Po úvaze se autor rozhodl neimplementovat zvláštní krabièku pro generování
@@ -319,8 +320,8 @@ koeficientù pro hypotézový virtuální atribut z následujících dùvodù.
 \item[Potøeba pouze jednoho koeficientu]
 Bylo rozhodnuto, že pøi generování koeficientù pro booleovský atribut
 bude potøeba implementovat pouze podmnožiny délky jedna.
-Krabièka ''AtomSetting'' pro hypotézový vir\-tuál\-ní atribut by byla nadbyteèná,
-protože by tam chybìlo uživatelské nastavení, vše se odehrávalo ''pod kapotou''.
+Krabièka \uv{AtomSetting} pro hypotézový vir\-tuál\-ní atribut by byla nadbyteèná,
+protože by tam chybìlo uživatelské nastavení, vše se odehrávalo \uv{pod kapotou}.
 Nebyl tedy dùvod tuto krabièku vytváøet.
 \item[Zbyteèná komunikace krabièek pøes rozhraní ICE] Navíc by ta\-to kra\-biè\-ka, která
 by se zapojila za hypotézový virtuální atribut, znamenala komunikaci pøes rozhraní ICE.
@@ -359,7 +360,7 @@ nepoužíval, zpùsoboval opravdu velké zpomalení bìhu úlohy, byl-li do ni zapojen.
 Podíváme-li se na pseudokód algoritmu procedury 4ft-Miner uvedený výše a pøedstavíme-li si ho
 jako nadúlohu, do které bude zapojen minimálnì jeden virtuální hypotézový atribut
 (napøíklad jako sukcedent), tak bude jasné, že tento algoritmus pobìží opravdu pomalu.
-Zapojení virtuálního atributu do sukcedentu je pro tento miner ''nejhorší pøípad'',
+Zapojení virtuálního atributu do sukcedentu je pro tento miner nejhorší pøípad,
 protože bitstringy jim generované jsou používány ve vnitøním \verb+foreach+ cyklu,
 a to v pøípadì ne\-pøí\-tom\-nos\-ti cache znamená, že uvnitø tohoto cyklu se \emph{pokaždé} spustí
 podúloha (vnitøní procedura), aby mohla nadúloze poskytnout bitový øetízek.
@@ -410,7 +411,7 @@ která umožòovala spouštìní modulu pro ruèní úpravu atributu. Atribut
 výše uvedenými krabièkami pro tvorbu ekvidistanèních nebo ekvifrekvenèních intervalù.
 \subsection{Modul pro úpravu atributu}
 \paragraph{}
-Tento modul je spouštìn nad krabièkou ''Statický atribut'' a umožòuje
+Tento modul je spouštìn nad krabièkou \uv{Statický atribut} a umožòuje
 ruèní úpravu kategorií v atributu. Pøi ní uživatel mùže jak upravovat
 již pøedem pøipravené kategorie, tak i vytváøet kategorie nové. Upravovaný
 atribut mùže být i zcela prázdný a kategorie mohou být vytvoøeny
