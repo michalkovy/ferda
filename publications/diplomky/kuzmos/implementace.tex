@@ -16,14 +16,15 @@ Agregaèní virtuální atribut poskytuje možnost spojit dvì
 datové matice (databázové tabulky) na základì zadaného klíèe
 a volby výsledného sloupce z vedlejší datové matice.
 Výsledný sloupec lze zapojit do dataminingové úlohy GUHA stejnì jako
-výsledný sloupec, který poskytuje krabièka ''Sloupec''.
+výsledný sloupec, který poskytuje krabièka \uv{Sloupec}.
 Dále daný atribut mùže využívat možnosti práce s SQL funkcemi
 díky použití stejného postupu jako pøi nadefinování odvozeného sloupce.
 Sloupec lze získat i jako výsledek SQL funkce, kterou lze zadat pøi volbì názvu sloupce.
 \subsection{Krabièka}
 \paragraph{}
 Daná krabièka reprezentuje výše popsaný agregaèní
-virtuální atribut z uživatel\-ské\-ho hlediska (obrázek \ref{fig:aggrcolumn}).
+virtuální atribut z uživatel\-ské\-ho hlediska (obrázek \ref{fig:aggrcolumn}). Lze vidìt,
+že krabièka \uv{Agre\-gaè\-ní vir\-tuál\-ní sloupec} je v zadání úlohy na stejném místì jako krabièka \uv{Sloupec}.
 
 \paragraph{}
 \begin{figure}[!h]
@@ -59,11 +60,12 @@ Záznamy z daného sloupce budou použity jako klíèe pro záznamy z vedlejší datové 
 pøi spojení hlavní a vedlejší datové tabulky.
 \end{description}
 \subsubsection{Seznam vlastností pouze pro ètení}
+\paragraph{}
 Vlastnosti pouze pro ètení obecnì v prostøedí Ferda DataMiner
 slouží k informování uživatele o vlastnostech zkoumané krabièky.
 \paragraph{}
 Vlastnosti pouze pro ètení pro danou krabièku jsou shodné s vlastnostmi pro ètení
-krabièky ''Sloupec''.
+krabièky \uv{Sloupec}.
 \begin{description}
 \item[Datový typ] 
 Zobrazí datový typ hodnot záznamù ve sloupci.
@@ -103,8 +105,8 @@ které používají krabièky dataminigových procedur.
 \paragraph{}
 Jak už bylo zmínìno v \ref{subtaskimplementation}, krabièky 4FT a SD4FT
 virtuálního atributu generují rovnou bitové øetízky pro druh koeficientu
-''jed\-no\-prvko\-vá pod\-mno\-ži\-na''. V prostøedí Ferda DataMiner proto vystupují na místì
-krabièky jak ''AtomSetting'', tak krabièky atributu.
+\uv{jed\-no\-prvko\-vá pod\-mno\-ži\-na}. V prostøedí Ferda DataMiner proto vystupují na místì
+krabièky jak \uv{AtomSetting}, tak krabièky atributu.
 \subsubsection{Generování kolekce}
 \paragraph{}
 Pøi implementování dle návrhu z \ref{subtaskimplementation} se autor rozhodl využít
@@ -112,11 +114,11 @@ nových vlastností, které nabízel jazyk C\# ve verzi 2.0 a to konkrétnì zavedení
 klíèového slova \verb+yield+ pro velmi snadné implementování
 iterátoru (více viz napøíklad na \verb+http://msdn2.microsoft.com/en-us/library/9k7k7cf0.aspx+).
 \paragraph{}
-Tato vlastnost nového C\# usnadnila implementování pøístupu ''poskytni další bitový øetízek'',
+Tato vlastnost nového C\# usnadnila implementování pøístupu \uv{poskytni další bitový øetízek},
 protože velmi zjednodušenì øeèeno umožòuje vrátit kolekci prvkù, kterou lze procházet
 pomocí cyklu \verb+foreach+, aniž by byly dopøedu známé prvky v dané kolekci. Ta se
 totiž generuje dynamicky, což se nám hodí právì pøi implementaci kolekce bitových øetízkù,
-které jsou získávány metodou ''poskytni další bitový øetízek''.
+které jsou získávány metodou \uv{poskytni další bitový øetízek}.
 
 \subsubsection{Count vector}
 \paragraph{}
@@ -193,7 +195,7 @@ na obrázku \ref{fig:4ftvirtualbig}
 \end{figure}
 \subsubsection{Seznam zásuvek}
 \paragraph{}
-Zásuvky jsou shodné s krabièkou ''4FT'' až na výjimky, jejichž popis následuje.
+Zásuvky jsou shodné s krabièkou \uv{4FT} až na výjimky, jejichž popis ná\-sle\-du\-je.
 \begin{description}
 \item[Hlavní datová matice] 
 Do této zásuvky se zapojuje krabièka reprezentující hlavní
@@ -201,16 +203,17 @@ datovou matici.
 \end{description}
 \subsubsection{Seznam vlastností}
 \paragraph{}
-Vlastnosti jsou shodné s krabièkou ''4FT'' až na výjimky, jejichž popis ná\-sle\-du\-je.
+Vlastnosti jsou shodné s krabièkou \uv{4FT} až na výjimky, jejichž popis ná\-sle\-du\-je.
 \begin{description}
 \item[Maximální poèet virtuálních sloupcù]
 Zde se zadává maximální poèet virtuálních sloupcù, které mùže virtuální atribut vygenerovat.
 \end{description}
+\paragraph{}
 Pro úspìšné spuštìní úlohy, do níž je zapojena tato relaèní procedura, je nutné
 zvolit klíè, podle kterého se budou identifikovat záznamy ve vedlejší datové matici
 oproti záznamùm v hlavní datové matici. Pro hlavní datovou matici, která je zapojena
 do zásuvky se stejným jménem, se zvolí její primární klíè pomocí vlastností krabièky
-''Tabulka'' se jménem ''Sloupce primárního klíèe''. Pro vedlejší datovou matici,
+\uv{Tabulka} se jménem \uv{Sloupce primárního klíèe}. Pro vedlejší datovou matici,
 ze které se vytváøejí atributy pro zapojení do krabièky relaèní procedury, se zvolí
 sloupec obsahující záznamy již vybraného v pøedchozím kroku klíèe z hlavní datové matice.
 \paragraph{}
@@ -224,17 +227,17 @@ mùže být naopak bìžný a pøi takové situaci úloha probìhne korektnì.
 \subsubsection{Krabièka SD4FT virtuální booleovský atribut}
 \paragraph{}
 Daná krabièka reprezentuje výše popsaný hy\-po\-té\-zo\-vý
-virtuální atribut z uživatelského hlediska. Zpùsob zapojení do úlohy je obdobný jako u krabièky ''4FT virtuální booleovský atribut''.
+virtuální atribut z uživatelského hlediska. Zpùsob zapojení do úlohy je obdobný jako u krabièky \uv{4FT virtuální booleovský atribut}.
 \subsubsection{Seznam zásuvek}
 \paragraph{}
-Zásuvky jsou shodné s krabièkou ''SD4FT'' až na výjimky, jejichž popis následuje.
+Zásuvky jsou shodné s krabièkou \uv{SD4FT} až na výjimky, jejichž popis následuje.
 \begin{description}
 \item[Hlavní datová tabulka] 
 Do této zásuvky se zapojuje krabièka reprezentující hlavní
 datovou matici.
 \end{description}
 \subsubsection{Seznam vlastností}
-Vlastnosti jsou shodné s krabièkou ''SD4FT'' až na výjimky, jejichž popis následuje.
+Vlastnosti jsou shodné s krabièkou \uv{SD4FT} až na výjimky, jejichž popis následuje.
 \begin{description}
 \item[Maximální poèet virtuálních sloupcù]
 Zde se zadává maximální poèet virtuálních sloupcù, které mùže virtuální atribut vygenerovat.
@@ -247,7 +250,7 @@ stejnì jako v pøípadì 4FT virtuálního boolovského atributu - viz výše.
 Z dùvodù popsaných v \ref{zmenazadani} byla implementovány krabièky atributu
 pro generování ekvidistanèních intervalù. Krabièky fungují skoro stejnì až na odlišnost
 zadaného parametru, podle kterého se mají intervaly generovat. Verze kra\-biè\-ky s názvem
-''Ekvidistanèní intervaly LISp'' vyžaduje zadání délky generovaného intervalu místo celkového požadovaného
+\uv{Ekvidistanèní intervaly LISp} vyžaduje zadání délky generovaného intervalu místo celkového požadovaného
 poètu intervalù.
 \subsection{Detaily implementace}
 \paragraph{}
@@ -256,26 +259,25 @@ v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana -- viz
 \cite{relminer}. Autor se proto soustøedil na implementování samotné krabièky.
 \subsection{Krabièka}
 \subsubsection{Seznam zásuvek}
-\paragraph{}
+
 \begin{description}
 \item[Sloupec] 
 Do této zásuvky se zapojuje krabièka reprezentující sloupec dat, nad kterým budou
 vytvoøeny ekvidistanèní intervaly.
 \end{description}
 \subsubsection{Seznam vlastností}
-\paragraph{}
 \begin{description}
 \item[Poèet intervalù]
 Zde se zadává poèet intervalù, které má krabièka vygenerovat.
 \item[Délka intervalu]
-Vlastnost se zadává místo vlastnosti ''Poèet intervalù'' ve verzi krabièky ''Ekvidistanèní intervaly LISp''. Zde se zadává délka intervalu, které má krabièka vygenerovat.
+Vlastnost se zadává místo vlastnosti \uv{Poèet intervalù} ve verzi krabièky \uv{Ekvidistanèní intervaly LISp}. Zde se zadává délka intervalu, které má krabièka vygenerovat.
 \item[X kategorie]
 Zde se zadává kategorie chybìjící informace.
 \item[Doména]
 Zde se zadává typ vybrané domény sloupce transformované do kategorií. 
-Uživatel mùže vybrat z možnosti ''Celá aktuální doména'' a ''Uživatelem definována doména''.
+Uživatel mùže vybrat z možnosti \uv{Celá aktuální doména} a \uv{Uživatelem definována doména}.
 První možnost nastaví vytváøení kategorie pro každou hodnotu z aktuální domény sloupce,
-druhá možnost nastaví omezení pro použitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
+druhá možnost nastaví omezení pro použitou doménu na základì hodnot vlastností \uv{Od} a \uv{Do}.
 \item[Od]
 Pøi zvolení uživatelem definované domény kategorie budou vytvoøeny pouze
 pro hodnoty z aktuální domény sloupce, které jsou vìtší nebo rovny hodnotì dané vlastnosti.
@@ -301,14 +303,12 @@ v rámci diplomové práce \cite{kuchar} a pùvodnì pocházejí od T.Karbana -- viz
 \cite{relminer}. Autor se proto soustøedil na implementování samotné krabièky.
 \subsection{Krabièka}
 \subsubsection{Seznam zásuvek}
-\paragraph{}
 \begin{description}
 \item[Sloupec] 
 Do této zásuvky se zapojuje krabièka reprezentující sloupec dat, nad kterým budou
 vytvoøeny ekvifrekvenèní intervaly.
 \end{description}
 \subsubsection{Seznam vlastností}
-\paragraph{}
 \begin{description}
 \item[Poèet kategorií]
 Zde se zadává poèet intervalù, které má krabièka vygenerovat.
@@ -316,9 +316,9 @@ Zde se zadává poèet intervalù, které má krabièka vygenerovat.
 Zde se zadává kategorie chybìjící informace.
 \item[Doména]
 Zde se zadává typ vybrané domény sloupce transformované do kategorií. 
-Uživatel mùže vybrat z možnosti ''Celá aktuální doména'' a ''Uživatelem definována doména''.
+Uživatel mùže vybrat z možnosti \uv{Celá aktuální doména} a \uv{Uživatelem definována doména}.
 První možnost nastaví vytváøení kategorie pro každou hodnotu z aktuální domény sloupce,
-druhá možnost nastaví omezení pro použitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
+druhá možnost nastaví omezení pro použitou doménu na základì hodnot vlastností \uv{Od} a \uv{Do}.
 \item[Od]
 Pøi zvolení uživatelem definované domény kategorie budou vytvoøeny pouze
 pro hodnoty z aktuální domény sloupce, které jsou vìtší nebo rovny hodnotì dané vlastnosti.
@@ -343,7 +343,6 @@ a pøedává upravený atribut pro další využití v prostøedí Ferda DataMiner.
 Podstatná funkènost je soustøedìná v modulu pro úpravu atributu.
 \subsection{Krabièka}
 \subsubsection{Seznam zásuvek}
-\paragraph{}
 
 \begin{description}
 \item[Sloupec nebo atribut] 
@@ -358,7 +357,6 @@ poskytuje informace o datech ve sloupci (dùležité jsou napøíklad všechny navzáje
 ze zapojeného sloupce, ale i jiné informace a vlastnosti).
 \end{description}
 \subsubsection{Seznam vlastností}
-\paragraph{}
 \begin{description}
 
 \item[Úprava kategorií]
@@ -368,9 +366,9 @@ Pøi kliknutí na tlaèítko spustí modul pro úpravu kategorií.
 Zde se zadává kategorie chybìjící informace.
 \item[Doména]
 Zde se zadává typ vybrané domény sloupce transformované do kategorií. 
-Uživatel mùže vybrat z možnosti ''Celá aktuální doména'' a ''Uživatelem definována doména''.
+Uživatel mùže vybrat z možnosti \uv{Celá aktuální doména} a \uv{Uživatelem definována doména}.
 První možnost nastaví vytváøení kategorie pro každou hodnotu z aktuální domény sloupce,
-druhá možnost nastaví omezení pro použitou doménu na základì hodnot vlastností ''Od'' a ''Do''.
+druhá možnost nastaví omezení pro použitou doménu na základì hodnot vlastností \uv{Od} a \uv{Do}.
 \item[Od]
 Pøi zvolení uživatelem definované domény kategorie budou vytvoøeny pouze
 pro hodnoty z aktuální domény sloupce, které jsou vìtší nebo rovny hodnotì dané vlastnosti.
@@ -385,7 +383,6 @@ z možností \emph{Nominální, Ordinální, Cyklický ordinální, Kardinální}.
 \end{description}
 
 \subsubsection{Seznam vlastností pouze pro ètení}
-\paragraph{}
 \begin{description}
 \item[Poèet kategorií]
 Zobrazí aktuální poèet kategorií v daném atributu.
@@ -394,7 +391,7 @@ Zobrazí aktuální poèet kategorií v daném atributu.
 
 \section{Modul pro úpravu atributu}
 \paragraph{}
-Tento modul se spouští nad krabièkou ''Statický atribut''. Ta mu poskytuje
+Tento modul se spouští nad krabièkou \uv{Statický atribut}. Ta mu poskytuje
 již existující kategorie v atributu pro úpravu a po skonèení práce
 modulu opìt uloží upravené kategorie pro další využití v prostøedí Ferda DataMiner.
 
@@ -423,13 +420,13 @@ bude oznámena chyba a kategorie se nepøejmenuje.
 \end{figure}
 \paragraph{}
 Více kategorií mùže být spojeno do jedné tak, že s podržením tlaèítka Control pøípadnì Shift
-a kliknutím na požadované kategorie se vybere více kategorií a pak kliknutím na tlaèítko ''Spojit''
+a kliknutím na požadované kategorie se vybere více kategorií a pak kliknutím na tlaèítko \uv{Spojit}
 se spojí do jedné kategorie.
 \paragraph{}
-Kategorie mùže být odstranìna z atributu vybraním a následným kliknutím na tlaèítko ''Odstranit''.
+Kategorie mùže být odstranìna z atributu vybraním a následným kliknutím na tlaèítko \uv{Odstranit}.
 \paragraph{}
-Provedené zmìny v seznamu kategorie se uloží kliknutím na tlaèítko ''Uložit a zavøít''. Pokud
-je potøeba ukonèit práci modulu bez uložení zmìn, použije se tlaèítko ''Zavøít bez uložení''.
+Provedené zmìny v seznamu kategorie se uloží kliknutím na tlaèítko \uv{Uložit a zavøít}. Pokud
+je potøeba ukonèit práci modulu bez uložení zmìn, použije se tlaèítko \uv{Zavøít bez uložení}.
 Uživatel mùže pøidat novou kategorií do seznamu kategorií v atributu. Z definice kategorie v metodì GUHA
 a její následného rozšíøení T.Kuchaøem v \cite{kuchar} plyne, že kategorie mùže obsahovat
 intervaly a výèet hodnot.
@@ -444,7 +441,7 @@ intervaly a výèet hodnot.
 \end{figure}
 Ve formuláøi pro pøidání intervalù (na obrázku \ref{fig:editcategoriesintervals}) uživatel mùže pøidávat intervaly
 do novì vytvoøené kategorie. Ve formuláøi lze vybrat typy hranic intervalu a hodnoty krajních bodù,
-poté kliknutím na tlaèítko ''Pøidat do kategorie'' pøidat interval do kategorie. Tento se poté zobrazí
+poté kliknutím na tlaèítko \uv{Pøidat do kategorie} pøidat interval do kategorie. Tento se poté zobrazí
 v seznamu intervalù dané kategorie a mùže být odebrán zvolením a následným kliknutím na tlaèítko pro odebrání intervalu. Dále se vybraný interval mùže upravovat pøepnutím do režimu úpravy.
 \paragraph{}
 Pøi pøidávání nebo zmìnì se kontroluje validita kategorie v atributu. Pro pøidávaný interval to tedy znamená,
@@ -452,8 +449,8 @@ Pøi pøidávání nebo zmìnì se kontroluje validita kategorie v atributu. Pro pøidáv
 výètech kategorií. Pokud by pøidávaný interval nebyl disjunktní s prvky existujících kategorií,
 modul oznámí chybu a nedovolí takový interval do kategorie pøidat.
 \paragraph{}
-Po pøidání intervalù do novì vytváøené kategorie lze potvrdit pøidání kategorie tlaèítkem ''OK''.
-Pro zrušení pøidání kategorie se použije tlaèítko ''Storno''.
+Po pøidání intervalù do novì vytváøené kategorie lze potvrdit pøidání kategorie tlaèítkem \uv{OK}.
+Pro zrušení pøidání kategorie se použije tlaèítko \uv{Storno}.
 \paragraph{}
 Obrazovka pro úpravu intervalù v již existující kategorii se liší tím, že nelze zmìnit název kategorie
 (ten lze zmìnit v hlavní obrazovce). Logika pøi úpravì intervalù v kategorii je stejná jako je popsáno výše.
@@ -471,5 +468,5 @@ novì vytvoøené kategorie. Ve formuláøi lze vybrat zatím nepokryté hodnoty v odpo
 a pøidat je do výètu novì vytváøené kategorie kliknutím na pøíslušné tlaèítko. Hodnota
 se poté objeví ve výètu hodnot dané kategorie. Odtud mùže být odstranìna zvolením a kliknutím na
 tlaèítko pro odebrání hodnoty z výètu.
-Po pøidání hodnot do výètu novì vytváøené kategorie lze potvrdit pøidání kategorie tlaèítkem ''OK''.
-Pro zru\-še\-ní pøidání kategorie se použije tlaèítko ''Storno''.
+Po pøidání hodnot do výètu novì vytváøené kategorie lze potvrdit pøidání kategorie tlaèítkem \uv{OK}.
+Pro zru\-še\-ní pøidání kategorie se použije tlaèítko \uv{Storno}.

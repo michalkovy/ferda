@@ -10,12 +10,12 @@ výkonu nezbytné.
 
 \section[Zkoumaná data]{Zkoumané datové matice}
 \paragraph{}
-Zkoumaná data vychází z databáze fiktivní banky ''Barbora'' používané
+Zkoumaná data vychází z databáze fiktivní banky \uv{Barbora} používané
 pù\-vod\-nì v projektu LISp-Miner a dále Ferda DataMiner. Databáze obsahuje
 data o fiktivních klientech, jejich pohlaví, místa bydlištì, transakcích, pùjè\-kách atd.
 \subsection[Hlavní matice]{Hlavní datová matice}
 \paragraph{}
-Hlavní datová matice s názvem ''Client\_Loans'' obsahuje údaje o jednotlivých klientech.
+Hlavní datová matice s názvem \uv{Client\_Loans} obsahuje údaje o jednotlivých klientech.
 Velikost této datové matice je kolem 700 øádkù.
 Následující tabulka obsahuje popis sloupcù hlavní datové matice.
 
@@ -86,7 +86,7 @@ Crimes96 & Dlouhé celé èíslo & Kriminalita v regionu v roce 1996\\
 \hline
 \end{tabular}
 \end{center}
-\caption{Sloupce hlavní datové matice ''Client\_Loans''}
+\caption{Sloupce hlavní datové matice \uv{Client\_Loans}}
 \end{table}
 \clearpage
 
@@ -94,8 +94,8 @@ Crimes96 & Dlouhé celé èíslo & Kriminalita v regionu v roce 1996\\
 
 \subsection[Vedlejší matice]{Vedlejší datová matice}
 \paragraph{}
-Vedlejší datová matice ''trans\_pro\_client\_loan'' obsahuje transakce pro klienty
-z tabulky ''Client\_Loans''. Pro úèely testování je tato tabulka obsažena
+Vedlejší datová matice \uv{trans\_pro\_client\_loan} obsahuje transakce pro klienty
+z tabulky \uv{Client\_Loans}. Pro úèely testování je tato tabulka obsažena
 v databází ve tøech verzích: malá, støední a velká, kde poèet øádkù 
 pro jednotlivé verze je
 pøibližnì 10000, 70000 a 200000.
@@ -135,7 +135,7 @@ account & Dlouhé celé èíslo & Zdrojový nebo cílový úèet transakce  \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Sloupce vedlejší datové matice ''trans\_pro\_client\_loan''}
+\caption{Sloupce vedlejší datové matice \uv{trans\_pro\_client\_loan}}
 \end{table}
 
 \section[Úloha]{Východiska zadání a zadaná úloha}
@@ -248,6 +248,7 @@ Type \Rightarrow_{0,9;5} Amount (Bank)
 $\Rightarrow_{0,9;5}$ je v tomto pøípadì rovnìž kvan\-ti\-fi\-ká\-tor
 fun\-do\-va\-né imp\-li\-ka\-ce $Found\-ed\-imp\-li\-ca\-tion$.
 \subsection[Výsledky testù]{Výsledky testù}
+\paragraph{}
 V následujících tabulkách jsou uvedeny doby bìhu úloh
 s rùznými velikostmi vedlejší datové matice a poètem virtuálních sloupcù vygenerovaných relaèním SD4FT booleovským atributem.
 \begin{table}[!h]
@@ -278,7 +279,7 @@ Výsledkem úlohy byly 4FT (resp. SD4FT) hypotézy (obrázek \ref{fig:4ftresult}), k
 úlohy pro proceduru 4FT. Jako hodnota virtuálního atributu je uvedeno znìní asociaèního pravidla, které platí na podmnožinì
 øádkù vedlejší datové matice (viz diskuzi v kapitole \ref{vattributes}). O zadání úlohy a zpùsobu interpretace získaných hypotéz probìhla krátká diskuze
 s vedoucím práce. Její výsledkem bylo konstatování faktu, že hypotézy nalezené s použitím relaèního atributu se obtížnì
-''pøekládají'' do pøirozeného jazyka. Ze zadání úlohy jsme získali nìjaká tvrzení o faktech, které platí pro klienty
+\uv{pøekládají} do pøirozeného jazyka. Ze zadání úlohy jsme získali nìjaká tvrzení o faktech, které platí pro klienty
 z hlavní datové tabulky, na základì faktù, která platí pro podmnožiny øádkù ve vedlejší datové tabulce.
 
 \begin{figure}[!h]
@@ -300,6 +301,7 @@ kde pro virtuální atribut platí:
 \item[Antecedent:] OP(PREVOD NA UCET)	
 \item[Sukcedent:] amount(Nizky vklad)
 \end{description}
+\paragraph{}
 Tato hypotéza mùže znamenat, že pro klienty z Výškova, kteøí \emph{mají tendenci pøevádìt na úèet menší èástky} a mají plat v rozmezí,
 $\langle 8110;8402)$, platí, že status jejich pùjèky je dobrý.
 \paragraph{}
@@ -318,7 +320,7 @@ kde pro virtuální atribut platí:
 Tato hypotéza mùže znamenat, že pro klienty z Jièína, kteøí \emph{mají tendenci vkládat na úèet menší èástky} a mají plat v rozmezí,
 $\langle 8110;8402)$, platí, že status jejich pùjèky je špatný.
 \paragraph{}
-V obou uvedených hypotézách \emph{mají tendenci\ldots} je pokusem o vysvìtlení významu hodnoty virtuálního atributu. Je vidìt, že
+V obou uvedených hypotézách \uv{\emph{mají tendenci}} je pokusem o vysvìtlení významu hodnoty virtuálního atributu. Je vidìt, že
 takové vysvìtlení je nepøesné (zde nalezené 4FT asociaèní pravidlo redukujeme na \emph{mít tendenci}) a velmi závisí na druhu zkoumaných dat.
 	
 \paragraph{}
@@ -340,7 +342,7 @@ a uloží si je do bufferu, pøi dalších voláních se pracuje s bufferem. Proto
 pøi rùzných velikostech vedlejší datové matice se úmìrnì mìní pouze
 doba prvního generování.
 \paragraph{}
-Dále se názornì ukazuje potøeba bufferu pro bitové øetízky generované
+Ukazuje se potøeba bufferu pro bitové øetízky generované
 virtuálním atributem. Lze to zjistit jak z èasù v tabulce,
 tak i z faktu, že pøi testování s vypnutou cache byl testovací
 poèítaè pøi bìhu úlohy vytížen o poznání více.
@@ -349,6 +351,5 @@ Také je potøeba uvést, že implementace relaèních rozšíøení v rámci dané práce
 je pilotní a chování úloh s hypotézovým virtuálním atributem vyžaduje další
 zkoušení a zkoumání, stejnì jako tomu bylo v pøípadì jíž implementovaných
 dataminingových úloh.
-\paragraph{}
 Pro lepší pochopení výsledkù obdržených pøi práci s relaèními rozšíøeními je tøeba dalšího zkoumání
 na rùzných typech dat.

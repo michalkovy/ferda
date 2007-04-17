@@ -31,12 +31,12 @@ v celé øadì aplikaèních oblastí.
 Pøi dobývání znalostí z dat lze použít více metod. Dobrých výsledkù
 lze dosáhnout pøi jejich kombinaci. Jako pøíklad mùžeme uvést statistické
 procedury, rozhodovací stromy, neuronové sítì nebo asociaèní pravidla, se
-kterými pracuje metoda GUHA a kte\-rý\-mi se zde budeme podrobnìji zabývat.
+kte\-rý\-mi pracuje metoda GUHA a kte\-rý\-mi se zde budeme podrobnìji zabývat.
 
-\subsection[Asociaèní pravidla ``nákupních košíkù'']{Asociaèní pravidla -- analýza nákupních košíkù}
+\subsection[Asociaèní pravidla \uv{nákupních košíkù}]{Asociaèní pravidla -- analýza nákupních košíkù}
 \label{asociacnipravidla}
 \paragraph{}
-''Klasické'' asociaèní pravidlo je definováno Aggravalem (\cite{aggraval})
+\uv{Klasické} asociaèní pravidlo je definováno Aggravalem (\cite{aggraval})
 v souvislosti s analýzou nákupního košíku. Zde použijeme jeho popis, jak je uveden J.Rauchem
 v \cite{skripta}.
 \paragraph{}
@@ -110,7 +110,7 @@ Hypotéza je prostá, jestliže je pravdivá
 v analyzované datové matici a zároveò nevyplývá z jiných, jednodušších hypotéz.
 \paragraph{}
 Jednou z nejpoužívanìjších GUHA procedur je procedura ASSOC (podrobnìji v \cite{guhabasic}),
-která hledá vztahy, jenž jsou zobecnìním ''klasických'' asociaèních pravidel definovaných Aggravalem v \cite{aggraval}.
+která hledá vztahy, jenž jsou zobecnìním \uv{klasických} asociaèních pravidel definovaných Aggravalem v \cite{aggraval}.
 Nejnovìjší implementací ASSOC je procedura 4FT, která je popsána dále v tomto textu.
 
 \subsection{Relaèní dobývání znalostí}
@@ -131,10 +131,10 @@ Je samozøejmì možné požadovaná data spojit do jedné datové matice, avšak takový 
 je èasovì velmi nároèný a èasto se musí provést manuálnì pro každou úlohu, chceme-li
 zkoumat napøíklad jiné atributy objektù z matice.
 \paragraph{}
-Nìkteré úlohy pro dobývání znalostí navíc nejdou jednoduše provést nad ''plochou''
+Nìkteré úlohy pro dobývání znalostí navíc nejdou jednoduše provést nad \uv{plochou}
 reprezentaci, obzvláštì v pøípadì, kde uvažujeme mnoho rùzných objektù s jejich
 vlastnostmi a vzájemnými vztahy. Cílem zavedení relaèního dataminingu je odstranìní
-omezení na jednu tabulku dat a umožnìní dobývání znalostí z více relaènì
+omezení na jednu tabulku dat a umožnìní do\-bý\-vá\-ní znalostí z více relaènì
 propojených datových tabulek. Navíc, jak uvádí T.Kar\-ban v \cite{dateso2005},
 ponechání dat v relaèním tvaru mùže zachovat informace, které mohou být
 vyjádøeny ve formì relaèních vztahù.
@@ -146,8 +146,8 @@ vyjádøeny ve formì relaèních vztahù.
 Od roku 1996 se na pražské VŠE vyvíjí systém LISp-Miner.
 Jak se uvádí na stránkách \verb+http://lispminer.vse.cz/+,
 \begin{quote}
-``LISp-Miner je akademický projekt pro podporu výzkumu a výuky dobývání znalostí z databází. Je vhodný zejména pro výuku studentù,
-pilotní a støednì velké projekty KDD.''
+\uv{LISp-Miner je akademický projekt pro podporu výzkumu a výu\-ky dobývání znalostí z databází. Je vhodný zejména pro výuku studentù,
+pilotní a støednì velké projekty KDD.}
 \end{quote}
 Výuka probíhá zejména na Fakultì informatiky a statistiky
 Vysoké školy ekonomické v Praze a Matematicko-fyzikální fakultì Univerzity Karlovy
@@ -161,6 +161,7 @@ systému LISp-Miner procedury v nìm implementované jsou relativnì stabilní a odla
 lze výsledky ze systému LISp-Miner považovat za vzorové.
 Podrobné informace o systému LISp-Miner lze nalézt v \cite{guha}.
 \subsection{Rel-Miner}
+\paragraph{}
 Systém Rel-Miner je softwarový projekt vznikající v rámci disertaèní práce (viz. \cite{relminer})
 Mgr. Tomáše Karbana na Matematicko-fyzikální fakultì Univerzity Karlovy.
 T.Karban uvádí jako cílech své práce následující:
@@ -235,7 +236,7 @@ do stávajícího zadání úlohy.
 \subsubsection{Základní programátorské rozdìlení prostøedí Ferda DataMiner}
 \paragraph{}
 Zde shrneme programátorské rozdìlení prostøedí Ferda DataMiner na jednotlivé èásti,
-jak je uvedeno v dokumentu ''Implementace Ferda'', který je souèástí dokumentace studentského projektu
+jak je uvedeno v dokumentu \uv{Implementace Ferda}, který je souèástí dokumentace studentského projektu
 Ferda DataMiner.
 \paragraph{}
 Pro ilustraci uvedeme obrázek \ref{fig:ferdadesign} celkového programátorského návrhu prostøedí
@@ -258,9 +259,10 @@ a jiné moduly pro komunikaci s uživatelem (tzv. \emph{moduly pro interakci}). Je
 \item	[Add Ins] jsou pøídavné èásti FrontEndu, které s ním komunikují pøímo pøes CLI. Nejèastìji obsahuje moduly pro interakci èi moduly pro nastavování nestandardních vlastností. Není však nutné, aby napøíklad modul pro interakci byl souèástí nìjakého Add Inu.
 \end{description}
 Metoda pro statickou úpravu atributu v této práci byla naprogramována jako modul pro interakci s uživatelem.
-\subsection{Diplomová práce ``Experimentální GUHA procedury''}
+\subsection{Diplomová práce \uv{Experimentální GUHA pro\-ce\-du\-ry}}
+\paragraph{}
 Zásadním pøínosem pro prostøedí Ferda DataMiner se stala diplomová práce T.Kuchaøe
-``Experimentální GUHA procedury'', která pøinesla novou implementaci krabièek šesti
+\uv{Experimentální GUHA procedury}, která pøinesla novou implementaci krabièek šesti
 procedur pro dobývání znalostí a zobecnìní nìkterých prvkù zadání úlohy oproti jejich
 stávající implementaci v systému LISp-Miner. 
 \paragraph{}
@@ -291,7 +293,7 @@ Následuje definice booleovského atributu.
 
 \newtheorem{booleanattributedef}{Definice booleovského atributu}
 \begin{booleanattributedef}
-Booleovský atribut je formule splòující následující podmínky.
+Booleovský atribut je formule splòu\-jí\-cí následující podmínky.
 \paragraph{}
 Pokud \emph{A} je atribut a $\alpha$ je vlastní neprázdná podmnožina množiny
 všech \emph{kategorií} atributu \emph{A}, pak $A(\alpha)$ je \emph{základní booleovský atribut}.
@@ -426,7 +428,7 @@ které nesplòují antecedent. Souèty sloupcù $a+c=k$  resp. $b+d=l$ odpovídají poè
 \subsection{Kvantifikátory}
 \paragraph{}
 Symbol $\approx$ se nazývá 4ft-kvantifikátor. 4ft-kvantifikátory 
-odpovídají podmínce na ètyøpolní tabulku. Na základì ètyøpolní tabulky se urèuje,
+odpovídají pod\-mín\-ce na ètyøpolní tabulku. Na základì ètyøpolní tabulky se urèuje,
 zda relevantní otázka je èi není relevantním tvrzením tj. hypotézou. 4ft-kvantifikátor pøi\-øa\-zu\-je
 ètyøpolní tabulce $\langle a, b, c, d\rangle$ èíslo z množiny  $\{0, 1\}$.
 Relevantní otázka $\phi \approx \psi / \chi$ je relevantním tvrzením právì tehdy, 
@@ -442,8 +444,8 @@ $\frac{a}{a+b}\geq p$ a $a\geq Base$.
 
 Asociaèní pravidlo  $\phi \Rightarrow_{p, Base} \psi$ je pravdivé právì tehdy,
 pokud je splnìna podmínka výše. Fundovaná implikace mùže být interpretována napøíklad takto:
-''100\% zkoumaných objektù splòujících $\phi$ splòuje také $\psi$'' 
-nebo ménì formálnì ''$\phi$ implikuje $\psi$ na 100\%''. 
+\uv{100\% zkoumaných objektù splòujících $\phi$ splòuje také $\psi$} 
+nebo ménì formálnì \uv{$\phi$ implikuje $\psi$ na 100\%}. 
 Podmínka na $a$ zajišuje, že v datové matici $M$ (resp. $M/\chi$) je dostateèný poèet 
 objektù splòujících  $\phi$ a $\psi$  (tedy že pravidlo má dostateènou podporu v datech matice $M$).
 
@@ -457,8 +459,8 @@ objektù splòujících  $\phi$ a $\psi$  (tedy že pravidlo má dostateènou podporu v
 Typická efektivní realizace GUHA procedury používá reprezentaci
 databáze, kde každá hodnota každého atributu je reprezentována bitovým øe\-tíz\-kem
 (viz. kapitola \ref{bitstrings}). Každý bit v øetìzci popisuje jeden objekt.
-Bit 1 reprezentuje ''objekt má tuto hodnotu'', zatímco bit 0 znamená
-''objekt nemá tuto hodnotu''.
+Bit 1 reprezentuje \uv{objekt má tuto hodnotu}, zatímco bit 0 znamená
+\uv{objekt nemá tuto hodnotu}.
 \paragraph{}
 Bitový øetízek mùžeme chápat jako bitmapový index databáze. Pøi klasické
 implementaci atributù se bitové øetízky vytváøejí pøi prvním prùchodu daty
@@ -547,8 +549,8 @@ Dále se z datových matic vybírají datové sloupce, ze kterých se budou vytváøet
 atributy obsahující kategorie pro potøebné rozdìlení vstupních dat. Data mohou
 patøit do rùzných datových typù. Tyto dále ovlivní možnosti kategorizace.
 Stojí za zmínku, že zatím nejkomplexnìjší implementace práce s jednotlivými
-sémantickými typy byla realizována v práci \cite{kuchar} -- ''Experimentální
-GUHA procedury''.
+sémantickými typy byla realizována v práci \cite{kuchar} -- \uv{Experi\-men\-tál\-ní
+GUHA procedury}.
 \subsubsection{Datová sémantika}
 \paragraph{}
 Z pohledu datové sémantiky se v prostøedí Ferda DataMiner rozlišují tyto ètyøi druhy dat:
@@ -556,7 +558,7 @@ Z pohledu datové sémantiky se v prostøedí Ferda DataMiner rozlišují tyto ètyøi d
 \label{datasemantics}
 \begin{description}
 \item[Nominální data] Hodnoty nejsou vzájemnì porovnatelné, napøíklad
-pohlaví nebo oblíbená pøíchu zmrzliny.
+po\-hla\-ví nebo oblíbená pøíchu zmrzliny.
 \item[Ordinální data] Hodnoty jsou vzájemnì porovnatelné, napøíklad výše
 do\-saže\-né\-ho vzdìlání.
 \item[Cyklická ordinální data] U tohoto sémantického typu se vychází ze
@@ -586,18 +588,18 @@ nebo kardinální (viz \ref{datasemantics}).
 \paragraph{}
 V rámci diplomové práce T.Kuchaøe \cite{kuchar} byly vytvoøeny prostøedky pro práci
 s atributy a kategorii, avšak pro uživatelskou práci byl z dùvodu pracnosti
-implementována pouze krabièka pro transformaci atributu ''Each value one category'', která, jak plyne
+implementována pouze krabièka pro transformaci atributu \uv{Each value one category}, která, jak plyne
 z názvu, umí vytvoøit ze zkoumaného datového sloupce atribut obsahující
 výètové kategorie pro každou hodnotu ve sloupci.
 \paragraph{}
-Krabièky pro atributy ''Ekvidistanèní intervaly'' a ''Ekvifrekvenèní intervaly'' ve formì
+Krabièky pro atributy \uv{Ekvidistanèní intervaly} a \uv{Ekvifrekvenèní inter\-va\-ly} ve formì
 krabièek pro uživatelskou práci v systému Ferda DataMiner byly implementovány
 autorem této diplomové práce, jedná se o pøínos autora. Taktéž byla autorem
-implentována krabièka ''Statický atribut'', která umožòuje pøímou úpravu
+implentována krabièka \uv{Statický atribut}, která umožòuje pøí\-mou úpravu
 atributu, vèetnì editace výètu a intervalù u jednotlivých kategorii.
 \paragraph{}
 Výše uvedené krabièky pro transformaci atributu byly pøítomny v první verzi
-Ferdy, avšak diplomová práce T.Kuchaøe ''Experimentální procedury'' podstatnì zmìnila
+Ferdy, avšak diplomová práce T.Kuchaøe \uv{Experimentální procedury} podstatnì zmìnila
 práci se zadáváním úlohy pro procedury GUHA, proto se krabièky musely implementovat znovu.
 
 \subsection{Generování booleovských atributù}
@@ -706,10 +708,10 @@ Pøedpokládejme, že nás zajímá typ operace v závislosti na výši transakce.
 Zkoumejme následující asociaèní pravidlo:
 \begin{eqnarray}
 \label{eq:aggrattributeexample}
-(TYPE="VKLAD") \& (AVGAMO{}UNT > 5000) \nonumber\\
-\Rightarrow_{0,8;20} OPERATION="PREVOD NA{}UCET"
+(TYPE=''VKLAD'') \& (AVGAMO{}UNT > 5000) \nonumber\\
+\Rightarrow_{0,8;20} OPERATION=''PREVOD NA{}UCET''
 \end{eqnarray}
-Typ transakce je VKLAD, jehož prùmìrná výše je vìtší než 5000.
+Typ transakce je $VKLAD$, jehož prùmìrná výše je vìtší než 5000.
 $\Rightarrow_{0,8;20}$ znaèí kvantifikátor fundované implikace, jak je
 uveden v \ref{foundedimplication}.
 Zde jsme použili jeden virtuální atribut $AVGAM{O}UNT$, který je odvozený jako:
@@ -725,14 +727,14 @@ na odborníka v oblasti bankovnictví.
 \paragraph{}
 Dále mùžeme zkoumat status úvìru klientù v závislosti na nìjaké charakteristice plateb. Za platby mùžeme považovat transakce, které
 mají uhradit nìjaké služby -- napøíklad inkaso apod. Lze pøedpokládat, že na status úvìru bude mít vliv, zda je klient
-napøíklad ''šetrný'' nebo naopak ''rozhazovaèný''. Takové charakteristiky zkusíme zjistit na základì dat v matici transakcí.
+napøíklad \uv{šetrný} nebo naopak \uv{rozhazovaèný}. Takové charakteristiky zkusíme zjistit na základì dat v matici transakcí.
 Zde si mùžeme všimnout, že požadovaných výsledkù lze velmi tìžko dosáhnout za použití jedné matice dat -- ztratíme tím
 možnost zkoumat zajímavé vztahy, které platí na vedlejší datové matici. Zkoumané charakteristiky nelze jednoduše pøidat do hlavní datové matice.
 Uvažme další hypotézu:
 \begin{eqnarray}
 \label{eq:hyprattributeexample}
 (VYSOKEINKASO) \& (SALARY(>15000)) \&   \nonumber\\
-(BYDLISTE="Praha")\Rightarrow_{0,8;10} STATUSUVERU="Dobry"
+(BYDLISTE=''Praha'')\Rightarrow_{0,8;10} STATUSUVERU=''Dobry''
 \end{eqnarray}
 Hypotéza tvrdí, že klienti, kteøí mají vyšší plat a platí vysoké inkaso (to je pøíklad výše zmínìné charakteristiky plateb)
 v okrese Praha, mají z 80\% dobré úvìry.
@@ -740,9 +742,9 @@ Zde jsme použili jeden virtuální atribut $VYSOKEINKASO$ , který
 mùže vypadat následovnì:
 \begin{eqnarray}
 \label{eq:hyprattributeexample1}
-TYPE="INKASO"  \Rightarrow_{0,9;10} AMOUNT > 5000
+TYPE=''INKASO''  \Rightarrow_{0,9;10} AMOUNT > 5000
 \end{eqnarray}
-Jinými slovy, pokud typ transakce je INKASO, je z 90\% vysoké.
+Jinými slovy, pokud typ transakce je $INKASO$, je z 90\% vysoké.
 \paragraph{}
 Zde data s informacemi o klientech a data s informacemi o jejich transakcích
 jsou dvì samostatné datové matice.
@@ -756,13 +758,13 @@ Jmenují se \emph{agregaèní atributy}. Druhou skupinou jsou virtuální atributy vz
 jako výsledek bìhu nìkteré z dataminingových úloh -- konkrétnì napøíklad mùžeme
 použít míru platnosti hypotéz pro jednotlivé záznamy v hlavní tabulce jako
 nový datový sloupec. Tìm øíkáme \emph{hypotézové atributy}. Navenek oba druhy atributu pracují s daty z vedlejší datové matice,
-provádí na ní nìjaké transformace a jako výsledek vznikají nové ''virtuální'' sloupce
+provádí na ní nìjaké transformace a jako výsledek vznikají nové \uv{virtuální} sloupce
 skládající se obecnì z reálných èísel,
 které jsou pøidány do hlavní datové matice.
 \subsubsection{Agregaèní atributy}
 \paragraph{}
 \emph{Agregaèní atribut} se reprezentuje novými virtuálními sloupci (které se
-z definice virtuálního atributu neukládá do databáze),
+z definice virtuálního atributu neukládájí do databáze),
 Tyto sloupce vznikají jako výsledek pøedzpracování dat z více datových tabulek. 
 Pro každý objekt z hlavní datové matice se pøiøadí reálné èíslo
 vypoèítané na základì hodnot v odpovídajících sloupcích z vedlejších datových 
@@ -797,7 +799,7 @@ datovými tabulkami a dále se používají pøi bìhu dataminingových úloh nad
 hlavní datovou tabulkou. Ústøední myšlenkou je zavést definici atributu
 se sémantikou hypotézy (ve smyslu metody GUHA), jehož hodnotou by byla konkrétnì
 síla nebo platnost hypotézy nad vedlejšími datovými tabulkami a takto
-nadefinovaný sloupec by se použil ''o úroveò výše'' -- pro generaci hypotéz
+nadefinovaný sloupec by se použil \uv{o úroveò výše} -- pro generaci hypotéz
 pøi bìhu další dataminingové úlohy.
 \paragraph{}
 Uvedli jsme pøíklad \ref{eq:hyprattributeexample}. Na základì platnosti hypotézy
@@ -896,7 +898,7 @@ hypo\-tézového atributu další hypo\-tézový atribut, pak první pod\-úloha bude zk
 vy\-ge\-ne\-rova\-ných druhou podúlohou, a opìt vy\-generuje velký poèet rele\-vant\-ních otázek pro nadúlohu.
 Když uvážíme možnost použití v zadání vícero virtuálních atributu, je vidìt, že složitost a doba
 výpoètu znaènì stoupnou. Tento problém se nazývá
-''Hypothesis space explosion'', jak o nìm pojednává T.Karban v \cite{relminer}.
+\uv{Hypothesis space explosion}, jak o nìm pojednává T.Karban v \cite{relminer}.
 \end{description}
 \paragraph{}
 Z výše uvedených dùvodù
