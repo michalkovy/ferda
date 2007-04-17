@@ -45,7 +45,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
         public const string PropMasterIdColumn = "MasterIdColumn";
         public const string PropDetailIdColumn = "DetailIdColumn";
         public const string PropDetailResultColumn = "DetailResultColumn";
-        // public const string PropSelectExpression = "SelectExpression";
+        public const string PropSelectExpression = "SelectExpression";
         //   public const string PropJoinKey = "JoinKey";
         public const string PropDataType = "DataType";
         public const string PropCardinality = "Cardinality";
@@ -74,13 +74,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             get { return _boxModule.GetPropertyString(PropName); }
         }
 
-        /*
+
         public string SelectExpression
         {
             get { return _boxModule.GetPropertyString(PropSelectExpression); }
         }
-        
 
+        /*
         public StringTI MasterIdColumn
         {
             get
@@ -417,15 +417,17 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 {
                     // FOR FUTURE IMPLEMENTATION: result column here does not have to be
                     // given as a name, a select expression can be applied
-                    // string selectExpression = GetSelectExpression(fallOnError);
+                    string selectExpression = GetSelectExpression(fallOnError);
                     ColumnInfo info = new ColumnInfo(
                         tmp1,
-                        DetailTableResultColumn,
+                        //   DetailTableResultColumn,
+                     selectExpression,
                         DbDataTypeEnum.UnknownType, CardinalityEnum.Nominal, ColumnTypeEnum.VirtualColumn,
                         tmp1.dataTableName, DetailTableIdColumn, MasterTableIdColumn);
                     return
                         GenericDatabaseCache.GetGenericDatabase(connSetting)[tmp.dataTableName].GetGenericColumn
-                            (DetailTableResultColumn, info);
+                        //  (DetailTableResultColumn, info);
+                    (selectExpression, info);
                 },
                 delegate
                 {
@@ -517,7 +519,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                     DataTableFunctionsPrx tmp1 = GetDetailDataTableFunctionsPrx(fallOnError);
 
                     if (tmp1 != null)
+                    {
                         return tmp1.getColumnsNames();
+                    }
                     return null;
                 },
                 delegate
@@ -527,10 +531,62 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                 _boxModule.StringIceIdentity
                 );
         }
-        /*
+
+        /// <summary>
+        /// Gets full column names (table.column) for detail datatable
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns>Array with column names</returns>
+        public string[] GetDetailColumnsFullNames(bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    DataTableFunctionsPrx tmp1 = GetDetailDataTableFunctionsPrx(fallOnError);
+
+                    if (tmp1 != null)
+                    {
+                        string[] detailCols =
+                            tmp1.getColumnsNames();
+
+                        DataTableFunctionsPrx prx = GetDetailDataTableFunctionsPrx(fallOnError);
+                        if (prx == null)
+                            return null;
+
+                        DataTableInfo tmp =
+               ExceptionsHandler.GetResult<DataTableInfo>(
+                   fallOnError,
+                   prx.getDataTableInfo,
+                   delegate
+                   {
+                       return null;
+                   },
+                   _boxModule.StringIceIdentity
+                   );
+
+                        if (tmp == null)
+                            return null;
+
+                        for (int i = 0; i < detailCols.Length; i++)
+                        {
+                            detailCols[i] = tmp.dataTableName + "." + detailCols[i];
+                        }
+                        return detailCols;
+                    }
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+
         public string GetSelectExpression(bool fallOnError)
         {
-            
+
             if (String.IsNullOrEmpty(SelectExpression) && fallOnError)
             {
                 throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
@@ -543,7 +599,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             return String.Empty;
         }
 
-        
+        /*
         public string GetJoinKey(bool fallOnError)
         {
             
@@ -586,7 +642,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                             );
 
                     ColumnExplain tmp2 = GetColumnExplain(fallOnError);
-                   // string selectExpression = GetSelectExpression(fallOnError);
+                    // string selectExpression = GetSelectExpression(fallOnError);
                     if (tmp1 != null && tmp2 != null)
                         return new ColumnInfo(tmp1.getDataTableInfo(),
                                               DetailTableResultColumn,

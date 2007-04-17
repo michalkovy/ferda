@@ -560,8 +560,11 @@ namespace Ferda.Guha.Data
             {
                 DbCommand command = GenericDatabase.CreateDbCommand();
                 // TODO possibly security attacs here
-                command.CommandText = "SELECT " + GenericDatabase.QuoteQueryIdentifier(detailDataTableName) 
-                                      + "." + columnSelectExpression + " FROM " +
+                command.CommandText = 
+                    "SELECT " + 
+                    //GenericDatabase.QuoteQueryIdentifier(detailDataTableName) + 
+                      //                "." + 
+                                      columnSelectExpression + " FROM " +
                                       GenericDatabase.QuoteQueryIdentifier(detailDataTableName)
                                       + ","
                                       + GenericDatabase.QuoteQueryIdentifier(_explain.name)
@@ -666,14 +669,17 @@ namespace Ferda.Guha.Data
                     );
 
                 _virtualColumns.Add(columnSelectExpression, column);
+               
+                column.DetailDataTableName = detailDataTableName;
+                column.DetailTableIdColumn = detailDataTableIdColumn;
+                column.MasterTableIdColumn = masterDataTableIdColumn;
+
                 DbDataTypeEnum dataType =
                     column.DetermineVirtualColumnDbDataType(detailDataTableName, masterDataTableIdColumn, detailDataTableIdColumn);
                 ColumnExplain explain = column.Explain;
                 explain.dataType = dataType;
                 column.Explain = explain;
-                column.DetailDataTableName = detailDataTableName;
-                column.DetailTableIdColumn = detailDataTableIdColumn;
-                column.MasterTableIdColumn = masterDataTableIdColumn;
+                
             }
         }
 
