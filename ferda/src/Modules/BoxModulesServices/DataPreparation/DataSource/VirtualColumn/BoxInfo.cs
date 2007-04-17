@@ -187,6 +187,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                     return BoxInfoHelper.GetSelectStringArray(
                         Func.GetDetailColumnsNames(false)
                         );
+
+                case Functions.PropSelectExpression:
+                    return BoxInfoHelper.GetSelectStringArray(
+                        Func.GetDetailColumnsFullNames(false)
+                        );
+
                 default:
                     return null;
             }

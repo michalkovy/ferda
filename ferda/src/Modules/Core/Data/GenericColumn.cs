@@ -152,9 +152,11 @@ namespace Ferda.Guha.Data
                         else
                         {
 
-                            columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
-                                DetailDataTableName)
-                                + "." + GetQuotedQueryIdentifier();
+                            columnQuotedIdentifier = 
+                               // GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
+                             //   DetailDataTableName)
+                            //    + "." + 
+                                GetQuotedQueryIdentifier();
 
 
                             dataTableQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
@@ -556,8 +558,10 @@ namespace Ferda.Guha.Data
         /// </summary>
         public DbDataTypeEnum DetermineVirtualColumnDbDataType(string detailTableName, string masterTableIdColumn, string detailTableIdColumn)
         {
-            string columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(detailTableName)
-                + "." + GetQuotedQueryIdentifier();
+            string columnQuotedIdentifier = 
+                //GenericDataTable.GenericDatabase.QuoteQueryIdentifier(detailTableName)
+              //  + "." + 
+                GetQuotedQueryIdentifier();
             string dataTableQuotedIdentifier =
                 GenericDataTable.GenericDatabase.QuoteQueryIdentifier(detailTableName)
             + ","
@@ -757,7 +761,7 @@ namespace Ferda.Guha.Data
         /// <returns>Quoted query identifier of the column</returns>
         public string GetQuotedQueryIdentifier()
         {
-            if ((IsDerived))
+            if ((IsDerived) || (IsVirtual))
                 return _explain.name;
             else
                 return GenericDataTable.GenericDatabase.QuoteQueryIdentifier(_explain.name);
@@ -810,8 +814,10 @@ namespace Ferda.Guha.Data
                 tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                 + ","
                 + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
-                columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
-                    DetailDataTableName) + "." + GetQuotedQueryIdentifier();
+                columnQuotedIdentifier = 
+                   // GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
+                  //  DetailDataTableName) + "." + 
+                    GetQuotedQueryIdentifier();
             }
             else
             {
@@ -885,8 +891,10 @@ namespace Ferda.Guha.Data
                 tableName = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(DetailDataTableName)
                     + ","
                     + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name);
-                columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
-                    DetailDataTableName) + "." + GetQuotedQueryIdentifier();
+                columnQuotedIdentifier = 
+                   // GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
+                 //   DetailDataTableName) + "." + 
+                    GetQuotedQueryIdentifier();
             }
             else
             {
@@ -1026,8 +1034,10 @@ namespace Ferda.Guha.Data
                     + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(GenericDataTable.Explain.name)
                     + "."
                     + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(MasterTableIdColumn);
-                columnQuotedIdentifier = GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
-                    DetailDataTableName) + "." + GetQuotedQueryIdentifier();
+                columnQuotedIdentifier = 
+                  //  GenericDataTable.GenericDatabase.QuoteQueryIdentifier(
+                 //   DetailDataTableName) + "." + 
+                    GetQuotedQueryIdentifier();
             }
 
             DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
