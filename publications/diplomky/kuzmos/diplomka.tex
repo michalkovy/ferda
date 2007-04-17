@@ -1,10 +1,14 @@
 
+
+
 \documentclass[a4paper,12pt,titlepage]{report}
 \usepackage[czech]{babel}
-
+%%\usepackage{czech}
 \usepackage{quotes}
 \usepackage[cp1250]{inputenc}
 \usepackage{ifpdf}
+
+
 
 %%\title{Relaèní GUHA procedury}
 %%\author{Alexander Kuzmin}
@@ -70,9 +74,7 @@
 %\pagestyle{plain} %Now display headings: headings / fancy / ...
 
 \input{title.tex}
-
 \tableofcontents
-
 \input{abstrakt.tex}
 \input{cile.tex}
 \input{uvod.tex}
@@ -80,11 +82,11 @@
 \input{implementace.tex}
 \input{testy.tex}
 \input{zaver.tex}
-\input{zdrojaky.tex}
 \input{bib.tex}
 \listoftables
 \listoffigures
 
-
-
+\appendix
+\input{zdrojaky.tex}
+\input{cedecko.tex}
 \end{document}

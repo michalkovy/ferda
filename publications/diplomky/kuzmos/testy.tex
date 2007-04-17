@@ -1,5 +1,6 @@
 \chapter{Testy}
 \label{tests}
+\paragraph{}
 V této kapitole bude popsán vliv rùzných faktorù na bìh
 úlohy s použitím relaèního rozšíøení dataminingové procedury.
 Autor bude zkoumat vliv zej\-mé\-na velikosti dat a poètu vygenerovaných
@@ -8,10 +9,12 @@ bufferu pro bitové øetízky vygenerované virtuálním at\-ri\-bu\-tem je z hlediska
 výkonu nezbytné.
 
 \section[Zkoumaná data]{Zkoumané datové matice}
+\paragraph{}
 Zkoumaná data vychází z databáze fiktivní banky ''Barbora'' používané
 pù\-vod\-nì v projektu LISp-Miner a dále Ferda DataMiner. Databáze obsahuje
 data o fiktivních klientech, jejich pohlaví, místa bydlištì, transakcích, pùjè\-kách atd.
 \subsection[Hlavní matice]{Hlavní datová matice}
+\paragraph{}
 Hlavní datová matice s názvem ''Client\_Loans'' obsahuje údaje o jednotlivých klientech.
 Velikost této datové matice je kolem 700 øádkù.
 Následující tabulka obsahuje popis sloupcù hlavní datové matice.
@@ -90,6 +93,7 @@ Crimes96 & Dlouhé celé èíslo & Kriminalita v regionu v roce 1996\\
 
 
 \subsection[Vedlejší matice]{Vedlejší datová matice}
+\paragraph{}
 Vedlejší datová matice ''trans\_pro\_client\_loan'' obsahuje transakce pro klienty
 z tabulky ''Client\_Loans''. Pro úèely testování je tato tabulka obsažena
 v databází ve tøech verzích: malá, støední a velká, kde poèet øádkù 
@@ -135,6 +139,7 @@ account & Dlouhé celé èíslo & Zdrojový nebo cílový úèet transakce  \\
 \end{table}
 
 \section[Úloha]{Východiska zadání a zadaná úloha}
+\paragraph{}
 Základní inspirací pro úlohu pro relaèní rozšíøení procedur 4FT a SD4FT bylo zjistit nìjaké údaje
 o objektech z hlavní datové matice na základì údajù z vedlejší datové matice.
 V našem pøípadì hledáme nìjaké vztahy v matici klientù na základì údajù
@@ -149,6 +154,7 @@ nìjaké zajímavé závislosti statusu pùjèky na charakteristice plateb klienta, jak
 
 \subsection[4FT virtuální atribut]{4FT virtuální booleovský atribut}
 \subsubsection[Úloha 1]{Úloha 1}
+\paragraph{}
 Úloha je zadaná pro proceduru 4FT následujícím zpùsobem:
 
 \begin{equation*}
@@ -167,6 +173,7 @@ fun\-do\-va\-né imp\-li\-ka\-ce $Found\-ed\-imp\-li\-ca\-tion$.
 
 
 \subsection[Výsledky testù]{Výsledky testù}
+\paragraph{}
 V následujících tabulkách jsou uvedeny doby bìhu úloh
 s rùznými velikostmi vedlejší datové matice a poètem relevantních
 otázek vygenerovaných relaèním 4ft booleovským atributem.
@@ -200,6 +207,7 @@ Transakce / & malé & støední &  velké  \\
 \end{table}
 
 \subsubsection{Úloha 1 -- bez cache}
+\paragraph{}
 Zde byla zkoumána rych\-lost práce bez cache. Porovnáním s pøed\-chozí tabul\-kou lze zjistit
 èasové roz\-díly bìhu úlohy.
 \begin{table}[!h]
@@ -221,8 +229,9 @@ Transakce / & malé & støední &  velké   \\
 \end{table}
 
 
-\subsection[SD4ft atribut]{SD4ft virtuální booleovský atribut}
+\subsection[SD4FT atribut]{SD4FT virtuální booleovský atribut}
 \subsubsection[Úloha 2]{Východiska zadání a zadaná úloha 2}
+\paragraph{}
 Úloha je zadaná pro 4FT následujícím zpùsobem:
 
 \begin{equation*}
@@ -264,6 +273,7 @@ Transakce / & malé & støední &  velké \\
 test nebyl spouštìn}
 
 \section{Výsledky}
+\paragraph{}
 Výsledkem úlohy byly 4FT (resp. SD4FT) hypotézy (obrázek \ref{fig:4ftresult}), kde vir\-tuál\-ní atribut byl souèásti zadání antecedentu
 úlohy pro proceduru 4FT. Jako hodnota virtuálního atributu je uvedeno znìní asociaèního pravidla, které platí na podmnožinì
 øádkù vedlejší datové matice (viz diskuzi v kapitole \ref{vattributes}). O zadání úlohy a zpùsobu interpretace získaných hypotéz probìhla krátká diskuze
@@ -275,12 +285,12 @@ z hlavní datové tabulky, na základì faktù, která platí pro podmnožiny øádkù ve v
 \begin{center}
 \includegraphics[width=15cm]{pics/4ft-result}
 \end{center}
-\caption{Výsledky bìhu úlohy s použitím 4FT vrituálního atributu}
+\caption{Výsledky bìhu úlohy s použitím 4FT virtuálního atributu}
 \label{fig:4ftresult}
 \end{figure}
 \paragraph{}
 
-Zkoumejme získanou hypotézu s id 0 z výsledku bìhu úlohy 1, která zní:
+Zkoumejme získanou hypotézu s id 0 z výsledku bìhu úlohy 1, která vypadá takto:
 \begin{description}
 \item[Antecedent:] Salary($\langle 8110;8402)$) \& V-FFT-Bool([ant]: OP(PREVOD NA UCET),  *** [succ]: amount(Nizky vklad)) \& District(Vyskov)	
 \item[Sukcedent:] status(Good)
@@ -290,7 +300,7 @@ kde pro virtuální atribut platí:
 \item[Antecedent:] OP(PREVOD NA UCET)	
 \item[Sukcedent:] amount(Nizky vklad)
 \end{description}
-Tato hypotéza mùže znamenat, že pro klienty z Výškova, kteøí mají tendenci pøevádìt na úèet menší èástky a mají plat v rozmezí,
+Tato hypotéza mùže znamenat, že pro klienty z Výškova, kteøí \emph{mají tendenci pøevádìt na úèet menší èástky} a mají plat v rozmezí,
 $\langle 8110;8402)$, platí, že status jejich pùjèky je dobrý.
 \paragraph{}
 Hypotéza s id 73 øíká:
@@ -305,8 +315,11 @@ kde pro virtuální atribut platí:
 \item[Sukcedent:] amount(Nizky vklad)
 \end{description}
 
-Tato hypotéza mùže znamenat, že pro klienty z Jièína, kteøí mají tendenci vkládat na úèet menší èástky a mají plat v rozmezí,
+Tato hypotéza mùže znamenat, že pro klienty z Jièína, kteøí \emph{mají tendenci vkládat na úèet menší èástky} a mají plat v rozmezí,
 $\langle 8110;8402)$, platí, že status jejich pùjèky je špatný.
+\paragraph{}
+V obou uvedených hypotézách \emph{mají tendenci\ldots} je pokusem o vysvìtlení významu hodnoty virtuálního atributu. Je vidìt, že
+takové vysvìtlení je nepøesné (zde nalezené 4FT asociaèní pravidlo redukujeme na \emph{mít tendenci}) a velmi závisí na druhu zkoumaných dat.
 	
 \paragraph{}
 Pro lepší objasnìní takto nalezených hypotéz se musí novì implementované relaèní rozšíøení vyzkoušet na jiných typech úloh
@@ -317,6 +330,7 @@ a korektnìjších dat.
 
 
 \section{Závìr}
+\paragraph{}
 Z provedených testù plyne, že doba bìhu pro obì úlohy záleží hlavnì
 na poètu vygenerovaných virtuálních sloupcù. Velikost vedlejší datové matice
 sice má na úlohu vliv, rozhodujícím faktorem však zùstává právì poèet vygenerovaných
@@ -335,3 +349,6 @@ Také je potøeba uvést, že implementace relaèních rozšíøení v rámci dané práce
 je pilotní a chování úloh s hypotézovým virtuálním atributem vyžaduje další
 zkoušení a zkoumání, stejnì jako tomu bylo v pøípadì jíž implementovaných
 dataminingových úloh.
+\paragraph{}
+Pro lepší pochopení výsledkù obdržených pøi práci s relaèními rozšíøeními je tøeba dalšího zkoumání
+na rùzných typech dat.

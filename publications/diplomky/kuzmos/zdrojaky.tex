@@ -1,7 +1,7 @@
-\appendix
 \chapter{Zdrojové kódy}
 \label{sourcecode}
 \section[Seznam souborù]{Seznam zmìnìných a vytvoøených souborù}
+\paragraph{}
 Jako souèást dané diplomové práce byly vytvoøeny nebo upraveny
 soubory se zdrojovými kódy. Na projektu Ferda DataMiner pracuje
 v souèasné dobì více lidí. Zdrojové kódy jsou proto spravovány
@@ -12,7 +12,8 @@ se vztahují zmìny provedené autorem \emph{kuzmos} od èísla revize 292.
 \paragraph{}
 \begin{itemize}
 \item \verb+ferda/slice/Modules/Guha.MiningProcessor.ice+
-\item \verb+ferda/slice/Modules/Boxes/DataPreparation/DataPreparation.ice+
+\item \verb+ferda/slice/Modules/Boxes/DataPreparation/+
+\newline \verb+DataPreparation.ice+
 \item \verb+ferda/slice/Modules/Common.ice+
 \item \verb+ferda/src/FrontEnd/AddIns/ResultBrowser/+
 \item \verb+ferda/src/FrontEnd/AddIns/EditCategories/+
@@ -64,6 +65,7 @@ Pøidána procedura pro generování bitových øetízkù pro relaèní rozšíøení.
 
 \section[Pøidání nových relaèních rozšíøení]{Postup pro pøidání nových re\-laè\-ních roz\-ší\-øe\-ní}
 \subsection[Krabièka]{Vytvoøení krabièky}
+\paragraph{}
 Pro uživatelské rozhraní se musí vytvoøit krabièka pro systém Ferda DataMiner. Obecný návod
 pro tento postup je popsán v dokumentu ''Implementace krabièek'', který se nachází v repozitáøi
 zdrojových kódu prostøedí Ferda DataMiner jako \verb+ferda/docsrc/draft/implementaceKrabicek.xdb+.
@@ -71,6 +73,7 @@ Jako vzorovou krabièku pro implementaci relaèních rozšíøení se mùže použít jedna
 \verb+VirtualFFTBooleanAttribute+ nebo \newline \verb+VirtualSDFFTBooleanAttribute+. Nesmí se zapomenout
 na úpravu souborù \newline \verb+ferda/src/Modules/BoxModulesServices/Boxes/*.xml+
 \subsection[Backend]{Úprava procedur}
+\paragraph{}
 Zde se v podstatì jedná o implementaci procedury \verb+TraceBoolean+ vracející enumerátor
 bitových øetízkù v jednotlivých procedurách, které se nacházejí v
 \verb+ferda/src/Modules/Core/MiningProcessor/Miners+. Jako vzor implementace mùže opìt
