@@ -120,6 +120,27 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                             new PropertySetting[] { propSetting };
                         break;
 
+                    case "EquidistantIntervalsLISpAttribute":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            Categorization.EquidistantIntervalsLISp.Functions.SockColumn;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //the property setting - here setting the "nameInLiterals" 
+                        //property of the attribute to the name of the column
+                        propSetting.propertyName =
+                            Categorization.EquidistantIntervalsLISp.Functions.PropNameInLiterals;
+                        propSetting.value = nameInLiteralsValue;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            Categorization.EquidistantIntervalsLISp.BoxInfo.typeIdentifier;
+                        singleModule.propertySetting =
+                            new PropertySetting[] { propSetting };
+                        break;
+
                     case "EquifrequencyIntervalsAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =

@@ -25,6 +25,8 @@ namespace Ferda.Modules.Boxes.DataPreparation
             
             registerBox(DataPreparation.Categorization.EquidistantIntervals.BoxInfo.typeIdentifier,
                         new DataPreparation.Categorization.EquidistantIntervals.BoxInfo());
+            registerBox(DataPreparation.Categorization.EquidistantIntervalsLISp.BoxInfo.typeIdentifier,
+                        new DataPreparation.Categorization.EquidistantIntervalsLISp.BoxInfo());
             registerBox(DataPreparation.Categorization.EquifrequencyIntervals.BoxInfo.typeIdentifier,
                         new DataPreparation.Categorization.EquifrequencyIntervals.BoxInfo());
             registerBox(Categorization.EachValueOneCategory.BoxInfo.typeIdentifier,
