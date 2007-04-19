@@ -308,7 +308,7 @@ namespace Ferda.ProjectManager {
                 adminOutputThread.Join();
                 adminErrorThread.Join();
                 Debug.WriteLine("waiting for exit admin...");
-                adminProcess.WaitForExit();
+     a/ferda/src/ProjectManager/bin/Debug           adminProcess.WaitForExit();
                 Debug.WriteLine("admin stoped...");*/
                 
                 RegistryPrx registryPrx = IceGrid.RegistryPrxHelper.checkedCast(
