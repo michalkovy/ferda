@@ -13,6 +13,75 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
     public static class EquidistantIntervals
     {
         /// <summary>
+        /// Generates the equidistant intervals as in LISp-Miner - based on intervals length
+        /// </summary>
+        /// <param name="from">From</param>
+        /// <param name="to">To</param>
+        /// <param name="length">LEngth of the generated interval</param>
+        /// <returns>Split points for the generated intervals</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        /// Thown if <c>length</c> is equal to zero or 
+        /// too high i.e. to - from is smaller than length.</exception>
+        public static long[] GenerateIntervalsLISp(long from, long to, int length)
+        {
+            if (length == 0)
+                throw new ArgumentOutOfRangeException("length",
+                    "Requested length of intervals can not be zero.");
+
+            if((to - from) < length)
+                throw new ArgumentOutOfRangeException("length",
+                    "Requested length of interval is larger than the maximum possible value.");
+
+            long actualValue = from;
+            long[] intervalsArray = 
+                new long[Convert.ToInt32(System.Math.Ceiling((double)(to - from) / length)) - 1];
+
+            int index = 0;
+            while (actualValue < to - length)
+            {
+                intervalsArray[index] = actualValue + length;
+                actualValue += length;
+                index++;
+            }
+            return intervalsArray;
+        }
+
+        /// <summary>
+        /// Generates the equidistant intervals as in LISp-Miner - based on intervals length
+        /// </summary>
+        /// <param name="from">From</param>
+        /// <param name="to">To</param>
+        /// <param name="length">LEngth of the generated interval</param>
+        /// <returns>Split points for the generated intervals</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        /// Thown if <c>length</c> is equal to zero or 
+        /// too high i.e. to - from is smaller than length.</exception>
+        public static double[] GenerateIntervalsLISp(double from, double to, int length)
+        {
+            if (length == 0)
+                throw new ArgumentOutOfRangeException("length",
+                    "Requested length of intervals can not be zero.");
+
+            if ((to - from) < length)
+                throw new ArgumentOutOfRangeException("length",
+                    "Requested length of interval is larger than the maximum possible value.");
+
+            double actualValue = from;
+            double[] intervalsArray =
+                new double[Convert.ToInt32(System.Math.Ceiling((double)(to - from) / length)) - 1];
+
+            int index = 0;
+            while (actualValue < to - length)
+            {
+                intervalsArray[index] = actualValue + length;
+                actualValue += length;
+                index++;
+            }
+            return intervalsArray;
+        }
+
+
+        /// <summary>
         /// Generates the intervals.
         /// </summary>
         /// <param name="from">From value.</param>

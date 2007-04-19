@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Categorization\Common.cs" />
+    <Compile Include="Categorization\EquidistantIntervalsLISp\BoxInfo.cs" />
+    <Compile Include="Categorization\EquidistantIntervalsLISp\Functions.cs" />
     <Compile Include="Categorization\StaticAttribute\BoxInfo.cs" />
     <Compile Include="Categorization\StaticAttribute\Functions.cs" />
     <Compile Include="Categorization\EachValueOneCategory\BoxInfo.cs" />
@@ -90,6 +92,10 @@
     <Compile Include="DataSource\VirtualColumn\Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Categorization\EquidistantIntervalsLISp\boxDesign.svg" />
+    <Content Include="Categorization\EquidistantIntervalsLISp\boxIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
