@@ -139,7 +139,7 @@ namespace Ferda.FrontEnd.AddIns.RegEditor.MyIce
 
 
             RegEditor.RegularExpEditor control =
-                new RegEditor.RegularExpEditor(XMLString.getStringValue());
+                new RegEditor.RegularExpEditor(XMLString.getStringValue(), localePrefs[0]);
 
             control.Disposed += new EventHandler(control_Disposed);
             System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(control);

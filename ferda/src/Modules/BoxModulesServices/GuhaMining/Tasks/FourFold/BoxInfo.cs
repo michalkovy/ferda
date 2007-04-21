@@ -52,12 +52,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
                 case Common.PropNumberOfHypotheses:
                     return new LongTI(Common.NumberOfHypotheses(Func));
                 case Common.PropStartTime:
-                    return new StringTI(Common.StartTime(Func).ToString());
+                    return new DateTimeTI(Common.StartTime(Func));
                 case Common.PropEndTime:
-                    return new StringTI(Common.EndTime(Func).ToString());
-                case Common.PropTotalTime:
-                    TimeSpan _ts = (TimeSpan)((Common.EndTime(Func) - Common.StartTime(Func)));
-                    return new StringTI(_ts.ToString());
+                    return new DateTimeTI(Common.EndTime(Func));
                 default:
                     throw new NotImplementedException();
             }
@@ -66,6 +63,15 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
             Functions Func = (Functions) boxModule.FunctionsIObj;
+
+              IntT TNumberRuns = (IntT)boxModule.GetPropertyOther("NumberRuns");
+              int IntNumberRuns = TNumberRuns.getIntValue();
+              IntNumberRuns++;
+              TNumberRuns.intValue = IntNumberRuns;
+              PropertyValue NRValue = TNumberRuns;
+                
+              boxModule.setProperty("NumberRuns", NRValue);
+
             switch (actionName)
             {
                 case "Run":

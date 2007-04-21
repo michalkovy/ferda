@@ -1,6 +1,6 @@
-﻿namespace Ferda.FrontEnd.AddIns.FormGenerator
+namespace Ferda.FrontEnd.AddIns.FormGenerator
 {
-    partial class Form1
+    partial class UserControl
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-           // this.components = new System.ComponentModel.Container();
-           // this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            //this.Text = "Form1";
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Text = "Control";
         }
 
         #endregion
     }
 }
-
