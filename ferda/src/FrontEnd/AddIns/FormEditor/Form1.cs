@@ -32,9 +32,13 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Serialization;
 using System.Windows.Forms;
-//using Generator;
+//using Ferda.FrontEnd.AddIns.FormGenerator;
+//using Interpreter;
 
 
+/// <summary>
+/// Class include implementation of Form editor
+/// </summary>
 namespace Ferda.FrontEnd.AddIns.FormEditor
 {
 
@@ -48,6 +52,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
             unpressed = 0,
             pressed = 1
         }
+
         /// <summary>
         /// which button in toolStrip was pressed
         /// </summary>
@@ -59,80 +64,126 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         NumericUpDown numeric;
 
         /// <summary>
-        ///array of radiobuttons
+        ///List of RadioButtons in form
         /// </summary>
-        //public RadioButton[] buttons = new RadioButton[20];
         private List<RadioButton> buttons;
 
         /// <summary>
-        ///array of successor buttons
+        /// List of buttons successor
         /// </summary>
         private List<Button> successor;
 
 
         /// <summary>
-        ///array of all richtexboxes in the form
+        /// List of RichTextBoxes in form
         /// </summary>
         private List<RichTextBox> boxes;
 
         /// <summary>
-        ///modal dialog for setting variable, example or path
+        ///Modal dialog for setting variable, example or path
         /// </summary>
         private Form new_form;
 
-        private RichTextBox dialog_box = new RichTextBox();
+        private RichTextBox dialog_box;
+        private RichTextBox edit1;
+        private RichTextBox edit2;
+        private RichTextBox edit3;
 
         /// <summary>
-        ///list of content of all RichTextBoxes.
+        ///List of content of all RichTextBoxes.
         /// </summary>
         private List<string> areas_text;
 
         /// <summary>
-        /// index of last active RichTextBox
+        /// Index of last active RichTextBox
         /// </summary>
         private int akt_index;
+
+        /// <summary>
+        /// Language code
+        /// </summary>
+        private string language;
 
         /// <summary>
         /// Keep track of when fake "drag and drop" mode is enabled.
         /// </summary>
         private bool isDragging = false;
+        private CheckBox check;
 
         /// <summary>
-        /// Resulting XML string
+        /// XML string that is the output of the Form editor
         /// </summary>
         private string returnString;
 
-        //System.Collections.ArrayList buttons;
-        private String selectedtext = "";
 
         /// <summary>
-        /// Hint for main area(main RichTextBox)
+        /// EN hint for main area(main RichTextBox)
         /// </summary>
-        private String area_help = @"Here insert text, that displays to user. 
-        -  When you want to insert variable, write $variable_name. Variable name is 
-           displayed with red color. Variable id substituted in generated form. 
-        -  When you want to insert example, write @example_name. Example name is 
-           displayed with green color. 
-        -  When you want to insert identifier path, write ^path_name. Path name is 
-           displayed with green color. 
+        private String area_help_EN = @"
+           Here insert text, that displays to common user. 
 
-           If you wat to fill the body of variable, example or path, select 
-           '$variable_name', '@example_name' or '^path_name'
-           Variables, examples and paths names must be without spaces. 
+        -  When you want to insert variable identifier , write $variable_name. 
+           Variable identifier is displayed with red color. Later the variable 
+           value will be evaluated and in substituted in generated form. 
+        -  When you want to insert example identifier, write @example_name. 
+           Example identifier is displayed with green color. In generated
+           form will be figured hypertext with link to text content of the 
+           example.
+        
+           To fill the body of identifier, mark it.
+           
+           ATTENTION: Identifiers must be without spaces. 
            ";
 
         /// <summary>
-        /// Hint for edits(choices)
+        /// CZ hint for main area(main RichTextBox)
         /// </summary>
-        private String edit_help = @"Here insert text version of one choice.
-        Priority is from top to down.
-        You can use variables, examples and paths as in the main area.
+        private String area_help_CZ = @"
+           Sem můžete vložit text, jež se zobrazí běžnému uživatli.
+
+        -  Pokud chcete vložit identifikátor proměnné, napište $jmeno_promenne. 
+           Identifikátor se zobrazí červenou barvou. Ve vygenerovaném formuláři
+           se  obsah proměnné vyhodnotí a expanduje.  
+        -  Pokud chcete vložit identifikátor příkladu, napište @jmeno_prikladu. 
+           Identifikátor příkladu je zobrazen v zelené barvě. Ve vygenerovaném
+           formuláři bude zobrazen hypertext s odkazem na znění příkladu. 
+        
+           Pro vyplnění těla identifikátoru, tento označte. 
+           
+           POZOR: Identifikátory musí být bezer. 
+           ";
+
+        /// <summary>
+        /// EN hint for edits(choices)
+        /// </summary>
+        private String edit_help_EN = @"
+        Here insert version of one choice. Priorities are ordered from top to down.
+        You can use variables, examples as in the main area.
+ 
+        And more you can use PATH identifiers , if you'll write ^path_name.
+        This identifier serve for definition controlled path property.
+        To fill the path body - mark its identifier. 
         ";
 
         /// <summary>
-        /// Hint for RichTextBox in variable definition window.
+        /// CZ hint for edits(choices)
         /// </summary>
-        private String variableUsing_help = @"Here insert source code of wizard language such as :
+        private String edit_help_CZ = @"
+        Sem vložte znění k jedné volbě. Volby jsou řazeny dle priorit směrem od 
+        shora dolů. Můžete využívat identifikátory proměnných a příkadů jako v 
+        hlavní oblasti.
+
+        A navíc můžete zadat identifikátor CESTY, pokud napišete ^jmeno_cesty.
+        Tento identifikátor slouží k definici kontrolované vlastnosti jisté krabičky.
+        Pro vyplnění těla cesty je nutné označit jeho identifikátor. 
+        ";
+
+        /// <summary>
+        /// EN hint for variable definition window.
+        /// </summary>
+        private String variableUsing_help_EN = @"
+        Here you can write source code of wizard language such as:
+
           $a = 1;
           $b = $a * 4;
           $c = $array[$b] - $a;   
@@ -141,23 +192,130 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         ";
 
         /// <summary>
-        /// Hint for example RichTextBox
+        /// CZ hint for variable definition window.
         /// </summary>
-        private String exampleUsing_help = @"Here insert text version of practical example
+        private String variableUsing_help_CZ = @"
+        Sem můžete vkládat zdrojový kod jazyka WizardLanguage napr.:
+
+          $a = 1;
+          $b = $a * 4;
+          $c = $array[$b] - $a;   
+          $d = if ($a > 4) {$b} else {$c};
+          $f = if (($a - 2 >= 6) && ($b < 8)) {$b+1} else {$a * 4};
         ";
 
         /// <summary>
-        /// Hint for path RichTextBox
+        /// EN hint for example RichTextBox
         /// </summary>
-        private String pathUsing_help = @"Here path of identifiers saparated by '->' such as :
-         founded_implication -> p
+        private String exampleUsing_help_EN = @"
+        Here insert text version of practical example
         ";
 
-        public System.Collections.Hashtable variables;
+        /// <summary>
+        /// CZ hint for example RichTextBox
+        /// </summary>
+        private String exampleUsing_help_CZ = @"
+        Vložte textové znění příkladu
+        ";
 
-        public System.Collections.Hashtable successors;
+        /// <summary>
+        /// EN hint for successors
+        /// </summary>
+        private String successorBox_help_EN = @"
+        Here insert user name of next box in scenario.
+        ";
 
-        public System.Collections.Hashtable numerics;
+        /// <summary>
+        /// CZ hint for successors
+        /// </summary>
+        private String successorBox_help_CZ = @"
+        Vložte uživatelské pojmenování následnické krabičky
+        ve scénáři.
+        ";
+
+        /// <summary>
+        /// EN hint for setting form variant
+        /// </summary>
+        private String nextVariant_help_EN = @"
+        Here insert variant of first box of type Form.
+
+        E.g.: We have form with four choices - basic variant of this form is 1234 
+              (all choices are present). Variant 124 discribe, that are present 
+              first two choices and last choice (sorted by priority).
+        ";
+
+        /// <summary>
+        /// CZ hint for setting form variant
+        /// </summary>
+        private String nextVariant_help_CZ = @"
+        Vložte variantu následnické krabičky typu Formulář.
+
+        Př.: Máme formulář se čtyřmi volbami - základní varianta tohoto formuláře je 1234 
+             (všechny volby přítomny. Varianta 124 popisuje, že jsou přítomné první dvě
+             volby a volba poslední (seřazany dle priorit).   
+        ";
+
+        /// <summary>
+        /// EN hint box user name
+        /// </summary>
+        private String controlledBox_help_EN = @"
+        Here insert user name of box, whose property will be checked.   
+        ";
+
+        /// <summary>
+        /// CZ hint box user name
+        /// </summary>
+        private String controlledBox_help_CZ = @"
+        Vložte uživatelské jméno krabičky, jejíž hodnota bude kontrolována.
+        ";
+
+        /// <summary>
+        /// EN hint property
+        /// </summary>
+        private String controlledProperty_help_EN = @"
+        Here insert name of property, whose will be checked.   
+        ";
+
+        /// <summary>
+        /// CZ hint property
+        /// </summary>
+        private String controlledProperty_help_CZ = @"
+        Vložte jméno vlastosti, jejíž hodnota bude kontrolována.
+        ";
+
+        /// <summary>
+        /// EN hint for value
+        /// </summary>
+        private String offeredValue_help_EN = @"
+        Here insert recommended value.
+        ";
+
+        /// <summary>
+        /// CZ hint for value
+        /// </summary>
+        private String offeredValue_help_CZ = @"
+        Vložte doporučovanou hodnotu.
+        ";
+
+        /// <summary>
+        /// hash table between variable and value
+        /// </summary>
+        private System.Collections.Hashtable variables;
+
+        /// <summary>
+        /// hash table between index and value
+        /// </summary>
+        private System.Collections.Hashtable indexes;
+
+        /// <summary>
+        /// hash table between successor and value
+        /// </summary>
+        private System.Collections.Hashtable successors;
+
+        /// <summary>
+        /// hash table between variant and value
+        /// </summary>
+        private System.Collections.Hashtable numerics;
 
         /// <summary>
         /// Resulting XML string
@@ -172,9 +330,12 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
 
 
         /// <summary>
-        /// Class constructor
+        /// Class constructor.
+        /// Lading content from XML string.
         /// </summary>
-        public WizardFormEditor(string ContentToLoad)
+        /// <param name="ContentToLoad">Content of form in XML format</param>
+        /// <param name="localization">Localization EN/CZ</param>
+        public WizardFormEditor(string ContentToLoad, string localization)
         {
             InitializeComponent();
 
@@ -186,12 +347,21 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
             buttons = new List<RadioButton>();
             successor = new List<Button>();
 
+            dialog_box = new RichTextBox();
+            edit1 = new RichTextBox();
+            edit2 = new RichTextBox();
+            edit3 = new RichTextBox();
+            check = new CheckBox();
+
             variables = new System.Collections.Hashtable();
             successors = new System.Collections.Hashtable();
             numerics = new System.Collections.Hashtable();
+            indexes = new System.Collections.Hashtable();
 
             RButtonState = ButtonState.unpressed;
             AButtonState = ButtonState.unpressed;
+
+            this.language = localization;
 
             this.returnString = ContentToLoad;
 
@@ -205,14 +375,20 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                       FormHihglighter(boxes[i]);
               }
         }
-
+        /// <summary>
+        /// Standard form_load method here is set title
+        /// according localization.
+        /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            if (language == "en-US") this.Text = "Wizard form editor";
+            else this.Text = "Editor formulářů ";
+          //  this.ShowInTaskbar = false;
         }
 
         /// <summary>
-        /// Function initialize common controls
+        /// Function initialize common controls,
+        /// set toolTips, etc.
         /// </summary>
         private void Initialize()
         {
@@ -224,8 +400,11 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
             text_box.Width = 350;
             text_box.Height = 130;
             text_box.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-            //text_box.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
-            this.main_toolTip.SetToolTip(text_box, area_help);
+            
+            if (language == "en-US")
+              this.main_toolTip.SetToolTip(text_box, area_help_EN);
+            else
+              this.main_toolTip.SetToolTip(text_box, area_help_CZ);
 
             text_box.SelectionChanged += new System.EventHandler(this.SelectionChanged);
             text_box.TextChanged += new System.EventHandler(this.TextChanged);
@@ -254,7 +433,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                 edit.Width = 320;
                 edit.Height = 20;
                 edit.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-                this.main_toolTip.SetToolTip(edit, edit_help);
+                if (language == "en-US")
+                   this.main_toolTip.SetToolTip(edit, edit_help_EN);
+                else
+                   this.main_toolTip.SetToolTip(edit, edit_help_CZ);
 
                 edit.SelectionChanged += new System.EventHandler(this.SelectionChanged);
                 edit.TextChanged += new System.EventHandler(this.TextChanged);
@@ -274,6 +456,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
+        /// Standard button_click method.
         /// When user click on Radio Button, neccessary to change state. 
         /// </summary>
         private void RButton_click(object sender, EventArgs e)
@@ -287,6 +470,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
+        /// Standard button_click method.
         /// When user click on RichTextBox Button, necessary to change state.
         /// </summary>
         private void AButton_Click(object sender, EventArgs e)
@@ -304,7 +488,9 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// When user click on Successor button.
+        /// Standard button_click method.
+        /// When user click on Successor button, it is
+        /// necessary to save the content of Successor dialog.
         /// </summary>
         private void Successor_Click(object sender, EventArgs e)
         {
@@ -325,7 +511,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// When user click on OK button of modal dialog.
+        /// Standard button_click method.
+        /// When user click on OK button in 
+        /// WizardLanguage or Example modal dialog.
+        /// It is necessary to save changes.
         /// </summary>
         private void OK1_Click(object sender, EventArgs e)
         {
@@ -337,7 +526,9 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// When user click on CAncel button of modal dialog.
+        /// Standard button_click method.
+        /// When user click on Cancel button of modal dialog,
+        /// this dialog must be closed.
         /// </summary>
         private void Cancel1_Click(object sender, EventArgs e)
         {
@@ -345,21 +536,21 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// When user click on OK button of modal successor dialog.
+        /// Standard button_click method.
+        /// When user click on OK button of modal successor dialog,
+        /// it is necessary to save successor name and variant.
         /// </summary>
         private void OK2_Click(object sender, EventArgs e)
         {
-          //  if (successors.Count > akt_index)
-            //    successors.RemoveAt(akt_index);
-
             successors[akt_index] = dialog_box.Text;
             numerics[akt_index] = numeric.Value;
-            //successors.Insert(akt_index, dialog_box.Text);
             new_form.Close();
         }
 
         /// <summary>
-        /// When user click on CAncel button of modal successor dialog.
+        /// Standard button_click method.
+        /// When user click on Cancel button of modal successor dialog,
+        /// dialog must be closed.
         /// </summary>
         private void Cancel2_Click(object sender, EventArgs e)
         {
@@ -367,12 +558,43 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// Function find specific text(condition types) in input string(used by highliter)
+        /// Standard button_click method.
+        /// When user click on OK button of modal path definition dialog,
+        /// it is necessary to save box name, property name and value.
+        /// </summary>
+        private void OK3_Click(object sender, EventArgs e)
+        {
+            if (areas_text.Count > akt_index)
+                areas_text.RemoveAt(akt_index);
+
+            string tendency = check.Checked ? "Y" : "N";
+            string path = edit1.Name + "->" +
+                          edit1.Text + "->" + edit2.Text + "->" + 
+                          edit3.Text + "->" + tendency;
+
+            areas_text.Insert(akt_index, path);
+
+            new_form.Close();
+        }
+
+        /// <summary>
+        /// Standard button_click method.
+        /// When user click on Cancel button of modal path definition dialog,
+        /// dialog is closed.
+        /// </summary>
+        private void Cancel3_Click(object sender, EventArgs e)
+        {
+            new_form.Close();
+        }
+
+        /// <summary>
+        /// Method finds specific text(condition types) in input string
+        /// Method is used by highlighter.
         /// </summary>
         /// <param name="text">Input text.</param>
         /// <param name="start">Start finding position.</param>
         /// <param name="begin">Begin of founded text.</param>
-        /// <param name="length">NUmber chars of founded text</param>
+        /// <param name="length">Number chars of founded text</param>
         private void Find_condition(String text, int start, ref int begin, ref int length)
         {
             String if_word = "if";
@@ -406,12 +628,13 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
               }
         }
         /// <summary>
-        /// Function find specific text(variables, examples or paths) in input string(used by highliter)
+        /// Function find specific text(variables, examples or paths) identifiers 
+        /// in input string(used by highliter).
         /// </summary>
         /// <param name="text">Input text.</param>
         /// <param name="start">Start finding position.</param>
         /// <param name="begin">Begin of founded text.</param>
-        /// <param name="length">NUmber chars of founded text</param>
+        /// <param name="length">Number chars of founded text</param>
         private void Find_variable(String text, ref int chr, int start, ref int begin, ref int length)
         {
             char[] chars = new char[3] {'$', '@', '^'};
@@ -433,9 +656,11 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// Function highlight variables, examples and paths in incoming RichTextBox
+        /// Method highlight variables, examples and paths 
+        /// in incoming RichTextBox. Highlighting is made
+        /// by changing color of selecting text.
         /// </summary>
-        /// <param name="box">Highlighted RichTextBox.</param>
+        /// <param name="box">Highlighted RichTextBox</param>
         private void FormHihglighter(RichTextBox box)
         {
             int begin = 0, start = 0, index = 0;
@@ -475,6 +700,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
 
         /// <summary>
         /// Function highlight expressions in incoming RichTextBox.
+        /// Highlighting is made by changing color of selecting text.
         /// </summary>
         /// <param name="box">Highlighted RichTextBox.</param>
         private void ExpressionHighlighter(RichTextBox box)
@@ -522,7 +748,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// Standart TextChanged function of RichTextBox.
+        /// Standard TextChanged function of RichTextBox.
         /// Function only calls Highlighter function.
         /// </summary>
         private void SubTextChanged(object sender, EventArgs e)
@@ -531,18 +757,13 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
          }
 
          /// <summary>
-         /// Function creates modal dialog.
+         /// Function creates modal dialog of several type.
          /// </summary>
-         /// <param name="form_type">Types of form - possibilities are Variable, Example and Path.</param>
-         /// <param name="variable"> Variable name.</param>
+         /// <param name="form_type">Types of form - possibilities are Variable, Example and Path</param>
+         /// <param name="variable"> Variable name</param>
          /// <param name="is_new"> If the dialog with its variable was yet created</param>
          private void CreateForm(String form_type, String variable, bool is_new, bool show)
          {
-           //if (form_type == "Successor")
-             //akt_index = int.Parse(variable);
-           //else
-             //akt_index = (int)variables[variable];
-
             new_form = new Form();
             new_form.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             new_form.StartPosition = FormStartPosition.CenterParent;
@@ -550,18 +771,28 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
             new_form.MaximizeBox = false;
             this.AddOwnedForm(new_form);
 
+            ToolTip dialog_toolTip = new ToolTip();
+            dialog_toolTip.IsBalloon = true;
+
             if (form_type == "Successor")
             {
                 akt_index = int.Parse(variable);
 
                 new_form.Width = 200;
                 new_form.Height = 180;
-                new_form.Text = "Successor name and variant";
+
+                if (language == "en-US")
+                  new_form.Text = "Setting successors";
+                else
+                  new_form.Text = "Nastavení pro následníky";
 
                 Label label1 = new Label();
                 label1.Left = 35;
                 label1.Top = new_form.Size.Height - 165;
-                label1.Text = "Successor form name:";
+                if (language == "en-US")
+                    label1.Text = "Successor box user name:";
+                else
+                    label1.Text = "Jméno následníka:"; 
                 label1.AutoSize = true;
                 new_form.Controls.Add(label1);
                 label1.Show();
@@ -572,6 +803,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                 edit.Top = new_form.Size.Height - 150;
                 edit.Width = 120;
                 edit.Height = 20;
+                if (language == "en-US")
+                   dialog_toolTip.SetToolTip(edit, successorBox_help_EN);
+                else
+                   dialog_toolTip.SetToolTip(edit, successorBox_help_CZ);
 
                 if (!is_new)
                     edit.Text = (string)successors[akt_index];
@@ -584,7 +819,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                 Label label2 = new Label();
                 label2.Left = 35;
                 label2.Top = new_form.Size.Height - 115;
-                label2.Text = "Successor form variant:";
+                if (language == "en-US")
+                    label2.Text = "Next Form box variant:";
+                else
+                    label2.Text = "Varianta následníka:";
                 label2.AutoSize = true;
                 new_form.Controls.Add(label2);
                 label2.Show();
@@ -595,13 +833,16 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                 numeric.Top = new_form.Size.Height - 100;
                 numeric.Minimum = 0;
                 numeric.Maximum = 100000;
+                if (language == "en-US")
+                   dialog_toolTip.SetToolTip(numeric, nextVariant_help_EN);
+                else
+                   dialog_toolTip.SetToolTip(numeric, nextVariant_help_CZ);
 
                 if (!is_new)
                     numeric.Value = (decimal)numerics[akt_index];
-              
+
                 new_form.Controls.Add(numeric);
                 numeric.Show();
-
 
 
                 Button ok_button = new Button();
@@ -623,20 +864,175 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                 cancel_button.Show();
 
             }
+            else if (form_type == "Path")
+            {
+                akt_index = (int)variables[variable];
+
+                string[] path_array = {};
+
+                if (!is_new)
+                {
+                  path_array = areas_text[akt_index].Split(new string[] { "->" },  
+                                                     StringSplitOptions.None );
+                }
+
+                new_form.Width = 420;
+                new_form.Height = 150;
+                if (language == "en-US")
+                  new_form.Text = "Path to property";
+                else
+                  new_form.Text = "Cesta k vlastnosti";
+
+                Label label1 = new Label();
+                label1.Left = 20;
+                label1.Top = 20;
+                if (language == "en-US")
+                   label1.Text = "Box user name:";
+                else
+                   label1.Text = "Jméno krabičky:";
+                label1.AutoSize = true;
+                new_form.Controls.Add(label1);
+                label1.Show();
+
+                edit1 = new RichTextBox();
+
+                edit1.Left = 20;
+                edit1.Top = 35;
+                edit1.Width = 120;
+                edit1.Height = 20;
+                edit1.Name = variable + " : ";
+                if (language == "en-US")
+                  dialog_toolTip.SetToolTip(edit1, controlledBox_help_EN);
+                else
+                  dialog_toolTip.SetToolTip(edit1, controlledBox_help_CZ);
+                if (!is_new)
+                    edit1.Text = path_array[1];
+
+                new_form.Controls.Add(edit1);
+                edit1.Show();
+
+                Label label2 = new Label();
+                label2.Left = 150;
+                label2.Top = 20;
+                if (language == "en-US")
+                   label2.Text = "Property name:";
+                else
+                   label2.Text = "Jméno vlastnosti:";
+
+                label2.AutoSize = true;
+                new_form.Controls.Add(label2);
+                label2.Show();
+
+                edit2 = new RichTextBox();
+
+                edit2.Left = 150;
+                edit2.Top = 35;
+                edit2.Width = 120;
+                edit2.Height = 20;
+                if (language == "en-US")
+                  dialog_toolTip.SetToolTip(edit2, controlledProperty_help_EN);
+                else
+                  dialog_toolTip.SetToolTip(edit2, controlledProperty_help_CZ);
+                if (!is_new)
+                    edit2.Text = path_array[2];
+
+                new_form.Controls.Add(edit2);
+                edit2.Show();
+
+                Label label3 = new Label();
+                label3.Left = 280;
+                label3.Top = 20;
+                if (language == "en-US")
+                    label3.Text = "Property value:";
+                else
+                    label3.Text = "Hodnota vlastnosti:";
+                label3.AutoSize = true;
+                new_form.Controls.Add(label3);
+                label3.Show();
+
+                edit3 = new RichTextBox();
+
+                edit3.Left = 280;
+                edit3.Top = 35;
+                edit3.Width = 120;
+                edit3.Height = 20;
+                if (language == "en-US")
+                    dialog_toolTip.SetToolTip(edit3, offeredValue_help_EN);
+                else
+                    dialog_toolTip.SetToolTip(edit3, offeredValue_help_CZ);
+
+                if (!is_new)
+                    edit3.Text = path_array[3];
+
+                new_form.Controls.Add(edit3);
+                edit3.Show();
+
+                check = new CheckBox();
+
+                check.Left = 20;
+                check.Top = 60;
+                if (language == "en-US")
+                   check.Text = "Follow tendency:";
+                else
+                   check.Text = "Sleduj tendence:";
+                check.AutoSize = true;
+
+                if (!is_new)
+                {
+                    if (path_array[4] == "Y")
+                                    check.Checked = true;
+                }
+
+                new_form.Controls.Add(check);
+                check.Show();
+
+                Button ok_button = new Button();
+
+                ok_button.Left = new_form.Size.Width  - 180;
+                ok_button.Top = new_form.Size.Height - 60;
+                ok_button.Text = "OK";
+                ok_button.Click += new System.EventHandler(this.OK3_Click);
+                new_form.Controls.Add(ok_button);
+                ok_button.Show();
+
+                Button cancel_button = new Button();
+
+                cancel_button.Left = new_form.Size.Width - 100;
+                cancel_button.Top = new_form.Size.Height - 60;
+                cancel_button.Text = "Cancel";
+                cancel_button.Click += new System.EventHandler(this.Cancel3_Click);
+                new_form.Controls.Add(cancel_button);
+                cancel_button.Show();
+
+            }
             else
             {
                 akt_index = (int)variables[variable];
 
+                if (form_type == "Variable")
+                    new_form.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+
                 new_form.Width = 300;
                 new_form.Height = 200;
 
+
                 if (form_type == "Variable")
-                    new_form.Text = "WizardLanguage code";
+                {
+                    if (language == "en-US")
+                         new_form.Text = "WizardLanguage code";
+                    else
+                         new_form.Text = "Kód jazyka WizardLanguage";
+                }
 
                 else if (form_type == "Example")
-                    new_form.Text = "Example of practical situation";
+                {
+                    if (language == "en-US")
+                       new_form.Text = "Example of practical situation";
+                    else
+                       new_form.Text = "Příklad praktické situace";
+                }
 
-                else new_form.Text = "Path to box property";
+                //else new_form.Text = "Path to box property";
 
                 RichTextBox richtext_box = new RichTextBox();
 
@@ -645,7 +1041,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                 richtext_box.Width = 250;
 
                 richtext_box.Height = 100;
-
+                richtext_box.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
                 new_form.Controls.Add(richtext_box);
                 richtext_box.Show();
 
@@ -658,19 +1054,22 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                     richtext_box.SelectionColor = Color.Red;
                     richtext_box.Select(length + 3, 0);
                     richtext_box.TextChanged += new System.EventHandler(this.SubTextChanged);
-                    this.main_toolTip.SetToolTip(richtext_box, variableUsing_help);
+
+                    if (language == "en-US")
+                       dialog_toolTip.SetToolTip(richtext_box, variableUsing_help_EN);
+                    else
+                       dialog_toolTip.SetToolTip(richtext_box, variableUsing_help_CZ);
                 }
-                else if ((form_type == "Path") || (form_type == "Example"))
+                else if ( form_type == "Example" )
                 {
                     int length = variable.Length;
 
                     richtext_box.Text = variable + " : ";
                     richtext_box.Select(length + 3, 0);
-
-                    //if (form_type == "Path")
-                    //  this.main_toolTip.SetToolTip(richtext_box, pathUsing_help); 
-                    //else if (form_type == "Example")
-                    //  this.main_toolTip.SetToolTip(richtext_box, exampleUsing_help); 
+                    if (language == "en-US")
+                       dialog_toolTip.SetToolTip(richtext_box, exampleUsing_help_EN);
+                    else
+                       dialog_toolTip.SetToolTip(richtext_box, exampleUsing_help_CZ);
                 }
 
 
@@ -678,20 +1077,21 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
 
                 if (!is_new)
                 {
-                        dialog_box.Text = areas_text[akt_index];
-                        if (form_type == "Variable")
-                            ExpressionHighlighter(dialog_box);
+                    dialog_box.Text = areas_text[akt_index];
+                    if (form_type == "Variable")
+                        ExpressionHighlighter(dialog_box);
 
-                        richtext_box.Select(dialog_box.Text.Length + 1, 0);
+                    richtext_box.Select(dialog_box.Text.Length + 1, 0);
                 }
 
                 Button ok_button = new Button();
 
                 ok_button.Left = new_form.Size.Height - 80;
+                ok_button.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
                 ok_button.Top = new_form.Size.Height - 70;
                 ok_button.Text = "OK";
 
-                    ok_button.Click += new System.EventHandler(this.OK1_Click);
+                ok_button.Click += new System.EventHandler(this.OK1_Click);
 
                 new_form.Controls.Add(ok_button);
                 ok_button.Show();
@@ -700,9 +1100,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
 
                 cancel_button.Left = new_form.Size.Height;
                 cancel_button.Top = new_form.Size.Height - 70;
+                cancel_button.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
                 cancel_button.Text = "Cancel";
 
-                    cancel_button.Click += new System.EventHandler(this.Cancel1_Click);
+                cancel_button.Click += new System.EventHandler(this.Cancel1_Click);
 
                 new_form.Controls.Add(cancel_button);
                 cancel_button.Show();
@@ -715,8 +1116,8 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
          }
 
          /// <summary>
-         /// Standard RichTextBox TextChanged function, from here it is 
-         /// necessary to call highlighter function
+         /// Standard RichTextBox TextChanged method.
+         /// Here it is necessary to call highlighter function.
          /// </summary>
         private void TextChanged(object sender, EventArgs e)
         {
@@ -734,8 +1135,9 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// Standard RichTextBox SelectionChanged function, from here it is 
-        /// necessary to call CreateForm function
+        /// Standard RichTextBox SelectionChanged method.
+        /// Method reacts when user select path, example
+        /// or variable identifier.
         /// </summary>
         private void SelectionChanged(object sender, EventArgs e)
         {
@@ -772,7 +1174,11 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                   {
                       if (!variables.ContainsKey(selected_text))
                       {
-                         variables[selected_text] = variables.Count;
+                         int bound = variables.Count;
+
+                         variables[selected_text] = bound;
+                         indexes[bound] = selected_text;
+
                          is_new = true;
                       }
 
@@ -786,8 +1192,9 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// Standard mouse MouseDown function. Here the function 
-        /// is used form drawing RichTextBox and Radio button with choice.
+        /// Standard mouse MouseDown method. 
+        /// Methd is used form placing edits(RichtextBoxes)
+        /// and choices (RadioButtons with RichtextBoxes and Buttons).
         /// </summary>
         public void Mouse_Down(object sender, MouseEventArgs e)
         {
@@ -823,7 +1230,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                 edit.Height = 20;
                 edit.ReadOnly = true;
                 edit.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-                this.main_toolTip.SetToolTip(edit, edit_help);
+                if (language == "en-US")
+                   this.main_toolTip.SetToolTip(edit, edit_help_EN);
+                else
+                   this.main_toolTip.SetToolTip(edit, edit_help_CZ);
 
                 edit.SelectionChanged += new System.EventHandler(this.SelectionChanged);
                 edit.TextChanged += new System.EventHandler(this.TextChanged);
@@ -860,8 +1270,8 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// Standard mouse MouseMove function.Here is used for
-        /// drawing RichTextBox.
+        /// Standard mouse MouseMove function.
+        /// Here is used for drawing RichTextBox.
         /// </summary>
         private void Mouse_move(object sender, MouseEventArgs e)
         {
@@ -873,8 +1283,8 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// Standard mouse MouseUp function.Here is used for
-        /// changing state of toolStrip buttons. 
+        /// Standard mouse MouseUp function.
+        /// Here is used forchanging state of toolStrip buttons. 
         /// </summary>
         private void Mouse_Up(object sender, MouseEventArgs e)
         {
@@ -891,7 +1301,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// Function load informations to wizard form from string
+        /// Function load informations to FormEditor form from string
         /// with XML format.
         /// </summary>
         /// <param name="XMLString"> String with XML content.</param>
@@ -913,18 +1323,13 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                           case "mainarea":
                               {
                                   boxes[0].Text = fils.InnerText;
-                                  //new_richtextbox.Text = fils.InnerText;
-                                  //boxes.RemoveAt(0);
-                                  //boxes.Insert(0,new_richtextbox);
                                   
                                   break;
                               }
                           case "followchoice":
                               {
                                   priority = int.Parse(fils.Attributes.Item(0).Value);
-                                  //new_richtextbox.Text = fils.InnerText;
-                                  //boxes.RemoveAt(priority);
-                                  //boxes.Insert(priority, new_richtextbox);
+
                                   foreach (XmlNode prafils in fils.ChildNodes)
                                     switch (prafils.Name)
                                      {
@@ -941,6 +1346,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                                        case "variant":
                                                     {
                                                      numerics[priority - 1] =  decimal.Parse(prafils.InnerText);
+                                                         //int.Parse(
                                                      break;
                                                     }
 
@@ -957,6 +1363,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                                   int index = variables.Count;
 
                                   variables[pointer_text] = index;
+                                  indexes[index] = pointer_text;
                                   areas_text.Add(fils.InnerText);
 
                                   break;
@@ -966,10 +1373,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// Function save content of all forms to one string with
-        /// XML format
+        /// Function save content of all RichtextBoxes
+        /// to one string with and dialogs to XML format.
         /// </summary>
-        /// <param name="FormID"> Globally unique ID of WizardForm box.</param>
+        /// <param name="FormID"> Globally unique ID of WizardForm box - now not important.</param>
         public string SaveFormToXMLString(string FormID)
         {
             int index;
@@ -1020,22 +1427,14 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                    new_form.AppendChild(choice);
                }
 
+
+            
                for (index = 0; index < variables.Count; index++)
                {
-                   int char_index = 0;
-                   string pointer = "";
-
-                   while ((areas_text[index][char_index] != ':') &&
-                          (areas_text[index][char_index] != '=') &&
-                          (areas_text[index][char_index] != ' '))
-                   {
-                       pointer = pointer + areas_text[index][char_index].ToString();
-                       char_index++;
-                   }
                    XmlElement pointer_element = form_document.CreateElement("pointer");
                    XmlAttribute pointer_attribute = form_document.CreateAttribute("Name");
 
-                   pointer_attribute.Value = pointer;
+                   pointer_attribute.Value = (string)indexes[index];// pointer;
                    pointer_element.SetAttributeNode(pointer_attribute);
                    pointer_element.InnerText = areas_text[index];
                    new_form.AppendChild(pointer_element);
@@ -1052,17 +1451,28 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
 
         /// <summary>
         /// Validation of the form content.
+        /// Method produces MessageBoxes and not
+        /// allow to leave FormEditor when Error.
         /// </summary>
         private bool Form_validate()
         {
             int i;
 
             for (i = 1; i < boxes.Count; i++)
+            {
+                if (boxes[i].Text.IndexOf('^') != boxes[i].Text.LastIndexOf('^'))
+                {
+                  MessageBox.Show("Some choice has more paths", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                  return false;
+                }
+
                 if ((!successors.ContainsKey(i - 1)) && (!successors.ContainsKey(i - 1))
                       && (boxes[i].Text == "")) continue;
                 else if ((boxes[i].Text == "") &&
                          (((string)successors[i - 1] == "") || ((decimal)numerics[i - 1] == 0)))
-                            continue;
+                    continue;
                 else if ((boxes[i].Text != "") && (!successors.ContainsKey(i - 1)))
                 {
                     MessageBox.Show("Some form name and form variant are not defined", "Error",
@@ -1070,9 +1480,13 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
 
                     return false;
                 }
-                else if ((boxes[i].Text != "") && ((string)successors[i - 1] == "") )
+                else if ((boxes[i].Text != "") && ((string)successors[i - 1] == ""))
                 {
+                  if (language == "en-US")
                     MessageBox.Show("Some form name is not defined", "Error",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                  else
+                    MessageBox.Show("Jméno některého formuláře není definováno", "Chyba",
                                       MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     return false;
@@ -1080,17 +1494,41 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                 else if ((boxes[i].Text == "") &&
                      (((string)successors[i - 1] != "")))
                 {
+                  if (language == "en-US")
                     MessageBox.Show("Some choice has no text", "Error",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                  else
+                    MessageBox.Show("Některá volba nemá text", "Chyba",
                                       MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     return false;
+                }
+            }
+
+            for (i = 0; i < variables.Count; i++)
+                if (areas_text[i][0] == '^')
+                {
+                  int index;
+    
+                    if ((index=areas_text[i].IndexOf("->->")) >= 0)      
+                    {
+                      if (language == "en-US")
+                        MessageBox.Show("Some part of path to property is not filled", "Error",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Error);
+                      else
+                        MessageBox.Show("Některá část cesty k vlastnosti není vyplněna", "Chyba",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        return false;
+                    }
                 }
 
             return true;
         }
 
         /// <summary>
-        /// Function save content when user clicks on OK button.
+        /// When Validation is OK, 
+        /// method save content when user clicks on OK button.
         /// </summary>
         private void OK_Click(object sender, EventArgs e)
         {
@@ -1100,8 +1538,24 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
               
             this.returnString = this.SaveFormToXMLString("1");
 
-          //  WizardFormGenerator gen = 
-            //    new WizardFormGenerator(this.returnString, 200, "Next", 0);
+         //  VariableServices service = new VariableServices();
+
+           /*service.setValue("$a", "sdasd");
+            try{
+
+            object gg = service.getValue("$a");
+                
+            MessageBox.Show(gg.ToString());
+            }
+            catch(NullReferenceException)
+            {
+                MessageBox.Show("qsdsd");
+            }
+            */
+           /* WizardFormGenerator gen = 
+                new WizardFormGenerator(this.returnString, 200, "Next_STOP", 0, service);
+
+            System.Windows.Forms.DialogResult result = gen.GenerateForm();*/
 
             //MessageBox.Show(returnString);
 
@@ -1111,7 +1565,8 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         }
 
         /// <summary>
-        /// User click on Cancel button -> only close form.
+        /// User click on Cancel button the form must be 
+        /// closed with Cancel result.
         /// </summary>
         private void Cancel_Click(object sender, EventArgs e)
         {
@@ -1121,25 +1576,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
             this.Dispose();
         }
 
+
+        //END
         private void WizardFormEditor_HelpRequested(object sender, HelpEventArgs hlpevent)
         {
-     /*       Control controlNeedingHelp = null;
-   
-             Point pt = this.PointToClient(hlpevent.MousePos);
-
-               foreach(Control control in this.Controls)
-               {
-                   if (control == null) return;
-                   Rectangle myBounds = control.DisplayRectangle;
-
-                   if ( myBounds.Contains(pt)) 
-                   {
-                       controlNeedingHelp = control;
-                       break;
-                   }
-               }
-               string help = main_toolTip.GetToolTip(controlNeedingHelp);
-            if (help.Length > 0)  MessageBox.Show(help, "Help");*/
         }
 
         private void IDEdit_Click(object sender, EventArgs e)
@@ -1156,275 +1596,5 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                  
         }
 
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*   XmlTextWriter writer = new XmlTextWriter("forms.xml", null);
-            
-    writer.Formatting = Formatting.Indented;
-    writer.Indentation = 2;
-
-      writer.WriteStartDocument();
-      writer.WriteStartElement("FormsContent");
-            
-       writer.WriteStartElement("form");
-       writer.WriteAttributeString("ID", IDEdit.Text);
-       writer.WriteWhitespace("\n");
-       writer.WriteRaw(boxes[0].Text);
-       writer.WriteWhitespace("\n");
-
-       for (index = 1; index < number_buttons; index++)
-        {
-         if (boxes[index].Text == "") break;
-
-           writer.WriteStartElement("followchoice");
-           writer.WriteAttributeString("Priority", index.ToString());
-           writer.WriteWhitespace("\n");
-           writer.WriteRaw(boxes[index].Text);
-           writer.WriteWhitespace("\n");
-           writer.WriteEndElement();
-           writer.WriteWhitespace("\n");
-        }
-                
-        for (index = 0; index < variables.Count; index++)
-        {
-            int char_index=0;
-            String pointer = "";
-
-            while ((areas[index].Text[char_index] != ':') &&
-                     (areas[index].Text[char_index] != '='))
-               {
-                   pointer = pointer + areas[index].Text[char_index].ToString();
-                   char_index++;
-               }
-             pointer.Trim();
-            writer.WriteStartElement("pointer");
-            writer.WriteAttributeString("Name", pointer);
-            writer.WriteWhitespace("\n");
-            writer.WriteRaw(areas[index].Text);
-            writer.WriteWhitespace("\n");
-            writer.WriteEndElement();
-            writer.WriteWhitespace("\n");
-        }
-
-    writer.WriteWhitespace("\n");
-    writer.WriteEndElement();
-    writer.Close();  
- 
- *           /*      if ((r_begin = text.IndexOf(else_word, start)) >= 0)
-                { length = 4; begin = r_begin; }
-                else if ((r_begin = text.IndexOf(if_word, start)) >= 0)
-                { length = 2; begin = r_begin; }
-                else if ((r_begin = text.IndexOf(elseif_word, start)) >= 0)
-                { length = 6; begin = r_begin; }
-                else begin = -1;
-            */
-            //if (begin != -1)
-
-
- 
-  
-              /*
-            Find_variable(areas[active_area].Text, ref chr, -1, ref begin1, ref length1);
-            if (begin1 < 0) return;
-
-            Find_condition(areas[active_area].Text, -1, ref begin2, ref length2);
-            if (begin2 < 0) return;
-
-            areas[active_area].Select(begin1, length1);
-            areas[active_area].SelectionColor = Color.Red;
-
-            areas[active_area].Select(begin2, length2);
-            areas[active_area].SelectionColor = Color.Blue;
-
-            areas[active_area].Select(areas[active_area].Text.Length, 0);
-            areas[active_area].SelectionColor = Color.Black;
-             * */
-
-
-
-
-//            Cursor.Position = position;
-            /*length = boxes[active_area].Text.Length;
-
-            if (boxes[active_area].Text[length - 1] == '$')
-            {
-                boxes[active_area].Select(length - 1, 1);
-                boxes[active_area].SelectionColor = Color.Red;
-                boxes[active_area].Select(length, 0);
-            }
-            if ( (boxes[active_area].Text[length - 1] == '@') ||
-               (boxes[active_area].Text[length - 1] == '^') )
-            {
-                boxes[active_area].Select(length - 1, 1);
-                boxes[active_area].SelectionColor = Color.Green;
-                boxes[active_area].Select(length, 0);
-            }
-
-            if (ends.IndexOf(boxes[active_area].Text[length - 1]) >= 0)
-                boxes[active_area].SelectionColor = Color.Black;
-              
-              */
-
-
-//int active_area;
-
-//for (active_area = 0; active_area < variables.Count; active_area++)
-//   if (areas[active_area].Focused == true) break;
-
-// if (active_area == variables.Count) return;
-
-
-
-
-
-
-
-
-
-/*        private void LoadDocument(String File, String form_identifier)
-        {
-            XmlDocument form_document = new XmlDocument();
-
-            form_document.Load(File);
-
-            XmlNode FormsContent = form_document.DocumentElement;
-
-            foreach (XmlNode forms in FormsContent.ChildNodes)
-                if (forms.Attributes.Item(0).Value == form_identifier)
-                {
-                   int priority;   
-
-                    //IDEdit.Text = form_identifier;
-
-                    foreach (XmlNode fils in forms.ChildNodes)
-                       switch (fils.Name)
-                       {
-                         case "mainarea": boxes[0].Text = fils.InnerText; break;
-                         case "followchoice":
-                                            {
-                                              priority = int.Parse(fils.Attributes.Item(0).Value);
-                                              boxes[priority].Text = fils.InnerText;
-
-                                              break;   
-                                            }
-                         case "pointer":
-                                            {
-                                             String pointer_text = fils.Attributes.Item(0).Value;
-                                             int index = variables.Count;
-                                             variables[pointer_text] = index;
-                                             
-                                             areas_text[index] = fils.InnerText;
-                                             break;
-                                            }
-         }  }   
-        } */
-
-/* private void WriteChanges()
- {
-    int index;
-    String ID = "1";// IDEdit.Text;
-
-    XmlDocument form_document = new XmlDocument();
-
-     form_document.Load("forms.xml");
-     XmlNode document_child = form_document.DocumentElement;
-
-     foreach (XmlNode node in document_child.ChildNodes)
-         if (node.Attributes.Item(0).Value == ID)
-         {
-             document_child.RemoveChild(node);
-             break;
-         }
-       document_child = form_document.DocumentElement;
-
-
-      XmlTextWriter writer = new XmlTextWriter("forms.xml", null);
-      XmlElement new_form = form_document.CreateElement("form");
-      XmlAttribute form_attribute = form_document.CreateAttribute("ID");
-
-        form_attribute.Value = ID;
-        new_form.SetAttributeNode(form_attribute);
-
-        XmlElement mainarea = form_document.CreateElement("mainarea");
-        mainarea.InnerText = boxes[0].Text;
-        new_form.AppendChild(mainarea);
-               
-
-                   for (index = 1; index < number_buttons; index++)
-                   {
-                       if (boxes[index].Text == "") break;
-                       XmlElement choice = form_document.CreateElement("followchoice");
-                       XmlAttribute choice_attribute = form_document.CreateAttribute("Priority");
-
-                         choice_attribute.Value = index.ToString();
-                         choice.SetAttributeNode(choice_attribute);
-                         choice.InnerText = boxes[index].Text;
-                         new_form.AppendChild(choice);
-                   }
-
-                   for (index = 0; index < variables.Count; index++)
-                   {
-                       int char_index = 0;
-                       string pointer = "";
-
-                       while ((areas_text[index][char_index] != ':') &&
-                              (areas_text[index][char_index] != '=') &&
-                              (areas_text[index][char_index] != ' ') )
-                       {
-                           pointer = pointer + areas_text[index][char_index].ToString();
-                           char_index++;
-                       }
-                       XmlElement pointer_element = form_document.CreateElement("pointer");
-                       XmlAttribute pointer_attribute = form_document.CreateAttribute("Name");
-
-                         pointer_attribute.Value = pointer;
-                         pointer_element.SetAttributeNode(pointer_attribute);
-                         pointer_element.InnerText = areas_text[index];
-                         new_form.AppendChild(pointer_element);
-                   }
-      form_document.DocumentElement.InsertAfter(new_form,
-                             form_document.DocumentElement.LastChild);
-
-     form_document.WriteContentTo(writer);
-
-    writer.Close();
- }*/

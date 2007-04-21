@@ -1,4 +1,5 @@
-﻿//Interpreter and evaluater form Wizard language.
+﻿//Interpreter and evaluater for WizardLanguage.
+//Access to WizardLanguage properties.
 //
 // Author: Daniel Kupka<kupkd9am@post.cz>
 //
@@ -26,6 +27,9 @@ using System.Text;
 
 namespace Interpreter
 {
+    /// <summary>
+    /// Class guarantee access to WizardLanguage properties.
+    /// </summary>
      class VariableServices
      {
          /// <summary>
@@ -40,11 +44,13 @@ namespace Interpreter
 
          /// <summary>
          /// Class constructor.
+         /// Filling values to predefined editable and non-editable variables.
          /// </summary>
         public VariableServices()
         {
             this.predefinedVariables = new string[] {"$NUMBER_ROWS", "$RUN", 
-            "$NUMBER_HYPOTHESIS", "$HISTORY", "$LITERALS_OFFTEN"};
+            "$NUM_HYPOTHESES", "$HISTORY", "$FORM_INDEX", "$LIT_OFFTEN", "$BOTTOM_LIMIT", "$TOP_LIMIT", 
+            "$LITERAL_LIMIT"};
 
             variable = new System.Collections.Hashtable();
 
@@ -55,22 +61,29 @@ namespace Interpreter
                                          break;
                     case "$RUN": this.variable[__variable] = get_run_Value();
                                          break;
-                    case "$NUMBER_HYPOTHESIS": this.variable[__variable] = get_numberHypothesis_Value();
+                    case "$NUM_HYPOTHESES": this.variable[__variable] = get_numberHypothesis_Value();
                                          break;
                     case "$HISTORY": this.variable[__variable] = get_history_Value();
                                          break;
-                    case "$LITERALS_OFFTEN": this.variable[__variable] = get_literalsOfften_Value();
+                    case "$LIT_OFFTEN": this.variable[__variable] = get_literalsOfften_Value();
                                          break;
-                }
-            //this.variable["$a[1]"] = (float)5;
-            //this.variable["$a[2]"] = (float)3;
+                    case "$FORM_INDEX": this.variable[__variable] = get_formIndex_Value();
+                                         break;
+                    case "$BOTTOM_LIMIT": this.variable[__variable] = get_bottomLimit_Value();
+                                         break;
+                    case "$TOP_LIMIT": this.variable[__variable] = get_topLimit_Value();
+                                         break;
+                    case "$LITERAL_LIMIT": this.variable[__variable] = get_literalLimit_Value();
+                                         break;
 
+                }
         }
 
         /// <summary>
-        /// Method get the univerzal value of input variable.
+        /// Method returns the value (Object type) of input variable.
         /// </summary>
-        /// <param name="variableName">Name of variable.</param>
+        /// <param name="variableName">Name of variable</param>
+        /// <returns>Value of input variable</returns>
         public Object getValue(string variableName)
         {
             try
@@ -84,11 +97,43 @@ namespace Interpreter
         }
 
         /// <summary>
+        /// Method set the value to input float variable.
+        /// But not to non-editable predefined variables.
+        /// </summary>
+        /// <param name="variableName">Name of variable</param>
+        /// <param name="variableValue">Value of variable</param>
+        public void setValue(string variableName, float variableValue)
+        {
+            if ((variableName.IndexOf("$RUN", 0) == 0) ||
+                 (variableName.IndexOf("$NUM_HYPOTHESES", 0) == 0) ||
+                 (variableName.IndexOf("$NUMBER_ROWS", 0) == 0) ||
+                 (variableName.IndexOf("$HISTORY", 0) == 0) ||
+                 (variableName.IndexOf("$FORM_INDEX", 0) == 0) || 
+                 (variableName.IndexOf("$LIT_OFFTEN", 0) == 0)) return;
+
+            this.variable[variableName] = variableValue;
+            return;
+        }
+
+        /// <summary>
         /// Method set the value of input float variable.
+        /// Setting also for non-editable variables.
         /// </summary>
         /// <param name="variableName">Name of variable.</param>
         /// <param name="variableValue">Value of variable.</param>
-        public void setValue(string variableName, float variableValue)
+        public void setValueP(string variableName, float variableValue)
+        {
+            this.variable[variableName] = variableValue;
+            return;
+        }
+
+        /// <summary>
+        /// Method set the value of input string variable.
+        /// Setting also for non-editable variables.
+        /// </summary>
+        /// <param name="variableName">Name of variable.</param>
+        /// <param name="variableValue">String value of variable.</param>
+        public void setValueP(string variableName, string variableValue)
         {
             this.variable[variableName] = variableValue;
             return;
@@ -97,19 +142,26 @@ namespace Interpreter
         /// <summary>
         /// Method set the value of input string variable.
         /// </summary>
-        /// <param name="variableName">Name of variable.</param>
-        /// <param name="variableValue">Value of variable.</param>
+        /// <param name="variableName">Name of variable</param>
+        /// <param name="variableValue">String value of variable</param>
         public void setValue(string variableName, string variableValue)
         {
             this.variable[variableName] = variableValue;
             return;
         }
 
+        /// <summary>
+        /// $NUMBER_ROWS value initialization
+        /// </summary>
         private float get_numberRows_Value()
         {
              return 0;
         }
 
+        /// <summary>
+        /// $RUN value initialization
+        /// </summary>
+        /// <returns>Default value</returns>
         private float get_run_Value()
         {
             return 0;
@@ -127,12 +179,46 @@ namespace Interpreter
 
         public float get_literalsOfften_Value()
         {
-            //Console.WriteLine(this.variable["$e"]);
             return 0;
         }
 
+         public float get_formIndex_Value()
+         {
+             return 0;
+         }
+
+        /// <summary>
+        /// editable $BOTTOM_LIMIT value initialization
+        /// </summary>
+        /// <returns>Default value</returns>
+         public float get_bottomLimit_Value()
+         {
+             return 1;
+         }
+
+         /// <summary>
+         /// editable $TOP_LIMIT value initialization
+         /// </summary>
+         /// <returns>Default value</returns>
+         public float get_topLimit_Value()
+         {
+             return 30;
+         }
+
+         /// <summary>
+         /// editable $LITERAL_LIMIT value initialization
+         /// </summary>
+         /// <returns>Default value</returns>
+         public float get_literalLimit_Value()
+         {
+             return (float)0.8;
+         }
+
     }
 
+    /// <summary>
+    /// Class divide PATH to elements.
+    /// </summary>
     class PathInterpreter
     {
         /// <summary>
@@ -141,8 +227,9 @@ namespace Interpreter
         string path;
 
         /// <summary>
-        /// Method split path into array of string of path elements.
+        /// Method split path into string array of path elements.
         /// </summary>
+        /// <returns>Splitted path</returns>
         public string[] splitPath()
         {
             this.path = this.path.Trim();
@@ -162,18 +249,18 @@ namespace Interpreter
         }
 
     }
-
+    /// <summary>
+    /// Class interpret and evaluate set of expressions in WizardLanguage code.
+    /// </summary>
     class WizardLanguageInterpreter
     {
         /// <summary>
-        /// Assotiative array with variables and their values.
+        /// Variable service class
         /// </summary>
-      //  static public System.Collections.Hashtable variable;
-
         VariableServices variableServices;
 
         /// <summary>
-        /// Input string with expressions.
+        /// Input string with expressions, divided by ';'.
         /// </summary>
         private String expressions;
 
@@ -182,6 +269,9 @@ namespace Interpreter
         /// </summary>
        private String ERROR_message;
 
+       /// <summary>
+       /// Value and its type - float, string, bool
+       /// </summary>
         private struct VALUE
         {
             public String type;
@@ -189,10 +279,12 @@ namespace Interpreter
         }
 
         /// <summary>
-        /// Method work with variables and arrays.
+        /// Method detect numeric constants and variables 
+        /// assign values to variables
         /// </summary>
         /// <param name="expr">Input/output expression.</param>
         /// <param name="ancestor">Ancestor of actualt char.</param>
+        /// <returns>Value and type of variable or constant</returns>
         private VALUE Factor(StringBuilder expr, String ancestor)
         {
             float number;
@@ -271,11 +363,15 @@ namespace Interpreter
                     return result;
                 }
 
-                while ((expr[0] >= '0') && (expr[0] <= '9'))
+                string string_number = "";
+                while (((expr[0] >= '0') && (expr[0] <= '9')) || (expr[0] == ','))
                 {
-                    number = number * 10 + expr[0] - '0';
+                 /*   number = number * 10 + expr[0] - '0';
+                    expr = expr.Remove(0, 1);*/
+                    string_number = string_number + expr[0].ToString();
                     expr = expr.Remove(0, 1);
                 }
+                number = float.Parse(string_number);
                 if (sign) number = -number;
 
                 result.type = "float";
@@ -286,10 +382,11 @@ namespace Interpreter
          }
 
          /// <summary>
-         /// Method control multiplying operations.
-         /// Highest priority.
+         /// Method evaluate mathematical expression with operator 
+         /// of higher priority
          /// </summary>
          /// <param name="expr">Input/output expression.</param>
+         /// <returns>Value expression after applying '*' or '/'</returns>
         private float Multiplying(StringBuilder expr)
         {
           float result;
@@ -313,9 +410,11 @@ namespace Interpreter
         }
 
         /// <summary>
-        /// Method control addiong operations.
+        /// Method evaluate mathematical expression with operator 
+        /// of lower priority
         /// </summary>
         /// <param name="expr">Input/output expression.</param>
+        /// <returns>Value expression after applying '+' or '-'</returns>
         private float Adding(StringBuilder expr)
         {
          float result=0;
@@ -339,9 +438,11 @@ namespace Interpreter
         }
 
         /// <summary>
-        /// Method control conditions.
+        /// Method make comparison of two numbers 
+        /// (expanded variables or evaluated expressions)
         /// </summary>
-        /// <param name="expr">Input/output expression.</param>
+        /// <param name="expr">Input/output expression</param>
+        /// <returns>Boolean value according to result of comparison</returns>
         private bool Comparing(StringBuilder expr)
         {
           bool result = true;
@@ -421,9 +522,10 @@ namespace Interpreter
 
         /// <summary>
         /// Method control logical AND in conditions.
-        /// With higher priority then OR.
+        /// AND have  higher priority then OR.
         /// </summary>
         /// <param name="expr">Input/output expression.</param>
+        /// <returns>Boolean value according to result application '&' </returns>
         private bool AND(StringBuilder expr)
         {
             bool result = true;
@@ -442,6 +544,7 @@ namespace Interpreter
         /// Method control logical OR in conditions.
         /// </summary>
         /// <param name="expr">Input/output expression.</param>
+        /// <returns>Boolean value according to result application '|' </returns>
         private bool OR(StringBuilder expr)
         {
             bool result = true;
@@ -460,6 +563,7 @@ namespace Interpreter
         /// Method deletes some white chars.
         /// </summary>
         /// <param name="expr">Input expression.</param>
+        /// <returns>Modified string</returns>
         private string Erase_white(String expr)
         {
             expr = expr.Replace(" ", "");
@@ -469,10 +573,11 @@ namespace Interpreter
         }
 
         /// <summary>
-        /// Method detect special chars and call special methods.
+        /// Method call evaluating function according to 
+        /// types of right side of expression.
         /// </summary>
         /// <param name="left">Left part of assignment</param>
-        /// <param name="expr">Body of expression.</param>
+        /// <param name="expr">Body of expression</param>
         private void Expression(String left, StringBuilder expr)
         {
             bool result;
@@ -480,6 +585,21 @@ namespace Interpreter
             String[] ifs = new String[] { "if", "elseif", "else" };
             int counter=0;
             int length;
+
+            //special situation
+            if (expr_copy.Contains("$HISTORY["))
+            {
+              expr = expr.Replace(";", "");
+                try
+                {
+                    string variable = expr.ToString(); 
+                    string history = (string)variableServices.getValue(variable);
+                    variableServices.setValue(left, history);
+                    return;
+                }
+                catch (NullReferenceException)
+                { }
+            }
 
             while (counter <= 2)
             {
@@ -502,17 +622,36 @@ namespace Interpreter
                     {
                         if (expr[0] == '{')
                         {
-                            expr = expr.Remove(0, 1);
-                            //variable[left] = (float)Adding(expr);
-                            variableServices.setValue(left, Adding(expr));
-                            return;
+                          expr = expr.Remove(0, 1); 
+                            if (expr[0] == '"')
+                            {
+                                expr = expr.Remove(0, 1);
+                                int len = expr.Length;
+                                string text = "";
+                                int i = 0;
+                                while ((i < len) && (expr[i] != '"'))
+                                {
+                                    text = text + expr[i].ToString();
+                                    i++;
+                                }
+                                //expr = expr.Replace("\"", "");
+                                //expr = expr.Replace(";", "");
+                                //expr = expr.Replace("}", "");
+
+                                //string text = expr.ToString();
+                                variableServices.setValue(left, text);
+                                return;
+                            }
+                            else
+                            {
+                                variableServices.setValue(left, Adding(expr));
+                                return;
+                            }
                         }
                     }
                    expr = expr.Remove(0, 1);
                    while (expr[0] != '}') expr = expr.Remove(0, 1);
                    expr = expr.Remove(0, 1);
-
-                   //if (expr.Length == 0) return; 
                    expr_copy = expr.ToString();
                 }
                else counter++; 
@@ -534,8 +673,8 @@ namespace Interpreter
         }
 
         /// <summary>
-        /// Method divide variable expressions by ';' char, form each part
-        /// is callod expression() function.
+        /// Method divide variable expressions by ';' char, for each part
+        /// is called expression() function.
         /// </summary>
         private void ParseExpressions()
         {
@@ -575,9 +714,10 @@ namespace Interpreter
         }
 
         /// <summary>
-        /// Constructor of WizardLanguageInterpreted class
+        /// Constructor of WizardLanguageInterpreter class
         /// </summary>
         /// <param name="expr">Parsed expressions</param>
+        /// <param name="variableServices">Class with variables</param>
         public WizardLanguageInterpreter(String expr, VariableServices variableServices)
         {
             this.expressions = expr;
@@ -593,7 +733,7 @@ namespace Interpreter
     {
         static void Main(string[] args)
         {
-            string e = "$c =  $a[1] +    \n  2 /   4;$d=1;$e = $c + 2 * 3 + 4;   $f = \"nazdar\"; $g = if ((6 < $c) | (10 < $e)) {$c+3}  elseif (4 != $c){$e*2} else {$c+20};";
+            string e = "$c =  $a[1] +    \n  2 /   4;$d=1;$e = $c + 2 * 3 + 4;   $f = \"debug_text\"; $g = if ((6 < $c) | (10 < $e)) {$c+3}  elseif (4 != $c){$e*2} else {$c+20};";
 
              VariableServices s = new VariableServices();
 

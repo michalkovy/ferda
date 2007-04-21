@@ -33,6 +33,10 @@ using System.Windows.Forms;
 
 namespace Ferda.FrontEnd.AddIns.RegEditor
 {
+    /// <summary>
+    /// Form for inserting regular expressions
+    /// and connectiong him with successors.
+    /// </summary>        
     public partial class RegularExpEditor : Form
     {
         /// <summary>
@@ -41,27 +45,29 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
         NumericUpDown numeric;
 
         /// <summary>
-        /// Global RichTextBox
+        /// Main RichTextBox
         /// </summary>        
         RichTextBox edit;
 
-
         /// <summary>
-        /// Global new form variable.
+        /// Dialog form setting successor
         /// </summary>        
         private Form new_form;
 
         /// <summary>
+        /// Language code
+        /// </summary>
+        private string language;
+
+        /// <summary>
         /// List of variant shortcuts.
         /// </summary>        
-        // private int[] numerics = new int[20];
         private List<int> numerics;
 
         /// <summary>
-        /// List of form names - successors.
+        /// List of successor form names.
         /// </summary>        
         private List<string> successor;
-
 
         /// <summary>
         /// Assotiative array of regular expressions.
@@ -75,19 +81,79 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
         private int akt_index;
 
         /// <summary>
-        /// toolTip text for main RichTextBox.
+        /// EN hint for inserting rerular expressions
         /// </summary>
-        private string regular_help = @"Here insert set of regular expressions. For example :
+        private string regular_help_EN = @"
+        Here insert set of regular expressions. 
+        E.g.:
+
+         (form10_123){5}
+         (form10_[1-9]{1,4}){6}
+         (form1(0|5)_[1-9]){8}
+
         Each expression must be in different line.
+        To discribe the succesor after matching
+        regular expression - select it.   
         ";
 
         /// <summary>
-        /// Resulting XML string
+        /// CZ hint for inserting rerular expressions
         /// </summary>
+        private string regular_help_CZ = @"
+        Vložte množinu regulárních výrazů. 
+        Př.:
+
+         (form10_123){5}
+         (form10_[1-9]{1,4}){6}
+         (form1(0|5)_[1-9]){8}
+
+        Každý regulární výraz musí být na zvláštním řádku.
+        Pro specifikaci následnického formuláře, jež se zobrazí
+        pokud je některý výraz splněn - vyberte příslušný výraz. 
+        ";
+
+        /// <summary>
+        /// EN hint for successors
+        /// </summary>
+        private String successorBox_help_EN = @"
+        Here insert user name of next box in scenario
+        ";
+
+        /// <summary>
+        /// CZ hint for successors 
+        /// </summary>
+        private String successorBox_help_CZ = @"
+        Vložte uživatelské pojmenování následnické krabičky
+        ve scénáři.
+        ";
+
+        /// <summary>
+        /// EN hint for setting form variant
+        /// </summary>
+        private String nextVariant_help_EN = @"
+        Here insert variant of first box of type Form.
+
+        E.g.: We have form with four choices - basic variant of this form is 1234 
+              (all choices are present). Variant 124 discribe, that are present 
+              first two choices and last choice (sorted by priority).
+        ";
+
+        /// <summary>
+        /// CZ hint for setting form variant
+        /// </summary>
+        private String nextVariant_help_CZ = @"
+        Vložte variantu následnické krabičky typu Formulář.
+
+        Př.: Máme formulář se čtyřmi volbami - základní varianta tohoto formuláře je 1234 
+             (všechny volby přítomny. Varianta 124 popisuje, že jsou přítomné první dvě
+             volby a volba poslední (seřazany dle priorit).   
+        ";
+
+
         private string returnString;
 
         /// <summary>
-        /// Resulting XML string
+        /// All content in XML format
         /// </summary>
         public string ReturnString
         {
@@ -99,12 +165,16 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
 
         /// <summary>
         /// Class constructor.
+        /// Initializing global properties and
+        /// loading content to main RichTextBox.
         /// </summary>        
-        public RegularExpEditor(string ContentToLoad)
+        public RegularExpEditor(string ContentToLoad, string localization)
         {
             regulars = new System.Collections.Hashtable();
 
             numerics = new List<int>();
+
+            this.language = localization;
 
             successor = new List<string>();
 
@@ -117,15 +187,25 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
         }
 
         /// <summary>
-        /// Standard from load function.
+        /// Standard from_load method.
+        /// Setting titles etc.
         /// </summary>        
         private void RegualExpEditor_Load(object sender, EventArgs e)
         {
-            main_toolTip.SetToolTip(TextBox, regular_help);
+           // this.ShowInTaskbar = false;
+            if (language == "en-US") this.Text = "Regular expressions editor";
+            else this.Text = "Editor regulárních výrazů";
+
+            if (language == "en-US")
+                 main_toolTip.SetToolTip(TextBox, regular_help_EN);
+            else
+                 main_toolTip.SetToolTip(TextBox, regular_help_CZ);
         }
 
         /// <summary>
-        /// OK button click in modal dialog. Save settings.
+        /// Standard button_click method.
+        /// When user click on OK button of modal successor dialog,
+        /// it is necessary to save successor name and variant.
         /// </summary>
         private void OK1_Click(object sender, EventArgs e)
         {
@@ -142,7 +222,9 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
         }
 
         /// <summary>
-        /// Cancel button click in modal dialog.
+        /// Standard button_click method.
+        /// When user click on Cancel button of modal successor dialog,
+        /// must be closed.
         /// </summary>
         private void Cancel1_Click(object sender, EventArgs e)
         {
@@ -150,7 +232,7 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
         }
 
         /// <summary>
-        /// Function creates modal dialog with NumericUpDown.
+        /// Function creates modal dialog for setting box successor.
         /// </summary>
         /// <param name="regularExp"> Regular expression.</param>
         /// <param name="is_new"> If the dialog with its variable was yet created</param>
@@ -164,15 +246,24 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
               new_form.StartPosition = FormStartPosition.CenterParent;
               new_form.Width = 200;
               new_form.Height = 180;
-              new_form.Text = "Successor name and variant";
+              if (language == "en-US")
+                  new_form.Text = "Setting successors";
+              else
+                  new_form.Text = "Nastavení pro následníky";
               new_form.MinimizeBox = false;
               new_form.MaximizeBox = false;
               this.AddOwnedForm(new_form);
 
+              ToolTip dialog_toolTip = new ToolTip();
+              dialog_toolTip.IsBalloon = true;
+
               Label label1 = new Label();
               label1.Left = 35;
               label1.Top = new_form.Size.Height - 165;
-              label1.Text = "Successor form name:";
+              if (language == "en-US")
+                  label1.Text = "Successor box user name:";
+              else
+                  label1.Text = "Jméno následníka:";
               label1.AutoSize = true;
               new_form.Controls.Add(label1);
               label1.Show();
@@ -183,6 +274,11 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
               edit.Top = new_form.Size.Height - 150;
               edit.Width = 120;
               edit.Height = 20;
+              if (language == "en-US")
+                  dialog_toolTip.SetToolTip(edit, successorBox_help_EN);
+              else
+                  dialog_toolTip.SetToolTip(edit, successorBox_help_CZ);
+
 
               if (!is_new)
                   edit.Text = successor[akt_index];
@@ -193,7 +289,7 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
             Label label2 = new Label();
             label2.Left = 35;
             label2.Top = new_form.Size.Height - 115;
-            label2.Text = "Successor form variant:";
+            label2.Text = "Next Form box variant:";
             label2.AutoSize = true;
             new_form.Controls.Add(label2);
             label2.Show();
@@ -204,6 +300,10 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
             numeric.Top = new_form.Size.Height - 100;
             numeric.Minimum = -100000;
             numeric.Maximum = 100000;
+            if (language == "en-US")
+                dialog_toolTip.SetToolTip(numeric, nextVariant_help_EN);
+            else
+                dialog_toolTip.SetToolTip(numeric, nextVariant_help_CZ);
 
             if (!is_new)
                   numeric.Value = numerics[akt_index];
@@ -232,6 +332,7 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
 
             DialogResult result = new_form.ShowDialog();
         }
+
         /// <summary>
         /// Standard RichTextBox SelectionChanged function.
         /// When one line is selected CreateForm function is called. 
@@ -263,7 +364,10 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
 
         /// <summary>
         /// Validation of the form content.
+        /// Method produces MessageBoxes and not
+        /// allow to leave FormEditor when Error.
         /// </summary>
+        /// <returns>true if the validation passed good otherwise false</returns>
         private bool Form_validate()
         {
             int i;
@@ -288,7 +392,8 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
         }
 
         /// <summary>
-        /// Function save content when user clicks on OK button.
+        /// If validation passed good,
+        /// method save content and close regular expression dialog.
         /// </summary>
         private void OK_Click(object sender, EventArgs e)
         {
@@ -298,32 +403,29 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
 
             this.returnString = SaveFormToXMLString("1");
 
-            //MessageBox.Show(this.returnString);
-
             this.DialogResult = DialogResult.OK;
 
             //LoadFormFromXMLString(XMLString);
-            //this.Close();
             this.Dispose();
-            //this.Close();
         }
 
         /// <summary>
-        /// User click on Cancel button -> only close form.
+        /// User click on Cancel button the form must be 
+        /// closed with Cancel result.
         /// </summary>
         private void Cancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
 
-            //this.Close();
             this.Dispose();
         }
 
         /// <summary>
-        /// Function save content of all forms to one string with
+        /// Method save content of all forms to one string with
         /// XML format.
         /// </summary>
-        /// <param name="FormID"> Globally unique ID of WizardGenereted box.</param>
+        /// <param name="FormID"> Globally unique ID of WizardGenereted box - not important</param>
+        /// <returns>XML content in string</returns>
         public string SaveFormToXMLString(string FormID)
         {
             int index;
@@ -375,10 +477,10 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
         }
 
         /// <summary>
-        /// Function load informations to generated wizard from string
-        /// with XML format.
+        /// Method load content to regular expressions
+        /// editor.
         /// </summary>
-        /// <param name="XMLString"> String with XML content.</param>
+        /// <param name="XMLString"> String with XML content</param>
         public void LoadFormFromXMLString(string XMLString)
         {
             int index = 0;
@@ -402,19 +504,16 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
                             //numerics.Add(int.Parse(fils.InnerText));
                             index++;
 
-                            //int order = 0;
                             foreach (XmlNode prafils in fils.ChildNodes)
                                 switch (prafils.Name)
                                 {
                                     case "successor":
                                         {
-                                            //successor[order] = prafils.InnerText;
                                             successor.Add(prafils.InnerText);
                                             break;
                                         }
                                     case "variant":
                                         {
-                                           // numerics[order] = int.Parse(prafils.InnerText);
                                             numerics.Add(int.Parse(prafils.InnerText));
                                             break;
                                         }
@@ -424,7 +523,7 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
                         }
                 }
         }
-
+//END
         /// <summary>
         /// Validation of the form -> each regular expression must have
         /// its own number.
@@ -435,84 +534,3 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
 
     }
 }
-
-
-/*       private void WriteChanges()
-       {
-           int index;
-           String ID = "3";
-
-           XmlDocument form_document = new XmlDocument();
-
-           form_document.Load("forms.xml");
-           XmlNode document_child = form_document.DocumentElement;
-
-           foreach (XmlNode node in document_child.ChildNodes)
-               if (node.Attributes.Item(0).Value == ID)
-               {
-                   document_child.RemoveChild(node);
-                   break;
-               }
-           document_child = form_document.DocumentElement;
-
-
-           XmlTextWriter writer = new XmlTextWriter("forms.xml", null);
-           XmlElement new_form = form_document.CreateElement("Expressions");
-           XmlAttribute form_attribute = form_document.CreateAttribute("ID");
-
-           form_attribute.Value = ID;
-           new_form.SetAttributeNode(form_attribute);
-
-           for (index = 0; index < TextBox.Lines.Length; index++)
-           {
-               XmlElement regular_expr = form_document.CreateElement("RegularExpr");
-               XmlAttribute regular_expr_attribute = form_document.CreateAttribute("text");
-
-               regular_expr_attribute.Value = TextBox.Lines[index];
-               regular_expr.SetAttributeNode(regular_expr_attribute);
-               regular_expr.InnerText = numerics[index].ToString();
-               new_form.AppendChild(regular_expr);
-           }
-
-           form_document.DocumentElement.InsertAfter(new_form,
-                                  form_document.DocumentElement.LastChild);
-
-           form_document.WriteContentTo(writer);
-
-           writer.Close();
- * 
- * 
- *         private void LoadDocument(String File, String form_identifier)
-        {
-          int index = 0;
-          XmlDocument form_document = new XmlDocument();
-
-            form_document.Load(File);
-
-            XmlNode FormsContent = form_document.DocumentElement;
-
-            foreach (XmlNode forms in FormsContent.ChildNodes)
-                if (forms.Attributes.Item(0).Value == form_identifier)
-                {
-                    string text;
-
-                    foreach (XmlNode fils in FormsContent.ChildNodes)
-                        switch (fils.Name)
-                        {
-                            case "RegularExpr":
-                                {
-                                    text = fils.Attributes.Item(0).Value;
-                                    regulars[text] = index;
-                                    if (index != 0) TextBox.Text += "\n";
-                                    TextBox.Text += text;
-                                    numerics[index] =int.Parse(fils.InnerText);
-                                    index++;
-
-                                    break;
-                                }
-                        }
-               //}
-        }
-
-       }*/
-
