@@ -11,7 +11,7 @@ dir}/bin
 		<csc target="library" warnaserror="true" debug="${debug}" output="${build.dir}/ModulesManagerTest.dll">
 			<sources failonempty="true">
 				<include name="**/*.cs"/>
-				<!-- common assembly-level attributes 
+				<!-- common assembly-level attributes
                 <include name="../../src/CommonAssemblyInfo.cs" /> -->
 			</sources>
 			<references>
@@ -19,6 +19,7 @@ dir}/bin
 				<include name="${path::combine(lib.dir,'icepackcs.dll')}"/>
 				<include name="${lib.dir}/log4net.dll"/>
 				<include name="${build.dir}/FerdaModulesManager.dll"/>
+				<include name="${build.dir}/FerdaProjectManager.dll"/>
 				<include name="${build.dir}/FerdaBase.dll"/>
 				<include name="${lib.dir}/nunit.framework.dll"/>
 			</references>

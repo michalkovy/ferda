@@ -1,8 +1,8 @@
-// 
+//
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
-// Copyright (c) 2005 Michal Kováč 
+// Copyright (c) 2005 Michal Kováč
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -33,8 +33,37 @@ namespace Ferda.ModulesManager
 	public class ModulesManagerTest
 	{
 		private ModulesManager manager;
+		private Ferda.ProjectManager.ProjectManager projectManager;
 		
-		[TestFixtureSetUpAttribute]
+		[TestFixtureSetUp]
+		public void SetUp()
+		{
+			Debug.Listeners.Clear();
+			TextWriterTraceListener t = new TextWriterTraceListener("log.txt");
+			Debug.Listeners.Add(t);
+			Debug.AutoFlush = true;
+			Debug.WriteLine("starting projectManager...");
+            Ferda.ProjectManager.ProjectManagerOptions options = new Ferda.ProjectManager.ProjectManagerOptions();
+            options.StartIceGridLocaly = true;
+            options.StopIceGridLocaly = true;
+            options.IceGridAsService = false;
+			options.IceGridWorkingDirectory = "/home/michal/studium/mff/ferda/ferda/bin/db";
+			options.IceGridApplicationXmlFilePath = "/home/michal/studium/mff/ferda/ferda/bin/db/application.xml";
+            options.LocalePrefs = new string[]{"cs-CZ","en-US"};
+            options.SentenceForWait = "Server: changed server `0' state to `Inactive' ]";
+            projectManager = new Ferda.ProjectManager.ProjectManager(new string[0], options);
+			manager = projectManager.ModulesManager;
+		}
+		
+		[TestFixtureTearDown]
+		public void TearDown()
+		{
+            Debug.WriteLine("destroying projectManager...");
+			projectManager.DestroyProjectManager();
+            Debug.WriteLine("projectManager destroyed");
+		}
+		
+		/*[TestFixtureSetUpAttribute]
 		public void set_up()
 		{
 			Debug.Listeners.Clear();
@@ -42,27 +71,27 @@ namespace Ferda.ModulesManager
 			Debug.Listeners.Add(t);
 			Debug.AutoFlush = true;
 			Debug.WriteLine("0");
-			/*PlatformID platformID = Environment.OSVersion.Platform;
+			//PlatformID platformID = Environment.OSVersion.Platform;
 			
-            if (platformID == PlatformID.Win32NT || platformID == PlatformID.Win32Windows) {
-                Process process = new Process();
-				process.StartInfo.FileName = "icepacknode";
-				process.StartInfo.Arguments = "--start FerdaIcePackNode";
-				process.Start();
-				process.WaitForExit();
-            }
-			else
-			{*/
+            //if (platformID == PlatformID.Win32NT || platformID == PlatformID.Win32Windows) {
+            //    Process process = new Process();
+			//	process.StartInfo.FileName = "icepacknode";
+			//	process.StartInfo.Arguments = "--start FerdaIcePackNode";
+			//	process.Start();
+			//	process.WaitForExit();
+            //}
+			//else
+			//{
             ProcessStartInfo psi = new ProcessStartInfo("icegridnode", "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy application.xml --warn");
 				psi.CreateNoWindow = true;
                 psi.WorkingDirectory = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "../db");
 				Process.Start(psi);
-				/*ProcessStartInfo psi2 = new ProcessStartInfo("icepackadmin", "--Ice.Config=config -e \"application add 'application.xml'\"");
-				psi2.CreateNoWindow = true;
-				Process processReg = Process.Start(psi2);
-				processReg.WaitForExit();*/
+				//ProcessStartInfo psi2 = new ProcessStartInfo("icepackadmin", "--Ice.Config=config -e \"application add 'application.xml'\"");
+				//psi2.CreateNoWindow = true;
+				//Process processReg = Process.Start(psi2);
+				//processReg.WaitForExit();
 				System.Threading.Thread.Sleep(5000);
-			/*}*/
+			//}
 			Debug.WriteLine("1");
 			this.manager = new ModulesManager(new string[0],new string[2]{"cs-CZ","en-US"});
 			Debug.WriteLine("2");
@@ -77,18 +106,18 @@ namespace Ferda.ModulesManager
 			}
 			finally
 			{
-				PlatformID platformID = Environment.OSVersion.Platform;
-				/*if (!(platformID == PlatformID.Win32NT || platformID == PlatformID.Win32Windows))
-				{*/
+				//PlatformID platformID = Environment.OSVersion.Platform;
+				//if (!(platformID == PlatformID.Win32NT || platformID == PlatformID.Win32Windows))
+				//{
 					ProcessStartInfo psi = new ProcessStartInfo("icegridadmin", "--Ice.Config=config -e shutdown");
 					//-e \"server stop FerdaModules\" -e \"application remove FerdaModulesApplication\"
 					psi.CreateNoWindow = true;
 					Process processReg = Process.Start(psi);
 					processReg.WaitForExit();
-				/*}*/
+				//}
 			}
 			
-		}
+		}*/
 		
 		[Test]
 		public void Test_GetLocales()

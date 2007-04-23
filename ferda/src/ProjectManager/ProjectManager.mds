@@ -1,0 +1,17 @@
+<Combine name="ProjectManager" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="ProjectManager" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="ProjectManager" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <StartMode startupentry="ProjectManager" single="True">
+    <Execute type="None" entry="ProjectManager" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./ProjectManager.mdp" />
+  </Entries>
+</Combine>
