@@ -418,7 +418,13 @@ namespace Ferda {
 				boxes.Clear();
 			}
 			
-			
+			protected internal int LastBoxModuleProjectIdentifier
+			{
+				get
+				{
+					return this.lastBoxModuleProjectIdentifier;
+				}
+			}
         }
     }
 }

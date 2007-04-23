@@ -834,7 +834,6 @@ namespace Ferda {
                 while (somethingDone);
 
                 //tops = topology from top
-                Dictionary<int, List<int>>topologiesTops = new Dictionary<int, List<int>>();
                 int topsMinimum = 0;
                 foreach (List<IBoxModule> component in components)
                 {

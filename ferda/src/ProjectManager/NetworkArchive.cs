@@ -18,7 +18,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
+using Ferda.Modules;
 using Ferda.ModulesManager;
 using System.Collections.Generic;
 
@@ -29,10 +29,10 @@ namespace Ferda.ProjectManager
 	/// </summary>
 	public class NetworkArchive
 	{
-		public NetworkArchive(Ferda.ModulesManager.ModulesManager modulesManager)
+		public NetworkArchive(Ferda.ModulesManager.ModulesManager modulesManager, Ferda.ProjectManager.IProjectLoader projectLoader)
 		{
-			this.modulesManager = modulesManager;
 			this.archive = modulesManager.Helper.NetworkArchive;
+			this.projectLoader = projectLoader;
 		}
 		
 		public void AddBox(IBoxModule boxModule, string label)
@@ -45,9 +45,13 @@ namespace Ferda.ProjectManager
 			archive.RemoveBox(label);
 		}
 		
-		public IBoxModule[] GetBox(string label)
+		public IBoxModule GetBoxToProject(string label, out string errors)
 		{
-			return createBoxModulesFromBox(archive.GetBox(label));
+			Project.Box mainProjectBox;
+			Ferda.ModulesManager.IBoxModule mainIBoxModule;
+			Project project = createProjectFromBox(archive.GetBox(label), out mainProjectBox);
+			errors = projectLoader.ImportProject(project, mainProjectBox, out mainIBoxModule);
+			return mainIBoxModule;
 		}
 		
 		public IBoxModuleFactoryCreator GetBoxModeleFactoryCreatorOfBox(string label)
@@ -65,24 +69,23 @@ namespace Ferda.ProjectManager
 		
 		private Ferda.NetworkArchive.Box createBoxFromBoxModule(IBoxModule boxModule)
 		{
-			return null;
+			Project project = projectLoader.SaveBoxModulesToProject(new IBoxModule[]{boxModule}, null);
+			return createBoxFromProject(project);
 		}
 		
-		private IBoxModule[] createBoxModulesFromBox(Ferda.NetworkArchive.Box box)
-		{
-			return null;
-		}
-		
-		private Project createProjectBoxFromBox(Ferda.NetworkArchive.Box box)
+		private Project createProjectFromBox(Ferda.NetworkArchive.Box box, out Project.Box mainProjectBox)
 		{
 			Dictionary<Ferda.NetworkArchive.Box, int> projectIdentifiers =
 				new Dictionary<Ferda.NetworkArchive.Box, int>();
 			List<Ferda.NetworkArchive.Box> undoneBoxes =
 				new List<Ferda.NetworkArchive.Box>(new Ferda.NetworkArchive.Box[]{box});
 			int lastProjectIdentifier =  1;
+						
 			projectIdentifiers.Add(box, lastProjectIdentifier);
 			
 			List<Project.Box> projectBoxes = new List<Project.Box>();
+			
+			mainProjectBox = addBoxToProjectBoxes(box, projectBoxes, projectIdentifiers, undoneBoxes, ref lastProjectIdentifier);
 			
 			while(undoneBoxes.Count > 0)
 			{
@@ -96,7 +99,7 @@ namespace Ferda.ProjectManager
 			return project;
 		}
 		
-		private static void addBoxToProjectBoxes(Ferda.NetworkArchive.Box box, List<Project.Box> projectBoxes, Dictionary<Ferda.NetworkArchive.Box, int> projectIdentifiers, List<Ferda.NetworkArchive.Box> undoneBoxes, ref int lastProjectIdentifier)
+		private static Project.Box addBoxToProjectBoxes(Ferda.NetworkArchive.Box box, List<Project.Box> projectBoxes, Dictionary<Ferda.NetworkArchive.Box, int> projectIdentifiers, List<Ferda.NetworkArchive.Box> undoneBoxes, ref int lastProjectIdentifier)
 		{
 			Project.Box projectBox = new Project.Box();
 			projectBox.Connections = new Project.Box.Connection[box.Connections.Length];
@@ -114,13 +117,53 @@ namespace Ferda.ProjectManager
 			for(int i = 0; i < box.PropertySets.Length; i++)
 			{
 				projectBox.PropertySets[i].PropertyName = box.PropertySets[i].propertyName;
-				//projectBox.PropertySets[i].Value =  (Ferda.Modules.ValueT)box.PropertySets[i].value;
+				projectBox.PropertySets[i].Value =  ((Ferda.Modules.IValue)box.PropertySets[i].value).getValueT();
 			}
 			projectBoxes.Add(projectBox);
 			undoneBoxes.Remove(box);
+			return projectBox;
 		}
 		
-		private Ferda.ModulesManager.ModulesManager modulesManager;
+		private static Ferda.NetworkArchive.Box createBoxFromProject(Project project)
+		{
+			Dictionary<int,Ferda.NetworkArchive.Box> identiferToBoxMap = new Dictionary<int,Ferda.NetworkArchive.Box>();
+			foreach(Project.Box box in project.Boxes)
+			{
+				identiferToBoxMap.Add(box.ProjectIdentifier,
+									  new Ferda.NetworkArchive.Box(
+										  box.CreatorIdentifier,
+										  box.UserName,
+										  box.UserHint,
+										  null,
+										  null));
+			}
+			foreach(Project.Box box in project.Boxes)
+			{
+				List<Ferda.NetworkArchive.Connection> boxConnections =
+					new List<Ferda.NetworkArchive.Connection>();
+				Ferda.NetworkArchive.Box networkBox = identiferToBoxMap[box.ProjectIdentifier];
+				
+				foreach(Project.Box.Connection projectConnection in box.Connections)
+				{
+					Ferda.NetworkArchive.Connection boxConnection =
+						new Ferda.NetworkArchive.Connection(
+							projectConnection.SocketName,
+							identiferToBoxMap[projectConnection.BoxProjectIdentifier]);
+					boxConnections.Add(boxConnection);
+				}
+				networkBox.Connections = boxConnections.ToArray();
+				
+				networkBox.PropertySets = new PropertySetting[box.PropertySets.Length];
+				for(int i = 0; i < box.PropertySets.Length; i++)
+				{
+					networkBox.PropertySets[i].propertyName = box.PropertySets[i].PropertyName;
+					networkBox.PropertySets[i].value =  box.PropertySets[i].Value.GetPropertyValue();
+				}
+			}
+			return identiferToBoxMap[project.Boxes[0].ProjectIdentifier];
+		}
+		
 		private Ferda.ModulesManager.NetworkArchive archive;
+		private Ferda.ProjectManager.IProjectLoader projectLoader;
 	}
 }
