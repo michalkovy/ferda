@@ -7,16 +7,17 @@
             * debug           - (true|false) debug build?
     -->
 	<target name="test">
-		<nant buildfile="ModulesManagerTest/default.build" target="test">
-			<properties>
-				<property name="build.dir" value="${frontendbin.dir}"/>
-			</properties>
-		</nant>
 		<nant buildfile="ProjectManagerTest/default.build" target="test">
 			<properties>
 				<property name="build.dir" value="${frontendbin.dir}"/>
 			</properties>
 		</nant>
+		<nant buildfile="ModulesManagerTest/default.build" target="test">
+			<properties>
+				<property name="build.dir" value="${frontendbin.dir}"/>
+			</properties>
+		</nant>
+		<!-- please repair bugs in these tests -->
 		<nant buildfile="ModulesTest/default.build" target="test">
 			<properties>
 				<property name="build.dir" value="${frontendbin.dir}"/>

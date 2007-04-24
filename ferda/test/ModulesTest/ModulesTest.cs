@@ -9,30 +9,33 @@ namespace Ferda.Modules
 	{
 		private Ferda.ProjectManager.ProjectManager projectManager;
 		private Ferda.ModulesManager.ModulesManager modulesManager;
-
+		
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
 			Debug.Listeners.Clear();
-			TextWriterTraceListener t = new TextWriterTraceListener("TestLogModules.txt");
+			TextWriterTraceListener t = new TextWriterTraceListener("log.txt");
 			Debug.Listeners.Add(t);
 			Debug.AutoFlush = true;
-			Debug.WriteLine("starting projectManager ...");
+			Debug.WriteLine("starting projectManager...");
             Ferda.ProjectManager.ProjectManagerOptions options = new Ferda.ProjectManager.ProjectManagerOptions();
             options.StartIceGridLocaly = true;
             options.StopIceGridLocaly = true;
             options.IceGridAsService = false;
-            options.LocalePrefs = new string[] { "en-US", "cs-CZ" };
-            options.SentenceForWait = "[ icegridnode: Server: changed server `0' state to `Inactive' ]";
+			options.IceGridWorkingDirectory = "/home/michal/studium/mff/ferda/ferda/bin/db";
+			options.IceGridApplicationXmlFilePath = "/home/michal/studium/mff/ferda/ferda/bin/db/application.xml";
+            options.LocalePrefs = new string[]{"cs-CZ","en-US"};
+            options.SentenceForWait = "Server: changed server `0' state to `Inactive' ]";
             projectManager = new Ferda.ProjectManager.ProjectManager(new string[0], options);
-			Debug.WriteLine("getting modulesManager ...");
 			modulesManager = projectManager.ModulesManager;
 		}
-
+		
 		[TestFixtureTearDown]
 		public void TearDown()
 		{
+            Debug.WriteLine("destroying projectManager...");
 			projectManager.DestroyProjectManager();
+            Debug.WriteLine("projectManager destroyed");
 		}
 
 		private void getBoxModuleProperties(IBoxModule boxModule)
@@ -93,19 +96,35 @@ namespace Ferda.Modules
 			foreach (IBoxModuleFactoryCreator boxModuleFactoryCreator in boxModuleFactoryCreators)
 			{
 				string boxModuleIdentifier = boxModuleFactoryCreator.Identifier;
-				Debug.WriteLine("testing module " + boxModuleIdentifier);
-				Debug.WriteLine("  CreateBoxModule ...");
-				IBoxModule boxModule = boxModuleFactoryCreator.CreateBoxModule();
-				Debug.WriteLine("  ModulesAskingForCreation ...");
-				ModulesAskingForCreation[] modulesAskingForCreation = boxModule.ModulesAskingForCreation;
-				Debug.WriteLine("  DynamicHelpItems ...");
-				DynamicHelpItem[] dynamicHelp = boxModule.DynamicHelpItems;
-				Debug.WriteLine("  Sockets, UserHint, UserName, ...");
-				SocketInfo[] sockets = boxModule.Sockets;
-				string userHint = boxModule.UserHint;
-				string userName = boxModule.UserName;
-				this.getBoxModuleProperties(boxModule);
-				Debug.WriteLine("box module " + boxModuleIdentifier + " tested");
+				try
+				
+				{
+					Debug.WriteLine("testing module " + boxModuleIdentifier);
+					Debug.WriteLine("  CreateBoxModule ...");
+					IBoxModule boxModule = boxModuleFactoryCreator.CreateBoxModule();
+					Debug.WriteLine("  ModulesAskingForCreation ...");
+					ModulesAskingForCreation[] modulesAskingForCreation = boxModule.ModulesAskingForCreation;
+					Debug.WriteLine("  DynamicHelpItems ...");
+					DynamicHelpItem[] dynamicHelp = boxModule.DynamicHelpItems;
+					Debug.WriteLine("  Sockets, UserHint, UserName, ...");
+					SocketInfo[] sockets = boxModule.Sockets;
+					string userHint = boxModule.UserHint;
+					string userName = boxModule.UserName;
+					this.getBoxModuleProperties(boxModule);
+					Debug.WriteLine("box module " + boxModuleIdentifier + " tested");
+					Debug.WriteLine("user name:" + userName);
+					Debug.WriteLine("user hint:" + userHint);
+					foreach(SocketInfo socket in sockets)
+					{
+						Debug.WriteLine("Socket:" + socket.name);
+					}
+					Debug.WriteLine("dynamic helps:" + dynamicHelp.Length);
+					Debug.WriteLine("modulesAskingForCreation:" + modulesAskingForCreation.Length);
+				}
+				catch(System.Exception)
+				{
+					NUnit.Framework.Assert.Fail("BoxModule " + boxModuleIdentifier + " failed");
+				}
 			}
 			Debug.WriteLine("leaving create all boxes test ...");
 		}

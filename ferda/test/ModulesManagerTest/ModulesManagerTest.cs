@@ -203,9 +203,14 @@ namespace Ferda.ModulesManager
 		[Test]
 		public void Test_DatabaseBox()
 		{
+			IBoxModuleFactoryCreator databaseCreator = null;
 			//creating creator of database boxes
-			IBoxModuleFactoryCreator databaseCreator = manager.GetBoxModuleFactoryCreator("DataMiningCommon.Database");
-			Assert.IsNotNull(databaseCreator, "GetBoxModuleFactoryCreator(DataMiningCommon.Database)");
+			try
+			{
+				databaseCreator = manager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.Database");
+			}
+			catch(Exception){}
+			Assert.IsNotNull(databaseCreator, "M30: GetBoxModuleFactoryCreator(DataPreparation.DataSource.Database)");
 			
 			//creating database box
 			IBoxModule box = databaseCreator.CreateBoxModule();
@@ -250,13 +255,20 @@ namespace Ferda.ModulesManager
 		public void Test_DatabaseBoxDataMatrixBoxConnection()
 		{
 			//creating creator of database boxes
-			IBoxModuleFactoryCreator databaseCreator = manager.GetBoxModuleFactoryCreator("DataMiningCommon.Database");
+			IBoxModuleFactoryCreator databaseCreator = manager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.Database");
 			
 			//creating database box
 			IBoxModule databaseBox = databaseCreator.CreateBoxModule();
 			
 			//creating creator of dataMatrix boxes
-			IBoxModuleFactoryCreator matrixCreator = manager.GetBoxModuleFactoryCreator("DataMiningCommon.DataMatrix");
+			IBoxModuleFactoryCreator matrixCreator = null;
+			try
+			{
+				matrixCreator = manager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.DataTable");
+			}
+			catch (Exception)
+			{
+			}
 			Assert.IsNotNull(matrixCreator, "M040");
 			
 			//creating dataMatrix box
@@ -281,7 +293,7 @@ namespace Ferda.ModulesManager
 		[Test]
 		public void Test_DataMatrixCloning()
 		{
-			IBoxModuleFactoryCreator matrixCreator = manager.GetBoxModuleFactoryCreator("DataMiningCommon.DataMatrix");
+			IBoxModuleFactoryCreator matrixCreator = manager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.DataTable");
 
 			IBoxModule matrixBox = matrixCreator.CreateBoxModule();
 			IBoxModule matrixBoxClone = matrixBox.Clone();

@@ -11,11 +11,14 @@ dir}/bin
 		<csc target="library" warnaserror="true" debug="${debug}" output="${build.dir}/ModulesTest.dll">
 			<sources failonempty="true">
 				<include name="**/*.cs"/>
+				<exclude name="FFTQuantifiersTest.cs"/>
+				<exclude name="HelpersTest.cs"/>
 				<!-- common assembly-level attributes
                 <include name="../../src/CommonAssemblyInfo.cs" /> -->
 			</sources>
 			<references>
 				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 				<include name="${path::combine(lib.dir,'icegridcs.dll')}"/>
 				<include name="${lib.dir}/log4net.dll"/>

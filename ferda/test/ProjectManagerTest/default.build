@@ -15,7 +15,18 @@ dir}/bin
                 <include name="../../src/CommonAssemblyInfo.cs" /> -->
 			</sources>
 			<references>
-				<include name="System.dll"/>
+				<!-- <include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+				<include name="System.Drawing.dll"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'icepackcs.dll')}"/>
+				<include name="${lib.dir}/log4net.dll"/>
+				<include name="${build.dir}/FerdaModulesManager.dll"/>
+				<include name="${build.dir}/FerdaProjectManager.dll"/>
+				<include name="${build.dir}/FerdaBase.dll"/>
+				<include name="${lib.dir}/nunit.framework.dll"/>
+-->
 				<include name="System.Data.dll"/>
 				<include name="System.Xml.dll"/>
 				<include name="System.Drawing.dll"/>
