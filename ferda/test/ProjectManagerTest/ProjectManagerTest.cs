@@ -2,7 +2,7 @@
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
-// Copyright (c) 2005 Michal Kováč 
+// Copyright (c) 2005 Michal Kováč
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,11 @@
 using System;
 using System.Text;
 using NUnit.Framework;
+using Ferda;
+using Ferda.ModulesManager;
 using System.Diagnostics;
+using System.IO;
+using System.Collections.Generic;
 
 namespace Ferda.ProjectManager
 {
@@ -38,13 +42,15 @@ namespace Ferda.ProjectManager
 			Debug.Listeners.Add(t);
 			Debug.AutoFlush = true;
 			Debug.WriteLine("starting projectManager...");
-            ProjectManagerOptions options = new ProjectManagerOptions();
+            Ferda.ProjectManager.ProjectManagerOptions options = new Ferda.ProjectManager.ProjectManagerOptions();
             options.StartIceGridLocaly = true;
             options.StopIceGridLocaly = true;
             options.IceGridAsService = false;
-            options.LocalePrefs = new string[]{"en-US","cs-CZ"};
-            options.SentenceForWait = "[ icegridnode: Server: changed server `0' state to `Inactive' ]";
-            projectManager = new ProjectManager(new string[0], options);
+			options.IceGridWorkingDirectory = "/home/michal/studium/mff/ferda/ferda/bin/db";
+			options.IceGridApplicationXmlFilePath = "/home/michal/studium/mff/ferda/ferda/bin/db/application.xml";
+            options.LocalePrefs = new string[]{"cs-CZ","en-US"};
+            options.SentenceForWait = "Server: changed server `0' state to `Inactive' ]";
+            projectManager = new Ferda.ProjectManager.ProjectManager(new string[0], options);
 		}
 		
 		[TestFixtureTearDown]
@@ -74,7 +80,7 @@ namespace Ferda.ProjectManager
 			Ferda.ModulesManager.IBoxModule b = creator.CreateBoxModule();
 			Debug.WriteLine("destroying boxModule...");
 			b.destroy();
-            //Ferda.ModulesManager.IBoxModule dataMatrix = 
+            //Ferda.ModulesManager.IBoxModule dataMatrix =
             //string about;
             //dataMatrix.RunSetPropertyOther("PrimaryKeyColumns",out about);
             //Assert.AreEqual(about, "ttt");
@@ -87,30 +93,67 @@ namespace Ferda.ProjectManager
 		public void Test_SavingAndLoadingProject()
 		{
 			Ferda.ModulesManager.ModulesManager modulesManager = projectManager.ModulesManager;
+			Ferda.ModulesManager.IBoxModule b = null;
+			Ferda.ModulesManager.IBoxModule bDatabase = null;
+			
+			try
+			{
 			Ferda.ModulesManager.IBoxModuleFactoryCreator creator =
-				modulesManager.GetBoxModuleFactoryCreator("DataMiningCommon.DataMatrix");
+					modulesManager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.DataTable");
 
-			Ferda.ModulesManager.IBoxModule b = creator.CreateBoxModule();
+			b = creator.CreateBoxModule();
 			
 			Ferda.ModulesManager.IBoxModuleFactoryCreator creatorDatabase =
-				modulesManager.GetBoxModuleFactoryCreator("DataMiningCommon.Database");
+					modulesManager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.Database");
+			bDatabase = creatorDatabase.CreateBoxModule();
+			}
+			catch (Exception)
+			{
+				Assert.Fail("PM00: Can not connect database to datatable");
+			}
 			
-			Ferda.ModulesManager.IBoxModule bDatabase = creatorDatabase.CreateBoxModule();
+			try
+			{
+				b.SetConnection("Database", bDatabase);
+			}
+			catch (Exception)
+			{
+				Assert.Fail("PM01: Can not connect database to datatable");
+			}
 			
-			b.SetConnection("Database", bDatabase);
-			
+			try
+			{
 			projectManager.Archive.Add(b);
 			projectManager.Archive.Add(bDatabase);
 			View viv = projectManager.NewView("testView");
 			viv.Add(b,new System.Drawing.PointF(4,5));
+			}
+			catch (Exception)
+			{
+				Assert.Fail("PM02: Can not connect database to datatable");
+			}
 			
+			try
+			{
 			System.IO.FileStream fs = new System.IO.FileStream("test.xml",System.IO.FileMode.Create);
 			projectManager.SaveProject(fs);
 			fs.Close();
+			}
+			catch (Exception)
+			{
+				Assert.Fail("PM03: Can not connect database to datatable");
+			}
 			
-			fs = new System.IO.FileStream("test.xml",System.IO.FileMode.Open);
+			try
+			{
+			System.IO.FileStream fs = new System.IO.FileStream("test.xml",System.IO.FileMode.Open);
 			projectManager.LoadProject(fs);
 			fs.Close();
+			}
+			catch (Exception)
+			{
+				Assert.Fail("PM04: Can not connect database to datatable");
+			}
 		}
 	}
 }
