@@ -46,8 +46,8 @@ namespace Ferda.ProjectManager
             options.StartIceGridLocaly = true;
             options.StopIceGridLocaly = true;
             options.IceGridAsService = false;
-			options.IceGridWorkingDirectory = "/home/michal/studium/mff/ferda/ferda/bin/db";
-			options.IceGridApplicationXmlFilePath = "/home/michal/studium/mff/ferda/ferda/bin/db/application.xml";
+			options.IceGridWorkingDirectory = "../../bin/db";
+			options.IceGridApplicationXmlFilePath = "application.xml";
             options.LocalePrefs = new string[]{"cs-CZ","en-US"};
             options.SentenceForWait = "Server: changed server `0' state to `Inactive' ]";
             projectManager = new Ferda.ProjectManager.ProjectManager(new string[0], options);
