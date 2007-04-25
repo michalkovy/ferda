@@ -46,6 +46,16 @@ namespace Ferda.Modules
 			this.minute = (short)datetime.Minute;
 			this.second = (short)datetime.Second;
 		}
+		
+		public DateTimeTI(System.TimeSpan timeSpan)
+		{
+			this.year = 0;
+			this.month = 0;
+			this.day = (short)timeSpan.Days;
+			this.hour = (short)timeSpan.Hours;
+			this.minute = (short)timeSpan.Minutes;
+			this.second = (short)timeSpan.Seconds;
+		}
 
 		public DateTimeTI(DateTimeTInterfacePrx iface)
 		{
