@@ -22,8 +22,8 @@ namespace Ferda.Modules
             options.StartIceGridLocaly = true;
             options.StopIceGridLocaly = true;
             options.IceGridAsService = false;
-			options.IceGridWorkingDirectory = "/home/michal/studium/mff/ferda/ferda/bin/db";
-			options.IceGridApplicationXmlFilePath = "/home/michal/studium/mff/ferda/ferda/bin/db/application.xml";
+			options.IceGridWorkingDirectory = "../../bin/db";
+			options.IceGridApplicationXmlFilePath = "application.xml";
             options.LocalePrefs = new string[]{"cs-CZ","en-US"};
             options.SentenceForWait = "Server: changed server `0' state to `Inactive' ]";
             projectManager = new Ferda.ProjectManager.ProjectManager(new string[0], options);
@@ -45,44 +45,51 @@ namespace Ferda.Modules
 			foreach (PropertyInfo property in properties)
 			{
 				string propertyName = property.name;
-				Debug.WriteLine("try to get property " + propertyName);
-				switch (property.typeClassIceId)
+				try
 				{
-					case "::Ferda::Modules::BoolT":
-						boxModule.GetPropertyBool(propertyName);
-						break;
-					case "::Ferda::Modules::DateT":
-						boxModule.GetPropertyDate(propertyName);
-						break;
-					case "::Ferda::Modules::DateTimeT":
-						boxModule.GetPropertyDateTime(propertyName);
-						break;
-					case "::Ferda::Modules::DoubleT":
-						boxModule.GetPropertyDouble(propertyName);
-						break;
-					case "::Ferda::Modules::FloatT":
-						boxModule.GetPropertyFloat(propertyName);
-						break;
-					case "::Ferda::Modules::IntT":
-						boxModule.GetPropertyInt(propertyName);
-						break;
-					case "::Ferda::Modules::LongT":
-						boxModule.GetPropertyLong(propertyName);
-						break;
-					case "::Ferda::Modules::ShortT":
-						boxModule.GetPropertyShort(propertyName);
-						break;
-					case "::Ferda::Modules::StringT":
-						boxModule.GetPropertyString(propertyName);
-						if (property.selectBoxParams != null && property.selectBoxParams.Length > 0)
-							boxModule.GetPropertyOptions(propertyName);
-						break;
-					case "::Ferda::Modules::TimeT":
-						boxModule.GetPropertyTime(propertyName);
-						break;
-					case "::Ferda::Modules::OtherT":
-						//TODO
-						break;
+					Debug.WriteLine("try to get property " + propertyName);
+					switch (property.typeClassIceId)
+					{
+						case "::Ferda::Modules::BoolT":
+							boxModule.GetPropertyBool(propertyName);
+							break;
+						case "::Ferda::Modules::DateT":
+							boxModule.GetPropertyDate(propertyName);
+							break;
+						case "::Ferda::Modules::DateTimeT":
+							boxModule.GetPropertyDateTime(propertyName);
+							break;
+						case "::Ferda::Modules::DoubleT":
+							boxModule.GetPropertyDouble(propertyName);
+							break;
+						case "::Ferda::Modules::FloatT":
+							boxModule.GetPropertyFloat(propertyName);
+							break;
+						case "::Ferda::Modules::IntT":
+							boxModule.GetPropertyInt(propertyName);
+							break;
+						case "::Ferda::Modules::LongT":
+							boxModule.GetPropertyLong(propertyName);
+							break;
+						case "::Ferda::Modules::ShortT":
+							boxModule.GetPropertyShort(propertyName);
+							break;
+						case "::Ferda::Modules::StringT":
+							boxModule.GetPropertyString(propertyName);
+							if (property.selectBoxParams != null && property.selectBoxParams.Length > 0)
+								boxModule.GetPropertyOptions(propertyName);
+							break;
+						case "::Ferda::Modules::TimeT":
+							boxModule.GetPropertyTime(propertyName);
+							break;
+						case "::Ferda::Modules::OtherT":
+							//TODO
+							break;
+					}
+				}
+				catch (System.Exception e)
+				{
+					Assert.Fail("A02, getting property " + propertyName + " from " + boxModule.MadeInCreator.Identifier + " failed: " + e.ToString());
 				}
 			}
 			Debug.WriteLine("leaving test get properties ...");
@@ -121,9 +128,9 @@ namespace Ferda.Modules
 					Debug.WriteLine("dynamic helps:" + dynamicHelp.Length);
 					Debug.WriteLine("modulesAskingForCreation:" + modulesAskingForCreation.Length);
 				}
-				catch(System.Exception)
+				catch(System.Exception e)
 				{
-					NUnit.Framework.Assert.Fail("BoxModule " + boxModuleIdentifier + " failed");
+					NUnit.Framework.Assert.Fail("A01: BoxModule " + boxModuleIdentifier + " failed with message: " + e.ToString() + "\n\n");
 				}
 			}
 			Debug.WriteLine("leaving create all boxes test ...");
