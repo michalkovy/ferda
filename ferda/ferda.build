@@ -329,7 +329,7 @@
 			<arg value="FerdaIceGridNode"/>
 		</exec>
 	</target>
-	<target name="refresh" depends="uninstall,clean,fullinstall"/>
+	<target name="refresh" depends="uninstall,clean,fullinstall,test"/>
 	<target name="snapshot" description="Vytvoří snapshot" depends="clean,all">
 		<tstamp property="build.date" pattern="yyyyMMdd" verbose="true"/>
 		<mkdir dir="${snapshot.dir}"/>
