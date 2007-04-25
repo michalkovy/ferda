@@ -3595,7 +3595,7 @@
         <Name>StartTime</Name>
         <SocketTypes>
           <BoxType>
-            <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+            <FunctionIceId>::Ferda::Modules::DateTimeTInterface</FunctionIceId>
           </BoxType>
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
@@ -3604,7 +3604,7 @@
         <Name>EndTime</Name>
         <SocketTypes>
           <BoxType>
-            <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+            <FunctionIceId>::Ferda::Modules::DateTimeTInterface</FunctionIceId>
           </BoxType>
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
@@ -3698,13 +3698,13 @@
       </Property>
       <Property>
         <Name>StartTime</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+        <TypeClassIceId>::Ferda::Modules::DateTimeT</TypeClassIceId>
         <Visible>true</Visible>
         <ReadOnly>true</ReadOnly>
       </Property>
       <Property>
         <Name>EndTime</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+        <TypeClassIceId>::Ferda::Modules::DateTimeT</TypeClassIceId>
         <Visible>true</Visible>
         <ReadOnly>true</ReadOnly>
       </Property>
