@@ -55,6 +55,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
                     return new DateTimeTI(Common.StartTime(Func));
                 case Common.PropEndTime:
                     return new DateTimeTI(Common.EndTime(Func));
+				case Common.PropTotalTime:
+					return new DateTimeTI(Common.EndTime(Func) - Common.StartTime(Func));
                 default:
                     throw new NotImplementedException();
             }

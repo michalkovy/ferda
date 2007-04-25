@@ -3613,7 +3613,7 @@
         <Name>TotalTime</Name>
         <SocketTypes>
           <BoxType>
-            <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+            <FunctionIceId>::Ferda::Modules::DateTimeTInterface</FunctionIceId>
           </BoxType>
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
@@ -3710,7 +3710,7 @@
       </Property>
       <Property>
         <Name>TotalTime</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+        <TypeClassIceId>::Ferda::Modules::DateTimeT</TypeClassIceId>
         <Visible>true</Visible>
         <ReadOnly>true</ReadOnly>
       </Property>
