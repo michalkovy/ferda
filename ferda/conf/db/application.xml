@@ -131,6 +131,7 @@
         <property name="IceBox.UseSharedCommunicator.FerdaWizards" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningProcessor" value="1"/>
+				<property name="IceBox.UseSharedCommunicator.FerdaNetworkArchive" value="1"/>
 			</icebox>
 		</server-template>
 		<node name="Local">

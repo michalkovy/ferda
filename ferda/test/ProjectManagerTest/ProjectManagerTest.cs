@@ -42,23 +42,23 @@ namespace Ferda.ProjectManager
 			Debug.Listeners.Add(t);
 			Debug.AutoFlush = true;
 			Debug.WriteLine("starting projectManager...");
-            Ferda.ProjectManager.ProjectManagerOptions options = new Ferda.ProjectManager.ProjectManagerOptions();
-            options.StartIceGridLocaly = true;
-            options.StopIceGridLocaly = true;
-            options.IceGridAsService = false;
+			Ferda.ProjectManager.ProjectManagerOptions options = new Ferda.ProjectManager.ProjectManagerOptions();
+			options.StartIceGridLocaly = true;
+			options.StopIceGridLocaly = true;
+			options.IceGridAsService = false;
 			options.IceGridWorkingDirectory = "../../bin/db";
 			options.IceGridApplicationXmlFilePath = "application.xml";
-            options.LocalePrefs = new string[]{"cs-CZ","en-US"};
-            options.SentenceForWait = "Server: changed server `0' state to `Inactive' ]";
-            projectManager = new Ferda.ProjectManager.ProjectManager(new string[0], options);
+			options.LocalePrefs = new string[]{"cs-CZ","en-US"};
+			options.SentenceForWait = "Server: changed server `0' state to `Inactive' ]";
+			projectManager = new Ferda.ProjectManager.ProjectManager(new string[0], options);
 		}
 		
 		[TestFixtureTearDown]
 		public void TearDown()
 		{
-            Debug.WriteLine("destroying projectManager...");
+			Debug.WriteLine("destroying projectManager...");
 			projectManager.DestroyProjectManager();
-            Debug.WriteLine("projectManager destroyed");
+			Debug.WriteLine("projectManager destroyed");
 		}
 		
         /*
@@ -86,9 +86,9 @@ namespace Ferda.ProjectManager
             //Assert.AreEqual(about, "ttt");
 		}*/
 		
-        /// <summary>
-        /// Will try to create sample project, save it and load it
-        /// </summary>
+		/// <summary>
+		/// Will try to create sample project, save it and load it
+		/// </summary>
 		[Test]
 		public void Test_SavingAndLoadingProject()
 		{
@@ -154,6 +154,87 @@ namespace Ferda.ProjectManager
 			{
 				Assert.Fail("PM04: Can not connect database to datatable");
 			}
+		}
+		
+		/// <summary>
+		/// Will try to create sample project, save it and load it
+		/// </summary>
+		[Test]
+		public void Test_NetworkArchive()
+		{
+			Ferda.ModulesManager.ModulesManager modulesManager = projectManager.ModulesManager;
+			
+			Ferda.ModulesManager.IBoxModuleFactoryCreator creator =
+				modulesManager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.DataTable");
+			Ferda.ModulesManager.IBoxModule b = creator.CreateBoxModule();
+			
+			Ferda.ModulesManager.IBoxModuleFactoryCreator creatorDatabase =
+				modulesManager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.Database");
+			Ferda.ModulesManager.IBoxModule bDatabase = creatorDatabase.CreateBoxModule();
+			
+			b.SetConnection("Database", bDatabase);
+			projectManager.Archive.Add(b);
+			projectManager.Archive.Add(bDatabase);
+			
+			Ferda.ProjectManager.NetworkArchive networkArchive = projectManager.NetworkArchive;
+			
+			try
+			{
+				networkArchive.AddBox(bDatabase, "Test Box Database");
+			}
+			catch (Exception e)
+			{
+				Assert.Fail("PM10: Could not add Database box to archive: {0}", e.ToString());
+			}
+			
+			try
+			{
+				networkArchive.AddBox(b, "Test Box Datatable");
+			}
+			catch (Exception e)
+			{
+				Assert.Fail("PM11: Could not add DataTable box to archive: {0}", e.ToString());
+			}
+			
+			Assert.AreEqual(networkArchive.Labels,
+							new string[]{"Test Box Database", "Test Box Datatable"},
+							"PM12: Labels in network archive are incorrect");
+			
+			Assert.AreSame(
+				networkArchive.GetBoxModuleFactoryCreatorOfBox("Test Box Datatable"),
+				b.MadeInCreator,
+				"PM13: Creator of old box is not same as new one"
+			);
+			
+			string errors = null;
+			try
+			{
+				networkArchive.GetBoxToProject("Test Box Database", out errors);
+			}
+			catch (Exception e)
+			{
+				Assert.Fail("PM14: Could not load DataBase box from archive to project: {0}", e.ToString());
+			}
+			
+			Assert.IsTrue(String.IsNullOrEmpty(errors),
+						  "PM15: There are errors when loading stored database box: {0}",
+						  errors);
+			
+			IBoxModule newB = null;
+			try
+			{
+				newB = networkArchive.GetBoxToProject("Test Box Datatable", out errors);
+			}
+			catch (Exception e)
+			{
+				Assert.Fail("PM16: Could not load Datatable box from archive to project: {0}", e.ToString());
+			}
+			
+			Assert.IsTrue(String.IsNullOrEmpty(errors),
+						  "PM17: There are errors when loading stored datatable box: {0}",
+						  errors);
+			
+			Assert.AreSame(newB.MadeInCreator, b.MadeInCreator, "PM18");
 		}
 	}
 }
