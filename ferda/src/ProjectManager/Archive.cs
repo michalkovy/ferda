@@ -2,7 +2,7 @@
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
-// Copyright (c) 2005 Michal Kováč 
+// Copyright (c) 2005 Michal Kováč
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,12 +25,12 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace Ferda {
-    namespace ProjectManager {
+	namespace ProjectManager {
 
-        /// <summary>
-        /// Archive of boxes in project
-        /// </summary>
-        public class Archive {
+		/// <summary>
+		/// Archive of boxes in project
+		/// </summary>
+		public class Archive {
 			private int lastBoxModuleProjectIdentifier = 0;
 			private List<IBoxModule> boxes = new List<IBoxModule>();
 			private StringCollection boxCategories =
@@ -41,11 +41,11 @@ namespace Ferda {
 				new StringCollection();
 			private Dictionary<string,List<IBoxModule>> boxesWithLabel =
 				new Dictionary<string,List<IBoxModule>>();
-            private Dictionary<string, StringCollection> labelsInCategory =
-                new Dictionary<string, StringCollection>();
+			private Dictionary<string, StringCollection> labelsInCategory =
+				new Dictionary<string, StringCollection>();
 			private List<View> views;
-            private Dictionary<int, IBoxModule> boxesByProjectIdentifier =
-                new Dictionary<int, IBoxModule>();
+			private Dictionary<int, IBoxModule> boxesByProjectIdentifier =
+				new Dictionary<int, IBoxModule>();
 			
 			/// <summary>
 			/// Constructs archive
@@ -58,10 +58,10 @@ namespace Ferda {
 				this.views = views;
 			}
 			
-            /// <summary>
-            /// Adds categorie and labels of box <paramref name="box"/> to class structures
-            /// </summary>
-            /// <param name="box">A box</param>
+			/// <summary>
+			/// Adds categorie and labels of box <paramref name="box"/> to class structures
+			/// </summary>
+			/// <param name="box">A box</param>
 			private void addBoxCategories(IBoxModule box)
 			{
 				IBoxModuleFactoryCreator creator = box.MadeInCreator;
@@ -81,21 +81,21 @@ namespace Ferda {
 					boxesWithLabel[label] = new List<IBoxModule>();
 				}
 				boxesWithLabel[label].Add(box);
-                foreach (string category in creator.BoxCategories)
-                {
-                    if (!labelsInCategory.ContainsKey(category))
-                    {
-                        labelsInCategory[category] = new StringCollection();
-                        labelsInCategory[category].Add(label);
-                    }
-                    else
-                    {
-                        if (!labelsInCategory[category].Contains(label))
-                        {
-                            labelsInCategory[category].Add(label);
-                        }
-                    }
-                }
+				foreach (string category in creator.BoxCategories)
+				{
+					if (!labelsInCategory.ContainsKey(category))
+					{
+						labelsInCategory[category] = new StringCollection();
+						labelsInCategory[category].Add(label);
+					}
+					else
+					{
+						if (!labelsInCategory[category].Contains(label))
+						{
+							labelsInCategory[category].Add(label);
+						}
+					}
+				}
 			}
 			
 			/// <summary>
@@ -105,21 +105,21 @@ namespace Ferda {
 			/// representation of box</param>
 			/// <seealso cref="M:Ferda.ProjectManager.Archive.Remove(Ferda.ModulesManager.IBoxModule)"/>
 			/// <seealso cref="P:Ferda.ProjectManager.Archive.Boxes"/>
-            public void Add(IBoxModule box) {
+			public void Add(IBoxModule box) {
 				if(!boxes.Contains(box))
 				{
 					boxes.Add(box);
 					box.ProjectIdentifier = lastBoxModuleProjectIdentifier++;
 					addBoxCategories(box);
-                    boxesByProjectIdentifier.Add(box.ProjectIdentifier,box);
+					boxesByProjectIdentifier.Add(box.ProjectIdentifier,box);
 				}
-            }
+			}
 
-            /// <summary>
-            /// Removes categorie and labels of box <paramref name="box"/> from class structures
-            /// if there are no other box which have the same category or label
-            /// </summary>
-            /// <param name="box">A box</param>
+			/// <summary>
+			/// Removes categorie and labels of box <paramref name="box"/> from class structures
+			/// if there are no other box which have the same category or label
+			/// </summary>
+			/// <param name="box">A box</param>
 			private void removeBoxCategories(IBoxModule box)
 			{
 				IBoxModuleFactoryCreator creator = box.MadeInCreator;
@@ -129,28 +129,28 @@ namespace Ferda {
 					if(boxesInCategory[category].Count == 0)
 					{
 						boxCategories.Remove(category);
-                        labelsInCategory[category].Clear();
+						labelsInCategory[category].Clear();
 					}
 				}
 				string label = creator.Label;
 				boxesWithLabel[label].Remove(box);
 				if(boxesWithLabel[label].Count == 0)
 				{
-                    boxLabels.Remove(label);
-                    foreach (StringCollection labels in labelsInCategory.Values)
-                    {
-                        if (labels.Contains(label)) labels.Remove(label);
-                    }
+					boxLabels.Remove(label);
+					foreach (StringCollection labels in labelsInCategory.Values)
+					{
+						if (labels.Contains(label)) labels.Remove(label);
+					}
 				}
 			}
 			
-            /// <summary>
-            /// Adds box module with specified project identifier
-            /// </summary>
-            /// <param name="box">An <see cref="T:Ferda.ModulesManager.IBoxModule"/>
-            /// representation of box</param>
-            /// <param name="projectIdentifier">An integer representing unicate
-            /// identifier in project</param>
+			/// <summary>
+			/// Adds box module with specified project identifier
+			/// </summary>
+			/// <param name="box">An <see cref="T:Ferda.ModulesManager.IBoxModule"/>
+			/// representation of box</param>
+			/// <param name="projectIdentifier">An integer representing unicate
+			/// identifier in project</param>
 			protected internal void AddWithIdentifier(IBoxModule box, int projectIdentifier)
 			{
 				if(!boxes.Contains(box))
@@ -161,7 +161,14 @@ namespace Ferda {
 						lastBoxModuleProjectIdentifier <= projectIdentifier ?
 						projectIdentifier+1 : lastBoxModuleProjectIdentifier;
 					addBoxCategories(box);
-                    boxesByProjectIdentifier.Add(projectIdentifier, box);
+					if(boxesByProjectIdentifier.ContainsKey(projectIdentifier))
+					{
+						throw new System.ArgumentException("Project identifier " +
+														   projectIdentifier.ToString() +
+														   " allready exists, last project identifier is " +
+														   lastBoxModuleProjectIdentifier.ToString());
+					}
+					boxesByProjectIdentifier.Add(projectIdentifier, box);
 				}
 			}
 			
@@ -172,7 +179,7 @@ namespace Ferda {
 			/// representation of box</param>
 			/// <seealso cref="M:Ferda.ProjectManager.Archive.Add(Ferda.ModulesManager.IBoxModule)"/>
 			/// <seealso cref="P:Ferda.ProjectManager.Archive.Boxes"/>
-            public void Remove(IBoxModule box) {
+			public void Remove(IBoxModule box) {
 				foreach(IBoxModule otherBox in box.ConnectedTo())
 				{
 					foreach(SocketInfo info in otherBox.Sockets)
@@ -202,9 +209,9 @@ namespace Ferda {
 				{
 					removeBoxCategories(box);
 				}
-                boxesByProjectIdentifier.Remove(box.ProjectIdentifier);
+				boxesByProjectIdentifier.Remove(box.ProjectIdentifier);
 				box.destroy();
-            }
+			}
 
 			/// <summary>
 			/// Clones box, adds that clon to archive and returns it
@@ -213,73 +220,73 @@ namespace Ferda {
 			/// representating clone of box <paramref name="box"/></returns>
 			/// <param name="box">An <see cref="T:Ferda.ModulesManager.IBoxModule"/>
 			/// representation of box</param>
-            public IBoxModule Clone(IBoxModule box) {
+			public IBoxModule Clone(IBoxModule box) {
 				IBoxModule result = box.Clone();
 				Add(result);
 				return result;
-            }
+			}
 
 			/// <summary>
-            /// Lists boxes with type specified by <paramref name="boxCategory"/>
-            /// and <paramref name="boxLabel"/>
+			/// Lists boxes with type specified by <paramref name="boxCategory"/>
+			/// and <paramref name="boxLabel"/>
 			/// </summary>
 			/// <returns>An array of <see cref="T:Ferda.ModulesManager.IBoxModule"/>
 			/// representing boxes with type <paramref name="archiveBoxType"/>
 			/// </returns>
-            /// <param name="boxCategory">A string representation
+			/// <param name="boxCategory">A string representation
 			/// of category of box. If null or empty then returns all.</param>
-            /// <param name="boxLabel">A string representation
-            /// of label of box. If null or empty then returns all.</param>
-            public IBoxModule[] ListBoxesWithType(string boxCategory, string boxLabel) {
-                if (String.IsNullOrEmpty(boxLabel))
-                {
-                    if (boxCategories.Contains(boxCategory))
-                    {
-                        IBoxModule[] resultArray = boxesInCategory[boxCategory].ToArray();
-                        Array.Sort<IBoxModule>(resultArray);
-                        return resultArray;
-                    }
-                }
-                if (boxLabels.Contains(boxLabel))
+			/// <param name="boxLabel">A string representation
+			/// of label of box. If null or empty then returns all.</param>
+			public IBoxModule[] ListBoxesWithType(string boxCategory, string boxLabel) {
+				if (String.IsNullOrEmpty(boxLabel))
 				{
-                    IBoxModule[] resultArray = boxesWithLabel[boxLabel].ToArray();
+					if (boxCategories.Contains(boxCategory))
+					{
+						IBoxModule[] resultArray = boxesInCategory[boxCategory].ToArray();
+						Array.Sort<IBoxModule>(resultArray);
+						return resultArray;
+					}
+				}
+				if (boxLabels.Contains(boxLabel))
+				{
+					IBoxModule[] resultArray = boxesWithLabel[boxLabel].ToArray();
 					Array.Sort<IBoxModule>(resultArray);
 					return resultArray;
 				}
 				return new IBoxModule[0];
-            }
+			}
 
-            /// <summary>
-            /// Returns labels of boxes in category
-            /// </summary>
-            /// <param name="boxCategory">A string representation
-            /// of category of box. If null or empty then returns all.</param>
-            /// <returns>An array of labels of boxes</returns>
-            public string[] ListBoxLabelsInCategory(string boxCategory)
-            {
-                StringCollection result;
-                if (String.IsNullOrEmpty(boxCategory))
-                {
-                    result = this.boxLabels;
-                }
-                else
-                {
-                    if (labelsInCategory.ContainsKey(boxCategory))
-                    {
-                        result = labelsInCategory[boxCategory];
-                    }
-                    else
-                    {
-                        result = new StringCollection();
-                    }
-                }
-                int size = result.Count;
-                if (size == 0) return new string[0];
-                string[] returnValue = new string[size];
-                result.CopyTo(returnValue, 0);
-                Array.Sort<string>(returnValue);
-                return returnValue;
-            }
+			/// <summary>
+			/// Returns labels of boxes in category
+			/// </summary>
+			/// <param name="boxCategory">A string representation
+			/// of category of box. If null or empty then returns all.</param>
+			/// <returns>An array of labels of boxes</returns>
+			public string[] ListBoxLabelsInCategory(string boxCategory)
+			{
+				StringCollection result;
+				if (String.IsNullOrEmpty(boxCategory))
+				{
+					result = this.boxLabels;
+				}
+				else
+				{
+					if (labelsInCategory.ContainsKey(boxCategory))
+					{
+						result = labelsInCategory[boxCategory];
+					}
+					else
+					{
+						result = new StringCollection();
+					}
+				}
+				int size = result.Count;
+				if (size == 0) return new string[0];
+				string[] returnValue = new string[size];
+				result.CopyTo(returnValue, 0);
+				Array.Sort<string>(returnValue);
+				return returnValue;
+			}
 
 
 			/// <summary>
@@ -290,11 +297,11 @@ namespace Ferda {
 			/// <param name="box">An <see cref="T:Ferda.ModulesManager.IBoxModule"/>
 			/// representation of box</param>
 			/// <seealso cref="M:Ferda.ProjectManager.Archive.ConnectionsFrom(Ferda.ModulesManager.IBoxModule)"/>
-            public IBoxModule[] ConnectedTo(IBoxModule box) {
+			public IBoxModule[] ConnectedTo(IBoxModule box) {
 				IBoxModule[] resultArray = box.ConnectedTo();
 				Array.Sort<IBoxModule>(resultArray);
 				return resultArray;
-            }
+			}
 
 			/// <summary>
 			/// Gets boxes to which is connected box <paramref name="box"/>.
@@ -304,7 +311,7 @@ namespace Ferda {
 			/// <param name="box">An <see cref="T:Ferda.ModulesManager.IBoxModule"/>
 			/// representation of box</param>
 			/// <seealso cref="M:Ferda.ProjectManager.Archive.ConnectedTo(Ferda.ModulesManager.IBoxModule)"/>
-            public IBoxModule[] ConnectionsFrom(IBoxModule box)
+			public IBoxModule[] ConnectionsFrom(IBoxModule box)
 			{
 				List<IBoxModule> result = new List<IBoxModule>();
 				foreach (SocketInfo socket in box.Sockets)
@@ -317,7 +324,7 @@ namespace Ferda {
 				IBoxModule[] resultArray = result.ToArray();
 				Array.Sort<IBoxModule>(resultArray);
 				return resultArray;
-            }
+			}
 
 			/// <summary>
 			/// Looks if archive contains box <paramref name="box"/>
@@ -326,9 +333,9 @@ namespace Ferda {
 			/// otherwise false</returns>
 			/// <param name="box">An <see cref="T:Ferda.ModulesManager.IBoxModule"/>
 			/// representation of box</param>
-            public bool ContainsBox(IBoxModule box) {
+			public bool ContainsBox(IBoxModule box) {
 				return boxes.Contains(box);
-            }
+			}
 
 			/// <summary>
 			/// Types of boxes in archive
@@ -336,17 +343,17 @@ namespace Ferda {
 			/// <value>
 			/// An array of string representing box types
 			/// </value>
-            public string[] ArchiveBoxTypes {
+			public string[] ArchiveBoxTypes {
 
-                get {
+				get {
 					int bc = boxCategories.Count;
-                    string[] result = new string[bc];
+					string[] result = new string[bc];
 					if(bc > 0)
 						boxCategories.CopyTo(result, 0);
 					Array.Sort<string>(result);
 					return result;
-                }
-            }
+				}
+			}
 			
 			/// <summary>
 			/// Boxes in archive
@@ -355,24 +362,24 @@ namespace Ferda {
 			/// An array of <see cref="T:Ferda.ModulesManager.IBoxModule"/>
 			/// representing boxes in archive
 			/// </value>
-            public ModulesManager.IBoxModule[] Boxes {
+			public ModulesManager.IBoxModule[] Boxes {
 				
-                get {
-                    return boxes.ToArray();
-                }
-            }
+				get {
+					return boxes.ToArray();
+				}
+			}
 
-            /// <summary>
-            /// Gets box with specified project identifier
-            /// </summary>
-            /// <returns>box with specified project identifier or null box with specified identifier does not exist</returns>
-            /// <param name="projectIdentifier">An int representing project identifier</param>
-            public ModulesManager.IBoxModule GetBoxByProjectIdentifier(int projectIdentifier)
-            {
-                IBoxModule result = null;
-                boxesByProjectIdentifier.TryGetValue(projectIdentifier, out result);
-                return result;
-            }
+			/// <summary>
+			/// Gets box with specified project identifier
+			/// </summary>
+			/// <returns>box with specified project identifier or null box with specified identifier does not exist</returns>
+			/// <param name="projectIdentifier">An int representing project identifier</param>
+			public ModulesManager.IBoxModule GetBoxByProjectIdentifier(int projectIdentifier)
+			{
+				IBoxModule result = null;
+				boxesByProjectIdentifier.TryGetValue(projectIdentifier, out result);
+				return result;
+			}
 			
 			/// <summary>
 			/// Boxes in archive
@@ -381,27 +388,27 @@ namespace Ferda {
 			/// An sorted array of <see cref="T:Ferda.ModulesManager.IBoxModule"/>
 			/// representing boxes in archive
 			/// </value>
-            public ModulesManager.IBoxModule[] SortedBoxes {
+			public ModulesManager.IBoxModule[] SortedBoxes {
 				
-                get {
+				get {
 					ModulesManager.IBoxModule[] result = boxes.ToArray();
 					Array.Sort<IBoxModule>(result);
-                    return result;
-                }
-            }
+					return result;
+				}
+			}
 
-            /// <summary>
-            /// Refreshes information about order of boxes. Use before
-            /// <see cref="M:Ferda.ProjectManager.Archive.ConnectedTo(Ferda.ModulesManager.IBoxModule)"/>,
-            /// <see cref="M:Ferda.ProjectManager.Archive.ConnectionsFrom(Ferda.ModulesManager.IBoxModule)"/>
-            /// and
-            /// <see cref="P:Ferda.ProjectManager.Archive.SortedBoxes"/>
-            /// </summary>
-            public void RefreshOrder()
-            {
-                foreach(ModulesManager.IBoxModule box in Boxes)
-                    box.RefreshOrder();
-            }
+			/// <summary>
+			/// Refreshes information about order of boxes. Use before
+			/// <see cref="M:Ferda.ProjectManager.Archive.ConnectedTo(Ferda.ModulesManager.IBoxModule)"/>,
+			/// <see cref="M:Ferda.ProjectManager.Archive.ConnectionsFrom(Ferda.ModulesManager.IBoxModule)"/>
+			/// and
+			/// <see cref="P:Ferda.ProjectManager.Archive.SortedBoxes"/>
+			/// </summary>
+			public void RefreshOrder()
+			{
+				foreach(ModulesManager.IBoxModule box in Boxes)
+					box.RefreshOrder();
+			}
 			
 			/// <summary>
 			/// Destroys archive
@@ -425,6 +432,6 @@ namespace Ferda {
 					return this.lastBoxModuleProjectIdentifier;
 				}
 			}
-        }
-    }
+		}
+	}
 }

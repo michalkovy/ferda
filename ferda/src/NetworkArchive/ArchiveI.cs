@@ -74,7 +74,7 @@ namespace Ferda.NetworkArchive
 			lock(archive)
 			{
 				string[] result = new string[archive.Count];
-				archive.Keys.CopyTo(result, archive.Count);
+				archive.Keys.CopyTo(result, 0);
 				return result;
 			}
 		}

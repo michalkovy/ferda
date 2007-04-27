@@ -54,7 +54,7 @@ namespace Ferda.ProjectManager
 			return mainIBoxModule;
 		}
 		
-		public IBoxModuleFactoryCreator GetBoxModeleFactoryCreatorOfBox(string label)
+		public IBoxModuleFactoryCreator GetBoxModuleFactoryCreatorOfBox(string label)
 		{
 			return archive.GetBoxModeleFactoryCreatorOfBox(label);
 		}
@@ -102,15 +102,20 @@ namespace Ferda.ProjectManager
 		private static Project.Box addBoxToProjectBoxes(Ferda.NetworkArchive.Box box, List<Project.Box> projectBoxes, Dictionary<Ferda.NetworkArchive.Box, int> projectIdentifiers, List<Ferda.NetworkArchive.Box> undoneBoxes, ref int lastProjectIdentifier)
 		{
 			Project.Box projectBox = new Project.Box();
+			projectBox.CreatorIdentifier = box.creatorIdentifier;
+			projectBox.UserHint = box.userHint;
+			projectBox.UserName = box.userName;
 			projectBox.Connections = new Project.Box.Connection[box.Connections.Length];
+			projectBox.ProjectIdentifier = projectIdentifiers[box];
 			for(int i = 0; i < box.Connections.Length; i++)
 			{
 				projectBox.Connections[i].SocketName = box.Connections[i].socketName;
 				if(!projectIdentifiers.TryGetValue(box.Connections[i].boxValue, out projectBox.Connections[i].BoxProjectIdentifier))
 				{
-					projectBox.Connections[i].BoxProjectIdentifier = ++lastProjectIdentifier;
-					projectIdentifiers.Add(box, lastProjectIdentifier);
-					undoneBoxes.Add(box);
+					++lastProjectIdentifier;
+					projectBox.Connections[i].BoxProjectIdentifier = lastProjectIdentifier;
+					projectIdentifiers.Add(box.Connections[i].boxValue, lastProjectIdentifier);
+					undoneBoxes.Add(box.Connections[i].boxValue);
 				}
 			}
 			projectBox.PropertySets = new Project.Box.PropertySet[box.PropertySets.Length];
@@ -126,6 +131,9 @@ namespace Ferda.ProjectManager
 		
 		private static Ferda.NetworkArchive.Box createBoxFromProject(Project project)
 		{
+			if((project == null) || (project.Boxes.Length == 0))
+				return null;
+			
 			Dictionary<int,Ferda.NetworkArchive.Box> identiferToBoxMap = new Dictionary<int,Ferda.NetworkArchive.Box>();
 			foreach(Project.Box box in project.Boxes)
 			{
@@ -153,12 +161,13 @@ namespace Ferda.ProjectManager
 				}
 				networkBox.Connections = boxConnections.ToArray();
 				
-				networkBox.PropertySets = new PropertySetting[box.PropertySets.Length];
-				for(int i = 0; i < box.PropertySets.Length; i++)
+				List<PropertySetting> propertySettings = new List<PropertySetting>((box.PropertySets == null) ? 0 : box.PropertySets.Length);
+				foreach(Project.Box.PropertySet s in box.PropertySets)
 				{
-					networkBox.PropertySets[i].propertyName = box.PropertySets[i].PropertyName;
-					networkBox.PropertySets[i].value =  box.PropertySets[i].Value.GetPropertyValue();
+					PropertySetting propertySetting = new PropertySetting(s.PropertyName, (s.Value == null) ? null : s.Value.GetPropertyValue());
+					propertySettings.Add(propertySetting);
 				}
+				networkBox.PropertySets = propertySettings.ToArray();
 			}
 			return identiferToBoxMap[project.Boxes[0].ProjectIdentifier];
 		}

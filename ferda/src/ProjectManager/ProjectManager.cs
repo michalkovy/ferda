@@ -433,7 +433,12 @@ namespace Ferda.ProjectManager {
             {
                 IBoxModuleFactoryCreator creator =
                     this.modulesManager.GetBoxModuleFactoryCreator(b.CreatorIdentifier);
-                if (creator == null)
+                if (boxesByProjectIdentifier.ContainsKey(b.ProjectIdentifier))
+				{
+                    errors += "There are more boxes with project identifier " + b.ProjectIdentifier + ".\n";
+                    notLoadedBoxes.Add(b.ProjectIdentifier);
+                }
+				else if (creator == null)
                 {
                     errors += "Box with identifier " + b.CreatorIdentifier + " does not exist.\n";
                     notLoadedBoxes.Add(b.ProjectIdentifier);
@@ -625,7 +630,7 @@ namespace Ferda.ProjectManager {
 				view = new View(archive, modulesManager, null);
 
 			List<IBoxModule> usedBoxModules = new List<IBoxModule>();
-			Stack<IBoxModule> modulesToGoTrought = new Stack<IBoxModule>(boxModules);
+			Queue<IBoxModule> modulesToGoTrought = new Queue<IBoxModule>(boxModules);
 			List<Project.Box> resultBoxes = new List<Project.Box>();
 			Project resultProject = new Project();
 			
@@ -635,14 +640,14 @@ namespace Ferda.ProjectManager {
 				
 				resultBoxes.Add(SaveBoxModule(boxModule, view, modulesToGoTrought, usedBoxModules));
 				usedBoxModules.Add(boxModule);
-				modulesToGoTrought.Pop();
+				modulesToGoTrought.Dequeue();
 			}
 			resultProject.Boxes = resultBoxes.ToArray();
 			resultProject.Views = new Project.View[0];
 			return resultProject;
 		}
 		
-		private Project.Box SaveBoxModule(IBoxModule box, View view, Stack<IBoxModule> modulesToGoTrought, List<IBoxModule> usedBoxModules)
+		private Project.Box SaveBoxModule(IBoxModule box, View view, Queue<IBoxModule> modulesToGoTrought, List<IBoxModule> usedBoxModules)
 		{
 			Project.Box b = new Project.Box();
 			b.ProjectIdentifier = box.ProjectIdentifier;
@@ -671,7 +676,7 @@ namespace Ferda.ProjectManager {
 						}
 						else
 						{
-							modulesToGoTrought.Push(otherBox);
+							modulesToGoTrought.Enqueue(otherBox);
 						}
 					}
 

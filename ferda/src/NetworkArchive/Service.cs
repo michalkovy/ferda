@@ -1,8 +1,8 @@
 // Project.cs - Definition of class for project serialization
 //
-// Author: Michal Kováè <michal.kovac.develop@centrum.cz>
+// Author: Michal Kovï¿½ï¿½ <michal.kovac.develop@centrum.cz>
 //
-// Copyright (c) 2005 Michal Kováè 
+// Copyright (c) 2005 Michal Kovï¿½ï¿½
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -46,12 +46,13 @@ namespace Ferda.NetworkArchive
                 new ObjectFactoryForBox();
             ObjectFactoryForBox.addFactoryToCommunicator(
                 communicator, factory);
+			
+			ArchiveI archive = new ArchiveI();
+            _adapter.add(archive, Util.stringToIdentity("Ferda.NetworkArchive.Archive"));
+			
             Debug.WriteLine("Activating adapter...");
             _adapter.activate();
-
-            ArchiveI archive = new ArchiveI();
-            _adapter.add(archive, Util.stringToIdentity("Ferda.NetworkArchive.Archive"));
-            
+			
             Debug.WriteLine("NetworkArchive service has started");
         }
 
