@@ -26,6 +26,7 @@ using Ferda.ModulesManager;
 using System.Diagnostics;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace Ferda.ProjectManager
 {
@@ -157,7 +158,7 @@ namespace Ferda.ProjectManager
 		}
 		
 		/// <summary>
-		/// Will try to create sample project, save it and load it
+		/// Will try to do many things with network archive
 		/// </summary>
 		[Test]
 		public void Test_NetworkArchive()
@@ -178,13 +179,26 @@ namespace Ferda.ProjectManager
 			
 			Ferda.ProjectManager.NetworkArchive networkArchive = projectManager.NetworkArchive;
 			
+			StringCollection labels = new StringCollection();
+			labels.AddRange(networkArchive.Labels);
+			if (labels.Contains("Test Box Database"))
+				networkArchive.RemoveBox("Test Box Database");
+			
+			if (labels.Contains("Test Box Datatable"))
+				networkArchive.RemoveBox("Test Box Datatable");
+			
+			labels = new StringCollection();
+			labels.AddRange(networkArchive.Labels);
+			Assert.IsFalse(labels.Contains("Test Box Database") || labels.Contains("Test Box Datatable"),
+						  "PM100.1: Labels in network archive still contains testing boxes");
+			
 			try
 			{
 				networkArchive.AddBox(bDatabase, "Test Box Database");
 			}
 			catch (Exception e)
 			{
-				Assert.Fail("PM10: Could not add Database box to archive: {0}", e.ToString());
+				Assert.Fail("PM100: Could not add Database box to archive: {0}", e.ToString());
 			}
 			
 			try
@@ -193,17 +207,18 @@ namespace Ferda.ProjectManager
 			}
 			catch (Exception e)
 			{
-				Assert.Fail("PM11: Could not add DataTable box to archive: {0}", e.ToString());
+				Assert.Fail("PM101: Could not add DataTable box to archive: {0}", e.ToString());
 			}
 			
-			Assert.AreEqual(networkArchive.Labels,
-							new string[]{"Test Box Database", "Test Box Datatable"},
-							"PM12: Labels in network archive are incorrect");
+			labels = new StringCollection();
+			labels.AddRange(networkArchive.Labels);
+			Assert.IsTrue(labels.Contains("Test Box Database") && labels.Contains("Test Box Datatable"),
+						  "PM102: Labels in network archive does not contains added boxes");
 			
 			Assert.AreSame(
 				networkArchive.GetBoxModuleFactoryCreatorOfBox("Test Box Datatable"),
 				b.MadeInCreator,
-				"PM13: Creator of old box is not same as new one"
+				"PM103: Creator of old box is not same as new one"
 			);
 			
 			string errors = null;
@@ -213,11 +228,11 @@ namespace Ferda.ProjectManager
 			}
 			catch (Exception e)
 			{
-				Assert.Fail("PM14: Could not load DataBase box from archive to project: {0}", e.ToString());
+				Assert.Fail("PM104: Could not load DataBase box from archive to project: {0}", e.ToString());
 			}
 			
 			Assert.IsTrue(String.IsNullOrEmpty(errors),
-						  "PM15: There are errors when loading stored database box: {0}",
+						  "PM105: There are errors when loading stored database box: {0}",
 						  errors);
 			
 			IBoxModule newB = null;
@@ -227,14 +242,47 @@ namespace Ferda.ProjectManager
 			}
 			catch (Exception e)
 			{
-				Assert.Fail("PM16: Could not load Datatable box from archive to project: {0}", e.ToString());
+				Assert.Fail("PM106: Could not load Datatable box from archive to project: {0}", e.ToString());
 			}
 			
 			Assert.IsTrue(String.IsNullOrEmpty(errors),
-						  "PM17: There are errors when loading stored datatable box: {0}",
+						  "PM107: There are errors when loading stored datatable box: {0}",
 						  errors);
 			
-			Assert.AreSame(newB.MadeInCreator, b.MadeInCreator, "PM18");
+			Assert.AreSame(newB.MadeInCreator, b.MadeInCreator, "PM108");
+			Assert.AreEqual(newB.UserName, b.UserName, "PM109");
+			Assert.AreEqual(newB.ConnectionsFrom().Count, b.ConnectionsFrom().Count, "PM110");
+			Assert.AreEqual(newB.ConnectionsFrom()[0].MadeInCreator, b.ConnectionsFrom()[0].MadeInCreator, "PM111");
+			
+			try
+			{
+				networkArchive.RemoveBox("Test Box Database");
+			}
+			catch (Exception e)
+			{
+				Assert.Fail("PM121: Could not add Database box to archive: {0}", e.ToString());
+			}
+			
+			try
+			{
+				networkArchive.RemoveBox("Test Box Datatable");
+			}
+			catch (Exception e)
+			{
+				Assert.Fail("PM122: Could not add DataTable box to archive: {0}", e.ToString());
+			}
+			
+			//a little bit problematic connection - only for test
+			/*Ferda.ModulesManager.IBoxModuleFactoryCreator creatorString =
+				modulesManager.GetBoxModuleFactoryCreator("StringT");
+			Ferda.ModulesManager.IBoxModule bString = creatorString.CreateBoxModule();
+			
+			Assert.IsNotNull(bString, "PM123");
+			
+			bString.SetConnection("value", bString);
+			
+			networkArchive.AddBox(bString, "Test String Box");*/
+			
 		}
 	}
 }

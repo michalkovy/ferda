@@ -1,4 +1,4 @@
-﻿// please change this line
+﻿// ObjectFactoryForBox.cs
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -23,15 +23,15 @@ using System;
 namespace Ferda.NetworkArchive
 {
 	/// <summary>
-	/// Description of ObjectFactoryForBox.
+	/// Object factory for network archive box
 	/// </summary>
 	public class ObjectFactoryForBox : Ice.LocalObjectImpl, Ice.ObjectFactory
 	{
 		/// <summary>
-		/// Method create
+		/// Creates network archive box
 		/// </summary>
-		/// <returns>An Ice.Object</returns>
-		/// <param name="type">A  string</param>
+		/// <returns>An Ice.Object representing network archive box</returns>
+		/// <param name="type">A  string with type</param>
 		public Ice.Object create(string type)
 		{
 			switch(type)
@@ -44,20 +44,25 @@ namespace Ferda.NetworkArchive
 		}
 		
 		/// <summary>
-		/// Method destroy
+		/// Destroys objct factory
 		/// </summary>
 		public void destroy()
 		{
 			// Nothing to do
 		}
 
+		/// <summary>
+		/// Adds factory to ice comunicator
+		/// </summary>
+		/// <param name="communicator">An Ice.Communicator</param>
+		/// <param name="factory">An ObjectFactoryForBox</param>
 		public static void addFactoryToCommunicator(Ice.Communicator communicator,
 				ObjectFactoryForBox factory)
 		{
             lock (communicator)
             {
                 if(communicator.findObjectFactory("::Ferda::NetworkArchive::Box")==null)
-                    communicator.addObjectFactory(factory, "::Ferda::NetworkArchive::Box"); 
+                    communicator.addObjectFactory(factory, "::Ferda::NetworkArchive::Box");
             }
 		}
 	}

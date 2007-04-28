@@ -8,11 +8,13 @@
 			</nowarn>
 			<sources>
 				<include name="*.cs"/>
+				<exclude name="Project.cs"/>
 			</sources>
 			<references>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
-				<include name="${path::combine(build.dir,'FerdaNetworkArchive.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaNetworkArchiveBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaProjectBase.dll')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 				<include name="${path::combine(lib.dir,'icegridcs.dll')}"/>
 				<include name="${path::combine(lib.dir,'glacier2cs.dll')}"/>
@@ -20,6 +22,22 @@
 				<include name="System.Data.dll"/>
 				<include name="System.Drawing.dll"/>
 				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+	</target>
+	<target name="build.ProjectBase" description="Build Project Base">
+		<csc target="library" output="${path::combine(build.dir,'FerdaProjectBase.dll')}" doc="${path::combine(build.dir,'FerdaProjectBase.xml')}" debug="${debug}" optimize="${optimize}">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="Project.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll"/>
 			</references>
 		</csc>
 	</target>

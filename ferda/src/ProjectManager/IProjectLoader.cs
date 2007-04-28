@@ -1,4 +1,4 @@
-﻿// IProjectLoader.cs
+﻿// IProjectLoader.cs - interface for loading and saving project
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -22,9 +22,30 @@ using System;
 
 namespace Ferda.ProjectManager
 {
+	/// <summary>
+	/// Interface for saving and loading of project
+	/// </summary>
 	public interface IProjectLoader
 	{
+		/// <summary>
+		/// Imports project to allready opened one
+		/// </summary>
+		/// <returns>A string representing errors of import</returns>
+		/// <param name="p">A  Ferda.ProjectManager.Project representing project which have to be imported</param>
+		/// <param name="mainProjectBox">A  Project.Box representing some box in project,
+		/// this method will return in <paramref name="mainIBoxModule"/> new IBoxModule
+		/// representation of this box</param>
+		/// <param name="mainIBoxModule">New Ferda.ModulesManager.IBoxModule representation
+		/// of <paramref name="mainProjectBox"/></param>
 		string ImportProject(Ferda.ProjectManager.Project p, Project.Box mainProjectBox, out Ferda.ModulesManager.IBoxModule mainIBoxModule);
+		
+		/// <summary>
+		/// Saves box modules to project
+		/// </summary>
+		/// <returns>A Project with boxes from <paramref name="boxModules"/> or which are connected
+		/// to these and not included in view <paramref name="view"/></returns>
+		/// <param name="boxModules">A  Ferda.ModulesManager.IBoxModule[]</param>
+		/// <param name="view">A  View</param>
 		Project SaveBoxModulesToProject(Ferda.ModulesManager.IBoxModule[] boxModules, View view);
 	}
 }

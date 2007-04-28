@@ -1,4 +1,4 @@
-﻿// please change this line
+﻿// NetworkArchive.cs - project manager side of Network Archive
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -29,36 +29,73 @@ namespace Ferda.ProjectManager
 	/// </summary>
 	public class NetworkArchive
 	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="modulesManager">A Ferda.ModulesManager.ModulesManager</param>
+		/// <param name="projectLoader">A Ferda.ProjectManager.IProjectLoader</param>
 		public NetworkArchive(Ferda.ModulesManager.ModulesManager modulesManager, Ferda.ProjectManager.IProjectLoader projectLoader)
 		{
 			this.archive = modulesManager.Helper.NetworkArchive;
 			this.projectLoader = projectLoader;
 		}
 		
+		/// <summary>
+		/// Adds connection of IBoxModules to network archive. It is representation of
+		/// function. We simply call it Box, even if it is more IBoxModules connected together.
+		/// In network archive will be stored <paramref name="boxModule"/> with all boxes connected
+		/// to them.
+		/// </summary>
+		/// <param name="boxModule">Main IBoxModule</param>
+		/// <param name="label">A string which represents label of </param>
 		public void AddBox(IBoxModule boxModule, string label)
 		{
 			archive.AddBox(createBoxFromBoxModule(boxModule), label);
 		}
 		
+		/// <summary>
+		/// Removes connection of boxes from network archive
+		/// </summary>
+		/// <param name="label">A string representing name of connection</param>
 		public void RemoveBox(string label)
 		{
 			archive.RemoveBox(label);
 		}
 		
+		/// <summary>
+		/// Creates a copy of connection stored in network archive to actual project
+		/// (standard archive)
+		/// </summary>
+		/// <returns>An IBoxModule representing main box module added which is copied to
+		/// actual project</returns>
+		/// <param name="label">A string representing name of the connection</param>
+		/// <param name="errors">A string representing errors from project loading,
+		/// these errors aro not exception. If you store some connection in old version
+		/// of Ferda and open it in new, it is possible that for example not all IBoxModuleFactoryCreators
+		/// will still exist and that boxes will still have the same properties.</param>
 		public IBoxModule GetBoxToProject(string label, out string errors)
 		{
 			Project.Box mainProjectBox;
 			Ferda.ModulesManager.IBoxModule mainIBoxModule;
-			Project project = createProjectFromBox(archive.GetBox(label), out mainProjectBox);
+			Project project = Ferda.NetworkArchive.ProjectConverter.CreateProjectFromBox(archive.GetBox(label), out mainProjectBox);
 			errors = projectLoader.ImportProject(project, mainProjectBox, out mainIBoxModule);
 			return mainIBoxModule;
 		}
 		
+		/// <summary>
+		/// Gets IBoxModuleFactioryCreator of main box in stored connection. This
+		/// method is usefull for displaying type of box in FrontEnd
+		/// </summary>
+		/// <returns>An IBoxModuleFactoryCreator of main box module</returns>
+		/// <param name="label">A string representing user name of stored connection</param>
 		public IBoxModuleFactoryCreator GetBoxModuleFactoryCreatorOfBox(string label)
 		{
 			return archive.GetBoxModeleFactoryCreatorOfBox(label);
 		}
 		
+		/// <summary>
+		/// User names of stored boxes with connections in archive
+		/// </summary>
 		public string[] Labels
 		{
 			get
@@ -70,106 +107,14 @@ namespace Ferda.ProjectManager
 		private Ferda.NetworkArchive.Box createBoxFromBoxModule(IBoxModule boxModule)
 		{
 			Project project = projectLoader.SaveBoxModulesToProject(new IBoxModule[]{boxModule}, null);
-			return createBoxFromProject(project);
-		}
-		
-		private Project createProjectFromBox(Ferda.NetworkArchive.Box box, out Project.Box mainProjectBox)
-		{
-			Dictionary<Ferda.NetworkArchive.Box, int> projectIdentifiers =
-				new Dictionary<Ferda.NetworkArchive.Box, int>();
-			List<Ferda.NetworkArchive.Box> undoneBoxes =
-				new List<Ferda.NetworkArchive.Box>(new Ferda.NetworkArchive.Box[]{box});
-			int lastProjectIdentifier =  1;
-						
-			projectIdentifiers.Add(box, lastProjectIdentifier);
-			
-			List<Project.Box> projectBoxes = new List<Project.Box>();
-			
-			mainProjectBox = addBoxToProjectBoxes(box, projectBoxes, projectIdentifiers, undoneBoxes, ref lastProjectIdentifier);
-			
-			while(undoneBoxes.Count > 0)
+			if(project.Boxes.Length > 0)
 			{
-				addBoxToProjectBoxes(undoneBoxes[0], projectBoxes, projectIdentifiers, undoneBoxes, ref lastProjectIdentifier);
+				return Ferda.NetworkArchive.ProjectConverter.CreateBoxFromProject(project, project.Boxes[0].ProjectIdentifier);
 			}
-			
-			Project project = new Project();
-			project.Boxes = projectBoxes.ToArray();
-			project.Views = new Project.View[0];
-			
-			return project;
-		}
-		
-		private static Project.Box addBoxToProjectBoxes(Ferda.NetworkArchive.Box box, List<Project.Box> projectBoxes, Dictionary<Ferda.NetworkArchive.Box, int> projectIdentifiers, List<Ferda.NetworkArchive.Box> undoneBoxes, ref int lastProjectIdentifier)
-		{
-			Project.Box projectBox = new Project.Box();
-			projectBox.CreatorIdentifier = box.creatorIdentifier;
-			projectBox.UserHint = box.userHint;
-			projectBox.UserName = box.userName;
-			projectBox.Connections = new Project.Box.Connection[box.Connections.Length];
-			projectBox.ProjectIdentifier = projectIdentifiers[box];
-			for(int i = 0; i < box.Connections.Length; i++)
+			else
 			{
-				projectBox.Connections[i].SocketName = box.Connections[i].socketName;
-				if(!projectIdentifiers.TryGetValue(box.Connections[i].boxValue, out projectBox.Connections[i].BoxProjectIdentifier))
-				{
-					++lastProjectIdentifier;
-					projectBox.Connections[i].BoxProjectIdentifier = lastProjectIdentifier;
-					projectIdentifiers.Add(box.Connections[i].boxValue, lastProjectIdentifier);
-					undoneBoxes.Add(box.Connections[i].boxValue);
-				}
-			}
-			projectBox.PropertySets = new Project.Box.PropertySet[box.PropertySets.Length];
-			for(int i = 0; i < box.PropertySets.Length; i++)
-			{
-				projectBox.PropertySets[i].PropertyName = box.PropertySets[i].propertyName;
-				projectBox.PropertySets[i].Value =  ((Ferda.Modules.IValue)box.PropertySets[i].value).getValueT();
-			}
-			projectBoxes.Add(projectBox);
-			undoneBoxes.Remove(box);
-			return projectBox;
-		}
-		
-		private static Ferda.NetworkArchive.Box createBoxFromProject(Project project)
-		{
-			if((project == null) || (project.Boxes.Length == 0))
 				return null;
-			
-			Dictionary<int,Ferda.NetworkArchive.Box> identiferToBoxMap = new Dictionary<int,Ferda.NetworkArchive.Box>();
-			foreach(Project.Box box in project.Boxes)
-			{
-				identiferToBoxMap.Add(box.ProjectIdentifier,
-									  new Ferda.NetworkArchive.Box(
-										  box.CreatorIdentifier,
-										  box.UserName,
-										  box.UserHint,
-										  null,
-										  null));
 			}
-			foreach(Project.Box box in project.Boxes)
-			{
-				List<Ferda.NetworkArchive.Connection> boxConnections =
-					new List<Ferda.NetworkArchive.Connection>();
-				Ferda.NetworkArchive.Box networkBox = identiferToBoxMap[box.ProjectIdentifier];
-				
-				foreach(Project.Box.Connection projectConnection in box.Connections)
-				{
-					Ferda.NetworkArchive.Connection boxConnection =
-						new Ferda.NetworkArchive.Connection(
-							projectConnection.SocketName,
-							identiferToBoxMap[projectConnection.BoxProjectIdentifier]);
-					boxConnections.Add(boxConnection);
-				}
-				networkBox.Connections = boxConnections.ToArray();
-				
-				List<PropertySetting> propertySettings = new List<PropertySetting>((box.PropertySets == null) ? 0 : box.PropertySets.Length);
-				foreach(Project.Box.PropertySet s in box.PropertySets)
-				{
-					PropertySetting propertySetting = new PropertySetting(s.PropertyName, (s.Value == null) ? null : s.Value.GetPropertyValue());
-					propertySettings.Add(propertySetting);
-				}
-				networkBox.PropertySets = propertySettings.ToArray();
-			}
-			return identiferToBoxMap[project.Boxes[0].ProjectIdentifier];
 		}
 		
 		private Ferda.ModulesManager.NetworkArchive archive;
