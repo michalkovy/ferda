@@ -408,6 +408,12 @@ namespace Ferda.ProjectManager {
         	return ImportProject(stream);
         }
         
+		/// <summary>
+		/// Import Project from a stream
+		/// </summary>
+		/// <param name="stream">A System.IO.Stream representing stream with XML
+        /// file with project information</param>
+        /// <returns>A string that contains loading errors</returns>
         public string ImportProject(System.IO.Stream stream)
         {
         	XmlSerializer s = new XmlSerializer( typeof( Project ) );
@@ -821,6 +827,9 @@ namespace Ferda.ProjectManager {
             }
         }
         
+		/// <summary>
+		/// Network archive
+		/// </summary>
         public Ferda.ProjectManager.NetworkArchive NetworkArchive
         {
         	get {

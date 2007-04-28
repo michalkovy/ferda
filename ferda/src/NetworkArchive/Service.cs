@@ -1,8 +1,8 @@
-// Project.cs - Definition of class for project serialization
+// Service.cs - IceBox service with network archive
 //
-// Author: Michal Kov�� <michal.kovac.develop@centrum.cz>
+// Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
-// Copyright (c) 2005 Michal Kov��
+// Copyright (c) 2005 Michal Kováč
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -46,8 +46,12 @@ namespace Ferda.NetworkArchive
                 new ObjectFactoryForBox();
             ObjectFactoryForBox.addFactoryToCommunicator(
                 communicator, factory);
+			Ferda.Modules.ObjectFactoryForPropertyTypes factoryPropertyTypes =
+				new Ferda.Modules.ObjectFactoryForPropertyTypes();
+			Ferda.Modules.ObjectFactoryForPropertyTypes.addFactoryToCommunicator(
+				communicator, factoryPropertyTypes);
 			
-			ArchiveI archive = new ArchiveI();
+			ArchiveI archive = ArchiveI.Instance;
             _adapter.add(archive, Util.stringToIdentity("Ferda.NetworkArchive.Archive"));
 			
             Debug.WriteLine("Activating adapter...");

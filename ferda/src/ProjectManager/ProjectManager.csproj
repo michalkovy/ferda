@@ -35,9 +35,11 @@
             <SpecificVersion>False</SpecificVersion>
             <HintPath>..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
         </Reference>
-        <Reference Include="FerdaNetworkArchive">
-            <HintPath>..\..\bin\Server\FerdaNetworkArchive.dll</HintPath>
-            <SpecificVersion>False</SpecificVersion>
+        <Reference Include="FerdaNetworkArchiveBase, Version=0.0.0.0, Culture=neutral">
+            <HintPath>..\..\bin\FrontEnd\FerdaNetworkArchiveBase.dll</HintPath>
+        </Reference>
+        <Reference Include="FerdaProjectBase, Version=0.0.0.0, Culture=neutral">
+            <HintPath>..\..\bin\Server\FerdaProjectBase.dll</HintPath>
         </Reference>
         <Reference Include="glacier2cs">
             <HintPath>..\..\lib\glacier2cs.dll</HintPath>
@@ -61,7 +63,6 @@
         <Compile Include="Connection.cs"/>
         <Compile Include="IProjectLoader.cs"/>
         <Compile Include="NetworkArchive.cs"/>
-        <Compile Include="Project.cs"/>
         <Compile Include="ProjectManager.cs"/>
         <Compile Include="ProjectManagerOptions.cs"/>
         <Compile Include="View.cs"/>

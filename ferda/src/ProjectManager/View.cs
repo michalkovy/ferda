@@ -2,7 +2,7 @@
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
-// Copyright (c) 2005 Michal Kováč 
+// Copyright (c) 2005 Michal Kováč
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -454,7 +454,7 @@ namespace Ferda {
             /// <param name="box">An <see cref="T:Ferda.ModulesManager.IBoxModule"/>
             /// representing box from view which sockets have to be packed</param>
             /// <param name="firstUse">If this method was called first time or in recursive propagation</param>
-            /// <seealso cref="M:Ferda.ProjectManager.View.PackSocket(Ferda.ModulesManager.IBoxModule,System.Boolean)"/>
+            /// <seealso cref="M:Ferda.ProjectManager.View.PackSocket(Ferda.ModulesManager.IBoxModule,System.String,System.Boolean)"/>
             /// <seealso cref="M:Ferda.ProjectManager.View.PackAllSockets(Ferda.ModulesManager.IBoxModule)"/>
             /// <seealso cref="M:Ferda.ProjectManager.View.PackSocket(Ferda.ModulesManager.IBoxModule,System.String)"/>
 			private void PackAllSockets(IBoxModule box, bool firstUse)
@@ -635,8 +635,8 @@ namespace Ferda {
                 {
                     foreach (IBoxModule otherBox in box.ConnectionsFrom())
                     {
-                        if (this.ContainsBox(otherBox) && 
-                            !oldBoxes.Contains(otherBox) && 
+                        if (this.ContainsBox(otherBox) &&
+                            !oldBoxes.Contains(otherBox) &&
                             !result.Contains(otherBox))
                         {
                             result.Add(otherBox);
@@ -700,7 +700,7 @@ namespace Ferda {
             /// <summary>
             /// Counts position of boxes in easier representation of positions (topology)
             /// of boxes.
-            /// This representation is made by two integers whith meens on which place 
+            /// This representation is made by two integers whith meens on which place
             /// is box from left an on whitch place from top.
             /// </summary>
             /// <remarks>
@@ -718,7 +718,7 @@ namespace Ferda {
                 IBoxModule[] boxesInView = this.Boxes;
                 if (boxesInView.Length == 0) return new Dictionary<IBoxModule, int>();
 
-                // Creating connections from relation in view from which 
+                // Creating connections from relation in view from which
                 // we will later remove (like topology sort algorithm)
                 Dictionary<IBoxModule, List<IBoxModule>> connectionsFrom = new Dictionary<IBoxModule, List<IBoxModule>>();
                 foreach (IBoxModule box in boxesInView)

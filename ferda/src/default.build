@@ -1,14 +1,26 @@
 <?xml version="1.0"?>
 <project name="Ferda sources" default="build" basedir=".">
 	<description>project Ferda sources</description>
-	<target name="build" description="Build sources" depends="FerdaBaseBuild,NetworkArchiveBuild,ProjectManagerBuild,ModulesManagerBuild,ModulesBuild,FrontEndBuild,UtilsBuild"/> <!-- ,FrontEndBuild -->
+	<target name="build" description="Build sources" depends="FerdaBaseBuild,ProjectBaseBuild,NetworkArchiveBuild,NetworkArchiveBaseBuild,ProjectManagerBuild,ModulesManagerBuild,ModulesBuild,FrontEndBuild,UtilsBuild"/> <!-- ,FrontEndBuild -->
 	<target name="clean" description="Clean builds" depends="FerdaBaseClean,NetworkArchiveClean,ProjectManagerClean,ModulesManagerClean,ModulesClean,FrontEndClean,UtilsClean"/>
-	<target name="ProjectManagerBuild" depends="ModulesManagerBuild,FerdaBaseBuild">
+	<target name="ProjectManagerBuild" depends="ModulesManagerBuild,FerdaBaseBuild,ProjectBaseBuild,NetworkArchiveBaseBuild">
 		<nant buildfile="ProjectManager/default.build" target="build">
 			<properties>
 				<property name="build.dir" value="${frontendbin.dir}"/>
 			</properties>
 		</nant>
+	</target>
+	<target name="ProjectBaseBuild">
+		<nant buildfile="ProjectManager/default.build" target="build.ProjectBase">
+			<properties>
+				<property name="build.dir" value="${serverbin.dir}"/>
+			</properties>
+		</nant>
+		<copy todir="${frontendbin.dir}">
+			<fileset basedir="${serverbin.dir}">
+				<include name="FerdaProjectBase.*"/>
+			</fileset>
+		</copy>
 	</target>
 	<target name="FrontEndBuild">
 		<if test="${framework::get-target-framework()!='mono-2.0'}">
@@ -35,7 +47,7 @@
 			</properties>
 		</nant>
 	</target>
-	<target name="ModulesManagerBuild" depends="FerdaBaseBuild,ModulesBuild,NetworkArchiveBuild">
+	<target name="ModulesManagerBuild" depends="FerdaBaseBuild,ModulesBuild,NetworkArchiveBaseBuild">
 		<nant buildfile="ModulesManager/default.build" target="build">
 			<properties>
 				<property name="build.dir" value="${frontendbin.dir}"/>
@@ -49,15 +61,22 @@
 			</properties>
 		</nant>
 	</target>
-	<target name="NetworkArchiveBuild" depends="FerdaBaseBuild">
+	<target name="NetworkArchiveBuild" depends="NetworkArchiveBaseBuild">
 		<nant buildfile="NetworkArchive/default.build" target="build">
+			<properties>
+				<property name="build.dir" value="${serverbin.dir}"/>
+			</properties>
+		</nant>
+	</target>
+	<target name="NetworkArchiveBaseBuild" depends="FerdaBaseBuild,ProjectBaseBuild">
+		<nant buildfile="NetworkArchive/default.build" target="build.NetworkArchiveBase">
 			<properties>
 				<property name="build.dir" value="${serverbin.dir}"/>
 			</properties>
 		</nant>
 		<copy todir="${frontendbin.dir}">
 			<fileset basedir="${serverbin.dir}">
-				<include name="FerdaNetworkArchive.*"/>
+				<include name="FerdaNetworkArchiveBase.*"/>
 			</fileset>
 		</copy>
 	</target>

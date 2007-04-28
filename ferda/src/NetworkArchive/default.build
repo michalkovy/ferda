@@ -8,10 +8,32 @@
 			</nowarn>
 			<sources>
 				<include name="*.cs"/>
+				<exclude name="ProjectConverter.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaNetworkArchiveBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaProjectBase.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+	</target>
+	<target name="build.NetworkArchiveBase" description="Build Network Archive Base">
+		<csc target="library" output="${path::combine(build.dir,'FerdaNetworkArchiveBase.dll')}" doc="${path::combine(build.dir,'FerdaNetworArchiveBase.xml')}" debug="${debug}" optimize="${optimize}">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="ProjectConverter.cs"/>
 				<include name="generated/*.cs"/>
 			</sources>
 			<references>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaProjectBase.dll')}"/>
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
 				<include name="System.dll"/>

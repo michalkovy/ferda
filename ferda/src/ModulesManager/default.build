@@ -11,7 +11,7 @@
 			</sources>
 			<references>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
-				<include name="${path::combine(build.dir,'FerdaNetworkArchive.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaNetworkArchiveBase.dll')}"/>
 				<!--  <include name="${path::combine(build.dir,'FerdaModules.exe')}"/> -->
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 				<include name="${path::combine(lib.dir,'icegridcs.dll')}"/>
