@@ -136,7 +136,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         {
             get
             {
-                return GetAttribute(false).Count;
+                return (GetAttribute(false) == null) ? 0 : GetAttribute(false).Count;   
             }
         }
 
