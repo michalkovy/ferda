@@ -83,7 +83,8 @@ Section \ref{section:experiments} describes conducted experiments. Section
 \subsection{The GUHA method}
 \label{section:guha}
 GUHA method is one of the first methods of exploratory data analysis, developed in 
-the mid-sixties in Prague. The method has firm theoretical foundations based on 
+the mid-sixties in Prague. It is a general mainframe for retrieving interesting
+knowledge from data. The method has firm theoretical foundations based on 
 observational calculi and statistics \cite{GUHA1}, \cite{GUHA2}. For purpose of 
 this paper let us explain only the basic principles of the method, as shown in 
 Figure \ref{fig:GUHA}.
@@ -95,10 +96,9 @@ Figure \ref{fig:GUHA}.
 \label{fig:GUHA}
 \end{figure}
 
-GUHA method is realized by GUHA procedures, located in the middle of the figure\footnote{
-Even though we present only one GUHA procedure in this work, there are five more 
-procedures working above one data table implemented in Ferda and also two relational
-procedures under development.}. Inputs of the procedure are data and a simple definition
+GUHA method is realized by GUHA procedures such as 4FT procedure to be described, 
+located in the middle of the figure\footnote{Even though we present only one GUHA procedure in this work, there are five more 
+procedures working above one data table implemented in Ferda and also two relational procedures under development.}. Inputs of the procedure are data and a simple definition
 of a possibly large set of relevant patterns, which will be discussed in detail
 in the following section \ref{section:patterns}. The procedure automatically generates
 all the relevant patterns and verifies them against the provided data. Patterns that
@@ -213,16 +213,17 @@ quantifiers can be found.
 The founded implication is basic quantifier for the 4FT procedure introduced in
 \cite{GUHA1} and is defined by following condition:
 
-\begin{center}
-	$\frac{a}{a+b+c+d}\geq Base \wedge \frac{a}{a+b} \geq p$
-\end{center}
+$$a \leq Base \wedge \frac{a}{a+b} \geq p$$
 
-Here \emph{Base} and \emph{p} are threshold parameters of the procedure. As can
-be seen, the \emph{Base} parameter corresponds to the \emph{support} and \emph{p} 
-to the \emph{confidence} parameters 
+Here \emph{Base} and \emph{p} are threshold parameters of the procedure. The
+\emph{Base} parameter represents absolute number of objects that satisfies 
+$\varphi$. In our work we will use relative \emph{Base} representation, 
+$\frac{a}{a+b+c+d}$. So, the \emph{Base} parameter corresponds to the 
+\emph{support} and \emph{p} to the \emph{confidence} parameters 
 of classical association mining. When using the 4FT procedure with \emph{founded
 implication quantifier} and constructing \emph{Boolean attributes} only with
-conjunctions, we get the same results as if using classical association mining.\\
+conjunctions, we get the same results as if using classical association mining.
+Quantifier can be verbally interpreted with the expression \emph{tendency to}.\\
 \\
 \textbf{Example 2}\\
 Association rule \emph{Patients that drink 12 degree beer tend be overweight} 
@@ -237,18 +238,19 @@ with symmetry feature. Symmetry means that when \mbox{$\varphi \approx \psi$} is
 valid, when \mbox{$\psi \approx \varphi$} should be also valid. The quantifier has 
 also threshold parameters $Base$ and $p$ and is defined by following condition:
 
-\begin{center}
-	$\frac{a}{a+b+c+d}\geq Base \wedge \frac{a}{a+b+c} \geq p$
-\end{center}
+$$a \leq Base \wedge \frac{a}{a+b+c} \geq p$$
 
+Again, we will use the relative representation of \emph{Base}, $\frac{a}{a+b+c+d}$.
 We consider \emph{double founded implication} a \emph{strict quantifier}. 
 However, we wanted to use the quantifier in our experiments to question the possibilities
-of disjunctions.\\
+of disjunctions. The most suitable verbal expression for the quantifier 
+is \emph{relation of equivalence}.\\
 \\
 \textbf{Example 3}\\
 The sign for \emph{double founded implication} quantifier is $\Leftrightarrow_{p,Base}$. The
 rule \textbf{beer12(high) $\Leftrightarrow_{p,Base}$ BMI(overweight)} with the \emph{Boolean attributes} from example 2 can be verbally interpreted as \emph{Drinking 12
-degree beer is in relation with being overweight among the patients}. 
+degree beer is in relation of equivalence with being overweight among the 
+observed patients}. 
 
 \subsection{Founded Equivalence Quantifier}
 
@@ -257,21 +259,24 @@ a stronger quantifier than \emph{founded implication} in terms of equivalence; a
 of two entities to attain the same logical values. The condition for the quantifier is
 
 \begin{center}
-	$\frac{a}{a+b+c+d}\geq Base \wedge \frac{a+d}{a+b+c+d} \geq p$
+	$a \leq Base \wedge \frac{a+d}{a+b+c+d} \geq p$
 \end{center}
 
+For \emph{founded equivalence}, we will also use the relative representation 
+of \emph{Base}, $\frac{a}{a+b+c+d}$.
 The fraction $\frac{a+d}{a+b+c+d}$ means the proportion of objects in the 
 data matrix having $\varphi$ and $\psi$ both equal to 0 or 1, to all objects.
 Similarly, $Base$ and $p$ are threshold parameters for the quantifier. As well
 as \emph{double founded implication}, the \emph{founded equivalence} is 
-considered to be a \emph{strict quantifier}.\\
+considered to be a \emph{strict quantifier}. Quantifier can be verbally 
+interpreted as \emph{equivalent occurrence}.\\
 \\
 \textbf{Example 4}\\
 The sign for the \emph{founded equivalence} quantifier is $\equiv_{p,Base}$. 
 Generalized association rule \textbf{beer12(high) $\equiv_{p,Base}$
 BMI(overweight)} can be translated to verbal form as \emph{Consumption
 of 12 degree beer and being overweight has equivalent occurrence among
-the patients}.
+the observed patients}.
 
 \section{GUHA and Ferda}
 \label{section:ferda}
@@ -284,7 +289,7 @@ information about history of GUHA method.
 
 The development of first GUHA procedure started in 1956. In modern terminology,
 it mined for association rules with given \emph{confidence} with one item as a
-succedent and one item as a consequent \cite{GUHAHistory}. The results, published
+antecedent and one item as a consequent \cite{GUHAHistory}. The results, published
 in \cite{GUHA1}, were clearly ahead of their time, long before terms like data
 mining or knowledge discovery from databases were invented. 
 
@@ -302,8 +307,8 @@ performance of the procedure.
 
 The LISp-Miner tool\footnote{See \url{http://lispminer.vse.cz}.} started in 1996
 and contributed greatly to the level of contemporary GUHA tools by implementing
-six GUHA procedures and implementing coefficients. The latter technique allowed creation of
-more general subsets of an attribute than one element subsets \cite{Alternative}
+six GUHA procedures and implementing coefficients - generation of special types
+of subsets of an attribute \cite{Alternative}.
 GUHA procedure 4ft-Miner implemented in LISp-Miner is predecessor of procedure 4FT 
 introduced in this work. 4ft-Miner does not allow construction of 
 \emph{Boolean attributes}, it constructs \emph{partial cedents} instead and until 
@@ -322,7 +327,7 @@ Ferda is the most generalized version of the original ASSOC procedure defined in
 
 \begin{figure}[ht]
 \centering
-\mbox{\resizebox{100mm}{!}{\includegraphics{Ferda.png}}}
+\mbox{\resizebox{120mm}{!}{\includegraphics{Ferda.png}}}
 \caption{Ferda environment}
 \label{fig:Ferda}
 \end{figure}
@@ -331,7 +336,8 @@ Ferda is the most generalized version of the original ASSOC procedure defined in
 \label{section:experiments}
 In order to test the possibilities of disjunctions of items, we carried
 out experiment, which consisted of testing number of analytical questions. 
-We chose the STULONG data set, introduced in section \ref{section:STULONG}. 
+We chose the STULONG
+data set, introduced in section \ref{section:STULONG}. 
 The limitations and criteria that led to 
 the experiment setup are described in sections \ref{section:limitations}
 and \ref{section:setup}. Performance is discussed in section 
@@ -341,7 +347,14 @@ results which are summarized in section \ref{section:results}.
 \subsection{STULONG Data Set}
 \label{section:STULONG}
 
-We decided to use the STULONG medical data set for our experiments\footnote{EUROMISE:
+We decided to use the STULONG medical data set for our experiments.
+The data set 
+contains data about longitudinal study of atherosclerosis risk factors. 
+There are two main reasons to choose this data set. First reason is that
+STULONG is relativelly known among KDD researchers -- it served as the examined
+data set for three ECML/PKDD Discovery challenges. There are meaningful 
+analytical questions defined on the data set to be examined, which is the
+second reason. In our experiments we wanted to answer these questions\footnote{EUROMISE:
 The STULONG Project \url{http://euromise.vse.cz/stulong}\\
 The STULONG Project is partially supported by project no.LN00B107 of the Ministry of Education
 of the Czech Republic and by grant no.2003/23 of the Internal Grant Agency of
@@ -351,29 +364,16 @@ University Hospital (head Prof. M. Aschermann, MD, SDr, FESC), under the supervi
 of Prof. F. Boud\'{i}k, MD, ScD, with collaboration of M. Tome\v{c}kov\'{a}, MD, PhD
 and Ass. Prof. J. Bultas, MD, PhD. The data were transferred to electronic form by
 the European Centre of Medical Informatics, Statistics and Epidemiology of Charles
-University and Academy of Sciences (head Prof. RNDr. J. Zv\'{a}rov\'{a}, DrSc).}.
-The data set 
-contains data about longitudinal study of atherosclerosis risk factors. 
-There are two main reasons to choose this data set. First reason is that
-STULONG is relativelly known among KDD researchers -- it served as the examined
-data set for three ECML/PKDD discovery challenges. There are meaningful 
-analytical questions defined on the data set to be examined, which is the
-second reason. In our experiments we wanted to answer these questions. 
+University and Academy of Sciences (head Prof. RNDr. J. Zv\'{a}rov\'{a}, DrSc).}. 
 
 \subsection{Limitations}
 \label{section:limitations}
 Before explaining setup of the experiments, let us note two major limitations
 of mining disjunctions in general. These limitations affect our experiments as
-well. First limitation is generation of \emph{non prime} rules, in sense of GUHA mining 
-\cite{GUHA2}.
-
-\medskip
-\textbf{Definition 3}
-\emph{Let \mbox{$\varphi \approx \psi$} be a valid 4FT association rule and
-$\varphi'$ and $\psi'$ are chosen normal forms of $\varphi$ and $\psi$.
-The rule is} \textbf{prime} \emph{if the no $\varphi''\subset\varphi'$ and
-$\psi''\subset\psi'$ exist, so that $\varphi'' \approx \psi''$ is a valid
-4FT association rule.}
+well. First limitation is generation of \emph{non prime} rules. The rule is 
+\emph{prime} when it is true in the examined data and when the rule cannot be
+derived from a more simple rule also true in the examined data. More details can
+be found in \cite{GUHA2}
 
 \medskip
 Our implementation does not guarantee generation of prime rules. Therefore
@@ -446,12 +446,14 @@ the experiment:
 \label{section:performance}
 It is shown in \cite{Alternative} that the 4FT procedure operation time
 without disjunctions is approximately linear to number of rows of the data
-matrix. The reason is that pruning based on minimal support similar to one 
-in \emph{apriori} algorithm is applied \cite{Alternative}. As was stated 
-before, we cannot apply the same pruning with disjunctions, hence the operation time
-rises with number of verifications. However, practical experience shows
-that there is no need to be concerned, because the running times are
-acceptable.
+matrix. Moreover, the bit string approach takes advantage of fast
+instructions in the processor, which makes running times acceptable
+for most tasks.
+When using disjunctions, the operation time rises due to the fact, 
+that search space is not reduced by adding conjunctions decreasing 
+\emph{support} of the rule.
+However, practical experience shows that there is no need to be concerned, 
+because the running times are acceptable.
 
 In our experiment we used a Pentium~M 1,7GHz processor with 1~GB of RAM
 and Windows XP. We noted the running times of tasks designed to answer
@@ -460,10 +462,9 @@ was 0.310 seconds, maximal running time was 2.543 seconds and average
 running time was 0.829 seconds\footnote{Performance tests between 
 the 4FT procedure implemented in Ferda and LISp-Miner can be found 
 in \cite{Kuchar}.}. When using disjunctions, minimal running time was
-0.370 seconds, maximal running time was 345,997 and average running time
+0.370 seconds, maximal running time was 345.997 and average running time
 was 38.9 seconds. In the maximum case, procedure constructed and verified
-almost 8 million contingency tables. This is an abnormally big task setting; 
-for majority of tasks, the number of verifications is between 5000 and 10000. 
+almost 8 million contingency tables.
 
 \subsection{Results}
 \label{section:results}
@@ -480,10 +481,10 @@ to reduce the amount of rules presented, we consider for simplicity only the
 analytical question 3.(b). We may limit our analysis, because all the rules
 found show similar characteristics. Possible rules answering the question
 were presented as examples throughout the article. Moreover, a rule for this analytical
-question was found during step one of the experiment.\\
-\\
-\emph{Beer7(No) $\Leftrightarrow_{p=0.986,Base=0.968}$ BMI(Normal weight, Overweight)}\\
-\\
+question was found during step one of the experiment.
+
+$$Beer7(No) \Leftrightarrow_{p=0.986,Base=0.968} BMI(Normal weight, Overweight)$$
+
 is the rule found without disjunction usage. It can be explained by the fact 
 that 7 degree beer is very rare and it was mainly used for hydration of manual workers
 in extremely hot working environment (glassmakers or metallurgists). Therefore majority
@@ -523,7 +524,10 @@ of population did not drink this type of beer.
 
 Table \ref{tab:RulesFound} shows rules found with disjunction usage. The rules were
 valid both for \emph{double founded implication} (DFI) and \emph{founded equivalence}(FE)
-quantifiers. According to high values of both quantifiers and also to the high 
+quantifiers. Numbers in these columns represent actual values of quantifiers, 
+$\frac{a}{a+b+c}$ for \emph{double founded implication}, $\frac{a+d}{a+b+c+d}$ for 
+\emph{founded equivalence} and $\frac{a}{a+b+c+d}$ for \emph{Base}.
+According to high values of both quantifiers and also to the high 
 support of the rules (the \emph{Base} parameter), we have found very strong rules
 containing disjunctions. Despite the initial concerns about interpretability of rules 
 with disjunctions, the rules can be easily interpreted and comprehended. We are aware
@@ -570,7 +574,7 @@ or dependence between quantifiers.
 \emph{Boolean attribute} was presented in the article. The attribute
 can reach values \emph{false} or \emph{true} (0 or 1). \emph{Fuzzy
 attribute} can also be defined, reaching values from the interval
-$<0,1>$. Then fuzzy \emph{4ft tables} can be constructed and fuzzy 
+$\langle0,1\rangle$. Then fuzzy \emph{4ft tables} can be constructed and fuzzy 
 quantifiers can be defined\footnote{Naturally, some of the existing
 quantifiers could not be used.}. \cite{Holena} is the inspiration
 for this direction. 
@@ -605,9 +609,10 @@ should be subjects of further research.
 
 \subsection*{Acknowledgements}
 This work was supported by the project MSM6138439910 of the
-Ministry of Education of the Czech Republic. We acknowledge the contribution
-of our research colleagues Jan Rauch and Daniel Kupka for valuable comments and
-reviews.
+Ministry of Education of the Czech Republic, project IG407056 of University
+of Economics, Prague and by the project 201/05/0325 of the Czech Science
+Foundation. We acknowledge the contribution of our research colleagues Jan Rauch 
+and Daniel Kupka for valuable comments and reviews.
 
 \begin{thebibliography}{20}
 
