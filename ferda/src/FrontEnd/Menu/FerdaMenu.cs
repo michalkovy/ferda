@@ -82,6 +82,8 @@ namespace Ferda.FrontEnd.Menu
         private ToolStripMenuItem contextHelp;
         private ToolStripMenuItem propertyGrid;
         private ToolStripMenuItem userNote;
+        private ToolStripMenuItem progressBars;
+        private ToolStripMenuItem networkArchive;
 
 		/// Group Desktop
 		private ToolStripMenuItem newDesktop;
@@ -380,13 +382,23 @@ namespace Ferda.FrontEnd.Menu
             userNote.Click += new EventHandler(userNote_Click);
             userNote.ShortcutKeys = (Keys)Shortcut.Ctrl4;
 
+            progressBars = new ToolStripMenuItem(ResManager.GetString("ProgressBarsCaption"));
+            progressBars.Click += new EventHandler(progressBars_Click);
+            progressBars.ShortcutKeys = (Keys)Shortcut.Ctrl4;
+
+            networkArchive = new ToolStripMenuItem(ResManager.GetString("NetworkArchive"));
+            networkArchive.Click += new EventHandler(networkArchive_Click);
+            networkArchive.ShortcutKeys = (Keys)Shortcut.Ctrl5;
+
             this.view.DropDownItems.AddRange(new ToolStripItem[]
                 {
                     archive,
                     contextHelp,
-                    newBoxTV,
                     propertyGrid,
-                    userNote
+                    newBoxTV,
+                    userNote,
+                    progressBars,
+                    networkArchive
                 });
         }
 
@@ -1154,14 +1166,36 @@ namespace Ferda.FrontEnd.Menu
         }
 
         /// <summary>
-        /// Event handles the View->UserNote click, displays (and docks the UserNote
-        /// control)
+        /// Event handles the View->UserNote click, displays (and docks) the UserNote
+        /// control
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event parameters</param>
         void userNote_Click(object sender, EventArgs e)
         {
             dockingManager.ShowUserNote();
+        }
+
+        /// <summary>
+        /// Event handles the View->ProgressBars click, displays (and docks) the 
+        /// ProgressBars control
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void progressBars_Click(object sender, EventArgs e)
+        {
+            dockingManager.ShowProgressBars();
+        }
+
+        /// <summary>
+        /// Event handles the View->NetworkArchive click, displays (and docks)
+        /// the NetworkArchive control
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void networkArchive_Click(object sender, EventArgs e)
+        {
+            dockingManager.ShowNetworkArchive();
         }
 
         #endregion

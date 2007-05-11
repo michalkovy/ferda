@@ -59,12 +59,15 @@ namespace Ferda
                 /// </summary>
                 void ShowUserNote();
 
-                /* I decided that this is not necessary for the application
-                ///<summary>
-                ///Shows the application's tooooooooolbar
-                ///</summary>
-			    void ShowToolBar();
-                */
+                /// <summary>
+                /// Shows the ProgressBars control
+                /// </summary>
+                void ShowProgressBars();
+
+                /// <summary>
+                /// Shows the NetworkArchive control
+                /// </summary>
+                void ShowNetworkArchive();
 		    }
         }
     }
