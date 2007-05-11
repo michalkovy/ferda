@@ -36,6 +36,15 @@
     <!--
     <revhistory>
 		<revision>
+			<revnumber>2.4</revnumber>
+			<date>2006-05-11</date>
+			<revdescription>
+				<para>
+					Added the Menu->View->Progress bars and Network Archive items
+				</para>
+			</revdescription>
+		</revision>
+		<revision>
 			<revnumber>2.3</revnumber>
 			<date>2006-01-09</date>
 			<revdescription>
@@ -280,6 +289,12 @@
             </listitem>
             <listitem>
               <para>User note</para>
+            </listitem>
+            <listitem>
+              <para>Progress bars</para>
+            </listitem>
+            <listitem>
+              <para>Network archive</para>
             </listitem>
           </itemizedlist>
         </section>

@@ -25,6 +25,15 @@
 		<titleabbrev>UzivatelskeRozhrani</titleabbrev>
     <!--
     <revhistory>
+    <revision>
+      <revnumber>4.3</revnumber>
+      <date>2007-05-11</revnumber>
+      <revdescription>
+        <para>
+          Přidání Menu->Zobrazení->Progres Bary a Síťový archiv
+        </para>
+      </revdescription>
+    </revision>
 		<revision>
 			<revnumber>4.2<revnumber>
 			<date>2007-01-09</date>
@@ -481,6 +490,16 @@
                 Uživatelská poznámka
               </para>
             </listitem>
+            <listitem>
+				<para>
+				Progress bary
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Síťový archiv
+				</para>
+			</listitem>
 					</itemizedlist>
 				</section>
 				<section>
