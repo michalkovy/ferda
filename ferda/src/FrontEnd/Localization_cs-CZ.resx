@@ -414,6 +414,9 @@
   <data name="MenuViewToolBar" xml:space="preserve">
     <value>Panel nástrojů</value>
   </data>
+  <data name="NetworkArchive" xml:space="preserve">
+    <value>Síťový archiv</value>
+  </data>
   <data name="NewBoxContentText" xml:space="preserve">
     <value>Nové krabičky</value>
   </data>

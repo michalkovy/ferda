@@ -645,6 +645,7 @@ using Ferda.ModulesManager;
 
             userNoteContent.Controls.Add(userNote);
 
+            //letting the views know about the change
             archive.UserNote = userNote;
             foreach (FerdaDesktop desktop in views)
             {
@@ -963,10 +964,7 @@ using Ferda.ModulesManager;
         ///</summary>
         public void ShowContextHelp()
         {
-            if (contextHelpContent.IsVisible)
-            {
-            }
-            else
+            if (!contextHelpContent.IsVisible)
             {
                 SetupContextHelp();
                 foreach (FerdaDesktop desktop in views)
@@ -978,6 +976,8 @@ using Ferda.ModulesManager;
                 //docking the control
                 dockingManager.AddForm(contextHelpContent);
                 AddOwnedForm(contextHelpContent);
+
+                //user note is visible
                 if (userNoteContent.IsVisible)
                 {
                     DockContainer cont = userNoteContent.HostContainer;
@@ -985,16 +985,27 @@ using Ferda.ModulesManager;
                 }
                 else
                 {
-                if (propertyGridContent.IsVisible)
-                {
-                    //docking according to the propertiesDisplayer
-                    DockContainer cont = propertyGridContent.HostContainer;
-                    cont.DockWindow(contextHelpContent, DockStyle.Bottom);
-                }
+                    //progress bars are visible
+                    if (progressBarContent.IsVisible)
+                    {
+                        DockContainer cont = progressBarContent.HostContainer;
+                        cont.DockWindow(contextHelpContent, DockStyle.Fill);
+                    }
                     else
                     {
-                        //docking to the right side as a first control
-                        dockingManager.DockWindow(contextHelpContent, DockStyle.Right);
+                        //property grid is visible
+                        if (propertyGridContent.IsVisible)
+                        {
+                            //docking according to the propertiesDisplayer
+                            DockContainer cont = propertyGridContent.HostContainer;
+                            cont.DockWindow(contextHelpContent, DockStyle.Bottom);
+                        }
+                        //nothing is visible
+                        else
+                        {
+                            //docking to the right side as a first control
+                            dockingManager.DockWindow(contextHelpContent, DockStyle.Right);
+                        }
                     }
                 }
             }
@@ -1080,13 +1091,6 @@ using Ferda.ModulesManager;
         {
             if (!userNoteContent.IsVisible)
             {
-                //letting the views know about the change
-                foreach (FerdaDesktop desktop in views)
-                {
-                    desktop.UserNote = userNote;
-                }
-                archive.UserNote = userNote;
-
                 //the nececcary docking initialization
                 SetupUserNote();
                 dockingManager.AddForm(userNoteContent);
@@ -1100,19 +1104,80 @@ using Ferda.ModulesManager;
                 }
                 else
                 {
-                    //docking to the propertry grid
-                    if (propertyGridContent.IsVisible)
+                    //docking to the progress bars control
+                    if (progressBarContent.IsVisible)
                     {
-                        DockContainer cont = propertyGridContent.HostContainer;
-                        cont.DockWindow(userNoteContent, DockStyle.Bottom);
+                        DockContainer cont = progressBarContent.HostContainer;
+                        cont.DockWindow(userNoteContent, DockStyle.Fill);
                     }
-                    else //docking to the main control
+                    else
                     {
-                        //docking to the right side as a first control
-                        dockingManager.DockWindow(userNoteContent, DockStyle.Right);
+                        //docking to the propertry grid
+                        if (propertyGridContent.IsVisible)
+                        {
+                            DockContainer cont = propertyGridContent.HostContainer;
+                            cont.DockWindow(userNoteContent, DockStyle.Bottom);
+                        }
+                        else //docking to the main control
+                        {
+                            //docking to the right side as a first control
+                            dockingManager.DockWindow(userNoteContent, DockStyle.Right);
+                        }
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Shows the ProgressBars control
+        /// </summary>
+        public void ShowProgressBars()
+        {
+            if (!progressBarContent.IsVisible)
+            {
+                //the necessary docking initialization
+                SetupProgessBar();
+                dockingManager.AddForm(progressBarContent);
+                AddOwnedForm(progressBarContent);
+
+                //user note is visible
+                if (userNoteContent.IsVisible)
+                {
+                    DockContainer cont = userNoteContent.HostContainer;
+                    cont.DockWindow(progressBarContent, DockStyle.Fill);
+                }
+                else
+                {
+                    //context help is visible
+                    if (contextHelpContent.IsVisible)
+                    {
+                        DockContainer cont = contextHelpContent.HostContainer;
+                        cont.DockWindow(progressBarContent, DockStyle.Fill);
+                    }
+                    else
+                    {
+                        //property grid is visible
+                        if (propertyGridContent.IsVisible)
+                        {
+                            //docking according to the propertiesDisplayer
+                            DockContainer cont = propertyGridContent.HostContainer;
+                            cont.DockWindow(progressBarContent, DockStyle.Bottom);
+                        }
+                        else
+                        {
+                            //docking to the right side as a first control
+                            dockingManager.DockWindow(progressBarContent, DockStyle.Right);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Shows the NetworkArchive control
+        /// </summary>
+        public void ShowNetworkArchive()
+        {
         }
 
         #endregion //Docking related functions

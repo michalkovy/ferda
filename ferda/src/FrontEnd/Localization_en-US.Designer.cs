@@ -966,6 +966,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network Archive.
+        /// </summary>
+        internal static string NetworkArchive {
+            get {
+                return ResourceManager.GetString("NetworkArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Boxes.
         /// </summary>
         internal static string NewBoxContentText {

@@ -421,6 +421,9 @@
   <data name="MenuViewToolBar" xml:space="preserve">
     <value>ToolBar</value>
   </data>
+  <data name="NetworkArchive" xml:space="preserve">
+    <value>Network Archive</value>
+  </data>
   <data name="NewBoxContentText" xml:space="preserve">
     <value>New Boxes</value>
   </data>
