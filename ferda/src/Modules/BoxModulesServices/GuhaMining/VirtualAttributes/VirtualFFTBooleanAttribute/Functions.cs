@@ -218,6 +218,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 
         #region Private methods
 
+        /*
         /// <summary>
         /// Gets column names for master datatable
         /// </summary>
@@ -242,7 +243,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                 _boxModule.StringIceIdentity
                 );
         }
-/*
+
         /// <summary>
         /// Gets column names for detail datatable
         /// </summary>
