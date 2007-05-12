@@ -151,6 +151,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
             object dummy = Func.GetSourceDataTableId();
+
+            dummy =
+                Ferda.Modules.Boxes.GuhaMining.Tasks.Common.GetBooleanAttributes(boxModule, Func);
+
+            dummy =
+                Ferda.Modules.Boxes.GuhaMining.Tasks.Common.GetQuantifierBaseFunctions(boxModule, true);
             
             DataTableFunctionsPrx _dtPrx = Func.GetMasterDataTableFunctionsPrx(true);
             string[] _primaryKeyColumns = _dtPrx.getDataTableInfo().primaryKeyColumns;
