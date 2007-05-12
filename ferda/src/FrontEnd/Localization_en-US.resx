@@ -241,6 +241,9 @@
   <data name="LoadingMenus" xml:space="preserve">
     <value>Loading menus ...</value>
   </data>
+  <data name="LoadingNetworkArchive" xml:space="preserve">
+    <value>Loading network archive...</value>
+  </data>
   <data name="LoadingNewBox" xml:space="preserve">
     <value>Loading new boxes ... </value>
   </data>

@@ -426,6 +426,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading network archive....
+        /// </summary>
+        internal static string LoadingNetworkArchive {
+            get {
+                return ResourceManager.GetString("LoadingNetworkArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading new boxes ... .
         /// </summary>
         internal static string LoadingNewBox {
