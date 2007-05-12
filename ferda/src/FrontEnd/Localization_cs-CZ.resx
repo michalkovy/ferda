@@ -234,6 +234,9 @@
   <data name="LoadingMenus" xml:space="preserve">
     <value>Inicializace menu ...</value>
   </data>
+  <data name="LoadingNetworkArchive" xml:space="preserve">
+    <value>Inicializace síťového archivu</value>
+  </data>
   <data name="LoadingNewBox" xml:space="preserve">
     <value>Inicializace nových krabiček ...</value>
   </data>

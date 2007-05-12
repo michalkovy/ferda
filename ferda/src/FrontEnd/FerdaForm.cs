@@ -80,6 +80,10 @@ using Ferda.ModulesManager;
         /// Progress bar control
         /// </summary>
         private ProgressBar.ProgressBarsManager progressBarControl;
+        /// <summary>
+        /// Network archive control
+        /// </summary>
+        private NetworkArchive.FerdaNetworkArchive networkArchive;
 
         /// <summary>
         /// All view controls
@@ -95,16 +99,26 @@ using Ferda.ModulesManager;
         private DockDotNET.DockWindow newBoxContent;
         private DockDotNET.DockWindow userNoteContent;
         private DockDotNET.DockWindow progressBarContent;
+        private DockDotNET.DockWindow networkArchiveContent;
 
         /// <summary>
         /// Project manager
         /// </summary>
         protected ProjectManager.ProjectManager projectManager;
 
+        /// <summary>
+        /// ICE configuration of the application.
+        /// </summary>
 		private static FrontEndConfig iceConfig;
 
+        /// <summary>
+        /// List of AddIn modules
+        /// </summary>
         private static List<IAddInMain> addIns = new List<IAddInMain>();
 
+        /// <summary>
+        /// Path to file, where list of recent projects is saved.
+        /// </summary>
         private static string recentProjectsPath = "recent.xml";
 
         /// <summary>
@@ -336,6 +350,8 @@ using Ferda.ModulesManager;
             prescreen.DisplayText(ResManager.GetString("LoadingUserNoteProgressBar"));
             SetupUserNote();
             SetupProgessBar();
+            prescreen.DisplayText(ResManager.GetString("LoadingNetworkArchive"));
+            SetupNetworkArchive();
             prescreen.DisplayText(ResManager.GetString("LoadingDesktop"));
             SetupDesktop();
 
@@ -492,7 +508,6 @@ using Ferda.ModulesManager;
             //Settings required by the DockDotNET library to dock anything
             archiveContent.DockType = DockContainerType.ToolWindow;
             archiveContent.Text = ResManager.GetString("ArchiveContentText");
-            archive.ResManager = this.ResManager;
             archive.PropertiesDisplayer = propertyGrid;
             archive.ContextHelpDisplayer = contextHelp;
 
@@ -692,6 +707,25 @@ using Ferda.ModulesManager;
             svgManager = new Ferda.FrontEnd.Desktop.SVGManager(c);
         }
 
+        /// <summary>
+        /// Initializes the network archive component of the application
+        /// </summary>
+        protected void SetupNetworkArchive()
+        {
+            //creating the network archive control and its content
+            networkArchive = new NetworkArchive.FerdaNetworkArchive(this);
+            networkArchiveContent = new DockWindow();
+            networkArchiveContent.Resize += new EventHandler(networkArchiveContent_Resize);
+
+            //synchronizing the sizes of the network archive and its content
+            networkArchiveContent.ClientSize = networkArchive.Size;
+
+            networkArchiveContent.DockType = DockContainerType.ToolWindow;
+            networkArchiveContent.Text = ResManager.GetString("NetworkArchive");
+
+            networkArchiveContent.Controls.Add(networkArchive);
+        }
+
         #endregion
 
         #region AddIns methods
@@ -880,9 +914,9 @@ using Ferda.ModulesManager;
             Controls.Add(dockingManager);
 
             //docking the archive
-            dockingManager.AddForm(archiveContent);
-            AddOwnedForm(archiveContent); //required process by the DockDotNET
-            dockingManager.DockWindow(archiveContent, DockStyle.Left);
+            dockingManager.AddForm(networkArchiveContent);
+            AddOwnedForm(networkArchiveContent); //required process by the DockDotNET
+            dockingManager.DockWindow(networkArchiveContent, DockStyle.Left);
 
             //docking the view
             foreach (DockWindow viewContent in viewContents)
@@ -893,12 +927,12 @@ using Ferda.ModulesManager;
             }
 
             //docking the property grid
+            DockContainer cont;
             dockingManager.AddForm(propertyGridContent);
             AddOwnedForm(propertyGridContent);
             dockingManager.DockWindow(propertyGridContent, DockStyle.Right);
 
             //docking the user note
-            DockContainer cont;
             dockingManager.AddForm(userNoteContent);
             AddOwnedForm(userNoteContent);
             cont = propertyGridContent.HostContainer;
@@ -919,10 +953,14 @@ using Ferda.ModulesManager;
             //docking the newBox
             dockingManager.AddForm(newBoxContent);
             AddOwnedForm(newBoxContent);
-            cont = archiveContent.HostContainer;
+            cont = networkArchiveContent.HostContainer;
             cont.DockWindow(newBoxContent, DockStyle.Bottom);
-            //TODO zprovoznit menu->view->progress bars, jestlize se tvori nova
-            //progressbarcontrol, musi se to oznamit i outputI (pripadne se udelat nova)
+
+            //docking the network archive
+            dockingManager.AddForm(archiveContent);
+            AddOwnedForm(archiveContent); //required process by the DockDotNET
+            cont = networkArchiveContent.HostContainer;
+            cont.DockWindow(archiveContent, DockStyle.Fill);
         }
 
         ///<summary>
@@ -947,14 +985,22 @@ using Ferda.ModulesManager;
                 //docking the archive
                 dockingManager.AddForm(archiveContent);
                 AddOwnedForm(archiveContent); //required process by the DockDotNET
-                if (newBoxContent.IsVisible)
+                if (networkArchiveContent.IsVisible)
                 {
-                    DockContainer cont = newBoxContent.HostContainer;
-                    cont.DockWindow(archiveContent, DockStyle.Top);
+                    DockContainer cont = networkArchiveContent.HostContainer;
+                    cont.DockWindow(archiveContent, DockStyle.Fill);
                 }
                 else
                 {
-                    dockingManager.DockWindow(archiveContent, DockStyle.Left);
+                    if (newBoxContent.IsVisible)
+                    {
+                        DockContainer cont = newBoxContent.HostContainer;
+                        cont.DockWindow(archiveContent, DockStyle.Top);
+                    }
+                    else
+                    {
+                        dockingManager.DockWindow(archiveContent, DockStyle.Left);
+                    }
                 }
             }
         }
@@ -1060,10 +1106,7 @@ using Ferda.ModulesManager;
         /// </summary>
         public void ShowNewBox()
         {
-            if (newBoxContent.IsVisible)
-            {
-            }
-            else
+            if (!newBoxContent.IsVisible)
             {
                 //the necessary stuff
                 SetupNewBox();
@@ -1078,8 +1121,16 @@ using Ferda.ModulesManager;
                 }
                 else
                 {
-                    //docking to the left side as a first control
-                    dockingManager.DockWindow(newBoxContent, DockStyle.Left);
+                    if (networkArchiveContent.IsVisible)
+                    {
+                        DockContainer cont = networkArchiveContent.HostContainer;
+                        cont.DockWindow(newBoxContent, DockStyle.Bottom);
+                    }
+                    else
+                    {
+                        //docking to the left side as a first control
+                        dockingManager.DockWindow(newBoxContent, DockStyle.Left);
+                    }
                 }
             }
         }
@@ -1178,6 +1229,30 @@ using Ferda.ModulesManager;
         /// </summary>
         public void ShowNetworkArchive()
         {
+            if (!networkArchiveContent.IsVisible)
+            {
+                SetupNetworkArchive();
+                dockingManager.AddForm(networkArchiveContent);
+                AddOwnedForm(networkArchiveContent);
+
+                if (archiveContent.IsVisible)
+                {
+                    DockContainer cont = archiveContent.HostContainer;
+                    cont.DockWindow(networkArchiveContent, DockStyle.Fill);
+                }
+                else
+                {
+                    if (newBoxContent.IsVisible)
+                    {
+                        DockContainer cont = newBoxContent.HostContainer;
+                        cont.DockWindow(networkArchiveContent, DockStyle.Top);
+                    }
+                    else
+                    {
+                        dockingManager.DockWindow(networkArchiveContent, DockStyle.Left);
+                    }
+                }
+            }
         }
 
         #endregion //Docking related functions
@@ -1765,6 +1840,16 @@ using Ferda.ModulesManager;
         }
 
         /// <summary>
+        /// Forces the network archive to resize, DockDotNET cannot do it
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        void networkArchiveContent_Resize(object sender, EventArgs e)
+        {
+            networkArchive.ChangeSize();
+        }
+
+        /// <summary>
         /// Forces the NewBoxTreeView control to resize
         /// </summary>
         /// <param name="sender">Sender of the event</param>
@@ -1803,7 +1888,6 @@ using Ferda.ModulesManager;
         {
             progressBarControl.ChangeSize();
         }
-
 
         /// <summary>
         /// Forces the property grid to resize

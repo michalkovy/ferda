@@ -168,6 +168,9 @@
     <Compile Include="Menu\IDockingManager.cs" />
     <Compile Include="Menu\IMenuDisplayer.cs" />
     <Compile Include="Menu\IPreferencesManager.cs" />
+    <Compile Include="NetworkArchive\FerdaNetworkArchive.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="NewBox\IBoxModuleFactoryCreatorComparer.cs" />
     <Compile Include="NewBox\NewBoxControl.cs">
       <SubType>UserControl</SubType>
@@ -224,6 +227,10 @@
     <Compile Include="Property\StringComboAddingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <EmbeddedResource Include="NetworkArchive\FerdaNetworkArchive.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FerdaNetworkArchive.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProgressBar\BoxProgressBar.resx">
       <SubType>Designer</SubType>
       <DependentUpon>BoxProgressBar.cs</DependentUpon>

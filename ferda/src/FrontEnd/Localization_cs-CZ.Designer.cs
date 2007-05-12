@@ -412,6 +412,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inicializace síťového archivu.
+        /// </summary>
+        internal static string LoadingNetworkArchive {
+            get {
+                return ResourceManager.GetString("LoadingNetworkArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inicializace nových krabiček ....
         /// </summary>
         internal static string LoadingNewBox {
