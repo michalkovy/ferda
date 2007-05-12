@@ -2575,6 +2575,20 @@
         <ReadOnly>true</ReadOnly>
       </Property>-->
     </Properties>
+    <ModulesAskingForCreationSeq>
+      <ModulesAskingForCreation>
+        <Name>ConjunctionSetting</Name>
+      </ModulesAskingForCreation>
+      <ModulesAskingForCreation>
+        <Name>DisjunctionSetting</Name>
+      </ModulesAskingForCreation>
+      <ModulesAskingForCreation>
+        <Name>Sign</Name>
+      </ModulesAskingForCreation>
+      <ModulesAskingForCreation>
+        <Name>ClassOfEquivalence</Name>
+      </ModulesAskingForCreation>
+    </ModulesAskingForCreationSeq>
   </Box>
   <Box>
     <Identifier>GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAttribute</Identifier>
@@ -2900,7 +2914,7 @@
         <ReadOnly>false</ReadOnly>
         <Default>FirstN</Default>
       </Property>
-     <!-- <Property>
+      <!-- <Property>
         <Name>TotalNumberOfRelevantQuestions</Name>
         <TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
         <Visible>true</Visible>
@@ -2919,6 +2933,20 @@
         <ReadOnly>true</ReadOnly>
       </Property>-->
     </Properties>
+    <ModulesAskingForCreationSeq>
+      <ModulesAskingForCreation>
+        <Name>ConjunctionSetting</Name>
+      </ModulesAskingForCreation>
+      <ModulesAskingForCreation>
+        <Name>DisjunctionSetting</Name>
+      </ModulesAskingForCreation>
+      <ModulesAskingForCreation>
+        <Name>Sign</Name>
+      </ModulesAskingForCreation>
+      <ModulesAskingForCreation>
+        <Name>ClassOfEquivalence</Name>
+      </ModulesAskingForCreation>
+    </ModulesAskingForCreationSeq>
   </Box>
   <Box>
     <Identifier>GuhaMining.AtomSetting</Identifier>
