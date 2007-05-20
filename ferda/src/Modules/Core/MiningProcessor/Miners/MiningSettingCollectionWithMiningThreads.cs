@@ -36,7 +36,7 @@ namespace Ferda.Guha.MiningProcessor
 			{
 				semaphore.WaitOne();
 				Type t;
-				lock(this)
+				lock (this)
 				{
 					lock (miningSetting)
 					{
@@ -45,12 +45,13 @@ namespace Ferda.Guha.MiningProcessor
 						{
 							t = miningSetting.Dequeue();
 						}
+						else
+						{
+							continue;
+						}
 					}
 				}
-				if(runThreadsLocal)
-				{
-					mine(t);
-				}
+				mine(t);
 			}
 			while(runThreadsLocal);
 		}

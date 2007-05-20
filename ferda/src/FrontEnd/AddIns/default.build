@@ -22,6 +22,9 @@
 		<if test="${framework::get-target-framework()=='mono-2.0'}">
 			<property name="defines" value="MONO"/>
 		</if>
+		<if test="${framework::get-target-framework()!='mono-2.0'}">
+			<property name="defines" value=""/>
+		</if>
 
 			<mkdir dir="${addInsBuild.dir}/Common"/>
 
