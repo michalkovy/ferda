@@ -17,8 +17,9 @@
 			</exec>
 		</if>
 		<if test="${framework::get-target-framework()!='mono-2.0'}">
+			<property name="defines" value=""/>
 			<resgen usesourcepath="true">
-				<resources prefix="Ferda.FrontEnd">
+				<resources>
 					<include name="*.resx" />
 				</resources>
 			</resgen>
