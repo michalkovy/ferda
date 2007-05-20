@@ -1,3 +1,23 @@
+// BoxInfo.cs - box functions for VirtualFFBooleanAttribute box
+//
+// Author: Alexander Kuzmin <alexander.kuzmin@gmail.com>
+//
+// Copyright (c) 2007 Alexander Kuzmin
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.Data;
@@ -8,7 +28,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 {
     internal class BoxInfo : Boxes.BoxInfo
     {
-
+        /// <summary>
+        /// Creates Functions object
+        /// </summary>
+        /// <param name="boxModule">The boxmodule</param>
+        /// <param name="iceObject">The ice object</param>
+        /// <param name="functions">Functions</param>
         public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
         {
             Functions result = new Functions();
@@ -16,11 +41,21 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             functions = result;
         }
 
+        /// <summary>
+        /// Gets functions ids
+        /// </summary>
+        /// <returns></returns>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
             return Functions.ids__;
         }
 
+        /// <summary>
+        /// Displaying default user label for the box, if it is not customized.
+        /// Here the default name from .xml config files is used
+        /// </summary>
+        /// <param name="boxModule">The boxmodule</param>
+        /// <returns>Box label</returns>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
             return null;
@@ -123,28 +158,29 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             return result.ToArray();
         }
 
-        
+        /// <summary>
+        /// Gets property options.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="boxModule"></param>
+        /// <returns></returns>
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
 
             switch (propertyName)
             {
-               // case Functions.PropMasterIdColumn:
-              //      return BoxInfoHelper.GetSelectStringArray(
-               //         Func.GetMasterColumnsNames(false)
-               //         );
-
-               // case Functions.PropDetailIdColumn:
-              //      return BoxInfoHelper.GetSelectStringArray(
-              //          Func.GetDetailColumnsNames(false)
-              //          );
-
                 default:
                     return null;
             }
         }
-        
+
+        /// <summary>
+        /// Returns read-only property values for displaying in propertygrid
+        /// </summary>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="boxModule">The boxmodule.</param>
+        /// <returns></returns>
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
@@ -155,8 +191,15 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             }
         }
 
+        /// <summary>
+        /// Box identifier
+        /// </summary>
         public const string typeIdentifier = "GuhaMining.VirtualAttributes.VirtualFFTBooleanAttribute";
-        
+
+        /// <summary>
+        /// Validation of the box
+        /// </summary>
+        /// <param name="boxModule">The boxmodule</param>
         public override void Validate(BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
@@ -183,6 +226,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             
         }
 
+        /// <summary>
+        /// Box identifier
+        /// </summary>
         protected override string identifier
         {
             get { return typeIdentifier; }

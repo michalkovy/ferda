@@ -93,6 +93,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
             return result;
         }
 
+        /// <summary>
+        /// Method that retrieves the devision points for equifrequency intervals
+        /// and retypes them to the correct datatype
+        /// </summary>
+        /// <param name="dt">Datatable to count values frequency from</param>
+        /// <param name="converter">Delegate for conversion to the correct type</param>
+        /// <param name="count">Requested count of intervals</param>
+        /// <returns></returns>
         public static T[] PrepareForEquifrequency(System.Data.DataTable dt, ToTypeDelegate converter, int count)
         {
             List<
@@ -121,33 +129,4 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
 
         }
     }
-
-    public static class DataHelper
-    {
-        /*
-        public static GenericColumn GetGenericColumn(ColumnFunctionsPrx prx, BoxModuleI boxModule)
-        {
-            DatabaseConnectionSettingHelper connSetting =
-                  new DatabaseConnectionSettingHelper(column.dataTable.databaseConnectionSetting);
-
-            try
-            {
-                BoxModulePrx boxModuleParamNew =
-                    boxModule.MyProxy.getConnections("Column")[0];
-                AttributeFunctionsPrx prx1;
-                ColumnFunctionsPrx prx2 =
-                     ColumnFunctionsPrxHelper.checkedCast(
-                        boxModuleParam1.getFunctions());
-                
-
-            }
-            catch
-            {
-            }
-        }*/
-    }
-    /*
-    class Common
-    {
-    }*/
 }

@@ -326,15 +326,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
 
         #region Methods
 
-        /*public BitStringGeneratorPrx GetBitStringGeneratorPrx(bool fallOnError)
-        {
-            return SocketConnections.GetPrx<BitStringGeneratorPrx>(
-                _boxModule,
-                SockBitStringGenerator,
-                BitStringGeneratorPrxHelper.checkedCast,
-                fallOnError);
-        }*/
-
         /// <summary>
         /// Counts potential cardinality
         /// </summary>
@@ -658,10 +649,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// <returns></returns>
         public Attribute<IComparable> GetAttribute(bool fallOnError)
         {
+            //getting the proxy of a column
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
             if (prx == null)
                 return null;
 
+            //getting a info about a column
             ColumnInfo tmp =
                 ExceptionsHandler.GetResult<ColumnInfo>(
                     fallOnError,
@@ -676,13 +669,17 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             if (tmp == null)
                 return null;
 
+            //getting the connection setting
             DatabaseConnectionSettingHelper connSetting =
                 new DatabaseConnectionSettingHelper(tmp.dataTable.databaseConnectionSetting);
 
+            //getting the serialized attribute set in the previous boxes
             string categories = getAttribute();
 
-
+            //creating a new cache entry
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
+
+            //adding attribute information to the cache
             cacheSetting.Add(
                 Datasource.Database.BoxInfo.typeIdentifier + Datasource.Database.Functions.PropConnectionString,
                 connSetting);
@@ -697,10 +694,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
 
+            //adding serialized attribute to cache only if it has been set in the previous box
             if (!String.IsNullOrEmpty(categories))
                 cacheSetting.Add("SerializedAttribute", categories);
 
-
+            //Loading the values from cache or recounting them...
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
             {
@@ -711,7 +709,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                     {
                         Attribute<IComparable> attribute;
                         DbDataTypeEnum columnDataType;
-                        //static attribute connected to attribute
+                        //this is the case when static attribute connected to attribute box
+                        //need to jump twice to get to the column box
                         try
                         {
                             BoxModulePrx boxModuleParamNew =
@@ -743,7 +742,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                             {
                                 return null;
                             }
-                            //static attribute connected to column
+                            //this is the case when static attribute connected to column
+                            //need to jump once to get to the column box
                             BoxModulePrx boxModuleParam1 =
                                 _boxModule.MyProxy.getConnections("Column")[0];
                             ColumnFunctionsPrx prx2 =
@@ -753,6 +753,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                         }
 
                         #region datatype switch
+
+                        //creating the attribute of the correct datatype
                         switch (columnDataType)
                         {
                             case DbDataTypeEnum.BooleanType:
