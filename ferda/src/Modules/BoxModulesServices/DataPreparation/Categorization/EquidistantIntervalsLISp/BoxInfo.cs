@@ -29,6 +29,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 {
     internal class BoxInfo : Boxes.BoxInfo
     {
+        /// <summary>
+        /// Creates Functions object
+        /// </summary>
+        /// <param name="boxModule">The boxmodule</param>
+        /// <param name="iceObject">The ice object</param>
+        /// <param name="functions">Functions</param>
         public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
         {
             Functions result = new Functions();
@@ -36,11 +42,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             functions = result;
         }
 
+        /// <summary>
+        /// Gets functions ids
+        /// </summary>
+        /// <returns></returns>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
             return Functions.ids__;
         }
 
+        /// <summary>
+        /// Displaying default user label for the box, if it is not customized
+        /// </summary>
+        /// <param name="boxModule">The boxmodule</param>
+        /// <returns>Box label</returns>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
@@ -159,6 +174,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Returns read-only property values for displaying in propertygrid
+        /// </summary>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="boxModule">The boxmodule.</param>
+        /// <returns></returns>
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
@@ -173,6 +194,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+        /// <summary>
+        /// Gets property options - here it is XCategory
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="boxModule"></param>
+        /// <returns></returns>
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
@@ -188,13 +215,23 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
         }
 
+        /// <summary>
+        /// Box identifier
+        /// </summary>
         public const string typeIdentifier = "DataPreparation.Categorization.EquidistantIntervalsLISp";
 
+        /// <summary>
+        /// Box identifier
+        /// </summary>
         protected override string identifier
         {
             get { return typeIdentifier; }
         }
 
+        /// <summary>
+        /// Validation of the box
+        /// </summary>
+        /// <param name="boxModule">The boxmodule</param>
         public override void Validate(BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;

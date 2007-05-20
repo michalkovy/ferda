@@ -426,7 +426,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 return null;
             }
 
-            //Loading the values from cache or reloading it from the database...
+            //Loading the values from cache or recounting them...
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
             {
@@ -450,7 +450,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         string stringMin;
                         string stringMax;
 
-                        //getting the min and max values of the column from the statistics
+                        //getting the min and max values of the column from the user input
                         if (Domain == DomainEnum.SubDomain)
                         {
                             IComparable from;
@@ -461,6 +461,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {
+                            //or from the column statistics, if no user input is given
                             stringMin = column.Statistics.valueMin;
                             stringMax = column.Statistics.valueMax;
                         }
@@ -471,16 +472,24 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         IComparable comparableMin;
                         IComparable comparableMax;
 
+                        //creating intervals of the type based on the connected column datatype
+                        //switch branches differ only in the datatype, so only one branch will be explained
                         switch (column.DbSimpleDataType)
                         {
                             case DbSimpleDataTypeEnum.FloatSimpleType:
                             case DbSimpleDataTypeEnum.DoubleSimpleType:
+                                //for double or float type, the same algorithm is used
+                                //which generates division points of double types
+                                //for float, the division points must be retyped to float
+
+                                //converting min and max values for the attribute domain
                                 double _dmin = Convert.ToDouble(stringMin);
                                 double _dmax = Convert.ToDouble(stringMax);
 
                                 double[] _divisionPointsDouble;
                                 try
                                 {
+                                    //generation of the division points
                                     _divisionPointsDouble =
                                         Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervalsLISp(
                                         _dmin, _dmax, length);
@@ -497,6 +506,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                     float[] _divisionPointsFloat;
                                     try
                                     {
+                                        //retyping double division points to float
                                         _divisionPointsFloat =
                                             Retyper<object>.RetypeDoubleToFloat(_divisionPointsDouble);
                                     }
@@ -504,6 +514,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                     {
                                         throw new ArgumentOutOfRangeException();
                                     }
+                                    //creating intervals in the attribute
                                     result.CreateIntervals(
                                         BoundaryEnum.Closed, comparableMin,
                                         Retyper<float>.Retype(_divisionPointsFloat),

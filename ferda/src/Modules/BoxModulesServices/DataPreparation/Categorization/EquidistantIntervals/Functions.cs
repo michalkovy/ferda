@@ -65,7 +65,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         }
 
         /// <summary>
-        /// Name in literals
+        /// Name in results
         /// </summary>
         public string NameInLiterals
         {
@@ -73,7 +73,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         }
 
         /// <summary>
-        /// Intervals closed from
+        /// Intervals closed from which side
         /// </summary>
         public Side ClosedFrom
         {
@@ -176,73 +176,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 
         #region Methods
 
-        /*
-        /// <summary>
-        /// Creates equidistant intervals from the given range of values.
-        /// </summary>
-        /// <param name="_from">Requested starting point of intervals.</param>
-        /// <param name="_to">Requested end point of intervals.</param>
-        /// <param name="_length">Requested length of one interval.</param>
-        /// <returns>An array of dividing points. The first point returned is the right bound of the first value (the left bound can be -INF), the last point returned is the left bound of the last interval (right bound can be INF).</returns>
-        public static object[] GenerateIntevals(double _from, double _to, int _length)
-        {
-            double actualValue = _from;
-            object[] intervalsArray = new object[Convert.ToInt32(Math.Ceiling((_to - _from) / _length)) - 1];
-
-            int index = 0;
-            while (actualValue < _to - _length)
-            {
-                intervalsArray[index] = actualValue + _length;
-                actualValue += _length;
-                index++;
-            }
-            return intervalsArray;
-        }
-
-        /// <summary>
-        /// Creates equidistant intervals from the given range of values.
-        /// </summary>
-        /// <param name="_from">Requested starting point of intervals.</param>
-        /// <param name="_to">Requested end point of intervals.</param>
-        /// <param name="_length">Requested length of one interval.</param>
-        /// <returns>An array of dividing points. The first point returned is the right bound of the first value (the left bound can be -INF), the last point returned is the left bound of the last interval (right bound can be INF).</returns>
-        public static object[] GenerateIntevals(int _from, int _to, int _length)
-        {
-            int actualValue = _from;
-            object[] intervalsArray = new object[Convert.ToInt32(Math.Ceiling(((double)_to - (double)_from) / _length)) - 1];
-
-            int index = 0;
-            while (actualValue < _to - _length)
-            {
-                intervalsArray[index] = actualValue + _length;
-                actualValue += _length;
-                index++;
-            }
-            return intervalsArray;
-        }
-
-        /// <summary>
-        /// Creates equidistant intervals from the given range of values.
-        /// </summary>
-        /// <param name="_from">Requested starting point of intervals.</param>
-        /// <param name="_to">Requested end point of intervals.</param>
-        /// <param name="_length">Requested length of one interval.</param>
-        /// <returns>An array of dividing points. The first point returned is the right bound of the first value (the left bound can be -INF), the last point returned is the left bound of the last interval (right bound can be INF).</returns>
-        public static object[] GenerateIntevals(uint _from, uint _to, uint _length)
-        {
-            uint actualValue = _from;
-            object[] intervalsArray = new object[Convert.ToInt32(Math.Ceiling(((double)_to - (double)_from) / _length)) - 1];
-
-            int index = 0;
-            while (actualValue < _to - _length)
-            {
-                intervalsArray[index] = actualValue + _length;
-                actualValue += _length;
-                index++;
-            }
-            return intervalsArray;
-        }*/
-
         /// <summary>
         /// Parses from and to values
         /// </summary>
@@ -279,17 +212,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     restrictionTypeEnum.BadFormat
                     );
             }
-        }
-
-
-        private object[] Retype(int[] input)
-        {
-            object[] result = new object[input.Length];
-            for (int i = 0; i < input.Length; i++)
-            {
-                result[i] = (object)input[i];
-            }
-            return result;
         }
 
         private Guid _cachesReloadFlag = System.Guid.NewGuid();
@@ -460,7 +382,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             DatabaseConnectionSettingHelper connSetting =
                 new DatabaseConnectionSettingHelper(columnInfo.dataTable.databaseConnectionSetting);
 
-            //creating a new cache
+            //creating a new cache entry
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
 
             //adding the information about the database to the cache
@@ -487,7 +409,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             //count of categories
             int count = (int)Count;
 
-            //Loading the values from cache or reloading it from the database...
+            //Loading the values from cache or recounting them...
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
             {
@@ -511,7 +433,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         string stringMin;
                         string stringMax;
 
-                        //getting the min and max values of the column from the statistics
+                        //getting the min and max values of the column from the user input
                         if (Domain == DomainEnum.SubDomain)
                         {
                             IComparable from;
@@ -522,26 +444,35 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {
+                            //or from the column statistics, if no user input is given
                             stringMin = column.Statistics.valueMin;
                             stringMax = column.Statistics.valueMax;
                         }
                         else
                             throw new NotImplementedException();
 
-                        //creating intervals for individual data types
+                        
                         IComparable comparableMin;
                         IComparable comparableMax;
 
+                        //creating intervals of the type based on the connected column datatype
+                        //switch branches differ only in the datatype, so only one branch will be explained
                         switch (column.DbSimpleDataType)
                         {
                             case DbSimpleDataTypeEnum.FloatSimpleType:
                             case DbSimpleDataTypeEnum.DoubleSimpleType:
+                                //for double or float type, the same algorithm is used
+                                //which generates division points of double types
+                                //for float, the division points must be retyped to float
+
+                                //converting min and max values for the attribute domain
                                 double _dmin = Convert.ToDouble(stringMin);
                                 double _dmax = Convert.ToDouble(stringMax);
 
                                 double[] _divisionPointsDouble;
                                 try
                                 {
+                                    //generation of the division points
                                     _divisionPointsDouble =
                                         Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervals(
                                         _dmin, _dmax, count);
@@ -558,6 +489,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                     float[] _divisionPointsFloat;
                                     try
                                     {
+                                        //retyping double division points to float
                                         _divisionPointsFloat =
                                             Retyper<object>.RetypeDoubleToFloat(_divisionPointsDouble);
                                     }
@@ -565,6 +497,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                     {
                                         throw new ArgumentOutOfRangeException();
                                     }
+                                    //creating intervals in the attribute
                                     result.CreateIntervals(
                                         BoundaryEnum.Closed, comparableMin,
                                         Retyper<float>.Retype(_divisionPointsFloat),
