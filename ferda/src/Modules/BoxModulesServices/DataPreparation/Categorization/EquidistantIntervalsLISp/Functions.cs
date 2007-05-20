@@ -421,6 +421,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             //requested length of intervals
             int length = (int)Length;
 
+            if (length == 0)
+            {
+                return null;
+            }
+
             //Loading the values from cache or reloading it from the database...
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
