@@ -17,7 +17,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         IBitString And(IBitString source);
 
         ///// <summary>
-        ///// Performs the bitwise AND operation on 
+        ///// Performs the bitwise AND operation on
         ///// copy of current BitString against the specified BitString.
         ///// </summary>
         ///// <param name="source">The second BitString operand.</param>
@@ -30,7 +30,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         IBitString Or(IBitString source);
 
         ///// <summary>
-        ///// Performs the bitwise OR operation on 
+        ///// Performs the bitwise OR operation on
         ///// copy of current BitString against the specified BitString.
         ///// </summary>
         ///// <param name="source">The second BitString operand.</param>
@@ -50,7 +50,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise SUM operation on current BitString.
         /// </summary>
         /// <returns>The number of bits set to 1 in current BitString.</returns>
-        int Sum { get; }
+        int Sum { get; set; }
     }
 
     public interface IBitStringCreate : IBitStringBase
@@ -75,7 +75,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Sets a specified bit in the BitString.
         /// </summary>
         /// <param name="index">Index of the bit to be set.</param>
-        /// <param name="value">New value of the bit.</param>        
+        /// <param name="value">New value of the bit.</param>
         void SetBit(int index, bool value);
     }
 

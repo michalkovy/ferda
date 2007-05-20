@@ -255,7 +255,10 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
               this.AddOwnedForm(new_form);
 
               ToolTip dialog_toolTip = new ToolTip();
+#if MONO
+#else
               dialog_toolTip.IsBalloon = true;
+#endif
 
               Label label1 = new Label();
               label1.Left = 35;

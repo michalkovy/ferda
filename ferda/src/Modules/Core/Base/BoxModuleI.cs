@@ -1,6 +1,6 @@
 // BoxModuleI.cs - box on Ferda modules side
 //
-// Authors: 
+// Authors:
 //   Michal Kováč <michal.kovac.develop@centrum.cz>
 //   Tomáš Kuchař <tomas.kuchar@gmail.com>
 //
@@ -53,7 +53,7 @@ namespace Ferda.Modules
 
         /// <summary>
         /// <para>
-        /// Gets the boxes (proxies of the box modules) connected 
+        /// Gets the boxes (proxies of the box modules) connected
         /// to the socket of the specified name.
         /// </para>
         /// <para>
@@ -91,7 +91,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the boxes (proxies of the box modules) connected 
+        /// Gets the boxes (proxies of the box modules) connected
         /// to the socket of the specified name.
         /// </summary>
         /// <param name="socketName">Name of the socket.</param>
@@ -159,7 +159,7 @@ namespace Ferda.Modules
 
         /// <summary>
         /// <para>
-        /// Gets the functions objects (more precisely its proxies) 
+        /// Gets the functions objects (more precisely its proxies)
         /// connected to the socket of the specified name.
         /// </para>
         /// <para>
@@ -169,7 +169,7 @@ namespace Ferda.Modules
         /// </summary>
         /// <param name="socketName">Name of the socket.</param>
         /// <returns>
-        /// Array of <see cref="T:Ice.ObjectPrx">proxies of 
+        /// Array of <see cref="T:Ice.ObjectPrx">proxies of
         /// functions objects</see> connected in the specified socket.
         /// </returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
@@ -205,7 +205,7 @@ namespace Ferda.Modules
 
         /// <summary>
         /// Properties which are set by <see cref="T:Ferda.Modules.PropertyValue"/>
-        /// (There are not properties, which are set by PropertyBoxes 
+        /// (There are not properties, which are set by PropertyBoxes
         /// which implements interfaces of property values.)
         /// </summary>
         private Dictionary<string, PropertyValue> properties;
@@ -601,10 +601,10 @@ namespace Ferda.Modules
         /// Gets the box info.
         /// </summary>
         /// <remarks>
-        /// The <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> provides 
-        /// some fundamental functionality so if you are developing 
-        /// new box module you don`t have to bother about implementing the 
-        /// <b>Factory Creator</b> moreover if you are using e.g. 
+        /// The <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> provides
+        /// some fundamental functionality so if you are developing
+        /// new box module you don`t have to bother about implementing the
+        /// <b>Factory Creator</b> moreover if you are using e.g.
         /// <see cref="T:Ferda.Modules.Boxes.BoxInfo"/> implementatiion of
         /// the <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> interface you
         /// don`t need to understand the theory about <b>Factory Creators</b>
@@ -626,8 +626,8 @@ namespace Ferda.Modules
         /// </summary>
         /// <value>Ice identity of current object (box module).</value>
         /// <remarks>
-        /// Please note that this identity of box module is not 
-        /// presistent if you wants to get persistent box module`s 
+        /// Please note that this identity of box module is not
+        /// presistent if you wants to get persistent box module`s
         /// identity (i.e. persistent identifier of current box module)
         /// please use <see cref="P:Ferda.Modules.BoxModuleI.PersistentIdentity"/>.
         /// </remarks>
@@ -637,22 +637,22 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// String representation of the 
+        /// String representation of the
         /// <see cref="P:Ferda.Modules.BoxModuleI.IceIdentity">ice identity</see>
         /// of current box module..
         /// </summary>
         private string stringIceIdentity;
 
         /// <summary>
-        /// Gets a string representation of the 
+        /// Gets a string representation of the
         /// <see cref="P:Ferda.Modules.BoxModuleI.IceIdentity">ice identity</see>
         /// of current box module..
         /// </summary>
-        /// <value>String representation of Ice identity of 
+        /// <value>String representation of Ice identity of
         /// current object (box module).</value>
         /// <remarks>
-        /// Please note that this identity of box module is not 
-        /// presistent if you wants to get persistent box module`s 
+        /// Please note that this identity of box module is not
+        /// presistent if you wants to get persistent box module`s
         /// identity (i.e. persistent identifier of current box module)
         /// please use <see cref="P:Ferda.Modules.BoxModuleI.PersistentIdentity"/>.
         /// </remarks>
@@ -675,7 +675,7 @@ namespace Ferda.Modules
         /// </summary>
         /// <value>The output.</value>
         /// <remarks>
-        /// Output provides some functions for writing 
+        /// Output provides some functions for writing
         /// messages to the front-end but it is not overly
         /// recomended to use this output. Please use it only
         /// if you are certain of your are going to do.
@@ -776,13 +776,13 @@ namespace Ferda.Modules
         /// <para>
         /// Throught lambda abstraction is BoxModule interface separated from
         /// functions over this BoxModule. Functions object is module containing
-        /// functions over properties and sockets of this BoxModule specified in 
+        /// functions over properties and sockets of this BoxModule specified in
         /// slice design.
         /// </para>
         /// </summary>
         /// <param name="__current">The Ice.Current.</param>
         /// <returns>
-        /// The <see cref="Ice.ObjectPrx">proxy </see> of the box module`s 
+        /// The <see cref="Ice.ObjectPrx">proxy </see> of the box module`s
         /// functions object.
         /// </returns>
         public override ObjectPrx getFunctions(Current __current)
@@ -795,18 +795,18 @@ namespace Ferda.Modules
         /// </summary>
         /// <param name="__current">The Ice.Current.</param>
         /// <returns>
-        /// Array of <see cref="T:System.String"/> as ids 
+        /// Array of <see cref="T:System.String"/> as ids
         /// of all provided functions (i.e. implemented intefaces).
         /// </returns>
         public override string[] getFunctionsIceIds(Current __current)
         {
-            return functionsObjPrx.ice_ids();
+            return (functionsObjPrx == null) ? new string[0] : functionsObjPrx.ice_ids();
         }
 
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the 
+        /// Initializes a new instance of the
         /// <see cref="T:Ferda.Modules.BoxModuleI"/> class.
         /// </summary>
         /// <param name="boxInfo">The box info.</param>
@@ -840,8 +840,11 @@ namespace Ferda.Modules
 
             // initializes box module`s functions object
             this.boxInfo.CreateFunctions(this, out functionsIceObj, out functionsIObj);
-            functionsIObj.setBoxModuleInfo(this, this.boxInfo);
-            functionsObjPrx = ObjectPrxHelper.uncheckedCast(adapter.addWithUUID(functionsIceObj));
+			
+			if(functionsIObj != null)
+				functionsIObj.setBoxModuleInfo(this, this.boxInfo);
+            if(functionsIceObj != null)
+				functionsObjPrx = ObjectPrxHelper.uncheckedCast(adapter.addWithUUID(functionsIceObj));
 
             // initializes properties
             properties = new Dictionary<string, PropertyValue>();
@@ -874,8 +877,22 @@ namespace Ferda.Modules
         /// <remarks>For lamda-like boxes.</remarks>
         public override SocketInfo[] getAdditionalSockets(Current __current)
         {
-            return new SocketInfo[0];
+            return boxInfo.GetAdditionalSockets(localePrefs, this);
         }
+		
+		/// <summary>
+        /// Gets the additional properties. Some boxes can create properties dynamicaly from user input, for example "lambda box".
+        /// </summary>
+        /// <param name="__current">The Ice.Current.</param>
+        /// <returns>
+        /// Array of <see cref="T:Ferda.Modules.PropertyInfo"/> as
+        /// possible additional properties.
+        /// </returns>
+        /// <remarks>For lamda-like boxes.</remarks>
+		public override PropertyInfo[] getAdditionalProperties(Current __current)
+		{
+			return boxInfo.GetAdditionalProperties(localePrefs, this);
+		}
 
         /// <summary>
         /// Gets the box modules asking for creation.
@@ -895,7 +912,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as 
+        /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as
         /// options for the specified property, whose options are dynamically variable.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
@@ -944,16 +961,16 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Determines whether the specified <c>sockets</c> satisfy 
-        /// the condition on required sockets (<c>neededSockets</c>) 
-        /// i.e. if there are sockets of the same name and the same type 
+        /// Determines whether the specified <c>sockets</c> satisfy
+        /// the condition on required sockets (<c>neededSockets</c>)
+        /// i.e. if there are sockets of the same name and the same type
         /// (<see cref="F:Ferda.Modules.Boxes.Serializer.Configuration.NeededSocket.FunctionIceId"/>)
         /// as required.
         /// </summary>
         /// <param name="neededSockets">The needed sockets.</param>
         /// <param name="sockets">The sockets.</param>
         /// <returns>
-        /// <c>true</c> if the specified <c>sockets</c>satisfy 
+        /// <c>true</c> if the specified <c>sockets</c>satisfy
         /// <c>neededSockets</c> restrictions; otherwise, <c>false</c>.
         /// </returns>
         private static bool hasSockets(NeededSocket[] neededSockets, SocketInfo[] sockets)
@@ -1003,9 +1020,9 @@ namespace Ferda.Modules
         /// <param name="functionsPrx">The functions object`s proxy.</param>
         /// <param name="sockets">The sockets of box module to which the functions object belongs to.</param>
         /// <returns>
-        /// <c>true</c> if the specified functions object 
+        /// <c>true</c> if the specified functions object
         /// <see cref="M:Ice.ObjectPrx.ice_isA(System.String)">
-        /// implements required functions</see> and and its box module 
+        /// implements required functions</see> and and its box module
         /// <see cref="M:Ferda.Modules.BoxModuleI.hasSockets(Ferda.Modules.NeededSocket[],Ferda.Modules.SocketInfo[])">
         /// has required sockets</see>.
         /// </returns>
@@ -1026,7 +1043,7 @@ namespace Ferda.Modules
         /// Thrown if socket named <c>socketName</c> doesn`t exist in the box module.
         /// </exception>
         /// <exception cref="T:Ferda.Modules.BadTypeError">
-        /// Thrown if the type of functions provided by 
+        /// Thrown if the type of functions provided by
         /// the <c>otherModule</c> is not accepted by the socket.
         /// </exception>
         /// <exception cref="T:Ferda.Modules.ConnectionExistsError">
@@ -1097,7 +1114,7 @@ namespace Ferda.Modules
         /// is the box module (recursively) locked.
         /// </remarks>
         /// <exception cref="T:Ferda.Modules.NeedConnectedSocketError">
-        /// Thrown if condition on 
+        /// Thrown if condition on
         /// <see cref="M:Ferda.Modules.Boxes.IBoxInfo.GetActionInfoNeededConnectedSockets(System.String)">needed connected sockets</see>
         /// is not satisfied.
         /// </exception>
@@ -1169,7 +1186,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Sets the specified property (<c>propertyName</c>) by 
+        /// Sets the specified property (<c>propertyName</c>) by
         /// specified <c>propertyValue</c>.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
@@ -1424,11 +1441,11 @@ namespace Ferda.Modules
         /// <returns>
         /// <para>
         /// Result is String representing default user label of the box module.
-        /// This label can change in time ... it can reflect inner 
+        /// This label can change in time ... it can reflect inner
         /// box module`s state e.g. up-to-date values of its properties.
         /// </para>
         /// <para>
-        /// (StringOpt) If result string is null or empty returns empty string 
+        /// (StringOpt) If result string is null or empty returns empty string
         /// array; otherwise, string array with one member.
         /// </para>
         /// </returns>
@@ -1446,11 +1463,11 @@ namespace Ferda.Modules
         /// </summary>
         /// <param name="phraseIdentifier">The phrase`s identifier.</param>
         /// <param name="isLocalized">
-        /// if set to <c>true</c> localization exists; otherwise, 
+        /// if set to <c>true</c> localization exists; otherwise,
         /// <c>phraseIdentifier</c> is returned.
         /// </param>
         /// <returns>
-        /// The phrase`s localized text (if it exists; otherwise, 
+        /// The phrase`s localized text (if it exists; otherwise,
         /// <c>phraseIdentifier</c> is returned).
         /// </returns>
         public string GetPhrase(string phraseIdentifier, out bool isLocalized)
@@ -1486,7 +1503,7 @@ namespace Ferda.Modules
         #region Destroying
 
         /// <summary>
-        /// Destroys all Ice objects inherent to the box module 
+        /// Destroys all Ice objects inherent to the box module
         /// (e.g. <see cref="T:Ferda.Modules.PropertyValue">property values</see>)
         /// i.e. remove their proxies from the specified <c>adapter</c>.
         /// </summary>
@@ -1509,22 +1526,22 @@ namespace Ferda.Modules
         /// Validates the specified box module. (e.g. setting of some properties
         /// is right (satisfies its restrictions) but box module can not work with
         /// this setting e.g. property "OdbcConnectionString" is valid ODBC connection
-        /// string but the box module can not connect with given value to the 
+        /// string but the box module can not connect with given value to the
         /// specified data source.)
         /// </para>
         /// <para>
-        /// E. g. if (current) box module provides OdbcConnectionString 
+        /// E. g. if (current) box module provides OdbcConnectionString
         /// and its value is bad (not valid ODBC connection string) then
-        /// if another box module wants to use the (bad) value of the 
-        /// connection string, probably exception will be thrown but 
-        /// the error occured because of bad param of current box and 
+        /// if another box module wants to use the (bad) value of the
+        /// connection string, probably exception will be thrown but
+        /// the error occured because of bad param of current box and
         /// its property OdbcConnectionString. So, the other box, where
         /// the error occured, should call (job of ModulesManager) function
-        /// Validate on current box and current box should test validity 
+        /// Validate on current box and current box should test validity
         /// and usability of the OdbcConnectionString.
         /// </para>
         /// <para>
-        /// If setting of current box is bad (may leads to some errors 
+        /// If setting of current box is bad (may leads to some errors
         /// of exceptions) than some exception is thrown.
         /// </para>
         /// </remarks>

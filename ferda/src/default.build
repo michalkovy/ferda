@@ -23,13 +23,13 @@
 		</copy>
 	</target>
 	<target name="FrontEndBuild">
-		<if test="${framework::get-target-framework()!='mono-2.0'}">
+		<!-- <if test="${framework::get-target-framework()!='mono-2.0'}"> -->
 			<nant buildfile="FrontEnd/default.build" target="build">
 				<properties>
 					<property name="build.dir" value="${frontendbin.dir}"/>
 				</properties>
 			</nant>
-		</if>
+		<!-- </if> -->
 	</target>
 	<target name="FrontEndClean">
 		<if test="${framework::get-target-framework()!='mono-2.0'}">

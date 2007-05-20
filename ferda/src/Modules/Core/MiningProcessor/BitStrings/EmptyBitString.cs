@@ -68,7 +68,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         //        return bs.AndCloned(this);
         //    else
         //        return andSpecial(source, false);
-        //} 
+        //}
         
         #endregion
 
@@ -82,7 +82,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         public IBitString NotCloned()
         {
             return this;
-        } 
+        }
         
         #endregion
 
@@ -114,13 +114,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         //        return bs.OrCloned(this);
         //    else
         //        return andSpecial(source, false);
-        //} 
+        //}
         
         #endregion
 
         public int Sum
         {
             get { return Int32.MaxValue; }
+			set {}
         }
 
         #endregion

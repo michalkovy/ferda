@@ -28,6 +28,11 @@
 			<object identity="DateTimeT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
 		</replica-group>
     
+		<replica-group id="FerdaLanguageBoxesReplicaAdapter">
+			<object identity="Language.Lambda" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="Language.Variable" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+		</replica-group>
+		
 		<replica-group id="FerdaSampleBoxesReplicaAdapter">
 			<object identity="Sample.BodyMassIndex" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
@@ -111,6 +116,7 @@
 			<icebox id="${index}" exe="iceboxnet" activation="on-demand" pwd="${pwd}">
 				<service-instance template="FerdaServiceTemplate" name="FerdaDataPreparationBoxes" entry="FerdaDataPreparationBoxes.dll:Ferda.Modules.Boxes.DataPreparation.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaBasicBoxes" entry="FerdaBasicBoxes.dll:Ferda.Modules.Boxes.Basic.Service" endpoints="${endpoints}"/>
+				<service-instance template="FerdaServiceTemplate" name="FerdaLanguageBoxes" entry="FerdaLanguageBoxes.dll:Ferda.Modules.Boxes.Language.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaSampleBoxes" entry="FerdaSampleBoxes.dll:Ferda.Modules.Boxes.Sample.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaGuhaMiningBoxes" entry="FerdaGuhaMiningBoxes.dll:Ferda.Modules.Boxes.GuhaMining.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaGuhaMiningProcessor" entry="FerdaMiningProcessor.dll:Ferda.Guha.MiningProcessor.Service" endpoints="${endpoints}"/>
@@ -127,6 +133,7 @@
 				<property name="Ice.ThreadPool.Server.SizeWarn" value="950"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaDataPreparationBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaBasicBoxes" value="1"/>
+				<property name="IceBox.UseSharedCommunicator.FerdaLanguageBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaSampleBoxes" value="1"/>
         <property name="IceBox.UseSharedCommunicator.FerdaWizards" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningBoxes" value="1"/>

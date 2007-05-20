@@ -772,7 +772,10 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
             this.AddOwnedForm(new_form);
 
             ToolTip dialog_toolTip = new ToolTip();
+#if MONO
+#else
             dialog_toolTip.IsBalloon = true;
+#endif
 
             if (form_type == "Successor")
             {

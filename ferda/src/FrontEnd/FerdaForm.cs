@@ -410,66 +410,66 @@ using Ferda.ModulesManager;
             iconProvider.Add("FerdaIcon", i);
 
             //loading the newbox and archive icons
-            i = new Icon("Icons\\NA.ico");
+            i = new Icon(Path.Combine("Icons", "NA.ico"));
             iconProvider.Add("NAIcon", i);
-            i = new Icon("Icons\\Category.ico");
+            i = new Icon(Path.Combine("Icons", "Category.ico"));
             iconProvider.Add("FolderIcon", i);
 
             //loading the menu->File group icons
-            i = new Icon("Icons\\Open project.ico");
+            i = new Icon(Path.Combine("Icons", "Open project.ico"));
             iconProvider.Add("OpenProject", i);
-            i = new Icon("Icons\\New project.ico");
+            i = new Icon(Path.Combine("Icons", "New project.ico"));
             iconProvider.Add("NewProject", i);
-            i = new Icon("Icons\\Save project.ico");
+            i = new Icon(Path.Combine("Icons", "Save project.ico"));
             iconProvider.Add("SaveProject", i);
-            i = new Icon("Icons\\Exit.ico");
+            i = new Icon(Path.Combine("Icons", "Exit.ico"));
             iconProvider.Add("Exit", i);
 
             //loading the menu->Desktop part
-            i = new Icon("Icons\\New Desktop.ico");
+            i = new Icon(Path.Combine("Icons", "New Desktop.ico"));
             iconProvider.Add("NewDesktop", i);
 
             //loading the menu->Preferences part
-            i = new Icon("Icons\\Properties.ico");
+            i = new Icon(Path.Combine("Icons", "Properties.ico"));
             iconProvider.Add("Properties", i);
 
             //loading the icons connected to task
-            i = new Icon("Icons\\Rename Icon.ico");
+            i = new Icon(Path.Combine("Icons", "Rename Icon.ico"));
             iconProvider.Add("Rename", i);
-            i = new Icon("Icons\\Clone.ico");
+            i = new Icon(Path.Combine("Icons", "Clone.ico"));
             iconProvider.Add("Clone", i);
-            i = new Icon("Icons\\Copy.ico");
+            i = new Icon(Path.Combine("Icons", "Copy.ico"));
             iconProvider.Add("Copy", i);
-            i = new Icon("Icons\\Paste.ico");
+            i = new Icon(Path.Combine("Icons", "Paste.ico"));
             iconProvider.Add("Paste", i);
-            i = new Icon("Icons\\Delete from Archive.ico");
+            i = new Icon(Path.Combine("Icons", "Delete from Archive.ico"));
             iconProvider.Add("DeleteFromArchive", i);
-            i = new Icon("Icons\\UserNote.ico");
+            i = new Icon(Path.Combine("Icons", "UserNote.ico"));
             iconProvider.Add("UserNote", i);
 
 
             //loading other icons needed for the desktop
-            i = new Icon("Icons\\Layout.ico");
+            i = new Icon(Path.Combine("Icons", "Layout.ico"));
             iconProvider.Add("Layout", i);
-            i = new Icon("Icons\\Delete from Desktop.ico");
+            i = new Icon(Path.Combine("Icons", "Delete from Desktop.ico"));
             iconProvider.Add("DeleteFromDesktop", i);
-            i = new Icon("Icons\\Unpack socket one layer.ico");
+            i = new Icon(Path.Combine("Icons", "Unpack socket one layer.ico"));
             iconProvider.Add("UnpackSocketOneLayer", i);
-            i = new Icon("Icons\\Unpack socket all layers.ico");
+            i = new Icon(Path.Combine("Icons", "Unpack socket all layers.ico"));
             iconProvider.Add("UnpackSocketAllLayers", i);
-            i = new Icon("Icons\\Pack sockets.ico");
+            i = new Icon(Path.Combine("Icons", "Pack sockets.ico"));
             iconProvider.Add("PackSocket", i);
-            i = new Icon("Icons\\Pack all sockets.ico");
+            i = new Icon(Path.Combine("Icons", "Pack all sockets.ico"));
             iconProvider.Add("PackAllSockets", i);
-            i = new Icon("Icons\\Unpack all sockets all layers.ico");
+            i = new Icon(Path.Combine("Icons", "Unpack all sockets all layers.ico"));
             iconProvider.Add("UnpackAllLayersAllSockets", i);
-            i = new Icon("Icons\\Unpack all sockets one layer.ico");
+            i = new Icon(Path.Combine("Icons", "Unpack all sockets one layer.ico"));
             iconProvider.Add("UnpackAllLayersOneSocketAllSockets", i);
-            i = new Icon("Icons\\Localize in archive.ico");
+            i = new Icon(Path.Combine("Icons", "Localize in archive.ico"));
             iconProvider.Add("LocalizeInArchive", i);
-            i = new Icon("Icons\\MakeGroup.ico");
+            i = new Icon(Path.Combine("Icons", "MakeGroup.ico"));
             iconProvider.Add("MakeGroup", i);
-            i = new Icon("Icons\\Validate.ico");
+            i = new Icon(Path.Combine("Icons", "Validate.ico"));
             iconProvider.Add("Validate", i);
         }
 

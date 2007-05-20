@@ -107,7 +107,10 @@
             // main_toolTip
             // 
             this.main_toolTip.AutomaticDelay = 1500;
+#if MONO
+#else
             this.main_toolTip.IsBalloon = true;
+#endif
             // 
             // WizardFormEditor
             // 

@@ -1,6 +1,8 @@
 using Ferda.ModulesManager;
 using NUnit.Framework;
+using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Ferda.Modules
 {
@@ -134,6 +136,18 @@ namespace Ferda.Modules
 				}
 			}
 			Debug.WriteLine("leaving create all boxes test ...");
+		}
+		
+		[Test]
+		public void Test_LanguageBoxes()
+		{
+			IBoxModuleFactoryCreator creator = modulesManager.GetBoxModuleFactoryCreator("Language.Lambda");
+			IBoxModule lambdaBox = creator.CreateBoxModule();
+			lambdaBox.SetPropertyInt("VariablesCount", 3);
+			int variablesCount = lambdaBox.GetPropertyInt("VariablesCount");
+			Assert.AreEqual(3, variablesCount);
+			StringCollection iceIds = lambdaBox.GetFunctionsIceIds();
+			Assert.AreEqual(0, iceIds.Count);
 		}
 
         /*

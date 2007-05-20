@@ -3,7 +3,7 @@
 <project name="Ferda Modules" default="build" basedir=".">
 	<description>Ferda Modules</description>
 	<target name="build" description="Build Module Services" 
-         depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaGuhaMiningBoxes,FerdaWizards">
+         depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaLanguageBoxes,FerdaGuhaMiningBoxes,FerdaWizards">
 		<mkdir dir="${build.dir}/BoxModulesServices"/>
 		<copy todir="${build.dir}/BoxModulesServices">
 			<fileset>
@@ -69,6 +69,31 @@
 			<sources>
 				<include name="DataPreparation/**.cs"/>
 				<exclude name="DataPreparation/**/generated/**.cs"/>
+			</sources>
+			<references>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaGuhaMiningBoxes.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Xml.dll"/>
+			</references>
+		</csc>
+	</target>
+	<target name="FerdaLanguageBoxes" depends="">
+		<csc target="library" output="${path::combine(build.dir,'FerdaLanguageBoxes.dll')}" doc="${path::combine(build.dir,'FerdaLanguageBoxes.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaLanguageBoxes.snk">
+			<nowarn>
+				<warning number="1591"/>
+			</nowarn>
+			<sources>
+				<include name="Language/**.cs"/>
+				<exclude name="Language/**/generated/**.cs"/>
 			</sources>
 			<references>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>

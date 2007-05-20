@@ -153,9 +153,11 @@ namespace Ferda.FrontEnd
             //getting where directory, where the assembly resides (FerdaFrontEnd.exe)    
             //getting the full location fo the .exe file
             string assemblyDir = Assembly.GetExecutingAssembly().Location;
+	    System.IO.FileInfo fileInfo = new System.IO.FileInfo(assemblyDir);
+	    assemblyDir = fileInfo.Directory.ToString();
             //replacing the .exe by the name of the config file
-            int lastDash = assemblyDir.LastIndexOf('\\');
-            assemblyDir = assemblyDir.Remove(lastDash);
+            //int lastDash = assemblyDir.LastIndexOf('\\');
+            //assemblyDir = assemblyDir.Remove(lastDash);
 
             return assemblyDir;
         }
