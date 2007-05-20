@@ -84,6 +84,16 @@ using Ice;namespace Ferda.Modules
 		{
 			return new SocketInfo[0];
 		}
+		
+		/// <summary>
+		/// Method getAdditionalProperties
+		/// </summary>
+		/// <returns>A Ferda.Modules.PropertyInfo[]</returns>
+		/// <param name="__current">An Ice.Current</param>
+		public override PropertyInfo[] getAdditionalProperties(Current __current)
+		{
+			return new PropertyInfo[0];
+		}
 
 		/// <summary>
 		/// Method setConnection

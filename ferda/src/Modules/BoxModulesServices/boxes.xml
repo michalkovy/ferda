@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Martin (Ru-Board) -->
-<Boxes xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ferda.is-a-geek.net
-../Core/Boxes/boxes.xsd">
+<Boxes xsi:schemaLocation="http://ferda.is-a-geek.net ../Core/Boxes/boxes.xsd" xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://ferda.is-a-geek.net">
   <Box>
     <Identifier>DataPreparation.DataSource.Database</Identifier>
     <IconPath>boxIcon.ico</IconPath>
@@ -326,7 +325,6 @@
       <string>DataPreparation.DataSource</string>
     </Categories>
     <Sockets>
-      
       <Socket>
         <Name>SelectExpression</Name>
         <SocketTypes>
@@ -336,7 +334,6 @@
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
       </Socket>
-    
       <Socket>
         <Name>MasterDataTable</Name>
         <SocketTypes>
@@ -456,14 +453,12 @@
       </Socket>
     </Sockets>
     <Properties>
-      
       <Property>
         <Name>SelectExpression</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
         <Visible>true</Visible>
         <ReadOnly>false</ReadOnly>
       </Property>
-    
       <Property>
         <Name>MasterIdColumn</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -915,16 +910,16 @@
         <MoreThanOne>false</MoreThanOne>
       </Socket>
       <!--
-			<Socket>
-				<Name>IncludeNullCategory</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			-->
+                        <Socket>
+                                <Name>IncludeNullCategory</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        -->
       <Socket>
         <Name>Domain</Name>
         <SocketTypes>
@@ -990,14 +985,14 @@
         <ReadOnly>false</ReadOnly>
       </Property>
       <!--
-			<Property>
-				<Name>IncludeNullCategory</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>true</ReadOnly>
-			</Property>
-			-->
+                        <Property>
+                                <Name>IncludeNullCategory</Name>
+                                <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+                                <CategoryName>Categories</CategoryName>
+                                <Visible>true</Visible>
+                                <ReadOnly>true</ReadOnly>
+                        </Property>
+                        -->
       <Property>
         <Name>Domain</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -1142,16 +1137,16 @@
         <MoreThanOne>false</MoreThanOne>
       </Socket>
       <!--
-			<Socket>
-				<Name>IncludeNullCategory</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			-->
+                        <Socket>
+                                <Name>IncludeNullCategory</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        -->
       <Socket>
         <Name>Domain</Name>
         <SocketTypes>
@@ -1233,7 +1228,7 @@
         <Visible>true</Visible>
         <ReadOnly>false</ReadOnly>
       </Property>
-		-->
+                -->
       <Property>
         <Name>Domain</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -1354,16 +1349,16 @@
         <MoreThanOne>false</MoreThanOne>
       </Socket>
       <!--
-			<Socket>
-				<Name>IncludeNullCategory</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			-->
+                        <Socket>
+                                <Name>IncludeNullCategory</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        -->
       <Socket>
         <Name>Domain</Name>
         <SocketTypes>
@@ -1401,15 +1396,15 @@
         <MoreThanOne>false</MoreThanOne>
       </Socket>
       <!--
-			<Socket>
-				<Name>Length</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>-->
+                        <Socket>
+                                <Name>Length</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>-->
       <Socket>
         <Name>ClosedFrom</Name>
         <SocketTypes>
@@ -1456,14 +1451,14 @@
         <ReadOnly>false</ReadOnly>
       </Property>
       <!--
-			<Property>
-				<Name>IncludeNullCategory</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-			</Property>
-			-->
+                        <Property>
+                                <Name>IncludeNullCategory</Name>
+                                <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+                                <CategoryName>Categories</CategoryName>
+                                <Visible>true</Visible>
+                                <ReadOnly>false</ReadOnly>
+                        </Property>
+                        -->
       <Property>
         <Name>Domain</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -1521,14 +1516,14 @@
         <Default>Cardinal</Default>
       </Property>
       <!--
-			<Property>
-				<Name>Length</Name>
-				<TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
-				<CategoryName>Intervals</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>true</ReadOnly>
-				<Default>1</Default>
-			</Property>-->
+                        <Property>
+                                <Name>Length</Name>
+                                <TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
+                                <CategoryName>Intervals</CategoryName>
+                                <Visible>true</Visible>
+                                <ReadOnly>true</ReadOnly>
+                                <Default>1</Default>
+                        </Property>-->
       <Property>
         <Name>ClosedFrom</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -1558,7 +1553,6 @@
       </ModulesAskingForCreation>
     </ModulesAskingForCreationSeq>
   </Box>
-
   <Box>
     <Identifier>DataPreparation.Categorization.EquidistantIntervalsLISp</Identifier>
     <IconPath>boxIcon.ico</IconPath>
@@ -1613,16 +1607,16 @@
         <MoreThanOne>false</MoreThanOne>
       </Socket>
       <!--
-			<Socket>
-				<Name>IncludeNullCategory</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			-->
+                        <Socket>
+                                <Name>IncludeNullCategory</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        -->
       <Socket>
         <Name>Domain</Name>
         <SocketTypes>
@@ -1659,16 +1653,15 @@
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
       </Socket>
-      
-			<Socket>
-				<Name>Length</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
+      <Socket>
+        <Name>Length</Name>
+        <SocketTypes>
+          <BoxType>
+            <FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+          </BoxType>
+        </SocketTypes>
+        <MoreThanOne>false</MoreThanOne>
+      </Socket>
       <Socket>
         <Name>ClosedFrom</Name>
         <SocketTypes>
@@ -1707,14 +1700,14 @@
         <ReadOnly>false</ReadOnly>
       </Property>
       <!--
-			<Property>
-				<Name>IncludeNullCategory</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-			</Property>
-			-->
+                        <Property>
+                                <Name>IncludeNullCategory</Name>
+                                <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+                                <CategoryName>Categories</CategoryName>
+                                <Visible>true</Visible>
+                                <ReadOnly>false</ReadOnly>
+                        </Property>
+                        -->
       <Property>
         <Name>Domain</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -1771,14 +1764,13 @@
         <ReadOnly>false</ReadOnly>
         <Default>Cardinal</Default>
       </Property>
-      
-			<Property>
-				<Name>Length</Name>
-				<TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
-				<CategoryName>Intervals</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-				<Default>0</Default>
+      <Property>
+        <Name>Length</Name>
+        <TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
+        <CategoryName>Intervals</CategoryName>
+        <Visible>true</Visible>
+        <ReadOnly>false</ReadOnly>
+        <Default>0</Default>
         <NumericalRestrictions>
           <Restriction>
             <Integral>0</Integral>
@@ -1786,7 +1778,7 @@
             <Including>true</Including>
           </Restriction>
         </NumericalRestrictions>
-			</Property>
+      </Property>
       <Property>
         <Name>ClosedFrom</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -1816,7 +1808,6 @@
       </ModulesAskingForCreation>
     </ModulesAskingForCreationSeq>
   </Box>
-  
   <Box>
     <Identifier>DataPreparation.Categorization.EquifrequencyIntervals</Identifier>
     <IconPath>boxIcon.ico</IconPath>
@@ -1871,16 +1862,16 @@
         <MoreThanOne>false</MoreThanOne>
       </Socket>
       <!--
-			<Socket>
-				<Name>IncludeNullCategory</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			-->
+                        <Socket>
+                                <Name>IncludeNullCategory</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        -->
       <Socket>
         <Name>Domain</Name>
         <SocketTypes>
@@ -1963,14 +1954,14 @@
         <ReadOnly>false</ReadOnly>
       </Property>
       <!--
-			<Property>
-				<Name>IncludeNullCategory</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-			</Property>
-			-->
+                        <Property>
+                                <Name>IncludeNullCategory</Name>
+                                <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+                                <CategoryName>Categories</CategoryName>
+                                <Visible>true</Visible>
+                                <ReadOnly>false</ReadOnly>
+                        </Property>
+                        -->
       <Property>
         <Name>Domain</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -1997,7 +1988,6 @@
         <CategoryName>Domain</CategoryName>
         <Visible>true</Visible>
         <ReadOnly>false</ReadOnly>
-        
       </Property>
       <Property>
         <Name>To</Name>
@@ -2005,7 +1995,6 @@
         <CategoryName>Domain</CategoryName>
         <Visible>true</Visible>
         <ReadOnly>false</ReadOnly>
-        
       </Property>
       <Property>
         <Name>ClosedFrom</Name>
@@ -2266,23 +2255,23 @@
     </Categories>
     <Sockets>
       <!-- <Socket>
-				<Name>MasterIdColumn</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringT</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			<Socket>
-				<Name>DetailIdColumn</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringT</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>-->
+                                <Name>MasterIdColumn</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringT</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        <Socket>
+                                <Name>DetailIdColumn</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringT</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>-->
       <Socket>
         <Name>Quantifiers</Name>
         <SocketTypes>
@@ -2398,7 +2387,6 @@
         <MoreThanOne>false</MoreThanOne>
       </Socket>-->
       <Socket>
-        
         <Name>ExecutionType</Name>
         <SocketTypes>
           <BoxType>
@@ -2452,8 +2440,8 @@
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
       </Socket>-->
-      </Sockets>
-      <Properties>
+    </Sockets>
+    <Properties>
       <!--
       <Property>
         <Name>MasterIdColumn</Name>
@@ -3664,15 +3652,15 @@
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
       </Socket>
-     	<Socket>
-				<Name>NumberRuns</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::IntT</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>  
+      <Socket>
+        <Name>NumberRuns</Name>
+        <SocketTypes>
+          <BoxType>
+            <FunctionIceId>::Ferda::Modules::IntT</FunctionIceId>
+          </BoxType>
+        </SocketTypes>
+        <MoreThanOne>false</MoreThanOne>
+      </Socket>
     </Sockets>
     <Properties>
       <Property>
@@ -3754,13 +3742,13 @@
         <Visible>false</Visible>
         <ReadOnly>false</ReadOnly>
       </Property>
-			<Property>
-				<Name>NumberRuns</Name>
-				<TypeClassIceId>::Ferda::Modules::IntT</TypeClassIceId>
-				<Visible>false</Visible>
-				<ReadOnly>false</ReadOnly>
-				<Default>0</Default>
-			</Property>       
+      <Property>
+        <Name>NumberRuns</Name>
+        <TypeClassIceId>::Ferda::Modules::IntT</TypeClassIceId>
+        <Visible>false</Visible>
+        <ReadOnly>false</ReadOnly>
+        <Default>0</Default>
+      </Property>
     </Properties>
   </Box>
   <Box>
@@ -17557,108 +17545,108 @@
     </Properties>
   </Box>
   <!--
-	<Box>
-		<Identifier>DataPreparation.Categorization.Attribute</Identifier>
-		<IconPath>boxIcon.ico</IconPath>
-		<DesignPath>boxDesign.svg</DesignPath>
-		<Categories>
-			<string>DataPreparation.Categorization</string>
-		</Categories>
-		<Sockets>
-			<Socket>
-				<Name>ColumnOrDerivedColumn</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::Boxes::DataPreparation::Column::ColumnFunctions</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			<Socket>
-				<Name>NameInLiterals</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			<Socket>
-				<Name>Categories</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::CategoriesTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			<Socket>
-				<Name>CountOfCategories</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			<Socket>
-				<Name>XCategory</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			<Socket>
-				<Name>IncludeNullCategory</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-		</Sockets>
-		<Properties>
-			<Property>
-				<Name>NameInLiterals</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-			</Property>
-			<Property>
-				<Name>Categories</Name>
-				<TypeClassIceId>::Ferda::Modules::CategoriesT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-				<SettingModuleIdentifier>CategoriesT</SettingModuleIdentifier>
-			</Property>
-			<Property>
-				<Name>CountOfCategories</Name>
-				<TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>true</ReadOnly>
-				<Default>0</Default>
-			</Property>
-			<Property>
-				<Name>XCategory</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-			</Property>
-			<Property>
-				<Name>IncludeNullCategory</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-			</Property>
-		</Properties>
-	</Box>-->
+        <Box>
+                <Identifier>DataPreparation.Categorization.Attribute</Identifier>
+                <IconPath>boxIcon.ico</IconPath>
+                <DesignPath>boxDesign.svg</DesignPath>
+                <Categories>
+                        <string>DataPreparation.Categorization</string>
+                </Categories>
+                <Sockets>
+                        <Socket>
+                                <Name>ColumnOrDerivedColumn</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::Boxes::DataPreparation::Column::ColumnFunctions</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        <Socket>
+                                <Name>NameInLiterals</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        <Socket>
+                                <Name>Categories</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::CategoriesTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        <Socket>
+                                <Name>CountOfCategories</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        <Socket>
+                                <Name>XCategory</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                        <Socket>
+                                <Name>IncludeNullCategory</Name>
+                                <SocketTypes>
+                                        <BoxType>
+                                                <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+                                        </BoxType>
+                                </SocketTypes>
+                                <MoreThanOne>false</MoreThanOne>
+                        </Socket>
+                </Sockets>
+                <Properties>
+                        <Property>
+                                <Name>NameInLiterals</Name>
+                                <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+                                <Visible>true</Visible>
+                                <ReadOnly>false</ReadOnly>
+                        </Property>
+                        <Property>
+                                <Name>Categories</Name>
+                                <TypeClassIceId>::Ferda::Modules::CategoriesT</TypeClassIceId>
+                                <CategoryName>Categories</CategoryName>
+                                <Visible>true</Visible>
+                                <ReadOnly>false</ReadOnly>
+                                <SettingModuleIdentifier>CategoriesT</SettingModuleIdentifier>
+                        </Property>
+                        <Property>
+                                <Name>CountOfCategories</Name>
+                                <TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
+                                <CategoryName>Categories</CategoryName>
+                                <Visible>true</Visible>
+                                <ReadOnly>true</ReadOnly>
+                                <Default>0</Default>
+                        </Property>
+                        <Property>
+                                <Name>XCategory</Name>
+                                <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+                                <CategoryName>Categories</CategoryName>
+                                <Visible>true</Visible>
+                                <ReadOnly>false</ReadOnly>
+                        </Property>
+                        <Property>
+                                <Name>IncludeNullCategory</Name>
+                                <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+                                <CategoryName>Categories</CategoryName>
+                                <Visible>true</Visible>
+                                <ReadOnly>false</ReadOnly>
+                        </Property>
+                </Properties>
+        </Box>-->
   <Box>
     <Identifier>Wizards.Wizard</Identifier>
     <IconPath>wizard.ico</IconPath>
@@ -17666,12 +17654,12 @@
     <Categories>
       <string>Wizards</string>
     </Categories>
-    <!--	<Actions>
-			<Action>
-				<Name>RunScenario</Name>
-				<IconPath>reloadRequestIcon.ico</IconPath>
-			</Action>
-		</Actions> -->
+    <!--        <Actions>
+                        <Action>
+                                <Name>RunScenario</Name>
+                                <IconPath>reloadRequestIcon.ico</IconPath>
+                        </Action>
+                </Actions> -->
     <Sockets>
       <Socket>
         <Name>Wizard Input</Name>
@@ -17896,6 +17884,62 @@
         <Visible>true</Visible>
         <ReadOnly>false</ReadOnly>
         <SettingModuleIdentifier>RegEditor</SettingModuleIdentifier>
+      </Property>
+    </Properties>
+  </Box>
+  <Box>
+    <Identifier>Language.Lambda</Identifier>
+    <IconPath>lambda.ico</IconPath>
+    <DesignPath>lamgda.svg</DesignPath>
+    <Categories>
+      <string>Language</string>
+    </Categories>
+    <Sockets>
+      <Socket>
+        <Name>VariablesCount</Name>
+        <SocketTypes>
+          <BoxType>
+            <FunctionIceId>::Ferda::Modules::IntTInterface</FunctionIceId>
+          </BoxType>
+        </SocketTypes>
+        <MoreThanOne>false</MoreThanOne>
+      </Socket>
+    </Sockets>
+    <Properties>
+      <Property>
+        <Name>VariablesCount</Name>
+        <TypeClassIceId>::Ferda::Modules::IntT</TypeClassIceId>
+        <CategoryName>Type</CategoryName>
+        <Visible>true</Visible>
+        <ReadOnly>false</ReadOnly>
+      </Property>
+    </Properties>
+  </Box>
+  <Box>
+    <Identifier>Language.Variable</Identifier>
+    <IconPath>variable.ico</IconPath>
+    <DesignPath>variable.svg</DesignPath>
+    <Categories>
+      <string>Language</string>
+    </Categories>
+    <Sockets>
+      <Socket>
+        <Name>FunctionsType</Name>
+        <SocketTypes>
+          <BoxType>
+            <FunctionIceId>::Ferda:Modules::StringTInterface</FunctionIceId>
+          </BoxType>
+        </SocketTypes>
+        <MoreThanOne>false</MoreThanOne>
+      </Socket>
+    </Sockets>
+    <Properties>
+      <Property>
+        <Name>FunctionsType</Name>
+        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+        <CategoryName>Type</CategoryName>
+        <Visible>true</Visible>
+        <ReadOnly>false</ReadOnly>
       </Property>
     </Properties>
   </Box>

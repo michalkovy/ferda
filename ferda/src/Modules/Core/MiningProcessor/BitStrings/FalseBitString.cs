@@ -83,6 +83,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         public int Sum
         {
             get { return 0; }
+			set {}
         }
 
         #endregion

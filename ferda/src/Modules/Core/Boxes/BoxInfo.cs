@@ -20,41 +20,41 @@ namespace Ferda.Modules.Boxes
 {
     /// <summary>
     /// <para>
-    /// This is the basic implementation of 
+    /// This is the basic implementation of
     /// <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/>.
     /// </para>
     /// <para>
-    /// Lot of provided features are stored in configuration XML 
-    /// files. There are two kinds of configuration files. The 
+    /// Lot of provided features are stored in configuration XML
+    /// files. There are two kinds of configuration files. The
     /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box">first one</see>
-    /// contains settings independent on localization. The 
-    /// <see cref="T:Ferda.Modules.Boxes.Serializer.Localization.BoxLocalization">second one</see> 
+    /// contains settings independent on localization. The
+    /// <see cref="T:Ferda.Modules.Boxes.Serializer.Localization.BoxLocalization">second one</see>
     /// contains localization of Box module
     /// </para>
     /// <para>
-    /// Thanks to the configuration and localization files, most of 
-    /// <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see> 
-    /// functions are implemeted directly but some functions are still 
+    /// Thanks to the configuration and localization files, most of
+    /// <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see>
+    /// functions are implemeted directly but some functions are still
     /// abstract and some are virtual.
     /// </para>
     /// </summary>
     /// <remarks>
     /// <para>
     /// The <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box">
-    /// first type of configuration XML file</see> is 
+    /// first type of configuration XML file</see> is
     /// <see cref="T:Ferda.Modules.Boxes.Serializer.Reader">deserealized</see>
-    /// to <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Helper"> 
-    /// more effective representation</see> and cached to 
-    /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.box">member field</see> 
+    /// to <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Helper">
+    /// more effective representation</see> and cached to
+    /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.box">member field</see>
     /// alredy in the constructor.
     /// </para>
     /// <para>
     /// The <see cref="T:Ferda.Modules.Boxes.Serializer.Localization.BoxLocalization">
-    /// second type of configuration XML file(s) (i.e. localization)</see> is(are) 
+    /// second type of configuration XML file(s) (i.e. localization)</see> is(are)
     /// <see cref="T:Ferda.Modules.Boxes.Serializer.Reader">deserealized</see>
     /// to <see cref="T:Ferda.Modules.Boxes.Serializer.Localization.Helper">
-    /// more effective representation</see> and cached to 
-    /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.boxLocalizations">member field</see> 
+    /// more effective representation</see> and cached to
+    /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.boxLocalizations">member field</see>
     /// when the specified <c>localePrefs</c> is required.
     /// </para>
     /// </remarks>
@@ -63,7 +63,7 @@ namespace Ferda.Modules.Boxes
         #region Config files directory
 
         /// <summary>
-        /// Name of application subdirectory, were are 
+        /// Name of application subdirectory, were are
         /// configuration files stored (in next subdirectories).
         /// </summary>
         /// <seealso cref="P:Ferda.Modules.Boxes.BoxInfo._configFilesDirectoryPath"/>
@@ -72,10 +72,10 @@ namespace Ferda.Modules.Boxes
         private string _configFilesDirectoryPath = String.Empty;
 
         /// <summary>
-        /// Default directory for config files is in ApplicationDomainDirectory + 
-        /// <see cref="P:Ferda.Modules.Boxes.BoxInfo.configFilesFolderName"/> + 
-        /// name of directory of current box i.e. 
-        /// <see cref="P:Ferda.Modules.Boxes.BoxInfo.identifier"/> when you replace 
+        /// Default directory for config files is in ApplicationDomainDirectory +
+        /// <see cref="P:Ferda.Modules.Boxes.BoxInfo.configFilesFolderName"/> +
+        /// name of directory of current box i.e.
+        /// <see cref="P:Ferda.Modules.Boxes.BoxInfo.identifier"/> when you replace
         /// pluses "+" by <see cref="F:System.IO.Path.DirectorySeparatorChar"/>.
         /// </summary>
         public string ConfigFilesDirectoryPath
@@ -120,13 +120,13 @@ namespace Ferda.Modules.Boxes
         private const string localizationFileNamePostfix = "xml";
 
         /// <summary>
-        /// Allows to obtain name of localization config file. 
-        /// E.g. Localization.en-US.xml where "Localization" invariable is prefix, 
+        /// Allows to obtain name of localization config file.
+        /// E.g. Localization.en-US.xml where "Localization" invariable is prefix,
         /// "xml" is invariable posfix and "en-US" is varying localizeId.
         /// </summary>
         /// <param name="localeId">
-        /// Identification of localization i.e. something like "en-US" or 
-        /// "cs-CZ" ... or empty string for default localization ("") or 
+        /// Identification of localization i.e. something like "en-US" or
+        /// "cs-CZ" ... or empty string for default localization ("") or
         /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.defaultLanguageId"/>.
         /// </param>
         /// <returns>String representing name of localization config file.</returns>
@@ -147,7 +147,7 @@ namespace Ferda.Modules.Boxes
         #region Config files cache
 
         /// <summary>
-        /// Cache for <see cref="T:Ferda.Modules.Boxes.Serializer.Reader">deserealized</see> 
+        /// Cache for <see cref="T:Ferda.Modules.Boxes.Serializer.Reader">deserealized</see>
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.Box">config file</see>
         /// (independent on localization).
         /// </summary>
@@ -160,7 +160,7 @@ namespace Ferda.Modules.Boxes
         protected const string defaultLanguageId = "en-US";
 
         /// <summary>
-        /// Cache for <see cref="T:Ferda.Modules.Boxes.Serializer.Reader">deserealized</see> 
+        /// Cache for <see cref="T:Ferda.Modules.Boxes.Serializer.Reader">deserealized</see>
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Localization.BoxLocalization">localization config file</see>.
         /// </summary>
         /// <remarks>
@@ -176,8 +176,8 @@ namespace Ferda.Modules.Boxes
 
         /// <summary>
         /// <para>Default constructor.</para>
-        /// <para>Loads box config file (independent on localization) 
-        /// i.e. stores box config file deserealization to 
+        /// <para>Loads box config file (independent on localization)
+        /// i.e. stores box config file deserealization to
         /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.box">cache</see>.
         /// </para>
         /// <para>Config files are loaded from <see cref="F:Ferda.Modules.Boxes.BoxInfo._configFilesDirectoryPath"/>.</para>
@@ -245,7 +245,7 @@ namespace Ferda.Modules.Boxes
         /// </summary>
         /// <param name="configurationHelper">The configuration helper.</param>
         /// <remarks>
-        /// If this constructor is used no configuration file is loaded 
+        /// If this constructor is used no configuration file is loaded
         /// and localization config files are loaded (deserealized and stored in
         /// cache) as needed (lazy loading).
         /// </remarks>
@@ -267,9 +267,9 @@ namespace Ferda.Modules.Boxes
         /// <param name="defaultLocalization">The default localization.</param>
         /// <param name="localizations">The localizations.</param>
         /// <remarks>
-        /// If this constructor is used no configuration file is loaded 
+        /// If this constructor is used no configuration file is loaded
         /// and localization config files are loaded (deserealized and stored in
-        /// cache) as needed (lazy loading) but only if specified 
+        /// cache) as needed (lazy loading) but only if specified
         /// <c>localizations</c> does not satisfy some localePrefs.
         /// </remarks>
         public BoxInfo(
@@ -394,7 +394,7 @@ namespace Ferda.Modules.Boxes
         /// <remarks>
         /// This string identifier is parsed i.e. dots (".") are
         /// replaced by <see cref="P:System.IO.Path.DirectorySeparatorChar"/>.
-        /// Returned path is combined with application directory`s 
+        /// Returned path is combined with application directory`s
         /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.configFilesFolderName">subdirectory</see>
         /// and final path is used for getting stored configuration [localization] XML files.
         /// </remarks>
@@ -431,7 +431,7 @@ namespace Ferda.Modules.Boxes
         /// of the box module`s functions.
         /// </returns>
         /// <example>
-        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see> 
+        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see>
         /// <see cref="M:Ferda.Modules.Boxes.IBoxInfo.GetBoxModuleFunctionsIceIds()"/>.
         /// </example>
         public abstract string[] GetBoxModuleFunctionsIceIds();
@@ -447,7 +447,7 @@ namespace Ferda.Modules.Boxes
         /// as list of options for property named <c>propertyName</c>.
         /// </returns>
         /// <example>
-        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see> 
+        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see>
         /// <see cref="M:Ferda.Modules.Boxes.IBoxInfo.GetPropertyOptions(System.String,Ferda.Modules.BoxModuleI)"/>.
         /// </example>
         /// <remarks>
@@ -476,7 +476,7 @@ namespace Ferda.Modules.Boxes
         /// The <see cref="T:Ferda.Modules.PropertyValue"/>.
         /// </returns>
         /// <example>
-        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see> 
+        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see>
         /// <see cref="M:Ferda.Modules.Boxes.IBoxInfo.GetPropertyObjectFromInterface(System.String,Ice.ObjectPrx)"/>.
         /// </example>
         /// <exception cref="T:Ferda.Modules.NameNotExistError">Iff
@@ -588,6 +588,16 @@ namespace Ferda.Modules.Boxes
         /// <see cref="P:Ferda.Modules.BoxModuleI.LocalePrefs"/>.
         /// </remarks>
         public abstract string GetDefaultUserLabel(BoxModuleI boxModule);
+		
+		public virtual PropertyInfo[] GetAdditionalProperties(string[] localePrefs, BoxModuleI boxModule)
+		{
+			return new PropertyInfo[0];
+		}
+		
+		public virtual SocketInfo[] GetAdditionalSockets(string[] localePrefs, BoxModuleI boxModule)
+		{
+			return new SocketInfo[0];
+		}
 
         #endregion
 
@@ -1149,11 +1159,11 @@ namespace Ferda.Modules.Boxes
         /// Box module can be in any number of categories.
         /// </para>
         /// <para>
-        /// These names are not localized  i.e. the name of 
+        /// These names are not localized  i.e. the name of
         /// the category is an identifier of the category.
         /// </para>
         /// <para>
-        /// For localization of this identifiers use 
+        /// For localization of this identifiers use
         /// <see cref="M:Ferda.Modules.Boxes.IBoxInfo.GetBoxCategoryLocalizedName(System.String,System.String)"/>.
         /// </para>
         /// </remarks>
@@ -1253,11 +1263,11 @@ namespace Ferda.Modules.Boxes
         #region Other helping functions
 
         /// <summary>
-        /// Gets localized data prepared for processing and completing result for 
+        /// Gets localized data prepared for processing and completing result for
         /// <see cref="M:Ferda.Modules.BoxModuleI.getModulesAskingForCreation()"/>.
         /// </summary>
         /// <param name="localePrefs">The localization preferences.</param>
-        /// <returns>Prepared data for next processing by 
+        /// <returns>Prepared data for next processing by
         /// <see cref="M:Ferda.Modules.Boxes.BoxInfo.GetModulesAskingForCreation(System.String[], Ferda.Modules.BoxModuleI)"/>.
         /// </returns>
         public Dictionary<string, ModulesAskingForCreation> getModulesAskingForCreationNonDynamic(string[] localePrefs)

@@ -71,7 +71,10 @@
             this.main_toolTip.AutomaticDelay = 1500;
             this.main_toolTip.AutoPopDelay = 5000;
             this.main_toolTip.InitialDelay = 1500;
+#if MONO
+#else
             this.main_toolTip.IsBalloon = true;
+#endif
             this.main_toolTip.ReshowDelay = 500;
             // 
             // RegualExpEditor

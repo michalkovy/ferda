@@ -575,6 +575,14 @@ module Ferda {
 
 			/**
 			 *
+			 * //TODO
+			 * For lambda-like boxes
+			 *
+			 **/
+			idempotent PropertyInfoSeq getAdditionalProperties();
+
+			/**
+			 *
 			 * Creates connection with one BoxModule to socket.
 			 *
 			 * @param socketName Name of the socket, where should be connected

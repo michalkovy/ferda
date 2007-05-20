@@ -19,6 +19,10 @@
 		</csc>
 	</target>
 	<target name="buildaddins">
+		<if test="${framework::get-target-framework()=='mono-2.0'}">
+			<property name="defines" value="MONO"/>
+		</if>
+
 			<mkdir dir="${addInsBuild.dir}/Common"/>
 
     <csc target="library" output="${path::combine(build.dir,'AddInsCommon.dll')}" debug="${debug}" optimize="${optimize}">
@@ -62,6 +66,7 @@
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
@@ -83,7 +88,8 @@
      		 </fileset>
     		</copy>
 
-		<csc target="library" output="${path::combine(addInsBuild.dir,'ExplainTable.dll')}" debug="${debug}" optimize="${optimize}">
+
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'ExplainTable.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="ExplainTable/**.cs"/>
 				<include name="ExplainTable/MyIce/**.cs"/>
@@ -98,6 +104,7 @@
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll"/>
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
@@ -146,7 +153,7 @@
      		 </fileset>
     		</copy>
     
-		<csc target="library" output="${path::combine(addInsBuild.dir,'FrequencyDisplayer.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'FrequencyDisplayer.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="FrequencyDisplayer/**.cs"/>
 				<include name="FrequencyDisplayer/MyIce/**.cs"/>
@@ -181,7 +188,7 @@
     		</copy>
     		
 
-		<csc target="library" output="${path::combine(addInsBuild.dir,'EditCategories.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'EditCategories.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="EditCategories/**.cs"/>
 				<include name="EditCategories/MyIce/**.cs"/>
@@ -198,6 +205,7 @@
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
@@ -230,6 +238,7 @@
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
@@ -261,6 +270,7 @@
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
@@ -321,6 +331,7 @@
       <references>
         <include name="System.dll"/>
         <include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
         <include name="System.Windows.Forms.dll"/>
         <include name="System.Collections.dll"/>
         <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
@@ -333,7 +344,7 @@
       </references>
     </csc>
     
-		<csc target="library" output="${path::combine(addInsBuild.dir,'FormEditor.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'FormEditor.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="FormEditor/**.cs"/>
 				<include name="FormEditor/MyIce/**.cs"/>
@@ -347,6 +358,7 @@
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
@@ -358,7 +370,7 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
-		<csc target="library" output="${path::combine(addInsBuild.dir,'RegEditor.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'RegEditor.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="RegEditor/**.cs"/>
 				<include name="RegEditor/MyIce/**.cs"/>
@@ -372,6 +384,7 @@
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
@@ -398,6 +411,7 @@
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
 				<include name="System.Windows.Forms.dll"/>
 				<include name="System.Collections.dll"/>
 				<include name="System.Drawing.dll" />

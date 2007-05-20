@@ -543,6 +543,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
                 return _sum;
             }
+            
+			set
+			{
+				_sum = value;
+			}
         }
 
 #if UNSAFE
@@ -1157,5 +1162,252 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
             return hash;
         }
+
+		protected ulong[] Array
+		{
+			get
+			{
+#if USE64BIT
+				return _array;
+#else
+				throw new NotImplementedException();
+#endif
+			}
+		}
+		
+		/// <summary>
+		/// sum = (a&b).Sum
+		/// </summary>
+		public unsafe static void AndSum(IBitString a, IBitString b, int sumA, int sumB, out int sum)
+		{
+			ulong[] ap = null;
+			ulong[] bp = null;
+			sum = 0;
+			
+			fillSum(a, sumA, sumB, ref sum, ref ap);
+			if (ap == null)
+			{
+				return;
+			}
+			else
+			{
+				fillSum(b, sumB, sumA, ref sum, ref bp);
+				if (bp == null)
+				{
+					return;
+				}
+				//else clausule is down
+			}
+
+			fixed (ulong* aP = ap, bP = bp)
+			{
+				fixed (Byte* lookup = _lookup16)
+				{
+					ulong* aPt = aP, bPt = bP, stopPt = aP + ap.Length;
+					ulong temp;
+					while (aPt < stopPt)
+					{
+						temp = (*aPt++)&(*bPt++);
+						sum += *(lookup + (int)(temp & _16bits));
+						sum += *(lookup + (int)((temp >> 16) & _16bits));
+						sum += *(lookup + (int)((temp >> 32) & _16bits));
+						sum += *(lookup + (int)(temp >> 48));
+					}
+				}
+			}
+		}
+		
+		/// <summary>
+		/// sum1 = (a&b).Sum
+		/// sum2 = (a&c).Sum
+		/// </summary>
+		public unsafe static void TwoAndSum(IBitString a, IBitString b, IBitString c, int sumA, int sumB, int sumC, out int sum1, out int sum2)
+		{
+			ulong[] ap = null;
+			ulong[] bp = null;
+			ulong[] cp = null;
+			sum1 = 0;
+			sum2 = 0;
+			
+			fillSums(a, sumA, sumB, sumC, ref sum1, ref sum2, ref ap);
+			if (ap == null)
+			{
+				return;
+			}
+			else
+			{
+				fillSum(b, sumB, sumA, ref sum1, ref bp);
+				if (bp == null)
+				{
+					AndSum(a, c, sumA, sumC, out sum2);
+					return;
+				}
+				else
+				{
+					fillSum(c, sumC, sumA, ref sum2, ref cp);
+					if (cp == null)
+					{
+						AndSum(a, b, sumA, sumB, out sum1);
+						return;
+					}
+					//else clausule is down
+				}
+			}
+
+			fixed (ulong* aP = ap, bP = bp, cP = cp)
+			{
+				fixed (Byte* lookup = _lookup16)
+				{
+					ulong* aPt = aP, bPt = bP, cPt = cP, stopPt = aP + ap.Length;
+					ulong temp1, temp2;
+					while (aPt < stopPt)
+					{
+						temp1 = *aPt++;
+						temp2 = *bPt++;
+						temp2 &= temp1;
+						sum1 += *(lookup + (int)(temp2 & _16bits));
+						sum1 += *(lookup + (int)((temp2 >> 16) & _16bits));
+						sum1 += *(lookup + (int)((temp2 >> 32) & _16bits));
+						sum1 += *(lookup + (int)(temp2 >> 48));
+						temp2 = *cPt++;
+						temp2 &= temp1;
+						sum2 += *(lookup + (int)(temp2 & _16bits));
+						sum2 += *(lookup + (int)((temp2 >> 16) & _16bits));
+						sum2 += *(lookup + (int)((temp2 >> 32) & _16bits));
+						sum2 += *(lookup + (int)(temp2 >> 48));
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// sum1 = (a&c).Sum
+		/// sum2 = (b&c).Sum
+		/// sum3 = (a&d).Sum
+		/// sum4 = (b&d).Sum
+		/// </summary>
+		public unsafe static void CrossAndSum(IBitString a, IBitString b, IBitString c, IBitString d, int sumA, int sumB, int sumC, int sumD, out int sum1, out int sum2, out int sum3, out int sum4)
+		{
+			ulong[] ap = null;
+			ulong[] bp = null;
+			ulong[] cp = null;
+			ulong[] dp = null;
+			sum1 = 0;
+			sum2 = 0;
+			sum3 = 0;
+			sum4 = 0;
+			
+			fillSums(a, sumA, sumC, sumD, ref sum1, ref sum3, ref ap);
+			if (ap == null)
+			{
+				TwoAndSum(b, c, d, sumB, sumC, sumD, out sum2, out sum4);
+				return;
+			}
+			else
+			{
+				fillSums(b, sumB, sumC, sumD, ref sum2, ref sum4, ref bp);
+				if (bp == null)
+				{
+					TwoAndSum(a, c, d, sumA, sumC, sumD, out sum1, out sum3);
+					return;
+				}
+				else
+				{
+					fillSums(c, sumC, sumA, sumB, ref sum1, ref sum2, ref cp);
+					if (cp == null)
+					{
+						TwoAndSum(d, a, b, sumD, sumA, sumB, out sum3, out sum4);
+						return;
+					}
+					else
+					{
+						fillSums(d, sumD, sumA, sumB, ref sum3, ref sum4, ref dp);
+						if (dp == null)
+						{
+							TwoAndSum(d, a, b, sumD, sumA, sumB, out sum3, out sum4);
+							return;
+						}
+						//else clausule is down
+					}
+				}
+			}
+
+			fixed (ulong* aP = ap, bP = bp, cP = cp, dP = dp)
+			{
+				fixed (Byte* lookup = _lookup16)
+				{
+					ulong* aPt = aP, bPt = bP, cPt = cP, dPt = dP, stopPt = aP + ap.Length;
+					ulong temp1, temp2, temp3;
+					while (aPt < stopPt)
+					{
+						temp1 = *aPt++;
+						temp2 = *cPt++;
+						temp3 = temp1 & temp2;
+						sum1 += *(lookup + (int)(temp3 & _16bits));
+						sum1 += *(lookup + (int)((temp3 >> 16) & _16bits));
+						sum1 += *(lookup + (int)((temp3 >> 32) & _16bits));
+						sum1 += *(lookup + (int)(temp3 >> 48));
+						temp3 = *dPt++;
+						temp1 &= temp3;
+						sum2 += *(lookup + (int)(temp1 & _16bits));
+						sum2 += *(lookup + (int)((temp1 >> 16) & _16bits));
+						sum2 += *(lookup + (int)((temp1 >> 32) & _16bits));
+						sum2 += *(lookup + (int)(temp1 >> 48));
+						temp1 = *bPt++;
+						temp2 &= temp1;
+						sum3 += *(lookup + (int)(temp2 & _16bits));
+						sum3 += *(lookup + (int)((temp2 >> 16) & _16bits));
+						sum3 += *(lookup + (int)((temp2 >> 32) & _16bits));
+						sum3 += *(lookup + (int)(temp2 >> 48));
+						temp3 &= temp1;
+						sum4 += *(lookup + (int)(temp3 & _16bits));
+						sum4 += *(lookup + (int)((temp3 >> 16) & _16bits));
+						sum4 += *(lookup + (int)((temp3 >> 32) & _16bits));
+						sum4 += *(lookup + (int)(temp3 >> 48));
+					}
+				}
+			}
+		}
+		private static void fillSum(IBitString iBS, int actSum, int secondSum, ref int sumSet, ref ulong[] bp)
+		{
+			if (iBS is EmptyBitString)
+			{
+				sumSet	= secondSum;
+			}
+			else if (iBS is FalseBitString)
+			{
+				sumSet	= actSum;
+			}
+			else if (iBS is BitString)
+			{
+				bp = ((BitString)iBS).Array;
+			}
+			else
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		private static void fillSums(IBitString iBS, int actSum, int firstSum, int secondSum, ref int firstSumSet, ref int secondSumSet, ref ulong[] bp)
+		{
+			if (iBS is EmptyBitString)
+			{
+				firstSumSet	= firstSum;
+				secondSumSet	= secondSum;
+			}
+			else if (iBS is FalseBitString)
+			{
+				firstSumSet	= actSum;
+				secondSumSet	= actSum;
+			}
+			else if (iBS is BitString)
+			{
+				bp = ((BitString)iBS).Array;
+			}
+			else
+			{
+				throw new NotImplementedException();
+			}
+		}
     }
 }
