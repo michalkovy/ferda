@@ -9,11 +9,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 {
     public class MissingInformation : MostRecentlyUsed<Set<string>, IBitString>
     {
-        private readonly IBitStringCache _bitStringCache;
+        private static IBitStringCache _bitStringCache;
+		private static readonly MissingInformation _instance = new MissingInformation();
 
         public const int cacheDefaultSize = 1048576; // ~1Mb
 
-        public MissingInformation()
+        private MissingInformation()
             : base(cacheDefaultSize)
         {
             _bitStringCache = BitStringCache.GetInstance();
@@ -77,5 +78,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         {
             return itemToMeasure.Length;
         }
+		
+		public static MissingInformation GetInstance()
+        {
+            return _instance;
+		}
     }
 }

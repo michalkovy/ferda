@@ -190,7 +190,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			nineFoldTableOfBitStrings nineFT = miningSetting.NineFT;
 			IEvaluator evaluator = miningSetting.Evaluator;
 			
-			MissingInformation missingInformation = new MissingInformation();
+			MissingInformation missingInformation = MissingInformation.GetInstance();
 			IBitString xA;
 			
 			GetMissings(pA, out xA, _succedent.UsedAttributes, missingInformation);
@@ -260,7 +260,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             else
                 throw new NotImplementedException();
 			
-            MissingInformation missingInformation = new MissingInformation();
+            MissingInformation missingInformation = MissingInformation.GetInstance();
             IBitString xS;
             IBitString nS;
             IBitString xC;
@@ -362,7 +362,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             else
                 throw new NotImplementedException();
 			
-            MissingInformation missingInformation = new MissingInformation();
+            MissingInformation missingInformation = MissingInformation.GetInstance();
             IBitString xS;
             IBitString nS;
             IBitString xA;
