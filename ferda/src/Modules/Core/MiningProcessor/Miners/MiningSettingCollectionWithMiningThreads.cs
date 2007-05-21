@@ -9,6 +9,7 @@ namespace Ferda.Guha.MiningProcessor
 		private Mine mine;
 		private Finished finished;
 		private Semaphore semaphore;
+		private Semaphore semaphore2;
 		private bool runThreads = true;
 		private List<Thread> threads = new List<Thread>();
 		
@@ -20,6 +21,7 @@ namespace Ferda.Guha.MiningProcessor
 			mine = m;
 			finished = f;
 			semaphore = new Semaphore(0, 2 * System.Environment.ProcessorCount);
+			semaphore2 = new Semaphore(2 * System.Environment.ProcessorCount, 2 * System.Environment.ProcessorCount);
 			for(int i = 0; i < System.Environment.ProcessorCount; i++)
 			{
 				Thread thread = new Thread(threadDo);
@@ -44,6 +46,7 @@ namespace Ferda.Guha.MiningProcessor
 						if(runThreadsLocal)
 						{
 							t = miningSetting.Dequeue();
+							semaphore2.Release();
 						}
 						else
 						{
@@ -60,6 +63,7 @@ namespace Ferda.Guha.MiningProcessor
 		{
 			lock(miningSetting)
 			{
+				semaphore2.WaitOne();
 				miningSetting.Enqueue(t);
 				semaphore.Release();
 			}
@@ -73,6 +77,7 @@ namespace Ferda.Guha.MiningProcessor
 			}
 			for(int i = 0; i < System.Environment.ProcessorCount; i++)
 			{
+				semaphore2.WaitOne();
 				semaphore.Release();
 			}
 			
