@@ -4,13 +4,13 @@
  *  --------------
  *  Copyright (C) 2002  Tony Allowatt
  *  Last Update: 12/14/2002
- * 
+ *
  *  THE SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS", WITHOUT WARRANTY
  *  OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE AUTHOR BE
  *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM,
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF THIS
  *  SOFTWARE.
- * 
+ *
  *  Public types defined in this file:
  *  ----------------------------------
  *  namespace Flobbster.Windows.Forms
@@ -22,7 +22,7 @@
  *     class PropertyTable
  *
  * www.codeproject.com/cs/miscctrl/bending_property.asp
- * 
+ *
  ********************************************************************/
 
 using System;
@@ -215,7 +215,7 @@ namespace Ferda.FrontEnd.External
 		/// <param name="typeConverter">The fully qualified name of the type of the type
 		/// converter for this property.  This type must derive from TypeConverter.</param>
 		public PropertySpec(string name, Type type, string category, string description, object defaultValue,
-			Type editor, string typeConverter) : 
+			Type editor, string typeConverter) :
 			this(name, type.AssemblyQualifiedName, category, description, defaultValue,
 			editor.AssemblyQualifiedName, typeConverter) { }
 
@@ -1008,6 +1008,7 @@ namespace Ferda.FrontEnd.External
 	public class PropertyTable : PropertyBag
 	{
 		private Hashtable propValues;
+		
 
 		/// <summary>
 		/// Initializes a new instance of the PropertyTable class.
@@ -1023,7 +1024,7 @@ namespace Ferda.FrontEnd.External
 		/// </summary>
 		public object this[string key]
 		{
-			get { return propValues[key]; }
+			get { return  propValues[key]; }
 			set { propValues[key] = value; }
 		}
 
@@ -1032,7 +1033,13 @@ namespace Ferda.FrontEnd.External
 		/// </summary>
 		protected override void OnGetValue(PropertySpecEventArgs e)
 		{
-			e.Value = propValues[e.Property.Name];
+			if (e != null && e.Property != null && e.Property.Name != null)
+			{
+				if (propValues.ContainsKey(e.Property.Name))
+				{
+					e.Value = propValues[e.Property.Name];
+				}
+			}
 			base.OnGetValue(e);
 		}
 
@@ -1041,7 +1048,10 @@ namespace Ferda.FrontEnd.External
 		/// </summary>
 		protected override void OnSetValue(PropertySpecEventArgs e)
 		{
-			propValues[e.Property.Name] = e.Value;
+			if(e != null && e.Property != null)
+			{
+				propValues[e.Property.Name] = e.Value;
+			}
 			base.OnSetValue(e);
 		}
 

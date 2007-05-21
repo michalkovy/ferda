@@ -37,13 +37,13 @@ using Ferda.FrontEnd.Desktop;
 namespace Ferda.FrontEnd.Properties
 {
     /// <summary>
-    /// It is used for asynchronous property getting, when there are more boxes 
+    /// It is used for asynchronous property getting, when there are more boxes
     /// selected. It determines the state of the property getting.
     /// </summary>
     public enum EMoreBoxesTemporaryValueState
     {
         /// <summary>
-        /// No property value has returned from asynchronous calling, the 
+        /// No property value has returned from asynchronous calling, the
         /// value of the property is set to initial value
         /// </summary>
         First,
@@ -52,7 +52,7 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         Right,
         /// <summary>
-        /// The properties returning from asychnronous calling are different, 
+        /// The properties returning from asychnronous calling are different,
         /// therefore the right behaviour is to set the property value back
         /// to initial value
         /// </summary>
@@ -106,7 +106,7 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         protected Dictionary<string, object> temporaryValues;
         /// <summary>
-        /// A dictionary to get a type of the property from the 
+        /// A dictionary to get a type of the property from the
         /// </summary>
         protected Dictionary<string, string> temporaryPropertyTypes;
         /// <summary>
@@ -352,6 +352,15 @@ namespace Ferda.FrontEnd.Properties
             }
 
             propertyBag = new PropertyTable();
+#if MONO
+			FerdaPropertySpec ps = new FerdaPropertySpec("nothing set", "System.String", false);
+			ps.Category = "nothing set";
+			
+			//geting the socket information about the category
+			ps.Description = "nothing set";
+			
+			propertyBag.Properties.Add(ps);
+#endif
             this.SelectedObject = propertyBag;
         }
 
@@ -359,7 +368,7 @@ namespace Ferda.FrontEnd.Properties
         /// Adapts the PropertyGrid when another object than a box is selected.
         /// Uses the SelectedObject as its object.
         /// </summary>
-        /// <param name="objectProperties">The 
+        /// <param name="objectProperties">The
         /// <see cref="T:Ferda.FrontEnd.External.PropertyTable"/> object
         /// that contains information about the object.
         /// </param>
@@ -506,7 +515,7 @@ namespace Ferda.FrontEnd.Properties
         /// </summary>
         /// <param name="catcher">Catcher of the connection</param>
         /// <param name="value">New value of the property</param>
-        /// <param name="moreBoxes">If the refresh of the property grid is 
+        /// <param name="moreBoxes">If the refresh of the property grid is
         /// from one or more boxes</param>
         public void ChangedPropertyValue(AsyncPropertyCatcher catcher, object value, bool moreBoxes)
         {
@@ -534,7 +543,7 @@ namespace Ferda.FrontEnd.Properties
                                     if (int32Value != (Int32)temporaryValues[catcher.PropertyName])
                                     {
                                         temporaryValues[catcher.PropertyName] = (Int32)0;
-                                        moreBoxesValuesState[catcher.PropertyName] = 
+                                        moreBoxesValuesState[catcher.PropertyName] =
                                             EMoreBoxesTemporaryValueState.Wrong;
                                     }
                                     break;
@@ -1060,7 +1069,7 @@ namespace Ferda.FrontEnd.Properties
 
                                 //it is readonly or it is already there as a socket -
                                 //cannot edit "socketed" value
-                                if (box.IsPropertyReadOnly(pinfo.name) || 
+                                if (box.IsPropertyReadOnly(pinfo.name) ||
                                     box.GetPropertySocking(pinfo.name))
                                 {
                                     ps.Attributes = new Attribute[]
@@ -1085,11 +1094,11 @@ namespace Ferda.FrontEnd.Properties
 
         /// <summary>
         /// Adds the common properties of the selected boxes on the desktop
-        /// to the <see cref="T:Ferda.FrontEnd.External.PropertyTable"/> 
+        /// to the <see cref="T:Ferda.FrontEnd.External.PropertyTable"/>
         /// object. Common properties mean that all the boxes have the property
         /// of that name and the same type.
         /// </summary>
-        /// <param name="boxes">The boxes from which the properties should 
+        /// <param name="boxes">The boxes from which the properties should
         /// be created</param>
         /// <returns>A <see cref="T:Ferda.FrontEnd.External.PropertyTable"/>
         /// object filled with common properties</returns>
@@ -1105,7 +1114,7 @@ namespace Ferda.FrontEnd.Properties
             //increasing the number of clicks of the user on the desktop
             bag.ClickID = IncreaseClickID();
 
-            //first creator - properties from this creator will be 
+            //first creator - properties from this creator will be
             //compared to creators from other boxes
             IBoxModuleFactoryCreator firstCreator = boxes[0].MadeInCreator;
 
@@ -1151,7 +1160,7 @@ namespace Ferda.FrontEnd.Properties
                         //bool canBeSetWithModule = true;
                         //foreach (IBoxModule box in boxes)
                         //{
-                        //    canBeSetWithModule = 
+                        //    canBeSetWithModule =
                         //        box.IsPropertySetWithSettingModule(pinfo.name);
                         //}
                         ////we can set the property with a module (ODBC Connection string)
@@ -1174,8 +1183,8 @@ namespace Ferda.FrontEnd.Properties
                         //            ps.Attributes = new Attribute[]
                         //            {
                         //                ReadOnlyAttribute.Yes,
-                        //                new TypeConverterAttribute(typeof(OtherPropertyAddingConverter)), 
-                        //                new EditorAttribute(typeof(OtherPropertyEditor), 
+                        //                new TypeConverterAttribute(typeof(OtherPropertyAddingConverter)),
+                        //                new EditorAttribute(typeof(OtherPropertyEditor),
                         //                typeof(System.Drawing.Design.UITypeEditor))
                         //            };
                         //        }
@@ -1184,7 +1193,7 @@ namespace Ferda.FrontEnd.Properties
                         //            ps.Attributes = new Attribute[]
                         //            {
                         //                new TypeConverterAttribute(typeof(OtherPropertyAddingConverter)),
-                        //                new EditorAttribute(typeof(OtherPropertyEditor), 
+                        //                new EditorAttribute(typeof(OtherPropertyEditor),
                         //                typeof(System.Drawing.Design.UITypeEditor))
                         //            };
                         //        }
@@ -1244,7 +1253,7 @@ namespace Ferda.FrontEnd.Properties
 
         /// <summary>
         /// Determines if the property is socked in more boxes (it is taken out to the
-        /// desktop as a socket). The rule is that if there is one box that has this 
+        /// desktop as a socket). The rule is that if there is one box that has this
         /// property socked, then it is socked in all the boxes.
         /// </summary>
         /// <param name="boxes">Boxes with the property</param>
@@ -1342,7 +1351,7 @@ namespace Ferda.FrontEnd.Properties
         }
 
         /// <summary>
-        /// Creates a property for a "::Ferda::Modules::StringT". There can be not 
+        /// Creates a property for a "::Ferda::Modules::StringT". There can be not
         /// only string, but also types of ComboBoxes and this method decides, which
         /// FerdaPropertySpec will be created
         /// </summary>
@@ -1482,7 +1491,7 @@ namespace Ferda.FrontEnd.Properties
                     ps.Attributes = new Attribute[]
                     {
                         ReadOnlyAttribute.Yes,
-                        new TypeConverterAttribute(typeof(OtherPropertyAddingConverter)), 
+                        new TypeConverterAttribute(typeof(OtherPropertyAddingConverter)),
                         new EditorAttribute(typeof(OtherPropertyEditor), typeof(System.Drawing.Design.UITypeEditor))
                     };
                 }
@@ -1510,7 +1519,7 @@ namespace Ferda.FrontEnd.Properties
                 {
                     ps.Attributes = new Attribute[]
                     {
-                        new TypeConverterAttribute(typeof(OtherPropertyConverter)), 
+                        new TypeConverterAttribute(typeof(OtherPropertyConverter)),
                         new EditorAttribute(typeof(OtherPropertyEditor), typeof(System.Drawing.Design.UITypeEditor))
                     };
                 }
@@ -2105,7 +2114,7 @@ namespace Ferda.FrontEnd.Properties
 
         /// <summary>
         /// The method gets the correct date (or datetime) property according
-        /// to the property name for more boxes. The DateT and DateTimeT structures of the 
+        /// to the property name for more boxes. The DateT and DateTimeT structures of the
         /// ModulesManager are both converted to the DateTime structure. Thus
         /// we must know which function to call (GetPropertyDate or GetPropertyDateTime)
         /// </summary>
@@ -2156,7 +2165,7 @@ namespace Ferda.FrontEnd.Properties
                 tempValue = SelectedBoxes[0].GetPropertyDateTime(propertyName);
             }
 
-            //getting the other values and comparing them 
+            //getting the other values and comparing them
             for (int i = 1; i < SelectedBoxes.Count; i++)
             {
                 //it is a DateT value
@@ -2214,13 +2223,13 @@ namespace Ferda.FrontEnd.Properties
         }
 
         /// <summary>
-        /// This function gets one value from more boxes, that are selected (on the 
+        /// This function gets one value from more boxes, that are selected (on the
         /// desktop)
         /// </summary>
-        /// <param name="typeName">name of the type of the propertry, example: 
+        /// <param name="typeName">name of the type of the propertry, example:
         /// <example>System.Int16</example>
         /// </param>
-        /// <param name="realPropertyName">The name of the property in the Module 
+        /// <param name="realPropertyName">The name of the property in the Module
         /// (not the label)
         /// </param>
         /// <returns>object containing the value, null if the values are different
@@ -2375,7 +2384,7 @@ namespace Ferda.FrontEnd.Properties
         #region Other methods
 
         /// <summary>
-        /// Changes the size of the child controls. Archive has to do it 
+        /// Changes the size of the child controls. Archive has to do it
         /// itself, because DockDotNET doesnt support these kinds of events
         /// </summary>
         public void ChangeSize()
@@ -2388,7 +2397,7 @@ namespace Ferda.FrontEnd.Properties
         }
 
         /// <summary>
-        /// Returns real type name of the property 
+        /// Returns real type name of the property
         /// (without the assembly information)
         /// </summary>
         /// <param name="assemblyTypeName">type name from the assembly</param>
