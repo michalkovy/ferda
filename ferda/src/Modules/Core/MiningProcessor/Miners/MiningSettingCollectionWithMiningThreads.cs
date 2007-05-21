@@ -61,9 +61,9 @@ namespace Ferda.Guha.MiningProcessor
 		
 		public void AddSetting(Type t)
 		{
+			semaphore2.WaitOne();
 			lock(miningSetting)
 			{
-				semaphore2.WaitOne();
 				miningSetting.Enqueue(t);
 				semaphore.Release();
 			}
