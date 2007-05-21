@@ -359,7 +359,7 @@ namespace Ferda.FrontEnd.Desktop
         ///<param name="toolBar">Toolbar control</param>
 		public FerdaDesktop(Menu.IPreferencesManager prefManager,
             SVGManager svgMan, IMenuDisplayer menuDisp, ProjectManager.View view,
-            ProjectManager.ProjectManager pm, Archive.IArchiveDisplayer arch, 
+            ProjectManager.ProjectManager pm, Archive.IArchiveDisplayer arch,
             IIconProvider provider, IMenuDisplayer toolBar)
             : base()
 		{
@@ -397,6 +397,10 @@ namespace Ferda.FrontEnd.Desktop
             ShowGrid = false;
             Zoom = 1;
             RestrictToCanvas = false;
+
+            Width = 10;
+	    Height = 10;
+
             this.ImeMode = System.Windows.Forms.ImeMode.On;
 
             //for now trial stuff
@@ -417,7 +421,10 @@ namespace Ferda.FrontEnd.Desktop
             DefaultLineEnd = ConnectionEnds.RightFilledArrow;
 
             //Creation of the boxes and connections
+#if MONO
+#else
             Adapt();
+#endif
         }
 
         #endregion
@@ -492,7 +499,7 @@ namespace Ferda.FrontEnd.Desktop
         }
 
         /// <summary>
-        /// When a box is selected in the archive, it should also be selected on the 
+        /// When a box is selected in the archive, it should also be selected on the
         /// view. This function selects the box in the desktop
         /// </summary>
         /// <param name="box">Box to be selected</param>
@@ -796,7 +803,14 @@ namespace Ferda.FrontEnd.Desktop
             IBoxModule box;
             if (Hover == null)
             {
-                box = SelectedBoxes[0];
+				if (SelectedBoxes.Count > 0)
+				{
+                	box = SelectedBoxes[0];
+				}
+				else
+				{
+					box = null;
+				}
             }
             else
             {
@@ -933,7 +947,7 @@ namespace Ferda.FrontEnd.Desktop
                     PropertiesDisplayer.IsOneBoxSelected = true;
                     PropertiesDisplayer.Adapt();
 
-                    //here we dont have to adapt the user note, the box 
+                    //here we dont have to adapt the user note, the box
                     //remains the same
 
                     //selecting the box which name was changed
@@ -1447,7 +1461,7 @@ namespace Ferda.FrontEnd.Desktop
         }
 
         /// <summary>
-        /// Creates the boxes asking for creation submenu for more boxes selected. 
+        /// Creates the boxes asking for creation submenu for more boxes selected.
         /// The boxes should be of the same type and only the items that have the
         /// same name go to the submenu.
         /// </summary>
@@ -1459,7 +1473,7 @@ namespace Ferda.FrontEnd.Desktop
             List<ToolStripMenuItem> modules = new List<ToolStripMenuItem>();
 
             //getting the first modules
-            ModulesAskingForCreation[] firstModules = 
+            ModulesAskingForCreation[] firstModules =
                 ((BoxNode)SelectedShapes[0]).Box.ModulesAskingForCreation;
 
             //iterating through the other modules - getting the names of the
@@ -1762,7 +1776,7 @@ namespace Ferda.FrontEnd.Desktop
         /// <param name="boxes">Boxes to be removed</param>
         /// <remarks>There no need to have a
         /// IBoxModule list in the argument, because
-        /// this command can be only accessible from 
+        /// this command can be only accessible from
         /// the desktop (not from the archive)</remarks>
         protected void RemoveBoxes(ShapeCollection boxes)
         {
@@ -1780,7 +1794,7 @@ namespace Ferda.FrontEnd.Desktop
         /// <summary>
         /// Event that is raised, when user raises a key
         /// (currently only Ctrl+F4 handling - to close the active
-        /// desktop). 
+        /// desktop).
         /// </summary>
         /// <param name="sender">Sender of the argument</param>
         /// <param name="e">Event arguments - information about the key</param>
@@ -2281,7 +2295,7 @@ namespace Ferda.FrontEnd.Desktop
             {
                 if (info.label == sender.ToString())
                 {
-                    ActionExceptionCatcher catcher = 
+                    ActionExceptionCatcher catcher =
                         new ActionExceptionCatcher(projectManager, ResManager, this, PropertiesDisplayer);
 					box.RunAction_async(catcher, info.name);
                     break;
@@ -2373,7 +2387,7 @@ namespace Ferda.FrontEnd.Desktop
 
             foreach (BoxNode bn in SelectedShapes)
             {
-                foreach (ModulesAskingForCreation info in 
+                foreach (ModulesAskingForCreation info in
                     bn.Box.ModulesAskingForCreation)
                 {
                     if (info.label == sender.ToString())

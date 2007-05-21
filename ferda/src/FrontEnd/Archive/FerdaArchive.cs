@@ -405,53 +405,53 @@ namespace Ferda.FrontEnd.Archive
             this.CBCategories = new System.Windows.Forms.ComboBox();
             this.CBTypes = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
+            //
             // TVArchive
-            // 
+            //
             this.TVArchive.FullRowSelect = true;
             this.TVArchive.HotTracking = true;
             this.TVArchive.Location = new System.Drawing.Point(0, 44);
             this.TVArchive.Name = "TVArchive";
             this.TVArchive.Size = new System.Drawing.Size(140, 380);
             this.TVArchive.TabIndex = 1;
-            // 
+            //
             // RBAlong
-            // 
+            //
             this.RBAlong.AutoSize = true;
             this.RBAlong.Location = new System.Drawing.Point(1, 425);
             this.RBAlong.Name = "RBAlong";
             this.RBAlong.Size = new System.Drawing.Size(85, 17);
             this.RBAlong.TabIndex = 2;
             this.RBAlong.Text = "radioButton1";
-            // 
+            //
             // RBAgainst
-            // 
+            //
             this.RBAgainst.AutoSize = true;
             this.RBAgainst.Location = new System.Drawing.Point(1, 442);
             this.RBAgainst.Name = "RBAgainst";
             this.RBAgainst.Size = new System.Drawing.Size(85, 17);
             this.RBAgainst.TabIndex = 3;
             this.RBAgainst.Text = "radioButton2";
-            // 
+            //
             // CBCategories
-            // 
+            //
             this.CBCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBCategories.FormattingEnabled = true;
             this.CBCategories.Location = new System.Drawing.Point(0, 0);
             this.CBCategories.Name = "CBCategories";
             this.CBCategories.Size = new System.Drawing.Size(140, 22);
             this.CBCategories.TabIndex = 0;
-            // 
+            //
             // CBTypes
-            // 
+            //
             this.CBTypes.FormattingEnabled = true;
             this.CBTypes.Location = new System.Drawing.Point(0, 22);
             this.CBTypes.Name = "CBTypes";
             this.CBTypes.Size = new System.Drawing.Size(140, 22);
             this.CBTypes.TabIndex = 4;
-            // 
+            //
             // FerdaArchive
-            // 
+            //
             this.Controls.Add(this.CBTypes);
             this.Controls.Add(this.CBCategories);
             this.Controls.Add(this.RBAgainst);
@@ -831,7 +831,7 @@ namespace Ferda.FrontEnd.Archive
         #region IBoxSelector implementation
 
         /// <summary>
-        /// When a box is selected in the archive, it should also be selected on the 
+        /// When a box is selected in the archive, it should also be selected on the
         /// view. This function selects the box in the desktop
         /// </summary>
         /// <param name="box">Box to be selected</param>
@@ -972,7 +972,7 @@ namespace Ferda.FrontEnd.Archive
             //selecting the first item in the combo-box
             CBTypes.SelectedIndex = 0;
 
-            //we dont have to reset the archive, because the 
+            //we dont have to reset the archive, because the
             //second combo-box handler takes care about this
         }
 
@@ -1115,7 +1115,7 @@ namespace Ferda.FrontEnd.Archive
             FerdaTreeNode node = e.Node as FerdaTreeNode;
 
             string name;
-            if (e.Label == null)
+            if (e.Label == null && node != null)
             {
                 name = node.Text;
             }
@@ -1125,28 +1125,31 @@ namespace Ferda.FrontEnd.Archive
             }
 
             //tries to write to the box
-            if (node.Box.TryWriteEnter())
-            {
-                node.Box.UserName = name;
-
-                node.Box.WriteExit();
-                node.EndEdit(false);
-
-                //notifies the propertyDisplayer and all the views
-                PropertiesDisplayer.Adapt();
-                foreach (Desktop.IViewDisplayer view in Views)
-                {
-                    view.Adapt();
-                }
-                //here it is not necessaty to adapt also the user note
-                //control, because the change of the label of the box does not
-                //affect the user note of the box
-            }
-            else
-            {
-                node.CannotWriteToBox(node.Box);
-                e.CancelEdit = true;
-            }
+			if (node != null && node.Box != null && PropertiesDisplayer != null)
+			{
+				if (node.Box.TryWriteEnter())
+				{
+					node.Box.UserName = name;
+					
+					node.Box.WriteExit();
+					node.EndEdit(false);
+					
+					//notifies the propertyDisplayer and all the views
+					PropertiesDisplayer.Adapt();
+					foreach (Desktop.IViewDisplayer view in Views)
+					{
+						view.Adapt();
+					}
+					//here it is not necessaty to adapt also the user note
+					//control, because the change of the label of the box does not
+					//affect the user note of the box
+				}
+				else
+				{
+					node.CannotWriteToBox(node.Box);
+					e.CancelEdit = true;
+				}
+			}
         }
 
         #endregion
