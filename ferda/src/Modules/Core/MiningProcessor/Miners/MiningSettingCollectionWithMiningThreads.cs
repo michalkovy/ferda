@@ -61,6 +61,7 @@ namespace Ferda.Guha.MiningProcessor
 			lock(miningSetting)
 			{
 				miningSetting.Enqueue(t);
+				semaphore.Release();
 			}
 		}
 		

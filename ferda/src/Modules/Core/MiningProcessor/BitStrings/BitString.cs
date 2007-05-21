@@ -1368,6 +1368,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 				}
 			}
 		}
+		
 		private static void fillSum(IBitString iBS, int actSum, int secondSum, ref int sumSet, ref ulong[] bp)
 		{
 			if (iBS is EmptyBitString)
@@ -1393,12 +1394,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 			if (iBS is EmptyBitString)
 			{
 				firstSumSet	= firstSum;
-				secondSumSet	= secondSum;
+				secondSumSet = secondSum;
 			}
 			else if (iBS is FalseBitString)
 			{
 				firstSumSet	= actSum;
-				secondSumSet	= actSum;
+				secondSumSet = actSum;
 			}
 			else if (iBS is BitString)
 			{
