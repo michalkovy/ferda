@@ -33,40 +33,58 @@ namespace Ferda.Guha.MiningProcessor
 		private void threadDo()
 		{
 			bool runThreadsLocal;
+            int clearCount = 0;
 			
 			do
 			{
 				semaphore.WaitOne();
+                semaphore2.Release();
 				Type t;
 				lock (this)
 				{
 					lock (miningSetting)
 					{
 						runThreadsLocal = (runThreads || miningSetting.Count > 0) && !finished();
-						if(runThreadsLocal)
+						if (runThreadsLocal)
 						{
 							t = miningSetting.Dequeue();
-							semaphore2.Release();
 						}
 						else
 						{
-							continue;
+                            clearCount = miningSetting.Count;
+                            miningSetting.Clear();
+                            continue;
 						}
 					}
 				}
 				mine(t);
 			}
 			while(runThreadsLocal);
+            for (int i = 0; i < clearCount; i++)
+            {
+                semaphore.WaitOne();
+                semaphore2.Release();
+            }
 		}
 		
 		public void AddSetting(Type t)
-		{
-			semaphore2.WaitOne();
-			lock(miningSetting)
-			{
-				miningSetting.Enqueue(t);
-				semaphore.Release();
-			}
+		{   
+		    semaphore2.WaitOne();
+            lock (this)
+            {
+                lock (miningSetting)
+                {
+                    if (runThreads)
+                    {
+                        miningSetting.Enqueue(t);
+                        semaphore.Release();
+                    }
+                    else
+                    {
+                        semaphore2.Release();
+                    }
+                }
+            }
 		}
 		
 		public void Finish()

@@ -41,6 +41,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			IBitString pA, pS, pC;
 			nineFoldTableOfBitStrings nineFT;
 			IEvaluator evaluator;
+            Set<String> usedAttributes;
+            int allObjectsCount;
 			
 			///<summary>
 			/// Constructor
@@ -50,13 +52,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			/// <param name="pC">An IBitString</param>
 			/// <param name="nineFT">A  nineFoldTableOfBitStrings</param>
 			/// <param name="evaluator">An IEvaluator</param>
-			public MiningSetting(IBitString pA, IBitString pS, IBitString pC, nineFoldTableOfBitStrings nineFT, IEvaluator evaluator)
+            public MiningSetting(IBitString pA, IBitString pS, IBitString pC, nineFoldTableOfBitStrings nineFT, IEvaluator evaluator, Set<String> usedAttributes, int allObjectsCount)
 			{
 				this.pA = pA;
 				this.pS = pS;
 				this.pC = pC;
 				this.nineFT = nineFT;
 				this.evaluator = evaluator;
+                this.usedAttributes = (new Set<string>()).Join(usedAttributes);
+                this.allObjectsCount = allObjectsCount;
 			}
 			
 			public IBitString PA
@@ -113,6 +117,32 @@ namespace Ferda.Guha.MiningProcessor.Miners
 					return evaluator;
 				}
 			}
+
+            public Set<String> UsedAttributes
+            {
+                set
+                {
+                    usedAttributes = value;
+                }
+
+                get
+                {
+                    return usedAttributes;
+                }
+            }
+
+            public int AllObjectsCount
+            {
+                set
+                {
+                    allObjectsCount = value;
+                }
+
+                get
+                {
+                    return allObjectsCount;
+                }
+            }
 		}
 		
         protected override void getCedents(out ICollection<IEntityEnumerator> booleanCedents,
@@ -189,11 +219,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			IBitString pC = miningSetting.PC;
 			nineFoldTableOfBitStrings nineFT = miningSetting.NineFT;
 			IEvaluator evaluator = miningSetting.Evaluator;
+            Set<String> usedAttributes = miningSetting.UsedAttributes;
+            int allObjectsCount = miningSetting.AllObjectsCount;
 			
 			MissingInformation missingInformation = MissingInformation.GetInstance();
 			IBitString xA;
 			
-			GetMissings(pA, out xA, _succedent.UsedAttributes, missingInformation);
+			GetMissings(pA, out xA, usedAttributes, missingInformation);
 			int f111, fx11, f1x1, fxx1;
 			int f11x, fx1x, f1xx, fxxx;
 			
@@ -225,23 +257,22 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			fft.f0xx = nineFT.xAxB.Sum - fft.f1x1 - fft.fxx1;
 			fft.f00x = nineFT.xAnB.Sum - fft.f101 - fft.fx01;
 			
-			lock(this)
-			{
-				if (!finishThreads)
-				{
-					ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
-						fft.ContingencyTable,
-						_result.AllObjectsCount
-					);
-					
-					Hypothesis hypothesis = new Hypothesis();
-					hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
-					hypothesis.SetFormula(MarkEnum.Antecedent, pA.Identifier);
-					hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
-					hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
-					//h.NumericValuesAttributeGuid = contingencyTable.NumericValuesAttributeGuid;
-					
-					
+			ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
+				fft.ContingencyTable,
+				allObjectsCount
+			);
+			
+			Hypothesis hypothesis = new Hypothesis();
+			hypothesis.SetFormula(MarkEnum.Succedent, pS.Identifier);
+			hypothesis.SetFormula(MarkEnum.Antecedent, pA.Identifier);
+			hypothesis.SetFormula(MarkEnum.Condition, pC.Identifier);
+			hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
+			//h.NumericValuesAttributeGuid = contingencyTable.NumericValuesAttributeGuid;
+
+            lock (this)
+            {
+                if (!finishThreads)
+                {		
 					if (evaluator.VerifyIsComplete(contingencyTable, hypothesis))
 						finishThreads = true;
 				}
@@ -300,7 +331,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 					
                     foreach (IBitString pA in _antecedent)
                     {
-						MiningSetting miningSetting = new FourFoldMiningProcessor.MiningSetting(pA, pS, pC, nineFT, evaluator);
+                        MiningSetting miningSetting = new FourFoldMiningProcessor.MiningSetting(pA, pS, pC, nineFT, evaluator, _succedent.UsedAttributes, (int)_result.AllObjectsCount);
 						
 						miningThreads.AddSetting(miningSetting);
 						if(finished())

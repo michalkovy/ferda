@@ -1,9 +1,9 @@
 // MinningProcessor.cs - interface and abstract class for mining processor
 //
-// Author:  Tomáš Kuchaø <tomas.kuchar@gmail.com>
+// Author:  TomÃ¡Å¡ KuchaÅ™ <tomas.kuchar@gmail.com>
 //          Alexander Kuzmin <alexander.kuzmin@gmail.com> (Virtual attribute functionality)
 //
-// Copyright (c) 2007 Tomáš Kuchaø, Alexander Kuzmin
+// Copyright (c) 2007 TomÃ¡Å¡ KuchaÅ™, Alexander Kuzmin
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -409,7 +409,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 if (System.Math.Abs(_progressLastUpdateTicks - actTicks) > _progressMinCountOfTicksToPublish)
                 {
                     _progressLastUpdateTicks = actTicks;
-                    _progressBarPrx.setValue(value, message);
+                    try
+                    {
+                        _progressBarPrx.setValue(value, message);
+                    }
+                    catch (Ice.ObjectNotExistException)
+                    {
+                        // because one thread can destroy progress bar this exception is possible
+                    }
                 }
 
                 if (_progressListener.Stopped)
