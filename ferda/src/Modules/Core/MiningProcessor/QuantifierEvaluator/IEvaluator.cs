@@ -4,8 +4,9 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 {
     public interface IEvaluator
     {
+		
         //tady pujde bufferovat zadani a volat Valid na pole CT
-        bool VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis);
+        void VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis, System.Threading.WaitCallback setFinished);
 
         /// <summary>
         /// Returns boolean vector of verification results on contingency tables

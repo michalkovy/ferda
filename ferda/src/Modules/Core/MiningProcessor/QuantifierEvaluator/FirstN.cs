@@ -59,20 +59,48 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         private const int _bufferSize = 300;
         private bufferItem[] _buffer = new bufferItem[_bufferSize];
         private int _actBufferUsed = 0;
+		private static readonly bool _useThreads = System.Environment.ProcessorCount > 1;
+		
+		private class FlushIsCompleteHelper
+		{
+			public FlushIsCompleteHelper(bufferItem[] bufferCopy, int bufferUsed, System.Threading.WaitCallback setFinished)
+			{
+				this.bufferCopy = bufferCopy;
+				this.bufferUsed = bufferUsed;
+				this.setFinished = setFinished;
+			}
+			
+			public bufferItem[] bufferCopy;
+			public int bufferUsed;
+			public System.Threading.WaitCallback setFinished;
+		}
 
-
-        public bool VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis)
+        public void VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis, System.Threading.WaitCallback setFinished)
         {
 #if BATCH //Valid ComputeBatch(setting[] ...)
-            if (_actBufferUsed < _bufferMaxUsedSize)
-            {
-                _buffer[_actBufferUsed] = new bufferItem(contingencyTable, hypothesis);
-                _actBufferUsed++;
-            }
-            if (_actBufferUsed == _bufferMaxUsedSize)
-                return flushIsComplete();
+			lock(this)
+			{
+				if (_actBufferUsed < _bufferMaxUsedSize)
+				{
+					_buffer[_actBufferUsed] = new bufferItem(contingencyTable, hypothesis);
+					_actBufferUsed++;
+				}
+				if (_actBufferUsed == _bufferMaxUsedSize)
+				{
+					if(_useThreads)
+					{
+						System.Threading.ThreadPool.QueueUserWorkItem(flushIsComplete, new FlushIsCompleteHelper(_buffer, _actBufferUsed, setFinished));
+					}
+					else
+					{
+						flushIsComplete(new FlushIsCompleteHelper(_buffer, _actBufferUsed, setFinished));
+					}
+					_buffer = new bufferItem[_bufferSize];
+					_actBufferUsed = 0;
+				}
+			}
 
-            return false;
+            return;
 #else
             _rInfo.NumberOfVerifications++;
             _miningProcessor.ProgressSetValue(
@@ -94,43 +122,66 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         public void Flush()
         {
-            flushIsComplete();
+			lock(this)
+			{
+				flushIsComplete(new FlushIsCompleteHelper(_buffer, _actBufferUsed, null));
+				_buffer = new bufferItem[_bufferSize];
+				_actBufferUsed = 0;
+			}
         }
 
-        private bool flushIsComplete()
+        private void flushIsComplete(Object flushIsCompleteHelperAsObject)
         {
-            if (_actBufferUsed == 0)
-                return false;
-
-            List<ContingencyTableHelper> tables = new List<ContingencyTableHelper>(_actBufferUsed);
-            for (int i = 0; i < _actBufferUsed; i++)
-            {
-                tables.Insert(i, _buffer[i].ContingencyTable);
-            }
-            _rInfo.NumberOfVerifications += _actBufferUsed;
-            List<bool> result = _quantifiers.Valid(tables);
-            bool finalResult = false;
-
-            for (int i = 0; i < result.Count; i++)
-            {
-                if (result[i])
-                {
-                    _rInfo.NumberOfHypotheses++;
-                    _result.Hypotheses.Add(_buffer[i].Hypothesis);
-                    if (_result.Hypotheses.Count >= _n)
-                    {
-                        finalResult = true;
-                        break;
-                    }
-                }
-            }
-
-            bool shouldStop = !_miningProcessor.ProgressSetValue(
-                progress(), progressMessage()
+			FlushIsCompleteHelper flushIsCompleteHelper = flushIsCompleteHelperAsObject as FlushIsCompleteHelper;
+			if (flushIsCompleteHelper == null || _result == null || _rInfo == null || _quantifiers == null || _miningProcessor == null)
+				return;
+			System.Threading.WaitCallback setFinished = flushIsCompleteHelper.setFinished;
+			bufferItem[] bufferCopy = flushIsCompleteHelper.bufferCopy;
+			int actBufferUsed = flushIsCompleteHelper.bufferUsed;
+			if (actBufferUsed == 0)
+				return;
+				
+			List<ContingencyTableHelper> tables = new List<ContingencyTableHelper>(actBufferUsed);
+			for (int i = 0; i < actBufferUsed; i++)
+			{
+				tables.Insert(i, bufferCopy[i].ContingencyTable);
+			}
+			
+			bool finalResult = false;
+			bool shouldStop = false;
+			lock(_result)
+			{
+				_rInfo.NumberOfVerifications += actBufferUsed;
+				
+				List<bool> result = _quantifiers.Valid(tables);
+				
+				
+				for (int i = 0; i < result.Count; i++)
+				{
+					if (result[i])
+					{
+						_rInfo.NumberOfHypotheses++;
+						_result.Hypotheses.Add(bufferCopy[i].Hypothesis);
+						if (_result.Hypotheses.Count >= _n)
+						{
+							finalResult = true;
+							break;
+						}
+					}
+				}
+				
+				shouldStop = !_miningProcessor.ProgressSetValue(
+					progress(), progressMessage()
                 );
+			}
 
-            _actBufferUsed = 0;
-            return finalResult || shouldStop;
+            if (finalResult || shouldStop)
+			{
+				if (setFinished != null)
+				{
+					setFinished(null);
+				}
+			}
         }
 
         #region IEvaluator Members

@@ -103,19 +103,19 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         /// <param name="contingencyTable">Contingency table to add</param>
         /// <param name="hypothesis"></param>
         /// <returns>True if added succesfully</returns>
-        public bool VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis)
+        public void VerifyIsComplete(ContingencyTableHelper contingencyTable, Hypothesis hypothesis, System.Threading.WaitCallback setFinished)
         {
-            
-            if (_actBufferUsed < _bufferMaxUsedSize)
-            {
-                _buffer[_actBufferUsed] = new bufferItem(contingencyTable, new double [0]);
-                _actBufferUsed++;
-            }
-            if (_actBufferUsed == _bufferMaxUsedSize)
+            lock(this)
+			{
+				if (_actBufferUsed < _bufferMaxUsedSize)
+				{
+					_buffer[_actBufferUsed] = new bufferItem(contingencyTable, new double [0]);
+					_actBufferUsed++;
+				}
+				if (_actBufferUsed == _bufferMaxUsedSize)
                 //  return flushIsComplete();
-                return true;
-
-            return false;
+					setFinished(null);
+			}
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             evalVector.AddRange(_quantifiers.Valid(tables));
             bool finalResult = false;
             bool shouldStop = !_miningProcessor.ProgressSetValue(
-                progress(), "Counting quantifiers...done, \n" + 
+                progress(), "Counting quantifiers...done, \n" +
                 progressMessage()
                 );
 
@@ -172,7 +172,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
             for (int j = 0; j < _actBufferUsed; j++)
             {
-                ContingencyTableHelper table = 
+                ContingencyTableHelper table =
                     _buffer[j].ContingencyTable;
                 double[] sDSecondSetValues = _quantifiers.Values(table);
                 Debug.Assert(_buffer[j].FirstSetValues.Length == sDSecondSetValues.Length);
@@ -233,7 +233,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 //  return flushIsComplete();
                 return true;
 
-            return false;      
+            return false;
         }
 
         /// <summary>

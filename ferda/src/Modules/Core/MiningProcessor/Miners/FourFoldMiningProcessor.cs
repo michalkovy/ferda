@@ -212,6 +212,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			}
 		}
 		
+		private void setFinished(object o)
+		{
+			lock(this)
+			{
+				finishThreads = true;
+			}
+		}
+		
 		private int _mineRuns = 0;
 		
 		private void mine(Object ob)
@@ -272,16 +280,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
 			//h.NumericValuesAttributeGuid = contingencyTable.NumericValuesAttributeGuid;
 
-            lock (this)
-            {
-                if (!finishThreads)
-                {
-					if (evaluator.VerifyIsComplete(contingencyTable, hypothesis))
-						finishThreads = true;
-				}
-				_mineRuns++;
+			if (!finished())
+			{
+				evaluator.VerifyIsComplete(contingencyTable, hypothesis, setFinished);
 			}
+
+			_mineRuns++;
 		}
+		
+		private static readonly bool _useThreads = System.Environment.ProcessorCount > 1;
 		
         public override void Trace()
         {
@@ -342,7 +349,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 						
                         //miningThreads.AddSetting(miningSetting);
 						mineToRun++;
-						if (System.Environment.ProcessorCount > 1)
+						if (_useThreads)
 						{
 							System.Threading.ThreadPool.UnsafeQueueUserWorkItem(mine, miningSetting);
 						}
@@ -356,7 +363,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
             }
 			
-			while (mineToRun != _mineRuns)
+			while (mineToRun != _mineRuns && (!finished()))
 			{
 				System.Threading.Thread.Sleep(50);
 			}
@@ -520,8 +527,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             //VerifyIsComplete means no buffer is left.
                             //If not all relevant questions have been
                             //generated and verified, will stop yielding bitstrings
-                            if (evaluator.VerifyIsComplete(contingencyTable, new Hypothesis()))
-                                break;
+						if (!finished())
+						{
+							evaluator.VerifyIsComplete(contingencyTable, new Hypothesis(), setFinished);
+						}
+						if(finished())
+							break;
                         }
 						
                         //vector to be yielded as bitstring
