@@ -36,7 +36,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 {
     public class FourFoldMiningProcessor : MiningProcessorBase
     {
-		private struct MiningSetting
+		private class MiningSetting
 		{
 			IBitString pA, pS, pC;
 			nineFoldTableOfBitStrings nineFT;
@@ -212,8 +212,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			}
 		}
 		
-		private void mine(MiningSetting miningSetting)
+		private void mine(Object ob)
 		{
+			MiningSetting miningSetting = ob as MiningSetting;
 			IBitString pA = miningSetting.PA;
 			IBitString pS = miningSetting.PS;
 			IBitString pC = miningSetting.PC;
@@ -272,7 +273,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             lock (this)
             {
                 if (!finishThreads)
-                {		
+                {
 					if (evaluator.VerifyIsComplete(contingencyTable, hypothesis))
 						finishThreads = true;
 				}
@@ -298,6 +299,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
 			
 			MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
+			//System.Threading.ThreadPool threadPool = new System.Threading.ThreadPool();
 			
             foreach (IBitString pC in _condition)
             {
@@ -333,7 +335,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     {
                         MiningSetting miningSetting = new FourFoldMiningProcessor.MiningSetting(pA, pS, pC, nineFT, evaluator, _succedent.UsedAttributes, (int)_result.AllObjectsCount);
 						
-                       miningThreads.AddSetting(miningSetting);
+                        //miningThreads.AddSetting(miningSetting);
+						
+						System.Threading.ThreadPool.UnsafeQueueUserWorkItem(mine, miningSetting);
 		       //mine(miningSetting);
 						if(finished())
 							goto finish;
