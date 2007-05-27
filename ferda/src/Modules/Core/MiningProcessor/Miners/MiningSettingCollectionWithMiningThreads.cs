@@ -22,9 +22,10 @@ namespace Ferda.Guha.MiningProcessor
 			finished = f;
 			semaphore = new Semaphore(0, 2 * System.Environment.ProcessorCount);
 			semaphore2 = new Semaphore(2 * System.Environment.ProcessorCount, 2 * System.Environment.ProcessorCount);
-			for(int i = 0; i < System.Environment.ProcessorCount; i++)
+			for (int i = 0; i < System.Environment.ProcessorCount; i++)
 			{
 				Thread thread = new Thread(threadDo);
+				thread.Priority = ThreadPriority.AboveNormal;
 				thread.Start();
 				threads.Add(thread);
 			}
@@ -42,19 +43,16 @@ namespace Ferda.Guha.MiningProcessor
 				Type t;
 				lock (this)
 				{
-					lock (miningSetting)
+					runThreadsLocal = (runThreads || miningSetting.Count > 0) && !finished();
+					if (runThreadsLocal)
 					{
-						runThreadsLocal = (runThreads || miningSetting.Count > 0) && !finished();
-						if (runThreadsLocal)
-						{
-							t = miningSetting.Dequeue();
-						}
-						else
-						{
-                            clearCount = miningSetting.Count;
-                            miningSetting.Clear();
-                            continue;
-						}
+						t = miningSetting.Dequeue();
+					}
+					else
+					{
+						clearCount = miningSetting.Count;
+						miningSetting.Clear();
+						continue;
 					}
 				}
 				mine(t);
@@ -68,38 +66,35 @@ namespace Ferda.Guha.MiningProcessor
 		}
 		
 		public void AddSetting(Type t)
-		{   
+		{
 		    semaphore2.WaitOne();
             lock (this)
             {
-                lock (miningSetting)
-                {
-                    if (runThreads)
-                    {
-                        miningSetting.Enqueue(t);
-                        semaphore.Release();
-                    }
-                    else
-                    {
-                        semaphore2.Release();
-                    }
-                }
+				if (runThreads)
+				{
+					miningSetting.Enqueue(t);
+					semaphore.Release();
+				}
+				else
+				{
+					semaphore2.Release();
+				}
             }
 		}
 		
 		public void Finish()
 		{
-			lock(this)
+			lock (this)
 			{
 				runThreads = false;
 			}
-			for(int i = 0; i < System.Environment.ProcessorCount; i++)
+			for (int i = 0; i < System.Environment.ProcessorCount; i++)
 			{
 				semaphore2.WaitOne();
 				semaphore.Release();
 			}
 			
-			foreach(Thread thread in threads)
+			foreach (Thread thread in threads)
 			{
 				thread.Join();
 			}

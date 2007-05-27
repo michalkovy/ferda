@@ -53,6 +53,7 @@ namespace Ferda.Guha.Data
                 case OleDbInvariantName:
                 case OracleClientInvariantName:
                 case SqlClientInvariantName:
+		case MonoSqliteInvariantName:
                     prefix = "`";
                     suffix = "`";
                     return;
@@ -83,6 +84,11 @@ namespace Ferda.Guha.Data
         /// Provider invariant name for MS SQL Server.
         /// </summary>
         public const string SqlClientInvariantName = "System.Data.SqlClient";
+        
+	/// <summary>
+        /// Provider invariant name for SQLite in Mono.
+        /// </summary>
+        public const string MonoSqliteInvariantName = "Mono.Data.Sqlite";
 
         /// <summary>
         /// Gets the DB provider factory.

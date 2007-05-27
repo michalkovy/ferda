@@ -527,16 +527,19 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                     "The bit string contains non-zero bits in the last block behind the allowed length.");
 
-                if (_sum >= 0)
-                    return _sum;
+                lock (this)
+                {
+                    if (_sum >= 0)
+                        return _sum;
 
-                // compute the sum using the best available method
-                // (looping, folding, 8-bit lookup, 16-bit lookup or sparse sum)
+                    // compute the sum using the best available method
+                    // (looping, folding, 8-bit lookup, 16-bit lookup or sparse sum)
 #if UNSAFE
-                sumLookup16Unsafe();
+                    sumLookup16Unsafe();
 #else
-            sumLookup16Safe();
+                    sumLookup16Safe();
 #endif
+                }
 
                 Debug.Assert(_sum >= 0, "The sum must be non-negative.");
                 Debug.Assert(_sum <= _size, "The sum must be less than or equal to the size of the bit string.");
@@ -544,10 +547,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 return _sum;
             }
             
-			set
-			{
-				_sum = value;
-			}
+            set
+            {
+                _sum = value;
+            }
         }
 
 #if UNSAFE

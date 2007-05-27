@@ -96,22 +96,46 @@
 				<include name="FerdaAttribute.*"/>
 			</fileset>
 		</copy>
-		<csc target="library" output="${path::combine(build.dir,'FerdaData.dll')}" doc="${path::combine(build.dir,'FerdaData.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaData.snk">
-			<nowarn>
-				<warning number="1591"/>
-			</nowarn>
-			<sources>
-				<include name="Core/Data/**.cs"/>
-			</sources>
-			<references>
-				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
-				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="System.dll"/>
-				<include name="System.Data.dll"/>
-				<include name="System.Xml.dll"/>
-			</references>
-		</csc>
+		<if test="${framework::get-target-framework()=='mono-2.0'}">
+			<csc target="library" output="${path::combine(build.dir,'FerdaData.dll')}" doc="${path::combine(build.dir,'FerdaData.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaData.snk">
+				<nowarn>
+					<warning number="1591"/>
+				</nowarn>
+				<sources>
+					<include name="Core/Data/**.cs"/>
+				</sources>
+				<references>
+					<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+					<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+					<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+					<include name="System.dll"/>
+					<include name="System.Data.dll"/>
+					<include name="System.Data.OracleClient.dll"/>
+					<include name="Mono.Data.dll"/>
+					<include name="Mono.Data.Sqlite.dll"/>
+					<include name="Mono.Data.SybaseClient.dll"/>
+					<include name="System.Xml.dll"/>
+				</references>
+			</csc>
+		</if>
+		<if test="${framework::get-target-framework()!='mono-2.0'}">
+			<csc target="library" output="${path::combine(build.dir,'FerdaData.dll')}" doc="${path::combine(build.dir,'FerdaData.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaData.snk">
+				<nowarn>
+					<warning number="1591"/>
+				</nowarn>
+				<sources>
+					<include name="Core/Data/**.cs"/>
+				</sources>
+				<references>
+					<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+					<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+					<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+					<include name="System.dll"/>
+					<include name="System.Data.dll"/>
+					<include name="System.Xml.dll"/>
+				</references>
+			</csc>
+		</if>
 		<copy todir="${frontendbin.dir}">
 			<fileset basedir="${build.dir}">
 				<include name="FerdaData.*"/>

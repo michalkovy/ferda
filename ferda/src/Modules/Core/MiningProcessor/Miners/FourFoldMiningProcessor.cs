@@ -321,19 +321,20 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     nineFT.pApB = pC.And(pS);
                     nineFT.pAxB = pC.And(xS);
                     nineFT.pAnB = pC.And(nS);
-					nineFT.pAnB.Sum = pCSum - nineFT.pApB.Sum - nineFT.pAxB.Sum;
+                    nineFT.pAnB.Sum = pCSum - nineFT.pApB.Sum - nineFT.pAxB.Sum;
 					
                     // should be simillar
                     nineFT.xApB = xC.And(pS);
                     nineFT.xAxB = xC.And(xS);
                     nineFT.xAnB = xC.And(nS);
-					nineFT.xAnB.Sum = xC.Sum - nineFT.xApB.Sum - nineFT.xAxB.Sum;
+                    nineFT.xAnB.Sum = xC.Sum - nineFT.xApB.Sum - nineFT.xAxB.Sum;
 					
                     foreach (IBitString pA in _antecedent)
                     {
                         MiningSetting miningSetting = new FourFoldMiningProcessor.MiningSetting(pA, pS, pC, nineFT, evaluator, _succedent.UsedAttributes, (int)_result.AllObjectsCount);
 						
-						miningThreads.AddSetting(miningSetting);
+                       miningThreads.AddSetting(miningSetting);
+		       //mine(miningSetting);
 						if(finished())
 							goto finish;
                     }
