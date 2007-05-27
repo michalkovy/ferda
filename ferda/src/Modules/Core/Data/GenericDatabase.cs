@@ -304,7 +304,14 @@ namespace Ferda.Guha.Data
                             DataTableExplain resultItem = new DataTableExplain();
                             resultItem.name = row["TABLE_NAME"].ToString();
                             resultItem.type = row["TABLE_TYPE"].ToString();
-                            resultItem.remarks = row["REMARKS"].ToString();
+			    if (schema.Columns.Contains("REMARKS"))
+			    {
+                            	resultItem.remarks = row["REMARKS"].ToString();
+			    }
+			    else
+			    {
+			    	resultItem.remarks = "not supported";
+			    }
                             resultItem.recordsCount = -1;
                             _tables.Add(resultItem.name, new GenericDataTable(this, resultItem));
                         }

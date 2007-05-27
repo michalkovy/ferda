@@ -27,7 +27,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 if (progressBarPrx != null)
                 {
                     progressBarPrx.done();
-                    System.Threading.Thread.Sleep(100);
+                    //System.Threading.Thread.Sleep(100);
                     ProgressTaskI.Destroy(_current.adapter, progressPrx);
                 }
                 return null;
@@ -230,7 +230,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     miningProcessor.ProgressSetValue(-1, "Generation failed");
                 else
                     progressBarPrx.setValue(-1, "Generation failed");
-                System.Threading.Thread.Sleep(1500);
+                //System.Threading.Thread.Sleep(1500);
                 throw;
             }
             catch (Exception e)
@@ -239,16 +239,16 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     miningProcessor.ProgressSetValue(-1, "Generation failed");
                 else
                     progressBarPrx.setValue(-1, "Generation failed");
-                System.Threading.Thread.Sleep(1500);
+                //System.Threading.Thread.Sleep(1500);
                 throw Modules.Exceptions.BoxRuntimeError(e, null, "An error ocured in mining processor: " + e.Message + "\n" + e.ToString());
             }
             finally
             {
-                System.Threading.Thread.Sleep(200);
+                //System.Threading.Thread.Sleep(200);
                 if ((progressBarPrx != null) && (_booleanTraceEnumerator == null))
                 {
                     progressBarPrx.done();
-                    System.Threading.Thread.Sleep(100);
+                    //System.Threading.Thread.Sleep(100);
                     ProgressTaskI.Destroy(_current.adapter, progressPrx);
                 }
             }

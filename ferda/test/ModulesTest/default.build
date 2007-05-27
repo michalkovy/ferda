@@ -26,6 +26,7 @@ dir}/bin
 				<include name="${build.dir}/FerdaProjectManager.dll"/>
 				<include name="${build.dir}/FerdaBase.dll"/>
 				<include name="${build.dir}/FerdaBoxInterfaces.dll"/>
+				<include name="${serverbin.dir}/FerdaMiningProcessor.dll"/>
 				<include name="${serverbin.dir}/FerdaDataMiningCommonBoxes.dll"/>
 				<include name="${serverbin.dir}/FerdaLMTasksBoxes.dll"/>
 				<include name="${lib.dir}/nunit.framework.dll"/>
