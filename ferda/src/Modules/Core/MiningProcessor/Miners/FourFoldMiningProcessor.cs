@@ -212,6 +212,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			}
 		}
 		
+		private int _mineRuns = 0;
+		
 		private void mine(Object ob)
 		{
 			MiningSetting miningSetting = ob as MiningSetting;
@@ -277,6 +279,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 					if (evaluator.VerifyIsComplete(contingencyTable, hypothesis))
 						finishThreads = true;
 				}
+				_mineRuns++;
 			}
 		}
 		
@@ -301,6 +304,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			//MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
 			//System.Threading.ThreadPool threadPool = new System.Threading.ThreadPool();
 			
+			_mineRuns = 0;
+			int mineToRun = 0;
             foreach (IBitString pC in _condition)
             {
                 //if (pC is FalseBitString)
@@ -336,7 +341,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         MiningSetting miningSetting = new FourFoldMiningProcessor.MiningSetting(pA, pS, pC, nineFT, evaluator, _succedent.UsedAttributes, (int)_result.AllObjectsCount);
 						
                         //miningThreads.AddSetting(miningSetting);
-						
+						mineToRun++;
 						if (System.Environment.ProcessorCount > 1)
 						{
 							System.Threading.ThreadPool.UnsafeQueueUserWorkItem(mine, miningSetting);
@@ -351,6 +356,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
             }
 			
+			while (mineToRun != _mineRuns)
+			{
+				System.Threading.Thread.Sleep(50);
+			}
 			finish:
             evaluator.Flush();
             resultFinish();
