@@ -7,14 +7,14 @@ using Ferda.Modules.Helpers.Caching;
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
     /// <summary>
-    /// This class is a Singleton class that serves as a provider of 
-    /// bit strings with local in-memory storage. It uses LRU strategy, 
+    /// This class is a Singleton class that serves as a provider of
+    /// bit strings with local in-memory storage. It uses LRU strategy,
     /// when memory consumption grows over a given limit.
     /// </summary>
     /// <remarks>
-    /// BitStringCache does not care about the data mining tasks, 
-    /// settings and other complexities. It only stores BitStrings 
-    /// identified by BitStringIdentifier (i.e. pair attribute ID (Guid), 
+    /// BitStringCache does not care about the data mining tasks,
+    /// settings and other complexities. It only stores BitStrings
+    /// identified by BitStringIdentifier (i.e. pair attribute ID (Guid),
     /// category ID (string)).
     /// </remarks>
     /// <seealso href="http://www.yoda.arachsys.com/csharp/singleton.html">Singleton in .NET C#</seealso>
@@ -27,9 +27,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         //private const int cacheDefaultSize = 1310720; // ~10MB
         //private const int cacheDefaultSize = 32768; // ~32MB
         //private const int cacheDefaultSize = 65536; // ~64MB
-        private const int cacheDefaultSize = 655360; // 
-        // size is in BitString units i.e. for strings of 
-        // bits its in bits, for strings of floats (fuzzy bit strings) 
+        private const int cacheDefaultSize = 65536; //
+        // size is in BitString units i.e. for strings of
+        // bits its in bits, for strings of floats (fuzzy bit strings)
         // it is in floats
 
         // key is attributeGuid
@@ -56,9 +56,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         internal static IBitStringCache GetInstance()
         {
             return _instance;
-            // !!! only for constructor of MissingInformation 
-            // (MI class is initialized before cache is fisrttime 
-            // touched by MI instance is firstime used after some 
+            // !!! only for constructor of MissingInformation
+            // (MI class is initialized before cache is fisrttime
+            // touched by MI instance is firstime used after some
             // usage the cache (rightway inicialization of cache))
         }
 

@@ -298,7 +298,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IBitString xC;
             nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
 			
-			MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
+			//MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
 			//System.Threading.ThreadPool threadPool = new System.Threading.ThreadPool();
 			
             foreach (IBitString pC in _condition)
@@ -337,8 +337,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
 						
                         //miningThreads.AddSetting(miningSetting);
 						
-						System.Threading.ThreadPool.UnsafeQueueUserWorkItem(mine, miningSetting);
-		       //mine(miningSetting);
+						if (System.Environment.ProcessorCount > 1)
+						{
+							System.Threading.ThreadPool.UnsafeQueueUserWorkItem(mine, miningSetting);
+						}
+						else
+						{
+							mine(miningSetting);
+						}
 						if(finished())
 							goto finish;
                     }
@@ -348,7 +354,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			finish:
             evaluator.Flush();
             resultFinish();
-			miningThreads.Finish();
+			//miningThreads.Finish();
         }
 		
         
