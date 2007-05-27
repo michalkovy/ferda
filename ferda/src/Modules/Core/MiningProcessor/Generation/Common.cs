@@ -69,7 +69,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object 
+        /// An <see cref="T:System.Collections.IEnumerator"></see> object
         /// that can be used to iterate through the collection.
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
@@ -242,10 +242,13 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 }
             }
             _forcedCount = forcedEnts.Count;
-            _sourceEntities.AddRange(forcedEnts.Values);
+            if (_forcedCount > 0)
+            	_sourceEntities.AddRange(forcedEnts.Values);
             _basicCount = basicEnts.Count;
-            _sourceEntities.AddRange(basicEnts.Values);
-            _sourceEntities.AddRange(auxiliaryEnts.Values);
+			if (_basicCount > 0)
+            	_sourceEntities.AddRange(basicEnts.Values);
+			if (auxiliaryEnts.Values.Count > 0)
+            	_sourceEntities.AddRange(auxiliaryEnts.Values);
 
             // max(0, max(number of forced operands, min length param))
             _effectiveMinLength = System.Math.Max(0, System.Math.Max(forcedEnts.Count, _setting.minLength));
@@ -344,7 +347,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
                 _totalCount = 0;
 
-                // initialize 
+                // initialize
                 int count = _sourceEntities.Count;
                 List<long> totalCounts = new List<long>(_sourceEntities.Count);
                 foreach (IEntityEnumerator entity in _sourceEntities)
@@ -413,8 +416,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         #region IDisposable Members
 
         /// <summary>
-        /// Performs application-defined tasks associated 
-        /// with freeing, releasing, or resetting unmanaged 
+        /// Performs application-defined tasks associated
+        /// with freeing, releasing, or resetting unmanaged
         /// resources.
         /// </summary>
         public void Dispose()
@@ -484,7 +487,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             IEnumerator<IBitString> enumerator = _sourceEntities[index].GetEnumerator();
 
             //enumerator.Reset();
-            // UNDONE ... myslim, ze by to melo byt odkomentovane, ale 
+            // UNDONE ... myslim, ze by to melo byt odkomentovane, ale
             // kdyz je to odkomentovane tak to zde pada na NotSupprotedOperation
 
             bool succeds = enumerator.MoveNext();
@@ -508,7 +511,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     // switching first member of conjunction
                     if (_forcedCount > 0)
                     {
-                        // forced entities are defined 
+                        // forced entities are defined
                         // ! but forced entity can not be removed
                         // => end iteration
                         Debug.Assert(sB.Count == 0); //because after remove && sI.Count == 1

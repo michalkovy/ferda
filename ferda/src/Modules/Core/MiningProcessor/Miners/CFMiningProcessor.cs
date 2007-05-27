@@ -64,6 +64,24 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             afterConstruct();
         }
+		
+		private bool finishThreads = false;
+		
+		private bool finished()
+		{
+			lock(this)
+			{
+				return finishThreads;
+			}
+		}
+		
+		private void setFinished(object o)
+		{
+			lock(this)
+			{
+				finishThreads = true;
+			}
+		}
 
         public override void Trace()
         {
@@ -101,11 +119,16 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     hypothesis.SetFormula(MarkEnum.Condition, cS.Identifier);
                     hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
 
-                    if (evaluator.VerifyIsComplete(contingencyTable, hypothesis))
-                        goto finish;
+					if (!finished())
+					{
+						evaluator.VerifyIsComplete(contingencyTable, hypothesis, setFinished);
+					}
+					if(finished())
+						goto finish;
                 }
             }
 
+			
         finish:
             evaluator.Flush();
             resultFinish();

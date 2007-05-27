@@ -27,7 +27,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         //private const int cacheDefaultSize = 1310720; // ~10MB
         //private const int cacheDefaultSize = 32768; // ~32MB
         //private const int cacheDefaultSize = 65536; // ~64MB
-        private const int cacheDefaultSize = 65536; //
+        private const int cacheDefaultSize = 655360; //
         // size is in BitString units i.e. for strings of
         // bits its in bits, for strings of floats (fuzzy bit strings)
         // it is in floats

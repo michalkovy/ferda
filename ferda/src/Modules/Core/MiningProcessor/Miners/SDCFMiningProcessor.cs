@@ -149,7 +149,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                 cT2,
                                 _result.AllObjectsCount,
                                 trace.Identifier.AttributeGuid
-                                ); 
+                                );
                             #endregion
 
                             Hypothesis hypothesis = new Hypothesis();
