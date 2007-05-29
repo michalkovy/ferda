@@ -587,16 +587,19 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
         public string GetSelectExpression(bool fallOnError)
         {
 
-            if (String.IsNullOrEmpty(SelectExpression) && fallOnError)
+            if (String.IsNullOrEmpty(SelectExpression))
             {
-                throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
+                if (fallOnError)
+                {
+                    throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
                                                "Property is not set.", new string[] { PropSelectExpression },
                                                restrictionTypeEnum.Missing);
+                }
+                else
+                    return String.Empty;
             }
             else
                 return SelectExpression;
-
-            return String.Empty;
         }
 
         /*

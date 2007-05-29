@@ -470,7 +470,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         }
 
         private Guid _cachesReloadFlag = System.Guid.NewGuid();
-        private Guid _lastReloadFlag;
+        private Guid _lastReloadFlag = System.Guid.Empty;
         private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
         private long _lastBSQueryTicks = 0;
 
@@ -488,9 +488,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                     delegate
                     {
                         if (_cachedValueBitStrings == null
-                            || String.IsNullOrEmpty(_lastReloadFlag.ToString())
+                            || _lastReloadFlag == System.Guid.Empty
                             || _lastReloadFlag != _cachesReloadFlag
-                            || (DateTime.Now.Ticks - _lastBSQueryTicks) > 300000000
+                            //|| (DateTime.Now.Ticks - _lastBSQueryTicks) > 300000000
                             )
                         // ticks:
                         // 1 tick = 100-nanosecond 
