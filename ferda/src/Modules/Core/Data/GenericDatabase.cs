@@ -392,7 +392,7 @@ namespace Ferda.Guha.Data
                 // test validity of params
                 foreach (string var in acceptableTypes)
                 {
-                    if (!TableTypes.Contains(var))
+                    if (!TableTypes.Contains(var.ToUpper()))
                         throw new ArgumentOutOfRangeException("acceptableTypes", var, null);
                 }
 

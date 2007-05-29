@@ -201,11 +201,11 @@ namespace Ferda.Guha.Data
 
             foreach (string var in acceptableTypes)
             {
-                if (!GenericDatabase.TableTypes.Contains(var))
+                if (!GenericDatabase.TableTypes.Contains(var.ToUpper()))
                     throw new ArgumentOutOfRangeException("acceptableTypes", var, null);
             }
 
-            if (acceptableTypes.Contains(_explain.type))
+            if (acceptableTypes.Contains(_explain.type.ToUpper()))
                 return true;
             return false;
         }
