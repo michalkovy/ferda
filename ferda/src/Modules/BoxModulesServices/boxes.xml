@@ -2359,15 +2359,7 @@
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
       </Socket>
-      <!--<Socket>
-        <Name>DetailDataTable</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::Boxes::DataPreparation::DataTableFunctions</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>-->
+
       <Socket>
         <Name>MaxNumberOfHypotheses</Name>
         <SocketTypes>
@@ -2377,15 +2369,6 @@
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
       </Socket>
-      <!--<Socket>
-        <Name>NumberOfVerifications</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>-->
       <Socket>
         <Name>ExecutionType</Name>
         <SocketTypes>
@@ -2404,85 +2387,10 @@
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
       </Socket>
-      <!-- <Socket>
-        <Name>TotalNumberOfRelevantQuestions</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>
-        <Socket>
-        <Name>StartTime</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>
-      <Socket>
-        <Name>EndTime</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>
-      <Socket>
-        <Name>TotalTime</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>-->
+     
     </Sockets>
     <Properties>
-      <!--
-      <Property>
-        <Name>MasterIdColumn</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <CategoryName>Schema</CategoryName>
-        <Visible>true</Visible>
-        <ReadOnly>false</ReadOnly>
-      </Property>
-      <Property>
-        <Name>DetailIdColumn</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <CategoryName>Schema</CategoryName>
-        <Visible>true</Visible>
-        <ReadOnly>false</ReadOnly>
-      </Property>
-      
-      <Property>
-        <Name>NumberOfVerifications</Name>
-        <TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>
-       <Property>
-        <Name>NumberOfHypotheses</Name>
-        <TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>
-      <Property>
-        <Name>Result</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <Visible>false</Visible>
-        <ReadOnly>false</ReadOnly>
-      </Property>
-      <Property>
-        <Name>ResultInfo</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <Visible>false</Visible>
-        <ReadOnly>false</ReadOnly>
-      </Property>
-      -->
+    
       <Property>
         <Name>MaxNumberOfHypotheses</Name>
         <TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
@@ -2538,30 +2446,7 @@
         <ReadOnly>false</ReadOnly>
         <Default>FirstN</Default>
       </Property>
-      <!--<Property>
-        <Name>TotalNumberOfRelevantQuestions</Name>
-        <TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>
-      <Property>
-        <Name>StartTime</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>
-      <Property>
-        <Name>EndTime</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>
-      <Property>
-        <Name>TotalTime</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>-->
+     
     </Properties>
     <ModulesAskingForCreationSeq>
       <ModulesAskingForCreation>
@@ -2586,25 +2471,7 @@
       <string>GuhaMining.VirtualAttributes</string>
     </Categories>
     <Sockets>
-      <!--
-      <Socket>
-        <Name>MasterIdColumn</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::StringT</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>
-      <Socket>
-        <Name>DetailIdColumn</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::StringT</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>-->
+     
       <Socket>
         <Name>Quantifiers</Name>
         <SocketTypes>
@@ -2728,25 +2595,6 @@
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
       </Socket>
-      <!--  <Socket>
-        <Name>DetailDataTable</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::Boxes::DataPreparation::DataTableFunctions</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>
-      
-      <Socket>
-        <Name>NumberOfVerifications</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>-->
       <Socket>
         <Name>ExecutionType</Name>
         <SocketTypes>
@@ -2765,49 +2613,8 @@
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
       </Socket>
-      <!-- <Socket>
-        <Name>TotalNumberOfRelevantQuestions</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>
-       <Socket>
-        <Name>StartTime</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::DateTimeTInterface</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>
-      <Socket>
-        <Name>EndTime</Name>
-        <SocketTypes>
-          <BoxType>
-            <FunctionIceId>::Ferda::Modules::DateTimeTInterface</FunctionIceId>
-          </BoxType>
-        </SocketTypes>
-        <MoreThanOne>false</MoreThanOne>
-      </Socket>-->
-    </Sockets>
+      </Sockets>
     <Properties>
-      <!--<Property>
-        <Name>MasterIdColumn</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <CategoryName>Schema</CategoryName>
-        <Visible>true</Visible>
-        <ReadOnly>false</ReadOnly>
-      </Property>
-      <Property>
-        <Name>DetailIdColumn</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <CategoryName>Schema</CategoryName>
-        <Visible>true</Visible>
-        <ReadOnly>false</ReadOnly>
-      </Property>-->
       <Property>
         <Name>WorkingWithSecondSetMode</Name>
         <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -2823,30 +2630,7 @@
         <ReadOnly>false</ReadOnly>
         <Default>Cedent2</Default>
       </Property>
-      <!--  <Property>
-        <Name>NumberOfVerifications</Name>
-        <TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>
-       <Property>
-        <Name>NumberOfHypotheses</Name>
-        <TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>
-      <Property>
-        <Name>Result</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <Visible>false</Visible>
-        <ReadOnly>false</ReadOnly>
-      </Property>
-      <Property>
-        <Name>ResultInfo</Name>
-        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-        <Visible>false</Visible>
-        <ReadOnly>false</ReadOnly>
-      </Property>-->
+     
       <Property>
         <Name>MaxNumberOfHypotheses</Name>
         <TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
@@ -2902,24 +2686,7 @@
         <ReadOnly>false</ReadOnly>
         <Default>FirstN</Default>
       </Property>
-      <!-- <Property>
-        <Name>TotalNumberOfRelevantQuestions</Name>
-        <TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>
-      <Property>
-        <Name>StartTime</Name>
-        <TypeClassIceId>::Ferda::Modules::DateTimeT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>
-      <Property>
-        <Name>EndTime</Name>
-        <TypeClassIceId>::Ferda::Modules::DateTimeT</TypeClassIceId>
-        <Visible>true</Visible>
-        <ReadOnly>true</ReadOnly>
-      </Property>-->
+   
     </Properties>
     <ModulesAskingForCreationSeq>
       <ModulesAskingForCreation>
@@ -3629,7 +3396,7 @@
         <Name>TotalTime</Name>
         <SocketTypes>
           <BoxType>
-            <FunctionIceId>::Ferda::Modules::DateTimeTInterface</FunctionIceId>
+            <FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
           </BoxType>
         </SocketTypes>
         <MoreThanOne>false</MoreThanOne>
@@ -3726,7 +3493,7 @@
       </Property>
       <Property>
         <Name>TotalTime</Name>
-        <TypeClassIceId>::Ferda::Modules::DateTimeT</TypeClassIceId>
+        <TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
         <Visible>true</Visible>
         <ReadOnly>true</ReadOnly>
       </Property>
