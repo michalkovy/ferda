@@ -296,7 +296,21 @@ of the conference, we should bring findings.
 
 \section{Conclusion}
 \label{section:conclusion}
-The conclusion goes here.
+Multirelational association mining brings more natural way of working with data mining tasks
+on complex data. It generalizes the concept of GUHA association rules by widening the definition
+of the attribute values to the results of the data mining tasks run on the subset of rows of tables
+related to the main table. This approach enables mining for patterns that could not be mined for by
+non-relational procedures.
+
+Main drawbacks are the result interpretation and computational complexity. Working with implementation
+of hypotheses virtual attribute in Ferda DataMiner has helped to define some concrete issues with virtual
+attribute output. These issues are being actively discussed and will be addressed in the next implementation
+of relational extensions in Ferda DataMiner.
+
+Computational complexity and resulting performance drawbacks can be addressed by distributing the computations
+among different nodes. This solution has been touched by Tomáš Karban. In future, this approach can be
+implemented in Ferda as well, as Ferda supports distributed computations thanks to its architecture.
+
 
 \section*{Acknowledgment}
 
