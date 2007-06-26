@@ -69,19 +69,24 @@ the GUHA method \cite{GUHA1, GUHA2}. GUHA is the an original method of
 exploratory data analysis that is nowadays researched mainly in context of
 generalizing association rules \cite{Rauch2, Alternative}. Attemts to
 use generalized association rules also for multirelational data were made
-\cite{Rauch1, Karban}. The technique uses star schema of the 
-database\footnote{One master table and several detail tables.} and introduced
-\emph{virtual attribute}, attribute that is computed from the detail tables
-and acts as attribute of master table. There are two types of 
+\cite{Rauch1, Karban}. 
+Non-relational GUHA procedures work with single data table. 
+Working with multirelational rules requires having more than one data table
+in relation, which better reflects real-world situations.
+For now, the star-scheme\footnote{One master table and several detail tables.}
+technique of the database has been considered.
+Relational approach works with the term \emph{virtual attribute}.
+Its values are computed from detail data tables and act as attribute for the main
+data table. There are two types of 
 \emph{virtual attributes} presented: SQL transformation or generalized
 association rule mined above the detail table\footnote{To be explained
 later}. The latter cannot be obtained by any of the methods based on 
 \emph{apriori} algorithm. 
 
-Although the theory for multirelational extentions of the GUHA association
+Although the theory for multirelational extensions of the GUHA association
 mining is well developed, until now there was a lack of successful 
 implementation. In our Ferda environment, we implemented the multirelational
-extentions of GUHA generalized association rules and conducted some very
+extensions of GUHA generalized association rules and conducted some very
 useful experiments to show advisability of these rules. The aim of this paper
 is to present multirelational association rules based on \emph{virtual attributes}
 and to demonstrate their implementation in the Ferda system. 
@@ -152,7 +157,7 @@ of a bank. The master table contains information about clients' accounts and the
 table contains information about transactions of individual clients\footnote{The
 example was greatly inspired by data describing clients of virtual bank Barbora. The
 dataset was examined e.g. during the PKDD 1999 Discovery challenge, see 
-\url{http://lisp.vse.cz/challenge}.}.
+\url{http://lisp.vse.cz/challenge}.}. One client in the master table can have several transactions in the detail table.
 
 \emph{Virtual attributes} are attributes from detail data tables, that are created
 during the process of association rules verification and are treated as normal attributes
@@ -166,9 +171,10 @@ is an example of \emph{aggregation attribute}. We will not focus on \emph{aggreg
 attributes}, because they can be also imported into the master data table by corresponding
 SQL transformations.
 
-\emph{Hypotheses attributes} are of more interest. They represent a generalized
-association rule (as explained above), which is true or false for each key item
-of the master table. Example of such attribute can be \emph{client that often
+\emph{Hypotheses attributes} are of more interest. Their values represent validity of 
+generalized association rules on detail data tables. Those values form a virtual 
+attribute that is added to the main data table. Example of such attribute can be
+\emph{client that often
 pays by credit card}, which can be formally written as 
 $$ClientID \approx Payment(CreditCard)$$
 with a suitable \emph{4ft-quantifier} $\approx$. It is obvious, that this rule
@@ -180,6 +186,28 @@ $$District(SouthEast) \& ClientPayingByCreditCard$$
 $$\approx Status(good)$$
 Note that these types of rules cannot be obtained by any other method mentioned in
 section \ref{section:introduction}.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.2in]{Transactions.eps}
+% where an .eps filename suffix will be assumed under latex, 
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+\caption{Example of multirelational task setting}
+\label{fig:transactions}
+\end{figure}
+
+As we have said earlier, \emph{hypotheses attributes} represent validity of generalized 
+association rules on detail data tables. The validity of the rules is not computed
+for the whole detail table at once but rather for those objects of the detail
+table that are in relation with the object from the main data table one by one. This is achieved by dividing the detail table rows into groups corresponding with each
+object from the main table and for each such group, the validity of the association
+rule on it is returned, generally, as a real number. Figure x represents this
+situation. In current implementation in Ferda,
+the true/false value for each group of detail table rows is returned (association rule
+can be either valid or invalid). As the count of these groups corresponds to count of
+objects in the main data table, hypotheses attribute gives us exactly new columns for
+the main data table.
 
 Issues concerning \emph{hypotheses attributes} by far exceed the scope of this paper.
 As well as WARMR, construction of \emph{hypotheses attributes} suffer from explosion
@@ -255,8 +283,7 @@ about client's district in conjunction with \emph{hypotheses attribute} are exam
 against status of the client. The setting again corresponds to exemplary association 
 rule from section \ref{section:attributes}. Note similar appearance of the master 
 table task \emph{box} and also the \emph{hypotheses attribute box} -- they represent 
-modifications of the 4FT procedure. Also note how inputs of the master table task 
-box represents setting of generalized association rules, \mbox{$\varphi \approx \psi$}.
+modifications of the 4FT procedure.
 $$$$
 We would also like to present, how \emph{hypotheses attribute} setting can affect
 the hypotheses space and thus the running times. So far, our experiments have been
