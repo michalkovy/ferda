@@ -62,15 +62,20 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         {
             this.TabPageBarChart.SuspendLayout();
             this.SuspendLayout();
+
             this.ColumnFrequencyBarChart = new Steema.TeeChart.TChart();
             this.ColumnFrequencyBarChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ColumnFrequencyBarChart.Header.Lines = new string[] { resManager.GetString("ColumnFrequencyBarChart") };
+            this.ColumnFrequencyBarChart.Header.Lines = 
+                new string[] { resManager.GetString("ColumnFrequencyBarChart") };
             this.ColumnFrequencyBarChart.Location = new System.Drawing.Point(0, 0);
             this.ColumnFrequencyBarChart.Header.Visible = true;
             this.ColumnFrequencyBarChart.Aspect.View3D = false;
-            this.ColumnFrequencyBarChart.Axes.Left.Labels.Style = Steema.TeeChart.AxisLabelStyle.Text;
-            //     this.ColumnFrequencyChart.DoubleClick += new EventHandler(tChart1_DoubleClick);
+            this.ColumnFrequencyBarChart.Axes.Left.Labels.Style = 
+                Steema.TeeChart.AxisLabelStyle.Text;
+            this.ColumnFrequencyBarChart.Legend.Visible = false; //added
+            this.ColumnFrequencyBarChart.Axes.Visible = false; //added
             this.ColumnFrequencyBarChart.Size = new System.Drawing.Size(466, 286);
+            
             this.TabPageBarChart.Controls.Add(ColumnFrequencyBarChart);
             this.TabPageBarChart.ResumeLayout(false);
 
@@ -81,6 +86,8 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ColumnFrequencyAreaChart.Header.Visible = true;
             this.ColumnFrequencyAreaChart.Aspect.View3D = false;
             this.ColumnFrequencyAreaChart.Axes.Left.Labels.Style = Steema.TeeChart.AxisLabelStyle.Text;
+            this.ColumnFrequencyAreaChart.Legend.Visible = false; //added
+            this.ColumnFrequencyAreaChart.Axes.Visible = false; //added
             this.ColumnFrequencyAreaChart.Size = new System.Drawing.Size(466, 286);
             this.TabPageAreaChart.Controls.Add(ColumnFrequencyAreaChart);
 
@@ -94,6 +101,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ColumnFrequencyPieChart.Size = new System.Drawing.Size(466, 286);
             this.TabPagePieChart.Controls.Add(ColumnFrequencyPieChart);
             this.TabPagePieChart.ResumeLayout(false);
+            
             this.ResumeLayout(false);
         }
 
