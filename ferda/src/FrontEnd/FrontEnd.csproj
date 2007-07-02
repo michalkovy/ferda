@@ -101,6 +101,9 @@
   <ItemGroup />
   <ItemGroup>
     <Compile Include="BoxExceptionThreadClass.cs" />
+    <Compile Include="ContextHelp\FerdaContextHelp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Desktop\RenameDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,9 +137,6 @@
     </Compile>
     <Compile Include="Desktop\BoxNode.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="ContextHelp\FerdaContextHelp.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="ContextHelp\IContextHelpDisplayer.cs" />
     <None Include="default.build" />
     <Compile Include="Desktop\FerdaDesktop.cs">
@@ -189,10 +189,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Property\AsyncPropertyCatcher.cs" />
-    <EmbeddedResource Include="ContextHelp\FerdaContextHelp.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FerdaContextHelp.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Desktop\RenameDialog.resx">
       <DependentUpon>RenameDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
