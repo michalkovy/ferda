@@ -300,7 +300,7 @@ namespace Ferda.FrontEnd.ContextHelp
             // 
             // FerdaContextHelp
             // 
-            this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.LLTutorial);
             this.Controls.Add(this.RTBBoxTypeHint);
             this.Controls.Add(this.LBoxType);
