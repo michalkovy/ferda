@@ -344,7 +344,7 @@ namespace Ferda.FrontEnd.Archive
             TVArchive.LabelEdit = true;
             TVArchive.AfterLabelEdit += new NodeLabelEditEventHandler(TVArchive_AfterLabelEdit);
 
-            CBCategories.SelectedIndexChanged += new EventHandler(CBArchive_SelectedIndexChanged);
+            CBCategories.SelectedIndexChanged += new EventHandler(CBCategories_SelectedIndexChanged);
             CBTypes.SelectedIndexChanged += new EventHandler(CBTypes_SelectedIndexChanged);
             RBAlong.CheckedChanged += new EventHandler(RBAlong_CheckedChanged);
             TVArchive.AfterSelect += new TreeViewEventHandler(TVArchive_AfterSelect);
@@ -578,10 +578,25 @@ namespace Ferda.FrontEnd.Archive
             else
             {
                 IBoxModule[] boxesList;
+                List<IBoxModule> tmpList;
                 //all boxes in that category
                 if (BoxType == ResManager.GetString("ArchiveAllText"))
                 {
-                    boxesList = archive.ListBoxesWithType(BoxCategory, null);
+                    tmpList =
+                        new List<IBoxModule>();
+
+                    //iterating through all the categories names and 
+                    //adding boxes of categories that start with the
+                    //same substring
+                    foreach (string category in CBCategories.Items)
+                    {
+                        if (category.StartsWith(BoxCategory))
+                        {
+                            tmpList.AddRange(archive.ListBoxesWithType(category,null));
+                        }
+                    }
+
+                    boxesList = tmpList.ToArray();
                 }
                 //a specified box type
                 else
@@ -780,7 +795,7 @@ namespace Ferda.FrontEnd.Archive
                     }
                 }
 
-                CBCategories.SelectedIndexChanged -= new EventHandler(CBArchive_SelectedIndexChanged);
+                CBCategories.SelectedIndexChanged -= new EventHandler(CBCategories_SelectedIndexChanged);
 
                 if (i == CBCategories.Items.Count)
                 {
@@ -796,7 +811,7 @@ namespace Ferda.FrontEnd.Archive
                     ResetArchive(oldCategory, oldType, true);
                 }
 
-                CBCategories.SelectedIndexChanged += new EventHandler(CBArchive_SelectedIndexChanged);
+                CBCategories.SelectedIndexChanged += new EventHandler(CBCategories_SelectedIndexChanged);
 
                 //selecting the box type
                 for (int j = 0; j < CBTypes.Items.Count; j++)
@@ -959,11 +974,12 @@ namespace Ferda.FrontEnd.Archive
         }
 
         /// <summary>
-        /// Redraws the treeview according to the new settings of this ComboBox
+        /// Redraws the treeview according to the new settings of the Categories
+        /// combo box
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event parameters</param>
-        void CBArchive_SelectedIndexChanged(object sender, EventArgs e)
+        void CBCategories_SelectedIndexChanged(object sender, EventArgs e)
         {
             //getting the categoriesIndex
             int index = CBCategories.SelectedIndex;
