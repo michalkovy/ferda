@@ -430,6 +430,9 @@
   <data name="NetworkArchive" xml:space="preserve">
     <value>Network Archive</value>
   </data>
+  <data name="NetworkArchiveLabelBox" xml:space="preserve">
+    <value>Label of the box in the network archive</value>
+  </data>
   <data name="NewBoxContentText" xml:space="preserve">
     <value>New Boxes</value>
   </data>

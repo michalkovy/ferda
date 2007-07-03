@@ -172,6 +172,7 @@
     <Compile Include="NetworkArchive\FerdaNetworkArchive.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="NetworkArchive\INetworkArchiveDisplayer.cs" />
     <Compile Include="NewBox\IBoxModuleFactoryCreatorComparer.cs" />
     <Compile Include="NewBox\NewBoxControl.cs">
       <SubType>UserControl</SubType>

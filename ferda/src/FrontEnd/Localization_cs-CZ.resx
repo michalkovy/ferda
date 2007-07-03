@@ -423,6 +423,9 @@
   <data name="NetworkArchive" xml:space="preserve">
     <value>Síťový archiv</value>
   </data>
+  <data name="NetworkArchiveLabelBox" xml:space="preserve">
+    <value>Název krabičky v síťovém archivu</value>
+  </data>
   <data name="NewBoxContentText" xml:space="preserve">
     <value>Nové krabičky</value>
   </data>
