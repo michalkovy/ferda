@@ -525,6 +525,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add to network archive.
+        /// </summary>
+        internal static string MenuAddToNA {
+            get {
+                return ResourceManager.GetString("MenuAddToNA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string MenuArchiveDelete {
