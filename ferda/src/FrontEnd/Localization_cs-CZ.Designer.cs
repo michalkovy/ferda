@@ -511,6 +511,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Přidat do síťového archivu.
+        /// </summary>
+        internal static string MenuAddToNA {
+            get {
+                return ResourceManager.GetString("MenuAddToNA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odstranit.
         /// </summary>
         internal static string MenuArchiveDelete {

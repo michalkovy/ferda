@@ -267,6 +267,9 @@
   <data name="MenuActions" xml:space="preserve">
     <value>Akce</value>
   </data>
+  <data name="MenuAddToNA" xml:space="preserve">
+    <value>Přidat do síťového archivu</value>
+  </data>
   <data name="MenuArchiveDelete" xml:space="preserve">
     <value>Odstranit</value>
   </data>

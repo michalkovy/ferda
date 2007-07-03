@@ -274,6 +274,9 @@
   <data name="MenuActions" xml:space="preserve">
     <value>Actions</value>
   </data>
+  <data name="MenuAddToNA" xml:space="preserve">
+    <value>Add to network archive</value>
+  </data>
   <data name="MenuArchiveDelete" xml:space="preserve">
     <value>Delete</value>
   </data>

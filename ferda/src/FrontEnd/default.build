@@ -49,6 +49,7 @@
 				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}" />
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}" />
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}" />
+        <include name="${path::combine(build.dir,'FerdaNetworkArchiveBase.dll')}" />
 
 				<include name="${path::combine(build.dir,'NAFGraph.dll')}" />
 				<include name="${path::combine(build.dir,'DockDotNET.dll')}" />

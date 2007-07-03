@@ -61,6 +61,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
     </Reference>
+    <Reference Include="FerdaNetworkArchiveBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="FerdaProjectManager, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\FrontEnd\FerdaProjectManager.dll</HintPath>
@@ -272,6 +273,7 @@
     <Content Include="Icons\Localize in archive.ico" />
     <Content Include="Icons\MakeGroup.ico" />
     <Content Include="Icons\NA.ico" />
+    <Content Include="Icons\Network Archive.ico" />
     <Content Include="Icons\New Desktop.ico" />
     <Content Include="Icons\New project.ico" />
     <Content Include="Icons\Open project.ico" />
