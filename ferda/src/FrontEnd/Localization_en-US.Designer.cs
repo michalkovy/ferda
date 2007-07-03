@@ -993,6 +993,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Label of the box in the network archive.
+        /// </summary>
+        internal static string NetworkArchiveLabelBox {
+            get {
+                return ResourceManager.GetString("NetworkArchiveLabelBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Boxes.
         /// </summary>
         internal static string NewBoxContentText {

@@ -979,6 +979,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Název krabičky v síťovém archivu.
+        /// </summary>
+        internal static string NetworkArchiveLabelBox {
+            get {
+                return ResourceManager.GetString("NetworkArchiveLabelBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nové krabičky.
         /// </summary>
         internal static string NewBoxContentText {

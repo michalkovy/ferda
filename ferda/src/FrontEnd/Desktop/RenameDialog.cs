@@ -84,7 +84,10 @@ namespace Ferda.FrontEnd.Desktop
         /// </summary>
         /// <param name="n">name of the dialog</param>
         /// <param name="res">Resource manager for the resources</param>
-        public RenameDialog(string n, ResourceManager res)
+        /// <param name="networkArchive">
+        /// Determines, if the new name should be used for the network archive
+        /// </param>
+        public RenameDialog(string n, ResourceManager res, bool networkArchive)
         {
             InitializeComponent();
 
@@ -93,7 +96,14 @@ namespace Ferda.FrontEnd.Desktop
             resManager = res;
 
             //localizing the application
-            Text = ResManager.GetString("RenameDialogCaption");
+            if (networkArchive)
+            {
+                Text = ResManager.GetString("NetworkArchiveLabelBox");
+            }
+            else
+            {
+                Text = ResManager.GetString("RenameDialogCaption");
+            }
             BOk.Text = ResManager.GetString("OKButton");
             BCancel.Text = ResManager.GetString("CancelButton");
         }
