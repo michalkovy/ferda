@@ -24,15 +24,15 @@ Class=CLatexEdit
 Document=ICDE.tex
 
 [Frame0_Row0]
-cyCur=590
+cyCur=556
 cyMin=10
 
 [Frame0_Col0]
-cxCur=987
+cxCur=966
 cxMin=10
 
 [Frame0_View0,0]
-Cursor.row=293
+Cursor.row=0
 Cursor.column=0
-TopSubLine=289
+TopSubLine=0
 
