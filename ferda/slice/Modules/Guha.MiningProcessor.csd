@@ -1,4 +1,3 @@
-<!--Class diagram created by the NClass tool. See http:\\nclass.sourceforge.net -->
 <ClassProject>
   <Language>CSharp</Language>
   <Entities>
@@ -372,7 +371,7 @@
     </Shape>
     <Shape>
       <Location left="923" top="230" />
-      <Size width="162" height="107" />
+      <Size width="187" height="107" />
     </Shape>
     <Shape>
       <Location left="1247" top="40" />
