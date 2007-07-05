@@ -35,7 +35,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
     internal class Functions : DatabaseFunctionsDisp_, IFunctions
     {
         /// <summary>
-        /// The current
+        /// The current box module
         /// </summary>
         protected BoxModuleI _boxModule;
 

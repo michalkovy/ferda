@@ -613,10 +613,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         }
 
         /// <summary>
-        /// Gets categories ids
+        /// Gets categories ids (they are actually names of the categories
+        /// that need to be unique). The missing category is ommited.
         /// </summary>
-        /// <param name="fallOnError"></param>
-        /// <returns></returns>
+        /// <param name="fallOnError">If the function should throw an exception
+        /// when error</param>
+        /// <returns>Categories names</returns>
         public string[] GetCategoriesIds(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(

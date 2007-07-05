@@ -1,3 +1,24 @@
+// BoxInfoHelper.cs - Provides some static functions for easier
+// boxes handling
+//
+// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+//
+// Copyright (c) 2006 Tomáš Kuchaø
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -187,11 +208,13 @@ namespace Ferda.Modules.Boxes
         #endregion
 
         /// <summary>
-        /// Gets the GUID struct from specified property.
+        /// Gets the GUID struct from specified property. If the property value is null or
+        /// empty string, the method creates a new GUID and writes it to the property.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="boxModule">The box module.</param>
-        /// <returns></returns>
+        /// <returns>A new GUID struct</returns>
+        /// <remarks>The method can be used only when the property is string type.</remarks>
         public static GuidStruct GetGuidStructFromProperty(string propertyName, BoxModuleI boxModule)
         {
             string guid = boxModule.GetPropertyString(propertyName);
