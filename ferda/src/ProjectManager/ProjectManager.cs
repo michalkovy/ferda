@@ -88,6 +88,7 @@ namespace Ferda.ProjectManager {
             if (options.StartIceGridLocaly) StartIceGrid(options.IceBinPath, options.IceGridAsService, options.IceGridWorkingDirectory, options.IceGridApplicationXmlFilePath);
             modulesManager = new Ferda.ModulesManager.ModulesManager(args, options.LocalePrefs, output);
             archive = new Archive(views);
+            networkArchive = new Ferda.ProjectManager.NetworkArchive(modulesManager,this);
         }
 
         private void StreamReaderThread_Output() {
