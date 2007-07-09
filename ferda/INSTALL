@@ -3,12 +3,12 @@
 Please go through these steps to successfully install ferda on your system:
 
 1) Install .NET 2 SDK
-2) Install last night version of NAnt (nant.sourceforge.net)
+2) Install NAnt, supported version is 0.85 (nant.sourceforge.net)
 3) Install Ice (www.zeroc.com)
 4) Set PATH environment variable to have Ice bin directory, NAnt bin directory and the .NET 2 SDK bin directory in it.
 5) Run "nant fullinstall"
 You can specify these options in this step:
--D:ice.dir=ICEPATH	path to Ice directory, if not C:\Ice-3.0.0
+-D:ice.dir=ICEPATH	path to Ice directory, if not C:\Ice-3.2.0
 -D:optimize=true		optimize generated code
 -D:debug=None				do not create debug symbols
 
