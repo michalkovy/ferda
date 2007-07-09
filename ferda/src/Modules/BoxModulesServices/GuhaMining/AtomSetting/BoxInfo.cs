@@ -30,7 +30,7 @@ using Object = Ice.Object;
 namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
 {
     /// <summary>
-    /// Class that provides info about boxes of the AtomSetting box
+    /// Class that provides info about boxes of the AtomSetting type
     /// </summary>
     public class BoxInfo : Boxes.BoxInfo
     {
