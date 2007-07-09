@@ -1,3 +1,24 @@
+// Functions.cs - Function objects for the ConjunctionSetting box module
+//
+// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+// Documented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+//
+// Copyright (c) 2006 Tomáš Kuchaø, Martin Ralbovský
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.MiningProcessor;
@@ -5,6 +26,10 @@ using Ice;
 
 namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
 {
+    /// <summary>
+    /// Class is providing ICE functionality of the ConjunctionSetting
+    /// box module
+    /// </summary>
     internal class Functions : BooleanAttributeSettingFunctionsDisp_, IFunctions
     {
         /// <summary>
@@ -32,17 +57,24 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
 
         #region Properties
 
+        //names of the properties
         public const string PropImportance = "Importance";
         public const string PropMinimalLength = "MinimalLength";
         public const string PropMaximalLength = "MaximalLength";
         public const string SockBooleanAttributeSetting = "BooleanAttributeSetting";
         public const string SockEquivalenceClasses = "EquivalenceClasses";
 
+        /// <summary>
+        /// The GUID identifier of the atom
+        /// </summary>
         public GuidStruct Guid
         {
             get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
 
+        /// <summary>
+        /// Importance of the atom (basic/auxiliary/forced)
+        /// </summary>
         public ImportanceEnum Importance
         {
             get
@@ -54,11 +86,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
             }
         }
 
+        /// <summary>
+        /// Minimal length of the atom
+        /// </summary>
         public int MinimalLength
         {
             get { return _boxModule.GetPropertyInt(PropMinimalLength); }
         }
 
+        /// <summary>
+        /// Maximal length of the atom
+        /// </summary>
         public int MaximalLength
         {
             get { return _boxModule.GetPropertyInt(PropMaximalLength); }
@@ -68,6 +106,13 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
 
         #region Methods
 
+        /// <summary>
+        /// Returns proxies of boxes connected to the Boolean attribute setting
+        /// socket
+        /// </summary>
+        /// <param name="fallOnError">If the function should throw an exception
+        /// when error</param>
+        /// <returns>Proxies of connected boxes</returns>
         public List<BooleanAttributeSettingFunctionsPrx> GetBooleanAttributeSettingFunctionsPrxs(bool fallOnError)
         {
             return SocketConnections.GetPrxs<BooleanAttributeSettingFunctionsPrx>(
@@ -78,6 +123,13 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
                 fallOnError);
         }
 
+        /// <summary>
+        /// Returns proxies of boxes connected to the classes of equivalence
+        /// socket
+        /// </summary>
+        /// <param name="fallOnError">If the function should throw an exception
+        /// when error</param>
+        /// <returns>Proxies of connected boxes</returns>
         public List<EquivalenceClassFunctionsPrx> GetEquivalenceClassFunctionsPrxs(bool fallOnError)
         {
             return SocketConnections.GetPrxs<EquivalenceClassFunctionsPrx>(
@@ -88,11 +140,24 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
                 fallOnError);
         }
 
+        /// <summary>
+        /// Gets the label of the boxes connected to the Boolean Attribute setting socket
+        /// </summary>
+        /// <returns>Connected boxes labels</returns>
         public string[] GetInputBoxesLabels()
         {
             return SocketConnections.GetInputBoxesLabels(_boxModule, SockBooleanAttributeSetting);
         }
 
+        /// <summary>
+        /// Returns the setting of the entity (all Boolean attributes). The
+        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting">
+        /// contains identification information and the importance
+        /// of this entity (BooleanAttribute). 
+        /// </summary>
+        /// <param name="fallOnError">If the function should throw an exception
+        /// when error</param>
+        /// <returns>The entity setting</returns>
         public IEntitySetting GetEntitySetting(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<IEntitySetting>(
@@ -107,6 +172,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
                             return null;
                         else
                         {
+                            //constructing a conjunction setting
                             ConjunctionSettingI result =
                                 new ConjunctionSettingI();
                             result.id = Guid;
@@ -140,11 +206,26 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
 
         #region Ice Functions
 
+        /// <summary>
+        /// Returns the setting of the entity (all Boolean attributes). The
+        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting">
+        /// contains identification information and the importance
+        /// of this entity (BooleanAttribute). 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>The entity setting</returns>
         public override IEntitySetting GetEntitySetting(Current current__)
         {
             return GetEntitySetting(true);
         }
 
+        /// <summary>
+        /// Returns attribute names (overridden from 
+        /// <see cref="T:Ferda.Guha.MiningProcessor.AttributeNameProvider"/>)
+        /// of this boolean attribute and their identification.
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Attribute names</returns>
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
             List<GuidAttributeNamePair> result = new List<GuidAttributeNamePair>();
@@ -157,6 +238,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Returns the proxy of the bit string generator
+        /// (overridden from <see cref="T:Ferda.Guha.MiningProcessor.BitStringGeneratorProvider"/>)
+        /// a specified attribute.
+        /// </summary>
+        /// <param name="attributeId">ID of the specified attribute.</param>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Proxy of the bit string generator</returns>
         public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Current current__)
         {
             BitStringGeneratorPrx result;
@@ -171,6 +260,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
             return null;
         }
 
+        /// <summary>
+        /// Gets the ID of the table that is beeing mined.
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>ID of the mined table</returns>
         public override string GetSourceDataTableId(Current current__)
         {
             List<BooleanAttributeSettingFunctionsPrx> prxs = GetBooleanAttributeSettingFunctionsPrxs(true);
