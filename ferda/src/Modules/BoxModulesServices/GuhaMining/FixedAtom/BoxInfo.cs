@@ -28,8 +28,18 @@ using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
 {
+    /// <summary>
+    /// Class that provides info about boxes of the FixedAtom box
+    /// </summary>
     public class BoxInfo : Boxes.BoxInfo
     {
+        /// <summary>
+        /// Functions creates an object of <see cref="T:Ferda.Modules.IFunctions">IFuntions</see>
+        /// type that provides functionality of the box
+        /// </summary>
+        /// <param name="boxModule">Current box module</param>
+        /// <param name="iceObject">ICE stuff</param>
+        /// <param name="functions">The new created functions object</param>
         public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
         {
             Functions result = new Functions();
@@ -37,11 +47,29 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
             functions = result;
         }
 
+        /// <summary>
+        /// Gets function`s Ice identifiers of the box module.
+        /// </summary>
+        /// <returns>
+        /// An array of strings representing Ice identifiers
+        /// of the box module`s functions.
+        /// </returns>
+        /// <example>
+        /// Please see an example for <see cref="T:Ferda.Modules.Boxes.IBoxInfo">IBoxInfo`s</see>
+        /// 	<see cref="M:Ferda.Modules.Boxes.IBoxInfo.GetBoxModuleFunctionsIceIds()"/>.
+        /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
             return Functions.ids__;
         }
 
+        /// <summary>
+        /// Gets default value for box module user label. The label consists
+        /// of the name of the attribute and the list of categories in
+        /// parentheses.
+        /// </summary>
+        /// <param name="boxModule">A module that returns the label</param>
+        /// <returns>The user label</returns>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
             Functions Func = (Functions) boxModule.FunctionsIObj;
@@ -150,7 +178,13 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
 
             return result.ToArray();
         }
-
+        /// <summary>
+        /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as
+        /// options for property, whose options are dynamically variable.
+        /// </summary>
+        /// <param name="boxModule">The current module</param>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>String options of the property</returns>
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
             Functions Func = (Functions) boxModule.FunctionsIObj;
@@ -166,13 +200,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
             }
         }
 
-        public const string typeIdentifier = "GuhaMining.FixedAtom";
-
-        protected override string identifier
-        {
-            get { return typeIdentifier; }
-        }
-
+        /// <summary>
+        /// Validates the box
+        /// </summary>
+        /// <param name="boxModule">box instance to be validated</param>
         public override void Validate(BoxModuleI boxModule)
         {
             Functions Func = (Functions) boxModule.FunctionsIObj;
@@ -206,5 +237,32 @@ namespace Ferda.Modules.Boxes.GuhaMining.FixedAtom
             object dummy = Func.GetEntitySetting(true);
             dummy = Func.GetAttributeName(true);
         }
+
+        #region Type identifier
+
+        /// <summary>
+        /// This is recomended (not required) to have <c>public const string</c> 
+        /// field in the BoxInfo implementation which holds the identifier 
+        /// of type of the box module.
+        /// </summary>
+        public const string typeIdentifier = "GuhaMining.FixedAtom";
+
+        /// <summary>
+        /// Unique identifier of type of Box module
+        /// </summary>
+        /// <value></value>
+        /// <remarks>
+        /// This string identifier is parsed i.e. dots (".") are
+        /// replaced by <see cref="P:System.IO.Path.DirectorySeparatorChar"/>.
+        /// Returned path is combined with application directory`s
+        /// <see cref="F:Ferda.Modules.Boxes.BoxInfo.configFilesFolderName">subdirectory</see>
+        /// and final path is used for getting stored configuration [localization] XML files.
+        /// </remarks>
+        protected override string identifier
+        {
+            get { return typeIdentifier; }
+        }
+
+        #endregion
     }
 }
