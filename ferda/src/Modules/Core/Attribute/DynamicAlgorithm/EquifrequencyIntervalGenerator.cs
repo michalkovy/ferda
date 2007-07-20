@@ -1,3 +1,10 @@
+// EquifrequencyIntervalsGenerator.cs - RelMiners generation of equifrequency intervals
+//
+// Author: Tomáš Karban
+//
+// Copyright (c) Tomáš Karban
+
+
 // #define PERFCOUNTERS
 // #define SCOREGRAPH
 

@@ -5,6 +5,9 @@
 #include <Modules/BasicPropertyTypes.ice>
 #include <Modules/Exceptions.ice>
 
+//Documentation for this slice design can be found in
+// Ferda.Guha.Data.IceDesignDocumentation
+
 module Ferda {
 	module Guha {
 		module Data {

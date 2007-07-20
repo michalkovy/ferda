@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <personname>
+          <firstname>Martin</firstname>
+          <surname>Ralbovský</surname>
+        </personname>
+        <email>martin.ralbovsky@gmail.com</email>
+      </author>
+      <othercredit>
+        <personname>
+          <firstname>Tomáš</firstname>
+          <surname>Kuchař</surname>
+        </personname>
+        <email>tomas.kuchar@gmail.com</email>
+      </othercredit>
+    </authorgroup>
+    <pubdate>2007-07-19</pubdate>
+    <title>Ferda Core documentation</title>
+    <titleabbrev>Ferda Core</titleabbrev>
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2007-07-19</date>
+        <revremark>First version of the document
+        </revremark>
+      </revision>
+    </revhistory>
+    -->
+  </articleinfo>
+  <abstract>
+    <para>
+      The document describes collection of dynamic libraries 
+      Ferda Core. Each of the library provides specific functionality
+      for several boxes in the Ferda system. Document describes
+      the architecture of Ferda Core and individual libraries.
+    </para>
+  </abstract>
+  <section>
+    <title>What is Ferda Core</title>
+    <para>
+      Ferda Core is a collection of dynamic libraries that provide specific
+      functionality for several boxes in the Ferda system.
+    </para>
+    <section>
+      <title>Why to have Ferda Core libraries?</title>
+      <para>
+        Each box module in the Ferda system is from the design point of view independent
+        module with ability to run anywhere over the network connected with the rest of
+        the system via the ICE middleware. However, often happens that more boxes need
+        the same functionality. Therefore it is needed
+        to have shared libraries that provide this functionality.
+      </para>
+      <para>
+        Moreover, in some cases such as
+        bitstring handling in GUHA tasks generation, the additional cost of using 
+        middleware would be too large and performance of the system would suffer.
+        Therefore the boxes perform only calls of the Ferda Core libraries and these
+        libraries do the computationally difficult job.
+      </para>
+    </section>
+    <section>
+      <title>Architecture overview</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="ferdaCoreArchitecture.png" format="PNG"/>
+        </imageobject>
+      </mediaobject>      
+      <para>
+        The image shows architecture of Ferda Core libraries with respect to
+        other parts of the Ferda system. The user communicates with the box
+        modules via the Ferda FrontEnd environment. The boxes then use Ferda
+        core libraries for their functionality. 
+      </para>
+      <para>
+        Programmer can see source code of all the libraries in the
+        <classname>ferda\src\Modules\Core\Core.sln</classname>
+        Visual Studio project. Here each library corresponds to one VS project.
+        The libraries are built and distributed
+        to directories according to a <classname>ferda\src\Modules\default.build</classname>
+        nant script.
+      </para>
+      <para>
+        Below are listed the Ferda Core libraries:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <simpara>
+            Attribute
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Base
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Boxes
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Data
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Helpers
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Math
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            MiningProcessor
+          </simpara>
+        </listitem>        
+      </itemizedlist>
+    </section>
+  </section>
+  <section>
+    <title>Attribute</title>
+    <para>
+      The Attribute library handles construction of attributes in the Ferda system.
+      Creation of attributes belongs to the data preparation phase of data mining.
+      By creation of attributes we mean creation of finite subsets of a domain of a
+      data column. Attribute can consist of individual categories and intervals
+      (only on ordinal and cardinal data).
+      The library can guarantee disjunctions of intervals or determine, if a category
+      lies within the interval.
+    </para>
+    <para>
+      User can define attribute in two ways. One way is to create an empty attribute
+      and fill it with categories or intervals. The other way is to use algorithms for
+      automatic construction of intervals. These are contained in the 
+      <classname>Ferda.Guha.Attribute.DynamicAlgorithm</classname> namespace. There are
+      algorithms for construction equidistant and equifrequency intervals. 
+    </para>
+    <para>
+      The <classname>Ferda.Guha.Attribute.Axis</classname> class is an important class that
+      provides attribute with a lot of the functionality, such as bit string generation,
+      disjunctivity setting or string operations with the attribute.
+    </para>
+  </section>
+  <section>
+    <title>Base</title>
+    <para>
+      The Base library contains basics of box modules implementation in the Ferda system
+      and thus we will describe it more carefully. 
+      <classname>Ferda.Modules.BoxModuleFactoryCreatorI</classname>,
+      <classname>Ferda.Modules.BoxModuleFactoryI</classname> and
+      <classname>Ferda.Modules.BoxModuleI</classname> implement the important Ice
+      interfaces of box modules. One can read more about box modules implementation in
+      the "Implementace Ferdy" document (available only in Czech). These interfaces provide
+      box functionality for the <classname>ModulesManager</classname> component of the
+      system. The classes make it easier for a C# developer to write his own boxes. Note
+      that developer using other programming language would have to implement these
+      interfaces on his own. 
+    </para>
+    <para>
+		There are two important interfaces defined for the work with the boxes. These are
+		the <classname>Ferda.Modules.IBoxInfo</classname> and 
+		<classname>Ferda.Modules.IFunctions</classname>. The first one implements fundamental
+		functionality and a lot of basic features of a box type. The second one implements
+		boxe's ICE functionality. More on how to create boxes can be found in 
+		"HowToBoxModule" tutorial (available only in Czech). 
+    </para>
+    <para>
+		The remaining classes of the library take also care for the boxes implementation. The
+		<classname>Ferda.Modules.SocketConnections</classname> is worth mentioning.
+		It contains static functions for operating with socket of a box, for retrieving the function
+		proxies, box modules proxies and default user labels. 
+    </para>
+  </section>
+  <section>
+			<title>Boxes</title>
+			<para>
+				The Base library defined the <classname>Ferda.Modules.IBoxInfo</classname>
+				interface. This interface provides information about types of a box. It
+				contain information about boxes label, sockets, properties actions and so on. 
+				We decided to store most of these information in XML configuration files for
+				easier access and configuration. The main function of the Boxes library is
+				to handle these XML configuration files.
+			</para>
+			<para>
+				<classname>Ferda.Modules.Boxes.BoxInfo</classname> is the main abstract
+				class of this library. It implements the <classname>Ferda.Modules.IBoxInfo</classname>
+				interface. Other classes serve mainly for serializing contents of this class into
+				the XML files. There are XML schemas named <classname>box(es).xsd</classname>
+				and <classname>box(es)Localizatoin.xsd</classname> that show schema of XML
+				configuration files. 
+			</para>
+			<para>
+				One class worth mentioning is the
+				<classname>Ferda.Modules.Boxes.ExceptionHandler.cs</classname> class.
+				It provides static functions for method handling with specified error behavior.
+				This is widely used for getting boxes properties or functional outputs. When
+				getting property of a box, the process should not throw an exception. On contrary,
+				when validating a box or getting functional output of a box, exception should be 
+				thrown. 
+			</para>
+	</section>
+	<section>
+		<title>Data</title>
+		<para>
+			The Data library handles the data preparation phase of GUHA data mining up to 
+			creation of attributes. The classes of this library take care of connecting to a 
+			database, retrieving information about datat tables and columns of the tables.
+		</para>
+	</section>
+  <!--
+  <bibliography>
+  </bibliography>
+  -->
+</article>
