@@ -11,6 +11,8 @@
     <AssemblyName>FerdaFrontEnd</AssemblyName>
     <StartupObject />
     <IsWebBootstrapper>true</IsWebBootstrapper>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <PublishUrl>http://localhost/FrontEnd/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -21,10 +23,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationVersion>1.0.0.*</ApplicationVersion>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ApplicationIcon>
-    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,8 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
-      <InProject>False</InProject>
-      <ProductName>.NET Framework 2.0 Beta</ProductName>
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>

@@ -33,6 +33,10 @@ namespace Ferda.Modules.Boxes.DataPreparation
                        new Categorization.EachValueOneCategory.BoxInfo());
             registerBox(Categorization.StaticAttribute.BoxInfo.typeIdentifier,
                        new Categorization.StaticAttribute.BoxInfo());
+                       
+            registerBox(Categorization.OntologyDerivedAttribute.BoxInfo.typeIdentifier,
+                       new Categorization.OntologyDerivedAttribute.BoxInfo());
+                       
             registerBox(Datasource.VirtualColumn.BoxInfo.typeIdentifier,
                         new Datasource.VirtualColumn.BoxInfo());
 
