@@ -2,53 +2,55 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <article lang="en">
-  <articleinfo>
-    <authorgroup>
-      <author>
-        <personname>
-          <firstname>Martin</firstname>
-          <surname>Ralbovský</surname>
-        </personname>
-        <email>martin.ralbovsky@gmail.com</email>
-      </author>
-      <othercredit>
-        <personname>
-          <firstname>Tomáš</firstname>
-          <surname>Kuchař</surname>
-        </personname>
-        <email>tomas.kuchar@gmail.com</email>
-      </othercredit>
-    </authorgroup>
-    <pubdate>2007-02-03</pubdate>
-    <title>Jak přidat do Ferdy novou krabičku</title>
-    <titleabbrev>Jak přidat krabičku</titleabbrev>
-
-    <!--
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+			<othercredit>
+				<personname>
+					<firstname>Tomáš</firstname>
+					<surname>Kuchař</surname>
+				</personname>
+				<email>tomas.kuchar@gmail.com</email>
+			</othercredit>
+		</authorgroup>
+		<pubdate>2007-02-03</pubdate>
+		<title>Jak přidat do Ferdy novou krabičku</title>
+		<titleabbrev>Jak přidat krabičku</titleabbrev>
+		<!--
     <revhistory>
       <revision>
         <revnumber>1.0</revnumber>
-        <date>2006-03-22</date>
+        <date>2007-03-22</date>
         <revremark>První verze dokumentu
         </revremark>
       </revision>
+		<revision>
+		<revnumber>1.1</revnumber>
+		<date>2007-07-23</date>
+		<revremark>Přidal jsem do tvorby knihovny použití sdíleného komunikátoru</revremark>
+		</revision>
     </revhistory>
     -->
-  </articleinfo>
-
-  <abstract>
-    <para>
+	</articleinfo>
+	<abstract>
+		<para>
       Tento dokument popisuje, jak vytvořit novou krabičku pro systém Ferda.
       Informuje také o doporučených nástrojích a postupech, které tvůrci
       Ferdy používají pro tvorbu krabiček. Ukazuje také, jak vytvořit novou
       knihovnu, do které může uživatel umístnit nové krabičky.
     </para>
-  </abstract>
-
-  <section>
-    <title>Potřebné a doporučené nástroje</title>
-    <section>
-      <title>Ice</title>
-      <para>
+	</abstract>
+	<section>
+		<title>Potřebné a doporučené nástroje</title>
+		<section>
+			<title>Ice</title>
+			<para>
         Ice je middleware, který používá Ferda pro komunikaci mezi modely. 
         To umožňuje spouštět systém distribovaně po síti a další věci. Částečně
         je funkce vysvětlena v dokumentech 
@@ -56,37 +58,37 @@
         <classname>implementaceFerdy</classname>. V tomo dokumentu se budeme
         zabývat funkcemi Ice z hlediska vytvoření nových krabiček.
       </para>
-      <para>
+			<para>
         Instalační balíček Ice je volně ke stažení na adrese 
         <ulink url="http://www.zeroc.com">http://www.zeroc.com</ulink>.
         Ferda používá verzi 3.1.1.
       </para>
-    </section>
-    <section>
-      <title>NAnt</title>
-      <para>
+		</section>
+		<section>
+			<title>NAnt</title>
+			<para>
         Utilitu NAnt používáme pro kompilaci a sestavování spustitelných souborů
         Ferdy. Můžete si ji stáhnout na 
         <ulink url="http://nant.sourceforge.net">http://nant.sourceforge.net</ulink>.
         Pro projekt Ferda používáme verzi 0.84 a vyšší.
       </para>
-    </section>
-    <section>
-      <title>.NET 2.0 a Visual Studio</title>
-      <para>
+		</section>
+		<section>
+			<title>.NET 2.0 a Visual Studio</title>
+			<para>
         Ačkoli middleware Ice podporuje řadu programovacích jazyků, tvůrci Ferdy
         si vybrali a doporučují jazyk C#. V tomto dokumentu budeme dále
         předpokládat pouze kódy v jazyce C#. Platforma pro (nejen) tento jazyk se
         jmenuje .NET Framework a je dostupná ve verzi od Microsoftu, či Open source
         implementace Mono.
       </para>
-      <para>
+			<para>
         Ferda používá .NET Framework verze 2. Můžete si ji stáhnout i s SDK na adrese
         <ulink url="http://www.microsoft.com/downloads">www.microsoft.com/downloads</ulink>.
         Doporučujeme ji však používat i s vývojovým softwarem Microsoft Visual Studio
         2005. Tento software je však komerční.
       </para>
-      <para>
+			<para>
         Alternativou ke komerčnímu Visual Studiu je volně dostupný Visual C# Express 
         Edition 2005 taktéž od Microsoftu, ke stažení na 
         <ulink url="http://msdn.microsoft.com/vstudio/express/visualcsharp/">
@@ -101,18 +103,18 @@
           tudíž uživatelské prostředí pod Monem nebude běhat. Doporučujeme proto 
           .NET verzi 2.
       </para>
-    </section>
-  </section>
-  <section>
-    <title>Nezávislé knihovny a krabičky v nich</title>
-    <para>
+		</section>
+	</section>
+	<section>
+		<title>Nezávislé knihovny a krabičky v nich</title>
+		<para>
       Programátor, který chce přidat krabičku do Ferdy může buď přidat krabičku do
       existující knihovny, anebo pro ni vytvořit novou dynamickou knihovnu. Preferujeme
       první případ, pokud přidávaná krabička je součástí nějakého většího konceptu
       krabiček a uživatel pouze rozšiřuje tento koncept. Dobrým příkladem
       je přidání dalšího kvantifikátoru pro určitou GUHA proceduru. 
     </para>
-    <para>
+		<para>
       Jestliže však programátor chce vytvořit pomocí krabičky (či krabiček) úplně
       novou funkcionalitu, je možno vytvořit pro tyto krabičky novou dynamickou
       knihovnu (dll). Kromě výhod z hlediska návrhu systému ma tento způsob i 
@@ -120,12 +122,12 @@
       se budou instalovat. Toto probíhá pomocí kopírování příslušných knihoven.
       Programátor může tedy vytvořit zcela modulární součást systému. 
     </para>
-  </section>
-  <section>
-    <title>Tvorba nové dynamické knihovny</title>
-    <section>
-      <title>1. Vytvoření adresářů pro novou knihovnu</title>
-      <para>
+	</section>
+	<section>
+		<title>Tvorba nové dynamické knihovny</title>
+		<section>
+			<title>1. Vytvoření adresářů pro novou knihovnu</title>
+			<para>
         Nejdříve musí programátor vytvořit nový adresář pro svoji knihovnu.
         Nechť se naše knihovna jmenuje <classname>SampleBoxModules</classname>. 
         Vytvoříme tedy adresář 
@@ -134,26 +136,26 @@
         <classname>slice\Modules\Boxes\SampleBoxModules</classname> pro slice návrh
         budoucích krabiček.
       </para>
-    </section>
-    <section>
-      <title>2. Referenční knihovny potřebné pro kompilaci krabiček</title>
-      <para>
+		</section>
+		<section>
+			<title>2. Referenční knihovny potřebné pro kompilaci krabiček</title>
+			<para>
         Dříve než přistoupíme k vytvoření konfiguračních souborů a projektů pro
         novou krabičku, obeznámíme programátora s knihovnami potřebnými k vytvoření
         krabičky.
       </para>
-      <formalpara>
-        <title>FerdaBase.dll</title>
-        <para>
+			<formalpara>
+				<title>FerdaBase.dll</title>
+				<para>
           Obsahuje kód (datové struktury, …) vygenerovaný ze slice návrhů 
           Ferda.Modules a Ferda.ModulesManager, běžné typy vlastností (Basic 
           property types) a ve třídě Ferda.Modules.Exceptions pomocné funkce
           pro výjimky.
         </para>
-      </formalpara>
-      <formalpara>
-        <title>FerdaServerBase.dll</title>
-        <para>
+			</formalpara>
+			<formalpara>
+				<title>FerdaServerBase.dll</title>
+				<para>
           Obsahuje třídy BoxModuleFactoryCreatorI, BoxModuleFactoryI, 
           BoxModuleI. Pro implementaci nových krabiček rozhodující interface
           IBoxInfo a třídu BoxInfo (implementující tento interface). Dále
@@ -162,29 +164,29 @@
           Ferda.Modules.Boxes.SocketConnections usnadňuje práci se zásuvkami
           (socket) krabiček.
         </para>
-      </formalpara>
-      <formalpara>
-        <title>FerdaBoxInterfaces.dll</title>
-        <para>
+			</formalpara>
+			<formalpara>
+				<title>FerdaBoxInterfaces.dll</title>
+				<para>
           Kód vygenerovaný ze slice návrhů krabiček distribuovaných s Ferdou.
         </para>
-      </formalpara>
-      <formalpara>
-        <title>icecs.dll</title>
-        <para>Knihovna pro práci s Ice (C#).</para>
-      </formalpara>
-      <formalpara>
-        <title>iceboxcs.dll</title>
-        <para>
+			</formalpara>
+			<formalpara>
+				<title>icecs.dll</title>
+				<para>Knihovna pro práci s Ice (C#).</para>
+			</formalpara>
+			<formalpara>
+				<title>iceboxcs.dll</title>
+				<para>
           Píšete-li vlastní službu, v niž poběží vlastní krabičky (bude probráno dále)
           implementujete abstraktní třídu Ferda.Modules.FerdaServiceI, která zase
           implementuje interface IceBox.Service. (Ten je definován v iceboxcs.dll)
         </para>
-      </formalpara>
-    </section>
-    <section>
-      <title>3. Vytvoření build souborů pro novou knihovnu</title>
-      <para>
+			</formalpara>
+		</section>
+		<section>
+			<title>3. Vytvoření build souborů pro novou knihovnu</title>
+			<para>
         V tomto návodu používáme pro kompilaci krabiček soubor nástroj NAnt.
         Tento nástroj kompiluje pomocí konfiguračních xml souborů. Proto musíme
         obohatit příslušné soubory o komplaci nové knihovny. Soubor, který má
@@ -195,8 +197,8 @@
         dokumentaci. Kód, který musíme přidat pro úspěšnou kompilaci do tohoto
         souboru je:
       </para>
-      <para>
-        <programlisting>
+			<para>
+				<programlisting>
 &lt;target name="SampleBoxModules"&gt;
   &lt;csc target="library" 
        output="${path::combine(build.dir,'SampleBoxModules.dll')}" 
@@ -235,7 +237,7 @@
         vždy když se tyto požadované referenční knihovny obohatí o nějakou
         další, je ji třeba přidat i do tohoto kompilačního xml.
       </para>
-      <para>
+			<para>
         Výše zobrazený kód definuje jednu úlohu v NAntu. Tato úloha se
         sama o sobě neprovede, pokud se nezavolá. Toho docílíme přidáním
         závislosti v hlavní úloze kompilačního souboru. Řádek 
@@ -252,10 +254,10 @@ depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaGuhaMin
         (<classname>nant fullinstall</classname> se již bude nová 
         knihovna kompilovat a bude umístěna v <classname>bin\server</classname>.
       </para>
-    </section>
-    <section>
-      <title>4. Vytvoření projektu ve Visual Studiu</title>
-      <para>
+		</section>
+		<section>
+			<title>4. Vytvoření projektu ve Visual Studiu</title>
+			<para>
         Pro pohodlnou práci doporučujeme pro novou knihovnu vytvořit
         nový projekt ve Visual Studiu. Nejdříve otevřeme solution
         <classname>src\Modules\BoxModulesServices\BoxModulesServices.sln</classname>.
@@ -264,15 +266,15 @@ depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaGuhaMin
         všechny reference z kroku 2. Tento projekt můžeme kompilovat i v
         rámci vizuálního prostředí a nemusíme to dělat složitě přes NAnt.
       </para>
-    </section>
-    <section>
-      <title>5. Tvorba třídy service.cs</title>
-      <para>
+		</section>
+		<section>
+			<title>5. Tvorba třídy service.cs</title>
+			<para>
         Aby se knihovna mohla zaregistrovat u služby IceGrid, potřebuje
         implementovat abstraktní třídu <classname>Ferda.Modules.FerdaServiceI </classname>.
         Následuje kód se vzorovou implementací třídy.
       </para>
-      <programlisting>
+			<programlisting>
 using Ferda.Modules.Boxes.SampleBoxModules.*;
 using Ice;
 
@@ -292,13 +294,13 @@ namespace Ferda.Modules.Boxes.SampleBoxModules
     }
 }
       </programlisting>
-      <para>
+			<para>
         Třída <classname>Service</classname> slouží k registrace jednotlivých
         typů krabiček. Většinu potřebného obstarává abstraktní třída
         <classname>FerdaServiceI</classname>. Do metody <classname>registerBoxes</classname>
         budeme později psát kód pro registraci jednotlivých krabiček. 
       </para>
-      <para>
+			<para>
         Zmíníme se ještě o části using: namespace
         <classname>Ferda.Modules.Boxes.SampleBoxModules</classname> odpovídá namespacu
         všech pozdějších krabiček této knihovny (vyjádřeno hvězdičkou). Název namespacu
@@ -307,10 +309,10 @@ namespace Ferda.Modules.Boxes.SampleBoxModules
         <classname>slice\Modules\Boxes</classname> a to z důvodu přehlednosti a
         automatického generování slice tříd.
       </para>
-    </section>
-    <section>
-      <title>6. Změny v application.xml</title>
-      <para>
+		</section>
+		<section>
+			<title>6. Změny v application.xml</title>
+			<para>
         Posledním krokem je přidání nově vzniklé knihovny do 
         aplikačního souboru <classname>application.xml</classname>, 
         který konfiguruje celého Ferdu. Jedná se zde o přidání instance
@@ -322,25 +324,31 @@ namespace Ferda.Modules.Boxes.SampleBoxModules
 &lt;service-instance template="FerdaServiceTemplate" name="SampleBoxModules" 
 entry="SampleBoxModules.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${endpoints}" /&gt;
         </programlisting>
+        a řekneme mu, že má používat sdílený komunikátor. To se nastavuje pomocí vlastnosti
+        
+<programlisting>
+&lt;property name="IceBox.UseSharedCommunicator.SampleBoxModules" value="1"/&gt;
+</programlisting>             
         Dále vytvoříme nový adaptér replik přidáním řádku:
         <programlisting>
 &lt;replica-group id="SampleBoxModulesReplicaAdapter"&gt;
 &lt;/replica-group&gt;
         </programlisting>
-      </para>
-    </section>
-    <section>
-      <title>Registrace do GAC</title>
-      <para>
+        do kterého budeme přidávat objekty jednotlivých krabiček. 
+			</para>
+		</section>
+		<section>
+			<title>Registrace do GAC</title>
+			<para>
         Tohle dodělat...
       </para>
-    </section>
-  </section>
-  <section>
-    <title>Tvorba nové krabičky</title>
-    <section>
-      <title>1. Vytvoření adresářů pro novou krabičku</title>
-      <para>
+		</section>
+	</section>
+	<section>
+		<title>Tvorba nové krabičky</title>
+		<section>
+			<title>1. Vytvoření adresářů pro novou krabičku</title>
+			<para>
         Podobně jako u knihovny je prvním krokem vytvoření adresářů
         pro novou krabičku. Budeme tvořit krabičku <classname>SampleBoxModule</classname>
         v již vytvořené knihovně <classname>SampleBoxModules</classname>.
@@ -350,10 +358,10 @@ entry="SampleBoxModules.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${en
         <classname>slice\Modules\Boxes\SampleBoxModules\SampleBoxModule</classname>
         pro slice návrh. krabičky. 
       </para>
-    </section>
-    <section>
-      <title>2. Vytvoření slice návrhu krabičky</title>
-      <para>
+		</section>
+		<section>
+			<title>2. Vytvoření slice návrhu krabičky</title>
+			<para>
         Middleware Ice podporuje řadu programovacích jazyků, mezi nimi 
         například C#, C++, Java, Python a další. Aby mohl všechny tyto
         jazyky používat, definuje svůj vlastní zjednodušený deklarativní
@@ -361,7 +369,7 @@ entry="SampleBoxModules.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${en
         tvoří kód v určeném cílovém jazyku, který se posléze kompiluje
         standardním způsobem.
       </para>
-      <para>
+			<para>
         Ferda používá Ice pro komunikaci mezi moduly, zejména mezi komunikaci
         mezi krabičkami a managerem modulů (více v dokumentech
         <classname>registraceModulu</classname> a 
@@ -370,12 +378,12 @@ entry="SampleBoxModules.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${en
         a vrací definované výstupy. Právě výstupy krabičky definujeme
         pomocí slice, neboť tak jsou viditelné pro ostatní krabičky.
       </para>
-      <para>
+			<para>
         Kód slice zobrazený níže uložíme do adresáře vytvořeném v kroku 1
         pod názvem krabičky, tedy pod názvem 
         <classname>SampleBoxModule.ice</classname>.
       </para>
-      <programlisting>
+			<programlisting>
 /*
 SLICE DOCUMENTATION
 -------------------
@@ -434,12 +442,12 @@ module Ferda
 };
 #endif;
       </programlisting>
-      <para>
+			<para>
         První zakomentovaná část kódu popisuje slice (který má v podstatě syntaxi
         jazyka C++ a dává informace o vytvoření C# kódu ze slice. Druhá část už
         je definice rozhraní výstupu krabičky Ferdy.
       </para>
-      <para>
+			<para>
         Nejdříve se definuje podobně jako v C++ proměnná 
         <classname>SampleBoxes_SampleBoxModule</classname>. Poté část
         <classname>#include</classname> definuje jiné slice soubory
@@ -447,15 +455,15 @@ module Ferda
         krabičky (funkce poskytované krabičkou). V našem případě je tam pouze
         jedna funkce vracející string.
       </para>
-      <para>
+			<para>
         Klíčové slovo <classname>module</classname> definuje modul, ve kterém
         se bude rozhraní nacházet. Je to analogie namespace v C# a proto použijeme
         shodnou strukturu, jak u zdrojových kódů krabiček (použijeme dále).
       </para>
-    </section>
-    <section>
-      <title>3. Zdrojové kódy krabičky</title>
-      <para>
+		</section>
+		<section>
+			<title>3. Zdrojové kódy krabičky</title>
+			<para>
         Slice návrh obecné krabičky (všech funkcí které musí krabička
         mít) si můžeme přečíst v <classname>slice\Modules\Modules.ice</classname>.
         Je to řada funkcí, které by měl programátor krabičky impelmentovat.
@@ -464,9 +472,9 @@ module Ferda
         (část 4). Náš postup používá tyto třídy: má to výhodu v obrovském
         usnadnění práce programátora, musíme se však omezit pouze na jazyk C#.
       </para>
-      <section>
-        <title>BoxInfo</title>
-        <para>
+			<section>
+				<title>BoxInfo</title>
+				<para>
           První pomocnou třídou je <classname>BoxInfo</classname>. Tato třída
           implementuje rozhraní <classname>IBoxInfo</classname>, které zahrnuje
           veškeré funkce, které od krabičky požaduje manager modulů a manager
@@ -475,7 +483,7 @@ module Ferda
           funkcí načítá z konfiguračních souborů (část 4). Programátor však
           některé funkce implementovat musí:
         </para>
-        <programlisting>
+				<programlisting>
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -595,7 +603,7 @@ namespace Ferda.Modules.Boxes.SampleBoxModules.SampleBoxModule
   }
 }
         </programlisting>
-        <para>
+				<para>
           V dlouhý kus kódu obsahuje vše potřebné (i s popisky) pro přetížení třídy
           <classname>BoxInfo</classname> tak, aby nová krabička fungovala.
           Uložíme ho (nejčastěji s názvem <classname>BoxInfo.cs</classname> ale může být i jiný)
@@ -605,10 +613,10 @@ namespace Ferda.Modules.Boxes.SampleBoxModules.SampleBoxModule
           jedinečný identifikátor, jinak systém Ferda nenastartuje a vyhodí
           výjimku.
         </para>
-      </section>
-      <section>
-        <title>Functions</title>
-        <para>
+			</section>
+			<section>
+				<title>Functions</title>
+				<para>
           Druhou pomocnou třídou je třída <classname>Functions</classname>.
           Tato třída implementuje dvě rozhraní, <classname>IFunctions</classname>
           a rozhraní určené slice návrhem. <classname>IFunctions</classname>
@@ -619,7 +627,7 @@ namespace Ferda.Modules.Boxes.SampleBoxModules.SampleBoxModule
           abstraktní třídu <classname>SampleBoxModuleFunctionsDisp_</classname>.
           Následující kód určuje třídu implementující obě rozhraní.
         </para>
-        <programlisting>
+				<programlisting>
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -662,22 +670,22 @@ namespace Ferda.Modules.Boxes.SampleBoxModules.SampleBoxModule
   }
 }
         </programlisting>
-        <para>
+				<para>
           Tento kód uložíme na do stejného adresáře pod názvem 
           <classname>Functions.cs</classname>.
         </para>
-      </section>
-    </section>
-    <section>
-      <title>4. Vytvoření konfigurace a lokalizace krabičky</title>
-      <para>
+			</section>
+		</section>
+		<section>
+			<title>4. Vytvoření konfigurace a lokalizace krabičky</title>
+			<para>
         Kód vytvořený v kroku 3 ještě nebude fungovat správně, neboť chybí
         konfigurace a lokalizace krabičky, se kterou pracuje třída
         <classname>BoxInfo</classname>. Musíme teda vytvořit konfiguraci.
         Kod níže zobrazuje konfiguraci jednoduché krabičky mající pouze
         jednu zásuvku typu integer. 
       </para>
-      <programlisting>
+			<programlisting>
 &lt;Box&gt;
   &lt;Identifier&gt;SampleBoxModules.SampleBoxModule&lt;/Identifier&gt;
   &lt;IconPath&gt;boxIcon.ico&lt;/IconPath&gt;
@@ -698,12 +706,12 @@ namespace Ferda.Modules.Boxes.SampleBoxModules.SampleBoxModule
   &lt;/Sockets&gt;
 &lt;/Box&gt;
       </programlisting>
-      <para>
+			<para>
         Všechny možnosti konfigurace krabiček jsou popsány v 
         <classname>src\Modules\Core\Boxes\box.xsd</classname>.
         K této krabičce je třeba také nastavit lokalizaci:
       </para>
-      <programlisting>
+			<programlisting>
 &lt;BoxLocalization&gt;
   &lt;Identifier&gt;SampleBoxModules.SampleBoxModule&lt;/Identifier&gt;
   &lt;Label&gt;Sample box&lt;/Label&gt;
@@ -723,7 +731,7 @@ namespace Ferda.Modules.Boxes.SampleBoxModules.SampleBoxModule
   &lt;/Sockets&gt;
 &lt;/BoxLocalization&gt;
       </programlisting>
-      <para>
+			<para>
         Všechny možnosti konfigurace lokalizace krabiček
         jsou popsány v <classname>src\Modules\Core\Boxes\boxLocalization.xsd</classname>.
         Konfiguraci a lokalizaci je poté třeba nahrát na správné místo. 
@@ -734,19 +742,19 @@ namespace Ferda.Modules.Boxes.SampleBoxModules.SampleBoxModule
         <classname>src\Modules\BoxModulesServices\boxesLocalization.en-US.xml</classname>.
         K správnému fungování programu jsou nutné obě lokalizace.
       </para>
-      <section>
-        <title>Upozornění</title>
-        <para>
+			<section>
+				<title>Upozornění</title>
+				<para>
           Z důvodu špatného fungování utility kompilačního programu je nutné
           vytvořit pro krabičku ikonu a umístnit ji do adresáře se zdrojovým
           kódem krabičky (krok 1). Jinak se nevytvoří v serverové části instalace
           adresář krabičky.
         </para>
-      </section>
-    </section>
-    <section>
-      <title>5. Registrace krabičky</title>
-      <para>
+			</section>
+		</section>
+		<section>
+			<title>5. Registrace krabičky</title>
+			<para>
         Konečně posledním krokem je registrace krabičky. Tu je nutné provést na dvou
         místech. Prvním místem je soubor <classname>Service.cs</classname>.
         Zde je nutné do funkce <classname>registerBoxes</classname> napsat následující
@@ -763,12 +771,12 @@ registerBox(SampleBoxModule.BoxInfo.typeIdentifier, new SampleBoxModule.BoxInfo(
         Identita objektu musí být shodná s identitou třídy <classname>BoxInfo</classname>,
         jinak se krabička nezobrazí.
       </para>
-    </section>
-  </section>
-  <section>
-    <title>Ladění tvorby krabiček</title>
-    <para>
+		</section>
+	</section>
+	<section>
+		<title>Ladění tvorby krabiček</title>
+		<para>
       Tomášova diplomka TODO.
     </para>
-  </section>
+	</section>
 </article>
