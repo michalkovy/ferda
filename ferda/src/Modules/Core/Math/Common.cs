@@ -1,12 +1,44 @@
+// Common.cs - Common mathematical functionality
+//
+// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+//
+// Copyright (c) 2006 Tomáš Kuchaø
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using Ferda.Modules;
 
 namespace Ferda.Guha.Math
 {
+    /// <summary>
+    /// Class providing common functionality for the mathematical functions
+    /// </summary>
     public static class Common
     {
         const int defaultPrecisionTestForEquality = 10;
 
+        /// <summary>
+        /// Determines if two numbers are close to each other.
+        /// The <paramref name="precision"/> determines how close the
+        /// numbers should be
+        /// </summary>
+        /// <param name="precision">Precision of the closeness</param>
+        /// <param name="x">First number</param>
+        /// <param name="y">Second number</param>
+        /// <returns>True if numbers are close enough</returns>
         public static bool CloseEnough(int precision, double x, double y)
         {
             if (precision < 1)
@@ -21,6 +53,13 @@ namespace Ferda.Guha.Math
             return (System.Math.Abs(x - y) < System.Math.Pow(10, level - precision));
         }
 
+        /// <summary>
+        /// Returns if the two operands belong to a specified relation
+        /// </summary>
+        /// <param name="relation">Rekation</param>
+        /// <param name="firstOperand">First operand</param>
+        /// <param name="secondOperand">Second operand</param>
+        /// <returns>True iff two operands belong to a specified relation</returns>
         public static bool Compare(RelationEnum relation, double firstOperand, double secondOperand)
         {
             if (firstOperand == Double.NaN)
