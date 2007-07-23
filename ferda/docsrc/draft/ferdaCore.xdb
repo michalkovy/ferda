@@ -212,13 +212,70 @@
 	<section>
 		<title>Data</title>
 		<para>
-			The Data library handles the data preparation phase of GUHA data mining up to 
+			The Data library provides DAL (Data Access Layer) for the Ferda system.
+			In terms of GUHA mining, this means construction of task up to 
 			creation of attributes. The classes of this library take care of connecting to a 
 			database, retrieving information about datat tables and columns of the tables.
+			The library is used by boxes from the 
+			<classname>Data preparation.Data source</classname> group.
+		</para>
+		<para>
+			The <classname>Ferda.Guha.Data.IceDesignDocumentation</classname> class
+			describes the slice design of the data layer. 
 		</para>
 	</section>
-  <!--
+	<section>
+		<title>Helpers</title>
+		<para>
+			The Helpers library contains some functionality that can be useful. It contains of
+			two parts: caching and common
+		</para>
+		<section>
+			<title>Caching</title>
+			<para>
+				This part provides caching functionality. There is an implementation of
+				most recently used items holder and implementation of a simple cache.
+			</para>
+		</section>
+		<section>
+			<title>Common</title>
+			<para>
+				This part provides some other common functionality. See the class summaries
+				for more details. 
+			</para>
+		</section>
+	</section>
+	<section>
+		<title>Math</title>
+		<para>
+			The Math library provides mathematical formulas for complex mathematical computing
+			in Ferda. There are several classes defined, each of which deals with specific part
+			of the library. There are classes for combinatorics, factorial, information theory and
+			contingency tables. The <classname>Ferda.Guha.Math.SpecialFunctions</classname>
+			define several other functions that could be used. 
+		</para>
+		<para>
+			Another important class is the 
+			<classname>Ferda.Guha.Math.Quantifiers.IceDesignDocumentation</classname>.
+			This class describes the slice design of the GUHA quantifiers.
+		</para>
+		<para>
+			The <classname>Ferda.Guha.Math.Karby-FourFTQuantifiers</classname>
+			file contains commented code of quantifiers in Tomáš Karban's work <citation>Karban</citation>.
+			Our implementation of quantifiers in Ferda was greatly inspired by this work.
+		</para>
+	</section>
   <bibliography>
+		  <biblioentry>
+			 <abbrev>Karban</abbrev>
+			  <authorgroup>
+				<author><firstname>Tomáš</firstname><surname>Karban</surname></author>
+			  </authorgroup>
+			  <title>Data Mining in Relational Databases</title>
+			  <publisher>
+						<publishername>Doctoral work at Faculty of Mathematics and Physics,
+						Charles University, Prague</publishername>
+				</publisher>
+		  </biblioentry>
   </bibliography>
-  -->
 </article>

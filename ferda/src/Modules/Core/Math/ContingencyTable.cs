@@ -1,3 +1,23 @@
+// ContingencyTable.cs - Mathematical core for dealing with contingency table
+//
+// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+//
+// Copyright (c) 2006 Tomáš Kuchaø
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using Ferda.Guha.Math.Quantifiers;
 
@@ -10,9 +30,10 @@ namespace Ferda.Guha.Math
     public class ContingencyTable
     {
         /// <summary>
-        /// Kontingencni tabulka
-        /// (obdelnikove pole kladnych float/double hodnot)
-        /// [rows,columns]; na políèku [0,0] je parametr <c>a</c> (známy z ètyøpolních tabulek)
+        /// Contingency table
+        /// (rectangular matrix of positive float/double values
+        /// [rows,columns]; the field [0,0] contains paramenter <c>a</c> 
+        /// (known from four fold contingency tables)
         /// </summary>
         protected readonly double[][] _contingecyTable;
 
@@ -43,6 +64,11 @@ namespace Ferda.Guha.Math
             get { return _denominator; }
         }
 
+        /// <summary>
+        /// Basic constructor for the class
+        /// </summary>
+        /// <param name="contingencyTable">Contingency table data</param>
+        /// <param name="denominator">Denominator</param>
         public ContingencyTable(double[][] contingencyTable, double denominator)
         {
             if (contingencyTable == null)
@@ -63,6 +89,11 @@ namespace Ferda.Guha.Math
             _denominator = denominator;
         }
         
+        /// <summary>
+        /// Other possible constructor of the class
+        /// </summary>
+        /// <param name="quantifierEvaluateSetting">Setting for quantifiers to be
+        /// evaluated</param>
         public ContingencyTable(QuantifierEvaluateSetting quantifierEvaluateSetting)
             : this(quantifierEvaluateSetting.contingencyTable, quantifierEvaluateSetting.denominator)
         {}
@@ -91,7 +122,7 @@ namespace Ferda.Guha.Math
         private double _sum = -1;
         /// <summary>
         /// Gets the sum of all vaules in contingency table. This number is not
-        /// denominted by teh Denominator.
+        /// denominted by the Denominator.
         /// </summary>
         /// <value>The sum.</value>
         public double Sum
@@ -193,8 +224,17 @@ namespace Ferda.Guha.Math
         }
     }
 
+    /// <summary>
+    /// The four fold contingency table. This tables are constructed by the
+    /// 4FT and SD4FT procedure. 
+    /// </summary>
     public class FourFoldContingencyTable : ContingencyTable
     {
+        /// <summary>
+        /// Basic constructor for the class
+        /// </summary>
+        /// <param name="contingencyTable">Contingency table data</param>
+        /// <param name="denominator">Denominator</param>
         public FourFoldContingencyTable(double[][] contingencyTable, double denominator)
             : base(contingencyTable, denominator)
         {
@@ -202,6 +242,11 @@ namespace Ferda.Guha.Math
                 throw new ArgumentException("Bad size of contingency table", "contingencyTable");
         }
 
+        /// <summary>
+        /// Other possible constructor of the class
+        /// </summary>
+        /// <param name="quantifierEvaluateSetting">Setting for quantifiers to be
+        /// evaluated</param>
         public FourFoldContingencyTable(QuantifierEvaluateSetting quantifierEvaluateSetting)
             : this(quantifierEvaluateSetting.contingencyTable, quantifierEvaluateSetting.denominator)
         {}
@@ -382,8 +427,16 @@ namespace Ferda.Guha.Math
         #endregion
     }
     
+    /// <summary>
+    /// A single dimension contingency table used in the CF and SDCF procedures.
+    /// </summary>
     public class SingleDimensionContingecyTable : ContingencyTable
     {
+        /// <summary>
+        /// Basic constructor for the class
+        /// </summary>
+        /// <param name="contingencyTable">Contingency table data</param>
+        /// <param name="denominator">Denominator</param>
         public SingleDimensionContingecyTable(double[][] contingencyTable, double denominator)
             : base(contingencyTable, denominator)
         {
@@ -391,6 +444,11 @@ namespace Ferda.Guha.Math
                 throw new ArgumentException("Bad size of contingency table", "contingencyTable");
         }
 
+        /// <summary>
+        /// Other possible constructor of the class
+        /// </summary>
+        /// <param name="quantifierEvaluateSetting">Setting for quantifiers to be
+        /// evaluated</param>
         public SingleDimensionContingecyTable(QuantifierEvaluateSetting quantifierEvaluateSetting)
             : this(quantifierEvaluateSetting.contingencyTable, quantifierEvaluateSetting.denominator)
         {}
