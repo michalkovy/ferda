@@ -1,21 +1,16 @@
-
 <icegrid>
 	<application name="FerdaModulesApplication">
 		<replica-group id="FerdaDataPreparationBoxesReplicaAdapter">
-
-      <object identity="DataPreparation.DataSource.Database" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-       <object identity="DataPreparation.DataSource.DataTable" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="DataPreparation.DataSource.Column" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-       <object identity="DataPreparation.Categorization.EachValueOneCategory" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-
-      <object identity="DataPreparation.DataSource.VirtualColumn" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="DataPreparation.Categorization.EquidistantIntervals" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="DataPreparation.Categorization.EquidistantIntervalsLISp" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="DataPreparation.Categorization.EquifrequencyIntervals" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="DataPreparation.Categorization.StaticAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      
-      <object identity="DataPreparation.Categorization.OntologyDerivedAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator" />
-
+			<object identity="DataPreparation.DataSource.Database" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.DataSource.DataTable" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.DataSource.Column" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.Categorization.EachValueOneCategory" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.DataSource.VirtualColumn" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.Categorization.EquidistantIntervals" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.Categorization.EquidistantIntervalsLISp" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.Categorization.EquifrequencyIntervals" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.Categorization.StaticAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.Categorization.OntologyDerivedAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaBasicBoxesReplicaAdapter">
 			<object identity="BoolT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
@@ -29,46 +24,39 @@
 			<object identity="DateT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
 			<object identity="DateTimeT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
 		</replica-group>
-    
 		<replica-group id="FerdaLanguageBoxesReplicaAdapter">
 			<object identity="Language.Lambda" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="Language.Variable" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
-		
 		<replica-group id="FerdaSampleBoxesReplicaAdapter">
 			<object identity="Sample.BodyMassIndex" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
-
-    <replica-group id="FerdaWizardsReplicaAdapter">
-      <object identity="Wizards.Wizard" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="Wizards.WizardForm" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="Wizards.WizardAction" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="Wizards.WizardGenerated" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      
-    </replica-group>
-    
+		<replica-group id="FerdaWizardsReplicaAdapter">
+			<object identity="Wizards.Wizard" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="Wizards.WizardForm" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="Wizards.WizardAction" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="Wizards.WizardGenerated" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+		</replica-group>
 		<replica-group id="FerdaGuhaMiningBoxesReplicaAdapter">
 			<object identity="GuhaMining.FixedAtom" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-			<object identity="GuhaMining.AtomSetting" type="::Ferda::Modules::BoxModuleFactoryCreator"/>      
+			<object identity="GuhaMining.AtomSetting" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Sign" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.ClassOfEquivalence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.ConjunctionSetting" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.DisjunctionSetting" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-			
 			<object identity="GuhaMining.Tasks.FourFold" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.SDFourFold" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.SingleDimensional" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.SDSingleDimensional" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.TwoDimensional" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.SDTwoDimensional" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-			
 			<object identity="GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Equivalence.FoundedEquivalence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="GuhaMining.Quantifiers.FourFold.Equivalence.AboveNegation" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="GuhaMining.Quantifiers.FourFold.Equivalence.AboveNegation" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.AboveAverageDependence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="GuhaMining.Quantifiers.FourFold.Others.BelowAverageDependence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="GuhaMining.Quantifiers.FourFold.Others.Pairing" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="GuhaMining.Quantifiers.FourFold.Others.BelowAverageDependence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="GuhaMining.Quantifiers.FourFold.Others.Pairing" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.Base" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.E" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
@@ -90,12 +78,11 @@
 			<object identity="GuhaMining.Quantifiers.TwoDimensional.InformationTheory.ConditionalEntropy" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.TwoDimensional.InformationTheory.InformationDependence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.TwoDimensional.InformationTheory.MutualInformationNormalized" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-<!--
+			<!--
 			<object identity="GuhaMining.Quantifiers.TwoDimensional.OrdinalDependence.Kendall" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 -->
-      <object identity="GuhaMining.VirtualAttributes.VirtualFFTBooleanAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-           <object identity="GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      
+			<object identity="GuhaMining.VirtualAttributes.VirtualFFTBooleanAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaGuhaMiningProcessorReplicaAdapter">
 			<object identity="Ferda.Guha.MiningProcessor.MiningProcessorFunctions" type="::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"/>
@@ -103,12 +90,10 @@
 		<replica-group id="FerdaNetworkArchiveReplicaAdapter">
 			<object identity="Ferda.NetworkArchive.Archive" type="::Ferda::NetworkArchive::Archive"/>
 		</replica-group>
-		
 		<replica-group id="FerdaOntologyRelatedBoxesReplicaAdapter">
-		  <object identity="OntologyRelated.Ontology" type="::Ferda::Modules::BoxModuleFactoryCreator" />
-		  <object identity="OntologyRelated.OntologyMapping" type="::Ferda::Modules::BoxModuleFactoryCreator" />
+			<object identity="OntologyRelated.Ontology" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="OntologyRelated.OntologyMapping" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
-		
 		<service-template id="FerdaServiceTemplate">
 			<parameter name="name"/>
 			<parameter name="entry"/>
@@ -129,10 +114,9 @@
 				<service-instance template="FerdaServiceTemplate" name="FerdaGuhaMiningBoxes" entry="FerdaGuhaMiningBoxes.dll:Ferda.Modules.Boxes.GuhaMining.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaGuhaMiningProcessor" entry="FerdaMiningProcessor.dll:Ferda.Guha.MiningProcessor.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaNetworkArchive" entry="FerdaNetworkArchive.dll:Ferda.NetworkArchive.Service" endpoints="${endpoints}"/>
-        <service-instance template="FerdaServiceTemplate" name="FerdaWizards" entry="FerdaWizards.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${endpoints}"/>
-        <service-instance template="FerdaServiceTemplate" name="FerdaOntologyRelatedBoxes" entry="FerdaOntologyRelatedBoxes.dll:Ferda.Modules.Boxes.OntologyRelated.Service" endpoints="${endpoints}" />
-				
-        <property name="Ice.MessageSizeMax" value="409600"/>
+				<service-instance template="FerdaServiceTemplate" name="FerdaWizards" entry="FerdaWizards.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${endpoints}"/>
+				<service-instance template="FerdaServiceTemplate" name="FerdaOntologyRelatedBoxes" entry="FerdaOntologyRelatedBoxes.dll:Ferda.Modules.Boxes.OntologyRelated.Service" endpoints="${endpoints}"/>
+				<property name="Ice.MessageSizeMax" value="409600"/>
 				<property name="Ice.ThreadPool.Server.Size" value="10"/>
 				<property name="Ice.ThreadPool.Server.SizeMax" value="1000"/>
 				<property name="Ice.ThreadPool.Server.SizeWarn" value="950"/>
@@ -140,10 +124,11 @@
 				<property name="IceBox.UseSharedCommunicator.FerdaBasicBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaLanguageBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaSampleBoxes" value="1"/>
-        <property name="IceBox.UseSharedCommunicator.FerdaWizards" value="1"/>
+				<property name="IceBox.UseSharedCommunicator.FerdaWizards" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningProcessor" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaNetworkArchive" value="1"/>
+				<property name="IceBox.UseSharedCommunicator.FerdaOntologyRelatedBoxes" value="1"/>
 			</icebox>
 		</server-template>
 		<node name="Local">
