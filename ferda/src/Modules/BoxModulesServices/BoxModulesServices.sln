@@ -1,5 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual C# Express 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxModulesServices", "BoxModulesServices.csproj", "{177BB8EC-BA0E-4100-8821-9F25BC6CC1B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{080262C5-D4FC-4722-B1E7-46E927D34507}"
@@ -15,7 +16,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuhaMining", "GuhaMining\Gu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wizards", "Wizards\Wizards.csproj", "{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Language", "Language/Language.csproj", "{EB18047A-CB00-4C0F-A748-01E68393B64A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Language", "Language\Language.csproj", "{EB18047A-CB00-4C0F-A748-01E68393B64A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OntologyRelated", "OntologyRelated\OntologyRelated.csproj", "{438E806F-76ED-4403-8BB2-89C11EFC5D33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +54,10 @@ Global
 		{EB18047A-CB00-4C0F-A748-01E68393B64A}.Debug|Any CPU.Build.0 = Debug|AnyCPU
 		{EB18047A-CB00-4C0F-A748-01E68393B64A}.Release|Any CPU.ActiveCfg = Release|AnyCPU
 		{EB18047A-CB00-4C0F-A748-01E68393B64A}.Release|Any CPU.Build.0 = Release|AnyCPU
+		{438E806F-76ED-4403-8BB2-89C11EFC5D33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{438E806F-76ED-4403-8BB2-89C11EFC5D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{438E806F-76ED-4403-8BB2-89C11EFC5D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{438E806F-76ED-4403-8BB2-89C11EFC5D33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

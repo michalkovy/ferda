@@ -74,6 +74,8 @@
     <Compile Include="Categorization\Common.cs" />
     <Compile Include="Categorization\EquidistantIntervalsLISp\BoxInfo.cs" />
     <Compile Include="Categorization\EquidistantIntervalsLISp\Functions.cs" />
+    <Compile Include="Categorization\OntologyDerivedAttribute\BoxInfo.cs" />
+    <Compile Include="Categorization\OntologyDerivedAttribute\Functions.cs" />
     <Compile Include="Categorization\StaticAttribute\BoxInfo.cs" />
     <Compile Include="Categorization\StaticAttribute\Functions.cs" />
     <Compile Include="Categorization\EachValueOneCategory\BoxInfo.cs" />
