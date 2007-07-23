@@ -17728,7 +17728,7 @@
 				<Name>Ontology</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::Boxes::OntologyRelated::OntologyFunctions</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::Boxes::OntologyRelated::Ontology::OntologyFunctions</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
