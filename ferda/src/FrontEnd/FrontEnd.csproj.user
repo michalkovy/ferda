@@ -16,7 +16,7 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartWorkingDirectory>D:\Marthin\skola\diplomova_prace\ferda\debug\</StartWorkingDirectory>
+    <StartWorkingDirectory>C:\Make\Projekt\svn\ferda\bin\FrontEnd\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <StartWorkingDirectory>D:\Marthin\skola\diplomova_prace\ferda\debug\</StartWorkingDirectory>

@@ -106,7 +106,7 @@ namespace Ferda.Modules.Helpers.Common
 
 
         /// <summary>
-        /// Determines whether the sepecified set is subset of this set.
+        /// Determines whether the specified set is subset of this set.
         /// </summary>
         /// <param name="set">The set.</param>
         /// <returns>
