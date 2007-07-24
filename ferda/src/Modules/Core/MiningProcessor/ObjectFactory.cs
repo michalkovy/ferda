@@ -1,10 +1,33 @@
+// ObjectFactory.cs - Defines exceptions for the MiningProcessor
+//
+// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+// Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+//
+// Copyright (c) 2006 Tomáš Kuchaø
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System.Diagnostics;
 using Ferda.Modules;
 using Ice;
 
 namespace Ferda.Guha.MiningProcessor
 {
-
+    ///These classes implement structures from the ICE design as defined
+    ///in <c>slice.Modules.Guha.MiningProcessor</c>.
+    ///Some of them contain also default constructor.
     #region Ice object implementations
 
     public class BitStringIceI : BitStringIce
@@ -112,10 +135,20 @@ namespace Ferda.Guha.MiningProcessor
 
     #endregion
 
+    /// <summary>
+    /// The mining processor object factory. This factory is used for
+    /// creation of mining processor objects.
+    /// </summary>
     public class ObjectFactory : LocalObjectImpl, Ice.ObjectFactory
     {
         #region ObjectFactoryOperationsNC_ Members
 
+        /// <summary>
+        /// Creates an object according to its type defined by 
+        /// string in the parameter.
+        /// </summary>
+        /// <param name="type">Type of the object</param>
+        /// <returns>Object of a given type</returns>
         public Object create(string type)
         {
             switch (type)
@@ -154,6 +187,12 @@ namespace Ferda.Guha.MiningProcessor
 
         #endregion
 
+        /// <summary>
+        /// Adds this object factory to the communicator. For further details,
+        /// see the ICE documentation. 
+        /// </summary>
+        /// <param name="communicator">Communicator</param>
+        /// <param name="factory">Factory to be added to a communicator</param>
         public static void addFactoryToCommunicator(Communicator communicator,
                                                     ObjectFactory factory)
         {

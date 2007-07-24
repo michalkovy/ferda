@@ -113,7 +113,8 @@ namespace Ferda.Modules.Helpers.Caching
         }
 
         /// <summary>
-        /// Gets the value of specified <c>key</c>.
+        /// Retrieves the value from external sources. The value can be then
+        /// added to the cache. This is why the method is abstract.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
@@ -154,9 +155,13 @@ namespace Ferda.Modules.Helpers.Caching
         }
 
         /// <summary>
-        /// Gets the value with the specified key.
+        /// Gets the value with the specified key. Note that if the
+        /// value represented by key is not present in the cache, the
+        /// cache calls the GetValue method which calls some external
+        /// sources and, retrieves the value. This method adds the value
+        /// to the dictionary (which serves as a cache).
         /// </summary>
-        /// <value></value>
+        /// <value>Value that is returned.</value>
         public ValueT this[KeyT key]
         {
             get
