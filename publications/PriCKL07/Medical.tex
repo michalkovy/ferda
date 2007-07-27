@@ -13,7 +13,12 @@ University of Economics, Prague, W. Churchill Sq.~4, 130 67 Praha~3, Czech Repub
 \maketitle
 
 \begin{abstract}
-Background knowledge
+Background knowledge is used for evaluation of specific KDD technique --
+GUHA method. This is done by verification of verbal background knowledge
+rules on a medical STULONG dataset. Formalization for the verbal rules
+was developed and tools for verification of the rules against output of
+GUHA procedures implemented. We conducted experiments that and drew 
+conclusions about the mostly used settings of GUHA procedures. 
 \end{abstract}
 
 {\small {\bf Keywords:} Background knowledge, GUHA Method, STULONG dataset}
@@ -21,9 +26,10 @@ Background knowledge
 \section{Introduction}
 Process of knowledge discovery in databases
 (KDD) can be affected by using domain knowledge. 
-In \cite{Ontology} authors identified four KDD stages: data understanding,
-task design, result interpretation and result dissemination over the semantic web, 
-where proper domain knowledge (ontologies) can be helpful. In this work, we are
+In \cite{Ontology} authors identify four KDD stages where proper domain knowledge 
+(ontologies) can be helpful: data understanding,
+task design, result interpretation and result dissemination over the semantic web. 
+In this work, we are
 interested in evaluation of KDD techniques with respect to the used domain
 knowledge and examined data. The evaluation should help to improve the task design
 and result interpretation KDD stages. 
@@ -48,12 +54,12 @@ work to evaluate GUHA mining on bases of comprehensive background knowledge
 verification.
 
 The work is structured as follows: section \ref{section:guha} describes the GUHA method,
-GUHA procedures used in this work and also recent tools implementing the GUHA method.
+GUHA procedures used in this work and also recent tools implementing the method.
 Section \ref{section:knowledge} explains background knowledge used, new 
 formalization of the background knowledge and example of the formalization. 
-\ref{section:experiments} shows conducted experiments evaluates the GUHA method
+Section \ref{section:experiments} shows conducted experiments and evaluates the GUHA method
 on basis of the experiments. Section \ref{section:related} puts the work into context
-of other works dealing with \emph{background knowledge} and section~\ref{section:conclusion} concludes
+of other works dealing with background knowledge and section~\ref{section:conclusion} concludes
 the work and gives ideas about future research.
 
 \section{The GUHA Method}
@@ -62,30 +68,23 @@ the work and gives ideas about future research.
 GUHA method is one of the first methods of exploratory data analysis, developed in 
 the mid-sixties in Prague. It is a general mainframe for retrieving interesting
 knowledge from data. The method has firm theoretical foundations based on 
-observational calculi and statistics \cite{GUHA1}, \cite{GUHA2}. For purpose of 
+observational calculi and statistics \cite{GUHA2}. For purpose of 
 this work let us explain only the basic principles of the method, as shown in 
 Figure \ref{fig:GUHA}.
 
 \begin{figure}[ht]
 \centering
-\mbox{\resizebox{60mm}{!}{\includegraphics{GUHA.png}}}
+\mbox{\resizebox{45mm}{!}{\includegraphics{GUHA.png}}}
 \caption{The GUHA method}
 \label{fig:GUHA}
 \end{figure}
 
 GUHA method is realized by GUHA procedures such as 4FT procedure to be described, 
 located in the middle of the figure. Inputs of the procedure are data and a simple definition
-of a possibly large set of relevant patterns, which will be discussed in detail
-in the following section \ref{section:patterns}. The procedure automatically generates
+of a possibly large set of relevant patterns. The procedure automatically generates
 all the relevant patterns and verifies them against the provided data. Patterns that
 are true are output of the procedure. In this work, we use procedure 4FT (described in
 section \ref{section:4ft}) and procedure KL (described in section \ref{section:kl}).
-
-\textbf{Definition 2}
-\emph{Each basic Boolean attribute is a }\textbf{Boolean 
-attribute}\emph{. If $\alpha$ and $\beta$ are} \textsl{Boolean 
-attributes}\emph{, $\alpha\wedge\beta$, $\alpha\vee\beta$ and
-$\neg\alpha$ are }\textbf{Boolean attributes}.
 
 \subsection{Procedure 4FT}
 \label{section:4ft}
@@ -95,17 +94,19 @@ $X \longrightarrow Y$, where
 $X$ and $Y$ are sets of items. Procedure 4FT searches (in the simplified form) for 
 generalized association rules in form \mbox{$\varphi \approx \psi$}, 
 where $\varphi$ and $\psi$ are 
-\emph{Boolean attributes} and $\approx$ is a \emph{4ft-quantifier}\footnote{The
-more complex form includes another \emph{Boolean attribute} as a condition
-In our work we do not mine for conditional rules, therefore we omit the more
-complex definition.}. Relation \mbox{$\varphi \approx \psi$} is evaluated on the
+\emph{Boolean attributes} and $\approx$ is a \emph{4ft-quantifier}. 
+Relation \mbox{$\varphi \approx \psi$} is evaluated on the
 basis of \emph{4ft table}, as shown in Table \ref{table:4FTcontingency}.
 
-The term \emph{Boolean attribute} is created from attributes. We use the 
+The term \emph{Boolean attribute} uses attributes. We use the 
 term attribute in the sense of \emph{categorial attribute}, i.e.
 attribute with finite number of values. Let A be an attribute, 
 A = $\{a_{1}, a_{2}...a_{n}\}$ and $\alpha\subset A$, $\alpha\neq\emptyset$. 
 Then $A(\alpha)$ is a \emph{basic Boolean attribute}.
+
+Each \emph{basic Boolean attribute} is a \emph{Boolean attribute}.
+If $\alpha$ and $\beta$ are \emph{Boolean attributes}, $\alpha\wedge\beta$, 
+$\alpha\vee\beta$ and $\neg\alpha$ are \emph{Boolean attributes}.
 
 \begin{table}[ht]
 	\begin{center}
@@ -139,8 +140,8 @@ so that:
 \end{itemize}
 
 \emph{4ft-quantifier} expresses kind of dependency between $\varphi$ and $\psi$.
-The quantifier is defined as a condition over the \emph{4ft table}. In this 
-work, we use the two most common \emph{4ft-quantifiers}: \emph{founded implication}
+The quantifier is defined as a condition over the 4ft table. In this 
+work, we use the two most common 4ft-quantifiers: \emph{founded implication}
 and \emph{above average dependence}.
 
 \medskip
@@ -163,21 +164,20 @@ We alter this definition in order to avoid negative $p$ results in the experimen
 Again, we will use the
 relative \emph{Base} representation $\frac{a}{a+b+c+d}$. So, the quantifier 
 can be verbally interpreted as
-\emph{Among object satisfying $\varphi$, there are at least p per cent 
+\emph{"among object satisfying $\varphi$, there are at least p per cent 
 more objects satisfying $\psi$ then among all observed objects and there are
-at least Base per cent of observed objects satisfying $\varphi$ and $\psi$.}
+at least Base per cent of observed objects satisfying $\varphi$ and $\psi$".}
 
 \subsection{Procedure KL}
 \label{section:kl}
 Procedure KL \cite{KL} searches (in the simplified form) for rules 
-in form $R \sim C$, where $R$ and $C$ are \emph{categorial attributes}\footnote{Again,
-there can be \emph{Boolean attribute} added as a condition to the rule.}.
+in form $R \sim C$, where $R$ and $C$ are categorial attributes.
 The symbol $\sim$ is called \emph{KL-quantifier}. The rule $R \sim C$ means, 
-that \emph{categorial attributes} $R$ and $C$ are in relation described by 
+that categorial attributes $R$ and $C$ are in relation described by 
 $\sim$. In this work, we are using the \emph{Kendall's quantifier}.
 
 \medskip
-\emph{Kendall's quantifier} is based on \emph{Kendall's coeficient} 
+\emph{Kendall's quantifier} is based on \emph{Kendall's coefficient} 
 $\tau_{b}$\cite{Kendall}. It is defined as
 
 $$\tau_{b}=\frac{2(P-Q)}{\sqrt{(n^{2}-\sum_{k}n^{2}_{k,*})(n^2-\sum_{l}n^{2}_{*,l})}}$$
@@ -188,7 +188,7 @@ indicate positive ordinal dependence\footnote{High values of $C$ often coincide 
 high values of $R$, low values of $C$ often coincide with low values of $R$.}, values
 $\tau_{b}<0$ negative ordinal dependence, $\tau_{b}=0$ ordinal independence and 
 $|\tau_{b}|=1$ functional dependence of $C$ on $R$. In this work, we are using the
-\emph{Kendall's quantifier} to construct \emph{abstract quantifiers} discussed in 
+Kendall's quantifier to construct \emph{abstract quantifiers} discussed in 
 section \ref{section:types}.
 
 \subsection{GUHA Tools}
@@ -196,7 +196,7 @@ Apart from the tools presented in this section, several systems implementing
 GUHA procedures were developed in the past. In recent years, the
 \emph{LISp-Miner} system has been the most significant GUHA tool. This system
 has been under development since 1996 at the University of Economics, Prague.
-The system includes six GUHA procedures including procedure KL and lighter version
+It includes six GUHA procedures including procedure KL and lighter version
 of 4FT procedure \cite{Ralbovsky} in addition to other data preparation and 
 result interpretation modules.
 
@@ -207,16 +207,15 @@ Charles University, Prague) succeeded in developing an user friendly
 visual system with advanced features such as high level modularity, support
 for distributed computing or reusability of the task setting \cite{Ferda}.
 At present there are several research activities taking advantage of the system.
+Figure \ref{fig:Ferda} shows the Ferda working environment. For purposes of
+this work, there were modules implemented in the Ferda system as well.
 
 \begin{figure}[ht]
 \centering
-\mbox{\resizebox{120mm}{!}{\includegraphics{Ferda.png}}}
+\mbox{\resizebox{110mm}{!}{\includegraphics{Ferda.png}}}
 \caption{Ferda environment}
 \label{fig:Ferda}
 \end{figure}
-
-Figure \ref{fig:Ferda} shows the Ferda working environment. For purposes of
-this work, there were modules implemented in the Ferda system as well.
 
 \section{Background Knowledge}
 \label{section:knowledge}
@@ -238,9 +237,10 @@ between entities or say something about their behavior. Below are presented
 example rules taken from STULONG\footnote{The study (STULONG) was realized at the
 2nd Department of Medicine, 1st Faculty of Medicine of Charles University and 
 Charles University Hospital, U nemocnice 2, Prague 2 (head. Prof. M. Aschermann, 
-MD, SDr, FESC), under the supervision of Prof. F. Boudík, MD, ScD, with collaboration 
-of M. Tomeèková, MD, PhD and Ass. Prof. J. Bultas, MD, PhD. The data were transferred 
-to the electronic form by the European Centre of Medical Informatics, Statistics and Epidemiology of Charles University and Academy of Sciences (head. Prof. RNDr. J. Zvárová, DrSc). The data resource is on the web pages \url{http://euromise.vse.cz/challenge2004}. 
+MD, SDr, FESC), under the supervision of Prof. F. Boud\'{i}k, MD, ScD, with collaboration 
+of M. Tome\v{c}kov\'{a}, MD, PhD and Ass. Prof. J. Bultas, MD, PhD. The data were transferred 
+to the electronic form by the European Centre of Medical Informatics, Statistics and Epidemiology of Charles University and Academy of Sciences (head. Prof. RNDr. J. 
+Zv\'{a}rov\'{a}, DrSc). The data resource is on the web pages \url{http://euromise.vse.cz/challenge2004}. 
 At present time the data analysis is supported by the grant of the Ministry of 
 Education CR Nr LN 00B 107.}: 
 
@@ -250,6 +250,7 @@ Education CR Nr LN 00B 107.}:
 \end{itemize}
 
 \subsection{Background Knowledge Formalization}
+\label{section:formalization}
 In order to automatically verify background knowledge against the data, a new formalization
 needed to be thought out. 
 Background knowledge contains heterogeneous verbal formulations of dependences
@@ -259,7 +260,7 @@ example in sociology they mean only expected behavior or opinion of a group of p
 Our aim is to find formalization usable for both domains.
 
 We present a new \emph{Formalization with attributes, validation literals and 
-abstract quantifiers} first used in \cite{Diplomka} The main idea behind the
+abstract quantifiers} first used in \cite{Diplomka}. The main idea behind the
 formalization is to make it as close to GUHA terms as possible while still
 enabling large expressive possibilities of the verbal rule. Because of shorter
 format of the article, we present only an overview and an example of the new
@@ -273,64 +274,63 @@ to create \emph{categorial attributes}, inputs of the \emph{KL} procedure.
 
 \medskip
 \emph{Validation literal} is a special type of \emph{literal} used to express
-background knowledge. \emph{Literal} is a \emph{basic Boolean 
-attribute} or its negation. We define the \emph{literal length}
+background knowledge. \emph{Literal} is a basic Boolean 
+attribute or its negation. We define the \emph{literal length}
 as the size of the categories' subset. \emph{Validation literal} is a literal,
 which has \emph{literal length} equal to 1.
 
 \medskip
 \emph{Abstract quantifier} is a generalization of a quantifier or quantifiers of 
-a procedure (4FT or KL). The idea behind \emph{abstract quantifiers}
+a procedure (4FT or KL). The idea behind abstract quantifiers
 is to create a "black-box" quantifier: user does not need to fill any numeral 
 parameters of the quantifier. The quantifier is then more suitable for transferring
-verbal \emph{background knowledge} rules into formalized form.
+verbal background knowledge rules into formalized form.
 
 \subsection{Formalization Example}
 With all the terms explained, let us see how the formalization is applied to 
 a specific verbal rule \textbf{If education increases, wine consumption increases as well.}
 as presented in Section~\ref{section:types}. The rule defines relationship
 between two measurable quantities of a patient. These quantities are stored in the
-database in the form of columns of a table, so \emph{attributes} can be created.
+database in the form of columns of a table, so attributes can be created.
 We name the attributes for \textbf{education} and \textbf{wine consumption}
 \emph{education} and \emph{wine} respectively.
 
-For this paragraph we will consider only the \emph{KL} procedure. 
+For this paragraph we will consider only the KL procedure. 
 The procedure searches (in the simplified form) for rules 
-in form $R \sim C$, where $R$ and $C$ are \emph{categorial attributes}, which
-derive from \emph{attributes}.
+in form $R \sim C$, where $R$ and $C$ are categorial attributes, which
+derive from attributes.
 When \textbf{education} and \textbf{wine consumption}
 out of the rule are to be formalized with \emph{R} and \emph{C} of the hypothesis,
 then the part \textbf{If ... increases, ... increases as well} could be formalized with
-a proper \emph{abstract quantifier}. We call this quantifier
+a proper abstract quantifier. We call this quantifier
 \emph{increasing dependence} and is implemented as a special setting of the 
-\emph{Kendall quantifier} (to be described later). With all the knowledge
+Kendall quantifier (to be described later). With all the knowledge
 stated above, the rule \textbf{If education increases, wine consumption increases
 as well} can be formally written as \emph{education} $\uparrow$ \emph{wine}, where
-$\uparrow$ states for \emph{increasing dependence abstract quantifier}.
+$\uparrow$ states for increasing dependence abstract quantifier.
 
-We can also define the formalization for the \emph{4FT} procedure. The hypotheses
-of this procedure consist of \emph{Boolean attributes}, therefore it is better to use \emph{validation literals}. If we presume correct categorization, out of
+We can also define the formalization for the 4FT procedure. The hypotheses
+of this procedure consist of Boolean attributes, therefore it is better to use validation literals. If we presume correct categorization, out of
 \emph{attributes education} and \emph{wine} the \emph{validation literals
-education(HIGH)} and \emph{wine(HIGH)} can be created\footnote{\emph{Validation
-literal} allows sign setting. Here both signs are \emph{positive}.}. Similarly
-to \emph{KL} formalization we can use \emph{abstract quantifier} to 
+education(HIGH)} and \emph{wine(HIGH)} can be created. Similarly
+to KL formalization we can use abstract quantifier to 
 note the dependence. Then the rule \textbf{If education increases, wine consumption
 increases as well} can be formalized as \emph{education(HIGH)} $\Rightarrow$
-\emph{wine(HIGH)} with a proper \emph{abstract quantifier} $\Rightarrow$
+\emph{wine(HIGH)} with a proper abstract quantifier $\Rightarrow$
 
-Formalization with the \emph{4FT} procedure does not consider the whole \emph{attributes}
+Formalization with the 4FT procedure cannot consider the whole \emph{attributes}
 but only some of its categories, thus it is weaker. However there may be situations 
-when it is feasible to use the \emph{4FT} procedure. If the examined attribute is not
+when it is feasible to use the 4FT procedure. If the examined attribute is not
 ordinal, the KL procedure cannot be used. Also there may be ordinal attributes
 with such a small number of categories, that is preferred to use 4FT 
-procedure\footnote{In our experiments that was often the case}.
+procedure (which was often the case in our experiments).
 
-In the beginning of this section, a requirement was given on the formalization
+In the beginning of section \ref{section:formalization}, a requirement was given on the formalization
 to be able to represent various kinds of relationships between the
-entities of the domain. The \emph{formalization with attributes, validation 
-literals and abstract quantifiers} fulfills this requirement, because the
+entities of the domain. The formalization with attributes, validation 
+literals and abstract quantifiers fulfills this requirement, because the
 formalization does not pose any restrictions on the relationships - 
-the relationship is expressed by the \emph{abstract quantifier}. 
+the relationship is expressed by the abstract quantifier. 
 
 \section{Experiments}
 \label{section:experiments}
@@ -339,31 +339,32 @@ find out, if background knowledge gained from domain experts is apparent
 in the data by GUHA means. This part of the paper gives information about experiments:
 section \ref{section:setup} describes experiments' setup, 
 sections \ref{section:default} and \ref{section:suitable} show two conducted
-experiments and section \ref{section:findings} discusses the results of the
+experiments and section \ref{section:findings} evaluates the results of the
 experiments. 
 
 \subsection{Setup}
 \label{section:setup}
 Modules of the Ferda system were created for purposes of this work and of work
-\cite{Diplomka}. The modules enable the \emph{formalization with attributes,
-validation literals and abstract quantifiers} setting. They also automatically
+\cite{Diplomka}. The modules enable the formalization with attributes,
+validation literals and abstract quantifiers setting. They also automatically
 find rules from the output of 4FT and KL procedures that match the formalized 
 background knowledge. The details of the implementation, with proper 
 explanation of the modules and description of algorithms can be found 
 in \cite{Diplomka}.
 
-Special attention was paid to selection of \emph{abstract quantifiers}. For the 
-KL procedure, we chose variations of \emph{Kendall quantifier} named 
+Special attention was paid to selection of abstract quantifiers. For the 
+KL procedure, we chose variations of Kendall quantifier named 
 \emph{increasing} and \emph{decreasing dependence} for observing positive and
-negative ordinal dependence. Out of many \emph{4ft-quantifiers}, we chose the
+negative ordinal dependence. Out of many 4ft-quantifiers, we chose the
 two most used quantifiers introduced in section \ref{section:4ft}, the
-\emph{founded implication} and \emph{above average dependence}. We presumed
+founded implication and above average dependence. We presumed
 that if they are most used, they should be somehow "good". 
 
-We chose 8 sample background knowledge rules concerning education and responsibility
+We chose 8 sample rules constructed by medical experts
+concerning education and responsibility
 in work. These rules were selected as a sample of the rules that can be mined upon
 (without changing the database schema). Rules are listed in Table \ref{tab:rules}. 
-We used the same common categorization of STULONG attribute both for the task
+We used the same common categorization of STULONG attributes both for the task
 settings and for the formalization settings.
 
 \begin{table}[ht]
@@ -397,17 +398,16 @@ settings and for the formalization settings.
 \label{section:default}
 There are threshold values of parameters defined for each quantifier, which tell
 us when quantifier's output is significant. We call them \emph{default quantifiers'
-settings}. These values were set up by an agreement among data mining experts
-\footnote{However, the values are not fixed and can be subject of further discussion}.
-The aim of the first conducted experiment was to verify, if there are in the data any 
-rules found with aid of formalization and \emph{abstract quantifiers} defined in
-previous section backing the background knowledge.
+settings}. These values were set up by an agreement among data mining experts.
+The aim of the first conducted experiment was to verify, if there are in there are any 
+rules verified with aid of formalization and abstract quantifiers defined in
+previous section backing the background knowledge with default settings. 
 
-We chose 0.7 and -0.7 value of the \emph{Kendall's coeficient} for the
-\emph{increasing} and \emph{decreasing dependency abstract quantifiers} respectively.
-For the \emph{founded implication} quantifier, the default values are 0.95 for
+We chose 0.7 and -0.7 value of the Kendall's coefficient for the
+increasing and decreasing dependency abstract quantifiers respectively.
+For the founded implication quantifier, the default values are 0.95 for
 the $p$ parameter and 0.05 for the (relative) $Base$ parameter. For the
-\emph{above average dependence} quantifier, the default values are 1.2 for th
+above average dependence quantifier, the default values are 1.2 for th
 $p$ parameter and again 0.05 for the $Base$ parameter.
 
 \begin{table}[ht]
@@ -438,8 +438,8 @@ $p$ parameter and again 0.05 for the $Base$ parameter.
 \end{table}
 
 Table~\ref{tab:validation1} shows the results of the first experiment. The \textbf{ID},
-\textbf{DD}, \textbf{FI} and \textbf{AA} stands for \emph{increasing dependence}, 
-\emph{decreasing dependence}, \emph{founded implication} and \emph{above average}
+\textbf{DD}, \textbf{FI} and \textbf{AA} stands for increasing dependence, 
+decreasing dependence, founded implication and above average dependence
 quantifiers. \textbf{YES} means that the rule was found with the given quantifier,
 \textbf{NO} means that the rule was not found and \textbf{x} means that the
 rule was not meaningful for the given quantifier.
@@ -449,28 +449,28 @@ presumptions about the data source. The data table \emph{Entry}, which was mined
 upon, contains records about the entry examination of 1417 patients. Because of
 this number, we consider the data to be statistically significant. We also
 presume no errors in the data and proper categorization (described in \cite{Diplomka}). 
-Finally, when we want to question settings of individual quantifiers, we
+Finally, if we want to question settings of individual quantifiers, we
 presume that the background knowledge rules are "somehow stored" in the data.
 For example that the number of patients approving the background knowledge 
 rule is greater then the number of patients disapproving the rule. 
 
 The most interesting result of the experiment the disapproval of all the rules except
-one with the \emph{founded implication} and also the \emph{above average}
+one with the founded implication and also the above average
 quantifier. The fact leads to a conclusion that the $p$ parameters of 4FT quantifiers
 are too restrictive, e.g. there should be 95\% confidence of the rule when
-using \emph{founded implication} quantifier. 
+using founded implication quantifier. 
 
 \subsection{Suitable Quantifiers' Settings}
 \label{section:suitable}
 As the previous section showed, the default settings of a quantifier can be
 misleading. The next conducted experiment tries to find suitable quantifiers'
-settings, based on the \emph{background knowledge} rule validation. We gradually
-decreased the $p$ settings of the \emph{founded implication} and
-\emph{above average} quantifiers. We did not experiment with the
-\emph{KL} quantifiers, because of the complexity of the problem\footnote{The 
+settings, based on the background knowledge rule validation. We gradually
+decreased the $p$ settings of the founded implication and
+above average dependence quantifiers. We did not experiment with the
+KL quantifiers, because of the complexity of the problem\footnote{The 
 results need not to improve merely by changing a parameter of a quantifier. 
-We also need to take the shape of the \emph{KL} contingency table into consideration.}.
-With this technique, we could examine more \emph{background knowledge} rules,
+We also need to take the shape of the KL contingency table into consideration.}.
+With this technique, we could examine more background knowledge rules,
 determine the value of the parameter for each rule and compute the average
 of the values for each examined dataset. New mining with the quantifier can be
 done with this average value and new relevant relationships in the data could
@@ -504,23 +504,23 @@ be discovered.
 \end{table}
 
 As we can see in Table~\ref{tab:validation2}, the results of the experiment
-are rather disappointing for the \emph{founded implication} quantifier. Majority
+are rather disappointing for the founded implication quantifier. Majority
 of rules had the \emph{P} value below 0.5. We got better results for the 
-\emph{above average} quantifier where the \emph{p} parameter was only twice below 1. 
+above average dependence quantifier where the \emph{p} parameter was only twice below 1. 
 However, only once the value exceeded the desired 1.2 value. 
 
-\subsection{Discussion}
+\subsection{Evaluation}
 \label{section:findings}
-Considering the KL procedure, we obtained reasonable results for the \emph{increasing
-dependence} and bad results for the \emph{decreasing dependence} abstract quantifiers.
-This may be caused by the fact, that the \emph{categorial attributes} $R$ and $C$ of the task setting contained few categories and thus irregularities of the  KL contingency table 
+Considering the KL procedure, we obtained reasonable results for the increasing
+dependence and bad results for the decreasing dependence abstract quantifiers.
+This may be caused by the fact, that the categorial attributes $R$ and $C$ of the task setting contained few categories and thus irregularities of the  KL contingency table 
 (see \cite{KL} for details) could easily affect the quantifier.
 
-Considering the 4FT procedure, there results for \emph{above average dependence} were
-reasonable. On the other hand, the most used quantifier \emph{founded implication} 
+Considering the 4FT procedure, there results for above average dependence were
+reasonable. On the other hand, the most used quantifier founded implication
 did not prove to be useful at all. This may be caused by the fact, that for rules 
 no. 4, 5 and 6 ($\varphi$ increasing,
-$\psi$ decreasing) \emph{founded implication} is not a suitable quantifier. 
+$\psi$ decreasing) founded implication is not a suitable quantifier. 
 
 Although the formal theory of the quantifiers (KL and 4FT) is well developed
 \cite{Rauch}, our experiments showed that semantically sound interpretation is
@@ -545,7 +545,7 @@ knowledge. However, our background knowledge formalization is less restrictive
 than the Bayesian network and the GUHA procedures offer greater possibilities than
 the classical association mining.
 
-\cite{Qualitative1,Qualitative2} show another formalization of background knowledge.
+\cite{Qualitative2} show another formalization of background knowledge.
 It is based on qualitative models and used for induction learning. This model is
 not suitable for GUHA mining, mainly because the strict mathematical requirements
 of the model. 
@@ -554,10 +554,47 @@ The data from STULONG itself have been matter of long run research
 \cite{Stulong2,Stulong4}. \cite{Adamek} deals with background
 knowledge rules annotation into a attribute matrix. This annotation is a
 simplification of our formalization without proper explanation of suggested
-\emph{abstract quantifiers}.
+abstract quantifiers.
 
 \section{Conclusion and Future Work}
 \label{section:conclusion}
+We focused on evaluation of specific KDD technique -- GUHA mining by verifying
+background knowledge rules on a specific STULONG dataset. Background knowledge
+consisted of verbal rules created by domain experts. These rules express
+relationship between two entities of the domain. 
+
+In order to automatically verify background knowledge rules, a formalization
+of them needed to be developed. Our formalization with attributes, validation
+literals and abstract quantifiers is tailored for the GUHA method, more specifically
+their 4FT and KL procedures. We also developed automatic tools for the verification
+of formalized background knowledge rules against the output of the two GUHA
+procedures. 
+
+Experiments were conducted testing background knowledge rules from the STULONG dataset
+against the data. In the first experiment, we tried to verify background knowledge
+against default settings of mostly used quantifiers. We found default settings of
+the quantifiers too strict. Then we continued to find out which values of quantifiers'
+parameters can verify the background knowledge rules. Results of this experiment were
+reasonable for the above average dependence quantifier but disappointing for the
+founded implication quantifier. 
+
+The overall output of the experiments is, that more attention should be paid to
+semantic interpretation of quantifiers and their default settings. This should
+be the main direction for the future work in the field. New abstract quantifiers
+need to be defined and conditions for their usage investigated. This requires
+cooperation between the domain experts and data miners. One of the possible
+improvements helping to better reflect real life situations is enabling
+fuzzy quantifiers and attributes. 
+
+\section*{Acknowledgment}
+
+This work was supported by the project MSM6138439910 of the
+Ministry of Education of the Czech Republic, project IG407056 of University
+of Economics, Prague and by the project 201/05/0325 of the Czech Science
+Foundation. 
+
+We would like to thanks our research colleagues Jan Rauch and Vojt\v{e}ch 
+Sv\'{a}tek for help, valuable comments and reviews.
 
 \begin{thebibliography}{20}
 
@@ -574,19 +611,10 @@ Springer-Verlag 2006, p.~318~--~325
 \bibitem{Stulong2}
 Berka P., Tome\v{c}kov\'{a} M., Rauch J.: \emph{The ECML/PKDD Discovery Challenge on the Atherosclerosis Risk Factors Data}. In: Popel\'{i}nsk\'{y} L., Kr\'{a}tk\'{y} M. (ed.): Znalosti 2005. Ostrava, VŠB TU Ostrava 2005, pp. 18–-28. ISBN 80-248-0755-6.
 
-\bibitem{Qualitative1}
-Clark P., Matwin S.: \emph{Using Qualitative Models to Guide Inductive Learning}.
-In: Proceedings 10$^{th}$ International Machine Learning Conference (ML93), p. 
-49--56
-
 \bibitem{Faure}
 Faur\'{e} C., Delpart S., Boulicaut J., Mille A.: \emph{Iterative Bayesian Network
 Implementation by Using Annotated Association Rules}. In: S. Staab and V. Sv\'{a}tek
 (Eds.): EKAW 2006, LNAI 4248, Springer-Verlag 2006, p.~326~--~333
-
-\bibitem{GUHA1}
-H\'{a}jek P., Havel I., Chytil M.: \emph{The GUHA method of
-automatic hypotheses determination}. Computing 1, 1966, p.~293~--~308
 
 \bibitem{GUHA2}
 H\'{a}jek P., Havr\'{a}nek, T.: \emph{Mechanising Hypothesis
@@ -627,9 +655,8 @@ Issue 1, p.~9~--~28
 Rauch J., \v{S}im\accent23unek M., L\'{i}n V.:
 \emph{Mining for Patterns Based on Contingency Tables by KL-Miner – First
 Experience}.
-In: LIN, Tsau Young, OHSUGA, Setsuo, LIAU, C. J., HU, Xiaohua (Eds.)
- Foundations and Novel Approaches in Data Mining. Berlin : Springer-Verlag,
-pp. 155--167. ISBN 3-540-28315-3
+In: Lin T.Y. (ed.): Foundations and Novel Approaches in Data Mining. Springer-Verlag,
+pp. 155--167
 
 \bibitem{Adamek}
 Rauch J., Tome\v{c}kov\'{a} M.: \emph{System of Analytical Questions and
