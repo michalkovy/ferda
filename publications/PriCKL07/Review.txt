@@ -1,0 +1,44 @@
+Summary: This paper focus on the evaluation of GUHA method, a specific KDD technique. The author presents a formalization of background knowledge and tools in order to compare knowledge with patterns extracted with GUHA. Then, the author presents experiments in order to evaluate GUHA method.
+
+This is clearly an interesting topic and one strength of the paper is the existence of a prototype. Nevertheless, some parts of the paper need more explanations and the author should investigate previous works about interestingness measures.
+
+Details: Section 3.3:
+
+I don't understand why you din't choose to consider the whole attributes but only some of its categories for formalization with 4FT procedure. Moreover, more information are only available in Czech !
+
+Section 4.1:
+
+One strength of your paper is the existence of a prototype to find rules. However, details are only available in Czech and some questions remains. For example, what kind of matching do you apply ? Something strict ou approximative ?
+
+What kind of rules are rules listed in table 2 ? Hypothesis or prior knowledge validated by experts ?
+
+Section 4.2:
+
+Your hypothesis presuming there are no errors in data is too strong. It should be interesting to describe your data preparation step or to analyse the noise sensibility of your approch.
+
+Section 4.3:
+
+I don't understand why you want to find an average value for p settings. Your objective isn't obvious !
+
+Section 4.4:
+
+You say that founded implication (based on support and confidence) isn't a suitable quantifier: it isn't a very original result ! Lots of works already exist on interestingness measures:
+
+@ARTICLE{Mcgarry:2005,
+ author = {Ken McGarry},
+ title = {A survey of interestingness measures for knowledge discovery},
+ journal = {Knowl. Eng. Rev.},
+ year = {2005},
+ volume = {20},
+ pages = {39--61},
+ number = {1},
+ address = {New York, NY, USA},
+ doi = {http://dx.doi.org/10.1017/S0269888905000408},
+ issn = {0269-8889},
+ publisher = {Cambridge University Press}
+
+You can also read the following papers in order to choose relevant combinations of interestingness measures:
+
+Lenca, P., Meyer, P., Vaillant, B. and Lallich, S. On selecting interestingness measures for association rules: user oriented description and multiple criteria decision aid, the European Journal of Operational Research, 2007.
+
+M. Collard, JC. Vansnick, How to measure interestingness in data mining : a multiple criteria decision analysis approach, 1st Int. Conf. on Research Challenges in Information Science (RCIS) 07, 2007.  to appear.
