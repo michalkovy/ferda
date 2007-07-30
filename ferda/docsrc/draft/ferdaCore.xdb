@@ -265,6 +265,10 @@
 			Our implementation of quantifiers in Ferda was greatly inspired by this work.
 		</para>
 	</section>
+	<section>
+		<title>Mining Processor</title>
+		<para></para>
+	</section>
   <bibliography>
 		  <biblioentry>
 			 <abbrev>Karban</abbrev>

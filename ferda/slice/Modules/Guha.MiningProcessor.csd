@@ -219,6 +219,11 @@
       <Field type="CSharpField">public int skipFirstN</Field>
       <Field type="CSharpField">public WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode</Field>
     </Entity>
+    <Entity type="CSharpInterface">
+      <Name>MiningProcessorFunctions</Name>
+      <Access>Public</Access>
+      <Operation type="CSharpMethod">string Run()</Operation>
+    </Entity>
   </Entities>
   <Relations>
     <Relation type="Association" first="1" second="0">
@@ -241,8 +246,6 @@
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
-    <Relation type="Dependency" first="5" second="4" />
-    <Relation type="Dependency" first="4" second="3" />
     <Relation type="Dependency" first="11" second="10" />
     <Relation type="Dependency" first="11" second="8" />
     <Relation type="Association" first="11" second="5">
@@ -282,7 +285,6 @@
     <Relation type="Dependency" first="20" second="21" />
     <Relation type="Dependency" first="5" second="21" />
     <Relation type="Dependency" first="19" second="23" />
-    <Relation type="Dependency" first="4" second="23" />
     <Relation type="Association" first="27" second="7">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
@@ -323,6 +325,9 @@
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
+    <Relation type="Dependency" first="3" second="4" />
+    <Relation type="Dependency" first="4" second="5" />
+    <Relation type="Dependency" first="4" second="23" />
   </Relations>
   <Positions>
     <Shape>
@@ -330,23 +335,23 @@
       <Size width="193" height="124" />
     </Shape>
     <Shape>
-      <Location left="323" top="18" />
-      <Size width="162" height="124" />
-    </Shape>
-    <Shape>
-      <Location left="28" top="317" />
+      <Location left="323" top="8" />
       <Size width="193" height="124" />
     </Shape>
     <Shape>
-      <Location left="343" top="598" />
+      <Location left="18" top="186" />
+      <Size width="193" height="124" />
+    </Shape>
+    <Shape>
+      <Location left="323" top="149" />
       <Size width="240" height="93" />
     </Shape>
     <Shape>
-      <Location left="323" top="458" />
+      <Location left="363" top="287" />
       <Size width="283" height="93" />
     </Shape>
     <Shape>
-      <Location left="323" top="168" />
+      <Location left="395" top="429" />
       <Size width="342" height="223" />
     </Shape>
     <Shape>
@@ -362,11 +367,11 @@
       <Size width="264" height="144" />
     </Shape>
     <Shape>
-      <Location left="724" top="536" />
+      <Location left="818" top="536" />
       <Size width="137" height="193" />
     </Shape>
     <Shape>
-      <Location left="903" top="496" />
+      <Location left="1007" top="491" />
       <Size width="230" height="141" />
     </Shape>
     <Shape>
@@ -391,7 +396,7 @@
     </Shape>
     <Shape>
       <Location left="1247" top="317" />
-      <Size width="192" height="167" />
+      <Size width="206" height="167" />
     </Shape>
     <Shape>
       <Location left="1514" top="317" />
@@ -402,7 +407,7 @@
       <Size width="130" height="80" />
     </Shape>
     <Shape>
-      <Location left="343" top="715" />
+      <Location left="323" top="698" />
       <Size width="268" height="90" />
     </Shape>
     <Shape>
@@ -410,15 +415,15 @@
       <Size width="212" height="115" />
     </Shape>
     <Shape>
-      <Location left="687" top="1030" />
+      <Location left="751" top="1030" />
       <Size width="334" height="70" />
     </Shape>
     <Shape>
-      <Location left="18" top="564" />
+      <Location left="8" top="380" />
       <Size width="304" height="100" />
     </Shape>
     <Shape>
-      <Location left="228" top="864" />
+      <Location left="220" top="864" />
       <Size width="433" height="115" />
     </Shape>
     <Shape>
@@ -430,7 +435,7 @@
       <Size width="162" height="128" />
     </Shape>
     <Shape>
-      <Location left="1130" top="1044" />
+      <Location left="1138" top="1115" />
       <Size width="162" height="216" />
     </Shape>
     <Shape>
@@ -438,7 +443,7 @@
       <Size width="162" height="124" />
     </Shape>
     <Shape>
-      <Location left="840" top="1259" />
+      <Location left="840" top="1260" />
       <Size width="162" height="124" />
     </Shape>
     <Shape>
@@ -452,6 +457,10 @@
     <Shape>
       <Location left="301" top="1044" />
       <Size width="364" height="216" />
+    </Shape>
+    <Shape>
+      <Location left="1124" top="854" />
+      <Size width="176" height="93" />
     </Shape>
     <Connection>
       <StartNode isHorizontal="True" location="63" />
@@ -468,14 +477,6 @@
     <Connection>
       <StartNode isHorizontal="True" location="85" />
       <EndNode isHorizontal="True" location="22" />
-    </Connection>
-    <Connection>
-      <StartNode isHorizontal="False" location="101" />
-      <EndNode isHorizontal="False" location="101" />
-    </Connection>
-    <Connection>
-      <StartNode isHorizontal="False" location="98" />
-      <EndNode isHorizontal="False" location="98" />
     </Connection>
     <Connection>
       <StartNode isHorizontal="False" location="58" />
@@ -551,11 +552,7 @@
     </Connection>
     <Connection>
       <StartNode isHorizontal="False" location="81" />
-      <EndNode isHorizontal="False" location="81" />
-    </Connection>
-    <Connection>
-      <StartNode isHorizontal="False" location="46" />
-      <EndNode isHorizontal="False" location="27" />
+      <EndNode isHorizontal="False" location="184" />
     </Connection>
     <Connection>
       <StartNode isHorizontal="True" location="90" />
@@ -588,6 +585,18 @@
     <Connection>
       <StartNode isHorizontal="True" location="154" />
       <EndNode isHorizontal="True" location="18" />
+    </Connection>
+    <Connection>
+      <StartNode isHorizontal="False" location="125" />
+      <EndNode isHorizontal="False" location="85" />
+    </Connection>
+    <Connection>
+      <StartNode isHorizontal="False" location="105" />
+      <EndNode isHorizontal="False" location="73" />
+    </Connection>
+    <Connection>
+      <StartNode isHorizontal="False" location="19" />
+      <EndNode isHorizontal="False" location="74" />
     </Connection>
   </Positions>
 </ClassProject>

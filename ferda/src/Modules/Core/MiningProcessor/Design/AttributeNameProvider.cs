@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// AttributeNameProvider.cs - Interface for attributes
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -20,12 +20,18 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// Interface for attributes names. It is derived from the 
+    /// <see cref="Ferda.Guha.MiningProcessor.Design.SourceDataTableIdProvider"/>
+    /// containing the data table name. Moreover, this class 
+    /// provides names of attributes and their identification. 
+    /// In real it means to retrieve one attribute (for an attribute box)
+    /// or all connected attributes (for a task box).
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +42,12 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    interface AttributeNameProvider : SourceDataTableIdProvider
     {
         /// <summary>
-        /// Identifier of the entity
+        /// Gets attributes names and identifications of this attribute. 
         /// </summary>
-        Guid Id { get; set; }
-
-        /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
-        /// </summary>
-        ImportanceEnum importance { get; set; }
+        /// <returns>Attribute name and identification</returns>
+        public GuidAttributeNamePair[] GetAttributeNames();
     }
 }

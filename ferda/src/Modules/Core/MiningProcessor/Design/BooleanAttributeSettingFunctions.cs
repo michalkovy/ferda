@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// BooleanAttributeSettingsFunctions.cs - Interface for Boolean attribute settings
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -18,14 +18,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// Represents an interface for Boolean attribute seting. It contains
+    /// the bit string generator (from the
+    /// <see cref="Ferda.Guha.MiningProcessor.Desing.BitStringGeneratorProvider"/>
+    /// class and also entity setting.
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +39,14 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    interface BooleanAttributeSettingFunctions : BitStringGeneratorProvider
     {
         /// <summary>
-        /// Identifier of the entity
+        /// Get entity setting for the current Boolean attribute. 
+        /// That is the entity setting that is represented by the 
+        /// current box.
         /// </summary>
-        Guid Id { get; set; }
-
-        /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
-        /// </summary>
-        ImportanceEnum importance { get; set; }
+        /// <returns>Entity setting</returns>
+        IEntitySetting GetEntitySetting();
     }
 }

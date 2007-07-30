@@ -61,7 +61,6 @@
     <Compile Include="Common.cs" />
     <Compile Include="DynamicAlgorithm\EquifrequencyIntervalGenerator.cs" />
     <Compile Include="Exceptions.cs" />
-    <Compile Include="DynamicAlgorithm\EachValueOneCategory.cs" />
     <Compile Include="DynamicAlgorithm\EquidistantIntervals.cs" />
     <Compile Include="DynamicAlgorithm\EquifrequencyIntervals.cs" />
     <Compile Include="Enumeration.cs" />

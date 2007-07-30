@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// SourceDataTableIdProvider.cs - provider of mining data table
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -19,13 +19,12 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// Interface providing identification of the source data table,
+    /// i.e. the data table that is mined upon. The identification
+    /// is the name of the table.
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +35,12 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    interface SourceDataTableIdProvider
     {
         /// <summary>
-        /// Identifier of the entity
+        /// Gets the source data table identification.
         /// </summary>
-        Guid Id { get; set; }
-
-        /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
-        /// </summary>
-        ImportanceEnum importance { get; set; }
+        /// <returns>Source data table identification</returns>
+        string GetSourceDataTableId();
     }
 }

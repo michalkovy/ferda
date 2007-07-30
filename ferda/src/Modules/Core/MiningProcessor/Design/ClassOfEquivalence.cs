@@ -1,6 +1,6 @@
 using System;
 
-namespace Design
+namespace Ferda.Guha.MiningProcessor.Design
 {
     public class ClassOfEquivalence
     {

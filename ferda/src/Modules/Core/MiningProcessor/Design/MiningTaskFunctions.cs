@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// MiningtaskFunctions.cs - Functionality of the mining task
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -20,12 +20,13 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// Interface of a (GUHA) mining task. 
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +37,20 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    interface MiningTaskFunctions : BitStringGeneratorProvider, AttributeNameProvider
     {
         /// <summary>
-        /// Identifier of the entity
+        /// Returns proxies of all the quantifiers connected to the task
         /// </summary>
-        Guid Id { get; set; }
-
+        /// <returns>Proxies of the connected quantifiers</returns>
+        Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrx[]
+            GetQuantifiers();
+        
         /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
+        /// Gets serialized task result. 
         /// </summary>
-        ImportanceEnum importance { get; set; }
+        /// <param name="statistics">Serialized task run statistics</param>
+        /// <returns>Serialized task result.</returns>
+        string GetResult(out string statistics);
     }
 }

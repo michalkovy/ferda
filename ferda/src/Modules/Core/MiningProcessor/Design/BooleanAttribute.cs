@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// BooleanAttribute.cs - Boolean attribute structure
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -20,12 +20,15 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// Defines a Boolean attribute for the miner. In addition to
+    /// defining entity, the structure has also information about the
+    /// role of the Boolean attribute in the task (antecedent, succedent..)
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +39,16 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    public struct BooleanAttribute
     {
         /// <summary>
-        /// Identifier of the entity
+        /// Entity setting
         /// </summary>
-        Guid Id { get; set; }
+        public IEntitySetting setting;
 
         /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
+        /// Role of the Boolean attribute
         /// </summary>
-        ImportanceEnum importance { get; set; }
+        public MarkEnum mark;
     }
 }
