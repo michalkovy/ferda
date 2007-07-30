@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// BitStringIce.cs - Bit string with category identificator
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -19,13 +19,13 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// The bit string for Ice layer, see
+    /// <see cref="Ferda.Guha.MiningProcessor.Design.BitStringIce"/> containing
+    /// bit string and identification of a category (perhaps identificator of the
+    /// virtual hypotheses attribute).
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +36,16 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    public struct BitStringIceWithCategoryID
     {
         /// <summary>
-        /// Identifier of the entity
+        /// The bit string.
         /// </summary>
-        Guid Id { get; set; }
+        public BitStringIce bitstring;
 
         /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
+        /// Identifier of the category
         /// </summary>
-        ImportanceEnum importance { get; set; }
+        public string categoryId;
     }
 }

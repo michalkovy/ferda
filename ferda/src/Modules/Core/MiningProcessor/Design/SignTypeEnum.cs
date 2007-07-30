@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// SignTypeEnum.cs - Represents Boolean attribute setting and its negation
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -24,8 +24,13 @@ using System;
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// The enumeration represents possible signs of a Boolean attribute.
+    /// It does occur only in the <c>Sign</c> box. It does not occur in the
+    /// <see cref="Ferda.Guha.MiningProcessor.Design.IEntitySetting"/> derived
+    /// classes. These classes represent settings of Boolean attributes for
+    /// generation of bit string. Instead of this class,
+    /// the <see cref="Ferda.Guha.MiningProcessor.Design.NegationSetting"/> or
+    /// <see cref="Ferda.Guha.MiningProcessor.Design.BothSignsSetting"/> occur.
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +41,21 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    public enum SignTypeEnum
     {
         /// <summary>
-        /// Identifier of the entity
+        /// Positive sign
         /// </summary>
-        Guid Id { get; set; }
+        Positive,
 
         /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
+        /// Negative sign
         /// </summary>
-        ImportanceEnum importance { get; set; }
+        Negative,
+
+        /// <summary>
+        /// Positive and negative sign
+        /// </summary>
+        Both
     }
 }

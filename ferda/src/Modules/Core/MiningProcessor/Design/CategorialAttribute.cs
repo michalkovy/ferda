@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// CategorialAttribute.cs - Categorial attribute structure
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -20,12 +20,15 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// Defines a categorial attribute. This type of attribute is not 
+    /// divided into individual entities and then constructed in form
+    /// of Boolean attribute. All categories of the attribute are considered.
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +39,17 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    public struct CategorialAttribute
     {
         /// <summary>
-        /// Identifier of the entity
+        /// Role of the attribute in the task
         /// </summary>
-        Guid Id { get; set; }
+        public MarkEnum mark;
 
         /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
+        /// Bit string generator, providing the categories
+        /// and bit strings of the attribute.
         /// </summary>
-        ImportanceEnum importance { get; set; }
+        public BitStringGenerator setting;
     }
 }

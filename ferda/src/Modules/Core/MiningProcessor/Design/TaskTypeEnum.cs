@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// TaskTypeEnum.cs - defines type of the GUHA task
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -24,8 +24,7 @@ using System;
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// Defines type of the GUHA task (procedure).
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +35,31 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    public enum TaskTypeEnum
     {
         /// <summary>
-        /// Identifier of the entity
+        /// 4FT Procedure
         /// </summary>
-        Guid Id { get; set; }
-
+        FourFold,
         /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
+        /// KL Procedure
         /// </summary>
-        ImportanceEnum importance { get; set; }
+        KL,
+        /// <summary>
+        /// CF Procedure
+        /// </summary>
+        CF,
+        /// <summary>
+        /// SD4FT Procedure
+        /// </summary>
+        SDFourFold,
+        /// <summary>
+        /// SDKL Procedure
+        /// </summary>
+        SDKL,
+        /// <summary>
+        /// SDCF Procedure
+        /// </summary>
+        SDCF
     }
 }

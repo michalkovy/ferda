@@ -1,152 +1,170 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>TRACE;DEBUG;Testing</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <RunCodeAnalysis>false</RunCodeAnalysis>
-        <CodeAnalysisRules>-Microsoft.Naming#CA1707</CodeAnalysisRules>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    </PropertyGroup>
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProductVersion>8.0.50727</ProductVersion>
-        <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{8A77381C-4DBC-40FA-A090-9AF34D65660E}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Ferda.Guha.MiningProcessor</RootNamespace>
-        <AssemblyName>MiningProcessor</AssemblyName>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
-        </Reference>
-        <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
-        </Reference>
-        <Reference Include="FerdaData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\bin\Server\FerdaData.dll</HintPath>
-        </Reference>
-        <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
-        </Reference>
-        <Reference Include="FerdaMath, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\bin\Server\FerdaMath.dll</HintPath>
-        </Reference>
-        <Reference Include="iceboxcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
-        </Reference>
-        <Reference Include="icecs, Version=3.1.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
-        </Reference>
-        <Reference Include="System"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Xml"/>
-    </ItemGroup>
-    <ItemGroup/>
-    <ItemGroup/>
-    <ItemGroup>
-        <Compile Include="BitStrings\BitString.cs"/>
-        <Compile Include="BitStrings\BitStringBuffer.cs"/>
-        <Compile Include="BitStrings\BitStringCache.cs"/>
-        <Compile Include="BitStrings\BitStringCacheTest.cs"/>
-        <Compile Include="BitStrings\BitStringIdentifier.cs"/>
-        <Compile Include="BitStrings\BitStringsArray.cs"/>
-        <Compile Include="BitStrings\EmptyBitString.cs"/>
-        <Compile Include="BitStrings\FalseBitString.cs"/>
-        <Compile Include="BitStrings\IBitString.cs"/>
-        <Compile Include="BitStrings\IBitStringCache.cs"/>
-        <Compile Include="BitStrings\MissingInformation.cs"/>
-        <Compile Include="BitStrings\MissingInformationBitStringsIdsCache.cs"/>
-        <None Include="Design\BitStringGeneratorPrx.cs"/>
-        <None Include="Design\BothSignsSetting.cs"/>
-        <None Include="Design\ClassOfEquivalence.cs"/>
-        <None Include="Design\CoefficientFixedSetSetting.cs"/>
-        <None Include="Design\CoefficientSetting.cs"/>
-        <None Include="Design\CoefficientType.cs"/>
-        <None Include="Design\ConjunctionSetting.cs"/>
-        <None Include="Design\DisjunctionSetting.cs"/>
-        <None Include="Design\EntityImporatancePair.cs"/>
-        <None Include="Design\IEntitySetting.cs"/>
-        <None Include="Design\ILeafEntitySetting.cs"/>
-        <None Include="Design\Importance.cs"/>
-        <None Include="Design\IMultipleOperandEntitySetting.cs"/>
-        <None Include="Design\ISingleOperandEntitySetting.cs"/>
-        <None Include="Design\NegationSetting.cs"/>
-        <None Include="DesignDiagram.cd"/>
-        <Compile Include="Exceptions.cs"/>
-        <Compile Include="Formulas\AtomFormula.cs"/>
-        <Compile Include="Formulas\AttributeNameInLiteralsProvider.cs"/>
-        <Compile Include="Formulas\BooleanAttributeFormula.cs"/>
-        <Compile Include="Formulas\CategorialAttributeFormula.cs"/>
-        <Compile Include="Formulas\ConjunctionFormula.cs"/>
-        <Compile Include="Formulas\DisjunctionFormula.cs"/>
-        <Compile Include="Formulas\Formula.cs"/>
-        <Compile Include="Formulas\FormulaHelper.cs"/>
-        <Compile Include="Formulas\NegationFormula.cs"/>
-        <Compile Include="Generation\CategorialAttributeTrace.cs"/>
-        <Compile Include="Generation\Common.cs"/>
-        <Compile Include="Generation\EmptyTrace.cs"/>
-        <Compile Include="Generation\Factory.cs"/>
-        <Compile Include="Generation\Helpers.cs"/>
-        <Compile Include="Generation\IEntityEnumerator.cs"/>
-        <Compile Include="Generation\INotLeafEntityEnumerator.cs"/>
-        <Compile Include="Generation\ISkipOptimalization.cs"/>
-        <Compile Include="Generation\LeafEntities.cs"/>
-        <Compile Include="Generation\MutliOperandEntities.cs"/>
-        <Compile Include="Generation\SingleOperandEntities.cs"/>
-        <Compile Include="Generation\SubsetsGenerationHelper.cs"/>
-        <Compile Include="Miners\CFMiningProcessor.cs"/>
-        <Compile Include="Miners\FourFoldMiningProcessor.cs"/>
-        <Compile Include="Miners\KLMiningProcessor.cs"/>
-        <Compile Include="Miners\MiningProcessorFunctionsI.cs"/>
-        <Compile Include="Miners\MiningSettingCollectionWithMiningThreads.cs"/>
-        <Compile Include="Miners\MinningProcessor.cs"/>
-        <Compile Include="Miners\ProgressTaskListener.cs"/>
-        <Compile Include="Miners\SDCFMiningProcessor.cs"/>
-        <Compile Include="Miners\SDFourFoldMiningProcessor.cs"/>
-        <Compile Include="Miners\SDKLMiningProcessor.cs"/>
-        <Compile Include="Miners\tablesOfBitStrings.cs"/>
-        <Compile Include="ObjectFactory.cs"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="QuantifierEvaluator\ContingencyTableHelper.cs"/>
-        <Compile Include="QuantifierEvaluator\FirstN.cs"/>
-        <Compile Include="QuantifierEvaluator\FirstNNoResult.cs"/>
-        <Compile Include="QuantifierEvaluator\IEvaluator.cs"/>
-        <Compile Include="QuantifierEvaluator\Quantifier.cs"/>
-        <Compile Include="QuantifierEvaluator\Quantifiers.cs"/>
-        <Compile Include="Results\Hypothesis.cs"/>
-        <Compile Include="Results\Result.cs"/>
-        <Compile Include="Results\SerializableFormula.cs"/>
-        <Compile Include="Results\SerializableHypothesis.cs"/>
-        <Compile Include="Results\SerializableResult.cs"/>
-        <Compile Include="Results\SerializableResultInfo.cs"/>
-        <Compile Include="Service.cs"/>
-        <Content Include="TODO.txt"/>
-    </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets"/>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Testing</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRules>-Microsoft.Naming#CA1707</CodeAnalysisRules>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8A77381C-4DBC-40FA-A090-9AF34D65660E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ferda.Guha.MiningProcessor</RootNamespace>
+    <AssemblyName>MiningProcessor</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaData.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="FerdaMath, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaMath.dll</HintPath>
+    </Reference>
+    <Reference Include="iceboxcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
+    </Reference>
+    <Reference Include="icecs, Version=3.1.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="BitStrings\BitString.cs" />
+    <Compile Include="BitStrings\BitStringBuffer.cs" />
+    <Compile Include="BitStrings\BitStringCache.cs" />
+    <Compile Include="BitStrings\BitStringCacheTest.cs" />
+    <None Include="Design\BitStringIceWithCategoryID.cs" />
+    <Compile Include="BitStrings\BitStringIdentifier.cs" />
+    <Compile Include="BitStrings\BitStringsArray.cs" />
+    <Compile Include="BitStrings\EmptyBitString.cs" />
+    <Compile Include="BitStrings\FalseBitString.cs" />
+    <Compile Include="BitStrings\IBitString.cs" />
+    <Compile Include="BitStrings\IBitStringCache.cs" />
+    <Compile Include="BitStrings\MissingInformation.cs" />
+    <Compile Include="BitStrings\MissingInformationBitStringsIdsCache.cs" />
+    <None Include="Design\BitStringGeneratorPrx.cs" />
+    <None Include="Design\BothSignsSetting.cs" />
+    <None Include="Design\ClassOfEquivalence.cs" />
+    <None Include="Design\CoefficientFixedSetSetting.cs" />
+    <None Include="Design\CoefficientSetting.cs" />
+    <None Include="Design\CoefficientType.cs" />
+    <None Include="Design\ConjunctionSetting.cs" />
+    <None Include="Design\DisjunctionSetting.cs" />
+    <None Include="Design\IEntitySetting.cs" />
+    <None Include="Design\ILeafEntitySetting.cs" />
+    <None Include="Design\Importance.cs" />
+    <None Include="Design\IMultipleOperandEntitySetting.cs" />
+    <None Include="Design\ISingleOperandEntitySetting.cs" />
+    <None Include="Design\NegationSetting.cs" />
+    <None Include="DesignDiagram.cd" />
+    <None Include="Design\SignTypeEnum.cs" />
+    <None Include="Design\BitStringIce.cs" />
+    <None Include="Design\AttributeNameProvider.cs" />
+    <None Include="Design\SourceDataTableIdProvider.cs" />
+    <None Include="Design\GuidAttributeNamePair.cs" />
+    <None Include="Design\MiningTaskFunctions.cs" />
+    <None Include="Design\TaskTypeEnum.cs" />
+    <None Include="Design\ResultTypeEnum.cs" />
+    <None Include="Design\TaskEvaluationTypeEnum.cs" />
+    <None Include="Design\WorkingWithSecondSetModeEnum.cs" />
+    <None Include="Design\TaskRunParams.cs" />
+    <None Include="Design\BitStringGeneratorProvider.cs" />
+    <None Include="Design\BooleanAttributeSettingFunctions.cs" />
+    <None Include="Design\BooleanAttributeSettingWithGenerationAbilityFunctions.cs" />
+    <None Include="Design\BooleanAttribute.cs" />
+    <None Include="Design\MarkEnum.cs" />
+    <None Include="Design\CategorialAttribute.cs" />
+    <None Include="Design\MiningProcessorFunctions.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="Formulas\AtomFormula.cs" />
+    <Compile Include="Formulas\AttributeNameInLiteralsProvider.cs" />
+    <Compile Include="Formulas\BooleanAttributeFormula.cs" />
+    <Compile Include="Formulas\CategorialAttributeFormula.cs" />
+    <Compile Include="Formulas\ConjunctionFormula.cs" />
+    <Compile Include="Formulas\DisjunctionFormula.cs" />
+    <Compile Include="Formulas\Formula.cs" />
+    <Compile Include="Formulas\FormulaHelper.cs" />
+    <Compile Include="Formulas\NegationFormula.cs" />
+    <Compile Include="Generation\CategorialAttributeTrace.cs" />
+    <Compile Include="Generation\Common.cs" />
+    <Compile Include="Generation\EmptyTrace.cs" />
+    <Compile Include="Generation\Factory.cs" />
+    <Compile Include="Generation\Helpers.cs" />
+    <Compile Include="Generation\IEntityEnumerator.cs" />
+    <Compile Include="Generation\INotLeafEntityEnumerator.cs" />
+    <Compile Include="Generation\ISkipOptimalization.cs" />
+    <Compile Include="Generation\LeafEntities.cs" />
+    <Compile Include="Generation\MutliOperandEntities.cs" />
+    <Compile Include="Generation\SingleOperandEntities.cs" />
+    <Compile Include="Generation\SubsetsGenerationHelper.cs" />
+    <Compile Include="Miners\CFMiningProcessor.cs" />
+    <Compile Include="Miners\FourFoldMiningProcessor.cs" />
+    <Compile Include="Miners\KLMiningProcessor.cs" />
+    <Compile Include="Miners\MiningProcessorFunctionsI.cs" />
+    <Compile Include="Miners\MiningSettingCollectionWithMiningThreads.cs" />
+    <Compile Include="Miners\MinningProcessor.cs" />
+    <Compile Include="Miners\ProgressTaskListener.cs" />
+    <Compile Include="Miners\SDCFMiningProcessor.cs" />
+    <Compile Include="Miners\SDFourFoldMiningProcessor.cs" />
+    <Compile Include="Miners\SDKLMiningProcessor.cs" />
+    <Compile Include="Miners\tablesOfBitStrings.cs" />
+    <Compile Include="ObjectFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuantifierEvaluator\ContingencyTableHelper.cs" />
+    <Compile Include="QuantifierEvaluator\FirstN.cs" />
+    <Compile Include="QuantifierEvaluator\FirstNNoResult.cs" />
+    <Compile Include="QuantifierEvaluator\IEvaluator.cs" />
+    <Compile Include="QuantifierEvaluator\Quantifier.cs" />
+    <Compile Include="QuantifierEvaluator\Quantifiers.cs" />
+    <Compile Include="Results\Hypothesis.cs" />
+    <Compile Include="Results\Result.cs" />
+    <Compile Include="Results\SerializableFormula.cs" />
+    <Compile Include="Results\SerializableHypothesis.cs" />
+    <Compile Include="Results\SerializableResult.cs" />
+    <Compile Include="Results\SerializableResultInfo.cs" />
+    <Compile Include="Service.cs" />
+    <Content Include="TODO.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

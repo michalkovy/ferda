@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// TaskRunParams.cs - Parameters of the task run
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -20,12 +20,14 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// Parameters of an individual run of a task (GUHA procedure). 
+    /// For details, see explanation of individula fields.
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +38,36 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    public struct TaskRunParams
     {
         /// <summary>
-        /// Identifier of the entity
+        /// Task type
         /// </summary>
-        Guid Id { get; set; }
+        public TaskTypeEnum taskType;
 
         /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
+        /// Type of the result
         /// </summary>
-        ImportanceEnum importance { get; set; }
+        public ResultTypeEnum resultType;
+
+        /// <summary>
+        /// Evaluation type
+        /// </summary>
+        public TaskEvaluationTypeEnum evaluationType;
+
+        /// <summary>
+        /// Maximal number of hypotheses to be generated
+        /// </summary>
+        public long maxSizeOfResults;
+
+        /// <summary>
+        /// If first N hypotheses should by skipped
+        /// </summary>
+        public int skipFirstN;
+
+        /// <summary>
+        /// How should the secnod set should be treated
+        /// </summary>
+        public WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode;
     }
 }

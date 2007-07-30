@@ -1,4 +1,4 @@
-// IEntitySetting.cs - Basic entity (atom) information
+// BooleanAttributeSettingWithGenerationAbilityFunctions.cs - virtual hypotheses attributes
 //
 // Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
 // Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
@@ -20,12 +20,15 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Defines basic entity information. The entity is defined by its
-    /// Guid identifier.
+    /// Interface for the virtual hypotheses attribute. It provides
+    /// information about Boolean attribute, moreover it has ability
+    /// of generating own hypotheses.
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -36,16 +39,8 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public interface IEntitySetting
+    interface BooleanAttributeSettingWithGenerationAbilityFunctions : 
+        BooleanAttributeSettingsFunctions
     {
-        /// <summary>
-        /// Identifier of the entity
-        /// </summary>
-        Guid Id { get; set; }
-
-        /// <summary>
-        /// Importance level of the entity (forced/basic/auxiliary).
-        /// </summary>
-        ImportanceEnum importance { get; set; }
     }
 }

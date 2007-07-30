@@ -9,6 +9,18 @@
 #include <Modules/Guha.Math.Quantifiers.ice>
 #include <ModulesManager/ManagersEngine.ice>
 
+/*
+SLICE DESIGN OF THE FERDA GUHA MINING PROCESSOR
+
+The class design diagram representing dependencies of the designed entities
+can be found in "slice/Modules/GUha.MiningProcessor.png(csd)".
+The csd file stands for class diagram, that can be edited with the 
+NCLass tool, see "http://nclass.sourceforge.net".
+
+Explanation of structures, interfaces and their methods is located in
+"src/Modules/Core/MiningProcessor/Design/*"
+*/
+
 module Ferda {
 	module Guha {
 		module Math {
@@ -84,7 +96,7 @@ module Ferda {
 
 					Ferda::Modules::StringOpt GetMissingInformationCategoryId()
 						throws Ferda::Modules::BoxRuntimeError;
-					
+						
 					//---relacni DM informace	
 					//vraci countvector
 					Ferda::Modules::IntSeq GetCountVector(string masterIdColumn, string masterDataTableName, string detailIdColumn)
@@ -96,7 +108,7 @@ module Ferda {
 						
 					//maximalni # bs, ktere podminer vygeneruje
 					long GetMaxBitStringCount()
-						throws Ferda::Modules::BoxRuntimeError;
+						throws Ferda::Modules::BoxRuntimeError;						
 				};
 
 				// BOOLEAN ATTRIBUTE SETTING ENTITIES
@@ -158,7 +170,7 @@ module Ferda {
 					Negative,
 					Both,
 				};
-
+				
 				class NegationSetting extends ISingleOperandEntitySetting
 				{};
 
@@ -197,7 +209,6 @@ module Ferda {
 				
 				interface BooleanAttributeSettingWithBSGenerationAbilityFunctions extends BooleanAttributeSettingFunctions, BitStringGenerator
 				{	
-
 				};
 
 				interface EquivalenceClassFunctions
