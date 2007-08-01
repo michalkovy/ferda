@@ -82,7 +82,6 @@
     <Compile Include="BitStrings\MissingInformationBitStringsIdsCache.cs" />
     <None Include="Design\BitStringGeneratorPrx.cs" />
     <None Include="Design\BothSignsSetting.cs" />
-    <None Include="Design\ClassOfEquivalence.cs" />
     <None Include="Design\CoefficientFixedSetSetting.cs" />
     <None Include="Design\CoefficientSetting.cs" />
     <None Include="Design\CoefficientType.cs" />
@@ -113,6 +112,7 @@
     <None Include="Design\MarkEnum.cs" />
     <None Include="Design\CategorialAttribute.cs" />
     <None Include="Design\MiningProcessorFunctions.cs" />
+    <None Include="Design\EquivalenceClassFunctions.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Formulas\AtomFormula.cs" />
     <Compile Include="Formulas\AttributeNameInLiteralsProvider.cs" />
