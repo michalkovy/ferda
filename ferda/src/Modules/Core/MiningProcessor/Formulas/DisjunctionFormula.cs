@@ -98,7 +98,9 @@ namespace Ferda.Guha.MiningProcessor.Formulas
                 {
                     //group atoms
                     if (!(atoms.ContainsKey(atomFormula.BitStringIdentifier.AttributeGuid)))
+                    {
                         atoms[atomFormula.BitStringIdentifier.AttributeGuid] = new List<string>();
+                    }
                     atoms[atomFormula.BitStringIdentifier.AttributeGuid].Add(atomFormula.BitStringIdentifier.CategoryId);
                 }
             }
