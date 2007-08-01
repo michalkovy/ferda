@@ -1,9 +1,33 @@
+// FormulaHelper.cs - methods for help to build formulas
+//
+// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+// Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+//
+// Copyright (c) 2006 Tomáš Kuchaø
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
+    /// <summary>
+    /// Possible separators for a formula
+    /// </summary>
     public enum FormulaSeparator
     {
         And,
@@ -11,8 +35,17 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         AtomMembers
     }
 
+    /// <summary>
+    /// Provides static methods for helping of formula building.
+    /// </summary>
     public static class FormulaHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="operandA"></param>
+        /// <param name="operandB"></param>
+        /// <returns></returns>
         public static BooleanAttributeFormula And(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
         {
             return new ConjunctionFormula(operandA, operandB);
@@ -46,8 +79,9 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         /// </summary>
         public const string SeparatorOr = " | ";
 
-        //public const string SeparatorOr = "|";
-
+        /// <summary>
+        /// Separator of atoms
+        /// </summary>
         public const string SeparatorAtomMembers = ", ";
 
         /// <summary>
@@ -56,6 +90,14 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         /// </summary>
         public const string NegationSign = "\u00AC";
 
+        /// <summary>
+        /// Converts a sequence of items (operands of a formula) into string
+        /// and binds them with the desired separator.
+        /// </summary>
+        /// <param name="items">The items</param>
+        /// <param name="formulaSeparator">Formula separator</param>
+        /// <param name="sorted">If the items are sorted</param>
+        /// <returns>Sequence converted to string</returns>
         public static string SequenceToString(IEnumerable<string> items, FormulaSeparator formulaSeparator, bool sorted)
         {
             string separator;
