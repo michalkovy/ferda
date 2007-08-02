@@ -118,8 +118,9 @@ namespace Ferda.Guha.MiningProcessor.Formulas
 
             if (sorted)
             {
-                List<string> sortedItems = new List<string>(items);
-                items = sortedItems;
+                throw new NotImplementedException();
+                //List<string> sortedItems = new List<string>(items);
+                //items = sortedItems;
             }
 
             return Print.SequenceToString(items, separator);
