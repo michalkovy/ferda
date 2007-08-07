@@ -267,10 +267,81 @@
 	</section>
 	<section>
 		<title>Mining Processor</title>
-		<para></para>
+		<para>
+      The mining processor is by far the most complex library in Ferda Core. 
+      The library takes care about running the GUHA procedures defined
+      in the system (there are 6 relational and 2 multirelational procedures
+      defined). Therefore we pay special attention to this library.
+    </para>
+    <para>
+      In contrary to other libraries that are used as dynamic libraries
+      for the box modules, the mining procesor is an Ice module on its own.
+      It is a servise that is running and individual task boxes can access
+      this service and perform computation of GUHA mining tasks. The 
+      slice code can be found in 
+      <classname>slice/Modules/Guha.MiningProcessor.ice</classname>.
+      For the computation, the task box modules access only the
+      <classname>Run</classname> method of the
+      <classname>MiningProcessorFunctions</classname> interface.
+      The parameters of this function contain all the information needed
+      for the computation.
+    </para>
+    <para>
+      This way, all the computing done when calculating the tasks, is done
+      in one module and there are no performance problems with transporting
+      large amount of data over the Ice middleware layer. More on this topic
+      can be found in <citation>Kuchar</citation>
+    </para>
+    <para>
+      The library is divided into 7 parts and we will explain in more detail
+      each of the parts. 
+    </para>
+    <section>
+      <title>BitStrings</title>
+      <para>
+        Our implementation of the GUHA method
+        <footnote>
+          <para>
+            Originating from the LISp-Miner system
+          </para>
+        </footnote>
+        uses the bit string approach (called also <classname>granular computing</classname>
+        for computing hypotheses. This provides efficient bit string handling, because
+        of the Boolean operations carried out by elementary instructions of a processor. 
+        More details can be found in <citation>Rauch</citation>. This part of the library
+        defines the bit string and cache of bit string implementation. 
+      </para>
+      <para>
+        There are two main interfaces to handle bit strings. The <classname>IBitString</classname>
+        interface defines the basic operations with bit strings and
+        <classname>IBitStringCache</classname> defines how to deal with cache of 
+        bit strings. 
+      </para>
+    </section>
+    <section>
+      <title>Design</title>
+      <para>
+        The Design part is a documentation of the slice design of the mining processor. The
+        class diagram of the design is located in
+        <classname>slice/Modules/Guha.MiningProcessor.csd</classname>. 
+      </para>
+    </section>
+    <section>
+      <title>Formulas</title>
+      <para>
+        The Formula part handles creation of formulas of Boolean and categorial attributes,
+        mainly for interpretation of the results. These two types of formulas are
+        also the main abstract classes that derive from the general
+        <classname>Formula</classname> class. For Boolean attributes, there are
+        classes that represent atom, negation, conjunction and disjunction formulas.
+        These classes can describe underlying formulas in form of comprehensible
+        text representation. Moreover, the Formula part contains simple helping classes
+        for building formulas.
+      </para>
+    </section>
 	</section>
   <bibliography>
-		  <biblioentry>
+		<biblioentry>
 			 <abbrev>Karban</abbrev>
 			  <authorgroup>
 				<author><firstname>Tomáš</firstname><surname>Karban</surname></author>
@@ -280,6 +351,42 @@
 						<publishername>Doctoral work at Faculty of Mathematics and Physics,
 						Charles University, Prague</publishername>
 				</publisher>
-		  </biblioentry>
+		</biblioentry>
+    <biblioentry>
+      <abbrev>Kuchar</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Tomáš</firstname>
+          <surname>Kuchař</surname>
+        </author>
+      </authorgroup>
+      <title>Experimentální GUHA procedury</title>
+      <publisher>
+        <publishername>
+          Master thesis at Faculty of Mathematics and Physics,
+          Charles University, Prague (in Czech)
+        </publishername>
+      </publisher>
+    </biblioentry>
+    <biblioentry>
+      <abbrev>Rauch</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Jan</firstname>
+          <surname>Rauch</surname>
+        </author>
+      </authorgroup>
+      <title>GUHA Method and Granular Computing</title>
+      <publisher>
+        <publishername>
+          Presented in the Proceedings of IEEE
+          International Conference on Granular
+          Computing 2005. see
+          <ulink url="http://www.cs.sjsu.edu/~grc/grc2005/index.html">
+            http://www.cs.sjsu.edu/~grc/grc2005/index.html
+          </ulink>
+        </publishername>
+      </publisher>
+    </biblioentry>
   </bibliography>
 </article>
