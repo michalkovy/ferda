@@ -9601,7 +9601,7 @@
 	<BoxLocalization>
 		<Identifier>Wizards.Wizard</Identifier>
 		<Label>Wizard</Label>
-		<Hint>User support for data mining</Hint>
+		<Hint>User support for data mining.</Hint>
 		<Categories>
 			<Category>
 				<Name>Wizards</Name>
@@ -9609,24 +9609,31 @@
 			</Category>
 		</Categories>
 		<!-- <Actions>
-                        <Action>
-                                <Name>RunScenario</Name>
-                                <Label>Run scenario</Label>
-                                <Hint>The action run first form from scenario.</Hint>
-                        </Action>
-                </Actions> -->
+			<Action>
+				<Name>RunScenario</Name>
+				<Label>Run scenario</Label>
+				<Hint>The action run first form from scenario.</Hint>
+			</Action>
+		</Actions> -->
 		<Sockets>
 			<Socket>
 				<Name>Wizard Input</Name>
 				<Label>Advices</Label>
-				<Hint>Advices for boxes</Hint>
+				<Hint>Advices for boxes.</Hint>
 			</Socket>
 		</Sockets>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>WizardForm</Name>
+				<Label>Wizard form</Label>
+				<Hint>Creates box with form editor.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Wizards.WizardForm</Identifier>
 		<Label>Form</Label>
-		<Hint>Administration of form</Hint>
+		<Hint>Administration of form.</Hint>
 		<Categories>
 			<Category>
 				<Name>Wizards</Name>
@@ -9637,12 +9644,12 @@
 			<Socket>
 				<Name>Form Input</Name>
 				<Label>Form variant</Label>
-				<Hint>Number of form variant</Hint>
+				<Hint>Number of form variant.</Hint>
 			</Socket>
 			<Socket>
 				<Name>FormEditor</Name>
 				<Label>Form editor</Label>
-				<Hint>Start form editor</Hint>
+				<Hint>Start form editor.</Hint>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
@@ -9651,11 +9658,24 @@
 				<Label>Setting</Label>
 			</PropertyCategory>
 		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>WizardForm</Name>
+				<Label>Wizard form</Label>
+				<Hint>Creates box with form editor.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>WizardAction</Name>
+				<Label>Wizard action</Label>
+				<Hint>Creates box with setting checker.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
+
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Wizards.WizardAction</Identifier>
 		<Label>Check for setting</Label>
-		<Hint>Check for property setting</Hint>
+		<Hint>Check for property setting.</Hint>
 		<Categories>
 			<Category>
 				<Name>Wizards</Name>
@@ -9666,14 +9686,21 @@
 			<Socket>
 				<Name>Action Input</Name>
 				<Label>Path to property</Label>
-				<Hint>Name of box and property</Hint>
+				<Hint>Name of box and property.</Hint>
 			</Socket>
 		</Sockets>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>WizardGenerated</Name>
+				<Label>Wizard generated</Label>
+				<Hint>Creates box with reaction on generated.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Wizards.WizardGenerated</Identifier>
 		<Label>Reaction on generated</Label>
-		<Hint>Reaction on generated hypotheses</Hint>
+		<Hint>Reaction on generated hypotheses.</Hint>
 		<Categories>
 			<Category>
 				<Name>Wizards</Name>
@@ -9684,27 +9711,27 @@
 			<Socket>
 				<Name>Generated Input</Name>
 				<Label>Connection</Label>
-				<Hint>Connection</Hint>
+				<Hint>Connection.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ManyHypotheses</Name>
 				<Label>Many hypotheses</Label>
-				<Hint>Identification of successor form, when many hypotheses are generated</Hint>
+				<Hint>Identification of successor form, when many hypotheses are generated.</Hint>
 			</Socket>
 			<Socket>
 				<Name>FewHypotheses</Name>
 				<Label>Few hypotheses</Label>
-				<Hint>Identification of successor form, when few hypotheses are generated</Hint>
+				<Hint>Identification of successor form, when few hypotheses are generated.</Hint>
 			</Socket>
 			<Socket>
 				<Name>AcceptablyHypotheses</Name>
 				<Label>Acceptably hypotheses</Label>
-				<Hint>Identification of successor form, when acceptably hypotheses are generated</Hint>
+				<Hint>Identification of successor form, when acceptably hypotheses are generated.</Hint>
 			</Socket>
 			<Socket>
 				<Name>RegEditor</Name>
 				<Label>Editor of regular expressions</Label>
-				<Hint>Start editor of regular expressions</Hint>
+				<Hint>Start editor of regular expressions.</Hint>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
@@ -9713,7 +9740,14 @@
 				<Label>Setting</Label>
 			</PropertyCategory>
 		</PropertyCategories>
-	</BoxLocalization>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>WizardForm</Name>
+				<Label>Wizard form</Label>
+				<Hint>Creates box with form editor.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
+	</BoxLocalization>	
 	<BoxLocalization>
 		<Identifier>Language.Lambda</Identifier>
 		<Label>Lambda</Label>

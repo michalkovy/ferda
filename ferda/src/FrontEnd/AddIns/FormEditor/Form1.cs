@@ -29,6 +29,7 @@ using System.Drawing;
 using System.Text;
 using System.IO;
 using System.Xml;
+using System.Diagnostics;
 using System.Xml.XPath;
 using System.Xml.Serialization;
 using System.Windows.Forms;
@@ -150,7 +151,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         
            Pro vyplnění těla identifikátoru, tento označte. 
            
-           POZOR: Identifikátory musí být bezer. 
+           POZOR: Identifikátory musí být bez mezer. 
            ";
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         You can use variables, examples as in the main area.
  
         And more you can use PATH identifiers , if you'll write ^path_name.
-        This identifier serve for definition controlled path property.
+        This identifier serves for definition controlled path property.
         To fill the path body - mark its identifier. 
         ";
 
@@ -374,6 +375,8 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
                   for (int i = 0; i < 5; i++)
                       FormHihglighter(boxes[i]);
               }
+            
+
         }
         /// <summary>
         /// Standard form_load method here is set title
@@ -772,10 +775,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
             this.AddOwnedForm(new_form);
 
             ToolTip dialog_toolTip = new ToolTip();
-#if MONO
-#else
             dialog_toolTip.IsBalloon = true;
-#endif
 
             if (form_type == "Successor")
             {
@@ -1541,26 +1541,14 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
               
             this.returnString = this.SaveFormToXMLString("1");
 
-         //  VariableServices service = new VariableServices();
-
-           /*service.setValue("$a", "sdasd");
-            try{
-
-            object gg = service.getValue("$a");
-                
-            MessageBox.Show(gg.ToString());
-            }
-            catch(NullReferenceException)
-            {
-                MessageBox.Show("qsdsd");
-            }
-            */
-           /* WizardFormGenerator gen = 
+          // VariableServices service = new VariableServices();
+            /*
+            WizardFormGenerator gen = 
                 new WizardFormGenerator(this.returnString, 200, "Next_STOP", 0, service);
 
-            System.Windows.Forms.DialogResult result = gen.GenerateForm();*/
+            System.Windows.Forms.DialogResult result = gen.GenerateForm();
 
-            //MessageBox.Show(returnString);
+            //MessageBox.Show(returnString);*/
 
             this.DialogResult = DialogResult.OK;
            
@@ -1574,9 +1562,13 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         private void Cancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
- 
+            
+ //           System.DiagnosticsConfigurationHandler.
+
             //this.Close();
             this.Dispose();
+
+            
         }
 
 
@@ -1597,6 +1589,14 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
         private void Form_Validating(object sender, CancelEventArgs e)
         {
                  
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            string path = Application.ExecutablePath;
+            int index = path.LastIndexOf("\\");
+            path = path.Remove(index);
+            Process.Start(path + "\\AddIns\\Help\\FormEditor.pdf");
         }
 
     }

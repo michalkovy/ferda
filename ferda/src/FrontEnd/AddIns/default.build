@@ -373,6 +373,13 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		 <fileset basedir="FormEditor/Help">
+     		   <include name="*.*" /> 
+     		</fileset>
+    </copy>
+
+
 		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'RegEditor.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="RegEditor/**.cs"/>
@@ -399,6 +406,13 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		 <fileset basedir="RegEditor/Help">
+     		   <include name="*.*" /> 
+     		</fileset>
+    </copy>
+
+
 
  		<csc target="library" output="${path::combine(addInsBuild.dir,'FormGenerator.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
