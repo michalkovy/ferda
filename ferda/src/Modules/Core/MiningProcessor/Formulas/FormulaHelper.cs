@@ -41,21 +41,33 @@ namespace Ferda.Guha.MiningProcessor.Formulas
     public static class FormulaHelper
     {
         /// <summary>
-        /// 
+        /// Constructs a new conjunction formula out of two operands
         /// </summary>
-        /// <param name="operandA"></param>
-        /// <param name="operandB"></param>
-        /// <returns></returns>
+        /// <param name="operandA">First operand</param>
+        /// <param name="operandB">Second operand</param>
+        /// <returns>Resulting conjunction formula</returns>
         public static BooleanAttributeFormula And(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
         {
             return new ConjunctionFormula(operandA, operandB);
         }
 
+        /// <summary>
+        /// Constructs a new disjunction formula out of two operands
+        /// </summary>
+        /// <param name="operandA">First operand</param>
+        /// <param name="operandB">Second operand</param>
+        /// <returns>Resulting disjunction formula</returns>
         public static BooleanAttributeFormula Or(BooleanAttributeFormula operandA, BooleanAttributeFormula operandB)
         {
             return new DisjunctionFormula(operandA, operandB);
         }
 
+        /// <summary>
+        /// Constructs a new negation formula out of two operands
+        /// </summary>
+        /// <param name="operandA">First operand</param>
+        /// <param name="operandB">Second operand</param>
+        /// <returns>Resulting negation formula</returns>
         public static BooleanAttributeFormula Not(BooleanAttributeFormula operand)
         {
             return new NegationFormula(operand);
