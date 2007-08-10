@@ -28,6 +28,7 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Xml.XPath;
+using System.Diagnostics;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 
@@ -255,10 +256,7 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
               this.AddOwnedForm(new_form);
 
               ToolTip dialog_toolTip = new ToolTip();
-#if MONO
-#else
               dialog_toolTip.IsBalloon = true;
-#endif
 
               Label label1 = new Label();
               label1.Left = 35;
@@ -533,6 +531,14 @@ namespace Ferda.FrontEnd.AddIns.RegEditor
         /// </summary>
         private void TextBox_Validating(object sender, CancelEventArgs e)
         {
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            string path = Application.ExecutablePath;
+            int index = path.LastIndexOf("\\");
+            path = path.Remove(index);
+            Process.Start(path + "\\AddIns\\Help\\RegEditor.pdf");
         }
 
     }

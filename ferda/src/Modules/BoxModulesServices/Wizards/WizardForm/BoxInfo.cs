@@ -85,7 +85,48 @@ namespace Ferda.Modules.Boxes.Wizards.WizardForm
         /// </returns>
         public override Ferda.Modules.ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, Ferda.Modules.BoxModuleI boxModule)
         {
-            return new ModulesAskingForCreation[] { };
+            Dictionary<string, ModulesAskingForCreation> modulesAFC =
+                getModulesAskingForCreationNonDynamic(localePrefs);
+            List<ModulesAskingForCreation> result =
+                new List<ModulesAskingForCreation>();
+            ModulesConnection moduleConnection;
+            ModuleAskingForCreation singleModule;
+
+            foreach (string moduleAFCname in modulesAFC.Keys)
+            {
+                singleModule = new ModuleAskingForCreation();
+                moduleConnection = new ModulesConnection();
+                singleModule.propertySetting = new PropertySetting[] { };
+
+                switch (moduleAFCname)
+                {
+                    case "WizardForm":
+                        moduleConnection.socketName = "Form Input";
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+                        singleModule.modulesConnection =
+                                                    new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier = Wizards.WizardForm.BoxInfo.typeIdentifier;
+                        break;
+                    case "WizardAction":
+                        moduleConnection.socketName = "Action Input";
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+                        singleModule.modulesConnection =
+                                                    new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier = Wizards.WizardAction.BoxInfo.typeIdentifier;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+
+                }
+                modulesAFC[moduleAFCname].newModules =
+                    new ModuleAskingForCreation[] { singleModule };
+                result.Add(modulesAFC[moduleAFCname]);
+
+            }
+            return result.ToArray();
+
+            //return new ModulesAskingForCreation[] { };
         }
 
         /// <summary>

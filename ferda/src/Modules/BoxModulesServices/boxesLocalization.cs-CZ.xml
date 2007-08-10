@@ -9569,32 +9569,39 @@
 	<BoxLocalization>
 		<Identifier>Wizards.Wizard</Identifier>
 		<Label>Wizard</Label>
-		<Hint>Uživatelská prodpora pro dobývání znalostí</Hint>
+		<Hint>Uživatelská prodpora pro dobývání znalostí.</Hint>
 		<Categories>
 			<Category>
 				<Name>Wizards</Name>
 				<Label>Wizards</Label>
 			</Category>
 		</Categories>
-		<!--        <Actions>
-                        <Action>
-                                <Name>RunScenario</Name>
-                                <Label>Spustit scenar</Label>
-                                <Hint>Akce spusti prvni formular ze serie formuraru.</Hint>
-                        </Action>
-                </Actions> -->
+		<!--	<Actions>
+			<Action>
+				<Name>RunScenario</Name>
+				<Label>Spustit scenar</Label>
+				<Hint>Akce spusti prvni formular ze serie formuraru.</Hint>
+			</Action>
+		</Actions> -->
 		<Sockets>
 			<Socket>
 				<Name>Wizard Input</Name>
 				<Label>Rady</Label>
-				<Hint>Rady ke krabičce</Hint>
+				<Hint>Rady ke krabičce.</Hint>
 			</Socket>
 		</Sockets>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>WizardForm</Name>
+				<Label>Wizard formulář</Label>
+				<Hint>Vytvoří krabičku s editorem formulářů.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Wizards.WizardForm</Identifier>
 		<Label>Formulář</Label>
-		<Hint>Sprava formulářů</Hint>
+		<Hint>Správa formulářů.</Hint>
 		<Categories>
 			<Category>
 				<Name>Wizards</Name>
@@ -9605,12 +9612,12 @@
 			<Socket>
 				<Name>Form Input</Name>
 				<Label>Varianta formuláře</Label>
-				<Hint>Číslo varianty formuláře</Hint>
+				<Hint>Číslo varianty formuláře.</Hint>
 			</Socket>
 			<Socket>
 				<Name>FormEditor</Name>
 				<Label>Editor formulářů</Label>
-				<Hint>Start editoru formulářů</Hint>
+				<Hint>Start editoru formulářů.</Hint>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
@@ -9619,11 +9626,24 @@
 				<Label>Nastavení</Label>
 			</PropertyCategory>
 		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>WizardForm</Name>
+				<Label>Wizard formulář</Label>
+				<Hint>Vytvoří krabičku s editorem formulářů.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>WizardAction</Name>
+				<Label>Wizard akce</Label>
+				<Hint>Vytvoří krabičku s kontrolou nastavení.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
+
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Wizards.WizardAction</Identifier>
 		<Label>Kontrola nastavení</Label>
-		<Hint>Kontrola nastavení vlastnosti</Hint>
+		<Hint>Kontrola nastavení vlastnosti.</Hint>
 		<Categories>
 			<Category>
 				<Name>Wizards</Name>
@@ -9634,14 +9654,21 @@
 			<Socket>
 				<Name>Action Input</Name>
 				<Label>Cesta k vlastnosti</Label>
-				<Hint>Jméno krabičky a vlastnosti</Hint>
+				<Hint>Jméno krabičky a vlastnosti.</Hint>
 			</Socket>
 		</Sockets>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>WizardGenerated</Name>
+				<Label>Wizard reakce na vygenerované</Label>
+				<Hint>Vytvoří krabičku s reakcemi na vygenerované hypotézy.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Wizards.WizardGenerated</Identifier>
 		<Label>Reakce na vygenerované</Label>
-		<Hint>Reakce na vygenerované hypotézy</Hint>
+		<Hint>Reakce na vygenerované hypotézy.</Hint>
 		<Categories>
 			<Category>
 				<Name>Wizards</Name>
@@ -9652,27 +9679,27 @@
 			<Socket>
 				<Name>Generated Input</Name>
 				<Label>Spojení</Label>
-				<Hint>Spojení</Hint>
+				<Hint>Spojení.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ManyHypotheses</Name>
 				<Label>Hodně hypotéz</Label>
-				<Hint>Identifikace následnického formuláře pro případ, že bylo vygenerováno hodně hypotéz</Hint>
+				<Hint>Identifikace následnického formuláře pro případ, že bylo vygenerováno hodně hypotéz.</Hint>
 			</Socket>
 			<Socket>
 				<Name>FewHypotheses</Name>
 				<Label>Málo hypotéz</Label>
-				<Hint>Identifikace následnického formuláře pro případ, že bylo vygenerováno málo hypotéz</Hint>
+				<Hint>Identifikace následnického formuláře pro případ, že bylo vygenerováno málo hypotéz.</Hint>
 			</Socket>
 			<Socket>
 				<Name>AcceptablyHypotheses</Name>
 				<Label>Přijatelně hypotéz</Label>
-				<Hint>Identifikace následnického formuláře pro případ, že bylo vygenerováno přijatelně hypotéz</Hint>
+				<Hint>Identifikace následnického formuláře pro případ, že bylo vygenerováno přijatelně hypotéz.</Hint>
 			</Socket>
 			<Socket>
 				<Name>RegEditor</Name>
 				<Label>Editor regulárních výrazů</Label>
-				<Hint>Start editoru regulárních výrazů</Hint>
+				<Hint>Start editoru regulárních výrazů.</Hint>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
@@ -9681,6 +9708,13 @@
 				<Label>Nastavení</Label>
 			</PropertyCategory>
 		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>WizardForm</Name>
+				<Label>Wizard formulář</Label>
+				<Hint>Vytvoří krabičku s editorem formulářů.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Language.Lambda</Identifier>
