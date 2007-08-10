@@ -24,8 +24,8 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// <summary>
     /// The bit string for Ice layer, see
     /// <see cref="Ferda.Guha.MiningProcessor.Design.BitStringIce"/> containing
-    /// bit string and identification of a category (perhaps identificator of the
-    /// virtual hypotheses attribute).
+    /// bit string and identification of a category for purposes of
+    /// relational data mining. 
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -44,7 +44,8 @@ namespace Ferda.Guha.MiningProcessor.Design
         public BitStringIce bitstring;
 
         /// <summary>
-        /// Identifier of the category
+        /// Identifier of the virtual attribute (consisting of
+        /// setting of the attribute).
         /// </summary>
         public string categoryId;
     }

@@ -25,10 +25,26 @@ using System.Text;
 
 namespace Ferda.Guha.MiningProcessor.Design
 {
+    /// <summary>
+    /// The type of result that is returned from the GUHA procedure
+    /// (miner).
+    /// </summary>
     public enum ResultTypeEnum
     {
+        /// <summary>
+        /// Only valid hypotheses are returned
+        /// </summary>
 	    Trace,
+        /// <summary>
+        /// All the verifications, validity of the verification on
+        /// individual objects can be true or false
+        /// </summary>
 	    TraceBoolean,
+        /// <summary>
+        /// All the verifications, validity of the verificatoin
+        /// on individual objects can be a value from closed interval
+        /// 0 to 1.
+        /// </summary>
 	    TraceReal
     }
 }
