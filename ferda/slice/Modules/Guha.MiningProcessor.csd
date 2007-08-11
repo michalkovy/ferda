@@ -1,69 +1,69 @@
 <ClassProject>
   <Language>CSharp</Language>
   <Entities>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>BitStringIce</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public Ferda.Modules.LongSeq value</Field>
-      <Field type="CSharpField">public int length</Field>
+      <Member type="Field">public Ferda.Modules.LongSeq value</Member>
+      <Member type="Field">public int length</Member>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="StructType">
+    <Entity type="Structure">
       <Name>BitStringIceWithCategoryID</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public BitStringIce bitString</Field>
-      <Field type="CSharpField">public string categoryId</Field>
+      <Member type="Field">public BitStringIce bitString</Member>
+      <Member type="Field">public string categoryId</Member>
     </Entity>
-    <Entity type="StructType">
+    <Entity type="Structure">
       <Name>GuidAttributeNamePair</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public Ferda.Modules.GuidStruct id</Field>
-      <Field type="CSharpField">public string attributeName</Field>
+      <Member type="Field">public Ferda.Modules.GuidStruct id</Member>
+      <Member type="Field">public string attributeName</Member>
     </Entity>
-    <Entity type="CSharpInterface">
+    <Entity type="Interface">
       <Name>SourceDataTableIdProvider</Name>
       <Access>Public</Access>
-      <Operation type="CSharpMethod">string GetSourceDataTableIdProvider()</Operation>
+      <Member type="Method">string GetSourceDataTableIdProvider()</Member>
     </Entity>
-    <Entity type="CSharpInterface">
+    <Entity type="Interface">
       <Name>AttributeNameProvider</Name>
       <Access>Public</Access>
-      <Operation type="CSharpMethod">GuidAttributeNamePair GetAttributeNames()</Operation>
+      <Member type="Method">GuidAttributeNamePair GetAttributeNames()</Member>
     </Entity>
-    <Entity type="CSharpInterface">
+    <Entity type="Interface">
       <Name>BitStringGenerator</Name>
       <Access>Public</Access>
-      <Operation type="CSharpMethod">Ferda.Modules.GuidStruct GetAttributeId()</Operation>
-      <Operation type="CSharpMethod">Ferda.Guha.Data.CardinalityEnum GetAttributeCardinality()</Operation>
-      <Operation type="CSharpMethod">Ferda.Modules.StringSeq GetCategoriesIds()</Operation>
-      <Operation type="CSharpMethod">Ferda.Modules.DoubleSeq GetCategoriesNumericValues()</Operation>
-      <Operation type="CSharpMethod">BitStringIce GetBitString()</Operation>
-      <Operation type="CSharpMethod">Ferda.Modules.StringOpt GetMissingInformationCategory()</Operation>
-      <Operation type="CSharpMethod">Ferda.Modules.IntSeq GetCountVector()</Operation>
-      <Operation type="CSharpMethod">bool GetNextBitString()</Operation>
-      <Operation type="CSharpMethod">Long GetMaxBitStringCount()</Operation>
+      <Member type="Method">Ferda.Modules.GuidStruct GetAttributeId()</Member>
+      <Member type="Method">Ferda.Guha.Data.CardinalityEnum GetAttributeCardinality()</Member>
+      <Member type="Method">Ferda.Modules.StringSeq GetCategoriesIds()</Member>
+      <Member type="Method">Ferda.Modules.DoubleSeq GetCategoriesNumericValues()</Member>
+      <Member type="Method">BitStringIce GetBitString()</Member>
+      <Member type="Method">Ferda.Modules.StringOpt GetMissingInformationCategory()</Member>
+      <Member type="Method">Ferda.Modules.IntSeq GetCountVector()</Member>
+      <Member type="Method">bool GetNextBitString()</Member>
+      <Member type="Method">Long GetMaxBitStringCount()</Member>
     </Entity>
-    <Entity type="CSharpEnum">
+    <Entity type="Enum">
       <Name>ImportanceEnum</Name>
       <Access>Public</Access>
       <Value>Forced</Value>
       <Value>Basic</Value>
       <Value>Auxiliary</Value>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>IEntitySetting</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public Ferda.Modules.GuidStruct id</Field>
-      <Field type="CSharpField">public ImportanceEnum importance</Field>
+      <Member type="Field">public Ferda.Modules.GuidStruct id</Member>
+      <Member type="Field">public ImportanceEnum importance</Member>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>CoefficientFixedSetSetting</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public Ferda.Modules.StringSeq categoriesIds</Field>
+      <Member type="Field">public Ferda.Modules.StringSeq categoriesIds</Member>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpEnum">
+    <Entity type="Enum">
       <Name>CoefficientTypeEnum</Name>
       <Access>Public</Access>
       <Value>Subsets</Value>
@@ -74,88 +74,88 @@
       <Value>LeftCuts</Value>
       <Value>RightCuts</Value>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>CoefficicentSetting</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public CoefficientTypeEnum coefficientType</Field>
-      <Field type="CSharpField">public int maxLength</Field>
-      <Field type="CSharpField">public int minLength</Field>
+      <Member type="Field">public CoefficientTypeEnum coefficientType</Member>
+      <Member type="Field">public int maxLength</Member>
+      <Member type="Field">public int minLength</Member>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>ILeafEntitySetting</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public BitStringGenerator generator</Field>
+      <Member type="Field">public BitStringGenerator generator</Member>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>ISingleOperandEntitySetting</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public IEntitySetting operand</Field>
+      <Member type="Field">public IEntitySetting operand</Member>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpEnum">
+    <Entity type="Enum">
       <Name>SignTypeEnum</Name>
       <Access>Public</Access>
       <Value>Positive</Value>
       <Value>Negative</Value>
       <Value>Both</Value>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>NegationSetting</Name>
       <Access>Public</Access>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>BothSignsSetting</Name>
       <Access>Public</Access>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>IMultipleOperandEntitySetting</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public IEntitySetting [] operands</Field>
-      <Field type="CSharpField">public Ferda.Modules.GuidStructSeqSeq classesOfEquivalence</Field>
-      <Field type="CSharpField">public int minLength</Field>
-      <Field type="CSharpField">public int maxLength</Field>
+      <Member type="Field">public IEntitySetting [] operands</Member>
+      <Member type="Field">public Ferda.Modules.GuidStructSeqSeq classesOfEquivalence</Member>
+      <Member type="Field">public int minLength</Member>
+      <Member type="Field">public int maxLength</Member>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>ConjunctionSetting</Name>
       <Access>Public</Access>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpClass">
+    <Entity type="Class">
       <Name>DisjunctionSetting</Name>
       <Access>Public</Access>
       <Modifier>None</Modifier>
     </Entity>
-    <Entity type="CSharpInterface">
+    <Entity type="Interface">
       <Name>BitStringGeneratorProvider</Name>
       <Access>Public</Access>
-      <Operation type="CSharpMethod">BitStringGenerator GetBitSTringGenerator()</Operation>
+      <Member type="Method">BitStringGenerator GetBitSTringGenerator()</Member>
     </Entity>
-    <Entity type="CSharpInterface">
+    <Entity type="Interface">
       <Name>BooleanAttributeSettingFunctions</Name>
       <Access>Public</Access>
-      <Operation type="CSharpMethod">IEntitySetting GetEntitySetting()</Operation>
+      <Member type="Method">IEntitySetting GetEntitySetting()</Member>
     </Entity>
-    <Entity type="CSharpInterface">
+    <Entity type="Interface">
       <Name>BooleanAttributeSettingWithGenerationAbilityFunctions</Name>
       <Access>Public</Access>
     </Entity>
-    <Entity type="CSharpInterface">
+    <Entity type="Interface">
       <Name>EquivalenceClassFunctions</Name>
       <Access>Public</Access>
-      <Operation type="CSharpMethod">Ferda.Modules.GuidStructSeq GetEquivalenceClass()</Operation>
+      <Member type="Method">Ferda.Modules.GuidStructSeq GetEquivalenceClass()</Member>
     </Entity>
-    <Entity type="CSharpInterface">
+    <Entity type="Interface">
       <Name>MiningTaskFunctions</Name>
       <Access>Public</Access>
-      <Operation type="CSharpMethod">Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrxSeq GetQuantifiers()</Operation>
-      <Operation type="CSharpMethod">string GetResult()</Operation>
+      <Member type="Method">Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrxSeq GetQuantifiers()</Member>
+      <Member type="Method">string GetResult()</Member>
     </Entity>
-    <Entity type="CSharpEnum">
+    <Entity type="Enum">
       <Name>TaskTypeEnum</Name>
       <Access>Public</Access>
       <Value>FourFold</Value>
@@ -165,14 +165,14 @@
       <Value>SDKL</Value>
       <Value>SDCF</Value>
     </Entity>
-    <Entity type="CSharpEnum">
+    <Entity type="Enum">
       <Name>ResultTypeEnum</Name>
       <Access>Public</Access>
       <Value>Trace</Value>
       <Value>TraceBoolean</Value>
       <Value>TraceReal</Value>
     </Entity>
-    <Entity type="CSharpEnum">
+    <Entity type="Enum">
       <Name>MarkEnum</Name>
       <Access>Public</Access>
       <Value>Antecedent</Value>
@@ -184,45 +184,45 @@
       <Value>FirstSet</Value>
       <Value>SecondSet</Value>
     </Entity>
-    <Entity type="StructType">
+    <Entity type="Structure">
       <Name>BooleanAttribute</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public MarkEnum mark</Field>
-      <Field type="CSharpField">public IEntitySetting settting</Field>
+      <Member type="Field">public MarkEnum mark</Member>
+      <Member type="Field">public IEntitySetting settting</Member>
     </Entity>
-    <Entity type="StructType">
+    <Entity type="Structure">
       <Name>CategorialAttribute</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public MarkEnum mark</Field>
-      <Field type="CSharpField">public BitStringGenerator setting</Field>
+      <Member type="Field">public MarkEnum mark</Member>
+      <Member type="Field">public BitStringGenerator setting</Member>
     </Entity>
-    <Entity type="CSharpEnum">
+    <Entity type="Enum">
       <Name>TaskEvaluationTypeEnum</Name>
       <Access>Public</Access>
       <Value>FirstN</Value>
       <Value>TopN</Value>
     </Entity>
-    <Entity type="CSharpEnum">
+    <Entity type="Enum">
       <Name>WorkingWithSecondSetModeEnum</Name>
       <Access>Public</Access>
       <Value>None</Value>
       <Value>Cedent2</Value>
       <Value>Cedent1AndCedent2</Value>
     </Entity>
-    <Entity type="StructType">
+    <Entity type="Structure">
       <Name>TaskRunParams</Name>
       <Access>Public</Access>
-      <Field type="CSharpField">public TaskTypeEnum taskType</Field>
-      <Field type="CSharpField">public ResultTypeEnum resultType</Field>
-      <Field type="CSharpField">public TaskEvaluationTypeEnum evaluationType</Field>
-      <Field type="CSharpField">public Long maxSizeOfResults</Field>
-      <Field type="CSharpField">public int skipFirstN</Field>
-      <Field type="CSharpField">public WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode</Field>
+      <Member type="Field">public TaskTypeEnum taskType</Member>
+      <Member type="Field">public ResultTypeEnum resultType</Member>
+      <Member type="Field">public TaskEvaluationTypeEnum evaluationType</Member>
+      <Member type="Field">public Long maxSizeOfResults</Member>
+      <Member type="Field">public int skipFirstN</Member>
+      <Member type="Field">public WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode</Member>
     </Entity>
-    <Entity type="CSharpInterface">
+    <Entity type="Interface">
       <Name>MiningProcessorFunctions</Name>
       <Access>Public</Access>
-      <Operation type="CSharpMethod">string Run()</Operation>
+      <Member type="Method">string Run()</Member>
     </Entity>
   </Entities>
   <Relations>
