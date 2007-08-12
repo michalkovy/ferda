@@ -339,6 +339,51 @@
         for building formulas.
       </para>
     </section>
+    <section>
+      <title>Generation</title>
+      <para>
+        The Generation part of mining processor takes care about the very important
+        process of bit string generation. In GUHA terminology, this means to construct
+        data representation of all the relevant questions. Ferda uses bit strings for
+        the data representation, details are to be found in <citation>Rauch</citation>. 
+        In principle, for each category of a defined attribute one bit string is created.
+        The length of this bit string is equal to the lenght of records in the source
+        data matrix. The bit string contains a 1 on position n, iff the n-th record
+        of the data matrix contains the category (for which the bit string is created).
+        The bit strings of categories are aftewrards dealt according to the Boolean
+        attribute setting of the task. The Generation part allows to perform all the
+        bit string operations that can occur in a Boolean attribute setting.
+      </para>
+      <para>
+        In Ferda, we implement the generation of Boolean (and categorial) attributes
+        via the C# enumerators of bit strings. Enumerator is a class, that can effectivelly return 
+        objects in the <classname>foreach</classname> cycle. For a programmer, the
+        C# language provides easy to use implementatio of enumerators with the 
+        <classname>yield</classname> keyword. <classname>IEntityEnumerator</classname>
+        is the basic interface for bit string enumerators. The 
+        <classname>EntityEnumerable</classname> class is the abstract class that
+        implements the interface. There are also other classes defined in the
+        <classname>src/Modules/core/MiningProcessor/Generation/Common.cs</classname>,
+        which are successors of the <classname>EntityEnumerable</classname>
+        and provide some more functionality. There are classes for leaf entities
+        (atom settings of some kind), classes for single-operand entities
+        (sign setting) and classes for multi-operand entities (conjunction, disjunction...).
+        There is also the skip step optimalization defined, currently only for 
+        Base parameter. 
+      </para>
+      <para>
+        Let us pay special attention to the generation of multi-operand bit strings. The
+        <classname>MultiOperandEntity</classname> abstract class contains code for
+        implementing not only conjunction and disjunction, but general boolean operator.
+        The class provides enumerator with the aid of a rather complicated automaton.
+        The picture shows basic design of that automaton.
+      </para>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="multiOperandGenerationAutomaton.png" format="PNG"/>
+        </imageobject>
+      </mediaobject>
+    </section>
 	</section>
   <bibliography>
 		<biblioentry>
