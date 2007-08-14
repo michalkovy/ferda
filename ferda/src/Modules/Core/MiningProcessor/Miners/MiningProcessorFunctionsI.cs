@@ -1,3 +1,24 @@
+// MuningProcessorFunctionsI.cs - The mining processor Ice interface
+//
+// Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
+// Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+//
+// Copyright (c) 2006 Tomáš Kuchaø
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.Math.Quantifiers;
@@ -11,35 +32,51 @@ using Exception = System.Exception;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
+    /// <summary>
+    /// Implementation of the Ice mining processor functions. This class is the
+    /// entry point to the mining processor module. 
+    /// </summary>
     public class MiningProcessorFunctionsI : MiningProcessorFunctionsDisp_
     {
-        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
-        {
-            if (_booleanTraceEnumerator.MoveNext())
-            {
-                BitStringIceWithCategoryId _tmpTuple = new BitStringIceWithCategoryId();
-                _tmpTuple.categoryId = _booleanTraceEnumerator.Current.Key;
-                _tmpTuple.bitString = _booleanTraceEnumerator.Current.Value;
-                return _tmpTuple;
-            }
-            else
-            {
-                if (progressBarPrx != null)
-                {
-                    progressBarPrx.done();
-                    //System.Threading.Thread.Sleep(100);
-                    ProgressTaskI.Destroy(_current.adapter, progressPrx);
-                }
-                return null;
-            }
-        }
+        #region Private fields
 
-        // private static bool firstRun = true;
-
+        /// <summary>
+        /// Identification of the virtual hypotheses attribute
+        /// </summary>
         private static GuidStruct _attributeId;
 
+        /// <summary>
+        /// The count vector for the virtual hypotheses attribute
+        /// </summary>
         private static int[] _countVector;
 
+        /// <summary>
+        /// Boolean attribute entity enumerators
+        /// </summary>
+        private IEnumerator<KeyValuePair<string, BitStringIce>> _booleanTraceEnumerator = null;
+        
+        /// <summary>
+        /// Proxy of the progress task
+        /// </summary>
+        ProgressTaskPrx progressPrx = null;
+
+        /// <summary>
+        /// Proxy of the progress bar
+        /// </summary>
+        ProgressBarPrx progressBarPrx = null;
+
+        /// <summary>
+        /// Ice current information
+        /// </summary>
+        Ice.Current _current = null;
+
+        #endregion
+
+        /// <summary>
+        /// Converts task type to string
+        /// </summary>
+        /// <param name="taskType">Task type enumeration</param>
+        /// <returns>String representation of the task type</returns>
         private static string taskTypeToString(TaskTypeEnum taskType)
         {
             switch (taskType)
@@ -61,11 +98,65 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
         }
 
-        private IEnumerator<KeyValuePair<string, BitStringIce>> _booleanTraceEnumerator = null;
-        ProgressTaskPrx progressPrx = null;
-        ProgressBarPrx progressBarPrx = null;
-        Ice.Current _current = null;
+        #region Ice functions
 
+        /// <summary>
+        /// Retrieves next bit string. This type of computation is used by the
+        /// virtual hypotheses attribute boxes. They do not compute the whole task,
+        /// they return bit strings corresponding to individual relevant questions
+        /// instead. 
+        /// More information can
+        /// be found in <c>svnroot/publications/diplomky/Kuzmos/diplomka.pdf</c> or
+        /// in <c>svnroot/publications/Icde08/ICDE.pdf</c>.
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Bit string</returns>
+        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
+        {
+            if (_booleanTraceEnumerator.MoveNext())
+            {
+                BitStringIceWithCategoryId _tmpTuple = new BitStringIceWithCategoryId();
+                _tmpTuple.categoryId = _booleanTraceEnumerator.Current.Key;
+                _tmpTuple.bitString = _booleanTraceEnumerator.Current.Value;
+                return _tmpTuple;
+            }
+            else
+            {
+                if (progressBarPrx != null)
+                {
+                    progressBarPrx.done();
+                    //System.Threading.Thread.Sleep(100);
+                    ProgressTaskI.Destroy(_current.adapter, progressPrx);
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Executes a run of a GUHA task. All the needed information are
+        /// in the parameters. It executes the
+        /// <see cref="T:Ferda.Guha.MiningProcessor.Miners.MiningProcessorBase.Trace"/>
+        /// method to get results of a run.
+        /// </summary>
+        /// <param name="boxModule">The task box module</param>
+        /// <param name="booleanAttributes">Boolean attributes connected to the task</param>
+        /// <param name="categorialAttributes">Categorial attributes connected to the task</param>
+        /// <param name="quantifiers">Quantifiers connected to the task</param>
+        /// <param name="taskParams">Task parameters</param>
+        /// <param name="bitStringGenerator">The bit string generator provider
+        /// (should be only one for the whole task)</param>
+        /// <param name="output">Where the progress of the task should be written</param>
+        /// <param name="attributeId">Id of the task attribute - valid only for
+        /// virtual hypotheses attributes.</param>
+        /// <param name="countVector">Count vector - valid only for the
+        /// virtual hypotheses attributes.</param>
+        /// <param name="resultInfo">In this string serialized informations
+        /// about the task run will be stored in from
+        /// <see cref="Ferda.Guha.MiningProcessor.SerializableResultInfo"/></param>
+        /// <param name="current__">Ice current information</param>
+        /// <returns>Serialized result of the task in form
+        /// <see cref="Ferda.Guha.MiningProcessor.SerializableResult"/> is returned.
+        /// </returns>
         public override string Run(
             BoxModulePrx boxModule,
             BooleanAttribute[] booleanAttributes,
@@ -94,6 +185,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             _current = current__;
 
+            //Writing initialization information to the progress bar 
             switch (taskParams.resultType)
             {
                 case ResultTypeEnum.Trace:
@@ -123,6 +215,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     throw new NotImplementedException();
             }
 
+            //Creating mining processor of the right kind
             MiningProcessorBase miningProcessor = null;
             try
             {
@@ -192,6 +285,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         throw new NotImplementedException();
                 }
 
+                //executing the trace method according to the result type of the procedure
                 switch (taskParams.resultType)
                 {
                     case ResultTypeEnum.Trace:
@@ -253,5 +347,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
             }
         }
+
+        #endregion
     }
 }

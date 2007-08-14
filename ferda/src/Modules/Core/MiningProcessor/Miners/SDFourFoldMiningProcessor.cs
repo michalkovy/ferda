@@ -18,6 +18,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.Math.Quantifiers;
@@ -29,8 +30,88 @@ using Ferda.ModulesManager;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
+    /// <summary>
+    /// The SD4FT procedure mining processor
+    /// </summary>
     public class SDFourFoldMiningProcessor : MiningProcessorBase
     {
+        #region Private fields
+
+        /// <summary>
+        /// Antecedent Boolean attribute entity enumerator
+        /// </summary>
+        private IEntityEnumerator _antecedent;
+
+        /// <summary>
+        /// Succedent Boolean attribute entity enumerator
+        /// </summary>
+        private IEntityEnumerator _succedent;
+
+        /// <summary>
+        /// Condition Boolean attribute entity enumerator
+        /// </summary>
+        private IEntityEnumerator _condition;
+
+        /// <summary>
+        /// First set Boolean attribute entity enumerator
+        /// </summary>
+        private IEntityEnumerator _firstSet;
+
+        /// <summary>
+        /// Second set Boolean attribute entity enumerator
+        /// </summary>
+        private IEntityEnumerator _secondSet;
+
+        /// <summary>
+        /// Count of relevant questions so far returned
+        /// by the virtual 4FT attribute
+        /// </summary>
+        private long _relevantQuestionsCount = 0;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor of the class.
+        /// </summary>
+        /// <param name="booleanAttributes">Boolean attributes connected to the task</param>
+        /// <param name="categorialAttributes">Categorial attributes connected to the task</param>
+        /// <param name="quantifiers">Quantifiers connected to the task</param>
+        /// <param name="taskFuncPrx">Proxy of the task functions</param>
+        /// <param name="taskParams">Task parameters</param>
+        /// <param name="progressListener">The progress listener.</param>
+        /// <param name="progressBarPrx">The progress bar PRX.</param>
+        public SDFourFoldMiningProcessor(
+            BooleanAttribute[] booleanAttributes,
+            CategorialAttribute[] categorialAttributes,
+            QuantifierBaseFunctionsPrx[] quantifiers,
+            TaskRunParams taskParams,
+            BitStringGeneratorProviderPrx taskFuncPrx,
+            ProgressTaskListener progressListener,
+            ProgressBarPrx progressBarPrx
+            )
+            : base(
+                booleanAttributes, categorialAttributes, quantifiers, taskFuncPrx, taskParams, progressListener,
+                progressBarPrx)
+        {
+            afterConstruct();
+        }
+
+        #endregion
+
+        #region MiningProcessorBase overrides
+
+        /// <summary>
+        /// Returns all cedents of the particular miner, for this class
+        /// the antecedent, succedent, condition, first set and second set.
+        /// </summary>
+        /// <example>
+        /// The 4FT procedure returns <c>Antecedent</c>, <c>Succedent</c> and <c>Condition</c>
+        /// as Boolean cedents and <c>null</c> as categorial cedents.
+        /// </example>
+        /// <param name="booleanCedents">List of Boolean cedents to be returned</param>
+        /// <param name="categorialCedents">List of categorial cedents to be returned</param>
         protected override void getCedents(out ICollection<IEntityEnumerator> booleanCedents,
                                            out ICollection<CategorialAttributeTrace[]> categorialCedents)
         {
@@ -38,27 +119,46 @@ namespace Ferda.Guha.MiningProcessor.Miners
             categorialCedents = null;
         }
 
+        /// <summary>
+        /// Type of the task of the particular miner (SD4FT)
+        /// </summary>
         public override TaskTypeEnum TaskType
         {
             get { return TaskTypeEnum.SDFourFold; }
         }
 
+        /// <summary>
+        /// Returns array of categorial attributes (in form of
+        /// <see cref="T:Ferda.Guha.MiningProcessor.Generation.CategorialAttributeTrace"/>
+        /// that should support numeric values
+        /// (for purposes of mining).
+        /// </summary>
+        /// <returns>Array of categorial attributes</returns>
         protected override CategorialAttributeTrace[] attributesWhichShouldSupportNumericValues()
         {
             return null;
         }
 
+        /// <summary>
+        /// Returns array of categorial attributes (in form of
+        /// <see cref="T:Ferda.Guha.MiningProcessor.Generation.CategorialAttributeTrace"/>
+        /// that request some form of cardinality
+        /// (for purposes of mining).
+        /// </summary>
+        /// <example>
+        /// The CF procedure mines upon one categorial attribute. The procedure needs for this
+        /// attribute to be cardinal, because it needs to order the attributes to count the 
+        /// quantifiers.
+        /// </example>
+        /// <returns>Array of categorial attributes</returns>
         protected override List<CategorialAttributeTrace[]> attributesWhichRequestsSomeCardinality()
         {
             return null;
         }
 
-        private IEntityEnumerator _antecedent;
-        private IEntityEnumerator _succedent;
-        private IEntityEnumerator _condition;
-        private IEntityEnumerator _firstSet;
-        private IEntityEnumerator _secondSet;
-
+        /// <summary>
+        /// Prepares traces (entity enumerators) for a given miner
+        /// </summary>
         protected override void prepareAttributeTraces()
         {
             if (!ProgressSetValue(-1, "Preparing Succedent trace"))
@@ -82,40 +182,36 @@ namespace Ferda.Guha.MiningProcessor.Miners
             _secondSet = CreateBooleanAttributeTrace(MarkEnum.SecondSet, _booleanAttributes, false, this);
         }
 
-        public SDFourFoldMiningProcessor(
-            BooleanAttribute[] booleanAttributes,
-            CategorialAttribute[] categorialAttributes,
-            QuantifierBaseFunctionsPrx[] quantifiers,
-            TaskRunParams taskParams,
-            BitStringGeneratorProviderPrx taskFuncPrx,
-            ProgressTaskListener progressListener,
-            ProgressBarPrx progressBarPrx
-            )
-            : base(
-                booleanAttributes, categorialAttributes, quantifiers, taskFuncPrx, taskParams, progressListener,
-                progressBarPrx)
-        {
-            afterConstruct();
-        }
-
+        /// <summary>
+        /// Algoritm for computing all the relevant questions and veryfiing them
+        /// agaist the quantifier. It is used in the virtual attributes.
+        /// In contrary to the <see cref="MiningProcessor.Trace"/>
+        /// method, this method returns not only valid hypotheses, but all the relevant
+        /// questions and states with 0 or 1 iff the relevant question is valid for
+        /// given record of the master data table.
+        /// </summary>
+        /// <param name="CountVector">
+        /// The count vector is an array of integers 
+        /// representing for each item in the master data table how many records are
+        /// in the detail data table corresponding to the item. 
+        /// More information can
+        /// be found in <c>svnroot/publications/diplomky/Kuzmos/diplomka.pdf</c> or
+        /// in <c>svnroot/publications/Icde08/ICDE.pdf</c>.
+        /// </param>
+        /// <param name="attributeGuid">Identification of newly created attribute</param>
+        /// <param name="skipFirstN">Skip first N steps of the computation</param>
+        /// <returns>A key/value pair: the key is identification of the virtual hypothesis attribute,
+        /// the value is bit string corresponding to this attribute.</returns>
         public override void Trace()
         {
             if (!ProgressSetValue(-1, "Begining of attributes trace."))
                 return;
             resultInit();
 
-            IEvaluator evaluator;
-            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
-                evaluator = new FirstN(this);
-            else
-                throw new NotImplementedException();
+            IEvaluator evaluator = CreateEvaluator(TaskParams.evaluationType, false);
 
-            //MissingInformation missingInformation = new MissingInformation();
-            //IBitString xS;
             IBitString nS;
-            //IBitString xA;
             IBitString nA;
-            //IBitString xC;
             IBitString fSF; // first set
             IBitString sSF; // second set
 
@@ -213,23 +309,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             resultFinish();
         }
 
-        #region Testing
-        private long _relevantQuestionsCount = 0;
-
-        private bool MustStop()
-        {
-            if (_relevantQuestionsCount > this.TaskParams.maxSizeOfResult)
-            {
-                return true;
-            }
-            else
-            {
-                _relevantQuestionsCount++;
-                return false;
-            }
-        }
-        #endregion
-
         /// <summary>
         /// Method that yields bitstrings for virtual 4ft attribute
         /// </summary>
@@ -249,21 +328,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
             resultInit();
             CountVector = countVector;
 
-
-            IEvaluator evaluator;
-            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
-                evaluator = new FirstNNoResult(this);
-            else
-                throw new NotImplementedException();
+            IEvaluator evaluator = CreateEvaluator(TaskParams.evaluationType, true);
 
             int step = 0;
 
-            //MissingInformation missingInformation = new MissingInformation();
-            //IBitString xS;
             IBitString nS;
-            //IBitString xA;
             IBitString nA;
-            //IBitString xC;
             IBitString fSF; // first set
             IBitString sSF; // second set
 
@@ -316,7 +386,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             //cycle through countvector-based masks
                             for (int i = 0; i < CountVector.Length; i++)
                             {
-                                #region SD first set contingency table                                
+                                #region SD first set contingency table
                                 fourFoldCT1 = new FourFoldContingencyTable();
 
                                 //if countvector contains zero, it means that there is a record
@@ -444,15 +514,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                 }
 
                                 //second set identifier
-                              /*  if (!(sS is EmptyBitString) && !(String.IsNullOrEmpty(sS.Identifier.ToString())))
-                                {
-                                    if (!String.IsNullOrEmpty(_yieldStringName))
-                                    {
-                                        _yieldStringName = _yieldStringName + " \u00D7 ";
-                                    }
-                                    _yieldStringName = _yieldStringName +
-                                        sS.Identifier;
-                                }*/
+                                /*  if (!(sS is EmptyBitString) && !(String.IsNullOrEmpty(sS.Identifier.ToString())))
+                                  {
+                                      if (!String.IsNullOrEmpty(_yieldStringName))
+                                      {
+                                          _yieldStringName = _yieldStringName + " \u00D7 ";
+                                      }
+                                      _yieldStringName = _yieldStringName +
+                                          sS.Identifier;
+                                  }*/
 
                                 #endregion
 
@@ -471,9 +541,34 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     }
                 }
             }
-            //       finish:
-            //          evaluator.Flush();
-            //          resultFinish();
         }
+
+        #endregion
+
+        #region Testing
+
+        /// <summary>
+        /// Method is used for retrieving virtual attributes. Iff
+        /// the method returns true, the generation must stop
+        /// (the method generated more virtual attributes than
+        /// maximal desired amount).
+        /// Otherwise, it increases the count of returned
+        /// relevatant questions.
+        /// </summary>
+        /// <returns>Iff generation of virutal attributes must stop</returns>
+        private bool MustStop()
+        {
+            if (_relevantQuestionsCount > this.TaskParams.maxSizeOfResult)
+            {
+                return true;
+            }
+            else
+            {
+                _relevantQuestionsCount++;
+                return false;
+            }
+        }
+
+        #endregion
     }
 }
