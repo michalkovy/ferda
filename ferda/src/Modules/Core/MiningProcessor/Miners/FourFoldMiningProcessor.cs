@@ -34,24 +34,41 @@ using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
+    /// <summary>
+    /// The 4FT procedure mining processor
+    /// </summary>
     public class FourFoldMiningProcessor : MiningProcessorBase
     {
+        /// <summary>
+        /// Class representing a mining setting. It has all
+        /// the information needed for verification of one relevant question.
+        /// </summary>
 		private class MiningSetting
 		{
+            //positive antecedent, positive succedent, positive condition
 			IBitString pA, pS, pC;
+            //nine fold table of condition and succedent
 			nineFoldTableOfBitStrings nineFT;
+            //quantifier evaluator
 			IEvaluator evaluator;
+            //set of used attributes
             Set<String> usedAttributes;
+            //count of all objects that is mined upon
             int allObjectsCount;
 			
 			///<summary>
-			/// Constructor
+			/// Default constructor of the class.
 			/// </summary>
-			/// <param name="pA">An IBitString</param>
-			/// <param name="pS">An IBitString</param>
-			/// <param name="pC">An IBitString</param>
-			/// <param name="nineFT">A  nineFoldTableOfBitStrings</param>
-			/// <param name="evaluator">An IEvaluator</param>
+			/// <param name="pA">Positive antecedent bit string</param>
+			/// <param name="pS">Positive succedent bit string</param>
+			/// <param name="pC">Positive condition bit string</param>
+            /// <param name="nineFT">Nine fold table of condition and succedent</param>
+			/// <param name="evaluator">Quantifier evaluator</param>
+            /// <param name="allObjectsCount">
+            /// Count of all objects that is mined upon
+            /// (considering condition)
+            /// </param>
+            /// <param name="usedAttributes">Set of used attributes</param>
             public MiningSetting(IBitString pA, IBitString pS, IBitString pC, nineFoldTableOfBitStrings nineFT, IEvaluator evaluator, Set<String> usedAttributes, int allObjectsCount)
 			{
 				this.pA = pA;
@@ -63,6 +80,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 this.allObjectsCount = allObjectsCount;
 			}
 			
+            /// <summary>
+            /// Positive antecedent bit string
+            /// </summary>
 			public IBitString PA
 			{
 				set {
@@ -74,6 +94,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
 				}
 			}
 			
+            /// <summary>
+            /// Positive succedent bit string
+            /// </summary>
 			public IBitString PS
 			{
 				set {
@@ -85,6 +108,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
 				}
 			}
 			
+            /// <summary>
+            /// Positive condition bit string
+            /// </summary>
 			public IBitString PC
 			{
 				set {
@@ -96,6 +122,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
 				}
 			}
 			
+            /// <summary>
+            /// Nine fold table of condition and succedent
+            /// </summary>
 			public nineFoldTableOfBitStrings NineFT
 			{
 				set {
@@ -107,6 +136,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
 				}
 			}
 			
+            /// <summary>
+            /// Quantifier evaluator
+            /// </summary>
 			public IEvaluator Evaluator
 			{
 				set {
@@ -118,6 +150,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
 				}
 			}
 
+            /// <summary>
+            /// Set of used attributes
+            /// </summary>
             public Set<String> UsedAttributes
             {
                 set
@@ -131,6 +166,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
             }
 
+            /// <summary>
+            /// Count of all objects that is mined upon
+            /// (considering condition)
+            /// </summary>
             public int AllObjectsCount
             {
                 set
@@ -143,34 +182,122 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     return allObjectsCount;
                 }
             }
-		}
-		
+        }
+
+        #region Private fields
+
+        /// <summary>
+        /// Antecedent Boolean attribute entity enumerator
+        /// </summary>
+        private IEntityEnumerator _antecedent;
+
+        /// <summary>
+        /// Succedent Boolean attribute entity enumerator
+        /// </summary>
+        private IEntityEnumerator _succedent;
+
+        /// <summary>
+        /// Condition Boolean attribute entity enumerator
+        /// </summary>
+        private IEntityEnumerator _condition;
+
+        /// <summary>
+        /// Count of relevant questions so far returned
+        /// by the virtual 4FT attribute
+        /// </summary>
+        private long _relevantQuestionsCount = 0;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor of the class.
+        /// </summary>
+        /// <param name="booleanAttributes">Boolean attributes connected to the task</param>
+        /// <param name="categorialAttributes">Categorial attributes connected to the task</param>
+        /// <param name="quantifiers">Quantifiers connected to the task</param>
+        /// <param name="taskFuncPrx">Proxy of the task functions</param>
+        /// <param name="taskParams">Task parameters</param>
+        /// <param name="progressListener">The progress listener.</param>
+        /// <param name="progressBarPrx">The progress bar PRX.</param>
+        public FourFoldMiningProcessor(
+            BooleanAttribute[] booleanAttributes,
+            CategorialAttribute[] categorialAttributes,
+            QuantifierBaseFunctionsPrx[] quantifiers,
+            TaskRunParams taskParams,
+            BitStringGeneratorProviderPrx taskFuncPrx,
+            ProgressTaskListener progressListener,
+            ProgressBarPrx progressBarPrx
+        )
+            : base(
+            booleanAttributes, categorialAttributes, quantifiers, taskFuncPrx, taskParams, progressListener,
+            progressBarPrx)
+        {
+            afterConstruct();
+        }
+
+        #endregion
+
+        #region MiningProcessorBase overrides
+
+        /// <summary>
+        /// Returns all cedents of the particular miner, for this class
+        /// the antecedent, succedent and condition.
+        /// </summary>
+        /// <example>
+        /// The 4FT procedure returns <c>Antecedent</c>, <c>Succedent</c> and <c>Condition</c>
+        /// as Boolean cedents and <c>null</c> as categorial cedents.
+        /// </example>
+        /// <param name="booleanCedents">List of Boolean cedents to be returned</param>
+        /// <param name="categorialCedents">List of categorial cedents to be returned</param>
         protected override void getCedents(out ICollection<IEntityEnumerator> booleanCedents,
                                            out ICollection<CategorialAttributeTrace[]> categorialCedents)
         {
             booleanCedents = new IEntityEnumerator[] { _antecedent, _succedent, _condition };
             categorialCedents = null;
         }
-		
+
+        /// <summary>
+        /// Type of the task of the particular miner (4FT)
+        /// </summary>
         public override TaskTypeEnum TaskType
         {
             get { return TaskTypeEnum.FourFold; }
         }
-		
+
+        /// <summary>
+        /// Returns array of categorial attributes (in form of
+        /// <see cref="T:Ferda.Guha.MiningProcessor.Generation.CategorialAttributeTrace"/>
+        /// that should support numeric values
+        /// (for purposes of mining).
+        /// </summary>
+        /// <returns>Array of categorial attributes</returns>
         protected override CategorialAttributeTrace[] attributesWhichShouldSupportNumericValues()
         {
             return null;
         }
-		
+
+        /// <summary>
+        /// Returns array of categorial attributes (in form of
+        /// <see cref="T:Ferda.Guha.MiningProcessor.Generation.CategorialAttributeTrace"/>
+        /// that request some form of cardinality
+        /// (for purposes of mining).
+        /// </summary>
+        /// <example>
+        /// The CF procedure mines upon one categorial attribute. The procedure needs for this
+        /// attribute to be cardinal, because it needs to order the attributes to count the 
+        /// quantifiers.
+        /// </example>
+        /// <returns>Array of categorial attributes</returns>
         protected override List<CategorialAttributeTrace[]> attributesWhichRequestsSomeCardinality()
         {
             return null;
         }
-		
-        private IEntityEnumerator _antecedent;
-        private IEntityEnumerator _succedent;
-        private IEntityEnumerator _condition;
-		
+
+        /// <summary>
+        /// Prepares traces (entity enumerators) for a given miner
+        /// </summary>
         protected override void prepareAttributeTraces()
         {
             if (!ProgressSetValue(-1, "Preparing Succedent trace"))
@@ -185,44 +312,293 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return;
             _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true, this);
         }
-		
-        public FourFoldMiningProcessor(
-            BooleanAttribute[] booleanAttributes,
-            CategorialAttribute[] categorialAttributes,
-            QuantifierBaseFunctionsPrx[] quantifiers,
-            TaskRunParams taskParams,
-            BitStringGeneratorProviderPrx taskFuncPrx,
-            ProgressTaskListener progressListener,
-            ProgressBarPrx progressBarPrx
-		)
-		: base(
-			booleanAttributes, categorialAttributes, quantifiers, taskFuncPrx, taskParams, progressListener,
-			progressBarPrx)
+
+        /// <summary>
+        /// Algoritm for tracing the relevant questions and verifying them against
+        /// the quantifier. The algoritm computes valid hypotheses.
+        /// </summary>
+        public override void Trace()
         {
-            afterConstruct();
+            //code common to trace and trace boolean methods
+            InitializeTrace();
+            IEvaluator evaluator = CreateEvaluator(TaskParams.evaluationType, false);
+
+            MissingInformation missingInformation = MissingInformation.GetInstance();
+            //missing succedent
+            IBitString xS;
+            //negative succedent
+            IBitString nS;
+            //missing condition
+            IBitString xC;
+            nineFoldTableOfBitStrings nineFT;
+
+            //MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
+            //System.Threading.ThreadPool threadPool = new System.Threading.ThreadPool();
+
+            _mineRuns = 0;
+            int mineToRun = 0;
+            foreach (IBitString pC in _condition)
+            {
+                //Gets missing value for the condition
+                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
+
+                //set actual count of objects with respect to condition
+                int actCount = SetActConditionCountOfObjects(pC);
+
+                foreach (IBitString pS in _succedent)
+                {
+                    if (pS is IEmptyBitString)
+                        continue;
+                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
+
+                    //Fills the nine fold table (A is condition, B is succedent)
+                    nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
+
+                    foreach (IBitString pA in _antecedent)
+                    {
+                        MiningSetting miningSetting =
+                            new MiningSetting(pA, pS, pC, nineFT, evaluator, _succedent.UsedAttributes, 
+                            (int)_result.AllObjectsCount);
+
+                        //miningThreads.AddSetting(miningSetting);
+                        mineToRun++;
+                        if (_useThreads)
+                        {
+                            System.Threading.ThreadPool.UnsafeQueueUserWorkItem(mine, miningSetting);
+                        }
+                        else
+                        {
+                            mine(miningSetting);
+                        }
+                        if (finished())
+                            goto finish;
+                    }
+                }
+            }
+
+            //waiting for all the threads still computing to 
+            //finish
+            while (mineToRun != _mineRuns && (!finished()))
+            {
+                System.Threading.Thread.Sleep(50);
+            }
+        finish:
+            evaluator.Flush();
+            resultFinish();
+            //miningThreads.Finish();
         }
-		
-		private bool finishThreads = false;
-		
-		private bool finished()
-		{
-			lock(this)
-			{
-				return finishThreads;
-			}
-		}
-		
-		private void setFinished(object o)
-		{
-			lock(this)
-			{
-				finishThreads = true;
-			}
-		}
-		
-		private int _mineRuns = 0;
-		
-		private void mine(Object ob)
+
+        /// <summary>
+        /// Algoritm for computing all the relevant questions and veryfiing them
+        /// agaist the quantifier. It is used in the virtual attributes.
+        /// In contrary to the <see cref="MiningProcessor.Trace"/>
+        /// method, this method returns not only valid hypotheses, but all the relevant
+        /// questions and states with 0 or 1 iff the relevant question is valid for
+        /// given record of the master data table.
+        /// </summary>
+        /// <param name="CountVector">
+        /// The count vector is an array of integers 
+        /// representing for each item in the master data table how many records are
+        /// in the detail data table corresponding to the item. 
+        /// More information can
+        /// be found in <c>svnroot/publications/diplomky/Kuzmos/diplomka.pdf</c> or
+        /// in <c>svnroot/publications/Icde08/ICDE.pdf</c>.
+        /// </param>
+        /// <param name="attributeGuid">Identification of newly created attribute</param>
+        /// <param name="skipFirstN">Skip first N steps of the computation</param>
+        /// <returns>A key/value pair: the key is identification of the virtual hypothesis attribute,
+        /// the value is bit string corresponding to this attribute.</returns>
+        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, GuidStruct attributeGuid, int skipFirstN)
+        {
+            //initialization of multirelational stuff
+            if (skipFirstN >= this.TaskParams.maxSizeOfResult)
+            {
+                ProgressSetValue(1, "Reading " + skipFirstN.ToString() + " bitstrings from cache");
+                yield break;
+            }
+            CountVector = countVector;
+
+            //code common to trace and trace boolean methods
+            InitializeTrace();
+            IEvaluator evaluator = CreateEvaluator(TaskParams.evaluationType, true);
+
+            MissingInformation missingInformation = MissingInformation.GetInstance();
+            //missing succedent
+            IBitString xS;
+            //negative succedent
+            IBitString nS;
+            //missing antecedent
+            IBitString xA;
+            //negative antecedent
+            IBitString nA;
+            //missing condition
+            IBitString xC;
+            nineFoldTableOfBitStrings nineFT;
+
+            int step = 0;
+
+            foreach (IBitString pC in _condition)
+            {
+                //Gets missing value for the condition
+                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
+
+                //set actual count of objects with respect to condition
+                SetActConditionCountOfObjects(pC);
+
+                foreach (IBitString pS in _succedent)
+                {
+                    if (pS is IEmptyBitString)
+                        continue;
+                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
+
+                    //Fills the nine fold table (A is condition, B is succedent)
+                    nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, Int32.MinValue);
+
+                    foreach (IBitString pA in _antecedent)
+                    {
+                        if (MustStop())
+                        {
+                            yield break;
+                        }
+
+                        if (step < skipFirstN)
+                        {
+                            step++;
+                            continue;
+                        }
+                        if (skipFirstN > 0)
+                        {
+                            if (this.TaskParams.maxSizeOfResult > 0)
+                            {
+                                ProgressSetValue((float)step / (float)this.TaskParams.maxSizeOfResult,
+                                                 "Skipped " + step.ToString() + " steps, using cache");
+                            }
+                        }
+                        step++;
+                        GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
+
+                        //cycle through countvector-based masks
+                        for (int i = 0; i < CountVector.Length; i++)
+                        {
+                            NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
+
+                            //if countvector contains zero, it means that there is a record
+                            //in the master table which has no corresponding record in the detail table
+                            //in order to keep the correct length of the yielded bitstring
+                            //for every missing record from the MT we add an empty contingency table
+                            if (CountVector[i] > 0)
+                            {
+                                IBitString mask = Masks[i];
+
+                                fft.f111 = nineFT.pApB.And(pA.And(Masks[i])).Sum;
+                                fft.f1x1 = nineFT.pAxB.And(pA.And(Masks[i])).Sum;
+                                fft.f101 = nineFT.pAnB.And(pA.And(Masks[i])).Sum;
+
+                                fft.fx11 = nineFT.pApB.And(xA.And(Masks[i])).Sum;
+                                fft.fxx1 = nineFT.pAxB.And(xA.And(Masks[i])).Sum;
+                                fft.fx01 = nineFT.pAnB.And(xA.And(Masks[i])).Sum;
+
+                                fft.f011 = nineFT.pApB.And(nA.And(Masks[i])).Sum;
+                                fft.f0x1 = nineFT.pAxB.And(nA.And(Masks[i])).Sum;
+                                fft.f001 = nineFT.pAnB.And(nA.And(Masks[i])).Sum;
+
+                                fft.f11x = nineFT.xApB.And(pA.And(Masks[i])).Sum;
+                                fft.f1xx = nineFT.xAxB.And(pA.And(Masks[i])).Sum;
+                                fft.f10x = nineFT.xAnB.And(pA.And(Masks[i])).Sum;
+
+                                fft.fx1x = nineFT.xApB.And(xA.And(Masks[i])).Sum;
+                                fft.fxxx = nineFT.xAxB.And(xA.And(Masks[i])).Sum;
+                                fft.fx0x = nineFT.xAnB.And(xA.And(Masks[i])).Sum;
+
+                                fft.f01x = nineFT.xApB.And(nA.And(Masks[i])).Sum;
+                                fft.f0xx = nineFT.xAxB.And(nA.And(Masks[i])).Sum;
+                                fft.f00x = nineFT.xAnB.And(nA.And(Masks[i])).Sum;
+                            }
+                            ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
+                                fft.ContingencyTable,
+                                _result.AllObjectsCount
+                            );
+
+                            //VerifyIsComplete means no buffer is left.
+                            //If not all relevant questions have been
+                            //generated and verified, will stop yielding bitstrings
+                            if (!finished())
+                            {
+                                evaluator.VerifyIsComplete(contingencyTable, new Hypothesis(), setFinished);
+                            }
+                            if (finished())
+                                break;
+                        }
+
+                        //vector to be yielded as bitstring
+                        bool[] evalVector = evaluator.GetEvaluationVector();
+
+                        int _arraySize = (CountVector.Length + _blockSize - 1) / _blockSize;
+
+                        long[] _tmpString = new long[_arraySize];
+                        _tmpString.Initialize();
+
+                        //here we create virtual attribute name
+                        //based on relevant question parameters
+
+                        #region Compose virtual attribute name
+
+                        string _yieldStringName = String.Empty;
+
+                        if (!(pA.Identifier is IEmptyBitString) && !(String.IsNullOrEmpty(pA.Identifier.ToString())))
+                        {
+                            _yieldStringName =
+                                //MarkEnum.Antecedent.ToString() +
+                                "[ant]" +
+                                ": " + pA.Identifier;
+                        }
+
+                        if (!(pS.Identifier is IEmptyBitString) && !(String.IsNullOrEmpty(pS.Identifier.ToString())))
+                        {
+                            if (!String.IsNullOrEmpty(_yieldStringName))
+                            {
+                                _yieldStringName = _yieldStringName + ", ";
+                            }
+                            _yieldStringName = _yieldStringName +
+                                //    MarkEnum.Succedent.ToString() +
+                                " *** [succ]" +
+                                ": " + pS.Identifier;
+                        }
+
+                        if (!(pC.Identifier is IEmptyBitString) && !(String.IsNullOrEmpty(pC.Identifier.ToString())))
+                        {
+                            if (!String.IsNullOrEmpty(_yieldStringName))
+                            {
+                                _yieldStringName = _yieldStringName + ", ";
+                            }
+                            _yieldStringName = _yieldStringName +
+                                //MarkEnum.Condition.ToString() +
+                                " / [cond]" +
+                                ": " + pC.Identifier;
+                        }
+
+                        #endregion
+
+                        for (int i = 0; i < evalVector.Length; i++)
+                        {
+                            if (evalVector[i])
+                                setTrueBit(i, _tmpString);
+                        }
+
+                        yield return new KeyValuePair<string, BitStringIce>(
+                            _yieldStringName,
+                            new BitStringIce(_tmpString, CountVector.Length));
+                        evaluator.Flush();
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private void mine(Object ob)
 		{
 			MiningSetting miningSetting = ob as MiningSetting;
 			IBitString pA = miningSetting.PA;
@@ -240,8 +616,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			int f111, fx11, f1x1, fxx1;
 			int f11x, fx1x, f1xx, fxxx;
 			
-			BitString.CrossAndSum(pA, xA, nineFT.pApB, nineFT.pAxB, pA.Sum, xA.Sum, nineFT.pApB.Sum, nineFT.pAxB.Sum, out f111, out fx11, out f1x1, out fxx1);
-			BitString.CrossAndSum(pA, xA, nineFT.xApB, nineFT.xAxB, pA.Sum, xA.Sum, nineFT.xApB.Sum, nineFT.xAxB.Sum, out f11x, out fx1x, out f1xx, out fxxx);
+			BitString.CrossAndSum(pA, xA, nineFT.pApB, nineFT.pAxB, pA.Sum, xA.Sum, nineFT.pApB.Sum, nineFT.pAxB.Sum, 
+                out f111, out fx11, out f1x1, out fxx1);
+			BitString.CrossAndSum(pA, xA, nineFT.xApB, nineFT.xAxB, pA.Sum, xA.Sum, nineFT.xApB.Sum, nineFT.xAxB.Sum, 
+                out f11x, out fx1x, out f1xx, out fxxx);
 			NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
 			
 			fft.f111 = f111;
@@ -287,99 +665,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
 			_mineRuns++;
 		}
-		
-		private static readonly bool _useThreads = System.Environment.ProcessorCount > 1;
-		
-        public override void Trace()
-        {
-            if (!ProgressSetValue(-1, "Beginning of attributes trace."))
-                return;
-            resultInit();
-			
-            IEvaluator evaluator;
-            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
-                evaluator = new FirstN(this);
-            else
-                throw new NotImplementedException();
-			
-            MissingInformation missingInformation = MissingInformation.GetInstance();
-            IBitString xS;
-            IBitString nS;
-            IBitString xC;
-            nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
-			
-			//MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
-			//System.Threading.ThreadPool threadPool = new System.Threading.ThreadPool();
-			
-			_mineRuns = 0;
-			int mineToRun = 0;
-            foreach (IBitString pC in _condition)
-            {
-                //if (pC is FalseBitString)
-                //{
-                //    // empty contingency table (zeros)
-                //    continue;
-                //}
-                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
-				int pCSum = (pC is IEmptyBitString) ? (int)_result.AllObjectsCount : pC.Sum;
-				
-				ActConditionCountOfObjects = pCSum;
-				
-                foreach (IBitString pS in _succedent)
-                {
-                    if (pS is IEmptyBitString)
-                        continue;
-                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
-					
-                    // A is condition, B is succedent
-                    nineFT.pApB = pC.And(pS);
-                    nineFT.pAxB = pC.And(xS);
-                    nineFT.pAnB = pC.And(nS);
-                    nineFT.pAnB.Sum = pCSum - nineFT.pApB.Sum - nineFT.pAxB.Sum;
-					
-                    // should be simillar
-                    nineFT.xApB = xC.And(pS);
-                    nineFT.xAxB = xC.And(xS);
-                    nineFT.xAnB = xC.And(nS);
-                    nineFT.xAnB.Sum = xC.Sum - nineFT.xApB.Sum - nineFT.xAxB.Sum;
-					
-                    foreach (IBitString pA in _antecedent)
-                    {
-                        MiningSetting miningSetting = new FourFoldMiningProcessor.MiningSetting(pA, pS, pC, nineFT, evaluator, _succedent.UsedAttributes, (int)_result.AllObjectsCount);
-						
-                        //miningThreads.AddSetting(miningSetting);
-						mineToRun++;
-						if (_useThreads)
-						{
-							System.Threading.ThreadPool.UnsafeQueueUserWorkItem(mine, miningSetting);
-						}
-						else
-						{
-							mine(miningSetting);
-						}
-						if(finished())
-							goto finish;
-                    }
-                }
-            }
-			
-			while (mineToRun != _mineRuns && (!finished()))
-			{
-				System.Threading.Thread.Sleep(50);
-			}
-			finish:
-            evaluator.Flush();
-            resultFinish();
-			//miningThreads.Finish();
-        }
-		
-        
-		
-		
-		
-        #region Testing
-        private long _relevantQuestionsCount = 0;
-		
+
         private bool MustStop()
         {
             if (_relevantQuestionsCount > this.TaskParams.maxSizeOfResult)
@@ -392,211 +678,172 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return false;
             }
         }
-        #endregion
-		
+
         /// <summary>
-        /// Method that yields bitstrings for virtual 4ft attribute
+        /// Initializes trace of the procedure. 
+        /// This code is common
+        /// to <see cref="FourFoldMiningProcessor.Trace"/> and
+        /// <see cref="FourFoldMiningProcessor.TraceBoolean"/>
+        /// methods.
         /// </summary>
-        /// <param name="countVector">CountVector</param>
-        /// <param name="attributeGuid">Guid of the virtual attribute box</param>
-        /// <param name="skipFirstN">Number of virtual columns to skip</param>
-        /// <returns>Enumerable collection</returns>
-        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, GuidStruct attributeGuid, int skipFirstN)
+        private void InitializeTrace()
         {
-            if (skipFirstN >= this.TaskParams.maxSizeOfResult)
-            {
-                ProgressSetValue(100, "Reading " + skipFirstN.ToString() + " bitstrings from cache");
-                yield break;
-            }
-            ProgressSetValue(-1, "Beginning of attributes trace.");
-            //       return false;
+            if (!ProgressSetValue(-1, "Beginning of attributes trace."))
+                return;
             resultInit();
-            CountVector = countVector;
-			
-            
-            IEvaluator evaluator;
-            if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
-                evaluator = new FirstNNoResult(this);
-            else
-                throw new NotImplementedException();
-			
-            MissingInformation missingInformation = MissingInformation.GetInstance();
-            IBitString xS;
-            IBitString nS;
-            IBitString xA;
-            IBitString nA;
-            IBitString xC;
-            nineFoldTableOfBitStrings nineFT = new nineFoldTableOfBitStrings();
-			
-            int step = 0;
-			
-            foreach (IBitString pC in _condition)
+        }
+
+        /// <summary>
+        /// Creates an evaluator.
+        /// This code is common
+        /// to <see cref="FourFoldMiningProcessor.Trace"/> and
+        /// <see cref="FourFoldMiningProcessor.TraceBoolean"/>
+        /// methods.
+        /// </summary>
+        /// <param name="evaluationType">Evaluation type</param>
+        /// <param name="virtualAttribute">If the evaluator
+        /// is used for the virtual attribute, that is 
+        /// in the <see cref="FourFoldMiningProcessor.TraceBoolean"/>
+        /// method.</param>
+        /// <returns>Evaluator</returns>
+        private IEvaluator CreateEvaluator(TaskEvaluationTypeEnum evaluationType,
+            bool virtualAttribute)
+        {
+            if (virtualAttribute)
             {
-                //if (pC is FalseBitString)
-                //{
-                //    // empty contingency table (zeros)
-                //    continue;
-                //}
-                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
-				
-                if (pC is IEmptyBitString)
-                    ActConditionCountOfObjects = (int)_result.AllObjectsCount;
+                if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
+                    return new FirstNNoResult(this);
                 else
-                    ActConditionCountOfObjects = pC.Sum;
-				
-                foreach (IBitString pS in _succedent)
-                {
-                    if (pS is IEmptyBitString)
-                        continue;
-                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
-					
-                    // A is condition, B is succedent
-                    nineFT.pApB = pC.And(pS);
-                    nineFT.pAxB = pC.And(xS);
-                    nineFT.pAnB = pC.And(nS);
-					
-                    nineFT.xApB = xC.And(pS);
-                    nineFT.xAxB = xC.And(xS);
-                    nineFT.xAnB = xC.And(nS);
-					
-                    foreach (IBitString pA in _antecedent)
-                    {
-                        if (MustStop())
-                        {
-                            yield break;
-                        }
-						
-                        if (step < skipFirstN)
-                        {
-                            step++;
-                            continue;
-                        }
-                        if (skipFirstN > 0)
-                        {
-                            if (this.TaskParams.maxSizeOfResult > 0)
-                            {
-                                ProgressSetValue((float)step / (float)this.TaskParams.maxSizeOfResult,
-												 "Skipped " + step.ToString() + " steps, using cache");
-                            }
-                        }
-                        step++;
-                        GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
-						
-                        //cycle through countvector-based masks
-                        for (int i = 0; i < CountVector.Length; i++)
-                        {
-                            NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
-							
-                            //if countvector contains zero, it means that there is a record
-                            //in the master table which has no corresponding record in the detail table
-                            //in order to keep the correct length of the yielded bitstring
-                            //for every missing record from the MT we add an empty contingency table
-                            if (CountVector[i] > 0)
-                            {
-                                IBitString mask = Masks[i];
-								
-                                fft.f111 = nineFT.pApB.And(pA.And(Masks[i])).Sum;
-                                fft.f1x1 = nineFT.pAxB.And(pA.And(Masks[i])).Sum;
-                                fft.f101 = nineFT.pAnB.And(pA.And(Masks[i])).Sum;
-								
-                                fft.fx11 = nineFT.pApB.And(xA.And(Masks[i])).Sum;
-                                fft.fxx1 = nineFT.pAxB.And(xA.And(Masks[i])).Sum;
-                                fft.fx01 = nineFT.pAnB.And(xA.And(Masks[i])).Sum;
-								
-                                fft.f011 = nineFT.pApB.And(nA.And(Masks[i])).Sum;
-                                fft.f0x1 = nineFT.pAxB.And(nA.And(Masks[i])).Sum;
-                                fft.f001 = nineFT.pAnB.And(nA.And(Masks[i])).Sum;
-								
-                                fft.f11x = nineFT.xApB.And(pA.And(Masks[i])).Sum;
-                                fft.f1xx = nineFT.xAxB.And(pA.And(Masks[i])).Sum;
-                                fft.f10x = nineFT.xAnB.And(pA.And(Masks[i])).Sum;
-								
-                                fft.fx1x = nineFT.xApB.And(xA.And(Masks[i])).Sum;
-                                fft.fxxx = nineFT.xAxB.And(xA.And(Masks[i])).Sum;
-                                fft.fx0x = nineFT.xAnB.And(xA.And(Masks[i])).Sum;
-								
-                                fft.f01x = nineFT.xApB.And(nA.And(Masks[i])).Sum;
-                                fft.f0xx = nineFT.xAxB.And(nA.And(Masks[i])).Sum;
-                                fft.f00x = nineFT.xAnB.And(nA.And(Masks[i])).Sum;
-                            }
-                            ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
-								fft.ContingencyTable,
-								_result.AllObjectsCount
-							);
-							
-                            //VerifyIsComplete means no buffer is left.
-                            //If not all relevant questions have been
-                            //generated and verified, will stop yielding bitstrings
-						if (!finished())
-						{
-							evaluator.VerifyIsComplete(contingencyTable, new Hypothesis(), setFinished);
-						}
-						if(finished())
-							break;
-                        }
-						
-                        //vector to be yielded as bitstring
-                        bool[] evalVector = evaluator.GetEvaluationVector();
-						
-                        int _arraySize = (CountVector.Length + _blockSize - 1) / _blockSize;
-						
-                        long[] _tmpString = new long[_arraySize];
-                        _tmpString.Initialize();
-						
-                        //here we create virtual attribute name
-                        //based on relevant question parameters
-						
-                        #region Compose virtual attribute name
-						
-                        string _yieldStringName = String.Empty;
-						
-                        if (!(pA.Identifier is IEmptyBitString) && !(String.IsNullOrEmpty(pA.Identifier.ToString())))
-                        {
-                            _yieldStringName =
-                                //MarkEnum.Antecedent.ToString() +
-                                "[ant]" +
-								": " + pA.Identifier;
-                        }
-						
-                        if (!(pS.Identifier is IEmptyBitString) && !(String.IsNullOrEmpty(pS.Identifier.ToString())))
-                        {
-                            if (!String.IsNullOrEmpty(_yieldStringName))
-                            {
-                                _yieldStringName = _yieldStringName + ", ";
-                            }
-							_yieldStringName = _yieldStringName +
-                                //    MarkEnum.Succedent.ToString() +
-                                " *** [succ]" +
-                                ": " + pS.Identifier;
-                        }
-						
-                        if (!(pC.Identifier is IEmptyBitString) && !(String.IsNullOrEmpty(pC.Identifier.ToString())))
-                        {
-                            if (!String.IsNullOrEmpty(_yieldStringName))
-                            {
-                                _yieldStringName = _yieldStringName + ", ";
-                            }
-                            _yieldStringName = _yieldStringName +
-                                //MarkEnum.Condition.ToString() +
-                                " / [cond]" +
-								": " + pC.Identifier;
-                        }
-						
-                        #endregion
-						
-                        for (int i = 0; i < evalVector.Length; i++)
-                        {
-                            if (evalVector[i])
-                                setTrueBit(i, _tmpString);
-                        }
-						
-                        yield return new KeyValuePair<string, BitStringIce>(
-							_yieldStringName,
-							new BitStringIce(_tmpString, CountVector.Length));
-                        evaluator.Flush();
-                    }
-                }
+                    throw new NotImplementedException();
+            }
+            else
+            {
+                if (TaskParams.evaluationType == TaskEvaluationTypeEnum.FirstN)
+                    return new FirstN(this);
+                else
+                    throw new NotImplementedException();
+
+            }
+
+        }
+
+        /// <summary>
+        /// Gets count of all object with respect to a condition.
+        /// When there is a non empty condition, the count of all
+        /// objects equals to sum of the positive condition bit string.
+        /// </summary>
+        /// <param name="positiveCondition">The positive condition
+        /// bit string</param>
+        /// <returns>Count of all objects with respect
+        /// to condition.</returns>
+        private int SetActConditionCountOfObjects(IBitString positiveCondition)
+        {
+            int result;
+
+            if (positiveCondition is IEmptyBitString)
+                result = (int)_result.AllObjectsCount;
+            else
+                result = positiveCondition.Sum;
+
+            ActConditionCountOfObjects = result;
+            return result;
+        }
+
+        /// <summary>
+        /// Fills the nine-fold contingency table with values of condition and
+        /// succedent (A is condition, B is succedent) from provided bit strings.
+        /// The <paramref name="allObjectCount"/> serves for computing
+        /// optimalization. It should not be <c>Int32.MinValue</c> in the 
+        /// <see cref="FourFoldMiningProcessor.Trace"/> method and
+        /// should be <c>Int32.MinValue</c> in the 
+        /// <see cref="FourFoldMiningProcessor.TraceBoolean"/> method.
+        /// </summary>
+        /// <param name="pS">Positive succedent bit string</param>
+        /// <param name="nS">Negative succedent bit string</param>
+        /// <param name="xS">Missing succedent bit string</param>
+        /// <param name="pC">Positive condition bit string</param>
+        /// <param name="xC">Missing condition bit string</param>
+        /// <param name="allObjectsCount">Count of all objects
+        /// that are mined in this relevant question. Server
+        /// for computing optimalization. It should not be <c>null</c> in the 
+        /// <see cref="FourFoldMiningProcessor.Trace"/> method and
+        /// should be null in the 
+        /// <see cref="FourFoldMiningProcessor.TraceBoolean"/> method.
+        /// </param>
+        /// <returns>Nine fold contingency table of condition
+        /// and succedent.</returns>
+        private nineFoldTableOfBitStrings FillNineFoldConditionSuccedent(
+            IBitString pS, IBitString nS, IBitString xS,
+            IBitString pC, IBitString xC, int allObjectsCount)
+        {
+            nineFoldTableOfBitStrings result = new nineFoldTableOfBitStrings();
+
+            result.pApB = pC.And(pS);
+            result.pAxB = pC.And(xS);
+            result.pAnB = pC.And(nS);
+
+            result.xApB = xC.And(pS);
+            result.xAxB = xC.And(xS);
+            result.xAnB = xC.And(nS);
+
+            if (allObjectsCount == Int32.MinValue)
+            {
+                result.pAnB.Sum = allObjectsCount - result.pApB.Sum - result.pAxB.Sum;
+                result.xAnB.Sum = xC.Sum - result.xApB.Sum - result.xAxB.Sum;
+            }
+
+            return result;
+        }
+
+
+        #endregion
+
+        #region Thread handling
+
+        /// <summary>
+        /// If threads of this miner are finished
+        /// </summary>
+        private bool finishThreads = false;
+
+        /// <summary>
+        /// If more than one thread should be used
+        /// (makes sense form more then 1 core processors
+        /// </summary>
+        private static readonly bool _useThreads = System.Environment.ProcessorCount > 1;
+
+        /// <summary>
+        /// How many times did the threads acutally computed contingency
+        /// tables
+        /// </summary>
+        private int _mineRuns = 0;
+
+        /// <summary>
+        /// Function returns if procedure is fininshed.
+        /// Thread safe.
+        /// </summary>
+        /// <returns>If the computing of the procedure is finished</returns>
+        private bool finished()
+        {
+            lock (this)
+            {
+                return finishThreads;
             }
         }
+
+        /// <summary>
+        /// Wait callback delegate to the thread pool. Writes the finishing
+        /// information. Thread safe.
+        /// </summary>
+        /// <param name="o">An object</param>
+        private void setFinished(object o)
+        {
+            lock (this)
+            {
+                finishThreads = true;
+            }
+        }
+
+        #endregion
+
     }
 }
