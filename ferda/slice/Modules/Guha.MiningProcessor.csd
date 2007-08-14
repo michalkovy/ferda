@@ -223,6 +223,7 @@
       <Name>MiningProcessorFunctions</Name>
       <Access>Public</Access>
       <Member type="Method">string Run()</Member>
+      <Member type="Method">BitStringIceWithCategoryId GetNextBitString()</Member>
     </Entity>
   </Entities>
   <Relations>
@@ -388,11 +389,11 @@
     </Shape>
     <Shape>
       <Location left="1514" top="40" />
-      <Size width="115" height="80" />
+      <Size width="115" height="85" />
     </Shape>
     <Shape>
       <Location left="1514" top="139" />
-      <Size width="115" height="80" />
+      <Size width="115" height="85" />
     </Shape>
     <Shape>
       <Location left="1247" top="317" />
@@ -400,11 +401,11 @@
     </Shape>
     <Shape>
       <Location left="1514" top="317" />
-      <Size width="130" height="80" />
+      <Size width="130" height="85" />
     </Shape>
     <Shape>
       <Location left="1514" top="417" />
-      <Size width="130" height="80" />
+      <Size width="130" height="85" />
     </Shape>
     <Shape>
       <Location left="323" top="698" />
@@ -459,8 +460,8 @@
       <Size width="364" height="216" />
     </Shape>
     <Shape>
-      <Location left="1124" top="854" />
-      <Size width="176" height="93" />
+      <Location left="1096" top="888" />
+      <Size width="176" height="99" />
     </Shape>
     <Connection>
       <StartNode isHorizontal="True" location="63" />
