@@ -281,7 +281,8 @@
       slice code can be found in 
       <classname>slice/Modules/Guha.MiningProcessor.ice</classname>.
       For the computation, the task box modules access only the
-      <classname>Run</classname> method of the
+      <classname>Run</classname> and 
+      <classname>GetNextBitString</classname> method of the
       <classname>MiningProcessorFunctions</classname> interface.
       The parameters of this function contain all the information needed
       for the computation.
@@ -383,6 +384,23 @@
           <imagedata fileref="multiOperandGenerationAutomaton.png" format="PNG"/>
         </imageobject>
       </mediaobject>
+    </section>
+    <section>
+      <title>Miners</title>
+      <para>
+        The Miners part of the mining processor does actual computing of GUHA
+        procedures. The part includes implementation of the 
+        <classname>slice/Modules/Guha.MiningProcessor.ice</classname> interface.
+        Class for each miner is defined. These classes derive from the
+        <classname>MiningProcessorBase</classname> abstract class, which implements
+        common functionality of every particular miner.
+      </para>
+      <para>
+        Each miner class has the <classname>Trace</classname> method
+        for computation of normal (non-multirelational) task and the
+        <classname>TraceBoolean</classname> method. These methods
+        do the verifications of relevant questions.
+      </para>
     </section>
 	</section>
   <bibliography>
