@@ -402,6 +402,24 @@
         do the verifications of relevant questions.
       </para>
     </section>
+    <section>
+      <title>QuantifierEvaluator</title>
+      <para>
+        The Miners part generated the all the relevant questions and
+        verified them. For verification it uses the functionality from the
+        QuantifierEvaluator. This part consists of three logical parts.
+      </para>
+      <para>
+        The <classname>IEvaluator</classname> interface and its implementations
+        is the first part. The evaluator is class responsible of evaluation
+        of all relevant questions and composition of result of the task
+        from the evaluation. Currently, the <classname>FirstN</classname>
+        and <classname>FirstNoN</classname> evaluators are implemented,
+        the second used is used for multirelational data mining. The remaining
+        logical parts are contingency table handling and quantifier handling.
+        Both contain untrivial code to deal with their objects of interest.
+      </para>
+    </section>
 	</section>
   <bibliography>
 		<biblioentry>
