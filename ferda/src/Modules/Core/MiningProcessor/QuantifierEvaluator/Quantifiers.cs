@@ -1,3 +1,24 @@
+// Quantifiers.cs - represents set of quantifiers
+//
+// Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
+// Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+//
+// Copyright (c) 2006 Tomáš Kuchaø
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,20 +27,48 @@ using Ferda.Guha.Math.Quantifiers;
 
 namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 {
+    /// <summary>
+    /// Represents set of quantifiers for validation of
+    /// relevant questions traced by a miner.
+    /// </summary>
     public class Quantifiers
     {
+        #region Private fields
+
+        /// <summary>
+        /// Number of invokes before next dynamic reorder of
+        /// quantifiers
+        /// </summary>
         private const int invokesBeforeNextReorderOfQuantifiers = 128;
 
-        private readonly Dictionary<string, Quantifier> _quantifeirs;
+        /// <summary>
+        /// Set of quantifiers in the class
+        /// </summary>
+        private readonly Dictionary<string, Quantifier> _quantifiers;
 
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Set of quantifiers in the class
+        /// </summary>
         public Dictionary<string, Quantifier> Quantifeirs
         {
-            get { return _quantifeirs; }
+            get { return _quantifiers; }
         }
 
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Constructor initializing number of quantifiers
+        /// </summary>
+        /// <param name="quantifiersCount">Number of quantifiers</param>
         private Quantifiers(int quantifiersCount)
         {
-            _quantifeirs = new Dictionary<string, Quantifier>(quantifiersCount);
+            _quantifiers = new Dictionary<string, Quantifier>(quantifiersCount);
         }
 
         /// <summary>
@@ -35,24 +84,37 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             foreach (QuantifierBaseFunctionsPrx prx in quantifiers)
             {
                 Quantifier quantifier = new Quantifier(prx, taskFuncPrx, localePrefs);
-                _quantifeirs.Add(quantifier.Setting.stringIceIdentity, quantifier);
+                _quantifiers.Add(quantifier.Setting.stringIceIdentity, quantifier);
             }
         }
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Quantifiers"/> class.
+        /// </summary>
+        /// <param name="quantifiers">The quantifiers.</param>
+        /// <param name="taskFuncPrx">The "numeric values providers" provider.</param>
         public Quantifiers(QuantifierBaseFunctionsPrx[] quantifiers, BitStringGeneratorProviderPrx taskFuncPrx)
             : this(quantifiers.Length)
         {
             foreach (QuantifierBaseFunctionsPrx prx in quantifiers)
             {
                 Quantifier quantifier = new Quantifier(prx, taskFuncPrx);
-                _quantifeirs.Add(quantifier.Setting.stringIceIdentity, quantifier);
+                _quantifiers.Add(quantifier.Setting.stringIceIdentity, quantifier);
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Gets the setting of the base quantifier, if there is a base
+        /// quantifier connected. Otherwise returns null
+        /// </summary>
+        /// <returns>Base quantifier setting or null</returns>
         public QuantifierSetting GetBaseQuantifierSetting()
         {
             //UNDONE this should return array of all used Base quantifiers (if more than one)
-            foreach (Quantifier value in _quantifeirs.Values)
+            foreach (Quantifier value in _quantifiers.Values)
             {
                 if (value.Setting.boxTypeIdentifier == "GuhaMining.Quantifiers.FourFold.Others.Base")
                     return value.Setting;
@@ -60,6 +122,25 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return null;
         }
 
+        /// <summary>
+        /// Determines which request are valid for this set of
+        /// quantifiers. Returns the information to the parameters.
+        /// </summary>
+        /// <param name="notOnlyFirstSetOperationMode">
+        /// If there exist operation mode different than 
+        /// <c>FirstSetFrequencies</c>. For SD tasks only.
+        /// </param>
+        /// <param name="needsNumericValues">
+        /// If there is a quantifier that needs numeric values.
+        /// </param>
+        /// <param name="notOnlyDeletingMissingInformation">
+        /// If there is a quantifier that requires information
+        /// handling different then <c>Deleting</c>
+        /// </param>
+        /// <param name="maximalRequestedCardinality">
+        /// What is the maximal cardinality requested by 
+        /// quantifiers
+        /// </param>
         public void ValidRequests(
             out bool notOnlyFirstSetOperationMode,
             out bool needsNumericValues,
@@ -96,7 +177,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             notOnlyDeletingMissingInformation = false;
             maximalRequestedCardinality = CardinalityEnum.Nominal;
 
-            foreach (Quantifier value in _quantifeirs.Values)
+            foreach (Quantifier value in _quantifiers.Values)
             {
                 if (value.Setting.operationMode != OperationModeEnum.FirstSetFrequencies)
                 {
@@ -119,6 +200,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         #region Sort quantifiers by efficiency
 
+        /// <summary>
+        /// Sorts quantifiers according to actual efficiency. Acual efficiency
+        /// of the quantifier is used.
+        /// </summary>
+        /// <param name="quantifiers">Quantifiers to be sorted</param>
+        /// <returns>Sorted quantifiers</returns>
         private ICollection<Quantifier> sortByActualEfficiency(ICollection<Quantifier> quantifiers)
         {
             if (quantifiers.Count <= 1)
@@ -145,6 +232,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         private List<Quantifier> _qEasy;
         private int _invokes = 0;
 
+        /// <summary>
+        /// Gets quantifiers sorted by efficiency. The sorting is done
+        /// according to the difficulty of quantifier and according to
+        /// actual efficiency.
+        /// </summary>
+        /// <returns></returns>
         private List<Quantifier> getQuantifiersSortedByEfficiency()
         {
             lock (this)
@@ -153,7 +246,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                 {
                     if (_sortedByEfficiency == null)
                     {
-                        _sortedByEfficiency = new List<Quantifier>(_quantifeirs.Count);
+                        _sortedByEfficiency = new List<Quantifier>(_quantifiers.Count);
 
                         #region Divide by performance difficulty
 
@@ -163,7 +256,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                         _qQuiteEasy = new List<Quantifier>();
                         _qEasy = new List<Quantifier>();
 
-                        foreach (KeyValuePair<string, Quantifier> pair in _quantifeirs)
+                        foreach (KeyValuePair<string, Quantifier> pair in _quantifiers)
                         {
                             switch (pair.Value.PerformanceDifficulty)
                             {
@@ -204,6 +297,94 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         #endregion
 
+        /// <summary>
+        /// The method takes out of the list of contingency tables
+        /// the tables that are 'good', which is determined by
+        /// a list of good flags.
+        /// </summary>
+        /// <param name="contingencyTables">List of contingency tables</param>
+        /// <param name="goodsFlags">List of good flags</param>
+        /// <param name="onlyGoodsIndexes">Indexes of contingency tables,
+        /// that are good.</param>
+        /// <returns>List of good contingency tables.</returns>
+        private List<ContingencyTableHelper> onlyGoods(List<ContingencyTableHelper> contingencyTables, List<bool> goodsFlags, out List<int> onlyGoodsIndexes)
+        {
+            List<ContingencyTableHelper> result = new List<ContingencyTableHelper>();
+            onlyGoodsIndexes = new List<int>();
+
+            for (int i = 0; i < goodsFlags.Count; i++ )
+            {
+                if (goodsFlags[i])
+                {
+                    onlyGoodsIndexes.Add(i);
+                    result.Add(contingencyTables[i]);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// The method takes out of the list of contingency tables
+        /// the tables that are 'good', which is determined by
+        /// an array of good flags.
+        /// </summary>
+        /// <param name="contingencyTables">List of contingency tables</param>
+        /// <param name="goodsFlags">Array of good flags</param>
+        /// <param name="onlyGoodsIndexes">Indexes of contingency tables,
+        /// that are good.</param>
+        /// <returns>List of good contingency tables.</returns>
+        private List<ContingencyTableHelper> onlyGoods(ContingencyTableHelper [] contingencyTables, bool [] goodsFlags, out List<int> onlyGoodsIndexes)
+        {
+            List<ContingencyTableHelper> result = new List<ContingencyTableHelper>();
+            onlyGoodsIndexes = new List<int>();
+            
+            for (int i = 0; i < goodsFlags.Length; i++)
+            {
+                if (goodsFlags[i])
+                {
+                    onlyGoodsIndexes.Add(i);
+                    result.Add(contingencyTables[i]);
+                }
+            }
+            return result;
+        }
+        
+        /// <summary>
+        /// Updates the current list of good flags with new a new list.
+        /// </summary>
+        /// <param name="goodsFlags">The good flags list</param>
+        /// <param name="updateFlags">The update flags array</param>
+        /// <param name="indexes">The indexes to orginal field</param>
+        private void updateGoods(List<bool> goodsFlags, bool[] updateFlags, List<int> indexes)
+        {
+            for (int i = 0; i < updateFlags.Length; i++)
+            {
+                if (!updateFlags[i])
+                    goodsFlags[indexes[i]] = false;
+            }
+        }
+
+        /// <summary>
+        /// Updates the current array of good flags with new a new list.
+        /// </summary>
+        /// <param name="goodsFlags">The good flags array</param>
+        /// <param name="updateFlags">The update flags array</param>
+        /// <param name="indexes">The indexes to orginal field</param>
+        private void updateGoods(bool [] goodsFlags, bool[] updateFlags, List<int> indexes)
+        {
+            for (int i = 0; i < updateFlags.Length; i++)
+            {
+                if (!updateFlags[i])
+                    goodsFlags[indexes[i]] = false;
+            }
+        }
+
+        /// <summary>
+        /// If a contigency table is valid for all the
+        /// quantifiers in this class.
+        /// </summary>
+        /// <param name="contingencyTable">Contingency table</param>
+        /// <returns>Iff it is valid</returns>
         public bool Valid(ContingencyTableHelper contingencyTable)
         {
             if (contingencyTable.IsEmpty)
@@ -217,57 +398,14 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
             return true;
         }
-        
-        private List<ContingencyTableHelper> onlyGoods(List<ContingencyTableHelper> contingencyTables, List<bool> goodsFlags, out List<int> onlyGoodsIndexes)
-        {
-            List<ContingencyTableHelper> result = new List<ContingencyTableHelper>();
-            onlyGoodsIndexes = new List<int>();
-            ;
-            for (int i = 0; i < goodsFlags.Count; i++ )
-            {
-                if (goodsFlags[i])
-                {
-                    onlyGoodsIndexes.Add(i);
-                    result.Add(contingencyTables[i]);
-                }
-            }
-            return result;
-        }
 
-        private List<ContingencyTableHelper> onlyGoods(ContingencyTableHelper [] contingencyTables, bool [] goodsFlags, out List<int> onlyGoodsIndexes)
-        {
-            List<ContingencyTableHelper> result = new List<ContingencyTableHelper>();
-            onlyGoodsIndexes = new List<int>();
-            ;
-            for (int i = 0; i < goodsFlags.Length; i++)
-            {
-                if (goodsFlags[i])
-                {
-                    onlyGoodsIndexes.Add(i);
-                    result.Add(contingencyTables[i]);
-                }
-            }
-            return result;
-        }
-        
-        private void updateGoods(List<bool> goodsFlags, bool[] updateFlags, List<int> indexes)
-        {
-            for (int i = 0; i < updateFlags.Length; i++)
-            {
-                if (!updateFlags[i])
-                    goodsFlags[indexes[i]] = false;
-            }
-        }
-
-        private void updateGoods(bool [] goodsFlags, bool[] updateFlags, List<int> indexes)
-        {
-            for (int i = 0; i < updateFlags.Length; i++)
-            {
-                if (!updateFlags[i])
-                    goodsFlags[indexes[i]] = false;
-            }
-        }
-
+        /// <summary>
+        /// Validates a list of contingency table agains all the containing 
+        /// quantifiers
+        /// </summary>
+        /// <param name="contingencyTables">List of contingency tables</param>
+        /// <returns>A boolean vectors saying which contingency table
+        /// was valid</returns>
         public List<bool> Valid(List<ContingencyTableHelper> contingencyTables)
         {
             List<bool> result = new List<bool>(contingencyTables.Count);
@@ -289,6 +427,13 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return result;
         }
 
+        /// <summary>
+        /// Validates a list of contingency table agains all the containing 
+        /// quantifiers
+        /// </summary>
+        /// <param name="contingencyTables">List of contingency tables</param>
+        /// <returns>A boolean vectors saying which contingency table
+        /// was valid</returns>
         public bool [] Valid(ContingencyTableHelper [] contingencyTables)
         {
             bool [] result = new bool[contingencyTables.Length];
@@ -310,15 +455,21 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return result;
         }
 
+        /// <summary>
+        /// Computes values of containing quantifiers for a given 
+        /// contingency table.
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table</param>
+        /// <returns>Array of validity values</returns>
         public double[] Values(ContingencyTableHelper contingencyTable)
         {
-            double[] result = new double[_quantifeirs.Count];
+            double[] result = new double[_quantifiers.Count];
 
             //UNDONE mozna kontrolovat zda vsechny pouzite kvantifikatory poskytuji ciselne hodnoty
             if (contingencyTable.IsEmpty)
                 return result;
             int i = 0;
-            foreach (Quantifier q in _quantifeirs.Values)
+            foreach (Quantifier q in _quantifiers.Values)
             {
                 result[i] = q.Value(contingencyTable);
                 i++;
@@ -326,12 +477,19 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return result;
         }
 
+        /// <summary>
+        /// Verifies the difference of quantifiers for the SD 
+        /// <c>Difference of quantifiers</c> mode (between the first set and the second set).
+        /// </summary>
+        /// <param name="sDFirstSetValues">Values of quantifiers for the first set</param>
+        /// <param name="sDSecondSetValues">Values of quantifiers for the second set</param>
+        /// <returns>Iff valid (all differences are in given relation)</returns>
         public bool VerifySdDifferenceOfQuantifierValues(double[] sDFirstSetValues, double[] sDSecondSetValues)
         {
             int i = 0;
             Debug.Assert(sDFirstSetValues.Length == sDSecondSetValues.Length);
             Debug.Assert(sDSecondSetValues.Length > 0);
-            foreach (Quantifier q in _quantifeirs.Values)
+            foreach (Quantifier q in _quantifiers.Values)
             {
                 if (!
                 Ferda.Guha.Math.Common.Compare(

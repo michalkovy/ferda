@@ -1,3 +1,24 @@
+// Quantifier.cs - represents a quantifier in the mining processor
+//
+// Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
+// Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+//
+// Copyright (c) 2006 Tomáš Kuchaø
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,47 +37,120 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
     }
 
     /// <summary>
+    /// <para>
+    /// Represents a quantifier for the MiningProcessor. The relevant
+    /// information are taken form the quantifier box modules connected
+    /// to the task box modules in form of proxies.
+    /// </para>
+    /// <para>
     /// Please note that <c>OperationModeEnum OperationMode</c> has 
     /// to be processed externaly i.e. out of this class. In other
     /// words this class has no interests in this property. 
+    /// </para>
     /// </summary>
     public class Quantifier
     {
-        private readonly QuantifierBaseFunctionsPrx _prx;
-        private readonly BitStringGeneratorProviderPrx _taskFuncPrx;
-        private readonly QuantifierValueFunctionsPrx _prxValue;
-        private readonly QuantifierSignificantValueFunctionsPrx _prxSignificantValue;
-        private readonly QuantifierValidFunctionsPrx _prxValid;
+        #region Private fields
 
+        /// <summary>
+        /// Proxy of the basic functions of a quantifier
+        /// (name, settings etc.)
+        /// </summary>
+        private readonly QuantifierBaseFunctionsPrx _prx;
+        /// <summary>
+        /// The "numeric values providers" provider.
+        /// </summary>
+        private readonly BitStringGeneratorProviderPrx _taskFuncPrx;
+        /// <summary>
+        /// This proxy is used, when the quantifier provides numeric values that
+        /// are meaningful to the user.
+        /// </summary>
+        private readonly QuantifierValueFunctionsPrx _prxValue;
+        /// <summary>
+        /// This proxy is used, when the quantifier provides numeric values that
+        /// are not meaningful to the user, however hypotheses can be sorted
+        /// according to these numeric values.
+        /// </summary>
+        private readonly QuantifierSignificantValueFunctionsPrx _prxSignificantValue;
+        /// <summary>
+        /// This proxy is used, when the quantifier can only say, whether
+        /// the contingency table is valid for the quantifier or not.
+        /// </summary>
+        private readonly QuantifierValidFunctionsPrx _prxValid;
+        /// <summary>
+        /// Setting of the quantifier
+        /// </summary>
         private readonly QuantifierSetting _setting;
 
+        /// <summary>
+        /// Iff the quantifier provides numeric values
+        /// meaningful to the user.
+        /// </summary>
+        private readonly bool _providesValues = false;
+
+        /// <summary>
+        /// Iff the quantifier provides numeric values that
+        /// are not meaningful to the user, however hypotheses can be sorted
+        /// according to these numeric values.
+        /// </summary>
+        private readonly bool _providesAtLeastSignificantValues = false;
+
+        /// <summary>
+        /// Operation mode of the quantifier. 
+        /// Please note that <c>OperationMode</c> has 
+        /// to be processed externaly i.e. out of this class. In other
+        /// words this class has no interests in this property. 
+        /// </summary>
+        private readonly OperationModeEnum _operationMode;
+
+        /// <summary>
+        /// Determines, if the quantifier is four-fold only
+        /// </summary>
+        private readonly bool _isPureFourFold;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Setting of the quantifier
+        /// </summary>
         public QuantifierSetting Setting
         {
             get { return _setting; }
         }
 
-        private readonly bool _providesValues = false;
-
+        /// <summary>
+        /// Iff the quantifier provides numeric values
+        /// meaningful to the user.
+        /// </summary>
         public bool ProvidesValues
         {
             get { return _providesValues; }
         }
 
-        private readonly bool _providesAtLeastSignificantValues = false;
-
+        /// <summary>
+        /// Iff the quantifier provides numeric values that
+        /// are not meaningful to the user, however hypotheses can be sorted
+        /// according to these numeric values.
+        /// </summary>
         public bool ProvidesAtLeastSignificantValues
         {
             get { return _providesAtLeastSignificantValues; }
         }
 
-        private readonly OperationModeEnum _operationMode;
-
+        /// <summary>
+        /// Operation mode of the quantifier. 
+        /// Please note that <c>OperationMode</c> has 
+        /// to be processed externaly i.e. out of this class. In other
+        /// words this class has no interests in this property. 
+        /// </summary>
         public OperationModeEnum OperationMode
         {
             get { return _operationMode; }
         }
 
-        private readonly bool _isPureFourFold;
+        #endregion 
 
         #region For TopN algorithm purposes
 
@@ -173,10 +267,21 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         #region Localization - quantifier (boxes) [user] labels
 
+        /// <summary>
+        /// Localization preferences
+        /// </summary>
         private readonly string[] _localePrefs = null;
 
+        /// <summary>
+        /// The localized label of the quantifier
+        /// (the localized name of the quantifier)
+        /// </summary>
         private string _localizedLabel = null;
 
+        /// <summary>
+        /// The localized label of the quantifier
+        /// (the localized name of the quantifier)
+        /// </summary>
         public string LocalizedLabel
         {
             get
@@ -190,8 +295,16 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             }
         }
 
+        /// <summary>
+        /// The localized user label of the quantifier
+        /// (what user sees on desktop)
+        /// </summary>
         private string _localizedUserLabel = null;
 
+        /// <summary>
+        /// The localized user label of the quantifier
+        /// (what user sees on desktop)
+        /// </summary>
         public string LocalizedUserLabel
         {
             get
@@ -207,6 +320,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
 
         #endregion
 
+        /// <summary>
+        /// Constructs a <see cref="Ferda.Guha.Math.Quantifiers.QuantifierEvaluateSetting"/>
+        /// out of the contingancy table stored in <paramref name="contingencyTable"/>
+        /// </summary>
+        /// <param name="contingencyTable">Contingency table</param>
+        /// <returns>Table to be evaluated by quantifier.</returns>
         private QuantifierEvaluateSetting getQuantifierEvaluateSetting(ContingencyTableHelper contingencyTable)
         {
             QuantifierEvaluateSetting setting;
@@ -325,6 +444,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         #endregion
 
         #region Value
+
+        /// <summary>
+        /// Computes a numeric value of the quantifier for a given setting
+        /// </summary>
+        /// <param name="setting">Setting to be evaluated by a quantifier</param>
+        /// <returns>Numeric value of the quantifier</returns>
         private double value(QuantifierEvaluateSetting setting)
         {
             if (Setting.needsNumericValues && String.IsNullOrEmpty(setting.numericValuesAttributeId.value))
@@ -338,17 +463,25 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         }
 
         /// <summary>
-        /// !!! kvantifikatory modu DifferenceOfQuantifierValues v SD tascich smi pouzivat jen toto rozhrani.
-        /// !!! V result browseru ukazovat hodnoty jen tech kvantifikatoru poskytujicich toto rozhrani.
+        /// !!! Quantifiers of the <c>DifferenceOfQuantifierValues</c> must
+        /// use only this method. In the result browser, allow to show values of only
+        /// those quantifiers, that support this interface.
         /// </summary>
         /// <param name="contingencyTable">The contingency table.</param>
-        /// <returns></returns>
+        /// <returns>Value of the quantifier</returns>
         public double Value(ContingencyTableHelper contingencyTable)
         {
             QuantifierEvaluateSetting setting = getQuantifierEvaluateSetting(contingencyTable);
             return value(setting);
         }
 
+        /// <summary>
+        /// Gets value of the quantifier depending on the operation
+        /// mode. Used mainly for the SD quantifiers.
+        /// </summary>
+        /// <param name="hypothesis">Hypothesis</param>
+        /// <param name="allObjectsCount">Count of all objects</param>
+        /// <returns>Value of quantifier</returns>
         public double Value(Hypothesis hypothesis, long allObjectsCount)
         {
             switch (_setting.operationMode)
@@ -368,8 +501,21 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
                     throw new NotImplementedException();
             }
         }
+
         #endregion
 
+        #region At least significant values
+
+        /// <summary>
+        /// Returns if the quantifier is valid for a given setting + in the 
+        /// <paramref name="value"/> parameter show the significant value of the
+        /// quantifier. Significant value means the quantifier provides numeric 
+        /// values that are not meaningful to the user, however hypotheses can be 
+        /// sorted according to these numeric values.
+        /// </summary>
+        /// <param name="setting">Contingency table setting to be evaluated</param>
+        /// <param name="value">Where the significant value is stored</param>
+        /// <returns>If the quantifier is valid</returns>
         private bool atLeastSignificantValidValue(QuantifierEvaluateSetting setting, out double value)
         {
             Debug.Assert(!(Setting.needsNumericValues && String.IsNullOrEmpty(setting.numericValuesAttributeId.value)));
@@ -398,20 +544,43 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return atLeastSignificantValidValue(setting, out value);
         }
 
+        #endregion
+
+        #region Valid
+
+        /// <summary>
+        /// How much time did the computation of quantifiers take
+        /// (Ice communication)
+        /// </summary>
         private static long _iceTicks;
+        /// <summary>
+        /// How much time did the computation of quantifiers take
+        /// </summary>
         public static long IceTicks
         {
             get { return _iceTicks; }
             set { _iceTicks = value; }
         }
 
+        /// <summary>
+        /// How much Ice calls were made during the computation of quantifiers
+        /// </summary>
         private static long _iceCalls;
+        /// <summary>
+        /// How much Ice calls were made during the computation of quantifiers
+        /// </summary>
         public static long IceCalls
         {
             get { return _iceCalls; }
             set { _iceCalls = value; }
         }
         
+        /// <summary>
+        /// Determines, if the quantifier is valid for setting
+        /// in the parameter.
+        /// </summary>
+        /// <param name="setting">Contingency table setting</param>
+        /// <returns>Iff the quantifier is valid</returns>
         private bool valid(QuantifierEvaluateSetting setting)
         {
             long before = DateTime.Now.Ticks;
@@ -437,6 +606,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return result;
         }
 
+        /// <summary>
+        /// Examines the validity of a quantifier on an array
+        /// of quantifier evaluation (contingency tables) setting. 
+        /// </summary>
+        /// <param name="setting">Contingency table setting</param>
+        /// <returns>Iff the quantifier is valid</returns>
         private bool[] valid(QuantifierEvaluateSetting[] setting)
         {
             long before = DateTime.Now.Ticks;
@@ -473,6 +648,12 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
             return valid(setting);
         }
 
+        /// <summary>
+        /// !!! Pro kvantifikatory neposkytujici jiny interface,
+        /// !!! Pro ucely FirstN
+        /// </summary>
+        /// <param name="contingencyTable">The contingency table.</param>
+        /// <returns></returns>
         public bool[] Valid(List<ContingencyTableHelper> contingencyTables)
         {
             QuantifierEvaluateSetting[] setting = new QuantifierEvaluateSetting[contingencyTables.Count];
@@ -486,11 +667,13 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         /// <summary>
         /// Pro zjisteni validity u SD kvantifikatoru. Napr typu AbsoluteDifferenceOfQuantifierValues
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">Value of the quantifier</param>
+        /// <returns>If it is in relation with the treshold</returns>
         public bool TestTreshold(double value)
         {
             return Common.Compare(_setting.relation, value, _setting.treshold);
         }
+
+        #endregion
     }
 }
