@@ -420,6 +420,15 @@
         Both contain untrivial code to deal with their objects of interest.
       </para>
     </section>
+    <section>
+      <title>Results</title>
+      <para>
+        The Results part takes care about result serialization and interpretatation.
+        There are effective and serializable classes defined, and user can access
+        the results (hyptheses, formulas) via these classes. This is used mainly
+        in the Result Browser module for interaction.
+      </para>
+    </section>
 	</section>
   <bibliography>
 		<biblioentry>
