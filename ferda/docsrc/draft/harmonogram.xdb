@@ -461,6 +461,13 @@
       2. Do funkčnosti je stejná jako verze 1.0.
     </para>
     <para>
+      Díky intezivnímu ladění diplomové práce A. Kuzmina se Ferda v prvním dubnovém
+      týdnu dostal do Top 1000 listu projektů na sourceforge z hlediska jejich aktivity,
+      konkrétně na 817 místo
+      Tento server sdružuje více než 145 000 open-source projektů, proto je umístnění
+      považováno za úspěch.
+    </para>
+    <para>
       Koncem dubna byl Ferda představen česko-slovenské komunitě výzkumníků
       relačního dobývání znalostí na konferenci CSRDM (konané v maďarském 
       Abaujszanto). Posléze byl současný rozvoj projektu představen na Hájkově semináři, 
@@ -503,6 +510,14 @@
             </entry>
             <entry>
               Verze 2.1 RC na sourceforge
+            </entry>
+          </row>
+          <row>
+            <entry>
+              7.4.
+            </entry>
+            <entry>
+              Ferda na 817 místě v Top 1000 listu na sourceforge
             </entry>
           </row>          
           <row>
