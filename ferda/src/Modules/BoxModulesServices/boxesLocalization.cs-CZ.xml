@@ -319,9 +319,9 @@
 				<Hint>Average value in the column.</Hint>
 			</Socket>
 			<Socket>
-				<Name>ValueVariability</Name>
-				<Label>Variability</Label>
-				<Hint>Variability of values in the column.</Hint>
+				<Name>ValueVariance</Name>
+				<Label>Variance</Label>
+				<Hint>Variance of values in the column.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ValueStandardDeviation</Name>
