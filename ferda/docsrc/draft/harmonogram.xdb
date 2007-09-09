@@ -9,8 +9,8 @@
       <email>martin.ralbovsky@gmail.com</email>
     </author>
     <pubdate>2006-03-21</pubdate>
-    <title>Harmonogram projektu Ferda</title>
-    <titleabbrev>HarmonogramProjektu</titleabbrev>
+    <title>Historie projektu Ferda</title>
+    <titleabbrev>HistorieProjektu</titleabbrev>
     <!--
     <revhistory>
       <revision>
@@ -22,6 +22,16 @@
           </para>
         </revdescription>
       </revision>       
+      <revision>
+        <revnumber>0.2</revnumber>
+        <date>2006-9-9</date>
+        <revdescription>
+          <para>
+            Aktualizace dokumentu
+            (dění do 09/2007)
+          </para>
+        </revdescription>
+      </revision>
     </revhistory>
     -->
   </articleinfo>
@@ -310,12 +320,58 @@
   <section>
     <title>Rok 2006</title>
     <para>
-      V roce 2006 se zatím udála jedna významná událost a to konference Znalosti 2006. Členové
-      teamu úspěšně prezentovali Ferdu na této konferenci a tím se dostal Ferda do podvědomí
+      První významnou událostí roku 2006 byla konference Znalosti 2006. Členové
+      teamu úspěšně prezentovali Ferdu článkem <citation>Znalosti2006</citation>
+      a tím se dostal Ferda do podvědomí
       široké vědecké veřejnosti. Ferda se dále ladí a zlepšuje, z několikaměsíčního používání
       programu se zjistilo, že některé dříve navržené postupy nejsou vhodné a je dobré je
       nahradit jinými. Ferda už je mnohem stabilnější a rychlejší. Tvůrci Ferdy budou na 
       programu pracovat i v rámci svých diplomových prací.
+    </para>
+    <para>
+      Dne 7.4. se konala obhajoba projektu. Ferda na ní byl úspěšně obhájen. Poté
+      následovala přirozená diskuse, co s projektem této velikosti dál. Vhodným krokem
+      se zdál být hlavně rozvoj systému v rámci diplomových prací. Proto všichni tvůrci
+      rozhodli zadat si diplomové práce na témata spojená s Ferdou.
+    </para>
+    <para>
+      4. května byl spolu s referátem o systému Report Asistent přednesen na semináři KEG
+      referát o součastném stavu a příštích plánech projektu Ferda.
+    </para>
+    <para>
+      V průběhu léta dokončovali své diplomové práce první dva členové teamu. 11. září
+      se konala jejich obhajoba. Martin Ralbovský se ve své práci 
+      <classname>Využití doménových znalostí při aplikacích GUHA procedur</classname>
+      <citation>Ralbovsky</citation> pokoušel použít různé typy doménových znalostí
+      pro lepší práci s GUHA procedurami implementovanými v systému Ferda. Uvažované 
+      byly dva typy těchto znalostí, <classname>ontologie</classname> a 
+      <classname>background knowledge</classname>. U background knowledge došlo i
+      k implementaci validátoru background knowledge pravidel vůči GUHA hypotézám. Tato
+      implementace byla provedena ve verzi 1.0. Ferda byl také prezentován v článku
+      <citation>Ontology</citation> jako možný implementační nástroj pro 
+      zpracování konceptů navržených autory. 
+    </para>
+    <para>
+      Tomáš Kuchař taktéž obhajoval svou diplomovou práci 11. září. Ve své práci
+      <classname>Experimentální GUHA procedury</classname> vytvořil novou implementaci
+      šesti procedur ze systému LISp-Miner <citation>Kuchar</citation>. Tímto se Ferda
+      osamostatnil od systému LISp-Miner. Nová verze Ferdy dostala označení 2.0. 
+      Tuto událost chápeme jako významný milník celého projektu. Bohužel se v rámci
+      práce nestihli zprovoznit některé moduly (hlavně moduly pro interakci), které
+      byli v dřívější verzi funkční.
+    </para>
+    <para>
+      Na podzim nastupuje Martin Ralbovský na doktorské studium na KIZI FIS VŠE pod
+      vedením doc. Raucha. Tímto
+      je částečně zaručeno pokračování projektu na akademické půdě. Zároveň se Ferda
+      přesouvá z MFF na VŠE, kde bude muset nalézt (zejména materiální) podporu. 
+      Je totiž zřejmé, že původní členové teamu nejsou schopni pouze ve svém volném 
+      čase plně zajistit provozování a rozvoj tak velkého projektu, jako je Ferda.
+      V průběhu podzimu M. Ralbovský převádí a doprogramovává chybějící části pod
+      verzi 2.0 spolu s Alexandrem Kuzminem, který dělá chybějící typy atributů.
+    </para>
+    <para>
+      V samotném závěru roku 2006 je Ferda opět prezentován na semináři KEG.
     </para>
     <table>
       <title>Přehled aktivit za rok 2006</title>
@@ -353,8 +409,266 @@
               Obhajoba projektu
             </entry>
           </row>
+          <row>
+            <entry>
+              4.5.2006
+            </entry>
+            <entry>
+              Referát KEG o dalších plánech projektu
+            </entry>
+          </row>          
+          <row>
+            <entry>
+              11.9.2006
+            </entry>
+            <entry>
+              Obhajoba diplomových prací M. Ralbovského a T. Kuchaře
+            </entry>
+          </row>
+          <row>
+            <entry>
+              13.11.2006
+            </entry>
+            <entry>
+              Verze 2.0 na sourceforge
+            </entry>
+          </row>
+          <row>
+            <entry>
+              14.12.2006
+            </entry>
+            <entry>
+              Referát KEG o součastném stavu projektu
+            </entry>
+          </row>
         </tbody>
       </tgroup>
     </table>
   </section>
+  <section>
+    <title>Rok 2007</title>
+    <para>
+      Začátkem roku 2007 M. Ralbovský dostává místo vědeckého pracovníka na 
+      nově získaném výzkumném záměru FIS. Tím, že má zabezpečený stálý příjem,
+      může se věnovat práci na projektu. Ferda tudíž získal nepřímo finanční 
+      podporu od VŠE (MŠMT) a může se dále rozvíjet. V prvních měsících začal
+      pracovat na projektu Dan Kupka, student MFF v rámci své diplomové práce.
+      Vyvíjel formulářový systém pro podporu uživatelských rozhodnutí Ferda Wizard.
+    </para>
+    <para>
+      14. 3. byla na sourceforge uvedena nová verze programu, 2.1 RC. Tato verze 
+      obsahuje dokončené moduly pro interakci a atributy, které chyběly ve verzi
+      2. Do funkčnosti je stejná jako verze 1.0.
+    </para>
+    <para>
+      Koncem dubna byl Ferda představen česko-slovenské komunitě výzkumníků
+      relačního dobývání znalostí na konferenci CSRDM (konané v maďarském 
+      Abaujszanto). Posléze byl současný rozvoj projektu představen na Hájkově semináři, 
+      což se setkalo se značným zájmem.
+    </para>
+    <para>
+      21. května obhájil Alexander Kuzmin svoji diplomovou práci
+      <classname>Relační GUHA procedury</classname> <citation>Kuzmin</citation>.
+      V této diplomové práci se podařilo implementovat relační rozšíření procedur
+      4FT a SD4FT. A. Kuzmin hodlá pokračovat s relační tematikou i dále
+      v doktorském studiu na KIZI FIS VŠE pod vedením doc. Raucha. Diplomová 
+      práce byla v krátkosti představena na semináři KEG.
+      Součastně 
+      začal pracovat na projektu další student MFF, Martin Zeman. Ten se pod 
+      vedením M. Ralbovského pokusí v rámci své diplomové práce implementovat
+      rozšíření pro ontologie.
+    </para>
+    <para>
+      V červnu byl Ferda prezentován na mezinárodní konferenci ICDM 2007 v Lipsku
+      s článkem <citation>Disjunctions</citation>. Článek probíral problematiku 
+      použití disjunkcí v dobývání znalostí pomocí asociačních pravidel.
+      Použití disjunkcí je změna, která přišla s verzí 2.0 (LISp-Miner disjunkce
+      neuměl).
+    </para>
+    <para>
+      I když v první polovině roku dosáhl Ferda a vědecká práce spojená s ním
+      značných publikačních úspěchů, je stále zřejmé že program není řádně dodělán
+      ani otestován. Proto M. Ralbovský pokračoval v létě na práci na Ferdovi
+      (nyní již sám). Věnoval se zejména dokumentace části FerdaCore, dopisováním
+      jiné dokumentace a vysvětlováním fungování Ferdy novým učastníkům projektu.
+      Tento proces bude beze sporu ještě dlouho pokračovat.
+    </para>
+    <table>
+      <title>Přehled aktivit za rok 2007</title>
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>
+              14.3.
+            </entry>
+            <entry>
+              Verze 2.1 RC na sourceforge
+            </entry>
+          </row>          
+          <row>
+            <entry>
+              28. - 30. 4.
+            </entry>
+            <entry>
+              Konference CSRDM
+            </entry>
+          </row>
+          <row>
+            <entry>
+              2.5.
+            </entry>
+            <entry>
+              Vystoupení na Hájkově semináři
+            </entry>
+          </row>
+          <row>
+            <entry>
+              21.5.
+            </entry>
+            <entry>
+              Obhájena diplomová práce A. Kuzmina
+            </entry>
+          </row>
+          <row>
+            <entry>
+              21.5.
+            </entry>
+            <entry>
+              Diplomová práce A. Kuzmina představena na semináři KEG
+            </entry>
+          </row>
+          <row>
+            <entry>
+              15. - 17.7.
+            </entry>
+            <entry>
+              Konference IDCM 2007
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>    
+  </section>
+  <bibliography>
+    <biblioentry>
+      <abbrev>Znalosti2006</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Michal</firstname>
+          <surname>Kováč</surname>
+        </author>
+        <author>
+          <firstname>Tomáš</firstname>
+          <surname>Kuchař</surname>
+        </author>
+        <author>
+          <firstname>Alexander</firstname>
+          <surname>Kuzmin</surname>
+        </author>
+        <author>
+          <firstname>Martin</firstname>
+          <surname>Ralbovský</surname>
+        </author>        
+      </authorgroup>
+      <title>Ferda, nové vizuální prostředí pro dobývání znalostí</title>
+      <publisher>
+        <publishername>
+          Znalosti 2006, Sborník příspěvků 5. ročníku konference, Hradec Králové 2006, 
+          ISBN 80-248-1001-8
+        </publishername>
+      </publisher>
+    </biblioentry>    
+    <biblioentry>
+      <abbrev>Ralbovsky</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Martin</firstname>
+          <surname>Ralbovský</surname>
+        </author>
+      </authorgroup>
+      <title>Využití doménových znalostí při aplikacích GUHA procedur</title>
+      <publisher>
+        <publishername>
+          Master thesis at Faculty of Mathematics and Physics,
+          Charles University, Prague (in Czech)
+        </publishername>
+      </publisher>      
+    </biblioentry>
+    <biblioentry>
+      <abbrev>Kuchar</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Tomáš</firstname>
+          <surname>Kuchař</surname>
+        </author>
+      </authorgroup>
+      <title>Experimentální GUHA procedury</title>
+      <publisher>
+        <publishername>
+          Master thesis at Faculty of Mathematics and Physics,
+          Charles University, Prague (in Czech)
+        </publishername>
+      </publisher>
+    </biblioentry>
+    <biblioentry>
+      <abbrev>Ontology</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Vojtěch</firstname>
+          <surname>Svátek</surname>
+        </author>
+        <author>
+          <firstname>Jan</firstname>
+          <surname>Rauch</surname>
+        </author>
+        <author>
+          <firstname>Martin</firstname>
+          <surname>Ralbovský</surname>
+        </author>
+      </authorgroup>
+      <title>Ontology-Enhanced Association Mining</title>
+      <publisher>
+        <publishername>
+          Ackermann, Berendt (eds.). Semantics, Web and Mining, Springer-Verlag 2006
+        </publishername>
+      </publisher>
+    </biblioentry>
+    <biblioentry>
+      <abbrev>Kuzmin</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Alexander</firstname>
+          <surname>Kuzmin</surname>
+        </author>
+      </authorgroup>
+      <title>Relační GUHA procedury</title>
+      <publisher>
+        <publishername>
+          Master thesis at Faculty of Mathematics and Physics,
+          Charles University, Prague (in Czech)
+        </publishername>
+      </publisher>
+    </biblioentry>
+    <biblioentry>
+      <abbrev>Disjunctions</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Martin</firstname>
+          <surname>Ralbovský</surname>
+        </author>
+        <author>
+          <firstname>Tomáš</firstname>
+          <surname>Kuchař</surname>
+        </author>
+      </authorgroup>
+      <title>Using Disjunctions in Association Mining</title>
+      <publisher>
+        <publishername>
+          P. Perner (Ed.),
+          Advances in Data Mining - Theoretical Aspects and Applications, LNAI
+          4597, Springer Verlag, Heidelberg 2007
+        </publishername>
+      </publisher>
+    </biblioentry>    
+  </bibliography>
 </article>
