@@ -687,7 +687,7 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
-				<Name>ValueVariability</Name>
+				<Name>ValueVariance</Name>
 				<SocketTypes>
 					<BoxType>
 						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
@@ -817,7 +817,7 @@
 				<ReadOnly>true</ReadOnly>
 			</Property>
 			<Property>
-				<Name>ValueVariability</Name>
+				<Name>ValueVariance</Name>
 				<TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
 				<CategoryName>Statistics</CategoryName>
 				<Visible>true</Visible>
