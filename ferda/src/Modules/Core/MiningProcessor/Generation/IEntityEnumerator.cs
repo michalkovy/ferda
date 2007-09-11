@@ -56,10 +56,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// </summary>
         Set<string> UsedAttributes { get; }
         /// <summary>
-        /// Set of used entities by enumerator
-        /// </summary>
-        Set<string> UsedEntities { get; }
-        /// <summary>
         /// Cedent type of the enumerator
         /// </summary>
         MarkEnum CedentType { get;}
