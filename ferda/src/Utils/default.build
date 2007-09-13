@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <project name="Ferda utils sources" default="build" basedir=".">
 	<description>project Ferda utils sources</description>
 	<target name="build" description="Build sources" depends="ConfigGeneratorBuild"/>
