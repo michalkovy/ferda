@@ -20,7 +20,7 @@
 	<property name="utils.dir" value="${path::get-full-path('utils')}"/>
 	<property name="snapshot.dir" value="${path::combine(directory::get-current-directory(),'snapshot')}" unless="${property::exists('snapshot.dir')}"/>
 	<property name="docs.build.file" value="docs/docs.build"/>
-	<property name="ice.dir" value="c:\Ice-3.2.0\" unless="${property::exists('ice.dir')}"/>
+	<property name="ice.dir" value="c:\Ice-3.2.1\" unless="${property::exists('ice.dir')}"/>
 	<property name="installer.dir" value="${path::get-full-path('installer')}"/>
 	<target name="clean" description="Smaže build">
 		<nant buildfile="${path::combine(slice.dir,default.build)}" target="clean">
