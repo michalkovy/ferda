@@ -73,8 +73,6 @@
   <ItemGroup>
     <Compile Include="AtomSetting\BoxInfo.cs" />
     <Compile Include="AtomSetting\Functions.cs" />
-    <Compile Include="ClassOfEquivalence\BoxInfo.cs" />
-    <Compile Include="ClassOfEquivalence\Functions.cs" />
     <Compile Include="ConjunctionSetting\BoxInfo.cs" />
     <Compile Include="ConjunctionSetting\Functions.cs" />
     <Compile Include="DisjunctionSetting\BoxInfo.cs" />

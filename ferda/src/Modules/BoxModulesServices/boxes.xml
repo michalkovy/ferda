@@ -2241,9 +2241,6 @@
 			<ModulesAskingForCreation>
 				<Name>Sign</Name>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>
 	<Box>
@@ -2453,9 +2450,6 @@
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>Sign</Name>
-			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>
@@ -2691,9 +2685,6 @@
 			<ModulesAskingForCreation>
 				<Name>Sign</Name>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>
 	<Box>
@@ -2850,9 +2841,6 @@
 			<ModulesAskingForCreation>
 				<Name>Sign</Name>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>
 	<Box>
@@ -2951,29 +2939,7 @@
 			<ModulesAskingForCreation>
 				<Name>DisjunctionSetting</Name>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
-	</Box>
-	<Box>
-		<Identifier>GuhaMining.ClassOfEquivalence</Identifier>
-		<IconPath>boxIcon.ico</IconPath>
-		<DesignPath>boxDesign.svg</DesignPath>
-		<Categories>
-			<string>GuhaMining</string>
-		</Categories>
-		<Sockets>
-			<Socket>
-				<Name>BooleanAttributeSetting</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Guha::MiningProcessor::BooleanAttributeSettingFunctions</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>true</MoreThanOne>
-			</Socket>
-		</Sockets>
 	</Box>
 	<Box>
 		<Identifier>GuhaMining.ConjunctionSetting</Identifier>
@@ -2988,15 +2954,6 @@
 				<SocketTypes>
 					<BoxType>
 						<FunctionIceId>::Ferda::Guha::MiningProcessor::BooleanAttributeSettingFunctions</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>true</MoreThanOne>
-			</Socket>
-			<Socket>
-				<Name>EquivalenceClasses</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Guha::MiningProcessor::EquivalenceClassFunctions</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>true</MoreThanOne>
@@ -3101,9 +3058,6 @@
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>Sign</Name>
-			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>
@@ -3125,15 +3079,6 @@
 				<MoreThanOne>true</MoreThanOne>
 			</Socket>
 			<Socket>
-				<Name>EquivalenceClasses</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Guha::MiningProcessor::EquivalenceClassFunctions</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>true</MoreThanOne>
-			</Socket>
-			<Socket>
 				<Name>Guid</Name>
 				<SocketTypes>
 					<BoxType>
@@ -3233,9 +3178,6 @@
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>Sign</Name>
-			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>

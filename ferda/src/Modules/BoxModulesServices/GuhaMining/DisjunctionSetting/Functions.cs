@@ -62,7 +62,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
         public const string PropMinimalLength = "MinimalLength";
         public const string PropMaximalLength = "MaximalLength";
         public const string SockBooleanAttributeSetting = "BooleanAttributeSetting";
-        public const string SockEquivalenceClasses = "EquivalenceClasses";
 
         /// <summary>
         /// The GUID identifier of the atom
@@ -124,23 +123,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
         }
 
         /// <summary>
-        /// Returns proxies of boxes connected to the classes of equivalence
-        /// socket
-        /// </summary>
-        /// <param name="fallOnError">If the function should throw an exception
-        /// when error</param>
-        /// <returns>Proxies of connected boxes</returns>
-        public List<EquivalenceClassFunctionsPrx> GetEquivalenceClassFunctionsPrxs(bool fallOnError)
-        {
-            return SocketConnections.GetPrxs<EquivalenceClassFunctionsPrx>(
-                _boxModule,
-                SockEquivalenceClasses,
-                EquivalenceClassFunctionsPrxHelper.checkedCast,
-                false,
-                fallOnError);
-        }
-
-        /// <summary>
         /// Gets the label of the boxes connected to the Boolean Attribute setting socket
         /// </summary>
         /// <returns>Connected boxes labels</returns>
@@ -166,9 +148,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
                     {
                         List<BooleanAttributeSettingFunctionsPrx> subFormulas =
                             GetBooleanAttributeSettingFunctionsPrxs(fallOnError);
-                        List<EquivalenceClassFunctionsPrx> equivalenceClasses =
-                            GetEquivalenceClassFunctionsPrxs(fallOnError);
-                        if (subFormulas == null || equivalenceClasses == null)
+                        if (subFormulas == null)
                             return null;
                         else
                         {
@@ -184,12 +164,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
                                 operands.Add(prx.GetEntitySetting());
                             }
                             result.operands = operands.ToArray();
-                            List<GuidStruct[]> classesOfEquivalence = new List<GuidStruct[]>();
-                            foreach (EquivalenceClassFunctionsPrx prx in equivalenceClasses)
-                            {
-                                classesOfEquivalence.Add(prx.GetEquivalenceClass());
-                            }
-                            result.classesOfEquivalence = classesOfEquivalence.ToArray();
                             return result;
                         }
                     },

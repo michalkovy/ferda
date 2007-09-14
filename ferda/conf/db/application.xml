@@ -41,7 +41,6 @@
 			<object identity="GuhaMining.FixedAtom" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.AtomSetting" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Sign" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-			<object identity="GuhaMining.ClassOfEquivalence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.ConjunctionSetting" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.DisjunctionSetting" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.FourFold" type="::Ferda::Modules::BoxModuleFactoryCreator"/>

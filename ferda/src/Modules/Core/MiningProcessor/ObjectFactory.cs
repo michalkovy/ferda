@@ -107,8 +107,8 @@ namespace Ferda.Guha.MiningProcessor
     public class ConjunctionSettingI : ConjunctionSetting
     {
         public ConjunctionSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting[] operands,
-                                   GuidStruct[][] classesOfEquivalence, int minLength, int maxLength)
-            : base(id, importance, operands, classesOfEquivalence, minLength, maxLength)
+                                   int minLength, int maxLength)
+            : base(id, importance, operands, minLength, maxLength)
         {
         }
 
@@ -122,8 +122,8 @@ namespace Ferda.Guha.MiningProcessor
     public class DisjunctionSettingI : DisjunctionSetting
     {
         public DisjunctionSettingI(GuidStruct id, ImportanceEnum importance, IEntitySetting[] operands,
-                                   GuidStruct[][] classesOfEquivalence, int minLength, int maxLength)
-            : base(id, importance, operands, classesOfEquivalence, minLength, maxLength)
+                                   int minLength, int maxLength)
+            : base(id, importance, operands, minLength, maxLength)
         {
         }
 
