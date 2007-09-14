@@ -361,7 +361,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
     /// (Conjunction, Disjunction)
     /// </summary>
     public abstract class MutliOperandEntity : EntityEnumerable, INotLeafEntityEnumerator
-    {
+    {   
         #region Constructor
 
         /// <summary>
@@ -370,7 +370,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <param name="setting">The setting of this enumerator</param>
         /// <param name="skipOptimalization">The skip optimalization.</param>
         /// <param name="cedentType">Type of the cedent.</param>
-        protected MutliOperandEntity(IMultipleOperandEntitySetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
+        protected MutliOperandEntity(IMultipleOperandEntitySetting setting, 
+            ISkipOptimalization skipOptimalization, MarkEnum cedentType)
             : base(setting.id, skipOptimalization, cedentType)
         {
             if (setting == null)

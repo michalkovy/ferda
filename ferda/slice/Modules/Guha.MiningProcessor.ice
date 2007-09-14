@@ -182,7 +182,7 @@ module Ferda {
 				class IMultipleOperandEntitySetting extends IEntitySetting
 				{
 					IEntitySettingSeq operands;
-					Ferda::Modules::GuidStructSeqSeq classesOfEquivalence;
+					//Ferda::Modules::GuidStructSeqSeq classesOfEquivalence;
 					int minLength;
 					int maxLength;
 				};
@@ -209,12 +209,6 @@ module Ferda {
 				
 				interface BooleanAttributeSettingWithBSGenerationAbilityFunctions extends BooleanAttributeSettingFunctions, BitStringGenerator
 				{	
-				};
-
-				interface EquivalenceClassFunctions
-				{
-					idempotent Ferda::Modules::GuidStructSeq GetEquivalenceClass()
-						throws Ferda::Modules::BoxRuntimeError;
 				};
 
 				// MINING TASK BOX MODULE FUNCTIOS

@@ -115,7 +115,6 @@
       <Name>IMultipleOperandEntitySetting</Name>
       <Access>Public</Access>
       <Member type="Field">public IEntitySetting [] operands</Member>
-      <Member type="Field">public Ferda.Modules.GuidStructSeqSeq classesOfEquivalence</Member>
       <Member type="Field">public int minLength</Member>
       <Member type="Field">public int maxLength</Member>
       <Modifier>None</Modifier>
@@ -143,11 +142,6 @@
     <Entity type="Interface">
       <Name>BooleanAttributeSettingWithGenerationAbilityFunctions</Name>
       <Access>Public</Access>
-    </Entity>
-    <Entity type="Interface">
-      <Name>EquivalenceClassFunctions</Name>
-      <Access>Public</Access>
-      <Member type="Method">Ferda.Modules.GuidStructSeq GetEquivalenceClass()</Member>
     </Entity>
     <Entity type="Interface">
       <Name>MiningTaskFunctions</Name>
@@ -285,50 +279,50 @@
     </Relation>
     <Relation type="Dependency" first="20" second="21" />
     <Relation type="Dependency" first="5" second="21" />
-    <Relation type="Dependency" first="19" second="23" />
-    <Relation type="Association" first="27" second="7">
+    <Relation type="Dependency" first="19" second="22" />
+    <Relation type="Association" first="26" second="7">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
-    <Relation type="Association" first="28" second="5">
+    <Relation type="Association" first="27" second="5">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
-    <Relation type="Association" first="31" second="24">
+    <Relation type="Association" first="30" second="23">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
-    <Relation type="Association" first="31" second="25">
+    <Relation type="Association" first="30" second="24">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
-    <Relation type="Association" first="31" second="29">
+    <Relation type="Association" first="30" second="28">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
-    <Relation type="Association" first="27" second="26">
+    <Relation type="Association" first="26" second="25">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
-    <Relation type="Association" first="28" second="26">
+    <Relation type="Association" first="27" second="25">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
-    <Relation type="Association" first="31" second="30">
+    <Relation type="Association" first="30" second="29">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
     <Relation type="Dependency" first="3" second="4" />
     <Relation type="Dependency" first="4" second="5" />
-    <Relation type="Dependency" first="4" second="23" />
+    <Relation type="Dependency" first="4" second="22" />
   </Relations>
   <Positions>
     <Shape>
@@ -418,10 +412,6 @@
     <Shape>
       <Location left="751" top="1030" />
       <Size width="334" height="70" />
-    </Shape>
-    <Shape>
-      <Location left="8" top="380" />
-      <Size width="304" height="100" />
     </Shape>
     <Shape>
       <Location left="220" top="864" />

@@ -20,7 +20,6 @@ namespace Ferda.Modules.Boxes.GuhaMining
         {
             // guha mining setting
             registerBox(AtomSetting.BoxInfo.typeIdentifier, new AtomSetting.BoxInfo());
-            registerBox(ClassOfEquivalence.BoxInfo.typeIdentifier, new ClassOfEquivalence.BoxInfo());
             registerBox(ConjunctionSetting.BoxInfo.typeIdentifier, new ConjunctionSetting.BoxInfo());
             registerBox(DisjunctionSetting.BoxInfo.typeIdentifier, new DisjunctionSetting.BoxInfo());
             registerBox(FixedAtom.BoxInfo.typeIdentifier, new FixedAtom.BoxInfo());

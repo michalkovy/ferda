@@ -155,19 +155,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
                             DisjunctionSetting.BoxInfo.typeIdentifier;
                         break;
 
-                    case "ClassOfEquivalence":
-                        //creating the info about the connections of the new module
-                        moduleConnection.socketName =
-                            ClassOfEquivalence.Functions.SockBooleanAttributeSetting;
-                        moduleConnection.boxModuleParam = boxModule.MyProxy;
-
-                        //creating the new (single) module
-                        singleModule.modulesConnection =
-                            new ModulesConnection[] { moduleConnection };
-                        singleModule.newBoxModuleIdentifier =
-                            ClassOfEquivalence.BoxInfo.typeIdentifier;
-                        break;
-
                     default:
                         throw new NotImplementedException();
                 }

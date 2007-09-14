@@ -1445,11 +1445,6 @@
 				<Label>Sign</Label>
 				<Hint>Adds a sign to the boolean attribute setting</Hint>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-				<Label>Class of Equivalence</Label>
-				<Hint>Creates a class of equivalence</Hint>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
@@ -1550,11 +1545,6 @@
 				<Name>Sign</Name>
 				<Label>Sign</Label>
 				<Hint>Adds a sign to the boolean attribute setting</Hint>
-			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-				<Label>Class of Equivalence</Label>
-				<Hint>Creates a class of equivalence</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
@@ -1697,11 +1687,6 @@
 				<Name>Sign</Name>
 				<Label>Sign</Label>
 				<Hint>Adds a sign to the boolean attribute setting</Hint>
-			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-				<Label>Class of Equivalence</Label>
-				<Hint>Creates a class of equivalence</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
@@ -1865,11 +1850,6 @@
 				<Label>Sign</Label>
 				<Hint>Adds a sign to the boolean attribute setting</Hint>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-				<Label>Class of Equivalence</Label>
-				<Hint>Creates a class of equivalence</Hint>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
@@ -1938,30 +1918,7 @@
 				<Label>Disjunction Setting</Label>
 				<Hint>Creates a disjunction setting</Hint>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-				<Label>Class of Equivalence</Label>
-				<Hint>Creates a class of equivalence</Hint>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
-	</BoxLocalization>
-	<BoxLocalization>
-		<Identifier>GuhaMining.ClassOfEquivalence</Identifier>
-		<Label>Class of Equivalence</Label>
-		<Hint>Defines class of equivalence of subformulas in formula.</Hint>
-		<Categories>
-			<Category>
-				<Name>GuhaMining</Name>
-				<Label>Guha Mining</Label>
-			</Category>
-		</Categories>
-		<Sockets>
-			<Socket>
-				<Name>BooleanAttributeSetting</Name>
-				<Label>Boolean attribute setting</Label>
-				<Hint>Box modules providing setting of (partial) boolean attribute which belongs to one class of equivalence i.e. there can not be more than one partial boolean attribute used in final formula.</Hint>
-			</Socket>
-		</Sockets>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>GuhaMining.ConjunctionSetting</Identifier>
@@ -1978,11 +1935,6 @@
 				<Name>BooleanAttributeSetting</Name>
 				<Label>Boolean attribute setting</Label>
 				<Hint>Box modules providing setting of (partial) boolean attribute.</Hint>
-			</Socket>
-			<Socket>
-				<Name>EquivalenceClasses</Name>
-				<Label>Classes of equivalence</Label>
-				<Hint>Box modules providing specification of classes of equivalence of (partial) boolean attributes.</Hint>
 			</Socket>
 			<Socket>
 				<Name>Importance</Name>
@@ -2029,11 +1981,6 @@
 				<Name>Sign</Name>
 				<Label>Sign</Label>
 				<Hint>Adds a sign to the boolean attribute setting</Hint>
-			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-				<Label>Class of Equivalence</Label>
-				<Hint>Creates a class of equivalence</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
@@ -2054,11 +2001,6 @@
 				<Hint>Box modules providing setting of (partial) boolean attribute.</Hint>
 			</Socket>
 			<Socket>
-				<Name>EquivalenceClasses</Name>
-				<Label>Classes of equivalence</Label>
-				<Hint>Box modules providing specification of classes of equivalence of (partial) boolean attributes.</Hint>
-			</Socket>
-			<Socket>
 				<Name>Importance</Name>
 				<Label>Importance</Label>
 				<Hint>Importance of this subformula in final formula.</Hint>
@@ -2103,11 +2045,6 @@
 				<Name>Sign</Name>
 				<Label>Sign</Label>
 				<Hint>Adds a sign to the boolean attribute setting</Hint>
-			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>ClassOfEquivalence</Name>
-				<Label>Class of Equivalence</Label>
-				<Hint>Creates a class of equivalence</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
