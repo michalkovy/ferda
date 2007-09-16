@@ -364,10 +364,7 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                     return;
                 }
             }
-#if MONO
-#else
             this.ListBoxIntervals.SelectedItems.Clear();
-#endif
         }
 
         /// <summary>

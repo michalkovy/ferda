@@ -112,10 +112,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ColumnFrListView.GridLines = true;
             this.ColumnFrListView.Location = new System.Drawing.Point(3, 3);
             this.ColumnFrListView.Name = "ColumnFrListView";
-#if MONO
-#else
             this.ColumnFrListView.ShowItemToolTips = true;
-#endif
             this.ColumnFrListView.Size = new System.Drawing.Size(453, 230);
             this.ColumnFrListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.ColumnFrListView.TabIndex = 2;
