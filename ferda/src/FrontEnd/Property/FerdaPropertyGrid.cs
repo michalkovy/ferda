@@ -352,15 +352,6 @@ namespace Ferda.FrontEnd.Properties
             }
 
             propertyBag = new PropertyTable();
-#if MONO
-			FerdaPropertySpec ps = new FerdaPropertySpec("nothing set", "System.String", false);
-			ps.Category = "nothing set";
-			
-			//geting the socket information about the category
-			ps.Description = "nothing set";
-			
-			propertyBag.Properties.Add(ps);
-#endif
             this.SelectedObject = propertyBag;
         }
 

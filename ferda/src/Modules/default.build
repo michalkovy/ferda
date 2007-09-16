@@ -3,6 +3,12 @@
 <project name="Ferda Modules" default="build" basedir=".">
 	<description>Ferda Modules</description>
 	<target name="build" description="Build Modules">
+		<if test="${framework::get-target-framework()=='mono-2.0'}">
+			<property name="defines" value="MONO"/>
+		</if>
+		<if test="${framework::get-target-framework()!='mono-2.0'}">
+			<property name="defines" value=""/>
+		</if>
 		<copy todir="${build.dir}" flatten="true">
 			<fileset>
 				<include name="Core/Boxes/*.xsd"/>
@@ -29,7 +35,7 @@
 				<include name="FerdaBoxInterfaces.*"/>
 			</fileset>
 		</copy>
-		<csc target="library" output="${path::combine(build.dir,'FerdaServerBase.dll')}" doc="${path::combine(build.dir,'FerdaServerBase.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaServerBase.snk">
+		<csc target="library" define="${defines}" output="${path::combine(build.dir,'FerdaServerBase.dll')}" doc="${path::combine(build.dir,'FerdaServerBase.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaServerBase.snk">
 			<nowarn>
 				<warning number="1591"/>
 			</nowarn>

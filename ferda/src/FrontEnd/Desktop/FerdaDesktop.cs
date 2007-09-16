@@ -358,8 +358,8 @@ namespace Ferda.FrontEnd.Desktop
         #region Constructor
 
         ///<summary>
-		/// Default constructor for FerdaView class.
-		///</summary>
+        /// Default constructor for FerdaView class.
+        ///</summary>
         ///<param name="prefManager">
         /// The prefernces manager - informs about preferences of the environment,
         /// mainly localization
@@ -373,7 +373,7 @@ namespace Ferda.FrontEnd.Desktop
         ///<param name="arch">Control that displays the archive</param>
         ///<param name="provider">Provider of the icons</param>
         ///<param name="toolBar">Toolbar control</param>
-		public FerdaDesktop(Menu.IPreferencesManager prefManager,
+        public FerdaDesktop(Menu.IPreferencesManager prefManager,
             SVGManager svgMan, IMenuDisplayer menuDisp, ProjectManager.View view,
             ProjectManager.ProjectManager pm, Archive.IArchiveDisplayer arch,
             IIconProvider provider, IMenuDisplayer toolBar, 
@@ -417,7 +417,7 @@ namespace Ferda.FrontEnd.Desktop
             RestrictToCanvas = false;
 
             Width = 10;
-	        Height = 10;
+            Height = 10;       
 
             this.ImeMode = System.Windows.Forms.ImeMode.On;
 
@@ -439,10 +439,7 @@ namespace Ferda.FrontEnd.Desktop
             DefaultLineEnd = ConnectionEnds.RightFilledArrow;
 
             //Creation of the boxes and connections
-#if MONO
-#else
             Adapt();
-#endif
         }
 
         #endregion

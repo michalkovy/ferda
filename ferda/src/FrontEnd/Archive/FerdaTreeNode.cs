@@ -52,11 +52,6 @@ namespace Ferda.FrontEnd.Archive
         /// </summary>
         protected IIconProvider provider;
 
-#if MONO
-	ContextMenu ContextMenu;
-	ContextMenuStrip ContextMenuStrip;
-#endif
-
         #endregion
 
         #region Properties

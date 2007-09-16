@@ -834,9 +834,12 @@ namespace Netron.GraphLib.UI
 			AddProperties();
 
 
-			this.AutoScroll=true;			
+			this.AutoScroll=true;
+#if MONO
+#else
 			this.HScroll=true;
 			this.VScroll=true;
+#endif
 
 	
 		

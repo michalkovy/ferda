@@ -1,7 +1,13 @@
 <?xml version="1.0"?>
 <project name="Netron graphical library" default="build" basedir=".">
 	<target name="build">
-		<csc target="library" output="${path::combine(build.dir,'NAFGraph.dll')}" debug="${debug}" optimize="${optimize}">
+		<if test="${framework::get-target-framework()=='mono-2.0'}">
+			<property name="defines" value="MONO"/>
+		</if>
+		<if test="${framework::get-target-framework()!='mono-2.0'}">
+			<property name="defines" value=""/>
+		</if>
+		<csc target="library" define="${defines}" output="${path::combine(build.dir,'NAFGraph.dll')}" debug="${debug}" optimize="${optimize}">
 			<nowarn>
 				<warning number="618"/>
 			</nowarn> 
