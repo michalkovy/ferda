@@ -95,10 +95,7 @@ namespace Ferda.FrontEnd.AddIns.ExplainTable
             this.ExplainTableListView.GridLines = true;
             this.ExplainTableListView.Location = new System.Drawing.Point(0, 0);
             this.ExplainTableListView.Name = "ExplainTableListView";
-#if MONO
-#else
             this.ExplainTableListView.ShowItemToolTips = true;
-#endif
             this.ExplainTableListView.Size = new System.Drawing.Size(730, 262);
             this.ExplainTableListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.ExplainTableListView.TabIndex = 0;

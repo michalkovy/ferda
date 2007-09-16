@@ -214,10 +214,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
                 }
                 toolTip.AppendLine();
                 toolTip.Append(" (" + this.resManager.GetString("RightClickToCopySelected") + ")");
-#if MONO
-#else
                 newItem.ToolTipText = toolTip.ToString();
-#endif
                 this.ColumnFrListView.Items.Add(newItem);
                 toolTip.Remove(0, toolTip.Length);
             }
