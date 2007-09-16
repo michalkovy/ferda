@@ -203,9 +203,9 @@ namespace Ferda.Utils.ConfigGenerator
                             Reader.ReadBoxLocalization(outputFilePath);
                         }
                     }
-                    catch
+                    catch (Exception e)
                     {
-                        Console.WriteLine("_Error: Deserializing " + consoleSubString + " for: " + xmlItemName + " FAILED");
+                        Console.WriteLine("_Error: Deserializing " + consoleSubString + " for: " + xmlItemName + " file: " + outputFilePath  + " FAILED: " + e.ToString());
                         Environment.Exit(1);
                     }
                 }

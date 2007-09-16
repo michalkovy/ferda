@@ -85,7 +85,11 @@ namespace Ferda.Modules.Boxes.Serializer
         public static Box ReadBox(string fileName)
         {
 #if DEBUG
+#if MONO
+            // validation does not work correctly
+#else
             XmlValidator.ValidateXmlFile(fileName, "box.xsd");
+#endif    
 #endif
             XmlRootAttribute xmlRootAttribute = new XmlRootAttribute();
             xmlRootAttribute.Namespace = "http://ferda.is-a-geek.net";
@@ -105,7 +109,11 @@ namespace Ferda.Modules.Boxes.Serializer
         public static BoxLocalization ReadBoxLocalization(string fileName)
         {
 #if DEBUG
+#if MONO
+            // validation does not work correctly
+#else
             XmlValidator.ValidateXmlFile(fileName, "boxLocalization.xsd");
+#endif
 #endif
             XmlRootAttribute xmlRootAttribute = new XmlRootAttribute();
             xmlRootAttribute.Namespace = "http://ferda.is-a-geek.net";
