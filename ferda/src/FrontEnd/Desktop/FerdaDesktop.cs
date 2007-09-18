@@ -1181,6 +1181,7 @@ namespace Ferda.FrontEnd.Desktop
             if (renameDialog.DialogResult == DialogResult.OK)
             {
                 NetworkArchive.AddBox(box, renameDialog.NewName);
+                NetworkArchive.Adapt();
             }
         }
 

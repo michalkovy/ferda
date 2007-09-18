@@ -28,7 +28,7 @@ namespace Ferda.FrontEnd.Archive
 	///Each control that displays a Ferda archive should implement this
 	///interface in order to cooperate with other controls.
 	///</summary>
-    public interface IArchiveDisplayer
+    public interface IArchiveDisplayer : IEditMenuAbility
 	{
 		///<summary>
 		///Localizes view in parameter in the archive
@@ -43,15 +43,6 @@ namespace Ferda.FrontEnd.Archive
         ///The box currently selected in the archive
         ///</summary>
 		IBoxModule SelectedBox
-        {
-            //set;
-            get;
-        }
-
-        /// <summary>
-        /// Context menu for the edit part of the main menu
-        /// </summary>
-        ContextMenuStrip EditMenu
         {
             get;
         }

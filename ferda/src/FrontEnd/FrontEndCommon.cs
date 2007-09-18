@@ -451,4 +451,19 @@ namespace Ferda.FrontEnd
             }
         }
     }
+
+    /// <summary>
+    /// The controls (displayers) implementing this interface
+    /// have ability to fill the edit part of the main menu.
+    /// </summary>
+    public interface IEditMenuAbility
+    {
+        /// <summary>
+        /// Context menu for the edit part of the main menu
+        /// </summary>
+        ContextMenuStrip EditMenu
+        {
+            get;
+        }
+    }
 }

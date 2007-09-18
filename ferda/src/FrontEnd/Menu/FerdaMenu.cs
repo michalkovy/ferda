@@ -31,6 +31,7 @@ using Ferda.ProjectManager;
 using Ferda.ModulesManager;
 using Ferda.Modules;
 using Ferda.FrontEnd.Properties;
+using Ferda.FrontEnd.NetworkArchive;
 
 namespace Ferda.FrontEnd.Menu
 {
@@ -590,6 +591,12 @@ namespace Ferda.FrontEnd.Menu
                 return;
             }
 
+            if (ControlHasFocus is INetworkArchiveDisplayer)
+            {
+                SetForArchive();
+                return;
+            }
+
             //disable edit and desktop if there is something else selected
             edit.Enabled = false;
             //desktop.Enabled = false;
@@ -606,18 +613,9 @@ namespace Ferda.FrontEnd.Menu
             desktop.Enabled = true;
             edit.Enabled = true;
 
-            IArchiveDisplayer ad = ControlHasFocus as IArchiveDisplayer;
+            IEditMenuAbility fd = ControlHasFocus as IEditMenuAbility;
 
-            ContextMenuStrip cMenu = ad.EditMenu;
-            edit.DropDownItems.Clear();
-
-            ToolStripItem[] newArray = new ToolStripItem[cMenu.Items.Count];
-            cMenu.Items.CopyTo(newArray, 0);
-
-            //there are wrong Click events we have to correct them
-            //CorrectDynamicClick(newArray);
-
-            edit.DropDownItems.AddRange(newArray);
+            FillEditMenu(fd, false);
         }
 
         /// <summary>
@@ -629,16 +627,31 @@ namespace Ferda.FrontEnd.Menu
             desktop.Enabled = true;
             edit.Enabled = true;
 
-            IViewDisplayer fd = ControlHasFocus as IViewDisplayer;
+            IEditMenuAbility fd = ControlHasFocus as IEditMenuAbility;
 
-            ContextMenuStrip cMenu = fd.EditMenu;
+            FillEditMenu(fd, true);
+        }
+
+        /// <summary>
+        /// Fills the edit part of the menu.
+        /// </summary>
+        /// <param name="editMenu">Control that has ability to fill
+        /// the edit part of the menu</param>
+        /// <param name="correctClick">If the menu requires to
+        /// correct dynamic clicks</param>
+        protected void FillEditMenu(IEditMenuAbility editMenu, bool correctClick)
+        {
+            ContextMenuStrip cMenu = editMenu.EditMenu;
             edit.DropDownItems.Clear();
 
             ToolStripItem[] newArray = new ToolStripItem[cMenu.Items.Count];
             cMenu.Items.CopyTo(newArray, 0);
 
             //there are wrong Click events we have to correct them
-            CorrectDynamicClick(newArray);
+            if (correctClick)
+            {
+                CorrectDynamicClick(newArray);
+            }
 
             edit.DropDownItems.AddRange(newArray);
         }

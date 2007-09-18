@@ -715,7 +715,8 @@ using Ferda.ModulesManager;
         protected void SetupNetworkArchive()
         {
             //creating the network archive control and its content
-            networkArchive = new NetworkArchive.FerdaNetworkArchive(this, ProjectManager);
+            networkArchive = new NetworkArchive.FerdaNetworkArchive(this, ProjectManager,
+                menu, toolBar, this);
             networkArchiveContent = new DockWindow();
             networkArchiveContent.Resize += new EventHandler(networkArchiveContent_Resize);
 
