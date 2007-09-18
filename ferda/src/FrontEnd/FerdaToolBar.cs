@@ -165,6 +165,12 @@ namespace Ferda.FrontEnd
                 return;
             }
 
+            if (ControlHasFocus is NetworkArchive.INetworkArchiveDisplayer)
+            {
+                SetForNetworkArchive();
+                return;
+            }
+
             RemoveDynamicPart();
         }
 
@@ -237,6 +243,13 @@ namespace Ferda.FrontEnd
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Sets the toolbar for archive (archive has focus)
+        /// </summary>
+        protected void SetForNetworkArchive()
+        {
         }
 
         /// <summary>

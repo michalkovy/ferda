@@ -29,7 +29,7 @@ namespace Ferda.FrontEnd.Desktop
     ///Each control that displays a Ferda view should implement this
     ///interface
     ///</summary>
-    public interface IViewDisplayer
+    public interface IViewDisplayer : IEditMenuAbility
 	{
         /// <summary>
         /// Name of the ViewDisplayer
@@ -62,14 +62,6 @@ namespace Ferda.FrontEnd.Desktop
         ///be displayed)
         ///</summary>
 		bool IsBoxSelected
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Context menu for the edit part of the main menu
-        /// </summary>
-        ContextMenuStrip EditMenu
         {
             get;
         }

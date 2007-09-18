@@ -430,8 +430,14 @@
   <data name="NetworkArchive" xml:space="preserve">
     <value>Network Archive</value>
   </data>
+  <data name="NetworkArchiveAlreadyContains" xml:space="preserve">
+    <value>The network archive already contains box of this name. Names of boxes in the network archive need to be unique.</value>
+  </data>
   <data name="NetworkArchiveLabelBox" xml:space="preserve">
     <value>Label of the box in the network archive</value>
+  </data>
+  <data name="NetworkArchiveRemove" xml:space="preserve">
+    <value>Remove box from network archive</value>
   </data>
   <data name="NewBoxContentText" xml:space="preserve">
     <value>New Boxes</value>

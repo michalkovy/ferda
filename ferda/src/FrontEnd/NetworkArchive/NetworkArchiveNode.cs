@@ -1,4 +1,4 @@
-// INetworkArchiveDisplayer.cs - Interface to implement the Ferda Network Archive
+// NetworkArchiveNode.cs - a tree node Ferda Network Archive
 //
 // Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
@@ -19,27 +19,32 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using Ferda.ModulesManager;
+using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Ferda.FrontEnd.NetworkArchive
 {
     /// <summary>
-    /// Each control implementing Ferda Network Archive displayer should
-    /// implement this interface
+    /// The tree node structure for the Ferda network archive. It contains
+    /// information about the identifier of the box type (to retrieve the
+    /// box icon).
     /// </summary>
-    public interface INetworkArchiveDisplayer : IEditMenuAbility
+    public class NetworkArchiveNode : TreeNode
     {
         /// <summary>
-        /// Adds Box to a network archive
+        /// Identifier of the box type that is represented by this node
         /// </summary>
-        /// <param name="box">Box module to be added</param>
-        /// <param name="label">Label of the box in the network archive</param>
-        void AddBox(IBoxModule box, string label);
 
-        ///<summary>
-        ///Forces the control to refresh its state
-        ///</summary>
-        void Adapt();
+        protected string identifier;
+
+        /// <summary>
+        /// Identifier of the box type that is represented by this node
+        /// </summary>
+        public string Identifier
+        {
+            get { return identifier; }
+            set { identifier = value; }
+        }
     }
 }

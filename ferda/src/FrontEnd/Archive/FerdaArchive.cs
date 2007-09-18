@@ -956,7 +956,7 @@ namespace Ferda.FrontEnd.Archive
         #region Events
 
         /// <summary>
-        /// Event when the archive receives focus. It forces the menu
+        /// Event when the archive recieves focus. It forces the menu and toolbar
         /// to adapt
         /// </summary>
         /// <param name="sender">Sender of the event</param>
