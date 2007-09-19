@@ -429,6 +429,9 @@
   <data name="NetworkArchiveLabelBox" xml:space="preserve">
     <value>Název krabičky v síťovém archivu</value>
   </data>
+  <data name="NetworkArchiveLoadingError" xml:space="preserve">
+    <value>Při načítání krabičky ze síťového archivu došlo k chybě.</value>
+  </data>
   <data name="NetworkArchiveRemove" xml:space="preserve">
     <value>Odebrat krabičku ze síťového archivu</value>
   </data>

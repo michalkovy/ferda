@@ -39,6 +39,15 @@
 				  </para>
 			</revdescription>
 		</revision>
+		<revision>
+			<revnumber>1.2</revnumber>
+			<date>2007-09-18</date>
+			<revdescription>
+				<para>
+					Added the network archive
+				</para>
+			</revdescription>
+		</revision>
     </revhistory>
 	-->
   </articleinfo>
@@ -120,7 +129,7 @@ Events ...
   <section>
     <title>FrontEnd "philosophy"</title>
     <para>
-      Whole FrontEnd is divided into 8 logical subelements according to their
+      Whole FrontEnd is divided into 9 logical subelements according to their
       functionality. The namespaces in the <classname>Ferda.FrontEnd</classname> namespace
       are divided the same way:
     </para>
@@ -149,6 +158,9 @@ Events ...
       <listitem>
         <para>Ferda.FrontEnd.External</para>
       </listitem>
+      <listitem>
+        <para>Ferda.FrontEnd.NetworkArchive</para>
+      </listitem>      
     </itemizedlist>
     <para>
       Each of these parts takes care of something individual in the application(its purpose
@@ -634,6 +646,41 @@ Events ...
       </listitem>
     </itemizedlist>
   </section>
+  <section>
+			<title>Ferda.FrontEnd.NetworkArchive</title>
+			<para>
+				The namespace contains network archive functionality from the FrondEnd side.
+			</para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <formalpara>
+          <title>FerdaNetworkArchive</title>
+          <para>
+           Control class for the Ferda Network Archive
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>INetworkArchiveDisplayer</title>
+          <para>
+			  Each control implementing Ferda Network Archive displayer should
+			  implement this interface
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>NetworkArchiveNode</title>
+          <para>
+			The tree node structure for the Ferda network archive. It contains
+			information about the identifier of the box type (to retrieve the
+			box icon).
+          </para>
+        </formalpara>
+      </listitem>      
+    </itemizedlist>			
+		</section>
 </section>
 <section>
   <title>FrontEnd connections to the other parts of the Ferda DataMiner system</title>

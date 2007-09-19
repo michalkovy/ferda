@@ -237,7 +237,7 @@ namespace Ferda.FrontEnd
                         //display
                         hasDropdown = false;
                         button = new ToolStripButton(item.Image);
-                        button.Click += new EventHandler(Archive_Click);
+                        button.Click += new EventHandler(IEditMenuAbility_Click);
                         button.ToolTipText = item.Text;
                         Items.Add(button);
                     }
@@ -250,6 +250,24 @@ namespace Ferda.FrontEnd
         /// </summary>
         protected void SetForNetworkArchive()
         {
+            ToolStripButton button;
+            RemoveDynamicPart();
+
+            IEditMenuAbility na = ControlHasFocus as IEditMenuAbility;
+            ContextMenuStrip cMenu = na.EditMenu;
+
+            if (cMenu == null)
+            {
+                return;
+            }
+
+            foreach (ToolStripMenuItem item in cMenu.Items)
+            {
+                button = new ToolStripButton(item.Image);
+                button.Click += new EventHandler(IEditMenuAbility_Click);
+                button.ToolTipText = item.Text;
+                Items.Add(button);
+            }
         }
 
         /// <summary>
@@ -296,7 +314,7 @@ namespace Ferda.FrontEnd
                         //display
                         hasDropdown = false;
                         button = new ToolStripButton(item.Image);
-                        button.Click += new EventHandler(Desktop_Click);
+                        button.Click += new EventHandler(IEditMenuAbility_Click);
                         button.ToolTipText = item.Text;
                         Items.Add(button);
                     }
@@ -367,43 +385,23 @@ namespace Ferda.FrontEnd
         #region Events
 
         /// <summary>
-        /// If user clicks on the toolbar on some archive action,
-        /// this method takes care that proper event is raised
+        /// If user clicks on the toolbar on some archive or desktop or network archive 
+        /// action, this method takes care that proper event is raised
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event parameters</param>
-        private void Archive_Click(object sender, EventArgs e)
+        private void IEditMenuAbility_Click(object sender, EventArgs e)
         {
-            Archive.IArchiveDisplayer arch = ControlHasFocus as
-                Archive.IArchiveDisplayer;
+            IEditMenuAbility editMenu = ControlHasFocus as
+                IEditMenuAbility;
 
-            if (arch == null)
+            if (editMenu == null)
             {
                 throw new
-                    ApplicationException("An archive should be selected - incorrect use of Desktop_Click function");
+                    ApplicationException("A control should be selected - incorrect use of Desktop_Click function");
             }
 
-            arch.RaiseToolBarAction(sender);
-        }
-
-        /// <summary>
-        /// If user clicks on the toolbar on some desktop action,
-        /// this method takes care that proper event is raised
-        /// </summary>
-        /// <param name="sender">Sender of the event</param>
-        /// <param name="e">Event parameters</param>
-        private void Desktop_Click(object sender, EventArgs e)
-        {
-            Desktop.IViewDisplayer view = ControlHasFocus as
-                Desktop.IViewDisplayer;
-
-            if (view == null)
-            {
-                throw new
-                    ApplicationException("A view should be selected - incorrect use of Desktop_Click function");
-            }
-
-            view.RaiseToolBarAction(sender);
+            editMenu.RaiseToolBarAction(sender);
         }
 
         #endregion

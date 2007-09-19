@@ -36,10 +36,5 @@ namespace Ferda.FrontEnd.NetworkArchive
         /// <param name="box">Box module to be added</param>
         /// <param name="label">Label of the box in the network archive</param>
         void AddBox(IBoxModule box, string label);
-
-        ///<summary>
-        ///Forces the control to refresh its state
-        ///</summary>
-        void Adapt();
     }
 }

@@ -72,16 +72,6 @@ namespace Ferda.FrontEnd.Desktop
         ///</summary>
         void SetLocations();
 
-        ///<summary>
-        ///Redraws all shapes and connections according to a new state in
-        ///the view object
-        ///</summary>
-        ///<remarks>
-        ///Dont know if the control will remember previous shapes and connections
-        ///and ask for the changed or write the entire structure over again...
-        ///</remarks>
-        void Adapt();
-
         /// <summary>
         /// Removes a box from the desktop
         /// </summary>
@@ -112,13 +102,5 @@ namespace Ferda.FrontEnd.Desktop
         /// </summary>
         /// <param name="box">Box to be selected</param>
         void SelectBox(IBoxModule box);
-
-        /// <summary>
-        /// Because there are problems with sharing the clicking actions on the menu
-        /// with other controls (ToolBox), this method raises the action that was
-        /// clicked on the toolbar
-        /// </summary>
-        /// <param name="sender">sender of the method</param>
-        void RaiseToolBarAction(object sender);
 	}
 }

@@ -465,5 +465,19 @@ namespace Ferda.FrontEnd
         {
             get;
         }
+
+        /// <summary>
+        /// Because there are problems with sharing the clicking actions on the menu
+        /// with other controls (ToolBox), this method raises the action that was
+        /// clicked on the toolbar
+        /// </summary>
+        /// <param name="sender">sender of the method</param>
+        void RaiseToolBarAction(object sender);
+
+        ///<summary>
+        ///Forces the control to refresh its appearance according to its
+        ///new state
+        ///</summary>
+        void Adapt();
     }
 }

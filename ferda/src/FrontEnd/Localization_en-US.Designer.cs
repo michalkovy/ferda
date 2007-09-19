@@ -1011,6 +1011,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Errors have occured while loading a box from network archive..
+        /// </summary>
+        internal static string NetworkArchiveLoadingError {
+            get {
+                return ResourceManager.GetString("NetworkArchiveLoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove box from network archive.
         /// </summary>
         internal static string NetworkArchiveRemove {

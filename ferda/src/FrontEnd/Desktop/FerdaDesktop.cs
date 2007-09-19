@@ -2057,14 +2057,14 @@ namespace Ferda.FrontEnd.Desktop
             string text = ResManager.GetString("DesktopBoxAlreadyExistsText");
             string caption = ResManager.GetString("DesktopBoxAlreadyExistsCaption");
 
-            //we are getting data from the NewBox control
-            object o = drgevent.Data.GetData(typeof(NewBoxNode));
-
             //adjusting the coordinates
             PointF clientPoint =
                 this.PointToClient(new Point(drgevent.X, drgevent.Y));
             clientPoint.X -= AutoScrollPosition.X;
             clientPoint.Y -= AutoScrollPosition.Y;
+
+            //we are getting data from the NewBox control
+            object o = drgevent.Data.GetData(typeof(NewBoxNode));
 
             if (o is NewBoxNode)
             {
@@ -2103,6 +2103,34 @@ namespace Ferda.FrontEnd.Desktop
             if (o is FerdaTreeNode)
             {
                 box = ((FerdaTreeNode)o).Box;
+
+                if (!view.ContainsBox(box))
+                {
+                    view.Add(box, clientPoint);
+                }
+                else
+                {
+                    MessageBox.Show(text, caption);
+                }
+                Adapt();
+            }
+
+            o = drgevent.Data.GetData(typeof(string));
+
+            //we are getting the data from the network archive
+            if (o is string)
+            {
+                string boxCaption = o as string;
+                string errorMessage = null;
+                
+                box = projectManager.NetworkArchive.GetBoxToProject(boxCaption, 
+                    out errorMessage);
+
+                if (errorMessage != string.Empty)
+                {
+                    MessageBox.Show(ResManager.GetString("NetworkArchiveLoadingError"),
+                        errorMessage, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 if (!view.ContainsBox(box))
                 {
