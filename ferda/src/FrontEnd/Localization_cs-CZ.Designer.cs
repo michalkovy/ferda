@@ -997,6 +997,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Při načítání krabičky ze síťového archivu došlo k chybě..
+        /// </summary>
+        internal static string NetworkArchiveLoadingError {
+            get {
+                return ResourceManager.GetString("NetworkArchiveLoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odebrat krabičku ze síťového archivu.
         /// </summary>
         internal static string NetworkArchiveRemove {

@@ -436,6 +436,9 @@
   <data name="NetworkArchiveLabelBox" xml:space="preserve">
     <value>Label of the box in the network archive</value>
   </data>
+  <data name="NetworkArchiveLoadingError" xml:space="preserve">
+    <value>Errors have occured while loading a box from network archive.</value>
+  </data>
   <data name="NetworkArchiveRemove" xml:space="preserve">
     <value>Remove box from network archive</value>
   </data>

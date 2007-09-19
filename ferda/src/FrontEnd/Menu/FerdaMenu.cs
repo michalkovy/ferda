@@ -642,6 +642,11 @@ namespace Ferda.FrontEnd.Menu
         protected void FillEditMenu(IEditMenuAbility editMenu, bool correctClick)
         {
             ContextMenuStrip cMenu = editMenu.EditMenu;
+            if (cMenu == null)
+            {
+                return;
+            }
+
             edit.DropDownItems.Clear();
 
             ToolStripItem[] newArray = new ToolStripItem[cMenu.Items.Count];

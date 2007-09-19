@@ -47,11 +47,6 @@ namespace Ferda.FrontEnd.Archive
             get;
         }
 
-        ///<summary>
-        ///Forces the control to refresh its state
-        ///</summary>
-        void Adapt();
-
 		///<summary>
 		///This function is called when the localization
 		///of the application is changed - the whole menu needs to be redrawn
@@ -63,13 +58,5 @@ namespace Ferda.FrontEnd.Archive
         /// that can only mean the change of the user name of the box.
         /// </summary>
         void RefreshBoxNames();
-
-        /// <summary>
-        /// Because there are problems with sharing the clicking actions on the menu
-        /// with other controls (ToolBox), this method raises the action that was
-        /// clicked on the toolbar
-        /// </summary>
-        /// <param name="sender">sender of the method</param>
-        void RaiseToolBarAction(object sender);
 	}
 }
