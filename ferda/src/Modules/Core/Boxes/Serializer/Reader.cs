@@ -1,8 +1,8 @@
-// Reader.cs - Functions for deserialization of configuration files
+ï»¿// Reader.cs - Functions for deserialization of configuration files
 //
-// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+// Author: TomÃ¡Å¡ KuchaÅ™ <tomas.kuchar@gmail.com>
 //
-// Copyright (c) 2006 Tomáš Kuchaø
+// Copyright (c) 2006 TomÃ¡Å¡ KuchaÅ™
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
