@@ -21,6 +21,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using Ice;
 
 namespace Ferda.Modules.Boxes
@@ -636,6 +637,7 @@ namespace Ferda.Modules.Boxes
         /// of types of boxes, which can be connected to <c>socketName</c>.
         /// </summary>
         /// <param name="socketName">Unique name (identifer) of socket.</param>
+        /// <param name="boxModule">Box module.</param>
         /// <returns>
         /// Returns types of boxes, which can be connected to <c>socketName</c>.
         /// </returns>
@@ -644,7 +646,7 @@ namespace Ferda.Modules.Boxes
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.NeededSocket">needed sockets</see>.
         /// Needed socket is given by its name and the functions accepted by this socket.
         /// </remarks>
-        BoxType[] GetSocketTypes(string socketName);
+        BoxType[] GetSocketTypes(string socketName, BoxModuleI boxModule);
 
         /// <summary>
         /// Gets names of the sockets.
@@ -674,6 +676,13 @@ namespace Ferda.Modules.Boxes
 		/// <param name="localePrefs">The localization preferences.</param>
 		/// <param name="boxModule">A runtime box module.</param>
 		SocketInfo[] GetAdditionalSockets(string[] localePrefs, BoxModuleI boxModule);
+		
+		/// <summary>
+		/// Gets names of sockets of the box module which are known newly in runtime
+		/// </summary>
+		/// <returns>Array of <seealso cref="T:Ferda.Modules.SocketInfo">SocketInfos</seealso>.</returns>
+		/// <param name="boxModule">A runtime box module.</param>
+		StringCollection GetAdditionalSocketsNames(BoxModuleI boxModule);
 
         /// <summary>
         /// Gets the box module`s icon.
@@ -724,11 +733,12 @@ namespace Ferda.Modules.Boxes
         /// one box can be connected to the socket specified by <c>socketName</c>.
         /// </summary>
         /// <param name="socketName">Name of the socket.</param>
+        /// <param name="boxModule">Box module.</param>
         /// <returns>Returns true iff more than one box can be connected in
         /// the socket named <c>socketName</c>; otherwise, returns false.</returns>
         /// <exception cref="T:Ferda.Modules.Exceptions.NameNotExistError">There
         /// is no <c>socketName</c> in Box module</exception>
-        bool IsSocketMoreThanOne(string socketName);
+        bool IsSocketMoreThanOne(string socketName, BoxModuleI boxModule);
 
         /// <summary>
         /// Gets default value for box module`s user label. This label
@@ -769,9 +779,10 @@ namespace Ferda.Modules.Boxes
         /// socket named <c>socketName</c> in the box module.</para>
         /// </summary>
         /// <param name="socketName">Name of the socket.</param>
+        /// <param name="boxModule">Box module.</param>
         /// <returns>Returns true iff the box module has socket
         /// named <c>socketName</c>.</returns>
-        bool TestSocketNameExistence(string socketName);
+        bool TestSocketNameExistence(string socketName, BoxModuleI boxModule);
 
         /// <summary>
         /// Executes (runs) action specified by <c>actionName</c>.

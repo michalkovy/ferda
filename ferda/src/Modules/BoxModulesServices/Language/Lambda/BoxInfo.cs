@@ -89,7 +89,7 @@ namespace Ferda.Modules.Boxes.Language.Lambda
 					String.Format("Variable {0}", i),
 					String.Format("Variable {0}", i),
 					null,
-					new BoxType[1]{new BoxType(null, new NeededSocket[0])},
+					new BoxType[1]{new BoxType("::Ice::Object", new NeededSocket[0])},
 					new String[0],
 					true);
 				BoxType[] variableBoxType;
@@ -166,7 +166,7 @@ namespace Ferda.Modules.Boxes.Language.Lambda
 						neededSocketsOne.Add(new NeededSocket(neededSocket.Key,
 															  (neededSocket.Value.Count > 0) ? neededSocket.Value[0] : null));
 					}
-					variableBoxType = new BoxType[1]{new BoxType((functionIceIds.Count > 0) ? null : functionIceIds[0],
+					variableBoxType = new BoxType[1]{new BoxType((functionIceIds.Count > 0) ? functionIceIds[0] : null,
 																 neededSocketsOne.ToArray())};
 				}
 				else
@@ -187,6 +187,18 @@ namespace Ferda.Modules.Boxes.Language.Lambda
 			return resultSocketInfo;
 		}
 		
+		public override StringCollection GetAdditionalSocketsNames(BoxModuleI boxModule)
+		{
+			StringCollection result = new StringCollection();
+			int variablesCount = boxModule.GetPropertyInt("VariablesCount");
+			for(int i = 0; i < variablesCount; i++)
+			{
+				result.Add(String.Format("Variable{0}", i));
+				result.Add(String.Format("VariableValue{0}", i));
+			}
+			return result;
+		}
+		
 		/*
 		public override PropertyInfo[] GetAdditionalProperties(String[] localePrefs, BoxModuleI boxModule)
 		{
@@ -198,20 +210,5 @@ namespace Ferda.Modules.Boxes.Language.Lambda
 			}
 			return resultPropertyInfo;
 		}*/
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <summary>
-		/// Constructor
-		/// </summary>
     }
 }
