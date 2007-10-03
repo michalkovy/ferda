@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using Ferda.Modules.Boxes;
 using Ferda.ModulesManager;
@@ -50,6 +51,8 @@ namespace Ferda.Modules
         /// </para>
         /// </summary>
         private Dictionary<string, Dictionary<string, BoxModulePrx>> connections;
+        
+        private Dictionary<string, Dictionary<string, BoxModulePrx>> connectionsOfAdditionalSockets = new Dictionary<string, Dictionary<string, BoxModulePrx>>();
 
         /// <summary>
         /// <para>
@@ -73,21 +76,12 @@ namespace Ferda.Modules
         /// <seealso cref="T:Ferda.Modules.Boxes.SocketConnections"/>
         public BoxModulePrx[] GetConnections(string socketName)
         {
-            try
-            {
-                lock (this)
-                {
-                    BoxModulePrx[] result = new BoxModulePrx[connections[socketName].Values.Count];
-                    connections[socketName].Values.CopyTo(result, 0);
-                    return result;
-                }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                string message = "BMI03: " + ex.Message;
-                Debug.WriteLine(message);
-                throw new ArgumentOutOfRangeException("socketName", socketName, message);
-            }
+           lock (this)
+           {
+               BoxModulePrx[] result = new BoxModulePrx[getConnection(socketName).Values.Count];
+               getConnection(socketName).Values.CopyTo(result, 0);
+               return result;
+           }
         }
 
         /// <summary>
@@ -106,7 +100,7 @@ namespace Ferda.Modules
         /// </exception>
         public override BoxModulePrx[] getConnections(string socketName, Current __current)
         {
-            if (!boxInfo.TestSocketNameExistence(socketName))
+            if (!boxInfo.TestSocketNameExistence(socketName, this))
             {
                 Debug.Assert(false);
                 throw Exceptions.NameNotExistError(null, socketName);
@@ -130,7 +124,7 @@ namespace Ferda.Modules
         /// </exception>
         public override void removeConnection(string socketName, string boxModuleIceIdentity, Current __current)
         {
-            if (!boxInfo.TestSocketNameExistence(socketName))
+            if (!boxInfo.TestSocketNameExistence(socketName, this))
             {
                 Debug.Assert(false);
                 throw Exceptions.NameNotExistError(null, socketName);
@@ -139,7 +133,7 @@ namespace Ferda.Modules
             {
                 try
                 {
-                    connections[socketName].Remove(boxModuleIceIdentity);
+                    getConnection(socketName).Remove(boxModuleIceIdentity);
                 }
                 catch
                 {
@@ -179,26 +173,17 @@ namespace Ferda.Modules
         /// <seealso cref="T:Ferda.Modules.Boxes.SocketConnections"/>
         public ObjectPrx[] GetFunctions(string socketName)
         {
-            try
-            {
-                lock (this)
-                {
-                    List<ObjectPrx> result = new List<ObjectPrx>();
-                    foreach (BoxModulePrx boxModule in connections[socketName].Values)
-                    {
-                        ObjectPrx functions = boxModule.getFunctions();
-                        if (functions != null)
-                            result.Add(functions);
-                    }
-                    return result.ToArray();
-                }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                string message = "BMI07: " + ex.Message;
-                Debug.WriteLine(message);
-                throw new ArgumentOutOfRangeException("socketName", socketName, message);
-            }
+           lock (this)
+           {
+               List<ObjectPrx> result = new List<ObjectPrx>();
+               foreach (BoxModulePrx boxModule in getConnection(socketName).Values)
+               {
+                   ObjectPrx functions = boxModule.getFunctions();
+                   if (functions != null)
+                       result.Add(functions);
+               }
+               return result.ToArray();
+           }
         }
 
         #endregion
@@ -1052,7 +1037,7 @@ namespace Ferda.Modules
         public override void setConnection(string socketName, BoxModulePrx otherModule, Current __current)
         {
             // tests specified socketName existence
-            if (!boxInfo.TestSocketNameExistence(socketName))
+            if (!boxInfo.TestSocketNameExistence(socketName, this))
             {
                 Debug.Assert(false);
                 throw Exceptions.NameNotExistError(null, socketName);
@@ -1063,7 +1048,7 @@ namespace Ferda.Modules
             ObjectPrx objPrx = otherModule.getFunctions();
             SocketInfo[] otherModuleSocketInfos = otherModule.getMyFactory().getSockets();
             foreach (BoxType socketBoxType in
-                boxInfo.GetSocketTypes(socketName))
+                boxInfo.GetSocketTypes(socketName, this))
             {
                 // tests otherModule`s functions type (functionsPrx.ice_isA)
                 // tests if otherModule has needed sockets
@@ -1092,15 +1077,15 @@ namespace Ferda.Modules
                 else
                 {
                     // tests if socket (accepting only one connection) is already full
-                    if ((!boxInfo.IsSocketMoreThanOne(socketName)) &&
-                        connections[socketName].Count != 0)
+                    if ((!boxInfo.IsSocketMoreThanOne(socketName, this)) &&
+                        getConnection(socketName).Count != 0)
                     {
                         // the socket is already used -> exception is thrown
                         Debug.WriteLine("BMI23");
                         throw new ConnectionExistsError();
                     }
                 }
-                connections[socketName][identity] = otherModule;
+                getConnection(socketName)[identity] = otherModule;
             }
         }
 
@@ -1134,8 +1119,7 @@ namespace Ferda.Modules
                     neededSocketsConnected = true;
                     foreach (string neededSocket in neededSockets)
                     {
-                        if (!connections.ContainsKey(neededSocket)
-                            || !(connections[neededSocket].Count > 0))
+                        if (!(getConnection(neededSocket).Count > 0))
                         {
                             neededSocketsConnected = false;
                             break;
@@ -1563,6 +1547,35 @@ namespace Ferda.Modules
             {
                 throw new BoxRuntimeError(e);
             }
+        }
+        
+        private Dictionary<string, BoxModulePrx> getConnection(string socketName)
+        {
+			lock (this)
+			{
+				Dictionary<string, BoxModulePrx> result = null;
+				//now test if there is socket socketName
+
+				if(!connections.TryGetValue(socketName, out result))
+				{
+					StringCollection socketNames = this.boxInfo.GetAdditionalSocketsNames(this);
+					if(socketNames.Contains(socketName))
+					{
+						if(!connectionsOfAdditionalSockets.TryGetValue(socketName, out result))
+						{
+							result = new Dictionary<string, BoxModulePrx>();
+							connectionsOfAdditionalSockets[socketName] = result;
+						}
+					}
+					else
+					{
+						string message = "BMI03";
+						Debug.WriteLine(message);
+						throw new ArgumentOutOfRangeException("socketName", socketName, message);
+					}
+				}
+				return result;
+			}
         }
     }
 }

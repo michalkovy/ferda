@@ -1,8 +1,8 @@
 // BoxInfo.cs - Abstract class implementing the IBoxInfo interface
 //
-// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+// Author: TomÃ¡Å¡ KuchaÅ™ <tomas.kuchar@gmail.com>
 //
-// Copyright (c) 2006 Tomáš Kuchaø
+// Copyright (c) 2006 TomÃ¡Å¡ KuchaÅ™
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -618,6 +619,11 @@ namespace Ferda.Modules.Boxes
 		{
 			return new SocketInfo[0];
 		}
+		
+		public virtual StringCollection GetAdditionalSocketsNames(BoxModuleI boxModule)
+		{
+			return new StringCollection();
+		}
 
         #endregion
 
@@ -701,6 +707,7 @@ namespace Ferda.Modules.Boxes
         /// of types of boxes, which can be connected to <c>socketName</c>.
         /// </summary>
         /// <param name="socketName">Unique name (identifer) of socket.</param>
+        /// <param name="boxModule">Box module.</param>
         /// <returns>
         /// Returns types of boxes, which can be connected to <c>socketName</c>.
         /// </returns>
@@ -709,9 +716,24 @@ namespace Ferda.Modules.Boxes
         /// <see cref="T:Ferda.Modules.Boxes.Serializer.Configuration.NeededSocket">needed sockets</see>.
         /// Needed socket is given by its name and the functions accepted by this socket.
         /// </remarks>
-        public BoxType[] GetSocketTypes(string socketName)
+        public BoxType[] GetSocketTypes(string socketName, BoxModuleI boxModule)
         {
-            return box.GetSocketTypes(socketName);
+        	if (box.Sockets.ContainsKey(socketName))
+        	{
+            	return box.GetSocketTypes(socketName);
+            }
+            else
+            {
+            	SocketInfo[] socketInfos = this.GetAdditionalSockets(null, boxModule);
+            	foreach(SocketInfo socketInfo in socketInfos)
+            	{
+            		if (String.Equals(socketInfo.name, socketName))
+            		{
+            			return socketInfo.socketType;
+            		}
+            	}
+            	return null;
+            }
         }
 
         /// <summary>
@@ -723,13 +745,15 @@ namespace Ferda.Modules.Boxes
         /// socket named <c>socketName</c> in the box module.</para>
         /// </summary>
         /// <param name="socketName">Name of the socket.</param>
+        /// <param name="boxModule">Box module.</param>
         /// <returns>
         /// Returns true iff the box module has socket
         /// named <c>socketName</c>.
         /// </returns>
-        public bool TestSocketNameExistence(string socketName)
+        public bool TestSocketNameExistence(string socketName, BoxModuleI boxModule)
         {
-            return box.Sockets.ContainsKey(socketName);
+            return box.Sockets.ContainsKey(socketName) ||
+            	this.GetAdditionalSocketsNames(boxModule).Contains(socketName);
         }
 
         /// <summary>
@@ -737,15 +761,32 @@ namespace Ferda.Modules.Boxes
         /// one box can be connected to the socket specified by <c>socketName</c>.
         /// </summary>
         /// <param name="socketName">Name of the socket.</param>
+        /// <param name="boxModule">Box module.</param>
         /// <returns>
         /// Returns true iff more than one box can be connected in
         /// the socket named <c>socketName</c> otherwise returns false.
         /// </returns>
         /// <exception cref="T:Ferda.Modules.Exceptions.NameNotExistError">There
         /// is no <c>socketName</c> in Box module</exception>
-        public bool IsSocketMoreThanOne(string socketName)
+        public bool IsSocketMoreThanOne(string socketName, BoxModuleI boxModule)
         {
-            return box.GetSocket(socketName).MoreThanOne;
+        	if (box.Sockets.ContainsKey(socketName))
+        	{
+            	return box.GetSocket(socketName).MoreThanOne;
+            }
+            else
+            {
+            	SocketInfo[] socketInfos = this.GetAdditionalSockets(null, boxModule);
+            	foreach(SocketInfo socketInfo in socketInfos)
+            	{
+            		if (String.Equals(socketInfo.name, socketName))
+            		{
+            			return socketInfo.moreThanOne;
+            		}
+            	}
+            	Debug.Assert(false);
+                throw Exceptions.NameNotExistError(null, socketName);
+            }
         }
 
         /// <summary>
