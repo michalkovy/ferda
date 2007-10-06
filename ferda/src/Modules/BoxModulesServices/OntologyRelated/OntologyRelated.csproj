@@ -14,21 +14,30 @@
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <OutputType>Library</OutputType>
+    <AssemblyName>OntologyRelated</AssemblyName>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <OutputType>Library</OutputType>
+    <AssemblyName>OntologyRelated</AssemblyName>
+    <DebugSymbols>True</DebugSymbols>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -39,23 +48,23 @@
   </Target>
   -->
   <ItemGroup>
-    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cbe18eed93b6dbb1, processorArchitecture=MSIL">
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cbe18eed93b6dbb1">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, PublicKeyToken=526936f183183f71, processorArchitecture=MSIL">
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, PublicKeyToken=526936f183183f71">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f38f029e8cb6ab0e, processorArchitecture=MSIL">
+    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f38f029e8cb6ab0e">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaServerBase.dll</HintPath>
     </Reference>
-    <Reference Include="iceboxcs, Version=3.2.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="iceboxcs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
     </Reference>
-    <Reference Include="icecs, Version=3.2.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="icecs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
     </Reference>

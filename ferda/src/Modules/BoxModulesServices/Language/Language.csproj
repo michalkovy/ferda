@@ -1,56 +1,72 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugSymbols>false</DebugSymbols>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    </PropertyGroup>
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProductVersion>8.0.30703</ProductVersion>
-        <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{EB18047A-CB00-4C0F-A748-01E68393B64A}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <RootNamespace>Ferda.Modules.Boxes.Language</RootNamespace>
-        <AssemblyName>FerdaLanguageBoxes</AssemblyName>
-        <WarningLevel>4</WarningLevel>
-        <StartupObject/>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cbe18eed93b6dbb1">
-            <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
-        </Reference>
-        <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, PublicKeyToken=526936f183183f71">
-            <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
-        </Reference>
-        <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f38f029e8cb6ab0e">
-            <HintPath>..\..\..\..\bin\Server\FerdaServerBase.dll</HintPath>
-        </Reference>
-        <Reference Include="icecs, Version=3.2.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-            <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
-        </Reference>
-        <Reference Include="System"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Xml"/>
-    </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets"/>
-    <ItemGroup>
-        <None Include="Lambda\boxDesign.svg"/>
-        <None Include="Lambda\boxIcon.ico"/>
-        <Compile Include="Lambda\BoxInfo.cs"/>
-        <Compile Include="Service.cs"/>
-        <None Include="Variable\boxDesign.svg"/>
-        <None Include="Variable\boxIcon.ico"/>
-        <Compile Include="Variable\BoxInfo.cs"/>
-    </ItemGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <OutputType>Library</OutputType>
+    <AssemblyName>FerdaLanguageBoxes</AssemblyName>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>False</DebugSymbols>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <OutputType>Library</OutputType>
+    <AssemblyName>FerdaLanguageBoxes</AssemblyName>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EB18047A-CB00-4C0F-A748-01E68393B64A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Ferda.Modules.Boxes.Language</RootNamespace>
+    <AssemblyName>FerdaLanguageBoxes</AssemblyName>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cbe18eed93b6dbb1">
+      <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, PublicKeyToken=526936f183183f71">
+      <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f38f029e8cb6ab0e">
+      <HintPath>..\..\..\..\bin\Server\FerdaServerBase.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="icecs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <ItemGroup>
+    <None Include="Lambda\boxDesign.svg" />
+    <None Include="Lambda\boxIcon.ico" />
+    <Compile Include="Lambda\BoxInfo.cs" />
+    <Compile Include="Service.cs" />
+    <None Include="Variable\boxDesign.svg" />
+    <None Include="Variable\boxIcon.ico" />
+    <Compile Include="Variable\BoxInfo.cs" />
+    <None Include="Math\Plus\boxIcon.ico" />
+    <None Include="Math\Plus\boxDesign.svg" />
+    <Compile Include="Math\Plus\BoxInfo.cs" />
+    <Compile Include="Math\Plus\Functions.cs" />
+  </ItemGroup>
 </Project>

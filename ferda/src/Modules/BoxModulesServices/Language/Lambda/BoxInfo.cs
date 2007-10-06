@@ -19,6 +19,15 @@ namespace Ferda.Modules.Boxes.Language.Lambda
         {
             return new string[0];
         }
+        
+        public override ObjectPrx GetFunctionsObjPrx(BoxModuleI boxModule)
+        {
+        	BoxModulePrx[] otherBoxModulePrxs = boxModule.getConnections("Function",null);
+        	if (otherBoxModulePrxs.Length == 0) return null;
+        	BoxModulePrx otherBoxModulePrx = otherBoxModulePrxs[0];
+        	if (otherBoxModulePrx == null) return null;
+        	return otherBoxModulePrx.getFunctions();
+        }
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {

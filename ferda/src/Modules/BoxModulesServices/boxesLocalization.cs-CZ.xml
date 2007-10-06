@@ -9665,6 +9665,11 @@
 		</Categories>
 		<Sockets>
 			<Socket>
+				<Name>Function</Name>
+				<Label>Funkce</Label>
+				<Hint>Funkce</Hint>
+			</Socket>
+			<Socket>
 				<Name>VariablesCount</Name>
 				<Label>Počet proměnných</Label>
 				<Hint>Počet zásuvek, které repreentují nový vstup funkce</Hint>
@@ -9698,6 +9703,35 @@
 			<PropertyCategory>
 				<Name>Type</Name>
 				<Label>Typ</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.Math.Plus</Identifier>
+		<Label>Součet</Label>
+		<Hint>Součet dvou čísel</Hint>
+		<Categories>
+			<Category>
+				<Name>Language.Math</Name>
+				<Label>Jazyk.Matematika</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Succ1</Name>
+				<Label>Sčítanec 1</Label>
+				<Hint>První sčítanec</Hint>
+			</Socket>
+			<Socket>
+				<Name>Succ2</Name>
+				<Label>Sčítanec 2</Label>
+				<Hint>Druhý sčítanec</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Hlavní</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>

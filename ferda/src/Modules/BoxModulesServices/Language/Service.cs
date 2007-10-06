@@ -41,6 +41,7 @@ namespace Ferda.Modules.Boxes.Language
             // guha mining setting
             registerBox(Lambda.BoxInfo.typeIdentifier, new Lambda.BoxInfo());
             registerBox(Variable.BoxInfo.typeIdentifier, new Variable.BoxInfo());
+            registerBox(Math.Plus.BoxInfo.typeIdentifier, new Math.Plus.BoxInfo());
         }
 
         /// <summary>

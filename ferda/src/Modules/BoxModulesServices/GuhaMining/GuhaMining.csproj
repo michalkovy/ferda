@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -13,62 +13,71 @@
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>GuhaMining</AssemblyName>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>GuhaMining</AssemblyName>
+    <DebugSymbols>True</DebugSymbols>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cbe18eed93b6dbb1">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, PublicKeyToken=526936f183183f71">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d30deff6fe5fc56, processorArchitecture=MSIL">
+    <Reference Include="FerdaData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d30deff6fe5fc56">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaData.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, PublicKeyToken=555ee41fab6936f2">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaMath, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaMath, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9c707da063d5a3ca">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaMath.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaMiningProcessor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaMiningProcessor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b8124f638c9cf024">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaMiningProcessor.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f38f029e8cb6ab0e">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaServerBase.dll</HintPath>
     </Reference>
-    <Reference Include="iceboxcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+    <Reference Include="iceboxcs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
     </Reference>
-    <Reference Include="icecs, Version=3.1.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="icecs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AtomSetting\BoxInfo.cs" />

@@ -755,6 +755,11 @@ namespace Ferda.Modules
         /// The proxy of box module`s functions object.
         /// </summary>
         private ObjectPrx functionsObjPrx;
+        
+        public ObjectPrx FunctionsObjPrx
+        {
+            get { return functionsObjPrx; }
+        }
 
         /// <summary>
         /// <para>Gets the functions object proxy.</para>
@@ -772,7 +777,7 @@ namespace Ferda.Modules
         /// </returns>
         public override ObjectPrx getFunctions(Current __current)
         {
-            return functionsObjPrx;
+            return boxInfo.GetFunctionsObjPrx(this);
         }
 
         /// <summary>
@@ -785,7 +790,8 @@ namespace Ferda.Modules
         /// </returns>
         public override string[] getFunctionsIceIds(Current __current)
         {
-            return (functionsObjPrx == null) ? new string[0] : functionsObjPrx.ice_ids();
+        	ObjectPrx functionsObjProxy = getFunctions(__current);
+            return (functionsObjProxy == null) ? new string[0] : functionsObjProxy.ice_ids();
         }
 
         #endregion
