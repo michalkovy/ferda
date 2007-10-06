@@ -258,6 +258,33 @@ namespace Ferda.Modules.Boxes
         /// of the box module`s functions.
         /// </returns>
         string[] GetBoxModuleFunctionsIceIds();
+        
+        /// <summary>
+        /// Gets function`s Ice identifiers of the box module.
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// An array of strings representing Ice identifiers
+        /// of the box module`s functions.
+        /// </returns>
+        /// <see cref="M:Ferda.Modules.Boxes.IBoxInfo.GetBoxModuleFunctionsIceIds()"/>
+        string[] GetBoxModuleFunctionsIceIds(BoxModule boxModule);
+        
+        /// <summary>
+        /// <para>Gets the functions object proxy.</para>
+        /// <para>
+        /// Throught lambda abstraction is BoxModule interface separated from
+        /// functions over this BoxModule. Functions object is module containing
+        /// functions over properties and sockets of this BoxModule specified in
+        /// slice design.
+        /// </para>
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// The <see cref="Ice.ObjectPrx">proxy </see> of the box module`s
+        /// functions object.
+        /// </returns>
+        ObjectPrx GetFunctionsObjPrx(BoxModuleI boxModule);
 
         /// <summary>
         /// Gets items of the dynamic help.

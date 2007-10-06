@@ -4811,7 +4811,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -4820,7 +4820,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -5242,7 +5242,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -5251,7 +5251,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -5673,7 +5673,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -5682,7 +5682,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -6104,7 +6104,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -6113,7 +6113,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -6535,7 +6535,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -6544,7 +6544,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -6962,7 +6962,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -6971,7 +6971,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -7389,7 +7389,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -7398,7 +7398,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -7820,7 +7820,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -7829,7 +7829,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -8243,7 +8243,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -8252,7 +8252,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -8671,7 +8671,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -8680,7 +8680,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -9097,7 +9097,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -9106,7 +9106,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -9516,7 +9516,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -9525,7 +9525,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -9942,7 +9942,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -9951,7 +9951,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -10361,7 +10361,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -10370,7 +10370,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -10787,7 +10787,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -10796,7 +10796,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -11213,7 +11213,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -11222,7 +11222,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -11644,7 +11644,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -11653,7 +11653,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -12075,7 +12075,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -12084,7 +12084,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -12506,7 +12506,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -12515,7 +12515,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -12929,7 +12929,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -12938,7 +12938,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -13352,7 +13352,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -13361,7 +13361,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -13778,7 +13778,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -13787,7 +13787,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -14204,7 +14204,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -14213,7 +14213,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -14630,7 +14630,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -14639,7 +14639,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -15074,7 +15074,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -15083,7 +15083,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -15518,7 +15518,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -15527,7 +15527,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -15967,7 +15967,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -15976,7 +15976,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -16416,7 +16416,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -16425,7 +16425,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -16846,7 +16846,7 @@
 				<Name>Relation</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -16855,7 +16855,7 @@
 				<Name>Treshold</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -17626,6 +17626,15 @@
 		</Categories>
 		<Sockets>
 			<Socket>
+				<Name>Function</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ice::Object</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
 				<Name>VariablesCount</Name>
 				<SocketTypes>
 					<BoxType>
@@ -17668,6 +17677,50 @@
 				<Name>FunctionsType</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
 				<CategoryName>Type</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
+		</Properties>
+	</Box>
+	<Box>
+		<Identifier>Language.Math.Plus</Identifier>
+		<IconPath>plus.ico</IconPath>
+		<DesignPath>plus.svg</DesignPath>
+		<Categories>
+			<string>Language.Math</string>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Succ1</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>Succ2</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+		</Sockets>
+		<Properties>
+			<Property>
+				<Name>Succ1</Name>
+				<TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
+				<CategoryName>Main</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
+			<Property>
+				<Name>Succ2</Name>
+				<TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
+				<CategoryName>Main</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 			</Property>

@@ -9697,6 +9697,11 @@
 		</Categories>
 		<Sockets>
 			<Socket>
+				<Name>Function</Name>
+				<Label>Function</Label>
+				<Hint>Function</Hint>
+			</Socket>
+			<Socket>
 				<Name>VariablesCount</Name>
 				<Label>Count of variables</Label>
 				<Hint>Cont of sockets which represent argument of function</Hint>
@@ -9730,6 +9735,35 @@
 			<PropertyCategory>
 				<Name>Type</Name>
 				<Label>Type</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.Math.Plus</Identifier>
+		<Label>Plus</Label>
+		<Hint>Adds one number in another</Hint>
+		<Categories>
+			<Category>
+				<Name>Language.Math</Name>
+				<Label>Language.Math</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Succ1</Name>
+				<Label>Succ 1</Label>
+				<Hint>First succ</Hint>
+			</Socket>
+			<Socket>
+				<Name>Succ2</Name>
+				<Label>Succ 2</Label>
+				<Hint>Second succ</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Main</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>
