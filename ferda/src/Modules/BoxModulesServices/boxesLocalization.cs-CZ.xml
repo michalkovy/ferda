@@ -9745,6 +9745,19 @@
 				<Label>Krabičky vztahující se k ontologiím</Label>
 			</Category>
 		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>OntologyPath</Name>
+				<Label>Cesta k ontologii</Label>
+				<Hint>Určuje ontologii, která bude načtena touto krabičkou.</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Ontology Path</Name>
+				<Label>Cesta k ontologii</Label>
+			</PropertyCategory>
+		</PropertyCategories>
 		<ModulesAskingForCreationSeq>
 			<ModulesAskingForCreation>
 				<Name>OntologyMapping</Name>

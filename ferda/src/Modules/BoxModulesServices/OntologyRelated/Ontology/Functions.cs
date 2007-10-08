@@ -68,6 +68,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         #region Methods
 
+        
         /* TODO - nahradit Ontology Metodama
         /// <summary>
         /// Gets the names of data tables in the database

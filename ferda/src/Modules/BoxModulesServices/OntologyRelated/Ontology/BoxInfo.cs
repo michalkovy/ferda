@@ -69,7 +69,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// <returns>The user label</returns>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            //TODO - dynanmický název krabičky - např. stulong.owl
+            //TODO - dynamický název krabičky - např. stulong.owl
             return "Ontology";
         }
 
@@ -89,46 +89,38 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
             Dictionary<string, ModulesAskingForCreation> modulesAFC = getModulesAskingForCreationNonDynamic(localePrefs);
             List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();
-            ModulesAskingForCreation moduleAFC;
+           
             ModulesConnection moduleConnection;
-            ModuleAskingForCreation singleModuleAFC;
+            ModuleAskingForCreation singleModule;
 
-            foreach (string moduleAFCName in modulesAFC.Keys)
+            foreach (string moduleAFCname in modulesAFC.Keys)
             {
-                moduleAFC = modulesAFC[moduleAFCName];
-                switch (moduleAFCName)
+
+                singleModule = new ModuleAskingForCreation();
+                moduleConnection = new ModulesConnection();
+
+                switch (moduleAFCname)
                 {
                     case "OntologyMapping":
-                        string ontologyName = "pevneZadana.owl";   //TODO Func.GetDataTablesNames(false);
-                        if (true)   //TODO dataMatrixNames.Length > 0)
-                        {
-                            moduleConnection = new ModulesConnection();
-                            moduleConnection.socketName = OntologyMapping.Functions.SockOntology;
-                            moduleConnection.boxModuleParam = boxModule.MyProxy;
-                            //foreach (string dataMatrixName in dataMatrixNames)
-                            //{
-                                ModulesAskingForCreation newMAFC = new ModulesAskingForCreation();
-                                newMAFC.label = moduleAFC.label.Replace("@Name", ontologyName);
-                                newMAFC.hint = moduleAFC.hint.Replace("@Name", ontologyName);
-                                newMAFC.help = moduleAFC.help;
-                                singleModuleAFC = new ModuleAskingForCreation();
-                                singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
-                                singleModuleAFC.newBoxModuleIdentifier = OntologyMapping.BoxInfo.typeIdentifier;
-                                PropertySetting propertySetting = new PropertySetting();
-                                propertySetting.propertyName = OntologyMapping.Functions.PropName;
-                                propertySetting.value = new StringTI(ontologyName);
-                                singleModuleAFC.propertySetting = new PropertySetting[] { propertySetting };
-                                //allDataMatrixModulesAFC.Add(singleModuleAFC);
-                                newMAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
-                                result.Add(newMAFC);
-                            //}
-                        }
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName = OntologyMapping.Functions.SockOntology;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection = new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier = OntologyMapping.BoxInfo.typeIdentifier;
+                        singleModule.propertySetting = new PropertySetting[] { };
                         break;
+                       
                     default:
                         throw new NotImplementedException();
                 }
+
+                //setting the newModules property of each modules for intearction
+                modulesAFC[moduleAFCname].newModules = new ModuleAskingForCreation[] { singleModule };
+                result.Add(modulesAFC[moduleAFCname]);
             }
-            //return new ModulesAskingForCreation[0];
+
             return result.ToArray();
         }
         /// <summary>
@@ -140,18 +132,19 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// <returns>String options of the property</returns>
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
-            /*TODO zjistit co to je a upravit
-             * switch (propertyName)
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            switch (propertyName)
             {
-                case Functions.PropProviderInvariantName:
-                    return BoxInfoHelper.GetSelectStringArray(
+                case Functions.OntologyPath:
+                    return null;
+                        /*BoxInfoHelper.GetSelectStringArray(
                         DataProviderHelper.FactoryClassesInvariantNames
                         );
+                         */
                 default:
                     return null;
             }
-             */
-            return null;
         }
 
         /// <summary>
@@ -222,8 +215,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// <returns>If the property is set.</returns>
         public override bool IsPropertySet(string propertyName, PropertyValue propertyValue)
         {
-            /*TOTO doplnit - asi v tomto pripade bude jedina property OntologyPath
-            if (propertyName == "ConnectionString")
+            //TOTO doplnit - asi v tomto pripade bude jedina property OntologyPath
+            if (propertyName == "OntologyPath")
             {
                 string value = ((StringT)propertyValue).stringValue;
                 if (value == string.Empty || value == null)
@@ -233,8 +226,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
 
             return base.IsPropertySet(propertyName, propertyValue);
-             */
-            return false;
         }
 
         #region Type Identifier

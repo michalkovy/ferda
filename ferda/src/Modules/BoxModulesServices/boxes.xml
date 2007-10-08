@@ -17733,6 +17733,26 @@
 		<Categories>
 			<string>OntologyRelated</string>
 		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>OntologyPath</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda:Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+		</Sockets>
+		<Properties>
+			<Property>
+				<Name>OntologyPath</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Ontology Path</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
+		</Properties>
 		<ModulesAskingForCreationSeq>
 			<ModulesAskingForCreation>
 				<Name>OntologyMapping</Name>
