@@ -9777,6 +9777,19 @@
 				<Label>Ontology Related Boxes</Label>
 			</Category>
 		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>OntologyPath</Name>
+				<Label>Location of ontology</Label>
+				<Hint>Defines a location to the ontology, which will be loaded by this box.</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Ontology Path</Name>
+				<Label>Path to Ontology</Label>
+			</PropertyCategory>
+		</PropertyCategories>
 		<ModulesAskingForCreationSeq>
 			<ModulesAskingForCreation>
 				<Name>OntologyMapping</Name>
