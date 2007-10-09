@@ -9747,15 +9747,15 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>OntologyPath</Name>
+				<Name>Ontology Path</Name>
 				<Label>Cesta k ontologii</Label>
 				<Hint>Určuje ontologii, která bude načtena touto krabičkou.</Hint>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
-				<Name>Ontology Path</Name>
-				<Label>Cesta k ontologii</Label>
+				<Name>Ontology Location</Name>
+				<Label>Umístění ontologie</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>

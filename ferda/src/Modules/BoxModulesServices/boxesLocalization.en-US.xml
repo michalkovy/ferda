@@ -9779,15 +9779,15 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>OntologyPath</Name>
-				<Label>Location of ontology</Label>
-				<Hint>Defines a location to the ontology, which will be loaded by this box.</Hint>
+				<Name>Ontology Path</Name>
+				<Label>Path to Ontology</Label>
+				<Hint>Defines an ontology, which will be loaded by this box.</Hint>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
-				<Name>Ontology Path</Name>
-				<Label>Path to Ontology</Label>
+				<Name>Ontology Location</Name>
+				<Label>Location of Ontology</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>

@@ -17735,7 +17735,7 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>OntologyPath</Name>
+				<Name>Ontology Path</Name>
 				<SocketTypes>
 					<BoxType>
 						<FunctionIceId>::Ferda:Modules::StringTInterface</FunctionIceId>
@@ -17746,11 +17746,12 @@
 		</Sockets>
 		<Properties>
 			<Property>
-				<Name>OntologyPath</Name>
+				<Name>Ontology Path</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Ontology Path</CategoryName>
+				<CategoryName>Ontology Location</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
+				<SettingModuleIdentifier>SetOntologyPath</SettingModuleIdentifier>
 			</Property>
 		</Properties>
 		<ModulesAskingForCreationSeq>
