@@ -189,7 +189,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
             Ferda.FrontEnd.AddIns.SetOntologyPath.SetOntologyPathControl listView =
                 (Ferda.FrontEnd.AddIns.SetOntologyPath.SetOntologyPathControl)sender;
 
-            /*TODO this.returnString = listView.ReturnString; */
+            this.returnString = listView.ReturnOntologyPath;
         }
 
         #endregion

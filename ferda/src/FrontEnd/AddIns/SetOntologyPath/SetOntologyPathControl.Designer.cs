@@ -28,7 +28,6 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
         /// </summary>
         private void InitializeComponent()
         {
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -42,67 +41,70 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "OWL files (*.owl) | *.owl";
             // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(23, 37);
+            this.radioButton1.Location = new System.Drawing.Point(21, 39);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(85, 17);
+            this.radioButton1.Size = new System.Drawing.Size(14, 13);
             this.radioButton1.TabIndex = 0;
             this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton1";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(23, 85);
+            this.radioButton2.Location = new System.Drawing.Point(21, 87);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(85, 17);
-            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Size = new System.Drawing.Size(14, 13);
+            this.radioButton2.TabIndex = 0;
             this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "radioButton2";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // diskPathTextBox
             // 
-            this.diskPathTextBox.Location = new System.Drawing.Point(124, 36);
+            this.diskPathTextBox.Location = new System.Drawing.Point(51, 36);
             this.diskPathTextBox.Name = "diskPathTextBox";
             this.diskPathTextBox.Size = new System.Drawing.Size(206, 20);
-            this.diskPathTextBox.TabIndex = 2;
+            this.diskPathTextBox.TabIndex = 0;
+            this.diskPathTextBox.TextChanged += new System.EventHandler(this.diskPathTextBox_TextChanged);
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(134, 132);
+            this.okButton.Location = new System.Drawing.Point(63, 132);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 3;
+            this.okButton.TabIndex = 1;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(248, 132);
+            this.cancelButton.Location = new System.Drawing.Point(170, 132);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 4;
+            this.cancelButton.TabIndex = 2;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // URLPathTextBox
             // 
-            this.URLPathTextBox.Location = new System.Drawing.Point(124, 84);
+            this.URLPathTextBox.Location = new System.Drawing.Point(51, 84);
             this.URLPathTextBox.Name = "URLPathTextBox";
             this.URLPathTextBox.Size = new System.Drawing.Size(206, 20);
-            this.URLPathTextBox.TabIndex = 5;
+            this.URLPathTextBox.TabIndex = 0;
+            this.URLPathTextBox.TextChanged += new System.EventHandler(this.URLPathTextBox_TextChanged);
             // 
             // browseButton
             // 
-            this.browseButton.Location = new System.Drawing.Point(358, 34);
+            this.browseButton.Location = new System.Drawing.Point(279, 34);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(75, 23);
-            this.browseButton.TabIndex = 6;
+            this.browseButton.TabIndex = 0;
             this.browseButton.Text = "Procházet";
             this.browseButton.UseVisualStyleBackColor = true;
             this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
@@ -111,7 +113,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(457, 187);
+            this.ClientSize = new System.Drawing.Size(373, 183);
             this.Controls.Add(this.browseButton);
             this.Controls.Add(this.URLPathTextBox);
             this.Controls.Add(this.cancelButton);
@@ -128,7 +130,6 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
 
         #endregion
 
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
