@@ -113,7 +113,42 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         public override string HelloWorld(Ice.Current __current)
         {
-            return "Hello World!";
+            System.Windows.Forms.MessageBox.Show("Funkce je volaná s Ontology Path : " + OntologyPath);
+            int status = 0;
+		    Ice.Communicator ic = null;
+		    try {
+			    ic = Ice.Util.initialize();
+			    Ice.ObjectPrx obj = ic.stringToProxy("OWLParser:default -p 10000");
+			    
+                /*OWLParserPrx parser = OWLParserPrxHelper.checkedCast(obj);
+			    if (parser == null)
+				    throw new Error("Invalid proxy");
+    			
+			    OntologyStructure FerdaOntology = new OntologyStructure();
+    						
+			    FerdaOntology = parser.parseOntology("file:/D:/Marthin/skola/diplomova_prace/pokusne_ontologie/umls_stulong_2/umls_stulong_2.owl");*/
+                status = 0;
+            } catch (Ice.Exception e) {
+                Console.Error.WriteLine(e);
+                status = 1;
+            }
+            if (ic != null) {
+                // Clean up
+                //
+                try {
+                    ic.destroy();
+                } catch (Ice.Exception e) {
+                    Console.Error.WriteLine(e);
+                    status = 1;
+                }
+            }
+            return "end of Hello world";
+            //Environment.Exit(status);
+        }
+
+        public override void LoadOntology(Ice.Current __current)
+        {
+            //TODO funkce, ktera ma zajistit spusteni serveru (resp overit, ze bezi) a nacteni a parsovani ontologie
         }
 
 

@@ -9777,6 +9777,13 @@
 				<Label>Ontology Related Boxes</Label>
 			</Category>
 		</Categories>
+		<Actions>
+			<Action>
+				<Name>LoadOntology</Name>
+				<Label>Load Ontology</Label>
+				<Hint>The action loads the structure of an ontology.</Hint>
+			</Action>
+		</Actions>
 		<Sockets>
 			<Socket>
 				<Name>Ontology Path</Name>
