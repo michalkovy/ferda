@@ -1,0 +1,2 @@
+  slice2java -I. --output-dir .. OntologyData.ice
+  slice2java -I. --output-dir .. OWLParser.ice

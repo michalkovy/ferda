@@ -31,7 +31,7 @@ HOW TO GENERATE *.cs FROM *.ice
 #include <Modules/Common.ice> //some common enumerations and structures
 #include <Modules/Exceptions.ice> //some exceptions defined
 #include <Modules/BuiltinSequences.ice> //sequences of basic types
-#include <FerdaOWLParser/OWLParser.ice> //OWL parser
+#include <Modules/OWLParser.ice> //OWL parser
 
 module Ferda {
 	module Modules {

@@ -148,6 +148,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         public override void LoadOntology(Ice.Current __current)
         {
+            //Ferda.OntologyRelated.OWLParserPrx prx;
+            //prx.parseOntology("url");
             //TODO funkce, ktera ma zajistit spusteni serveru (resp overit, ze bezi) a nacteni a parsovani ontologie
         }
 
