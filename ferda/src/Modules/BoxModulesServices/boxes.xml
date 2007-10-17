@@ -17733,6 +17733,12 @@
 		<Categories>
 			<string>OntologyRelated</string>
 		</Categories>
+		<Actions>
+			<Action>
+				<Name>LoadOntology</Name>
+				<IconPath>loadOntologyIcon.ico</IconPath>
+			</Action>
+		</Actions>
 		<Sockets>
 			<Socket>
 				<Name>Ontology Path</Name>

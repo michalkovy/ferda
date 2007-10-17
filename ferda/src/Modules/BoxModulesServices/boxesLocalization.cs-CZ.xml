@@ -9745,6 +9745,13 @@
 				<Label>Krabičky vztahující se k ontologiím</Label>
 			</Category>
 		</Categories>
+		<Actions>
+			<Action>
+				<Name>LoadOntology</Name>
+				<Label>Načíst ontologii</Label>
+				<Hint>Akce načte strukturu ontologie.</Hint>
+			</Action>
+		</Actions>
 		<Sockets>
 			<Socket>
 				<Name>Ontology Path</Name>

@@ -194,17 +194,16 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// </exception>
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
-            /* TODO doplnit/smazat
-             * Functions Func = (Functions)boxModule.FunctionsIObj;
+            // TODO doplnit/smazat
+            Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (actionName)
             {
-                case "ReloadRequest":
-                    Func.LastReloadRequest = DateTime.Now;
+                case "LoadOntology":
+                    Func.HelloWorld();
                     break;
                 default:
                     throw Exceptions.NameNotExistError(null, actionName);
             }
-             */
         }
 
         /// <summary>

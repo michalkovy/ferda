@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <project name="Slice to C#" default="slice" basedir=".">
 	<description>Generates .cs files from slice</description>
 	<!--
@@ -118,6 +118,27 @@
 					</foreach>
 				</do>
 			</foreach>
+			
+			<echo message="Generuji .java z .ice souboru v adresari FerdaOWLParser..."/>
+			<mkdir dir="${build.dir}/FerdaOWLParser/src/generated"/>
+			<exec program="slice2java">
+				<arg value="-I."/>
+				<arg value="--output-dir"/>
+				<arg value="${build.dir}/FerdaOWLParser/src/generated"/>
+				<arg file="FerdaOWLParser/OntologyData.ice"/>
+				<arg file="FerdaOWLParser/OWLParser.ice"/>
+			</exec>
+			
+			<echo message="Generuji .cs z .ice souboru v adresari FerdaOWLParser..."/>
+			<mkdir dir="${build.dir}/Modules/BoxModulesServices/OntologyRelated/generated"/>
+			<exec program="slice2cs">
+				<arg value="-I."/>
+				<arg value="--output-dir"/>
+				<arg value="${build.dir}/Modules/BoxModulesServices/OntologyRelated/generated"/>
+				<arg file="FerdaOWLParser/OntologyData.ice"/>
+				<arg file="FerdaOWLParser/OWLParser.ice"/>
+			</exec>
+			
 		</if>
 	</target>
 	<target name="doc">
