@@ -125,8 +125,8 @@
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
 				<arg value="${build.dir}/FerdaOWLParser/src/generated"/>
-				<arg file="FerdaOWLParser/OntologyData.ice"/>
-				<arg file="FerdaOWLParser/OWLParser.ice"/>
+				<arg file="Modules/OntologyData.ice"/>
+				<arg file="Modules/OWLParser.ice"/>
 			</exec>
 			
 			<echo message="Generuji .cs z .ice souboru v adresari FerdaOWLParser..."/>
@@ -135,8 +135,8 @@
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
 				<arg value="${build.dir}/Modules/BoxModulesServices/OntologyRelated/generated"/>
-				<arg file="FerdaOWLParser/OntologyData.ice"/>
-				<arg file="FerdaOWLParser/OWLParser.ice"/>
+				<arg file="Modules/OntologyData.ice"/>
+				<arg file="Modules/OWLParser.ice"/>
 			</exec>
 			
 		</if>
