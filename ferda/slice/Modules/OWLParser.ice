@@ -6,9 +6,11 @@
 #endif    
 
 module Ferda {
-   module OntologyRelated {          
-       interface OWLParser {
-           OntologyData::OntologyStructure parseOntology(string ontologyURL) throws OntologyData::WrongOntologyURL;
-       };
+  module OntologyRelated {
+    module generated {          
+      interface OWLParser {
+        OntologyData::OntologyStructure parseOntology(string ontologyURL) throws OntologyData::WrongOntologyURL;
+      };
+    };
   };
 };

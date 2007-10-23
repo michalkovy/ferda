@@ -148,11 +148,43 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         public override void LoadOntology(Ice.Current __current)
         {
-            //Ferda.OntologyRelated.OWLParserPrx prx;
-            //prx.parseOntology("url");
-            //TODO funkce, ktera ma zajistit spusteni serveru (resp overit, ze bezi) a nacteni a parsovani ontologie
-        }
+            Ice.Communicator ic = null;
+            ic = Ice.Util.initialize();
 
+            Ice.ObjectPrx obj = ic.stringToProxy("Ferda.OntologyRelated.OWLParser");
+
+            try
+            {
+                Ferda.OntologyRelated.generated.OWLParserPrx prx =
+                    Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(obj);
+
+                System.Windows.Forms.MessageBox.Show("proxy nalezena");
+
+                prx.parseOntology("url");
+
+                System.Windows.Forms.MessageBox.Show("parse ontology byla úspìšnì zavolána");
+                //TODO funkce, ktera ma zajistit spusteni serveru (resp overit, ze bezi) a nacteni a parsovani ontologie
+            }
+            catch (Ice.Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.ToString());
+
+                Console.Error.WriteLine(e);
+            }
+            if (ic != null)
+            {
+                // Clean up
+                //
+                try
+                {
+                    ic.destroy();
+                }
+                catch (Ice.Exception e)
+                {
+                    Console.Error.WriteLine(e);
+                }
+            }
+        }
 
         #endregion
     }
