@@ -1,0 +1,299 @@
+\documentclass{llncs}
+\usepackage{url}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{amssymb}
+
+%\newtheorem{definition}{Definition}
+
+\begin{document}
+
+\pagestyle{empty}
+\mainmatter
+
+\title{Investigating Measures of Association by Graphs and Tables of Critical Frequencies}
+\author{Martin Ralbovsk\'{y}, Jan Rauch}
+
+\institute{University of Economics, Prague \\
+ W. Churchill Sq.~4,  130 67 Praha~3, Czech Republic \\
+\email{martin.ralbovsky@gmail.com, rauch@vse.cz} }
+
+\maketitle
+
+\begin{abstract}
+There is lot of effort to find suitable measures of interestingness of association rules. 
+The most known measures are confidence and support but there are tens of additional ones. 
+Each association measure can be understood as a function of four independent variables. 
+These variables correspond to frequencies from a fourfold contingency table of antecedent and succedent. 
+A natural way to investigate functions is to study their graphs. However it is hard to deal 
+with graphs of functions of four independent variables; thus graphs are generally not suitable 
+to study association measures. We show that tables of critical frequencies can be used 
+to overcome this difficulty for some important classes of association measures. We give 
+an overview of important classes of association measures and then we show how 
+the graphs of tables of critical frequencies describe behavior of corresponding association 
+measures in a reasonable way. 
+\end{abstract}
+
+
+\section{Introduction}  \label{Introduction}
+
+%-------------------------------------------------------------------------
+
+
+There are lot of papers dealing with various aspects of association measures; 
+see e.g. \cite{Han:07,HeCr,TKS:02}. The goal is to find optimal criterion 
+of truthfulness of the association rule $\varphi \approx \psi$ 
+expressing a relation of Boolean attributes $\varphi $ and $ \psi$ in given data. 
+We suppose to have data matrix $\cal M$ with two Boolean columns corresponding 
+to $\varphi $ and $ \psi$. Both $\varphi $ and $ \psi$ can be derived from the other, usually 
+non Boolean,  columns.  
+The whole situation is fully described by the four-fold 
+contingency table 
+$4ft(\varphi, \psi, {\cal M})$ (the {\em 4ft table} for short) of $\varphi $ and $\psi$ 
+in the data matrix $\cal M$. It is the quadruple $\langle a,b,c,d \rangle $ 
+of natural numbers such that $a $ is the number of rows of ${\cal M}$ satisfying both $ \varphi $
+and $ \psi $, $b $ is the number of rows of ${\cal M}$ satisfying $ \varphi $
+and not satisfying $ \psi $ etc.; see Table \ref{4ft_Table_fi_psi}.
+%
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{r|c|c}
+   $ {\cal M} $       & $ \psi $ &  $ \neg \psi $ \\
+\hline
+     $  \varphi $  & \ \ \  $ a \ \ \  $    & $ \ \ \ b \ \ \ $      \\
+\hline
+   $ \neg \varphi $  &  $ c $    & $ d $    \\
+%\hline
+%          &  $ k $    & $ l $  & $n$   \\
+\end {tabular}
+\caption{4ft table $4ft(\varphi, \psi, {\cal M})$ of $\varphi $ and $\psi$ in $\cal M$ } \label{4ft_Table_fi_psi}
+\end{center}
+\end{table}
+
+
+There are 
+ various requirements concerning relation of $\varphi $ and $ \psi$. We can try 
+to express the "classical" association rule with confidence and support, some 
+relation described by  a simple condition concerning frequencies  
+$ a, b, c, d $   from the 4ft table  $4ft(\varphi, \psi, {\cal M})$ or 
+even a relation corresponding to a statistical hypothesis test. 
+We call the symbol $ \approx $ as {\em 4ft-quantifier} \cite{Ra:05A}.  
+The truthfulness  of the rule  $\varphi \approx \psi$ in data matrix 
+$\cal M$ is often defined such that $\varphi \approx \psi$ is true if and only if 
+$ F_{\approx}(a,b,c,d) \geq p $ or $F_{\approx}(a,b,c,d) \leq p $ where 
+$\langle a,b,c,d \rangle = 4ft(\varphi, \psi, {\cal M})$. The function ${\cal F}_{\approx}$ 
+and the parameter $p$ are given by the 4ft-quantifier $ \approx $. We call the function
+$F_{\approx}$  the {\em evaluation function of 4ft-quantifier} $\approx$. 
+Examples of 4ft-quantifiers and their evaluation functions are in section 
+\ref{Evaluation_Functions}. 
+
+Properties of the 4ft-quantifier $\approx$ are fully described by behavior of its 
+evaluation function $F_{\approx}$. 
+A natural way to investigate functions is to study their graphs. 
+Some results in this direction are presented in section \ref{Evaluation_Functions}. 
+The evaluation function is the function of four independent variables;
+thus graphs are not suitable to study association measures. 
+This problem can be partly solved by graphs of tables of critical frequencies 
+that describe behavior of important 4ft-quantifiers in a comprehensive way;
+see section \ref{Classes_Tables}.  Graphs of tables of critical frequencies are used in section 
+\ref{Graphs_Tables}  to describe behavior of several important 4ft-quantifiers. 
+Conclusions and further research are presented in section \ref{Conclusions}. 
+ 
+
+\input 2EvalFun.tex 
+%\section{Evaluation Functions of 4ft-quantifiers} \label{Evaluation_Functions}
+% JR po dohode s MR ktere quantifikatory 
+
+\input 3Graphs.tex
+%\section{Graphs of Evaluation Functions} \label{Graphs}
+%MR 
+
+\input 4TableCF.tex
+%\section{Classes of 4ft-quantifiers and Tables of Critical Frequencies} \label{Classes_Tables}
+
+
+\input 5GraTCF.tex
+%\section{Graphs of Tables of Critical Frequencies} \label{Graphs_Tables}
+
+
+\input 6Conclus.tex
+%\section{Conclusions} \label{Conclusions}
+
+%\bibliographystyle{IEEEbib}
+
+\begin{thebibliography}{1} %
+
+\bibitem{Ha:83}
+H\'{a}jek P, Havr\'{a}nek T, Chytil M (1983) GUHA Method. Academia, Prague (in Czech)
+
+\bibitem{Ha:78}
+H\'{a}jek P, Havr\'{a}nek T (1978) Mechanising Hypothesis Formation
+- Mathematical  Foundations  for  a   General  Theory. Springer, Berlin Heidelberg New York
+
+\bibitem{Kupka}
+Kupka D.: \emph{User support 4ft-miner procedure for data mining}. Master Thesis,
+Faculty of Mathematics and Physics, Charles University, Prague 2007 (in Czech)
+
+\bibitem {Han:07}
+Wu T., Chen Y., Han J.: Association Mining in Large Databases: A Reexamination of Its Measures.
+In: Kok J. (Edt.): Knowledge Discovery in Databases: PKDD 2007, conference proceedings. 
+Springer Verlag, 2007, ISBN: 3-540-74975-6
+
+\bibitem {HeCr}
+{C{\'e}line H. Cr{\'e}milleux} B.: A Unified View of Objective Interestingness Measures. 
+In.: Perner P.(Edt.): Machine Learning and Data Mining in Pattern Recognition. 
+               MLDM 2007, conference proceedings, Springer, 2007
+
+\bibitem {TKS:02}
+Tan P., Kumar V. Srivastava J.: Selecting the right interestingness measure for association patterns. 
+In Proceedings of the Eight A CM SIGKDD   International Conference on Knowledge Discovery and Data Mining, July 2002.
+    
+\bibitem{Ra:86} Rauch J (1986) Logical Foundations of Hypothesis Formation from Databases. 
+Mathematical Institute of the Czechoslovak Academy of Sciences, Prague, Dissertation  (in Czech)
+
+\bibitem {Ra:98A}
+Rauch J (1998) Classes of Four-Fold Table Quantifiers. 
+In: Zytkow J, Quafafou M (Eds.): Principles of Data Mining and Knowledge Discovery. 
+Springer, Berlin Heidelberg New York
+
+\bibitem{Ra:04}
+Rauch J (2004) Definability of Association Rules and Tables of
+Critical Frequencies. In: Lin T Y et al.  (Eds.): Foundations of 
+Data Mining. Brighton,  IEEE Computer Society
+
+\bibitem{Ra:05A}
+Rauch J (2005) Logic of Association Rules. Applied Intelligence, 
+ 22, pp. 9-28
+
+\bibitem{RS:05A} 
+Rauch J., \v{S}im\accent23unek M.: (2005) An
+Alternative Approach to Mining Association Rules. In:  Lin T Y et al. (Eds.) 
+Data Mining: Foundations, Methods, and Applications. 
+Springer, Berlin Heidelberg New York
+
+\bibitem{Ra:07}
+Rauch, J.: Observational Calculi, Classes of Association Rules and F-property. 
+accepted for publication at The 2007 IEEE International Conference on Granular Computing, 
+(\url{http://www.cs.sjsu.edu/~grc/grc2007/?index=program})
+
+
+	
+\bibitem{RK:07}
+Ralbovsk\'{y} M, Kucha\v{r} T (2007) Using Disjunctions in 
+Association Mining. In: Perner P (Ed.): 
+Advances in Data Mining - Theoretical Aspects and Applications.  
+Springer, Berlin Heidelberg New York
+
+\end{thebibliography}
+
+\end{document}
+
+
+
+
+\bibitem {Ag:96}
+Aggraval R et al. (1996) Fast Discovery of Association Rules.
+In: Fayyad, U. M. et al.(Eds.) Advances in Knowledge Discovery and Data
+Mining. AAAI Press %/ The MIT Press  
+
+\bibitem{Ha:78A} H\'{a}jek P (guest ed.) (1978) International Journal of
+Man-Machine Studies, special issue on GUHA, 10
+
+\bibitem{Ha:81}
+H\'{a}jek P (guest ed.) (1981) International Journal of
+Man-Machine Studies, second special issue on GUHA, 15
+
+\bibitem{Ha:83}
+H\'{a}jek P, Havr\'{a}nek T, Chytil M (1983) GUHA Method. Academia, Prague (in Czech)
+
+\bibitem{Ha:95}
+H\'{a}jek P, Sochorov\'{a} A, Zv\'{a}rov\'{a} J (1995) GUHA for personal computers.
+Computational Statistics \& Data Analysis,  19
+
+%\bibitem{LL:00}
+%Louie E,  Lin T Y (2000) Finding Association Rules using Fast Bit
+%Computation: Machine-Oriented Modeling. In: Ras Z, Ohsuga S (eds)
+%Foundations of Intelligent Systems. Springer, Berlin Heidelberg New York
+
+\bibitem{PKS:04}
+Pang-Ning T, Kumar V, Srivastava J (2004)
+Selecting the Right Objective Measure for Association Analysis.  Information Systems, 29
+
+\bibitem{RK:07}
+Ralbovsk\'{y} M, Kucha\v{r} T (2007) Using Disjunctions in 
+Association Mining. In: Perner P (Ed.): 
+Advances in Data Mining - Theoretical Aspects and Applications.  
+Springer, Berlin Heidelberg New York
+
+
+\bibitem{Ra:75}
+Rauch J (1975) Ein Beitrag zu der GUHA Methode in der dreiwertigen Logik. Kybernetika, 11
+
+%\bibitem {Ra:78}
+%Rauch J (1978) Some Remarks on Computer  Realisations of GUHA
+%Procedures. International Journal of Man-Machine Studies 10: 23--28
+
+\bibitem{Ra:86} Rauch J (1986) Logical Foundations of Hypothesis Formation from Databases. 
+Mathematical Institute of the Czechoslovak Academy of Sciences, Prague, Dissertation  (in Czech)
+
+
+%\bibitem{Ra:97}
+%Rauch J (1997) Logical Calculi for Knowledge Discovery in Databases.
+%In: Zytkow J, Komorowski J (Eds.): Principles of Data Mining and Knowledge Discovery. 
+%Springer, Berlin Heidelberg New York
+
+
+%\bibitem {Ra:98B}
+%Rauch J (1998) Four-Fold Table Calculi and Missing Information.
+%in Proc. Joint Conference on Information Sciences, Durham, North Carolina, 1998, pp. 375-378
+
+
+\bibitem {Ra:98C}
+Rauch J (1998) Contribution to Logical Foundations of KDD. 
+University of Economics Prague, Assoc. Prof. Thesis (in  Czech)
+
+%\bibitem{Ra:02A}
+%Rauch J (2002) Interesting Association Rules and Multi-relational Association Rules.
+%Communications of Institute of Information and Computing Machinery, Taiwan,
+%Vol. 5, pp. 77-82, May 2002
+
+
+%\bibitem{Ra:05B}
+%Rauch J (2005) Definability of Association Rules in Predicate
+%Calculus.  In:  Lin T Y, Ohsuga S,  Liau C J,  Hu X (eds)
+%Foundations and Novel Approaches in Data Mining. Springer, Berlin
+%Heidelberg New York pp. 23 - 40
+
+\bibitem{Ra:05C}
+Rauch J (2005) Classes of Association Rules, an Overview.
+In: Lin T Y, Xie Y (Eds.). Foundation of semantic Oriented Data
+and Web Mining. %[online] 
+Houston, IEEE Computer Society
+%, 2005, pp. 68–-74. ISBN 0-9738918-7-4.
+%\url{http://www.cs.sjsu.edu/faculty/tylin/ICDM05/}.
+
+
+%\bibitem{RSL:05}
+%Rauch Jan, \v{S}im\accent23unek Milan, L\'{i}n V\'{a}clav (2005)
+%Mining for Patterns Based on Contingency Tables by KL-Miner – First Experience.%
+%In: LIN, Tsau Young, OHSUGA, Setsuo, LIAU, C. J., HU, Xiaohua (Eds.)
+% Foundations and Novel Approaches in Data Mining. Berlin : Springer-Verlag, pp. 155 -- 167. ISBN 3-540-28315-3
+
+
+\bibitem{RS:05B}
+Rauch J, \v{S}im\accent23unek M (2005)
+GUHA Method and Granular Computing. In: Hu, X et al. (Eds.) 
+%et iaohua, LIU, Qing, SKOWRON, Andrzej, LIN, Tsau Young, YAGER, Ronald R., ZANG, Bo (ed.). 
+Proceedings of IEEE conference Granular Computing. Beijing, IEEE Computer Society
+
+\bibitem{RS:07B}
+Rauch J, \v{S}im\accent23unek M: Semantic Web Presentation of Analytical 
+Reports from Data Mining  -- Preliminary Considerations. In Proceedings of Web 
+Intelligence 07
+
+%\bibitem {Ze:96}
+%R. Zembowicz and J. Zytkow (1996) From Contingency Tables to Various Forms of
+%Knowledge in Databases. in Advances in Knowledge Discovery and Data
+%Mining, edited by U. M. Fayyad and all, AAAI Press: Menlo Park, California, pp. 329 - 349, 1996
+
