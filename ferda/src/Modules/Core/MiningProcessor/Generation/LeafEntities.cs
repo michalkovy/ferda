@@ -723,6 +723,25 @@ namespace Ferda.Guha.MiningProcessor.Generation
             return null;
         }
 
+        /// <summary>
+        /// The skip optimalization implementation
+        /// </summary>
+        /// <param name="current">The current bit string</param>
+        /// <returns>If current bit string should be returned or not</returns>
+        public bool skipOptimize(IBitString current)
+        {
+            SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+            if (parentSkipSetting != null)
+            {
+                return Common.Compare(parentSkipSetting.Relation,
+                    current.Sum, parentSkipSetting.Treshold);
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         #endregion
     }
 
@@ -772,7 +791,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             _setting = setting;
             _attributeGuid = setting.generator.GetAttributeId().value;
             _totalCount = setting.generator.GetMaxBitStringCount();
-             _bufferInstance = BitStringBuffer.GetInstance();
+            _bufferInstance = BitStringBuffer.GetInstance();
 
             if (!_bufferInstance.GuidPresent(_attributeGuid))
             {
@@ -799,14 +818,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
             {
                 if (currentBitString < bufferedCount)
                 {
-                    BitStringIceWithCategoryId _bs = 
+                    BitStringIceWithCategoryId _bs =
                         _bufferInstance.GetBitString(currentBitString);
                     yield return new BitString(
                                 new BitStringIdentifier(
                                 _attributeGuid, _bs.categoryId),
                                 _bs.bitString.length,
                                 _bs.bitString.value);
-                    
+
                     currentBitString++;
                 }
                 else

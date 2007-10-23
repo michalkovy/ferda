@@ -30,11 +30,18 @@ using System.Runtime.InteropServices;
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
     /// <summary>
+    /// This is buffer for getting bit string from the Ice layer 
+    /// <see cref="Ferda.Guha.MiningProcessor.BitStringIceWithCategoryId"/>
+    /// (not to be confused with the <see cref="BitStringCache"/>, that 
+    /// caches bit strings <see cref="IBitString"/> inside the mining processor.
+    /// It is used also in relational DM.
+    /// </summary>
+    /// <remarks>
     /// Cache for relational DM is separate, as getting bitstrings from sub-miners
     /// is different: sub-miner provides no particular bitstring with specified
     /// attribute and category id, but "next" bitstring instead
     /// This cache will hold first N bitstrings from one subminer run
-    /// </summary>
+    /// </remarks>
     public class BitStringBuffer
     {
         private const int maxSize = 1000;

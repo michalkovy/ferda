@@ -57,6 +57,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
             return 0;
         }
 
+        public bool skipOptimize(long current)
+        {
+            return true;
+        }
+
         #endregion
     }
 
@@ -66,6 +71,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         M operation(T current);
         T getItem(int index);
         M getDefaultInit();
+        bool skipOptimize(M current);
     }
 
     public class Subsets<T, M> : IEnumerable<M>
@@ -162,9 +168,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
             returnCurrent:
             if (returnCurrent(out result))
             {
-                //if (result == null)
-                //    throw new ApplicationException("result == null in public IEnumerator<M> GetEnumerator()");
-                yield return result;
+                if (_instance.skipOptimize(result))
+                {
+                    yield return result;
+                }
             }
             prolong:
             if (prolong(afterRemove))
