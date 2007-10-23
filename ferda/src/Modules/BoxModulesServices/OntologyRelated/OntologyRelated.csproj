@@ -70,10 +70,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OntologyData.cs" />
     <Compile Include="OntologyMapping\BoxInfo.cs" />
     <Compile Include="OntologyMapping\Functions.cs" />
     <Compile Include="Ontology\BoxInfo.cs" />
     <Compile Include="Ontology\Functions.cs" />
+    <Compile Include="OWLParser.cs" />
     <Compile Include="Service.cs" />
   </ItemGroup>
 </Project>

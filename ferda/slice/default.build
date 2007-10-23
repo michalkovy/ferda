@@ -119,22 +119,22 @@
 				</do>
 			</foreach>
 			
-			<echo message="Generuji .java z .ice souboru v adresari FerdaOWLParser..."/>
-			<mkdir dir="${build.dir}/FerdaOWLParser/src/generated"/>
+			<echo message="Generuji .java z .ice souboru pro FerdaOWLParser..."/>
+			<mkdir dir="${build.dir}/FerdaOWLParser/src"/>
 			<exec program="slice2java">
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
-				<arg value="${build.dir}/FerdaOWLParser/src/generated"/>
+				<arg value="${build.dir}/FerdaOWLParser/src"/>
 				<arg file="Modules/OntologyData.ice"/>
 				<arg file="Modules/OWLParser.ice"/>
 			</exec>
 			
-			<echo message="Generuji .cs z .ice souboru v adresari FerdaOWLParser..."/>
-			<mkdir dir="${build.dir}/Modules/BoxModulesServices/OntologyRelated/generated"/>
+			<echo message="Generuji .cs z .ice souboru pro FerdaOWLParser..."/>
+			<mkdir dir="${build.dir}/Modules/BoxModulesServices/OntologyRelated"/>
 			<exec program="slice2cs">
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
-				<arg value="${build.dir}/Modules/BoxModulesServices/OntologyRelated/generated"/>
+				<arg value="${build.dir}/Modules/BoxModulesServices/OntologyRelated"/>
 				<arg file="Modules/OntologyData.ice"/>
 				<arg file="Modules/OWLParser.ice"/>
 			</exec>

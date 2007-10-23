@@ -199,7 +199,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             switch (actionName)
             {
                 case "LoadOntology":
-                    Func.HelloWorld();
+                    Func.LoadOntology();
+                    //Func.HelloWorld();
                     break;
                 default:
                     throw Exceptions.NameNotExistError(null, actionName);
