@@ -182,6 +182,9 @@
     <Content Include="Quantifiers\FourFold\Others\Pairing\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\Others\Pairing\boxIcon.ico" />
     <Content Include="Quantifiers\Notes.txt" />
+    <Content Include="Tasks\ETree\boxIcon.ico" />
+    <Content Include="Tasks\FourFold\boxDesign.svg" />
+    <Content Include="Tasks\FourFold\boxIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Quantifiers\FourFold\DistributionSignificance\ChiSquare\" />
