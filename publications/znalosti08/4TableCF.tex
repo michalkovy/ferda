@@ -1,0 +1,79 @@
+\section{Tables of Critical Frequencies} \label{Classes_Tables}
+
+Tables of critical frequencies are closely related to classes of 4ft-quantifiers.  
+Examples of classes of 4ft-quantifiers are: {\em implicational quantifiers} \cite{Ha:78}, 
+{\em double implicational quantifiers} \cite{Ra:05A}
+or {\em $\Sigma$- equivalency quantifiers} \cite{Ra:05A}. 
+There are both theoretically interesting and practically important results 
+that are related to classes of 4ft-quantifiers. These results concern
+namely deduction rules  of the form  $ \frac{\varphi \approx \psi}{\varphi' \approx \psi'} $
+where both $ \varphi \approx \psi $ and 
+$ \varphi' \approx \psi' $ are association rules; see \cite{Ra:05A}, dealing with missing information; 
+see \cite{Ha:78,Ra:98A} and definability of association rules in classical predicate calculi 
+with equality \cite{Ra:04}. There are also results concerning tables of critical frequencies that 
+can be used to optimize verification of particular association rules. 
+
+We use tables of critical frequencies to simplify graphical description 
+of behavior of some of quantifiers introduced in section 
+\ref{Evaluation_Functions}. We deal with the class of {\em implicational quantifiers}
+and with the class of {\em quantifiers with F-property}.  
+
+The class of {\em implicational quantifiers} is defined in \cite{Ha:78} such that 
+the 4ft quantifier $ \Rightarrow^*  $ is implicational if it satisfies the condition 
+%
+$$ \Rightarrow^*(a,b,c,d) = 1   \ \ \land \ \ a' \geq a \  \land b' \leq b \ \mbox{ implies} \Rightarrow^*(a,b,c,d)  = 1 $$
+%
+for all the 4ft tables $ \langle a,b,c,d \rangle $   and $ \langle a',b',c',d'\rangle $.
+It is proved in \cite{Ha:78}  that the quantifiers 
+ $ \Rightarrow_{p} $ of {\it founded implication \/},  $ \Rightarrow^{!}_{p, \alpha} $ of
+ {\it lower critical implication} and 
+ $ \Rightarrow^{?}_{p, \alpha} $ of
+ {\it upper critical implication} see section 
+ \ref{Evaluation_Functions} are implicational. 
+It is easy to prove that for each implicational quantifier there is a 
+non-negative and non-decreasing function
+$ Tb_{\Rightarrow^{*}}$ with value
+\mbox{ $ Tb_{\Rightarrow^{*}}(a) \in  \{ 0,1,2, \dots \} \cup \{ \infty \}$}
+such that it is 
+$$ \Rightarrow^{*}(a,b) = 1  \ \mbox{ if and only if}  \ b <  Tb_{\Rightarrow^{*}}(a) \  $$
+for all integers $ a \geq 0$ and $ b \geq 0 $.
+We call the function $Tb_{\Rightarrow^{*}}$
+a {\it table of maximal b for implicational quantifier \/} $\Rightarrow^{*}$ \cite{Ha:78,Ra:98A}.
+It is important that precomputed function $Tb_{\Rightarrow^{*}}$
+makes it possible to use a simple test of inequality
+instead of a rather complex computation. E.g.,  we can use inequality
+\mbox{ $ b < Tb_{\Rightarrow^{!}_{p, \alpha}}(a) $}
+instead of condition \mbox{ $ \sum_{i = a}^{a + b} \frac{(a+b)!}{i!(a+b-i)!}
+          p^{i} (1 - p)^{a+b-i} \leq \alpha $}
+for quantifier
+$ \Rightarrow^{!}_{p, \alpha} $ of lower critical implication. 
+
+The class of {\em 4ft-quantifiers with F-property} is defined in \cite{Ra:86} (see  also 
+\cite{Ra:07}) such that 
+the 4ft quantifier $\approx$ has the {\em F-property} if it satisfies:
+\begin{enumerate}
+\item If $ \  \approx(a,b,c,d) = 1 $ and $ b \geq c-1 \geq 0 $
+then $ \approx(a,b+1,c-1,d) = 1 $.
+
+\item If $ \ \approx(a,b,c,d) = 1 $ and $ c \geq b -1 \geq 0 $
+then $ \approx(a,b-1,c+1,d) = 1 $.
+\end{enumerate}
+
+We \ say \ that \ the \ quantifier \ $\approx$ \ is \ {\em symmetrical} \ \cite{Ha:78}
+if \ it \ satisfies \mbox{$\approx(a,b,c,d) = \approx(a,c,b,d)$}. 
+It is proved in \cite{Ra:86} that for the symmetrical 4ft-quantifier $\approx$ with the 
+F-property there is a function $T_{\approx}$ that assigns to each triple $\langle a,d,n \rangle$ of natural numbers satisfying 
+$a+d \leq n $ the number $T_{\approx}(a,d,n)$ such that for each $b \geq 0$ and $c \geq 0$ where 
+$a+b+c+d = n $ it is 
+%
+$$ \approx(a,b,c,d) = 1 \mbox{ iff } |b-c| \geq T_{\approx}(a,d,n) \mbox{ .}$$
+
+The function $T_{\approx}(a,d,n)$ can be used in the same way as the function 
+$ Tb_{\Rightarrow^{*}}(a) $ for the implicational quantifier 
+$ \Rightarrow^{*}$,  see above. 
+The function $T_{\approx}(a,d,n)$ is called {\em table of minimal} 
+$|b-c|$. 
+
+The  functions $Tb_{\Rightarrow^{*}}$ and $T_{\approx}(a,d,n)$ are called 
+{\em tables of critical frequencies}. Note that there are also tables of critical frequencies 
+for additional classes  of 4ft-quantifiers; see e.g. \cite{Ra:07}. 
