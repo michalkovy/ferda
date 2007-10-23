@@ -87,14 +87,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
         }
 
         /// <summary>
-        /// Coefficient type of the atom
+        /// Coefficient type of the atom.  
         /// </summary>
         public CoefficientTypeEnum CoefficientType
         {
             get
             {
                 return (CoefficientTypeEnum) Enum.Parse(
-                                                 typeof (CoefficientTypeEnum),
+                                                 typeof(CoefficientTypeEnum),
                                                  _boxModule.GetPropertyString(PropCoefficientType)
                                                  );
             }
@@ -234,6 +234,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
         /// contains identification information and the importance
         /// of this entity (BooleanAttribute). 
         /// </summary>
+        /// <remarks>
+        /// Note, that the XML configuration
+        /// of the AtomSetting box does not know the option "SubsetsOneOne",
+        /// it has to be converted. It is converted by this function.
+        /// </remarks>
         /// <param name="fallOnError">If the function should throw an exception
         /// when error</param>
         /// <returns>The entity setting</returns>
@@ -255,7 +260,19 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
                             result.generator = bitStringGenerator;
                             result.maxLength = MaximalLength;
                             result.minLength = MinimalLength;
+
                             result.coefficientType = CoefficientType;
+
+                            //if (result.maxLength == 1 &&
+                            //    result.minLength == 1 &&
+                            //    CoefficientType == CoefficientTypeEnum.Subsets)
+                            //{
+                            //    result.coefficientType = CoefficientTypeEnum.SubsetsOneOne;
+                            //}
+                            //else
+                            //{
+                            //    result.coefficientType = CoefficientType;
+                            //}
                             return result;
                         }
                     },
