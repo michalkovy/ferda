@@ -37,6 +37,8 @@ namespace Ferda.Modules.Boxes.GuhaMining
             registerBox(Tasks.TwoDimensional.BoxInfo.typeIdentifier, new Tasks.TwoDimensional.BoxInfo());
             registerBox(Tasks.SDTwoDimensional.BoxInfo.typeIdentifier, new Tasks.SDTwoDimensional.BoxInfo());
 
+            registerBox(Tasks.ETree.BoxInfo.typeIdentifier, new Tasks.ETree.BoxInfo());
+
             // guha quantifiers boxes
             registerBox(Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo.typeIdentifier,
                         new Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo());
