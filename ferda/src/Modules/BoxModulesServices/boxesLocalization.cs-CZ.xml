@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Martin (Ru-Board) -->
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
 <BoxesLocalization xsi:schemaLocation="http://ferda.is-a-geek.net ../Core/Boxes/boxesLocalization.xsd" xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://ferda.is-a-geek.net">
 	<BoxLocalization>
 		<Identifier>DataPreparation.DataSource.Database</Identifier>
@@ -2023,7 +2023,7 @@
 		<Categories>
 			<Category>
 				<Name>GuhaMining.Tasks</Name>
-				<Label>Guha Mining.Tasks</Label>
+				<Label>Guha Mining.Úlohy</Label>
 			</Category>
 		</Categories>
 		<Actions>
@@ -2109,7 +2109,7 @@
 		<Categories>
 			<Category>
 				<Name>GuhaMining.Tasks</Name>
-				<Label>Guha Mining.Tasks</Label>
+				<Label>Guha Mining.Úlohy</Label>
 			</Category>
 		</Categories>
 		<Actions>
@@ -2220,7 +2220,7 @@
 		<Categories>
 			<Category>
 				<Name>GuhaMining.Tasks</Name>
-				<Label>Guha Mining.Tasks</Label>
+				<Label>Guha Mining.Úlohy</Label>
 			</Category>
 		</Categories>
 		<Actions>
@@ -2296,7 +2296,7 @@
 		<Categories>
 			<Category>
 				<Name>GuhaMining.Tasks</Name>
-				<Label>Guha Mining.Tasks</Label>
+				<Label>Guha Mining.Úlohy</Label>
 			</Category>
 		</Categories>
 		<Actions>
@@ -2397,7 +2397,7 @@
 		<Categories>
 			<Category>
 				<Name>GuhaMining.Tasks</Name>
-				<Label>Guha Mining.Tasks</Label>
+				<Label>Guha Mining.Úlohy</Label>
 			</Category>
 		</Categories>
 		<Actions>
@@ -2478,7 +2478,7 @@
 		<Categories>
 			<Category>
 				<Name>GuhaMining.Tasks</Name>
-				<Label>Guha Mining.Tasks</Label>
+				<Label>Guha Mining.Úlohy</Label>
 			</Category>
 		</Categories>
 		<Actions>
@@ -2574,6 +2574,51 @@
 				<Name>EndTime</Name>
 				<Label>End Time</Label>
 				<Hint>Finish time of last task run.</Hint>
+			</Socket>
+		</Sockets>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>GuhaMining.Tasks.ETree</Identifier>
+		<Label>ETree úloha</Label>
+		<Hint>Hledá rozhodovací stromy klasifikující cílový atribut z množiny větvících atributů podle zadaných parametrů</Hint>
+		<Categories>
+			<Category>
+				<Name>GuhaMining.Tasks</Name>
+				<Label>Guha Mining.Úlohy</Label>
+			</Category>
+		</Categories>
+		<Actions>
+			<Action>
+				<Name>Run</Name>
+				<Label>Spustit</Label>
+				<Hint>Spustí proceduru ETree</Hint>
+			</Action>
+		</Actions>
+		<Sockets>
+			<Socket>
+				<Name>TreeQuality</Name>
+				<Label>Kvalita stromu</Label>
+				<Hint>Kvalita stromu vyjádřená 4FT kvantifikátorem</Hint>
+			</Socket>
+			<Socket>
+				<Name>TargetClassificationAttribute</Name>
+				<Label>Cílový atribut</Label>
+				<Hint>Cílový atribut rozdělující data do tříd</Hint>
+			</Socket>
+			<Socket>
+				<Name>BranchingAttributes</Name>
+				<Label>Vstupní atributy pro větvení</Label>
+				<Hint>Vstupní atributy, z nichž budou vznikat rozhodovací stromy</Hint>
+			</Socket>
+			<Socket>
+				<Name>MinimalNodeImpurity</Name>
+				<Label>Minimální čistota listu</Label>
+				<Hint>Minimální čistota uzlu</Hint>
+			</Socket>
+			<Socket>
+				<Name>MinimalNodeFrequency</Name>
+				<Label>Minimální četnost listu</Label>
+				<Hint>Minimální četnost listu</Hint>
 			</Socket>
 		</Sockets>
 	</BoxLocalization>
@@ -9575,7 +9620,6 @@
 				<Hint>Vytvoří krabičku s kontrolou nastavení.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
-
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Wizards.WizardAction</Identifier>

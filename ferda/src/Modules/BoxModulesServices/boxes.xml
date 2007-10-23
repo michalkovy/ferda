@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Martin (Ru-Board) -->
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
 <Boxes xsi:schemaLocation="http://ferda.is-a-geek.net ../Core/Boxes/boxes.xsd" xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://ferda.is-a-geek.net">
 	<Box>
 		<Identifier>DataPreparation.DataSource.Database</Identifier>
@@ -4780,6 +4780,100 @@
 				<ReadOnly>false</ReadOnly>
 			</Property>
 		</Properties>
+	</Box>
+	<Box>
+		<Identifier>GuhaMining.Tasks.ETree</Identifier>
+		<IconPath>boxIcon.ico</IconPath>
+		<DesignPath>boxDesign.svg</DesignPath>
+		<Categories>
+			<string>GuhaMining.Tasks</string>
+		</Categories>
+		<Actions>
+			<Action>
+				<Name>Run</Name>
+				<IconPath>Run.ico</IconPath>
+			</Action>
+		</Actions>
+		<Sockets>
+			<Socket>
+				<Name>TreeQuality</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldValid</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldTwoDimensionsValid</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionValid</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsValid</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldValue</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldTwoDimensionsValue</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionValue</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsValue</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldSignificantValue</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldTwoDimensionsSignificantValue</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionSignificantValue</FunctionIceId>
+					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::Math::Quantifiers::FourFoldSingleDimensionTwoDimensionsSignificantValue</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>true</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>TargetClassificationAttribute</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::MiningProcessor::BitStringGenerator</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>BranchingAttributes</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Guha::MiningProcessor::BitStringGenerator</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>true</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>MinimalNodeImpurity</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>MinimalNodeFrequency</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+		</Sockets>
 	</Box>
 	<Box>
 		<Identifier>GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication</Identifier>
@@ -17435,7 +17529,6 @@
 					<BoxType>
 						<FunctionIceId>::Ferda::Guha::MiningProcessor::MiningTaskFunctions</FunctionIceId>
 					</BoxType>
-
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
@@ -17536,39 +17629,39 @@
 					<BoxType>
 						<FunctionIceId>::Ferda::Modules::Boxes::Wizards::WizardAction::WizardActionFunctions</FunctionIceId>
 					</BoxType>
-				<!--	<BoxType>
+					<!--	<BoxType>
 						<FunctionIceId>::Ferda::Modules::Boxes::Wizards::WizardForm::WizardFormFunctions</FunctionIceId>
 					</BoxType> -->
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
-			<Name>ManyHypotheses</Name>
-			<SocketTypes>
-				<BoxType>
-					<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-				</BoxType>
-			</SocketTypes>
-			<MoreThanOne>false</MoreThanOne>
-		</Socket>
-		<Socket>
-			<Name>FewHypotheses</Name>
-			<SocketTypes>
-				<BoxType>
-					<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-				</BoxType>
-			</SocketTypes>
-			<MoreThanOne>false</MoreThanOne>
-		</Socket>
-		<Socket>
-			<Name>AcceptablyHypotheses</Name>
-			<SocketTypes>
-				<BoxType>
-					<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-				</BoxType>
-			</SocketTypes>
-			<MoreThanOne>false</MoreThanOne>
-		</Socket>
+				<Name>ManyHypotheses</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>FewHypotheses</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>AcceptablyHypotheses</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
 			<Socket>
 				<Name>RegEditor</Name>
 				<SocketTypes>
@@ -17580,13 +17673,13 @@
 			</Socket>
 		</Sockets>
 		<Properties>
-		<Property>
-					<Name>ManyHypotheses</Name>
-					<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-					<CategoryName>Setting</CategoryName>
-					<Visible>true</Visible>
-					<ReadOnly>false</ReadOnly>
-				</Property>
+			<Property>
+				<Name>ManyHypotheses</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Setting</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
 			<Property>
 				<Name>FewHypotheses</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
@@ -17615,8 +17708,7 @@
 				<Name>WizardForm</Name>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
-
-	</Box>	
+	</Box>
 	<Box>
 		<Identifier>Language.Lambda</Identifier>
 		<IconPath>lambda.ico</IconPath>

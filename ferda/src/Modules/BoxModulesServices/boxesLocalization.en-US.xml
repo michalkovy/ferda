@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Martin (Ru-Board) -->
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
 <BoxesLocalization xsi:schemaLocation="http://ferda.is-a-geek.net ../Core/Boxes/boxesLocalization.xsd" xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://ferda.is-a-geek.net">
 	<BoxLocalization>
 		<Identifier>DataPreparation.DataSource.Database</Identifier>
@@ -334,10 +334,10 @@
 				<Hint>Average value in the column.</Hint>
 			</Socket>
 			<Socket>
-        <Name>ValueVariance</Name>
-        <Label>Variance</Label>
-        <Hint>Variance of values in the column.</Hint>
-      </Socket>
+				<Name>ValueVariance</Name>
+				<Label>Variance</Label>
+				<Hint>Variance of values in the column.</Hint>
+			</Socket>
 			<Socket>
 				<Name>ValueStandardDeviation</Name>
 				<Label>Standard deviation</Label>
@@ -2606,6 +2606,51 @@
 				<Name>EndTime</Name>
 				<Label>End Time</Label>
 				<Hint>Finish time of last task run.</Hint>
+			</Socket>
+		</Sockets>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>GuhaMining.Tasks.ETree</Identifier>
+		<Label>ETree-Task</Label>
+		<Hint>Searches for decision trees classifying the target attribute from set of branching attributes according to preset parameters.</Hint>
+		<Categories>
+			<Category>
+				<Name>GuhaMining.Tasks</Name>
+				<Label>Guha Mining.Tasks</Label>
+			</Category>
+		</Categories>
+		<Actions>
+			<Action>
+				<Name>Run</Name>
+				<Label>Run</Label>
+				<Hint>Run the ETree task</Hint>
+			</Action>
+		</Actions>
+		<Sockets>
+			<Socket>
+				<Name>TreeQuality</Name>
+				<Label>Tree quality</Label>
+				<Hint>Quality of the tree expressed by 4ft-quantifier</Hint>
+			</Socket>
+			<Socket>
+				<Name>TargetClassificationAttribute</Name>
+				<Label>Target classification attribute</Label>
+				<Hint>Target classification attribute dividing data in classes</Hint>
+			</Socket>
+			<Socket>
+				<Name>BranchingAttributes</Name>
+				<Label>Input attributes for branching</Label>
+				<Hint>Input attributes for branching</Hint>
+			</Socket>
+			<Socket>
+				<Name>MinimalNodeImpurity</Name>
+				<Label>Minimal node impurity</Label>
+				<Hint>Minimal node impurity</Hint>
+			</Socket>
+			<Socket>
+				<Name>MinimalNodeFrequency</Name>
+				<Label>Minimal node frequency</Label>
+				<Hint>Minimal node frequency</Hint>
 			</Socket>
 		</Sockets>
 	</BoxLocalization>
@@ -9607,7 +9652,6 @@
 				<Hint>Creates box with setting checker.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
-
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Wizards.WizardAction</Identifier>
@@ -9684,7 +9728,7 @@
 				<Hint>Creates box with form editor.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
-	</BoxLocalization>	
+	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>Language.Lambda</Identifier>
 		<Label>Lambda</Label>

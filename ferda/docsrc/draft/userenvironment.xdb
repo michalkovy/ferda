@@ -36,8 +36,17 @@
     <!--
     <revhistory>
 		<revision>
+			<revnumber>2.5</revnumber>
+			<date>2007-09-18</date>
+			<revdescription>
+				<para>
+					Added work with the network archive
+				</para>
+			<revdescription>
+		</revisio>
+		<revision>
 			<revnumber>2.4</revnumber>
-			<date>2006-05-11</date>
+			<date>2007-05-11</date>
 			<revdescription>
 				<para>
 					Added the Menu->View->Progress bars and Network Archive items
@@ -683,6 +692,13 @@
         </mediaobject>
       </para>
     </section>
+    <section>
+		<title>Network Archive</title>
+		<para>
+			The Network Archive is a component that stores boxes between individual runs of
+			the FrontEnd. They are stored inside the instalation of Ferda. 
+		</para>
+	</section>
     <section>
       <title>Progress Bars</title>
       <para>
