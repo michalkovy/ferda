@@ -2072,28 +2072,28 @@
 			</Socket>
 			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
-				<Label>Relevant Questions Count</Label>
-				<Hint>Total number of relevant questions in specified task.</Hint>
+				<Label>Počet relevantních otázek</Label>
+				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfVerifications</Name>
-				<Label>Numeber of Verifications</Label>
-				<Hint>Number of executed verifications.</Hint>
+				<Label>Počet verifikací</Label>
+				<Hint>Počet skutečně spočítaných verifikací</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfHypotheses</Name>
-				<Label>Number Of Hypotheses</Label>
-				<Hint>Number of returned hypotheses.</Hint>
+				<Label>Počet hypotéz</Label>
+				<Hint>Počet výsledných hypotéz</Hint>
 			</Socket>
 			<Socket>
 				<Name>StartTime</Name>
-				<Label>Start Time</Label>
-				<Hint>Start time of last task run.</Hint>
+				<Label>Počáteční čas</Label>
+				<Hint>Počáteční čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
 				<Name>EndTime</Name>
-				<Label>End Time</Label>
-				<Hint>Finish time of last task run.</Hint>
+				<Label>Koncový čas</Label>
+				<Hint>Koncový čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
 				<Name>TotalTime</Name>
@@ -2183,28 +2183,28 @@
 			</Socket>
 			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
-				<Label>Relevant Questions Count</Label>
-				<Hint>Total number of relevant questions in specified task.</Hint>
+				<Label>Počet relevantních otázek</Label>
+				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfVerifications</Name>
-				<Label>Numeber of Verifications</Label>
-				<Hint>Number of executed verifications.</Hint>
+				<Label>Počet verifikací</Label>
+				<Hint>Počet skutečně spočítaných verifikací</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfHypotheses</Name>
-				<Label>Number Of Hypotheses</Label>
-				<Hint>Number of returned hypotheses.</Hint>
+				<Label>Počet hypotéz</Label>
+				<Hint>Počet výsledných hypotéz</Hint>
 			</Socket>
 			<Socket>
 				<Name>StartTime</Name>
-				<Label>Start Time</Label>
-				<Hint>Start time of last task run.</Hint>
+				<Label>Počáteční čas</Label>
+				<Hint>Počáteční čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
 				<Name>EndTime</Name>
-				<Label>End Time</Label>
-				<Hint>Finish time of last task run.</Hint>
+				<Label>Koncový čas</Label>
+				<Hint>Koncový čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
 				<Name>TotalTime</Name>
@@ -2264,28 +2264,28 @@
 			</Socket>
 			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
-				<Label>Relevant Questions Count</Label>
-				<Hint>Total number of relevant questions in specified task.</Hint>
+				<Label>Počet relevantních otázek</Label>
+				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfVerifications</Name>
-				<Label>Numeber of Verifications</Label>
-				<Hint>Number of executed verifications.</Hint>
+				<Label>Počet verifikací</Label>
+				<Hint>Počet skutečně spočítaných verifikací</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfHypotheses</Name>
-				<Label>Number Of Hypotheses</Label>
-				<Hint>Number of returned hypotheses.</Hint>
+				<Label>Počet hypotéz</Label>
+				<Hint>Počet výsledných hypotéz</Hint>
 			</Socket>
 			<Socket>
 				<Name>StartTime</Name>
-				<Label>Start Time</Label>
-				<Hint>Start time of last task run.</Hint>
+				<Label>Počáteční čas</Label>
+				<Hint>Počáteční čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
 				<Name>EndTime</Name>
-				<Label>End Time</Label>
-				<Hint>Finish time of last task run.</Hint>
+				<Label>Koncový čas</Label>
+				<Hint>Koncový čas běhu poslení úlohy</Hint>
 			</Socket>
 		</Sockets>
 	</BoxLocalization>
@@ -2365,28 +2365,28 @@
 			</Socket>
 			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
-				<Label>Relevant Questions Count</Label>
-				<Hint>Total number of relevant questions in specified task.</Hint>
+				<Label>Počet relevantních otázek</Label>
+				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfVerifications</Name>
-				<Label>Numeber of Verifications</Label>
-				<Hint>Number of executed verifications.</Hint>
+				<Label>Počet verifikací</Label>
+				<Hint>Počet skutečně spočítaných verifikací</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfHypotheses</Name>
-				<Label>Number Of Hypotheses</Label>
-				<Hint>Number of returned hypotheses.</Hint>
+				<Label>Počet hypotéz</Label>
+				<Hint>Počet výsledných hypotéz</Hint>
 			</Socket>
 			<Socket>
 				<Name>StartTime</Name>
-				<Label>Start Time</Label>
-				<Hint>Start time of last task run.</Hint>
+				<Label>Počáteční čas</Label>
+				<Hint>Počáteční čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
 				<Name>EndTime</Name>
-				<Label>End Time</Label>
-				<Hint>Finish time of last task run.</Hint>
+				<Label>Koncový čas</Label>
+				<Hint>Koncový čas běhu poslení úlohy</Hint>
 			</Socket>
 		</Sockets>
 	</BoxLocalization>
@@ -2446,28 +2446,28 @@
 			</Socket>
 			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
-				<Label>Relevant Questions Count</Label>
-				<Hint>Total number of relevant questions in specified task.</Hint>
+				<Label>Počet relevantních otázek</Label>
+				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfVerifications</Name>
-				<Label>Numeber of Verifications</Label>
-				<Hint>Number of executed verifications.</Hint>
+				<Label>Počet verifikací</Label>
+				<Hint>Počet skutečně spočítaných verifikací</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfHypotheses</Name>
-				<Label>Number Of Hypotheses</Label>
-				<Hint>Number of returned hypotheses.</Hint>
+				<Label>Počet hypotéz</Label>
+				<Hint>Počet výsledných hypotéz</Hint>
 			</Socket>
 			<Socket>
 				<Name>StartTime</Name>
-				<Label>Start Time</Label>
-				<Hint>Start time of last task run.</Hint>
+				<Label>Počáteční čas</Label>
+				<Hint>Počáteční čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
 				<Name>EndTime</Name>
-				<Label>End Time</Label>
-				<Hint>Finish time of last task run.</Hint>
+				<Label>Koncový čas</Label>
+				<Hint>Koncový čas běhu poslení úlohy</Hint>
 			</Socket>
 		</Sockets>
 	</BoxLocalization>
@@ -2552,28 +2552,28 @@
 			</Socket>
 			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
-				<Label>Relevant Questions Count</Label>
-				<Hint>Total number of relevant questions in specified task.</Hint>
+				<Label>Počet relevantních otázek</Label>
+				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfVerifications</Name>
-				<Label>Numeber of Verifications</Label>
-				<Hint>Number of executed verifications.</Hint>
+				<Label>Počet verifikací</Label>
+				<Hint>Počet skutečně spočítaných verifikací</Hint>
 			</Socket>
 			<Socket>
 				<Name>NumberOfHypotheses</Name>
-				<Label>Number Of Hypotheses</Label>
-				<Hint>Number of returned hypotheses.</Hint>
+				<Label>Počet hypotéz</Label>
+				<Hint>Počet výsledných hypotéz</Hint>
 			</Socket>
 			<Socket>
 				<Name>StartTime</Name>
-				<Label>Start Time</Label>
-				<Hint>Start time of last task run.</Hint>
+				<Label>Počáteční čas</Label>
+				<Hint>Počáteční čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
 				<Name>EndTime</Name>
-				<Label>End Time</Label>
-				<Hint>Finish time of last task run.</Hint>
+				<Label>Koncový čas</Label>
+				<Hint>Koncový čas běhu poslení úlohy</Hint>
 			</Socket>
 		</Sockets>
 	</BoxLocalization>
@@ -2619,6 +2619,36 @@
 				<Name>MinimalNodeFrequency</Name>
 				<Label>Minimální četnost listu</Label>
 				<Hint>Minimální četnost listu</Hint>
+			</Socket>
+			<Socket>
+				<Name>MaximalTreeDepth</Name>
+				<Label>Maximální hloubka stromu</Label>
+				<Hint>Maximální hloubka stromu</Hint>
+			</Socket>
+			<Socket>
+				<Name>NumberOfHypotheses</Name>
+				<Label>Počet hypotéz</Label>
+				<Hint>Počet výsledných hypotéz</Hint>
+			</Socket>
+			<Socket>
+				<Name>NumberOfVerifications</Name>
+				<Label>Počet verifikací</Label>
+				<Hint>Počet skutečně spočítaných verifikací</Hint>
+			</Socket>
+			<Socket>
+				<Name>EndTime</Name>
+				<Label>Koncový čas</Label>
+				<Hint>Koncový čas běhu poslení úlohy</Hint>
+			</Socket>
+			<Socket>
+				<Name>StartTime</Name>
+				<Label>Počáteční čas</Label>
+				<Hint>Počáteční čas běhu poslení úlohy</Hint>
+			</Socket>
+			<Socket>
+				<Name>TotalNumberOfRelevantQuestions</Name>
+				<Label>Počet relevantních otázek</Label>
+				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
 			</Socket>
 		</Sockets>
 	</BoxLocalization>
@@ -9858,18 +9888,18 @@
 			</Socket>
 			<Socket>
 				<Name>NameInLiterals</Name>
-				<Label>Název ve výsledcích</Label>
-				<Hint>Název zobrazovaný ve výsledích.</Hint>
+				<Label>NĂˇzev ve vĂ˝sledcĂ­ch</Label>
+				<Hint>NĂˇzev zobrazovanĂ˝ ve vĂ˝sledĂ­ch.</Hint>
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
-				<Label>Počet kategorií.</Label>
-				<Hint>Počet kategorií v atributů..</Hint>
+				<Label>PoÄŤet kategoriĂ­.</Label>
+				<Hint>PoÄŤet kategoriĂ­ v atributĹŻ..</Hint>
 			</Socket>
 			<Socket>
 				<Name>XCategory</Name>
 				<Label>X-Kategorie</Label>
-				<Hint>Kategorie pro chybějící hodnoty.</Hint>
+				<Hint>Kategorie pro chybÄ›jĂ­cĂ­ hodnoty.</Hint>
 			</Socket>
 			<!--
                         <Socket>
@@ -9880,61 +9910,61 @@
                         -->
 			<Socket>
 				<Name>Domain</Name>
-				<Label>Doména</Label>
-				<Hint>Výběr rozsahu hodnot pro kategorizaci.</Hint>
+				<Label>DomĂ©na</Label>
+				<Hint>VĂ˝bÄ›r rozsahu hodnot pro kategorizaci.</Hint>
 				<SelectOptions>
 					<SelectOption>
 						<Name>WholeDomain</Name>
-						<Label>Celá aktuální doména</Label>
+						<Label>CelĂˇ aktuĂˇlnĂ­ domĂ©na</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>SubDomain</Name>
-						<Label>Uživatelem definovaná doména</Label>
+						<Label>UĹľivatelem definovanĂˇ domĂ©na</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
 			<Socket>
 				<Name>From</Name>
 				<Label>Od</Label>
-				<Hint>Počáteční hodnota</Hint>
+				<Hint>PoÄŤĂˇteÄŤnĂ­ hodnota</Hint>
 			</Socket>
 			<Socket>
 				<Name>To</Name>
 				<Label>Do</Label>
-				<Hint>Koncová hodnota</Hint>
+				<Hint>KoncovĂˇ hodnota</Hint>
 			</Socket>
 			<Socket>
 				<Name>Cardinality</Name>
-				<Label>Sémantika</Label>
-				<Hint>Musí se zadat sémantika hodnot ve sloupci.</Hint>
+				<Label>SĂ©mantika</Label>
+				<Hint>MusĂ­ se zadat sĂ©mantika hodnot ve sloupci.</Hint>
 				<SelectOptions>
 					<SelectOption>
 						<Name>Nominal</Name>
-						<Label>Nominální</Label>
+						<Label>NominĂˇlnĂ­</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Ordinal</Name>
-						<Label>Ordinální</Label>
+						<Label>OrdinĂˇlnĂ­</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>OrdinalCyclic</Name>
-						<Label>Ordinální cyklická</Label>
+						<Label>OrdinĂˇlnĂ­ cyklickĂˇ</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Cardinal</Name>
-						<Label>Kardinální</Label>
+						<Label>KardinĂˇlnĂ­</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
 			<Socket>
 				<Name>Length</Name>
-				<Label>Délka</Label>
-				<Hint>Délka intervalu.</Hint>
+				<Label>DĂ©lka</Label>
+				<Hint>DĂ©lka intervalu.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ClosedFrom</Name>
-				<Label>Uzavřený ze strany</Label>
-				<Hint>Intervaly jsou uzavřeny z dané strany.</Hint>
+				<Label>UzavĹ™enĂ˝ ze strany</Label>
+				<Hint>Intervaly jsou uzavĹ™eny z danĂ© strany.</Hint>
 				<SelectOptions>
 					<SelectOption>
 						<Name>Left</Name>
@@ -9946,7 +9976,7 @@
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
-		</Sockets>
+		</Sockets>		
 		<PropertyCategories>
 			<PropertyCategory>
 				<Name>Categories</Name>
