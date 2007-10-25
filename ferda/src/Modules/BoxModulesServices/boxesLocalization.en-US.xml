@@ -2589,7 +2589,7 @@
 			</Socket>
 			<Socket>
 				<Name>NumberOfVerifications</Name>
-				<Label>Numeber of Verifications</Label>
+				<Label>Number of Verifications</Label>
 				<Hint>Number of executed verifications.</Hint>
 			</Socket>
 			<Socket>
@@ -2648,9 +2648,39 @@
 				<Hint>Minimal node impurity</Hint>
 			</Socket>
 			<Socket>
+				<Name>NumberOfHypotheses</Name>
+				<Label>Number Of Hypotheses</Label>
+				<Hint>Number of returned hypotheses.</Hint>
+			</Socket>
+			<Socket>
+				<Name>NumberOfVerifications</Name>
+				<Label>Number of Verifications</Label>
+				<Hint>Number of executed verifications.</Hint>
+			</Socket>
+			<Socket>
+				<Name>TotalNumberOfRelevantQuestions</Name>
+				<Label>Relevant Questions Count</Label>
+				<Hint>Total number of relevant questions in specified task.</Hint>
+			</Socket>
+			<Socket>
+				<Name>StartTime</Name>
+				<Label>Start Time</Label>
+				<Hint>Start time of last task run.</Hint>
+			</Socket>
+			<Socket>
+				<Name>EndTime</Name>
+				<Label>End Time</Label>
+				<Hint>Finish time of last task run.</Hint>
+			</Socket>
+			<Socket>
 				<Name>MinimalNodeFrequency</Name>
 				<Label>Minimal node frequency</Label>
 				<Hint>Minimal node frequency</Hint>
+			</Socket>
+			<Socket>
+				<Name>MaximalTreeDepth</Name>
+				<Label>Maximal tree depth</Label>
+				<Hint>Maximal tree depth</Hint>
 			</Socket>
 		</Sockets>
 	</BoxLocalization>
