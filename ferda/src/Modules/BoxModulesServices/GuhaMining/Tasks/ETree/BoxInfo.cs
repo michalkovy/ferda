@@ -122,24 +122,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// </exception>
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
-            //Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
 
-            //IntT TNumberRuns = (IntT)boxModule.GetPropertyOther("NumberRuns");
-            //int IntNumberRuns = TNumberRuns.getIntValue();
-            //IntNumberRuns++;
-            //TNumberRuns.intValue = IntNumberRuns;
-            //PropertyValue NRValue = TNumberRuns;
-
-            //boxModule.setProperty("NumberRuns", NRValue);
-
-            //switch (actionName)
-            //{
-            //    case "Run":
-            //        Func.Run();
-            //        break;
-            //    default:
-            //        throw Exceptions.NameNotExistError(null, actionName);
-            //}
+            switch (actionName)
+            {
+                case "Run":
+                    Func.Run();
+                    break;
+                default:
+                    throw Exceptions.NameNotExistError(null, actionName);
+            }
         }
 
         /// <summary>
@@ -148,10 +140,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <param name="boxModule">box instance to be validated</param>
         public override void Validate(BoxModuleI boxModule)
         {
-            // all used attributes are from the same data table
-
-            //Functions Func = (Functions)boxModule.FunctionsIObj;
-            //Func.GetSourceDataTableId();
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            Func.GetSourceDataTableId();
+            Func.GetQuantifiers();
         }
 
         #region Type Identifier

@@ -60,27 +60,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 
         #endregion
 
-        #region ITask Members
-
-        /// <summary>
-        /// Cached serializible result info
-        /// </summary>
-        private SerializableResultInfo _cachedSerializableResultInfo = null;
-        
-        /// <summary>
-        /// Returns information about the task results
-        /// </summary>
-        /// <returns>Information about a result of a task
-        /// (can be serialized)</returns>
-        public SerializableResultInfo GetResultInfo()
-        {
-            if (_cachedSerializableResultInfo == null)
-                _cachedSerializableResultInfo = Common.GetResultInfoDeserealized(_boxModule);
-            return _cachedSerializableResultInfo;
-        }
-
-        #endregion
-
         /// <summary>
         /// Gets the bit string generator for a given attribute.
         /// see <see cref="T:Ferda.Guha.MiningProcessor.BitStringGenerator"/>
@@ -146,6 +125,23 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
         #endregion
 
         #region ITask Members
+
+        /// <summary>
+        /// Cached serializible result info
+        /// </summary>
+        private SerializableResultInfo _cachedSerializableResultInfo = null;
+
+        /// <summary>
+        /// Returns information about the task results
+        /// </summary>
+        /// <returns>Information about a result of a task
+        /// (can be serialized)</returns>
+        public SerializableResultInfo GetResultInfo()
+        {
+            if (_cachedSerializableResultInfo == null)
+                _cachedSerializableResultInfo = Common.GetResultInfoDeserealized(_boxModule);
+            return _cachedSerializableResultInfo;
+        }
 
         /// <summary>
         /// Names of sockets with Boolean attributes
