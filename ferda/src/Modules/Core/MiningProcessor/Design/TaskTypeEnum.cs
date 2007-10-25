@@ -60,6 +60,10 @@ namespace Ferda.Guha.MiningProcessor.Design
         /// <summary>
         /// SDCF Procedure
         /// </summary>
-        SDCF
+        SDCF,
+        /// <summary>
+        /// ETree Procedure
+        /// </summary>
+        ETree
     }
 }

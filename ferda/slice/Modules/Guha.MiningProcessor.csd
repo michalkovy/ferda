@@ -158,6 +158,7 @@
       <Value>SDFourFold</Value>
       <Value>SDKL</Value>
       <Value>SDCF</Value>
+      <Value>ETree</Value>
     </Entity>
     <Entity type="Enum">
       <Name>ResultTypeEnum</Name>
@@ -419,7 +420,7 @@
     </Shape>
     <Shape>
       <Location left="18" top="687" />
-      <Size width="162" height="176" />
+      <Size width="162" height="184" />
     </Shape>
     <Shape>
       <Location left="18" top="878" />

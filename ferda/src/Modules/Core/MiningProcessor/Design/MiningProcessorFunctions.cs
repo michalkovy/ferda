@@ -75,5 +75,12 @@ namespace Ferda.Guha.MiningProcessor.Design
             Guid attributeId,
             int[] countVector,
             out string resultInfo);
+
+        /// <summary>
+        /// Returns next bit string (more preciselly a structure that contains a bit string
+        /// and category identification
+        /// </summary>
+        /// <returns></returns>
+        BitStringWithCategoryId GetNextBitString();
     }
 }

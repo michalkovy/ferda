@@ -230,7 +230,8 @@ module Ferda {
 					CF,
 					SDFourFold,
 					SDKL,
-					SDCF
+					SDCF,
+					ETree
 				};
 				
 				enum ResultTypeEnum
