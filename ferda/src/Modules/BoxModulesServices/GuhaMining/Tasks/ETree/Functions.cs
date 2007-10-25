@@ -23,6 +23,7 @@ using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.ModulesManager;
 using Ice;
+using System.Collections.Generic;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
 {
@@ -30,7 +31,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
     /// Class is providing ICE functionality of the ETree task
     /// box module
     /// </summary>
-    public class Functions : MiningTaskFunctionsDisp_, IFunctions
+    public class Functions : MiningTaskFunctionsDisp_, IFunctions, ITask
     {
         /// <summary>
         /// The box module.
@@ -54,6 +55,25 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         #endregion
 
         /// <summary>
+        /// Name of quantifier's socket. In the ETree box, the quantifiers
+        /// determine quality of the individual decision trees.
+        /// </summary>
+        public const string SockQuantifiers = "TreeQuality";
+
+        /// <summary>
+        /// Name of the socket containing target classification
+        /// attribute
+        /// </summary>
+        public const string SockTargetClassificationAttribute = "TargetClassificationAttribute";
+
+        /// <summary>
+        /// Name of the socket containing branching attributes
+        /// </summary>
+        public const string SockBranchingAttributes = "BranchingAttributes";
+
+        #region MiningTaskFunctions overrides
+
+        /// <summary>
         /// Returns the proxies of quantifiers connected to the box. Every quantifier in
         /// Ferda implements the same interface and thus one function can retrieve proxies
         /// for quantifiers for all task types. For the ETree task box, the quantifiers are
@@ -63,8 +83,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <returns>Proxies of quantifiers</returns>
         public override QuantifierBaseFunctionsPrx[] GetQuantifiers(Current current__)
         {
-            //TODO dodelat
-            return null;
+            List<QuantifierBaseFunctionsPrx> quant = SocketConnections.GetPrxs<QuantifierBaseFunctionsPrx>(
+                _boxModule,
+                SockQuantifiers,
+                QuantifierBaseFunctionsPrxHelper.checkedCast,
+                true,
+                true);
+
+            return quant.ToArray();
         }
 
         /// <summary>
@@ -78,8 +104,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <returns>Result of a task</returns>
         public override string GetResult(out string statistics, Current current__)
         {
+            //TODO az budu vedet, co tam budu davat, tak to dodelam
             statistics = string.Empty;
-            //TODO dodelat
             return string.Empty;
         }
 
@@ -91,8 +117,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <returns>Pairs of attributes and their identification</returns>
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
-            //TODO dodelat
-            return null;
+            return Common.GetAttributeNames(_boxModule, this);
         }
 
         /// <summary>
@@ -105,9 +130,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <returns>Bit string generator</returns>
         public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Current current__)
         {
-            //TODO dodelat
-            //return Common.GetBitStringGenerator(_boxModule, attributeId, this);
-            return null;
+            return Common.GetBitStringGenerator(_boxModule, attributeId, this);
         }
 
         /// <summary>
@@ -117,9 +140,79 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <returns>ID of the mined table</returns>
         public override string GetSourceDataTableId(Current current__)
         {
-            //TODO nejak to resit
-            //return Common.GetSourceDataTableId(_boxModule, this);
-            return null;
+            return Common.GetSourceDataTableId(_boxModule, this);
+        }
+
+        #endregion
+
+        #region ITask Members
+
+        /// <summary>
+        /// Returns information about the task results. The function should not be for ETree
+        /// box, because the <see cref="Ferda.Guha.MiningProcessor.Results.SerializableResultInfo"/>
+        /// in unsuitable for storing of decision trees.
+        /// </summary>
+        /// <returns>Information about a result of a task
+        /// (can be serialized)</returns>
+        public SerializableResultInfo GetResultInfo()
+        {
+            throw Exceptions.BoxRuntimeError(null, _boxModule.getDefaultUserLabel()[0],
+                "The GetResultInfo function shouldn't be used for ETree box.");
+        }
+
+        /// <summary>
+        /// Names of sockets with Boolean attributes. The ETree box does not
+        /// contain any boolean attribute socket names.
+        /// </summary>
+        /// <returns>Boolean attribute socket names</returns>
+        /// <example>
+        /// The 4FT procedure has three Boolean attribute sockets
+        /// named ANTECEDENT, SUCCEDENT and CONDITION.
+        /// </example>
+        public string[] GetBooleanAttributesSocketNames()
+        {
+            return new string[0];
+        }
+
+        /// <summary>
+        /// Names of sockets with categorial attributes. The ETree box contains
+        /// sockets <c>TargetClassificationAttribute</c> and <c>BranchingAttributes</c>
+        /// as categorial attributes.
+        /// </summary>
+        /// <returns>Categorial attribute socket names</returns>
+        /// <example>
+        /// The KL procedure has two categorial attribute sockets
+        /// named ROW ATTRIBUTES and COLUMN ATTRIBUTES
+        /// </example>
+        public string[] GetCategorialAttributesSocketNames()
+        {
+            return new string[]
+                {
+                    SockTargetClassificationAttribute,
+                    SockBranchingAttributes
+                };
+        }
+
+        /// <summary>
+        /// Determines for a given socket name, if the socket requires
+        /// minimally one box connected to the socket.
+        /// </summary>
+        /// <param name="socketName">Name of the socket</param>
+        /// <returns>If there needs to be at least one box connected</returns>
+        public bool IsRequiredOneAtMinimumAttributeInSocket(string socketName)
+        {
+            //there has to be exactly one classification attribute and 
+            //at least one branching attribute
+            return true;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Generation of hypotheses
+        /// </summary>
+        public void Run()
+        {
         }
     }
 }
