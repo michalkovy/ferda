@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <project name="Ferda sources" default="build" basedir=".">
 	<description>project Ferda sources</description>
-	<target name="build" description="Build sources" depends="FerdaBaseBuild,ProjectBaseBuild,NetworkArchiveBuild,NetworkArchiveBaseBuild,FerdaOWLParserBuild,ProjectManagerBuild,ModulesManagerBuild,ModulesBuild,FrontEndBuild,UtilsBuild"/> <!-- ,FrontEndBuild -->
-	<target name="clean" description="Clean builds" depends="FerdaBaseClean,NetworkArchiveClean,FerdaOWLParserClean,ProjectManagerClean,ModulesManagerClean,ModulesClean,FrontEndClean,UtilsClean"/>
+	<target name="build" description="Build sources" depends="FerdaBaseBuild,ProjectBaseBuild,NetworkArchiveBuild,NetworkArchiveBaseBuild,ProjectManagerBuild,ModulesManagerBuild,ModulesBuild,FrontEndBuild,UtilsBuild"/> <!-- ,FrontEndBuild -->
+	<target name="clean" description="Clean builds" depends="FerdaBaseClean,NetworkArchiveClean,ProjectManagerClean,ModulesManagerClean,ModulesClean,FrontEndClean,UtilsClean"/>
 	<target name="ProjectManagerBuild" depends="ModulesManagerBuild,FerdaBaseBuild,ProjectBaseBuild,NetworkArchiveBaseBuild">
 		<nant buildfile="ProjectManager/default.build" target="build">
 			<properties>
@@ -91,20 +91,6 @@
 				<include name="FerdaNetworkArchive.*"/>
 			</fileset>
 		</delete>
-	</target>
-	<target name="FerdaOWLParserBuild">
-		<nant buildfile="FerdaOWLParser/default.build" target="build">
-			<properties>
-				<property name="build.dir" value="${serverbin.dir}"/>
-			</properties>
-		</nant>
-	</target>
-	<target name="FerdaOWLParserClean">
-		<nant buildfile="FerdaOWLParser/default.build" target="clean">
-			<properties>
-				<property name="build.dir" value="${serverbin.dir}"/>
-			</properties>
-		</nant>
 	</target>
 	<target name="ModulesBuild" depends="FerdaBaseBuild">
 		<nant buildfile="Modules/default.build" target="build">

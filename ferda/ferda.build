@@ -53,7 +53,9 @@
 			<fileset>
 				<include name="${bin.dir}/FrontEnd/**" />
 				<include name="${bin.dir}/Server/**" />
-				<include name="${bin.dir}/db/**" />
+		    <!--directory OWLParser isn't deleted by default - it is deleted only if you run "nant jrefresh" you should have JDK installed to do so--> 
+        <exclude name="${bin.dir}/Server/OWLParser/**" />
+        <include name="${bin.dir}/db/**" />
 			</fileset>
 		</delete>
 	</target>
@@ -449,50 +451,16 @@
 		</exec>
 	</target>
 	
-	
-	<target name="jclean" description="Smaže build">
-		<nant buildfile="${path::combine(slice.dir,default.build)}" target="clean">
-			<properties>
-				<property name="build.dir" value="${src.dir}"/>
-			</properties>
-		</nant>
-		<nant target="clean">
-			<buildfiles>
-				<include name="${docsrc.dir}/**/default.build"/>
-			</buildfiles>
-			<properties>
-				<property name="build.dir" value="${doc.dir}"/>
-			</properties>
-		</nant>
-		<nant buildfile="${path::combine(libsrc.dir,'default.build')}" target="clean">
-			<properties>
-				<property name="build.dir" value="${bin.dir}"/>
-			</properties>
-		</nant>
-		<nant buildfile="${path::combine(src.dir,'default.build')}" target="clean">
-			<properties>
-				<property name="build.dir" value="${bin.dir}"/>
-			</properties>
-		</nant>
-		<!--
-		<delete dir="${bin.dir}" failonerror="false" if="${directory::exists(bin.dir)}"/>
-		-->
-		<delete failonerror="false">
-			<fileset>
-				<include name="${bin.dir}/FrontEnd/**" />
-				<include name="${bin.dir}/Server/**" />
-				<include name="${bin.dir}/db/**" />
+	<target name="jclean" description="Deleting java build of OWLParser">
+		<echo message="Deleting java build of OWLParser"/>
+    <delete failonerror="false">
+      <fileset>
+				<include name="${bin.dir}/Server/OWLParser/**" />
 			</fileset>
 		</delete>
 	</target>
-	<target name="jslice">
-		<nant buildfile="${path::combine(slice.dir,default.build)}">
-			<properties>
-				<property name="build.dir" value="${src.dir}"/>
-			</properties>
-		</nant>
-	</target>
-	<target name="jsrc" depends="jslice">
+	
+	<target name="jsrc" depends="slice">
 		<mkdir dir="${bin.dir}"/>
 		<mkdir dir="${frontendbin.dir}"/>
 		<mkdir dir="${serverbin.dir}"/>
@@ -502,7 +470,12 @@
 				<property name="serverbin.dir" value="${serverbin.dir}"/>
 			</properties>
 		</nant>
-		<nant buildfile="${path::combine(src.dir,'default.build')}"/>
+		<nant buildfile="${path::combine(src.dir,'default.build')}">
+      <properties>
+        <!--variable which tells nant to compile also java src-->
+        <property name="JDK" value="true"/>
+      </properties>
+    </nant>
 		<copy todir="${frontendbin.dir}">
 			<fileset basedir="lib">
 				<include name="icecs.dll"/>
@@ -521,6 +494,8 @@
 		</copy>
 		<call target="boxconfig" verbose="true"/>
 	</target>
-	<target name="jrefresh" depends="uninstall,clean,jclean,jfullinstall,test"/>
-	<target name="jfullinstall" depends="src,jsrc,config,install"/>
+	
+	<!-- you should have JDK installed to run nant jrefresh or jfullinstall, because these targets include compiling of java files-->
+  <target name="jfullinstall" depends="jsrc,config,install"/>
+  <target name="jrefresh" depends="uninstall,clean,jclean,jfullinstall,test"/>
 </project>

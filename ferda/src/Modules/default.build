@@ -196,7 +196,14 @@
 				<include name="FerdaMiningProcessor.*"/>
 			</fileset>
 		</copy>
-		<nant buildfile="./BoxModulesServices/default.build" target="build"/>
+		<nant buildfile="./BoxModulesServices/default.build" target="build"/>		
+		<if test="${property::exists('JDK')}">
+      <nant buildfile="FerdaOWLParser/default.build" target="build">
+  			<properties>
+  				<property name="build.dir" value="${serverbin.dir}"/>
+  			</properties>
+		  </nant>
+		</if>
 	</target>
 	<target name="clean">
 		<!-- asi zbytecny

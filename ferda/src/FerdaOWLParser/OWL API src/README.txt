@@ -1,1 +1,0 @@
-Developed as part of the CO-ODE project (http://www.co-ode.org).  Please see the OWL API website for instructions and examples http://owlapi.sourceforge.net
