@@ -4859,7 +4859,7 @@
 				<Name>MinimalNodeImpurity</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::IntTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -4868,7 +4868,7 @@
 				<Name>MinimalNodeFrequency</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::IntTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -4877,7 +4877,7 @@
 				<Name>MaximalTreeDepth</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::IntTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -4931,21 +4931,24 @@
 		<Properties>
 			<Property>
 				<Name>MinimalNodeImpurity</Name>
-				<TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
+				<TypeClassIceId>::Ferda::Modules::IntT</TypeClassIceId>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
+				<Default>50</Default>
 			</Property>
 			<Property>
 				<Name>MinimalNodeFrequency</Name>
-				<TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
+				<TypeClassIceId>::Ferda::Modules::IntT</TypeClassIceId>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
+				<Default>10</Default>
 			</Property>
 			<Property>
 				<Name>MaximalTreeDepth</Name>
-				<TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
+				<TypeClassIceId>::Ferda::Modules::IntT</TypeClassIceId>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
+				<Default>4</Default>
 			</Property>
 			<Property>
 				<Name>TotalNumberOfRelevantQuestions</Name>

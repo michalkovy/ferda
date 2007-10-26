@@ -54,6 +54,43 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Minimal node impurity
+        /// </summary>
+        public int MinimalNodeImpurity
+        {
+            get
+            {
+                return _boxModule.GetPropertyInt(SockMinimalNodeImpurity);
+            }
+        }
+
+        /// <summary>
+        /// Minimal node frequency
+        /// </summary>
+        public int MinimalNodeFrequency
+        {
+            get
+            {
+                return _boxModule.GetPropertyInt(SockMinimalNodeFrequency);
+            }
+        }
+
+        /// <summary>
+        /// Maximal tree depth
+        /// </summary>
+        public int MaximalTreeDepth
+        {
+            get
+            {
+                return _boxModule.GetPropertyInt(SockMaximalTreeDepth);
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Name of quantifier's socket. In the ETree box, the quantifiers
         /// determine quality of the individual decision trees.
@@ -70,6 +107,21 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// Name of the socket containing branching attributes
         /// </summary>
         public const string SockBranchingAttributes = "BranchingAttributes";
+
+        /// <summary>
+        /// Name of the socket defininng minimal node impurity
+        /// </summary>
+        public const string SockMinimalNodeImpurity = "MinimalNodeImpurity";
+
+        /// <summary>
+        /// Name of the socket defining minimal node frequency
+        /// </summary>
+        public const string SockMinimalNodeFrequency = "MinimalNodeFrequency";
+
+        /// <summary>
+        /// Name of the socket defining maximal tree depth
+        /// </summary>
+        public const string SockMaximalTreeDepth = "MaximalTreeDepth";
 
         #region MiningTaskFunctions overrides
 
@@ -213,6 +265,32 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// </summary>
         public void Run()
         {
+            MiningProcessorFunctionsPrx miningProcessor = 
+                Common.GetMiningProcessorFunctionsPrx(_boxModule);
+            BitStringGeneratorProviderPrx bsProvider = 
+                Common.GetBitStringGeneratorProviderPrx(_boxModule);
+
+            //retrieving and checking the quantifiers
+            List<QuantifierBaseFunctionsPrx> quantifiers = 
+                Common.GetQuantifierBaseFunctions(_boxModule, true);
+            if (quantifiers == null || quantifiers.Count == 0)
+            {
+                throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
+                                                Common.QuantifiersErrorMessage,
+                                                new string[] { SockQuantifiers },
+                                                restrictionTypeEnum.OtherReason);
+            }
+
+            //getting the categorial attributes
+            CategorialAttribute[] branchingAttributes =
+                Common.GetCategorialAttributesBySockets(_boxModule,
+                    new string[] { SockBranchingAttributes }, this);
+            CategorialAttribute classificationAttribute =
+                Common.GetCategorialAttributesBySockets(_boxModule,
+                    new string[] { SockTargetClassificationAttribute }, this)[0];
+
+            //string result =  + progress bar
+
         }
     }
 }
