@@ -64,11 +64,15 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             get { return _boxModule.GetPropertyString(OntologyPath); }
         }*/
 
+        public BoxModuleI BoxModule
+        {
+            get { return _boxModule; }
+        }
+
         #endregion
 
         #region Methods
 
-        
         /* TODO - nahradit Ontology Metodama
         /// <summary>
         /// Gets the names of data tables in the database
@@ -148,6 +152,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         public override void LoadOntology(Ice.Current __current)
         {
+            
             Ice.Communicator ic = null;
             ic = Ice.Util.initialize();
 
@@ -155,8 +160,27 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
             try
             {
+                /*ObjectPrx prx = BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
+                        "::Ferda::OntologyRelated::OWLParser"
+                        )[0];*/
+                ObjectPrx objPrx = BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
+                        "::Ferda::OntologyRelated::OWLParser"
+                        )[0];
+                if (objPrx != null)
+                {
+                    System.Windows.Forms.MessageBox.Show(objPrx.ice_toString());
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("objekt NEnalezen");
+                }
+
                 Ferda.OntologyRelated.generated.OWLParserPrx prx =
-                    Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(obj);
+                    Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(
+                        BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
+                        "::Ferda::OntologyRelated::OWLParser"
+                        )[0]
+                    );
 
                 System.Windows.Forms.MessageBox.Show("proxy nalezena");
 

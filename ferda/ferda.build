@@ -448,4 +448,79 @@
 			<arg value="-silent"/>
 		</exec>
 	</target>
+	
+	
+	<target name="jclean" description="Smaže build">
+		<nant buildfile="${path::combine(slice.dir,default.build)}" target="clean">
+			<properties>
+				<property name="build.dir" value="${src.dir}"/>
+			</properties>
+		</nant>
+		<nant target="clean">
+			<buildfiles>
+				<include name="${docsrc.dir}/**/default.build"/>
+			</buildfiles>
+			<properties>
+				<property name="build.dir" value="${doc.dir}"/>
+			</properties>
+		</nant>
+		<nant buildfile="${path::combine(libsrc.dir,'default.build')}" target="clean">
+			<properties>
+				<property name="build.dir" value="${bin.dir}"/>
+			</properties>
+		</nant>
+		<nant buildfile="${path::combine(src.dir,'default.build')}" target="clean">
+			<properties>
+				<property name="build.dir" value="${bin.dir}"/>
+			</properties>
+		</nant>
+		<!--
+		<delete dir="${bin.dir}" failonerror="false" if="${directory::exists(bin.dir)}"/>
+		-->
+		<delete failonerror="false">
+			<fileset>
+				<include name="${bin.dir}/FrontEnd/**" />
+				<include name="${bin.dir}/Server/**" />
+				<include name="${bin.dir}/db/**" />
+			</fileset>
+		</delete>
+	</target>
+	<target name="jslice">
+		<nant buildfile="${path::combine(slice.dir,default.build)}">
+			<properties>
+				<property name="build.dir" value="${src.dir}"/>
+			</properties>
+		</nant>
+	</target>
+	<target name="jsrc" depends="jslice">
+		<mkdir dir="${bin.dir}"/>
+		<mkdir dir="${frontendbin.dir}"/>
+		<mkdir dir="${serverbin.dir}"/>
+		<nant buildfile="${path::combine(libsrc.dir,'default.build')}" target="build">
+			<properties>
+				<property name="build.dir" value="${frontendbin.dir}"/>
+				<property name="serverbin.dir" value="${serverbin.dir}"/>
+			</properties>
+		</nant>
+		<nant buildfile="${path::combine(src.dir,'default.build')}"/>
+		<copy todir="${frontendbin.dir}">
+			<fileset basedir="lib">
+				<include name="icecs.dll"/>
+				<include name="icegridcs.dll"/>
+				<include name="NetronMaths.dll"/>
+				<include name="TeeChart.Lite.dll"/>
+				<include name="TeeChart.Lite.Languages.dll"/>
+			</fileset>
+		</copy>
+		<copy todir="${serverbin.dir}">
+			<fileset basedir="lib">
+				<include name="icecs.dll"/>
+				<include name="icegridcs.dll"/>
+				<include name="lispMinerGens/*"/>
+			</fileset>
+		</copy>
+		<call target="boxconfig" verbose="true"/>
+	</target>
+	<target name="jrefresh" depends="uninstall,clean,jclean,jfullinstall,test"/>
+	<target name="jfullinstall" depends="src,jsrc,config,install"/>
 </project>
