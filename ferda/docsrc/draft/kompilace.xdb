@@ -19,6 +19,15 @@
     <!--
     <revhistory>
       <revision>
+        <revnumber>1.3</revnumber>
+        <date>2007-10-26</date>
+        <revdescription>
+          <para>
+            Zlepšená část o kompilaci, přidany věci o kompilacy Javy
+          </para>
+        </revdescription>
+      </revision>    
+      <revision>
         <revnumber>1.2</revnumber>
         <date>2006-11-16</date>
         <revdescription>
@@ -71,26 +80,95 @@
     <para>
       Pro kompilaci Ferdy je potřeba nainstalovat .NET Framework 2.0, .NET
       Framework 2.0 SDK,
-      <ulink url="http://nant.sourceforge.net">NAnt</ulink>(v součastné verzi je podporovaná verze  0.85rc4)
+      <ulink url="http://nant.sourceforge.net">NAnt</ulink>(v součastné verzi je podporovaná verze  0.85)
 
       a
-      <ulink url="http://www.zeroc.com">Ice</ulink> (součastná verze Ferdy běží na Ice 3.1.).
+      <ulink url="http://www.zeroc.com">Ice</ulink> (součastná verze Ferdy běží na Ice 3.2.1).
+      Pro kompilaci části v Javě (týkající se ontologií) je třeba mít nainstalovaný 
+      Java SDK.
       Po nainstalování NAntu a Ice je třeba dát
-      Ice a NAnt bin adresář do proměnné prostředí PATH. Dále je třeba v souboru
+      Ice a NAnt bin adresář do proměnné prostředí PATH (pro Javu i adresář SDK). Dále je třeba v souboru
       ferda.build nastavit proměnnou ice.dir na adresář Ice.
       Protože se dll knihovny Ferdy automaticky přidávají do GAC (Global Assembly Cache), je třeba
       mít pro správné fungování NAnt skriptů v proměnné PATH také příkaz gacutil, který přidává
       knihovny do GAC (typická cesta je například "c:\Program
       Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\").
     </para>
+    <para>
+     Pro kompilaci dokumentace je nutné mít v proměnné PATH cestu k procesoru xslt šablon (jedna z možností je xsltproc.exe)
+    </para>
   </section>
 
   <section>
     <title>Kompilace Fedy</title>
 
-    <para>Pro první zkompilování Ferdy je třeba v hlavním adresáři Ferda zadat příkaz <code>nant fullinstall</code>.</para>
+    <para>Pro první zkompilování Ferdy je třeba v hlavním adresáři Ferda zadat příkaz <code>nant refresh</code>.</para>
 
-    <para>Dále jsou k dispozici příkazy <code>nant clean</code> (vyčistí zkomilované soubory), <code>nant src</code> (zkomiluje znovu Ferdu) a <code>nant refresh</code> (udělá clean a fullinstall).</para>
+    <para>
+      Dále jsou k dispozici příkazy
+      </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <classname>nant clean</classname> (vyčistí zkomilované soubory)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant src</classname> (zkomiluje znovu Ferdu)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant config</classname> (nakonfiguruje Ferdu)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant fullinstall</classname> (instaluje zkompilovaného a nakonfigurovaného Ferdu)
+        </para>
+      </listitem>
+     <listitem>
+        <para>
+          <classname>nant refresh</classname> (udělá clean a fullinstall a spustí testy)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant debugsrc</classname> (jako <classname>nant src</classname> ale v debug módu
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant debugrefresh</classname> (jako <classname>nant refresh</classname> ale v debug módu
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant debuginstall</classname> (jako <classname>nant install</classname> ale v debug módu
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant jfullinstall</classname> (jako <classname>nant fullinstall</classname> ale kompiluje i javu
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant jrefresh</classname> (jako <classname>nant refresh</classname> ale kompiluje i javu
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant doc</classname> (vytvoří dokumentaci)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant programdoc</classname> (vytvoří dokumentaci z komentářů v kódu, v současné době nefuntuje:) )
+        </para>
+      </listitem>
+    </itemizedlist>
   </section>
   <section>
     <title>Nastavení prostředí pro ladění</title>
