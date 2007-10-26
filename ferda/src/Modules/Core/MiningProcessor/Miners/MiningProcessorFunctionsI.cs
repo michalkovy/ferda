@@ -171,6 +171,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
             Current current__
             )
         {
+            //the ETree task is treated differently
+            if (taskParams.taskType == TaskTypeEnum.ETree)
+            {
+            }
+
             // Ice peformance
             BitStringCache.IceCalls = 0;
             BitStringCache.IceTicks = 0;
@@ -346,6 +351,43 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     ProgressTaskI.Destroy(_current.adapter, progressPrx);
                 }
             }
+        }
+
+        /// <summary>
+        /// This function runs the ETree task in the mining processor.
+        /// Unlike other GUHA procedures implemented in Ferda, the proceduer 
+        /// does not mine for patterns or association rules, but for decision trees.
+        /// Therefore it was not suitable to use existing <c>Run</c> function
+        /// for running the other 6 procedures. Therefore a new functionality of the
+        /// Mining processor was added in form of this function.
+        /// </summary>
+        /// <param name="taskBoxModule">The task box module</param>
+        /// <param name="branchingAttributes">Attributes used for branching 
+        /// decision trees</param>
+        /// <param name="targetClassificationAttribute">Attribute used for 
+        /// target classification</param>
+        /// <param name="minimalNodeImpurity">Minimal node impurity</param>
+        /// <param name="minimalNodeFrequency">Minimal node frequency</param>
+        /// <param name="maximalTreeDepth">Maximal tree depth</param>
+        /// <param name="output">Where the progress of the task should be written</param>
+        /// <param name="resultInfo">Information about the task run are stored
+        /// in this parameter</param>
+        /// <param name="quantifiers">Quantifiers to evaluate quality of the
+        /// generated trees</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Decision trees serialized to a string</returns>
+        public override string ETreeRun(BoxModulePrx taskBoxModule, 
+            CategorialAttribute[] branchingAttributes, 
+            CategorialAttribute targetClassificationAttribute,
+            QuantifierBaseFunctionsPrx[] quantifiers, 
+            int minimalNodeImpurity, 
+            int minimalNodeFrequency, 
+            int maximalTreeDepth, 
+            OutputPrx output, 
+            out string resultInfo, Current current__)
+        {
+            resultInfo = string.Empty;
+            return string.Empty;
         }
 
         #endregion

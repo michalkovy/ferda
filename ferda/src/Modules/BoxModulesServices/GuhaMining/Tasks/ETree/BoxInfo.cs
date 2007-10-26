@@ -19,6 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using Ferda.Guha.Math.Quantifiers;
+using System.Collections.Generic;
 using Object = Ice.Object;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
@@ -142,7 +144,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
             Func.GetSourceDataTableId();
-            Func.GetQuantifiers();
         }
 
         #region Type Identifier

@@ -313,6 +313,19 @@ module Ferda {
 						
 					BitStringIceWithCategoryId GetNextBitString()
 						throws Ferda::Modules::BoxRuntimeError;
+						
+					string ETreeRun(
+					     Ferda::Modules::BoxModule* taskBoxModule,
+					     CategorialAttributeSeq branchingAttributes,
+					     CategorialAttribute targetClassificationAttribute,
+                              Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq quantifiers,
+					     int minimalNodeImpurity,
+					     int minimalNodeFrequency,
+					     int maximalTreeDepth,
+					     Ferda::ModulesManager::Output* output,
+					     out string resultInfo
+                              )
+                              throws Ferda::Modules::BoxRuntimeError;
 
 				};
 		};

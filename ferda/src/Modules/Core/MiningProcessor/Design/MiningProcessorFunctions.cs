@@ -45,9 +45,11 @@ namespace Ferda.Guha.MiningProcessor.Design
     {
         /// <summary>
         /// Executes a run of a GUHA task. All the needed information are
-        /// in the parameters.
+        /// in the parameters. It executes the
+        /// <see cref="T:Ferda.Guha.MiningProcessor.Miners.MiningProcessorBase.Trace"/>
+        /// method to get results of a run.
         /// </summary>
-        /// <param name="taskBoxModule">The task box module</param>
+        /// <param name="boxModule">The task box module</param>
         /// <param name="booleanAttributes">Boolean attributes connected to the task</param>
         /// <param name="categorialAttributes">Categorial attributes connected to the task</param>
         /// <param name="quantifiers">Quantifiers connected to the task</param>
@@ -77,10 +79,48 @@ namespace Ferda.Guha.MiningProcessor.Design
             out string resultInfo);
 
         /// <summary>
-        /// Returns next bit string (more preciselly a structure that contains a bit string
-        /// and category identification
+        /// Retrieves next bit string. This type of computation is used by the
+        /// virtual hypotheses attribute boxes. They do not compute the whole task,
+        /// they return bit strings corresponding to individual relevant questions
+        /// instead. 
+        /// More information can
+        /// be found in <c>svnroot/publications/diplomky/Kuzmos/diplomka.pdf</c> or
+        /// in <c>svnroot/publications/Icde08/ICDE.pdf</c>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Bit string</returns>
         BitStringWithCategoryId GetNextBitString();
+
+        /// <summary>
+        /// This function runs the ETree task in the mining processor.
+        /// Unlike other GUHA procedures implemented in Ferda, the proceduer 
+        /// does not mine for patterns or association rules, but for decision trees.
+        /// Therefore it was not suitable to use existing <c>Run</c> function
+        /// for running the other 6 procedures. Therefore a new functionality of the
+        /// Mining processor was added in form of this function.
+        /// </summary>
+        /// <param name="taskBoxModule">The task box module</param>
+        /// <param name="branchingAttributes">Attributes used for branching 
+        /// decision trees</param>
+        /// <param name="targetClassificationAttribute">Attribute used for 
+        /// target classification</param>
+        /// <param name="minimalNodeImpurity">Minimal node impurity</param>
+        /// <param name="minimalNodeFrequency">Minimal node frequency</param>
+        /// <param name="maximalTreeDepth">Maximal tree depth</param>
+        /// <param name="output">Where the progress of the task should be written</param>
+        /// <param name="resultInfo">Information about the task run are stored
+        /// in this parameter</param>
+        /// <param name="quantifiers">Quantifiers to evaluate quality of the
+        /// generated trees</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Decision trees serialized to a string</returns>        
+        string ETreeRun(BoxModulePrx taskBoxModule, 
+            CategorialAttribute[] branchingAttributes, 
+            CategorialAttribute targetClassificationAttribute,
+            QuantifierBaseFunctionsPrx[] quantifiers, 
+            int minimalNodeImpurity, 
+            int minimalNodeFrequency, 
+            int maximalTreeDepth, 
+            OutputPrx output, 
+            out string resultInfo, Current current__)
     }
 }

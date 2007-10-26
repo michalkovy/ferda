@@ -219,6 +219,7 @@
       <Access>Public</Access>
       <Member type="Method">string Run()</Member>
       <Member type="Method">BitStringIceWithCategoryId GetNextBitString()</Member>
+      <Member type="Method">string ETreeRun()</Member>
     </Entity>
   </Entities>
   <Relations>
@@ -452,7 +453,7 @@
     </Shape>
     <Shape>
       <Location left="1096" top="888" />
-      <Size width="176" height="99" />
+      <Size width="176" height="116" />
     </Shape>
     <Connection>
       <StartNode isHorizontal="True" location="63" />
