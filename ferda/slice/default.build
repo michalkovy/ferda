@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<project name="Slice to C#" default="slice" basedir=".">
-	<description>Generates .cs files from slice</description>
+<project name="Slice to C# and java" default="slice" basedir=".">
+	<description>Generates .cs and .java files from slice</description>
 	<!--
 		Požadované vlastnosti:
 			* build.dir		- (path) kam se má vytvořená dokumentace dát
@@ -9,6 +9,11 @@
 		<delete failonerror="false">
 			<fileset basedir="${build.dir}">
 				<include name="**/generated/**.cs"/>
+			</fileset>
+		</delete>
+		<delete failonerror="false">
+			<fileset basedir="${build.dir}">
+				<include name="**/generated/**.java"/>
 			</fileset>
 		</delete>
 		<delete dir="${path::combine(moddoc.dir,'modules')}" failonerror="false"/>
@@ -38,7 +43,15 @@
 				<include name="${build.dir}/NetworkArchive/generated/*.cs"/>
 			</targetfiles>
 		</uptodate>
-		<if test="${not(actual1) or not(actual2) or not(actual3)}">
+		<uptodate property="actual4">
+			<sourcefiles>
+				<include name="Modules/*.ice"/>
+			</sourcefiles>
+			<targetfiles>
+				<include name="${build.dir}/Modules/FerdaOWLParser/**/generated/**.java"/>
+			</targetfiles>
+		</uptodate>
+		<if test="${not(actual1) or not(actual2) or not(actual3) or not(actual4)}">
 			<echo message="Generuji .cs z .ice souboru v adresari Modules..."/>
 			<mkdir dir="${build.dir}/Modules/Core/Base/generated"/>
 			<exec program="slice2cs">
@@ -120,11 +133,11 @@
 			</foreach>
 			
 			<echo message="Generuji .java z .ice souboru pro FerdaOWLParser..."/>
-			<mkdir dir="${build.dir}/FerdaOWLParser/src"/>
+			<mkdir dir="${build.dir}/Modules/FerdaOWLParser/src"/>
 			<exec program="slice2java">
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
-				<arg value="${build.dir}/FerdaOWLParser/src"/>
+				<arg value="${build.dir}/Modules/FerdaOWLParser/src"/>
 				<arg file="Modules/OntologyData.ice"/>
 				<arg file="Modules/OWLParser.ice"/>
 			</exec>
