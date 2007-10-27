@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<project name="Ferda OWL Parser" default="build" basedir=".">
+	<description>Ferda OWL Parser</description>
+	<target name="build" description="Build Ferda OWL Parser">
+    <echo message="Kompiluji javovy OntologyParser..."/>
+    <mkdir dir="${path::combine(build.dir,'OWLParser')}"/>
+    <exec program="javac">
+      <arg value="-d" />
+      <arg value="${path::combine(build.dir,'OWLParser')}" />
+      <arg value="-sourcepath" />
+      <arg value="src" />
+      <arg value="-classpath" />
+      <arg>
+          <path>
+              <pathelement file="OWL_API_src/owlapi-api.jar" />
+              <pathelement file="OWL_API_src/owlapi-apibinding.jar" />
+              <pathelement file="C:/Ice-3.2.1/lib/Ice.jar" />
+          </path>
+      </arg>
+      <arg path="src/Ferda/OntologyRelated/OWLParserI.java" />
+      <arg path="src/Ferda/OntologyRelated/ObjectFactory.java" />
+      <arg path="src/Ferda/OntologyRelated/Service.java" />
+    </exec>
+    <echo message="OntologyParser zkompilovan."/>
+	</target>
+</project>
