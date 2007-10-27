@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="."/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Ice-3.2.1/lib/Ice.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-util.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/commons-lang-2.2.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-api.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-apibinding.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-debugging.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-dig1_1.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-functionalparser.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-functionalrenderer.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-impl.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-krssparser.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-oboparser.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-owlxmlparser.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-owlxmlrenderer.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-rdfapi.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-rdfxmlparser.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-rdfxmlrenderer.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
