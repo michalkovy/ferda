@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="."/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"></classpathentry>
 	<classpathentry kind="lib" path="C:/Ice-3.2.1/lib/Ice.jar"/>
 	<classpathentry kind="lib" path="./OWL_API_src/owlapi-util.jar"/>
 	<classpathentry kind="lib" path="./OWL_API_src/commons-lang-2.2.jar"/>
-	<classpathentry kind="lib" path="./OWL_API_src/owlapi-api.jar"/>
+	<classpathentry kind="lib" path="./OWL_API_src/owlapi-api.jar"></classpathentry>
 	<classpathentry kind="lib" path="./OWL_API_src/owlapi-apibinding.jar"/>
 	<classpathentry kind="lib" path="./OWL_API_src/owlapi-debugging.jar"/>
 	<classpathentry kind="lib" path="./OWL_API_src/owlapi-dig1_1.jar"/>
