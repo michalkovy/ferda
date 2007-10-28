@@ -142,8 +142,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <param name="boxModule">box instance to be validated</param>
         public override void Validate(BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
-            Func.GetSourceDataTableId();
+            //Does nothing, all validation is done either via numerical restrictions
+            //in boxes.xml or when a task is run
         }
 
         #region Type Identifier

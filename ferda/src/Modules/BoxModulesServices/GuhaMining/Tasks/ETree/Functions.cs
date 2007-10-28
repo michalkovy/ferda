@@ -89,6 +89,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
             }
         }
 
+        /// <summary>
+        /// Number of branching categories
+        /// </summary>
+        public int NoBranchingCategories
+        {
+            get
+            {
+                return _boxModule.GetPropertyInt(SockNoBranchingCategories);
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -122,6 +133,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// Name of the socket defining maximal tree depth
         /// </summary>
         public const string SockMaximalTreeDepth = "MaximalTreeDepth";
+
+        /// <summary>
+        /// Name of the socket defining number of branching categories
+        /// </summary>
+        public const string SockNoBranchingCategories = "NoBranchingCategories";
 
         #region MiningTaskFunctions overrides
 
@@ -271,8 +287,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
                 Common.GetBitStringGeneratorProviderPrx(_boxModule);
 
             //retrieving and checking the quantifiers
+            //because of other name of the socket that contain quantifiers,
+            //we cannot use Common.GetQuantifierBaseFunctions
             List<QuantifierBaseFunctionsPrx> quantifiers = 
-                Common.GetQuantifierBaseFunctions(_boxModule, true);
+                SocketConnections.GetPrxs<QuantifierBaseFunctionsPrx>(
+                _boxModule, 
+                SockQuantifiers,
+                QuantifierBaseFunctionsPrxHelper.checkedCast,
+                true, true);
             if (quantifiers == null || quantifiers.Count == 0)
             {
                 throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
@@ -289,8 +311,31 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
                 Common.GetCategorialAttributesBySockets(_boxModule,
                     new string[] { SockTargetClassificationAttribute }, this)[0];
 
-            //string result =  + progress bar
+            if (classificationAttribute == null)
+            {
+                throw Exceptions.NoConnectionInSocketError(null, _boxModule.StringIceIdentity,
+                    new string[] { SockTargetClassificationAttribute });
+            }
+            if (branchingAttributes.Length == 0)
+            {
+                throw Exceptions.NoConnectionInSocketError(null, _boxModule.StringIceIdentity,
+                    new string[] { SockBranchingAttributes });
+            }
 
+            string resultInfo = string.Empty;
+            string result = miningProcessor.ETreeRun(
+                _boxModule.MyProxy,
+                branchingAttributes,
+                classificationAttribute,
+                quantifiers.ToArray(),
+                MinimalNodeImpurity,
+                MinimalNodeFrequency,
+                MaximalTreeDepth,
+                NoBranchingCategories,
+                _boxModule.Output,
+                out resultInfo);
+
+            //processing of the results
         }
     }
 }

@@ -2646,6 +2646,11 @@
 				<Hint>Počáteční čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
+				<Name>NoBranchingCategories</Name>
+				<Label>Počet kategorií pro větvení</Label>
+				<Hint>Počet kategorií pro větvení jednoho atributu</Hint>
+			</Socket>
+			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
 				<Label>Počet relevantních otázek</Label>
 				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
@@ -9976,7 +9981,7 @@
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
-		</Sockets>		
+		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
 				<Name>Categories</Name>

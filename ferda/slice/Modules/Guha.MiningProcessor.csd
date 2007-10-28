@@ -178,6 +178,8 @@
       <Value>Attribute</Value>
       <Value>FirstSet</Value>
       <Value>SecondSet</Value>
+      <Value>TargetClassificationAttribute</Value>
+      <Value>BranchingAttributes</Value>
     </Entity>
     <Entity type="Structure">
       <Name>BooleanAttribute</Name>
@@ -344,7 +346,7 @@
       <Size width="240" height="93" />
     </Shape>
     <Shape>
-      <Location left="363" top="287" />
+      <Location left="362" top="287" />
       <Size width="283" height="93" />
     </Shape>
     <Shape>
@@ -429,7 +431,7 @@
     </Shape>
     <Shape>
       <Location left="1138" top="1115" />
-      <Size width="162" height="216" />
+      <Size width="162" height="235" />
     </Shape>
     <Shape>
       <Location left="840" top="1115" />

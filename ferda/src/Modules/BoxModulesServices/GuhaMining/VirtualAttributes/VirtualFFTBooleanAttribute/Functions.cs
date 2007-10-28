@@ -27,7 +27,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override string ETreeRun(BoxModulePrx taskBoxModule, CategorialAttribute[] branchingAttributes, CategorialAttribute targetClassificationAttribute, Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrx[] quantifiers, int minimalNodeImpurity, int minimalNodeFrequency, int maximalTreeDepth, Ferda.ModulesManager.OutputPrx output, out string resultInfo, Current current__)
+        public override string ETreeRun(BoxModulePrx taskBoxModule, CategorialAttribute[] branchingAttributes, CategorialAttribute targetClassificationAttribute, Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrx[] quantifiers, int minimalNodeImpurity, int minimalNodeFrequency, int maximalTreeDepth, int noBranchingCategories, Ferda.ModulesManager.OutputPrx output, out string resultInfo, Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }

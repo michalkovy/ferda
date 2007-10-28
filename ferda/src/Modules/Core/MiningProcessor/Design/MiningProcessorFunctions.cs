@@ -106,6 +106,9 @@ namespace Ferda.Guha.MiningProcessor.Design
         /// <param name="minimalNodeImpurity">Minimal node impurity</param>
         /// <param name="minimalNodeFrequency">Minimal node frequency</param>
         /// <param name="maximalTreeDepth">Maximal tree depth</param>
+        /// <param name="noBranchingCategories">
+        /// Number of categories for branching of one attribute
+        /// </param>
         /// <param name="output">Where the progress of the task should be written</param>
         /// <param name="resultInfo">Information about the task run are stored
         /// in this parameter</param>
@@ -113,14 +116,15 @@ namespace Ferda.Guha.MiningProcessor.Design
         /// generated trees</param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>Decision trees serialized to a string</returns>        
-        string ETreeRun(BoxModulePrx taskBoxModule, 
-            CategorialAttribute[] branchingAttributes, 
+        string ETreeRun(BoxModulePrx taskBoxModule,
+            CategorialAttribute[] branchingAttributes,
             CategorialAttribute targetClassificationAttribute,
-            QuantifierBaseFunctionsPrx[] quantifiers, 
-            int minimalNodeImpurity, 
-            int minimalNodeFrequency, 
-            int maximalTreeDepth, 
-            OutputPrx output, 
-            out string resultInfo, Current current__)
+            QuantifierBaseFunctionsPrx[] quantifiers,
+            int minimalNodeImpurity,
+            int minimalNodeFrequency,
+            int maximalTreeDepth,
+            int noBranchingCategories,
+            OutputPrx output,
+            out string resultInfo, Current current__);
     }
 }

@@ -26,7 +26,11 @@ using System.Text;
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Role of the attribute (Boolean or categorial) in the task.
+    /// Role of the attribute (Boolean or categorial) in the task. In adition to the
+    /// normal GUHA tasks, for ETree defines the BranchingAttribute and 
+    /// TargetClassificationAttribute mark types. These types are not used in the
+    /// mining algorithm itself, they are used just for the compatibility with
+    /// the rest of mining processor.
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -46,6 +50,8 @@ namespace Ferda.Guha.MiningProcessor.Design
         ColumnAttribute,
         Attribute,
         FirstSet,
-        SecondSet
+        SecondSet,
+        TargetClassificationAttribute,
+        BranchingAttributes
     }
 }

@@ -369,6 +369,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="minimalNodeImpurity">Minimal node impurity</param>
         /// <param name="minimalNodeFrequency">Minimal node frequency</param>
         /// <param name="maximalTreeDepth">Maximal tree depth</param>
+        /// <param name="noBranchingCategories">
+        /// Number of categories for branching of one attribute
+        /// </param>
         /// <param name="output">Where the progress of the task should be written</param>
         /// <param name="resultInfo">Information about the task run are stored
         /// in this parameter</param>
@@ -383,9 +386,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
             int minimalNodeImpurity, 
             int minimalNodeFrequency, 
             int maximalTreeDepth, 
+            int noBranchingCategories,
             OutputPrx output, 
             out string resultInfo, Current current__)
         {
+
             resultInfo = string.Empty;
             return string.Empty;
         }
