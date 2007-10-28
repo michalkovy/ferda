@@ -107,7 +107,7 @@ namespace Ferda.Guha.MiningProcessor.Design
         /// <param name="minimalNodeFrequency">Minimal node frequency</param>
         /// <param name="maximalTreeDepth">Maximal tree depth</param>
         /// <param name="noBranchingCategories">
-        /// Number of categories for branching of one attribute
+        /// Number of attributes used for branching when prolonging the tree
         /// </param>
         /// <param name="output">Where the progress of the task should be written</param>
         /// <param name="resultInfo">Information about the task run are stored
@@ -123,7 +123,7 @@ namespace Ferda.Guha.MiningProcessor.Design
             int minimalNodeImpurity,
             int minimalNodeFrequency,
             int maximalTreeDepth,
-            int noBranchingCategories,
+            int noAttributesForBranching,
             OutputPrx output,
             out string resultInfo, Current current__);
     }
