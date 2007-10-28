@@ -53,9 +53,7 @@
 			<fileset>
 				<include name="${bin.dir}/FrontEnd/**" />
 				<include name="${bin.dir}/Server/**" />
-		    <!--directory OWLParser isn't deleted by default - it is deleted only if you run "nant jrefresh" you should have JDK installed to do so--> 
-        <exclude name="${bin.dir}/Server/OWLParser/**" />
-        <include name="${bin.dir}/db/**" />
+		    <include name="${bin.dir}/db/**" />
 			</fileset>
 		</delete>
 	</target>
@@ -170,6 +168,11 @@
 				<include name="icecs.dll"/>
 				<include name="icegridcs.dll"/>
 				<include name="lispMinerGens/*"/>
+			</fileset>
+		</copy>
+		<copy todir="${serverbin.dir}">
+			<fileset basedir="libsrc">
+				<include name="OWLParser/**"/>
 			</fileset>
 		</copy>
 		<call target="boxconfig" verbose="true"/>
@@ -455,7 +458,7 @@
 		<echo message="Deleting java build of OWLParser"/>
     <delete failonerror="false">
       <fileset>
-				<include name="${bin.dir}/Server/OWLParser/**" />
+				<include name="${libsrc.dir}/OWLParser/**" />
 			</fileset>
 		</delete>
 	</target>
@@ -490,6 +493,11 @@
 				<include name="icecs.dll"/>
 				<include name="icegridcs.dll"/>
 				<include name="lispMinerGens/*"/>
+			</fileset>
+		</copy>
+		<copy todir="${serverbin.dir}">
+			<fileset basedir="libsrc">
+				<include name="OWLParser/**"/>
 			</fileset>
 		</copy>
 		<call target="boxconfig" verbose="true"/>
