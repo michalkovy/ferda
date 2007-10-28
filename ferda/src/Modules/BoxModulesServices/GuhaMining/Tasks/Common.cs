@@ -741,12 +741,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         {
             //UNDONE Load Balancing
 
-            //there should be only 1 mining processor running
-            Ice.ObjectPrx objPrx = boxModule.Manager.getManagersLocator().findAllObjectsWithType(
-                        "::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"
-                        )[0];
-            System.Windows.Forms.MessageBox.Show(objPrx.ice_toString());
-
             return MiningProcessorFunctionsPrxHelper.checkedCast(
                 boxModule.Manager.getManagersLocator().findAllObjectsWithType(
                     "::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"
