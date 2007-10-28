@@ -2646,9 +2646,9 @@
 				<Hint>Počáteční čas běhu poslení úlohy</Hint>
 			</Socket>
 			<Socket>
-				<Name>NoBranchingCategories</Name>
-				<Label>Počet kategorií pro větvení</Label>
-				<Hint>Počet kategorií pro větvení jednoho atributu</Hint>
+				<Name>NoAttributesForBranching</Name>
+				<Label>Počet atributů pro větvení</Label>
+				<Hint>Počet atributů použitých pro větvení v jednom kroku prodloužení délky stromu</Hint>
 			</Socket>
 			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
