@@ -92,11 +92,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <summary>
         /// Number of branching categories
         /// </summary>
-        public int NoBranchingCategories
+        public int NoAttributesForBranching
         {
             get
             {
-                return _boxModule.GetPropertyInt(SockNoBranchingCategories);
+                return _boxModule.GetPropertyInt(SockNoAttributesForBranching);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <summary>
         /// Name of the socket defining number of branching categories
         /// </summary>
-        public const string SockNoBranchingCategories = "NoBranchingCategories";
+        public const string SockNoAttributesForBranching = "NoBranchingCategories";
 
         #region MiningTaskFunctions overrides
 
@@ -331,7 +331,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
                 MinimalNodeImpurity,
                 MinimalNodeFrequency,
                 MaximalTreeDepth,
-                NoBranchingCategories,
+                NoAttributesForBranching,
                 _boxModule.Output,
                 out resultInfo);
 

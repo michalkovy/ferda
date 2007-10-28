@@ -4883,7 +4883,7 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
-				<Name>NoBranchingCategories</Name>
+				<Name>NoAttributesForBranching</Name>
 				<SocketTypes>
 					<BoxType>
 						<FunctionIceId>::Ferda::Modules::IntTInterface</FunctionIceId>
@@ -4981,7 +4981,7 @@
 				</NumericalRestrictions>
 			</Property>
 			<Property>
-				<Name>NoBranchingCategories</Name>
+				<Name>NoAttributesForBranching</Name>
 				<TypeClassIceId>::Ferda::Modules::IntT</TypeClassIceId>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
