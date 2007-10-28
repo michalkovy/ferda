@@ -324,7 +324,7 @@ module Ferda {
 					     int minimalNodeImpurity,
 					     int minimalNodeFrequency,
 					     int maximalTreeDepth,
-					     int noBranchingCategories,
+					     int noAttributesForBranching,
 					     Ferda::ModulesManager::Output* output,
 					     out string resultInfo
                               )
