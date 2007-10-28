@@ -75,12 +75,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
             int minimalNodeImpurity,
             int minimalNodeFrequency,
             int maximalTreeDepth,
-            int noBranchingCategories)
+            int noAttributesForBranching)
         {
             this.branchingAttributes = branchingAttributes;
             this.targetClassificationAttribute = targetClassificationAttribute;
             this.quantifiers = quantifiers;
 
+            //checking the
             if (minimalNodeFrequency < 0)
             {
                 throw Exceptions.NotMoreThanZeroException("MinimalNodeFrequency");
@@ -88,6 +89,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
             else
             {
                 this.minimalNodeFrequency = minimalNodeFrequency;
+            }
+
+            if (minimalNodeImpurity < 0)
+            {
+                throw Exceptions.NotMoreThanZeroException("MinimalNodeImpurity");
+            }
+            else
+            {
+
             }
 
         }
