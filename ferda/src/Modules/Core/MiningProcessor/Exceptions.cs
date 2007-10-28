@@ -79,5 +79,18 @@ namespace Ferda.Guha.MiningProcessor
             result.userMessage = "Empty cedent (or with MinLength equal to zero) is not allowed for cedent type: " + cedentType.ToString();
             return result;
         }
+
+        /// <summary>
+        /// Returns an error saying that given algorithm parameter should be greater than zero.
+        /// The exception is used for ETree mining
+        /// </summary>
+        /// <param name="algorithmParameter">Algorithm parameter</param>
+        /// <returns>Exception</returns>
+        public static BoxRuntimeError NotMoreThanZeroException(string algorithmParameter)
+        {
+            BoxRuntimeError result = new BoxRuntimeError();
+            result.userMessage = "Parameter " + algorithmParameter + "should be always greater than zero.";
+            return result;
+        }
     }
 }

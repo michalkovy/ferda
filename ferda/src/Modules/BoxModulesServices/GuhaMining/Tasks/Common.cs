@@ -170,6 +170,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                     return MarkEnum.FirstSet;
                 case SockSDCedent2:
                     return MarkEnum.SecondSet;
+                case ETree.Functions.SockBranchingAttributes:
+                    return MarkEnum.BranchingAttributes;
+                case ETree.Functions.SockTargetClassificationAttribute:
+                    return MarkEnum.TargetClassificationAttribute;
                 default:
                     throw new NotImplementedException();
             }

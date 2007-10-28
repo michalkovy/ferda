@@ -2678,6 +2678,11 @@
 				<Hint>Minimal node frequency</Hint>
 			</Socket>
 			<Socket>
+				<Name>NoBranchingCategories</Name>
+				<Label>Number of categories for branching</Label>
+				<Hint>Number of categories for branching of one attribute</Hint>
+			</Socket>
+			<Socket>
 				<Name>MaximalTreeDepth</Name>
 				<Label>Maximal tree depth</Label>
 				<Hint>Maximal tree depth</Hint>

@@ -250,7 +250,9 @@ module Ferda {
 					ColumnAttribute,
 					Attribute,
 					FirstSet,
-					SecondSet
+					SecondSet,
+					TargetClassificationAttribute,
+					BranchingAttributes
 				};
 
 				struct BooleanAttribute
@@ -322,6 +324,7 @@ module Ferda {
 					     int minimalNodeImpurity,
 					     int minimalNodeFrequency,
 					     int maximalTreeDepth,
+					     int noBranchingCategories,
 					     Ferda::ModulesManager::Output* output,
 					     out string resultInfo
                               )

@@ -136,6 +136,7 @@
     <Compile Include="Generation\SingleOperandEntities.cs" />
     <Compile Include="Generation\SubsetsGenerationHelper.cs" />
     <Compile Include="Miners\CFMiningProcessor.cs" />
+    <Compile Include="Miners\ETreeMiningProcessor.cs" />
     <Compile Include="Miners\FourFoldMiningProcessor.cs" />
     <Compile Include="Miners\KLMiningProcessor.cs" />
     <Compile Include="Miners\MiningProcessorFunctionsI.cs" />
