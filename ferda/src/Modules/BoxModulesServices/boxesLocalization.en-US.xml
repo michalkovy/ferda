@@ -2658,6 +2658,11 @@
 				<Hint>Number of executed verifications.</Hint>
 			</Socket>
 			<Socket>
+				<Name>MaxNumberOfHypotheses</Name>
+				<Label>Maximal # of Hypotheses</Label>
+				<Hint>Maximal number of hypotheses in result.</Hint>
+			</Socket>
+			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
 				<Label>Relevant Questions Count</Label>
 				<Hint>Total number of relevant questions in specified task.</Hint>

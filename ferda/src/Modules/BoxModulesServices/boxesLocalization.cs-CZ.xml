@@ -2651,6 +2651,11 @@
 				<Hint>Počet atributů použitých pro větvení v jednom kroku prodloužení délky stromu</Hint>
 			</Socket>
 			<Socket>
+				<Name>MaxNumberOfHypotheses</Name>
+				<Label>Maximální počet hypotéz</Label>
+				<Hint>Maximální počet hypotéz, který se dostane do výsledku</Hint>
+			</Socket>
+			<Socket>
 				<Name>TotalNumberOfRelevantQuestions</Name>
 				<Label>Počet relevantních otázek</Label>
 				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
