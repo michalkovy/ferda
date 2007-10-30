@@ -93,6 +93,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     return "SD4ft";
                 case TaskTypeEnum.SDKL:
                     return "SDKL";
+                case TaskTypeEnum.ETree:
+                    return "ETree";
                 default:
                     throw new NotImplementedException();
             }
@@ -171,11 +173,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             Current current__
             )
         {
-            //the ETree task is treated differently
-            if (taskParams.taskType == TaskTypeEnum.ETree)
-            {
-            }
-
             // Ice peformance
             BitStringCache.IceCalls = 0;
             BitStringCache.IceTicks = 0;
@@ -366,11 +363,27 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// decision trees</param>
         /// <param name="targetClassificationAttribute">Attribute used for 
         /// target classification</param>
-        /// <param name="minimalNodeImpurity">Minimal node impurity</param>
-        /// <param name="minimalNodeFrequency">Minimal node frequency</param>
-        /// <param name="maximalTreeDepth">Maximal tree depth</param>
-        /// <param name="noBranchingCategories">
-        /// Number of attributes used for branching when prolonging the tree
+        /// <param name="minimalNodeImpurity">
+        /// Minimal node impurity (algorithm parameter). Minimal node impurity is
+        /// a condition for stopping growth of a tree. When sufficient amount 
+        /// (determined by this parameter) of cases (items) belongs to one classification
+        /// class in one node, the three is returned in output and stops growing. 
+        /// </param>
+        /// <param name="minimalNodeFrequency">
+        /// Minimal node frequency (algorithm parameter). Minimal node frequency is
+        /// a condition for stopping growth of a tree. When a node does not contain
+        /// minimal number of items (determined by this parameter), the three is returned
+        /// in output and stops growing. 
+        /// </param>
+        /// <param name="maximalTreeDepth">
+        /// Maximal tree depth (algorithm parameter). The total depth of the tree
+        /// cannot exceed this value.
+        /// </param>
+        /// <param name="noAttributesForBranching">
+        /// Number of attributes for branching (algorithm parameter). When determining
+        /// the most suitable for tree branching, the remaining attributes are sorted
+        /// by a criterion (here, chi squared) and the best N(determined by this 
+        /// parameter) are used for branching.
         /// </param>
         /// <param name="output">Where the progress of the task should be written</param>
         /// <param name="resultInfo">Information about the task run are stored
@@ -378,7 +391,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="quantifiers">Quantifiers to evaluate quality of the
         /// generated trees</param>
         /// <param name="current__">Ice stuff</param>
-        /// <returns>Decision trees serialized to a string</returns>  
+        /// <returns>Decision trees serialized to a string</returns>       
         public override string ETreeRun(BoxModulePrx taskBoxModule, 
             CategorialAttribute[] branchingAttributes, 
             CategorialAttribute targetClassificationAttribute,
@@ -390,6 +403,29 @@ namespace Ferda.Guha.MiningProcessor.Miners
             OutputPrx output, 
             out string resultInfo, Current current__)
         {
+            ProgressTaskListener progressListener = null;
+            string label = String.Empty;
+            _current = current__;
+
+
+            label = taskTypeToString(TaskTypeEnum.ETree) + "-Task";
+            progressListener = new ProgressTaskListener();
+            progressPrx =
+                ProgressTaskI.Create(_current.adapter, progressListener);
+            progressBarPrx =
+                output.startProgress(progressPrx, label, label + " running...");
+            progressBarPrx.setValue(-1, "Loading ...");
+
+            ETreeMiningProcessor miningProcessor = new ETreeMiningProcessor(
+                branchingAttributes,
+                targetClassificationAttribute,
+                quantifiers,
+                minimalNodeImpurity,
+                minimalNodeFrequency,
+                maximalTreeDepth,
+                noAttributesForBranching,
+                progressListener,
+                progressBarPrx);
 
             resultInfo = string.Empty;
             return string.Empty;

@@ -35,7 +35,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// The associated mining processor (set only)
         /// </summary>
-        public MiningProcessorBase MinningProcessor
+        public ProgressBarHandler MinningProcessor
         {
             set { _minningProcessor = value; }
         }
@@ -43,7 +43,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// The associated mining processor
         /// </summary>
-        MiningProcessorBase _minningProcessor = null;
+        ProgressBarHandler _minningProcessor = null;
 
         /// <summary>
         /// Gets the progress value. -1 stands for unknown

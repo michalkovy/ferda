@@ -142,6 +142,7 @@
     <Compile Include="Miners\MiningProcessorFunctionsI.cs" />
     <Compile Include="Miners\MiningSettingCollectionWithMiningThreads.cs" />
     <Compile Include="Miners\MinningProcessor.cs" />
+    <Compile Include="Miners\ProgressBarHandler.cs" />
     <Compile Include="Miners\ProgressTaskListener.cs" />
     <Compile Include="Miners\SDCFMiningProcessor.cs" />
     <Compile Include="Miners\SDFourFoldMiningProcessor.cs" />
