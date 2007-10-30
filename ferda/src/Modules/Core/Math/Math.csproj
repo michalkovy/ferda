@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Combinatorics.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DecisionTrees.cs" />
     <Compile Include="InformationTheory.cs" />
     <Compile Include="ContingencyTable.cs" />
     <Compile Include="Factorial.cs" />

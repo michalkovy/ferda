@@ -24,6 +24,8 @@ using System.Text;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.ModulesManager;
+using Ferda.Guha.MiningProcessor.DecisionTrees;
+using Ferda.Guha.MiningProcessor.Generation;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
@@ -67,12 +69,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Branching attributes (algorithm parameter)
         /// </summary>
-        private CategorialAttribute[] branchingAttributes;
+        private CategorialAttributeTrace[] branchingAttributes;
 
         /// <summary>
         /// Target classification attribute (algorithm parameter)
         /// </summary>
-        private CategorialAttribute targetClassificationAttribute;
+        private CategorialAttributeTrace targetClassificationAttribute;
 
         /// <summary>
         /// Quatifiers to evaluate the tree quality 
@@ -132,8 +134,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
             ProgressTaskListener progressListener,
             ProgressBarPrx progressBarPrx) : base(progressListener, progressBarPrx)
         {
-            this.branchingAttributes = branchingAttributes;
-            this.targetClassificationAttribute = targetClassificationAttribute;
+            //getting the attribute traces
+            this.branchingAttributes =
+                MiningProcessorBase.CreateCategorialAttributeTrace(MarkEnum.BranchingAttributes,
+                branchingAttributes, false);
+            this.targetClassificationAttribute =
+                MiningProcessorBase.CreateCategorialAttributeTrace(MarkEnum.TargetClassificationAttribute,
+                targetClassificationAttribute, false);
             this.quantifiers = quantifiers;
 
             //checking corectness of the input parameters
@@ -176,5 +183,65 @@ namespace Ferda.Guha.MiningProcessor.Miners
         }
 
         #endregion
+
+        /// <summary>
+        /// The main procedure for generating hypotheses
+        /// </summary>
+        public void Trace()
+        {
+            double relevantQuestionsCount = 0;
+            long noOfVerifications = 0;
+            long noOfHypotheses = 0;
+
+            //Counting number of relevant questions
+            //Setting the progres bar (if result is false, user stopped the task
+            if (!ProgressSetValue(-1, "Counting number of relevant questions"))
+            {
+                return;
+            }
+            relevantQuestionsCount = CountRelevantQuestions();
+
+
+        }
+
+        /// <summary>
+        /// <para>
+        /// Counts number of relevant questions for this task setting. The formula
+        /// can be upper approximated with variables <c>k</c>, <c>l</c> and <c>v</c> as
+        /// <c>k*PRODUCT(i=1 to l)(k^v)</c>.
+        /// </para>
+        /// <para>
+        /// where <c>k</c> stands for maximal number attributes for branching,
+        /// <c>l</c> stands for maximal tree depth and <c>v</c> for maximal 
+        /// number of categories from branching attributes.
+        /// </para>
+        /// </summary>
+        /// <returns>Number of relevant questions</returns>
+        private double CountRelevantQuestions()
+        {
+            int l;
+            if (branchingAttributes.Length < maximalTreeDepth)
+            {
+                l = branchingAttributes.Length;
+            }
+            else
+            {
+                l = maximalTreeDepth;
+            }
+
+            //getting the categorial attribute with most categories
+            int v = 1;
+            foreach (CategorialAttributeTrace atrTrace in branchingAttributes)
+            {
+                if (atrTrace.NoOfCategories > v)
+                {
+                    v = atrTrace.NoOfCategories;
+                }
+            }
+
+            double result =
+                Ferda.Guha.Math.DecisionTrees.CountRelevantQuestions(noAttributesForBranching, l, v);
+            return result;
+        }
     }
 }

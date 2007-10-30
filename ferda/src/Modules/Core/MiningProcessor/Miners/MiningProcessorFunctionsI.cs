@@ -427,6 +427,36 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 progressListener,
                 progressBarPrx);
 
+            try
+            {
+                miningProcessor.Trace();
+            }
+            catch (BoxRuntimeError)
+            {
+                if (miningProcessor != null)
+                    miningProcessor.ProgressSetValue(-1, "Generation failed");
+                else
+                    progressBarPrx.setValue(-1, "Generation failed");
+                //System.Threading.Thread.Sleep(1500);
+                throw;
+            }
+            catch (Exception e)
+            {
+                if (miningProcessor != null)
+                    miningProcessor.ProgressSetValue(-1, "Generation failed");
+                else
+                    progressBarPrx.setValue(-1, "Generation failed");
+                throw Modules.Exceptions.BoxRuntimeError(e, null, "An error ocured in mining processor: " + e.Message + "\n" + e.ToString());
+            }
+            finally
+            {
+                if ((progressBarPrx != null) && (_booleanTraceEnumerator == null))
+                {
+                    progressBarPrx.done();
+                    ProgressTaskI.Destroy(_current.adapter, progressPrx);
+                }
+            }
+
             resultInfo = string.Empty;
             return string.Empty;
         }

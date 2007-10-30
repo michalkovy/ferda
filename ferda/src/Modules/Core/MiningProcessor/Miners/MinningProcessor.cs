@@ -706,9 +706,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         /// <summary>
         /// Gets categorial attribute (represented by a bit string generator)
-        /// according to a task semantic
+        /// according to a socket semantic
         /// </summary>
-        /// <param name="semantic">Task semantic</param>
+        /// <param name="semantic">Semantic of the categorial attribute</param>
         /// <param name="categorialAttributes">Array of all categorial attributes
         /// connected to the task</param>
         /// <returns>Categorial attribute with desired semantics</returns>
@@ -728,6 +728,28 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return null;
             else
                 return result.ToArray();
+        }
+
+        /// <summary>
+        /// Converts categorial attribute to a bit string generator representing
+        /// that attribute
+        /// </summary>
+        /// <param name="semantic">Semantic of the categorial attribute</param>
+        /// <param name="attribute">The categorial attribute</param>
+        /// <returns>Bit string generator of that attribute</returns>
+        public static BitStringGeneratorPrx GetCategorialAttributeBySemantic(MarkEnum semantic,
+                                                                               CategorialAttribute attribute)
+        {
+            if (attribute == null)
+                return null;
+            if (attribute.mark == semantic)
+            {
+                return attribute.setting;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -782,6 +804,23 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                                                                 bool allowEmptyCategorialCedent,
                                                                                 MiningProcessorBase miningProcessorBase)
         {
+            CategorialAttributeTrace[] result =
+                CreateCategorialAttributeTrace(semantic, categorialAttributes, allowEmptyCategorialCedent);
+            miningProcessorBase.ComputeAllObjectsCount(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a categorial attribute trace of a given semantic.
+        /// </summary>
+        /// <param name="semantic">The semantic</param>
+        /// <param name="categorialAttributes">Array of categorial attributes</param>
+        /// <param name="allowEmptyCategorialCedent">If the miner allows empty categorial cedent</param>
+        /// <returns>Categorial attribute trace</returns>
+        public static CategorialAttributeTrace[] CreateCategorialAttributeTrace(MarkEnum semantic,
+                                                    CategorialAttribute[] categorialAttributes,
+                                                    bool allowEmptyCategorialCedent)
+        {
             BitStringGeneratorPrx[] setting = GetCategorialAttributeBySemantic(semantic, categorialAttributes);
             if (setting == null)
             {
@@ -803,9 +842,31 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     return null;
             }
 
-            CategorialAttributeTrace[] finalResult = result.ToArray();
-            miningProcessorBase.ComputeAllObjectsCount(finalResult);
-            return finalResult;
+            return result.ToArray();
+        }
+
+        /// <summary>
+        /// Creates a categorial attribute trace of a given semantic
+        /// </summary>
+        /// <param name="semantic">The semantic</param>
+        /// <param name="attribute">Categorial attributes</param>
+        /// <param name="allowEmptyCategorialCedent">If the miner allows empty categorial cedent</param>
+        /// <returns>Categorial attribute trace</returns>
+        public static CategorialAttributeTrace CreateCategorialAttributeTrace(MarkEnum semantic,
+                                                    CategorialAttribute attribute,
+                                                    bool allowEmptyCategorialCedent)
+        {
+            BitStringGeneratorPrx setting = GetCategorialAttributeBySemantic(semantic, attribute);
+
+            if (setting == null)
+            {
+                if (!allowEmptyCategorialCedent)
+                    throw Exceptions.EmptyCedentIsNotAllowedError(semantic);
+                else
+                    return null;
+            }
+
+            return new CategorialAttributeTrace(setting);
         }
 
         #endregion

@@ -75,6 +75,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// </summary>
         private readonly BitStringGeneratorPrx _generator;
 
+        /// <summary>
+        /// Number of categories of the categorial attribute
+        /// </summary>
+        private int _noOfCategories = -1;
+
         #endregion
 
         #region Properties
@@ -85,6 +90,21 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public CategorialAttributeFormula Identifier
         {
             get { return _identifier; }
+        }
+
+        /// <summary>
+        /// Number of categories of the categorial attribute
+        /// </summary>
+        public int NoOfCategories
+        {
+            get
+            {
+                if (_noOfCategories == -1)
+                {
+                    _noOfCategories = _generator.GetCategoriesIds().Length;
+                }
+                return _noOfCategories;
+            }
         }
 
         /// <summary>
@@ -149,7 +169,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 throw new ArgumentNullException("generator");
             _generator = generator;
             _identifier = new CategorialAttributeFormula(generator.GetAttributeId().value);
-            //_bitStrings = Helpers.GetBitStrings(generator, _identifier.AttributeGuid);
         }
     }
 }
