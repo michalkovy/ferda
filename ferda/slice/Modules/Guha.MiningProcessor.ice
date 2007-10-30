@@ -325,6 +325,7 @@ module Ferda {
 					     int minimalNodeFrequency,
 					     int maximalTreeDepth,
 					     int noAttributesForBranching,
+					     long maxNumberOfHypotheses,
 					     Ferda::ModulesManager::Output* output,
 					     out string resultInfo
                               )
