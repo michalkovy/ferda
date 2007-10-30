@@ -103,11 +103,27 @@ namespace Ferda.Guha.MiningProcessor.Design
         /// decision trees</param>
         /// <param name="targetClassificationAttribute">Attribute used for 
         /// target classification</param>
-        /// <param name="minimalNodeImpurity">Minimal node impurity</param>
-        /// <param name="minimalNodeFrequency">Minimal node frequency</param>
-        /// <param name="maximalTreeDepth">Maximal tree depth</param>
-        /// <param name="noBranchingCategories">
-        /// Number of attributes used for branching when prolonging the tree
+        /// <param name="minimalNodeImpurity">
+        /// Minimal node impurity (algorithm parameter). Minimal node impurity is
+        /// a condition for stopping growth of a tree. When sufficient amount 
+        /// (determined by this parameter) of cases (items) belongs to one classification
+        /// class in one node, the three is returned in output and stops growing. 
+        /// </param>
+        /// <param name="minimalNodeFrequency">
+        /// Minimal node frequency (algorithm parameter). Minimal node frequency is
+        /// a condition for stopping growth of a tree. When a node does not contain
+        /// minimal number of items (determined by this parameter), the three is returned
+        /// in output and stops growing. 
+        /// </param>
+        /// <param name="maximalTreeDepth">
+        /// Maximal tree depth (algorithm parameter). The total depth of the tree
+        /// cannot exceed this value.
+        /// </param>
+        /// <param name="noAttributesForBranching">
+        /// Number of attributes for branching (algorithm parameter). When determining
+        /// the most suitable for tree branching, the remaining attributes are sorted
+        /// by a criterion (here, chi squared) and the best N(determined by this 
+        /// parameter) are used for branching.
         /// </param>
         /// <param name="output">Where the progress of the task should be written</param>
         /// <param name="resultInfo">Information about the task run are stored

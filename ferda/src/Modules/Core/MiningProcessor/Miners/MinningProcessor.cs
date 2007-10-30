@@ -58,7 +58,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
     /// Base abstract class providing functionality for all GUHA procedures
     /// (in Ferda terminology mining processors).
     /// </summary>
-    public abstract class MiningProcessorBase : IComputeAllObjectsCount, ISkipOptimalization
+    public abstract class MiningProcessorBase : ProgressBarHandler, IComputeAllObjectsCount, ISkipOptimalization
     {
         #region Abstract members
 
@@ -587,95 +587,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         #endregion
 
-        #region Progress
-
-        /// <summary>
-        /// Progress task (a task that has its progress and can be displayed
-        /// in the progress bar).
-        /// </summary>
-        private readonly ProgressTaskListener _progressListener;
-        /// <summary>
-        /// Proxy to a progress bar.
-        /// </summary>
-        private readonly ProgressBarPrx _progressBarPrx;
-
-        /// <summary>
-        /// The progress value (indicating how far is the computation).
-        /// -1 indicates unknown value, otherwise the value is a float
-        /// from 0 to 1.
-        /// </summary>
-        private float _progressValue = -1;
-        /// <summary>
-        /// The progress message shown to the user
-        /// </summary>
-        private string _progressMessage = "Loading ...";
-        /// <summary>
-        /// Ticks (precise time) of the last update of the 
-        /// progress bar
-        /// </summary>
-        private long _progressLastUpdateTicks = DateTime.Now.Ticks;
-        /// <summary>
-        /// Minimum change in number of ticks for the miner to publish its
-        /// progress. 
-        /// </summary>
-        private const long _progressMinCountOfTicksToPublish = 500000;
-        // ticks:
-        // 1 tick = 100-nanosecond 
-        // nano is 0.000 000 001
-        // mili is 0.001
-        // 0.05 sec is ticks * 500 000
-
-        /// <summary>
-        /// Gets the value of progress of the task.
-        /// -1 indicates unknown value, otherwise the value is a float
-        /// from 0 to 1
-        /// </summary>
-        /// <param name="message">In this parameter, the message to the user
-        /// is stored</param>
-        /// <returns>The progress value</returns>
-        public float ProgressGetValue(out string message)
-        {
-            message = _progressMessage;
-            return _progressValue;
-        }
-
-        /// <summary>
-        /// Sets the progress value to a progress bar proxy. 
-        /// -1 indicates unknown value, otherwise the value is a float
-        /// from 0 to 1.
-        /// </summary>
-        /// <param name="value">Value to be set.</param>
-        /// <param name="message">Message to be set</param>
-        /// <returns>If false, the task was stopped by the user</returns>
-        public bool ProgressSetValue(float value, string message)
-        {
-            if ((_progressBarPrx != null) && (_progressListener != null))
-            {
-                _progressValue = value;
-                _progressMessage = message;
-
-                long actTicks = DateTime.Now.Ticks;
-                if (System.Math.Abs(_progressLastUpdateTicks - actTicks) > _progressMinCountOfTicksToPublish)
-                {
-                    _progressLastUpdateTicks = actTicks;
-                    try
-                    {
-                        _progressBarPrx.setValue(value, message);
-                    }
-                    catch (Ice.ObjectNotExistException)
-                    {
-                        // because one thread can destroy progress bar this exception is possible
-                    }
-                }
-
-                if (_progressListener.Stopped)
-                    return false;
-            }
-            return true;
-        }
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
@@ -697,14 +608,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
             TaskRunParams taskParams,
             ProgressTaskListener progressListener,
             ProgressBarPrx progressBarPrx
-            )
+            ) : base(progressListener, progressBarPrx)
         {
-            _progressListener = progressListener;
-
-            if (_progressListener != null)
-                _progressListener.MinningProcessor = this;
-
-            _progressBarPrx = progressBarPrx;
             _taskParams = taskParams;
             _booleanAttributes = booleanAttributes;
             _categorialAttributes = categorialAttributes;

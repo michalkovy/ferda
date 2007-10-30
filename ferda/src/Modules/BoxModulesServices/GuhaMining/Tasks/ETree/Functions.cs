@@ -137,7 +137,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <summary>
         /// Name of the socket defining number of branching categories
         /// </summary>
-        public const string SockNoAttributesForBranching = "NoBranchingCategories";
+        public const string SockNoAttributesForBranching = "NoAttributesForBranching";
 
         #region MiningTaskFunctions overrides
 
