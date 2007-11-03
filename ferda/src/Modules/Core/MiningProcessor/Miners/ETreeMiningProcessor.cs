@@ -27,6 +27,7 @@ using Ferda.ModulesManager;
 using Ferda.Guha.MiningProcessor.DecisionTrees;
 using Ferda.Guha.MiningProcessor.Generation;
 using Ferda.Guha.MiningProcessor.Formulas;
+using Ferda.Guha.MiningProcessor.BitStrings;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
@@ -286,28 +287,33 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return fifo;
             }
 
-            //Remaining rules apply only to non-seed trees
-            if (processTree.RootNode != null)
+            if (processTree.RootNode == null)
             {
-                //2. rule for further branching - if the tree contains node that
-                //fulfills the minimal node impurity criterion (there exists a category
-                //where number of items for that category is larger than given parameter)
-                //then do no further branching of the tree
-                if (processTree.HasMinimalImpurity(minimalNodeImpurity))
-                {
-                    return fifo;
-                }
+                //tady bude samostatna procedura
 
-                //3. rule for further branching - if the tree does not contain nodes
-                //that fulfill minimal node frequency criterion (number of items in 
-                //their nodes is smaller that the MinimalNodeFrequency parameter,
-                //then do no further branching of the tree
-                if (!processTree.ContainsMoreThanMinimalFrequencyNodes(
-                    minimalNodeFrequency, out nodesForBranching))
-                {
-                    return fifo;
-                }
+                return fifo;
             }
+
+            //2. rule for further branching - if the tree contains node that
+            //fulfills the minimal node impurity criterion (there exists a category
+            //where number of items for that category is larger than given parameter)
+            //then do no further branching of the tree
+            if (processTree.HasMinimalImpurity(minimalNodeImpurity))
+            {
+                return fifo;
+            }
+
+            //3. rule for further branching - if the tree does not contain nodes
+            //that fulfill minimal node frequency criterion (number of items in 
+            //their nodes is smaller that the MinimalNodeFrequency parameter,
+            //then do no further branching of the tree
+            if (!processTree.ContainsMoreThanMinimalFrequencyNodes(
+                minimalNodeFrequency, out nodesForBranching))
+            {
+                return fifo;
+            }
+
+            //tady se tvori atributy z nodes for branching
 
             return fifo;
         }

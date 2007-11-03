@@ -159,6 +159,18 @@ namespace Ferda.Guha.MiningProcessor.Generation
         #endregion
 
         /// <summary>
+        /// Retrieves the bit string for a category determined by an identifier
+        /// in the parameter. Uses the bit string cache.
+        /// </summary>
+        /// <param name="categoryId">Identification of the category</param>
+        /// <returns>Bit string of the category</returns>
+        public IBitString CategoryBitString(string categoryId)
+        {
+            IBitStringCache cache = BitStringCache.GetInstance(_generator);
+            return cache[Identifier.AttributeGuid, categoryId];
+        }
+
+        /// <summary>
         /// Default constructor of the class
         /// </summary>
         /// <param name="generator">The bit string generator of this

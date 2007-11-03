@@ -1,9 +1,9 @@
-// FalseBitString.cs - Singleton false empty bit string
+// TrueBitString.cs - Singleton true bit string
 //
-// Author: TomÃ¡Å¡ KuchaÅ™ <tomas.kuchar@gmail.com>
-// Commented by: Martin RalbovskÃ½ <martin.ralbovsky@gmail.com>
+// Author:  Tomáš Kuchaø <tomas.kuchar@gmail.com>,
+//          Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2006 TomÃ¡Å¡ KuchaÅ™
+// Copyright (c) 2007 Tomáš Kuchaø, Martin Ralbovský
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,18 +25,18 @@ using Ferda.Guha.MiningProcessor.Formulas;
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
     /// <summary>
-    /// Singleton class that represents a false bit string - bit string that
-    /// is zero for any length. For performance
-    /// reasons, we chose to have only one false bit string.
+    /// Singleton class that represents a true bit string - bit string that
+    /// is 1 for any length. For performance
+    /// reasons, we chose to have only one true bit string.
     /// </summary>
-    public class FalseBitString : IEmptyBitString
+    public class TrueBitString : IEmptyBitString
     {
         #region Singleton
 
         /// <summary>
         /// The singleton (one) object that can be created
         /// </summary>
-        private static readonly FalseBitString _instance = new FalseBitString();
+        private static readonly TrueBitString _instance = new TrueBitString();
 
         /// <summary>
         /// Object used for thread-safe access to the bit string cache
@@ -47,15 +47,15 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Explicit static constructor to tell C# compiler
         /// not to mark type as beforefieldinit
         /// </summary>
-        static FalseBitString()
+        static TrueBitString()
         {
         }
 
         /// <summary>
-        /// Gets the (singleton) instance of the false bit string. 
+        /// Gets the (singleton) instance of the true bit string. 
         /// </summary>
-        /// <returns>Instance of the false bit string</returns>
-        public static FalseBitString GetInstance()
+        /// <returns>Instance of the true bit string</returns>
+        public static TrueBitString GetInstance()
         {
             lock (padlock)
             {
@@ -66,15 +66,16 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         #endregion
 
         /// <summary>
-        /// The false bit string identifier
+        /// The true bit string identifier
         /// </summary>
-        public static readonly BitStringIdentifier FalseBitStringIdentifier =
-            new BitStringIdentifier(null, "False BitString");
+        public static readonly BitStringIdentifier TrueBitStringIdentifier =
+            new BitStringIdentifier(null, "True BitString");
 
         /// <summary>
         /// Boolean attribute formula for the false bit string
         /// </summary>
-        public static readonly BooleanAttributeFormula FalseBitStringId = new AtomFormula(FalseBitStringIdentifier);
+        public static readonly BooleanAttributeFormula TrueBitStringId =
+            new AtomFormula(TrueBitStringIdentifier);
 
         #region IBitString Members
 
@@ -85,7 +86,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         public BooleanAttributeFormula Identifier
         {
-            get { return FalseBitStringId; }
+            get
+            {
+                return TrueBitStringId;
+            }
         }
 
         /// <summary>
@@ -94,50 +98,17 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <param name="source">The second BitString operand.</param>
         public IBitString And(IBitString source)
         {
-            return this;
+            return source;
         }
 
         /// <summary>
-        /// Performs the bitwise AND operation on
-        /// copy of current BitString against the specified BitString.
-        /// </summary>
-        /// <param name="source">The second BitString operand.</param>
-        public IBitString AndCloned(IBitString source)
-        {
-            return this;
-        }
-
-        /// <summary>
-        /// Performs a NOT operation on the false bit string (result is
-        /// again an empty bit string.
+        /// Performs a NOT operation on the true bit string. This should not
+        /// happen.
         /// </summary>
         /// <returns>Result of NOT operation</returns>
         public IBitString Not()
         {
             throw new NotSupportedException("Negation of false bit string is not supported.");
-        }
-
-        ///// <summary>
-        ///// Performs the bitwise NOT on copy of current BitString.
-        ///// </summary>
-        public IBitString NotCloned()
-        {
-            throw new NotSupportedException("Negation of false bit string is not supported.");
-        }
-
-        /// <summary>
-        /// Special OR operation for handling empty and false bit strings
-        /// </summary>
-        /// <param name="source">Source bit string</param>
-        /// <returns>Result of special OR operation</returns>
-        public IBitString orSpecial(IBitString source)
-        {
-            if (source is EmptyBitString)
-                return source;
-            else if (source is FalseBitString)
-                return this;
-            else
-                throw new NotImplementedException();
         }
 
         /// <summary>
@@ -146,17 +117,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <param name="source">The second BitString operand.</param>
         public IBitString Or(IBitString source)
         {
-            return source;
+            return this;
         }
-
-        //public IBitString OrCloned(IBitString source)
-        //{
-        //    BitString bs = source as BitString;
-        //    if (bs != null)
-        //        return bs.OrCloned(this);
-        //    else
-        //        return orSpecial(source, false);
-        //}
 
         /// <summary>
         /// Performs the bitwise SUM operation on current BitString.
@@ -165,7 +127,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         public int Sum
         {
             get { return 0; }
-			set {}
+            set { }
         }
 
         #endregion
