@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ferda.Guha.MiningProcessor.Generation;
+using Ferda.Guha.MiningProcessor.BitStrings;
 
 namespace Ferda.Guha.MiningProcessor.DecisionTrees
 {
@@ -39,7 +40,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// the node is not a leaf, for each category there is an attached node that
         /// represents further branching of the tree.
         /// </summary>
-        private bool leaf;
+        private bool leaf = true;
 
         /// <summary>
         /// The node represents a division by an attribute. This property determines
@@ -68,6 +69,13 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// </summary>
         private long frequency;
 
+        /// <summary>
+        /// The base bit string of the current node. The 1's in the bit string represent items
+        /// from the data table, that are true for this node. The 0's are items
+        /// true for some other nodes of the tree.
+        /// </summary>
+        private IBitString baseBitString = new FalseBitString();
+
         #endregion
 
         #region Properties
@@ -82,7 +90,6 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         public bool Leaf
         {
             get { return leaf; }
-            set { leaf = value; }
         }
 
         /// <summary>
@@ -217,7 +224,50 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// impurity criterion</returns>
         public bool HasMinimalImpurity(int minimalImpurity)
         {
-            return true;
+            if (!Leaf)
+            {
+                foreach (Node node in SubNodes.Values)
+                {
+                    //it is sufficient that only one of all the nodes has minimal 
+                    //impurity
+                    if (node.HasMinimalImpurity(minimalImpurity))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            else
+            {
+                foreach (string category in SubCategories.Values)
+                {
+                    if (CategoryBitString(category).Sum > minimalImpurity)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets a bit string of one category. This string is created
+        /// by ANDing the base bit string of the node and bit string of the
+        /// category from the bit string generator.
+        /// </summary>
+        /// <param name="category">Category</param>
+        /// <returns></returns>
+        public IBitString CategoryBitString(string category)
+        {
+            if (!Leaf)
+            {
+                throw Exceptions.WrongNodeTypeException();
+            }
+
+            IBitString categoryOnlyBitString = attribute.CategoryBitString(category);
+            return baseBitString.And(categoryOnlyBitString);
         }
 
         #endregion

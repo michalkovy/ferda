@@ -113,6 +113,7 @@
     <None Include="Design\CategorialAttribute.cs" />
     <None Include="Design\MiningProcessorFunctions.cs" />
     <None Include="Design\EquivalenceClassFunctions.cs" />
+    <Compile Include="BitStrings\TrueBitString.cs" />
     <Compile Include="DecisionTrees\Node.cs" />
     <Compile Include="DecisionTrees\Tree.cs" />
     <Compile Include="Exceptions.cs" />
