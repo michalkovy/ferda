@@ -1,9 +1,9 @@
 // Exceptions.cs - Defines exceptions for the MiningProcessor
 //
-// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
-// Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+// Authors: Tomáš Kuchaø, Martin Ralbovský <tomas.kuchar@gmail.com> 
+//          <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2006 Tomáš Kuchaø
+// Copyright (c) 2006 Tomáš Kuchaø, Martin Ralbovský
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -90,6 +90,19 @@ namespace Ferda.Guha.MiningProcessor
         {
             BoxRuntimeError result = new BoxRuntimeError();
             result.userMessage = "Parameter " + algorithmParameter + "should be always greater than zero.";
+            return result;
+        }
+
+        /// <summary>
+        /// Returns an error saying that the ETree node is treated differently that it should
+        /// be. This can occur when i.e. code asks for the subNodes, but the node is a leaf
+        /// (or vice versa). More details in <see cref="Ferda.Guha.MiningProcessor.DecisionTrees.Node"/>
+        /// </summary>
+        /// <returns>Exception</returns>
+        public static BoxRuntimeError WrongNodeTypeException()
+        {
+            BoxRuntimeError result = new BoxRuntimeError();
+            result.userMessage = "The GUHA tree node is not treated according to its position in the tree (leaf vs. inner node).";
             return result;
         }
     }

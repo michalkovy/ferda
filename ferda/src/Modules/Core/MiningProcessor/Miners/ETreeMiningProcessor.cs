@@ -26,6 +26,7 @@ using Ferda.Guha.Math.Quantifiers;
 using Ferda.ModulesManager;
 using Ferda.Guha.MiningProcessor.DecisionTrees;
 using Ferda.Guha.MiningProcessor.Generation;
+using Ferda.Guha.MiningProcessor.Formulas;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
@@ -260,7 +261,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>
         /// <param name="processTree">The examined tree</param>
         /// <returns>If the tree souhld be put to output</returns>
-        private bool QualityTree(Tree processTree)
+        private static bool QualityTree(Tree processTree)
         {
             return true;
         }
@@ -276,17 +277,54 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <returns>The queue where new trees were added.</returns>
         private Queue<Tree> Process(Tree processTree, Queue<Tree> fifo)
         {
-            return new Queue<Tree>();
+            List<Node> nodesForBranching;
+
+            //1. rule for further branching - if the three is already of the 
+            //maximal length, do no further branching of the tree
+            if (processTree.Depth == maximalTreeDepth)
+            {
+                return fifo;
+            }
+
+            //Remaining rules apply only to non-seed trees
+            if (processTree.RootNode != null)
+            {
+                //2. rule for further branching - if the tree contains node that
+                //fulfills the minimal node impurity criterion (there exists a category
+                //where number of items for that category is larger than given parameter)
+                //then do no further branching of the tree
+                if (processTree.HasMinimalImpurity(minimalNodeImpurity))
+                {
+                    return fifo;
+                }
+
+                //3. rule for further branching - if the tree does not contain nodes
+                //that fulfill minimal node frequency criterion (number of items in 
+                //their nodes is smaller that the MinimalNodeFrequency parameter,
+                //then do no further branching of the tree
+                if (!processTree.ContainsMoreThanMinimalFrequencyNodes(
+                    minimalNodeFrequency, out nodesForBranching))
+                {
+                    return fifo;
+                }
+            }
+
+            return fifo;
         }
 
         /// <summary>
         /// Makes a seed tree (a tree without any node, but with
         /// full attributes), a starting point of the algorithm
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Tree representing a seed</returns>
         private Tree MakeSeed()
         {
-            return new Tree();
+            Tree seed = new Tree();
+
+            //filling all attributes to the unused attributes
+            seed.UnusedAttributes = branchingAttributes;
+
+            return seed;
         }
 
         /// <summary>
