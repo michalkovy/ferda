@@ -58,5 +58,50 @@ namespace Ferda.Guha.Math
 
             return result;
         }
+
+        /// <summary>
+        /// Counts the chi-squared statictics for given parameters. The formula for
+        /// chi-squared statiscics is
+        /// <c>SUM(i=0..r.Length-1)SUM(j=0..s.Length-1)[a_{i,j}-(r_{i}*s_{j}/n)^2]/r_{i}*s_{j}/n</c>
+        /// </summary>
+        /// <param name="r">The <c>r_{i}</c> array corresponding to numbers of items of
+        /// individual categories of the attribute.</param>
+        /// <param name="s">The <c>s_{i}</c> array corresponding to numbers of items
+        /// of classification categories.</param>
+        /// <param name="a">The <c>a_{i,j}</c> array. Item on indes <c>(i,j)</c> is the
+        /// number of items that are present in given node (determined by the
+        /// base bit string) for classification category <c>j</c> and attribute
+        /// category <c>i</c></param>
+        /// <returns>Chi squared value for given parameters</returns>
+        public static double ChiSquared(int[] r, int[] s, int[,] a)
+        {
+            double result = 0;
+
+            //counting n
+            int n=0;
+            for (int i = 0; i < r.Length; i++)
+            {
+                n+= r[i];
+            }
+
+            int temp=0;
+            for (int j = 0; j < s.Length; j++)
+            {
+                temp+= s[j];            
+            }
+
+
+            for (int i = 0; i < r.Length; i++)
+            {
+                for (int j = 0; j < s.Length; j++)
+                {
+                    double step = System.Math.Pow((a[i, j] - (double)r[i] * s[j] / n), 2) 
+                        / ((double)r[i] * s[j] / n);
+                    result += step;
+                }
+            }
+
+            return result;
+        }
     }
 }
