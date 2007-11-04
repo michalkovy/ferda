@@ -371,6 +371,110 @@ namespace Ferda.Guha.MiningProcessor.Miners
             return Ferda.Guha.Math.DecisionTrees.CountRelevantQuestions(noAttributesForBranching, l, v);
         }
 
+        /// <summary>
+        /// Select the best attributes for branching depending on the number of 
+        /// attributes that can be used for branching (
+        /// <see cref="Ferda.Guha.MiningProcessor.noAttributesForBranching"/>),
+        /// possible attributes for branching and base bit string from the node
+        /// that is beeing branched.
+        /// </summary>
+        /// <param name="possibleAttributes">Array of possible attributes for branching</param>
+        /// <param name="baseBitString">
+        /// The base bit string of the node that is being branched. The 1's in 
+        /// the bit string represent items
+        /// from the data table, that are true for this node. The 0's are items
+        /// true for some other nodes of the tree.
+        /// </param>
+        /// <returns>Attributes for branching</returns>
+        private CategorialAttributeTrace[] SelectAttributesForBranching(
+            CategorialAttributeTrace[] possibleAttributes,
+            IBitString baseBitString)
+        {
+            //simple but effective optimizing
+            if (noAttributesForBranching >= possibleAttributes.Length)
+            {
+                return possibleAttributes;
+            }
+
+            //The r_{i} array
+            int[] r;
+            //The s_{j} array and array of (classificationAttribute AND baseBitString)
+            //bit strings
+            int[] s;
+            IBitString[] sBitStrings;
+            //The a_{i,j} array
+            int[,] a;
+
+            foreach (CategorialAttributeTrace attribute in possibleAttributes)
+            {
+                //computing the s_{j} array
+                s = new int[targetClassificationAttribute.NoOfCategories];
+                sBitStrings = new IBitString[targetClassificationAttribute.NoOfCategories];
+                for (int i = 0; i < s.Length; i++)
+                {
+                    sBitStrings[i] = 
+                        targetClassificationAttribute.BitStrings[i].And(baseBitString);
+                    s[i] = sBitStrings[i].Sum;
+                }
+
+                FillChiSqData(attribute, sBitStrings, baseBitString, out r, out a);
+                double chiSq = Math.DecisionTrees.ChiSquared(r, s, a);
+            }
+
+            CategorialAttributeTrace[] result = new CategorialAttributeTrace[noAttributesForBranching];
+            return result;
+        }
+
+        /// <summary>
+        /// Fills data structures needed for computation of chi-squared criterion
+        /// of the attribute in parameter and classification attribute on the base
+        /// bit string defined by parameter.
+        /// The data are three integer arrays and are returned in parameters.
+        /// </summary>
+        /// <param name="attribute">Attribute for which the data are filled</param>
+        /// <param name="classificationBitStrings">
+        /// The bit strings of classification
+        /// attribute. The are created as AND of the base bit string for the 
+        /// examined node and the bit strings of classification attribute.
+        /// They are passed as a parameter because of optimizing their computation.
+        /// </param>
+        /// <param name="baseBitString">
+        /// We need the base bit string of the considered node, because otherwise the
+        /// sum of r's and sum of s's would not fit. The bit strings of 
+        /// <paramref name="attribute"/>need to be reduced by the base bit string of the
+        /// node.
+        /// </param>
+        /// <param name="r">The <c>r_{i}</c> array corresponding to numbers of items of
+        /// individual categories of the attribute.</param>
+        /// <param name="a">The <c>a_{i,j}</c> array. Item on indes <c>(i,j)</c> is the
+        /// number of items that are present in given node (determined by the
+        /// base bit string) for classification category <c>j</c> and attribute
+        /// category <c>i</c></param>
+        private void FillChiSqData(CategorialAttributeTrace attribute,
+            IBitString[] classificationBitStrings,
+            IBitString baseBitString,
+            out int[] r,
+            out int[,] a)
+        {
+            r = new int[attribute.NoOfCategories];
+            a = new int[attribute.NoOfCategories, classificationBitStrings.Length];
+
+            for (int i = 0; i < r.Length; i++)
+            {
+                IBitString reducedAttrBS =
+                    attribute.BitStrings[i].And(baseBitString);
+                r[i] = reducedAttrBS.Sum;
+            }
+
+            for (int i = 0; i < r.Length; i++)
+            {
+                for (int j = 0; j < classificationBitStrings.Length; j++)
+                {
+                    a[i, j] = attribute.BitStrings[i].And(classificationBitStrings[j]).Sum;
+                }
+            }
+        }
+
         #endregion
     }
 }
