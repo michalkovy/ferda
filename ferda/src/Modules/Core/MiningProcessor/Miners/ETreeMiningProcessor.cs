@@ -93,6 +93,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>
         private QuantifierBaseFunctionsPrx[] quantifiers;
 
+        /// <summary>
+        /// Count of all objects in the data matrix
+        /// </summary>
+        protected long allObjectsCount = -1;
+
         #endregion
 
         #region Constructor
@@ -213,6 +218,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return;
             }
             relevantQuestionsCount = CountRelevantQuestions();
+            ComputeAllObjectsCount();
 
 
             //Intializing a new FIFO queue and planting a seed tree (no attribute tree)
@@ -324,6 +330,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
             return fifo;
         }
 
+        /// <summary>
+        /// Makes new trees out of the seed tree. 
+        /// </summary>
+        /// <param name="attributes">The best attributes (judging by chi-squared kriterion)
+        /// for construction of trees.
+        /// </param>
+        /// <returns>Processed queue of decision trees</returns>
         private Queue<Tree> AddAttributesFromSeed(CategorialAttributeTrace[] attributes)
         {
             Queue<Tree> fifo = new Queue<Tree>();
@@ -336,9 +349,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 n = new Node(true);
                 n.Attribute = attribute;
                 n.BaseBitString = TrueBitString.GetInstance();
-                //n.Frequency = attribute.
-                //n.SubCategories = 
+                n.Frequency = allObjectsCount;
+                n.SubCategories = attribute.CategoriesIds;
 
+                //construction of the tree
                 t = new Tree();
                 t.Depth = 1;
                 t.RootNode = n;
@@ -475,7 +489,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
             values.Sort();
             for (int i = 0; i < noAttributesForBranching; i++)
             {
-                result[i] = dict[values[i]];
+                //adding in reverse order
+                result[i] = dict[values[values.Count - 1 - i]];
             }
 
             return result;
@@ -528,6 +543,21 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 {
                     a[i, j] = attribute.BitStrings[i].And(classificationBitStrings[j]).Sum;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Computes the count of all objects in the data matrix
+        /// </summary>
+        private void ComputeAllObjectsCount()
+        {
+            if (allObjectsCount > 0)
+                return;
+
+            foreach (IBitString s in targetClassificationAttribute.BitStrings)
+            {
+                allObjectsCount = s.Length;
+                return;
             }
         }
 
