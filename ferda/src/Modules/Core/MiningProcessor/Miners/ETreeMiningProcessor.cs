@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.ModulesManager;
@@ -213,6 +214,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
             relevantQuestionsCount = CountRelevantQuestions();
 
+
             //Intializing a new FIFO queue and planting a seed tree (no attribute tree)
             //inside;
             Queue<Tree> fifo = new Queue<Tree>();
@@ -289,9 +291,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             if (processTree.RootNode == null)
             {
-                //tady bude samostatna procedura
+                CategorialAttributeTrace[] branching =
+                    SelectAttributesForBranching(branchingAttributes, TrueBitString.GetInstance());
+                
+                //at this point, the fifo should always be empty.
+                Debug.Assert(fifo.Count > 0);
 
-                return fifo;
+                return AddAttributesFromSeed(branching);
             }
 
             //2. rule for further branching - if the tree contains node that
@@ -314,6 +320,37 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             //tady se tvori atributy z nodes for branching
+
+            return fifo;
+        }
+
+        private Queue<Tree> AddAttributesFromSeed(CategorialAttributeTrace[] attributes)
+        {
+            Queue<Tree> fifo = new Queue<Tree>();
+            Tree t;
+            Node n;
+            
+            foreach (CategorialAttributeTrace attribute in attributes)
+            {
+                //constructing a node
+                n = new Node(true);
+                n.Attribute = attribute;
+                n.BaseBitString = TrueBitString.GetInstance();
+                //n.Frequency = attribute.
+                //n.SubCategories = 
+
+                t = new Tree();
+                t.Depth = 1;
+                t.RootNode = n;
+                t.UsedAttributes = new CategorialAttributeTrace[] { attribute };
+
+                //setting the unused attributes
+                List<CategorialAttributeTrace> unused = new List<CategorialAttributeTrace>(branchingAttributes);
+                unused.Remove(attribute);
+                t.UnusedAttributes = unused.ToArray();
+
+                fifo.Enqueue(t);
+            }
 
             return fifo;
         }
@@ -404,6 +441,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IBitString[] sBitStrings;
             //The a_{i,j} array
             int[,] a;
+            double chiSq;
+
+            Dictionary<double, CategorialAttributeTrace> dict = 
+                new Dictionary<double,CategorialAttributeTrace>();
+            List<double> values = new List<double>();
 
             foreach (CategorialAttributeTrace attribute in possibleAttributes)
             {
@@ -418,10 +460,24 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
 
                 FillChiSqData(attribute, sBitStrings, baseBitString, out r, out a);
-                double chiSq = Math.DecisionTrees.ChiSquared(r, s, a);
+                chiSq = Math.DecisionTrees.ChiSquared(r, s, a);
+
+                dict.Add(chiSq, attribute);
+                values.Add(chiSq);
             }
 
             CategorialAttributeTrace[] result = new CategorialAttributeTrace[noAttributesForBranching];
+
+            //v tomto navrhu se prilis neresi pripad, kdy chi-kvadrat pro dva ruzne atributy vyjde
+            //uplne presne stejne. Myslim ze aby se to stalo, tak by museli byt ty 2 atributy uple
+            //presne stejne, coz v databazi trosicku nedava smysl. Pro atributy, ktere jsou aspon
+            //trosicku jine to vyjde nepatrne jinak (je tam deleni a zaokrouhlovani)
+            values.Sort();
+            for (int i = 0; i < noAttributesForBranching; i++)
+            {
+                result[i] = dict[values[i]];
+            }
+
             return result;
         }
 

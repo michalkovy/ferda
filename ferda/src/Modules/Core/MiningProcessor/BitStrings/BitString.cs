@@ -306,6 +306,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
                 return source;
             }
+            else if (source is TrueBitString)
+            {
+                return new BitString(this);
+            }
             else
                 throw new NotImplementedException();
         }
@@ -393,6 +397,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             else if (source is FalseBitString)
             {
                 return new BitString(this);
+            }
+            else if (source is TrueBitString)
+            {
+                return source;
             }
             else
                 throw new NotImplementedException();
