@@ -13,8 +13,6 @@ import Ferda.OntologyRelated.generated.OntologyData.WrongOntologyURL;
 import Ice.Current;
 import Ferda.OntologyRelated.generated.*;
 
-
-
 import org.semanticweb.owl.apibinding.OWLManager;
 import org.semanticweb.owl.model.OWLAnnotation;
 import org.semanticweb.owl.model.OWLClass;
@@ -23,18 +21,13 @@ import org.semanticweb.owl.model.OWLDataPropertyExpression;
 import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLOntology;
-import org.semanticweb.owl.model.OWLOntologyCreationException;
-import org.semanticweb.owl.model.OWLOntologyManager;
-
 
 public class OWLParserI extends _OWLParserDisp{
 	
 	public static final int DEFAULT_ARRAY_SIZE = 5;
 	
-	@Override
 	public OntologyStructure parseOntology(String ontologyURL, Current __current)
 			throws WrongOntologyURL {
-		
 		
 		OntologyStructure FerdaOntology = new OntologyStructure();
 		java.util.Map<java.lang.String, OntologyClass> FerdaOntologyClassMap = 
@@ -42,12 +35,14 @@ public class OWLParserI extends _OWLParserDisp{
 		FerdaOntology.OntologyClassMap = FerdaOntologyClassMap; 
 		
 		try {
-			//loading of an ontology
-			URI physicalURI = URI.create(ontologyURL);
-			OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-			OWLOntology ontology = manager.loadOntologyFromPhysicalURI(physicalURI);
-			// TODO - throw WrongOntologyURL
+			//loading ontology
 			
+			URI physicalURI = URI.create(ontologyURL);
+			
+			OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromPhysicalURI(physicalURI);
+			
+			// TODO - throw WrongOntologyURL
+						
 			//loading of particular classes from the ontology
 			for(OWLClass cls : ontology.getReferencedClasses()) {
 				
@@ -89,7 +84,6 @@ public class OWLParserI extends _OWLParserDisp{
 				
 				FerdaOntology.OntologyClassMap.put(cls.toString(), newFerdaClass);
 			}
-			
 			//assigning of data properties to particular classes - 
 			//in this context, classes acts as an individuals and 
 			//it's needed to assign right values (data properties) to classes in according to name 
@@ -116,7 +110,7 @@ public class OWLParserI extends _OWLParserDisp{
 				}
 			}
 			
-			int j = 0;	//artificial variable used for positioning od ObjectProperty into an array
+			int j = 0;	//artificial variable used for positioning of ObjectProperty into an array
 			ObjectProperty[] ArrayFerdaObjectProperty = new ObjectProperty[DEFAULT_ARRAY_SIZE];
 			for(org.semanticweb.owl.model.OWLObjectProperty op : ontology.getReferencedObjectProperties()) {
 				String[] annotations = new String[DEFAULT_ARRAY_SIZE];
@@ -169,7 +163,8 @@ public class OWLParserI extends _OWLParserDisp{
 			}
 		
 		}
-		catch (OWLOntologyCreationException e) {
+		//catch (OWLOntologyCreationException e) {
+		catch (Exception e) {
 			System.out.println("The ontology could not be created: " + e.getMessage());
 		}
 		

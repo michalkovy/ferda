@@ -144,52 +144,25 @@
 			<parameter name="index"/>
 			<parameter name="endpoints" default="tcp:udp"/>
 			<parameter name="pwd" default="${application.distrib}"/>
-			<icebox id="${index}" exe="java" activation="on-demand" pwd="D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\bin\Server\OWLParser">
-			
-			  <!--
-        <service name="FerdaOntologyRelated" entry="Ferda.OntologyRelated.Service">
-          <adapter name="FerdaOntologyRelatedReplicaAdapter" register-process="true" endpoints="${endpoints}">
-            
-          </adapter>
-          <property name="Identity" value="Ferda.OntologyRelated.OWLParser"/>
-        </service>
-        -->
+			<icebox id="${index}" exe="java" activation="on-demand" pwd="${pwd}">
+			  <option>-classpath</option>			  
+			  <option>C:\Ice-3.2.1\lib\ice.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-api.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-apibinding.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\bin\Server\OWLParser;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-oboparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-krssparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-functionalparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-owlxmlparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-rdfxmlparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-impl.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-rdfxmlrenderer.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-owlxmlrenderer.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-functionalrenderer.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-rdfapi.jar;</option>
+			  <option>IceBox.Server</option>
         <service-instance template="FerdaServiceTemplate" name="FerdaOntologyRelated" entry="Ferda.OntologyRelated.Service" endpoints="${endpoints}"/>
-				
-        <property name="Ice.MessageSizeMax" value="409600"/>
-        
-        <property name="Ice.StdOut" value="D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\server1_out.log"/>
-        <property name="Ice.StdErr" value="D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\server1_err.log"/>
-        
+				<property name="Ice.MessageSizeMax" value="409600"/>
 				<property name="Ice.ThreadPool.Server.Size" value="10"/>
 				<property name="Ice.ThreadPool.Server.SizeMax" value="1000"/>
 				<property name="Ice.ThreadPool.Server.SizeWarn" value="950"/>
         <property name="IceBox.UseSharedCommunicator.FerdaOntologyRelated" value="0"/>
 			</icebox>
+			
 		</server-template>
     
 		
 		<node name="Local">
-			<server-instance template="FerdaServerTemplate" index="0" pwd="bin/Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
-      
-      <!--
-      <server id="1"
-        exe="java"
-        activation="on-demand"
-        pwd="bin/Server/OWLParser">
-        <option>Ferda.OntologyRelated.Service</option>
-        <adapter name="FerdaOntologyRelatedReplicaAdapter"
-          register-process="true"
-          endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1">
-          <object identity="Ferda.OntologyRelated.OWLParser" type="::Ferda::OntologyRelated::OWLParser"/>
-        </adapter>
-      </server>
-      	-->
-			
+      <server-instance template="FerdaServerTemplate" index="0" pwd="bin/Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>			
       <server-instance template="FerdaServerTemplateJava" index="1" pwd="bin/Server/OWLParser" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
-      
-      
-		</node>
+    </node>
 		
 	</application>
 </icegrid>
