@@ -80,6 +80,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// </summary>
         private int _noOfCategories = -1;
 
+        /// <summary>
+        /// Identification of categories (their names)
+        /// </summary>
+        private string[] categoriesIds = null;
+
         #endregion
 
         #region Properties
@@ -104,6 +109,21 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     _noOfCategories = _generator.GetCategoriesIds().Length;
                 }
                 return _noOfCategories;
+            }
+        }
+
+        /// <summary>
+        /// Identification of categories (their names)
+        /// </summary>
+        public string[] CategoriesIds
+        {
+            get
+            {
+                if (categoriesIds == null)
+                {
+                    categoriesIds = _generator.GetCategoriesIds();
+                }
+                return categoriesIds;
             }
         }
 

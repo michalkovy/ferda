@@ -53,7 +53,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// attribute, there the dictionary returns the classification category of 
         /// the classfication attribute.
         /// </summary>
-        private Dictionary<string, string> subCategories;
+        private string[] subCategories;
 
         /// <summary>
         /// The dictionary is used when the tree is not a leaf. For each category of the
@@ -107,7 +107,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// attribute, there the dictionary returns the classification category of 
         /// the classfication attribute.
         /// </summary>
-        public Dictionary<string, string> SubCategories
+        public string[] SubCategories
         {
             get { return subCategories; }
             set { subCategories = value; }
@@ -264,7 +264,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             }
             else
             {
-                foreach (string category in SubCategories.Values)
+                foreach (string category in SubCategories)
                 {
                     if (CategoryBitString(category).Sum > minimalImpurity)
                     {
