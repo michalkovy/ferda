@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ice;
+using Ferda.OntologyRelated.generated.OntologyData;
 
 namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 {
@@ -160,21 +161,10 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
             try
             {
-                /*ObjectPrx prx = BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
-                        "::Ferda::OntologyRelated::OWLParser"
-                        )[0];*/
                 ObjectPrx objPrx = BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
                         "::Ferda::OntologyRelated::OWLParser"
                         )[0];
-                if (objPrx != null)
-                {
-                    System.Windows.Forms.MessageBox.Show(objPrx.ice_toString());
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("objekt NEnalezen");
-                }
-
+                
                 Ferda.OntologyRelated.generated.OWLParserPrx prx =
                     Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(
                         BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
@@ -182,11 +172,14 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
                         )[0]
                     );
 
-                System.Windows.Forms.MessageBox.Show("proxy nalezena");
+                if (prx == null) System.Windows.Forms.MessageBox.Show("proxy NEBYLA nalezena");
 
-                prx.parseOntology("url");
+                //System.Windows.Forms.MessageBox.Show("proxy nalezena");
 
-                System.Windows.Forms.MessageBox.Show("parse ontology byla úspìšnì zavolána");
+                OntologyStructure ontology = prx.parseOntology("file:/D:/Marthin/skola/diplomova_prace/pokusne_ontologie/umls_stulong_2/umls_stulong_2.owl");
+
+                if (ontology != null) 
+                    System.Windows.Forms.MessageBox.Show("parse ontology byla úspìšnì zavolána");
                 //TODO funkce, ktera ma zajistit spusteni serveru (resp overit, ze bezi) a nacteni a parsovani ontologie
             }
             catch (Ice.Exception e)

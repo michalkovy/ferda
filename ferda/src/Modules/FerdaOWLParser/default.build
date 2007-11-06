@@ -18,7 +18,6 @@
           </path>
       </arg>
       <arg path="Ferda/OntologyRelated/OWLParserI.java" />
-      <arg path="Ferda/OntologyRelated/ObjectFactory.java" />
       <arg path="Ferda/OntologyRelated/Service.java" />
     </exec>
     <echo message="OntologyParser zkompilovan."/>
