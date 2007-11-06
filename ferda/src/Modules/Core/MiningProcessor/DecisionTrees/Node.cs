@@ -155,6 +155,30 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             set { frequency = value; }
         }
 
+        /// <summary>
+        /// The base bit string of the current node. The 1's in the bit string represent items
+        /// from the data table, that are true for this node. The 0's are items
+        /// true for some other nodes of the tree.
+        /// </summary>
+        public IBitString BaseBitString
+        {
+            get { return baseBitString; }
+            set { baseBitString = value; }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor of the class
+        /// </summary>
+        /// <param name="isLeaf">If the node is a leaf or not</param>
+        public Node(bool isLeaf)
+        {
+            this.leaf = isLeaf;
+        }
+
         #endregion
 
         #region Protected methods

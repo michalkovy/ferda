@@ -72,7 +72,7 @@ namespace Ferda.Guha.Math
         /// number of items that are present in given node (determined by the
         /// base bit string) for classification category <c>j</c> and attribute
         /// category <c>i</c></param>
-        /// <returns>Chi squared value for given parameters</returns>
+        /// <returns>Chi squared value for given parametersu</returns>
         public static double ChiSquared(int[] r, int[] s, int[,] a)
         {
             double result = 0;
