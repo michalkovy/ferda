@@ -209,6 +209,8 @@
 		</copy>
 		<xmlpoke file="bin/db/application.xml" xpath="/icegrid/application[@name = 'FerdaModulesApplication']/node[@name = 'Local']/server-instance[@template = 'FerdaServerTemplate']/@pwd" value="${path::get-full-path('bin/Server/')}"/>
 		<xmlpoke file="bin/db/application.xml" xpath="/icegrid/application[@name = 'FerdaModulesApplication']/node[@name = 'Local']/server-instance[@template = 'FerdaServerTemplateJava']/@pwd" value="${path::get-full-path('bin/Server/OWLParser')}"/>
+		<xmlpoke file="bin/db/application.xml" xpath="/icegrid/application[@name = 'FerdaModulesApplication']/node[@name = 'Local']/server-instance[@template = 'FerdaServerTemplateJava']/@owlapipath" value="${path::get-full-path('src/Modules/FerdaOWLParser/OWL_API_src')}"/>
+		<xmlpoke file="bin/db/application.xml" xpath="/icegrid/application[@name = 'FerdaModulesApplication']/node[@name = 'Local']/server-instance[@template = 'FerdaServerTemplateJava']/@icepath" value="${ice.dir}/lib/ice.jar"/>
 		<!-- <delete failonerror="false">
 			<fileset basedir="${bin.dir}/db/node">
 				<include name="**" />

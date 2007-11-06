@@ -95,9 +95,6 @@
 			<object identity="OntologyRelated.Ontology" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="OntologyRelated.OntologyMapping" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
-		<!-- <replica-group id="FerdaOntologyRelatedReplicaAdapter"> 
-			<object identity="Ferda.OntologyRelated.OWLParser" type="::Ferda::OntologyRelated::OWLParser"/>
-		</replica-group> -->
 		<service-template id="FerdaServiceTemplate">
 			<parameter name="name"/>
 			<parameter name="entry"/>
@@ -144,10 +141,11 @@
 			<parameter name="index"/>
 			<parameter name="endpoints" default="tcp:udp"/>
 			<parameter name="pwd" default="${application.distrib}"/>
+			<parameter name="owlapipath"/>
+			<parameter name="icepath"/>
 			<icebox id="${index}" exe="java" activation="on-demand" pwd="${pwd}">
-			  <option>-classpath</option>			  
-			  <option>C:\Ice-3.2.1\lib\ice.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-api.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-apibinding.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\bin\Server\OWLParser;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-oboparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-krssparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-functionalparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-owlxmlparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-rdfxmlparser.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-impl.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-rdfxmlrenderer.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-owlxmlrenderer.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-functionalrenderer.jar;D:\Marthin\skola\diplomova_prace\ferda\SVN_Ferda_marthin5\ferda\src\Modules\FerdaOWLParser\OWL_API_src\owlapi-rdfapi.jar;</option>
-			  <option>IceBox.Server</option>
+			  <env>CLASSPATH=${pwd};${icepath};${owlapipath}\owlapi-api.jar;${owlapipath}\owlapi-apibinding.jar;${owlapipath}\owlapi-oboparser.jar;${owlapipath}\owlapi-krssparser.jar;${owlapipath}\owlapi-functionalparser.jar;${owlapipath}\owlapi-owlxmlparser.jar;${owlapipath}\owlapi-rdfxmlparser.jar;${owlapipath}\owlapi-impl.jar;${owlapipath}\owlapi-rdfxmlrenderer.jar;${owlapipath}\owlapi-owlxmlrenderer.jar;${owlapipath}\owlapi-functionalrenderer.jar;${owlapipath}\owlapi-rdfapi.jar;%CLASSPATH%</env>
+        <option>IceBox.Server</option>
         <service-instance template="FerdaServiceTemplate" name="FerdaOntologyRelated" entry="Ferda.OntologyRelated.Service" endpoints="${endpoints}"/>
 				<property name="Ice.MessageSizeMax" value="409600"/>
 				<property name="Ice.ThreadPool.Server.Size" value="10"/>
@@ -161,7 +159,7 @@
 		
 		<node name="Local">
       <server-instance template="FerdaServerTemplate" index="0" pwd="bin/Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>			
-      <server-instance template="FerdaServerTemplateJava" index="1" pwd="bin/Server/OWLParser" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
+      <server-instance template="FerdaServerTemplateJava" index="1" pwd="set in ferda.build" icepath="set in ferda.build" owlapipath="set in ferda.build" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
     </node>
 		
 	</application>
