@@ -28,7 +28,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
     /// <summary>
     /// Representation of a GUHA decision tree.
     /// </summary>
-    public class Tree
+    public class Tree : ICloneable
     {
         #region Private fields
 
@@ -117,6 +117,8 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// Determines if the tree contains at least one leaf, that
         /// has node frequency (number of items classified by the node)
         /// bigger then minimal node frequency from the parameter.
+        /// Here, we do not count individual categories of nodes, but
+        /// rather frequencies of whole nodes. 
         /// </summary>
         /// <param name="minimalNodeFrequency">Minimal node frequency</param>
         /// <param name="nodesWithMoreThanMinimalFrequency">
@@ -167,6 +169,31 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         public bool HasMinimalImpurity(int minimalImpurity)
         {
             return rootNode.HasMinimalImpurity(minimalImpurity);
+        }
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance. 
+        /// </summary>
+        /// <returns>A new object that is a copy of this instance. </returns>
+        public object Clone()
+        {
+            Tree tree = new Tree();
+            tree.depth = depth;
+            tree.usedAttributes = (CategorialAttributeTrace[]) usedAttributes.Clone();
+            tree.unusedAttributes = (CategorialAttributeTrace[])unusedAttributes.Clone();
+            tree.rootNode = (Node)rootNode.Clone();
+
+            return tree;
+        }
+
+        /// <summary>
+        /// Finds and returns node with specified identification in the tree
+        /// </summary>
+        /// <param name="attributeId">Identification of the attribute</param>
+        /// <returns>Node with given attribute</returns>
+        public Node FindNode(string attributeId)
+        {
+            return rootNode.FindNode(attributeId);
         }
 
         #endregion
