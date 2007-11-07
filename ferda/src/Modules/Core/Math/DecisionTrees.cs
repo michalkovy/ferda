@@ -84,13 +84,6 @@ namespace Ferda.Guha.Math
                 n+= r[i];
             }
 
-            int temp=0;
-            for (int j = 0; j < s.Length; j++)
-            {
-                temp+= s[j];            
-            }
-
-
             for (int i = 0; i < r.Length; i++)
             {
                 for (int j = 0; j < s.Length; j++)

@@ -243,19 +243,24 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// impurity criterion</returns>
         public bool HasMinimalImpurity(int minimalImpurity)
         {
-            foreach (Node node in SubNodes.Values)
+            foreach (string category in SubCategories)
             {
-                //it is sufficient that only one of all the nodes has minimal 
-                //impurity
-                if (node.HasMinimalImpurity(minimalImpurity))
+                if (CategoryBitString(category).Sum > minimalImpurity)
                 {
                     return true;
                 }
             }
 
-            foreach (string category in SubCategories)
+            if (SubNodes == null)
             {
-                if (CategoryBitString(category).Sum > minimalImpurity)
+                return false;
+            }
+
+            foreach (Node node in SubNodes.Values)
+            {
+                //it is sufficient that only one of all the nodes has minimal 
+                //impurity
+                if (node.HasMinimalImpurity(minimalImpurity))
                 {
                     return true;
                 }
@@ -300,6 +305,12 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             node.subCategories = (string[]) subCategories.Clone();
             node.baseBitString = baseBitString;
             node.frequency = frequency;
+
+            //the leaf does not contain any subnodes
+            if (leaf)
+            {
+                return node;
+            }
 
             //copying subNodes
             node.subNodes = new Dictionary<string, Node>(subNodes.Count);

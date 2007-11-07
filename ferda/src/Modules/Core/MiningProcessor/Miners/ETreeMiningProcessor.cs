@@ -33,6 +33,46 @@ using Ferda.Guha.MiningProcessor.BitStrings;
 namespace Ferda.Guha.MiningProcessor.Miners
 {
     /// <summary>
+    /// When selecting attributes for further branching, we need to compute the
+    /// values of chi square for individual attributes and then sort the values
+    /// and pick best n. There can be a problem when two attributes have identically
+    /// same chi-square values (one of the attributes would not be recognized).
+    /// Therefore this structure is used.
+    /// </summary>
+    internal class IdValuePair : IComparer<IdValuePair> 
+    {
+        /// <summary>
+        /// Identifier of the attribute
+        /// </summary>
+        public int Id;
+        /// <summary>
+        /// The attribute itself
+        /// </summary>
+        public double chiSquared;
+
+        /// <summary>
+        /// Compares two objects and returns a value indicating
+        /// whether one is less than, equal to, or greater than the other. 
+        /// </summary>
+        /// <param name="x">The first object to compare. </param>
+        /// <param name="y">The second object to compare.</param>
+        /// <returns>Minus if first is smaller, 0 if equal, plus if second is smaller</returns>
+        public int Compare(IdValuePair x, IdValuePair y)
+        {
+            double result = x.chiSquared - y.chiSquared;
+            if (result < 0)
+            {
+                return -1;
+            }
+            if (result > 0)
+            {
+                return 1;
+            }
+            return 0;
+        }
+    }
+
+    /// <summary>
     /// The ETree procedure mining processor
     /// </summary>
     public class ETreeMiningProcessor : ProgressBarHandler
@@ -318,7 +358,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             //3. rule for further branching - if the tree does not contain nodes
             //that fulfill minimal node frequency criterion (number of items in 
-            //their nodes is smaller that the MinimalNodeFrequency parameter,
+            //their nodes is smaller that the MinimalNodeFrequency parameter),
             //then do no further branching of the tree
             if (!processTree.ContainsMoreThanMinimalFrequencyNodes(
                 minimalNodeFrequency, out nodesForBranching))
@@ -387,7 +427,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             CategorialAttributeTrace attribute)
         {
             Tree result = (Tree) processTree.Clone();
-            Node n = result.FindNode(attribute.Identifier.AttributeGuid);
+            Node n = result.FindNode(node.Attribute.Identifier.AttributeGuid);
 
             if (n == null)
             {
@@ -408,7 +448,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
             newNode.BaseBitString = n.CategoryBitString(category).And(n.BaseBitString);
             newNode.Frequency = newNode.BaseBitString.Sum;
             newNode.SubCategories = attribute.CategoriesIds;
-
+            
+            //when we add the first node, we need to create the dictionary
+            if (n.SubNodes == null)
+            {
+                n.SubNodes = new Dictionary<string, Node>();
+            }
             //adding the node to an existing node
             n.SubNodes.Add(category, newNode);
             return result;
@@ -541,9 +586,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
             int[,] a;
             double chiSq;
 
-            Dictionary<double, CategorialAttributeTrace> dict = 
-                new Dictionary<double,CategorialAttributeTrace>();
-            List<double> values = new List<double>();
+            Dictionary<IdValuePair, CategorialAttributeTrace> dict = 
+                new Dictionary<IdValuePair,CategorialAttributeTrace>();
+            List<IdValuePair> values = new List<IdValuePair>();
+            //for identfying IdValuePairs
+            int id = 0;
 
             foreach (CategorialAttributeTrace attribute in possibleAttributes)
             {
@@ -559,18 +606,22 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                 FillChiSqData(attribute, sBitStrings, baseBitString, out r, out a);
                 chiSq = Math.DecisionTrees.ChiSquared(r, s, a);
+                
+                //constructing a new IdValuePair
+                IdValuePair idValue = new IdValuePair();
+                idValue.Id = id;
+                idValue.chiSquared = chiSq;
 
-                dict.Add(chiSq, attribute);
-                values.Add(chiSq);
+                dict.Add(idValue, attribute);
+                values.Add(idValue);
+
+                id++;
             }
 
             CategorialAttributeTrace[] result = new CategorialAttributeTrace[noAttributesForBranching];
+            IdValuePair comparer = new IdValuePair();
+            values.Sort(comparer);
 
-            //v tomto navrhu se prilis neresi pripad, kdy chi-kvadrat pro dva ruzne atributy vyjde
-            //uplne presne stejne. Myslim ze aby se to stalo, tak by museli byt ty 2 atributy uple
-            //presne stejne, coz v databazi trosicku nedava smysl. Pro atributy, ktere jsou aspon
-            //trosicku jine to vyjde nepatrne jinak (je tam deleni a zaokrouhlovani)
-            values.Sort();
             for (int i = 0; i < noAttributesForBranching; i++)
             {
                 //adding in reverse order
