@@ -29,7 +29,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
     /// <summary>
     /// Representation of a node for GUHA decision trees
     /// </summary>
-    public class Node
+    public class Node : ICloneable
     {
         #region Private fields
 
@@ -90,6 +90,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         public bool Leaf
         {
             get { return leaf; }
+            set { leaf = value; }
         }
 
         /// <summary>
@@ -133,14 +134,16 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         {
             get
             {
-                if (leaf)
-                {
-                    return SubCategoriesToIfString();
-                }
-                else
-                {
-                    return SubNodesToIfString();
-                }
+                //TADY TO MUSI UMET REAGOVAT NA SMISENY OBSAH
+                //if (leaf)
+                //{
+                //    return SubCategoriesToIfString();
+                //}
+                //else
+                //{
+                //    return SubNodesToIfString();
+                //}
+                return string.Empty;
             }
         }
 
@@ -191,10 +194,6 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// <returns>If representation of subcategories</returns>
         protected string SubCategoriesToIfString()
         {
-            if (!leaf)
-            {
-                throw Exceptions.WrongNodeTypeException();
-            }
             return string.Empty;
         }
 
@@ -206,10 +205,6 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// <returns>If representation of the subnodes</returns>
         protected string SubNodesToIfString()
         {
-            if (leaf)
-            {
-                throw Exceptions.WrongNodeTypeException();
-            }
             return string.Empty;
         }
 
@@ -248,32 +243,25 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// impurity criterion</returns>
         public bool HasMinimalImpurity(int minimalImpurity)
         {
-            if (!Leaf)
+            foreach (Node node in SubNodes.Values)
             {
-                foreach (Node node in SubNodes.Values)
+                //it is sufficient that only one of all the nodes has minimal 
+                //impurity
+                if (node.HasMinimalImpurity(minimalImpurity))
                 {
-                    //it is sufficient that only one of all the nodes has minimal 
-                    //impurity
-                    if (node.HasMinimalImpurity(minimalImpurity))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
-
-                return false;
             }
-            else
+
+            foreach (string category in SubCategories)
             {
-                foreach (string category in SubCategories)
+                if (CategoryBitString(category).Sum > minimalImpurity)
                 {
-                    if (CategoryBitString(category).Sum > minimalImpurity)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
-
-                return false;
             }
+
+            return false;
         }
 
         /// <summary>
@@ -282,16 +270,69 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// category from the bit string generator.
         /// </summary>
         /// <param name="category">Category</param>
-        /// <returns></returns>
+        /// <returns>Category bit string</returns>
         public IBitString CategoryBitString(string category)
         {
-            if (!Leaf)
-            {
-                throw Exceptions.WrongNodeTypeException();
-            }
-
             IBitString categoryOnlyBitString = attribute.CategoryBitString(category);
             return baseBitString.And(categoryOnlyBitString);
+        }
+
+        /// <summary>
+        /// Gets frequency of one category. The frequency is computed
+        /// as sum of the category bit string from the bit string generator
+        /// and base bit string of the node.
+        /// </summary>
+        /// <param name="category">Category name</param>
+        /// <returns>Category frequency</returns>
+        public long CategoryFrequency(string category)
+        {
+            return CategoryBitString(category).Sum;
+        }
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance. 
+        /// </summary>
+        /// <returns>A new object that is a copy of this instance. </returns>
+        public object Clone()
+        {
+            Node node = new Node(leaf);
+            node.attribute = attribute;
+            node.subCategories = (string[]) subCategories.Clone();
+            node.baseBitString = baseBitString;
+            node.frequency = frequency;
+
+            //copying subNodes
+            node.subNodes = new Dictionary<string, Node>(subNodes.Count);
+            foreach (string category in subNodes.Keys)
+            {
+                node.subNodes.Add(category, (Node)subNodes[category].Clone());
+            }
+
+            return node;
+        }
+
+        /// <summary>
+        /// Finds and returns node with specified identification in the node
+        /// or its subNodes;
+        /// </summary>
+        /// <param name="attributeId">Identification of the attribute</param>
+        /// <returns>Node with given attribute</returns>
+        public Node FindNode(string attributeId)
+        {
+            if (attribute.Identifier.AttributeGuid == attributeId)
+            {
+                return this;
+            }
+
+            foreach (Node n in subNodes.Values)
+            {
+                if (n.FindNode(attributeId) != null)
+                {
+                    return n;
+                }
+            }
+
+            return null;
         }
 
         #endregion

@@ -295,6 +295,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return fifo;
             }
 
+            //the seed tree is treated differently.
             if (processTree.RootNode == null)
             {
                 CategorialAttributeTrace[] branching =
@@ -325,9 +326,92 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return fifo;
             }
 
-            //tady se tvori atributy z nodes for branching
+            //for each node adding a new tree 
+            foreach (Node node in nodesForBranching)
+            {
+                fifo = ProlongTree(processTree, node, fifo);
+            }
 
             return fifo;
+        }
+
+        /// <summary>
+        /// Prolongs the tree (in parameter <paramref name="processTree"/> in node
+        /// (in parameter <paramref name="node"/>) and adds the tree into the
+        /// <paramref name="fifo"/> queue, which is returned. From previous code, the
+        /// node (not its categories) need to fullfill the minimal node frequency 
+        /// criterion. In this procedure, only the categories that also fulfill the
+        /// minimal node frequency criterion are bases of new nodes.
+        /// </summary>
+        /// <param name="processTree">Tree to be prolonged</param>
+        /// <param name="node">Where to prolong the tree</param>
+        /// <param name="fifo">Where to add newly created trees</param>
+        /// <returns>The queue is with newly created trees is returned.</returns>
+        private Queue<Tree> ProlongTree(Tree processTree, Node node, Queue<Tree> fifo)
+        {
+            foreach (string category in node.SubCategories)
+            {
+                //only for categories with higher frequency than minimal node
+                //frequency
+                if (node.CategoryFrequency(category) < minimalNodeFrequency)
+                {
+                    continue;
+                }
+
+                CategorialAttributeTrace[] branchingAttributes =
+                    SelectAttributesForBranching(processTree.UnusedAttributes,
+                    node.BaseBitString.And(node.CategoryBitString(category)));
+
+                foreach (CategorialAttributeTrace attribute in branchingAttributes)
+                {
+                    Tree t = CreateTree(processTree, node, category, attribute);
+                    fifo.Enqueue(t);
+                }
+            }
+
+            return fifo;
+        }
+
+        /// <summary>
+        /// Creates a new cloned tree out of the tree in <paramref name="processTree"/>
+        /// and for given node <paramref name="node"/> makes a new node out of
+        /// category <paramref name="category"/> using attribute
+        /// <paramref name="attribute"/>.
+        /// </summary>
+        /// <param name="processTree">Tree to be cloned.</param>
+        /// <param name="node">Node where noew node is to be created.</param>
+        /// <param name="category">Category which is to be replaced by a new leaf.</param>
+        /// <param name="attribute">Attribute that will be used for creation of a new leaf</param>
+        /// <returns>Newly created tree.</returns>
+        private Tree CreateTree(Tree processTree, Node node, string category, 
+            CategorialAttributeTrace attribute)
+        {
+            Tree result = (Tree) processTree.Clone();
+            Node n = result.FindNode(attribute.Identifier.AttributeGuid);
+
+            if (n == null)
+            {
+                throw new Exception("WRONGGGGGGGRRRRR");
+            }
+
+            //it is no longer a leaf
+            n.Leaf = false;
+
+            //removal of the category from tree categories
+            List<string> newCats = new List<string>(n.SubCategories);
+            newCats.Remove(category);
+            n.SubCategories = newCats.ToArray();
+
+            //creating a new node
+            Node newNode = new Node(true);
+            newNode.Attribute = attribute;
+            newNode.BaseBitString = n.CategoryBitString(category).And(n.BaseBitString);
+            newNode.Frequency = newNode.BaseBitString.Sum;
+            newNode.SubCategories = attribute.CategoriesIds;
+
+            //adding the node to an existing node
+            n.SubNodes.Add(category, newNode);
+            return result;
         }
 
         /// <summary>
