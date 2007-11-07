@@ -153,9 +153,7 @@
 				<property name="Ice.ThreadPool.Server.SizeWarn" value="950"/>
         <property name="IceBox.UseSharedCommunicator.FerdaOntologyRelated" value="0"/>
 			</icebox>
-			
 		</server-template>
-    
 		
 		<node name="Local">
       <server-instance template="FerdaServerTemplate" index="0" pwd="bin/Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>			
