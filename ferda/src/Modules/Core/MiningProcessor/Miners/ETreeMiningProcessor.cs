@@ -310,8 +310,20 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>
         /// <param name="processTree">The examined tree</param>
         /// <returns>If the tree souhld be put to output</returns>
-        private static bool QualityTree(Tree processTree)
+        private bool QualityTree(Tree processTree)
         {
+            //cannot determine the root node
+            if (processTree.RootNode == null)
+            {
+                return false;
+            }
+
+            processTree.InitNodeClassification(
+                targetClassificationAttribute.BitStrings,
+                targetClassificationAttribute.CategoriesIds);
+
+
+
             return true;
         }
 
