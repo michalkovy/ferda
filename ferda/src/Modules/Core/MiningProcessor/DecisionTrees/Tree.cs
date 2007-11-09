@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ferda.Guha.MiningProcessor.Generation;
+using Ferda.Guha.MiningProcessor.BitStrings;
 
 namespace Ferda.Guha.MiningProcessor.DecisionTrees
 {
@@ -194,6 +195,41 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         public Node FindNode(string attributeId)
         {
             return rootNode.FindNode(attributeId);
+        }
+
+        /// <summary>
+        /// This procedure initializes the node classification. Beforehand,
+        /// the <see cref="Ferda.Guha.MiningProcessor.DecisionTrees.Node.ClassifiedCategories"/>
+        /// dictionary is null. Procedure fills the dictionary and
+        /// afterwards each dictionary value contains node classification structure with
+        /// the most present classification category. 
+        /// </summary>
+        /// <param name="classificationBitStrings">Bit strings of the classification 
+        /// attribute</param>
+        /// <param name="classificationCategories">Categories names of the
+        /// classification attribute.</param>
+        public void InitNodeClassification(IBitString[] classificationBitStrings,
+            string[] classificationCategories)
+        {
+            rootNode.InitNodeClassification(classificationBitStrings,
+                classificationCategories);
+        }
+
+        /// <summary>
+        /// Returns the confusion matrix (matrix of positive and
+        /// negative classification vs. the true or false of
+        /// the examples for given classification
+        /// </summary>
+        /// <returns>Confusion matrix</returns>
+        public long[,] ConfusionMatrix()
+        {
+            long[,] result = new long[2, 2];
+            result[0, 0] = rootNode.TruePositive();
+            result[0, 1] = rootNode.TrueNegative();
+            result[1, 0] = rootNode.FalsePositive();
+            result[1, 1] = rootNode.FalseNegative();
+
+            return result;
         }
 
         #endregion
