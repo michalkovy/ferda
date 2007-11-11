@@ -221,13 +221,15 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// the examples for given classification
         /// </summary>
         /// <returns>Confusion matrix</returns>
-        public long[,] ConfusionMatrix()
+        public double[][] ConfusionMatrix()
         {
-            long[,] result = new long[2, 2];
-            result[0, 0] = rootNode.TruePositive();
-            result[0, 1] = rootNode.TrueNegative();
-            result[1, 0] = rootNode.FalsePositive();
-            result[1, 1] = rootNode.FalseNegative();
+            double[][] result = new double[2][];
+            result[0] = new double[2];
+            result[1] = new double[2];
+            result[0][0] = (double)rootNode.TruePositive();
+            result[0][1] = (double)rootNode.TrueNegative();
+            result[1][0] = (double)rootNode.FalsePositive();
+            result[1][1] = (double)rootNode.FalseNegative();
 
             return result;
         }

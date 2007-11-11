@@ -29,6 +29,7 @@ using Ferda.Guha.MiningProcessor.DecisionTrees;
 using Ferda.Guha.MiningProcessor.Generation;
 using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
@@ -322,7 +323,17 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 targetClassificationAttribute.BitStrings,
                 targetClassificationAttribute.CategoriesIds);
 
+            QuantifierEvaluateSetting setting = new QuantifierEvaluateSetting();
+            setting.contingencyTable = processTree.ConfusionMatrix();
+            setting.denominator = 1;
 
+            foreach (QuantifierBaseFunctionsPrx quant in quantifiers)
+            {
+                if (!quant.Compute(setting))
+                {
+                    return false;
+                }
+            }
 
             return true;
         }
