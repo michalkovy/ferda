@@ -220,16 +220,43 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// negative classification vs. the true or false of
         /// the examples for given classification
         /// </summary>
+        /// <param name="classificationBitStrings">Bit strings of the classification 
+        /// attribute</param>
+        /// <param name="classificationCategories">Categories names of the
+        /// classification attribute.</param>
         /// <returns>Confusion matrix</returns>
-        public double[][] ConfusionMatrix()
+        public double[][] ConfusionMatrix(IBitString[] classificationBitStrings,
+            string[] classificationCategories)
         {
             double[][] result = new double[2][];
             result[0] = new double[2];
             result[1] = new double[2];
-            //result[0][0] = (double)rootNode.TruePositive();
-            //result[0][1] = (double)rootNode.TrueNegative();
-            //result[1][0] = (double)rootNode.FalsePositive();
-            //result[1][1] = (double)rootNode.FalseNegative();
+
+            long truePositive = 0;
+            long trueNegative = 0;
+            long falsePositive = 0;
+            long falseNegative = 0;
+
+            for (int i = 0; i < classificationCategories.Length; i++)
+            {
+                truePositive +=
+                    classificationBitStrings[i].And(
+                    rootNode.ClassifiedCategoryBitString(classificationCategories[i])).Sum;
+                trueNegative +=
+                    classificationBitStrings[i].And(
+                    rootNode.ClassifiedCategoryBitString(classificationCategories[i]).Not()).Sum;
+                falsePositive +=
+                    classificationBitStrings[i].Not().And(
+                    rootNode.ClassifiedCategoryBitString(classificationCategories[i])).Sum;
+                falseNegative +=
+                    classificationBitStrings[i].Not().And(
+                    rootNode.ClassifiedCategoryBitString(classificationCategories[i]).Not()).Sum;
+            }
+
+            result[0][0] = (double)truePositive;
+            result[0][1] = (double)trueNegative;
+            result[1][0] = (double)falsePositive;
+            result[1][1] = (double)falseNegative;
 
             return result;
         }

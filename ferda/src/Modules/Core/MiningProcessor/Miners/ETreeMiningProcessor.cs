@@ -324,7 +324,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 targetClassificationAttribute.CategoriesIds);
 
             QuantifierEvaluateSetting setting = new QuantifierEvaluateSetting();
-            setting.contingencyTable = processTree.ConfusionMatrix();
+            setting.contingencyTable = processTree.ConfusionMatrix(
+                targetClassificationAttribute.BitStrings,
+                targetClassificationAttribute.CategoriesIds);
             setting.denominator = 1;
 
             foreach (QuantifierBaseFunctionsPrx quant in quantifiers)
