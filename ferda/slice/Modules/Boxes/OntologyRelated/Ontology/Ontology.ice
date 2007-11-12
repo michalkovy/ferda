@@ -25,13 +25,15 @@ HOW TO GENERATE *.cs FROM *.ice
 		$ slice2cs --help
 */
 
-#ifndef	OntologyRelated_Ontology
-#define OntologyRelated_Ontology
+#ifndef	FERDA_MODULES_BOXES_ONTOLOGYRELATED_ONTOLOGY
+#define FERDA_MODULES_BOXES_ONTOLOGYRELATED_ONTOLOGY
 
 #include <Modules/Common.ice> //some common enumerations and structures
 #include <Modules/Exceptions.ice> //some exceptions defined
 #include <Modules/BuiltinSequences.ice> //sequences of basic types
 #include <Modules/OWLParser.ice> //OWL parser
+#include <Modules/OntologyData.ice> //Ontology data
+
 
 module Ferda {
 	module Modules {
@@ -42,13 +44,17 @@ module Ferda {
 				{
 					interface OntologyFunctions						
 					{
-            string HelloWorld();
+            void LoadOntology() throws Ferda::Modules::BoxRuntimeError;
             
-            void LoadOntology();
+            void LoadOntologyWithParameter(string innerOntologyPath) throws Ferda::Modules::BoxRuntimeError;
+            
+            Ferda::OntologyRelated::generated::OntologyData::OntologyStructure getOntology()
+              throws Ferda::Modules::BoxRuntimeError;
+							
           };
 				};
 			};
 		};
 	};
 };
-#endif;
+#endif FERDA_MODULES_BOXES_ONTOLOGYRELATED_ONTOLOGY;

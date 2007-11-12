@@ -10,8 +10,6 @@ public class Service extends Ice.LocalObjectImpl implements IceBox.Service
 	{
 	    _adapter = communicator.createObjectAdapter(name);
 	    _adapter.add(new OWLParserI(), Ice.Util.stringToIdentity("Ferda.OntologyRelated.OWLParser"));
-	    //ObjectFactory factory = new ObjectFactory();
-	    //ObjectFactory.addFactoryToCommunicator(communicator, factory);
 	    
 	    _adapter.activate();
 	}

@@ -22,7 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ferda.FrontEnd.AddIns.SetOntologyPath
+namespace Ferda.FrontEnd.AddIns.OntologyMapping
 {
     class Main : Ferda.FrontEnd.AddIns.AbstractMain
     {
@@ -30,7 +30,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
         {
             get
             {
-                return "SetOntologyPath";
+                return "OntologyMapping";
             }
         }
 
@@ -38,7 +38,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
         {
             get
             {
-                return new Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce.SetOntologyPathIce(this.OwnerOfAddIn);
+                return new Ferda.FrontEnd.AddIns.OntologyMapping.MyIce.OntologyMappingIce(this.OwnerOfAddIn);
             }
         }
     }

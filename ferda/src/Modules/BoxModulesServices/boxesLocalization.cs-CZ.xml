@@ -9838,7 +9838,7 @@
 		</Actions>
 		<Sockets>
 			<Socket>
-				<Name>Ontology Path</Name>
+				<Name>OntologyPath</Name>
 				<Label>Cesta k ontologii</Label>
 				<Hint>Určuje ontologii, která bude načtena touto krabičkou.</Hint>
 			</Socket>
@@ -9878,7 +9878,18 @@
 				<Label>Tabulka databáze</Label>
 				<Hint>Definuje datovou tabulku (nebo množinu sloupců tabulky)</Hint>
 			</Socket>
+			<Socket>
+				<Name>OntologyMapping</Name>
+				<Label>Mapování ontologie a tabulky</Label>
+				<Hint>Mapování termínů z ontologie na sloupečky tabulky.</Hint>
+			</Socket>
 		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Ontology Mapping</Name>
+				<Label>Mapování ontologie a tabulky</Label>
+			</PropertyCategory>
+		</PropertyCategories>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>DataPreparation.Categorization.OntologyDerivedAttribute</Identifier>

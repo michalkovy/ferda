@@ -163,9 +163,10 @@ public class OWLParserI extends _OWLParserDisp{
 			}
 		
 		}
-		//catch (OWLOntologyCreationException e) {
+		
 		catch (Exception e) {
-			System.out.println("The ontology could not be created: " + e.getMessage());
+			//System.out.println("The ontology could not be created: " + e.getMessage());
+			//return null;
 		}
 		
 		return FerdaOntology;
@@ -174,7 +175,7 @@ public class OWLParserI extends _OWLParserDisp{
 	public String[] addToArray(String[] array, String value, int position) {
 		if (position < 0) {	//if position is negative it is a sign, that the value is to be placed on the first unoccupied position
 			position = 0;
-			while ((position < array.length) && (array[position]!=null)) {
+			while ((position < array.length) && (array[position]!= null)) {
 				position++;
 			}
 		}

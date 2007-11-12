@@ -85,7 +85,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
                                                                                BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
+            /*Functions Func = (Functions)boxModule.FunctionsIObj;
 
             Dictionary<string, ModulesAskingForCreation> modulesAFC = getModulesAskingForCreationNonDynamic(localePrefs);
             List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();
@@ -124,12 +124,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                                 newMAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
                                 result.Add(newMAFC);
                             }
-                        }*/
+                        }
                         break;
                     default:
                         throw new NotImplementedException();
                 }
-            }
+            }*/
             return new ModulesAskingForCreation[0];
             //TODO return result.ToArray();
         }
@@ -153,7 +153,19 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                     return null;
             }
              */
-            return null;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            switch (propertyName)
+            {
+                case Functions.OntologyMapping:
+                    return null;
+                /*BoxInfoHelper.GetSelectStringArray(
+                DataProviderHelper.FactoryClassesInvariantNames
+                );
+                 */
+                default:
+                    return null;
+            }
         }
 
         /// <summary>
@@ -224,8 +236,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <returns>If the property is set.</returns>
         public override bool IsPropertySet(string propertyName, PropertyValue propertyValue)
         {
-            /*TOTO doplnit - asi v tomto pripade bude jedina property OntologyPath
-            if (propertyName == "ConnectionString")
+            if (propertyName == "OntologyMapping")
             {
                 string value = ((StringT)propertyValue).stringValue;
                 if (value == string.Empty || value == null)
@@ -235,8 +246,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             }
 
             return base.IsPropertySet(propertyName, propertyValue);
-             */
-            return false;
         }
 
         #region Type Identifier

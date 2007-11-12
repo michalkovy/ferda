@@ -1,4 +1,4 @@
-// SetOntologyPathIce.cs - class for ice communication
+// OntologyMappingIce.cs - class for ice communication
 //
 // Author: Martin Zeman <martinzeman@email.cz>
 //
@@ -28,19 +28,27 @@ using Ferda.FrontEnd.AddIns;
 using System.Resources;
 using System.Reflection;
 
-namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
+using Ferda.ModulesManager;
+using Ferda.FrontEnd.AddIns;
+using Ferda.Modules.Boxes.DataPreparation;
+using Ferda.Modules.Boxes.OntologyRelated.OntologyMapping;
+using Ferda.Modules.Boxes.OntologyRelated.Ontology;
+using Ferda.OntologyRelated.generated.OntologyData;
+
+
+namespace Ferda.FrontEnd.AddIns.OntologyMapping.MyIce
 {
     /// <summary>
     /// Class for ice communication
     /// </summary>
-    class SetOntologyPathIce : SettingModuleWithStringAbilityDisp_
+    class OntologyMappingIce : SettingModuleWithStringAbilityDisp_
     {
         #region Private variables
 
         /// <summary>
         /// Owner of addin
         /// </summary>
-        Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
+        IOwnerOfAddIn ownerOfAddIn;
         
         /// <summary>
         /// L10n resource manager
@@ -66,12 +74,12 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
         /// Class constructor
         /// </summary>
         /// <param name="ownerOfAddIn">Owner of addin</param>
-        public SetOntologyPathIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
+        public OntologyMappingIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
         {
             this.ownerOfAddIn = ownerOfAddIn;
-            
+
             //setting the ResManager resource manager and localization string
-            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.SetOntologyPath.Localization_en-US",
+            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.OntologyMapping.Localization_en-US",
             Assembly.GetExecutingAssembly());
             localizationString = "en-US";
         }
@@ -88,11 +96,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.SetOntologyPath.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.OntologyMapping.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
-            catch {}
-            return resManager.GetString("SetOntologyPath");
+            catch { }
+            return resManager.GetString("OntologyMapping");
         }
 
         public override string getPropertyAbout(PropertyValue value, global::Ice.Current current__)
@@ -102,7 +110,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
 
         public override string getIdentifier(global::Ice.Current current__)
         {
-            return "SetOntologyPath";
+            return "OntologyMapping";
         }
 
         public override PropertyValue convertFromStringAbout(string about, string[] localePrefs, Ice.Current current__)
@@ -132,54 +140,67 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
             {
                 locale = localePrefs[0];
                 localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.SetOntologyPath.Localization_" + locale;
+                locale = "Ferda.FrontEnd.AddIns.OntologyMapping.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
             catch
             {
             }
-            Ferda.Modules.Boxes.OntologyRelated.Ontology.OntologyFunctionsPrx prx =
-                Ferda.Modules.Boxes.OntologyRelated.Ontology.OntologyFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
             
-            about = resManager.GetString("SetOntologyPathAbout");
-            StringT ontologyPath = (StringT)valueBefore;
+            OntologyMappingFunctionsPrx OntologyMappingPrx = 
+                OntologyMappingFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
+
+            DataTableFunctionsPrx DataTablePrx =
+                DataTableFunctionsPrxHelper.checkedCast(boxModuleParam.getConnections("DataTable")[0].getFunctions());            
+            /*TODO TEST, jestli connection existuje!!! kdyžtak error*/
+
+            OntologyFunctionsPrx OntologyPrx =
+                OntologyFunctionsPrxHelper.checkedCast(boxModuleParam.getConnections("Ontology")[0].getFunctions());
+
+            /*
+             * TODO LoadOntology() smazat a pøidat sem test, 
+             * jestli parsování úspìšnì probìhlo, jinak ontologie neexistuje
+             * a mìla by se o tom hodit standardní hláška
+             */
+            //OntologyPrx.LoadOntology();
+            OntologyStructure ontology = OntologyPrx.getOntology();
+            
+            about = resManager.GetString("OntologyMappingAbout");
             PropertyValue returnValue = new PropertyValue();
             PropertyValue propertyValue = valueBefore;
 
-            SetOntologyPath.SetOntologyPathControl listView =
-                new SetOntologyPath.SetOntologyPathControl(
-                        localePrefs,
-                        ontologyPath.getStringValue(),
-                        ownerOfAddIn
-                    );
+            //DataTablePrx.getColumnExplainSeq();
             
-            listView.ShowInTaskbar = false;
-            listView.Disposed += new EventHandler(listView_Disposed);
-            System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);
+            OntologyMappingControl control = 
+                new OntologyMappingControl(DataTablePrx.getColumnExplainSeq(), ontology);
             
-            if (result == System.Windows.Forms.DialogResult.OK)
+            /*OntologyMappingControl control =
+                new OntologyMappingControl();
+             */
+            
+            /*localePrefs,
+            ontologyPath.getStringValue(),
+            ownerOfAddIn,
+            prx.getDatabaseConnectionSetting().providerInvariantName);*/
+
+            
+            control.ShowInTaskbar = false;
+            //listView.Disposed += new EventHandler(listView_Disposed);
+            System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(control);
+
+            /*if (result == System.Windows.Forms.DialogResult.OK)
             {
-                try
-                {
-                    prx.LoadOntologyWithParameter(this.returnString.ToString());
-                }
-                catch (Ferda.Modules.BoxRuntimeError e)
-                {
-                    ownerOfAddIn.ShowBoxException(e);
-                    return valueBefore;
-                }
-                
                 ontologyPath.stringValue = this.returnString;
                 PropertyValue resultValue = ontologyPath;
                 about = this.getPropertyAbout(resultValue);
-                propertyValue = resultValue;                    
+                propertyValue = resultValue;
             }
             else
             {
                 about = this.getPropertyAbout(valueBefore);
                 return valueBefore;
-            }
-            
+            }*/
+
             return propertyValue;
         }
 
@@ -193,13 +214,13 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void listView_Disposed(object sender, EventArgs e)
+       /* void listView_Disposed(object sender, EventArgs e)
         {
-            Ferda.FrontEnd.AddIns.SetOntologyPath.SetOntologyPathControl listView =
-                (Ferda.FrontEnd.AddIns.SetOntologyPath.SetOntologyPathControl)sender;
+            Ferda.FrontEnd.AddIns.OntologyMapping.OntologyMappingControl listView =
+                (Ferda.FrontEnd.AddIns.OntologyMapping.OntologyMappingControl)sender;
 
-            this.returnString = listView.ReturnOntologyPath;
-        }
+            this.returnString = listView.ReturnOntologyMapping;
+        }*/
 
         #endregion
     }

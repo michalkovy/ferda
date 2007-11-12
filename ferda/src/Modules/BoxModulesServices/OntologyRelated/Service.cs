@@ -1,5 +1,4 @@
 using Ice;
-//using Ferda.Modules.Boxes.OntologyRelated.*;
 
 namespace Ferda.Modules.Boxes.OntologyRelated
 {

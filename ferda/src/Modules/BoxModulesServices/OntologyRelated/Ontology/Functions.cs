@@ -36,7 +36,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// The current box module
         /// </summary>
         protected BoxModuleI _boxModule;
-
+        
         #region IFunctions Members
 
         /// <summary>
@@ -53,17 +53,19 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         #endregion
 
         #region Properties
+        
+        private Ferda.OntologyRelated.generated.OntologyData.OntologyStructure ontology = new OntologyStructure();
 
         //names of the properties
-        public const string OntologyPath = "OntologyPath";
-        
+        public const string PropOntologyPath = "OntologyPath";
+
         /// <summary>
         /// The Ontology Path property
         /// </summary>
-        /*public string OntologyPath
+        public string OntologyPath
         {
-            get { return _boxModule.GetPropertyString(OntologyPath); }
-        }*/
+            get { return _boxModule.GetPropertyString(PropOntologyPath); }
+        }
 
         public BoxModuleI BoxModule
         {
@@ -74,133 +76,68 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         #region Methods
 
-        /* TODO - nahradit Ontology Metodama
-        /// <summary>
-        /// Gets the names of data tables in the database
-        /// </summary>
-        /// <param name="fallOnError">If to fail on error</param>
-        /// <returns>The names of data tables in the database</returns>
-        public string[] GetDataTablesNames(bool fallOnError)
+        public OntologyStructure getOntology(bool fallOnError)
         {
-            return ExceptionsHandler.GetResult<string[]>(
+            return ExceptionsHandler.GetResult<OntologyStructure>(
                 fallOnError,
                 delegate
-                    {
-                        GenericDatabase tmp = GetGenericDatabase(fallOnError);
-                        if (tmp != null)
-                            return tmp.GetAcceptableDataTablesNames(AcceptableDataTableTypes);
-                        return new string[0];
-                    },
+                {
+                    return ontology;
+                },
                 delegate
-                    {
-                        return new string[0];
-                    },
+                {
+                    return null;
+                },
                 _boxModule.StringIceIdentity
                 );
         }
-         */
 
         #endregion
 
         #region Ice Functions
 
-        /*TOTO nahradit Ontology Functions
-        /// <summary>
-        /// Gets names of tables in the database
-        /// </summary>
-        /// <param name="current__">Ice stuff</param>
-        /// <returns>Names of tables</returns>
-        public override string[] getDataTablesNames(Current current__)
-        {
-            return GetDataTablesNames(true);
-        }
-         */
-
-        public override string HelloWorld(Ice.Current __current)
-        {
-            System.Windows.Forms.MessageBox.Show("Funkce je volaná s Ontology Path : " + OntologyPath);
-            int status = 0;
-		    Ice.Communicator ic = null;
-		    try {
-			    ic = Ice.Util.initialize();
-			    Ice.ObjectPrx obj = ic.stringToProxy("OWLParser:default -p 10000");
-			    
-                /*OWLParserPrx parser = OWLParserPrxHelper.checkedCast(obj);
-			    if (parser == null)
-				    throw new Error("Invalid proxy");
-    			
-			    OntologyStructure FerdaOntology = new OntologyStructure();
-    						
-			    FerdaOntology = parser.parseOntology("file:/D:/Marthin/skola/diplomova_prace/pokusne_ontologie/umls_stulong_2/umls_stulong_2.owl");*/
-                status = 0;
-            } catch (Ice.Exception e) {
-                Console.Error.WriteLine(e);
-                status = 1;
-            }
-            if (ic != null) {
-                // Clean up
-                //
-                try {
-                    ic.destroy();
-                } catch (Ice.Exception e) {
-                    Console.Error.WriteLine(e);
-                    status = 1;
-                }
-            }
-            return "end of Hello world";
-            //Environment.Exit(status);
-        }
-
         public override void LoadOntology(Ice.Current __current)
+        {
+            LoadOntologyWithParameter(OntologyPath.ToString(), __current);
+            return;
+        }
+
+        public override void LoadOntologyWithParameter(string innerOntologyPath, Ice.Current __current)
         {
             
             Ice.Communicator ic = null;
             ic = Ice.Util.initialize();
 
-            Ice.ObjectPrx obj = ic.stringToProxy("Ferda.OntologyRelated.OWLParser");
-
-            try
-            {
-                ObjectPrx objPrx = BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
+            Ferda.OntologyRelated.generated.OWLParserPrx prx =
+                Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(
+                    BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
                         "::Ferda::OntologyRelated::OWLParser"
-                        )[0];
-                
-                Ferda.OntologyRelated.generated.OWLParserPrx prx =
-                    Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(
-                        BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
-                        "::Ferda::OntologyRelated::OWLParser"
-                        )[0]
-                    );
+                    )[0]
+                );
 
-                if (prx == null) System.Windows.Forms.MessageBox.Show("proxy NEBYLA nalezena");
-
-                //System.Windows.Forms.MessageBox.Show("proxy nalezena");
-
-                OntologyStructure ontology = prx.parseOntology("file:/D:/Marthin/skola/diplomova_prace/pokusne_ontologie/umls_stulong_2/umls_stulong_2.owl");
-
-                if (ontology != null) 
-                    System.Windows.Forms.MessageBox.Show("parse ontology byla úspìšnì zavolána");
-                //TODO funkce, ktera ma zajistit spusteni serveru (resp overit, ze bezi) a nacteni a parsovani ontologie
-            }
-            catch (Ice.Exception e)
+            if (prx == null)
             {
-                System.Windows.Forms.MessageBox.Show(e.ToString());
+                throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
+                        "Ice object ::Ferda::OntologyRelated::OWLParser can't be found.");
+            }
 
-                Console.Error.WriteLine(e);
-            }
-            if (ic != null)
+            this.ontology = prx.parseOntology(innerOntologyPath.Replace("\\", "/").ToString());
+            //examples
+            //this.ontology = prx.parseOntology("file:/D:/Marthin/skola/diplomova_prace/pokusne_ontologie/umls_stulong_2/umls_stulong_2.owl");
+            //this.ontology = prx.parseOntology("http://www.co-ode.org/ontologies/pizza/2007/02/12/pizza.owl"
+
+            if (this.ontology.OntologyClassMap.Keys.Count == 0)
             {
-                // Clean up
-                //
-                try
-                {
-                    ic.destroy();
-                }
-                catch (Ice.Exception e)
-                {
-                    Console.Error.WriteLine(e);
-                }
+                throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
+                        "Ontology specified by the ontology path: " + innerOntologyPath.ToString() + " is incorrect. Either the path is wrong or the ontology is in incorrect format.");
             }
+            
+            return;
+        }
+
+        public override OntologyStructure getOntology(Current current__)
+        {
+            return getOntology(true);
         }
 
         #endregion

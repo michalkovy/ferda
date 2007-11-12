@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1DC6D2BB-2D23-4B6B-8B6D-0122B533E519}</ProjectGuid>
+    <ProjectGuid>{0577F968-7690-4016-B8BF-CE7D3A846224}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SetOntologyPath</RootNamespace>
-    <AssemblyName>SetOntologyPath</AssemblyName>
+    <RootNamespace>OntologyMapping</RootNamespace>
+    <AssemblyName>OntologyMapping</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,31 +38,15 @@
   -->
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <Compile Include="MyIce\SetOntologyPathIce.cs" />
-    <Compile Include="SetOntologyPathControl.cs">
+    <Compile Include="MyIce\OntologyMappingIce.cs" />
+    <Compile Include="OntologyMappingControl.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SetOntologyPathControl.Designer.cs">
-      <DependentUpon>SetOntologyPathControl.cs</DependentUpon>
+    <Compile Include="OntologyMappingControl.Designer.cs">
+      <DependentUpon>OntologyMappingControl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Localization_cs-CZ.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Localization_en-US.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SetOntologyPathControl.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>SetOntologyPathControl.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="AddInsCommon, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\AddInsCommon.dll</HintPath>
-    </Reference>
     <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cbe18eed93b6dbb1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
@@ -84,5 +68,11 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="OntologyMappingControl.resx">
+      <DependentUpon>OntologyMappingControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

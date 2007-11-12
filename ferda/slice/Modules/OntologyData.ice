@@ -1,3 +1,6 @@
+#ifndef	FERDA_ONTOLOGYRELATED_GENERATED_ONTOLOGYDATA
+#define	FERDA_ONTOLOGYRELATED_GENERATED_ONTOLOGYDATA
+
 module Ferda {
   module OntologyRelated {
     module generated {
@@ -37,3 +40,5 @@ module Ferda {
     };
   };
 };
+
+#endif FERDA_ONTOLOGYRELATED_GENERATED_ONTOLOGYDATA

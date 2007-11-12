@@ -48,32 +48,34 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             this.radioButton1.AutoSize = true;
             this.radioButton1.Location = new System.Drawing.Point(21, 39);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(14, 13);
+            this.radioButton1.Size = new System.Drawing.Size(196, 17);
             this.radioButton1.TabIndex = 0;
             this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Select ontology from a local network";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(21, 87);
+            this.radioButton2.Location = new System.Drawing.Point(21, 97);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(14, 13);
+            this.radioButton2.Size = new System.Drawing.Size(211, 17);
             this.radioButton2.TabIndex = 0;
             this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Set path to ontology located on internet";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // diskPathTextBox
             // 
-            this.diskPathTextBox.Location = new System.Drawing.Point(51, 36);
+            this.diskPathTextBox.Enabled = false;
+            this.diskPathTextBox.Location = new System.Drawing.Point(21, 61);
             this.diskPathTextBox.Name = "diskPathTextBox";
             this.diskPathTextBox.Size = new System.Drawing.Size(206, 20);
             this.diskPathTextBox.TabIndex = 0;
-            this.diskPathTextBox.TextChanged += new System.EventHandler(this.diskPathTextBox_TextChanged);
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(63, 132);
+            this.okButton.Location = new System.Drawing.Point(95, 166);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 1;
@@ -83,7 +85,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(170, 132);
+            this.cancelButton.Location = new System.Drawing.Point(202, 166);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 2;
@@ -93,15 +95,16 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             // 
             // URLPathTextBox
             // 
-            this.URLPathTextBox.Location = new System.Drawing.Point(51, 84);
+            this.URLPathTextBox.Location = new System.Drawing.Point(21, 118);
             this.URLPathTextBox.Name = "URLPathTextBox";
             this.URLPathTextBox.Size = new System.Drawing.Size(206, 20);
             this.URLPathTextBox.TabIndex = 0;
+            this.URLPathTextBox.Click += new System.EventHandler(this.URLPathTextBox_Click);
             this.URLPathTextBox.TextChanged += new System.EventHandler(this.URLPathTextBox_TextChanged);
             // 
             // browseButton
             // 
-            this.browseButton.Location = new System.Drawing.Point(279, 34);
+            this.browseButton.Location = new System.Drawing.Point(262, 59);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(75, 23);
             this.browseButton.TabIndex = 0;
@@ -113,7 +116,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 183);
+            this.ClientSize = new System.Drawing.Size(367, 215);
             this.Controls.Add(this.browseButton);
             this.Controls.Add(this.URLPathTextBox);
             this.Controls.Add(this.cancelButton);
