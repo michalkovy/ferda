@@ -55,7 +55,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 
         //names of the properties
         public const string SockOntology = "Ontology";
-        public const string PropName = "PropName !?";
+        public const string OntologyMapping = "onto mapping";
         
         #endregion
 

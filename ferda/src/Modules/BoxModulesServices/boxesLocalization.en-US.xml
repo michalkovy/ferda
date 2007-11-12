@@ -9870,7 +9870,7 @@
 		</Actions>
 		<Sockets>
 			<Socket>
-				<Name>Ontology Path</Name>
+				<Name>OntologyPath</Name>
 				<Label>Path to Ontology</Label>
 				<Hint>Defines an ontology, which will be loaded by this box.</Hint>
 			</Socket>
@@ -9910,7 +9910,18 @@
 				<Label>Data table</Label>
 				<Hint>Defines data matrix or Multi-column.</Hint>
 			</Socket>
+			<Socket>
+				<Name>OntologyMapping</Name>
+				<Label>Mapping between an ontology and a table</Label>
+				<Hint>Mapping of terms from ontology on table columns.</Hint>
+			</Socket>
 		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Ontology Mapping</Name>
+				<Label>Mapping between an ontology and a table</Label>
+			</PropertyCategory>
+		</PropertyCategories>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>DataPreparation.Categorization.OntologyDerivedAttribute</Identifier>

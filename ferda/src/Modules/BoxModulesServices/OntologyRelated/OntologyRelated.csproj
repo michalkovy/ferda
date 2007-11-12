@@ -70,7 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OntologyData.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="OntologyMapping\BoxInfo.cs" />
     <Compile Include="OntologyMapping\Functions.cs" />
     <Compile Include="Ontology\BoxInfo.cs" />

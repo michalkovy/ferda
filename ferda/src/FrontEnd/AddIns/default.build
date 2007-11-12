@@ -453,13 +453,13 @@
     <csc target="library" output="${path::combine(addInsBuild.dir,'SetOntologyPath.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="SetOntologyPath/**.cs"/>
-				<include name="SetOntologyPath/Ice/**.cs"/>
+				<include name="SetOntologyPath/MyIce/**.cs"/>
 				<exclude name="SetOntologyPath/bin/**.*"/>
 				<exclude name="SetOntologyPath/obj/**.*"/>
 			</sources>
 			<resources prefix="Ferda.FrontEnd.AddIns.SetOntologyPath">
 				<include name="SetOntologyPath/**.resx"/>
-				<exclude name="SetOntologyPath/ConnectionString.resx"/>
+				<exclude name="SetOntologyPath/SetOntologyPath.resx"/>
 			</resources>
 			<references>
 				<include name="System.dll"/>
@@ -477,6 +477,32 @@
 			</references>
 		</csc>
     
+    <csc target="library" output="${path::combine(addInsBuild.dir,'OntologyMapping.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="OntologyMapping/**.cs"/>
+				<include name="OntologyMapping/MyIce/**.cs"/>
+				<exclude name="OntologyMapping/bin/**.*"/>
+				<exclude name="OntologyMapping/obj/**.*"/>
+			</sources>
+			<resources prefix="Ferda.FrontEnd.AddIns.OntologyMapping">
+				<include name="OntologyMapping/**.resx"/>
+				<exclude name="OntologyMapping/OntologyMapping.resx"/>
+			</resources>
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+			</references>
+		</csc>
     
 	</target>
 	<target name="clean">

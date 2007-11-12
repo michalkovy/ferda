@@ -50,25 +50,39 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
 
         #endregion
 
-        public SetOntologyPathControl()
+        public SetOntologyPathControl(string[] localePrefs, string currentOntologyPath, IOwnerOfAddIn ownerOfAddIn)
         {
             InitializeComponent();
+            if (currentOntologyPath.StartsWith("file:/"))
+            {
+                radioButton1.Checked = true;
+                string tmpstr = "file:/";
+                diskPathTextBox.Text = currentOntologyPath.Remove(0,tmpstr.Length).ToString();
+            }
+            else if (currentOntologyPath.ToString() != "") {
+                radioButton1.Checked = true;
+                URLPathTextBox.Text = currentOntologyPath.ToString();
+            }
         }
 
         private void browseButton_Click(object sender, EventArgs e)
         {
-            openFileDialog1.FileName = "";
-            openFileDialog1.ShowDialog();
-            diskPathTextBox.Text = openFileDialog1.FileName;
-            radioButton1.Checked = true;
-            radioButton2.Checked = false;
+            openFileDialog1.FileName = diskPathTextBox.Text;
+            
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                diskPathTextBox.Text = openFileDialog1.FileName;
+                URLPathTextBox.Text = "";
+                radioButton1.Checked = true;
+                radioButton2.Checked = false;
+            }
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
             if (radioButton1.Checked)
             {
-                this.returnOntologyPath = diskPathTextBox.Text;
+                this.returnOntologyPath = "file:/" + diskPathTextBox.Text;
                 this.DialogResult = DialogResult.OK;
                 this.Dispose();
                 return;
@@ -99,11 +113,10 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             radioButton2.Checked = true;
         }
 
-        private void diskPathTextBox_TextChanged(object sender, EventArgs e)
+        private void URLPathTextBox_Click(object sender, EventArgs e)
         {
-            radioButton1.Checked = true;
-            radioButton2.Checked = false;
+            radioButton1.Checked = false;
+            radioButton2.Checked = true;
         }
-
     }
 }

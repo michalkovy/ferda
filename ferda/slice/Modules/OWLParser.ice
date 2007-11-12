@@ -1,16 +1,16 @@
-#ifndef	FERDA_ONTOLOGYRELATED
-#define	FERDA_ONTOLOGYRELATED
+#ifndef	FERDA_ONTOLOGYRELATED_GENERATED
+#define	FERDA_ONTOLOGYRELATED_GENERATED
 
-#include <Modules/OntologyData.ice>
-
-#endif    
+#include <Modules/OntologyData.ice>  
 
 module Ferda {
   module OntologyRelated {
     module generated {          
       interface OWLParser {
-        OntologyData::OntologyStructure parseOntology(string ontologyURL) throws OntologyData::WrongOntologyURL;
+        Ferda::OntologyRelated::generated::OntologyData::OntologyStructure parseOntology(string ontologyURL) throws OntologyData::WrongOntologyURL;
       };
     };
   };
 };
+
+#endif FERDA_ONTOLOGYRELATED_GENERATED

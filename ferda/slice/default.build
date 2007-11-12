@@ -70,6 +70,7 @@
 				<arg file="Modules/Guha.Math.ice"/>
 				<arg file="Modules/Guha.Math.Quantifiers.ice"/>
 				<arg file="Modules/Guha.MiningProcessor.ice"/>
+				<arg file="Modules/OntologyData.ice"/>
 			</exec>
 			<echo message="Generuji .cs z .ice souboru v adresari ModulesManager..."/>
 			<mkdir dir="${build.dir}/ModulesManager/generated"/>
@@ -148,7 +149,6 @@
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
 				<arg value="${build.dir}/Modules/BoxModulesServices/OntologyRelated"/>
-				<arg file="Modules/OntologyData.ice"/>
 				<arg file="Modules/OWLParser.ice"/>
 			</exec>
 			

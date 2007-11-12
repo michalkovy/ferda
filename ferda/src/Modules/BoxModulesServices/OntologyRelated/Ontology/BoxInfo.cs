@@ -136,12 +136,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
             switch (propertyName)
             {
-                case Functions.OntologyPath:
+                case Functions.PropOntologyPath:
                     return null;
                         /*BoxInfoHelper.GetSelectStringArray(
                         DataProviderHelper.FactoryClassesInvariantNames
-                        );
-                         */
+                        );*/
+                         
                 default:
                     return null;
             }
@@ -200,10 +200,9 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             {
                 case "LoadOntology":
                     Func.LoadOntology();
-                    //Func.HelloWorld();
                     break;
                 default:
-                    throw Exceptions.NameNotExistError(null, actionName);
+                    throw Ferda.Modules.Exceptions.NameNotExistError(null, actionName);
             }
         }
 
@@ -215,7 +214,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// <returns>If the property is set.</returns>
         public override bool IsPropertySet(string propertyName, PropertyValue propertyValue)
         {
-            //TOTO doplnit - asi v tomto pripade bude jedina property OntologyPath
             if (propertyName == "OntologyPath")
             {
                 string value = ((StringT)propertyValue).stringValue;
