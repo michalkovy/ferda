@@ -221,7 +221,7 @@ namespace Ferda.FrontEnd.AddIns.ShowTable
                 ListViewItem newItem = new ListViewItem();
                 newItem.Text = dataRow[0].ToString();
 
-                for(int i = 1; i < dataRow.ItemArray.GetUpperBound(0);i++)
+                for(int i = 1; i <= dataRow.ItemArray.GetUpperBound(0);i++)
                 {
                     newItem.SubItems.Add(dataRow[i].ToString());
                 }
