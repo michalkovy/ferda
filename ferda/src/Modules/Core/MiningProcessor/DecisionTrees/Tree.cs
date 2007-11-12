@@ -226,10 +226,10 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             double[][] result = new double[2][];
             result[0] = new double[2];
             result[1] = new double[2];
-            result[0][0] = (double)rootNode.TruePositive();
-            result[0][1] = (double)rootNode.TrueNegative();
-            result[1][0] = (double)rootNode.FalsePositive();
-            result[1][1] = (double)rootNode.FalseNegative();
+            //result[0][0] = (double)rootNode.TruePositive();
+            //result[0][1] = (double)rootNode.TrueNegative();
+            //result[1][0] = (double)rootNode.FalsePositive();
+            //result[1][1] = (double)rootNode.FalseNegative();
 
             return result;
         }
