@@ -115,7 +115,6 @@
     <None Include="Design\EquivalenceClassFunctions.cs" />
     <Compile Include="BitStrings\TrueBitString.cs" />
     <Compile Include="DecisionTrees\Node.cs" />
-    <Compile Include="DecisionTrees\NodeClassification.cs" />
     <Compile Include="DecisionTrees\Tree.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Formulas\AtomFormula.cs" />

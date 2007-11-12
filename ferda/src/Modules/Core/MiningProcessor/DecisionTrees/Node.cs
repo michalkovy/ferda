@@ -71,7 +71,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// node (from the subCategories list), the value is node classification
         /// structure that classifies this node.
         /// </summary>
-        private Dictionary<string, NodeClassification> classifiedCategories = null;
+        private Dictionary<string, IBitString> classifiedCategories = null;
 
         /// <summary>
         /// Number representing how many items from the original database
@@ -377,155 +377,35 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             {
                 throw new Exception("More times tree classification");
             }
-            classifiedCategories = new Dictionary<string, NodeClassification>();
+            classifiedCategories = new Dictionary<string, IBitString>();
 
-            foreach (string category in subCategories)
-            {
-                //determining the classification category which bit string
-                //has maximal interference with the selected category
-                int max = -1;
-                int index = -1;
-                IBitString categoryBitString = CategoryBitString(category);
+            //foreach (string category in subCategories)
+            //{
+            //    //determining the classification category which bit string
+            //    //has maximal interference with the selected category
+            //    int max = -1;
+            //    int index = -1;
+            //    IBitString categoryBitString = CategoryBitString(category);
 
-                for (int i = 0; i < classificationCategories.Length; i++)
-                {
-                    int sum = categoryBitString.And(classificationBitStrings[i]).Sum;
+            //    for (int i = 0; i < classificationCategories.Length; i++)
+            //    {
+            //        int sum = categoryBitString.And(classificationBitStrings[i]).Sum;
 
-                    if (sum > max)
-                    {
-                        max = sum;
-                        index = i;
-                    }
-                }
+            //        if (sum > max)
+            //        {
+            //            max = sum;
+            //            index = i;
+            //        }
+            //    }
 
-                //we have the maximal category at index (index)
-                //now creating the node classification structure
-                NodeClassification nc = new NodeClassification();
-                nc.classificationCategory = classificationCategories[index];
-                nc.Init(categoryBitString, classificationBitStrings[index]);
+            //    //we have the maximal category at index (index)
+            //    //now creating the node classification structure
+            //    NodeClassification nc = new NodeClassification();
+            //    nc.classificationCategory = classificationCategories[index];
+            //    nc.Init(categoryBitString, classificationBitStrings[index]);
 
-                classifiedCategories.Add(category, nc);
-            }
-        }
-
-        /// <summary>
-        /// Returns number of true positive examples in the node. 
-        /// (examples that are true and positively classified)
-        /// </summary>
-        /// <returns>Number of true positives</returns>
-        public long TruePositive()
-        {
-            long result = 0;
-
-            if (classifiedCategories != null)
-            {
-                foreach (NodeClassification c in classifiedCategories.Values)
-                {
-                    Debug.Assert(c.truePositive >= 0);
-
-                    result += c.truePositive;
-                }
-            }
-
-            if (subNodes != null)
-            {
-                foreach (Node n in subNodes.Values)
-                {
-                    result += n.TruePositive();
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Returns number of true negative examples in the node. 
-        /// (examples that are true and negatively classified)
-        /// </summary>
-        /// <returns>Number of true negatives</returns>
-        public long TrueNegative()
-        {
-            long result = 0;
-
-            if (classifiedCategories != null)
-            {
-                foreach (NodeClassification c in classifiedCategories.Values)
-                {
-                    Debug.Assert(c.trueNegative >= 0);
-
-                    result += c.trueNegative;
-                }
-            }
-
-            if (subNodes != null)
-            {
-                foreach (Node n in subNodes.Values)
-                {
-                    result += n.TrueNegative();
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Returns number of false positive examples in the node. 
-        /// (examples that are false and positively classified)
-        /// </summary>
-        /// <returns>Number of false positives</returns>
-        public long FalsePositive()
-        {
-            long result = 0;
-
-            if (classifiedCategories != null)
-            {
-                foreach (NodeClassification c in classifiedCategories.Values)
-                {
-                    Debug.Assert(c.falsePositive >= 0);
-
-                    result += c.falsePositive;
-                }
-            }
-
-            if (subNodes != null)
-            {
-                foreach (Node n in subNodes.Values)
-                {
-                    result += n.FalsePositive();
-                }
-            }
-            
-            return result;
-        }
-
-        /// <summary>
-        /// Returns number of false positive examples in the node. 
-        /// (examples that are false and positively classified)
-        /// </summary>
-        /// <returns>Number of false positives</returns>
-        public long FalseNegative()
-        {
-            long result = 0;
-
-            if (classifiedCategories != null)
-            {
-                foreach (NodeClassification c in classifiedCategories.Values)
-                {
-                    Debug.Assert(c.falseNegative >= 0);
-
-                    result += c.falseNegative;
-                }
-            }
-
-            if (subNodes != null)
-            {
-                foreach (Node n in subNodes.Values)
-                {
-                    result += n.FalseNegative();
-                }
-            }
-
-            return result;
+            //    classifiedCategories.Add(category, nc);
+            //}
         }
 
         #endregion

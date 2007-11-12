@@ -86,8 +86,17 @@ namespace Ferda.Guha.Math
 
             for (int i = 0; i < r.Length; i++)
             {
+                if (r[i] == 0)
+                {
+                    continue;
+                }
                 for (int j = 0; j < s.Length; j++)
                 {
+                    if (s[j] == 0)
+                    {
+                        continue;
+                    }
+
                     double step = System.Math.Pow((a[i, j] - (double)r[i] * s[j] / n), 2) 
                         / ((double)r[i] * s[j] / n);
                     result += step;
