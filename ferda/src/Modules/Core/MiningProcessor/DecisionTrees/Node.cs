@@ -71,7 +71,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// node (from the subCategories list), the value is node classification
         /// structure that classifies this node.
         /// </summary>
-        private Dictionary<string, IBitString> classifiedCategories = null;
+        private Dictionary<string, NodeClassification> classifiedCategories = null;
 
         /// <summary>
         /// Number representing how many items from the original database
@@ -296,6 +296,41 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         }
 
         /// <summary>
+        /// Gets the bit string that shows, how this node classified the
+        /// classification category determined by
+        /// <paramref name="classificationCategory"/> parameter. 
+        /// </summary>
+        /// <param name="classificationCategory">Classification category</param>
+        /// <returns>Bit string showing how the node classified this
+        /// category.</returns>
+        public IBitString ClassifiedCategoryBitString(string classificationCategory)
+        {
+            IBitString result = FalseBitString.GetInstance();
+
+            //results from the sub categories of the node
+            //classified categories at this point should not be null
+            foreach (NodeClassification clas in classifiedCategories.Values)
+            {
+                if (clas.classificationCategory == classificationCategory)
+                {
+                    result = result.Or(clas.classificationBitString);
+                }
+            }
+
+            //adding the results from the subcategories.
+            if (subNodes != null)
+            {
+                foreach (Node node in subNodes.Values)
+                {
+                    result = 
+                        result.Or(node.ClassifiedCategoryBitString(classificationCategory));
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets frequency of one category. The frequency is computed
         /// as sum of the category bit string from the bit string generator
         /// and base bit string of the node.
@@ -377,35 +412,46 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             {
                 throw new Exception("More times tree classification");
             }
-            classifiedCategories = new Dictionary<string, IBitString>();
+            classifiedCategories = new Dictionary<string, NodeClassification>();
 
-            //foreach (string category in subCategories)
-            //{
-            //    //determining the classification category which bit string
-            //    //has maximal interference with the selected category
-            //    int max = -1;
-            //    int index = -1;
-            //    IBitString categoryBitString = CategoryBitString(category);
+            foreach (string category in subCategories)
+            {
+                //determining the classification category which bit string
+                //has maximal interference with the selected category
+                int max = -1;
+                int index = -1;
+                IBitString categoryBitString = CategoryBitString(category);
 
-            //    for (int i = 0; i < classificationCategories.Length; i++)
-            //    {
-            //        int sum = categoryBitString.And(classificationBitStrings[i]).Sum;
+                for (int i = 0; i < classificationCategories.Length; i++)
+                {
+                    int sum = categoryBitString.And(classificationBitStrings[i]).Sum;
 
-            //        if (sum > max)
-            //        {
-            //            max = sum;
-            //            index = i;
-            //        }
-            //    }
+                    if (sum > max)
+                    {
+                        max = sum;
+                        index = i;
+                    }
+                }
 
-            //    //we have the maximal category at index (index)
-            //    //now creating the node classification structure
-            //    NodeClassification nc = new NodeClassification();
-            //    nc.classificationCategory = classificationCategories[index];
-            //    nc.Init(categoryBitString, classificationBitStrings[index]);
+                //we have the maximal category at index (index)
+                //now creating the node classification structure
+                NodeClassification nc = new NodeClassification();
+                nc.classificationCategory = classificationCategories[index];
+                nc.classificationBitString = 
+                    categoryBitString.And(classificationBitStrings[index]);
 
-            //    classifiedCategories.Add(category, nc);
-            //}
+                classifiedCategories.Add(category, nc);
+            }
+
+            //initializes also the subnodes
+            if (subNodes != null)
+            {
+                foreach (Node n in subNodes.Values)
+                {
+                    n.InitNodeClassification(classificationBitStrings,
+                        classificationCategories);
+                }
+            }
         }
 
         #endregion
