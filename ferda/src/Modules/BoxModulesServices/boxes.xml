@@ -4945,6 +4945,24 @@
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
+			<Socket>
+				<Name>Result</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>ResultInfo</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
 		</Sockets>
 		<Properties>
 			<Property>
@@ -5051,6 +5069,18 @@
 				<TypeClassIceId>::Ferda::Modules::DateTimeT</TypeClassIceId>
 				<Visible>true</Visible>
 				<ReadOnly>true</ReadOnly>
+			</Property>
+			<Property>
+				<Name>Result</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<Visible>false</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
+			<Property>
+				<Name>ResultInfo</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<Visible>false</Visible>
+				<ReadOnly>false</ReadOnly>
 			</Property>
 		</Properties>
 	</Box>

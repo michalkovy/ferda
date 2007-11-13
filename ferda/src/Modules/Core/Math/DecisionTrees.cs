@@ -48,6 +48,11 @@ namespace Ferda.Guha.Math
         /// <returns>Number of relevant questions</returns>
         public static double CountRelevantQuestions(int k, int l, int v)
         {
+            if (k == 1)
+            {
+                return (double)l * v;
+            }
+
             double result = k;
 
             for (int i = 1; i <= l; i++)

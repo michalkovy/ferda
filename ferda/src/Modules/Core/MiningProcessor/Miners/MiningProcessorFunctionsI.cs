@@ -468,7 +468,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
             }
 
-            resultInfo = string.Empty;
+            resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
             return string.Empty;
         }
 

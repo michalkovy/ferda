@@ -245,16 +245,20 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         #region ITask Members
 
         /// <summary>
-        /// Returns information about the task results. The function should not be for ETree
-        /// box, because the <see cref="Ferda.Guha.MiningProcessor.Results.SerializableResultInfo"/>
-        /// in unsuitable for storing of decision trees.
+        /// Cached serializible result info
+        /// </summary>
+        private SerializableResultInfo _cachedSerializableResultInfo = null;
+
+        /// <summary>
+        /// Returns information about the task results
         /// </summary>
         /// <returns>Information about a result of a task
         /// (can be serialized)</returns>
         public SerializableResultInfo GetResultInfo()
         {
-            throw Exceptions.BoxRuntimeError(null, _boxModule.getDefaultUserLabel()[0],
-                "The GetResultInfo function shouldn't be used for ETree box.");
+            if (_cachedSerializableResultInfo == null)
+                _cachedSerializableResultInfo = Common.GetResultInfoDeserealized(_boxModule);
+            return _cachedSerializableResultInfo;
         }
 
         /// <summary>
@@ -366,6 +370,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
                 out resultInfo);
 
             //processing of the results
+            Common.SetResultInfo(_boxModule, resultInfo);
         }
     }
 }
