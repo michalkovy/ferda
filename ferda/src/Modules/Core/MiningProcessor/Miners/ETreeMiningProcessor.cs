@@ -30,6 +30,7 @@ using Ferda.Guha.MiningProcessor.Generation;
 using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
+using Ferda.Guha.MiningProcessor.Results;
 
 namespace Ferda.Guha.MiningProcessor.Miners
 {
@@ -138,6 +139,25 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Count of all objects in the data matrix
         /// </summary>
         protected long allObjectsCount = -1;
+
+        /// <summary>
+        /// Structure holding information about the running of the
+        /// task
+        /// </summary>
+        protected SerializableResultInfo _resultInfo = null;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Structure holding information about the running of the
+        /// task
+        /// </summary>        
+        public SerializableResultInfo ResultInfo
+        {
+            get { return _resultInfo; }
+        }
 
         #endregion
 
@@ -248,6 +268,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>
         public void Trace()
         {
+            //initialization of the resultinfo
+            _resultInfo = new SerializableResultInfo();
+            _resultInfo.StartTime = DateTime.Now;
+
             double relevantQuestionsCount = 0;
             long noOfVerifications = 0;
             long noOfHypotheses = 0;
@@ -289,13 +313,34 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                  noOfVerifications,
                                  noOfHypotheses)))
                     {
+                        ResultInfoFinish(relevantQuestionsCount, noOfVerifications, 
+                            noOfHypotheses);
                         return;
                     }
                 }
             }
+
+            ResultInfoFinish(relevantQuestionsCount, noOfVerifications, noOfHypotheses);
         }
 
         #region Private methods
+
+        /// <summary>
+        /// Finishes filling of the result info structure according
+        /// to the up-to-date values.
+        /// </summary>
+        /// <param name="relevantQuestionsCount">Number of relevant questions</param>
+        /// <param name="noOfVerifications">Number of verifications carried out</param>
+        /// <param name="noOfHypotheses">Number of hypotheses found</param>
+        private void ResultInfoFinish(double relevantQuestionsCount, long noOfVerifications,
+            long noOfHypotheses)
+        {
+            _resultInfo.EndTime = DateTime.Now;
+            _resultInfo.TotalNumberOfRelevantQuestions =
+                relevantQuestionsCount;
+            _resultInfo.NumberOfVerifications = noOfVerifications;
+            _resultInfo.NumberOfHypotheses = noOfHypotheses;
+        }
 
         /// <summary>
         /// Stores the tree in the output of the miner.
