@@ -17,6 +17,14 @@
 			</fileset>
 		</delete>
 		<delete dir="${path::combine(moddoc.dir,'modules')}" failonerror="false"/>
+		
+    <!-- generovane soubory, ktere byly driv generovany do spatneho adresare (mely by byt v podadresari generated), pozdeji bude mozne nasledujici tag smazat -->
+    <delete failonerror="false">
+			<fileset basedir="${build.dir}/Modules/BoxModulesServices/OntologyRelated/">
+				<include name="OWLParser.cs"/>
+				<include name="OntologyData.cs"/>
+			</fileset>
+		</delete>
 	</target>
 	<target name="slice" description="Create C# files from slice">
 		<uptodate property="actual1">
@@ -144,11 +152,11 @@
 			</exec>
 			
 			<echo message="Generuji .cs z .ice souboru pro FerdaOWLParser..."/>
-			<mkdir dir="${build.dir}/Modules/BoxModulesServices/OntologyRelated"/>
+			<mkdir dir="${build.dir}/Modules/BoxModulesServices/OntologyRelated/generated"/>
 			<exec program="slice2cs">
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
-				<arg value="${build.dir}/Modules/BoxModulesServices/OntologyRelated"/>
+				<arg value="${build.dir}/Modules/BoxModulesServices/OntologyRelated/generated"/>
 				<arg file="Modules/OWLParser.ice"/>
 			</exec>
 			
