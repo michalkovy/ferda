@@ -437,6 +437,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             try
             {
+                AttributeNameProviderPrx nameProvider =
+                    AttributeNameProviderPrxHelper.checkedCast(taskBoxModule.getFunctions());
+                Ferda.Guha.MiningProcessor.Formulas.AttributeNameInLiteralsProvider.Init(nameProvider);
                 miningProcessor.Trace();
             }
             catch (BoxRuntimeError)

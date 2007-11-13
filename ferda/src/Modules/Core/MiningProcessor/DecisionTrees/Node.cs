@@ -147,16 +147,33 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         {
             get
             {
-                //TADY TO MUSI UMET REAGOVAT NA SMISENY OBSAH
-                //if (leaf)
-                //{
-                //    return SubCategoriesToIfString();
-                //}
-                //else
-                //{
-                //    return SubNodesToIfString();
-                //}
-                return string.Empty;
+                string attributeName = 
+                    attribute.Identifier.ToString();
+
+                StringBuilder sb = new StringBuilder();
+
+                foreach (string cat in subCategories)
+                {
+                    sb.Append(attributeName);
+                    sb.Append(" = ");
+                    sb.Append(cat);
+                    sb.Append('\n');
+                }
+
+                if (SubNodes != null)
+                {
+                    foreach (string cat in SubNodes.Keys)
+                    {
+                        sb.Append(attributeName);
+                        sb.Append(" = ");
+                        sb.Append(cat);
+                        sb.Append('\n');
+
+                        sb.Append(Tabulate(SubNodes[cat].IfRepresentation));
+                    }
+                }
+
+                return sb.ToString();
             }
         }
 
@@ -219,6 +236,27 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         protected string SubNodesToIfString()
         {
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Appends each line of the <paramref name="source"/>
+        /// string with '\t'. It is used for construction of
+        /// if representation of the trees.
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>Tabulated string</returns>
+        protected static string Tabulate(string source)
+        {
+            string result = string.Empty;
+
+            while (source.IndexOf('\n') != -1)
+            {
+                string tmp = '\t' + source.Substring(0, source.IndexOf('\n')+1);
+                source = source.Remove(0, source.IndexOf('\n')+1);
+                result += tmp;
+            }
+
+            return result;
         }
 
         #endregion
