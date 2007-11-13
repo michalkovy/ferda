@@ -106,6 +106,10 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         {
             get
             {
+                if (rootNode == null)
+                {
+                    return "Seed tree";
+                }
                 return rootNode.IfRepresentation;
             }
         }

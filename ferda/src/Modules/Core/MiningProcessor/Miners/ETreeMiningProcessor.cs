@@ -275,6 +275,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 noOfVerifications++;
                 processTree = fifo.Dequeue();
+                string repre = processTree.IfRepresentation;
 
                 fifo = Process(processTree, fifo);
 
@@ -452,6 +453,18 @@ namespace Ferda.Guha.MiningProcessor.Miners
             CategorialAttributeTrace attribute)
         {
             Tree result = (Tree) processTree.Clone();
+
+            //change of the used and unused attributes of the tree
+            List<CategorialAttributeTrace> usedAttributes =
+                new List<CategorialAttributeTrace>(result.UsedAttributes);
+            List<CategorialAttributeTrace> unusedAttributes =
+                new List<CategorialAttributeTrace>(result.UnusedAttributes);
+            usedAttributes.Add(attribute);
+            unusedAttributes.Remove(attribute);
+            result.UsedAttributes = usedAttributes.ToArray();
+            result.UnusedAttributes = unusedAttributes.ToArray();
+
+            //finiding the right node in the new tree
             Node n = result.FindNode(node.Attribute.Identifier.AttributeGuid);
 
             if (n == null)
@@ -599,6 +612,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             if (noAttributesForBranching >= possibleAttributes.Length)
             {
                 return possibleAttributes;
+            }
+            if (possibleAttributes.Length == 0)
+            {
+                return new CategorialAttributeTrace[0];
             }
 
             //The r_{i} array
