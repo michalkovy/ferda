@@ -89,8 +89,12 @@
     <Compile Include="FixedAtom\BoxInfo.cs" />
     <Compile Include="FixedAtom\Functions.cs" />
     <Compile Include="Quantifiers\Common.cs" />
+    <Compile Include="Quantifiers\FourFold\AntiFProperty\Kulczinski\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\AntiFProperty\Kulczinski\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\DoubleImplicational\FMeasure\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\DoubleImplicational\FMeasure\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Equivalence\AboveNegation\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Equivalence\AboveNegation\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Equivalence\FoundedEquivalence\BoxInfo.cs" />
@@ -104,6 +108,8 @@
     <Compile Include="Quantifiers\FourFold\Others\Base\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Others\BelowAverageDependence\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Others\BelowAverageDependence\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\ComparedImplication\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\ComparedImplication\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Others\E\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Others\E\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Others\Pairing\BoxInfo.cs" />
@@ -173,23 +179,44 @@
     <Compile Include="VirtualAttributes\VirtualSDFFTBooleanAttribute\Functions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Quantifiers\FourFold\AntiFProperty\Kulczinski\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\AntiFProperty\Kulczinski\BoxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\boxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\DoubleImplicational\FMeasure\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\DoubleImplicational\FMeasure\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\Equivalence\AboveNegation\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\Equivalence\AboveNegation\boxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\FProperty\ChiSquare\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\FProperty\ChiSquare\boxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\FProperty\Fisher\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\FProperty\Fisher\boxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\FProperty\SimpleDeviation\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\FProperty\SimpleDeviation\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\Others\AboveAverageDependence\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\Others\AboveAverageDependence\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\Others\BelowAverageDependence\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\Others\BelowAverageDependence\boxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\Others\ComparedImplication\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\Others\ComparedImplication\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\Others\Pairing\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\Others\Pairing\boxIcon.ico" />
     <Content Include="Quantifiers\Notes.txt" />
     <Content Include="Tasks\ETree\boxIcon.ico" />
     <Content Include="Tasks\FourFold\boxDesign.svg" />
     <Content Include="Tasks\FourFold\boxIcon.ico" />
+    <Content Include="Tasks\SDFourFold\boxDesign.svg" />
+    <Content Include="Tasks\SDFourFold\boxIcon.ico" />
+    <Content Include="Tasks\SDSingleDimensional\boxDesign.svg" />
+    <Content Include="Tasks\SDSingleDimensional\boxIcon.ico" />
+    <Content Include="Tasks\SDTwoDimensional\boxDesign.svg" />
+    <Content Include="Tasks\SDTwoDimensional\boxIcon.ico" />
+    <Content Include="Tasks\SingleDimensional\boxDesign.svg" />
+    <Content Include="Tasks\SingleDimensional\boxIcon.ico" />
+    <Content Include="Tasks\TwoDimensional\boxDesign.svg" />
+    <Content Include="Tasks\TwoDimensional\boxIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Quantifiers\FourFold\DistributionSignificance\ChiSquare\" />
-    <Folder Include="Quantifiers\FourFold\DistributionSignificance\Fisher\" />
-    <Folder Include="Quantifiers\FourFold\DistributionSignificance\SimpleDeviation\" />
     <Folder Include="Quantifiers\FourFold\DoubleImplicational\DoubleLowerCriticalImplication\" />
     <Folder Include="Quantifiers\FourFold\DoubleImplicational\DoubleUpperCriticalImplication\" />
     <Folder Include="Quantifiers\FourFold\Equivalence\LowerCriticalEquivalence\" />

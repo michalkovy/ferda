@@ -1,8 +1,8 @@
-// Functions.cs - Function objects for the Pairing quantifier box module
+// Functions.cs - Function objects for the Kulczinski quantifier box module
 //
 // Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2006 Martin Ralbovský
+// Copyright (c) 2007 Martin Ralbovský
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@
 using System;
 using Object = Ice.Object;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczinski
 {
     /// <summary>
-    /// Class that provides info about boxes of the pairing quantifier type
+    /// Class that provides info about boxes of the Kulczinski quantifier type
     /// </summary>
     internal class BoxInfo : Boxes.BoxInfo
     {
@@ -156,7 +156,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
         /// field in the BoxInfo implementation which holds the identifier 
         /// of type of the box module.
         /// </summary>
-        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.Others.Pairing";
+        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczinski";
 
         /// <summary>
         /// Unique identifier of type of Box module
