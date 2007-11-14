@@ -9874,11 +9874,25 @@
 				<Label>Path to Ontology</Label>
 				<Hint>Defines an ontology, which will be loaded by this box.</Hint>
 			</Socket>
+			<Socket>
+				<Name>OntologyURI</Name>
+				<Label>ontology URI</Label>
+				<Hint>Uniform Resource Identifier of ontology.</Hint>
+			</Socket>
+			<Socket>
+				<Name>NumberOfClasses</Name>
+				<Label>Number of classes</Label>
+				<Hint>Number of classes in the ontology.</Hint>
+			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
 				<Name>Ontology Location</Name>
 				<Label>Location of Ontology</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Ontology Info</Name>
+				<Label>Information about the ontology</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>

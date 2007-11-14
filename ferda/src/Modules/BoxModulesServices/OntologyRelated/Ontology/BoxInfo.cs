@@ -158,26 +158,17 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// </returns>
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            /* TODO upravit
-             * Functions Func = (Functions)boxModule.FunctionsIObj;
+            
+            Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (propertyName)
             {
-                case Functions.PropLastReloadRequest:
-                    return Func.LastReloadRequest;
-                case Functions.PropConnectionTimeout:
-                    return Func.ConnectionTimeout;
-                case Functions.PropDatabaseName:
-                    return Func.DatabaseName;
-                case Functions.PropDataSource:
-                    return Func.DataSource;
-                case Functions.PropDriver:
-                    return Func.Driver;
-                case Functions.PropServerVersion:
-                    return Func.ServerVersion;
+                case Functions.PropOntologyURI:
+                    return Func.OntologyURI;
+                case Functions.PropNumberOfClasses:
+                    return Func.NumberOfClasses;
                 default:
                     throw new NotImplementedException();
             }
-             */
             return null; 
         }
 
@@ -204,6 +195,19 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
                 default:
                     throw Ferda.Modules.Exceptions.NameNotExistError(null, actionName);
             }
+        }
+
+        /// <summary>
+        /// Validates the box
+        /// </summary>
+        /// <param name="boxModule">box instance to be validated</param>
+        public override void Validate(BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            // try to invoke methods
+            object dummy = Func.getOntology(true);
+            Func.LoadOntology();
         }
 
         /// <summary>

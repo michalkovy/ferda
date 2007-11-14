@@ -37,12 +37,12 @@ public class OWLParserI extends _OWLParserDisp{
 		try {
 			//loading ontology
 			
-			URI physicalURI = URI.create(ontologyURL);
+			//replace "\\" with "/" for correct windows paths
+			//replace " " with "%20" is needed, bacause the method does't allow space character
+			URI physicalURI = URI.create(ontologyURL.replace("\\", "/").replace(" ","%20").toString());
 			
 			OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromPhysicalURI(physicalURI);
 			
-			// TODO - throw WrongOntologyURL
-						
 			//loading of particular classes from the ontology
 			for(OWLClass cls : ontology.getReferencedClasses()) {
 				
@@ -161,6 +161,8 @@ public class OWLParserI extends _OWLParserDisp{
 					j++;
 				}
 			}
+			
+			FerdaOntology.ontologyURI = ontology.getURI().toString();
 		
 		}
 		

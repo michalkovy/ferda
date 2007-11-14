@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,79 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="SetOntologyPath" xml:space="preserve">
+    <value>Nastavení cesty k ontologii</value>
+  </data>
+  <data name="ButtonBrowse" xml:space="preserve">
+    <value>Procházet</value>
+  </data>
   <data name="ButtonCancel" xml:space="preserve">
     <value>Storno</value>
   </data>
-  <data name="ButtonOdbcConnection" xml:space="preserve">
-    <value>Vytvořit ODBC zdroj...</value>
-  </data>
   <data name="ButtonOk" xml:space="preserve">
-    <value>Ok</value>
-  </data>
-  <data name="ButtonRefresh" xml:space="preserve">
-    <value>Obnovit</value>
-  </data>
-  <data name="ButtonTest" xml:space="preserve">
-    <value>Test</value>
-  </data>
-  <data name="ConnectionString" xml:space="preserve">
-    <value>ODBC připojení</value>
-  </data>
-  <data name="ConnectionStringAbout" xml:space="preserve">
-    <value>Nastavení pro připojení k databázi</value>
-  </data>
-  <data name="ConnectionStringFail" xml:space="preserve">
-    <value>Spojení s databázi se nezdařilo</value>
-  </data>
-  <data name="ConnectionStringOk" xml:space="preserve">
-    <value>Spojení s databázi se zdařilo</value>
-  </data>
-  <data name="CurrentDSN" xml:space="preserve">
-    <value>Současné DSN</value>
-  </data>
-  <data name="DllFail" xml:space="preserve">
-    <value>Chyba při volání ODBCCP32.dll</value>
-  </data>
-  <data name="EmptyPassword" xml:space="preserve">
-    <value>Prázdné heslo</value>
+    <value>OK</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Nápověda</value>
   </data>
-  <data name="InputAuth" xml:space="preserve">
-    <value>Zadejte autentifikaci pro server:</value>
+  <data name="SelectOntologyNetwork" xml:space="preserve">
+    <value>Vyberte ontologii z lokální sítě: </value>
   </data>
-  <data name="InputCustomConnectionString" xml:space="preserve">
-    <value>Zadejte vlastní připojovací řetězec: </value>
-  </data>
-  <data name="InputDataSource" xml:space="preserve">
-    <value>Zvolte název datového zdroje:</value>
-  </data>
-  <data name="InputFollowing" xml:space="preserve">
-    <value>Pro připojení ke zdroji dat zadejte následující:</value>
-  </data>
-  <data name="MessageTitleFail" xml:space="preserve">
-    <value>Chyba</value>
-  </data>
-  <data name="MessageTitleSuccess" xml:space="preserve">
-    <value>Úspěch</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>&lt;žádné&gt;</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Heslo</value>
-  </data>
-  <data name="PressTest" xml:space="preserve">
-    <value>Klikněte na tlačitko Test pro kontrolu řetězce</value>
-  </data>
-  <data name="ResultingString" xml:space="preserve">
-    <value>Výsledný připojovací řetězec:</value>
-  </data>
-  <data name="SavePassword" xml:space="preserve">
-    <value>Povolit ukládání hesla</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Uživatelské jméno</value>
+  <data name="SelectOntologyInternet" xml:space="preserve">
+    <value>Zadejte cestu k ontologii umístěné na internetu: </value>
   </data>
 </root>

@@ -68,14 +68,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions.cs" />
     <Compile Include="OntologyMapping\BoxInfo.cs" />
     <Compile Include="OntologyMapping\Functions.cs" />
     <Compile Include="Ontology\BoxInfo.cs" />
     <Compile Include="Ontology\Functions.cs" />
-    <Compile Include="OWLParser.cs" />
     <Compile Include="Service.cs" />
   </ItemGroup>
 </Project>

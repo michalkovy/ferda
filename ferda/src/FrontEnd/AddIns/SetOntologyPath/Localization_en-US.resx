@@ -117,28 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="SetOntologyPath" xml:space="preserve">
+    <value>Set path to ontology</value>
+  </data>
+  <data name="ButtonBrowse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
   <data name="ButtonCancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="ButtonOk" xml:space="preserve">
-    <value>Ok</value>
+    <value>OK</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>
-  <data name="SetOntologyPathAbout" xml:space="preserve">
-    <value>Setting a path to ontology</value>
+  <data name="SelectOntologyNetwork" xml:space="preserve">
+    <value>Select ontology from a local network: </value>
   </data>
-  <data name="InputOntologyURL" xml:space="preserve">
-    <value>Input URL to ontology:</value>
-  </data>
-  <data name="InputOntologyPath" xml:space="preserve">
-    <value>Select ontology:</value>
-  </data>
-  <data name="SetOntologyPath" xml:space="preserve">
-    <value>Set ontology path</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>&lt;none&gt;</value>
+  <data name="SelectOntologyInternet" xml:space="preserve">
+    <value>Set path to ontology located on internet: </value>
   </data>
 </root>
