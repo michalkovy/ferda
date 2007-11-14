@@ -201,9 +201,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <returns>Result of a task</returns>
         public override string GetResult(out string statistics, Current current__)
         {
-            //TODO az budu vedet, co tam budu davat, tak to dodelam
-            statistics = string.Empty;
-            return string.Empty;
+            statistics = Common.GetResultInfo(_boxModule);
+            return Common.GetResult(_boxModule);
         }
 
         /// <summary>
@@ -371,6 +370,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
 
             //processing of the results
             Common.SetResultInfo(_boxModule, resultInfo);
+            Common.SetResult(_boxModule, result);
         }
     }
 }
