@@ -5039,6 +5039,244 @@
 		</Sockets>
 	</BoxLocalization>
 	<BoxLocalization>
+		<Identifier>GuhaMining.Quantifiers.FourFold.Others.ComparedImplication</Identifier>
+		<Label>Porovnaná implikace</Label>
+		<Hint>Hledá pravidla, pro která pravděpobnost P(S|A) je 100*p krát vyšší než pravděpodobnost P(S|notA).</Hint>
+		<Categories>
+			<Category>
+				<Name>GuhaMining.Quantifiers.FourFold</Name>
+				<Label>Guha Mining.Quantifiers.4ft</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>OperationMode</Name>
+				<Label>Mód operace</Label>
+				<Hint>Mód operace je důležítý pro SD úlohy, pro ostatní úlohy je kvantifikátor povinen implementovat "FirstSetFrequencies"</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>FirstSetFrequencies</Name>
+						<Label>First set frequencies</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>SecondSetFrequencies</Name>
+						<Label>Second set frequencies</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>DifferenceOfFrequencies</Name>
+						<Label>Difference of frequencies</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>DifferenceOfQuantifierValues</Name>
+						<Label>Difference of quantifeir values</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>MissingInformationHandling</Name>
+				<Label>Práce s chybějící informací</Label>
+				<Hint>Specifikuje způsob práce s chybějící informací.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Deleting</Name>
+						<Label>Deleting</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Optimistic</Name>
+						<Label>Optimistic</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Secured</Name>
+						<Label>Secured</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>Relation</Name>
+				<Label>Relace</Label>
+				<Hint>Specifikuje relaci mezi mezí a signifikantní hodnotou kvantifikátoru (hodnotou evaluační funkce)</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Greater</Name>
+						<Label>Větší</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>GreaterOrEqual</Name>
+						<Label>Větší nebo rovno</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Equal</Name>
+						<Label>Rovno</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>LessOrEqual</Name>
+						<Label>Menší nebo rovno</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Less</Name>
+						<Label>Menší</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>Treshold</Name>
+				<Label>Mez</Label>
+				<Hint>Specifikuje mez, která bude porovnána se signifikantní hodnotou (hodnotou evaluační funkce)</Hint>
+			</Socket>
+			<Socket>
+				<Name>FromRowBoundary</Name>
+				<Label>Hranice OD řádků</Label>
+				<Hint>Typ hranice pro řádky kontingenční tabulky</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>All</Name>
+						<Label>Všechny</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Half</Name>
+						<Label>Polovina</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Number</Name>
+						<Label>Číslo</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>ToRowBoundary</Name>
+				<Label>Hranice DO řádků</Label>
+				<Hint>Typ hranice pro řádky kontingenční tabulky</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>All</Name>
+						<Label>Všechny</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Half</Name>
+						<Label>Polovina</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Number</Name>
+						<Label>Číslo</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>FromColumnBoundary</Name>
+				<Label>Hranice OD sloupců</Label>
+				<Hint>Typ hranice pro sloupce kontingenční tabulky</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>All</Name>
+						<Label>Všechny</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Half</Name>
+						<Label>Polovina</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Number</Name>
+						<Label>Číslo</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>ToColumnBoundary</Name>
+				<Label>Hranice DO sloupců</Label>
+				<Hint>Typ hranice pro sloupce kontingenční tabulky</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>All</Name>
+						<Label>Všechny</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Half</Name>
+						<Label>Polovina</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Number</Name>
+						<Label>Číslo</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>FromRowBoundaryIndex</Name>
+				<Label>Index OD pro řádky</Label>
+				<Hint>Specifies the index (from 0) of boundary of the contingency table</Hint>
+			</Socket>
+			<Socket>
+				<Name>ToRowBoundaryIndex</Name>
+				<Label>Index DO pro řádky</Label>
+				<Hint>Specifikuje index (číslování od 0)  hranice kontingenční tabulky</Hint>
+			</Socket>
+			<Socket>
+				<Name>FromColumnBoundaryIndex</Name>
+				<Label>Index OD pro sloupce</Label>
+				<Hint>Specifikuje index (číslování od 0)  hranice kontingenční tabulky</Hint>
+			</Socket>
+			<Socket>
+				<Name>ToColumnBoundaryIndex</Name>
+				<Label>Index DO pro sloupce</Label>
+				<Hint>Specifikuje index (číslování od 0)  hranice kontingenční tabulky</Hint>
+			</Socket>
+			<Socket>
+				<Name>NeedsNumericValues</Name>
+				<Label>Potřeba numerických hodnot</Label>
+				<Hint>Specifikuje index (číslování od 0)  hranice kontingenční tabulky</Hint>
+			</Socket>
+			<Socket>
+				<Name>SupportedData</Name>
+				<Label>Podporovaná data</Label>
+				<Hint>Specifikuje podporovanou sémantiku dat</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Nominal</Name>
+						<Label>Nominální</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Ordinal</Name>
+						<Label>Ordinální</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>OrdinalCyclic</Name>
+						<Label>Cyklické ordinální</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Cardinal</Name>
+						<Label>Kardinální</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>Units</Name>
+				<Label>Jednotky</Label>
+				<Hint>Jednotky do kterých se převede kontingenční tabulka</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Irrelevant</Name>
+						<Label>Irelevantní</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>AbsoluteNumber</Name>
+						<Label>Absolutní</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>RelativeToActCondition</Name>
+						<Label>Relativní k součku frekvencí</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>RelativeToMaxFrequency</Name>
+						<Label>Relativní k maximální frekvenci</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>RelativeToAllObjects</Name>
+						<Label>Relativní k celkovému počtu položek v datové matici</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+		</Sockets>
+	</BoxLocalization>
+	<BoxLocalization>
 		<Identifier>GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage</Identifier>
 		<Label>Aritmetic Average</Label>
 		<Hint>Single dimension table quantifier for cardinal values.</Hint>
