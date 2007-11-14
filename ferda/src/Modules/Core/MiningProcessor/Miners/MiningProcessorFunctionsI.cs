@@ -469,7 +469,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
-            return string.Empty;
+            return DecisionTreeResult.Serialize(miningProcessor.Result);
         }
 
         #endregion

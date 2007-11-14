@@ -163,6 +163,7 @@
     <Compile Include="QuantifierEvaluator\IEvaluator.cs" />
     <Compile Include="QuantifierEvaluator\Quantifier.cs" />
     <Compile Include="QuantifierEvaluator\Quantifiers.cs" />
+    <Compile Include="Results\DecisionTreeResult.cs" />
     <Compile Include="Results\Hypothesis.cs" />
     <Compile Include="Results\Result.cs" />
     <Compile Include="Results\SerializableFormula.cs" />

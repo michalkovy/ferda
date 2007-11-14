@@ -144,7 +144,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Structure holding information about the running of the
         /// task
         /// </summary>
-        protected SerializableResultInfo _resultInfo = null;
+        protected SerializableResultInfo resultInfo = null;
+
+        /// <summary>
+        /// The result of a run of this procedure
+        /// </summary>
+        private DecisionTreeResult result = null;
+
+        private List<Tree> hypotheses = new List<Tree>();
 
         #endregion
 
@@ -156,7 +163,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>        
         public SerializableResultInfo ResultInfo
         {
-            get { return _resultInfo; }
+            get { return resultInfo; }
+        }
+
+        /// <summary>
+        /// The result of a run of this procedure
+        /// </summary>
+        public DecisionTreeResult Result
+        {
+            get { return result; }
         }
 
         #endregion
@@ -269,8 +284,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
         public void Trace()
         {
             //initialization of the resultinfo
-            _resultInfo = new SerializableResultInfo();
-            _resultInfo.StartTime = DateTime.Now;
+            resultInfo = new SerializableResultInfo();
+            resultInfo.StartTime = DateTime.Now;
 
             double relevantQuestionsCount = 0;
             long noOfVerifications = 0;
@@ -313,14 +328,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                  noOfVerifications,
                                  noOfHypotheses)))
                     {
-                        ResultInfoFinish(relevantQuestionsCount, noOfVerifications, 
+                        ResultFinish(relevantQuestionsCount, noOfVerifications, 
                             noOfHypotheses);
                         return;
                     }
                 }
             }
 
-            ResultInfoFinish(relevantQuestionsCount, noOfVerifications, noOfHypotheses);
+            ResultFinish(relevantQuestionsCount, noOfVerifications, noOfHypotheses);
         }
 
         #region Private methods
@@ -332,14 +347,26 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="relevantQuestionsCount">Number of relevant questions</param>
         /// <param name="noOfVerifications">Number of verifications carried out</param>
         /// <param name="noOfHypotheses">Number of hypotheses found</param>
-        private void ResultInfoFinish(double relevantQuestionsCount, long noOfVerifications,
+        private void ResultFinish(double relevantQuestionsCount, long noOfVerifications,
             long noOfHypotheses)
         {
-            _resultInfo.EndTime = DateTime.Now;
-            _resultInfo.TotalNumberOfRelevantQuestions =
+            resultInfo.EndTime = DateTime.Now;
+            resultInfo.TotalNumberOfRelevantQuestions =
                 relevantQuestionsCount;
-            _resultInfo.NumberOfVerifications = noOfVerifications;
-            _resultInfo.NumberOfHypotheses = noOfHypotheses;
+            resultInfo.NumberOfVerifications = noOfVerifications;
+            resultInfo.NumberOfHypotheses = noOfHypotheses;
+
+            result = new DecisionTreeResult();
+            result.TaskTypeEnum = TaskTypeEnum.ETree;
+            result.AllObjectsCount = allObjectsCount;
+            
+            List<string> hyps = new List<string>(hypotheses.Count);
+            foreach (Tree tree in hypotheses)
+            {
+                hyps.Add(tree.IfRepresentation);
+            }
+            result.decisionTrees = hyps.ToArray();
+
         }
 
         /// <summary>
@@ -348,6 +375,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="processTree">The tree to be put to output</param>
         private void PutToOutPut(Tree processTree)
         {
+            hypotheses.Add(processTree);
         }
 
         /// <summary>
