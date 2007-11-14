@@ -13,8 +13,11 @@
    id="svg1374"
    sodipodi:version="0.32"
    inkscape:version="0.43"
-   sodipodi:docbase="C:\Make\Projekt\svn\ferda\src\Modules\BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\E"
-   sodipodi:docname="boxDesign.svg">
+   sodipodi:docbase="C:\Make\Projekt\svn\ferda\src\Modules\BoxModulesServices\GuhaMining\Quantifiers\FourFold\AntiFProperty\Kulczinski"
+   sodipodi:docname="boxDesign.svg"
+   inkscape:export-filename="C:\Make\Projekt\svn\ferda\src\Modules\BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\E\boxDesign.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs1376" />
   <sodipodi:namedview
@@ -81,14 +84,14 @@
        y="16.09" />
     <text
        xml:space="preserve"
-       style="font-size:41.81510925px;font-style:normal;font-weight:normal;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="0.36135295"
-       y="32.651497"
+       style="font-size:41.81511307px;font-style:normal;font-weight:normal;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="-0.96516716"
+       y="32.651501"
        id="text2831"
        transform="scale(1.124895,0.888972)"><tspan
          sodipodi:role="line"
          id="tspan2833"
-         x="0.36135295"
-         y="32.651497">E</tspan></text>
+         x="-0.96516716"
+         y="32.651501">K</tspan></text>
   </g>
 </svg>
