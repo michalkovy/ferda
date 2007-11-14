@@ -71,13 +71,15 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             catch
             {
                 resManager = new ResourceManager("Ferda.FrontEnd.AddIns.SetOntologyPath.Localization_en-US",
-            Assembly.GetExecutingAssembly());
+                    Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
+
             this.ownerOfAddIn = ownerOfAddIn;
             this.path = Assembly.GetExecutingAssembly().Location;
             
             InitializeComponent();
+            ChangeLocale(resManager);
             if (currentOntologyPath.StartsWith("file:/"))
             {
                 radioButton1.Checked = true;
