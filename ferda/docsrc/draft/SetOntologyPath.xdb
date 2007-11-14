@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <firstname>Martin</firstname>
+
+        <surname>Zeman</surname>
+
+        <email>martinzeman@email.cz</email>
+      </author>
+    </authorgroup>
+
+    <pubdate>2007-11-13</pubdate>
+
+    <title>SetOntologyPath module - Module for setting the path to the ontology</title>
+
+    <titleabbrev>SetOntologyPath</titleabbrev>
+
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2007-11-13</date>
+        <revremark>Initial version of the document</revremark>
+      </revision>
+    </revhistory>
+    -->
+  </articleinfo>
+
+  <abstract>
+    <para>This document describes the user interface for SetOntologyPath
+    module. It also contains simple examples.</para>
+  </abstract>
+
+  <section>
+    <title>Introduction</title>
+
+    <para>Welcome to SetOntologyPath module. This is a module designed
+    for setting up the path to OWL ontology. Module can load ontology saved in any dialect of OWL (Light, DL, FULL).</para>
+  </section>
+
+  <section>
+    <title>User interface</title>
+  
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="SetOntologyPath.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+        
+      <para>It's easy, you can either choose .owl file, which contains ontology from your local network 
+      or you can set the path to internet based ontology.</para>
+      <para>If you choose a file from your local network, then a
+      parameter OntologyPath of the Ontology box contains the path with the "file:/" string going before it.</para>
+      
+      <section>
+        <title>Examples</title>
+        <itemizedlist>
+          <listitem>
+            <formalpara>
+              <title>Ontology path to ontology from local network</title>
+              <para>file:/D:\My ontologies\umls_stulong_2.owl</para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Ontology path to internet based ontology</title>
+              <para>http://www.co-ode.org/ontologies/pizza/2007/02/12/pizza.owl</para>
+            </formalpara>
+          </listitem>
+        </itemizedlist>
+      </section> 
+       
+  </section>
+</article>
