@@ -18050,6 +18050,24 @@
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
+			<Socket>
+				<Name>OntologyURI</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>NumberOfClasses</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
 		</Sockets>
 		<Properties>
 			<Property>
@@ -18059,6 +18077,20 @@
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 				<SettingModuleIdentifier>SetOntologyPath</SettingModuleIdentifier>
+			</Property>
+			<Property>
+				<Name>OntologyURI</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Ontology Info</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>true</ReadOnly>
+			</Property>
+			<Property>
+				<Name>NumberOfClasses</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Ontology Info</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>true</ReadOnly>
 			</Property>
 		</Properties>
 		<ModulesAskingForCreationSeq>

@@ -54,10 +54,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         #region Properties
         
-        private Ferda.OntologyRelated.generated.OntologyData.OntologyStructure ontology = new OntologyStructure();
-
+        private OntologyStructure ontology;
+        
         //names of the properties
         public const string PropOntologyPath = "OntologyPath";
+        public const string PropOntologyURI = "OntologyURI";
+        public const string PropNumberOfClasses = "NumberOfClasses";
 
         /// <summary>
         /// The Ontology Path property
@@ -65,6 +67,24 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         public string OntologyPath
         {
             get { return _boxModule.GetPropertyString(PropOntologyPath); }
+        }
+
+        public StringTI OntologyURI
+        {
+            get
+            {
+                OntologyStructure tmpOntology = getOntology(false);
+                return (tmpOntology != null) ? tmpOntology.ontologyURI.ToString() : null;
+            }
+        }
+
+        public StringTI NumberOfClasses
+        {
+            get
+            {
+                OntologyStructure tmpOntology = getOntology(false);
+                return (tmpOntology != null) ? tmpOntology.OntologyClassMap.Values.Count.ToString() : "0";
+            }
         }
 
         public BoxModuleI BoxModule
@@ -98,7 +118,14 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         public override void LoadOntology(Ice.Current __current)
         {
-            LoadOntologyWithParameter(OntologyPath.ToString(), __current);
+            if ((OntologyPath == null))
+            {
+                LoadOntologyWithParameter("", __current);
+            }
+            else
+            {
+                LoadOntologyWithParameter(OntologyPath.ToString(), __current);
+            }
             return;
         }
 
@@ -108,28 +135,37 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             Ice.Communicator ic = null;
             ic = Ice.Util.initialize();
 
-            Ferda.OntologyRelated.generated.OWLParserPrx prx =
-                Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(
-                    BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
-                        "::Ferda::OntologyRelated::OWLParser"
-                    )[0]
-                );
-
-            if (prx == null)
+            if (innerOntologyPath.ToString() == "")
             {
                 throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
-                        "Ice object ::Ferda::OntologyRelated::OWLParser can't be found.");
+                        "Parameter Path to Ontology is empty.");
             }
-
-            this.ontology = prx.parseOntology(innerOntologyPath.Replace("\\", "/").ToString());
-            //examples
-            //this.ontology = prx.parseOntology("file:/D:/Marthin/skola/diplomova_prace/pokusne_ontologie/umls_stulong_2/umls_stulong_2.owl");
-            //this.ontology = prx.parseOntology("http://www.co-ode.org/ontologies/pizza/2007/02/12/pizza.owl"
-
-            if (this.ontology.OntologyClassMap.Keys.Count == 0)
+            else
             {
-                throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
-                        "Ontology specified by the ontology path: " + innerOntologyPath.ToString() + " is incorrect. Either the path is wrong or the ontology is in incorrect format.");
+                Ferda.OntologyRelated.generated.OWLParserPrx prx =
+                    Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(
+                        BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
+                            "::Ferda::OntologyRelated::OWLParser"
+                        )[0]
+                    );
+
+                if (prx == null)
+                {
+                    throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
+                            "Ice object ::Ferda::OntologyRelated::OWLParser can't be found.");
+                }
+
+                this.ontology = prx.parseOntology(innerOntologyPath.ToString());
+
+                //examples
+                //this.ontology = prx.parseOntology("file:/D:/My ontologies/umls_stulong_2.owl");
+                //this.ontology = prx.parseOntology("http://www.co-ode.org/ontologies/pizza/2007/02/12/pizza.owl");
+
+                if (this.ontology.OntologyClassMap.Keys.Count == 0)
+                {
+                    throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
+                            "Ontology specified by the ontology path: " + innerOntologyPath.ToString() + " is incorrect. Either the path is wrong or the ontology is in incorrect format.");
+                }
             }
             
             return;

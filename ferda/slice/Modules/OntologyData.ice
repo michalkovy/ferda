@@ -9,32 +9,33 @@ module Ferda {
           string ontologyURL;
         };
   
-        sequence<string> StrSeq;    //typ seznam stringu
+        sequence<string> StrSeq;    //type list of strings
         dictionary<string, StrSeq> StrSeqMap;
         
         struct OntologyClass {
-          string name;           //jmeno tridy ontologie
-          StrSeq Annotations;    //seznam pro komentare/labely/atd.
-          StrSeq SubClasses;     //seznam s nazvy trid primych potomku
-          StrSeq SuperClasses;   //seznam s nazvy trid primych predchudcu
-          StrSeq Instances;      //seznam s nazvy instanci teto tridy
-          StrSeqMap DataPropertiesMap;    //"slovnik" - nazev vlastnosti a seznam hodnot jakych nabyva
+          string name;           //name of the class
+          StrSeq Annotations;    //list for comments,labels,...
+          StrSeq SubClasses;     //list with names of lineal descentdants
+          StrSeq SuperClasses;   //list with name of lineal predecessors
+          StrSeq Instances;      //list with names of instances of this class
+          StrSeqMap DataPropertiesMap;    //"dictionary" - name of a property and list of values it takes for this class
         };
         
-        dictionary<string, OntologyClass> dictionaryStringOntologyClass; //mapa - nazev tridy -> trida ontologie
+        dictionary<string, OntologyClass> dictionaryStringOntologyClass; //"a map" - name of class -> class of ontology
   
         struct ObjectProperty {
-          string name;       //nazev relaci
-          StrSeq Annotations;    //seznam pro komentare/labely/atd.
-          StrSeq Domains;    //seznam trid, ktere jsou pro tuto relaci definicnim oborem
-          StrSeq Ranges;	   //seznam trid, ktere jsou pro tuto relaci oborem hodnot
+          string name;       //name of relation
+          StrSeq Annotations;    //list for comments,labels,...
+          StrSeq Domains;    //list of domains of the relation
+          StrSeq Ranges;	   //list of ranges of the relation
         };
   
         sequence<ObjectProperty> sequenceObjectProperty;
   
         struct OntologyStructure {
-          dictionaryStringOntologyClass OntologyClassMap; //vsechny tridy v ontologii
-          sequenceObjectProperty ObjectProperties;    //seznam relaci ontologie
+          string ontologyURI; //ontology URI
+          dictionaryStringOntologyClass OntologyClassMap; //all the classes in the ontology
+          sequenceObjectProperty ObjectProperties;    //list of all the relations in ontology
         };
       };
     };

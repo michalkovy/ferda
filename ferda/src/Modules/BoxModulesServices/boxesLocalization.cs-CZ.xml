@@ -9842,11 +9842,25 @@
 				<Label>Cesta k ontologii</Label>
 				<Hint>Určuje ontologii, která bude načtena touto krabičkou.</Hint>
 			</Socket>
+			<Socket>
+				<Name>OntologyURI</Name>
+				<Label>URI ontologie</Label>
+				<Hint>Uniform Resource Identifier ontologie.</Hint>
+			</Socket>
+			<Socket>
+				<Name>NumberOfClasses</Name>
+				<Label>Počet tříd</Label>
+				<Hint>Počet tříd v ontologii.</Hint>
+			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
 				<Name>Ontology Location</Name>
 				<Label>Umístění ontologie</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Ontology Info</Name>
+				<Label>Informace o ontologii</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>
