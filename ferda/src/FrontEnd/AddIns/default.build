@@ -477,6 +477,12 @@
 			</references>
 		</csc>
     
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+      <fileset basedir="SetOntologyPath/Help">
+        <include name="*.*" />
+      </fileset>
+    </copy>
+    
     <csc target="library" output="${path::combine(addInsBuild.dir,'OntologyMapping.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
 				<include name="OntologyMapping/**.cs"/>
