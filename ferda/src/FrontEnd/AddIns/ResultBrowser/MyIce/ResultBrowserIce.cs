@@ -30,6 +30,7 @@ using Ferda.Guha.Math.Quantifiers;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
+using Ferda.Guha.MiningProcessor.Results;
 using Ferda.FrontEnd.AddIns.Common.MyIce;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
@@ -167,14 +168,27 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                 return;
             }
 
+            //getting the information about the quantifiers from the task
             Quantifiers quantifiers = new Quantifiers(taskProxy1.GetQuantifiers(), taskProxy, localePrefs);
 
-            FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control = 
-                new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(
-                resManager, serializedResult, quantifiers, 
-                taskProxy, displayer, ownerOfAddIn, bitStringProvider);
-            this.ownerOfAddIn.ShowDockableControl(control, 
-                taskLabel + " - " + resManager.GetString("ResultBrowserControl"));
+            if (IsETreeTask(serializedResult))
+            {
+                FrontEnd.AddIns.ResultBrowser.DecisionTreeBrowser control =
+                    new DecisionTreeBrowser(serializedResult, resManager);
+
+                this.ownerOfAddIn.ShowDockableControl(control,
+                    taskLabel + " - " + resManager.GetString("ResultBrowserControl"));
+            }
+            else
+            {
+                FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl control =
+                    new FrontEnd.AddIns.ResultBrowser.FerdaResultBrowserControl(
+                    resManager, serializedResult, quantifiers,
+                    taskProxy, displayer, ownerOfAddIn, bitStringProvider);
+
+                this.ownerOfAddIn.ShowDockableControl(control,
+                    taskLabel + " - " + resManager.GetString("ResultBrowserControl"));
+            }
         }
 
         #endregion
@@ -195,6 +209,26 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             localizationString = locale;
             locale = "Ferda.FrontEnd.AddIns.ResultBrowser.Localization_" + locale;
             resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
+        }
+
+        /// <summary>
+        /// Determines from the serialized result string, if the result
+        /// is from ETree task or from other GUHA tasks.
+        /// </summary>
+        /// <param name="serializedResult">The serialized result</param>
+        /// <returns>If the task is ETree task</returns>
+        private bool IsETreeTask(string serializedResult)
+        {
+            try
+            {
+                DecisionTreeResult result =
+                    DecisionTreeResult.Deserialize(serializedResult);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
 
         #endregion

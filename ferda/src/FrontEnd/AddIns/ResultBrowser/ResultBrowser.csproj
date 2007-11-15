@@ -76,6 +76,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DecisionTreeBrowser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DecisionTreeBrowser.Designer.cs">
+      <DependentUpon>DecisionTreeBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="FerdaResultBrowserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -93,6 +99,10 @@
     <Compile Include="NonGUIClasses\Specifiers.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DecisionTreeBrowser.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DecisionTreeBrowser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FerdaResultBrowserControl.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FerdaResultBrowserControl.cs</DependentUpon>
