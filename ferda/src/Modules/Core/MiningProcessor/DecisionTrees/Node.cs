@@ -157,6 +157,11 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                     sb.Append(attributeName);
                     sb.Append(" = ");
                     sb.Append(cat);
+                    if (classifiedCategories != null)
+                    {
+                        sb.Append(" : ");
+                        sb.Append(classifiedCategories[cat].classificationCategory);
+                    }
                     sb.Append('\n');
                 }
 

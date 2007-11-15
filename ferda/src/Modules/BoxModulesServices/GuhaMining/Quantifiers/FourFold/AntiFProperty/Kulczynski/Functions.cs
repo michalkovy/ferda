@@ -32,7 +32,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulc
     /// <remarks>
     /// The formula for the quantifier is 
     /// a/2(1/a+c + 1/a+b). It is a statistical quantifier with the
-    /// null-invariance property. 
+    /// null-invariance property. More information can be found in
+    /// "Association Mining in Large Databases: A Re-examination of
+    /// Its Measures." by T.Wu, Y.Chen, J.Han, published in Springer
+    /// Verlag, LNAI 4702 Knowledge Discovery in Databases: PKDD 2007.
     /// </remarks>
     public class Functions : FourFoldValueDisp_, IFunctions
     {

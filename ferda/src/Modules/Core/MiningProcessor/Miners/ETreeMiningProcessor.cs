@@ -314,7 +314,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 noOfVerifications++;
                 processTree = fifo.Dequeue();
-                string repre = processTree.IfRepresentation;
 
                 fifo = Process(processTree, fifo);
 
