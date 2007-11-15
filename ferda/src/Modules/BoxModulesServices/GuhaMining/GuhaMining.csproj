@@ -89,8 +89,8 @@
     <Compile Include="FixedAtom\BoxInfo.cs" />
     <Compile Include="FixedAtom\Functions.cs" />
     <Compile Include="Quantifiers\Common.cs" />
-    <Compile Include="Quantifiers\FourFold\AntiFProperty\Kulczinski\BoxInfo.cs" />
-    <Compile Include="Quantifiers\FourFold\AntiFProperty\Kulczinski\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\AntiFProperty\Kulczynski\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\AntiFProperty\Kulczynski\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\DoubleImplicational\FMeasure\BoxInfo.cs" />
@@ -179,8 +179,8 @@
     <Compile Include="VirtualAttributes\VirtualSDFFTBooleanAttribute\Functions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Quantifiers\FourFold\AntiFProperty\Kulczinski\boxDesign.svg" />
-    <Content Include="Quantifiers\FourFold\AntiFProperty\Kulczinski\BoxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\AntiFProperty\Kulczynski\boxDesign.svg" />
+    <Content Include="Quantifiers\FourFold\AntiFProperty\Kulczynski\BoxIcon.ico" />
     <Content Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\DoubleImplicational\FMeasure\boxDesign.svg" />

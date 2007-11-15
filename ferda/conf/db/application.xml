@@ -61,6 +61,7 @@
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.Pairing" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.Base" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.E" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczynski" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Others.ComparedImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.Asymetry" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
