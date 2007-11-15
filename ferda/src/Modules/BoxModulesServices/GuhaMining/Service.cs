@@ -62,6 +62,8 @@ namespace Ferda.Modules.Boxes.GuhaMining
                         new Quantifiers.FourFold.Others.E.BoxInfo());
             registerBox(Quantifiers.FourFold.Others.ComparedImplication.BoxInfo.typeIdentifier,
                         new Quantifiers.FourFold.Others.ComparedImplication.BoxInfo());
+            registerBox(Quantifiers.FourFold.AntiFProperty.Kulczynski.BoxInfo.typeIdentifier,
+                        new Quantifiers.FourFold.AntiFProperty.Kulczynski.BoxInfo());
             registerBox(
                 Quantifiers.OneDimensional.CardinalVariableDistributionCharacteristics.AritmeticAverage.BoxInfo.
                     typeIdentifier,

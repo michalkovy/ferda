@@ -1,4 +1,4 @@
-// Functions.cs - Function objects for the Kulczinski quantifier box module
+// Functions.cs - Function objects for the Kulczynski quantifier box module
 //
 // Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
@@ -24,15 +24,15 @@ using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
 using Ice;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczinski
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczynski
 {
     /// <summary>
-    /// Computes the Kulczinski Quantifier
+    /// Computes the Kulczynski Quantifier
     /// </summary>
     /// <remarks>
     /// The formula for the quantifier is 
     /// a/2(1/a+c + 1/a+b). It is a statistical quantifier with the
-    /// null-invariance property.
+    /// null-invariance property. 
     /// </remarks>
     public class Functions : FourFoldValueDisp_, IFunctions
     {

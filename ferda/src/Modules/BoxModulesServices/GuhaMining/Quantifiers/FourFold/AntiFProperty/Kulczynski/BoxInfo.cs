@@ -1,4 +1,4 @@
-// Functions.cs - Function objects for the Kulczinski quantifier box module
+// Functions.cs - Function objects for the Kulczynski quantifier box module
 //
 // Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
@@ -21,10 +21,10 @@
 using System;
 using Object = Ice.Object;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczinski
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczynski
 {
     /// <summary>
-    /// Class that provides info about boxes of the Kulczinski quantifier type
+    /// Class that provides info about boxes of the Kulczynski quantifier type
     /// </summary>
     internal class BoxInfo : Boxes.BoxInfo
     {
@@ -156,7 +156,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulc
         /// field in the BoxInfo implementation which holds the identifier 
         /// of type of the box module.
         /// </summary>
-        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczinski";
+        public const string typeIdentifier = "GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczynski";
 
         /// <summary>
         /// Unique identifier of type of Box module
