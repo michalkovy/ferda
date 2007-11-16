@@ -2530,13 +2530,14 @@ namespace Ferda.FrontEnd.Properties
             archiveDisplayer.RefreshBoxNames();
             foreach (IViewDisplayer view in ViewDisplayers)
             {
-                view.RefreshBoxNames();
+                //view.RefreshBoxNames();
                 //for optimalization purposes we redraw the view only if
                 //there was a socket changed
-                if (changedSocket)
-                {
-                    view.Adapt();
-                }
+                //if (changedSocket)
+                //{
+                //    view.Adapt();
+                //}
+                view.Adapt();
             }
         }
 
