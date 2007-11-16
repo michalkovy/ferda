@@ -652,8 +652,8 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         /// !!! Pro kvantifikatory neposkytujici jiny interface,
         /// !!! Pro ucely FirstN
         /// </summary>
-        /// <param name="contingencyTable">The contingency table.</param>
-        /// <returns></returns>
+        /// <param name="contingencyTables">The contingency table.</param>
+        /// <returns>Validity vector</returns>
         public bool[] Valid(List<ContingencyTableHelper> contingencyTables)
         {
             QuantifierEvaluateSetting[] setting = new QuantifierEvaluateSetting[contingencyTables.Count];

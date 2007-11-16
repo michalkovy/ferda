@@ -183,25 +183,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
         }
 
         /// <summary>
-        /// Algoritm for computing all the relevant questions and veryfiing them
-        /// agaist the quantifier. It is used in the virtual attributes.
-        /// In contrary to the <see cref="MiningProcessor.Trace"/>
-        /// method, this method returns not only valid hypotheses, but all the relevant
-        /// questions and states with 0 or 1 iff the relevant question is valid for
-        /// given record of the master data table.
+        /// Algoritm for tracing the relevant questions and verifying them against
+        /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        /// <param name="CountVector">
-        /// The count vector is an array of integers 
-        /// representing for each item in the master data table how many records are
-        /// in the detail data table corresponding to the item. 
-        /// More information can
-        /// be found in <c>svnroot/publications/diplomky/Kuzmos/diplomka.pdf</c> or
-        /// in <c>svnroot/publications/Icde08/ICDE.pdf</c>.
-        /// </param>
-        /// <param name="attributeGuid">Identification of newly created attribute</param>
-        /// <param name="skipFirstN">Skip first N steps of the computation</param>
-        /// <returns>A key/value pair: the key is identification of the virtual hypothesis attribute,
-        /// the value is bit string corresponding to this attribute.</returns>
         public override void Trace()
         {
             if (!ProgressSetValue(-1, "Begining of attributes trace."))
@@ -312,10 +296,18 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Method that yields bitstrings for virtual 4ft attribute
         /// </summary>
-        /// <param name="countVector">CountVector</param>
-        /// <param name="attributeGuid">Guid of the virtual attribute box</param>
-        /// <param name="skipFirstN">Number of virtual columns to skip</param>
-        /// <returns>Enumerable collection</returns>
+        /// <param name="countVector">
+        /// The count vector is an array of integers 
+        /// representing for each item in the master data table how many records are
+        /// in the detail data table corresponding to the item. 
+        /// More information can
+        /// be found in <c>svnroot/publications/diplomky/Kuzmos/diplomka.pdf</c> or
+        /// in <c>svnroot/publications/Icde08/ICDE.pdf</c>.
+        /// </param>
+        /// <param name="attributeGuid">Identification of newly created attribute</param>
+        /// <param name="skipFirstN">Skip first N steps of the computation</param>
+        /// <returns>A key/value pair: the key is identification of the virtual hypothesis attribute,
+        /// the value is bit string corresponding to this attribute.</returns>
         public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
         {
             if (skipFirstN >= this.TaskParams.maxSizeOfResult)

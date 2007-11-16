@@ -391,12 +391,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Algoritm for computing all the relevant questions and veryfiing them
         /// agaist the quantifier. It is used in the virtual attributes.
-        /// In contrary to the <see cref="MiningProcessor.Trace"/>
+        /// In contrary to the <see cref="MiningProcessorBase.Trace"/>
         /// method, this method returns not only valid hypotheses, but all the relevant
         /// questions and states with 0 or 1 iff the relevant question is valid for
         /// given record of the master data table.
         /// </summary>
-        /// <param name="CountVector">
+        /// <param name="countVector">
         /// The count vector is an array of integers 
         /// representing for each item in the master data table how many records are
         /// in the detail data table corresponding to the item. 

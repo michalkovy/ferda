@@ -708,6 +708,7 @@ namespace Interpreter
                 catch (ArithmeticException)
                 {
                     ERROR_message = "Mathematic error !!!";
+                    throw new Exception(ERROR_message);
                 }
             }
             //variableServices.get_literalsOfften_Value();

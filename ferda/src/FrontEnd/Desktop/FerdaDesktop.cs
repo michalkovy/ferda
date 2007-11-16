@@ -373,6 +373,7 @@ namespace Ferda.FrontEnd.Desktop
         ///<param name="arch">Control that displays the archive</param>
         ///<param name="provider">Provider of the icons</param>
         ///<param name="toolBar">Toolbar control</param>
+        ///<param name="netArchive">The network archive</param>
         public FerdaDesktop(Menu.IPreferencesManager prefManager,
             SVGManager svgMan, IMenuDisplayer menuDisp, ProjectManager.View view,
             ProjectManager.ProjectManager pm, Archive.IArchiveDisplayer arch,
@@ -1997,7 +1998,7 @@ namespace Ferda.FrontEnd.Desktop
             //a new context menu
             ContextMenuStrip cMenu;
 
-            ///there is exactly one box selected
+            //there is exactly one box selected
             //there is number 2, because it can happen before there was no box
             //selected and the event about selected box is processed later than
             //the context menu event

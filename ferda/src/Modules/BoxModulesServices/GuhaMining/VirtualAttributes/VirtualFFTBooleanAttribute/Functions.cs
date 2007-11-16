@@ -191,18 +191,19 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
             get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
 
-        /// <summary>
-        /// Master datatable id column (for CountVector)
-        /// </summary>
-      /*  public string MasterTableIdColumn
-        {
-            get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
-        }
+        /*
+  /// <summary>
+  /// Master datatable id column (for CountVector)
+  /// </summary>
+  public string MasterTableIdColumn
+  {
+      get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
+  }
 
-        public string MasterDataTable
-        {
-            get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
-        }*/
+  public string MasterDataTable
+  {
+      get { return _boxModule.GetPropertyString(PropMasterIdColumn); }
+  }*/
 
         /// <summary>
         /// Literal importance
@@ -305,7 +306,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
 
 
         private CacheFlag _cacheFlagColumn = new CacheFlag();
-        private GenericColumn _cachedValueColumn = null;
 
         private const int _bufferSize = 200;
         private BitStringIceWithCategoryId[] bitStringCache =

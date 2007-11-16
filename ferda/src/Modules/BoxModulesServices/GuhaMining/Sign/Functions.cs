@@ -135,7 +135,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
 
         /// <summary>
         /// Returns the setting of the entity (all Boolean attributes). The
-        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting">
+        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting"/>
         /// contains identification information and the importance
         /// of this entity (BooleanAttribute). 
         /// </summary>
@@ -195,7 +195,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
 
         /// <summary>
         /// Returns the setting of the entity (all Boolean attributes). The
-        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting">
+        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting"/>
         /// contains identification information and the importance
         /// of this entity (BooleanAttribute). 
         /// </summary>

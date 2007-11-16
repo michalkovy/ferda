@@ -132,6 +132,7 @@
 				</nowarn>
 				<sources>
 					<include name="Core/Data/**.cs"/>
+          <exclude name="Core/Data/IceDesignDocumentation.cs"/>
 				</sources>
 				<references>
 					<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>

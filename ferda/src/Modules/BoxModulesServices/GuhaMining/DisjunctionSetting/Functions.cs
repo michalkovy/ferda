@@ -133,7 +133,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
 
         /// <summary>
         /// Returns the setting of the entity (all Boolean attributes). The
-        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting">
+        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting"/>
         /// contains identification information and the importance
         /// of this entity (BooleanAttribute). 
         /// </summary>
@@ -181,7 +181,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
 
         /// <summary>
         /// Returns the setting of the entity (all Boolean attributes). The
-        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting">
+        /// setting <see cref="T:Ferda.Guha.MiningProcessor.IEntitySetting"/>
         /// contains identification information and the importance
         /// of this entity (BooleanAttribute). 
         /// </summary>
@@ -216,7 +216,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
         /// (overridden from <see cref="T:Ferda.Guha.MiningProcessor.BitStringGeneratorProvider"/>)
         /// a specified attribute.
         /// </summary>
-        /// <param name="attributeId">ID of the specified attribute.</param>
+        /// <param name="attributeGuid">ID of the specified attribute.</param>
         /// <param name="current__">ICE stuff</param>
         /// <returns>Proxy of the bit string generator</returns>
         public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeGuid, Current current__)

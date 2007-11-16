@@ -122,7 +122,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <summary>
         /// Determines if two bit string identifiers are the same
         /// </summary>
-        /// <param name="obj">Other bit string identifier</param>
+        /// <param name="other">Other bit string identifier</param>
         /// <returns>Iff the two identifiers are equal</returns>
         public bool Equals(BitStringIdentifier other)
         {

@@ -100,7 +100,7 @@ namespace Ferda.FrontEnd.Archive
         private IFerdaClipboard clipboard;
 
         ///<summary>
-        ///Selected node for the drag&drop operations
+        ///Selected node for the drag&amp;drop operations
         ///</summary>
         private FerdaTreeNode mySelectedNode;
 

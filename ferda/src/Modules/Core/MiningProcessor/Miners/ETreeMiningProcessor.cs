@@ -213,6 +213,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// by a criterion (here, chi squared) and the best N(determined by this 
         /// parameter) are used for branching.
         /// </param>
+        /// <param name="maxNumberOfHypotheses">
+        /// Maximal number of hypotheses - decision trees. The parameter here is present
+        /// mainly because we need to show progress in the progress bar (this cannot be 
+        /// computed from the number of total relevant questions, because this number
+        /// is often so high that is computed as infinity).
+        /// </param>
         /// <param name="progressListener">The progress listener.</param>
         /// <param name="progressBarPrx">The progress bar PRX.</param>
         public ETreeMiningProcessor(
@@ -314,7 +320,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 noOfVerifications++;
                 processTree = fifo.Dequeue();
+                string ifr = processTree.IfRepresentation;
 
+                //MUZE ZE SPATNEHO STROMU VZNIKNOUT DOBRY STROM?
+                //JESTLI NE, TAK SE VELICE SNIZI POCET VERIFIKACI
                 fifo = Process(processTree, fifo);
 
                 if (QualityTree(processTree))
@@ -664,7 +673,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Select the best attributes for branching depending on the number of 
         /// attributes that can be used for branching (
-        /// <see cref="Ferda.Guha.MiningProcessor.noAttributesForBranching"/>),
+        /// <see cref="noAttributesForBranching"/>),
         /// possible attributes for branching and base bit string from the node
         /// that is beeing branched.
         /// </summary>

@@ -222,7 +222,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// </summary>
         /// <param name="current__">Ice stuff</param>
         /// <param name="attributeId">Id of the attribute</param>
-        /// <param name="taskFunctions">Information about the task</param>
         /// <returns>Bit string generator</returns>
         public override BitStringGeneratorPrx GetBitStringGenerator(GuidStruct attributeId, Current current__)
         {
