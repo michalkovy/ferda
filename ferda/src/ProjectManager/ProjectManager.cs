@@ -630,7 +630,10 @@ namespace Ferda.ProjectManager {
             s.Serialize( w, p );
             w.Close();
         }
-		
+
+		/// <summary>
+		/// Creates Project object from box modules
+		/// </summary>
 		public Project SaveBoxModulesToProject(IBoxModule[] boxModules, View view)
 		{
 			if(view == null)
