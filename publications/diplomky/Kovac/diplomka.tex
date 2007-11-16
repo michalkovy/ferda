@@ -1,0 +1,15 @@
+% Diplomová práce Michala Kováče
+\author{Michal Kováč}
+
+\begin{document}
+\section{Lambda}
+Skoro každý funkcionální programovací jazyk obsahuje funkci $\lambda$.
+
+Vstupem této funkce je standardně jiná funkce (říkejme jí vstupní) s volnýmy proměnnými a dále dosazení za tyto proměnné. Výsledkem této funkce je pak hodnota vstupní funkce po dosazení za proměnné.
+
+Ukažme si jak se pracuje s fukncí $\lambda$ na příkladu $\lambda{x}(x+1)(3)$. Jedná se o použití funkce lambda. Vstupní funkcí je funkce $x+1$, která má jednu volnou proměnnou ($x$). U funkce $\lambda$ je tato proměnná uvedena, aby bylo zřejmé za jaké proměnné se bude dosazovat a v jakém pořadí. Na konci zápisu je číslo tři, což je dosazenní za proměnnou $x$. Výsledkém této funkce pak je výsledek funkce $3+1$, tedy čtyři.
+
+Ještě pro lepší pochopení si ukažme složitější příklad $\lambda{x}(x(x(2)))(\lambda(y)(3+y))$. Výsledkem této funkce je $3+(3+2)$ tedy osm.
+
+Předchozí dva příklady sice ukazují, jak funguje funkce $\lambda$, nicméně neukazují její sílu (výraz $3+(3+2)$ je jednodužší než $\lambda{x}(x(x(2)))(\lambda(y)(3+y))$). 
+\end{document}
