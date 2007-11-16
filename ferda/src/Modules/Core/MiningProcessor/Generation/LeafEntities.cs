@@ -648,7 +648,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <summary>
         /// Retrieves the entity enumerator - the subsets of all the lengths from
         /// <c>minLenght</c> to <c>maxLength</c>. The enumerator uses the
-        /// <see cref="Ferda.Guha.MiningProcessor.Generation.Subsets<T,M>"/> type
+        /// <see cref="Ferda.Guha.MiningProcessor.Generation.Subsets&lt;T,M&gt;"/> type
         /// to compute the subsets.
         /// </summary>
         /// <returns>Entity enumerator</returns>

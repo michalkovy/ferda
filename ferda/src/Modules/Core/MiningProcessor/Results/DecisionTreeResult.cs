@@ -64,7 +64,7 @@ namespace Ferda.Guha.MiningProcessor.Results
         /// <summary>
         /// Serializes the specified result
         /// </summary>
-        /// <param name="input">The result</param>
+        /// <param name="result">The result</param>
         /// <returns>Result in serialized (string) form</returns>
         public static string Serialize(DecisionTreeResult result)
         {

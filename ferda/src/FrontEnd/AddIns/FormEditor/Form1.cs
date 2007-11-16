@@ -1122,7 +1122,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor
          /// Standard RichTextBox TextChanged method.
          /// Here it is necessary to call highlighter function.
          /// </summary>
-        private void TextChanged(object sender, EventArgs e)
+        private new void TextChanged(object sender, EventArgs e)
         {
           int active_area;
             

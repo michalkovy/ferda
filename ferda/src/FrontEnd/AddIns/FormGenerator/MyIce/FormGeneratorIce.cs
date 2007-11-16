@@ -45,11 +45,6 @@ namespace Ferda.FrontEnd.AddIns.FormGenerator.MyIce
     {
         #region Private variables
 
-        /// <summary>
-        /// Owner of addin
-        /// </summary>
-        Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
-
         private VariableServices services;
 
         /// <summary>

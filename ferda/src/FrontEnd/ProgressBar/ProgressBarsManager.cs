@@ -43,6 +43,10 @@ namespace Ferda.FrontEnd.ProgressBar
 
         //Resource manager from the FerdaForm
         private ResourceManager resManager = null;
+
+        /// <summary>
+        /// Preferences of the application
+        /// </summary>
         public IPreferencesManager preferences;
 
         #endregion

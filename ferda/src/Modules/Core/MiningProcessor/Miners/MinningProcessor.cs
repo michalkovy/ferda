@@ -111,7 +111,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Algoritm for computing all the relevant questions and veryfiing them
         /// agaist the quantifier. It is used in the virtual attributes.
-        /// In contrary to the <see cref="MiningProcessor.Trace"/>
+        /// In contrary to the <see cref="MiningProcessorBase.Trace()"/>
         /// method, this method returns not only valid hypotheses, but all the relevant
         /// questions and states with 0 or 1 iff the relevant question is valid for
         /// given record of the master data table. 
@@ -666,7 +666,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Computes count of all objects in the data matrix according to 
         /// an entity enumerator
         /// </summary>
-        /// <param name="attributes">The entity enumerator</param>
+        /// <param name="attribute">The entity enumerator</param>
         public void ComputeAllObjectsCount(IEntityEnumerator attribute)
         {
             if (_allObjectsCount > 0)

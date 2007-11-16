@@ -46,15 +46,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 		private static readonly MissingInformation _instance = new MissingInformation();
 
         /// <summary>
-        /// Default cache size (for the <see cref="Ferda.Modules.Helpers.Caching.MostRecentlyUsed"/>
-        /// size of the cache.
+        /// Default size of the most recently used cache.
         /// </summary>
         public const int cacheDefaultSize = 1048576; // ~1Mb
 
         /// <summary>
         /// Default constructor for the class. The constructor is private, because
         /// only way how to use the class should be through the
-        /// <see cref="Ferda.Guha.MiningProcessor.BitStrings.MissingInformation.GetInstance"/>
+        /// <see cref="Ferda.Guha.MiningProcessor.BitStrings.MissingInformation.GetInstance()"/>
         /// method. 
         /// </summary>
         private MissingInformation()

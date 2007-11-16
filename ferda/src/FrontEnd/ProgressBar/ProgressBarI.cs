@@ -34,17 +34,27 @@ namespace Ferda.FrontEnd.ProgressBar
     public class ProgressBarI : ProgressBarDisp_
     {
         //float mezi 0 a 1, jestlize zaporne, tak progress bar "bezi"
-        protected ProgressTaskPrx task;
         //task ma metodu stop, pomoci ktere se stopuje metoda.
         //kdyz stopnu, tak nic nedelam, treba disablenu progress bar
         //(nebo napsat stopping)
         //dalsi tlacitko hide bude davat visible = false
-        protected string name;
-        protected string hint;
-        protected BoxProgressBar myControl;
-        protected ProgressBarsManager parentControl;
 
-        protected DateTime counter;
+        /// <summary>
+        /// The task connected to this progress bar
+        /// </summary>
+        protected ProgressTaskPrx task;
+        /// <summary>
+        /// Name of this progress bar
+        /// </summary>
+        protected string name;
+        /// <summary>
+        /// Hint for this progress bar
+        /// </summary>
+        protected string hint;
+        private BoxProgressBar myControl;
+        private ProgressBarsManager parentControl;
+
+        private DateTime counter;
 
         /// <summary>
         /// Default constructor for the class

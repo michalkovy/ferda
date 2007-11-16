@@ -44,16 +44,6 @@ namespace Ferda.FrontEnd.AddIns.RegEditor.MyIce
         Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
 
         /// <summary>
-        /// L10n resource manager
-        /// </summary>
-        private ResourceManager resManager;
-
-        /// <summary>
-        /// L10n string, for now en-US or cs-CZ
-        /// </summary>
-        private string localizationString;
-
-        /// <summary>
         /// Resulting string with selected tables
         /// </summary>
         string [] returnStrings;
@@ -96,16 +86,6 @@ namespace Ferda.FrontEnd.AddIns.RegEditor.MyIce
 
         public override string getLabel(string[] localePrefs, Ice.Current current__)
         {
-            string locale;
-            /*try
-            {
-               locale = localePrefs[0];
-                localizationString = locale;
-                locale = "Ferda.FrontEnd.AddIns.MultiSelectStrings.Localization_" + locale;
-                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
-            }
-            catch { }
-            return resManager.GetString("FormEditor");*/
             return "";
         }
 
@@ -131,8 +111,6 @@ namespace Ferda.FrontEnd.AddIns.RegEditor.MyIce
         /// <returns>Modified property value</returns>
         public override PropertyValue run(PropertyValue valueBefore, string propertyName, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, Ice.Current current__)
         {
-            string locale;
-
             StringT XMLString = (StringT)valueBefore;
             PropertyValue returnValue = new PropertyValue();
             PropertyValue propertyValue = valueBefore;

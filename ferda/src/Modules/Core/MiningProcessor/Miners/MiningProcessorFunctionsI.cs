@@ -137,7 +137,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Executes a run of a GUHA task. All the needed information are
         /// in the parameters. It executes the
-        /// <see cref="T:Ferda.Guha.MiningProcessor.Miners.MiningProcessorBase.Trace"/>
+        /// <see cref="T:Ferda.Guha.MiningProcessor.Miners.MiningProcessorBase.Trace()"/>
         /// method to get results of a run.
         /// </summary>
         /// <param name="boxModule">The task box module</param>
@@ -154,10 +154,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// virtual hypotheses attributes.</param>
         /// <param name="resultInfo">In this string serialized informations
         /// about the task run will be stored in from
-        /// <see cref="Ferda.Guha.MiningProcessor.SerializableResultInfo"/></param>
+        /// <see cref="Ferda.Guha.MiningProcessor.Results.SerializableResultInfo"/></param>
         /// <param name="current__">Ice current information</param>
         /// <returns>Serialized result of the task in form
-        /// <see cref="Ferda.Guha.MiningProcessor.SerializableResult"/> is returned.
+        /// <see cref="Ferda.Guha.MiningProcessor.Results.SerializableResult"/> is returned.
         /// </returns>
         public override string Run(
             BoxModulePrx boxModule,

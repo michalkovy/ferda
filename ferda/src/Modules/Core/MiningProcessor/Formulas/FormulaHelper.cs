@@ -65,8 +65,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         /// <summary>
         /// Constructs a new negation formula out of two operands
         /// </summary>
-        /// <param name="operandA">First operand</param>
-        /// <param name="operandB">Second operand</param>
+        /// <param name="operand">The operand</param>
         /// <returns>Resulting negation formula</returns>
         public static BooleanAttributeFormula Not(BooleanAttributeFormula operand)
         {
@@ -76,7 +75,7 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         /// <summary>
         /// Should be the unicode Character 'LOGICAL AND' (U+2227)
         /// http://www.fileformat.info/info/unicode/char/2227/index.htm
-        /// but it is the normal & instead. The reason is, that the fonts
+        /// but it is the normal &amp; instead. The reason is, that the fonts
         /// that support unicode are in normal windows installation
         /// </summary>
         public const string SeparatorAnd = " & ";

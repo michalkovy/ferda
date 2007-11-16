@@ -40,8 +40,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private readonly BitStringCache _bitStringCache;
 
         /// <summary>
-        /// Default cache size (for the <see cref="Ferda.Modules.Helpers.Caching.MostRecentlyUsed"/>
-        /// size of the cache.
+        /// Default size of the most recently used cache.
         /// </summary>
         private const int cacheDefaultSize = 32;
 

@@ -42,11 +42,8 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormGenerator.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Interpreter.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="MyIce\FormEditorIce.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <SubType>Designer</SubType>
@@ -61,6 +58,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Help\FormEditor.pdf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

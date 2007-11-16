@@ -932,7 +932,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
 
         /// <summary>
-        /// sum = (a&b).Sum
+        /// sum = (a AND b).Sum
         /// </summary>
         public unsafe static void AndSum(IBitString a, IBitString b, int sumA, int sumB, out int sum)
         {
@@ -974,8 +974,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         }
 
         /// <summary>
-        /// sum1 = (a&b).Sum
-        /// sum2 = (a&c).Sum
+        /// sum1 = (a AND b).Sum
+        /// sum2 = (a AND c).Sum
         /// </summary>
         public unsafe static void TwoAndSum(IBitString a, IBitString b, IBitString c, int sumA, int sumB, int sumC, out int sum1, out int sum2)
         {
@@ -1037,10 +1037,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         }
 
         /// <summary>
-        /// sum1 = (a&c).Sum
-        /// sum2 = (b&c).Sum
-        /// sum3 = (a&d).Sum
-        /// sum4 = (b&d).Sum
+        /// sum1 = (a AND c).Sum
+        /// sum2 = (b AND c).Sum
+        /// sum3 = (a AND d).Sum
+        /// sum4 = (b AND d).Sum
         /// </summary>
         public unsafe static void CrossAndSum(IBitString a, IBitString b, IBitString c, IBitString d, int sumA, int sumB, int sumC, int sumD, out int sum1, out int sum2, out int sum3, out int sum4)
         {

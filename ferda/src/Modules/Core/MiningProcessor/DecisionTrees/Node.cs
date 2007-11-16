@@ -439,7 +439,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
 
         /// <summary>
         /// This procedure initializes the node classification. Beforehand,
-        /// the <see cref="Ferda.Guha.MiningProcessor.DecisionTrees.Node.ClassifiedCategories"/>
+        /// the <see cref="Ferda.Guha.MiningProcessor.DecisionTrees.Node.classifiedCategories"/>
         /// dictionary is null. Procedure fills the dictionary and
         /// afterwards each dictionary value contains node classification structure with
         /// the most present classification category. 

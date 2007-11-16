@@ -49,7 +49,7 @@ namespace Ferda.Guha.Data.IceDesignDocumentation
 
     /// <summary>
     /// Represents a ODBC connection info. For more information, see the
-    /// <see cref="System.Data.Odbc.OdbcConncetion"/> for details and
+    /// <see cref="System.Data.Odbc.OdbcConnection"/> for details and
     /// the corresponding fields.
     /// </summary>
     public struct ConnectionInfo

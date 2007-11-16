@@ -217,7 +217,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         #region Private methods
 
         private CacheFlag _cacheFlagColumn = new CacheFlag();
-        private GenericColumn _cachedValueColumn = null;
 
         /// <summary>
         /// Gets proxy of master datatable

@@ -208,9 +208,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         /// <param name="sockName">Name of a socket</param>
         /// <param name="fallOnError">If the function should throw an exception
         /// when error</param>
-        /// <param name="oneAtMinimum">Iff this is true and there is no 
+        /// <param name="oneAtMininum">
+        /// Iff this is true and there is no 
         /// BoxModule connected in socket than
-        /// <see cref="T:Ferda.Modules.NoConnectionInSocketError"/> is thrown.</param>
+        /// <see cref="T:Ferda.Modules.NoConnectionInSocketError"/> is thrown.
+        /// </param>
         /// <returns>Categorial attribute setting proxy</returns>
         /// <remarks>
         /// Attribute of any kind can be connected as bitstring generator to task working
