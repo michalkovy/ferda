@@ -156,7 +156,7 @@ namespace Ferda.FrontEnd
 	    System.IO.FileInfo fileInfo = new System.IO.FileInfo(assemblyDir);
 	    assemblyDir = fileInfo.Directory.ToString();
             //replacing the .exe by the name of the config file
-            //int lastDash = assemblyDir.LastIndexOf('\\');
+            //int lastDash = assemblyDir.LastIndexOf(Path.DirectorySeparatorChar);
             //assemblyDir = assemblyDir.Remove(lastDash);
 
             return assemblyDir;
@@ -263,7 +263,7 @@ namespace Ferda.FrontEnd
             RegistryKey installPath = version.OpenSubKey("InstallPath");
             string acrobatPath = installPath.GetValue(null).ToString();
 
-            acrobatPath += "\\Acrord32.exe";
+            acrobatPath += Path.DirectorySeparatorChar + "Acrord32.exe";
 
             return acrobatPath;
         }

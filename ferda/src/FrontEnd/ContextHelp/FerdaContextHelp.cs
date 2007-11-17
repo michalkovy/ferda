@@ -23,6 +23,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Resources;
 using System.Collections.Generic;
+using System.IO;
 using Ferda.FrontEnd.Menu;
 using Ferda.ModulesManager;
 using Ferda.Modules;
@@ -371,7 +372,8 @@ namespace Ferda.FrontEnd.ContextHelp
         void LLTutorial_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             string path = FrontEndCommon.GetBinPath();
-            path += "\\Help\\" + ResManager.GetString("FerdaTutorial");
+            path += Path.DirectorySeparatorChar + "Help" + 
+                Path.DirectorySeparatorChar + ResManager.GetString("FerdaTutorial");
 
             FrontEndCommon.OpenPdf(path, ResManager);
         }
