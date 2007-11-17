@@ -223,7 +223,7 @@ using Ferda.ModulesManager;
                     //setting the Text of the form - we know what project
                     //we are working on
                     string tmp =
-                        projectName.Substring(projectName.LastIndexOf('\\') + 1);
+                        projectName.Substring(projectName.LastIndexOf(Path.DirectorySeparatorChar) + 1);
                     tmp = tmp.Substring(0, tmp.LastIndexOf('.'));
                     Text = tmp + " - Ferda DataMiner";
                 }
@@ -1588,7 +1588,7 @@ using Ferda.ModulesManager;
         {
             //getting the right path
             string path = FrontEndCommon.GetBinPath();
-            path += "\\" + recentProjectsPath;
+            path += Path.DirectorySeparatorChar + recentProjectsPath;
 
             FileStream fs = null;
             try
@@ -1612,7 +1612,7 @@ using Ferda.ModulesManager;
         {
             //getting the right path
             string path = FrontEndCommon.GetBinPath();
-            path += "\\" + recentProjectsPath;
+            path += Path.DirectorySeparatorChar + recentProjectsPath;
 
             recentProjects = new List<string>();
 

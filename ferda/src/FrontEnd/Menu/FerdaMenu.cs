@@ -23,6 +23,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using System.Resources;
 using System.Collections.Generic;
+using System.IO;
 
 using Ferda.FrontEnd;
 using Ferda.FrontEnd.Desktop;
@@ -1325,7 +1326,7 @@ namespace Ferda.FrontEnd.Menu
         void applicationHelp_Click(object sender, EventArgs e)
         {
             string path = FrontEndCommon.GetBinPath();
-            path += "\\Help\\" + ResManager.GetString("FerdaUserEnvironment");
+            path += Path.DirectorySeparatorChar + "Help" + Path.DirectorySeparatorChar + ResManager.GetString("FerdaUserEnvironment");
 
             FrontEndCommon.OpenPdf(path, ResManager);
         }
@@ -1339,7 +1340,7 @@ namespace Ferda.FrontEnd.Menu
         void tutorial_Click(object sender, EventArgs e)
         {
             string path = FrontEndCommon.GetBinPath();
-            path += "\\Help\\" + ResManager.GetString("FerdaTutorial");
+            path += Path.DirectorySeparatorChar + "Help" + Path.DirectorySeparatorChar + ResManager.GetString("FerdaTutorial");
 
             FrontEndCommon.OpenPdf(path, ResManager);
         }
