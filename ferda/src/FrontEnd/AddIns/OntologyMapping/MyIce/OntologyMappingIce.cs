@@ -28,8 +28,6 @@ using Ferda.FrontEnd.AddIns;
 using System.Resources;
 using System.Reflection;
 
-using Ferda.ModulesManager;
-using Ferda.FrontEnd.AddIns;
 using Ferda.Modules.Boxes.DataPreparation;
 using Ferda.Modules.Boxes.OntologyRelated.OntologyMapping;
 using Ferda.Modules.Boxes.OntologyRelated.Ontology;
