@@ -98,6 +98,11 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         public OntologyStructure getOntology(bool fallOnError)
         {
+            if ((OntologyPath != null) && (PropOntologyURI.ToString() == "OntologyURI"))    //for loading the ontology after loading a saved project
+            {
+                LoadOntologyWithParameter(OntologyPath.ToString());
+            }
+
             return ExceptionsHandler.GetResult<OntologyStructure>(
                 fallOnError,
                 delegate
@@ -157,7 +162,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
                 this.ontology = prx.parseOntology(innerOntologyPath.ToString());
 
-                //examples
+                //testing examples
                 //this.ontology = prx.parseOntology("file:/D:/My ontologies/umls_stulong_2.owl");
                 //this.ontology = prx.parseOntology("http://www.co-ode.org/ontologies/pizza/2007/02/12/pizza.owl");
 

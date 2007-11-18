@@ -135,13 +135,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             Functions Func = (Functions)boxModule.FunctionsIObj;
 
             switch (propertyName)
-            {
-                case Functions.PropOntologyPath:
-                    return null;
-                        /*BoxInfoHelper.GetSelectStringArray(
-                        DataProviderHelper.FactoryClassesInvariantNames
-                        );*/
-                         
+            {            
                 default:
                     return null;
             }
@@ -158,7 +152,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// </returns>
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            
             Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (propertyName)
             {
