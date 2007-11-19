@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.IO;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.Math.Quantifiers;
 using Ferda.ModulesManager;
@@ -315,33 +316,46 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             Tree processTree;
 
+            //StreamWriter sw = new StreamWriter("c:\\log.txt");
+
             //basic algorithm for construction GUHA decision trees
             while (fifo.Count > 0)
             {
                 noOfVerifications++;
                 processTree = fifo.Dequeue();
-                string ifr = processTree.IfRepresentation;
-
-                //MUZE ZE SPATNEHO STROMU VZNIKNOUT DOBRY STROM?
-                //JESTLI NE, TAK SE VELICE SNIZI POCET VERIFIKACI
-                fifo = Process(processTree, fifo);
 
                 if (QualityTree(processTree))
                 {
                     noOfHypotheses++;
                     PutToOutPut(processTree);
                     //filling the progress bar with new values
-                    if (!ProgressSetValue((float)noOfHypotheses / maxNumberOfHypotheses,
-                        string.Format("Number of Verifications: {0}, Number of hypotheses: {1}",
-                                 noOfVerifications,
-                                 noOfHypotheses)))
+
+                    if (noOfHypotheses == maxNumberOfHypotheses)
                     {
-                        ResultFinish(relevantQuestionsCount, noOfVerifications, 
+                        ResultFinish(relevantQuestionsCount, noOfVerifications,
                             noOfHypotheses);
                         return;
                     }
                 }
+
+                fifo = Process(processTree, fifo);
+
+                //string ifr = processTree.IfRepresentation;
+                //sw.WriteLine("Verification no " + noOfVerifications.ToString());
+                //sw.Write(ifr);
+
+                if (!ProgressSetValue((float)noOfHypotheses / maxNumberOfHypotheses,
+                    string.Format("Number of Verifications: {0}, Number of hypotheses: {1}, Queue length: {2}",
+                             noOfVerifications,
+                             noOfHypotheses,
+                             fifo.Count)))
+                {
+                    ResultFinish(relevantQuestionsCount, noOfVerifications,
+                        noOfHypotheses);
+                    return;
+                }
             }
+            //sw.Close();
 
             ResultFinish(relevantQuestionsCount, noOfVerifications, noOfHypotheses);
         }
@@ -496,24 +510,36 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <returns>The queue is with newly created trees is returned.</returns>
         private Queue<Tree> ProlongTree(Tree processTree, Node node, Queue<Tree> fifo)
         {
+            //we are creating one subset of categories, that contains all the
+            //categories which have higher frequency than minimal node frequency.
+            List<string> rightCats = new List<string>();
+
             foreach (string category in node.SubCategories)
             {
-                //only for categories with higher frequency than minimal node
-                //frequency
-                if (node.CategoryFrequency(category) < minimalNodeFrequency)
+                if (node.CategoryFrequency(category) >= minimalNodeFrequency)
                 {
-                    continue;
+                    rightCats.Add(category);
                 }
+            }
 
-                CategorialAttributeTrace[] branchingAttributes =
-                    SelectAttributesForBranching(processTree.UnusedAttributes,
-                    node.BaseBitString.And(node.CategoryBitString(category)));
+            //by anding the bit strings of individual categories, we
+            //improve the accuracy for the attribute selection
+            IBitString newBitString = FalseBitString.GetInstance();
+            foreach (string category in rightCats)
+            {
+                newBitString = newBitString.Or(node.CategoryBitString(category));
+            }
 
-                foreach (CategorialAttributeTrace attribute in branchingAttributes)
-                {
-                    Tree t = CreateTree(processTree, node, category, attribute);
-                    fifo.Enqueue(t);
-                }
+            //selecting which attributes to branch
+            CategorialAttributeTrace[] branchingAttributes =
+                SelectAttributesForBranching(processTree.UnusedAttributes,
+                newBitString);
+
+            //creating the individual subtrees
+            foreach (CategorialAttributeTrace attribute in branchingAttributes)
+            {
+                Tree t = CreateTree(processTree, node, rightCats.ToArray(), attribute);
+                fifo.Enqueue(t);
             }
 
             return fifo;
@@ -522,7 +548,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Creates a new cloned tree out of the tree in <paramref name="processTree"/>
         /// and for given node <paramref name="node"/> makes a new node out of
-        /// category <paramref name="category"/> using attribute
+        /// categories <paramref name="categories"/> using attribute
         /// <paramref name="attribute"/>.
         /// </summary>
         /// <param name="processTree">Tree to be cloned.</param>
@@ -530,7 +556,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="category">Category which is to be replaced by a new leaf.</param>
         /// <param name="attribute">Attribute that will be used for creation of a new leaf</param>
         /// <returns>Newly created tree.</returns>
-        private Tree CreateTree(Tree processTree, Node node, string category, 
+        private Tree CreateTree(Tree processTree, Node node, string[] categories, 
             CategorialAttributeTrace attribute)
         {
             Tree result = (Tree) processTree.Clone();
@@ -558,23 +584,26 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             //removal of the category from tree categories
             List<string> newCats = new List<string>(n.SubCategories);
-            newCats.Remove(category);
+            foreach (string category in categories)
+            {
+                newCats.Remove(category);
+            }
             n.SubCategories = newCats.ToArray();
 
-            //creating a new node
-            Node newNode = new Node(true);
-            newNode.Attribute = attribute;
-            newNode.BaseBitString = n.CategoryBitString(category).And(n.BaseBitString);
-            newNode.Frequency = newNode.BaseBitString.Sum;
-            newNode.SubCategories = attribute.CategoriesIds;
-            
-            //when we add the first node, we need to create the dictionary
-            if (n.SubNodes == null)
+            //creating a new nodes
+            Dictionary<string,Node> newNodes = new Dictionary<string,Node>();
+            foreach (string category in categories)
             {
-                n.SubNodes = new Dictionary<string, Node>();
+                Node newNode = new Node(true);
+                newNode.Attribute = attribute;
+                newNode.BaseBitString = n.CategoryBitString(category).And(n.BaseBitString);
+                newNode.Frequency = newNode.BaseBitString.Sum;
+                newNode.SubCategories = attribute.CategoriesIds;
+
+                newNodes.Add(category,newNode);
             }
-            //adding the node to an existing node
-            n.SubNodes.Add(category, newNode);
+
+            n.SubNodes = newNodes;
             return result;
         }
 

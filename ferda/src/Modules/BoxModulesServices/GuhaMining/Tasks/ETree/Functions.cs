@@ -369,6 +369,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
 
             //processing of the results
             Common.SetResultInfo(_boxModule, resultInfo);
+            _cachedSerializableResultInfo = SerializableResultInfo.Deserialize(resultInfo);
             Common.SetResult(_boxModule, result);
         }
     }
