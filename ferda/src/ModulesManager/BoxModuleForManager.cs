@@ -308,7 +308,8 @@ namespace Ferda.ModulesManager
 		
 		public bool IsWithIceId(string iceId)
 		{
-			return this.GetFunctionsIceIds().Contains(iceId);
+			StringCollection iceIds = this.GetFunctionsIceIds();
+			return (iceIds.Count == 0 || iceIds.Contains(iceId));
 		}
 		
 		public abstract bool HasBoxType(BoxType boxType);

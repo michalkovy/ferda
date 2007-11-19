@@ -19,6 +19,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using Ferda.ModulesManager;
 
 namespace Ferda.ProjectManager
 {
@@ -35,9 +36,10 @@ namespace Ferda.ProjectManager
 		/// <param name="mainProjectBox">A  Project.Box representing some box in project,
 		/// this method will return in <paramref name="mainIBoxModule"/> new IBoxModule
 		/// representation of this box</param>
+		/// <param name="addToProject">If false new modules will not be added to archive.</param>
 		/// <param name="mainIBoxModule">New Ferda.ModulesManager.IBoxModule representation
 		/// of <paramref name="mainProjectBox"/></param>
-		string ImportProject(Ferda.ProjectManager.Project p, Project.Box mainProjectBox, out Ferda.ModulesManager.IBoxModule mainIBoxModule);
+		string ImportProject(Ferda.ProjectManager.Project p, Project.Box mainProjectBox, bool addToProject, out Ferda.ModulesManager.IBoxModule mainIBoxModule);
 		
 		/// <summary>
 		/// Saves box modules to project
@@ -46,6 +48,6 @@ namespace Ferda.ProjectManager
 		/// to these and not included in view <paramref name="view"/></returns>
 		/// <param name="boxModules">A  Ferda.ModulesManager.IBoxModule[]</param>
 		/// <param name="view">A  View</param>
-		Project SaveBoxModulesToProject(Ferda.ModulesManager.IBoxModule[] boxModules, View view);
+		Project SaveBoxModulesToProject(IBoxModule[] boxModules, View view, IBoxModule[][] variables, IBoxModule[] variableValues);
 	}
 }

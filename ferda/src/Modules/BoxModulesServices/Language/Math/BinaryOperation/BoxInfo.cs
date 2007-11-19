@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 
 using Object = Ice.Object;
 
-namespace Ferda.Modules.Boxes.Language.Math.Plus
+namespace Ferda.Modules.Boxes.Language.Math.BinaryOperation
 {
     internal class BoxInfo : Boxes.BoxInfo
     {
@@ -37,7 +37,7 @@ namespace Ferda.Modules.Boxes.Language.Math.Plus
             return null;
         }
 
-        public const string typeIdentifier = "Language.Math.Plus";
+        public const string typeIdentifier = "Language.Math.BinaryOperation";
 
         protected override string identifier
         {

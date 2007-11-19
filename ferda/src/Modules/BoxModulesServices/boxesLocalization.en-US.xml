@@ -10537,9 +10537,9 @@
 		</PropertyCategories>
 	</BoxLocalization>
 	<BoxLocalization>
-		<Identifier>Language.Math.Plus</Identifier>
-		<Label>Plus</Label>
-		<Hint>Adds one number in another</Hint>
+		<Identifier>Language.Math.BinaryOperation</Identifier>
+		<Label>Binary operation</Label>
+		<Hint>Binary operation</Hint>
 		<Categories>
 			<Category>
 				<Name>Language.Math</Name>
@@ -10548,14 +10548,37 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>Succ1</Name>
-				<Label>Succ 1</Label>
-				<Hint>First succ</Hint>
+				<Name>value1</Name>
+				<Label>Value 1</Label>
+				<Hint>First value</Hint>
 			</Socket>
 			<Socket>
-				<Name>Succ2</Name>
-				<Label>Succ 2</Label>
-				<Hint>Second succ</Hint>
+				<Name>value2</Name>
+				<Label>Value 2</Label>
+				<Hint>Second value</Hint>
+			</Socket>
+			<Socket>
+				<Name>type</Name>
+				<Label>Type</Label>
+				<Hint>Type of operation</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>+</Name>
+						<Label>+</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>-</Name>
+						<Label>-</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>*</Name>
+						<Label>*</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>/</Name>
+						<Label>/</Label>
+					</SelectOption>
+				</SelectOptions>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
@@ -10564,6 +10587,94 @@
 				<Label>Main</Label>
 			</PropertyCategory>
 		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.Math.Compare</Identifier>
+		<Label>Compare</Label>
+		<Hint>Compare two values</Hint>
+		<Categories>
+			<Category>
+				<Name>Language.Math</Name>
+				<Label>Language.Math</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>value1</Name>
+				<Label>Value 1</Label>
+				<Hint>First value</Hint>
+			</Socket>
+			<Socket>
+				<Name>value2</Name>
+				<Label>Value 2</Label>
+				<Hint>Second value</Hint>
+			</Socket>
+			<Socket>
+				<Name>type</Name>
+				<Label>Type</Label>
+				<Hint>Type of comparision</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>&lt;</Name>
+						<Label>&lt;</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>&lt;=</Name>
+						<Label>&lt;=</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>=</Name>
+						<Label>=</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>&gt;=</Name>
+						<Label>&gt;=</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>&gt;</Name>
+						<Label>&gt;</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>!=</Name>
+						<Label>!=</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Hlavní</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.Math.IfThenElse</Identifier>
+		<Label>if-then-else</Label>
+		<Hint>(if) ? (then) : (else)</Hint>
+		<Categories>
+			<Category>
+				<Name>Language.Math</Name>
+				<Label>Language.Math</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>if</Name>
+				<Label>if</Label>
+				<Hint>if</Hint>
+			</Socket>
+			<Socket>
+				<Name>then</Name>
+				<Label>then</Label>
+				<Hint>then</Hint>
+			</Socket>
+			<Socket>
+				<Name>else</Name>
+				<Label>else</Label>
+				<Hint>else</Hint>
+			</Socket>
+		</Sockets>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>OntologyRelated.Ontology</Identifier>

@@ -1019,6 +1019,7 @@ namespace Ferda.Modules
         /// </returns>
         private static bool hasBoxType(BoxType boxType, ObjectPrx functionsPrx, SocketInfo[] sockets)
         {
+        	if(boxType == null || functionsPrx == null) return true;
             return functionsPrx.ice_isA(boxType.functionIceId) &&
                    hasSockets(boxType.neededSockets, sockets);
         }

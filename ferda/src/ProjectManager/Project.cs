@@ -95,6 +95,11 @@ namespace Ferda.ProjectManager
             /// How are properties set
             /// </summary>
 			public Project.Box.PropertySet[] PropertySets;
+			
+			/// <summary>
+            /// Properties which are socked
+            /// </summary>
+			public string[] SockedProperties;
 		}
 		
         /// <summary>

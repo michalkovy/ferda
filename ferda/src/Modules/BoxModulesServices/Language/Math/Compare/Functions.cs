@@ -1,4 +1,4 @@
-// Functions.cs - Function objects for the Plus box module
+// Functions.cs - Function objects for the Compare box module
 //
 // Author: Michal Kováč
 //
@@ -21,12 +21,12 @@
 using System;
 using Ice;
 
-namespace Ferda.Modules.Boxes.Language.Math.Plus
+namespace Ferda.Modules.Boxes.Language.Math.Compare
 {
     /// <summary>
-    /// Class is providing ICE functionality of the Plus function
+    /// Class is providing ICE functionality of the Compare function
     /// </summary>
-    public class Functions : Ferda.Modules.DoubleTI, IFunctions
+    public class Functions : Ferda.Modules.BoolTI, IFunctions
     {
         /// <summary>
         /// The box module.
@@ -54,15 +54,27 @@ namespace Ferda.Modules.Boxes.Language.Math.Plus
         #region DoubleTInterfacePrx Members
         
         /// <summary>
-        /// Method getDoubleValue
+        /// Method getBoolValue
         /// </summary>
-        /// <returns>A double</returns>
+        /// <returns>A bool</returns>
         /// <param name="__current">An Ice.Current</param>
-        public override double getDoubleValue(Current __current)
+        public override bool getBoolValue(Current __current)
         {
-        	double succ1 = this._boxModule.GetPropertyDouble("Succ1");
-        	double succ2 = this._boxModule.GetPropertyDouble("Succ2");
-            return succ1 + succ2;
+        	double value1 = this._boxModule.GetPropertyDouble("value1");
+        	double value2 = this._boxModule.GetPropertyDouble("value2");
+        	string type = this._boxModule.GetPropertyString("type");
+        	switch (type)
+        	{
+        		case "<" : return value1 < (value2 - 0.00000001);
+        		case ">" : return value1 > (value2 + 0.00000001);
+        		case "<=" : return value1 <= (value2 + 0.00000001);
+        		case ">=" : return value1 >= (value2 - 0.00000001);
+        		case "=" : return (value1 >= (value2 - 0.00000001) &&
+        							value1 <= (value2 + 0.00000001));
+        		case "!=" : return (value1 < (value2 - 0.00000001) ||
+        							value1 > (value2 + 0.00000001));
+        		default: throw new System.Exception("Unexpected type");
+        	}
         }
 
         public override String getStringValue(Current __current)

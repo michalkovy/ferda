@@ -77,5 +77,6 @@
     <Compile Include="ProjectManager.cs" />
     <Compile Include="ProjectManagerOptions.cs" />
     <Compile Include="View.cs" />
+    <Compile Include="Project.cs" />
   </ItemGroup>
 </Project>
