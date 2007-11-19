@@ -173,17 +173,15 @@ namespace Ferda.Modules
         /// <seealso cref="T:Ferda.Modules.Boxes.SocketConnections"/>
         public ObjectPrx[] GetFunctions(string socketName)
         {
-           lock (this)
+           List<ObjectPrx> result = new List<ObjectPrx>();
+
+           foreach (BoxModulePrx boxModule in getConnection(socketName).Values)
            {
-               List<ObjectPrx> result = new List<ObjectPrx>();
-               foreach (BoxModulePrx boxModule in getConnection(socketName).Values)
-               {
-                   ObjectPrx functions = boxModule.getFunctions();
-                   if (functions != null)
-                       result.Add(functions);
-               }
-               return result.ToArray();
+               ObjectPrx functions = boxModule.getFunctions();
+               if (functions != null)
+                   result.Add(functions);
            }
+           return result.ToArray();
         }
 
         #endregion
@@ -213,17 +211,17 @@ namespace Ferda.Modules
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
                     return ((ShortT) value).getShortValue();
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    return ShortTInterfacePrxHelper.checkedCast(functions[0]).getShortValue();
-                }
-                else
-                {
-                    Debug.WriteLine("BMI08");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                return ShortTInterfacePrxHelper.checkedCast(functions[0]).getShortValue();
+            }
+            else
+            {
+                Debug.WriteLine("BMI08");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -243,17 +241,17 @@ namespace Ferda.Modules
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
                     return ((BoolT) value).getBoolValue();
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    return BoolTInterfacePrxHelper.checkedCast(functions[0]).getBoolValue();
-                }
-                else
-                {
-                    Debug.WriteLine("BMI09");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                return BoolTInterfacePrxHelper.checkedCast(functions[0]).getBoolValue();
+            }
+            else
+            {
+                Debug.WriteLine("BMI09");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -273,17 +271,17 @@ namespace Ferda.Modules
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
                     return ((IntT) value).getIntValue();
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    return IntTInterfacePrxHelper.checkedCast(functions[0]).getIntValue();
-                }
-                else
-                {
-                    Debug.WriteLine("BMI10");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                return IntTInterfacePrxHelper.checkedCast(functions[0]).getIntValue();
+            }
+            else
+            {
+                Debug.WriteLine("BMI10");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -303,17 +301,17 @@ namespace Ferda.Modules
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
                     return ((LongT) value).getLongValue();
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    return LongTInterfacePrxHelper.checkedCast(functions[0]).getLongValue();
-                }
-                else
-                {
-                    Debug.WriteLine("BMI11");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                return LongTInterfacePrxHelper.checkedCast(functions[0]).getLongValue();
+            }
+            else
+            {
+                Debug.WriteLine("BMI11");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -333,17 +331,17 @@ namespace Ferda.Modules
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
                     return ((FloatT) value).getFloatValue();
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    return FloatTInterfacePrxHelper.checkedCast(functions[0]).getFloatValue();
-                }
-                else
-                {
-                    Debug.WriteLine("BMI12");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                return FloatTInterfacePrxHelper.checkedCast(functions[0]).getFloatValue();
+            }
+            else
+            {
+                Debug.WriteLine("BMI12");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -363,17 +361,17 @@ namespace Ferda.Modules
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
                     return ((DoubleT) value).getDoubleValue();
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    return DoubleTInterfacePrxHelper.checkedCast(functions[0]).getDoubleValue();
-                }
-                else
-                {
-                    Debug.WriteLine("BMI13");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                return DoubleTInterfacePrxHelper.checkedCast(functions[0]).getDoubleValue();
+            }
+            else
+            {
+                Debug.WriteLine("BMI13");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -393,17 +391,17 @@ namespace Ferda.Modules
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
                     return ((StringT) value).getStringValue();
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    return StringTInterfacePrxHelper.checkedCast(functions[0]).getStringValue();
-                }
-                else
-                {
-                    Debug.WriteLine("BMI14");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                return StringTInterfacePrxHelper.checkedCast(functions[0]).getStringValue();
+            }
+            else
+            {
+                Debug.WriteLine("BMI14");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -423,17 +421,17 @@ namespace Ferda.Modules
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
                     return ((StringSeqT) value).getStringSeq();
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    return StringSeqTInterfacePrxHelper.checkedCast(functions[0]).getStringSeq();
-                }
-                else
-                {
-                    Debug.WriteLine("BMI144");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                return StringSeqTInterfacePrxHelper.checkedCast(functions[0]).getStringSeq();
+            }
+            else
+            {
+                Debug.WriteLine("BMI144");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -448,28 +446,28 @@ namespace Ferda.Modules
         /// </exception>
         public DateTime GetPropertyDateTime(string propertyName)
         {
+            PropertyValue value;
+            DateTime returnValue;
             lock (this)
             {
-                PropertyValue value;
-                DateTime returnValue;
                 if (properties.TryGetValue(propertyName, out value))
                 {
                     ((DateTimeTI) value).TryGetDateTime(out returnValue);
                     return returnValue;
                 }
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    (new DateTimeTI(DateTimeTInterfacePrxHelper.checkedCast(functions[0]))).TryGetDateTime(
-                        out returnValue);
-                    return returnValue;
-                }
-                else
-                {
-                    Debug.WriteLine("BMI15");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                (new DateTimeTI(DateTimeTInterfacePrxHelper.checkedCast(functions[0]))).TryGetDateTime(
+                    out returnValue);
+                return returnValue;
+            }
+            else
+            {
+                Debug.WriteLine("BMI15");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -484,27 +482,27 @@ namespace Ferda.Modules
         /// </exception>
         public DateTime GetPropertyDate(string propertyName)
         {
+            PropertyValue value;
+            DateTime returnValue;
             lock (this)
             {
-                PropertyValue value;
-                DateTime returnValue;
                 if (properties.TryGetValue(propertyName, out value))
                 {
                     ((DateTI) value).TryGetDateTime(out returnValue);
                     return returnValue;
                 }
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    (new DateTI(DateTInterfacePrxHelper.checkedCast(functions[0]))).TryGetDateTime(out returnValue);
-                    return returnValue;
-                }
-                else
-                {
-                    Debug.WriteLine("BMI16");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                (new DateTI(DateTInterfacePrxHelper.checkedCast(functions[0]))).TryGetDateTime(out returnValue);
+                return returnValue;
+            }
+            else
+            {
+                Debug.WriteLine("BMI16");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -519,27 +517,27 @@ namespace Ferda.Modules
         /// </exception>
         public TimeSpan GetPropertyTime(string propertyName)
         {
+            PropertyValue value;
+            TimeSpan returnValue;
             lock (this)
             {
-                PropertyValue value;
-                TimeSpan returnValue;
                 if (properties.TryGetValue(propertyName, out value))
                 {
                     ((TimeTI) value).TryGetTimeSpan(out returnValue);
                     return returnValue;
                 }
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    (new TimeTI(TimeTInterfacePrxHelper.checkedCast(functions[0]))).TryGetTimeSpan(out returnValue);
-                    return returnValue;
-                }
-                else
-                {
-                    Debug.WriteLine("BMI17");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                (new TimeTI(TimeTInterfacePrxHelper.checkedCast(functions[0]))).TryGetTimeSpan(out returnValue);
+                return returnValue;
+            }
+            else
+            {
+                Debug.WriteLine("BMI17");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -559,17 +557,17 @@ namespace Ferda.Modules
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
                     return value;
+            }
 
-                ObjectPrx[] functions = GetFunctions(propertyName);
-                if (functions.Length > 0)
-                {
-                    return boxInfo.GetPropertyObjectFromInterface(propertyName, functions[0]);
-                }
-                else
-                {
-                    Debug.WriteLine("BMI18");
-                    throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
-                }
+            ObjectPrx[] functions = GetFunctions(propertyName);
+            if (functions.Length > 0)
+            {
+                return boxInfo.GetPropertyObjectFromInterface(propertyName, functions[0]);
+            }
+            else
+            {
+                Debug.WriteLine("BMI18");
+                throw new ArgumentOutOfRangeException("propertyName", propertyName, "");
             }
         }
 
@@ -1377,37 +1375,38 @@ namespace Ferda.Modules
                     }
                 }
             }
+
             lock (this)
             {
                 if (properties.ContainsKey(propertyName))
                 {
                     return properties[propertyName];
                 }
-                switch (boxInfo.GetPropertyDataType(propertyName))
-                {
-                    case "::Ferda::Modules::BoolT":
-                        return new BoolTI(GetPropertyBool(propertyName));
-                    case "::Ferda::Modules::ShortT":
-                        return new ShortTI(GetPropertyShort(propertyName));
-                    case "::Ferda::Modules::IntT":
-                        return new IntTI(GetPropertyInt(propertyName));
-                    case "::Ferda::Modules::LongT":
-                        return new LongTI(GetPropertyLong(propertyName));
-                    case "::Ferda::Modules::FloatT":
-                        return new FloatTI(GetPropertyFloat(propertyName));
-                    case "::Ferda::Modules::DoubleT":
-                        return new DoubleTI(GetPropertyDouble(propertyName));
-                    case "::Ferda::Modules::StringT":
-                        return new StringTI(GetPropertyString(propertyName));
-                    case "::Ferda::Modules::DateTimeT":
-                        return new DateTimeTI(GetPropertyDateTime(propertyName));
-                    case "::Ferda::Modules::DateT":
-                        return new DateTI(GetPropertyDate(propertyName));
-                    case "::Ferda::Modules::TimeT":
-                        return new TimeTI(GetPropertyTime(propertyName));
-                    default:
-                        return GetPropertyOther(propertyName);
-                }
+            }
+            switch (boxInfo.GetPropertyDataType(propertyName))
+            {
+                case "::Ferda::Modules::BoolT":
+                    return new BoolTI(GetPropertyBool(propertyName));
+                case "::Ferda::Modules::ShortT":
+                    return new ShortTI(GetPropertyShort(propertyName));
+                case "::Ferda::Modules::IntT":
+                    return new IntTI(GetPropertyInt(propertyName));
+                case "::Ferda::Modules::LongT":
+                    return new LongTI(GetPropertyLong(propertyName));
+                case "::Ferda::Modules::FloatT":
+                    return new FloatTI(GetPropertyFloat(propertyName));
+                case "::Ferda::Modules::DoubleT":
+                    return new DoubleTI(GetPropertyDouble(propertyName));
+                case "::Ferda::Modules::StringT":
+                    return new StringTI(GetPropertyString(propertyName));
+                case "::Ferda::Modules::DateTimeT":
+                    return new DateTimeTI(GetPropertyDateTime(propertyName));
+                case "::Ferda::Modules::DateT":
+                    return new DateTI(GetPropertyDate(propertyName));
+                case "::Ferda::Modules::TimeT":
+                    return new TimeTI(GetPropertyTime(propertyName));
+                default:
+                    return GetPropertyOther(propertyName);
             }
         }
 
