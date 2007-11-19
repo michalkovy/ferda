@@ -70,7 +70,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <returns>The user label</returns>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return "Ontology-DataTable Mapping";
+            return "Table-Ontology Mapping";
         }
 
         /// <summary>
@@ -142,27 +142,10 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <returns>String options of the property</returns>
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
-            /*TODO zjistit co to je a upravit
-             * switch (propertyName)
-            {
-                case Functions.PropProviderInvariantName:
-                    return BoxInfoHelper.GetSelectStringArray(
-                        DataProviderHelper.FactoryClassesInvariantNames
-                        );
-                default:
-                    return null;
-            }
-             */
             Functions Func = (Functions)boxModule.FunctionsIObj;
 
             switch (propertyName)
             {
-                case Functions.OntologyMapping:
-                    return null;
-                /*BoxInfoHelper.GetSelectStringArray(
-                DataProviderHelper.FactoryClassesInvariantNames
-                );
-                 */
                 default:
                     return null;
             }
@@ -179,26 +162,15 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// </returns>
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            /* TODO upravit
-             * Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (propertyName)
             {
-                case Functions.PropLastReloadRequest:
-                    return Func.LastReloadRequest;
-                case Functions.PropConnectionTimeout:
-                    return Func.ConnectionTimeout;
-                case Functions.PropDatabaseName:
-                    return Func.DatabaseName;
-                case Functions.PropDataSource:
-                    return Func.DataSource;
-                case Functions.PropDriver:
-                    return Func.Driver;
-                case Functions.PropServerVersion:
-                    return Func.ServerVersion;
+                case Functions.PropNumberOfMappedPairs:
+                    return Func.NumberOfMappedPairs;
+                
                 default:
                     throw new NotImplementedException();
             }
-             */
             return null; 
         }
 
@@ -236,7 +208,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <returns>If the property is set.</returns>
         public override bool IsPropertySet(string propertyName, PropertyValue propertyValue)
         {
-            if (propertyName == "OntologyMapping")
+            if (propertyName == "Mapping")
             {
                 string value = ((StringT)propertyValue).stringValue;
                 if (value == string.Empty || value == null)

@@ -168,7 +168,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
                     ownerOfAddIn.ShowBoxException(e);
                     return valueBefore;
                 }
-                
+
                 ontologyPath.stringValue = this.returnString;
                 PropertyValue resultValue = ontologyPath;
                 about = this.getPropertyAbout(resultValue);

@@ -10617,7 +10617,7 @@
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
-	<BoxLocalization>
+  <BoxLocalization>
 		<Identifier>OntologyRelated.OntologyMapping</Identifier>
 		<Label>Mapping between an ontology and a table</Label>
 		<Hint>Box which is used to map column names on terms from the ontology</Hint>
@@ -10639,15 +10639,20 @@
 				<Hint>Defines data matrix or Multi-column.</Hint>
 			</Socket>
 			<Socket>
-				<Name>OntologyMapping</Name>
-				<Label>Mapping between an ontology and a table</Label>
-				<Hint>Mapping of terms from ontology on table columns.</Hint>
+				<Name>Mapping</Name>
+				<Label>Mapping between table and ontology</Label>
+				<Hint>Mapping of entities from ontology on table columns.</Hint>
+			</Socket>
+			<Socket>
+				<Name>NumberOfMappedPairs</Name>
+				<Label>Number of mapped pairs</Label>
+				<Hint>Number of mapped pairs (name of datatable column - name of ontology entity)</Hint>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
-				<Name>Ontology Mapping</Name>
-				<Label>Mapping between an ontology and a table</Label>
+				<Name>Mapping</Name>
+				<Label>Mapping between table and ontology</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>

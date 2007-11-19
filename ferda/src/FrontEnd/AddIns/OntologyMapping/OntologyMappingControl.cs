@@ -20,9 +20,9 @@ namespace Ferda.FrontEnd.AddIns.OntologyMapping
         private string localizationString;
 
         /// <summary>
-        /// Resulting Ontology Mapping
+        /// Resulting Mapping
         /// </summary>
-        private string returnOntologyMapping;
+        private string returnMapping;
 
         /// <summary>
         /// Array of structures that holds inrofmation about datatable columns and ontology
@@ -47,18 +47,18 @@ namespace Ferda.FrontEnd.AddIns.OntologyMapping
         /// <summary>
         /// Resulting DSN
         /// </summary>
-        public string ReturnOntologyMapping
+        public string ReturnMapping
         {
             get
             {
-                return returnOntologyMapping;
+                return returnMapping;
             }
         }
 
         #endregion
 
         //public OntologyMappingControl()
-        public OntologyMappingControl(ColumnExplain[] columnExplain, OntologyStructure ontology)
+        public OntologyMappingControl(ColumnExplain[] columnExplain, OntologyStructure ontology, string[] localePrefs, IOwnerOfAddIn ownerOfAddIn)
         {
             this.columnExplains = columnExplain;
             this.ontology = ontology;
@@ -210,8 +210,11 @@ namespace Ferda.FrontEnd.AddIns.OntologyMapping
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            //TODO ulozeni vsech MappedPairs z MappingListBox do parametru krabicky
-            //this.returnOntologyPath = URLPathTextBox.Text;
+            returnMapping = "";
+            foreach (MappedPair mappedPair in this.MappingListBox.Items)
+            {
+                returnMapping += mappedPair.DataTableColumnName + "\t" + mappedPair.OntologyEntityName + "\n";
+            }
             this.DialogResult = DialogResult.OK;
             this.Dispose();
             return;
