@@ -87,6 +87,11 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// </summary>
         private IBitString baseBitString = new FalseBitString();
 
+        /// <summary>
+        /// Unique identifier of this node and clones of the node
+        /// </summary>
+        private double id;
+
         #endregion
 
         #region Properties
@@ -215,6 +220,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         public Node(bool isLeaf)
         {
             this.leaf = isLeaf;
+            this.id = NodeCounter.GetNodeNumber();
         }
 
         #endregion
@@ -418,6 +424,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             node.subCategories = (string[]) subCategories.Clone();
             node.baseBitString = baseBitString;
             node.frequency = frequency;
+            node.id = id;
 
             //the leaf does not contain any subnodes
             if (leaf)
@@ -439,20 +446,23 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// Finds and returns node with specified identification in the node
         /// or its subNodes;
         /// </summary>
-        /// <param name="attributeId">Identification of the attribute</param>
+        /// <param name="attributeId">The node to be found</param>
         /// <returns>Node with given attribute</returns>
-        public Node FindNode(string attributeId)
+        public Node FindNode(Node node)
         {
-            if (attribute.Identifier.AttributeGuid == attributeId)
+            if (this.id == node.id)
             {
                 return this;
             }
 
-            foreach (Node n in subNodes.Values)
+            if (subNodes != null)
             {
-                if (n.FindNode(attributeId) != null)
+                foreach (Node n in subNodes.Values)
                 {
-                    return n;
+                    if (n.FindNode(node) != null)
+                    {
+                        return n;
+                    }
                 }
             }
 

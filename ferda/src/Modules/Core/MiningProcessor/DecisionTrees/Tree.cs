@@ -192,13 +192,13 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         }
 
         /// <summary>
-        /// Finds and returns node with specified identification in the tree
+        /// Finds and returns node with specified identification in the tree.
         /// </summary>
-        /// <param name="attributeId">Identification of the attribute</param>
+        /// <param name="attributeId">The node</param>
         /// <returns>Node with given attribute</returns>
-        public Node FindNode(string attributeId)
+        public Node FindNode(Node node)
         {
-            return rootNode.FindNode(attributeId);
+            return rootNode.FindNode(node);
         }
 
         /// <summary>
