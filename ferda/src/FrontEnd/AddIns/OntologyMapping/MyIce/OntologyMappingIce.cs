@@ -148,48 +148,70 @@ namespace Ferda.FrontEnd.AddIns.OntologyMapping.MyIce
             OntologyMappingFunctionsPrx OntologyMappingPrx = 
                 OntologyMappingFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
 
-            DataTableFunctionsPrx DataTablePrx =
-                DataTableFunctionsPrxHelper.checkedCast(boxModuleParam.getConnections("DataTable")[0].getFunctions());            
-            /*TODO TEST, jestli connection existuje!!! kdyžtak error*/
-
-            OntologyFunctionsPrx OntologyPrx =
-                OntologyFunctionsPrxHelper.checkedCast(boxModuleParam.getConnections("Ontology")[0].getFunctions());
-
-            /*
-             * TODO LoadOntology() smazat a pøidat sem test, 
-             * jestli parsování úspìšnì probìhlo, jinak ontologie neexistuje
-             * a mìla by se o tom hodit standardní hláška
-             */
-            //OntologyPrx.LoadOntology();
-            OntologyStructure ontology = OntologyPrx.getOntology();
+            DataTableFunctionsPrx DataTablePrx;
+            OntologyFunctionsPrx OntologyPrx;
+            try
+            {
+                DataTablePrx =
+                    DataTableFunctionsPrxHelper.checkedCast(boxModuleParam.getConnections("DataTable")[0].getFunctions());
             
+                OntologyPrx =
+                    OntologyFunctionsPrxHelper.checkedCast(boxModuleParam.getConnections("Ontology")[0].getFunctions());
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("null null");
+                /*TODO hodit vyjimku, ze nejsou zapojeny oba required sockety*/
+                //throw Ferda.Modules.Exceptions.BoxRuntimeError(null, boxModuleParam.getFunctionsIceId,
+                //      "Ontology box and DataTable box must be connected!");
+                about = this.getPropertyAbout(valueBefore);
+                return valueBefore;
+            }
+
+            OntologyStructure ontology = OntologyPrx.getOntology();
+
             about = resManager.GetString("OntologyMappingAbout");
+            StringT ontologyMapping = (StringT)valueBefore;
             PropertyValue returnValue = new PropertyValue();
             PropertyValue propertyValue = valueBefore;
 
-            //DataTablePrx.getColumnExplainSeq();
-            
-            OntologyMappingControl control = 
-                new OntologyMappingControl(DataTablePrx.getColumnExplainSeq(), ontology);
-            
-            /*OntologyMappingControl control =
-                new OntologyMappingControl();
-             */
-            
-            /*localePrefs,
-            ontologyPath.getStringValue(),
-            ownerOfAddIn,
-            prx.getDatabaseConnectionSetting().providerInvariantName);*/
+            OntologyMappingControl control =
+                new OntologyMappingControl(
+                    DataTablePrx.getColumnExplainSeq(),
+                    ontology,
+                    localePrefs,
+                    ownerOfAddIn
+                );
 
-            
             control.ShowInTaskbar = false;
-            //listView.Disposed += new EventHandler(listView_Disposed);
+            control.Disposed += new EventHandler(control_Disposed);
             System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(control);
 
-            /*if (result == System.Windows.Forms.DialogResult.OK)
+            if (result == System.Windows.Forms.DialogResult.OK)
             {
-                ontologyPath.stringValue = this.returnString;
-                PropertyValue resultValue = ontologyPath;
+
+                /*IntTI numberOfMappedPairs = new IntTI();
+                
+                numberOfMappedPairs.intValue = 5;
+
+                System.Windows.Forms.MessageBox.Show("A" + ((IntT)numberOfMappedPairs).getStringValue());
+                boxModuleParam.setProperty("NumberOfMappedPairs", (IntT)numberOfMappedPairs);
+                System.Windows.Forms.MessageBox.Show("B");
+                */
+                //StringT tmpstr = new StringTI();
+                //tmpstr.stringValue = "jde to";
+                //System.Windows.Forms.MessageBox.Show("A" + ((IntT)numberOfMappedPairs).getStringValue());
+                
+                //boxModuleParam.setProperty("Mapping", tmpstr);
+                //ontologyMapping.stringValue = "nazdar";
+                
+                //boxModuleParam.setProperty("Mapping", ontologyMapping);
+                
+                //System.Windows.Forms.MessageBox.Show("mmntik");
+                //ontologyMapping.stringValue = "druhy nastaveni";
+                ontologyMapping.stringValue = this.returnString;
+                PropertyValue resultValue = ontologyMapping;
+
                 about = this.getPropertyAbout(resultValue);
                 propertyValue = resultValue;
             }
@@ -197,9 +219,10 @@ namespace Ferda.FrontEnd.AddIns.OntologyMapping.MyIce
             {
                 about = this.getPropertyAbout(valueBefore);
                 return valueBefore;
-            }*/
+            }
 
             return propertyValue;
+            
         }
 
         #endregion
@@ -212,13 +235,13 @@ namespace Ferda.FrontEnd.AddIns.OntologyMapping.MyIce
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-       /* void listView_Disposed(object sender, EventArgs e)
+        void control_Disposed(object sender, EventArgs e)
         {
-            Ferda.FrontEnd.AddIns.OntologyMapping.OntologyMappingControl listView =
+            Ferda.FrontEnd.AddIns.OntologyMapping.OntologyMappingControl control =
                 (Ferda.FrontEnd.AddIns.OntologyMapping.OntologyMappingControl)sender;
 
-            this.returnString = listView.ReturnOntologyMapping;
-        }*/
+            this.returnString = control.ReturnMapping;
+        }
 
         #endregion
     }

@@ -10607,15 +10607,20 @@
 				<Hint>Definuje datovou tabulku (nebo množinu sloupců tabulky)</Hint>
 			</Socket>
 			<Socket>
-				<Name>OntologyMapping</Name>
-				<Label>Mapování ontologie a tabulky</Label>
+				<Name>Mapping</Name>
+				<Label>Mapování tabulky a ontologie</Label>
 				<Hint>Mapování termínů z ontologie na sloupečky tabulky.</Hint>
+			</Socket>
+			<Socket>
+				<Name>NumberOfMappedPairs</Name>
+				<Label>Počet namapovaných dvojic</Label>
+				<Hint>Počet namapovaných dvojic (název sloupce tabulky - název entity z ontologie)</Hint>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
-				<Name>Ontology Mapping</Name>
-				<Label>Mapování ontologie a tabulky</Label>
+				<Name>Mapping</Name>
+				<Label>Mapování tabulky a ontologie</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>

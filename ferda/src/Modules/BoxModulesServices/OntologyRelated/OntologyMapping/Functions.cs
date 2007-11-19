@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ice;
+using Ferda.OntologyRelated.generated.OntologyData;
 
 namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 {
@@ -55,59 +56,72 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 
         //names of the properties
         public const string SockOntology = "Ontology";
-        public const string OntologyMapping = "onto mapping";
-        
+        public const string Mapping = "Mapping";
+        public const string PropNumberOfMappedPairs = "NumberOfMappedPairs";
+
+        public IntTI NumberOfMappedPairs
+        {
+            get
+            {
+                //OntologyStructure tmpOntology = getOntology(false);
+                //return (tmpOntology != null) ? tmpOntology.OntologyClassMap.Values.Count.ToString() : "0";
+                return 777;
+            }
+        }
+
         #endregion
 
         #region Methods
 
-        /* TODO - nahradit OntologyMapping Metodama
-        /// <summary>
-        /// Gets the names of data tables in the database
-        /// </summary>
-        /// <param name="fallOnError">If to fail on error</param>
-        /// <returns>The names of data tables in the database</returns>
-        public string[] GetDataTablesNames(bool fallOnError)
+        public StrSeqMap getOntologyEntityProperties(string dataTableColumnName, bool fallOnError)
         {
-            return ExceptionsHandler.GetResult<string[]>(
+            return ExceptionsHandler.GetResult<StrSeqMap>(
                 fallOnError,
                 delegate
                     {
-                        GenericDatabase tmp = GetGenericDatabase(fallOnError);
+                        /*GenericDatabase tmp = GetGenericDatabase(fallOnError);
                         if (tmp != null)
-                            return tmp.GetAcceptableDataTablesNames(AcceptableDataTableTypes);
-                        return new string[0];
+                        {
+                            List<DataTableExplain> result = new List<DataTableExplain>();
+                            foreach (GenericDataTable table in tmp)
+                            {
+                                if (table.IsAcceptable(accepts))
+                                    result.Add(table.Explain);
+                            }
+                            return result.ToArray();
+                        }
+                        return new DataTableExplain[0];*/
+                        StrSeqMap dataPropertiesMap = new StrSeqMap();
+
+                        /*TODO - upravit odpovidajici vyhledani informaci z ontologie na zaklade parametru dataTableColumnName a mapovani*/
+
+                        string[] values = new string[3] { "15", "20", "30" };
+                        dataPropertiesMap.Add("DomainDividingValues", values);
+                        return dataPropertiesMap;
                     },
                 delegate
                     {
-                        return new string[0];
+                        return null;
                     },
                 _boxModule.StringIceIdentity
                 );
         }
-         */
 
         #endregion
 
         #region Ice Functions
 
-        /*TOTO nahradit OntologyMapping Functions
         /// <summary>
-        /// Gets names of tables in the database
+        /// Gets the properties (dataproperties) of ontology entity - for individuals it is empty
         /// </summary>
+        /// <param name="dataTableColumnName">Name of table column which properties (based on mapping) I want to get</param>
         /// <param name="current__">Ice stuff</param>
-        /// <returns>Names of tables</returns>
-        public override string[] getDataTablesNames(Current current__)
-        {
-            return GetDataTablesNames(true);
-        }
-         */
+        /// <returns>Data properties of ontology entity</returns>
 
-        public override string HelloWorld(Ice.Current __current)
+        public override StrSeqMap getOntologyEntityProperties(string dataTableColumnName, Ice.Current __current)
         {
-            return "Hello World!";
+            return getOntologyEntityProperties(dataTableColumnName, true);
         }
-
 
         #endregion
     }
