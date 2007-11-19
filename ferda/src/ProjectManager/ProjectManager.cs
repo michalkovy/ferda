@@ -825,23 +825,23 @@ namespace Ferda.ProjectManager {
         
         public IBoxModule CloneBoxModuleWithChilds(IBoxModule boxModule, bool addToProject, IBoxModule[][] variables, IBoxModule[] variableValues)
         {
-        	XmlSerializer s = new XmlSerializer( typeof( Project ) );
-            TextWriter w = new StreamWriter("test.p1");
+            //XmlSerializer s = new XmlSerializer( typeof( Project ) );
+            //TextWriter w = new StreamWriter("test.p1");
             
         	Project projectOld = SaveBoxModulesToProject(new IBoxModule[]{boxModule}, null, variables, variableValues);
         	
-        	s.Serialize( w, projectOld );
-            w.Close();
+            //s.Serialize( w, projectOld );
+            //w.Close();
             
 			Ferda.NetworkArchive.Box box = Ferda.NetworkArchive.ProjectConverter.CreateBoxFromProject(projectOld, projectOld.Boxes[0].ProjectIdentifier);
 			
 			Project.Box mainProjectBox;
 			Ferda.ModulesManager.IBoxModule clonedBox;
 			
-			TextWriter w2 = new StreamWriter("test.p2");
+            //TextWriter w2 = new StreamWriter("test.p2");
 			Project project = Ferda.NetworkArchive.ProjectConverter.CreateProjectFromBox(box, out mainProjectBox);
-			s.Serialize( w2, project );
-            w2.Close();
+            //s.Serialize( w2, project );
+            //w2.Close();
             
 			ImportProject(project, mainProjectBox, addToProject, out clonedBox);
 			return clonedBox;
