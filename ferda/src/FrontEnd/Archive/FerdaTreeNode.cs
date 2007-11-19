@@ -130,7 +130,7 @@ namespace Ferda.FrontEnd.Archive
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         /// <summary>
         /// Constructor that sets the Box property
@@ -147,6 +147,28 @@ namespace Ferda.FrontEnd.Archive
         public FerdaTreeNode(ModulesManager.IBoxModule box, bool alongDirection, 
             ProjectManager.Archive arch, FerdaArchive parent, Dictionary<string, int> iconDictionary,
             ImageList list, IIconProvider provider, ProjectManager.ProjectManager projManager)
+            : this(box, alongDirection,
+            arch, parent, iconDictionary, list, provider, projManager, new List<ModulesManager.IBoxModule>())
+        {
+        }
+            
+
+        /// <summary>
+        /// Constructor that sets the Box property
+        /// </summary>
+        /// <param name="box">box that will be represented by this node</param>
+        /// <param name="alongDirection">the direction of expanding</param>
+        /// <param name="arch">Archive where this box belongs</param>
+        /// <param name="parent">Parent component of the archive</param>
+        /// <param name="iconDictionary">Icon dictionary containing all the icons
+        /// for the box visualization</param>
+        /// <param name="list">Some image list</param>
+        /// <param name="provider">Control providing access to all the icons</param>
+        /// <param name="projManager">Project manager of the application</param>
+        /// <param name="usedBoxModules">Used box modules in recursion - for stopping recursion when in cycle</param>
+        public FerdaTreeNode(ModulesManager.IBoxModule box, bool alongDirection, 
+            ProjectManager.Archive arch, FerdaArchive parent, Dictionary<string, int> iconDictionary,
+            ImageList list, IIconProvider provider, ProjectManager.ProjectManager projManager, List<ModulesManager.IBoxModule> usedBoxModules)
             : base()
         {
             Box = box;
@@ -160,6 +182,9 @@ namespace Ferda.FrontEnd.Archive
 
             //setting the projectManager
             projectManager = projManager;
+
+            //add box module for stopping recursion
+            usedBoxModules.Add(box);
 
             //setting the icon
             if (box.MadeInCreator.Icon.Length == 0)
@@ -195,8 +220,11 @@ namespace Ferda.FrontEnd.Archive
                 //sets the boxes as ConnectionTo
                 foreach(ModulesManager.IBoxModule b in Archive.ConnectedTo(Box))
                 {
-                    Nodes.Add(new FerdaTreeNode(b, AlongDirection, Archive, 
-                        ParentTreeView, iconDictionary, list, provider, projectManager));
+                    if (!usedBoxModules.Contains(b))
+                    {
+                        Nodes.Add(new FerdaTreeNode(b, AlongDirection, Archive,
+                            ParentTreeView, iconDictionary, list, provider, projectManager, usedBoxModules));
+                    }
                 }
             }
             else
@@ -204,8 +232,11 @@ namespace Ferda.FrontEnd.Archive
                 //sets the boxes as ConnectionFrom
                 foreach(ModulesManager.IBoxModule b in Archive.ConnectionsFrom(Box))
                 {
-                    Nodes.Add(new FerdaTreeNode(b, AlongDirection, Archive, 
-                        ParentTreeView, iconDictionary, list, provider, projectManager));
+                    if (!usedBoxModules.Contains(b))
+                    {
+                        Nodes.Add(new FerdaTreeNode(b, AlongDirection, Archive,
+                            ParentTreeView, iconDictionary, list, provider, projectManager, usedBoxModules));
+                    }
                 }
             }
         }

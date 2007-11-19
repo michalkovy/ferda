@@ -19330,6 +19330,7 @@
 			<Property>
 				<Name>type</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Main</CategoryName>
 				<SelectOptions>
 					<SelectOption>
 						<Name>+</Name>
@@ -19344,7 +19345,6 @@
 						<Name>/</Name>
 					</SelectOption>
 				</SelectOptions>
-				<CategoryName>Main</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 				<Default>+</Default>
@@ -19405,6 +19405,7 @@
 			<Property>
 				<Name>type</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Main</CategoryName>
 				<SelectOptions>
 					<SelectOption>
 						<Name>&lt;</Name>
@@ -19425,7 +19426,6 @@
 						<Name>!=</Name>
 					</SelectOption>
 				</SelectOptions>
-				<CategoryName>Main</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 				<Default>=</Default>
