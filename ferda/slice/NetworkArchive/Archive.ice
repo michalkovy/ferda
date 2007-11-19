@@ -74,6 +74,13 @@ module Ferda {
         	 *
         	 **/
 			Ferda::Modules::PropertySettingSeq PropertySets;
+
+			/**
+			 *
+			 * Socked properties
+			 *
+			 **/
+			Ferda::Modules::StringSeq SockedProperties;
 		};
 		
 		exception NullParamError{};

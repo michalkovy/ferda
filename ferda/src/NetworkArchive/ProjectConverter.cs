@@ -68,6 +68,7 @@ namespace Ferda.NetworkArchive
 				projectBox.PropertySets[i].PropertyName = box.PropertySets[i].propertyName;
 				projectBox.PropertySets[i].Value =  ((Ferda.Modules.IValue)box.PropertySets[i].value).getValueT();
 			}
+			projectBox.SockedProperties = box.SockedProperties;
 			projectBoxes.Add(projectBox);
 			undoneBoxes.Remove(box);
 			return projectBox;
@@ -94,7 +95,8 @@ namespace Ferda.NetworkArchive
 										  box.UserName,
 										  box.UserHint,
 										  null,
-										  null));
+										  null,
+										  box.SockedProperties));
 			}
 			foreach(Project.Box box in project.Boxes)
 			{
@@ -104,10 +106,15 @@ namespace Ferda.NetworkArchive
 				
 				foreach(Project.Box.Connection projectConnection in box.Connections)
 				{
+					Ferda.NetworkArchive.Box otherBox = null;
+					if(!identiferToBoxMap.TryGetValue(projectConnection.BoxProjectIdentifier, out otherBox))
+					{
+						throw new System.Exception(System.String.Format("Can not find box {0}",projectConnection.BoxProjectIdentifier));
+					}
 					Ferda.NetworkArchive.Connection boxConnection =
 						new Ferda.NetworkArchive.Connection(
 						projectConnection.SocketName,
-						identiferToBoxMap[projectConnection.BoxProjectIdentifier]);
+						otherBox);
 					boxConnections.Add(boxConnection);
 				}
 				networkBox.Connections = boxConnections.ToArray();

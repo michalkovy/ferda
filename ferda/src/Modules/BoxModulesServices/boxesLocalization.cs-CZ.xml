@@ -10505,9 +10505,9 @@
 		</PropertyCategories>
 	</BoxLocalization>
 	<BoxLocalization>
-		<Identifier>Language.Math.Plus</Identifier>
-		<Label>Součet</Label>
-		<Hint>Součet dvou čísel</Hint>
+		<Identifier>Language.Math.BinaryOperation</Identifier>
+		<Label>Binární operace</Label>
+		<Hint>Binární operace</Hint>
 		<Categories>
 			<Category>
 				<Name>Language.Math</Name>
@@ -10516,14 +10516,37 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>Succ1</Name>
-				<Label>Sčítanec 1</Label>
-				<Hint>První sčítanec</Hint>
+				<Name>value1</Name>
+				<Label>Hodnota 1</Label>
+				<Hint>První hodnota</Hint>
 			</Socket>
 			<Socket>
-				<Name>Succ2</Name>
-				<Label>Sčítanec 2</Label>
-				<Hint>Druhý sčítanec</Hint>
+				<Name>value2</Name>
+				<Label>Hodnota 2</Label>
+				<Hint>Druhá hodnota</Hint>
+			</Socket>
+			<Socket>
+				<Name>type</Name>
+				<Label>Typ</Label>
+				<Hint>Typ operace</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>+</Name>
+						<Label>+</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>-</Name>
+						<Label>-</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>*</Name>
+						<Label>*</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>/</Name>
+						<Label>/</Label>
+					</SelectOption>
+				</SelectOptions>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
@@ -10532,6 +10555,94 @@
 				<Label>Hlavní</Label>
 			</PropertyCategory>
 		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.Math.Compare</Identifier>
+		<Label>Porovnání</Label>
+		<Hint>Porovnání dvou čísel</Hint>
+		<Categories>
+			<Category>
+				<Name>Language.Math</Name>
+				<Label>Jazyk.Matematika</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>value1</Name>
+				<Label>Hodnota 1</Label>
+				<Hint>První hodnota</Hint>
+			</Socket>
+			<Socket>
+				<Name>value2</Name>
+				<Label>Hodnota 2</Label>
+				<Hint>Druhá hodnota</Hint>
+			</Socket>
+			<Socket>
+				<Name>type</Name>
+				<Label>Typ</Label>
+				<Hint>Typ porovnání</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>&lt;</Name>
+						<Label>&lt;</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>&lt;=</Name>
+						<Label>&lt;=</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>=</Name>
+						<Label>=</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>&gt;=</Name>
+						<Label>&gt;=</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>&gt;</Name>
+						<Label>&gt;</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>!=</Name>
+						<Label>!=</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Hlavní</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.Math.IfThenElse</Identifier>
+		<Label>if-then-else</Label>
+		<Hint>Jestliže (if) pak (then) jinak (else)</Hint>
+		<Categories>
+			<Category>
+				<Name>Language.Math</Name>
+				<Label>Jazyk.Matematika</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>if</Name>
+				<Label>if</Label>
+				<Hint>jestliže</Hint>
+			</Socket>
+			<Socket>
+				<Name>then</Name>
+				<Label>then</Label>
+				<Hint>pak</Hint>
+			</Socket>
+			<Socket>
+				<Name>else</Name>
+				<Label>else</Label>
+				<Hint>jinak</Hint>
+			</Socket>
+		</Sockets>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>OntologyRelated.Ontology</Identifier>

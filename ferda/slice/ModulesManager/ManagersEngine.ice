@@ -60,6 +60,23 @@ module Ferda {
 						Ferda::Modules::NoConnectionInSocketError,
 						BoxModuleNotExistError;
 		};
+
+		sequence<Ferda::Modules::BoxModule*> BoxModuleSeq;
+		sequence<BoxModuleSeq> BoxModuleSeqSeq;
+
+		interface BoxModuleManager {
+			/**
+			 * Clone box boxModule with all boxes connected to it.
+			 * 
+			 * @param boxModule The parent box module which we want to clone with all child box modules
+			 * 
+			 * @return The cloned version of box module boxModule
+			 **/
+			Ferda::Modules::BoxModule* CloneBoxModuleWithChilds(Ferda::Modules::BoxModule* boxModule,
+				bool addToProject,
+				BoxModuleSeqSeq variables,
+				BoxModuleSeq variableValues);
+		};
 		
 		
 		sequence<Ferda::Modules::BoxModuleFactoryCreator*> BoxModuleFactoryCreatorSeq;
@@ -87,6 +104,7 @@ module Ferda {
 			idempotent BoxModuleProjectInformation* getProjectInformation();
 			idempotent BoxModuleLocker* getBoxModuleLocker();
 			idempotent BoxModuleValidator* getBoxModuleValidator();
+			idempotent BoxModuleManager* getBoxModuleManager();
 			idempotent ManagersLocator* getManagersLocator();
 		};
 	};

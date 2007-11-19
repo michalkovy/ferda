@@ -78,7 +78,7 @@ namespace Ferda.ProjectManager
 			Project.Box mainProjectBox;
 			Ferda.ModulesManager.IBoxModule mainIBoxModule;
 			Project project = Ferda.NetworkArchive.ProjectConverter.CreateProjectFromBox(archive.GetBox(label), out mainProjectBox);
-			errors = projectLoader.ImportProject(project, mainProjectBox, out mainIBoxModule);
+			errors = projectLoader.ImportProject(project, mainProjectBox, true, out mainIBoxModule);
 			return mainIBoxModule;
 		}
 		
@@ -106,7 +106,7 @@ namespace Ferda.ProjectManager
 		
 		private Ferda.NetworkArchive.Box createBoxFromBoxModule(IBoxModule boxModule)
 		{
-			Project project = projectLoader.SaveBoxModulesToProject(new IBoxModule[]{boxModule}, null);
+			Project project = projectLoader.SaveBoxModulesToProject(new IBoxModule[]{boxModule}, null, null, null);
 			if(project.Boxes.Length > 0)
 			{
 				return Ferda.NetworkArchive.ProjectConverter.CreateBoxFromProject(project, project.Boxes[0].ProjectIdentifier);

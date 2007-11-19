@@ -111,8 +111,12 @@ using Ice;namespace Ferda.Modules
 			{
 				throw new Modules.ConnectionExistsError();
 			}
+			if(otherModule == null)
+			{
+				throw new System.Exception("Can not set null box module");
+			}
 			Ice.ObjectPrx prx = otherModule.getFunctions();
-			if(!prx.ice_isA(this.propertyFunctionsIceIds[0]))
+			if(prx != null && !prx.ice_isA(this.propertyFunctionsIceIds[0]))
 				throw new Ferda.Modules.BadTypeError();
 			if(propertyValuePrx != null && propertySetByValue)
 				adapter.remove(propertyValuePrx.ice_getIdentity());

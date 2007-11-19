@@ -59,7 +59,15 @@
 				<include name="${build.dir}/Modules/FerdaOWLParser/**/generated/**.java"/>
 			</targetfiles>
 		</uptodate>
-		<if test="${not(actual1) or not(actual2) or not(actual3) or not(actual4)}">
+		<uptodate property="actual5">
+			<sourcefiles>
+				<include name="ModulesManager/*.ice"/>
+			</sourcefiles>
+			<targetfiles>
+				<include name="${build.dir}/ModulesManager/generated/*.cs"/>
+			</targetfiles>
+		</uptodate>
+		<if test="${not(actual1) or not(actual2) or not(actual3) or not(actual4) or not(actual5)}">
 			<echo message="Generuji .cs z .ice souboru v adresari Modules..."/>
 			<mkdir dir="${build.dir}/Modules/Core/Base/generated"/>
 			<exec program="slice2cs">

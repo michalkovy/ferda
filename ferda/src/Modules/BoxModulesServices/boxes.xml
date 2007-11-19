@@ -19277,15 +19277,15 @@
 		</Properties>
 	</Box>
 	<Box>
-		<Identifier>Language.Math.Plus</Identifier>
-		<IconPath>plus.ico</IconPath>
-		<DesignPath>plus.svg</DesignPath>
+		<Identifier>Language.Math.BinaryOperation</Identifier>
+		<IconPath>boxIcon.ico</IconPath>
+		<DesignPath>boxDesign.svg</DesignPath>
 		<Categories>
 			<string>Language.Math</string>
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>Succ1</Name>
+				<Name>value1</Name>
 				<SocketTypes>
 					<BoxType>
 						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
@@ -19294,10 +19294,19 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
-				<Name>Succ2</Name>
+				<Name>value2</Name>
 				<SocketTypes>
 					<BoxType>
 						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>type</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -19305,20 +19314,160 @@
 		</Sockets>
 		<Properties>
 			<Property>
-				<Name>Succ1</Name>
+				<Name>value1</Name>
 				<TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
 				<CategoryName>Main</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 			</Property>
 			<Property>
-				<Name>Succ2</Name>
+				<Name>value2</Name>
 				<TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
 				<CategoryName>Main</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 			</Property>
+			<Property>
+				<Name>type</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<SelectOptions>
+					<SelectOption>
+						<Name>+</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>-</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>*</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>/</Name>
+					</SelectOption>
+				</SelectOptions>
+				<CategoryName>Main</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+				<Default>+</Default>
+			</Property>
 		</Properties>
+	</Box>
+	<Box>
+		<Identifier>Language.Math.Compare</Identifier>
+		<IconPath>boxIcon.ico</IconPath>
+		<DesignPath>boxDesign.svg</DesignPath>
+		<Categories>
+			<string>Language.Math</string>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>value1</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>value2</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>type</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+		</Sockets>
+		<Properties>
+			<Property>
+				<Name>value1</Name>
+				<TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
+				<CategoryName>Main</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
+			<Property>
+				<Name>value2</Name>
+				<TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
+				<CategoryName>Main</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
+			<Property>
+				<Name>type</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<SelectOptions>
+					<SelectOption>
+						<Name>&lt;</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>&lt;=</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>=</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>&gt;=</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>&gt;</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>!=</Name>
+					</SelectOption>
+				</SelectOptions>
+				<CategoryName>Main</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+				<Default>=</Default>
+			</Property>
+		</Properties>
+	</Box>
+	<Box>
+		<Identifier>Language.Math.IfThenElse</Identifier>
+		<IconPath>boxIcon.ico</IconPath>
+		<DesignPath>boxDesign.svg</DesignPath>
+		<Categories>
+			<string>Language.Math</string>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>if</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::BoolTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>then</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ice::Object</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>else</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ice::Object</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+		</Sockets>
 	</Box>
 	<Box>
 		<Identifier>OntologyRelated.Ontology</Identifier>

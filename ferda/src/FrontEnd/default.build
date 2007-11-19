@@ -5,24 +5,36 @@
 	<target name="build">	
 <mkdir dir="${addInsBuild.dir}" />
 		<nant buildfile="${path::combine('AddIns','default.build')}" target="buildmain"/>
-		
+	
+		<uptodate property="resources.uptodate">
+			<targetfiles>
+				<include name="*.resources" />
+			</targetfiles>
+			<sourcefiles>
+				<include name="*.resx" />
+			</sourcefiles>
+		</uptodate>
 		<if test="${framework::get-target-framework()=='mono-2.0'}">
 			<property name="defines" value="MONO"/>
-			<exec program="resgen2">
-				<arg value="/useSourcePath" />
-				<arg value="/compile" />
-				<arg value="FerdaPrescreen.resx" />
-				<arg value="Localization_cs-CZ.resx" />
-				<arg value="Localization_en-US.resx" />
-			</exec>
+			<if test="${not(resources.uptodate)}">
+				<exec program="resgen2">
+					<arg value="/useSourcePath" />
+					<arg value="/compile" />
+					<arg value="FerdaPrescreen.resx" />
+					<arg value="Localization_cs-CZ.resx" />
+					<arg value="Localization_en-US.resx" />
+				</exec>
+			</if>
 		</if>
 		<if test="${framework::get-target-framework()!='mono-2.0'}">
 			<property name="defines" value=""/>
-			<resgen usesourcepath="true">
-				<resources>
-					<include name="*.resx" />
-				</resources>
-			</resgen>
+			<if test="${not(resources.uptodate)}">
+				<resgen usesourcepath="true">
+					<resources>
+						<include name="*.resx" />
+					</resources>
+				</resgen>
+			</if>
 		</if>
 		<csc target="winexe" define="${defines}" output="${path::combine(build.dir,'FerdaFrontEnd.exe')}" doc="${path::combine(build.dir,'FerdaFrontEnd.xml')}" debug="${debug}" optimize="${optimize}" win32icon="FerdaFrontEnd.ico">
 			<sources>

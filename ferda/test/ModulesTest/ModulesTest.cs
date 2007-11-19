@@ -149,6 +149,81 @@ namespace Ferda.Modules
 			StringCollection iceIds = lambdaBox.GetFunctionsIceIds();
 			Assert.AreEqual(0, iceIds.Count);
 		}
+		
+		[Test]
+		public void Test_Lambda()
+		{
+			IBoxModuleFactoryCreator lambdaCreator = modulesManager.GetBoxModuleFactoryCreator("Language.Lambda");
+			IBoxModule lambdaBox = lambdaCreator.CreateBoxModule();
+			lambdaBox.SetPropertyInt("VariablesCount", 1);
+			
+			IBoxModuleFactoryCreator plusCreator = modulesManager.GetBoxModuleFactoryCreator("Language.Math.BinaryOperation");
+			IBoxModule plusBox = plusCreator.CreateBoxModule();
+			plusBox.SetPropertyString("type", "+");
+			plusBox.SetPropertyDouble("value1", 1);
+			
+			IBoxModuleFactoryCreator doubleCreator = modulesManager.GetBoxModuleFactoryCreator("DoubleT");
+			IBoxModule doubleBoxBefore = doubleCreator.CreateBoxModule();
+			doubleBoxBefore.SetPropertyDouble("value", 1);
+			
+			IBoxModule doubleBoxAfter = doubleCreator.CreateBoxModule();
+			doubleBoxAfter.SetPropertyDouble("value", 2);
+			
+			plusBox.SetPropertySocking("value2", true);
+			plusBox.SetConnection("value2",doubleBoxBefore);
+			lambdaBox.SetConnection("Function", plusBox);
+			lambdaBox.SetConnection("Variable0", doubleBoxBefore);
+			lambdaBox.SetConnection("VariableValue0", doubleBoxAfter);
+			
+			IBoxModule doubleBoxResult = doubleCreator.CreateBoxModule();
+			doubleBoxResult.SetPropertySocking("value", true);
+			doubleBoxResult.SetConnection("value", lambdaBox);
+			
+			Assert.AreEqual(3.0, doubleBoxResult.GetPropertyDouble("value"), 0.1);
+		}
+		
+		[Test]
+		public void Test_Recursion()
+		{
+			IBoxModuleFactoryCreator lambdaCreator = modulesManager.GetBoxModuleFactoryCreator("Language.Lambda");
+			IBoxModule lambdaBox = lambdaCreator.CreateBoxModule();
+			lambdaBox.SetPropertyInt("VariablesCount", 1);
+			
+			IBoxModuleFactoryCreator plusCreator = modulesManager.GetBoxModuleFactoryCreator("Language.Math.BinaryOperation");
+			IBoxModule plusBox = plusCreator.CreateBoxModule();
+			plusBox.SetPropertyString("type", "+");
+			plusBox.SetPropertyDouble("value1", 1);
+			
+			IBoxModuleFactoryCreator doubleCreator = modulesManager.GetBoxModuleFactoryCreator("DoubleT");
+			IBoxModule doubleBox1 = doubleCreator.CreateBoxModule();
+			doubleBox1.SetPropertyDouble("value", 0);
+			
+			plusBox.SetPropertySocking("value2", true);
+			plusBox.SetConnection("value2",doubleBox1);
+			
+			IBoxModuleFactoryCreator compareCreator = modulesManager.GetBoxModuleFactoryCreator("Language.Math.Compare");
+			IBoxModule compareBox = compareCreator.CreateBoxModule();
+			compareBox.SetPropertyDouble("value2", 5);
+			compareBox.SetPropertyString("type", "<");
+			compareBox.SetPropertySocking("value1", true);
+			compareBox.SetConnection("value1",doubleBox1);
+			
+			IBoxModuleFactoryCreator ifThenElseCreator = modulesManager.GetBoxModuleFactoryCreator("Language.Math.IfThenElse");
+			IBoxModule ifThenElseBox = ifThenElseCreator.CreateBoxModule();
+			ifThenElseBox.SetConnection("if",compareBox);
+			ifThenElseBox.SetConnection("then",lambdaBox);
+			ifThenElseBox.SetConnection("else",doubleBox1);
+			
+			lambdaBox.SetConnection("Function", ifThenElseBox);
+			lambdaBox.SetConnection("Variable0", doubleBox1);
+			lambdaBox.SetConnection("VariableValue0", plusBox);
+			
+			IBoxModule doubleBoxResult = doubleCreator.CreateBoxModule();
+			doubleBoxResult.SetPropertySocking("value", true);
+			doubleBoxResult.SetConnection("value", ifThenElseBox);
+			
+			Assert.AreEqual(5.0, doubleBoxResult.GetPropertyDouble("value"), 0.1);
+		}
 
         /*
 		[Test]

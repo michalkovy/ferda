@@ -94,10 +94,12 @@ namespace Ferda {
 			/// </summary>
 			/// <param name="args">A string[] representing arguments from command line</param>
 			/// <param name="localePrefs">A string[] representing locales with descending importance</param>
-            public ModulesManager(string[] args, string[] localePrefs) {
+			/// <param name="projectHelper">Helper to Modules manager with project related tasks.</param>
+            public ModulesManager(string[] args, string[] localePrefs, Ferda.ModulesManager.IProjectHelper projectHelper) {
 				InitAdapterAndHelper(args, localePrefs);
 				/*IEnumerator<KeyValuePair<string,BoxModuleFactoryCreatorPrx>> iter =
 				.GetEnumerator();*/
+				this.projectHelper = projectHelper;
 				InitEnd();
             }
 
@@ -110,13 +112,15 @@ namespace Ferda {
 			/// <param name="localePrefs">A string[] representing locales with descending importance</param>
 			/// <param name="output">A <see cref="T:Ferda.ModulesManager.Output"/> class
 			/// representing inerface where are send output from user</param>
-			public ModulesManager(string[] args, string[] localePrefs, Ferda.ModulesManager.Output output)
+			/// <param name="projectHelper">Helper to Modules manager with project related tasks.</param>
+			public ModulesManager(string[] args, string[] localePrefs, Ferda.ModulesManager.Output output, Ferda.ModulesManager.IProjectHelper projectHelper)
 			{
 				InitAdapterAndHelper(args, localePrefs);
 				Ice.ObjectPrx outputPrx =
 					this.Helper.ObjectAdapter.addWithUUID(output);
 				this.Helper.ManagersEngineI.OutputPrx =
 					OutputPrxHelper.uncheckedCast(outputPrx);
+				this.projectHelper = projectHelper;
 				InitEnd();
 			}
 
@@ -435,6 +439,13 @@ namespace Ferda {
                     box.UnlockAll();
                 }
             }
+            
+            public IProjectHelper ProjectHelper
+            {
+            	get{
+            		return this.projectHelper;
+            	}
+            }
 
             private Dictionary<string, BoxModuleFactoryCreatorPrx> creatorPrxs;
 			private System.Collections.Generic.Dictionary<string,IBoxModuleFactoryCreator> boxModuleFactoryCreators =
@@ -449,6 +460,7 @@ namespace Ferda {
 			//TODO serializovat a deserializovat
 			private HelpFiles helpFiles = new HelpFiles();
 			private GroupBoxFactoryCreator groupCreator = new GroupBoxFactoryCreator();
+			private IProjectHelper projectHelper;
         }
     }
 }

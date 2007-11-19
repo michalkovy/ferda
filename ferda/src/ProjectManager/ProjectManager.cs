@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using Ferda.ModulesManager;
 using System.Diagnostics;
 using System.Threading;
@@ -32,7 +33,7 @@ namespace Ferda.ProjectManager {
     /// <summary>
     /// Main class for working with Project manager.
     /// </summary>
-    public class ProjectManager : IProjectLoader {
+    public class ProjectManager : IProjectLoader, Ferda.ModulesManager.IProjectHelper {
         private List<View> views = new List<View>();
         private Archive archive;
         private Ferda.ProjectManager.NetworkArchive networkArchive;
@@ -69,7 +70,7 @@ namespace Ferda.ProjectManager {
         {
             this.options = options;
             if(options.StartIceGridLocaly) StartIceGrid(options.IceBinPath, options.IceGridAsService, options.IceGridWorkingDirectory, options.IceGridApplicationXmlFilePath);
-            modulesManager = new Ferda.ModulesManager.ModulesManager(args, options.LocalePrefs);
+            modulesManager = new Ferda.ModulesManager.ModulesManager(args, options.LocalePrefs, this);
             archive = new Archive(views);
             networkArchive = new Ferda.ProjectManager.NetworkArchive(modulesManager,this);
         }
@@ -86,7 +87,7 @@ namespace Ferda.ProjectManager {
         {
             this.options = options;
             if (options.StartIceGridLocaly) StartIceGrid(options.IceBinPath, options.IceGridAsService, options.IceGridWorkingDirectory, options.IceGridApplicationXmlFilePath);
-            modulesManager = new Ferda.ModulesManager.ModulesManager(args, options.LocalePrefs, output);
+            modulesManager = new Ferda.ModulesManager.ModulesManager(args, options.LocalePrefs, output, this);
             archive = new Archive(views);
             networkArchive = new Ferda.ProjectManager.NetworkArchive(modulesManager,this);
         }
@@ -424,10 +425,10 @@ namespace Ferda.ProjectManager {
             
             Ferda.ModulesManager.IBoxModule mainIBoxModule;
             
-            return ImportProject(p, null, out mainIBoxModule);
+            return ImportProject(p, null, true, out mainIBoxModule);
         }
         
-        public string ImportProject(Project p, Project.Box mainProjectBox, out Ferda.ModulesManager.IBoxModule mainIBoxModule)
+        public string ImportProject(Project p, Project.Box mainProjectBox, bool addToProject, out Ferda.ModulesManager.IBoxModule mainIBoxModule)
         {
         	//TODO localize errors
         	string errors = "";
@@ -490,8 +491,33 @@ namespace Ferda.ProjectManager {
                                 propertySet.PropertyName + " readonly but I have to write something inside.\n";
                         }
                     }
+                    
+                    StringCollection propertyNames = new StringCollection();
+	               	foreach(Ferda.Modules.PropertyInfo propertyInfo in box.MadeInCreator.Properties)
+	               	{
+	               		propertyNames.Add(propertyInfo.name);
+	               	}
+	               	if(b.SockedProperties != null)
+	               	{
+	                    foreach(string propertyName in b.SockedProperties)
+	                    {
+	                    	if(propertyNames.Contains(propertyName))
+	                    	{
+	                    		box.SetPropertySocking(propertyName, true);
+	                    	}
+	                    	else
+	                    	{
+	                    		errors += "Your box with identifier " + b.CreatorIdentifier +
+	                                " does not have property with name " +
+	                                propertyName + ".\n";
+	                    	}
+	                    }
+	                }
                     boxesByProjectIdentifier[b.ProjectIdentifier] = box;
-                    archive.AddWithIdentifier(box, b.ProjectIdentifier + lastBoxModuleProjectIdentifier);
+                    if (addToProject)
+                    {
+                    	archive.AddWithIdentifier(box, b.ProjectIdentifier + lastBoxModuleProjectIdentifier);
+                    }
                 }
             }
             foreach(Project.Box b in p.Boxes)
@@ -590,20 +616,29 @@ namespace Ferda.ProjectManager {
 	            b.Connections = connections.ToArray();
 	            List<Project.Box.PropertySet> propertySets =
 		            new List<Project.Box.PropertySet>();
+		        List<string> sockedProperties = new List<string>();
 	            foreach(Ferda.Modules.PropertyInfo propertyInfo in box.MadeInCreator.Properties)
 	            {
 		            if(!propertyInfo.readOnly)
 		            {
-			            Project.Box.PropertySet propertySet =
-				            new Project.Box.PropertySet();
-			            propertySet.PropertyName = propertyInfo.name;
-			            Ferda.Modules.PropertyValue value =
-				            box.GetPropertyOther(propertyInfo.name);
-			            propertySet.Value = ((Ferda.Modules.IValue)value).getValueT();
-			            propertySets.Add(propertySet);
+		            	if (box.GetPropertySocking(propertyInfo.name))
+		            	{
+		            		sockedProperties.Add(propertyInfo.name);
+		            	}
+		            	else
+		            	{
+				            Project.Box.PropertySet propertySet =
+					            new Project.Box.PropertySet();
+				            propertySet.PropertyName = propertyInfo.name;
+				            Ferda.Modules.PropertyValue value =
+					            box.GetPropertyOther(propertyInfo.name);
+				            propertySet.Value = ((Ferda.Modules.IValue)value).getValueT();
+				            propertySets.Add(propertySet);
+				        }
 		            }
 	            }
 	            b.PropertySets = propertySets.ToArray();
+	            b.SockedProperties = sockedProperties.ToArray();
 	            boxes.Add(b);
             }
             p.Boxes = boxes.ToArray();
@@ -634,30 +669,66 @@ namespace Ferda.ProjectManager {
 		/// <summary>
 		/// Creates Project object from box modules
 		/// </summary>
-		public Project SaveBoxModulesToProject(IBoxModule[] boxModules, View view)
+		public Project SaveBoxModulesToProject(IBoxModule[] boxModules, View view, IBoxModule[][] variables, IBoxModule[] variableValues)
 		{
 			if(view == null)
 				view = new View(archive, modulesManager, null);
+			
+			Dictionary<IBoxModule, IBoxModule> changing = new Dictionary<IBoxModule,IBoxModule>();
+			if(variables != null)
+			{
+				for(int i = 0; i < variables.Length; i++)
+				{
+					for(int j = 0; j < variables[i].Length; j++)
+					{
+						if(variables[i][j] != null && variableValues[i] != null)
+						{
+							changing[variables[i][j]] = variableValues[i];
+						}
+					}
+				}
+			}
 
 			List<IBoxModule> usedBoxModules = new List<IBoxModule>();
-			Queue<IBoxModule> modulesToGoTrought = new Queue<IBoxModule>(boxModules);
+			Queue<IBoxModule> modulesToGoTrought = new Queue<IBoxModule>();
+			foreach(IBoxModule box in boxModules)
+			{
+				IBoxModule boxNew = null;
+				if(!changing.TryGetValue(box, out boxNew))
+				{
+					boxNew = box;
+				}
+				modulesToGoTrought.Enqueue(boxNew);
+			}
 			List<Project.Box> resultBoxes = new List<Project.Box>();
 			Project resultProject = new Project();
+			
+			int leastProjectIdentifier = 0;
+			
+			foreach(IBoxModule boxModule in modulesToGoTrought)
+			{
+				if (boxModule.ProjectIdentifier <= 0)
+				{
+					boxModule.ProjectIdentifier = --leastProjectIdentifier;
+				}
+			}
 			
 			while(modulesToGoTrought.Count > 0)
 			{
 				IBoxModule boxModule = modulesToGoTrought.Peek();
 				
-				resultBoxes.Add(SaveBoxModule(boxModule, view, modulesToGoTrought, usedBoxModules));
+				resultBoxes.Add(SaveBoxModule(boxModule, view, modulesToGoTrought, usedBoxModules, ref leastProjectIdentifier, changing));
 				usedBoxModules.Add(boxModule);
 				modulesToGoTrought.Dequeue();
 			}
+			
+			
 			resultProject.Boxes = resultBoxes.ToArray();
 			resultProject.Views = new Project.View[0];
 			return resultProject;
 		}
 		
-		private Project.Box SaveBoxModule(IBoxModule box, View view, Queue<IBoxModule> modulesToGoTrought, List<IBoxModule> usedBoxModules)
+		private Project.Box SaveBoxModule(IBoxModule box, View view, Queue<IBoxModule> modulesToGoTrought, List<IBoxModule> usedBoxModules, ref int leastProjectIdentifier, Dictionary<IBoxModule, IBoxModule> changing)
 		{
 			Project.Box b = new Project.Box();
 			b.ProjectIdentifier = box.ProjectIdentifier;
@@ -675,8 +746,14 @@ namespace Ferda.ProjectManager {
 				new List<Project.Box.Connection>();
 			foreach(Ferda.Modules.SocketInfo socketInfo in box.Sockets)
 			{
-				foreach(IBoxModule otherBox in box.GetConnections(socketInfo.name))
+				foreach(IBoxModule otherBoxBefore in box.GetConnections(socketInfo.name))
 				{
+					IBoxModule otherBox = null;
+					if(!changing.TryGetValue(otherBoxBefore, out otherBox))
+					{
+						otherBox = otherBoxBefore;
+					}
+					
 					if(!(modulesToGoTrought.Contains(otherBox) ||
 					   usedBoxModules.Contains(otherBox)))
 					{
@@ -687,6 +764,10 @@ namespace Ferda.ProjectManager {
 						else
 						{
 							modulesToGoTrought.Enqueue(otherBox);
+							if (otherBox.ProjectIdentifier <= 0)
+							{
+								otherBox.ProjectIdentifier = --leastProjectIdentifier;
+							}
 						}
 					}
 
@@ -699,20 +780,29 @@ namespace Ferda.ProjectManager {
 			b.Connections = connections.ToArray();
 			List<Project.Box.PropertySet> propertySets =
 				new List<Project.Box.PropertySet>();
+			List<string> sockedProperties = new List<string>();
 			foreach(Ferda.Modules.PropertyInfo propertyInfo in box.MadeInCreator.Properties)
 			{
 				if(!propertyInfo.readOnly)
 				{
-					Project.Box.PropertySet propertySet =
-						new Project.Box.PropertySet();
-					propertySet.PropertyName = propertyInfo.name;
-					Ferda.Modules.PropertyValue value =
-						box.GetPropertyOther(propertyInfo.name);
-					propertySet.Value = ((Ferda.Modules.IValue)value).getValueT();
-					propertySets.Add(propertySet);
+					if (box.GetPropertySocking(propertyInfo.name))
+	            	{
+	            		sockedProperties.Add(propertyInfo.name);
+	            	}
+	            	else
+	            	{
+						Project.Box.PropertySet propertySet =
+							new Project.Box.PropertySet();
+						propertySet.PropertyName = propertyInfo.name;
+						Ferda.Modules.PropertyValue value =
+							box.GetPropertyOther(propertyInfo.name);
+						propertySet.Value = ((Ferda.Modules.IValue)value).getValueT();
+						propertySets.Add(propertySet);
+					}
 				}
 			}
 			b.PropertySets = propertySets.ToArray();
+			b.SockedProperties = sockedProperties.ToArray();
 			return b;
 		}
         
@@ -731,6 +821,30 @@ namespace Ferda.ProjectManager {
             archive.Destroy();
             views = new List<View>();
             archive = new Archive(views);
+        }
+        
+        public IBoxModule CloneBoxModuleWithChilds(IBoxModule boxModule, bool addToProject, IBoxModule[][] variables, IBoxModule[] variableValues)
+        {
+        	XmlSerializer s = new XmlSerializer( typeof( Project ) );
+            TextWriter w = new StreamWriter("test.p1");
+            
+        	Project projectOld = SaveBoxModulesToProject(new IBoxModule[]{boxModule}, null, variables, variableValues);
+        	
+        	s.Serialize( w, projectOld );
+            w.Close();
+            
+			Ferda.NetworkArchive.Box box = Ferda.NetworkArchive.ProjectConverter.CreateBoxFromProject(projectOld, projectOld.Boxes[0].ProjectIdentifier);
+			
+			Project.Box mainProjectBox;
+			Ferda.ModulesManager.IBoxModule clonedBox;
+			
+			TextWriter w2 = new StreamWriter("test.p2");
+			Project project = Ferda.NetworkArchive.ProjectConverter.CreateProjectFromBox(box, out mainProjectBox);
+			s.Serialize( w2, project );
+            w2.Close();
+            
+			ImportProject(project, mainProjectBox, addToProject, out clonedBox);
+			return clonedBox;
         }
 
         /// <summary>

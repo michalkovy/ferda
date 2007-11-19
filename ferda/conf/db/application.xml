@@ -27,7 +27,9 @@
 		<replica-group id="FerdaLanguageBoxesReplicaAdapter">
 			<object identity="Language.Lambda" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="Language.Variable" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-			<object identity="Language.Math.Plus" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="Language.Math.BinaryOperation" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="Language.Math.Compare" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="Language.Math.IfThenElse" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaSampleBoxesReplicaAdapter">
 			<object identity="Sample.BodyMassIndex" type="::Ferda::Modules::BoxModuleFactoryCreator"/>

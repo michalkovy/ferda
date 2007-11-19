@@ -284,5 +284,83 @@ namespace Ferda.ProjectManager
 			networkArchive.AddBox(bString, "Test String Box");*/
 			
 		}
+		
+		/// <summary>
+		/// Will try to do many things with cloning
+		/// </summary>
+		[Test]
+		public void Test_Cloning()
+		{
+			Ferda.ModulesManager.ModulesManager modulesManager = projectManager.ModulesManager;
+			
+			Ferda.ModulesManager.IBoxModuleFactoryCreator creator =
+				modulesManager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.DataTable");
+			Ferda.ModulesManager.IBoxModule b = creator.CreateBoxModule();
+			
+			Ferda.ModulesManager.IBoxModuleFactoryCreator creatorDatabase =
+				modulesManager.GetBoxModuleFactoryCreator("DataPreparation.DataSource.Database");
+			Ferda.ModulesManager.IBoxModule bDatabase = creatorDatabase.CreateBoxModule();
+			
+			b.SetConnection("Database", bDatabase);
+			projectManager.Archive.Add(b);
+			projectManager.Archive.Add(bDatabase);
+
+			IBoxModule newB = projectManager.CloneBoxModuleWithChilds(b, false, null, null);
+			
+			Assert.AreSame(newB.MadeInCreator, b.MadeInCreator, "PM111");
+			Assert.AreEqual(newB.UserName, b.UserName, "PM112");
+			Assert.AreEqual(newB.ConnectionsFrom().Count, b.ConnectionsFrom().Count, "PM113");
+			Assert.AreEqual(newB.ConnectionsFrom()[0].MadeInCreator, b.ConnectionsFrom()[0].MadeInCreator, "PM114");
+
+			
+			//a little bit problematic connection - only for test
+			/*Ferda.ModulesManager.IBoxModuleFactoryCreator creatorString =
+				modulesManager.GetBoxModuleFactoryCreator("StringT");
+			Ferda.ModulesManager.IBoxModule bString = creatorString.CreateBoxModule();
+			
+			Assert.IsNotNull(bString, "PM123");
+			
+			bString.SetConnection("value", bString);
+			
+			networkArchive.AddBox(bString, "Test String Box");*/
+			
+		}
+		
+		/// <summary>
+		/// Will try to do many things with cloning
+		/// </summary>
+		[Test]
+		public void Test_Cloning2()
+		{
+			Ferda.ModulesManager.ModulesManager modulesManager = projectManager.ModulesManager;
+			
+			IBoxModuleFactoryCreator plusCreator = modulesManager.GetBoxModuleFactoryCreator("Language.Math.BinaryOperation");
+			IBoxModule plusBox = plusCreator.CreateBoxModule();
+			plusBox.SetPropertyString("type", "+");
+			plusBox.SetPropertyDouble("value1", 1);
+			
+			IBoxModuleFactoryCreator doubleCreator = modulesManager.GetBoxModuleFactoryCreator("DoubleT");
+			IBoxModule doubleBoxBefore = doubleCreator.CreateBoxModule();
+			doubleBoxBefore.SetPropertyDouble("value", 1);
+			
+			projectManager.Archive.Add(plusBox);
+			projectManager.Archive.Add(doubleBoxBefore);
+			
+			plusBox.SetPropertySocking("value2", true);
+			plusBox.SetConnection("value2",doubleBoxBefore);
+			
+			IBoxModule newB = projectManager.CloneBoxModuleWithChilds(plusBox, false, null, null);
+			
+			Assert.AreSame(newB.MadeInCreator, plusBox.MadeInCreator, "PM121");
+			Assert.AreEqual(newB.UserName, plusBox.UserName, "PM122");
+			
+			IBoxModule[] connectedToSucc2 = newB.GetConnections("value2");
+			//Assert.AreEqual(newB.ConnectionsFrom().Count, plusBox.ConnectionsFrom().Count, "PM123");
+			Assert.AreEqual(1, connectedToSucc2.Length, "PM123");
+			Assert.AreEqual("DoubleT", connectedToSucc2[0].MadeInCreator.Identifier, "PM124");
+			Assert.AreEqual(1, connectedToSucc2[0].GetPropertyDouble("value"), 0.01, "PM125");
+			
+			//Assert.AreEqual(newB.ConnectionsFrom()[0].MadeInCreator, plusBox.ConnectionsFrom()[0].MadeInCreator, "PM124");
+		}	
 	}
 }
