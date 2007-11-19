@@ -348,7 +348,13 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// category.</returns>
         public IBitString ClassifiedCategoryBitString(string classificationCategory)
         {
-            IBitString result = FalseBitString.GetInstance();
+            IBitString result = EmptyBitString.GetInstance();
+            //FalseBitString cannot be used as startup string for the result.
+            //The reason is that there the category in parameter may have an empty
+            //intersection with the classification, therefore empty bit string
+            //would be returned (there would be a problem with negations of the bit
+            //string and so on)
+            bool first = true;
 
             //results from the sub categories of the node
             //classified categories at this point should not be null
@@ -356,7 +362,15 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             {
                 if (clas.classificationCategory == classificationCategory)
                 {
-                    result = result.Or(clas.classificationBitString);
+                    if (first)
+                    {
+                        result = clas.classificationBitString;
+                        first = false;
+                    }
+                    else
+                    {
+                        result = result.Or(clas.classificationBitString);
+                    }
                 }
             }
 
@@ -365,8 +379,16 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             {
                 foreach (Node node in subNodes.Values)
                 {
-                    result = 
-                        result.Or(node.ClassifiedCategoryBitString(classificationCategory));
+                    if (first)
+                    {
+                        result = node.ClassifiedCategoryBitString(classificationCategory);
+                        first = false;
+                    }
+                    else
+                    {
+                        result =
+                            result.Or(node.ClassifiedCategoryBitString(classificationCategory));
+                    }
                 }
             }
 
