@@ -316,13 +316,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             Tree processTree;
 
-            //StreamWriter sw = new StreamWriter("c:\\log.txt");
-
             //basic algorithm for construction GUHA decision trees
             while (fifo.Count > 0)
             {
                 noOfVerifications++;
                 processTree = fifo.Dequeue();
+                string ifr = processTree.IfRepresentation;
 
                 if (QualityTree(processTree))
                 {
@@ -340,10 +339,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                 fifo = Process(processTree, fifo);
 
-                //string ifr = processTree.IfRepresentation;
-                //sw.WriteLine("Verification no " + noOfVerifications.ToString());
-                //sw.Write(ifr);
-
                 if (!ProgressSetValue((float)noOfHypotheses / maxNumberOfHypotheses,
                     string.Format("Number of Verifications: {0}, Number of hypotheses: {1}, Queue length: {2}",
                              noOfVerifications,
@@ -355,7 +350,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     return;
                 }
             }
-            //sw.Close();
 
             ResultFinish(relevantQuestionsCount, noOfVerifications, noOfHypotheses);
         }
@@ -572,7 +566,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             result.UnusedAttributes = unusedAttributes.ToArray();
 
             //finiding the right node in the new tree
-            Node n = result.FindNode(node.Attribute.Identifier.AttributeGuid);
+            Node n = result.FindNode(node);
 
             if (n == null)
             {
@@ -676,6 +670,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <returns>Number of relevant questions</returns>
         private double CountRelevantQuestions()
         {
+            //OLD VERSION
             int l;
             if (branchingAttributes.Length < maximalTreeDepth)
             {
@@ -697,6 +692,28 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             return Ferda.Guha.Math.DecisionTrees.CountRelevantQuestions(noAttributesForBranching, l, v);
+            
+            //NEW VERSION
+            //int EfNoAttr;
+            //if (noAttributesForBranching > branchingAttributes.Length)
+            //{
+            //    EfNoAttr = branchingAttributes.Length;
+            //}
+            //else
+            //{
+            //    EfNoAttr = noAttributesForBranching;
+            //}
+            //int EfTD;
+            //if (noAttributesForBranching > maximalTreeDepth)
+            //{
+            //    EfTD = maximalTreeDepth;
+            //}
+            //else
+            //{
+            //    EfTD = noAttributesForBranching;
+            //}
+
+            //return Ferda.Guha.Math.DecisionTrees.CountRelevantQuestionsNew(EfNoAttr, EfTD);
         }
 
         /// <summary>

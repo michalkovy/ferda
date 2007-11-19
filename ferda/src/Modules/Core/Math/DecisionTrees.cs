@@ -65,6 +65,37 @@ namespace Ferda.Guha.Math
         }
 
         /// <summary>
+        /// New way to compute the relevant questions count for the ETree GUHA procedure.
+        /// In the new algoritm, there can be only 1 subset created out of the categories
+        /// of a node. This subset will contain categories, that have bigger frequency
+        /// than minimal (minimal node frequency). The formula contains two variables (in
+        /// the parameteres and is computed by the recurent expression:
+        /// <c>a_{1} = EfNoAttr</c>, <c>a_{i} = a_{i-1}*(EfNoAttr - i)</c>.
+        /// </summary>
+        /// <param name="EfNoAttr">Effective number of attributes for branching
+        /// It is equal to minimum of number of attributes for branching (socket) and
+        /// number of input branching attributes(how many are connected).</param>
+        /// <param name="EfTD">Effective minimal tree depth. It is equal to
+        /// minimum of maximal tree depth (socket) and</param> and
+        /// number of input branching attributes(how many are connected).
+        /// <returns>Count of relevant questions.</returns>
+        public static double CountRelevantQuestionsNew(int EfNoAttr, int EfTD)
+        {
+            double result = (double)EfNoAttr;
+
+            for (int i = 2; i <= EfTD; i++)
+            {
+                if (EfNoAttr - i == 0)
+                {
+                    break;
+                }
+                result *= (EfNoAttr - i);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Counts the chi-squared statictics for given parameters. The formula for
         /// chi-squared statiscics is
         /// <c>SUM(i=0..r.Length-1)SUM(j=0..s.Length-1)[a_{i,j}-(r_{i}*s_{j}/n)^2]/r_{i}*s_{j}/n</c>
