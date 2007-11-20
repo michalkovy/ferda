@@ -78,5 +78,8 @@
     <None Include="Math\IfThenElse\boxDesign.svg" />
     <None Include="Math\IfThenElse\boxIcon.ico" />
     <Compile Include="Math\IfThenElse\BoxInfo.cs" />
+    <None Include="ExecuteAction\boxDesign.svg" />
+    <None Include="ExecuteAction\boxIcon.ico" />
+    <Compile Include="ExecuteAction\BoxInfo.cs" />
   </ItemGroup>
 </Project>

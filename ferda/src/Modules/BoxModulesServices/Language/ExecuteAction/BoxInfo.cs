@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 
 using Object = Ice.Object;
 
-namespace Ferda.Modules.Boxes.Language.GetParameter
+namespace Ferda.Modules.Boxes.Language.ExecuteAction
 {
     internal class BoxInfo : Boxes.BoxInfo
     {
@@ -23,31 +23,25 @@ namespace Ferda.Modules.Boxes.Language.GetParameter
         public override ObjectPrx GetFunctionsObjPrx(BoxModuleI boxModule)
         {
         	BoxModulePrx[] mainBoxModulePrxs = boxModule.getConnections("Box",null);
-        	if (mainBoxModulePrxs.Length == 0) return null;
+        	if (mainBoxModulePrxs.Length != 1) return null;
         	BoxModulePrx mainBoxModulePrx = mainBoxModulePrxs[0];
         	if (mainBoxModulePrx == null) return null;
-
-			string parameterName = boxModule.GetPropertyString("ParameterName");
-			try
-			{
-				BoxModulePrx[] connectedBoxModulePrxs = mainBoxModulePrx.getConnections(parameterName);
-				if (connectedBoxModulePrxs.Length > 1) return null;
-				if (connectedBoxModulePrxs.Length == 1)
-				{
-					BoxModulePrx connectedBoxModulePrx = connectedBoxModulePrxs[0];
-					if (connectedBoxModulePrx == null) return null;
-					return connectedBoxModulePrx.getFunctions();
-				}
-				else
-				{
-					PropertyValue propertyValue = mainBoxModulePrx.getProperty(parameterName);
-					return (propertyValue != null) ? boxModule.Adapter.addWithUUID(propertyValue) : null;
-				}
-			}
-			catch
-			{
-				return null;
-			}
+        	string actionName = boxModule.GetPropertyString("ActionName");
+        	
+        	try
+        	{
+        		mainBoxModulePrx.runAction(actionName);
+        	}
+        	catch(Ferda.Modules.NameNotExistError e)
+        	{
+        		throw new Ferda.Modules.BoxRuntimeError(e);
+        	}
+        	
+        	mainBoxModulePrxs = boxModule.getConnections("Function",null);
+        	if (mainBoxModulePrxs.Length != 1) return null;
+        	mainBoxModulePrx = mainBoxModulePrxs[0];
+        	if (mainBoxModulePrx == null) return null;
+        	return mainBoxModulePrx.getFunctions();
 		}
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
@@ -66,7 +60,7 @@ namespace Ferda.Modules.Boxes.Language.GetParameter
             return null;
         }
 
-        public const string typeIdentifier = "Language.GetParameter";
+        public const string typeIdentifier = "Language.ExecuteAction";
 
         protected override string identifier
         {

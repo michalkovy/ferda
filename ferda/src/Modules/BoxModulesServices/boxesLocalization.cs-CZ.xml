@@ -10645,6 +10645,69 @@
 		</Sockets>
 	</BoxLocalization>
 	<BoxLocalization>
+		<Identifier>Language.GetParameter</Identifier>
+		<Label>Získej parametr</Label>
+		<Hint>Získá hodnotu paametru jiné krabičky</Hint>
+		<Categories>
+			<Category>
+				<Name>Language</Name>
+				<Label>Jazyk</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Box</Name>
+				<Label>Krabička</Label>
+				<Hint>Krabička, ze které chceme získat parametr</Hint>
+			</Socket>
+			<Socket>
+				<Name>ParameterName</Name>
+				<Label>Jméno parametru</Label>
+				<Hint>Jméno parametru, který chceme získat</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Hlavní</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.ExecuteAction</Identifier>
+		<Label>Spusť akci</Label>
+		<Hint>Spustí akci nad jednou krabičkou a vrátí hodnotu druhé krabičky</Hint>
+		<Categories>
+			<Category>
+				<Name>Language</Name>
+				<Label>Jazyk</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Box</Name>
+				<Label>Krabička</Label>
+				<Hint>Krabička, nad kterou chceme spustit akci</Hint>
+			</Socket>
+			<Socket>
+				<Name>Function</Name>
+				<Label>Funkce</Label>
+				<Hint>Krabička, ze které chceme hodnotu</Hint>
+			</Socket>
+			<Socket>
+				<Name>ActionName</Name>
+				<Label>Jméno akce</Label>
+				<Hint>Jméno akce, kterou chceme spustit</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Hlavní</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
 		<Identifier>OntologyRelated.Ontology</Identifier>
 		<Label>Ontologie</Label>
 		<Hint>Krabička umožňující využití ontologií ve Ferdovi</Hint>

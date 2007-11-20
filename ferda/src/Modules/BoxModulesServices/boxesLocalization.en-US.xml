@@ -10677,6 +10677,69 @@
 		</Sockets>
 	</BoxLocalization>
 	<BoxLocalization>
+		<Identifier>Language.GetParameter</Identifier>
+		<Label>Get parameter</Label>
+		<Hint>Gets value of other box's parameter</Hint>
+		<Categories>
+			<Category>
+				<Name>Language</Name>
+				<Label>Language</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Box</Name>
+				<Label>Box</Label>
+				<Hint>Box from which we would like to get parameter</Hint>
+			</Socket>
+			<Socket>
+				<Name>ParameterName</Name>
+				<Label>Name of parameter</Label>
+				<Hint>Name of parameter, which we want to get</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Main</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.ExecuteAction</Identifier>
+		<Label>Execute action</Label>
+		<Hint>Executes action of first box and returns value of second box</Hint>
+		<Categories>
+			<Category>
+				<Name>Language</Name>
+				<Label>Language</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Box</Name>
+				<Label>Box</Label>
+				<Hint>Box on which we want to execute action</Hint>
+			</Socket>
+			<Socket>
+				<Name>Function</Name>
+				<Label>Function</Label>
+				<Hint>Box whichs value we want to return</Hint>
+			</Socket>
+			<Socket>
+				<Name>ActionName</Name>
+				<Label>Name of action</Label>
+				<Hint>Name of action, which we want to execute</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Main</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
 		<Identifier>OntologyRelated.Ontology</Identifier>
 		<Label>Ontology</Label>
 		<Hint>Box which enables usage of ontologies in Ferda</Hint>
