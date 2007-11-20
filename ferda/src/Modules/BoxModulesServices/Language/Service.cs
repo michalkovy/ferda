@@ -44,6 +44,8 @@ namespace Ferda.Modules.Boxes.Language
             registerBox(Math.BinaryOperation.BoxInfo.typeIdentifier, new Math.BinaryOperation.BoxInfo());
             registerBox(Math.Compare.BoxInfo.typeIdentifier, new Math.Compare.BoxInfo());
             registerBox(Math.IfThenElse.BoxInfo.typeIdentifier, new Math.IfThenElse.BoxInfo());
+            registerBox(GetParameter.BoxInfo.typeIdentifier, new GetParameter.BoxInfo());
+            registerBox(ExecuteAction.BoxInfo.typeIdentifier, new ExecuteAction.BoxInfo());
         }
 
         /// <summary>

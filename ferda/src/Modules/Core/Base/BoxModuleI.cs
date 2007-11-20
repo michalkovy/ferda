@@ -711,6 +711,14 @@ namespace Ferda.Modules
         }
 
         private ObjectAdapter adapter;
+        
+        public ObjectAdapter Adapter
+        {
+        	get
+        	{
+        		return this.adapter;
+        	}
+        }
 
         /// <summary>
         /// The localization preferences.
