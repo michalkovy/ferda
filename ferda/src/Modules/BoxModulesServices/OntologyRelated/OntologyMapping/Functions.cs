@@ -55,9 +55,11 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         #region Properties
 
         //names of the properties
-        public const string SockOntology = "Ontology";
         public const string Mapping = "Mapping";
         public const string PropNumberOfMappedPairs = "NumberOfMappedPairs";
+        public const string SockOntology = "Ontology";
+        public const string SockDatabase = "Database";
+        
 
         public IntTI NumberOfMappedPairs
         {
@@ -123,17 +125,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             return getOntologyEntityProperties(dataTableColumnName, true);
         }
 
-
-        public override Ferda.Modules.BoxModule getBoxModule(Ice.Current __current)
-        {
-            return (BoxModule)_boxModule;
-        }
-        /*
-        public BoxModuleI getBoxModule()
-        {
-            return _boxModule;
-        }
-        */
         #endregion
     }
 }

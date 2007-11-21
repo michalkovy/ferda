@@ -44,8 +44,6 @@ module Ferda {
 					interface OntologyMappingFunctions						
 					{
             Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableColumnName) throws Ferda::Modules::BoxRuntimeError;
-            
-            BoxModule getBoxModule();
           };
 				};
 			};

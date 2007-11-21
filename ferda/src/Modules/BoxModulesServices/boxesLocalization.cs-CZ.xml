@@ -10771,9 +10771,9 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>DataTable</Name>
-				<Label>Tabulka databáze</Label>
-				<Hint>Definuje datovou tabulku (nebo množinu sloupců tabulky)</Hint>
+				<Name>Database</Name>
+				<Label>Databáze</Label>
+				<Hint>Definuje datový zdroj a jeho parametry</Hint>
 			</Socket>
 			<Socket>
 				<Name>Ontology</Name>
