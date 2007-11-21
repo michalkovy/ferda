@@ -39,18 +39,6 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         private Node rootNode = null;
 
         /// <summary>
-        /// Attributes that were so far used in this tree. The
-        /// attributes are represented by their formulas.
-        /// </summary>
-        private CategorialAttributeTrace[] usedAttributes;
-
-        /// <summary>
-        /// Attributes that were so far not used in this tree.
-        /// The attributes are represented by their formulas.
-        /// </summary>
-        private CategorialAttributeTrace[] unusedAttributes;
-
-        /// <summary>
         /// Depth of the tree
         /// </summary>
         private int depth;
@@ -66,26 +54,6 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         {
             get { return rootNode; }
             set { rootNode = value; }
-        }
-
-        /// <summary>
-        /// Attributes that were so far used in this tree. The
-        /// attributes are represented by their formulas.
-        /// </summary>
-        public CategorialAttributeTrace[] UsedAttributes
-        {
-            get { return usedAttributes; }
-            set { usedAttributes = value; }
-        }
-
-        /// <summary>
-        /// Attributes that were so far not used in this tree.
-        /// The attributes are represented by their formulas.
-        /// </summary>
-        public CategorialAttributeTrace[] UnusedAttributes
-        {
-            get { return unusedAttributes; }
-            set { unusedAttributes = value; }
         }
 
         /// <summary>
@@ -139,15 +107,22 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
 
             if (rootNode.Leaf)
             {
-                if (rootNode.Frequency > minimalNodeFrequency)
+                bool hasCategories = false;
+
+                foreach (string category in rootNode.SubCategories)
+                {
+                    if (rootNode.CategoryFrequency(category) > minimalNodeFrequency)
+                    {
+                        hasCategories = true;
+                        break;
+                    }
+                }
+
+                if (hasCategories)
                 {
                     nodesWithMoreThanMinimalFrequency.Add(rootNode);
-                    return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return hasCategories;
             }
             else
             {
@@ -184,8 +159,6 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         {
             Tree tree = new Tree();
             tree.depth = depth;
-            tree.usedAttributes = (CategorialAttributeTrace[]) usedAttributes.Clone();
-            tree.unusedAttributes = (CategorialAttributeTrace[])unusedAttributes.Clone();
             tree.rootNode = (Node)rootNode.Clone();
 
             return tree;

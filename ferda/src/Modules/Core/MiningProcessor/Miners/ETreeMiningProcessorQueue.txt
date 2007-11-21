@@ -308,19 +308,19 @@ namespace Ferda.Guha.MiningProcessor.Miners
             ComputeAllObjectsCount();
 
 
-            //Intializing a new LIFO stack and planting a seed tree (no attribute tree)
+            //Intializing a new FIFO queue and planting a seed tree (no attribute tree)
             //inside;
-            Stack<Tree> stack = new Stack<Tree>();
+            Queue<Tree> fifo = new Queue<Tree>();
             Tree seed = MakeSeed();
-            stack.Push(seed);
+            fifo.Enqueue(seed);
 
             Tree processTree;
 
             //basic algorithm for construction GUHA decision trees
-            while (stack.Count > 0)
+            while (fifo.Count > 0)
             {
                 noOfVerifications++;
-                processTree = stack.Pop();
+                processTree = fifo.Dequeue();
                 string ifr = processTree.IfRepresentation;
 
                 if (QualityTree(processTree))
@@ -337,13 +337,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     }
                 }
 
-                stack = Process(processTree, stack);
+                fifo = Process(processTree, fifo);
 
                 if (!ProgressSetValue((float)noOfHypotheses / maxNumberOfHypotheses,
-                    string.Format("Number of Verifications: {0}, Number of hypotheses: {1}, Stack size: {2}",
+                    string.Format("Number of Verifications: {0}, Number of hypotheses: {1}, Queue length: {2}",
                              noOfVerifications,
                              noOfHypotheses,
-                             stack.Count)))
+                             fifo.Count)))
                 {
                     ResultFinish(relevantQuestionsCount, noOfVerifications,
                         noOfHypotheses);
@@ -437,9 +437,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// trees to the queue. 
         /// </summary>
         /// <param name="processTree">Tree to be processed</param>
-        /// <param name="fifo">Structure holding temporary results</param>
-        /// <returns>The stack where new trees were added.</returns>
-        private Stack<Tree> Process(Tree processTree, Stack<Tree> lifo)
+        /// <param name="fifo"></param>
+        /// <returns>The queue where new trees were added.</returns>
+        private Queue<Tree> Process(Tree processTree, Queue<Tree> fifo)
         {
             List<Node> nodesForBranching;
 
@@ -447,7 +447,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             //maximal length, do no further branching of the tree
             if (processTree.Depth == maximalTreeDepth)
             {
-                return lifo;
+                return fifo;
             }
 
             //the seed tree is treated differently.
@@ -457,7 +457,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     SelectAttributesForBranching(branchingAttributes, TrueBitString.GetInstance());
                 
                 //at this point, the fifo should always be empty.
-                Debug.Assert(lifo.Count > 0);
+                Debug.Assert(fifo.Count > 0);
 
                 return AddAttributesFromSeed(branching);
             }
@@ -468,7 +468,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             //then do no further branching of the tree
             if (processTree.HasMinimalImpurity(minimalNodeImpurity))
             {
-                return lifo;
+                return fifo;
             }
 
             //3. rule for further branching - if the tree does not contain nodes
@@ -478,16 +478,16 @@ namespace Ferda.Guha.MiningProcessor.Miners
             if (!processTree.ContainsMoreThanMinimalFrequencyNodes(
                 minimalNodeFrequency, out nodesForBranching))
             {
-                return lifo;
+                return fifo;
             }
 
             //for each node adding a new tree 
             foreach (Node node in nodesForBranching)
             {
-                lifo = ProlongTree(processTree, node, lifo);
+                fifo = ProlongTree(processTree, node, fifo);
             }
 
-            return lifo;
+            return fifo;
         }
 
         /// <summary>
@@ -501,8 +501,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="processTree">Tree to be prolonged</param>
         /// <param name="node">Where to prolong the tree</param>
         /// <param name="fifo">Where to add newly created trees</param>
-        /// <returns>The stack is with newly created trees is returned.</returns>
-        private Stack<Tree> ProlongTree(Tree processTree, Node node, Stack<Tree> lifo)
+        /// <returns>The queue is with newly created trees is returned.</returns>
+        private Queue<Tree> ProlongTree(Tree processTree, Node node, Queue<Tree> fifo)
         {
             //we are creating one subset of categories, that contains all the
             //categories which have higher frequency than minimal node frequency.
@@ -513,19 +513,22 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 if (node.CategoryFrequency(category) >= minimalNodeFrequency)
                 {
                     rightCats.Add(category);
-                }            
-            }
-            if (rightCats.Count == 0)
-            {
-                return lifo;
+                }
             }
 
             //by anding the bit strings of individual categories, we
             //improve the accuracy for the attribute selection
             IBitString newBitString = FalseBitString.GetInstance();
-            foreach (string category in rightCats)
+            if (node.Leaf)
             {
-                newBitString = newBitString.Or(node.CategoryBitString(category));
+                newBitString = node.BaseBitString;
+            }
+            else
+            {
+                foreach (string category in rightCats)
+                {
+                    newBitString = newBitString.Or(node.CategoryBitString(category));
+                }
             }
 
             //selecting which attributes to branch
@@ -537,10 +540,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             foreach (CategorialAttributeTrace attribute in branchingAttributes)
             {
                 Tree t = CreateTree(processTree, node, rightCats.ToArray(), attribute);
-                lifo.Push(t);
+                fifo.Enqueue(t);
             }
 
-            return lifo;
+            return fifo;
         }
 
         /// <summary>
@@ -607,9 +610,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// for construction of trees.
         /// </param>
         /// <returns>Processed queue of decision trees</returns>
-        private Stack<Tree> AddAttributesFromSeed(CategorialAttributeTrace[] attributes)
+        private Queue<Tree> AddAttributesFromSeed(CategorialAttributeTrace[] attributes)
         {
-            Stack<Tree> fifo = new Stack<Tree>();
+            Queue<Tree> fifo = new Queue<Tree>();
             Tree t;
             Node n;
             
@@ -633,7 +636,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 t.Depth = 1;
                 t.RootNode = n;
 
-                fifo.Push(t);
+                fifo.Enqueue(t);
             }
 
             return fifo;
