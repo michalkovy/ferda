@@ -19633,10 +19633,10 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>DataTable</Name>
+				<Name>Database</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::Boxes::DataPreparation::DataTableFunctions</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::Boxes::DataPreparation::DatabaseFunctions</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>

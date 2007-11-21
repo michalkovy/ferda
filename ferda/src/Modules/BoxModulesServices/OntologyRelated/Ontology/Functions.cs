@@ -100,7 +100,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         {
             if ((OntologyPath != null) && (PropOntologyURI.ToString() == "OntologyURI"))    //for loading the ontology after loading a saved project
             {
-                LoadOntologyWithParameter(OntologyPath.ToString());
+                LoadOntologyWithParameter(OntologyPath.ToString(), fallOnError);
             }
 
             return ExceptionsHandler.GetResult<OntologyStructure>(
@@ -117,26 +117,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
                 );
         }
 
-        #endregion
-
-        #region Ice Functions
-
-        public override void LoadOntology(Ice.Current __current)
+        public void LoadOntologyDelegate(string innerOntologyPath)
         {
-            if ((OntologyPath == null))
-            {
-                LoadOntologyWithParameter("", __current);
-            }
-            else
-            {
-                LoadOntologyWithParameter(OntologyPath.ToString(), __current);
-            }
-            return;
-        }
-
-        public override void LoadOntologyWithParameter(string innerOntologyPath, Ice.Current __current)
-        {
-            
             Ice.Communicator ic = null;
             ic = Ice.Util.initialize();
 
@@ -174,6 +156,57 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
             
             return;
+        }
+
+        public bool LoadOntologyWithParameter(string innerOntologyPath, bool fallOnError)
+        {
+            if (fallOnError)
+            {
+                return ExceptionsHandler.TryCatchMethodThrow<bool>(
+                    delegate
+                        {
+                            LoadOntologyDelegate(innerOntologyPath);
+                            return true;
+                        },
+                    _boxModule.StringIceIdentity
+                );
+            }
+            else 
+            {
+                return ExceptionsHandler.TryCatchMethodNoThrow<bool>(
+                    delegate
+                    {
+                        LoadOntologyDelegate(innerOntologyPath);
+                        return true;
+                    },
+                    delegate
+                    {
+                        return false;
+                    }
+                );
+            }
+        }
+
+        #endregion
+
+        #region Ice Functions
+
+        public override void LoadOntology(Ice.Current __current)
+        {
+            if ((OntologyPath == null))
+            {
+                LoadOntologyWithParameter("", __current);
+            }
+            else
+            {
+                LoadOntologyWithParameter(OntologyPath.ToString(), __current);
+            }
+            return;
+        }
+
+        public override void LoadOntologyWithParameter(string innerOntologyPath, Ice.Current __current)
+        {
+            LoadOntologyWithParameter(innerOntologyPath, true);
         }
 
         public override OntologyStructure getOntology(Current current__)

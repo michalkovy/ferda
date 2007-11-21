@@ -216,7 +216,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         /// <returns>Data table proxy</returns>
         public DataTableFunctionsPrx GetDataTableFunctionsPrx(bool fallOnError)
         {
-            OntologyMappingFunctionsPrx ontologyMappingPrx = GetOntologyMappingFunctionsPrx(fallOnError);
+            /*OntologyMappingFunctionsPrx ontologyMappingPrx = GetOntologyMappingFunctionsPrx(fallOnError);
 
             if (ontologyMappingPrx == null)
                 return null;
@@ -229,7 +229,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                     SockDataTable,
                     DataTableFunctionsPrxHelper.checkedCast,
                     fallOnError);
-            }
+            }*/
+            return null;
         }
 
         /// <summary>

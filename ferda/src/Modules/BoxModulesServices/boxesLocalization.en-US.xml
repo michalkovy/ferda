@@ -10803,9 +10803,9 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>DataTable</Name>
-				<Label>Data table</Label>
-				<Hint>Defines data matrix or Multi-column.</Hint>
+				<Name>Database</Name>
+				<Label>Database</Label>
+				<Hint>Defines data source and its parameters</Hint>
 			</Socket>
 			<Socket>
 				<Name>Ontology</Name>
