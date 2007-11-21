@@ -6,6 +6,7 @@
 			<object identity="DataPreparation.DataSource.Column" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="DataPreparation.Categorization.EachValueOneCategory" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="DataPreparation.DataSource.VirtualColumn" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.DataSource.OntologyEnablingColumn" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="DataPreparation.Categorization.EquidistantIntervals" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="DataPreparation.Categorization.EquidistantIntervalsLISp" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="DataPreparation.Categorization.EquifrequencyIntervals" type="::Ferda::Modules::BoxModuleFactoryCreator"/>

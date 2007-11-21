@@ -123,6 +123,17 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             return getOntologyEntityProperties(dataTableColumnName, true);
         }
 
+
+        public override Ferda.Modules.BoxModule getBoxModule(Ice.Current __current)
+        {
+            return (BoxModule)_boxModule;
+        }
+        /*
+        public BoxModuleI getBoxModule()
+        {
+            return _boxModule;
+        }
+        */
         #endregion
     }
 }

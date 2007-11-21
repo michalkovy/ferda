@@ -2903,7 +2903,7 @@
 	<BoxLocalization>
 		<Identifier>GuhaMining.Quantifiers.FourFold.DoubleImplicational.FMeasure</Identifier>
 		<Label>F-míra</Label>
-		<Hint>Hledá pravidla, pro která platí: 2a/(2a+b+c) > p</Hint>
+		<Hint>Hledá pravidla, pro která platí: 2a/(2a+b+c) &gt; p</Hint>
 		<Categories>
 			<Category>
 				<Name>GuhaMining.Quantifiers.FourFold.DoubleImplicational</Name>
@@ -5279,7 +5279,7 @@
 	<BoxLocalization>
 		<Identifier>GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczynski</Identifier>
 		<Label>Kulczynski</Label>
-		<Hint>Hledá pravidla, pro která platí a/2(1/(a+c) + 1/(a+b)) > p</Hint>
+		<Hint>Hledá pravidla, pro která platí a/2(1/(a+c) + 1/(a+b)) &gt; p</Hint>
 		<Categories>
 			<Category>
 				<Name>GuhaMining.Quantifiers.FourFold.AntiFProperty</Name>
@@ -10754,15 +10754,15 @@
 		<ModulesAskingForCreationSeq>
 			<ModulesAskingForCreation>
 				<Name>OntologyMapping</Name>
-				<Label>Mapování ontologie a tabulky</Label>
-				<Hint>Krabička sloužící k mapování mezi ontologií a tabulkou databáze (mapuje sloupečky tabulky na pojmy z ontologie)</Hint>
+				<Label>Mapování tabulky a ontologie</Label>
+				<Hint>Krabička sloužící k mapování mezi tabulkou databáze a ontologií (mapuje sloupečky tabulky na pojmy z ontologie)</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>OntologyRelated.OntologyMapping</Identifier>
-		<Label>Mapování ontologie a tabulky</Label>
-		<Hint>Krabička sloužící k mapování mezi ontologií a tabulkou databáze (mapuje sloupečky tabulky na pojmy z ontologie)</Hint>
+		<Label>Mapování tabulky a ontologie</Label>
+		<Hint>Krabička sloužící k mapování mezi tabulkou databáze a ontologií (mapuje sloupečky tabulky na pojmy z ontologie)</Hint>
 		<Categories>
 			<Category>
 				<Name>OntologyRelated</Name>
@@ -10771,14 +10771,14 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>Ontology</Name>
-				<Label>Ontologie</Label>
-				<Hint>Krabička umožňující využití ontologií ve Ferdovi</Hint>
-			</Socket>
-			<Socket>
 				<Name>DataTable</Name>
 				<Label>Tabulka databáze</Label>
 				<Hint>Definuje datovou tabulku (nebo množinu sloupců tabulky)</Hint>
+			</Socket>
+			<Socket>
+				<Name>Ontology</Name>
+				<Label>Ontologie</Label>
+				<Hint>Krabička umožňující využití ontologií ve Ferdovi</Hint>
 			</Socket>
 			<Socket>
 				<Name>Mapping</Name>
@@ -10923,5 +10923,186 @@
 				<Label>Intervaly</Label>
 			</PropertyCategory>
 		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>DataPreparation.DataSource.OntologyEnablingColumn</Identifier>
+		<Label>Sloupec umožňující využití ontologie</Label>
+		<Hint>Defines column of the table and its parameters</Hint>
+		<Categories>
+			<Category>
+				<Name>DataPreparation.DataSource</Name>
+				<Label>Data preparation.Data source</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>OntologyMapping</Name>
+				<Label>Mapování tabulky a ontologie</Label>
+				<Hint>Krabička sloužící k mapování mezi tabulkou databáze a ontologií (mapuje sloupečky tabulky na pojmy z ontologie)</Hint>
+			</Socket>
+			<Socket>
+				<Name>SelectExpression</Name>
+				<Label>Select expression</Label>
+				<Hint>Name of column or SQL formula as select expression. The name of column will be enclosed by apostrophes in SQL queries, specified formul will not be enclosed in apostrophes in the SQL query.</Hint>
+			</Socket>
+			<Socket>
+				<Name>DataType</Name>
+				<Label>Data type</Label>
+				<Hint>Column data type.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>UnknownType</Name>
+						<Label>Unknown</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>BooleanType</Name>
+						<Label>Boolean</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>DateTimeType</Name>
+						<Label>Date Time</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>TimeType</Name>
+						<Label>Time</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>ShortIntegerType</Name>
+						<Label>Short Integer</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>IntegerType</Name>
+						<Label>Integer</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>LongIntegerType</Name>
+						<Label>Long Integer</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>UnsignedShortIntegerType</Name>
+						<Label>Unsigned Short Integer</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>UnsignedIntegerType</Name>
+						<Label>Unsigned Integer</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>UnsignedLongIntegerType</Name>
+						<Label>Unsigned Long Integer</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>FloatType</Name>
+						<Label>Float</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>DoubleType</Name>
+						<Label>Double</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>DecimalType</Name>
+						<Label>Decimal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>StringType</Name>
+						<Label>String</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>Cardinality</Name>
+				<Label>Semantic</Label>
+				<Hint>You should specify the semantic of the column values.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Nominal</Name>
+						<Label>Nominal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Ordinal</Name>
+						<Label>Ordinal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>OrdinalCyclic</Name>
+						<Label>Ordinal Cyclic</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Cardinal</Name>
+						<Label>Cardinal</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>ValueMin</Name>
+				<Label>Minimum</Label>
+				<Hint>Minimal value in the column.</Hint>
+			</Socket>
+			<Socket>
+				<Name>ValueMax</Name>
+				<Label>Maximum</Label>
+				<Hint>Maximal value in the column.</Hint>
+			</Socket>
+			<Socket>
+				<Name>ValueAverage</Name>
+				<Label>Average</Label>
+				<Hint>Average value in the column.</Hint>
+			</Socket>
+			<Socket>
+				<Name>ValueVariance</Name>
+				<Label>Variance</Label>
+				<Hint>Variance of values in the column.</Hint>
+			</Socket>
+			<Socket>
+				<Name>ValueStandardDeviation</Name>
+				<Label>Standard deviation</Label>
+				<Hint>Average deviation of values in the column.</Hint>
+			</Socket>
+			<Socket>
+				<Name>ValueDistincts</Name>
+				<Label>Distinct values</Label>
+				<Hint>Number of distinct values in the column.</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>DataType</Name>
+				<Label>Data type</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Statistics</Name>
+				<Label>Statistics</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>EachValueOneCategoryAttribute</Name>
+				<Label>Each value one category attribute</Label>
+				<Hint>Each value of the column becomes one category</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>EquidistantIntervalsAttribute</Name>
+				<Label>Equidistant intervals attribute</Label>
+				<Hint>Intervals of the same length; parameters are starting value and count of intervals</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>EquidistantIntervalsLISpAttribute</Name>
+				<Label>Equidistant intervals LISp attribute</Label>
+				<Hint>Intervals of the same length; parameters are starting value and length of intervals</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>EquifrequencyIntervalsAttribute</Name>
+				<Label>Equifrequency intervals attribute</Label>
+				<Hint>There will be nearly the same number objects in each interval; parameter is number of intervals in which you want divide objects</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>OntologyDerivedAttribute</Name>
+				<Label>Atribut odvozený z ontologie</Label>
+				<Hint>Kategorie jsou vytvořeny na základě informací z ontologie</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>StaticAttribute</Name>
+				<Label>Static attribute</Label>
+				<Hint>User can edit categories</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 </BoxesLocalization>

@@ -160,10 +160,9 @@ namespace Ferda.FrontEnd.AddIns.OntologyMapping.MyIce
             }
             catch
             {
-                System.Windows.Forms.MessageBox.Show("null null");
                 /*TODO hodit vyjimku, ze nejsou zapojeny oba required sockety*/
-                //throw Ferda.Modules.Exceptions.BoxRuntimeError(null, boxModuleParam.getFunctionsIceId,
-                //      "Ontology box and DataTable box must be connected!");
+                //throw Ferda.Modules.Exceptions.BoxRuntimeError(null, boxModuleParam.gets.getFunctionsIceId,
+                  //    "Ontology box and DataTable box must be connected!");
                 about = this.getPropertyAbout(valueBefore);
                 return valueBefore;
             }

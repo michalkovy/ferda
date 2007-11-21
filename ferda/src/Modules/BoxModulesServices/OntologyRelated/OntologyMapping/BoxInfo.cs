@@ -70,7 +70,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <returns>The user label</returns>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return "Table-Ontology Mapping";
+            return "Mapping";
         }
 
         /// <summary>

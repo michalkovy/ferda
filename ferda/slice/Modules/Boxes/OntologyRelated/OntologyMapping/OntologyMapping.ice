@@ -32,6 +32,7 @@ HOW TO GENERATE *.cs FROM *.ice
 #include <Modules/Exceptions.ice> //some exceptions defined
 #include <Modules/BuiltinSequences.ice> //sequences of basic types
 #include <Modules/OntologyData.ice> //Ontology data
+#include <Modules/Modules.ice> //Ontology data
 
 module Ferda {
 	module Modules {
@@ -42,7 +43,9 @@ module Ferda {
 				{
 					interface OntologyMappingFunctions						
 					{
-            Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableColumnName) throws Ferda::Modules::BoxRuntimeError; 
+            Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableColumnName) throws Ferda::Modules::BoxRuntimeError;
+            
+            BoxModule getBoxModule();
           };
 				};
 			};
