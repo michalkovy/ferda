@@ -26,15 +26,21 @@ namespace Ferda.Modules.Boxes.Language.ExecuteAction
         	if (mainBoxModulePrxs.Length != 1) return null;
         	BoxModulePrx mainBoxModulePrx = mainBoxModulePrxs[0];
         	if (mainBoxModulePrx == null) return null;
-        	string actionName = boxModule.GetPropertyString("ActionName");
         	
         	try
         	{
+        		string actionName = boxModule.GetPropertyString("ActionName");
         		mainBoxModulePrx.runAction(actionName);
         	}
-        	catch(Ferda.Modules.NameNotExistError e)
+        	catch(Ferda.Modules.BoxRuntimeError e)
         	{
-        		throw new Ferda.Modules.BoxRuntimeError(e);
+        		boxModule.Manager.getOutputInterface().writeMsg(Ferda.ModulesManager.MsgType.Error, "BoxRuntimeError " + e.boxIdentity, e.userMessage);
+        		return null;
+        	}
+        	catch(System.Exception e)
+        	{
+        		boxModule.Manager.getOutputInterface().writeMsg(Ferda.ModulesManager.MsgType.Error, e.GetType().FullName, e.Message);
+        		return null;
         	}
         	
         	mainBoxModulePrxs = boxModule.getConnections("Function",null);

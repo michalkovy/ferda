@@ -22,7 +22,8 @@ namespace Ferda.Modules
 
         public BoolTI(BoolTInterfacePrx iface)
         {
-            this.boolValue = iface.getBoolValue();
+        	if (iface != null)
+            	this.boolValue = iface.getBoolValue();
         }
 
         public static implicit operator bool(BoolTI v)

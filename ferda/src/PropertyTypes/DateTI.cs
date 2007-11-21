@@ -44,7 +44,8 @@ namespace Ferda.Modules
 
 		public DateTI(DateTInterfacePrx iface)
 		{
-			iface.getDateValue(out year, out month, out day);
+			if (iface != null)
+				iface.getDateValue(out year, out month, out day);
 		}
 
         public static implicit operator DateTime(DateTI v)

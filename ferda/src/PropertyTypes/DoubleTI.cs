@@ -22,7 +22,8 @@ namespace Ferda.Modules
 		
 		public DoubleTI(DoubleTInterfacePrx iface)
 		{
-			this.doubleValue = iface.getDoubleValue();
+			if (iface != null)
+				this.doubleValue = iface.getDoubleValue();
 		}
 
         public static implicit operator double(DoubleTI v)

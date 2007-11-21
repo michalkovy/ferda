@@ -22,7 +22,8 @@ namespace Ferda.Modules
 		
 		public IntTI(IntTInterfacePrx iface)
 		{
-			this.intValue = iface.getIntValue();
+			if (iface != null)
+				this.intValue = iface.getIntValue();
 		}
 
         public static implicit operator int(IntTI v)
