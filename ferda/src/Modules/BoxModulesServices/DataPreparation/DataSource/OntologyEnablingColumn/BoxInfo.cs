@@ -24,7 +24,7 @@ using Ferda.Guha.Data;
 using System.Collections.Generic;
 using Object=Ice.Object;
 
-namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
+namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
 {
     /// <summary>
     /// Class that provides info about boxes of the Column type
@@ -37,7 +37,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
     internal class BoxInfo : Boxes.BoxInfo
     {
         /// <summary>
-        /// Functions creates an object of <see cref="T:Ferda.Modules.IFunctions">IFuntions</see>
+        /// Functions creates an object of <see cref="T:Ferda.Modules.IFunctions">IFunctions</see>
         /// type that provides functionality of the box
         /// </summary>
         /// <param name="boxModule">Current box module</param>
@@ -341,7 +341,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
         /// field in the BoxInfo implementation which holds the identifier 
         /// of type of the box module.
         /// </summary>
-        public const string typeIdentifier = "DataPreparation.DataSource.Column";
+        public const string typeIdentifier = "DataPreparation.DataSource.OntologyEnablingColumn";
 
         /// <summary>
         /// Unique identifier of type of Box module
