@@ -92,6 +92,12 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// </summary>
         private double id;
 
+        /// <summary>
+        /// Attributes still unused in this node (that means in this path from
+        /// the root of the tree to this node).
+        /// </summary>
+        private CategorialAttributeTrace[] unusedAttributes;
+
         #endregion
 
         #region Properties
@@ -117,6 +123,16 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         {
             get { return attribute; }
             set { attribute = value; }
+        }
+
+        /// <summary>
+        /// Attributes still unused in this node (that means in this path from
+        /// the root of the tree to this node).
+        /// </summary>
+        public CategorialAttributeTrace[] UnusedAttributes
+        {
+            get { return unusedAttributes; }
+            set { unusedAttributes = value; }
         }
 
         /// <summary>
@@ -166,6 +182,9 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                     {
                         sb.Append(" : ");
                         sb.Append(classifiedCategories[cat].classificationCategory);
+                        sb.Append(" [");
+                        sb.Append(classifiedCategories[cat].classificationBitString.Sum);
+                        sb.Append("]");
                     }
                     sb.Append('\n');
                 }
@@ -425,6 +444,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             node.baseBitString = baseBitString;
             node.frequency = frequency;
             node.id = id;
+            node.unusedAttributes = (CategorialAttributeTrace[])unusedAttributes.Clone();
 
             //the leaf does not contain any subnodes
             if (leaf)
@@ -459,9 +479,10 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             {
                 foreach (Node n in subNodes.Values)
                 {
-                    if (n.FindNode(node) != null)
+                    Node tmp = n.FindNode(node);
+                    if (tmp != null)
                     {
-                        return n;
+                        return tmp;
                     }
                 }
             }
