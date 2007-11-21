@@ -22,7 +22,8 @@ namespace Ferda.Modules
 		
 		public LongTI(LongTInterfacePrx iface)
 		{
-			this.longValue = iface.getLongValue();
+			if (iface != null)
+				this.longValue = iface.getLongValue();
 		}
 
         public static implicit operator long(LongTI v)

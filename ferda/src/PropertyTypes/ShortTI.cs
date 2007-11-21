@@ -22,7 +22,8 @@ namespace Ferda.Modules
 		
 		public ShortTI(ShortTInterfacePrx iface)
 		{
-			this.shortValue = iface.getShortValue();
+			if (iface != null)
+				this.shortValue = iface.getShortValue();
 		}
 
         public static implicit operator short(ShortTI v)

@@ -25,7 +25,8 @@ using Ice;namespace Ferda.Modules
 		
 		public StringSeqTI(StringSeqTInterfacePrx stringSeqTInterfacePrx)
 		{
-			this.stringSeqValue = stringSeqTInterfacePrx.getStringSeq();
+			if (stringSeqTInterfacePrx != null)
+				this.stringSeqValue = stringSeqTInterfacePrx.getStringSeq();
 		}
 		
 		/// <summary>

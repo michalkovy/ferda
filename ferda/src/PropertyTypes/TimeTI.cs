@@ -51,7 +51,8 @@ namespace Ferda.Modules
 
 		public TimeTI(TimeTInterfacePrx iface)
 		{
-			iface.getTimeValue(out hour, out minute, out second);
+			if (iface != null)
+				iface.getTimeValue(out hour, out minute, out second);
 		}
 
         public static implicit operator TimeSpan(TimeTI v)

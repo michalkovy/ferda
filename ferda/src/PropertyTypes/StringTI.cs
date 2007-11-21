@@ -23,7 +23,8 @@ namespace Ferda.Modules
 		
 		public StringTI(StringTInterfacePrx iface)
 		{
-			this.stringValue = iface.getStringValue();
+			if (iface != null)
+				this.stringValue = iface.getStringValue();
 		}
 
         public static implicit operator string(StringTI v)

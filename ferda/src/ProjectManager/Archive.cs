@@ -31,7 +31,7 @@ namespace Ferda {
 		/// Archive of boxes in project
 		/// </summary>
 		public class Archive {
-			private int lastBoxModuleProjectIdentifier = 0;
+			private int lastBoxModuleProjectIdentifier = 1;
 			private List<IBoxModule> boxes = new List<IBoxModule>();
 			private StringCollection boxCategories =
 				new StringCollection();

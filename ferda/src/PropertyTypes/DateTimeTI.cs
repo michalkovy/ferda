@@ -59,7 +59,8 @@ namespace Ferda.Modules
 
 		public DateTimeTI(DateTimeTInterfacePrx iface)
 		{
-			iface.getDateTimeValue(out year, out month, out day,
+			if (iface != null)
+				iface.getDateTimeValue(out year, out month, out day,
 								   out hour, out minute, out second);
 		}
 

@@ -22,7 +22,8 @@ namespace Ferda.Modules
 		
 		public FloatTI(FloatTInterfacePrx iface)
 		{
-			this.floatValue = iface.getFloatValue();
+			if (iface != null)
+				this.floatValue = iface.getFloatValue();
 		}
 
         public static implicit operator float(FloatTI v)
