@@ -170,8 +170,10 @@
     </sources>
     <references>
       <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
-      <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-      <include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
+			<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+			<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+			<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
+			<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
       <include name="${path::combine(lib.dir,'icecs.dll')}"/>
       <include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
       <include name="System.dll"/>

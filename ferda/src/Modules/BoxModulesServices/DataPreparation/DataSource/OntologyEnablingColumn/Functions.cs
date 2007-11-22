@@ -67,6 +67,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         #region Properties
 
         //names of the properties
+        public const string PropDataTableName = "DataTableName";
         public const string PropSelectExpression = "SelectExpression";
         public const string PropDataType = "DataType";
         public const string PropCardinality = "Cardinality";
@@ -77,10 +78,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         public const string PropValueStandardDeviation = "ValueStandardDeviation";
         public const string PropValueDistincts = "ValueDistincts";
         public const string SockMapping = "OntologyMapping";
-        /// this box is connected to DataTable box through OntologyMapping box, 
-        /// so SockDataTable is the name of OntologyMapping box socket
+        /// TODO smazat, nebude potøeba a nebude žádoucí
         public const string SockDataTable = "DataTable";
-        
+
+        /// <summary>
+        /// The name of data table of the column
+        /// </summary>
+        public string Name
+        {
+            get { return _boxModule.GetPropertyString(PropDataTableName); }
+        }
 
         /// <summary>
         /// The select expression of the column
@@ -319,6 +326,31 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                     );
             }
             return _cachedValue;
+        }
+
+        /// <summary>
+        /// Returns data table names of the database.
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>DataTable names</returns>
+        public string[] GetDataTablesNames(bool fallOnError)
+        {
+            OntologyMappingFunctionsPrx prx = GetOntologyMappingFunctionsPrx(fallOnError);
+            
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    if (prx != null)
+                        return prx.getDataTablesNames();
+                    return new string[0];
+                },
+                delegate
+                {
+                    return new string[0];
+                },
+                _boxModule.StringIceIdentity
+                );
         }
 
         /// <summary>

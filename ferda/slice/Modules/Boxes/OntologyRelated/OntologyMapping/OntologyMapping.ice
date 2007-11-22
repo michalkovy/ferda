@@ -29,10 +29,13 @@ HOW TO GENERATE *.cs FROM *.ice
 #define OntologyRelated_OntologyMapping
 
 #include <Modules/Common.ice> //some common enumerations and structures
+#include <Modules/BasicPropertyTypes.ice>
 #include <Modules/Exceptions.ice> //some exceptions defined
 #include <Modules/BuiltinSequences.ice> //sequences of basic types
 #include <Modules/OntologyData.ice> //Ontology data
-#include <Modules/Modules.ice> //Ontology data
+#include <Modules/Modules.ice> //Modules
+#include <Modules/Guha.Data.ice>
+#include <Modules/Guha.MiningProcessor.ice>
 
 module Ferda {
 	module Modules {
@@ -41,9 +44,31 @@ module Ferda {
 			{
 				module OntologyMapping
 				{
-					interface OntologyMappingFunctions						
+				  struct DataTableInfo {
+						Ferda::Guha::Data::DatabaseConnectionSetting databaseConnectionSetting;
+						string dataTableName;
+						string type;
+						string remarks;
+						StringSeq primaryKeyColumns;
+						long recordsCount;
+					};
+
+					interface OntologyMappingFunctions
 					{
-            Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableColumnName) throws Ferda::Modules::BoxRuntimeError;
+            idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableColumnName) 
+            throws Ferda::Modules::BoxRuntimeError;
+
+            idempotent	DataTableInfo getDataTableInfo()
+							throws Ferda::Modules::BoxRuntimeError;
+							
+						idempotent StringSeq getDataTablesNames()
+							throws Ferda::Modules::BoxRuntimeError;
+
+						idempotent StringSeq getColumnsNames()
+							throws Ferda::Modules::BoxRuntimeError;
+							
+						idempotent string GetSourceDataTableId(string DataTableColumnName)
+						  throws Ferda::Modules::BoxRuntimeError;
           };
 				};
 			};

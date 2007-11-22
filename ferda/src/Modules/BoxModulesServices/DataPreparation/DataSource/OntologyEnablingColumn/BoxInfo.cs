@@ -260,6 +260,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
 
             switch (propertyName)
             {
+                case Functions.PropDataTableName:
+                    return BoxInfoHelper.GetSelectStringArray(
+                        Func.GetDataTablesNames(false)
+                        );
                 case Functions.PropSelectExpression:
                     return BoxInfoHelper.GetSelectStringArray(
                         Func.GetColumnsNames(false)
