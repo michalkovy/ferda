@@ -147,19 +147,26 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
         /// </remarks>
         private void LoadIcons()
         {
-            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex("(\\\\)");
-            string[] s = r.Split(this.path);
-            string newPath = "";
-            for (int j = 0; j < s.GetLength(0) - 3; j++)
-            {
-                newPath = newPath + s[j];
-            }
+//            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex("(\\\\)");
+//            string[] s = r.Split(this.path);
+//            string newPath = "";
+//            for (int j = 0; j < s.GetLength(0) - 3; j++)
+//            {
+//                newPath = newPath + s[j];
+//            }
+            
+            // get the directory where FerdaFrontEnd.exe resides
+            string assemblyDir = Assembly.GetExecutingAssembly().Location;
+	    	System.IO.FileInfo fileInfo = new System.IO.FileInfo(assemblyDir);
+	    	assemblyDir = fileInfo.Directory.Parent.ToString();
+	    	
+	    	string iconPath = System.IO.Path.Combine(assemblyDir, "FerdaFrontEnd.ico");
 
             Icon i;
             iconProvider = new Dictionary<string, Icon>();
 
             //loading the program icon
-            i = new Icon(newPath + "FerdaFrontEnd.ico");
+            i = new Icon(iconPath);
             iconProvider.Add("FerdaIcon", i);
         }
 
