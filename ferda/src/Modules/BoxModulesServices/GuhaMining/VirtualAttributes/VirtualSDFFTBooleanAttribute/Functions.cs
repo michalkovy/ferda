@@ -448,7 +448,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
-            return Common.GetSourceDataTableId(_boxModule, this);
+            return Common.GetSourceDataTableIdMR(_boxModule, this);
         }
 
         /// <summary>
