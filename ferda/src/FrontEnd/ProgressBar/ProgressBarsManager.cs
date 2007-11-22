@@ -131,7 +131,7 @@ namespace Ferda.FrontEnd.ProgressBar
             if (InvokeRequired)
             {
                 MyDelegate d = new MyDelegate(AddBoxProgressBar);
-                this.Invoke(d, new object[] { progressBar });
+                this.BeginInvoke(d, new object[] { progressBar });
             }
             else
             {
@@ -157,7 +157,7 @@ namespace Ferda.FrontEnd.ProgressBar
             if (InvokeRequired)
             {
                 MyDelegate d = new MyDelegate(RemoveBoxProgressBar);
-                this.Invoke(d, new object[] { progressBar });
+                this.BeginInvoke(d, new object[] { progressBar });
             }
             else
             {
