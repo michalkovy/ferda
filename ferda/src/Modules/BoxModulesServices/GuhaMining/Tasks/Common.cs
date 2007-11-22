@@ -590,6 +590,73 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
 
                     newer = prx.GetSourceDataTableId();
                     if (String.IsNullOrEmpty(last))
+                        last = newer;
+                    else if (last != newer)
+                        throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                                       "Mining over only source data table is supported.",
+                                                       new string[] { s },
+                                                       restrictionTypeEnum.OtherReason);
+                }
+
+            // categorial attributes
+            socketsNames = taskFunctions.GetCategorialAttributesSocketNames();
+            if (socketsNames != null && socketsNames.Length > 0)
+                foreach (string s in socketsNames)
+                {
+                    if (String.IsNullOrEmpty(s))
+                        continue;
+
+                    List<BitStringGeneratorPrx> prxs = GetCategorialAttributePrxs(boxModule, s, false, false);
+                    if (prxs != null && prxs.Count > 0)
+                        foreach (BitStringGeneratorPrx generatorPrx in prxs)
+                        {
+                            if (generatorPrx == null)
+                                continue;
+
+                            newer = generatorPrx.GetSourceDataTableId();
+                            if (String.IsNullOrEmpty(last))
+                                last = newer;
+                            else if (last != newer)
+                                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                                               "Mining over only source data table is supported.",
+                                                               new string[] { s },
+                                                               restrictionTypeEnum.OtherReason);
+                        }
+                }
+            return last;
+        }
+
+        /// <summary>
+        /// Gets the ID of the table that is beeing mined for a box module - multirelational version.
+        /// This version is used for the virtual attributes, where there is no problem when there
+        /// is more than one source table
+        /// </summary>
+        /// <param name="boxModule">Task box module</param>
+        /// <param name="taskFunctions">Information about task</param>
+        /// <returns>ID of the mined table</returns>
+        public static string GetSourceDataTableIdMR(BoxModuleI boxModule, ITask taskFunctions)
+        {
+            BooleanAttributeSettingFunctionsPrx prx;
+            string last = null;
+            string newer;
+
+            string[] socketsNames;
+
+            // boolean attributes
+            socketsNames = taskFunctions.GetBooleanAttributesSocketNames();
+            if (socketsNames != null && socketsNames.Length > 0)
+                foreach (string s in socketsNames)
+                {
+                    if (String.IsNullOrEmpty(s))
+                        continue;
+
+                    prx = GetBooleanAttributePrx(boxModule, s, false);
+
+                    if (prx == null)
+                        continue;
+
+                    newer = prx.GetSourceDataTableId();
+                    if (String.IsNullOrEmpty(last))
                         last = newer;/*
                     else if (last != newer)
                         throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,

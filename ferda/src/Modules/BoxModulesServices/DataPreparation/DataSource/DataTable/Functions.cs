@@ -311,9 +311,20 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             return GetDataTableInfo(true);
         }
 
+        /// <summary>
+        /// Gets the identification of the this data table. The identification was
+        /// changed from the ice box identity to a string consisting of database name,
+        /// \n and the name of the table. This way, one can design columns that
+        /// are not connected via a datatable box (but via boxes such as ontology mapping).
+        /// </summary>
+        /// <param name="current__">Ice current</param>
+        /// <returns>Data table identifier</returns>
         public override string GetSourceDataTableId(Current current__)
         {
-            return _boxModule.StringIceIdentity;
+            DatabaseFunctionsPrx proxy = GetDatabaseFunctionsPrx(true);
+
+            string result = proxy.getConnectionInfo().databaseName + '\n' + GetName(true);
+            return result;
         }
 
         #endregion
