@@ -10941,6 +10941,11 @@
 				<Hint>Krabička sloužící k mapování mezi tabulkou databáze a ontologií (mapuje sloupečky tabulky na pojmy z ontologie)</Hint>
 			</Socket>
 			<Socket>
+				<Name>DataTableName</Name>
+				<Label>Název tabulky</Label>
+				<Hint>Název tabulky, do níž patří odpovídající sloupec.</Hint>
+			</Socket>
+			<Socket>
 				<Name>SelectExpression</Name>
 				<Label>Select expression</Label>
 				<Hint>Name of column or SQL formula as select expression. The name of column will be enclosed by apostrophes in SQL queries, specified formul will not be enclosed in apostrophes in the SQL query.</Hint>

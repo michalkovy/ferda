@@ -119,9 +119,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         public void LoadOntologyDelegate(string innerOntologyPath)
         {
-            Ice.Communicator ic = null;
-            ic = Ice.Util.initialize();
-
             if (innerOntologyPath.ToString() == "")
             {
                 throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
