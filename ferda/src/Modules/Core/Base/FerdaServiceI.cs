@@ -22,6 +22,7 @@
 
 using System.Diagnostics;
 using System.Threading;
+using System.Collections.Generic;
 using Ferda.Modules.Boxes;
 using Ice;
 using IceBox;
@@ -108,9 +109,19 @@ namespace Ferda.Modules
                                         PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx,
                                         string settingModuleIdentifier)
         {
+        	List<string> iceIds = new List<string>();
+        	string mainIceId = "::Ferda::Modules::" + type + "Interface";
+        	iceIds.Add(mainIceId);
+        	foreach(string iceId in defaultValue.ice_ids())
+        	{
+        		if ( (iceId.EndsWith("Interface") || iceId == "::Ice::Object") &&
+        			mainIceId != iceId)
+        		iceIds.Add(iceId);
+        	}
+        	
             new PropertyBoxModuleFactoryCreatorI(defaultValue.ice_id(),
-                                                 defaultValue.ice_ids(),
-                                                 "::Ferda::Modules::" + type + "Interface",
+                                                 iceIds.ToArray(),
+                                                 mainIceId,
                                                  type,
                                                  defaultValue,
                                                  valFromPrx,
