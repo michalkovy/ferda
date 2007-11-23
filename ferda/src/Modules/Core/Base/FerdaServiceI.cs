@@ -108,8 +108,9 @@ namespace Ferda.Modules
                                         PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx,
                                         string settingModuleIdentifier)
         {
-            new PropertyBoxModuleFactoryCreatorI("::Ferda::Modules::" + type,
+            new PropertyBoxModuleFactoryCreatorI(defaultValue.ice_id(),
                                                  defaultValue.ice_ids(),
+                                                 "::Ferda::Modules::" + type + "Interface",
                                                  type,
                                                  defaultValue,
                                                  valFromPrx,

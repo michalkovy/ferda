@@ -8,6 +8,7 @@ using Ice;namespace Ferda.Modules
 		private BoxModuleFactoryPrx factory;
 		private string propertyClassIceId;
 		private string[] propertyFunctionsIceIds;
+		private string mainFunctionsIceId;
 		private BoxModulePrx myProxy;
 		private Ice.ObjectPrx propertyValuePrx;
         private PropertyValue propertyValue;
@@ -33,11 +34,12 @@ using Ice;namespace Ferda.Modules
 		/// <param name="propertyClassIceId">A  string</param>
 		/// <param name="propertyFunctionsIceIds">A  string[]</param>
 		/// <param name="identifier">A  string</param>
-		public PropertyBoxModuleI(BoxModuleFactoryPrx factory, string propertyClassIceId, string[] propertyFunctionsIceIds, Ice.ObjectAdapter adapter, Ice.Identity myIdentity, Modules.PropertyBoxModuleFactoryCreatorI.ValueFromPrx valueFromPrx, PropertyValue defaultValue)
+		public PropertyBoxModuleI(BoxModuleFactoryPrx factory, string propertyClassIceId, string[] propertyFunctionsIceIds, string mainFunctionsIceId, Ice.ObjectAdapter adapter, Ice.Identity myIdentity, Modules.PropertyBoxModuleFactoryCreatorI.ValueFromPrx valueFromPrx, PropertyValue defaultValue)
 		{
 			this.factory = factory;
 			this.propertyClassIceId = propertyClassIceId;
 			this.propertyFunctionsIceIds = propertyFunctionsIceIds;
+			this.mainFunctionsIceId = mainFunctionsIceId;
 			this.myProxy = BoxModulePrxHelper.uncheckedCast(adapter.add(this,myIdentity));
 			this.adapter = adapter;
 			this.valueFromPrx = valueFromPrx;
@@ -116,7 +118,7 @@ using Ice;namespace Ferda.Modules
 				throw new System.Exception("Can not set null box module");
 			}
 			Ice.ObjectPrx prx = otherModule.getFunctions();
-			if(prx != null && !prx.ice_isA(this.propertyFunctionsIceIds[0]))
+			if(prx != null && !prx.ice_isA(mainFunctionsIceId))
 				throw new Ferda.Modules.BadTypeError();
 			if(propertyValuePrx != null && propertySetByValue)
 				adapter.remove(propertyValuePrx.ice_getIdentity());
