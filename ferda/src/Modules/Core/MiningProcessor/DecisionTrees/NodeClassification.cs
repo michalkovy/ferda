@@ -46,5 +46,17 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// to this (normal) category
         /// </summary>
         public string classificationCategory = string.Empty;
+
+        /// <summary>
+        /// Number of items in the classified category. It is equal to length
+        /// of the category bit string. Here is serves as output for IF representation
+        /// </summary>
+        public long noItemsInCategory = -1;
+
+        /// <summary>
+        /// Number of classification errors - the bit strings that have been 
+        /// not classified right.
+        /// </summary>
+        public long noErrors = -1;
     }
 }

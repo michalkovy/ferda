@@ -520,6 +520,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return lifo;
             }
 
+            rightCats = DeleteOneClassificationCategoryOnly(node, rightCats);
+
             //by anding the bit strings of individual categories, we
             //improve the accuracy for the attribute selection
             IBitString newBitString = FalseBitString.GetInstance();
@@ -541,6 +543,42 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             return lifo;
+        }
+
+        /// <summary>
+        /// From the categories of the node for branching, the procedure removes the
+        /// categories (of the node) that contain only one classification category.
+        /// </summary>
+        /// <param name="node">Node where the category is present</param>
+        /// <param name="catsForBranching">Categories for branching</param>
+        /// <returns>New list with removed categories</returns>
+        private List<string> DeleteOneClassificationCategoryOnly(Node node,
+            List<string> catsForBranching)
+        {
+            List<string> tmp = new List<string>(catsForBranching);
+
+            foreach (string category in tmp)
+            {
+                bool hasOneOnly = false;
+
+                for (int i = 0; i < targetClassificationAttribute.BitStrings.Length; i++)
+                {
+                    long andSum = targetClassificationAttribute.BitStrings[i].And(
+                        node.CategoryBitString(category)).Sum;
+                    if (andSum == node.CategoryBitString(category).Sum)
+                    {
+                        hasOneOnly = true;
+                        break;
+                    }
+                }
+
+                if (hasOneOnly)
+                {
+                    catsForBranching.Remove(category);
+                }
+            }
+
+            return catsForBranching;
         }
 
         /// <summary>
