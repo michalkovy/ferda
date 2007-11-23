@@ -8,6 +8,7 @@ namespace Ferda.Modules
 	{
 		private string propertyClassIceId;
 		private string[] propertyFunctionsIceIds;
+		private string mainFunctionsIceId;
 		private BoxModuleFactoryCreatorPrx myFactoryCreatorProxy;
         private string settingModuleIdentifier;
 
@@ -24,6 +25,7 @@ namespace Ferda.Modules
 
 		public PropertyBoxModuleFactoryI(string propertyClassIceId,
 										 string[] propertyFunctionsIceIds,
+										 string mainFunctionsIceId,
 										 BoxModuleFactoryCreatorPrx myFactoryCreatorProxy,
 										 string[] localePrefs,
 										 PropertyValue defaultValue,
@@ -33,6 +35,7 @@ namespace Ferda.Modules
 		{
 			this.propertyClassIceId = propertyClassIceId;
 			this.propertyFunctionsIceIds = propertyFunctionsIceIds;
+			this.mainFunctionsIceId = mainFunctionsIceId;
 			//this.localePrefs = localePrefs;
 			this.myFactoryCreatorProxy = myFactoryCreatorProxy;
 			this.defaultValue = defaultValue;
@@ -61,7 +64,7 @@ namespace Ferda.Modules
 				throw new Ice.ObjectNotExistException();
 			}
 			Ice.Identity boxModuleIdentity = Ice.Util.stringToIdentity(Ice.Util.generateUUID());
-			PropertyBoxModuleI boxModule = new PropertyBoxModuleI(myProxy, this.propertyClassIceId, this.propertyFunctionsIceIds, __current.adapter, boxModuleIdentity, valueFromPrx, defaultValue);
+			PropertyBoxModuleI boxModule = new PropertyBoxModuleI(myProxy, this.propertyClassIceId, this.propertyFunctionsIceIds, this.mainFunctionsIceId, __current.adapter, boxModuleIdentity, valueFromPrx, defaultValue);
 			BoxModulePrx boxModulePrx = boxModule.MyProxy;
 			string boxIdentity = Ice.Util.identityToString(boxModulePrx.ice_getIdentity());
 			this.boxModules[boxIdentity] = boxModule;
@@ -171,7 +174,7 @@ namespace Ferda.Modules
 			result.name = "value";
 			result.settingProperties = null;
 			BoxType boxType = new BoxType();
-			boxType.functionIceId = this.propertyFunctionsIceIds[0];
+			boxType.functionIceId = mainFunctionsIceId;
 			boxType.neededSockets = null;
 			result.socketType = new BoxType[] { boxType };
 			return new SocketInfo[] { result };

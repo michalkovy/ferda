@@ -10,6 +10,7 @@ namespace Ferda.Modules
 	{
 		private string propertyClassIceId;
 		private string[] propertyFunctionsIceIds;
+		private string mainFunctionsIceId;
 		private string identifier;
 		private PropertyReapThread reaper;
 		private PropertyValue defaultValue;
@@ -28,6 +29,7 @@ namespace Ferda.Modules
 		/// <param name="identifier">A  string</param>
 		public PropertyBoxModuleFactoryCreatorI(string propertyClassIceId,
 												string[] propertyFunctionsIceIds,
+												string mainFunctionsIceId,
 												string identifier,
 												PropertyValue defaultValue,
 												ValueFromPrx valueFromPrx,
@@ -37,6 +39,7 @@ namespace Ferda.Modules
 		{
 			this.propertyClassIceId = propertyClassIceId;
 			this.propertyFunctionsIceIds = propertyFunctionsIceIds;
+			this.mainFunctionsIceId = mainFunctionsIceId;
 			this.identifier = identifier;
 			this.valueFromPrx = valueFromPrx;
 			this.reaper = reaper;
@@ -75,6 +78,7 @@ namespace Ferda.Modules
 			
 			PropertyBoxModuleFactoryI boxModuleFactory = new PropertyBoxModuleFactoryI(propertyClassIceId,
 																					   propertyFunctionsIceIds,
+																					   mainFunctionsIceId,
 																					   myProxy,
 																					   localePrefs,
 																					   defaultValue,
