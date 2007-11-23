@@ -184,8 +184,8 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                         sb.Append(classifiedCategories[cat].classificationCategory);
                         sb.Append(" (");
                         sb.Append(classifiedCategories[cat].noItemsInCategory);
-                        //sb.Append(',');
-                        //sb.Append(classifiedCategories[cat].noErrors);
+                        sb.Append(',');
+                        sb.Append(classifiedCategories[cat].noErrors);
                         sb.Append(")");
                     }
                     sb.Append('\n');
@@ -538,8 +538,8 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                 nc.classificationBitString = 
                     categoryBitString.And(classificationBitStrings[index]);
                 nc.noItemsInCategory = categoryBitString.Sum;
-                nc.noErrors = classificationBitStrings[index].And(
-                    categoryBitString.Not()).Sum;
+                nc.noErrors = 
+                    categoryBitString.And(classificationBitStrings[index].Not()).Sum;
 
                 classifiedCategories.Add(category, nc);
             }
