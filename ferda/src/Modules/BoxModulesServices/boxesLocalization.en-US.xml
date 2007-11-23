@@ -10973,6 +10973,11 @@
 				<Hint>The name of the data table, in which the column belongs.</Hint>
 			</Socket>
 			<Socket>
+				<Name>PrimaryKeyColumns</Name>
+				<Label>Primary key</Label>
+				<Hint>List of columns that define the primary key of the table. The value is either a value of one column or CSV (comma separated values). It will be not enclosed in apostrophes.</Hint>
+			</Socket>
+			<Socket>
 				<Name>SelectExpression</Name>
 				<Label>Select expression</Label>
 				<Hint>Name of column or SQL formula as select expression. The name of column will be enclosed by apostrophes in SQL queries, specified formul will not be enclosed in apostrophes in the SQL query.</Hint>

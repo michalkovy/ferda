@@ -484,16 +484,16 @@
       </fileset>
     </copy>
     
-    <csc target="library" output="${path::combine(addInsBuild.dir,'OntologyMapping.dll')}" debug="${debug}" optimize="${optimize}">
+    <csc target="library" output="${path::combine(addInsBuild.dir,'SetOntologyMapping.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
-				<include name="OntologyMapping/**.cs"/>
-				<include name="OntologyMapping/MyIce/**.cs"/>
-				<exclude name="OntologyMapping/bin/**.*"/>
-				<exclude name="OntologyMapping/obj/**.*"/>
+				<include name="SetOntologyMapping/**.cs"/>
+				<include name="SetOntologyMapping/MyIce/**.cs"/>
+				<exclude name="SetOntologyMapping/bin/**.*"/>
+				<exclude name="SetOntologyMapping/obj/**.*"/>
 			</sources>
-			<resources prefix="Ferda.FrontEnd.AddIns.OntologyMapping">
-				<include name="OntologyMapping/**.resx"/>
-				<exclude name="OntologyMapping/OntologyMapping.resx"/>
+			<resources prefix="Ferda.FrontEnd.AddIns.SetOntologyMapping">
+				<include name="SetOntologyMapping/**.resx"/>
+				<exclude name="SetOntologyMapping/SetOntologyMapping.resx"/>
 			</resources>
 			<references>
 				<include name="System.dll"/>

@@ -36,6 +36,7 @@ HOW TO GENERATE *.cs FROM *.ice
 #include <Modules/Modules.ice> //Modules
 #include <Modules/Guha.Data.ice>
 #include <Modules/Guha.MiningProcessor.ice>
+#include <Modules/Boxes/DataPreparation/DataPreparation.ice>
 
 module Ferda {
 	module Modules {
@@ -44,30 +45,22 @@ module Ferda {
 			{
 				module OntologyMapping
 				{
-				  struct DataTableInfo {
-						Ferda::Guha::Data::DatabaseConnectionSetting databaseConnectionSetting;
-						string dataTableName;
-						string type;
-						string remarks;
-						StringSeq primaryKeyColumns;
-						long recordsCount;
-					};
-
+				  
 					interface OntologyMappingFunctions
 					{
             idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableColumnName) 
             throws Ferda::Modules::BoxRuntimeError;
 
-            idempotent	DataTableInfo getDataTableInfo()
+            idempotent	Ferda::Modules::Boxes::DataPreparation::DataTableInfo getDataTableInfo(string dataTableName, StringSeq primaryKeyColumns)
 							throws Ferda::Modules::BoxRuntimeError;
 							
 						idempotent StringSeq getDataTablesNames()
 							throws Ferda::Modules::BoxRuntimeError;
 
-						idempotent StringSeq getColumnsNames()
+						idempotent StringSeq getColumnsNames(string dataTableName)
 							throws Ferda::Modules::BoxRuntimeError;
 							
-						idempotent string GetSourceDataTableId(string DataTableColumnName)
+						idempotent string GetSourceDataTableId(string dataTableColumnName)
 						  throws Ferda::Modules::BoxRuntimeError;
           };
 				};

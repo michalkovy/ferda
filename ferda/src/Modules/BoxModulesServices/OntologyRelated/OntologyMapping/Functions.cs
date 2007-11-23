@@ -59,33 +59,29 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         #region Properties
 
         //names of the properties
-        public const string Mapping = "Mapping";
+        public const string PropMapping = "Mapping";
         public const string PropNumberOfMappedPairs = "NumberOfMappedPairs";
         public const string SockOntology = "Ontology";
         public const string SockDatabase = "Database";
 
-        /*TODO smazat*/
-        public const string PropName = "Name";
-        public const string PropPrimaryKeyColumns = "PrimaryKeyColumns";
-
-        public string Name
+        /// <summary>
+        /// Mapping between datatables columns and ontology entities
+        /// </summary>
+        public string Mapping
         {
-            get { return _boxModule.GetPropertyString(PropName); }
+            get { return _boxModule.GetPropertyString(PropMapping); }
         }
-
-        public string[] PrimaryKeyColumns
-        {
-            get { return _boxModule.GetPropertyStringSeq(PropPrimaryKeyColumns); }
-        }
-        /*TODO smazat - konec*/
 
         public IntTI NumberOfMappedPairs
         {
             get
             {
-                //OntologyStructure tmpOntology = getOntology(false);
-                //return (tmpOntology != null) ? tmpOntology.OntologyClassMap.Values.Count.ToString() : "0";
-                return 777;
+                if (Mapping != null)
+                {
+                    string[] tmpStringArray = Mapping.Split(new char[] { '\n' });
+                    return tmpStringArray.Length - 1;
+                }
+                return 0;
             }
         }
 
@@ -103,18 +99,17 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         }
 
         /*TODO smazat - nebude potøeba, resp. bude muset být nìco obdobnýho*/
-        public string GetName(bool fallOnError)
+        /*public string GetName(bool fallOnError)
         {
-            /*if (String.IsNullOrEmpty(Name) && fallOnError)
+            if (String.IsNullOrEmpty(Name) && fallOnError)
             {
                 throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
                                                "Property is not set.", new string[] { PropName },
                                                restrictionTypeEnum.Missing);
             }
             else
-                return Name;*/
-            return "test name";
-        }
+                return Name;
+        }*/
 
         public StrSeqMap getOntologyEntityProperties(string dataTableColumnName, bool fallOnError)
         {
@@ -153,7 +148,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         private CacheFlag _cacheFlag = new CacheFlag();
         private GenericDataTable _cachedValue = null;
         
-        public GenericDataTable GetGenericDataTable(bool fallOnError)
+        public GenericDataTable GetGenericDataTable(string dataTableName, bool fallOnError)
         {
             DatabaseFunctionsPrx prx = GetDatabaseFunctionsPrx(fallOnError);
             if (prx == null)
@@ -188,7 +183,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
              * je tohle v poøádku
              */
             cacheSetting.Add("DataPreparation.DataSource.Database" + "ConnectionString", connSetting);
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropName, Name);
+            cacheSetting.Add(BoxInfo.typeIdentifier + "dataTableName", dataTableName);
 
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
                 || (_cachedValue == null && fallOnError))
@@ -197,8 +192,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                     fallOnError,
                     delegate
                     {
-                        string name = GetName(fallOnError);
-                        return GenericDatabaseCache.GetGenericDatabase(connSetting)[Name];
+                        string name = dataTableName;
+                        return GenericDatabaseCache.GetGenericDatabase(connSetting)[dataTableName];
                     },
                     delegate
                     {
@@ -229,13 +224,13 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 );
         }
 
-        public string[] GetColumnsNames(bool fallOnError)
+        public string[] GetColumnsNames(string dataTableName, bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(
                 fallOnError,
                 delegate
                 {
-                    GenericDataTable tmp = GetGenericDataTable(fallOnError);
+                    GenericDataTable tmp = GetGenericDataTable(dataTableName, fallOnError);
                     if (tmp != null)
                         return tmp.BasicColumnsNames;
                     return new string[0];
@@ -248,13 +243,13 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 );
         }
 
-        public DataTableExplain GetDataTableExplain(bool fallOnError)
+        public DataTableExplain GetDataTableExplain(string dataTableName, bool fallOnError)
         {
             return ExceptionsHandler.GetResult<DataTableExplain>(
                 fallOnError,
                 delegate
                 {
-                    GenericDataTable tmp = GetGenericDataTable(fallOnError);
+                    GenericDataTable tmp = GetGenericDataTable(dataTableName, fallOnError);
                     if (tmp != null)
                         return tmp.Explain;
                     return null;
@@ -267,21 +262,26 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 );
         }
 
-        public DataTableInfo GetDataTableInfo(bool fallOnError)
+        public DataTableInfo GetDataTableInfo(string dataTableName, string[] primaryKeyColumns, bool fallOnError)
         {
+            /*TODO smazat
+             * primaryKeyColumns = new string[2];
+            primaryKeyColumns[0] = "ok";
+            primaryKeyColumns[1] = "notok";*/
+
             return ExceptionsHandler.GetResult<DataTableInfo>(
                 fallOnError,
                 delegate
                 {
-                    DataTableExplain tmp1 = GetDataTableExplain(fallOnError);
+                    DataTableExplain tmp1 = GetDataTableExplain(dataTableName, fallOnError);
                     DatabaseFunctionsPrx tmp2 = GetDatabaseFunctionsPrx(fallOnError);
-                    string name = GetName(fallOnError);
+                    string name = dataTableName;
                     if (tmp1 != null && tmp2 != null)
                         return new DataTableInfo(tmp2.getDatabaseConnectionSetting(),
-                                                 name,
+                                                 dataTableName,
                                                  tmp1.type,
                                                  tmp1.remarks,
-                                                 PrimaryKeyColumns,
+                                                 primaryKeyColumns,
                                                  tmp1.recordsCount);
                     return null;
                 },
@@ -301,10 +301,11 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// Gets the properties (dataproperties) of ontology entity - for individuals it is empty
         /// </summary>
         /// <param name="dataTableColumnName">Name of table column which properties (based on mapping) I want to get</param>
+        /// <param name="dataTableColumnName">Name of the data table and its column</param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>Data properties of ontology entity</returns>
 
-        public override StrSeqMap getOntologyEntityProperties(string dataTableColumnName, Ice.Current __current)
+        public override StrSeqMap getOntologyEntityProperties(string dataTableColumnName, Ice.Current current__)
         {
             return getOntologyEntityProperties(dataTableColumnName, true);
         }
@@ -314,21 +315,22 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             return GetDataTablesNames(true);
         }
 
-        public override string[] getColumnsNames(Current current__)
+        public override string[] getColumnsNames(string dataTableName, Current current__)
         {
-            return GetColumnsNames(true);
+            return GetColumnsNames(dataTableName, true);
         }
 
-        public override DataTableInfo getDataTableInfo(Current current__)
+        public override DataTableInfo getDataTableInfo(string dataTableName, string[] primaryKeyColumns, Current current__)
         {
-            return GetDataTableInfo(true);
+            return GetDataTableInfo(dataTableName, primaryKeyColumns, true);
         }
 
-        public override string GetSourceDataTableId(string dataTableColumnName, Current current__)
+        public override string GetSourceDataTableId(string dataTableName, Current current__)
         {
-            /*TODO zmìnit podle toho, jak to upraví Martin v Datatable
-             * pravdìpodobnì databaseBoxIceIdentity + name of table*/
-            return _boxModule.StringIceIdentity;
+            DatabaseFunctionsPrx proxy = GetDatabaseFunctionsPrx(true);
+
+            string result = proxy.getConnectionInfo().databaseName + '\n' + dataTableName;
+            return result;
         }
 
         #endregion
