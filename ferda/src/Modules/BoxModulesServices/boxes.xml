@@ -19676,7 +19676,7 @@
 				<CategoryName>Mapping</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<SettingModuleIdentifier>OntologyMapping</SettingModuleIdentifier>
+				<SettingModuleIdentifier>SetOntologyMapping</SettingModuleIdentifier>
 			</Property>
 			<Property>
 				<Name>NumberOfMappedPairs</Name>
@@ -19942,6 +19942,15 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
+				<Name>PrimaryKeyColumns</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringSeqTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
 				<Name>SelectExpression</Name>
 				<SocketTypes>
 					<BoxType>
@@ -20029,6 +20038,13 @@
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
+			</Property>
+			<Property>
+				<Name>PrimaryKeyColumns</Name>
+				<TypeClassIceId>::Ferda::Modules::StringSeqT</TypeClassIceId>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+				<SettingModuleIdentifier>MultiSelectStrings</SettingModuleIdentifier>
 			</Property>
 			<Property>
 				<Name>SelectExpression</Name>
