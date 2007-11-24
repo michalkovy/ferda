@@ -24,6 +24,7 @@ using System.Text;
 using Ferda.Modules.Boxes;
 using Ferda.Guha.Data;
 using Object = Ice.Object;
+using Ferda.Modules.Boxes.DataPreparation;
 
 namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 {
@@ -85,53 +86,80 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
                                                                                BoxModuleI boxModule)
         {
-            /*Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
 
             Dictionary<string, ModulesAskingForCreation> modulesAFC = getModulesAskingForCreationNonDynamic(localePrefs);
             List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();
             ModulesAskingForCreation moduleAFC;
             ModulesConnection moduleConnection;
             ModuleAskingForCreation singleModuleAFC;
+            List<ModuleAskingForCreation> allColumnModulesAFC = new List<ModuleAskingForCreation>();
+
+            // I presuppose that item with key "Column" is before item with key "AllColumns"
 
             foreach (string moduleAFCName in modulesAFC.Keys)
             {
-                moduleAFC = modulesAFC[moduleAFCName];
+                /*moduleAFC = modulesAFC[moduleAFCName];
                 switch (moduleAFCName)
                 {
-                    case "OntologyDerivedAttribute":
-                        /* TODO module asking for creation
-                         * 
-                         * string[] dataMatrixNames = Func.GetDataTablesNames(false);
-                        if (dataMatrixNames.Length > 0)
+                    case "Column":
+                        //TODO vybrat všechny možnosti DataTable/Columns
+                        string[] columnsNames = Func.GetColumnsNames(false);
+                        if (columnsNames.Length > 0)
                         {
                             moduleConnection = new ModulesConnection();
-                            moduleConnection.socketName = DataTable.Functions.SockDatabase;
+                            //TODO nìjak to ošetøit - asi nejlíp tim, že pøesunu OM do datapreparation
+                            //moduleConnection.socketName = Column.Functions.SockDataTable;
+                            moduleConnection.socketName = "OntologyMapping";
                             moduleConnection.boxModuleParam = boxModule.MyProxy;
-                            foreach (string dataMatrixName in dataMatrixNames)
+                            foreach (string columnName in columnsNames)
                             {
                                 ModulesAskingForCreation newMAFC = new ModulesAskingForCreation();
-                                newMAFC.label = moduleAFC.label.Replace("@Name", dataMatrixName);
-                                newMAFC.hint = moduleAFC.hint.Replace("@Name", dataMatrixName);
+                                newMAFC.label = moduleAFC.label.Replace("@Name", columnName);
+                                newMAFC.hint = moduleAFC.hint.Replace("@Name", columnName);
                                 newMAFC.help = moduleAFC.help;
                                 singleModuleAFC = new ModuleAskingForCreation();
                                 singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
-                                singleModuleAFC.newBoxModuleIdentifier = DataTable.BoxInfo.typeIdentifier;
+                                ;
+                                singleModuleAFC.newBoxModuleIdentifier = Column.BoxInfo.typeIdentifier;
                                 PropertySetting propertySetting = new PropertySetting();
-                                propertySetting.propertyName = DataTable.Functions.PropName;
-                                propertySetting.value = new StringTI(dataMatrixName);
+                                propertySetting.propertyName = Column.Functions.PropSelectExpression;
+                                propertySetting.value = new StringTI(columnName);
                                 singleModuleAFC.propertySetting = new PropertySetting[] { propertySetting };
-                                allDataMatrixModulesAFC.Add(singleModuleAFC);
+                                allColumnModulesAFC.Add(singleModuleAFC);
                                 newMAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
                                 result.Add(newMAFC);
+                                
                             }
                         }
                         break;
+                    case "DerivedColumn":
+                        moduleConnection = new ModulesConnection();
+                        singleModuleAFC = new ModuleAskingForCreation();
+                        //TODO - ošetøit viz výše
+                        //moduleConnection.socketName = Column.Functions.SockDataTable;
+                        moduleConnection.socketName = "OntologyMapping";
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+                        singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
+                        singleModuleAFC.newBoxModuleIdentifier = Column.BoxInfo.typeIdentifier;
+                        moduleAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
+                        result.Add(moduleAFC);
+                        break;
+                    case "AllColumns":
+                        if (allColumnModulesAFC.Count <= 1)
+                            continue;
+                        moduleConnection = new ModulesConnection();
+                        moduleConnection.socketName = Column.Functions.SockDataTable;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+                        moduleAFC.newModules = allColumnModulesAFC.ToArray();
+                        result.Add(moduleAFC);
+                        break;
                     default:
                         throw new NotImplementedException();
-                }
-            }*/
-            return new ModulesAskingForCreation[0];
-            //TODO return result.ToArray();
+                }*/
+            }
+            //return result.ToArray();
+            return null;
         }
         /// <summary>
         /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as

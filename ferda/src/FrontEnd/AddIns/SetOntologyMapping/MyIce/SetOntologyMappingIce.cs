@@ -156,7 +156,6 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
                 dataTableColumnsDictionary.Add(dataTableName, columnsNames);
             }            
 
-            DataTableFunctionsPrx DataTablePrx;
             OntologyFunctionsPrx OntologyPrx;
             try
             {
@@ -183,6 +182,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
                 new SetOntologyMappingControl(
                     dataTableColumnsDictionary,
                     ontology,
+                    mapping.stringValue,
                     localePrefs,
                     ownerOfAddIn
                 );
@@ -193,26 +193,6 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
 
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-
-                /*IntTI numberOfMappedPairs = new IntTI();
-                
-                numberOfMappedPairs.intValue = 5;
-
-                System.Windows.Forms.MessageBox.Show("A" + ((IntT)numberOfMappedPairs).getStringValue());
-                boxModuleParam.setProperty("NumberOfMappedPairs", (IntT)numberOfMappedPairs);
-                System.Windows.Forms.MessageBox.Show("B");
-                */
-                //StringT tmpstr = new StringTI();
-                //tmpstr.stringValue = "jde to";
-                //System.Windows.Forms.MessageBox.Show("A" + ((IntT)numberOfMappedPairs).getStringValue());
-                
-                //boxModuleParam.setProperty("Mapping", tmpstr);
-                //mapping.stringValue = "nazdar";
-                
-                //boxModuleParam.setProperty("Mapping", mapping);
-                
-                //System.Windows.Forms.MessageBox.Show("mmntik");
-                //mapping.stringValue = "druhy nastaveni";
                 mapping.stringValue = this.returnString;
                 PropertyValue resultValue = mapping;
 
