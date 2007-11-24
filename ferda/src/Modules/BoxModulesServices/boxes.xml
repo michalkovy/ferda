@@ -4892,6 +4892,15 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
+				<Name>OnlyFullTree</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::BoolTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
 				<Name>MaxNumberOfHypotheses</Name>
 				<SocketTypes>
 					<BoxType>
@@ -5020,6 +5029,13 @@
 						<Including>true</Including>
 					</Restriction>
 				</NumericalRestrictions>
+			</Property>
+			<Property>
+				<Name>OnlyFullTree</Name>
+				<TypeClassIceId>::Ferda::Modules::BoolT</TypeClassIceId>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+				<Default>false</Default>
 			</Property>
 			<Property>
 				<Name>MaxNumberOfHypotheses</Name>
@@ -20033,7 +20049,7 @@
 			</Socket>
 		</Sockets>
 		<Properties>
-		  <Property>
+			<Property>
 				<Name>DataTableName</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
 				<Visible>true</Visible>

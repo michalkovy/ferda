@@ -291,6 +291,19 @@ module Ferda {
 					int skipFirstN; //skip first N hypotheses for Rel DM purposes
 					WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode; // for SD tasks only
 				};
+				
+				struct ETreeTaskRunParams
+				{
+				      CategorialAttributeSeq branchingAttributes;
+				      CategorialAttribute targetClassificationAttribute;
+				      Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq quantifiers;
+				      int minimalNodeImpurity;
+				      int minimalNodeFrequency;
+				      int maximalTreeDepth;
+				      int noAttributesForBranching;
+				      long maxNumberOfHypotheses;
+				      bool onlyFullTree;				      
+                    };
 
 				interface MiningProcessorFunctions
 				{
@@ -318,14 +331,7 @@ module Ferda {
 						
 					string ETreeRun(
 					     Ferda::Modules::BoxModule* taskBoxModule,
-					     CategorialAttributeSeq branchingAttributes,
-					     CategorialAttribute targetClassificationAttribute,
-                              Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq quantifiers,
-					     int minimalNodeImpurity,
-					     int minimalNodeFrequency,
-					     int maximalTreeDepth,
-					     int noAttributesForBranching,
-					     long maxNumberOfHypotheses,
+                              ETreeTaskRunParams taskParams,
 					     Ferda::ModulesManager::Output* output,
 					     out string resultInfo
                               )

@@ -137,6 +137,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         private QuantifierBaseFunctionsPrx[] quantifiers;
 
         /// <summary>
+        /// If output should contain only trees of desired
+        /// length, or also shorter subtrees.
+        /// </summary>
+        private bool onlyFullTree;
+
+        /// <summary>
         /// Count of all objects in the data matrix
         /// </summary>
         protected long allObjectsCount = -1;
@@ -221,6 +227,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// is often so high that is computed as infinity).
         /// </param>
         /// <param name="progressListener">The progress listener.</param>
+        /// <param name="onlyFullTree">
+        /// If output should contain only trees of desired
+        /// length, or also shorter subtrees.
+        /// </param>
         /// <param name="progressBarPrx">The progress bar PRX.</param>
         public ETreeMiningProcessor(
             CategorialAttribute[] branchingAttributes,
@@ -231,6 +241,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             int maximalTreeDepth,
             int noAttributesForBranching,
             long maxNumberOfHypotheses,
+            bool onlyFullTree,
             ProgressTaskListener progressListener,
             ProgressBarPrx progressBarPrx) : base(progressListener, progressBarPrx)
         {
@@ -242,6 +253,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 MiningProcessorBase.CreateCategorialAttributeTrace(MarkEnum.TargetClassificationAttribute,
                 targetClassificationAttribute, false);
             this.quantifiers = quantifiers;
+            this.onlyFullTree = onlyFullTree;
 
             //checking corectness of the input parameters
             if (minimalNodeFrequency < 1)
@@ -403,6 +415,29 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <returns>If the tree souhld be put to output</returns>
         private bool QualityTree(Tree processTree)
         {
+            bool rightLentgh;
+
+            //checking the length of the tree
+            if (onlyFullTree)
+            {
+                if (processTree.Depth == maximalTreeDepth)
+                {
+                    rightLentgh = true;
+                }
+                else
+                {
+                    rightLentgh = false;
+                }
+            }
+            else
+            {
+                rightLentgh = true;
+            }
+            if (!rightLentgh)
+            {
+                return false;
+            }
+
             //cannot determine the root node
             if (processTree.RootNode == null)
             {
@@ -437,7 +472,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// trees to the queue. 
         /// </summary>
         /// <param name="processTree">Tree to be processed</param>
-        /// <param name="fifo">Structure holding temporary results</param>
+        /// <param name="lifo">Structure holding temporary results</param>
         /// <returns>The stack where new trees were added.</returns>
         private Stack<Tree> Process(Tree processTree, Stack<Tree> lifo)
         {
@@ -493,14 +528,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Prolongs the tree (in parameter <paramref name="processTree"/> in node
         /// (in parameter <paramref name="node"/>) and adds the tree into the
-        /// <paramref name="fifo"/> queue, which is returned. From previous code, the
+        /// <paramref name="lifo"/> queue, which is returned. From previous code, the
         /// node (not its categories) need to fullfill the minimal node frequency 
         /// criterion. In this procedure, only the categories that also fulfill the
         /// minimal node frequency criterion are bases of new nodes.
         /// </summary>
         /// <param name="processTree">Tree to be prolonged</param>
         /// <param name="node">Where to prolong the tree</param>
-        /// <param name="fifo">Where to add newly created trees</param>
+        /// <param name="lifo">Where to add newly created trees</param>
         /// <returns>The stack is with newly created trees is returned.</returns>
         private Stack<Tree> ProlongTree(Tree processTree, Node node, Stack<Tree> lifo)
         {
@@ -515,12 +550,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     rightCats.Add(category);
                 }            
             }
+            rightCats = DeleteOneClassificationCategoryOnly(node, rightCats);
+            
             if (rightCats.Count == 0)
             {
                 return lifo;
             }
-
-            rightCats = DeleteOneClassificationCategoryOnly(node, rightCats);
 
             //by anding the bit strings of individual categories, we
             //improve the accuracy for the attribute selection
@@ -589,14 +624,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>
         /// <param name="processTree">Tree to be cloned.</param>
         /// <param name="node">Node where noew node is to be created.</param>
-        /// <param name="category">Category which is to be replaced by a new leaf.</param>
+        /// <param name="categories">Category which is to be replaced by a new leaf.</param>
         /// <param name="attribute">Attribute that will be used for creation of a new leaf</param>
         /// <returns>Newly created tree.</returns>
         private Tree CreateTree(Tree processTree, Node node, string[] categories, 
             CategorialAttributeTrace attribute)
         {
             Tree result = (Tree) processTree.Clone();
-            //finiding the right node in the new tree
+            result.Depth = processTree.Depth + 1;
+            //finding the right node in the new tree
             Node n = result.FindNode(node);
 
             if (n == null)

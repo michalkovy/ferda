@@ -124,6 +124,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
             }
         }
 
+        /// <summary>
+        /// If output should contain only trees of desired
+        /// length, or also shorter subtrees.
+        /// </summary>
+        public bool OnlyFullTree
+        {
+            get
+            {
+                return _boxModule.GetPropertyBool(SockOnlyFullTree);
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -167,6 +179,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// Name of the socket defining maximal number of hypotheses for the output
         /// </summary>
         public const string SockMaxNumberOfHypotheses = "MaxNumberOfHypotheses";
+
+        /// <summary>
+        /// Name of the socket defining if output should contain only trees of desired
+        /// length, or also shorter subtrees.
+        /// </summary>
+        public const string SockOnlyFullTree = "OnlyFullTree";
 
         #region MiningTaskFunctions overrides
 
@@ -353,17 +371,23 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
                     new string[] { SockBranchingAttributes });
             }
 
+            //filling the task params structure
+            ETreeTaskRunParams par = new ETreeTaskRunParams();
+
+            par.branchingAttributes = branchingAttributes;
+            par.targetClassificationAttribute = classificationAttribute;
+            par.quantifiers = quantifiers.ToArray();
+            par.minimalNodeImpurity = MinimalNodeImpurity;
+            par.minimalNodeFrequency = MinimalNodeFrequency;
+            par.maximalTreeDepth = MaximalTreeDepth;
+            par.noAttributesForBranching = NoAttributesForBranching;
+            par.maxNumberOfHypotheses = MaxNumberOfHypotheses;
+            par.onlyFullTree = OnlyFullTree;
+
             string resultInfo = string.Empty;
             string result = miningProcessor.ETreeRun(
                 _boxModule.MyProxy,
-                branchingAttributes,
-                classificationAttribute,
-                quantifiers.ToArray(),
-                MinimalNodeImpurity,
-                MinimalNodeFrequency,
-                MaximalTreeDepth,
-                NoAttributesForBranching,
-                MaxNumberOfHypotheses,
+                par,
                 _boxModule.Output,
                 out resultInfo);
 

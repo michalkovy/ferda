@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="DecisionTrees\NodeCounter.cs" />
     <Compile Include="DecisionTrees\Tree.cs" />
+    <None Include="Design\ETreeTaskRunParams.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Formulas\AtomFormula.cs" />
     <Compile Include="Formulas\AttributeNameInLiteralsProvider.cs" />
