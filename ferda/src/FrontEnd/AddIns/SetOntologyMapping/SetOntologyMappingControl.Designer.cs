@@ -44,6 +44,8 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.OntologyRemoveButton = new System.Windows.Forms.Button();
             this.ontologyTreeView = new System.Windows.Forms.TreeView();
             this.dataTablesTreeView = new System.Windows.Forms.TreeView();
+            this.LoadMappingDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveMappingDialog = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // okButton
@@ -92,6 +94,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.loadButton.TabIndex = 7;
             this.loadButton.Text = "Load Mapping...";
             this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
             // saveButton
             // 
@@ -101,6 +104,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.saveButton.TabIndex = 8;
             this.saveButton.Text = "Save Mapping...";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // helpButton
             // 
@@ -185,6 +189,14 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.dataTablesTreeView.Enter += new System.EventHandler(this.dataTablesTreeView_Enter);
             this.dataTablesTreeView.Leave += new System.EventHandler(this.dataTablesTreeView_Leave);
             // 
+            // LoadMappingDialog
+            // 
+            this.LoadMappingDialog.Filter = "Ferda Ontology Mapping (*.fom) | *.fom";
+            // 
+            // saveMappingDialog
+            // 
+            this.saveMappingDialog.Filter = "Ferda Ontology Mapping (*.fom) | *.fom";
+            // 
             // SetOntologyMappingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -230,5 +242,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         private System.Windows.Forms.Button OntologyRemoveButton;
         private System.Windows.Forms.TreeView ontologyTreeView;
         private System.Windows.Forms.TreeView dataTablesTreeView;
+        private System.Windows.Forms.OpenFileDialog LoadMappingDialog;
+        private System.Windows.Forms.SaveFileDialog saveMappingDialog;
     }
 }

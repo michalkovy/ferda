@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,7 +29,26 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// Array of structures that holds inrofmation about datatables, its columns and ontology
         /// </summary>
         Dictionary<string, string[]> dataTableColumnsDictionary;
+
+        /// <summary>
+        /// Information about ontology
+        /// </summary>
         private OntologyStructure ontology;
+
+        /// <summary>
+        /// Char which separates strings of mapped pairs (triples if datatable name is count separately)
+        /// </summary>
+        char[] separatorOuter = new char[] { '\n' };
+
+        /// <summary>
+        /// Char which separates datatable name, column name and ontology entity name
+        /// </summary>
+        char[] separatorInner = new char[] { '\t' };
+
+        /// <summary>
+        /// Path to Ferda ontology mapping (.fom) file, which was most recently used for Load or Save
+        /// </summary>
+        string pathToOntologyMappingFile = "";
 
         /// <summary>
         /// Colors which are used in ontologyTreeView
@@ -58,18 +78,40 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         #endregion
 
         //public SetOntologyMappingControl()
-        public SetOntologyMappingControl(Dictionary<string, string[]> dataTableColumnsDictionary, OntologyStructure ontology, string[] localePrefs, IOwnerOfAddIn ownerOfAddIn)
+        public SetOntologyMappingControl(Dictionary<string, string[]> dataTableColumnsDictionary, OntologyStructure ontology, string inputMapping, string[] localePrefs, IOwnerOfAddIn ownerOfAddIn)
         {
             this.dataTableColumnsDictionary = dataTableColumnsDictionary;
             this.ontology = ontology;
 
             InitializeComponent();
 
-            this.MakeDataTablesTreeView();
-            this.MakeOntologyTreeView();
+            this.RefreshMappingViews(inputMapping);
         }
 
         #region Other private methods
+
+        /// <summary>
+        /// Method to fill ColumnsTree with DataTable names and its columns
+        /// </summary>
+        private void RefreshMappingViews(string mapping)
+        {
+            dataTablesTreeView.Nodes.Clear();
+            ontologyTreeView.Nodes.Clear();
+            MappingListBox.Items.Clear();
+
+            this.MakeDataTablesTreeView();
+            this.MakeOntologyTreeView();
+
+            string[] tmpMappedPairs = mapping.Split(this.separatorOuter, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string tmpMappedPair in tmpMappedPairs)
+            {
+                string[] DataTable_Column_OntEnt = tmpMappedPair.Split(this.separatorInner, StringSplitOptions.RemoveEmptyEntries);
+                mapPair(DataTable_Column_OntEnt[0], DataTable_Column_OntEnt[1], DataTable_Column_OntEnt[2]);
+            }
+            return;
+
+        }
 
         /// <summary>
         /// Method to fill ColumnsTree with DataTable names and its columns
@@ -171,13 +213,39 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// <summary>
         /// Method which maps data table column name and ontology entity name
         /// </summary>
+        private void mapPair(string dataTableName, string columnName, string ontologyEntityName)
+        {
+            TreeNode soughtColumnNode = new TreeNode();
+            foreach (TreeNode node in this.dataTablesTreeView.Nodes)
+            {
+                if (node.Text == dataTableName)
+                {
+                    foreach (TreeNode columnNode in node.Nodes)
+                    {
+                        if (columnNode.Text == columnName)
+                            soughtColumnNode = columnNode;
+                    }
+                }
+            }
+            //test if the column was found during loading of mapping it is possible, that some columns does't exist
+            if (soughtColumnNode.Text != "")
+            {
+                this.MappingListBox.Items.Add(new MappedPair(dataTableName, columnName, soughtColumnNode, ontologyEntityName));
+                this.infoBox.Text = "You have mapped pair: " + dataTableName + "." + columnName + " - " + ontologyEntityName + ".";
+                soughtColumnNode.NodeFont = new Font(this.dataTablesTreeView.Font, FontStyle.Strikeout);
+            }
+        }
+
+        /// <summary>
+        /// Method which tests if it is possible to map data table column name and ontology entity name and maps them
+        /// </summary>
         private void mapButton_Click(object sender, EventArgs e)
         {
             if (this.dataTablesTreeView.SelectedNode != null && this.ontologyTreeView.SelectedNode != null)
             {
-                if (this.ontologyTreeView.SelectedNode.NodeFont != null && this.ontologyTreeView.SelectedNode.NodeFont.Strikeout)
+                if (this.dataTablesTreeView.SelectedNode.NodeFont != null && this.dataTablesTreeView.SelectedNode.NodeFont.Strikeout)
                 {
-                    this.infoBox.Text = "You are trying to map an entity which is already mapped.";
+                    this.infoBox.Text = "You are trying to map a column which is already mapped.";
                 }
                 else if (this.dataTablesTreeView.SelectedNode.Parent == null)
                 {
@@ -185,10 +253,9 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
                 }
                 else
                 {
-                    this.MappingListBox.Items.Add(new MappedPair(this.dataTablesTreeView.SelectedNode.Parent.Text, this.dataTablesTreeView.SelectedNode.Text, this.dataTablesTreeView.SelectedNode, this.ontologyTreeView.SelectedNode.Text, this.ontologyTreeView.SelectedNode));
+                    this.MappingListBox.Items.Add(new MappedPair(this.dataTablesTreeView.SelectedNode.Parent.Text, this.dataTablesTreeView.SelectedNode.Text, this.dataTablesTreeView.SelectedNode, this.ontologyTreeView.SelectedNode.Text));
                     this.infoBox.Text = "You have mapped pair: " + this.dataTablesTreeView.SelectedNode.Parent.Text + "." + this.dataTablesTreeView.SelectedNode.Text + " - " + this.ontologyTreeView.SelectedNode.Text + ".";
-                    this.dataTablesTreeView.SelectedNode.NodeFont = new Font(this.ontologyTreeView.Font, FontStyle.Strikeout);
-                    this.ontologyTreeView.SelectedNode.NodeFont = new Font(this.ontologyTreeView.Font, FontStyle.Strikeout);
+                    this.dataTablesTreeView.SelectedNode.NodeFont = new Font(this.dataTablesTreeView.Font, FontStyle.Strikeout);
                 }
             }
             else
@@ -207,7 +274,6 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             {
                 MappedPair tmpPair = (MappedPair)this.MappingListBox.SelectedItem;
                 tmpPair.ColumnPositionInTreeView.NodeFont = this.dataTablesTreeView.Font;
-                tmpPair.OntologyPositionInTreeView.NodeFont = this.ontologyTreeView.Font;
                 this.MappingListBox.Items.Remove(tmpPair);
                 this.infoBox.Text = "You have ummapped pair: " + tmpPair.ToString() + ".";
             }
@@ -303,13 +369,42 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             }
         }
 
-        private void okButton_Click(object sender, EventArgs e)
+        private void loadButton_Click(object sender, EventArgs e)
         {
-            returnMapping = "";
+            if (LoadMappingDialog.ShowDialog() == DialogResult.OK)
+            {
+                TextReader tr = new StreamReader(LoadMappingDialog.OpenFile());
+                string tmpMapping = tr.ReadToEnd();
+                RefreshMappingViews(tmpMapping);
+                tr.Close();
+                pathToOntologyMappingFile = LoadMappingDialog.FileName;
+            }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            saveMappingDialog.FileName = pathToOntologyMappingFile;
+            if (saveMappingDialog.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter sw = new StreamWriter(saveMappingDialog.OpenFile());
+                sw.Write(generateMappingFromListView());
+                sw.Close();
+            }
+        }
+
+        private string generateMappingFromListView()
+        {
+            string tmpMapping = "";
             foreach (MappedPair mappedPair in this.MappingListBox.Items)
             {
-                returnMapping += mappedPair.DataTableName + "." + mappedPair.DataTableColumnName + "\t" + mappedPair.OntologyEntityName + "\n";
+                tmpMapping += mappedPair.DataTableName + this.separatorInner[0] + mappedPair.DataTableColumnName + this.separatorInner[0] + mappedPair.OntologyEntityName + this.separatorOuter[0];
             }
+            return tmpMapping;
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            returnMapping = generateMappingFromListView();
             this.DialogResult = DialogResult.OK;
             this.Dispose();
             return;
@@ -339,17 +434,15 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         public string DataTableColumnName;
         public string OntologyEntityName;
         public TreeNode ColumnPositionInTreeView;
-        public TreeNode OntologyPositionInTreeView;
 
         public MappedPair() { }
 
-        public MappedPair(string dataTableName, string dataTableColumnName, TreeNode columnPositionInTreeView,  string ontologyEntityName, TreeNode ontologyPositionInTreeView)
+        public MappedPair(string dataTableName, string dataTableColumnName, TreeNode columnPositionInTreeView,  string ontologyEntityName)
         {
             DataTableName = dataTableName;
             DataTableColumnName = dataTableColumnName;
             ColumnPositionInTreeView = columnPositionInTreeView;
             OntologyEntityName = ontologyEntityName;
-            OntologyPositionInTreeView = ontologyPositionInTreeView;
         }
 
         public override string ToString()
