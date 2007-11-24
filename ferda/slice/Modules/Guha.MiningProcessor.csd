@@ -223,6 +223,19 @@
       <Member type="Method">BitStringIceWithCategoryId GetNextBitString()</Member>
       <Member type="Method">string ETreeRun()</Member>
     </Entity>
+    <Entity type="Structure">
+      <Name>ETreeTaskRunParams</Name>
+      <Access>Public</Access>
+      <Member type="Field">public CategorialAttributeSeq branchingAttributes</Member>
+      <Member type="Field">public CategorialAttribute targetClassificationAttribute</Member>
+      <Member type="Field">public Ferda.Guha.Math.Quantifiers.QuantifierBase quantifiers</Member>
+      <Member type="Field">public int minimalNodeImpurity</Member>
+      <Member type="Field">public int minimalNodeFrequency</Member>
+      <Member type="Field">public int maximalTreeDepth</Member>
+      <Member type="Field">public int noAttributesForBranching</Member>
+      <Member type="Field">public long maxNumberOfHypotheses</Member>
+      <Member type="Field">public bool onlyFullTree</Member>
+    </Entity>
   </Entities>
   <Relations>
     <Relation type="Association" first="1" second="0">
@@ -327,6 +340,11 @@
     <Relation type="Dependency" first="3" second="4" />
     <Relation type="Dependency" first="4" second="5" />
     <Relation type="Dependency" first="4" second="22" />
+    <Relation type="Association" first="27" second="32">
+      <Direction>None</Direction>
+      <IsAggregation>False</IsAggregation>
+      <IsComposition>False</IsComposition>
+    </Relation>
   </Relations>
   <Positions>
     <Shape>
@@ -456,6 +474,10 @@
     <Shape>
       <Location left="1096" top="888" />
       <Size width="176" height="116" />
+    </Shape>
+    <Shape>
+      <Location left="301" top="1303" />
+      <Size width="321" height="238" />
     </Shape>
     <Connection>
       <StartNode isHorizontal="True" location="63" />
@@ -592,6 +614,10 @@
     <Connection>
       <StartNode isHorizontal="False" location="19" />
       <EndNode isHorizontal="False" location="74" />
+    </Connection>
+    <Connection>
+      <StartNode isHorizontal="True" location="17" />
+      <EndNode isHorizontal="True" location="66" />
     </Connection>
   </Positions>
 </ClassProject>

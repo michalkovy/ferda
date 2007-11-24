@@ -167,7 +167,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// <summary>
         /// Finds and returns node with specified identification in the tree.
         /// </summary>
-        /// <param name="attributeId">The node</param>
+        /// <param name="node">The node</param>
         /// <returns>Node with given attribute</returns>
         public Node FindNode(Node node)
         {

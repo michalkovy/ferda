@@ -2626,6 +2626,11 @@
 				<Hint>Maximální hloubka stromu</Hint>
 			</Socket>
 			<Socket>
+				<Name>OnlyFullTree</Name>
+				<Label>Pouze stromy plné délky</Label>
+				<Hint>Jestli má výstup obsahovat pouze stromy požadované délky, nebo i kratší podstromy.</Hint>
+			</Socket>
+			<Socket>
 				<Name>NumberOfHypotheses</Name>
 				<Label>Počet hypotéz</Label>
 				<Hint>Počet výsledných hypotéz</Hint>
