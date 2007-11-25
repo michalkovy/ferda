@@ -76,6 +76,7 @@
       <fileset basedir=".">
         <include name="*.bmp" />
         <include name="*.ico" />
+        <include name="*.svg" />
       </fileset>
     </copy>
     
