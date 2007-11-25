@@ -15,19 +15,22 @@ SectionGroup "$(Basefiles)" BaseFiles
 	File utils\gacutil.exe
 	  
 	SetOutPath "$INSTDIR\FrontEnd"
-	File ..\bin\FrontEnd\*.*
+	File /r ..\bin\FrontEnd\*.*
 	
-	SetOutPath "$INSTDIR\FrontEnd\Help"
-	File ..\bin\FrontEnd\Help\*.*
+	;SetOutPath "$INSTDIR\FrontEnd\Help"
+	;File ..\bin\FrontEnd\Help\*.*
 	
-	SetOutPath "$INSTDIR\FrontEnd\Icons"
-	File ..\bin\FrontEnd\Icons\*.*
+	;SetOutPath "$INSTDIR\FrontEnd\Icons"
+	;File ..\bin\FrontEnd\Icons\*.*
 	
 	SetOutPath "$INSTDIR\Server"
 	File ..\bin\Server\*.*
 	
-	SetOutPath "$INSTDIR\Server\BoxModulesServices"
-	File /r ..\bin\Server\BoxModulesServices\*.*
+	SetOutPath "$INSTDIR\Server\OWLParser"
+	File /r ..\bin\Server\OWLParser\*.*
+	
+	;SetOutPath "$INSTDIR\Server\BoxModulesServices"
+	;File /r ..\bin\Server\BoxModulesServices\*.*
 	  
 	;Store installation folder
 	WriteRegStr HKCU "Software\Ferda DataMiner\" "InstallDir" $INSTDIR
