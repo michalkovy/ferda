@@ -42,17 +42,10 @@ XPStyle on
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 
-
-
-
-
-
-
 ;Default installation folder
 ;InstallDir "c:\FerdaDataminer"
 Name "Ferda DataMiner"
 OutFile "ferda_install.exe"
-
 
 ;Langugage stuff 
 !insertmacro MUI_LANGUAGE "Czech"
@@ -61,7 +54,6 @@ OutFile "ferda_install.exe"
 ;language strings
 !include "localization.cs-CZ.nsi"  
 !include "localization.en-US.nsi"
-
 
 ;Installer Sections
 !include "oninit.nsi"
@@ -76,23 +68,31 @@ OutFile "ferda_install.exe"
 ;Intergration section
 !include "section_integration.nsi"
 
-
-
-
-
 ;Assign language strings to sections
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 !insertmacro MUI_DESCRIPTION_TEXT ${BaseFiles} $(DESC_BaseFiles)
 !insertmacro MUI_DESCRIPTION_TEXT ${FerdaAddIns} $(DESC_FerdaAddIns)
 
-
+;Assign language strings to add-ins
 !insertmacro MUI_DESCRIPTION_TEXT ${ResultBrowser} $(DESC_ResultBrowser)
 !insertmacro MUI_DESCRIPTION_TEXT ${ODBCConnectionString} $(DESC_ODBCConnectionString)
 !insertmacro MUI_DESCRIPTION_TEXT ${MultiSelectStrings} $(DESC_MultiSelectStrings)
+!insertmacro MUI_DESCRIPTION_TEXT ${FormEditor} $(DESC_FormEditor)
+!insertmacro MUI_DESCRIPTION_TEXT ${FormGenerator} $(DESC_FormGenerator)
+!insertmacro MUI_DESCRIPTION_TEXT ${SetOntologyMapping} $(DESC_SetOntologyMapping)
+!insertmacro MUI_DESCRIPTION_TEXT ${SetOntologyPath} $(DESC_SetOntologyPath)
+!insertmacro MUI_DESCRIPTION_TEXT ${EditCategories} $(DESC_EditCategories)
+!insertmacro MUI_DESCRIPTION_TEXT ${DatabaseInfo} $(DESC_DatabaseInfo)
+!insertmacro MUI_DESCRIPTION_TEXT ${ExplainTable} $(DESC_ExplainTable)
+!insertmacro MUI_DESCRIPTION_TEXT ${FrequencyDisplayer} $(DESC_FrequencyDisplayer)
+!insertmacro MUI_DESCRIPTION_TEXT ${ShowTable} $(DESC_ShowTable)
 
 !insertmacro MUI_DESCRIPTION_TEXT ${DataPreparation} $(DESC_DataPreparation)
 !insertmacro MUI_DESCRIPTION_TEXT ${GuhaMining} $(DESC_GuhaMining)
 !insertmacro MUI_DESCRIPTION_TEXT ${Sample} $(DESC_Sample)
+!insertmacro MUI_DESCRIPTION_TEXT ${OntologyRelated} $(DESC_OntologyRelated)
+!insertmacro MUI_DESCRIPTION_TEXT ${Language} $(DESC_Language)
+!insertmacro MUI_DESCRIPTION_TEXT ${Wizards} $(DESC_Wizards)
 
 !insertmacro MUI_DESCRIPTION_TEXT ${Boxes} $(DESC_Boxes)
 

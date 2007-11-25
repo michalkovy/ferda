@@ -15,4 +15,19 @@ SectionGroup "$(Boxes)" Boxes
 	File /r ..\bin\Server\BoxModulesServices\Sample\*.*
 	SectionEnd
 	
+	Section "$(OntologyRelated)" OntologyRelated
+	SetOutPath "$INSTDIR\Server\BoxModulesServices\OntologyRelated"
+	File /r ..\bin\Server\BoxModulesServices\OntologyRelated\*.*
+	SectionEnd
+	
+	Section "$(Language)" Language
+	SetOutPath "$INSTDIR\Server\BoxModulesServices\Language"
+	File /r ..\bin\Server\BoxModulesServices\Language\*.*
+	SectionEnd	
+	
+	Section "$(Wizards)" Wizards
+	SetOutPath "$INSTDIR\Server\BoxModulesServices\Wizards"
+	File /r ..\bin\Server\BoxModulesServices\Wizards\*.*
+	SectionEnd	
+	
 SectionGroupEnd
