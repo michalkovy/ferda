@@ -10,10 +10,28 @@ Section "$(DatabaseInfo)" DatabaseInfo
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "DatabaseInfo" "" 
 SectionEnd
 
+Section "$(EditCategories)" EditCategories
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\EditCategories.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "EditCategories" "" 
+SectionEnd
+
 Section "$(ExplainTable)" ExplainTable
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
   File ..\bin\FrontEnd\AddIns\ExplainTable.*
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ExplainTable" "" 
+SectionEnd
+
+Section "$(FormEditor)" FormEditor
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\FormEditor.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "FormEditor" ""   
+SectionEnd
+
+Section "$(FormGenerator)" FormGenerator
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\FormGenerator.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "FormGenerator" ""   
 SectionEnd
 
 Section "$(FrequencyDisplayer)" FrequencyDisplayer
@@ -22,10 +40,10 @@ Section "$(FrequencyDisplayer)" FrequencyDisplayer
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "FrequencyDisplayer" "" 
 SectionEnd
 
-Section "$(ResultBrowser)" ResultBrowser
+Section "$(MultiSelectStrings)" MultiSelectStrings
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\ResultBrowser.* 
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ResultBrowser" ""
+  File ..\bin\FrontEnd\AddIns\MultiSelectStrings.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "MultiSelectStrings" "" 
 SectionEnd
 
 Section "$(ODBCConnectionString)" ODBCConnectionString
@@ -34,22 +52,28 @@ Section "$(ODBCConnectionString)" ODBCConnectionString
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ODBCConnectionString" "" 
 SectionEnd
 
-Section "$(MultiSelectStrings)" MultiSelectStrings
+Section "$(ResultBrowser)" ResultBrowser
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\MultiSelectStrings.*
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "MultiSelectStrings" "" 
+  File ..\bin\FrontEnd\AddIns\ResultBrowser.* 
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ResultBrowser" ""
+SectionEnd
+
+Section "$(SetOntologyMapping)" SetOntologyMapping
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\SetOntologyMapping.* 
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "SetOntologyMapping" ""
+SectionEnd
+
+Section "$(SetOntologyPath)" SetOntologyPath
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\SetOntologyPath.* 
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "SetOntologyPath" ""
 SectionEnd
 
 Section "$(ShowTable)" ShowTable
   SetOutPath "$INSTDIR\FrontEnd\AddIns\"
   File ..\bin\FrontEnd\AddIns\ShowTable.*
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ShowTable" "" 
-SectionEnd
-
-Section "$(EditCategories)" EditCategories
-  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
-  File ..\bin\FrontEnd\AddIns\EditCategories.*
-  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "EditCategories" "" 
 SectionEnd
 
 ;addins help
