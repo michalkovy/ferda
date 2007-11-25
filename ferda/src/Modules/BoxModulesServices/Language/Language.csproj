@@ -81,5 +81,14 @@
     <None Include="ExecuteAction\boxDesign.svg" />
     <None Include="ExecuteAction\boxIcon.ico" />
     <Compile Include="ExecuteAction\BoxInfo.cs" />
+    <Compile Include="Command\Functions.cs" />
+    <Compile Include="Command\BoxInfo.cs" />
+    <None Include="Command\boxIcon.ico" />
+    <None Include="Command\boxDesign.svg" />
+    <Compile Include="Command\CommandTextStreamI.cs" />
+    <None Include="CommandOutput\boxDesign.svg" />
+    <None Include="CommandOutput\boxIcon.ico" />
+    <Compile Include="CommandOutput\BoxInfo.cs" />
+    <Compile Include="CommandOutput\Functions.cs" />
   </ItemGroup>
 </Project>

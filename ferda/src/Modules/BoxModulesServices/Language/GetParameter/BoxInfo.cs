@@ -7,13 +7,13 @@ using Object = Ice.Object;
 
 namespace Ferda.Modules.Boxes.Language.GetParameter
 {
-    internal class BoxInfo : Boxes.BoxInfo
-    {
-        public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
-        {
-            iceObject = null;
-            functions = null;
-        }
+	internal class BoxInfo : Boxes.BoxInfo
+	{
+		public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
+		{
+	 	   iceObject = null;
+	 	   functions = null;
+	    }
 
         public override string[] GetBoxModuleFunctionsIceIds()
         {

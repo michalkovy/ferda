@@ -23,31 +23,31 @@ using Ice;
 
 namespace Ferda.Modules.Boxes.Language.Math.Compare
 {
-    /// <summary>
-    /// Class is providing ICE functionality of the Compare function
-    /// </summary>
-    public class Functions : Ferda.Modules.BoolTI, IFunctions
-    {
-        /// <summary>
-        /// The box module.
-        /// </summary>
-        protected BoxModuleI _boxModule;
+	/// <summary>
+	/// Class is providing ICE functionality of the Compare function
+	/// </summary>
+	public class Functions : Ferda.Modules.BoolTI, IFunctions
+	{
+		/// <summary>
+		/// The box module.
+		/// </summary>
+		protected BoxModuleI _boxModule;
 
-        //protected IBoxInfo _boxInfo;
+		//protected IBoxInfo _boxInfo;
 
-        #region IFunctions Members
+		#region IFunctions Members
 
-        /// <summary>
-        /// Sets the <see cref="T:Ferda.Modules.BoxModuleI">box module</see>
-        /// and the <see cref="T:Ferda.Modules.Boxes.IBoxInfo">box info</see>.
-        /// </summary>
-        /// <param name="boxModule">The box module.</param>
-        /// <param name="boxInfo">The box info.</param>
-        public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
-        {
-            _boxModule = boxModule;
-            //_boxInfo = boxInfo;
-        }
+		/// <summary>
+		/// Sets the <see cref="T:Ferda.Modules.BoxModuleI">box module</see>
+		/// and the <see cref="T:Ferda.Modules.Boxes.IBoxInfo">box info</see>.
+		/// </summary>
+		/// <param name="boxModule">The box module.</param>
+		/// <param name="boxInfo">The box info.</param>
+		public void setBoxModuleInfo(BoxModuleI boxModule, IBoxInfo boxInfo)
+		{
+	 	   _boxModule = boxModule;
+	 	   //_boxInfo = boxInfo;
+	    }
 
         #endregion
         

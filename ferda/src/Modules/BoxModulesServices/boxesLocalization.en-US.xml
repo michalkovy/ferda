@@ -10649,7 +10649,7 @@
 		<PropertyCategories>
 			<PropertyCategory>
 				<Name>Main</Name>
-				<Label>Hlavní</Label>
+				<Label>Main</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>
@@ -10741,6 +10741,108 @@
 			<PropertyCategory>
 				<Name>Main</Name>
 				<Label>Main</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.Command</Identifier>
+		<Label>Command</Label>
+		<Hint>Command</Hint>
+		<Categories>
+			<Category>
+				<Name>Language</Name>
+				<Label>Language</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Command</Name>
+				<Label>Command before pipe</Label>
+				<Hint>Command for input</Hint>
+			</Socket>
+			<Socket>
+				<Name>Executable</Name>
+				<Label>Program</Label>
+				<Hint>Program for execution</Hint>
+			</Socket>
+			<Socket>
+				<Name>Arguments</Name>
+				<Label>Arguments</Label>
+				<Hint>Parameters for executing</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Main</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.CommandOutput</Identifier>
+		<Label>Command Output</Label>
+		<Hint>Redirects output to a file and returns output as a string</Hint>
+		<Categories>
+			<Category>
+				<Name>Language</Name>
+				<Label>Language</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Command</Name>
+				<Label>Command</Label>
+				<Hint>Input command</Hint>
+			</Socket>
+			<Socket>
+				<Name>StandardOutputFile</Name>
+				<Label>Standard output file</Label>
+				<Hint>File for storing of standard output</Hint>
+			</Socket>
+			<Socket>
+				<Name>ErrorOutputFile</Name>
+				<Label>Error output file</Label>
+				<Hint>File for storing of error output</Hint>
+			</Socket>
+			<Socket>
+				<Name>ResultValue</Name>
+				<Label>Result value</Label>
+				<Hint>Value of the result</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>StandardOutput</Name>
+						<Label>Standard output</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>ErrorOutput</Name>
+						<Label>Error output</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>StandardOutputAppendExistingFile</Name>
+				<Label>Append standard output</Label>
+				<Hint>Append the standard output to the existing file</Hint>
+			</Socket>
+			<Socket>
+				<Name>ErrorOutputAppendExistingFile</Name>
+				<Label>Append error output</Label>
+				<Hint>Append the error output to the existing file</Hint>
+			</Socket>
+			<Socket>
+				<Name>ShowErrors</Name>
+				<Label>Show errors</Label>
+				<Hint>Show the error output as a message</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Redirection</Name>
+				<Label>Redirection</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Result</Name>
+				<Label>Result</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>

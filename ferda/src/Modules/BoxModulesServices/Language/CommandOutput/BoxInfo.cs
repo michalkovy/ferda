@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 
 using Object = Ice.Object;
 
-namespace Ferda.Modules.Boxes.Language.Math.Compare
+namespace Ferda.Modules.Boxes.Language.CommandOutput
 {
 	internal class BoxInfo : Boxes.BoxInfo
 	{
@@ -37,7 +37,7 @@ namespace Ferda.Modules.Boxes.Language.Math.Compare
             return null;
         }
 
-        public const string typeIdentifier = "Language.Math.Compare";
+        public const string typeIdentifier = "Language.CommandOutput";
 
         protected override string identifier
         {
