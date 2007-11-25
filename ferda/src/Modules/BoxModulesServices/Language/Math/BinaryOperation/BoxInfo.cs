@@ -7,14 +7,14 @@ using Object = Ice.Object;
 
 namespace Ferda.Modules.Boxes.Language.Math.BinaryOperation
 {
-    internal class BoxInfo : Boxes.BoxInfo
-    {
-        public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
-        {
-            Functions result = new Functions();
-            iceObject = result;
-            functions = result;
-        }
+	internal class BoxInfo : Boxes.BoxInfo
+	{
+		public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
+		{
+	 	   Functions result = new Functions();
+	 	   iceObject = result;
+	 	   functions = result;
+	    }
 
         public override string[] GetBoxModuleFunctionsIceIds()
         {

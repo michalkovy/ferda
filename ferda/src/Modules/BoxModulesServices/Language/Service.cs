@@ -24,29 +24,31 @@ using Ice;
 
 namespace Ferda.Modules.Boxes.Language
 {
-    /// <summary>
-    /// Represents a IceBox service for common boxes for data mining
-    /// </summary>
-    public class Service : FerdaServiceI
-    {
-        /// <summary>
-        /// Register box modules to Ice.ObjectAdapter.
-        /// </summary>
-        /// <remarks>
-        /// Remember if you are adding registering of new box module,
-        /// you must also change application.xml filePath in config directory.
-        /// </remarks>
-        protected override void registerBoxes()
-        {
-            // guha mining setting
-            registerBox(Lambda.BoxInfo.typeIdentifier, new Lambda.BoxInfo());
-            registerBox(Variable.BoxInfo.typeIdentifier, new Variable.BoxInfo());
-            registerBox(Math.BinaryOperation.BoxInfo.typeIdentifier, new Math.BinaryOperation.BoxInfo());
-            registerBox(Math.Compare.BoxInfo.typeIdentifier, new Math.Compare.BoxInfo());
-            registerBox(Math.IfThenElse.BoxInfo.typeIdentifier, new Math.IfThenElse.BoxInfo());
-            registerBox(GetParameter.BoxInfo.typeIdentifier, new GetParameter.BoxInfo());
-            registerBox(ExecuteAction.BoxInfo.typeIdentifier, new ExecuteAction.BoxInfo());
-        }
+	/// <summary>
+	/// Represents a IceBox service for common boxes for data mining
+	/// </summary>
+	public class Service : FerdaServiceI
+	{
+		/// <summary>
+		/// Register box modules to Ice.ObjectAdapter.
+		/// </summary>
+		/// <remarks>
+		/// Remember if you are adding registering of new box module,
+		/// you must also change application.xml filePath in config directory.
+		/// </remarks>
+		protected override void registerBoxes()
+		{
+	 	   // guha mining setting
+	 	   registerBox(Lambda.BoxInfo.typeIdentifier, new Lambda.BoxInfo());
+	 	   registerBox(Variable.BoxInfo.typeIdentifier, new Variable.BoxInfo());
+	 	   registerBox(Math.BinaryOperation.BoxInfo.typeIdentifier, new Math.BinaryOperation.BoxInfo());
+	 	   registerBox(Math.Compare.BoxInfo.typeIdentifier, new Math.Compare.BoxInfo());
+	 	   registerBox(Math.IfThenElse.BoxInfo.typeIdentifier, new Math.IfThenElse.BoxInfo());
+	 	   registerBox(GetParameter.BoxInfo.typeIdentifier, new GetParameter.BoxInfo());
+	 	   registerBox(ExecuteAction.BoxInfo.typeIdentifier, new ExecuteAction.BoxInfo());
+	 	   registerBox(Command.BoxInfo.typeIdentifier, new Command.BoxInfo());
+	 	   registerBox(CommandOutput.BoxInfo.typeIdentifier, new CommandOutput.BoxInfo());
+	    }
 
         /// <summary>
         /// Says that this service has property boxes

@@ -10713,6 +10713,108 @@
 		</PropertyCategories>
 	</BoxLocalization>
 	<BoxLocalization>
+		<Identifier>Language.Command</Identifier>
+		<Label>Příkaz</Label>
+		<Hint>Program na spuštění</Hint>
+		<Categories>
+			<Category>
+				<Name>Language</Name>
+				<Label>Jazyk</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Command</Name>
+				<Label>Příkaz před rourou</Label>
+				<Hint>Příkaz kteý má být spuštěn pro získání vstupu</Hint>
+			</Socket>
+			<Socket>
+				<Name>Executable</Name>
+				<Label>Program</Label>
+				<Hint>Program, který se má spustit</Hint>
+			</Socket>
+			<Socket>
+				<Name>Arguments</Name>
+				<Label>Argumenty</Label>
+				<Hint>Parametry programu na spuštění</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Main</Name>
+				<Label>Hlavní</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>Language.CommandOutput</Identifier>
+		<Label>Výstup příkazu</Label>
+		<Hint>Přesměrovává výstup do souboru a vrací výstup jako řetězec</Hint>
+		<Categories>
+			<Category>
+				<Name>Language</Name>
+				<Label>Jazyk</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Command</Name>
+				<Label>Příkaz</Label>
+				<Hint>Vstupní příkaz</Hint>
+			</Socket>
+			<Socket>
+				<Name>StandardOutputFile</Name>
+				<Label>Standardní vstup</Label>
+				<Hint>Soubor pro uložení standardního vstupu</Hint>
+			</Socket>
+			<Socket>
+				<Name>ErrorOutputFile</Name>
+				<Label>Chybový výstup</Label>
+				<Hint>Soubor pro uložení chybového výstupu</Hint>
+			</Socket>
+			<Socket>
+				<Name>ResultValue</Name>
+				<Label>Výsledná hodnota</Label>
+				<Hint>Návratová hodnota</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>StandardOutput</Name>
+						<Label>Standardní výstup</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>ErrorOutput</Name>
+						<Label>Chybový výstup</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>StandardOutputAppendExistingFile</Name>
+				<Label>Připisuj standardní výstup</Label>
+				<Hint>Připisuj standardní výstup do existujícího souboru</Hint>
+			</Socket>
+			<Socket>
+				<Name>ErrorOutputAppendExistingFile</Name>
+				<Label>Připisuj chybový výstup</Label>
+				<Hint>Připisuj chybový výstup do existujícího souboru</Hint>
+			</Socket>
+			<Socket>
+				<Name>ShowErrors</Name>
+				<Label>Zobraz chybovou hlášku</Label>
+				<Hint>Zobaz chybový výstup jako chybovou hlášku</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Redirection</Name>
+				<Label>Přesměrování</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Result</Name>
+				<Label>Výstup</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
 		<Identifier>OntologyRelated.Ontology</Identifier>
 		<Label>Ontologie</Label>
 		<Hint>Krabička umožňující využití ontologií ve Ferdovi</Hint>

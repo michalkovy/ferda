@@ -7,13 +7,13 @@ using Object = Ice.Object;
 
 namespace Ferda.Modules.Boxes.Language.Lambda
 {
-    internal class BoxInfo : Boxes.BoxInfo
-    {
-        public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
-        {
-            iceObject = null;
-            functions = null;
-        }
+	internal class BoxInfo : Boxes.BoxInfo
+	{
+		public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
+		{
+	 	   iceObject = null;
+	 	   functions = null;
+	    }
 
         public override string[] GetBoxModuleFunctionsIceIds()
         {
@@ -218,7 +218,6 @@ namespace Ferda.Modules.Boxes.Language.Lambda
 							BoxModulePrx[] connections = connectedBox.getConnections(socket.name);
 							if((connections != null) && (connections.Length > 0))
 							{
-								string socketIceId = null;
 								StringCollection socketFunctionIceIds = new StringCollection();
 								StringCollection socketOldFunctionIceIds;
 								socketFunctionIceIds.AddRange(connections[0].getFunctionsIceIds());
@@ -239,7 +238,6 @@ namespace Ferda.Modules.Boxes.Language.Lambda
 								{
 									if(socketFunctionIceIds.Contains(boxType.functionIceId))
 									{
-										socketIceId = boxType.functionIceId;
 										if(!boxTypeSocketIceIds.Contains(boxType.functionIceId))
 											boxTypeSocketIceIds.Add(boxType.functionIceId);
 									}
