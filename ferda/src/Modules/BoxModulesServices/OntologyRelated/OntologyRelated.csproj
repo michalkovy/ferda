@@ -63,6 +63,10 @@
       <HintPath>..\..\..\..\bin\Server\FerdaData.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="FerdaDataPreparationBoxes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f2a9050593afcb5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Server\FerdaDataPreparationBoxes.dll</HintPath>
+    </Reference>
     <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, PublicKeyToken=555ee41fab6936f2">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
