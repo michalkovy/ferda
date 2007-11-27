@@ -99,49 +99,53 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 
             foreach (string moduleAFCName in modulesAFC.Keys)
             {
-                /*moduleAFC = modulesAFC[moduleAFCName];
+                moduleAFC = modulesAFC[moduleAFCName];
                 switch (moduleAFCName)
                 {
                     case "Column":
-                        //TODO vybrat všechny možnosti DataTable/Columns
-                        string[] columnsNames = Func.GetColumnsNames(false);
-                        if (columnsNames.Length > 0)
+                        //selecting all possible columns in all the datatables
+                        string[] datatablesNames = Func.GetDataTablesNames(false);
+                        foreach (string datatableName in datatablesNames)
                         {
-                            moduleConnection = new ModulesConnection();
-                            //TODO nìjak to ošetøit - asi nejlíp tim, že pøesunu OM do datapreparation
-                            //moduleConnection.socketName = Column.Functions.SockDataTable;
-                            moduleConnection.socketName = "OntologyMapping";
-                            moduleConnection.boxModuleParam = boxModule.MyProxy;
-                            foreach (string columnName in columnsNames)
+                            string[] columnsNames = Func.GetColumnsNames(datatableName, false);
+                            if (columnsNames.Length > 0)
                             {
-                                ModulesAskingForCreation newMAFC = new ModulesAskingForCreation();
-                                newMAFC.label = moduleAFC.label.Replace("@Name", columnName);
-                                newMAFC.hint = moduleAFC.hint.Replace("@Name", columnName);
-                                newMAFC.help = moduleAFC.help;
-                                singleModuleAFC = new ModuleAskingForCreation();
-                                singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
-                                ;
-                                singleModuleAFC.newBoxModuleIdentifier = Column.BoxInfo.typeIdentifier;
-                                PropertySetting propertySetting = new PropertySetting();
-                                propertySetting.propertyName = Column.Functions.PropSelectExpression;
-                                propertySetting.value = new StringTI(columnName);
-                                singleModuleAFC.propertySetting = new PropertySetting[] { propertySetting };
-                                allColumnModulesAFC.Add(singleModuleAFC);
-                                newMAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
-                                result.Add(newMAFC);
+                                moduleConnection = new ModulesConnection();
                                 
+                                moduleConnection.socketName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.SockMapping;
+                                moduleConnection.boxModuleParam = boxModule.MyProxy;
+                                foreach (string columnName in columnsNames)
+                                {
+                                    ModulesAskingForCreation newMAFC = new ModulesAskingForCreation();
+                                    newMAFC.label = moduleAFC.label.Replace("@Name", datatableName + "." + columnName);
+                                    newMAFC.hint = moduleAFC.hint.Replace("@Name", datatableName + "." + columnName);
+                                    newMAFC.help = moduleAFC.help;
+                                    singleModuleAFC = new ModuleAskingForCreation();
+                                    singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
+                                    ;
+                                    singleModuleAFC.newBoxModuleIdentifier = DataPreparation.Datasource.OntologyEnablingColumn.BoxInfo.typeIdentifier;
+                                    PropertySetting propertySettingDataTableName = new PropertySetting();
+                                    PropertySetting propertySettingColumnName = new PropertySetting();
+                                    propertySettingDataTableName.propertyName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.PropDataTableName;
+                                    propertySettingDataTableName.value = new StringTI(datatableName);
+                                    propertySettingColumnName.propertyName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.PropSelectExpression;
+                                    propertySettingColumnName.value = new StringTI(columnName);
+                                    singleModuleAFC.propertySetting = new PropertySetting[] { propertySettingDataTableName, propertySettingColumnName };
+                                    allColumnModulesAFC.Add(singleModuleAFC);
+                                    newMAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
+                                    result.Add(newMAFC);
+
+                                }
                             }
                         }
                         break;
                     case "DerivedColumn":
                         moduleConnection = new ModulesConnection();
                         singleModuleAFC = new ModuleAskingForCreation();
-                        //TODO - ošetøit viz výše
-                        //moduleConnection.socketName = Column.Functions.SockDataTable;
-                        moduleConnection.socketName = "OntologyMapping";
+                        moduleConnection.socketName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.SockMapping;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
                         singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
-                        singleModuleAFC.newBoxModuleIdentifier = Column.BoxInfo.typeIdentifier;
+                        singleModuleAFC.newBoxModuleIdentifier = DataPreparation.Datasource.OntologyEnablingColumn.BoxInfo.typeIdentifier;
                         moduleAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
                         result.Add(moduleAFC);
                         break;
@@ -149,17 +153,16 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                         if (allColumnModulesAFC.Count <= 1)
                             continue;
                         moduleConnection = new ModulesConnection();
-                        moduleConnection.socketName = Column.Functions.SockDataTable;
+                        moduleConnection.socketName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.SockMapping;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
                         moduleAFC.newModules = allColumnModulesAFC.ToArray();
                         result.Add(moduleAFC);
                         break;
                     default:
                         throw new NotImplementedException();
-                }*/
+                }
             }
-            //return result.ToArray();
-            return null;
+            return result.ToArray();
         }
         /// <summary>
         /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as

@@ -42,7 +42,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
     /// one additional box type (comparing to Column box) to create - it is
     /// Ontology Derived Attribute
     /// </remarks>
-    internal class Functions : ColumnFunctionsDisp_, IFunctions
+    public class Functions : ColumnFunctionsDisp_, IFunctions
     {
         /// <summary>
         /// The box module.
@@ -79,8 +79,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         public const string PropValueStandardDeviation = "ValueStandardDeviation";
         public const string PropValueDistincts = "ValueDistincts";
         public const string SockMapping = "OntologyMapping";
-        /// TODO smazat, nebude potøeba a nebude žádoucí
-        public const string SockDataTable = "DataTable";
 
         /// <summary>
         /// The name of data table of the column

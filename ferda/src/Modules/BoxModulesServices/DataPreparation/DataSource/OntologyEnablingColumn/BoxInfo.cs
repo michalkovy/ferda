@@ -34,7 +34,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
     /// "variance", which is the right term. Usage of these two
     /// terms is equal.
     /// </remarks>    /// 
-    internal class BoxInfo : Boxes.BoxInfo
+    public class BoxInfo : Boxes.BoxInfo
     {
         /// <summary>
         /// Functions creates an object of <see cref="T:Ferda.Modules.IFunctions">IFunctions</see>
@@ -73,7 +73,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         /// <returns>The user label</returns>
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
         {
-            return ((Functions) boxModule.FunctionsIObj).SelectExpression;
+            return ((Functions)boxModule.FunctionsIObj).DataTableName + "." + ((Functions)boxModule.FunctionsIObj).SelectExpression;
         }
 
         /// <summary>
