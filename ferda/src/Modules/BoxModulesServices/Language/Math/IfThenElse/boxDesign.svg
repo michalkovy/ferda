@@ -6,15 +6,16 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="32px"
    height="32px"
    id="svg1374"
    sodipodi:version="0.32"
-   inkscape:version="0.43"
-   sodipodi:docbase="C:\Make\Projekt\svg\4ft"
-   sodipodi:docname="4ft32.svg">
+   inkscape:version="0.45.1"
+   sodipodi:docbase="/home/michal/studium/mff/ferda/ferda/src/Modules/BoxModulesServices/Language/Math/IfThenElse"
+   sodipodi:docname="boxDesign.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs1376" />
   <sodipodi:namedview
@@ -26,15 +27,15 @@
      inkscape:pageshadow="2"
      inkscape:zoom="11.197802"
      inkscape:cx="16"
-     inkscape:cy="16.057003"
+     inkscape:cy="8.9127438"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
      inkscape:window-width="1024"
      inkscape:window-height="749"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4" />
+     inkscape:window-x="182"
+     inkscape:window-y="0" />
   <metadata
      id="metadata1379">
     <rdf:RDF>
@@ -50,45 +51,49 @@
      id="layer1"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
-    <rect
-       style="opacity:1;fill:#f00000;fill-opacity:1;stroke:#000000;stroke-width:0.86000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2097"
-       width="15.48"
-       height="15.48"
-       x="0.61000043"
-       y="0.60999995"
-       ry="0" />
-    <rect
-       style="opacity:1;fill:#1400f0;fill-opacity:1;stroke:#000000;stroke-width:0.86000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2099"
-       width="15.48"
-       height="15.48"
-       x="16.09"
-       y="0.60999995" />
-    <rect
-       style="opacity:1;fill:#f04c00;fill-opacity:1;stroke:#000000;stroke-width:0.86000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2101"
-       width="15.48"
-       height="15.48"
-       x="16.09"
-       y="16.09" />
-    <rect
-       style="opacity:1;fill:#b900f0;fill-opacity:1;stroke:#000000;stroke-width:0.86000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2103"
-       width="15.48"
-       height="15.48"
-       x="0.61000043"
-       y="16.09" />
     <text
        xml:space="preserve"
-       style="font-size:25.76749992px;font-style:normal;font-weight:normal;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="-0.36451089"
-       y="20.081512"
+       style="font-size:25.54136276px;font-style:normal;font-weight:normal;fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;stroke-miterlimit:4;stroke-dasharray:none"
+       x="9.465663"
+       y="20.32436"
        id="text2831"
-       transform="scale(0.68258,1.46503)"><tspan
+       transform="scale(0.7899934,1.2658333)"><tspan
          sodipodi:role="line"
          id="tspan2833"
-         x="-0.36451089"
-         y="20.081512">4FT</tspan></text>
+         x="9.465663"
+         y="20.32436">{</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="2.6865234"
+       y="22.675781"
+       id="text4228"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4230"
+         x="2.6865234"
+         y="22.675781">i</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="20.516602"
+       y="13"
+       id="text4232"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4234"
+         x="20.516602"
+         y="13">t</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="19.006836"
+       y="30.18729"
+       id="text4236"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4238"
+         x="19.006836"
+         y="30.18729">e</tspan></text>
   </g>
 </svg>
