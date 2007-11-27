@@ -19229,8 +19229,8 @@
 	</Box>
 	<Box>
 		<Identifier>Language.Lambda</Identifier>
-		<IconPath>lambda.ico</IconPath>
-		<DesignPath>lamgda.svg</DesignPath>
+		<IconPath>boxIcon.ico</IconPath>
+		<DesignPath>boxDesign.svg</DesignPath>
 		<Categories>
 			<string>Language</string>
 		</Categories>

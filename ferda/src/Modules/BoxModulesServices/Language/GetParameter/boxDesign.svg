@@ -6,17 +6,66 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="32px"
    height="32px"
    id="svg1374"
    sodipodi:version="0.32"
-   inkscape:version="0.43"
-   sodipodi:docbase="C:\Make\Projekt\svg\4ft"
-   sodipodi:docname="4ft32.svg">
+   inkscape:version="0.45.1"
+   sodipodi:docbase="/home/michal/studium/mff/ferda/ferda/src/Modules/BoxModulesServices/Language/GetParameter"
+   sodipodi:docname="boxDesign.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
-     id="defs1376" />
+     id="defs1376">
+    <linearGradient
+       id="linearGradient4179">
+      <stop
+         style="stop-color:#ffff00;stop-opacity:1;"
+         offset="0"
+         id="stop4181" />
+      <stop
+         id="stop4187"
+         offset="0.5"
+         style="stop-color:#ffff10;stop-opacity:1;" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop4183" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3200">
+      <stop
+         style="stop-color:#ff00ff;stop-opacity:1;"
+         offset="0"
+         id="stop3202" />
+      <stop
+         style="stop-color:#00ff00;stop-opacity:1;"
+         offset="1"
+         id="stop3204" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3200"
+       id="radialGradient3208"
+       cx="20.449461"
+       cy="15.552993"
+       fx="20.449461"
+       fy="15.552993"
+       r="10.649461"
+       gradientTransform="matrix(1,0,0,1.0097218,0,-0.151203)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4179"
+       id="linearGradient4185"
+       x1="1.8907213"
+       y1="20.008228"
+       x2="11.094995"
+       y2="20.008228"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -33,8 +82,8 @@
      inkscape:document-units="px"
      inkscape:window-width="1024"
      inkscape:window-height="749"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4" />
+     inkscape:window-x="300"
+     inkscape:window-y="43" />
   <metadata
      id="metadata1379">
     <rdf:RDF>
@@ -51,44 +100,27 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <rect
-       style="opacity:1;fill:#f00000;fill-opacity:1;stroke:#000000;stroke-width:0.86000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2097"
-       width="15.48"
-       height="15.48"
-       x="0.61000043"
-       y="0.60999995"
-       ry="0" />
-    <rect
-       style="opacity:1;fill:#1400f0;fill-opacity:1;stroke:#000000;stroke-width:0.86000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2099"
-       width="15.48"
-       height="15.48"
-       x="16.09"
-       y="0.60999995" />
-    <rect
-       style="opacity:1;fill:#f04c00;fill-opacity:1;stroke:#000000;stroke-width:0.86000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2101"
-       width="15.48"
-       height="15.48"
-       x="16.09"
-       y="16.09" />
-    <rect
-       style="opacity:1;fill:#b900f0;fill-opacity:1;stroke:#000000;stroke-width:0.86000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect2103"
-       width="15.48"
-       height="15.48"
-       x="0.61000043"
-       y="16.09" />
-    <text
-       xml:space="preserve"
-       style="font-size:25.76749992px;font-style:normal;font-weight:normal;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="-0.36451089"
-       y="20.081512"
-       id="text2831"
-       transform="scale(0.68258,1.46503)"><tspan
-         sodipodi:role="line"
-         id="tspan2833"
-         x="-0.36451089"
-         y="20.081512">4FT</tspan></text>
+       style="fill:url(#radialGradient3208);fill-opacity:1.0;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2223"
+       width="20.898922"
+       height="21.105986"
+       x="10"
+       y="5" />
+    <path
+       sodipodi:type="star"
+       style="fill:url(#linearGradient4185);fill-opacity:1.0;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path2227"
+       sodipodi:sides="5"
+       sodipodi:cx="6.6084399"
+       sodipodi:cy="19.676153"
+       sodipodi:r1="4.6437683"
+       sodipodi:r2="1.4969951"
+       sodipodi:arg1="0.39479114"
+       sodipodi:arg2="1.0231096"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 10.894995,21.462218 L 7.3879458,20.954185 L 6.2344098,24.304834 L 5.6338402,20.812441 L 2.0907213,20.75077 L 5.2265983,19.100386 L 4.1903664,15.711622 L 6.7290146,18.184022 L 9.631707,16.151321 L 8.0648008,19.329733 L 10.894995,21.462218 z "
+       transform="matrix(2.231329,0,0,2.231329,-4.2188212,-23.678347)" />
   </g>
 </svg>
