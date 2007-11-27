@@ -19884,6 +19884,17 @@
 				<ReadOnly>true</ReadOnly>
 			</Property>
 		</Properties>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>DerivedColumn</Name>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>Column</Name>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>AllColumns</Name>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</Box>
 	<Box>
 		<Identifier>DataPreparation.Categorization.OntologyDerivedAttribute</Identifier>

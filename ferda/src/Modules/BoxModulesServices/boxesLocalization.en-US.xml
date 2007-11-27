@@ -10936,6 +10936,23 @@
 				<Label>Mapping between table and ontology</Label>
 			</PropertyCategory>
 		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>DerivedColumn</Name>
+				<Label>Derived column</Label>
+				<Hint>Creates box of a new defived column</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>Column</Name>
+				<Label>Column @Name</Label>
+				<Hint>Creates box corresponding to the column @Name</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>AllColumns</Name>
+				<Label>All columns in all datatables in this database.</Label>
+				<Hint>Creates boxes for all columns in all datatables in this database.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>DataPreparation.Categorization.OntologyDerivedAttribute</Identifier>

@@ -156,7 +156,7 @@
       </references>
     </csc>
   </target>
-  <target name="FerdaOntologyRelatedBoxes">
+  <target name="FerdaOntologyRelatedBoxes" depends="FerdaDataPreparationBoxes">
   <csc target="library" 
        output="${path::combine(build.dir,'FerdaOntologyRelatedBoxes.dll')}" 
        doc="${path::combine(build.dir,'FerdaOntologyRelatedBoxes.xml')}" 
@@ -169,6 +169,7 @@
       <exclude name="OntologyRelated/**/generated/**.cs"/>
     </sources>
     <references>
+      <include name="${path::combine(build.dir,'FerdaDataPreparationBoxes.dll')}"/>
       <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 			<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 			<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
