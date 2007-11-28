@@ -48,8 +48,8 @@ module Ferda {
 				  
 					interface OntologyMappingFunctions
 					{
-            idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableColumnName) 
-            throws Ferda::Modules::BoxRuntimeError;
+            idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableName, string columnName) 
+              throws Ferda::Modules::BoxRuntimeError;
 
             idempotent	Ferda::Modules::Boxes::DataPreparation::DataTableInfo getDataTableInfo(string dataTableName, StringSeq primaryKeyColumns)
 							throws Ferda::Modules::BoxRuntimeError;
@@ -64,6 +64,12 @@ module Ferda {
 						  throws Ferda::Modules::BoxRuntimeError;
           };
 				};
+				
+				interface OntologyEnablingColumnFunctions extends Ferda::Modules::Boxes::DataPreparation::ColumnFunctions
+				{
+				  idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties() 
+            throws Ferda::Modules::BoxRuntimeError;
+        };
 			};
 		};
 	};

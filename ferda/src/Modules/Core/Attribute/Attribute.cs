@@ -312,7 +312,7 @@ namespace Ferda.Guha.Attribute
                 category.Value.Reduce();
             }
         }
-
+        
         /// <summary>
         /// Joins the categories of specified names (<c>categories</c>).
         /// New category will be created, old categories will be removed.

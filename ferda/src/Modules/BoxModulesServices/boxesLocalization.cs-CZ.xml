@@ -10940,8 +10940,8 @@
 			</Socket>
 			<Socket>
 				<Name>NameInLiterals</Name>
-				<Label>NĂˇzev ve vĂ˝sledcĂ­ch</Label>
-				<Hint>NĂˇzev zobrazovanĂ˝ ve vĂ˝sledĂ­ch.</Hint>
+				<Label>Název ve výsledcích</Label>
+				<Hint>Název zobrazovaný ve výsledcích.</Hint>
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
@@ -11028,6 +11028,26 @@
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
+			<Socket>
+				<Name>DomainDividingValues</Name>
+				<Label>Hodnoty rozdělující doménu</Label>
+				<Hint>Hodnoty rozdělující doménu</Hint>
+			</Socket>
+			<Socket>
+				<Name>DistinctValues</Name>
+				<Label>Významné hodnoty</Label>
+				<Hint>Významné hodnoty</Hint>
+			</Socket>
+			<Socket>
+				<Name>Minimum</Name>
+				<Label>Minimum</Label>
+				<Hint>Minimum</Hint>
+			</Socket>
+			<Socket>
+				<Name>Maximum</Name>
+				<Label>Maximum</Label>
+				<Hint>Maximum</Hint>
+			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
@@ -11039,12 +11059,12 @@
 				<Label>Doména</Label>
 			</PropertyCategory>
 			<PropertyCategory>
-				<Name>Semantic</Name>
-				<Label>Sémantika</Label>
-			</PropertyCategory>
-			<PropertyCategory>
 				<Name>Intervals</Name>
 				<Label>Intervaly</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>OntologyDerivedProperties</Name>
+				<Label>Vlastnosti odvozené z ontologie</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>

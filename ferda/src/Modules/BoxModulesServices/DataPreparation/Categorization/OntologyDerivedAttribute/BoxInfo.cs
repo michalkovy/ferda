@@ -69,8 +69,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             {
                 try
                 {
-                    label =
-                    Func.GetColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
+                    label = Func.GetOntologyEnablingColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
                 }
                 catch { }
                 return label;
@@ -235,6 +234,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         public override void Validate(BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
+            
             if (Func.Count <= 0)
             {
                 throw Exceptions.BadValueError(
@@ -246,7 +246,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                     );
             }
             // try to invoke methods
-            object dummy = Func.GetColumnFunctionsPrx(true);
+            object dummy = Func.GetOntologyEnablingColumnFunctionsPrx(true);
             dummy = Func.GetAttributeId();
             dummy = Func.GetAttributeNames();
 
@@ -288,31 +288,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                     );
 
             CardinalityEnum potentiallyCardinality = Func.PotentiallyCardinality(true);
-            /*
-            if (Common.CompareCardinalityEnums(
-                    Func.Cardinality,
-                    potentiallyCardinality
-                    ) > 1)
-            {
-                throw Exceptions.BadValueError(
-                    null,
-                    boxModule.StringIceIdentity,
-                    "Unsupported cardinality type for current attribute setting.",
-                    new string[] { Functions.PropCardinality },
-                    restrictionTypeEnum.OtherReason
-                    );
-            }
 
-            if (potentiallyCardinality == CardinalityEnum.Nominal)
-            {
-                throw Exceptions.BadValueError(
-                    null,
-                    boxModule.StringIceIdentity,
-                    "Unsupported cardinality type for current attribute setting.",
-                    new string[] { Functions.PropCardinality },
-                    restrictionTypeEnum.OtherReason
-                    );
-            }*/
+            //TODO SMAZAT
+            Func.setOntologyEntityProperties();
         }
     }
 }

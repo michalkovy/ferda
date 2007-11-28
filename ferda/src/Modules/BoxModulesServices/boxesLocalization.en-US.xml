@@ -10966,9 +10966,9 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>Column</Name>
-				<Label>Column</Label>
-				<Hint>Defines column or derived column .</Hint>
+				<Name>OntologyEnablingColumn</Name>
+				<Label>OntologyEnablingColumn</Label>
+				<Hint>Defines ontology enabling column.</Hint>
 			</Socket>
 			<Socket>
 				<Name>NameInLiterals</Name>
@@ -11055,6 +11055,26 @@
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
+			<Socket>
+				<Name>DomainDividingValues</Name>
+				<Label>Domain Dividing Values</Label>
+				<Hint>Domain Dividing Values</Hint>
+			</Socket>
+			<Socket>
+				<Name>DistinctValues</Name>
+				<Label>Distinct Values</Label>
+				<Hint>Distinct Values</Hint>
+			</Socket>
+			<Socket>
+				<Name>Minimum</Name>
+				<Label>Minimum</Label>
+				<Hint>Minimum</Hint>
+			</Socket>
+			<Socket>
+				<Name>Maximum</Name>
+				<Label>Maximum</Label>
+				<Hint>Maximum</Hint>
+			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
@@ -11066,12 +11086,12 @@
 				<Label>Domain</Label>
 			</PropertyCategory>
 			<PropertyCategory>
-				<Name>Semantic</Name>
-				<Label>Semantic</Label>
-			</PropertyCategory>
-			<PropertyCategory>
 				<Name>Intervals</Name>
 				<Label>Intervals</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>OntologyDerivedProperties</Name>
+				<Label>Ontology Derived Properties</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>

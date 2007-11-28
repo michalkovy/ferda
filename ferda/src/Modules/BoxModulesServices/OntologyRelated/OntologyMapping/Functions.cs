@@ -26,6 +26,7 @@ using Ferda.Guha.Data;
 using Ferda.Modules.Helpers.Caching;
 using Ferda.Modules.Boxes.DataPreparation;
 using Ferda.OntologyRelated.generated.OntologyData;
+using Ferda.Modules.Boxes.OntologyRelated.Ontology;
 using Ice;
 
 namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
@@ -34,7 +35,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
     /// Class is providing ICE functionality of the Ontology Mapping
     /// box module
     /// </summary>
-    internal class Functions : OntologyMappingFunctionsDisp_, IFunctions
+    public class Functions : OntologyMappingFunctionsDisp_, IFunctions
     {
         /// <summary>
         /// The current box module
@@ -65,6 +66,16 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public const string SockDatabase = "Database";
 
         /// <summary>
+        /// Char which separates strings of mapped pairs (triples if datatable name is count separately)
+        /// </summary>
+        public char[] separatorOuter = new char[] { '\n' };
+
+        /// <summary>
+        /// Char which separates datatable name, column name and ontology entity name
+        /// </summary>
+        public char[] separatorInner = new char[] { '\t' };
+
+        /// <summary>
         /// Mapping between datatables columns and ontology entities
         /// </summary>
         public string Mapping
@@ -78,7 +89,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             {
                 if (Mapping != null)
                 {
-                    string[] tmpStringArray = Mapping.Split(new char[] { '\n' });
+                    string[] tmpStringArray = Mapping.Split(separatorOuter);
                     return tmpStringArray.Length - 1;
                 }
                 return 0;
@@ -98,6 +109,21 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 fallOnError);
         }
 
+        /// <summary>
+        /// Gets the proxy of Ontology box (which is connected
+        /// to this Ontology Mapping box)
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Ontology proxy</returns>
+        public OntologyFunctionsPrx GetOntologyFunctionsPrx(bool fallOnError)
+        {
+            return SocketConnections.GetPrx<OntologyFunctionsPrx>(
+                _boxModule,
+                SockOntology,
+                OntologyFunctionsPrxHelper.checkedCast,
+                fallOnError);
+        }
+
         /*TODO smazat - nebude potøeba, resp. bude muset být nìco obdobnýho*/
         /*public string GetName(bool fallOnError)
         {
@@ -111,31 +137,34 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 return Name;
         }*/
 
-        public StrSeqMap getOntologyEntityProperties(string dataTableColumnName, bool fallOnError)
+        public StrSeqMap getOntologyEntityProperties(string dataTableName, string columnName, bool fallOnError)
         {
             return ExceptionsHandler.GetResult<StrSeqMap>(
                 fallOnError,
                 delegate
                     {
-                        /*GenericDatabase tmp = GetGenericDatabase(fallOnError);
-                        if (tmp != null)
+                        /// parse current Mapping
+                        string[] tmpMappedPairs = Mapping.Split(separatorOuter, StringSplitOptions.RemoveEmptyEntries);
+                        string ontologyEntity = "";
+                        /// seeking the row of Mapping which represents mapping of the particular column
+                        foreach (string tmpMappedPair in tmpMappedPairs)
                         {
-                            List<DataTableExplain> result = new List<DataTableExplain>();
-                            foreach (GenericDataTable table in tmp)
-                            {
-                                if (table.IsAcceptable(accepts))
-                                    result.Add(table.Explain);
-                            }
-                            return result.ToArray();
+                            string[] DataTable_Column_OntEnt = tmpMappedPair.Split(separatorInner, StringSplitOptions.RemoveEmptyEntries);
+                            if (DataTable_Column_OntEnt[0] == dataTableName && DataTable_Column_OntEnt[1] == columnName)
+                                ontologyEntity = DataTable_Column_OntEnt[2];
                         }
-                        return new DataTableExplain[0];*/
-                        StrSeqMap dataPropertiesMap = new StrSeqMap();
-
-                        /*TODO - upravit odpovidajici vyhledani informaci z ontologie na zaklade parametru dataTableColumnName a mapovani*/
-
-                        string[] values = new string[3] { "15", "20", "30" };
-                        dataPropertiesMap.Add("DomainDividingValues", values);
-                        return dataPropertiesMap;
+                        /// the column of the datatable is mapped on some entity from the ontology
+                        /// if it is empty, then the column is not mapped
+                        if (ontologyEntity != "")
+                        {
+                            OntologyFunctionsPrx prx = GetOntologyFunctionsPrx(true);
+                            if (prx != null)
+                            {
+                                /// getting the data properties from the ontology box
+                                return prx.getOntologyEntityProperties(ontologyEntity);
+                            }
+                        }
+                        return null;
                     },
                 delegate
                     {
@@ -305,9 +334,9 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <param name="current__">Ice stuff</param>
         /// <returns>Data properties of ontology entity</returns>
 
-        public override StrSeqMap getOntologyEntityProperties(string dataTableColumnName, Ice.Current current__)
+        public override StrSeqMap getOntologyEntityProperties(string dataTableName, string columnName, Ice.Current current__)
         {
-            return getOntologyEntityProperties(dataTableColumnName, true);
+            return getOntologyEntityProperties(dataTableName, columnName, true);
         }
 
         public override string[] getDataTablesNames(Current current__)
