@@ -491,6 +491,26 @@ namespace Ferda.Modules.Boxes
         }
 
         /// <summary>
+        /// <para>Gets ice ids of functions object.</para>
+        /// <para>
+        /// Throught lambda abstraction is BoxModule interface separated from
+        /// functions over this BoxModule. Functions object is module containing
+        /// functions over properties and sockets of this BoxModule specified in
+        /// slice design. This method gets its function ice ids
+        /// </para>
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// The array of the ice ids of the box module`s
+        /// functions object.
+        /// </returns>
+        public virtual string[] GetFunctionsIceIds(BoxModuleI boxModule)
+        {
+            ObjectPrx functionsObjProxy = GetFunctionsObjPrx(boxModule);
+            return (functionsObjProxy == null) ? new string[0] : functionsObjProxy.ice_ids();
+        }
+
+        /// <summary>
         /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as
         /// options for property, whose options are dynamically variable.
         /// </summary>

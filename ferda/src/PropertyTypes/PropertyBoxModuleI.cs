@@ -117,12 +117,14 @@ using Ice;namespace Ferda.Modules
 			{
 				throw new System.Exception("Can not set null box module");
 			}
-			Ice.ObjectPrx prx = otherModule.getFunctions();
-			if(prx != null && !prx.ice_isA(mainFunctionsIceId))
+            string[] iceIds = otherModule.getFunctionsIceIds();
+            System.Collections.Specialized.StringCollection collectionIceIds = new System.Collections.Specialized.StringCollection();
+            collectionIceIds.AddRange(iceIds);
+            if (iceIds.Length != 0 && !collectionIceIds.Contains(mainFunctionsIceId))
 				throw new Ferda.Modules.BadTypeError();
 			if(propertyValuePrx != null && propertySetByValue)
 				adapter.remove(propertyValuePrx.ice_getIdentity());
-			this.propertyValuePrx = prx;
+			this.propertyValuePrx = null;
 			connectedBox = otherModule;
 			this.propertySetByValue = false;
 		}
@@ -154,7 +156,7 @@ using Ice;namespace Ferda.Modules
             {
                 throw new Ferda.Modules.NameNotExistError();
             }
-            if (propertyValuePrx == null || propertySetByValue || Ice.Util.identityToString(connectedBox.ice_getIdentity()) != boxModuleIceIdentity )
+            if (connectedBox == null || propertySetByValue || Ice.Util.identityToString(connectedBox.ice_getIdentity()) != boxModuleIceIdentity)
 			{
 				throw new Modules.ConnectionNotExistError();
 			}

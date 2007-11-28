@@ -78,5 +78,10 @@ namespace Ferda.Modules.Boxes.Language.Math.Compare
         public override void Validate(BoxModuleI boxModule)
         {
         }
+
+        public override string[] GetFunctionsIceIds(BoxModuleI boxModule)
+        {
+            return Ferda.Modules.BoolT.ids__;
+        }
     }
 }

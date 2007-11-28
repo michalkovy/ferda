@@ -796,8 +796,7 @@ namespace Ferda.Modules
         /// </returns>
         public override string[] getFunctionsIceIds(Current __current)
         {
-        	ObjectPrx functionsObjProxy = getFunctions(__current);
-            return (functionsObjProxy == null) ? new string[0] : functionsObjProxy.ice_ids();
+            return boxInfo.GetFunctionsIceIds(this);
         }
 
         #endregion
@@ -1014,7 +1013,7 @@ namespace Ferda.Modules
         /// has required sockets.
         /// </summary>
         /// <param name="boxType">Required type of the box.</param>
-        /// <param name="functionsPrx">The functions object`s proxy.</param>
+        /// <param name="functionsIceIds">The functions object`s ice ids.</param>
         /// <param name="sockets">The sockets of box module to which the functions object belongs to.</param>
         /// <returns>
         /// <c>true</c> if the specified functions object
@@ -1023,10 +1022,12 @@ namespace Ferda.Modules
         /// <see cref="M:Ferda.Modules.BoxModuleI.hasSockets(Ferda.Modules.NeededSocket[],Ferda.Modules.SocketInfo[])">
         /// has required sockets</see>.
         /// </returns>
-        private static bool hasBoxType(BoxType boxType, ObjectPrx functionsPrx, SocketInfo[] sockets)
+        private static bool hasBoxType(BoxType boxType, string[] functionsIceIds, SocketInfo[] sockets)
         {
-        	if(boxType == null || functionsPrx == null) return true;
-            return functionsPrx.ice_isA(boxType.functionIceId) &&
+            if (boxType == null || functionsIceIds.Length == 0) return true;
+            System.Collections.Specialized.StringCollection iceIds = new System.Collections.Specialized.StringCollection();
+            iceIds.AddRange(functionsIceIds);
+            return iceIds.Contains(boxType.functionIceId) &&
                    hasSockets(boxType.neededSockets, sockets);
         }
 
@@ -1058,14 +1059,14 @@ namespace Ferda.Modules
 
             // tests Ferda.Modules.BoxType of otherModule
             bool badTypeError = true;
-            ObjectPrx objPrx = otherModule.getFunctions();
+            string[] otherModuleFunctionIceIds = otherModule.getFunctionsIceIds();
             SocketInfo[] otherModuleSocketInfos = otherModule.getMyFactory().getSockets();
             foreach (BoxType socketBoxType in
                 boxInfo.GetSocketTypes(socketName, this))
             {
                 // tests otherModule`s functions type (functionsPrx.ice_isA)
                 // tests if otherModule has needed sockets
-                if (hasBoxType(socketBoxType, objPrx, otherModuleSocketInfos))
+                if (hasBoxType(socketBoxType, otherModuleFunctionIceIds, otherModuleSocketInfos))
                 {
                     badTypeError = false;
                     break;
