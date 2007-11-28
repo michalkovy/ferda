@@ -388,10 +388,16 @@ namespace Ferda.Guha.MiningProcessor.Miners
             result.TaskTypeEnum = TaskTypeEnum.ETree;
             result.AllObjectsCount = allObjectsCount;
             
-            List<string> hyps = new List<string>(hypotheses.Count);
+            List<SerializableDecisionTree> hyps = 
+                new List<SerializableDecisionTree>(hypotheses.Count);
             foreach (Tree tree in hypotheses)
             {
-                hyps.Add(tree.IfRepresentation);
+                SerializableDecisionTree ser = new SerializableDecisionTree();
+                ser.IfRepresentation = tree.IfRepresentation;
+                ser.ConfusionMatrix = tree.ConfusionMatrix(
+                    targetClassificationAttribute.BitStrings, 
+                    targetClassificationAttribute.CategoriesIds);
+                hyps.Add(ser);
             }
             result.decisionTrees = hyps.ToArray();
 

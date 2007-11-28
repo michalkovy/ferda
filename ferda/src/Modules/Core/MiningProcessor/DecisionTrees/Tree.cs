@@ -195,7 +195,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// <summary>
         /// Returns the confusion matrix (matrix of positive and
         /// negative classification vs. the true or false of
-        /// the examples for given classification
+        /// the examples for given classification)
         /// </summary>
         /// <param name="classificationBitStrings">Bit strings of the classification 
         /// attribute</param>

@@ -433,7 +433,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
-            return DecisionTreeResult.Serialize(miningProcessor.Result);
+            string result = DecisionTreeResult.Serialize(miningProcessor.Result);
+            return result;
         }
 
         #endregion

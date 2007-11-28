@@ -168,6 +168,7 @@
     <Compile Include="Results\DecisionTreeResult.cs" />
     <Compile Include="Results\Hypothesis.cs" />
     <Compile Include="Results\Result.cs" />
+    <Compile Include="Results\SerializableDecisionTree.cs" />
     <Compile Include="Results\SerializableFormula.cs" />
     <Compile Include="Results\SerializableHypothesis.cs" />
     <Compile Include="Results\SerializableResult.cs" />
