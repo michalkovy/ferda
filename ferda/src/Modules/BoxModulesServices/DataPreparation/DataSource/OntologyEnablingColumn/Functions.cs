@@ -26,6 +26,7 @@ using Ferda.Guha.Data;
 using Ferda.Modules.Helpers.Caching;
 using Ice;
 using Ferda.Modules.Boxes.OntologyRelated.OntologyMapping;
+using Ferda.OntologyRelated.generated.OntologyData;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
 {
@@ -42,7 +43,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
     /// one additional box type (comparing to Column box) to create - it is
     /// Ontology Derived Attribute
     /// </remarks>
-    public class Functions : ColumnFunctionsDisp_, IFunctions
+    public class Functions : OntologyRelated.OntologyEnablingColumnFunctionsDisp_/*ColumnFunctionsDisp_, OntologyRelated.OntologyEnablingColumnFunctions*/, IFunctions
     {
         /// <summary>
         /// The box module.
@@ -216,33 +217,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                 SockMapping,
                 OntologyMappingFunctionsPrxHelper.checkedCast,
                 fallOnError);
-        }
-
-        /*TODO SMAZAT*/
-        /// <summary>
-        /// Gets the proxy of the Data Table (DataTable box is connected
-        /// to OntologyMapping box, which is connected to this 
-        /// OntologyEnablingColumn box)
-        /// </summary>
-        /// <param name="fallOnError">Iff the method should fall on error</param>
-        /// <returns>Data table proxy</returns>
-        public DataTableFunctionsPrx GetDataTableFunctionsPrx(bool fallOnError)
-        {
-            /*OntologyMappingFunctionsPrx ontologyMappingPrx = GetOntologyMappingFunctionsPrx(fallOnError);
-
-            if (ontologyMappingPrx == null)
-                return null;
-            else
-            {
-                BoxModuleI ontologyMappingBoxModule = (BoxModuleI)ontologyMappingPrx.getBoxModule();
-
-                return SocketConnections.GetPrx<DataTableFunctionsPrx>(
-                    ontologyMappingBoxModule,
-                    SockDataTable,
-                    DataTableFunctionsPrxHelper.checkedCast,
-                    fallOnError);
-            }*/
-            return null;
         }
 
         /// <summary>
@@ -610,6 +584,33 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                 return prx.GetSourceDataTableId(GetDataTableName(true));
             return null;
         }
+
+        /// Implementation of OntologyEnablingColumnFunctions interface
+        
+        /// <summary>
+        /// Gets the properties of entity from the ontology, which is mapped to column of this box
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns><string, string[]> value which represents properties of ontology entity which is mapped on this box's column.</returns>
+        public override StrSeqMap getOntologyEntityProperties(Current current__)
+        {
+            OntologyMappingFunctionsPrx prx = GetOntologyMappingFunctionsPrx(true);
+            if (prx != null)
+            {
+                return prx.getOntologyEntityProperties(GetDataTableName(true), GetSelectExpression(true));
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the properties of entity from the ontology, which is mapped to column of this box
+        /// </summary>
+        /// <returns><string, string[]> value which represents properties of ontology entity which is mapped on this box's column.</returns>
+        /*public StrSeqMap getOntologyEntityProperties()
+        {
+            System.Windows.Forms.MessageBox.Show("ok1");
+            return getOntologyEntityProperties(null);
+        }*/
 
         #endregion
     }

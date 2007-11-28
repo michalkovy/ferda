@@ -31,10 +31,13 @@ using Common = Ferda.Guha.Attribute.Common;
 using Exception = System.Exception;
 using System.Data;
 using System.Data.Common;
+using Ferda.Modules.Boxes.OntologyRelated;
+using Ferda.OntologyRelated.generated.OntologyData;
+
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttribute
 {
-    internal class Functions : AttributeFunctionsDisp_, IFunctions
+    public class Functions : AttributeFunctionsDisp_, IFunctions
     {
         /// <summary>
         /// The box module.
@@ -51,10 +54,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         public const string PropDomain = "Domain";
         public const string PropFrom = "From";
         public const string PropTo = "To";
-        public const string PropCardinality = "Cardinality";
-        public const string SockColumn = "Column";
         public const string PropCategories = "Categories";
-
+        public const string SockColumn = "Column";
+        public const string SockOntologyEnablingColumn = "OntologyEnablingColumn";
+        //ontology derived properties
+        public const string PropCardinality = "Cardinality";
+        public const string PropDistinctValues = "DistinctValues";
+        public const string PropDomainDividingValues = "DomainDividingValues";
+        public const string PropMinimum = "Minimum";
+        public const string PropMaximum = "Maximum";
+        public const string Separator = ", ";
 
         /// <summary>
         /// Guid
@@ -126,6 +135,44 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         }
 
         /// <summary>
+        /// Domain dividing values
+        /// </summary>
+        public string DomainDividingValues
+        {
+            get { return _boxModule.GetPropertyString(PropDomainDividingValues); }
+        }
+
+        /// <summary>
+        /// Distinct values
+        /// </summary>
+        public string DistinctValues
+        {
+            get { return _boxModule.GetPropertyString(PropDistinctValues); }
+        }
+
+        /// <summary>
+        /// Minimum value
+        /// </summary>
+        public string Minimum
+        {
+            get
+            {
+                return _boxModule.GetPropertyString(PropMinimum);
+            }
+        }
+
+        /// <summary>
+        /// Maximum value
+        /// </summary>
+        public string Maximum
+        {
+            get
+            {
+                return _boxModule.GetPropertyString(PropMaximum);
+            }
+        }
+
+        /// <summary>
         /// Xcategory
         /// </summary>
         public string XCategory
@@ -162,6 +209,78 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Gets the properties of entity from the ontology, which is mapped to attribute (column) of this box
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
+        public StrSeqMap getOntologyEntityProperties(bool fallOnError)
+        {
+            OntologyEnablingColumnFunctionsPrx prx = GetOntologyEnablingColumnFunctionsPrx(fallOnError);
+            if (prx != null)
+            {
+                return prx.getOntologyEntityProperties();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Sets the properties of entity from the ontology, which is mapped to attribute (column) of this box
+        /// </summary>
+        /// <returns></returns>
+        public void setOntologyEntityProperties()
+        {
+            /// clears previous properties if there were any
+            string emptyString = "";
+            _boxModule.setProperty(PropCardinality, new StringTI(CardinalityEnum.Nominal.ToString()));
+            _boxModule.setProperty(PropMinimum, (StringTI)emptyString);
+            _boxModule.setProperty(PropMaximum, (StringTI)emptyString);
+            _boxModule.setProperty(PropDomainDividingValues, (StringTI)emptyString);
+            _boxModule.setProperty(PropDistinctValues, (StringTI)emptyString);
+
+            /// gets the data properties of ontology entity 
+            /// which this box's column is mapped on
+            StrSeqMap tmpMap = getOntologyEntityProperties(true);
+
+            /// the entity is a class and have some data properties
+            /// the null value means that either the column is not mapped...
+            /// or the entity is an instance...
+            /// or the entity is a class, but has no data properties
+            if (tmpMap != null) 
+            {
+                foreach (string tmpStr in tmpMap.Keys)
+                {
+                    int i = 1;
+                    if (tmpMap[tmpStr] != null)
+                    {
+                        string tmpAllValues = "";
+                        foreach (string tmpValue in tmpMap[tmpStr])
+                        {
+                            //empty values are ignored
+                            if (tmpValue != "")
+                            {
+                                tmpAllValues += tmpValue;
+                                if (tmpMap[tmpStr].Length > i++)
+                                    tmpAllValues += Separator;
+                            }
+                        }
+                        /// removing unwanted separator at the end of the string
+                        if (tmpAllValues != "")
+                        {
+                            tmpAllValues = tmpAllValues.Remove(tmpAllValues.Length - Separator.Length);
+                        }
+                        /// setting the property of the box with value from the ontology
+                        try
+                        {
+                            _boxModule.setProperty(tmpStr, (StringTI)tmpAllValues);
+                        }
+                        catch { }
+                    }
+                }
+            }
+            return;
+        }
 
         /// <summary>
         /// Parses from and to values
@@ -240,7 +359,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         }
 
         /// <summary>
-        /// Gets proxy of the connected column box
+        /// Gets proxy of the connected column box - OntologyEnablingColumn interface
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
+        public OntologyEnablingColumnFunctionsPrx GetOntologyEnablingColumnFunctionsPrx(bool fallOnError)
+        {
+            return SocketConnections.GetPrx<OntologyEnablingColumnFunctionsPrx>(
+                _boxModule,
+                SockOntologyEnablingColumn,
+                OntologyEnablingColumnFunctionsPrxHelper.checkedCast,
+                fallOnError);
+        }
+
+        /// <summary>
+        /// Gets proxy of the connected column box - Column interface
         /// </summary>
         /// <param name="fallOnError"></param>
         /// <returns></returns>
@@ -291,7 +424,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         /// <returns></returns>
         public GenericColumn GetGenericColumn(bool fallOnError)
         {
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+            OntologyEnablingColumnFunctionsPrx prx = GetOntologyEnablingColumnFunctionsPrx(fallOnError);
             if (prx == null)
                 return null;
             ColumnInfo column = prx.getColumnInfo();
@@ -354,7 +487,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         public Attribute<IComparable> GetAttribute(bool fallOnError)
         {
             //getting the proxy of a column
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+            OntologyEnablingColumnFunctionsPrx prx = GetOntologyEnablingColumnFunctionsPrx(fallOnError);
             if (prx == null)
                 return null;
 
@@ -399,6 +532,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
+            
+            //TODO doplnit do cache hodnoty z ontologie a smazat vìci týkající se categories (nebude)
             cacheSetting.Add(BoxInfo.typeIdentifier + PropCountOfCategories, (long)Count);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropClosedFrom, ClosedFrom);
 
@@ -669,7 +804,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                         // 0.3 sec is ticks * 3 000 000
                         {
                             // get primary key
-                            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                            OntologyEnablingColumnFunctionsPrx prx = GetOntologyEnablingColumnFunctionsPrx(fallOnError);
                             if (prx == null)
                                 return null;
                             string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
@@ -830,7 +965,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                 fallOnError,
                 delegate
                 {
-                    ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                    OntologyEnablingColumnFunctionsPrx prx = GetOntologyEnablingColumnFunctionsPrx(fallOnError);
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
                     GenericColumn tmp2 = GetGenericColumn(fallOnError);
                     if (tmp != null && tmp2 != null && prx != null)
@@ -975,7 +1110,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(true);
+            OntologyEnablingColumnFunctionsPrx prx = GetOntologyEnablingColumnFunctionsPrx(true);
             if (prx != null)
                 return prx.GetSourceDataTableId();
             return null;
@@ -1014,7 +1149,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             string detailId = String.Empty;
             if (String.IsNullOrEmpty(detailIdColumn))
                 detailId =
-            GetColumnFunctionsPrx(true).getColumnInfo().dataTable.primaryKeyColumns[0];
+            GetOntologyEnablingColumnFunctionsPrx(true).getColumnInfo().dataTable.primaryKeyColumns[0];
             else
                 detailId = detailIdColumn;
 

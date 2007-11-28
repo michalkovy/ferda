@@ -19905,10 +19905,10 @@
 		</Categories>
 		<Sockets>
 			<Socket>
-				<Name>Column</Name>
+				<Name>OntologyEnablingColumn</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::Boxes::DataPreparation::ColumnFunctions</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::Boxes::OntologyRelated::OntologyEnablingColumnFunctions</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -20005,6 +20005,42 @@
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
+			<Socket>
+				<Name>DomainDividingValues</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>DistinctValues</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>Minimum</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
+				<Name>Maximum</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
 		</Sockets>
 		<Properties>
 			<Property>
@@ -20025,14 +20061,6 @@
 				<CategoryName>Categories</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>1</Default>
-				<NumericalRestrictions>
-					<Restriction>
-						<Integral>1</Integral>
-						<Min>true</Min>
-						<Including>true</Including>
-					</Restriction>
-				</NumericalRestrictions>
 			</Property>
 			<Property>
 				<Name>XCategory</Name>
@@ -20103,7 +20131,7 @@
 			<Property>
 				<Name>Cardinality</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Semantic</CategoryName>
+				<CategoryName>OntologyDerivedProperties</CategoryName>
 				<SelectOptions>
 					<SelectOption>
 						<Name>Nominal</Name>
@@ -20120,7 +20148,35 @@
 				</SelectOptions>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>Ordinal</Default>
+				<Default>Nominal</Default>
+			</Property>
+			<Property>
+				<Name>DomainDividingValues</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>OntologyDerivedProperties</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
+			<Property>
+				<Name>DistinctValues</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>OntologyDerivedProperties</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
+			<Property>
+				<Name>Minimum</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>OntologyDerivedProperties</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+			</Property>
+			<Property>
+				<Name>Maximum</Name>
+				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>OntologyDerivedProperties</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
 			</Property>
 		</Properties>
 	</Box>

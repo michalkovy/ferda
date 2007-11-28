@@ -211,6 +211,19 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             return getOntology(true);
         }
 
+        public override StrSeqMap getOntologyEntityProperties(string entityName, Current current__)
+        {
+            OntologyStructure ontology = getOntology(true);
+            try
+            {
+                return ontology.OntologyClassMap[entityName].DataPropertiesMap;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 }

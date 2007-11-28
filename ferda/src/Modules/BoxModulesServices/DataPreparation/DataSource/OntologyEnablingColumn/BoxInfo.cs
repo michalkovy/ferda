@@ -196,7 +196,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                     case "OntologyDerivedAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
-                            Categorization.OntologyDerivedAttribute.Functions.SockColumn;
+                            Categorization.OntologyDerivedAttribute.Functions.SockOntologyEnablingColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
                         //the property setting - here setting the "nameInLiterals" 
@@ -319,7 +319,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
             Functions Func = (Functions) boxModule.FunctionsIObj;
 
             // try to invoke methods
-            object dummy = Func.GetDataTableFunctionsPrx(true);
+            object dummy = Func.GetOntologyMappingFunctionsPrx(true);
             GenericColumn tmp = Func.GetGenericColumn(true);
             dummy = Func.GetColumnsNames(true);
             dummy = Func.GetColumnStatistics(true);
