@@ -27,6 +27,8 @@ using System.Text;
 using System.Resources;
 using System.Windows.Forms;
 using Ferda.Guha.MiningProcessor.Results;
+using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
+using Ferda.FrontEnd.AddIns.Common.ListView;
 
 namespace Ferda.FrontEnd.AddIns.ResultBrowser
 {
@@ -59,6 +61,21 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private ResourceManager resManager;
 
+        /// <summary>
+        /// Quantifiers connected to the task
+        /// </summary>
+        private Quantifiers quantifiers;
+
+        /// <summary>
+        /// Values of individual quantifiers
+        /// </summary>
+        private Dictionary<int,double[]> quantifierValues;
+
+        /// <summary>
+        /// Sorter for the listview
+        /// </summary>
+        ListViewItemComparer columnSorter = new ListViewItemComparer();
+
         #endregion
 
         #region Constructor
@@ -68,19 +85,25 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         /// <param name="serializedResult">
         /// Result of ETree procedure in a serialized form</param>
-        public DecisionTreeBrowser(string serializedResult, ResourceManager resManager)
+        /// <param name="resManager">The resource manager</param>
+        /// <param name="quantifiers">Quantifiers connected to the task</param>
+        public DecisionTreeBrowser(string serializedResult, ResourceManager resManager, 
+            Quantifiers quantifiers)
         {
             this.resManager = resManager;
+            this.quantifiers = quantifiers;
 
             DecisionTreeResult result =
                 DecisionTreeResult.Deserialize(serializedResult);
 
             decisionTrees = result.decisionTrees;
+            InitQuantifierValues();
             InitializeComponent();
             FillListView();
 
             treesListView.ItemSelectionChanged += new 
                 ListViewItemSelectionChangedEventHandler(treesListView_ItemSelectionChanged);
+            treesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
         }
 
         #endregion
@@ -90,18 +113,69 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// </summary>
         private void FillListView()
         {
+            ColumnHeader header;
+            //column width
+            int columnWidth = treesListView.Width / 
+                (quantifiers.Quantifeirs.Values.Count + 1);
+            int columnIndex = 0;
+
             //adding a column
             treesListView.Columns.Clear();
-            ColumnHeader header = new ColumnHeader();
+            header = new ColumnHeader();
             header.Text = resManager.GetString("HypothesisId");
             treesListView.Columns.Add(header);
-            treesListView.Columns[0].Width = treesListView.Width;
+            treesListView.Columns[columnIndex].Width = columnWidth;
+            columnIndex++;
+
+            //adding columns for quantifiers
+            foreach (Quantifier quant in quantifiers.Quantifeirs.Values)
+            {
+                header = new ColumnHeader();
+                header.Text = quant.LocalizedLabel;
+                treesListView.Columns.Add(header);
+                treesListView.Columns[columnIndex].Width = columnWidth;
+                columnIndex++;
+            }
 
             for (int i = 0; i < decisionTrees.Length; i++)
             {
                 ListViewItem item = new ListViewItem();
                 item.Text = i.ToString();
+
+                int length = quantifierValues[i].Length;
+
+                for (int j = 0; j < length; j++)
+                {
+                    item.SubItems.Add(quantifierValues[i][j].ToString());
+                }
+
                 treesListView.Items.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// The method precomputes the values of quantifiers for
+        /// all decision trees contained in the result.
+        /// </summary>
+        private void InitQuantifierValues()
+        {
+            quantifierValues = new Dictionary<int, double[]>();
+
+            for (int i = 0; i < decisionTrees.Length; i++)
+            {
+                //here we must add all the 4 fields of the contingency
+                //table, because count of all objects from the data matrix
+                //is something different
+                long allObjectsCount = 
+                    (long) decisionTrees[i].ConfusionMatrix[0][0] + 
+                    (long) decisionTrees[i].ConfusionMatrix[0][1] + 
+                    (long) decisionTrees[i].ConfusionMatrix[1][0] + 
+                    (long) decisionTrees[i].ConfusionMatrix[1][1];
+
+                ContingencyTableHelper helper =
+                    new ContingencyTableHelper(decisionTrees[i].ConfusionMatrix, allObjectsCount);        
+
+                quantifierValues.Add(i, quantifiers.Values(helper));
             }
         }
 
@@ -131,6 +205,27 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 treesRTB.Text = decisionTrees[e.ItemIndex].IfRepresentation;
             }
+        }
+
+        /// <summary>
+        /// Method for sorting by the column
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        private void ClickOnColumn(object sender, System.Windows.Forms.ColumnClickEventArgs e)
+        {
+            columnSorter.column = e.Column;
+            if (treesListView.Sorting == SortOrder.Ascending)
+            {
+                columnSorter.bAscending = false;
+                treesListView.Sorting = SortOrder.Descending;
+            }
+            else
+            {
+                columnSorter.bAscending = true;
+                treesListView.Sorting = SortOrder.Ascending;
+            }
+            treesListView.ListViewItemSorter = columnSorter;
         }
 
         #endregion

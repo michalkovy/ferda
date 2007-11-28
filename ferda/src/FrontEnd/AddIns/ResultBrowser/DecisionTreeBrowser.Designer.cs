@@ -60,7 +60,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             this.treesListView.MultiSelect = false;
             this.treesListView.Name = "treesListView";
             this.treesListView.ShowGroups = false;
-            this.treesListView.Size = new System.Drawing.Size(115, 324);
+            this.treesListView.Size = new System.Drawing.Size(255, 324);
             this.treesListView.TabIndex = 0;
             this.treesListView.UseCompatibleStateImageBehavior = false;
             this.treesListView.View = System.Windows.Forms.View.Details;
@@ -69,10 +69,10 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             // 
             this.treesRTB.AutoWordSelection = true;
             this.treesRTB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treesRTB.Location = new System.Drawing.Point(115, 0);
+            this.treesRTB.Location = new System.Drawing.Point(255, 0);
             this.treesRTB.Name = "treesRTB";
             this.treesRTB.ReadOnly = true;
-            this.treesRTB.Size = new System.Drawing.Size(443, 324);
+            this.treesRTB.Size = new System.Drawing.Size(303, 324);
             this.treesRTB.TabIndex = 1;
             this.treesRTB.Text = "";
             // 

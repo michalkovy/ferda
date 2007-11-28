@@ -174,7 +174,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             if (IsETreeTask(serializedResult))
             {
                 FrontEnd.AddIns.ResultBrowser.DecisionTreeBrowser control =
-                    new DecisionTreeBrowser(serializedResult, resManager);
+                    new DecisionTreeBrowser(serializedResult, resManager, quantifiers);
 
                 this.ownerOfAddIn.ShowDockableControl(control,
                     taskLabel + " - " + resManager.GetString("ResultBrowserControl"));
