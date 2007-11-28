@@ -307,5 +307,10 @@ namespace Ferda.Modules.Boxes.Language.Lambda
 			}
 			return resultPropertyInfo;
 		}*/
+
+        public override string[] GetFunctionsIceIds(BoxModuleI boxModule)
+        {
+            return new string[0];
+        }
     }
 }

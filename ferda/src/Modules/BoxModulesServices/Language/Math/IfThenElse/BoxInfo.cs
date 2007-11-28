@@ -82,5 +82,10 @@ namespace Ferda.Modules.Boxes.Language.Math.IfThenElse
         public override void Validate(BoxModuleI boxModule)
         {
         }
+
+        public override string[] GetFunctionsIceIds(BoxModuleI boxModule)
+        {
+            return new string[0];
+        }
     }
 }

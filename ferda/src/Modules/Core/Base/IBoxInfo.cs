@@ -287,6 +287,22 @@ namespace Ferda.Modules.Boxes
         ObjectPrx GetFunctionsObjPrx(BoxModuleI boxModule);
 
         /// <summary>
+        /// <para>Gets ice ids of functions object.</para>
+        /// <para>
+        /// Throught lambda abstraction is BoxModule interface separated from
+        /// functions over this BoxModule. Functions object is module containing
+        /// functions over properties and sockets of this BoxModule specified in
+        /// slice design. This method gets its function ice ids
+        /// </para>
+        /// </summary>
+        /// <param name="boxModule">The box module.</param>
+        /// <returns>
+        /// The array of the ice ids of the box module`s
+        /// functions object.
+        /// </returns>
+        string[] GetFunctionsIceIds(BoxModuleI boxModule);
+
+        /// <summary>
         /// Gets items of the dynamic help.
         /// </summary>
         /// <param name="localePrefs">The localization preferences.</param>

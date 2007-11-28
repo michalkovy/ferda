@@ -76,5 +76,10 @@ namespace Ferda.Modules.Boxes.Language.GetParameter
         public override void Validate(BoxModuleI boxModule)
         {
         }
+
+        public override string[] GetFunctionsIceIds(BoxModuleI boxModule)
+        {
+            return new string[0];
+        }
     }
 }
