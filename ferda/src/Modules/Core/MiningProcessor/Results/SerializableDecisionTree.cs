@@ -1,4 +1,4 @@
-// DecisionTreeeResult.cs - a result of a ETree procedure run
+// SerializableDecisionTree.cs - serializable version of a decision tree
 //
 // Authors: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
@@ -21,60 +21,47 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Ferda.Guha.MiningProcessor.DecisionTrees;
 using System.Xml.Serialization;
 using System.IO;
 
 namespace Ferda.Guha.MiningProcessor.Results
 {
     /// <summary>
-    /// The class represents a serializable result of one ETree procedure run.
-    /// Contains information about the task and decision trees.
+    /// Serializable version of the decision tree. It contains the IF-representation
+    /// and the contingency table for the quantifiers to be recomputed. 
     /// </summary>
     [Serializable()]
-    public class DecisionTreeResult
+    public class SerializableDecisionTree
     {
         /// <summary>
-        /// Count of all objects in analyzed data table.
+        /// The If representation of the tree
         /// </summary>
-        public long AllObjectsCount;
+        public string IfRepresentation;
 
         /// <summary>
-        /// Type of the task. In effective form of this class
-        /// (see <see cref="T:Ferda.Guha.MiningProcessor.Results.Result"/>)
-        /// the type of the task indicates 
-        /// list of used boolean/categorial attributes (method <code>GetSemanticMarks()</code>)
-        /// and usage of one or two contingecy tables (field <code>TwoContingencyTables</code>).
+        /// Confusion matrix of the decision tree.
+        /// (matrix of positive and
+        /// negative classification vs. the true or false of
+        /// the examples for given classification).
+        /// It is used similarily to the contingency tables
+        /// of the other GUHA miners.
         /// </summary>
-        public TaskTypeEnum TaskTypeEnum;
+        public double[][] ConfusionMatrix;
 
         /// <summary>
-        /// Decision trees (GUHA hypotheses) that were created by this
-        /// task in form of IF rules.
+        /// Serializes the specified input.
         /// </summary>
-        public SerializableDecisionTree[] decisionTrees;
-
-        /// <summary>
-        /// Default constructor of the class.
-        /// </summary>
-        public DecisionTreeResult()
+        /// <param name="input">The decision tree to be serialized</param>
+        /// <returns>Serialized version of the decision tree</returns>
+        public static string Serialize(SerializableDecisionTree input)
         {
-        }
-
-        /// <summary>
-        /// Serializes the specified result
-        /// </summary>
-        /// <param name="result">The result</param>
-        /// <returns>Result in serialized (string) form</returns>
-        public static string Serialize(DecisionTreeResult result)
-        {
-            if (result == null)
+            if (input == null)
                 return null;
-            XmlSerializer serializer = new XmlSerializer(typeof(DecisionTreeResult));
+            XmlSerializer serializer = new XmlSerializer(typeof(SerializableDecisionTree));
             StringBuilder sb = new StringBuilder();
             using (StringWriter writer = new StringWriter(sb))
             {
-                serializer.Serialize(writer, result);
+                serializer.Serialize(writer, input);
                 return sb.ToString();
             }
         }
@@ -85,7 +72,7 @@ namespace Ferda.Guha.MiningProcessor.Results
         /// </summary>
         /// <param name="input">The input string</param>
         /// <returns>Decision tree result</returns>
-        public static DecisionTreeResult Deserialize(string input)
+        public static SerializableDecisionTree Deserialize(string input)
         {
             if (String.IsNullOrEmpty(input))
                 return null;
@@ -93,9 +80,9 @@ namespace Ferda.Guha.MiningProcessor.Results
             StringReader reader = new StringReader(input)
             )
             {
-                XmlSerializer deserealizer = new XmlSerializer(typeof(DecisionTreeResult));
+                XmlSerializer deserealizer = new XmlSerializer(typeof(SerializableDecisionTree));
                 object deserealized = deserealizer.Deserialize(reader);
-                return (DecisionTreeResult)deserealized;
+                return (SerializableDecisionTree)deserealized;
             }
         }
     }

@@ -52,7 +52,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// The If representations of the decision trees.
         /// </summary>
-        private string[] ifRepresentations;
+        private SerializableDecisionTree[] decisionTrees;
 
         /// <summary>
         /// Resource manager of the control
@@ -75,7 +75,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             DecisionTreeResult result =
                 DecisionTreeResult.Deserialize(serializedResult);
 
-            ifRepresentations = result.decisionTrees;
+            decisionTrees = result.decisionTrees;
             InitializeComponent();
             FillListView();
 
@@ -97,7 +97,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             treesListView.Columns.Add(header);
             treesListView.Columns[0].Width = treesListView.Width;
 
-            for (int i = 0; i < ifRepresentations.Length; i++)
+            for (int i = 0; i < decisionTrees.Length; i++)
             {
                 ListViewItem item = new ListViewItem();
                 item.Text = i.ToString();
@@ -129,7 +129,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         {
             if (e.IsSelected == true)
             {
-                treesRTB.Text = ifRepresentations[e.ItemIndex];
+                treesRTB.Text = decisionTrees[e.ItemIndex].IfRepresentation;
             }
         }
 
