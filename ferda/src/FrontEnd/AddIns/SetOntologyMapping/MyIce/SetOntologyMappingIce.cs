@@ -182,6 +182,8 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
                 new SetOntologyMappingControl(
                     dataTableColumnsDictionary,
                     ontology,
+                    OntologyMappingPrx.getMappingSeparatorInner(),
+                    OntologyMappingPrx.getMappingSeparatorOuter(),
                     mapping.stringValue,
                     localePrefs,
                     ownerOfAddIn

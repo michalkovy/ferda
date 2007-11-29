@@ -53,6 +53,9 @@ module Ferda {
 						
 						idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string entityName) 
               throws Ferda::Modules::BoxRuntimeError;
+              
+            idempotent StringSeq getOntologyEntityAnnotations(string entityName) 
+							throws Ferda::Modules::BoxRuntimeError;
           };
 				};
 			};

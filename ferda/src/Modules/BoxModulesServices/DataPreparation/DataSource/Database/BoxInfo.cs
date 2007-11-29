@@ -29,7 +29,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
     /// <summary>
     /// Class that provides info about boxes of the Database type
     /// </summary>
-    internal class BoxInfo : Boxes.BoxInfo
+    public class BoxInfo : Boxes.BoxInfo
     {
         /// <summary>
         /// Functions creates an object of <see cref="T:Ferda.Modules.IFunctions">IFuntions</see>

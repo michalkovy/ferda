@@ -224,6 +224,19 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
         }
 
+        public override string[] getOntologyEntityAnnotations(string entityName, Current current__)
+        {
+            OntologyStructure ontology = getOntology(true);
+            try
+            {
+                return ontology.OntologyClassMap[entityName].Annotations;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 }

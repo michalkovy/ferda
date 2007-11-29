@@ -32,7 +32,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
     /// Class is providing ICE functionality of the Database
     /// box module
     /// </summary>
-    internal class Functions : DatabaseFunctionsDisp_, IFunctions
+    public class Functions : DatabaseFunctionsDisp_, IFunctions
     {
         /// <summary>
         /// The current box module

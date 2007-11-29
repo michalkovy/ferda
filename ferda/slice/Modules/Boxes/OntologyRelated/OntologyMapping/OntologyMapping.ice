@@ -48,10 +48,13 @@ module Ferda {
 				  
 					interface OntologyMappingFunctions
 					{
-            idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableName, string columnName) 
-              throws Ferda::Modules::BoxRuntimeError;
+						idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties(string dataTableName, string columnName) 
+							throws Ferda::Modules::BoxRuntimeError;
+							
+						idempotent StringSeq getOntologyEntityAnnotations(string dataTableName, string columnName) 
+							throws Ferda::Modules::BoxRuntimeError;
 
-            idempotent	Ferda::Modules::Boxes::DataPreparation::DataTableInfo getDataTableInfo(string dataTableName, StringSeq primaryKeyColumns)
+						idempotent Ferda::Modules::Boxes::DataPreparation::DataTableInfo getDataTableInfo(string dataTableName, StringSeq primaryKeyColumns)
 							throws Ferda::Modules::BoxRuntimeError;
 							
 						idempotent StringSeq getDataTablesNames()
@@ -60,16 +63,22 @@ module Ferda {
 						idempotent StringSeq getColumnsNames(string dataTableName)
 							throws Ferda::Modules::BoxRuntimeError;
 							
+						idempotent string getMapping();
+						
+						idempotent string getMappingSeparatorInner();
+						
+						idempotent string getMappingSeparatorOuter();
+							
 						idempotent string GetSourceDataTableId(string dataTableColumnName)
-						  throws Ferda::Modules::BoxRuntimeError;
-          };
+							throws Ferda::Modules::BoxRuntimeError;
+					};
 				};
 				
 				interface OntologyEnablingColumnFunctions extends Ferda::Modules::Boxes::DataPreparation::ColumnFunctions
 				{
-				  idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties() 
-            throws Ferda::Modules::BoxRuntimeError;
-        };
+					idempotent Ferda::OntologyRelated::generated::OntologyData::StrSeqMap getOntologyEntityProperties() 
+						throws Ferda::Modules::BoxRuntimeError;
+				};
 			};
 		};
 	};
