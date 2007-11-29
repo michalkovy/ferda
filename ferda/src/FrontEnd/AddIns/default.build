@@ -510,6 +510,38 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+		
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'ShowMapping.dll')}" debug="${debug}" optimize="${optimize}">
+			<sources>
+				<include name="ShowMapping/**.cs"/>
+				<include name="ShowMapping/MyIce/**.cs"/>
+				<exclude name="ShowMapping/bin/**.*"/>
+				<exclude name="ShowMapping/obj/**.*"/>
+			</sources>
+			<resources prefix="Ferda.FrontEnd.AddIns.ShowMapping">
+				<include name="ShowMapping/**.resx"/>
+				<exclude name="ShowMapping/ShowMapping.resx"/>
+			</resources>
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+			</references>
+		</csc>
+		
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ShowMapping/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
     
 	</target>
 	<target name="clean">

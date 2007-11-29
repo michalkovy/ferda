@@ -38,12 +38,12 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// <summary>
         /// Char which separates strings of mapped pairs (triples if datatable name is count separately)
         /// </summary>
-        char[] separatorOuter = new char[] { '\n' };
+        private string separatorOuter;
 
         /// <summary>
         /// Char which separates datatable name, column name and ontology entity name
         /// </summary>
-        char[] separatorInner = new char[] { '\t' };
+        private string separatorInner;
 
         /// <summary>
         /// Path to Ferda ontology mapping (.fom) file, which was most recently used for Load or Save
@@ -78,10 +78,12 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         #endregion
 
         //public SetOntologyMappingControl()
-        public SetOntologyMappingControl(Dictionary<string, string[]> dataTableColumnsDictionary, OntologyStructure ontology, string inputMapping, string[] localePrefs, IOwnerOfAddIn ownerOfAddIn)
+        public SetOntologyMappingControl(Dictionary<string, string[]> dataTableColumnsDictionary, OntologyStructure ontology, string separatorInner, string separatorOuter, string inputMapping, string[] localePrefs, IOwnerOfAddIn ownerOfAddIn)
         {
             this.dataTableColumnsDictionary = dataTableColumnsDictionary;
             this.ontology = ontology;
+            this.separatorInner = separatorInner;
+            this.separatorOuter = separatorOuter;
 
             InitializeComponent();
 
@@ -102,11 +104,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.MakeDataTablesTreeView();
             this.MakeOntologyTreeView();
 
-            string[] tmpMappedPairs = mapping.Split(this.separatorOuter, StringSplitOptions.RemoveEmptyEntries);
+            string[] tmpMappedPairs = mapping.Split(new string[] { this.separatorOuter }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string tmpMappedPair in tmpMappedPairs)
             {
-                string[] DataTable_Column_OntEnt = tmpMappedPair.Split(this.separatorInner, StringSplitOptions.RemoveEmptyEntries);
+                string[] DataTable_Column_OntEnt = tmpMappedPair.Split(new string[] { this.separatorInner }, StringSplitOptions.RemoveEmptyEntries);
                 mapPair(DataTable_Column_OntEnt[0], DataTable_Column_OntEnt[1], DataTable_Column_OntEnt[2]);
             }
             return;
@@ -397,7 +399,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             string tmpMapping = "";
             foreach (MappedPair mappedPair in this.MappingListBox.Items)
             {
-                tmpMapping += mappedPair.DataTableName + this.separatorInner[0] + mappedPair.DataTableColumnName + this.separatorInner[0] + mappedPair.OntologyEntityName + this.separatorOuter[0];
+                tmpMapping += mappedPair.DataTableName + this.separatorInner + mappedPair.DataTableColumnName + this.separatorInner + mappedPair.OntologyEntityName + this.separatorOuter;
             }
             return tmpMapping;
         }

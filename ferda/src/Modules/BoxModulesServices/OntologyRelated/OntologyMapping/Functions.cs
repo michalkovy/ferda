@@ -68,12 +68,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <summary>
         /// Char which separates strings of mapped pairs (triples if datatable name is count separately)
         /// </summary>
-        public char[] separatorOuter = new char[] { '\n' };
+        public const string separatorOuter = "\n";
 
         /// <summary>
         /// Char which separates datatable name, column name and ontology entity name
         /// </summary>
-        public char[] separatorInner = new char[] { '\t' };
+        public const string separatorInner = "\t";
 
         /// <summary>
         /// Mapping between datatables columns and ontology entities
@@ -89,8 +89,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             {
                 if (Mapping != null)
                 {
-                    string[] tmpStringArray = Mapping.Split(separatorOuter);
-                    return tmpStringArray.Length - 1;
+                    string[] tmpStringArray = Mapping.Split(new string[] { separatorOuter }, StringSplitOptions.RemoveEmptyEntries);
+                    return tmpStringArray.Length;
                 }
                 return 0;
             }
@@ -137,6 +137,13 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 return Name;
         }*/
 
+        /// <summary>
+        /// Gets the properties (Data Properties) of ontology entity - for individuals it is empty
+        /// </summary>
+        /// <param name="dataTableName">Name of the column's table</param>
+        /// <param name="columnName">Name of the column which properties (based on mapping) I want to get</param>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Data properties of ontology entity</returns>
         public StrSeqMap getOntologyEntityProperties(string dataTableName, string columnName, bool fallOnError)
         {
             return ExceptionsHandler.GetResult<StrSeqMap>(
@@ -144,12 +151,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 delegate
                     {
                         /// parse current Mapping
-                        string[] tmpMappedPairs = Mapping.Split(separatorOuter, StringSplitOptions.RemoveEmptyEntries);
+                        string[] tmpMappedPairs = Mapping.Split(new string[] { separatorOuter }, StringSplitOptions.RemoveEmptyEntries);
                         string ontologyEntity = "";
                         /// seeking the row of Mapping which represents mapping of the particular column
                         foreach (string tmpMappedPair in tmpMappedPairs)
                         {
-                            string[] DataTable_Column_OntEnt = tmpMappedPair.Split(separatorInner, StringSplitOptions.RemoveEmptyEntries);
+                            string[] DataTable_Column_OntEnt = tmpMappedPair.Split(new string[] { separatorInner }, StringSplitOptions.RemoveEmptyEntries);
                             if (DataTable_Column_OntEnt[0] == dataTableName && DataTable_Column_OntEnt[1] == columnName)
                                 ontologyEntity = DataTable_Column_OntEnt[2];
                         }
@@ -170,6 +177,50 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                     {
                         return null;
                     },
+                _boxModule.StringIceIdentity
+                );
+        }
+
+        /// <summary>
+        /// Gets the annotations (annotations + comments) of ontology entity
+        /// </summary>
+        /// <param name="dataTableName">Name of the column's table</param>
+        /// <param name="columnName">Name of the column which properties (based on mapping) I want to get</param>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Annotations of ontology entity</returns>
+        public string[] getOntologyEntityAnnotations(string dataTableName, string columnName, bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    /// parse current Mapping
+                    string[] tmpMappedPairs = Mapping.Split(new string[] { separatorOuter }, StringSplitOptions.RemoveEmptyEntries);
+                    string ontologyEntity = "";
+                    /// seeking the row of Mapping which represents mapping of the particular column
+                    foreach (string tmpMappedPair in tmpMappedPairs)
+                    {
+                        string[] DataTable_Column_OntEnt = tmpMappedPair.Split(new string[] { separatorInner }, StringSplitOptions.RemoveEmptyEntries);
+                        if (DataTable_Column_OntEnt[0] == dataTableName && DataTable_Column_OntEnt[1] == columnName)
+                            ontologyEntity = DataTable_Column_OntEnt[2];
+                    }
+                    /// the column of the datatable is mapped on some entity from the ontology
+                    /// if it is empty, then the column is not mapped
+                    if (ontologyEntity != "")
+                    {
+                        OntologyFunctionsPrx prx = GetOntologyFunctionsPrx(true);
+                        if (prx != null)
+                        {
+                            /// getting the data properties from the ontology box
+                            return prx.getOntologyEntityAnnotations(ontologyEntity);
+                        }
+                    }
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
                 _boxModule.StringIceIdentity
                 );
         }
@@ -211,6 +262,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
              * jinak lze pøidat referenci datapreparation (obj/debug), ale nevim jestli
              * je tohle v poøádku
              */
+            
             cacheSetting.Add("DataPreparation.DataSource.Database" + "ConnectionString", connSetting);
             cacheSetting.Add(BoxInfo.typeIdentifier + "dataTableName", dataTableName);
 
@@ -293,11 +345,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 
         public DataTableInfo GetDataTableInfo(string dataTableName, string[] primaryKeyColumns, bool fallOnError)
         {
-            /*TODO smazat
-             * primaryKeyColumns = new string[2];
-            primaryKeyColumns[0] = "ok";
-            primaryKeyColumns[1] = "notok";*/
-
             return ExceptionsHandler.GetResult<DataTableInfo>(
                 fallOnError,
                 delegate
@@ -327,16 +374,27 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         #region Ice Functions
 
         /// <summary>
-        /// Gets the properties (dataproperties) of ontology entity - for individuals it is empty
+        /// Gets the properties (Data Properties) of ontology entity - for individuals it is empty
         /// </summary>
-        /// <param name="dataTableColumnName">Name of table column which properties (based on mapping) I want to get</param>
-        /// <param name="dataTableColumnName">Name of the data table and its column</param>
+        /// <param name="dataTableName">Name of the column's table</param>
+        /// <param name="columnName">Name of the column which properties (based on mapping) I want to get</param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>Data properties of ontology entity</returns>
-
         public override StrSeqMap getOntologyEntityProperties(string dataTableName, string columnName, Ice.Current current__)
         {
             return getOntologyEntityProperties(dataTableName, columnName, true);
+        }
+
+        /// <summary>
+        /// Gets the annotations (annotations + comments) of ontology entity
+        /// </summary>
+        /// <param name="dataTableName">Name of the column's table</param>
+        /// <param name="columnName">Name of the column which properties (based on mapping) I want to get</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Annotations of ontology entity</returns>
+        public override string[] getOntologyEntityAnnotations(string dataTableName, string columnName, Ice.Current current__)
+        {
+            return getOntologyEntityAnnotations(dataTableName, columnName, true);
         }
 
         public override string[] getDataTablesNames(Current current__)
@@ -347,6 +405,21 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public override string[] getColumnsNames(string dataTableName, Current current__)
         {
             return GetColumnsNames(dataTableName, true);
+        }
+
+        public override string getMapping(Current current__)
+        {
+            return Mapping == null ? "" : Mapping;
+        }
+
+        public override string getMappingSeparatorInner(Current current__)
+        {
+            return separatorInner;
+        }
+
+        public override string getMappingSeparatorOuter(Current current__)
+        {
+            return separatorOuter;
         }
 
         public override DataTableInfo getDataTableInfo(string dataTableName, string[] primaryKeyColumns, Current current__)
