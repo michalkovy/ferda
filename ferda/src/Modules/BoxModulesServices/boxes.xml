@@ -1770,7 +1770,7 @@
 				<CategoryName>Intervals</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>0</Default>
+				<Default>10</Default>
 				<NumericalRestrictions>
 					<Restriction>
 						<Integral>0</Integral>
