@@ -72,9 +72,23 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Implicational.Foun
             }
         }
 
+        private bool _running = false;
+        private double _treshold;
+
+        public override void BeginOfUse(Current current__)
+        {
+            _treshold = this.Treshold;
+            _running = true;
+        }
+
+        public override void EndOfUse(Current current__)
+        {
+            _running = false;
+        }
+
         public double Treshold
         {
-            get { return _boxModule.GetPropertyDouble(Common.PropTreshold); }
+            get { return (_running) ? _treshold : _boxModule.GetPropertyDouble(Common.PropTreshold); }
         }
 
         public BoundTypeEnum FromRowBoundary

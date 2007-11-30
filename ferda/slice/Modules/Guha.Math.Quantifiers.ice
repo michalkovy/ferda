@@ -161,6 +161,16 @@ module Ferda {
 					*/
 					idempotent Ferda::Modules::BoolSeq ComputeBatch(QuantifierEvaluateSettingSeq param)
 						throws Ferda::Modules::BoxRuntimeError;
+					
+					/*
+					At begining of use call this
+					*/
+					idempotent void BeginOfUse();
+					
+					/*
+					At end of use call this
+					*/
+					idempotent void EndOfUse();
 				};
 
 				interface QuantifierValueBaseFunctions

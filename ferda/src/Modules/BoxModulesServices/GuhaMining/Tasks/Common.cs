@@ -876,6 +876,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                                                new string[] { SockQuantifiers }, 
                                                restrictionTypeEnum.OtherReason);
             }
+            foreach (QuantifierBaseFunctionsPrx quantifier in quantifiers) quantifier.BeginOfUse();
 
             
             // UNDONE in this version is only operation mode difference of quatifier values supported for SD tasks            
@@ -922,6 +923,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                     new int[0],
                     out statistics
                     );
+
+            foreach (QuantifierBaseFunctionsPrx quantifier in quantifiers) quantifier.EndOfUse();
 
             //SerializableResultInfo deserealized = SerializableResultInfo.Deserialize(statistics);
             //boxModule.Output.writeMsg(MsgType.Info, "Peformance info", deserealized.OtherInfo);
