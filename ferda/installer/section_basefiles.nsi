@@ -29,6 +29,9 @@ SectionGroup "$(Basefiles)" BaseFiles
 	SetOutPath "$INSTDIR\Server\OWLParser"
 	File /r ..\bin\Server\OWLParser\*.*
 	
+	SetOutPath "$INSTDIR\Server\OWLParser\Ferda\src"
+	File ..\src\Modules\FerdaOWLParser\OWL_API_src\*.*
+	
 	;SetOutPath "$INSTDIR\Server\BoxModulesServices"
 	;File /r ..\bin\Server\BoxModulesServices\*.*
 	  
@@ -87,11 +90,33 @@ SectionGroup "$(Basefiles)" BaseFiles
     Push $INSTDIR\db\application.xml      #-- file to replace in
     Call AdvReplaceInFile         #-- Call the Function
 
-    Push "<IceBinPath />"
-    Push "<IceBinPath>$R1\bin\</IceBinPath>"
+    ;not used
+    ;Push "<IceBinPath />"
+    ;Push "<IceBinPath>$R1\bin\</IceBinPath>"
+    ;Push all
+    ;Push all
+    ;Push $INSTDIR\FrontEnd\FrontEndConfig.xml
+    ;Call AdvReplaceInFile         #-- Call the Function
+    
+    Push "pwd=$\"set in ferda.build$\""
+    Push "pwd=$\"$INSTDIR\Server\OWLParser\$\""
     Push all
     Push all
-    Push $INSTDIR\FrontEnd\FrontEndConfig.xml
+    Push $INSTDIR\db\application.xml
+    Call AdvReplaceInFile         #-- Call the Function
+    
+    Push "icepath=$\"set in ferda.build$\""
+    Push "icepath=$\"$R1\lib\ice.jar$\""
+    Push all
+    Push all
+    Push $INSTDIR\db\application.xml
+    Call AdvReplaceInFile         #-- Call the Function
+    
+    Push "owlapipath=$\"set in ferda.build$\""
+    Push "owlapipath=$\"$INSTDIR\Server\OWLParser\Ferda\src$\""
+    Push all
+    Push all
+    Push $INSTDIR\db\application.xml
     Call AdvReplaceInFile         #-- Call the Function
                            
 	;creating .bat for ice
