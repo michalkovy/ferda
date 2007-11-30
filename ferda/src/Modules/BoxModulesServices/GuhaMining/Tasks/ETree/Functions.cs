@@ -24,6 +24,7 @@ using Ferda.Guha.MiningProcessor.Results;
 using Ferda.ModulesManager;
 using Ice;
 using System.Collections.Generic;
+using System;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
 {
@@ -57,16 +58,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         #region Properties
 
         /// <summary>
-        /// Minimal node impurity (algorithm parameter). Minimal node impurity is
-        /// a condition for stopping growth of a tree. When sufficient amount 
-        /// (determined by this parameter) of cases (items) belongs to one classification
-        /// class in one node, the three is returned in output and stops growing. 
+        /// Minimal node purity (algorithm parameter). Node purity = number of
+        /// right classifications/number of all items in the node. Minimal node purity
+        /// means that if the node purity is lower than minimal, the node branches,
+        /// otherwise it stops branching.
         /// </summary>
-        public int MinimalNodeImpurity
+        public float MinimalNodePurity
         {
             get
             {
-                return _boxModule.GetPropertyInt(SockMinimalNodeImpurity);
+                return _boxModule.GetPropertyFloat(SockMinimalNodePurity);
             }
         }
 
@@ -136,6 +137,20 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
             }
         }
 
+        /// <summary>
+        /// Defines criterion for stopping of branching of a node
+        /// in the ETree mining procedure.
+        /// </summary>
+        public BranchingStoppingCriterionEnum BranchingStoppingCriterion
+        {
+            get
+            {
+                return (BranchingStoppingCriterionEnum)Enum.Parse(
+                    typeof(BranchingStoppingCriterionEnum),
+                    _boxModule.GetPropertyString(SockBranchingStoppingCriterion));
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -156,9 +171,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         public const string SockBranchingAttributes = "BranchingAttributes";
 
         /// <summary>
-        /// Name of the socket defininng minimal node impurity
+        /// Name of the socket defininng minimal node purity
         /// </summary>
-        public const string SockMinimalNodeImpurity = "MinimalNodeImpurity";
+        public const string SockMinimalNodePurity = "MinimalNodePurity";
 
         /// <summary>
         /// Name of the socket defining minimal node frequency
@@ -185,6 +200,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// length, or also shorter subtrees.
         /// </summary>
         public const string SockOnlyFullTree = "OnlyFullTree";
+
+        /// <summary>
+        /// Name of the socket defining the criterion for stopping of node branching
+        /// </summary>
+        public const string SockBranchingStoppingCriterion = "BranchingStoppingCriterion";
 
         #region MiningTaskFunctions overrides
 
@@ -377,8 +397,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
             par.branchingAttributes = branchingAttributes;
             par.targetClassificationAttribute = classificationAttribute;
             par.quantifiers = quantifiers.ToArray();
-            par.minimalNodeImpurity = MinimalNodeImpurity;
+            par.minimalNodePurity = MinimalNodePurity;
             par.minimalNodeFrequency = MinimalNodeFrequency;
+            par.branchingStoppingCriterion = BranchingStoppingCriterion;
             par.maximalTreeDepth = MaximalTreeDepth;
             par.noAttributesForBranching = NoAttributesForBranching;
             par.maxNumberOfHypotheses = MaxNumberOfHypotheses;

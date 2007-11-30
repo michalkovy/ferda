@@ -2643,9 +2643,9 @@
 				<Hint>Input attributes for branching</Hint>
 			</Socket>
 			<Socket>
-				<Name>MinimalNodeImpurity</Name>
-				<Label>Minimal node impurity</Label>
-				<Hint>Minimal node impurity</Hint>
+				<Name>MinimalNodePurity</Name>
+				<Label>Minimal node purity</Label>
+				<Hint>If the node has purity lower than minimal, it branches, otherwise it stops branching.</Hint>
 			</Socket>
 			<Socket>
 				<Name>OnlyFullTree</Name>
@@ -2697,7 +2697,36 @@
 				<Label>Maximal tree depth</Label>
 				<Hint>Maximal tree depth</Hint>
 			</Socket>
+			<Socket>
+				<Name>BranchingStoppingCriterion</Name>
+				<Label>Branching stopping criterion</Label>
+				<Hint>Criterion for stopping of node branching</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>MinimalNodeFrequency</Name>
+						<Label>Minimalnode frequency</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>MinimalNodePurity</Name>
+						<Label>Minimal node purity</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>MinimalNodeFrequencyORMinimalNodePurity</Name>
+						<Label>Minimal frequency OR minimal purity of a node</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
 		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Settings</Name>
+				<Label>Procedure settting</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>OutputInfo</Name>
+				<Label>Output information</Label>
+			</PropertyCategory>
+		</PropertyCategories>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication</Identifier>

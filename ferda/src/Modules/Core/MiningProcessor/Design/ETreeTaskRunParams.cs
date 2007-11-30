@@ -1,4 +1,4 @@
-// ETreeMiningProcessor.cs - task parameters for the ETree procedure
+// ETreeTaskRunParams.cs - task parameters for the ETree procedure
 //
 // Authors: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
@@ -49,12 +49,12 @@ namespace Ferda.Guha.MiningProcessor.Design
         public Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrx[] quantifiers;
 
         /// <summary>
-        /// Minimal node impurity (algorithm parameter). Minimal node impurity is
-        /// a condition for stopping growth of a tree. When sufficient amount 
-        /// (determined by this parameter) of cases (items) belongs to one classification
-        /// class in one node, the three is returned in output and stops growing. 
+        /// Minimal node purity (algorithm parameter). Node purity = number of
+        /// right classifications/number of all items in the node. Minimal node purity
+        /// means that if the node purity is lower than minimal, the node branches,
+        /// otherwise it stops branching.
         /// </summary>
-        public int minimalNodeImpurity;
+        public int minimalNodePurity;
 
         /// <summary>
         /// Minimal node frequency (algorithm parameter). Minimal node frequency is
@@ -63,6 +63,13 @@ namespace Ferda.Guha.MiningProcessor.Design
         /// in output and stops growing. 
         /// </summary>
         public int minimalNodeFrequency;
+
+        /// <summary>
+        /// Determines the stopping of branching in a node. It can be either
+        /// according to minimal node frequency, or to minimal node purity
+        /// or to disjunction of both.
+        /// </summary>
+        public BranchingStoppingCriterionEnum branchingStoppingCriterion;
 
         /// <summary>
         /// Maximal tree depth (algorithm parameter). The total depth of the tree

@@ -231,10 +231,18 @@
       <Member type="Field">public Ferda.Guha.Math.Quantifiers.QuantifierBase quantifiers</Member>
       <Member type="Field">public int minimalNodeImpurity</Member>
       <Member type="Field">public int minimalNodeFrequency</Member>
+      <Member type="Field">public BranchingStoppingCriterionEnum branchingStoppingCriterion</Member>
       <Member type="Field">public int maximalTreeDepth</Member>
       <Member type="Field">public int noAttributesForBranching</Member>
       <Member type="Field">public long maxNumberOfHypotheses</Member>
       <Member type="Field">public bool onlyFullTree</Member>
+    </Entity>
+    <Entity type="Enum">
+      <Name>BranchingStoppingCriterionEnum</Name>
+      <Access>Public</Access>
+      <Value>MinimalNodePurity</Value>
+      <Value>MinimalNodeFrequency</Value>
+      <Value>MinimalNodePurityORMinimalNodeFrequency</Value>
     </Entity>
   </Entities>
   <Relations>
@@ -341,6 +349,11 @@
     <Relation type="Dependency" first="4" second="5" />
     <Relation type="Dependency" first="4" second="22" />
     <Relation type="Association" first="27" second="32">
+      <Direction>None</Direction>
+      <IsAggregation>False</IsAggregation>
+      <IsComposition>False</IsComposition>
+    </Relation>
+    <Relation type="Association" first="33" second="32">
       <Direction>None</Direction>
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
@@ -476,8 +489,12 @@
       <Size width="176" height="116" />
     </Shape>
     <Shape>
-      <Location left="301" top="1303" />
-      <Size width="321" height="238" />
+      <Location left="335" top="1308" />
+      <Size width="352" height="255" />
+    </Shape>
+    <Shape>
+      <Location left="18" top="1325" />
+      <Size width="264" height="126" />
     </Shape>
     <Connection>
       <StartNode isHorizontal="True" location="63" />
@@ -618,6 +635,10 @@
     <Connection>
       <StartNode isHorizontal="True" location="17" />
       <EndNode isHorizontal="True" location="66" />
+    </Connection>
+    <Connection>
+      <StartNode isHorizontal="True" location="24" />
+      <EndNode isHorizontal="True" location="148" />
     </Connection>
   </Positions>
 </ClassProject>
