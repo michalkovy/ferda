@@ -601,8 +601,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
 
                             case DbSimpleDataTypeEnum.DateTimeSimpleType:
                                 {
-                                    DateTime _dtmin = Convert.ToDateTime(_min);
-                                    DateTime _dtmax = Convert.ToDateTime(_max);
+                                    __min = Convert.ToDateTime(_min);
+                                    __max = Convert.ToDateTime(_max);
 
                                     Categorization.Retyper<DateTime>.ToTypeDelegate dg =
                                             new Categorization.Retyper<DateTime>.ToTypeDelegate(Convert.ToDateTime);
@@ -616,6 +616,24 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                                         ClosedFrom, __max,
                                         BoundaryEnum.Closed, false
                                         );
+                                }
+                                break;
+                            case DbSimpleDataTypeEnum.StringSimpleType:
+                                {
+                                    __min = _min;
+                                    __max = _max;
+
+                                    Categorization.Retyper<string>.ToTypeDelegate dg =
+                                        new Categorization.Retyper<string>.ToTypeDelegate(Convert.ToString);
+
+                                    string[] _divisionPoints =
+                                        Categorization.Retyper<string>.PrepareForEquifrequency(dt, dg, count);
+
+                                    result.CreateIntervals(
+                                        BoundaryEnum.Closed, __min,
+                                        Categorization.Retyper<string>.Retype(_divisionPoints),
+                                        ClosedFrom, __max,
+                                        BoundaryEnum.Closed, false);
                                 }
                                 break;
 
