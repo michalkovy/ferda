@@ -240,7 +240,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 throw Exceptions.BadValueError(
                     null,
                     boxModule.StringIceIdentity,
-                    "Count of intervals has to be greater than 0.",
+                    "Length of an interval has to be greater than 0.",
                     new string[] { Functions.PropCountOfCategories },
                     restrictionTypeEnum.OtherReason
                     );
@@ -249,19 +249,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             object dummy = Func.GetColumnFunctionsPrx(true);
             dummy = Func.GetAttributeId();
             dummy = Func.GetAttributeNames();
-            try
-            {
-                dummy = Func.GetAttribute(true);
-            }
-            catch
-            {
-                throw Exceptions.BadParamsError(
-                    null,
-                    boxModule.StringIceIdentity,
-                    "Requested number of intervals is either 0, exceeds count of values or domain is set incorrectly",
-                    restrictionTypeEnum.OtherReason
-                    );
-            }
+            dummy = Func.GetAttribute(true);
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);
