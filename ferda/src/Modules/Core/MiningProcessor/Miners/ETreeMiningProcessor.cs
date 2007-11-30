@@ -83,12 +83,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         #region Private fields
 
         /// <summary>
-        /// Minimal node impurity (algorithm parameter). Minimal node impurity is
-        /// a condition for stopping growth of a tree. When sufficient amount 
-        /// (determined by this parameter) of cases (items) belongs to one classification
-        /// class in one node, the three is returned in output and stops growing. 
+        /// Minimal node purity (algorithm parameter). Node purity = number of
+        /// right classifications/number of all items in the node. Minimal node purity
+        /// means that if the node purity is lower than minimal, the node branches,
+        /// otherwise it stops branching.
         /// </summary>
-        private int minimalNodeImpurity;
+        private float minimalNodePurity;
 
         /// <summary>
         /// Minimal node frequency (algorithm parameter). Minimal node frequency is
@@ -97,6 +97,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// in output and stops growing. 
         /// </summary>
         private int minimalNodeFrequency;
+
+        /// <summary>
+        /// Defines criterion for stopping of branching of a node
+        /// in the ETree mining procedure.
+        /// </summary>
+        private BranchingStoppingCriterionEnum branchingStoppingCriterion;
 
         /// <summary>
         /// Maximal tree depth (algorithm parameter). The total depth of the tree
@@ -198,17 +204,21 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Quatifiers to evaluate the tree quality 
         /// (algorithm parameter)
         /// </param>
-        /// <param name="minimalNodeImpurity">
-        /// Minimal node impurity (algorithm parameter). Minimal node impurity is
-        /// a condition for stopping growth of a tree. When sufficient amount 
-        /// (determined by this parameter) of cases (items) belongs to one classification
-        /// class in one node, the three is returned in output and stops growing. 
+        /// <param name="minimalNodePurity">
+        /// Minimal node purity (algorithm parameter). Node purity = number of
+        /// right classifications/number of all items in the node. Minimal node purity
+        /// means that if the node purity is lower than minimal, the node branches,
+        /// otherwise it stops branching.
         /// </param>
         /// <param name="minimalNodeFrequency">
         /// Minimal node frequency (algorithm parameter). Minimal node frequency is
         /// a condition for stopping growth of a tree. When a node does not contain
         /// minimal number of items (determined by this parameter), the three is returned
         /// in output and stops growing. 
+        /// </param>
+        /// <param name="branchingStoppingCriterion">
+        /// Defines criterion for stopping of branching of a node
+        /// in the ETree mining procedure.
         /// </param>
         /// <param name="maximalTreeDepth">
         /// Maximal tree depth (algorithm parameter). The total depth of the tree
@@ -236,8 +246,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
             CategorialAttribute[] branchingAttributes,
             CategorialAttribute targetClassificationAttribute,
             QuantifierBaseFunctionsPrx[] quantifiers,
-            int minimalNodeImpurity,
+            float minimalNodePurity,
             int minimalNodeFrequency,
+            BranchingStoppingCriterionEnum branchingStoppingCriterion,
             int maximalTreeDepth,
             int noAttributesForBranching,
             long maxNumberOfHypotheses,
@@ -254,6 +265,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 targetClassificationAttribute, false);
             this.quantifiers = quantifiers;
             this.onlyFullTree = onlyFullTree;
+            this.minimalNodePurity = minimalNodePurity;
+            this.branchingStoppingCriterion = branchingStoppingCriterion;
 
             //checking corectness of the input parameters
             if (minimalNodeFrequency < 1)
@@ -263,16 +276,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             else
             {
                 this.minimalNodeFrequency = minimalNodeFrequency;
-            }
-
-            if (minimalNodeImpurity < 1)
-            {
-                throw Exceptions.NotMoreThanZeroException("MinimalNodeImpurity");
-            }
-            else
-            {
-                this.minimalNodeImpurity = minimalNodeImpurity;
-
             }
 
             if (maximalTreeDepth < 1)
@@ -507,10 +510,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             //fulfills the minimal node impurity criterion (there exists a category
             //where number of items for that category is larger than given parameter)
             //then do no further branching of the tree
-            if (processTree.HasMinimalImpurity(minimalNodeImpurity))
-            {
-                return lifo;
-            }
+            //if (processTree.HasMinimalImpurity(minimalNodeImpurity))
+            //{
+            //    return lifo;
+            //}
 
             //3. rule for further branching - if the tree does not contain nodes
             //that fulfill minimal node frequency criterion (number of items in 

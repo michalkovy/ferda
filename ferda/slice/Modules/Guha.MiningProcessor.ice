@@ -292,13 +292,21 @@ module Ferda {
 					WorkingWithSecondSetModeEnum sdWorkingWithSecondSetMode; // for SD tasks only
 				};
 				
+				enum BranchingStoppingCriterionEnum
+				{
+			            MinimalNodePurity,
+			            MinimalNodeFrequency,
+			            MinimalNodeFrequencyORMinimalNodePurity
+				};
+				
 				struct ETreeTaskRunParams
 				{
 				      CategorialAttributeSeq branchingAttributes;
 				      CategorialAttribute targetClassificationAttribute;
 				      Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq quantifiers;
-				      int minimalNodeImpurity;
+				      float minimalNodePurity;
 				      int minimalNodeFrequency;
+				      BranchingStoppingCriterionEnum branchingStoppingCriterion;
 				      int maximalTreeDepth;
 				      int noAttributesForBranching;
 				      long maxNumberOfHypotheses;

@@ -2611,9 +2611,9 @@
 				<Hint>Vstupní atributy, z nichž budou vznikat rozhodovací stromy</Hint>
 			</Socket>
 			<Socket>
-				<Name>MinimalNodeImpurity</Name>
+				<Name>MinimalNodePurity</Name>
 				<Label>Minimální čistota listu</Label>
-				<Hint>Minimální čistota uzlu</Hint>
+				<Hint>Pokud bude mít uzel čistotu menší než minimálni, tak se větví jinak se nevětví</Hint>
 			</Socket>
 			<Socket>
 				<Name>MinimalNodeFrequency</Name>
@@ -2665,7 +2665,36 @@
 				<Label>Počet relevantních otázek</Label>
 				<Hint>Celkové množství relevatntních otázek v dané úloze.</Hint>
 			</Socket>
+			<Socket>
+				<Name>BranchingStoppingCriterion</Name>
+				<Label>Kritérium zastavení větvení</Label>
+				<Hint>Kritérium, podle kterého se se zastaví větvení v uzlu.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>MinimalNodeFrequency</Name>
+						<Label>Minimální frekvence uzlu</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>MinimalNodePurity</Name>
+						<Label>Minimální čistota uzlu</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>MinimalNodeFrequencyORMinimalNodePurity</Name>
+						<Label>Minimální frekvence NEBO minimální čistota uzlu</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
 		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Settings</Name>
+				<Label>Nastavení procedury</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>OutputInfo</Name>
+				<Label>Informace o výstupu</Label>
+			</PropertyCategory>
+		</PropertyCategories>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication</Identifier>
