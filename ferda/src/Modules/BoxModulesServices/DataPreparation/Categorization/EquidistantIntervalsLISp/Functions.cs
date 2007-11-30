@@ -537,7 +537,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 
                             case DbSimpleDataTypeEnum.StringSimpleType:
                                 throw new Exception("Cannot create equidistant intervals from a column containing strings.\nFerda cannot determine how to measure distance between strings.");
-                                break;
 
                             case DbSimpleDataTypeEnum.ShortSimpleType:
                             case DbSimpleDataTypeEnum.IntegerSimpleType:
