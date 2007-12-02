@@ -439,6 +439,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         //their frequencies for the equifrequency intervals generation
                         if (Domain == DomainEnum.SubDomain)
                         {
+                            if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
+                            {
+                                throw new Exception("Creation of string equifrequency intervals of sub domains is not supported.");
+                            }
+
                             IComparable from;
                             IComparable to;
                             parseFromTo(column.Explain.dataType, out from, out to);
