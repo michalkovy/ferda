@@ -338,6 +338,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 processTree = stack.Pop();
                 string ifr = processTree.IfRepresentation;
 
+                stack = Process(processTree, stack);
+
                 if (QualityTree(processTree))
                 {
                     noOfHypotheses++;
@@ -351,8 +353,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         return;
                     }
                 }
-
-                stack = Process(processTree, stack);
 
                 if (!ProgressSetValue((float)noOfHypotheses / maxNumberOfHypotheses,
                     string.Format("Number of Verifications: {0}, Number of hypotheses: {1}, Stack size: {2}",
@@ -453,10 +453,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return false;
             }
 
-            processTree.InitNodeClassification(
-                targetClassificationAttribute.BitStrings,
-                targetClassificationAttribute.CategoriesIds);
-
             QuantifierEvaluateSetting setting = new QuantifierEvaluateSetting();
             setting.contingencyTable = processTree.ConfusionMatrix(
                 targetClassificationAttribute.BitStrings,
@@ -487,6 +483,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             List<Node> nodesForBranching;
 
+            //classification of the nodes for minimal purity check
+            if (processTree.RootNode != null)
+            {
+                processTree.InitNodeClassification(
+                    targetClassificationAttribute.BitStrings,
+                    targetClassificationAttribute.CategoriesIds);
+            }
+
             //1. rule for further branching - if the three is already of the 
             //maximal length, do no further branching of the tree
             if (processTree.Depth == maximalTreeDepth)
@@ -506,23 +510,16 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return AddAttributesFromSeed(branching);
             }
 
-            //2. rule for further branching - if the tree contains node that
-            //fulfills the minimal node impurity criterion (there exists a category
-            //where number of items for that category is larger than given parameter)
-            //then do no further branching of the tree
-            //if (processTree.HasMinimalImpurity(minimalNodeImpurity))
-            //{
-            //    return lifo;
-            //}
-
-            //3. rule for further branching - if the tree does not contain nodes
-            //that fulfill minimal node frequency criterion (number of items in 
-            //their nodes is smaller that the MinimalNodeFrequency parameter),
-            //then do no further branching of the tree
-            if (!processTree.ContainsMoreThanMinimalFrequencyNodes(
-                minimalNodeFrequency, out nodesForBranching))
+            //Selecting the nodes that fulfill the minimal node frequency criterion
+            //(if is demanded).
+            if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequency
+                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalNodePurity)
             {
-                return lifo;
+                nodesForBranching = processTree.NodesForBranching(minimalNodeFrequency);
+            }
+            else
+            {
+                nodesForBranching = new List<Node>(processTree.RootNode.GetLeaves());
             }
 
             //for each node adding a new tree 
@@ -560,6 +557,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }            
             }
             rightCats = DeleteOneClassificationCategoryOnly(node, rightCats);
+
+            //the minimal node purity criterion (if needed)
+            if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodePurity
+                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalNodePurity)
+            {
+                rightCats = DeleteImpureCategories(node, rightCats);
+            }
             
             if (rightCats.Count == 0)
             {
@@ -587,6 +591,27 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             return lifo;
+        }
+
+        /// <summary>
+        /// Deletes impure categories of the node from the list of node's categories.
+        /// </summary>
+        /// <param name="node">Node where it is happening</param>
+        /// <param name="rightCats">Categories for possible branching</param>
+        /// <returns>Categories for branching that are pure</returns>
+        private List<string> DeleteImpureCategories(Node node, List<string> rightCats)
+        {
+            List<string> result = new List<string>(rightCats);
+
+            foreach (string category in rightCats)
+            {
+                if (node.CategoryPurity(category) >= minimalNodePurity)
+                {
+                    result.Remove(category);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>

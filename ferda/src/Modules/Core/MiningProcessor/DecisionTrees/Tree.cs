@@ -87,23 +87,14 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         #region Public Methods
 
         /// <summary>
-        /// Determines if the tree contains at least one leaf, that
-        /// has node frequency (number of items classified by the node)
-        /// bigger then minimal node frequency from the parameter.
-        /// Here, we do not count individual categories of nodes, but
-        /// rather frequencies of whole nodes. 
+        /// Selects the nodes for further branching (they have at least
+        /// one category, which has frequency biggre that minimal node frequency
         /// </summary>
         /// <param name="minimalNodeFrequency">Minimal node frequency</param>
-        /// <param name="nodesWithMoreThanMinimalFrequency">
-        /// In this parameter, the nodes that have bigger frequency than
-        /// minimal are stored.
-        /// </param>
-        /// <returns>Iff the tree contains a node with frequency bigger
-        /// than minimal</returns>
-        public bool ContainsMoreThanMinimalFrequencyNodes(int minimalNodeFrequency,
-            out List<Node> nodesWithMoreThanMinimalFrequency)
+        /// <returns>Nodes for branching</returns>
+        public List<Node> NodesForBranching(int minimalNodeFrequency)
         {
-            nodesWithMoreThanMinimalFrequency = new List<Node>();
+            List<Node> nodesWithMoreThanMinimalFrequency = new List<Node>();
 
             if (rootNode.Leaf)
             {
@@ -122,7 +113,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                 {
                     nodesWithMoreThanMinimalFrequency.Add(rootNode);
                 }
-                return hasCategories;
+                return nodesWithMoreThanMinimalFrequency;
             }
             else
             {
@@ -134,21 +125,8 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                     }
                 }
 
-                return (nodesWithMoreThanMinimalFrequency.Count > 0);
+                return nodesWithMoreThanMinimalFrequency;
             }
-        }
-
-        /// <summary>
-        /// Determines if the tree has a node which fullfils the minimal node
-        /// impurity criterion, that is that there exists a category in the node,
-        /// which has number of items greater than the parameter.
-        /// </summary>
-        /// <param name="minimalImpurity">Mininmal node impurity parameter</param>
-        /// <returns>True if there exist a node fullfilling the minimal node
-        /// impurity criterion</returns>
-        public bool HasMinimalImpurity(int minimalImpurity)
-        {
-            return rootNode.HasMinimalImpurity(minimalImpurity);
         }
 
         /// <summary>
