@@ -157,6 +157,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                             Guha.Attribute.Serializer.Serialize(
                             (attribute.Export()))));
 
+                        //TODO smazat
+                        /*System.Windows.Forms.MessageBox.Show("***" + new StringTI(
+                            Guha.Attribute.Serializer.Serialize(
+                            (attribute.Export()))));*/
+
                         singleModule.propertySetting = new PropertySetting[] { editCategories };
                         break;
 
@@ -215,6 +220,30 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         }
 
         /// <summary>
+        /// Executes (runs) action specified by <c>actionName</c>.
+        /// </summary>
+        /// <param name="actionName">Name of the action.</param>
+        /// <param name="boxModule">The Box module.</param>
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">
+        /// Thrown if action named <c>actionName</c> doesn`t exist.
+        /// </exception>
+        /// <exception cref="T:Ferda.Modules.BoxRuntimeError">
+        /// Thrown if any runtime error occured while executing the action.
+        /// </exception>
+        public override void RunAction(string actionName, BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            switch (actionName)
+            {
+                case "ReloadOntologyProperties":
+                    Func.setOntologyEntityProperties();
+                    break;
+                default:
+                    throw Exceptions.NameNotExistError(null, actionName);
+            }
+        }
+
+        /// <summary>
         /// Box identifier
         /// </summary>
         public const string typeIdentifier = "DataPreparation.Categorization.OntologyDerivedAttribute";
@@ -235,7 +264,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
             
-            if (Func.Count <= 0)
+            //TODO smazat
+            /*if (Func.Count <= 0)
             {
                 throw Exceptions.BadValueError(
                     null,
@@ -244,7 +274,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                     new string[] { Functions.PropCountOfCategories },
                     restrictionTypeEnum.OtherReason
                     );
-            }
+            }*/
+
             // try to invoke methods
             object dummy = Func.GetOntologyEnablingColumnFunctionsPrx(true);
             dummy = Func.GetAttributeId();
@@ -259,20 +290,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                 throw Exceptions.BadParamsError(
                     null,
                     boxModule.StringIceIdentity,
-                    "Requested number of intervals is either 0, exceeds count of values or domain is set incorrectly",
+                    "Domain is set incorrectly or some of the ontology derived parameter can't be converted into datatype of the data table column",
                     restrictionTypeEnum.OtherReason
-                    );
+                );
             }
-            /*   catch(Exception e)
-               {
-                   throw Exceptions.BadValueError(
-                       null,
-                       boxModule.StringIceIdentity,
-                       "Error occured: " + e.Message,
-                       new string[] { Functions.SockColumn },
-                       restrictionTypeEnum.OtherReason
-                       );
-               }*/
+            
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);
             dummy = Func.GetBitStrings(true);
@@ -288,9 +310,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                     );
 
             CardinalityEnum potentiallyCardinality = Func.PotentiallyCardinality(true);
-
-            //TODO SMAZAT
-            Func.setOntologyEntityProperties();
         }
     }
 }

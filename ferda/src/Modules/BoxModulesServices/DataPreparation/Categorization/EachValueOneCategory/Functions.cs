@@ -313,9 +313,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                             parseFromTo(column.Explain.dataType, out from, out to);
                             string columnSelectExpression = column.GetQuotedQueryIdentifier();
 
-                            dt = column.GetDistincts(columnSelectExpression + ">=" +
-                                from +
-                                " AND " + columnSelectExpression + "<=" + to);
+                            //strings must be placed between apostrophes in SQL QUERY
+                            if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
+                            {
+
+                                dt = column.GetDistinctsAndFrequencies(
+                                    columnSelectExpression + ">= '" + from + "' AND " + columnSelectExpression + "<= '" + to + "'"
+                                    );
+                            }
+
+                            else
+                            {
+                                dt = column.GetDistinctsAndFrequencies(
+                                    columnSelectExpression + ">=" + from + " AND " + columnSelectExpression + "<=" + to
+                                    );
+                            }
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {
