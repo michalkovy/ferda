@@ -317,42 +317,6 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         }
 
         /// <summary>
-        /// Determines if the node (or one of its subnodes) fullfils the minimal node
-        /// impurity criterion, that is that there exists a category in the node,
-        /// which has number of items greater than the parameter.
-        /// </summary>
-        /// <param name="minimalImpurity">Mininmal node impurity parameter</param>
-        /// <returns>True if there exist a node fullfilling the minimal node
-        /// impurity criterion</returns>
-        public bool HasMinimalImpurity(int minimalImpurity)
-        {
-            foreach (string category in SubCategories)
-            {
-                if (CategoryBitString(category).Sum > minimalImpurity)
-                {
-                    return true;
-                }
-            }
-
-            if (SubNodes == null)
-            {
-                return false;
-            }
-
-            foreach (Node node in SubNodes.Values)
-            {
-                //it is sufficient that only one of all the nodes has minimal 
-                //impurity
-                if (node.HasMinimalImpurity(minimalImpurity))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Gets a bit string of one category. This string is created
         /// by ANDing the base bit string of the node and bit string of the
         /// category from the bit string generator.
@@ -553,6 +517,20 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                         classificationCategories);
                 }
             }
+        }
+
+        /// <summary>
+        /// Determines the purity of a category in parameter
+        /// (No of right classifications/no of items in da category)
+        /// </summary>
+        /// <param name="category">Category</param>
+        /// <returns>Purity of a category</returns>
+        public float CategoryPurity(string category)
+        {
+            NodeClassification classif = classifiedCategories[category];
+            float result = (float)(classif.noItemsInCategory - classif.noErrors) /
+                (float)classif.noItemsInCategory;
+            return result;
         }
 
         #endregion
