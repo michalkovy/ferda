@@ -43,7 +43,7 @@ XPStyle on
 !insertmacro MUI_PAGE_FINISH
 
 ;Default installation folder
-;InstallDir "c:\FerdaDataminer"
+;InstallDir "c:\Program Files\FerdaDataminer"
 Name "Ferda DataMiner"
 OutFile "ferda_install.exe"
 
