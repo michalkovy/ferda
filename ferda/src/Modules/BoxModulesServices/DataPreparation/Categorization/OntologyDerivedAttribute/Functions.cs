@@ -372,6 +372,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                 fallOnError);
         }
 
+        //TODO smazat - ale možná to bude potøeba pro AddIn - zjistit a ošetøit
+
         /// <summary>
         /// Gets proxy of the connected column box - Column interface
         /// </summary>
@@ -525,24 +527,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             cacheSetting.Add(
                 Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropSelectExpression,
                 tmp.columnSelectExpression);
-            //adding the  information about the column cardinality to the cache
-            cacheSetting.Add(Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropCardinality,
-                             tmp.cardinality);
             //adding other attribute information to the cache
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
-            
-            //TODO doplnit do cache hodnoty z ontologie a smazat vìci týkající se categories (nebude)
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropCountOfCategories, (long)Count);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropClosedFrom, ClosedFrom);
 
-            //count of categories
-            int count = (int)Count;
-            if (count <= 0)
-            {
-                count = 1;
-            }
+            //adding the information derived from ontology to the cache
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropCardinality, Cardinality);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropMinimum, Minimum);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropMaximum, Maximum);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropDomainDividingValues, DomainDividingValues);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropDistinctValues, PropDistinctValues);
 
             //Loading the values from cache or recounting them...
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
@@ -582,9 +578,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                             string columnSelectExpression =
                                 column.GetQuotedQueryIdentifier();
 
-                            dt = column.GetDistinctsAndFrequencies(
-                                columnSelectExpression + ">=" + from + " AND " + columnSelectExpression + "<=" + to
-                                );
+                            //strings must be placed between apostrophes in SQL QUERY
+                            if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
+                            {
+
+                                dt = column.GetDistinctsAndFrequencies(
+                                    columnSelectExpression + ">= '" + from + "' AND " + columnSelectExpression + "<= '" + to + "'"
+                                    );
+                            }
+
+                            else
+                            {
+                                dt = column.GetDistinctsAndFrequencies(
+                                    columnSelectExpression + ">=" + from + " AND " + columnSelectExpression + "<=" + to
+                                    );
+                            }
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {
@@ -595,174 +603,301 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                         }
                         else
                             throw new NotImplementedException();
-
+                        
                         IComparable __min = null;
                         IComparable __max = null;
 
-                        //creating intervals of the type based on the connected column datatype
-                        //switch branches differ only in the datatype, so only one branch will be explained
-                        switch (column.DbSimpleDataType)
+                        _min = column.Statistics.valueMin;
+                        _max = column.Statistics.valueMax;
+
+                        /// if cardinality is Cardinal or Ordinal, then attribute
+                        /// is created by dividing the domain with Domain Dividing Values
+                        /// and separating of Distinct Values from the intervals and creating
+                        /// one category for every Distinct Value
+                        if (Cardinality == CardinalityEnum.Cardinal || Cardinality == CardinalityEnum.Ordinal)
                         {
-                            case DbSimpleDataTypeEnum.FloatSimpleType:
-                            case DbSimpleDataTypeEnum.DoubleSimpleType:
-                                //for double or float type, the same algorithm is used
-                                //which generates division points of double types
-                                //for float, the division points must be retyped to float
 
-                                //converting min and max values for the attribute domain
-                                double _dmin = Convert.ToDouble(_min);
-                                double _dmax = Convert.ToDouble(_max);
+                            //creating intervals of the type based on the connected column datatype
+                            //switch branches differ only in the datatype, so only one branch will be explained
+                            switch (column.DbSimpleDataType)
+                            {
+                                case DbSimpleDataTypeEnum.FloatSimpleType:
+                                case DbSimpleDataTypeEnum.DoubleSimpleType:
+                                    //for double or float type, the same algorithm is used
+                                    //which generates division points of double types
+                                    //for float, the division points must be retyped to float
 
-                                //here the common class for retyping is used
-                                //the division points are retrieved there and retyped to the correct type
-                                if (column.DbSimpleDataType == DbSimpleDataTypeEnum.FloatSimpleType)
-                                {
-                                    __min = (float)_dmin;
-                                    __max = (float)_dmax;
+                                    //converting min and max values for the attribute domain
+                                    double _dmin = Convert.ToDouble(_min);
+                                    double _dmax = Convert.ToDouble(_max);
 
-                                    //delegate method to retype values to float
-                                    Categorization.Retyper<float>.ToTypeDelegate dg =
-                                    new Categorization.Retyper<float>.ToTypeDelegate(ConvertToFloat);
-
-                                    float[] _divisionPoints;
-
-                                    try
+                                    //here the common class for retyping is used
+                                    //the division points are retrieved there and retyped to the correct type
+                                    if (column.DbSimpleDataType == DbSimpleDataTypeEnum.FloatSimpleType)
                                     {
-                                        //generation of the division points
-                                        _divisionPoints =
-                                            Categorization.Retyper<float>.PrepareForEquifrequency(dt, dg, count);
-                                    }
-                                    catch
-                                    {
-                                        throw new ArgumentOutOfRangeException();
-                                    }
-                                    //creating intervals in the attribute
-                                    result.CreateIntervals(
-                                        BoundaryEnum.Closed, __min,
-                                        Categorization.Retyper<float>.Retype(_divisionPoints),
-                                        ClosedFrom, __max,
-                                        BoundaryEnum.Closed, false
-                                        );
-                                }
-                                else
-                                {
-                                    __min = _dmin;
-                                    __max = _dmax;
-                                    Categorization.Retyper<double>.ToTypeDelegate dg =
-                                    new Categorization.Retyper<double>.ToTypeDelegate(Convert.ToDouble);
+                                        __min = (float)_dmin;
+                                        __max = (float)_dmax;
 
-                                    double[] _divisionPoints;
-                                    try
-                                    {
-                                        _divisionPoints =
-                                            Categorization.Retyper<double>.PrepareForEquifrequency(dt, dg, count);
-                                    }
-                                    catch
-                                    {
-                                        throw new ArgumentOutOfRangeException();
-                                    }
+                                        //delegate method to retype values to float
+                                        Categorization.Retyper<float>.ToTypeDelegate dg =
+                                        new Categorization.Retyper<float>.ToTypeDelegate(ConvertToFloat);
 
-                                    result.CreateIntervals(
-                                        BoundaryEnum.Closed, __min,
-                                        Categorization.Retyper<double>.Retype(_divisionPoints),
-                                        ClosedFrom, __max,
-                                        BoundaryEnum.Closed, false
-                                        );
-                                }
-                                break;
+                                        float[] _divisionPoints;
 
-
-                            case DbSimpleDataTypeEnum.ShortSimpleType:
-                            case DbSimpleDataTypeEnum.IntegerSimpleType:
-                            case DbSimpleDataTypeEnum.LongSimpleType:
-                                long _lmin = Convert.ToInt64(_min);
-                                long _lmax = Convert.ToInt64(_max);
-
-                                if (column.DbSimpleDataType == DbSimpleDataTypeEnum.ShortSimpleType)
-                                {
-                                    __min = (short)_lmin;
-                                    __max = (short)_lmax;
-                                    Categorization.Retyper<short>.ToTypeDelegate dg =
-                                    new Categorization.Retyper<short>.ToTypeDelegate(Convert.ToInt16);
-
-                                    short[] _divisionPoints =
-                                        Categorization.Retyper<short>.PrepareForEquifrequency(dt, dg, count);
-
-                                    result.CreateIntervals(
-                                        BoundaryEnum.Closed, __min,
-                                        Categorization.Retyper<short>.Retype(_divisionPoints),
-                                        ClosedFrom, __max,
-                                        BoundaryEnum.Closed, false
-                                        );
-                                }
-                                else
-                                {
-                                    if (column.DbSimpleDataType == DbSimpleDataTypeEnum.IntegerSimpleType)
-                                    {
-                                        __min = (int)_lmin;
-                                        __max = (int)_lmax;
-                                        Categorization.Retyper<int>.ToTypeDelegate dg =
-                                        new Categorization.Retyper<int>.ToTypeDelegate(Convert.ToInt32);
-
-                                        int[] _divisionPoints =
-                                            Categorization.Retyper<int>.PrepareForEquifrequency(dt, dg, count);
-
+                                        try
+                                        {
+                                            //generation of the division points
+                                            _divisionPoints = Categorization.Retyper<float>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+                                        }
+                                        catch
+                                        {
+                                            throw new ArgumentOutOfRangeException();
+                                        }
+                                        //creating intervals in the attribute
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
-                                            Categorization.Retyper<int>.Retype(_divisionPoints),
+                                            Categorization.Retyper<float>.Retype(_divisionPoints),
                                             ClosedFrom, __max,
                                             BoundaryEnum.Closed, false
-                                            );
+                                        );
                                     }
                                     else
                                     {
-                                        __min = _lmin;
-                                        __max = _lmax;
-                                        Categorization.Retyper<long>.ToTypeDelegate dg =
-                                        new Categorization.Retyper<long>.ToTypeDelegate(Convert.ToInt64);
+                                        __min = _dmin;
+                                        __max = _dmax;
+                                        Categorization.Retyper<double>.ToTypeDelegate dg =
+                                        new Categorization.Retyper<double>.ToTypeDelegate(Convert.ToDouble);
 
-                                        long[] _divisionPoints =
-                                            Categorization.Retyper<long>.PrepareForEquifrequency(dt, dg, count);
+                                        double[] _divisionPoints;
+                                        try
+                                        {
+                                            _divisionPoints = Categorization.Retyper<double>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+                                        }
+                                        catch
+                                        {
+                                            throw new ArgumentOutOfRangeException();
+                                        }
 
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
-                                            Categorization.Retyper<long>.Retype(_divisionPoints),
+                                            Categorization.Retyper<double>.Retype(_divisionPoints),
                                             ClosedFrom, __max,
                                             BoundaryEnum.Closed, false
-                                            );
-                                    }
-                                }
-                                break;
-
-                            case DbSimpleDataTypeEnum.DateTimeSimpleType:
-                                {
-                                    DateTime _dtmin = Convert.ToDateTime(_min);
-                                    DateTime _dtmax = Convert.ToDateTime(_max);
-
-                                    Categorization.Retyper<DateTime>.ToTypeDelegate dg =
-                                            new Categorization.Retyper<DateTime>.ToTypeDelegate(Convert.ToDateTime);
-
-                                    DateTime[] _divisionPoints =
-                                        Categorization.Retyper<DateTime>.PrepareForEquifrequency(dt, dg, count);
-
-                                    result.CreateIntervals(
-                                        BoundaryEnum.Closed, __min,
-                                        Categorization.Retyper<DateTime>.Retype(_divisionPoints),
-                                        ClosedFrom, __max,
-                                        BoundaryEnum.Closed, false
                                         );
-                                }
-                                break;
+                                    }
+                                    break;
 
-                            default:
-                                //    if (fallOnError)
-                                throw new ArgumentException("Type not supported");
-                            //    else
-                            //         break;
 
+                                case DbSimpleDataTypeEnum.ShortSimpleType:
+                                case DbSimpleDataTypeEnum.IntegerSimpleType:
+                                case DbSimpleDataTypeEnum.LongSimpleType:
+                                    long _lmin = Convert.ToInt64(_min);
+                                    long _lmax = Convert.ToInt64(_max);
+
+                                    if (column.DbSimpleDataType == DbSimpleDataTypeEnum.ShortSimpleType)
+                                    {
+                                        __min = (short)_lmin;
+                                        __max = (short)_lmax;
+                                        Categorization.Retyper<short>.ToTypeDelegate dg =
+                                        new Categorization.Retyper<short>.ToTypeDelegate(Convert.ToInt16);
+
+                                        short[] _divisionPoints = Categorization.Retyper<short>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+
+                                        result.CreateIntervals(
+                                            BoundaryEnum.Closed, __min,
+                                            Categorization.Retyper<short>.Retype(_divisionPoints),
+                                            ClosedFrom, __max,
+                                            BoundaryEnum.Closed, false
+                                        );
+                                    }
+                                    else
+                                    {
+                                        if (column.DbSimpleDataType == DbSimpleDataTypeEnum.IntegerSimpleType)
+                                        {
+                                            __min = (int)_lmin;
+                                            __max = (int)_lmax;
+
+                                            Categorization.Retyper<int>.ToTypeDelegate dg =
+                                            new Categorization.Retyper<int>.ToTypeDelegate(Convert.ToInt32);
+
+                                            int[] _divisionPoints = Categorization.Retyper<int>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+
+                                            System.Windows.Forms.MessageBox.Show("jsem tu");
+                                            int ontologyMin = new int();
+                                            int dataTableMin = new int();
+                                            int from = new int();
+
+                                            System.Windows.Forms.MessageBox.Show("hodnota min je *" + ontologyMin.ToString() + "*");
+                                            try
+                                            {
+                                                ontologyMin = Convert.ToInt32(Minimum);
+                                            }
+                                            catch { }
+                                            try
+                                            {
+                                                dataTableMin = Convert.ToInt32(column.Statistics.valueMin);
+                                            }
+                                            catch { }
+                                            try
+                                            {
+                                                from = Convert.ToInt32(From);
+                                            }
+                                            catch { }
+                                            
+
+                                            //int test = Convert.ToInt32("");
+                                            //if (test. == null)
+                                                System.Windows.Forms.MessageBox.Show("hodnota min je *" + ontologyMin.ToString() + "*");
+
+                                            
+
+                                            
+                                            /// if true: properties from ontology are in conflict
+                                            /// domain dividing values can't be lower than specified minimal value
+                                            if (_divisionPoints != null && _divisionPoints[0] < ontologyMin)
+                                            {
+                                                throw new ArgumentException("Ontology derived properties are in conflict. Some of the domain dividing values is lower than allowed minimum. The problem may be in ontology, but maybe you have changed the values manually.");
+                                            }
+                                            /// if true: column contains unallowed values,
+                                            /// values must be greater than specified minimal value
+                                            else if (dataTableMin < ontologyMin)
+                                            {
+                                                throw new ArgumentException("In the database there are unallowed values in the column.");
+                                            }
+                                            /// if true: user defined range of attribute is smaller
+                                            /// than it is allowed by ontology minimum property
+                                            /// the value is set to ontologyMin (in the column there are none values lower than ontologyMin - 
+                                            /// due one of the previous conditions)
+                                            else if (from < ontologyMin)
+                                            {
+                                                __min = ontologyMin;
+                                            }
+                                            /// if true, from property is set by user and is greater or equal to ontologyMin
+                                            else if (From != "")
+                                            {
+                                                __min = from;
+                                            }
+                                            /// ontology property minimum is set
+                                            else if (Minimum != "")
+                                            {
+                                                __min = ontologyMin;
+                                            }
+                                            /// neither from nor minimum property is set
+                                            /// mimimal value is the minimal value from the dataColumn
+                                            {
+                                                __min = dataTableMin;
+                                            }
+                                            
+                                            result.CreateIntervals(
+                                                BoundaryEnum.Closed, __min,
+                                                Categorization.Retyper<int>.Retype(_divisionPoints),
+                                                ClosedFrom, __max,
+                                                BoundaryEnum.Closed, false
+                                            );
+                                        }
+                                        else
+                                        {
+                                            __min = _lmin;
+                                            __max = _lmax;
+                                            Categorization.Retyper<long>.ToTypeDelegate dg =
+                                            new Categorization.Retyper<long>.ToTypeDelegate(Convert.ToInt64);
+
+                                            long[] _divisionPoints = Categorization.Retyper<long>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+
+                                            result.CreateIntervals(
+                                                BoundaryEnum.Closed, __min,
+                                                Categorization.Retyper<long>.Retype(_divisionPoints),
+                                                ClosedFrom, __max,
+                                                BoundaryEnum.Closed, false
+                                            );
+                                        }
+                                    }
+                                    break;
+
+                                case DbSimpleDataTypeEnum.DateTimeSimpleType:
+                                    {
+                                        __min = Convert.ToDateTime(_min);
+                                        __max = Convert.ToDateTime(_max);
+
+                                        Categorization.Retyper<DateTime>.ToTypeDelegate dg =
+                                                new Categorization.Retyper<DateTime>.ToTypeDelegate(Convert.ToDateTime);
+
+                                        DateTime[] _divisionPoints = Categorization.Retyper<DateTime>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+
+                                        result.CreateIntervals(
+                                            BoundaryEnum.Closed, __min,
+                                            Categorization.Retyper<DateTime>.Retype(_divisionPoints),
+                                            ClosedFrom, __max,
+                                            BoundaryEnum.Closed, false
+                                        );
+                                    }
+                                    break;
+                                case DbSimpleDataTypeEnum.StringSimpleType:
+                                    {
+                                        __min = _min;
+                                        __max = _max;
+
+                                        Categorization.Retyper<string>.ToTypeDelegate dg =
+                                            new Categorization.Retyper<string>.ToTypeDelegate(Convert.ToString);
+
+                                        string[] _divisionPoints = Categorization.Retyper<string>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+
+                                        result.CreateIntervals(
+                                            BoundaryEnum.Closed, __min,
+                                            Categorization.Retyper<string>.Retype(_divisionPoints),
+                                            ClosedFrom, __max,
+                                            BoundaryEnum.Closed, false
+                                        );
+                                    }
+                                    break;
+
+                                default:
+                                    //    if (fallOnError)
+                                    throw new ArgumentException("Type not supported");
+                                //    else
+                                //         break;
+
+                            }
+
+                            _nullCategoryName = result.NullContainingCategory;
+
+                            //DistinctValues
+
+                            result.Add("12541");
+                            result["12541"].Enumeration.Add(12541, true);
+
+                            //result.CreateEnums(enumeration.ToArray(), containsNull, true);
+
+                            //TODO smazat
+                            //foreach (int dp in _divisionPoints)
+                                //System.Windows.Forms.MessageBox.Show("vse ok");
+
+                            return result;
                         }
-                        _nullCategoryName = result.NullContainingCategory;
-                        return result;
+                        /// if cardinality is nominal or cyclic ordinal,
+                        /// then attribute is created as Each Value One Category
+                        /*else
+                        {
+                            bool containsNull = false;
+                            if (dt.Rows[0][0] is DBNull)
+                                containsNull = true;
+
+                            List<object> enumeration = new List<object>(dt.Rows.Count);
+                            foreach (System.Data.DataRow row in dt.Rows)
+                            {
+                                object v = row[0];
+                                if (v == null || v is DBNull)
+                                    continue;
+                                enumeration.Add(row[0]);
+                            }
+
+                            result.CreateEnums(enumeration.ToArray(), containsNull, true);
+
+                            _nullCategoryName = result.NullContainingCategory;
+
+                            return result;
+                        }*/
+                        return null;
                     },
                     delegate
                     {

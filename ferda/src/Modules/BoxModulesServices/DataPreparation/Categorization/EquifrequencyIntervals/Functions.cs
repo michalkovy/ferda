@@ -439,11 +439,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         //their frequencies for the equifrequency intervals generation
                         if (Domain == DomainEnum.SubDomain)
                         {
-                            if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
-                            {
-                                throw new Exception("Creation of string equifrequency intervals of sub domains is not supported.");
-                            }
-
                             IComparable from;
                             IComparable to;
                             parseFromTo(column.Explain.dataType, out from, out to);
@@ -451,15 +446,27 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                             _max = to.ToString();
                             string columnSelectExpression =
                                 column.GetQuotedQueryIdentifier();
+                            
+                            //strings must be placed between apostrophes in SQL QUERY
+                            if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
+                            {
+                                
+                                dt = column.GetDistinctsAndFrequencies(
+                                    columnSelectExpression + ">= '" + from + "' AND " + columnSelectExpression + "<= '" + to + "'"
+                                    );
+                            }
 
-                            dt = column.GetDistinctsAndFrequencies(
-                                columnSelectExpression + ">=" + from + " AND " + columnSelectExpression + "<=" + to
-                                );
+                            else {
+                                dt = column.GetDistinctsAndFrequencies(
+                                    columnSelectExpression + ">=" + from + " AND " + columnSelectExpression + "<=" + to
+                                    );
+                            }
                         }
                         else if (Domain == DomainEnum.WholeDomain)
                         {
                             //or from the column statistics, if no user input is given
                             dt = column.GetDistinctsAndFrequencies(String.Empty);
+                            
                             _min = column.Statistics.valueMin;
                             _max = column.Statistics.valueMax;
                         }

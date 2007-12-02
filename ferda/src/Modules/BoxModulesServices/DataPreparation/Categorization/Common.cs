@@ -128,5 +128,40 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
             return divisionPoints;
 
         }
+
+        /// <summary>
+        /// Method that retrieves the devision points for equifrequency intervals
+        /// and retypes them to the correct datatype
+        /// </summary>
+        /// <param name="dt">Datatable to count values frequency from</param>
+        /// <param name="converter">Delegate for conversion to the correct type</param>
+        /// <param name="count">Requested count of intervals</param>
+        /// <returns></returns>
+        public static T[] ConvertDomainDividingValuesToColumnTypeArray(string domainDividingValues, string separator, ToTypeDelegate converter)
+        {
+            /// split the string of domain dividing values separated by separator
+            string[] tmpDomainDividingValues = domainDividingValues.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+            T[] divisionPoints = new T[tmpDomainDividingValues.Length];
+
+            int i = 0;
+            foreach (string domainDividingValue in tmpDomainDividingValues)
+            {
+                try
+                {
+                    /// converting of the values into wanted data type (type of the data table column)
+                    divisionPoints[i] = converter(domainDividingValue);
+                }
+                catch
+                {
+                    throw new ArgumentException("Unable to convert domain dividing value " + domainDividingValue.ToString() + " into datatype of the data table column");
+                }
+                i++;
+            }
+
+            /// sorting the array
+            Array.Sort<T>(divisionPoints);
+
+            return divisionPoints;
+        }
     }
 }
