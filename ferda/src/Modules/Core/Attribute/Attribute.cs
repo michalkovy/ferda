@@ -419,6 +419,10 @@ namespace Ferda.Guha.Attribute
                                                                  itemToExclude, BoundaryEnum.Open, true);
                                 currentCategory.Intervals.Add(itemToExclude, BoundaryEnum.Open, interval.RightValue,
                                                               interval.RightBoundary, true);
+                                //TODO upravit!?
+                                //currentCategory.Name = currentCategory.Name + " / " + itemToExclude.ToString();
+
+                                
                             }
                             goto RestartIntervalEnumerator;
                         }

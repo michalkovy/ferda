@@ -147,7 +147,6 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
             {
                 ColumnFunctionsPrx prx =
                     ColumnFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
-
                 //getting the values and frequencies
                 valfreq = prx.getDistinctsAndFrequencies();
             }

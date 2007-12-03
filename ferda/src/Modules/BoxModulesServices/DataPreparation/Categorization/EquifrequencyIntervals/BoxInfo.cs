@@ -25,6 +25,7 @@ using Ferda.Guha.Data;
 using Object = Ice.Object;
 using FixedAtom = Ferda.Modules.Boxes.GuhaMining.FixedAtom;
 using AtomSetting = Ferda.Modules.Boxes.GuhaMining.AtomSetting;
+using System.IO;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyIntervals
 {
@@ -152,6 +153,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         {
                             break;
                         }
+
+                        StreamWriter sw = new StreamWriter("vystup_EQ.txt");
+                        sw.Write(new StringTI(Guha.Attribute.Serializer.Serialize((attribute.Export()))));
+                        sw.Close();
 
                         PropertySetting editCategories =
                             new PropertySetting(Functions.PropCategories, new StringTI(

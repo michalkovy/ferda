@@ -56,7 +56,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         public const string PropTo = "To";
         public const string PropCategories = "Categories";
         public const string SockColumn = "Column";
-        public const string SockOntologyEnablingColumn = "OntologyEnablingColumn";
+        public const string SockOntologyEnablingColumn = "Column";
         //ontology derived properties
         public const string PropCardinality = "Cardinality";
         public const string PropDistinctValues = "DistinctValues";
@@ -480,7 +480,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         private CacheFlag _cacheFlag = new CacheFlag();
         private Attribute<IComparable> _cachedValue = null;
 
-
         /// <summary>
         /// Returns an attribute (created or from cache)
         /// </summary>
@@ -647,7 +646,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         try
                                         {
                                             //generation of the division points
-                                            _divisionPoints = Categorization.Retyper<float>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+                                            _divisionPoints = Categorization.Retyper<float>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
                                         }
                                         catch
                                         {
@@ -671,7 +670,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         double[] _divisionPoints;
                                         try
                                         {
-                                            _divisionPoints = Categorization.Retyper<double>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+                                            _divisionPoints = Categorization.Retyper<double>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
                                         }
                                         catch
                                         {
@@ -701,7 +700,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         Categorization.Retyper<short>.ToTypeDelegate dg =
                                         new Categorization.Retyper<short>.ToTypeDelegate(Convert.ToInt16);
 
-                                        short[] _divisionPoints = Categorization.Retyper<short>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+                                        short[] _divisionPoints = Categorization.Retyper<short>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
 
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
@@ -716,42 +715,47 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         {
                                             __min = (int)_lmin;
                                             __max = (int)_lmax;
-
+                                            
                                             Categorization.Retyper<int>.ToTypeDelegate dg =
                                             new Categorization.Retyper<int>.ToTypeDelegate(Convert.ToInt32);
 
-                                            int[] _divisionPoints = Categorization.Retyper<int>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+                                            int[] _divisionPoints = Categorization.Retyper<int>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
 
-                                            System.Windows.Forms.MessageBox.Show("jsem tu");
-                                            int ontologyMin = new int();
-                                            int dataTableMin = new int();
-                                            int from = new int();
-
-                                            System.Windows.Forms.MessageBox.Show("hodnota min je *" + ontologyMin.ToString() + "*");
-                                            try
+                                            //ontology derived property has the biggest priority
+                                            //if the minimum is set, then it is the minimal allowed value
+                                            /*if (Minimum != "")
                                             {
-                                                ontologyMin = Convert.ToInt32(Minimum);
+                                                __min = Convert.ToInt32(Minimum);
                                             }
-                                            catch { }
-                                            try
+                                            //if ontology min value is not set, then the domain is bounded by from property
+                                            else if (Domain == DomainEnum.SubDomain && From != "")
                                             {
-                                                dataTableMin = Convert.ToInt32(column.Statistics.valueMin);
+                                                __min = Convert.ToInt32(From);
                                             }
-                                            catch { }
-                                            try
+                                            /// neither from nor minimum property is set
+                                            /// mimimal value is the minimal value from the dataColumn
+                                            else
                                             {
-                                                from = Convert.ToInt32(From);
+                                                __min = Convert.ToInt32(column.Statistics.valueMin);
                                             }
-                                            catch { }
-                                            
+                                            */
+                                            int[] _distinctValuesArray = Categorization.Retyper<int>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
 
-                                            //int test = Convert.ToInt32("");
-                                            //if (test. == null)
-                                                System.Windows.Forms.MessageBox.Show("hodnota min je *" + ontologyMin.ToString() + "*");
+                                            __min = Categorization.Retyper<int>.returnMinValue(
+                                                Minimum, From,
+                                                (Domain == DomainEnum.SubDomain) ? true : false,
+                                                column.Statistics.valueMin,
+                                                /// if there is no divisionPoint (domainDividingValue), then it is substituted by column minimal value
+                                                (_divisionPoints == null) ? "" : _divisionPoints[0].ToString(),
+                                                /// if there is no distinctValue, then it is substituted by column minimal value
+                                                (_distinctValuesArray == null) ? "" : _distinctValuesArray[0].ToString(),
+                                                dg
+                                            );
 
-                                            
+                                            //TODO smazat
+                                            //System.Windows.Forms.MessageBox.Show("min je: " + __min.ToString());
 
-                                            
+                                            /*TODO - doplnit kontrolu DDV a DV a porovnani Minimum a From
                                             /// if true: properties from ontology are in conflict
                                             /// domain dividing values can't be lower than specified minimal value
                                             if (_divisionPoints != null && _divisionPoints[0] < ontologyMin)
@@ -786,7 +790,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                             /// mimimal value is the minimal value from the dataColumn
                                             {
                                                 __min = dataTableMin;
-                                            }
+                                            }*/
                                             
                                             result.CreateIntervals(
                                                 BoundaryEnum.Closed, __min,
@@ -802,7 +806,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                             Categorization.Retyper<long>.ToTypeDelegate dg =
                                             new Categorization.Retyper<long>.ToTypeDelegate(Convert.ToInt64);
 
-                                            long[] _divisionPoints = Categorization.Retyper<long>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+                                            long[] _divisionPoints = Categorization.Retyper<long>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
 
                                             result.CreateIntervals(
                                                 BoundaryEnum.Closed, __min,
@@ -822,7 +826,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         Categorization.Retyper<DateTime>.ToTypeDelegate dg =
                                                 new Categorization.Retyper<DateTime>.ToTypeDelegate(Convert.ToDateTime);
 
-                                        DateTime[] _divisionPoints = Categorization.Retyper<DateTime>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+                                        DateTime[] _divisionPoints = Categorization.Retyper<DateTime>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
 
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
@@ -840,7 +844,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         Categorization.Retyper<string>.ToTypeDelegate dg =
                                             new Categorization.Retyper<string>.ToTypeDelegate(Convert.ToString);
 
-                                        string[] _divisionPoints = Categorization.Retyper<string>.ConvertDomainDividingValuesToColumnTypeArray(DomainDividingValues, ", ", dg);
+                                        string[] _divisionPoints = Categorization.Retyper<string>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
 
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
@@ -863,8 +867,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
 
                             //DistinctValues
 
-                            result.Add("12541");
-                            result["12541"].Enumeration.Add(12541, true);
+                            //result.Add("12");
+                            //result["12"].Enumeration.Add(12, true);
 
                             //result.CreateEnums(enumeration.ToArray(), containsNull, true);
 

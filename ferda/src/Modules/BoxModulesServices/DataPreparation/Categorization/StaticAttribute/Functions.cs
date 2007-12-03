@@ -596,6 +596,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 delegate
                 {
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
+
                     if (tmp != null)
                     {
                         bool dummy;
@@ -654,7 +655,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             //getting the proxy of a column
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
             if (prx == null)
+            {
                 return null;
+            }
 
             //getting a info about a column
             ColumnInfo tmp =
@@ -669,12 +672,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                     );
 
             if (tmp == null)
+            {
                 return null;
+            }
 
             //getting the connection setting
             DatabaseConnectionSettingHelper connSetting =
                 new DatabaseConnectionSettingHelper(tmp.dataTable.databaseConnectionSetting);
-
             //getting the serialized attribute set in the previous boxes
             string categories = getAttribute();
 
@@ -898,7 +902,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             }
             return DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
                 boxModuleParam1.getFunctions());
-
         }
 
         /// <summary>

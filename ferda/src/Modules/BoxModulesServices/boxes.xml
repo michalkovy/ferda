@@ -1088,6 +1088,9 @@
 					<BoxType>
 						<FunctionIceId>::Ferda::Guha::MiningProcessor::BitStringGenerator</FunctionIceId>
 					</BoxType>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::Boxes::OntologyRelated::OntologyEnablingColumnFunctions</FunctionIceId>
+					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
@@ -19947,9 +19950,15 @@
 		<Categories>
 			<string>DataPreparation.Categorization</string>
 		</Categories>
+		<Actions>
+			<Action>
+				<Name>ReloadOntologyProperties</Name>
+				<IconPath>reloadOntologyPropertiesIcon.ico</IconPath>
+			</Action>
+		</Actions>
 		<Sockets>
 			<Socket>
-				<Name>OntologyEnablingColumn</Name>
+				<Name>Column</Name>
 				<SocketTypes>
 					<BoxType>
 						<FunctionIceId>::Ferda::Modules::Boxes::OntologyRelated::OntologyEnablingColumnFunctions</FunctionIceId>
@@ -20223,6 +20232,17 @@
 				<ReadOnly>false</ReadOnly>
 			</Property>
 		</Properties>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>FixedAtom</Name>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>AtomSetting</Name>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>StaticAttribute</Name>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</Box>
 	<Box>
 		<Identifier>DataPreparation.DataSource.OntologyEnablingColumn</Identifier>
