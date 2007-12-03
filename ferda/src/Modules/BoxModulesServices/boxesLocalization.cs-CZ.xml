@@ -10961,11 +10961,18 @@
 				<Label>Příprava dat.Kategorizace</Label>
 			</Category>
 		</Categories>
+		<Actions>
+			<Action>
+				<Name>ReloadOntologyProperties</Name>
+				<Label>Znovu načíst vlastnosti z ontologie</Label>
+				<Hint>Akce načte vlastnosti z ontologie, které odpovídají namapovanému sloupci databáze.</Hint>
+			</Action>
+		</Actions>
 		<Sockets>
 			<Socket>
 				<Name>Column</Name>
-				<Label>Sloupec nebo atribut</Label>
-				<Hint>Sloupec nebo atribut</Hint>
+				<Label>Sloupec umožňující využití ontologie</Label>
+				<Hint>Sloupec umožňující využití ontologie</Hint>
 			</Socket>
 			<Socket>
 				<Name>NameInLiterals</Name>
@@ -11096,6 +11103,23 @@
 				<Label>Vlastnosti odvozené z ontologie</Label>
 			</PropertyCategory>
 		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>FixedAtom</Name>
+				<Label>Pevný atom</Label>
+				<Hint>Vytváří koeficient typu pevná podmnožina.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>AtomSetting</Name>
+				<Label>Nastavení atomu</Label>
+				<Hint>Vytváří nastavení koeficientu, kde uživatel může definovat typ koeficientů a maximální délku.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>StaticAttribute</Name>
+				<Label>Statický atribut</Label>
+				<Hint>Vytváří atribut, který může být manuálně upravován.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>DataPreparation.DataSource.OntologyEnablingColumn</Identifier>

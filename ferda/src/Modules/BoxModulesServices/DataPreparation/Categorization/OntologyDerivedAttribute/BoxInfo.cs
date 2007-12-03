@@ -25,6 +25,7 @@ using Ferda.Guha.Data;
 using Object = Ice.Object;
 using FixedAtom = Ferda.Modules.Boxes.GuhaMining.FixedAtom;
 using AtomSetting = Ferda.Modules.Boxes.GuhaMining.AtomSetting;
+using System.IO;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttribute
 {
@@ -152,15 +153,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                             break;
                         }
 
+                        StreamWriter sw = new StreamWriter("vystup_ODA.txt");
+                        sw.Write(new StringTI(Guha.Attribute.Serializer.Serialize((attribute.Export()))));
+                        sw.Close();
+
                         PropertySetting editCategories =
                             new PropertySetting(Functions.PropCategories, new StringTI(
                             Guha.Attribute.Serializer.Serialize(
                             (attribute.Export()))));
-
-                        //TODO smazat
-                        /*System.Windows.Forms.MessageBox.Show("***" + new StringTI(
-                            Guha.Attribute.Serializer.Serialize(
-                            (attribute.Export()))));*/
 
                         singleModule.propertySetting = new PropertySetting[] { editCategories };
                         break;

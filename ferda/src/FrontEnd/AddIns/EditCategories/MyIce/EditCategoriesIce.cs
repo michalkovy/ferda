@@ -158,86 +158,6 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
             DataTable table = new DataTable();
             CardinalityEnum cardinality = new CardinalityEnum();
 
-            /*List<string> iceIds = new List<string>(boxModuleParam.getFunctionsIceIds());
-
-            if (iceIds.Contains(
-                "::Ferda::Modules::Boxes::DataPreparation::ColumnFunctions"))
-            {
-                try
-                {
-                    BoxModulePrx boxModuleParam1 = boxModuleParam.getConnections("Column")[0];
-                    BoxModulePrx boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
-
-                    Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
-                        Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
-                        boxModuleParam1.getFunctions());
-
-                    Modules.Boxes.DataPreparation.DataTableFunctionsPrx prx3 =
-                        Modules.Boxes.DataPreparation.DataTableFunctionsPrxHelper.checkedCast(
-                        boxModuleParam2.getFunctions());
-
-                    Modules.Boxes.DataPreparation.ColumnInfo info = prx2.getColumnInfo();
-                    columnDataType = info.dataType;
-                    DatabaseConnectionSettingHelper connSetting =
-                        new DatabaseConnectionSettingHelper(
-                        info.dataTable.databaseConnectionSetting);
-                    GenericDataTable genericDataTable =
-                        GenericDatabaseCache.GetGenericDatabase(
-                        connSetting)[info.dataTable.dataTableName];
-                    table = genericDataTable.GetGenericColumn(
-                        info.columnSelectExpression).GetDistincts(String.Empty);
-                    //table = genericDataTable.Select();
-                    cardinality = info.cardinality;
-                }
-                catch
-                {
-                    return valueBefore;
-                }
-            }
-            else
-            {
-                //the box has attribute functionality
-                if (iceIds.Contains(
-                    "::Ferda::Modules::Boxes::DataPreparation::AttributeFunctions"))
-                {
-                    try
-                    {
-                        BoxModulePrx boxModuleParamNew = boxModuleParam.getConnections("Column")[0];
-                        BoxModulePrx boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
-                        BoxModulePrx boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
-
-                        Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
-                            Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
-                            boxModuleParam1.getFunctions());
-
-                        Modules.Boxes.DataPreparation.DataTableFunctionsPrx prx3 =
-                            Modules.Boxes.DataPreparation.DataTableFunctionsPrxHelper.checkedCast(
-                            boxModuleParam2.getFunctions());
-
-                        Modules.Boxes.DataPreparation.ColumnInfo info = prx2.getColumnInfo();
-                        columnDataType = info.dataType;
-                        DatabaseConnectionSettingHelper connSetting =
-                            new DatabaseConnectionSettingHelper(
-                            info.dataTable.databaseConnectionSetting);
-                        GenericDataTable genericDataTable =
-                            GenericDatabaseCache.GetGenericDatabase(
-                            connSetting)[info.dataTable.dataTableName];
-                        table = genericDataTable.GetGenericColumn(
-                                info.columnSelectExpression).GetDistincts(String.Empty);
-                        //table = genericDataTable.Select();
-                        cardinality = info.cardinality;
-                    }
-                    catch
-                    {
-                        return valueBefore;
-                    }
-                }
-                else
-                {
-                    return valueBefore;
-                }
-            }*/
-
             try
             {
                 
@@ -258,20 +178,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                     else
                         return valueBefore;
 
-                    if (boxModuleParam1.getConnections("DataTable").Length > 0)
-                        boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
-                    else
-                        return valueBefore;
-                    
-                    
-
                     Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
                         Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
                         boxModuleParam1.getFunctions());
-
-                    Modules.Boxes.DataPreparation.DataTableFunctionsPrx prx3 =
-                        Modules.Boxes.DataPreparation.DataTableFunctionsPrxHelper.checkedCast(
-                        boxModuleParam2.getFunctions());
 
                     Modules.Boxes.DataPreparation.ColumnInfo info = prx2.getColumnInfo();
                     columnDataType = info.dataType;
@@ -301,19 +210,9 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                         else
                             return valueBefore;
 
-                        if (boxModuleParam1.getConnections("DataTable").Length > 0)
-                            boxModuleParam2 = boxModuleParam1.getConnections("DataTable")[0];
-                        else
-                            return valueBefore;
-
-
                         Modules.Boxes.DataPreparation.ColumnFunctionsPrx prx2 =
                             Modules.Boxes.DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
                             boxModuleParam1.getFunctions());
-
-                        Modules.Boxes.DataPreparation.DataTableFunctionsPrx prx3 =
-                            Modules.Boxes.DataPreparation.DataTableFunctionsPrxHelper.checkedCast(
-                            boxModuleParam2.getFunctions());
 
                         Modules.Boxes.DataPreparation.ColumnInfo info = prx2.getColumnInfo();
                         columnDataType = info.dataType;

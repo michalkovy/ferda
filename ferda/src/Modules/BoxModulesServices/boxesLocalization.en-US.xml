@@ -10993,11 +10993,18 @@
 				<Label>Data preparation.Categorization</Label>
 			</Category>
 		</Categories>
+		<Actions>
+			<Action>
+				<Name>ReloadOntologyProperties</Name>
+				<Label>Reload properties from ontology</Label>
+				<Hint>This will reload the data properties which belong to ontology entity, which is mapped to the column of database</Hint>
+			</Action>
+		</Actions>
 		<Sockets>
 			<Socket>
-				<Name>OntologyEnablingColumn</Name>
-				<Label>OntologyEnablingColumn</Label>
-				<Hint>Defines ontology enabling column.</Hint>
+				<Name>Column</Name>
+				<Label>Ontology Enabling Column</Label>
+				<Hint>Ontology enabling column</Hint>
 			</Socket>
 			<Socket>
 				<Name>NameInLiterals</Name>
@@ -11123,6 +11130,23 @@
 				<Label>Ontology Derived Properties</Label>
 			</PropertyCategory>
 		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>FixedAtom</Name>
+				<Label>Fixed Atom</Label>
+				<Hint>Creates a fixes set coefficient.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>AtomSetting</Name>
+				<Label>Atom Setting</Label>
+				<Hint>Creates a coefficient setting where user can set the type of coefficient and maximal and minimal lengths.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>StaticAttribute</Name>
+				<Label>Static attribute</Label>
+				<Hint>Creates a static attribute which can be manually edited.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>DataPreparation.DataSource.OntologyEnablingColumn</Identifier>
