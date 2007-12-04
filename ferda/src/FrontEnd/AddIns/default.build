@@ -542,6 +542,33 @@
      		   <include name="*.*" /> 
      		 </fileset>
     		</copy>
+    		
+    <csc target="library" output="${path::combine(addInsBuild.dir,'SetPrimaryKeys.dll')}" debug="${debug}" optimize="${optimize}">
+      <sources>
+        <include name="SetPrimaryKeys/**.cs"/>
+        <include name="SetPrimaryKeys/MyIce/**.cs"/>
+        <exclude name="SetPrimaryKeys/bin/**.*"/>
+        <exclude name="SetPrimaryKeys/obj/**.*"/>
+      </sources>
+      <resources prefix="Ferda.FrontEnd.AddIns.SetPrimaryKeys">
+        <include name="SetPrimaryKeys/**.resx"/>
+        <exclude name="SetPrimaryKeys/SetPrimaryKeys.resx"/>
+      </resources>
+      <references>
+        <include name="System.dll"/>
+        <include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
+        <include name="System.Windows.Forms.dll"/>
+        <include name="System.Collections.dll"/>
+        <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+        <include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+        <include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+        <include name="${path::combine(lib.dir,'icecs.dll')}"/>
+      </references>
+    </csc>
     
 	</target>
 	<target name="clean">

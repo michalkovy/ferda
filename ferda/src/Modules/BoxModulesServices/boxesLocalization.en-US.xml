@@ -10958,11 +10958,20 @@
 				<Label>Number of mapped pairs</Label>
 				<Hint>Number of mapped pairs (name of datatable column - name of ontology entity)</Hint>
 			</Socket>
+			<Socket>
+				<Name>PrimaryKeys</Name>
+				<Label>Primary Keys</Label>
+				<Hint>Primary keys of data tables</Hint>
+			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
 				<Name>Mapping</Name>
 				<Label>Mapping between table and ontology</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>PrimaryKeys</Name>
+				<Label>Primary keys of data tables</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>
@@ -11168,11 +11177,6 @@
 				<Name>DataTableName</Name>
 				<Label>DataTable Name</Label>
 				<Hint>The name of the data table, in which the column belongs.</Hint>
-			</Socket>
-			<Socket>
-				<Name>PrimaryKeyColumns</Name>
-				<Label>Primary key</Label>
-				<Hint>List of columns that define the primary key of the table. The value is either a value of one column or CSV (comma separated values). It will be not enclosed in apostrophes.</Hint>
 			</Socket>
 			<Socket>
 				<Name>SelectExpression</Name>

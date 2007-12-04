@@ -177,6 +177,10 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 
             switch (propertyName)
             {
+                case Functions.PropPrimaryKeys:
+                    return BoxInfoHelper.GetSelectStringArray(
+                        Func.GetSelectPrimaryKeysStruct(false)
+                        );
                 default:
                     return null;
             }
@@ -275,6 +279,33 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         {
             get { return typeIdentifier; }
         }
+
+        /*public override void Validate(BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            // try to invoke methods
+            object dummy = Func.GetDatabaseFunctionsPrx(true);
+            /*dummy = Func..GetGenericDataTable(true);
+            dummy = Func.GetDataTableExplain(true);
+            dummy = Func.GetColumnExplainSeq(true);
+            dummy = Func.GetColumnsNames(true);
+            dummy = Func.GetDataTablesNames(true);
+            DataTableInfo dti = Func.GetDataTableInfo(true);
+            long recordsCount = dti.recordsCount;
+            if (recordsCount <= 0)
+                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                               "The table has no records. Please select non empty data table for analysis.",
+                                               new string[] { Functions.PropName, Functions.PropRecordsCount },
+                                               restrictionTypeEnum.Minimum);
+            if (recordsCount >= Int32.MaxValue)
+                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                                               "The table has more than " + Int32.MaxValue +
+                                               " records. Data mining of data tables of such size is not supported.",
+                                               new string[] { Functions.PropName, Functions.PropRecordsCount },
+                                               restrictionTypeEnum.Maximum);
+            Func.TryPrimaryKey(true);
+        }*/
 
         #endregion
     }

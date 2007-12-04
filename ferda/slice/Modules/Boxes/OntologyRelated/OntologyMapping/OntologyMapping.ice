@@ -54,7 +54,7 @@ module Ferda {
 						idempotent StringSeq getOntologyEntityAnnotations(string dataTableName, string columnName) 
 							throws Ferda::Modules::BoxRuntimeError;
 
-						idempotent Ferda::Modules::Boxes::DataPreparation::DataTableInfo getDataTableInfo(string dataTableName, StringSeq primaryKeyColumns)
+						idempotent Ferda::Modules::Boxes::DataPreparation::DataTableInfo getDataTableInfo(string dataTableName)
 							throws Ferda::Modules::BoxRuntimeError;
 							
 						idempotent StringSeq getDataTablesNames()

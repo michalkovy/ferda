@@ -64,6 +64,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public const string PropNumberOfMappedPairs = "NumberOfMappedPairs";
         public const string SockOntology = "Ontology";
         public const string SockDatabase = "Database";
+        public const string PropPrimaryKeys = "PrimaryKeys";
 
         /// <summary>
         /// Char which separates strings of mapped pairs (triples if datatable name is count separately)
@@ -81,6 +82,14 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public string Mapping
         {
             get { return _boxModule.GetPropertyString(PropMapping); }
+        }
+
+        /// <summary>
+        /// PrimaryKeys struct (one member of array: dataTableName[separatorOuter]PKcolumn1[separatorInner]PKcolumn2...)
+        /// </summary>
+        public string[] PrimaryKeys
+        {
+            get { return _boxModule.GetPropertyStringSeq(PropPrimaryKeys); }
         }
 
         public IntTI NumberOfMappedPairs
@@ -324,6 +333,40 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 );
         }
 
+        /// <summary>
+        /// Prepares a string array for AddIn SelectPrimaryKeys
+        /// the structure of the array is dataTableName'\n'column1'\t'column2
+        /// where \n is outer separator and \t inner separator
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>String array with dataTable names and theirs columns. 
+        /// The structure of the array is dataTableName'\n'column1'\t'column2
+        /// where \n is outer separator and \t inner separator</returns>
+        public string[] GetSelectPrimaryKeysStruct(bool fallOnError)
+        {
+            string[] dataTablesNames = GetDataTablesNames(fallOnError);
+
+            string[] _SelectPrimaryKeysStruct = new string[dataTablesNames.Length];
+
+            int i = 0;
+            foreach (string dataTableName in dataTablesNames)
+            {
+                string tableColumnsString = dataTableName + separatorOuter;
+                string[] columnsNames = GetColumnsNames(dataTableName, fallOnError);
+                foreach (string columnName in columnsNames)
+                {
+                    tableColumnsString += columnName + separatorInner;
+                }
+                /// removing last unwanted separator
+                tableColumnsString = tableColumnsString.Remove(tableColumnsString.Length-separatorOuter.Length);
+
+                _SelectPrimaryKeysStruct[i] = tableColumnsString;
+                i++;
+            }
+
+            return _SelectPrimaryKeysStruct;
+        }
+
         public DataTableExplain GetDataTableExplain(string dataTableName, bool fallOnError)
         {
             return ExceptionsHandler.GetResult<DataTableExplain>(
@@ -343,8 +386,66 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 );
         }
 
-        public DataTableInfo GetDataTableInfo(string dataTableName, string[] primaryKeyColumns, bool fallOnError)
+        /// <summary>
+        /// Tests the unique columns i.e. unicity of values in data in specified
+        /// <c>uniqueColumns</c>. (These columns can simulate Primary Key.)
+        /// </summary>
+        /// <param name="dataTableName">name of datatable where the unicity is going to test.</param>
+        /// <param name="fallOnError">if set to <c>true</c> the method will fall on error.</param>
+        /// <exception cref="T:Ferda.Modules.BadValueError">
+        /// <b>DbUniqueKeyError</b>
+        /// Thrown when the specified columns does not satisfy the
+        /// unicity of values in the database.
+        /// </exception>
+        public void TryPrimaryKey(string dataTableName, bool fallOnError)
         {
+            Debug.Assert(fallOnError);
+            ExceptionsHandler.GetResult<object>(
+                fallOnError,
+                delegate
+                {
+                    GenericDataTable tmp = GetGenericDataTable(dataTableName, fallOnError);
+                    if (tmp != null)
+                        tmp.TestUniqueKey(getPrimaryKeyColumns(dataTableName));
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+
+        /// <summary>
+        /// Gets the array of primary key columns of the data table
+        /// </summary>
+        /// <param name="dataTableName">Name of the data table</param>
+        /// <returns>Primary key columns</returns>
+        private string[] getPrimaryKeyColumns(string dataTableName)
+        {
+            string[] dataTablesNamesAndSelectedColumns = PrimaryKeys;
+            foreach (string tmpString in dataTablesNamesAndSelectedColumns)
+            {
+                //splits on two strings - first is name of datatable, second contains the primary key columns
+                string[] splitString = tmpString.Split(new string[] { separatorOuter }, StringSplitOptions.RemoveEmptyEntries);
+
+                //seeked datatable is found and it has primary key set
+                if (splitString[0] == dataTableName)
+                {   
+                    string[] primaryKeyColumns = splitString[1].Split(new string[] { separatorInner }, StringSplitOptions.RemoveEmptyEntries);
+                    return primaryKeyColumns;
+                }
+            }
+            return new string[0];
+        }
+
+        public DataTableInfo GetDataTableInfo(string dataTableName, bool fallOnError)
+        {
+            string[] primaryKeyColumns = getPrimaryKeyColumns(dataTableName);
+
+            TryPrimaryKey(dataTableName, fallOnError);
+
             return ExceptionsHandler.GetResult<DataTableInfo>(
                 fallOnError,
                 delegate
@@ -422,9 +523,9 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             return separatorOuter;
         }
 
-        public override DataTableInfo getDataTableInfo(string dataTableName, string[] primaryKeyColumns, Current current__)
+        public override DataTableInfo getDataTableInfo(string dataTableName, Current current__)
         {
-            return GetDataTableInfo(dataTableName, primaryKeyColumns, true);
+            return GetDataTableInfo(dataTableName, true);
         }
 
         public override string GetSourceDataTableId(string dataTableName, Current current__)

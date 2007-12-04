@@ -69,7 +69,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
 
         //names of the properties
         public const string PropDataTableName = "DataTableName";
-        public const string PropPrimaryKeyColumns = "PrimaryKeyColumns";
         public const string PropSelectExpression = "SelectExpression";
         public const string PropDataType = "DataType";
         public const string PropCardinality = "Cardinality";
@@ -87,11 +86,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         public string DataTableName
         {
             get { return _boxModule.GetPropertyString(PropDataTableName); }
-        }
-
-        public string[] PrimaryKeyColumns
-        {
-            get { return _boxModule.GetPropertyStringSeq(PropPrimaryKeyColumns); }
         }
 
         /// <summary>
@@ -271,8 +265,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         /// <returns>Generic column</returns>
         public GenericColumn GetGenericColumn(bool fallOnError)
         {
-            //TODO smazat
-            //DataTableFunctionsPrx prx = GetDataTableFunctionsPrx(fallOnError);
             OntologyMappingFunctionsPrx prx = GetOntologyMappingFunctionsPrx(fallOnError);
 
             string dataTableName = GetDataTableName(fallOnError);
@@ -288,7 +280,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                             string tmpDataTableName = GetDataTableName(fallOnError);
                             if (dataTableName == null)
                                 return null;
-                            return prx.getDataTableInfo(tmpDataTableName, PrimaryKeyColumns);
+                            return prx.getDataTableInfo(tmpDataTableName);
                         },
                     delegate
                         {
@@ -519,7 +511,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                         ColumnExplain tmp2 = GetColumnExplain(fallOnError);
                         string selectExpression = GetSelectExpression(fallOnError);
                         if (tmp1 != null && tmp2 != null)
-                            return new ColumnInfo(tmp1.getDataTableInfo(GetDataTableName(fallOnError), PrimaryKeyColumns),
+                            return new ColumnInfo(tmp1.getDataTableInfo(GetDataTableName(fallOnError)),
                                                   selectExpression,
                                                   tmp2.dataType,
                                                   Cardinality,
@@ -601,16 +593,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
             }
             return null;
         }
-
-        /// <summary>
-        /// Gets the properties of entity from the ontology, which is mapped to column of this box
-        /// </summary>
-        /// <returns><string, string[]> value which represents properties of ontology entity which is mapped on this box's column.</returns>
-        /*public StrSeqMap getOntologyEntityProperties()
-        {
-            System.Windows.Forms.MessageBox.Show("ok1");
-            return getOntologyEntityProperties(null);
-        }*/
 
         #endregion
     }
