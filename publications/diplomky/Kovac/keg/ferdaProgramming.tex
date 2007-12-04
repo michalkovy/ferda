@@ -156,9 +156,30 @@
 	\includegraphics[width=10.8cm]{ifthenelse2.png}
 \end{frame}
 
-\subsection{Lambda function}
-\begin{frame}
-	\frametitle{Lambda in other languages}
+\subsection{Lambda expression}
+\begin{frame}[fragile]
+	\frametitle{Lambda expression}
+	\begin{block}{Basic facts}
+		\begin{itemize}[<+->]
+			\item From lambda calculus $\lambda x.(x+2)$
+			\item Basic of functional programming
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{Lambda in C\# 3}
+\begin{verbatim}
+var function = x => int : x * x;
+\end{verbatim}
+	\end{block}	
+	\begin{block}<+->{Lambda in C\# 3}
+\begin{verbatim}
+var function = x => int : x * x;
+\end{verbatim}
+	\end{block}	
+	\begin{block}<+->{Lambda in C\# 3}
+\begin{verbatim}
+var function = x => int : x * x;
+\end{verbatim}
+	\end{block}	
 \end{frame}
 
 \begin{frame}
@@ -285,6 +306,11 @@ let rec factorial n =
 	\frametitle{Motivation on basic four fold task}
 	\includegraphics[width=5cm]{exampleMotivation1}
 	\begin{block}<+->{Problem}
+		\begin{itemize}[<+->]
+			\item User tries some setting of quantifiers
+			\item If he fails, he tries again with other settins?
+			\item It's manual and confusing
+		\end{itemize}	
 	\end{block}
 \end{frame}
 
@@ -331,13 +357,68 @@ let rec factorial n =
 
 \begin{frame}
 	\frametitle{How to do it better}
-%nepocitat zbytecne dokola
-%bestn
-
+	\begin{block}{Is the recursive computing of 4FT needed}
+		\pause No -- BestN algorithm
+	\end{block}
+	\begin{block}<+->{Is user programming needed}
+		\pause Yes -- even with BestN for different projects different value function
+	\end{block}
 \end{frame}
 
 \section{Next steps}
 \subsection{Sequences and sets}
+\begin{frame}
+	\frametitle{Sequences and sets}
+	\begin{block}{Do we need sequences?}
+		\begin{itemize}[<+->]
+			\item Every mature programming language has something like sequences
+			\item Sequences can be simulated, but the price
+		\end{itemize}	
+	\end{block}
+	\begin{block}<+->{What we would like to do with sequences}
+		\begin{itemize}[<+->]
+			\item Make a sequence of functions
+			\item Do something for each item in the sequence
+			\item Add item
+			\item Subsequence
+			\item Concatenation 
+		\end{itemize}	
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{What should be done for support of sequences?}
+	\begin{block}{New boxes}
+		\begin{itemize}[<+->]
+			\item Sequence as head/tail
+			\item Sequence as array of items
+			\item ForEach
+			\item AddItem, Subsequence, Concatenate
+			\item New group box
+			\item Box for conversion from sequence to group box
+		\end{itemize}	
+	\end{block}
+	\begin{block}<+->{Changes to Ferda core}
+		\pause Socket should accept new group box it accepts old one
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example sequence on DM}
+	\begin{block}{New boxes}
+		\begin{itemize}[<+->]
+			\item Sequence as head/tail
+			\item Sequence as array of items
+			\item ForEach
+			\item AddItem, Subsequence, Concatenate
+			\item New group box
+			\item Box for conversion from sequence to group box
+		\end{itemize}	
+	\end{block}
+	\begin{block}<+->{Changes to Ferda core}
+		\pause Socket should accept new group box it accepts old one
+	\end{block}
+\end{frame}
 \subsection{Reuse of code}
 % includy, lepsi sitovy archiv, nahrani krabicek z jineho projektu
 
