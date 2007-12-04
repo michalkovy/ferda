@@ -165,123 +165,147 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
 
         
         /// <summary>
-        /// Method that returns the minimal and maximal value for attribute creation
-        /// (it specifies global boundaries of the domain)
+        /// Method that returns the minimal value for attribute creation
+        /// (it specifies boundaries of the domain)
         /// </summary>
-        /// <param name="dt">Datatable to count values frequency from</param>
+        /// <param name="ontologyMin">Minimal value set by ontology</param>
+        /// <param name="dataMin">Minimal value in database</param>
+        /// <param name="domainDividingValueMin">Minimal domain dividing value</param>
+        /// <param name="distinctValueMin">Minimal distinct value</param>
         /// <param name="converter">Delegate for conversion to the correct type</param>
-        /// <param name="count">Requested count of intervals</param>
         /// <returns></returns>
-        public static T returnMinValue(string ontologyMin, string from, bool subdomain, string dataMin, 
+        public static T returnMinValue(string ontologyMin, string dataMin, 
             string domainDividingValueMin, string distinctValueMin, ToTypeDelegate converter)
         {
             T __min;
-
-            
-            //ontology derived property has the biggest priority
-            //if the minimum is set, then it is the minimal allowed value
-            if (ontologyMin != "")
-            {
-                __min = converter(ontologyMin);
-            }
-            //if ontology min value is not set, then the domain is bounded by from property
-            else if (subdomain && from != "")
-            {
-                __min = converter(from);
-            }
-            /// neither from nor minimum property is set
-            /// mimimal value is the minimal value from the dataColumn
-            else
-            {
-                __min = converter(dataMin);
-            }
-            
-            /*
-            int i = new int();
-            int j = new int();
-            int k = new int();
 
             if (ontologyMin != "")
             {
                 T _ontologyMin = converter(ontologyMin);
                 /// if true: properties from ontology are in conflict
                 /// domain dividing values can't be lower than specified minimal value
-                if (domainDividingValueMin != "" && 
-                    (i = Comparer<T>.Default.Compare(converter(domainDividingValueMin), _ontologyMin)) < 0)
+                if (domainDividingValueMin != "" &&
+                    (Comparer<T>.Default.Compare(converter(domainDividingValueMin), _ontologyMin) < 0))
                 {
-                    System.Windows.Forms.MessageBox.Show("i-" + i.ToString() + "j-" + j.ToString() + "k-" + k.ToString() + "\nERROR DDV je mensi nez ontomin!!! \n\nontomin: " + ontologyMin + "\n from" + from + "\n subdomain" + subdomain.ToString()
-                            + "\ndataMin: " + dataMin + "\n domainDivValMin" + domainDividingValueMin + "\n distvalMin" + distinctValueMin);
                     throw new ArgumentException("Ontology derived properties are in conflict. Some of the domain dividing values is lower than allowed minimum. The problem may be in ontology, but maybe you have changed the values manually.");
                 }
                 /// if true: properties from ontology are in conflict
                 /// domain dividing values can't be lower than specified minimal value
                 else if (distinctValueMin != "" &&
-                    (i = Comparer<T>.Default.Compare(converter(distinctValueMin), _ontologyMin)) < 0)
+                    (Comparer<T>.Default.Compare(converter(distinctValueMin), _ontologyMin) < 0))
                 {
-                    System.Windows.Forms.MessageBox.Show("i-" + i.ToString() + "j-" + j.ToString() + "k-" + k.ToString() + "\nERROR DistVal je mensi nez ontomin!!! \n\nontomin: " + ontologyMin + "\n from" + from + "\n subdomain" + subdomain.ToString()
-                            + "\ndataMin: " + dataMin + "\n domainDivValMin" + domainDividingValueMin + "\n distvalMin" + distinctValueMin);
                     throw new ArgumentException("Ontology derived properties are in conflict. Some of the domain dividing values is lower than allowed minimum. The problem may be in ontology, but maybe you have changed the values manually.");
                 }
                 /// if true: column contains unallowed values,
                 /// values must be greater than specified minimal value
-                else if ((j = Comparer<T>.Default.Compare(converter(dataMin), _ontologyMin)) < 0)
+                
+                /// TODO what is desired behaviour for user?
+                /// 1) To throw error when in database is some bad value (next IF not in comment)
+                /// 2) To ignore bad values (next IF in comment)
+                /*else if (Comparer<T>.Default.Compare(converter(dataMin), _ontologyMin) < 0)
                 {
-                    System.Windows.Forms.MessageBox.Show("i-" + i.ToString() + "j-" + j.ToString() + "k-" + k.ToString() + "\nERROR datamin je mensi nez ontomin!!! \n\nontomin: " + ontologyMin + "\n from" + from + "\n subdomain" + subdomain.ToString()
-                            + "\ndataMin: " + dataMin + "\n domainDivValMin" + domainDividingValueMin + "\n distvalMin" + distinctValueMin);
-                    throw new ArgumentException("In the database there are unallowed values in the column.");
-                }
-                else if (subdomain && from != "")
-                {
-                    /// if true: user defined range of attribute is smaller
-                    /// than it is allowed by ontology minimum property
-                    /// the value is set to ontologyMin (in the column there are none values lower than ontologyMin - 
-                    /// due one of the previous conditions)
-                    if ((k = Comparer<T>.Default.Compare(converter(from), _ontologyMin)) < 0)
-                    {
-                        __min = _ontologyMin;
-                        System.Windows.Forms.MessageBox.Show("i-" + i.ToString() + "j-" + j.ToString() + "k-" + k.ToString() + "\nmin je ONTOMIN: " + __min.ToString() + "\n\nontomin: " + ontologyMin + "\n from" + from + "\n subdomain" + subdomain.ToString()
-                            + "\ndataMin: " + dataMin + "\n domainDivValMin" + domainDividingValueMin + "\n distvalMin" + distinctValueMin);
-                    }
-                    /// From property is set by user and is greater or equal to ontologyMin
-                    else
-                    {
-                        __min = converter(from);
-                        System.Windows.Forms.MessageBox.Show("i-" + i.ToString() + "j-" + j.ToString() + "k-" + k.ToString() + "\nmin je FROM: " + __min.ToString() + "\n\nontomin: " + ontologyMin + "\n from" + from + "\n subdomain" + subdomain.ToString()
-                            + "\ndataMin: " + dataMin + "\n domainDivValMin" + domainDividingValueMin + "\n distvalMin" + distinctValueMin);
-                    }
-                }
-                /// ontology property minimum is set and property From is not set
+                    throw new ArgumentException("There are unallowed values in the database for this column.");
+                }*/
+
+                /// ontology property minimum is set and no other properties are in conflict
                 else
                 {
                     __min = _ontologyMin;
-                    System.Windows.Forms.MessageBox.Show("i-" + i.ToString() + "j-" + j.ToString() + "k-" + k.ToString() + "\nmin je ONTOMIN: " + __min.ToString() + "\n\nontomin: " + ontologyMin + "\n from" + from + "\n subdomain" + subdomain.ToString()
-                            + "\ndataMin: " + dataMin + "\n domainDivValMin" + domainDividingValueMin + "\n distvalMin" + distinctValueMin);
                 }
             }
             else
-            /// neither From nor Minimum property is set
-            /// mimimal value is the minimal value from the dataColumn
+            /// Minimum property is not set
+            /// mimimal value is the minimal value of {minimal value from the dataColumn, domainDividingValueMin, distinctValueMin}
             {
-                __min = converter(dataMin);
-                System.Windows.Forms.MessageBox.Show("i-" + i.ToString() + "j-" + j.ToString() + "k-" + k.ToString() + "\nmin je DATAMIN: " + __min.ToString() + "\n\nontomin: " + ontologyMin + "\n from" + from + "\n subdomain" + subdomain.ToString()
-                            + "\ndataMin: " + dataMin + "\n domainDivValMin" + domainDividingValueMin + "\n distvalMin" + distinctValueMin);
-            }*/
+                T tmpMin = converter(dataMin);
 
+                if (distinctValueMin != "" &&
+                    (Comparer<T>.Default.Compare(converter(distinctValueMin), tmpMin) < 0))
+                {
+                    tmpMin = converter(distinctValueMin);
+                }
+
+                if (domainDividingValueMin != "" &&
+                    (Comparer<T>.Default.Compare(converter(domainDividingValueMin), tmpMin) < 0))
+                {
+                    tmpMin = converter(domainDividingValueMin);
+                }
+
+                __min = tmpMin;
+            }
             return __min;
         }
 
         /// <summary>
         /// Method that returns the maximal value for attribute creation
-        /// (it specifies right global boundary of the domain)
+        /// (it specifies boundaries of the domain)
         /// </summary>
-        /// <param name="dt">Datatable to count values frequency from</param>
+        /// <param name="ontologyMax">Maximal value set by ontology</param>
+        /// <param name="dataMax">Maximal value in database</param>
+        /// <param name="domainDividingValueMax">Maximal domain dividing value</param>
+        /// <param name="distinctValueMax">Maximal distinct value</param>
         /// <param name="converter">Delegate for conversion to the correct type</param>
-        /// <param name="count">Requested count of intervals</param>
         /// <returns></returns>
-        public static T returnMaxValue(string ontologyMax, string to, bool subdomain, string dataMax,
-            T domainDividingValueMax, T distinctValueMax, ToTypeDelegate converter)
+        public static T returnMaxValue(string ontologyMax, string dataMax,
+            string domainDividingValueMax, string distinctValueMax, ToTypeDelegate converter)
         {
-            T __max = converter("9000");
+            T __max;
+
+            if (ontologyMax != "")
+            {
+                T _ontologyMax = converter(ontologyMax);
+                /// if true: properties from ontology are in conflict
+                /// domain dividing values can't be greater than specified maximal value
+                if (domainDividingValueMax != "" &&
+                    (Comparer<T>.Default.Compare(converter(domainDividingValueMax), _ontologyMax) > 0))
+                {
+                    throw new ArgumentException("Ontology derived properties are in conflict. Some of the domain dividing values is lower than allowed maximum. The problem may be in ontology, but maybe you have changed the values manually.");
+                }
+                /// if true: properties from ontology are in conflict
+                /// domain dividing values can't be greater than specified maximal value
+                else if (distinctValueMax != "" &&
+                    (Comparer<T>.Default.Compare(converter(distinctValueMax), _ontologyMax) > 0))
+                {
+                    throw new ArgumentException("Ontology derived properties are in conflict. Some of the domain dividing values is lower than allowed maximum. The problem may be in ontology, but maybe you have changed the values manually.");
+                }
+                /// if true: column contains unallowed values,
+                /// values must be lower than specified maximal value
+                                
+                /// TODO what is desired behaviour for user?
+                /// 1) To throw error when in database is some bad value (next IF not in comment)
+                /// 2) To ignore bad values (next IF in comment)
+                /*
+                else if (Comparer<T>.Default.Compare(converter(dataMax), _ontologyMax) > 0)
+                {
+                    throw new ArgumentException("There are unallowed values in the database for this column.");
+                }*/
+
+                /// ontology property maximum is set and no other properties are in conflict
+                else
+                {
+                    __max = _ontologyMax;
+                }
+            }
+            else
+            /// Maximum property is not set
+            /// mimimal value is the Maximal value of {maximal value from the dataColumn, domainDividingValueMax, distinctValueMax}
+            {
+                T tmpMax = converter(dataMax);
+
+                if (distinctValueMax != "" &&
+                    (Comparer<T>.Default.Compare(converter(distinctValueMax), tmpMax) > 0))
+                {
+                    tmpMax = converter(distinctValueMax);
+                }
+
+                if (domainDividingValueMax != "" &&
+                    (Comparer<T>.Default.Compare(converter(domainDividingValueMax), tmpMax) > 0))
+                {
+                    tmpMax = converter(domainDividingValueMax);
+                }
+
+                __max = tmpMax;
+            }
             return __max;
         }
     }
