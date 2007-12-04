@@ -537,7 +537,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             cacheSetting.Add(BoxInfo.typeIdentifier + PropMinimum, Minimum);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropMaximum, Maximum);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomainDividingValues, DomainDividingValues);
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropDistinctValues, PropDistinctValues);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropDistinctValues, DistinctValues);
 
             //Loading the values from cache or recounting them...
             if (_cacheFlag.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
@@ -558,56 +558,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                         //creating an empty result
                         Attribute<IComparable> result =
                             (Attribute<IComparable>)Common.GetAttributeObject(column.DbSimpleDataType, true);
-
-                        //string representation of max and min values of the column
-                        System.Data.DataTable dt;
-                        string _min;
-                        string _max;
-
-                        //getting the min and max values of the column from the user input
-                        //also getting the values from the table for the purpose of counting
-                        //their frequencies for the equifrequency intervals generation
-                        if (Domain == DomainEnum.SubDomain)
-                        {
-                            IComparable from;
-                            IComparable to;
-                            parseFromTo(column.Explain.dataType, out from, out to);
-                            _min = from.ToString();
-                            _max = to.ToString();
-                            string columnSelectExpression =
-                                column.GetQuotedQueryIdentifier();
-
-                            //strings must be placed between apostrophes in SQL QUERY
-                            if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
-                            {
-
-                                dt = column.GetDistinctsAndFrequencies(
-                                    columnSelectExpression + ">= '" + from + "' AND " + columnSelectExpression + "<= '" + to + "'"
-                                    );
-                            }
-
-                            else
-                            {
-                                dt = column.GetDistinctsAndFrequencies(
-                                    columnSelectExpression + ">=" + from + " AND " + columnSelectExpression + "<=" + to
-                                    );
-                            }
-                        }
-                        else if (Domain == DomainEnum.WholeDomain)
-                        {
-                            //or from the column statistics, if no user input is given
-                            dt = column.GetDistinctsAndFrequencies(String.Empty);
-                            _min = column.Statistics.valueMin;
-                            _max = column.Statistics.valueMax;
-                        }
-                        else
-                            throw new NotImplementedException();
                         
                         IComparable __min = null;
                         IComparable __max = null;
-
-                        _min = column.Statistics.valueMin;
-                        _max = column.Statistics.valueMax;
 
                         /// if cardinality is Cardinal or Ordinal, then attribute
                         /// is created by dividing the domain with Domain Dividing Values
@@ -616,42 +569,45 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                         if (Cardinality == CardinalityEnum.Cardinal || Cardinality == CardinalityEnum.Ordinal)
                         {
 
-                            //creating intervals of the type based on the connected column datatype
+                            //creating categories of the attributebased on the connected column datatype
                             //switch branches differ only in the datatype, so only one branch will be explained
                             switch (column.DbSimpleDataType)
                             {
                                 case DbSimpleDataTypeEnum.FloatSimpleType:
                                 case DbSimpleDataTypeEnum.DoubleSimpleType:
-                                    //for double or float type, the same algorithm is used
-                                    //which generates division points of double types
-                                    //for float, the division points must be retyped to float
-
-                                    //converting min and max values for the attribute domain
-                                    double _dmin = Convert.ToDouble(_min);
-                                    double _dmax = Convert.ToDouble(_max);
 
                                     //here the common class for retyping is used
                                     //the division points are retrieved there and retyped to the correct type
                                     if (column.DbSimpleDataType == DbSimpleDataTypeEnum.FloatSimpleType)
                                     {
-                                        __min = (float)_dmin;
-                                        __max = (float)_dmax;
-
                                         //delegate method to retype values to float
                                         Categorization.Retyper<float>.ToTypeDelegate dg =
-                                        new Categorization.Retyper<float>.ToTypeDelegate(ConvertToFloat);
+                                                new Categorization.Retyper<float>.ToTypeDelegate(ConvertToFloat);
 
-                                        float[] _divisionPoints;
+                                        //creating array of domain dividing values in float type
+                                        float[] _divisionPoints = Categorization.Retyper<float>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
 
-                                        try
-                                        {
-                                            //generation of the division points
-                                            _divisionPoints = Categorization.Retyper<float>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
-                                        }
-                                        catch
-                                        {
-                                            throw new ArgumentOutOfRangeException();
-                                        }
+                                        //creating array of distinct values in float type
+                                        float[] _distinctValuesArray = Categorization.Retyper<float>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+
+                                        //getting the minimal value for creation of intervals
+                                        __min = Categorization.Retyper<float>.returnMinValue(
+                                            Minimum,
+                                            column.Statistics.valueMin,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[0].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[0].ToString(),
+                                            dg
+                                        );
+
+                                        //getting the maximal value for creation of intervals
+                                        __max = Categorization.Retyper<float>.returnMaxValue(
+                                            Maximum,
+                                            column.Statistics.valueMax,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[_divisionPoints.Length - 1].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[_distinctValuesArray.Length - 1].ToString(),
+                                            dg
+                                        );
+
                                         //creating intervals in the attribute
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
@@ -659,23 +615,38 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                             ClosedFrom, __max,
                                             BoundaryEnum.Closed, false
                                         );
+
+                                        /// Creating Categories for DistinctValues, one category for each value
+                                        foreach (float distinctValue in _distinctValuesArray)
+                                        {
+                                            result.Add(distinctValue.ToString());
+                                            result[distinctValue.ToString()].Enumeration.Add(distinctValue, true);
+                                        }
                                     }
                                     else
                                     {
-                                        __min = _dmin;
-                                        __max = _dmax;
                                         Categorization.Retyper<double>.ToTypeDelegate dg =
-                                        new Categorization.Retyper<double>.ToTypeDelegate(Convert.ToDouble);
+                                                new Categorization.Retyper<double>.ToTypeDelegate(Convert.ToDouble);
 
-                                        double[] _divisionPoints;
-                                        try
-                                        {
-                                            _divisionPoints = Categorization.Retyper<double>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
-                                        }
-                                        catch
-                                        {
-                                            throw new ArgumentOutOfRangeException();
-                                        }
+                                        double[] _divisionPoints = Categorization.Retyper<double>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+
+                                        double[] _distinctValuesArray = Categorization.Retyper<double>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+
+                                        __min = Categorization.Retyper<double>.returnMinValue(
+                                            Minimum,
+                                            column.Statistics.valueMin,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[0].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[0].ToString(),
+                                            dg
+                                        );
+
+                                        __max = Categorization.Retyper<double>.returnMaxValue(
+                                            Maximum,
+                                            column.Statistics.valueMax,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[_divisionPoints.Length - 1].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[_distinctValuesArray.Length - 1].ToString(),
+                                            dg
+                                        );
 
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
@@ -683,6 +654,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                             ClosedFrom, __max,
                                             BoundaryEnum.Closed, false
                                         );
+
+                                        /// Creating Categories for DistinctValues, one category for each value
+
+                                        foreach (double distinctValue in _distinctValuesArray)
+                                        {
+                                            result.Add(distinctValue.ToString());
+                                            result[distinctValue.ToString()].Enumeration.Add(distinctValue, true);
+                                        }
                                     }
                                     break;
 
@@ -690,17 +669,31 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                 case DbSimpleDataTypeEnum.ShortSimpleType:
                                 case DbSimpleDataTypeEnum.IntegerSimpleType:
                                 case DbSimpleDataTypeEnum.LongSimpleType:
-                                    long _lmin = Convert.ToInt64(_min);
-                                    long _lmax = Convert.ToInt64(_max);
 
                                     if (column.DbSimpleDataType == DbSimpleDataTypeEnum.ShortSimpleType)
                                     {
-                                        __min = (short)_lmin;
-                                        __max = (short)_lmax;
                                         Categorization.Retyper<short>.ToTypeDelegate dg =
-                                        new Categorization.Retyper<short>.ToTypeDelegate(Convert.ToInt16);
+                                                new Categorization.Retyper<short>.ToTypeDelegate(Convert.ToInt16);
 
                                         short[] _divisionPoints = Categorization.Retyper<short>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+
+                                        short[] _distinctValuesArray = Categorization.Retyper<short>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+
+                                        __min = Categorization.Retyper<short>.returnMinValue(
+                                            Minimum,
+                                            column.Statistics.valueMin,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[0].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[0].ToString(),
+                                            dg
+                                        );
+
+                                        __max = Categorization.Retyper<short>.returnMaxValue(
+                                            Maximum,
+                                            column.Statistics.valueMax,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[_divisionPoints.Length - 1].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[_distinctValuesArray.Length - 1].ToString(),
+                                            dg
+                                        );
 
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
@@ -708,105 +701,81 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                             ClosedFrom, __max,
                                             BoundaryEnum.Closed, false
                                         );
+
+                                        /// Creating Categories for DistinctValues, one category for each value
+
+                                        foreach (short distinctValue in _distinctValuesArray)
+                                        {
+                                            result.Add(distinctValue.ToString());
+                                            result[distinctValue.ToString()].Enumeration.Add(distinctValue, true);
+                                        }
                                     }
                                     else
                                     {
                                         if (column.DbSimpleDataType == DbSimpleDataTypeEnum.IntegerSimpleType)
                                         {
-                                            __min = (int)_lmin;
-                                            __max = (int)_lmax;
-                                            
                                             Categorization.Retyper<int>.ToTypeDelegate dg =
-                                            new Categorization.Retyper<int>.ToTypeDelegate(Convert.ToInt32);
+                                                new Categorization.Retyper<int>.ToTypeDelegate(Convert.ToInt32);
 
                                             int[] _divisionPoints = Categorization.Retyper<int>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
 
-                                            //ontology derived property has the biggest priority
-                                            //if the minimum is set, then it is the minimal allowed value
-                                            /*if (Minimum != "")
-                                            {
-                                                __min = Convert.ToInt32(Minimum);
-                                            }
-                                            //if ontology min value is not set, then the domain is bounded by from property
-                                            else if (Domain == DomainEnum.SubDomain && From != "")
-                                            {
-                                                __min = Convert.ToInt32(From);
-                                            }
-                                            /// neither from nor minimum property is set
-                                            /// mimimal value is the minimal value from the dataColumn
-                                            else
-                                            {
-                                                __min = Convert.ToInt32(column.Statistics.valueMin);
-                                            }
-                                            */
                                             int[] _distinctValuesArray = Categorization.Retyper<int>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
 
                                             __min = Categorization.Retyper<int>.returnMinValue(
-                                                Minimum, From,
-                                                (Domain == DomainEnum.SubDomain) ? true : false,
+                                                Minimum,
                                                 column.Statistics.valueMin,
-                                                /// if there is no divisionPoint (domainDividingValue), then it is substituted by column minimal value
-                                                (_divisionPoints == null) ? "" : _divisionPoints[0].ToString(),
-                                                /// if there is no distinctValue, then it is substituted by column minimal value
-                                                (_distinctValuesArray == null) ? "" : _distinctValuesArray[0].ToString(),
+                                                (_divisionPoints.Length == 0) ? "" : _divisionPoints[0].ToString(),
+                                                (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[0].ToString(),
                                                 dg
                                             );
 
-                                            //TODO smazat
-                                            //System.Windows.Forms.MessageBox.Show("min je: " + __min.ToString());
+                                            __max = Categorization.Retyper<int>.returnMaxValue(
+                                                Maximum,
+                                                column.Statistics.valueMax,
+                                                (_divisionPoints.Length == 0) ? "" : _divisionPoints[_divisionPoints.Length - 1].ToString(),
+                                                (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[_distinctValuesArray.Length - 1].ToString(),
+                                                dg
+                                            );
 
-                                            /*TODO - doplnit kontrolu DDV a DV a porovnani Minimum a From
-                                            /// if true: properties from ontology are in conflict
-                                            /// domain dividing values can't be lower than specified minimal value
-                                            if (_divisionPoints != null && _divisionPoints[0] < ontologyMin)
-                                            {
-                                                throw new ArgumentException("Ontology derived properties are in conflict. Some of the domain dividing values is lower than allowed minimum. The problem may be in ontology, but maybe you have changed the values manually.");
-                                            }
-                                            /// if true: column contains unallowed values,
-                                            /// values must be greater than specified minimal value
-                                            else if (dataTableMin < ontologyMin)
-                                            {
-                                                throw new ArgumentException("In the database there are unallowed values in the column.");
-                                            }
-                                            /// if true: user defined range of attribute is smaller
-                                            /// than it is allowed by ontology minimum property
-                                            /// the value is set to ontologyMin (in the column there are none values lower than ontologyMin - 
-                                            /// due one of the previous conditions)
-                                            else if (from < ontologyMin)
-                                            {
-                                                __min = ontologyMin;
-                                            }
-                                            /// if true, from property is set by user and is greater or equal to ontologyMin
-                                            else if (From != "")
-                                            {
-                                                __min = from;
-                                            }
-                                            /// ontology property minimum is set
-                                            else if (Minimum != "")
-                                            {
-                                                __min = ontologyMin;
-                                            }
-                                            /// neither from nor minimum property is set
-                                            /// mimimal value is the minimal value from the dataColumn
-                                            {
-                                                __min = dataTableMin;
-                                            }*/
-                                            
                                             result.CreateIntervals(
                                                 BoundaryEnum.Closed, __min,
                                                 Categorization.Retyper<int>.Retype(_divisionPoints),
                                                 ClosedFrom, __max,
                                                 BoundaryEnum.Closed, false
                                             );
+
+                                            /// Creating Categories for DistinctValues, one category for each value
+
+                                            foreach (int distinctValue in _distinctValuesArray)
+                                            {
+                                                result.Add(distinctValue.ToString());
+                                                result[distinctValue.ToString()].Enumeration.Add(distinctValue, true);
+                                            }
                                         }
                                         else
                                         {
-                                            __min = _lmin;
-                                            __max = _lmax;
                                             Categorization.Retyper<long>.ToTypeDelegate dg =
-                                            new Categorization.Retyper<long>.ToTypeDelegate(Convert.ToInt64);
+                                                new Categorization.Retyper<long>.ToTypeDelegate(Convert.ToInt64);
 
                                             long[] _divisionPoints = Categorization.Retyper<long>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+
+                                            long[] _distinctValuesArray = Categorization.Retyper<long>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+
+                                            __min = Categorization.Retyper<long>.returnMinValue(
+                                                Minimum,
+                                                column.Statistics.valueMin,
+                                                (_divisionPoints.Length == 0) ? "" : _divisionPoints[0].ToString(),
+                                                (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[0].ToString(),
+                                                dg
+                                            );
+
+                                            __max = Categorization.Retyper<long>.returnMaxValue(
+                                                Maximum,
+                                                column.Statistics.valueMax,
+                                                (_divisionPoints.Length == 0) ? "" : _divisionPoints[_divisionPoints.Length - 1].ToString(),
+                                                (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[_distinctValuesArray.Length - 1].ToString(),
+                                                dg
+                                            );
 
                                             result.CreateIntervals(
                                                 BoundaryEnum.Closed, __min,
@@ -814,19 +783,42 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                                 ClosedFrom, __max,
                                                 BoundaryEnum.Closed, false
                                             );
+
+                                            /// Creating Categories for DistinctValues, one category for each value
+
+                                            foreach (long distinctValue in _distinctValuesArray)
+                                            {
+                                                result.Add(distinctValue.ToString());
+                                                result[distinctValue.ToString()].Enumeration.Add(distinctValue, true);
+                                            }
                                         }
                                     }
                                     break;
 
                                 case DbSimpleDataTypeEnum.DateTimeSimpleType:
                                     {
-                                        __min = Convert.ToDateTime(_min);
-                                        __max = Convert.ToDateTime(_max);
-
                                         Categorization.Retyper<DateTime>.ToTypeDelegate dg =
                                                 new Categorization.Retyper<DateTime>.ToTypeDelegate(Convert.ToDateTime);
 
                                         DateTime[] _divisionPoints = Categorization.Retyper<DateTime>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+
+                                        DateTime[] _distinctValuesArray = Categorization.Retyper<DateTime>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+
+                                        __min = Categorization.Retyper<DateTime>.returnMinValue(
+                                            Minimum,
+                                            column.Statistics.valueMin,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[0].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[0].ToString(),
+                                            dg
+                                        );
+
+                                        __max = Categorization.Retyper<DateTime>.returnMaxValue(
+                                            Maximum,
+                                            column.Statistics.valueMax,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[_divisionPoints.Length - 1].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[_distinctValuesArray.Length - 1].ToString(),
+                                            dg
+                                        );
 
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
@@ -834,17 +826,40 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                             ClosedFrom, __max,
                                             BoundaryEnum.Closed, false
                                         );
+
+                                        /// Creating Categories for DistinctValues, one category for each value
+
+                                        foreach (DateTime distinctValue in _distinctValuesArray)
+                                        {
+                                            result.Add(distinctValue.ToString());
+                                            result[distinctValue.ToString()].Enumeration.Add(distinctValue, true);
+                                        }
                                     }
                                     break;
                                 case DbSimpleDataTypeEnum.StringSimpleType:
                                     {
-                                        __min = _min;
-                                        __max = _max;
-
                                         Categorization.Retyper<string>.ToTypeDelegate dg =
-                                            new Categorization.Retyper<string>.ToTypeDelegate(Convert.ToString);
+                                                new Categorization.Retyper<string>.ToTypeDelegate(Convert.ToString);
 
                                         string[] _divisionPoints = Categorization.Retyper<string>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+
+                                        string[] _distinctValuesArray = Categorization.Retyper<string>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+
+                                        __min = Categorization.Retyper<string>.returnMinValue(
+                                            Minimum,
+                                            column.Statistics.valueMin,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[0].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[0].ToString(),
+                                            dg
+                                        );
+
+                                        __max = Categorization.Retyper<string>.returnMaxValue(
+                                            Maximum,
+                                            column.Statistics.valueMax,
+                                            (_divisionPoints.Length == 0) ? "" : _divisionPoints[_divisionPoints.Length - 1].ToString(),
+                                            (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[_distinctValuesArray.Length - 1].ToString(),
+                                            dg
+                                        );
 
                                         result.CreateIntervals(
                                             BoundaryEnum.Closed, __min,
@@ -852,36 +867,92 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                             ClosedFrom, __max,
                                             BoundaryEnum.Closed, false
                                         );
+
+                                        /// Creating Categories for DistinctValues, one category for each value
+                                        foreach (string distinctValue in _distinctValuesArray)
+                                        {
+                                            result.Add(distinctValue.ToString());
+                                            result[distinctValue.ToString()].Enumeration.Add(distinctValue, true);
+                                        }                                        
                                     }
                                     break;
 
                                 default:
-                                    //    if (fallOnError)
                                     throw new ArgumentException("Type not supported");
-                                //    else
-                                //         break;
 
                             }
 
                             _nullCategoryName = result.NullContainingCategory;
 
-                            //DistinctValues
-
-                            //result.Add("12");
-                            //result["12"].Enumeration.Add(12, true);
-
-                            //result.CreateEnums(enumeration.ToArray(), containsNull, true);
-
-                            //TODO smazat
-                            //foreach (int dp in _divisionPoints)
-                                //System.Windows.Forms.MessageBox.Show("vse ok");
-
                             return result;
                         }
                         /// if cardinality is nominal or cyclic ordinal,
                         /// then attribute is created as Each Value One Category
-                        /*else
+                        else
                         {
+                            string columnSelectExpression = column.GetQuotedQueryIdentifier();
+                            string conditionString = "";
+                            System.Data.DataTable dt;
+
+                            if (Minimum != "") {
+                                if (Maximum != "") {
+                                    //strings must be placed between apostrophes in SQL QUERY
+                                    if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
+                                    {
+
+                                        dt = column.GetDistinctsAndFrequencies(
+                                            columnSelectExpression + ">= '" + Minimum + "' AND " + columnSelectExpression + "<= '" + Maximum + "'"
+                                            );
+                                    }
+
+                                    else
+                                    {
+                                        dt = column.GetDistinctsAndFrequencies(
+                                            columnSelectExpression + ">=" + Minimum + " AND " + columnSelectExpression + "<=" + Maximum
+                                            );
+                                    }
+                                }
+                                else {
+                                    //strings must be placed between apostrophes in SQL QUERY
+                                    if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
+                                    {
+
+                                        dt = column.GetDistinctsAndFrequencies(
+                                            columnSelectExpression + ">= '" + Minimum + "'"
+                                            );
+                                    }
+
+                                    else
+                                    {
+                                        dt = column.GetDistinctsAndFrequencies(
+                                            columnSelectExpression + ">=" + Minimum
+                                            );
+                                    }
+                                }
+                            }
+                            else if (Maximum != "") {
+                                //strings must be placed between apostrophes in SQL QUERY
+                                if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
+                                {
+
+                                    dt = column.GetDistinctsAndFrequencies(
+                                        columnSelectExpression + "<= '" + Maximum + "'"
+                                        );
+                                }
+
+                                else
+                                {
+                                    dt = column.GetDistinctsAndFrequencies(
+                                        columnSelectExpression + "<=" + Maximum
+                                        );
+                                }
+                            }
+                            // neither Minimum nor Maximum value is set
+                            else
+                            {
+                                dt = column.GetDistincts(null);
+                            }
+                         
                             bool containsNull = false;
                             if (dt.Rows[0][0] is DBNull)
                                 containsNull = true;
@@ -900,8 +971,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                             _nullCategoryName = result.NullContainingCategory;
 
                             return result;
-                        }*/
-                        return null;
+                        }
                     },
                     delegate
                     {
