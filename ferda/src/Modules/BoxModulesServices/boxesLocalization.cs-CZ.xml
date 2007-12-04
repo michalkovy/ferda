@@ -10926,11 +10926,20 @@
 				<Label>Počet namapovaných dvojic</Label>
 				<Hint>Počet namapovaných dvojic (název sloupce tabulky - název entity z ontologie)</Hint>
 			</Socket>
+			<Socket>
+				<Name>PrimaryKeys</Name>
+				<Label>Primární klíče tabulek</Label>
+				<Hint>Primární klíček tabulek z databáze.</Hint>
+			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
 				<Name>Mapping</Name>
 				<Label>Mapování tabulky a ontologie</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>PrimaryKeys</Name>
+				<Label>Primární klíče tabulek</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>
@@ -11141,11 +11150,6 @@
 				<Name>DataTableName</Name>
 				<Label>Název tabulky</Label>
 				<Hint>Název tabulky, do níž patří odpovídající sloupec.</Hint>
-			</Socket>
-			<Socket>
-				<Name>PrimaryKeyColumns</Name>
-				<Label>Primární klíč</Label>
-				<Hint>Seznam sloupečků, které jsou primárním klíčem tabulky. Hodnotou parametru je jeden ze sloupečků, nebo hodnoty více sloupců oddělené čárkou. Názvy sloupců nejsou uvozeny apostrofy.</Hint>
 			</Socket>
 			<Socket>
 				<Name>SelectExpression</Name>
