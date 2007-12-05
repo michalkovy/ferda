@@ -200,6 +200,11 @@ var function = x => int : x * x;
 	\includegraphics[width=10.8cm]{lambdaBasic3.png}
 \end{frame}
 
+\begin{frame}
+	\frametitle{Implementation of lambda}
+	\framesubtitle{How it really works}
+\end{frame}
+
 \begin{frame}[fragile]
 	\frametitle{Factorial in C\#}
 	\framesubtitle{Structural version}
@@ -321,6 +326,11 @@ let rec factorial n =
 \subsection{Linear interpolation}
 \begin{frame}
 	\frametitle{Basics}
+	
+	\includegraphics[width=5cm]{linearInterpolationPlot}
+	\begin{block}{Formula}
+		$x = MaxX - (MaxY-WantedY)\frac{MaxX - MinX}{MaxY - MinY}$
+	\end{block}
 \end{frame}
 
 \begin{frame}
@@ -412,22 +422,91 @@ let rec factorial n =
 	\begin{block}<+->{Resolution}
 		\begin{itemize}[<+->]
 			\item Connect all columns you want to analyze to the sequence
-			\item Regarding type of columns and data which are there create attom setting for each column in the sequence
+			\item Regarding type of columns and data which are there create atom setting for each column in the sequence
 			\item Create basic tasks
 			\item See result of these tasks
-		\end{itemize}		
+		\end{itemize}
 	\end{block}
 \end{frame}
 
 \subsection{Reuse of code}
-% includy, lepsi sitovy archiv, nahrani krabicek z jineho projektu
+\begin{frame}
+	\frametitle{Reuse of code}
+	\framesubtitle{Problem description}
+	\begin{block}{Problem}
+		The use wants to reuse boxes which he created.
+	\end{block}
+	\begin{block}<+->{We have}
+		\begin{itemize}[<+->]
+			\item Project files
+			\item Network archive
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Reuse of code}
+	\framesubtitle{Better network archive}
+	\begin{block}{What can be done}
+		\begin{itemize}[<+->]
+			\item Labels
+			\item More network archives
+			\item User access rights
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Reuse of code}
+	\framesubtitle{Project files}
+	\begin{block}{User could load boxes from other project}
+		\begin{itemize}[<+->]
+			\item Easy to implement
+			\item There is workaround with networ archive
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{Including other project}
+		\begin{itemize}[<+->]
+			\item Like other programming languages
+			\item Strong
+			\item Harder to implement
+		\end{itemize}
+	\end{block}
+\end{frame}
 
 \subsection{Better lambda}
+\begin{frame}
+	\frametitle{Better lambda}
+	\begin{block}{}
+		\begin{itemize}[<+->]
+			\item Parameter could be function with parameter, not only constant
+			\item Lambda is slow
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{How to make lambda quicker}
+		\begin{itemize}[<+->]
+			\item Quicker creating of boxes
+			\item Functions could be called only once
+			\item Boxes could be clonned only in time it is really needed
+		\end{itemize}
+	\end{block}
+\end{frame}
+
 
 %dalsi:
 % uzivatel si vybira, kde krabicka bezi
 % moduly pro interakci nad skutecnym functions
 \subsection{Summary}
-\frame{vitez}
+\begin{frame}
+	\frametitle{Other things to do}
+	\begin{block}{}
+		\begin{itemize}[<+->]
+			\item Most of modules for interacionts sould work on top of functions not boxes
+			\item Boxes for GUHA -- parts 
+			\item User could choose on which computer bax runs
+		\end{itemize}
+	\end{block}
+\end{frame}
+
 
 \end{document}
