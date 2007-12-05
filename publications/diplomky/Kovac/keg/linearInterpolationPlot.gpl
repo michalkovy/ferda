@@ -1,0 +1,46 @@
+set terminal svg fname "Helvetica" fsize 25
+set output "linearInterpolationPlot.svg"
+set key off
+set xzeroaxis linewidth 3
+set yzeroaxis linewidth 3
+set xrange [0:3]
+set yrange [0:4]
+set xtics nomirror ("MinX" 1, "MaxX" 2)
+set ytics nomirror ("MinY" 1, "MaxY" 3)
+unset border
+set label 13 "(x,y)" at 1.55, 1.95 tc lt 3
+plot "-" with lines linetype -1, \
+"-" with lines linetype -1, \
+"-" with lines linetype 0, \
+"-" with lines linetype 0, \
+"-" with lines linetype 0, \
+"-" with lines linetype 0, \
+"-" with lines linetype 3 linewidth 4, \
+"-" with points linetype 1 pointtype 7 pointsize 0.7, \
+"-" with points linetype 3 linewidth 4 pointtype 7 pointsize 0.7
+1.5 0
+1.5 2
+e
+0 2
+1.5 2
+e
+1 0
+1 1
+e
+2 0
+2 3
+e
+0 1
+1 1
+e
+0 3
+2 3
+e
+1 1
+2 3
+e
+1 1
+2 3
+e
+1.5 2
+e
