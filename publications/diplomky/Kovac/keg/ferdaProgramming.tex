@@ -41,9 +41,9 @@
 	\end{block}
 	\begin{block}<+->{History}
 		\begin{itemize}[<+->]
-			\item LISp-Miner not so much user frienly
+			\item LISp-Miner not so user frienly
 			\item Software project at MFF
-			\item Diploma theses
+			\item Master theses
 		\end{itemize}
 	\end{block}
 \end{frame}
@@ -58,8 +58,8 @@
 	\frametitle{Ferda as programming language}
 	\begin{block}<+->{Box as function}
 		\begin{itemize}[<+->]
-			\item Box consists of function
-			\item Socket is parameter of ths function
+			\item Box consists of functions
+			\item Sockets are parameters of these functions
 			\item Property is also socket
 				\includegraphics[width=7cm]{property_as_socket}
 		\end{itemize}
@@ -89,7 +89,7 @@
 		\begin{itemize}[<+->]
 			\item New place where user can store connection
 			\item Independent on project
-			\item One network archive can be used from more computers
+			\item One network archive can be accessed from more computers
 			\item Way how to move connections from one project to another
 		\end{itemize}
 	\end{block}
@@ -161,23 +161,37 @@
 	\frametitle{Lambda expression}
 	\begin{block}{Basic facts}
 		\begin{itemize}[<+->]
-			\item From lambda calculus $\lambda x.(x+2)$
-			\item Basic of functional programming
+			\item From lambda calculus $(\lambda x.(1+x))(9)$
+			\item Basics of functional programming
 		\end{itemize}
 	\end{block}
 	\begin{block}<+->{Lambda in C\# 3}
 \begin{verbatim}
-var function = x => int : x * x;
+public delegate int function(int x);
+
+public static void Main(string[] args)
+{
+  function plusOne = x => 1 + x;
+  var a = plusOne(9);
+  System.Console.WriteLine(a);
+}
 \end{verbatim}
 	\end{block}	
-	\begin{block}<+->{Lambda in C\# 3}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Lambda expression}
+	\framesubtitle{Other languages}
+	\begin{block}<+->{Lambda in F\#}
 \begin{verbatim}
-var function = x => int : x * x;
+let onePlus x = 1 + x
+do printf "%s" (onePlus(9)) 
 \end{verbatim}
 	\end{block}	
-	\begin{block}<+->{Lambda in C\# 3}
+	\begin{block}<+->{Lambda in Python}
 \begin{verbatim}
-var function = x => int : x * x;
+plusOne = lambda x: 1 + x
+print plusOne(9)
 \end{verbatim}
 	\end{block}	
 \end{frame}
@@ -203,6 +217,12 @@ var function = x => int : x * x;
 \begin{frame}
 	\frametitle{Implementation of lambda}
 	\framesubtitle{How it really works}
+	\begin{block}{Algoritm}
+		\begin{itemize}[<+->]
+			\item Values of variables are cloned (whole subtree)
+			\item Main function is cloned with substitution and returned
+		\end{itemize}
+	\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -245,7 +265,7 @@ public static int Factorial2(int x)
 
 	\begin{block}<+->{Python}
 \begin{verbatim}
-l = lambda x: x == 0 and 1 or x * factorial(x - 1)
+fac = lambda x: x == 0 and 1 or x * fac(x - 1)
 \end{verbatim}
 	\end{block}
 
@@ -291,7 +311,7 @@ let rec factorial n =
 \begin{frame}
 	\frametitle{Command and command output}
 	\framesubtitle{Example in ferda}
-	\includegraphics[width=10.8cm]{command2.png}
+	\includegraphics[width=10.5cm]{command2.png}
 \end{frame}
 
 \begin{frame}
@@ -303,17 +323,17 @@ let rec factorial n =
 \section{Example -- executing four fold task recursively}
 \subsection{Motivation}
 \begin{frame}
-	\frametitle{Movie -- Motivation on basic four fold task}
+	\frametitle{Movie -- When lambda can be useful -- 4FT task}
 	\movie[externalviewer]{\includegraphics[width=10.8cm]{exampleMotivation1}}{exampleMotivation.ogg}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Motivation on basic four fold task}
+	\frametitle{When lambda can be useful -- 4FT task}
 	\includegraphics[width=5cm]{exampleMotivation1}
 	\begin{block}<+->{Problem}
 		\begin{itemize}[<+->]
 			\item User tries some setting of quantifiers
-			\item If he fails, he tries again with other settins?
+			\item If he fails, he tries again with other settings?
 			\item It's manual and confusing
 		\end{itemize}	
 	\end{block}
@@ -321,11 +341,25 @@ let rec factorial n =
 
 \begin{frame}
 	\frametitle{User specified automation of settings}
+	\begin{block}{User wants}
+		\begin{itemize}[<+->]
+			\item find the best settings for task
+			\item suggest way how to find best settings
+			\item have for different tasks different methods
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{Programming finding best settings by user}
+		\begin{itemize}[<+->]
+			\item biggest variability
+		\end{itemize}
+	\end{block}
+
 \end{frame}
 
 \subsection{Linear interpolation}
 \begin{frame}
-	\frametitle{Basics}
+	\frametitle{Linear interpolation}
+	\framesubtitle{Basics}
 	
 	\includegraphics[width=5cm]{linearInterpolationPlot}
 	\begin{block}{Formula}
@@ -357,7 +391,7 @@ let rec factorial n =
 \subsection{Results}
 \begin{frame}
 	\frametitle{Connection}
-	\includegraphics[width=10.8cm]{exampleResult}
+	\includegraphics[width=10cm]{exampleResult}
 \end{frame}
 
 \begin{frame}
@@ -389,7 +423,7 @@ let rec factorial n =
 		\begin{itemize}[<+->]
 			\item Make a sequence of functions
 			\item Do something for each item in the sequence
-			\item Add item
+			\item Add an item
 			\item Subsequence
 			\item Concatenation 
 		\end{itemize}	
@@ -409,20 +443,20 @@ let rec factorial n =
 		\end{itemize}	
 	\end{block}
 	\begin{block}<+->{Changes to Ferda core}
-		\pause Socket should accept new group box it accepts old one
+		\pause Socket should accept new group box the same way it accepts the old one
 	\end{block}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Example sequence on DM}
+	\frametitle{Sequence example on DM}
 	\begin{block}{Problem}
 		You have a table and don't know anything about.
-		You would like to know something about.
+		You would like to know something about it.
 	\end{block}
 	\begin{block}<+->{Resolution}
 		\begin{itemize}[<+->]
 			\item Connect all columns you want to analyze to the sequence
-			\item Regarding type of columns and data which are there create atom setting for each column in the sequence
+			\item Regarding types of colums and their data, create attributes for each column in the sequence
 			\item Create basic tasks
 			\item See result of these tasks
 		\end{itemize}
@@ -434,7 +468,7 @@ let rec factorial n =
 	\frametitle{Reuse of code}
 	\framesubtitle{Problem description}
 	\begin{block}{Problem}
-		The use wants to reuse boxes which he created.
+		The user wants to reuse boxes which he created.
 	\end{block}
 	\begin{block}<+->{We have}
 		\begin{itemize}[<+->]
@@ -462,7 +496,7 @@ let rec factorial n =
 	\begin{block}{User could load boxes from other project}
 		\begin{itemize}[<+->]
 			\item Easy to implement
-			\item There is workaround with networ archive
+			\item There is workaround with network archive
 		\end{itemize}
 	\end{block}
 	\begin{block}<+->{Including other project}
@@ -492,21 +526,32 @@ let rec factorial n =
 	\end{block}
 \end{frame}
 
-
-%dalsi:
-% uzivatel si vybira, kde krabicka bezi
-% moduly pro interakci nad skutecnym functions
 \subsection{Summary}
 \begin{frame}
 	\frametitle{Other things to do}
 	\begin{block}{}
 		\begin{itemize}[<+->]
-			\item Most of modules for interacionts sould work on top of functions not boxes
+			\item Most of modules for interacionts should work on top of functions not boxes
 			\item Boxes for GUHA -- parts 
-			\item User could choose on which computer bax runs
+			\item User could choose on which computer a box is running
+			\item Box which can be programmed by user at runtime in some scripting language
 		\end{itemize}
 	\end{block}
 \end{frame}
 
+\begin{frame}
+	\frametitle{Summary}
+	\begin{block}{Programming language in Ferda should}
+		\begin{itemize}[<+->]
+			\item offer more power for data mining
+			\item allow to do things which were not designed before
+		\end{itemize}
+	\end{block}
+	\begin{block}<+->{Next steps}
+		\begin{itemize}[<+->]
+			\item there are many things to do
+		\end{itemize}
+	\end{block}
+\end{frame}
 
 \end{document}
