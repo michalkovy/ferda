@@ -393,6 +393,7 @@ namespace Ferda.Guha.Attribute
                 if (_categories.TryGetValue(categoryName, out currentCategory))
                 {
                     currentCategory.Enumeration.Remove(itemToExclude);
+
                 RestartIntervalEnumerator:
                     foreach (Interval<T> interval in currentCategory.Intervals)
                     {
@@ -401,7 +402,7 @@ namespace Ferda.Guha.Attribute
                             // the itemToExclude is on some boundary
                             //  try left boundary
                             if (interval.LeftBoundary == BoundaryEnum.Closed
-                                && Compare(interval.RightValue, itemToExclude) == 0)
+                                && Compare(interval.LeftValue, itemToExclude) == 0)
                                 currentCategory.Intervals.Update(currentCategory.Intervals.IndexOf(interval),
                                                                  interval.LeftValue, BoundaryEnum.Open,
                                                                  interval.RightValue, interval.RightBoundary, true);

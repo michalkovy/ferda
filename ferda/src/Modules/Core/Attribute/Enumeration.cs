@@ -174,10 +174,11 @@ namespace Ferda.Guha.Attribute
 
             // test disjunctivity collisions of not contained itemToExclude - throw an exception
             string[] categoryInCollision = _category.Attribute.Axis.CategoriesInCollision(item);
+
             if (categoryInCollision.Length == 0)
             {
                 // no disjuntivity collisions
-                // the value is not covered by no category
+                // the value is covered by no category
                 _enumeration.Add(item);
                 if (!nowReducing)
                     _category.Reduce(); // can be joined to some interval (value of the open boundary of some interval)
@@ -200,7 +201,9 @@ namespace Ferda.Guha.Attribute
                     _category.Attribute.Exclude(item, categoryInCollision);
                     _enumeration.Add(item);
                     if (!nowReducing)
+                    {
                         _category.Reduce(); // can be joined to some interval (value of the open boundary of some interval)
+                    }
                     _category.Attribute.Axis.NotValid(true, true);
                     return;
                 }

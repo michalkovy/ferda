@@ -94,6 +94,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             ModulesConnection moduleConnection;
             ModuleAskingForCreation singleModuleAFC;
             List<ModuleAskingForCreation> allColumnModulesAFC = new List<ModuleAskingForCreation>();
+            Dictionary<string, List<ModuleAskingForCreation>> ontologyEntityModulesAFC = new Dictionary<string, List<ModuleAskingForCreation>>(); ;
 
             // I presuppose that item with key "Column" is before item with key "AllColumns"
 
@@ -103,17 +104,73 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 switch (moduleAFCName)
                 {
                     case "Column":
-                        //selecting all possible columns in all the datatables
+                        
+                        //all mapped columns
+                        if (Func.Mapping != null)
+                        {
+                            string[] tmpMappedPairs = Func.Mapping.Split(new string[] { Func.getMappingSeparatorOuter() }, StringSplitOptions.RemoveEmptyEntries);
+
+                            if (tmpMappedPairs.Length > 0)
+                            {
+                                moduleConnection = new ModulesConnection();
+                                moduleConnection.socketName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.SockMapping;
+                                moduleConnection.boxModuleParam = boxModule.MyProxy;
+                                //offer one box for creation for each mapped column
+                                foreach (string tmpMappedPair in tmpMappedPairs)
+                                {
+                                    // parsing the mapped pair (triple) - DataTableName, Column name, ontology Entity name
+                                    string[] DataTable_Column_OntEnt = tmpMappedPair.Split(new string[] { Func.getMappingSeparatorInner() }, StringSplitOptions.RemoveEmptyEntries);
+                                    ModulesAskingForCreation newMAFC = new ModulesAskingForCreation();
+                                    newMAFC.label = moduleAFC.label.Replace("@Name", DataTable_Column_OntEnt[2] + "(" + DataTable_Column_OntEnt[0] + "." + DataTable_Column_OntEnt[1] + ")");
+                                    newMAFC.hint = moduleAFC.hint.Replace("@Name", DataTable_Column_OntEnt[2] + "(" + DataTable_Column_OntEnt[0] + "." + DataTable_Column_OntEnt[1] + ")");
+                                    newMAFC.help = moduleAFC.help;
+                                    singleModuleAFC = new ModuleAskingForCreation();
+                                    singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
+                                    singleModuleAFC.newBoxModuleIdentifier = DataPreparation.Datasource.OntologyEnablingColumn.BoxInfo.typeIdentifier;
+                                    PropertySetting propertySettingDataTableName = new PropertySetting();
+                                    PropertySetting propertySettingColumnName = new PropertySetting();
+                                    propertySettingDataTableName.propertyName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.PropDataTableName;
+                                    propertySettingDataTableName.value = new StringTI(DataTable_Column_OntEnt[0]);
+                                    propertySettingColumnName.propertyName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.PropSelectExpression;
+                                    propertySettingColumnName.value = new StringTI(DataTable_Column_OntEnt[1]);
+                                    singleModuleAFC.propertySetting = new PropertySetting[] { propertySettingDataTableName, propertySettingColumnName };
+                                    //TODO del
+                                    allColumnModulesAFC.Add(singleModuleAFC);
+                                    // adding ModuleAFC to list of modules mapped on the ontology entity
+                                    try {
+                                        ontologyEntityModulesAFC[DataTable_Column_OntEnt[2]].Add(singleModuleAFC);
+                                    }
+                                    // there is no previous ModuleAFC mapped on the same ontology entity
+                                    catch {
+                                        List<ModuleAskingForCreation> newListModulesAFC = new List<ModuleAskingForCreation>();
+                                        newListModulesAFC.Add(singleModuleAFC);
+                                        ontologyEntityModulesAFC.Add(DataTable_Column_OntEnt[2], newListModulesAFC);
+                                    }
+
+                                    /// not used, Column boxes asking for creation are used just for the filling the ontologyEntityModulesAFC
+                                    /// newMAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
+                                    /// result.Add(newMAFC);
+                                }
+                            }
+                        }
+                        break;
+
+                        /* OLD VERSION OF MODULES ASKING FOR CREATION - all columns in all the datatables
+                        
                         string[] datatablesNames = Func.GetDataTablesNames(false);
                         foreach (string datatableName in datatablesNames)
                         {
                             string[] columnsNames = Func.GetColumnsNames(datatableName, false);
+                            
+                            
+
                             if (columnsNames.Length > 0)
                             {
                                 moduleConnection = new ModulesConnection();
-                                
                                 moduleConnection.socketName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.SockMapping;
                                 moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+
                                 foreach (string columnName in columnsNames)
                                 {
                                     ModulesAskingForCreation newMAFC = new ModulesAskingForCreation();
@@ -137,8 +194,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 
                                 }
                             }
-                        }
-                        break;
+                        }*/
                     case "DerivedColumn":
                         moduleConnection = new ModulesConnection();
                         singleModuleAFC = new ModuleAskingForCreation();
@@ -150,13 +206,26 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                         result.Add(moduleAFC);
                         break;
                     case "AllColumns":
-                        if (allColumnModulesAFC.Count <= 1)
-                            continue;
-                        moduleConnection = new ModulesConnection();
-                        moduleConnection.socketName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.SockMapping;
-                        moduleConnection.boxModuleParam = boxModule.MyProxy;
-                        moduleAFC.newModules = allColumnModulesAFC.ToArray();
-                        result.Add(moduleAFC);
+                        if (ontologyEntityModulesAFC != null)
+                        {
+                            foreach (string ontologyEntityName in ontologyEntityModulesAFC.Keys)
+                            {
+                                moduleConnection = new ModulesConnection();
+                                moduleConnection.socketName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.SockMapping;
+                                moduleConnection.boxModuleParam = boxModule.MyProxy;
+                                moduleAFC = new ModulesAskingForCreation();
+                                moduleAFC.newModules = ontologyEntityModulesAFC[ontologyEntityName].ToArray();
+                                moduleAFC.label = "All columns (" + ontologyEntityModulesAFC[ontologyEntityName].Count.ToString() + ") mapped on " + ontologyEntityName;
+                                string hint = "Columns: ";
+                                foreach (ModuleAskingForCreation tmpMAFC in ontologyEntityModulesAFC[ontologyEntityName])
+                                {
+                                    hint += tmpMAFC.propertySetting[0].value + "." + tmpMAFC.propertySetting[1].value + ", ";
+                                }
+                                hint = hint.Remove(hint.Length - 2);
+                                moduleAFC.hint = hint;
+                                result.Add(moduleAFC);
+                            }
+                        }
                         break;
                     default:
                         throw new NotImplementedException();

@@ -285,14 +285,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             {
                 dummy = Func.GetAttribute(true);
             }
-            catch
+            catch (Exception e)
             {
-                throw Exceptions.BadParamsError(
+                throw e;
+                /*throw Exceptions.BadParamsError(
                     null,
                     boxModule.StringIceIdentity,
                     "Domain is set incorrectly or some of the ontology derived parameter can't be converted into datatype of the data table column",
                     restrictionTypeEnum.OtherReason
-                );
+                );*/
             }
             
             dummy = Func.GetCategoriesNames(true);
