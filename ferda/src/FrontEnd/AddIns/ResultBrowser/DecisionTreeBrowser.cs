@@ -116,13 +116,20 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             ColumnHeader header;
             //column width
             int columnWidth = treesListView.Width / 
-                (quantifiers.Quantifeirs.Values.Count + 1);
+                (quantifiers.Quantifeirs.Values.Count + 2);
             int columnIndex = 0;
 
-            //adding a column
+            //adding a column for hypothesis ID
             treesListView.Columns.Clear();
             header = new ColumnHeader();
             header.Text = resManager.GetString("HypothesisId");
+            treesListView.Columns.Add(header);
+            treesListView.Columns[columnIndex].Width = columnWidth;
+            columnIndex++;
+
+            //adding a column for tree depth
+            header = new ColumnHeader();
+            header.Text = resManager.GetString("TreeDepth");
             treesListView.Columns.Add(header);
             treesListView.Columns[columnIndex].Width = columnWidth;
             columnIndex++;
@@ -141,6 +148,8 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             {
                 ListViewItem item = new ListViewItem();
                 item.Text = i.ToString();
+
+                item.SubItems.Add(decisionTrees[i].TreeDepth.ToString());
 
                 int length = quantifierValues[i].Length;
 

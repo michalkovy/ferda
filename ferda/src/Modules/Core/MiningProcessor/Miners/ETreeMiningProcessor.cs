@@ -397,13 +397,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 SerializableDecisionTree ser = new SerializableDecisionTree();
                 ser.IfRepresentation = tree.IfRepresentation;
+                ser.TreeDepth = tree.Depth;
                 ser.ConfusionMatrix = tree.ConfusionMatrix(
                     targetClassificationAttribute.BitStrings, 
                     targetClassificationAttribute.CategoriesIds);
                 hyps.Add(ser);
             }
             result.decisionTrees = hyps.ToArray();
-
         }
 
         /// <summary>

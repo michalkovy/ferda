@@ -197,21 +197,21 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                 truePositive +=
                     classificationBitStrings[i].And(
                     rootNode.ClassifiedCategoryBitString(classificationCategories[i])).Sum;
-                trueNegative +=
+                falseNegative +=
                     classificationBitStrings[i].And(
                     rootNode.ClassifiedCategoryBitString(classificationCategories[i]).Not()).Sum;
                 falsePositive +=
                     classificationBitStrings[i].Not().And(
                     rootNode.ClassifiedCategoryBitString(classificationCategories[i])).Sum;
-                falseNegative +=
+                trueNegative +=
                     classificationBitStrings[i].Not().And(
                     rootNode.ClassifiedCategoryBitString(classificationCategories[i]).Not()).Sum;
             }
 
             result[0][0] = (double)truePositive;
-            result[0][1] = (double)trueNegative;
-            result[1][0] = (double)falsePositive;
-            result[1][1] = (double)falseNegative;
+            result[0][1] = (double)falsePositive;
+            result[1][0] = (double)falseNegative;
+            result[1][1] = (double)trueNegative;
 
             return result;
         }
