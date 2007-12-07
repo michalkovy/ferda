@@ -309,4 +309,7 @@
   <data name="Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="TreeDepth" xml:space="preserve">
+    <value>Hloubka stromu</value>
+  </data>
 </root>

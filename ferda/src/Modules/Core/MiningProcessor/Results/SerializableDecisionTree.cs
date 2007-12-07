@@ -49,6 +49,11 @@ namespace Ferda.Guha.MiningProcessor.Results
         public double[][] ConfusionMatrix;
 
         /// <summary>
+        /// Depth of the tree
+        /// </summary>
+        public int TreeDepth;
+
+        /// <summary>
         /// Serializes the specified input.
         /// </summary>
         /// <param name="input">The decision tree to be serialized</param>
