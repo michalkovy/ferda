@@ -736,16 +736,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                                 (_distinctValuesArray.Length == 0) ? "" : _distinctValuesArray[_distinctValuesArray.Length - 1].ToString(),
                                                 dg
                                             );
-
+                                            
                                             result.CreateIntervals(
                                                 BoundaryEnum.Closed, __min,
                                                 Categorization.Retyper<int>.Retype(_divisionPoints),
                                                 ClosedFrom, __max,
                                                 BoundaryEnum.Closed, false
                                             );
-
+                                            
                                             /// Creating Categories for DistinctValues, one category for each value
-
                                             foreach (int distinctValue in _distinctValuesArray)
                                             {
                                                 result.Add(distinctValue.ToString());
@@ -891,11 +890,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                         else
                         {
                             string columnSelectExpression = column.GetQuotedQueryIdentifier();
-                            string conditionString = "";
                             System.Data.DataTable dt;
-
-                            if (Minimum != "") {
-                                if (Maximum != "") {
+                            if (Minimum != null && Minimum != "") {
+                                if (Maximum != null && Maximum != "")
+                                {
                                     //strings must be placed between apostrophes in SQL QUERY
                                     if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
                                     {
@@ -930,7 +928,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                     }
                                 }
                             }
-                            else if (Maximum != "") {
+                            else if (Maximum != null && Maximum != "")
+                            {
                                 //strings must be placed between apostrophes in SQL QUERY
                                 if (column.DbSimpleDataType == DbSimpleDataTypeEnum.StringSimpleType)
                                 {
@@ -954,7 +953,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                             }
                          
                             bool containsNull = false;
-                            if (dt.Rows[0][0] is DBNull)
+                            if (dt.Rows.Count > 0 && dt.Rows[0][0] is DBNull)
                                 containsNull = true;
 
                             List<object> enumeration = new List<object>(dt.Rows.Count);
