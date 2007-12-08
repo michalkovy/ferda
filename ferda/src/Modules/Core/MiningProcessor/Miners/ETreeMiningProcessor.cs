@@ -491,13 +491,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     targetClassificationAttribute.CategoriesIds);
             }
 
-            //1. rule for further branching - if the three is already of the 
-            //maximal length, do no further branching of the tree
-            if (processTree.Depth == maximalTreeDepth)
-            {
-                return lifo;
-            }
-
             //the seed tree is treated differently.
             if (processTree.RootNode == null)
             {
@@ -515,11 +508,29 @@ namespace Ferda.Guha.MiningProcessor.Miners
             if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequency
                 || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalNodePurity)
             {
-                nodesForBranching = processTree.NodesForBranching(minimalNodeFrequency);
+                //the trees, where some node is of maximal lenght (but others may not be)
+                //are treated differently
+                if (processTree.Depth == maximalTreeDepth)
+                {
+                    nodesForBranching = processTree.NodesForBranching(minimalNodeFrequency, maximalTreeDepth);
+                }
+                else
+                {
+                    nodesForBranching = processTree.NodesForBranching(minimalNodeFrequency, -1);
+                }
             }
             else
             {
-                nodesForBranching = new List<Node>(processTree.RootNode.GetLeaves());
+                //the trees, where some node is of maximal lenght (but others may not be)
+                //are treated differently
+                if (processTree.Depth == maximalTreeDepth)
+                {
+                    nodesForBranching = processTree.LeavesOfNotMaximalLength(maximalTreeDepth);
+                }
+                else
+                {
+                    nodesForBranching = new List<Node>(processTree.RootNode.GetLeaves());
+                }
             }
 
             //for each node adding a new tree 
@@ -665,7 +676,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
             CategorialAttributeTrace attribute)
         {
             Tree result = (Tree) processTree.Clone();
-            result.Depth = processTree.Depth + 1;
+            if (result.Depth < maximalTreeDepth)
+            {
+                result.Depth = processTree.Depth + 1;
+            }
+            else
+            {
+                result.Depth = processTree.Depth;
+            }
             //finding the right node in the new tree
             Node n = result.FindNode(node);
 
@@ -902,7 +920,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
             for (int i = 0; i < noAttributesForBranching; i++)
             {
                 //adding in reverse order
-                result[i] = dict[values[values.Count - 1 - i]];
+                //result[i] = dict[values[values.Count - 1 - i]];
+                //adding in right order
+                result[i] = dict[values[i]];
             }
 
             return result;

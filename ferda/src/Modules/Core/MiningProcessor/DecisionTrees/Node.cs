@@ -317,6 +317,34 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         }
 
         /// <summary>
+        /// Returns leaves of the tree and for each leaf, there
+        /// is a numbes stating depth of the leaf in the tree.
+        /// </summary>
+        /// <returns>Leaves and their depth in the tree</returns>
+        public Dictionary<Node, int> GetLeavesAndDepth()
+        {
+            Dictionary<Node, int> result = new Dictionary<Node, int>();
+
+            if (Leaf)
+            {
+                result.Add(this, 1);
+            }
+            else
+            {
+                foreach (Node node in SubNodes.Values)
+                {
+                    Dictionary<Node, int> tmp = node.GetLeavesAndDepth();
+                    foreach (Node n in tmp.Keys)
+                    {
+                        result.Add(n, tmp[n] + 1);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets a bit string of one category. This string is created
         /// by ANDing the base bit string of the node and bit string of the
         /// category from the bit string generator.
