@@ -91,8 +91,14 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// one category, which has frequency biggre that minimal node frequency
         /// </summary>
         /// <param name="minimalNodeFrequency">Minimal node frequency</param>
+        /// <param name="maximalTreeDepth">Maximal tree depth of the tree. If this 
+        /// parameter is equal to -1, then all the leaves of the tree are considered
+        /// for possible branching, if the parameter is greater then -1, only the
+        /// leaves with shorter depth than the parameter are considered for
+        /// possible branching.
+        /// </param>
         /// <returns>Nodes for branching</returns>
-        public List<Node> NodesForBranching(int minimalNodeFrequency)
+        public List<Node> NodesForBranching(int minimalNodeFrequency, int maximalTreeDepth)
         {
             List<Node> nodesWithMoreThanMinimalFrequency = new List<Node>();
 
@@ -117,7 +123,18 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             }
             else
             {
-                foreach (Node node in rootNode.GetLeaves())
+                Node[] potentialBranching;
+                if (maximalTreeDepth == -1)
+                {
+                    potentialBranching = rootNode.GetLeaves();
+                }
+                else
+                {
+                    potentialBranching =
+                        LeavesOfNotMaximalLength(maximalTreeDepth).ToArray();
+                }
+
+                foreach (Node node in potentialBranching)
                 {
                     if (node.Frequency > minimalNodeFrequency)
                     {
@@ -127,6 +144,28 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
 
                 return nodesWithMoreThanMinimalFrequency;
             }
+        }
+
+        /// <summary>
+        /// Returns leaves of the tree, that are in shorter depth than the maximal 
+        /// tree depth
+        /// </summary>
+        /// <param name="maximalTreeDepth">Maximal tree depth</param>
+        /// <returns>Leaves whose depth is shorter then maximal tree depth</returns>
+        public List<Node> LeavesOfNotMaximalLength(int maximalTreeDepth)
+        {
+            Dictionary<Node, int> LandD = rootNode.GetLeavesAndDepth();
+            List<Node> result = new List<Node>();
+
+            foreach (Node n in LandD.Keys)
+            {
+                if (LandD[n] < maximalTreeDepth)
+                {
+                    result.Add(n);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
