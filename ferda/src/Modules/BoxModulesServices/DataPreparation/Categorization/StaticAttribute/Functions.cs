@@ -713,7 +713,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                     fallOnError,
                     delegate
                     {
-                        Attribute<IComparable> attribute;
+                        Attribute<IComparable> attribute = null;
                         DbDataTypeEnum columnDataType;
                         //this is the case when static attribute connected to attribute box
                         //need to jump twice to get to the column box
