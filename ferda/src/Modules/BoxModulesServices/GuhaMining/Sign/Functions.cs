@@ -180,6 +180,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
                                     throw new NotImplementedException();
                             }
                         }
+			//Mono compilation fix
+			throw new NotImplementedException();
                     },
                 delegate
                     {

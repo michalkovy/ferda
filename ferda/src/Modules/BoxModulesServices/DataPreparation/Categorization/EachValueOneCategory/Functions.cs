@@ -284,7 +284,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                         if (column == null)
                             return null;
 
-                        Attribute<IComparable> result;
+                        Attribute<IComparable> result = null;
 
                         switch (column.DbSimpleDataType)
                         {
