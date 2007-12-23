@@ -21,10 +21,11 @@ import org.semanticweb.owl.model.OWLDataPropertyExpression;
 import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLOntology;
+import java.io.*;
 
 public class OWLParserI extends _OWLParserDisp{
 	
-	public static final int DEFAULT_ARRAY_SIZE = 5;
+	public static final int DEFAULT_ARRAY_SIZE = 10;
 	
 	public OntologyStructure parseOntology(String ontologyURL, Current __current)
 			throws WrongOntologyURL {
@@ -46,30 +47,37 @@ public class OWLParserI extends _OWLParserDisp{
 			//loading of particular classes from the ontology
 			for(OWLClass cls : ontology.getReferencedClasses()) {
 				
-				String[] annotations = new String[DEFAULT_ARRAY_SIZE];
-				String[] subClasses = new String[DEFAULT_ARRAY_SIZE];
-				String[] superClasses = new String[DEFAULT_ARRAY_SIZE];
-				String[] instances = new String[DEFAULT_ARRAY_SIZE];
 				Map<java.lang.String, String[]> dataPropertiesMap = new HashMap<String, String[]>();
+				Map<java.lang.String, String[]> instancesMap = new HashMap<String, String[]>();
 				
 				//loading of annotations (labels, comments, ...)
+				//annotations = new String[cls.getAnnotations(ontology).size()];
+				Set<OWLAnnotation> tmpAnnotations = cls.getAnnotations(ontology);
+				String[] annotations = new String[tmpAnnotations.size()];
 				int i = 0;
-				for (OWLAnnotation annotation : cls.getAnnotations(ontology)) {
-					annotations = addToArray(annotations, annotation.toString(), i);
+				for (OWLAnnotation annotation : tmpAnnotations) {
+					String tmpstr = annotation.getAnnotationValue().toString();
+					int from = tmpstr.indexOf("\"");
+					int to = tmpstr.indexOf("\"", from + 1);
+					annotations[i] = tmpstr.substring(from + 1, to);
 					i++;
 				}
 								
 				//loading of subclasses
+				Set<OWLDescription> tmpSubClasses = cls.getSubClasses(ontology);
+				String[] subClasses = new String[tmpSubClasses.size()];
 				i = 0;
-				for (OWLDescription subClass : cls.getSubClasses(ontology)) {
-					subClasses = addToArray(subClasses, subClass.toString(), i);
+				for (OWLDescription subClass : tmpSubClasses) {
+					subClasses[i] = subClass.toString();
 					i++;
 				}
 				
 				//loading of superclasses
-				i = 0; 
-				for (OWLDescription superClass : cls.getSuperClasses(ontology)) {
-					superClasses = addToArray(superClasses, superClass.toString(), i);
+				Set<OWLDescription> tmpSuperClasses = cls.getSuperClasses(ontology);
+				String[] superClasses = new String[tmpSuperClasses.size()];
+				i = 0;
+				for (OWLDescription superClass : tmpSuperClasses) {
+					superClasses[i] = superClass.toString();
 					i++;
 				}
 				
@@ -78,31 +86,43 @@ public class OWLParserI extends _OWLParserDisp{
 						annotations,
 						subClasses,
 						superClasses,
-						instances,
+						instancesMap,
 						dataPropertiesMap
 						);
 				
 				FerdaOntology.OntologyClassMap.put(cls.toString(), newFerdaClass);
 			}
-			//assigning of data properties to particular classes - 
+			//assigning instances and data properties to particular classes - 
 			//in this context, classes acts as an individuals and 
 			//it's needed to assign right values (data properties) to classes in according to name 
 			for(OWLIndividual ind : ontology.getReferencedIndividuals()) {
 				
 				OntologyClass ferdaClass = FerdaOntology.OntologyClassMap.get(ind.toString());
 				
-				if (ferdaClass == null) {	//instance which is not also a class
+				if (ferdaClass == null) {	//instance which is not also a class (individuals of the classes)
 					ferdaClass = FerdaOntology.OntologyClassMap.get(ind.getTypes(ontology).toArray()[0].toString());
-					ferdaClass.Instances = addToArray(ferdaClass.Instances, ind.toString(), -1);
+					//loading of annotations (labels, comments, ...)
+					//annotations = new String[cls.getAnnotations(ontology).size()];
+					Set<OWLAnnotation> tmpIndividualAnnotations = ind.getAnnotations(ontology);
+					String[] individualAnnotations = new String[tmpIndividualAnnotations.size()];
+					int i = 0;
+					for (OWLAnnotation annotation : tmpIndividualAnnotations) {
+						String tmpstr = annotation.getAnnotationValue().toString();
+						int from = tmpstr.indexOf("\"");
+						int to = tmpstr.indexOf("\"", from + 1);
+						individualAnnotations[i] = tmpstr.substring(from + 1, to);
+						i++;
+					}
+					ferdaClass.InstancesAnnotations.put(ind.toString(), individualAnnotations);
 				}
 				else {
 					Map<OWLDataPropertyExpression, Set<OWLConstant>> dpMap = ind.getDataPropertyValues(ontology);
 					for(OWLDataPropertyExpression dpName : dpMap.keySet()) {
-						String[] dpValueArray = new String[DEFAULT_ARRAY_SIZE];
-						int i = 0;
+						String[] dpValueArray = new String[dpMap.get(dpName).size()];
 						Iterator<OWLConstant> it = dpMap.get(dpName).iterator();
+						int i = 0;						
 						while (it.hasNext()) {
-							dpValueArray = (String[])addToArray(dpValueArray, it.next().getLiteral().toString(), i);
+							dpValueArray[i] = it.next().getLiteral().toString();
 							i++;
 						}
 						ferdaClass.DataPropertiesMap.put(dpName.toString(), dpValueArray);
@@ -111,27 +131,27 @@ public class OWLParserI extends _OWLParserDisp{
 			}
 			
 			int j = 0;	//artificial variable used for positioning of ObjectProperty into an array
-			ObjectProperty[] ArrayFerdaObjectProperty = new ObjectProperty[DEFAULT_ARRAY_SIZE];
+			ObjectProperty[] ArrayFerdaObjectProperty = new ObjectProperty[ontology.getReferencedObjectProperties().size()];
 			for(org.semanticweb.owl.model.OWLObjectProperty op : ontology.getReferencedObjectProperties()) {
-				String[] annotations = new String[DEFAULT_ARRAY_SIZE];
-				String[] domains = new String[DEFAULT_ARRAY_SIZE];
-				String[] ranges = new String[DEFAULT_ARRAY_SIZE];
+				String[] annotations = new String[op.getAnnotations(ontology).size()];
+				String[] domains = new String[op.getDomains(ontology).size()];
+				String[] ranges = new String[op.getRanges(ontology).size()];
 				
 				int i = 0;
 				for(org.semanticweb.owl.model.OWLAnnotation annotation : op.getAnnotations(ontology)) {
-					annotations = addToArray(annotations, annotation.toString(), i);
+					annotations[i] = annotation.toString();
 					i++;
 				}
 				
 				i = 0;
 				for(org.semanticweb.owl.model.OWLDescription domain : op.getDomains(ontology)) {
-					domains = addToArray(domains, domain.toString(), i);
+					domains[i] = domain.toString();
 					i++;
 				}
 				
 				i = 0;
 				for(org.semanticweb.owl.model.OWLDescription range : op.getRanges(ontology)) {
-					ranges = addToArray(ranges, range.toString(), i);
+					ranges[i] = range.toString();
 					i++;
 				}
 
@@ -144,7 +164,7 @@ public class OWLParserI extends _OWLParserDisp{
 				if (ArrayFerdaObjectProperty.length > j) {	//no need to enlarge the array
 					ArrayFerdaObjectProperty[j] = newFerdaObjectProperty;
 				}
-				else {	//needed to enlarge the array ArrayFerdaObjectProperty
+				else {	//it is needed to enlarge the array ArrayFerdaObjectProperty
 					ObjectProperty[] ArrayFerdaObjectProperty2 = new ObjectProperty[2*ArrayFerdaObjectProperty.length];
 					System.arraycopy(ArrayFerdaObjectProperty, 0, ArrayFerdaObjectProperty2, 0, ArrayFerdaObjectProperty.length);
 					ArrayFerdaObjectProperty2[j] = newFerdaObjectProperty;
@@ -172,26 +192,5 @@ public class OWLParserI extends _OWLParserDisp{
 		}
 		
 		return FerdaOntology;
-	}
-	
-	public String[] addToArray(String[] array, String value, int position) {
-		if (position < 0) {	//if position is negative it is a sign, that the value is to be placed on the first unoccupied position
-			position = 0;
-			while ((position < array.length) && (array[position]!= null)) {
-				position++;
-			}
-		}
-		if (position < array.length) {	//a capacity of an array is not exceeded
-			array[position] = value;
-			return array;
-		}
-		else {
-			int length2 = array.length*2;
-			int longer = length2 > position ? length2 : position + DEFAULT_ARRAY_SIZE; 
-			String[] array2 = new String[longer];
-			System.arraycopy(array, 0, array2, 0, array.length);
-			array2[position] = value;
-			return array2;
-		}
 	}
 }

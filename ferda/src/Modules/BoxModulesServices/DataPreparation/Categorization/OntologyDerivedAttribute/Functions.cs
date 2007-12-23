@@ -251,19 +251,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             {
                 foreach (string tmpStr in tmpMap.Keys)
                 {
-                    int i = 1;
                     if (tmpMap[tmpStr] != null)
                     {
                         string tmpAllValues = "";
                         foreach (string tmpValue in tmpMap[tmpStr])
                         {
-                            //empty values are ignored
-                            if (tmpValue != "")
-                            {
-                                tmpAllValues += tmpValue;
-                                if (tmpMap[tmpStr].Length > i++)
-                                    tmpAllValues += Separator;
-                            }
+                            tmpAllValues += tmpValue;
+                            tmpAllValues += Separator;
                         }
                         /// removing unwanted separator at the end of the string
                         if (tmpAllValues != "")

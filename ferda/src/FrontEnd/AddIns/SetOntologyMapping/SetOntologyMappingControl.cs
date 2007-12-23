@@ -103,13 +103,17 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
 
             this.MakeDataTablesTreeView();
             this.MakeOntologyTreeView();
+            
+            if (mapping != null && mapping != "") {
+                string[] tmpMappedPairs = mapping.Split(new string[] { this.separatorOuter }, StringSplitOptions.RemoveEmptyEntries);
 
-            string[] tmpMappedPairs = mapping.Split(new string[] { this.separatorOuter }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string tmpMappedPair in tmpMappedPairs)
-            {
-                string[] DataTable_Column_OntEnt = tmpMappedPair.Split(new string[] { this.separatorInner }, StringSplitOptions.RemoveEmptyEntries);
-                mapPair(DataTable_Column_OntEnt[0], DataTable_Column_OntEnt[1], DataTable_Column_OntEnt[2]);
+                foreach (string tmpMappedPair in tmpMappedPairs)
+                {
+                    string[] DataTable_Column_OntEnt = tmpMappedPair.Split(new string[] { this.separatorInner }, StringSplitOptions.RemoveEmptyEntries);
+                    //all three parts of the mapped pair must exist
+                    if (DataTable_Column_OntEnt.Length == 3)
+                        mapPair(DataTable_Column_OntEnt[0], DataTable_Column_OntEnt[1], DataTable_Column_OntEnt[2]);
+                }
             }
             return;
 
@@ -153,9 +157,10 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
 
             foreach (OntologyClass ontologyClass in this.ontology.OntologyClassMap.Values)
             {
-                if (ontologyClass.SuperClasses[0] == "")
+                if (ontologyClass.SuperClasses.Length == 0)
                 {
                     rootNode = ontologyTreeView.Nodes.Add(ontologyClass.name.ToString());
+
                     AddSubClassesNodes(ontologyClass, rootNode);
                 }
             }
@@ -169,15 +174,37 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         private void AddSubClassesNodes(OntologyClass ontologyClass, TreeNode node)
         {
             TreeNode newNode;
+
+            //adding the instances of class into the treeview
+            AddInstancesNodes(ontologyClass, node);
+
             foreach (string subClassName in ontologyClass.SubClasses)
             {
-                if (subClassName != "")
+                newNode = (node.Nodes.Add(subClassName));
+
+                OntologyClass subClass = this.ontology.OntologyClassMap[subClassName];
+                AddSubClassesNodes(subClass, newNode);
+            }
+            return;
+        }
+
+        /// <summary>
+        /// Method to add instances of ontology class to OntologyTreeView
+        /// </summary>
+        private void AddInstancesNodes(OntologyClass ontologyClass, TreeNode node)
+        {
+            TreeNode newNodeInstance;
+
+            //adding the instances of class into the treeview
+            foreach (string instance in ontologyClass.InstancesAnnotations.Keys)
+            {
+                if (instance != "")
                 {
-                    newNode = (node.Nodes.Add(subClassName));
-                    OntologyClass subClass = this.ontology.OntologyClassMap[subClassName];
-                    AddSubClassesNodes(subClass, newNode);
+                    newNodeInstance = (node.Nodes.Add(instance));
+                    newNodeInstance.NodeFont = new Font(this.dataTablesTreeView.Font, FontStyle.Italic);
                 }
             }
+
             return;
         }
 

@@ -146,6 +146,33 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 return Name;
         }*/
 
+
+        /// <summary>
+        /// Gets the superClass of the ontology entity from ontology, for individuals it returns the class from which the instance is instantiated
+        /// </summary>
+        /// <param name="ontologyEntityName">Name of the ontology entity</param>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>SuperClasses of the ontology entity</returns>
+        public string[] getOntologyEntitySuperClasses(string ontologyEntityName, bool fallOnError)
+        {
+            OntologyFunctionsPrx prx = GetOntologyFunctionsPrx(fallOnError);
+            if (prx == null)
+                return null;
+
+            return ExceptionsHandler.GetResult<string[]>(
+                fallOnError,
+                delegate
+                {
+                    return prx.getOntologyEntitySuperClasses(ontologyEntityName);
+                },
+                delegate
+                {
+                    return new string[0];
+                },
+                _boxModule.StringIceIdentity
+                );            
+        }
+
         /// <summary>
         /// Gets the properties (Data Properties) of ontology entity - for individuals it is empty
         /// </summary>
@@ -497,6 +524,18 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         {
             return getOntologyEntityAnnotations(dataTableName, columnName, true);
         }
+
+        /// <summary>
+        /// Gets the superClass of the ontology entity from ontology, for individuals it returns the class from which the instance is instantiated
+        /// </summary>
+        /// <param name="ontologyEntityName">Name of the ontology entity</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>SuperClasses of the ontology entity</returns>
+        public override string[] getOntologyEntitySuperClasses(string ontologyEntityName, Ice.Current current__)
+        {
+            return getOntologyEntitySuperClasses(ontologyEntityName, true);
+        }
+        
 
         public override string[] getDataTablesNames(Current current__)
         {
