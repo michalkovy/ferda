@@ -231,19 +231,12 @@ namespace Ferda.FrontEnd.AddIns.ShowMapping
                 {
                     foreach (string tmpStr in dataProperties.Keys)
                     {
-                        int i = 1;
                         if (dataProperties[tmpStr] != null)
                         {
                             string tmpAllValues = "";
                             foreach (string tmpValue in dataProperties[tmpStr])
                             {
-                                //empty values are ignored
-                                if (tmpValue != "")
-                                {
-                                    tmpAllValues += tmpValue;
-                                    if (dataProperties[tmpStr].Length > i++)
-                                        tmpAllValues += dataPropertyValuesSeparator;
-                                }
+                                tmpAllValues += tmpValue + dataPropertyValuesSeparator;
                             }
                             /// removing unwanted separator at the end of the string
                             if (tmpAllValues != "")
@@ -267,13 +260,18 @@ namespace Ferda.FrontEnd.AddIns.ShowMapping
                 /// adding annotations into listView row
                 string[] annotations = ontologyMappingPrx.getOntologyEntityAnnotations(DataTable_Column_OntEnt[0], DataTable_Column_OntEnt[1]);
                 string annotationAll = "";
-                foreach (string annotation in annotations)
+                if (annotations != null)
                 {
-                    if (annotation != "")
-                        annotationAll += annotation + '\n';
+                    foreach (string annotation in annotations)
+                    {
+                        if (annotation != "")
+                            annotationAll += annotation + "; ";
+                    }
                 }
                 //removing last unwanted char
-                annotationAll = annotationAll.Remove(annotationAll.Length - 1);
+                if (annotationAll != "")
+                    //remove last separator "; "
+                    annotationAll = annotationAll.Remove(annotationAll.Length - 2);
                 newItem.SubItems.Add(annotationAll);
 
                 /// adding new row into listview

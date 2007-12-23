@@ -56,6 +56,9 @@ module Ferda {
               
             idempotent StringSeq getOntologyEntityAnnotations(string entityName) 
 							throws Ferda::Modules::BoxRuntimeError;
+							
+						idempotent StringSeq getOntologyEntitySuperClasses(string entityName) 
+							throws Ferda::Modules::BoxRuntimeError;
           };
 				};
 			};

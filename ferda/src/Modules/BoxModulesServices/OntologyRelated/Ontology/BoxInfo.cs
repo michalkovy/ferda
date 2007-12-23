@@ -162,7 +162,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
                 default:
                     throw new NotImplementedException();
             }
-            return null; 
         }
 
         /// <summary>

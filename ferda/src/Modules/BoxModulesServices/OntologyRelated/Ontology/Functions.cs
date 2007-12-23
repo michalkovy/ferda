@@ -220,16 +220,51 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
             catch
             {
-                return null;
+                return new StrSeqMap();
             }
         }
 
         public override string[] getOntologyEntityAnnotations(string entityName, Current current__)
         {
             OntologyStructure ontology = getOntology(true);
+
             try
             {
+                //ontology entity is a class
                 return ontology.OntologyClassMap[entityName].Annotations;
+            }
+            catch
+            {
+                //ontology entity is an individual
+                try
+                {
+                    foreach (OntologyClass tmpOntologyClass in ontology.OntologyClassMap.Values) {
+                        foreach (string tmpIndividual in tmpOntologyClass.InstancesAnnotations.Keys) {
+                            if (tmpIndividual == entityName)
+                                return tmpOntologyClass.InstancesAnnotations[tmpIndividual];
+                        }
+                    }
+                }
+                catch
+                {
+                    return new string[0];
+                }
+                return new string[0];
+            }
+        }
+
+        /// <summary>
+        /// Gets the superClass of the ontology entity from ontology, for individuals it returns the class from which the instance is instantiated
+        /// </summary>
+        /// <param name="ontologyEntityName">Name of the ontology entity</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>SuperClasses of the ontology entity</returns>
+        public override string[] getOntologyEntitySuperClasses(string ontologyEntityName, Current current__)
+        {
+            OntologyStructure ontology = getOntology(true);
+            try
+            {
+                return ontology.OntologyClassMap[ontologyEntityName].SuperClasses;
             }
             catch
             {

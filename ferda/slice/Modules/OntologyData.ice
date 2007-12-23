@@ -17,7 +17,7 @@ module Ferda {
           StrSeq Annotations;    //list for comments,labels,...
           StrSeq SubClasses;     //list with names of lineal descentdants
           StrSeq SuperClasses;   //list with name of lineal predecessors
-          StrSeq Instances;      //list with names of instances of this class
+          StrSeqMap InstancesAnnotations; //"dictionary" - name of an instance and list of its annotations
           StrSeqMap DataPropertiesMap;    //"dictionary" - name of a property and list of values it takes for this class
         };
         

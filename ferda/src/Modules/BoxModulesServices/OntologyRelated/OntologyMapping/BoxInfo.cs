@@ -25,6 +25,7 @@ using Ferda.Modules.Boxes;
 using Ferda.Guha.Data;
 using Object = Ice.Object;
 using Ferda.Modules.Boxes.DataPreparation;
+using Ferda.OntologyRelated.generated.OntologyData;
 
 namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 {
@@ -33,6 +34,11 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
     /// </summary>
     internal class BoxInfo : Boxes.BoxInfo
     {
+        private OntologyStructure ontology;
+
+        /// ontologySuperClassesModulesAFC is a variable for assigning modules AFC to superclasses of ontology entites
+        public Dictionary<string, List<ModuleAskingForCreation>> ontologySuperClassesModulesAFC = new Dictionary<string, List<ModuleAskingForCreation>>();
+        
         /// <summary>
         /// Functions creates an object of <see cref="T:Ferda.Modules.IFunctions">IFuntions</see>
         /// type that provides functionality of the box
@@ -75,6 +81,64 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         }
 
         /// <summary>
+        /// Recursively assign module asking for creation to all the superclasses.
+        /// </summary>
+        /// <param name="ontologyEntity">name of ontology entity, to which the MAFC should be assigned</param>
+        /// <param name="singleModuleAFC">module asking for creation, which is assigned to superclasses MAFC</param>
+        public void assignMAFCtoSuperClasses(string ontologyEntity, ModuleAskingForCreation singleModuleAFC)
+        {
+            //System.Windows.Forms.MessageBox.Show("entita " + ontologyEntity + " zanoreni:" + i.ToString());
+            try
+            {
+                ontologySuperClassesModulesAFC[ontologyEntity].Add(singleModuleAFC);
+            }
+            // there is no previous ModuleAFC mapped on the same ontology entity
+            catch
+            {
+                List<ModuleAskingForCreation> newListModulesAFC = new List<ModuleAskingForCreation>();
+                newListModulesAFC.Add(singleModuleAFC);
+                ontologySuperClassesModulesAFC.Add(ontologyEntity, newListModulesAFC);
+            }
+
+            string[] superClasses = new string[0];
+            try
+            {
+                superClasses = ontology.OntologyClassMap[ontologyEntity].SuperClasses;
+            }
+            catch
+            {
+            }
+
+            foreach (string superClass in superClasses)
+            {
+                assignMAFCtoSuperClasses(superClass, singleModuleAFC);
+            }
+
+            return;
+        }
+
+        public List<ModulesAskingForCreation> AddSubClassesMAFC(List<ModulesAskingForCreation> result, OntologyClass ontologyClass, int offset)
+        {
+            foreach (string subClassName in ontologyClass.SubClasses)
+            {
+                try
+                {
+                    ModulesAskingForCreation moduleAFC = new ModulesAskingForCreation();
+                    moduleAFC.newModules = ontologySuperClassesModulesAFC[subClassName].ToArray();
+                    for (int i = 0; i < offset; i++)
+                        moduleAFC.label += "   ";
+                    moduleAFC.label += subClassName + " (" + ontologySuperClassesModulesAFC[subClassName].Count.ToString() + ")";
+
+                    result.Add(moduleAFC);
+                    result = AddSubClassesMAFC(result, ontology.OntologyClassMap[subClassName], offset + 1);
+                }
+                catch { }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the box modules asking for creation.
         /// </summary>
         /// <param name="localePrefs">The localization preferences.</param>
@@ -86,26 +150,42 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
                                                                                BoxModuleI boxModule)
         {
+            ontologySuperClassesModulesAFC.Clear();
             Functions Func = (Functions)boxModule.FunctionsIObj;
+            
+            Ontology.OntologyFunctionsPrx OntologyPrx = Func.GetOntologyFunctionsPrx(false);
+            //System.Windows.Forms.MessageBox.Show("ok4");
+
+            if (OntologyPrx != null)
+            {
+                //System.Windows.Forms.MessageBox.Show("ok4,5 " + OntologyPrx.ToString());
+                ontology = OntologyPrx.getOntology();
+            }
+            //System.Windows.Forms.MessageBox.Show("ok5");
 
             Dictionary<string, ModulesAskingForCreation> modulesAFC = getModulesAskingForCreationNonDynamic(localePrefs);
             List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();
             ModulesAskingForCreation moduleAFC;
             ModulesConnection moduleConnection;
             ModuleAskingForCreation singleModuleAFC;
-            List<ModuleAskingForCreation> allColumnModulesAFC = new List<ModuleAskingForCreation>();
-            Dictionary<string, List<ModuleAskingForCreation>> ontologyEntityModulesAFC = new Dictionary<string, List<ModuleAskingForCreation>>(); ;
 
+            //TODO delete
+            /// ontologySuperClassesModulesAFC is a variable for assigning modules AFC to superclasses of ontology entites
+            //Dictionary<string, List<ModuleAskingForCreation>> ontologySuperClassesModulesAFC = new Dictionary<string, List<ModuleAskingForCreation>>();
+
+            //TODO delete
+            /// ontologySuperClassesModulesAFC is a variable for assigning modules AFC to ontology entities
+            //Dictionary<string, List<ModuleAskingForCreation>> ontologyEntityModulesAFC = new Dictionary<string, List<ModuleAskingForCreation>>();
+            
             // I presuppose that item with key "Column" is before item with key "AllColumns"
-
             foreach (string moduleAFCName in modulesAFC.Keys)
             {
                 moduleAFC = modulesAFC[moduleAFCName];
+                
                 switch (moduleAFCName)
                 {
                     case "Column":
                         
-                        //all mapped columns
                         if (Func.Mapping != null)
                         {
                             string[] tmpMappedPairs = Func.Mapping.Split(new string[] { Func.getMappingSeparatorOuter() }, StringSplitOptions.RemoveEmptyEntries);
@@ -116,6 +196,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                                 moduleConnection.socketName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.SockMapping;
                                 moduleConnection.boxModuleParam = boxModule.MyProxy;
                                 //offer one box for creation for each mapped column
+
+                                
                                 foreach (string tmpMappedPair in tmpMappedPairs)
                                 {
                                     // parsing the mapped pair (triple) - DataTableName, Column name, ontology Entity name
@@ -134,8 +216,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                                     propertySettingColumnName.propertyName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.PropSelectExpression;
                                     propertySettingColumnName.value = new StringTI(DataTable_Column_OntEnt[1]);
                                     singleModuleAFC.propertySetting = new PropertySetting[] { propertySettingDataTableName, propertySettingColumnName };
-                                    //TODO del
-                                    allColumnModulesAFC.Add(singleModuleAFC);
+                                    
+                                    /*OLD version
                                     // adding ModuleAFC to list of modules mapped on the ontology entity
                                     try {
                                         ontologyEntityModulesAFC[DataTable_Column_OntEnt[2]].Add(singleModuleAFC);
@@ -145,11 +227,10 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                                         List<ModuleAskingForCreation> newListModulesAFC = new List<ModuleAskingForCreation>();
                                         newListModulesAFC.Add(singleModuleAFC);
                                         ontologyEntityModulesAFC.Add(DataTable_Column_OntEnt[2], newListModulesAFC);
-                                    }
+                                    }*/
 
-                                    /// not used, Column boxes asking for creation are used just for the filling the ontologyEntityModulesAFC
-                                    /// newMAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
-                                    /// result.Add(newMAFC);
+                                    if (ontology != null)
+                                        assignMAFCtoSuperClasses(DataTable_Column_OntEnt[2], singleModuleAFC);
                                 }
                             }
                         }
@@ -203,27 +284,32 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                         singleModuleAFC.modulesConnection = new ModulesConnection[] { moduleConnection };
                         singleModuleAFC.newBoxModuleIdentifier = DataPreparation.Datasource.OntologyEnablingColumn.BoxInfo.typeIdentifier;
                         moduleAFC.newModules = new ModuleAskingForCreation[] { singleModuleAFC };
+                        moduleAFC.label = "***CUSTOM COLUMN***";
                         result.Add(moduleAFC);
                         break;
                     case "AllColumns":
-                        if (ontologyEntityModulesAFC != null)
+                        if (ontologySuperClassesModulesAFC.Count > 0)
                         {
-                            foreach (string ontologyEntityName in ontologyEntityModulesAFC.Keys)
+                            if (ontology != null)
                             {
-                                moduleConnection = new ModulesConnection();
-                                moduleConnection.socketName = DataPreparation.Datasource.OntologyEnablingColumn.Functions.SockMapping;
-                                moduleConnection.boxModuleParam = boxModule.MyProxy;
-                                moduleAFC = new ModulesAskingForCreation();
-                                moduleAFC.newModules = ontologyEntityModulesAFC[ontologyEntityName].ToArray();
-                                moduleAFC.label = "All columns (" + ontologyEntityModulesAFC[ontologyEntityName].Count.ToString() + ") mapped on " + ontologyEntityName;
-                                string hint = "Columns: ";
-                                foreach (ModuleAskingForCreation tmpMAFC in ontologyEntityModulesAFC[ontologyEntityName])
+                                //TODO jeste INSTANCE!!!
+                                foreach (OntologyClass ontologyClass in ontology.OntologyClassMap.Values)
                                 {
-                                    hint += tmpMAFC.propertySetting[0].value + "." + tmpMAFC.propertySetting[1].value + ", ";
+                                    if (ontologyClass.SuperClasses.Length == 0)
+                                    {
+                                        try
+                                        {
+                                            moduleAFC = new ModulesAskingForCreation();
+                                            moduleAFC.newModules = ontologySuperClassesModulesAFC[ontologyClass.name].ToArray();
+                                            moduleAFC.label = ontologyClass.name + " (" + ontologySuperClassesModulesAFC[ontologyClass.name].Count.ToString() + ")";
+
+                                            result.Add(moduleAFC);
+                                            result = AddSubClassesMAFC(result, ontologyClass, 1);
+                                        }
+                                        catch { }
+                                    }
                                 }
-                                hint = hint.Remove(hint.Length - 2);
-                                moduleAFC.hint = hint;
-                                result.Add(moduleAFC);
+
                             }
                         }
                         break;
@@ -233,6 +319,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             }
             return result.ToArray();
         }
+
         /// <summary>
         /// Gets array of <see cref="T:Ferda.Modules.SelectString"/> as
         /// options for property, whose options are dynamically variable.
@@ -275,7 +362,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 default:
                     throw new NotImplementedException();
             }
-            return null; 
         }
 
         /// <summary>
