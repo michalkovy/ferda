@@ -595,9 +595,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 newBitString);
 
             //creating the individual subtrees
-            foreach (CategorialAttributeTrace attribute in branchingAttributes)
+            for (int i = branchingAttributes.Length - 1; i >= 0; i--)
             {
-                Tree t = CreateTree(processTree, node, rightCats.ToArray(), attribute);
+                Tree t = CreateTree(processTree, node, 
+                    rightCats.ToArray(), branchingAttributes[i]);
                 lifo.Push(t);
             }
 
@@ -616,7 +617,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             foreach (string category in rightCats)
             {
-                if (node.CategoryPurity(category) >= minimalNodePurity)
+                if (node.CategoryPurity(category) <= minimalNodePurity)
                 {
                     result.Remove(category);
                 }
@@ -738,20 +739,20 @@ namespace Ferda.Guha.MiningProcessor.Miners
             Stack<Tree> fifo = new Stack<Tree>();
             Tree t;
             Node n;
-            
-            foreach (CategorialAttributeTrace attribute in attributes)
+
+            for (int i = attributes.Length - 1; i >= 0; i--)
             {
                 //constructing a node
                 n = new Node(true);
-                n.Attribute = attribute;
+                n.Attribute = attributes[i];
                 n.BaseBitString = TrueBitString.GetInstance();
                 n.Frequency = allObjectsCount;
-                n.SubCategories = attribute.CategoriesIds;
+                n.SubCategories = attributes[i].CategoriesIds;
 
                 //setting the used and unused attributes
                 List<CategorialAttributeTrace> attr = 
                     new List<CategorialAttributeTrace>(branchingAttributes);
-                attr.Remove(attribute);
+                attr.Remove(attributes[i]);
                 n.UnusedAttributes = attr.ToArray();
 
                 //construction of the tree
@@ -920,9 +921,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             for (int i = 0; i < noAttributesForBranching; i++)
             {
                 //adding in reverse order
-                //result[i] = dict[values[values.Count - 1 - i]];
-                //adding in right order
-                result[i] = dict[values[i]];
+                result[i] = dict[values[values.Count - 1 - i]];
             }
 
             return result;
