@@ -10856,7 +10856,7 @@
 		<Actions>
 			<Action>
 				<Name>LoadOntology</Name>
-				<Label>Načíst ontologii</Label>
+				<Label>Znovu načíst ontologii</Label>
 				<Hint>Akce načte strukturu ontologie.</Hint>
 			</Action>
 		</Actions>
@@ -10990,13 +10990,13 @@
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
-				<Label>PoÄŤet kategoriĂ­.</Label>
-				<Hint>PoÄŤet kategoriĂ­ v atributĹŻ..</Hint>
+				<Label>Počet kategorií</Label>
+				<Hint>Počet kategorií v atributu.</Hint>
 			</Socket>
 			<Socket>
 				<Name>XCategory</Name>
 				<Label>X-Kategorie</Label>
-				<Hint>Kategorie pro chybÄ›jĂ­cĂ­ hodnoty.</Hint>
+				<Hint>Kategorie pro chybějící hodnoty.</Hint>
 			</Socket>
 			<!--
                         <Socket>
@@ -11006,62 +11006,37 @@
                         </Socket>
                         -->
 			<Socket>
-				<Name>Domain</Name>
-				<Label>DomĂ©na</Label>
-				<Hint>VĂ˝bÄ›r rozsahu hodnot pro kategorizaci.</Hint>
-				<SelectOptions>
-					<SelectOption>
-						<Name>WholeDomain</Name>
-						<Label>CelĂˇ aktuĂˇlnĂ­ domĂ©na</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>SubDomain</Name>
-						<Label>UĹľivatelem definovanĂˇ domĂ©na</Label>
-					</SelectOption>
-				</SelectOptions>
-			</Socket>
-			<Socket>
-				<Name>From</Name>
-				<Label>Od</Label>
-				<Hint>PoÄŤĂˇteÄŤnĂ­ hodnota</Hint>
-			</Socket>
-			<Socket>
-				<Name>To</Name>
-				<Label>Do</Label>
-				<Hint>KoncovĂˇ hodnota</Hint>
-			</Socket>
-			<Socket>
 				<Name>Cardinality</Name>
-				<Label>SĂ©mantika</Label>
-				<Hint>MusĂ­ se zadat sĂ©mantika hodnot ve sloupci.</Hint>
+				<Label>Sémantika</Label>
+				<Hint>Sémantika hodnot ve sloupci.</Hint>
 				<SelectOptions>
 					<SelectOption>
 						<Name>Nominal</Name>
-						<Label>NominĂˇlnĂ­</Label>
+						<Label>Nominální</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Ordinal</Name>
-						<Label>OrdinĂˇlnĂ­</Label>
+						<Label>Ordinální</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>OrdinalCyclic</Name>
-						<Label>OrdinĂˇlnĂ­ cyklickĂˇ</Label>
+						<Label>Ordinální cyklická</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>Cardinal</Name>
-						<Label>KardinĂˇlnĂ­</Label>
+						<Label>Kardinální</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
 			<Socket>
 				<Name>Length</Name>
-				<Label>DĂ©lka</Label>
-				<Hint>DĂ©lka intervalu.</Hint>
+				<Label>Délka</Label>
+				<Hint>Délka intervalu.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ClosedFrom</Name>
-				<Label>UzavĹ™enĂ˝ ze strany</Label>
-				<Hint>Intervaly jsou uzavĹ™eny z danĂ© strany.</Hint>
+				<Label>Uzavřené ze strany</Label>
+				<Hint>Intervaly jsou uzavřeny z dané strany.</Hint>
 				<SelectOptions>
 					<SelectOption>
 						<Name>Left</Name>
@@ -11098,10 +11073,6 @@
 			<PropertyCategory>
 				<Name>Categories</Name>
 				<Label>Kategorie</Label>
-			</PropertyCategory>
-			<PropertyCategory>
-				<Name>Domain</Name>
-				<Label>Doména</Label>
 			</PropertyCategory>
 			<PropertyCategory>
 				<Name>Intervals</Name>
@@ -11216,29 +11187,6 @@
 					<SelectOption>
 						<Name>StringType</Name>
 						<Label>String</Label>
-					</SelectOption>
-				</SelectOptions>
-			</Socket>
-			<Socket>
-				<Name>Cardinality</Name>
-				<Label>Semantic</Label>
-				<Hint>You should specify the semantic of the column values.</Hint>
-				<SelectOptions>
-					<SelectOption>
-						<Name>Nominal</Name>
-						<Label>Nominal</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>Ordinal</Name>
-						<Label>Ordinal</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>OrdinalCyclic</Name>
-						<Label>Ordinal Cyclic</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>Cardinal</Name>
-						<Label>Cardinal</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>

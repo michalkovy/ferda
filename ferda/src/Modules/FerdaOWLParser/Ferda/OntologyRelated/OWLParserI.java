@@ -21,37 +21,38 @@ import org.semanticweb.owl.model.OWLDataPropertyExpression;
 import org.semanticweb.owl.model.OWLDescription;
 import org.semanticweb.owl.model.OWLIndividual;
 import org.semanticweb.owl.model.OWLOntology;
-import java.io.*;
 
 public class OWLParserI extends _OWLParserDisp{
 	
-	public static final int DEFAULT_ARRAY_SIZE = 10;
-	
+	//function for parsing the ontology into predefined structure
+	//input parameter ontologyURL is either network or internet location of the ontology file
 	public OntologyStructure parseOntology(String ontologyURL, Current __current)
 			throws WrongOntologyURL {
 		
+		//ontology structure is defined in slice
 		OntologyStructure FerdaOntology = new OntologyStructure();
+		//FerdaOntologyClassMap connects names of classes and other information (properties) of the class 
 		java.util.Map<java.lang.String, OntologyClass> FerdaOntologyClassMap = 
 			new HashMap<String, OntologyClass>();
 		FerdaOntology.OntologyClassMap = FerdaOntologyClassMap; 
 		
+		//loading and parsing the ontology
 		try {
-			//loading ontology
-			
 			//replace "\\" with "/" for correct windows paths
 			//replace " " with "%20" is needed, bacause the method does't allow space character
 			URI physicalURI = URI.create(ontologyURL.replace("\\", "/").replace(" ","%20").toString());
 			
+			//loading the ontology
 			OWLOntology ontology = OWLManager.createOWLOntologyManager().loadOntologyFromPhysicalURI(physicalURI);
 			
-			//loading of particular classes from the ontology
+			//loading particular classes from the ontology
 			for(OWLClass cls : ontology.getReferencedClasses()) {
-				
+				//structure for storing the data properties (its names and values) of the class
 				Map<java.lang.String, String[]> dataPropertiesMap = new HashMap<String, String[]>();
+				//structure for storing the individuals (instances - its names and annotations) of the class
 				Map<java.lang.String, String[]> instancesMap = new HashMap<String, String[]>();
 				
-				//loading of annotations (labels, comments, ...)
-				//annotations = new String[cls.getAnnotations(ontology).size()];
+				//loading annotations (labels, comments, ...) of the class
 				Set<OWLAnnotation> tmpAnnotations = cls.getAnnotations(ontology);
 				String[] annotations = new String[tmpAnnotations.size()];
 				int i = 0;
@@ -63,7 +64,7 @@ public class OWLParserI extends _OWLParserDisp{
 					i++;
 				}
 								
-				//loading of subclasses
+				//loading subclasses of the class
 				Set<OWLDescription> tmpSubClasses = cls.getSubClasses(ontology);
 				String[] subClasses = new String[tmpSubClasses.size()];
 				i = 0;
@@ -72,7 +73,7 @@ public class OWLParserI extends _OWLParserDisp{
 					i++;
 				}
 				
-				//loading of superclasses
+				//loading superclasses of the class (in the owl ontology there can be more than one superclass for one class
 				Set<OWLDescription> tmpSuperClasses = cls.getSuperClasses(ontology);
 				String[] superClasses = new String[tmpSuperClasses.size()];
 				i = 0;
@@ -81,6 +82,7 @@ public class OWLParserI extends _OWLParserDisp{
 					i++;
 				}
 				
+				//creating new ontology class
 				OntologyClass newFerdaClass = new OntologyClass(
 						cls.toString(),
 						annotations,
@@ -90,6 +92,7 @@ public class OWLParserI extends _OWLParserDisp{
 						dataPropertiesMap
 						);
 				
+				//adding the class into OntologyClassMap
 				FerdaOntology.OntologyClassMap.put(cls.toString(), newFerdaClass);
 			}
 			//assigning instances and data properties to particular classes - 
@@ -98,8 +101,9 @@ public class OWLParserI extends _OWLParserDisp{
 			for(OWLIndividual ind : ontology.getReferencedIndividuals()) {
 				
 				OntologyClass ferdaClass = FerdaOntology.OntologyClassMap.get(ind.toString());
-				
-				if (ferdaClass == null) {	//instance which is not also a class (individuals of the classes)
+			
+				//instance which is not also a class (it is an individual of the class)
+				if (ferdaClass == null) {	
 					ferdaClass = FerdaOntology.OntologyClassMap.get(ind.getTypes(ontology).toArray()[0].toString());
 					//loading of annotations (labels, comments, ...)
 					//annotations = new String[cls.getAnnotations(ontology).size()];
@@ -115,6 +119,7 @@ public class OWLParserI extends _OWLParserDisp{
 					}
 					ferdaClass.InstancesAnnotations.put(ind.toString(), individualAnnotations);
 				}
+				//instance which is also a class (it is a data property of the class)
 				else {
 					Map<OWLDataPropertyExpression, Set<OWLConstant>> dpMap = ind.getDataPropertyValues(ontology);
 					for(OWLDataPropertyExpression dpName : dpMap.keySet()) {
@@ -130,8 +135,12 @@ public class OWLParserI extends _OWLParserDisp{
 				}
 			}
 			
-			int j = 0;	//artificial variable used for positioning of ObjectProperty into an array
-			ObjectProperty[] ArrayFerdaObjectProperty = new ObjectProperty[ontology.getReferencedObjectProperties().size()];
+			//loading the object properties of the ontology
+			
+			//creation of array ObjectProperties, which will be sent as a return value as a part of FerdaOntology
+			FerdaOntology.ObjectProperties = new ObjectProperty[ontology.getReferencedObjectProperties().size()];	
+			//artificial variable used for positioning of ObjectProperty into an array
+			int j = 0;
 			for(org.semanticweb.owl.model.OWLObjectProperty op : ontology.getReferencedObjectProperties()) {
 				String[] annotations = new String[op.getAnnotations(ontology).size()];
 				String[] domains = new String[op.getDomains(ontology).size()];
@@ -161,29 +170,13 @@ public class OWLParserI extends _OWLParserDisp{
 						domains, 
 						ranges);
 				
-				if (ArrayFerdaObjectProperty.length > j) {	//no need to enlarge the array
-					ArrayFerdaObjectProperty[j] = newFerdaObjectProperty;
-				}
-				else {	//it is needed to enlarge the array ArrayFerdaObjectProperty
-					ObjectProperty[] ArrayFerdaObjectProperty2 = new ObjectProperty[2*ArrayFerdaObjectProperty.length];
-					System.arraycopy(ArrayFerdaObjectProperty, 0, ArrayFerdaObjectProperty2, 0, ArrayFerdaObjectProperty.length);
-					ArrayFerdaObjectProperty2[j] = newFerdaObjectProperty;
-					ArrayFerdaObjectProperty = ArrayFerdaObjectProperty2;
-				}
-				j++;	
+				//adding new object property struct into the array of object properties
+				FerdaOntology.ObjectProperties[j] = newFerdaObjectProperty;
+				j++;
 			}
 			
-			FerdaOntology.ObjectProperties = new ObjectProperty[j];	//creation of array ObjectProperties, which will be sent as a return value as a part of FerdaOntology 
-			j = 0;
-			for(ObjectProperty objectProperty : ArrayFerdaObjectProperty) {
-				if (objectProperty != null) {
-					FerdaOntology.ObjectProperties[j] = objectProperty;
-					j++;
-				}
-			}
-			
+			//setting the ontology URI
 			FerdaOntology.ontologyURI = ontology.getURI().toString();
-		
 		}
 		
 		catch (Exception e) {
