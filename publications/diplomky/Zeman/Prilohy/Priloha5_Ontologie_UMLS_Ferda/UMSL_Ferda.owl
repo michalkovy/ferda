@@ -1,0 +1,688 @@
+﻿<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns="http://www.owl-ontologies.com/unnamed.owl#"
+  xml:base="http://www.owl-ontologies.com/unnamed.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="Diabetes">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Nutritional_and_Metabolic_Diseases"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Endocrine_diseases"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Cholesterol_measurement_test">
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Laboratory_or_Test_Result"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cholesterol measurement test</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Carbohydrates">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Organic_Chemical"/>
+    </rdfs:subClassOf>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A generic term that includes monosaccharides, oligosaccharides, and polysaccharides as well as substances derived from monosaccharides by reduction of the carbonyl group (alditols), by oxidation of one or more terminal group to carboxylic acids, or by replacement of one or more hydroxy groups by a hydrogen atom, an amino group, a thiol group or similar heteroatomic groups. It also includes derivatives of these compounds. Included here are sugar phosphates. Excluded are glycolipids and glycoproteins.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Skinfold_thickness">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The measurement of subcutaneous fat located directly beneath the skin by grasping a fold of skin and subcutaneous fat between the thumb and forefinger and pulling it away from the underlying muscle tissue. The thickness of the double layer of skin and subcutaneous tissue is then read with a caliper. The five most frequently measured sites are the upper arm, below the scapula, above the hip bone, the abdomen, and the thigh. Its application is the determination of relative fatness, of changes in physical conditioning programs, and of the percentage of body fat in desirable body weight. (From McArdle, et al., Exercise Physiology, 2d ed, p496-8) (MeSH)</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Skinfold thickness</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Laboratory_or_Test_Result"/>
+    </rdfs:subClassOf>
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+  </owl:Class>
+  <owl:Class rdf:ID="Glucose">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A primary source of energy for living organisms. It is naturally occurring and is found in fruits and other parts of plants in its free state. It is used therapeutically in fluid and nutrient replacement. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Carbohydrates"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Digestive_System">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Digestive System</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A group of organs stretching from the MOUTH to the ANUS, serving to breakdown foods, assimilate nutrients, and eliminate waste. In humans, the disgestive system includes the GASTROINTESTINAL TRACT and the accessory glands (LIVER; BILIARY TRACT; PANCREAS). (MeSH)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Body_system"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Angina_pectoris">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Cardiovascular_diseases"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Chest_Pain"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Angina pectoris</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The symptom of paroxysmal pain consequent to MYOCARDIAL ISCHEMIA usually of distinctive character, location and radiation. It is thought to be provoked by a transient stressful situation during which the oxygen requirements of the MYOCARDIUM exceed that supplied by the CORONARY CIRCULATION</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#Organic_Chemical">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Organic Chemical</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The general class of carbon-containing compounds, usually based on carbon chains or rings, and also containing hydrogen (hydrocarbons), with or without nitrogen, oxygen, or other elements in which the bonding between elements is generally covalent.
+The general class of carbon-containing compounds, usually based on carbon chains or rings, and also containing hydrogen (hydrocarbons), with or without nitrogen, oxygen, or other elements in which the bonding between elements is generally covalent.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Coffee">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Food"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Group">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A conceptual entity referring to the classification of individuals according to certain shared characteristics.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Chest">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Body_Part__Organ__or_Organ_Component"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Beer">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >An alcoholic beverage usually made from malted cereal grain (as barley), flavored with hops, and brewed by slow fermentation. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Food"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Cardiovascular_system">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Body_system"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardiovascular system</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Body_fluid">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Liquid components of living organisms. (MeSH)
+Extracellular material, or mixtures of cells and extracellular material, produced, excreted, or accreted by the body. Included here are substances such as saliva, dental enamel, sweat, and gastric acid.</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Body fluid</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Urine_glucose">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Urine glucose</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Urine_Test_Results"/>
+    </rdfs:subClassOf>
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+  </owl:Class>
+  <owl:Class rdf:ID="Smoking">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Inhaling and exhaling the smoke of tobacco or something similar to tobacco. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Individual_Behavior"/>
+    </rdfs:subClassOf>
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ordinal</Cardinality>
+  </owl:Class>
+  <owl:Class rdf:ID="Alcohol_consumption">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Alcohol consumption</rdfs:label>
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ordinal</Cardinality>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Individual_Behavior"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Nutritional_and_Metabolic_Diseases">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Nutritional and Metabolic Diseases</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Disease_or_syndrome"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Activity">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >An operation or series of operations that an organism or machine carries out or participates in.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Glycosuria">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Sign_or_Symptom"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Nutritional_and_Metabolic_Diseases"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The presence of glucose in the urine, especially the excretion of an abnormally large amount of sugar (glucose) in the urine. (MeSH)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Obesity">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Increase in body weight beyond skeletal and physical standards as the result of an excessive accumulation of fat in the body. More than two times the ideal weight is considered OBESITY, MORBID. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Sign_or_Symptom"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Lipids">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >An inclusive group of fat or fat-derived substances that are soluble in nonpolar solvents related to fatty acid esters, fatty alcohols, sterols, waxes, etc. Included in this group are the saponifiable lipids such as glycerides (fats and oils), essential (volatile) oils, and phospholipids.
+
+A generic term for fats and lipoids, the alcohol-ether-soluble constituents of protoplasm, which are insoluble in water. They comprise the fats, fatty oils, essential oils, waxes, phospholipids, glycolipids, sulfolipids, aminolipids, chromolipids (lipochromes), and fatty acids. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Organic_Chemical"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Triglycerides_measurement_test">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Triglycerides measurement test</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Laboratory_or_Test_Result"/>
+    </rdfs:subClassOf>
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+  </owl:Class>
+  <owl:Class rdf:ID="Wine">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Food"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Myocardial_Infarction">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Myocardial Infarction</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Gross necrosis of the myocardium, as a result of interruption of the blood supply to the area. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Cardiovascular_diseases"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Body_system">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A complex of anatomical structures that performs a common function.</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Body system</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Veins">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Body_Part__Organ__or_Organ_Component"/>
+    </rdfs:subClassOf>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The vessels carrying blood toward the heart. (MeSH)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#Disease_or_syndrome">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A condition which alters or interferes with a normal process, state, or activity of an organism. It is usually characterized by the abnormal functioning of one or more of the host's systems, parts, or organs. Included here is a complex of symptoms descriptive of a disorder.</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Disease or syndrome</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#Individual_Behavior">
+    <rdfs:subClassOf rdf:resource="#Activity"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Behavior exhibited by a human or an animal that is not a direct result of interaction with other members of the species, but which may have an effect on others.</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Individual Behavior</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Endocrine_System">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The system of glands that release their secretions (hormones) directly into the circulatory system. In addition to the ENDOCRINE GLANDS, included are the CHROMAFFIN SYSTEM and the NEUROSECRETORY SYSTEMS. (MeSH)</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Endocrine System</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Body_system"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Age_group">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Age group</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Group"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >An individual or individuals classified according to their age.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#Sign_or_Symptom">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >An observable manifestation of a disease or condition based on clinical judgment, or a manifestation of a disease or condition which is experienced by the patient and reported as a subjective observation.</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Sign or Symptom</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Finding"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Adolescent">
+    <rdfs:subClassOf rdf:resource="#Age_group"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Blood">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The body fluid that circulates in the vascular system (BLOOD VESSELS). Whole blood includes PLASMA and BLOOD CELLS. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Body_fluid"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Diastolic_blood_preasure">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Diastolic blood preasure</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Blood_preasure"/>
+    </rdfs:subClassOf>
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >110</DomainDividingValues>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >100</DomainDividingValues>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >90</DomainDividingValues>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >85</DomainDividingValues>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >80</DomainDividingValues>
+  </owl:Class>
+  <owl:Class rdf:ID="Triglycerides">
+    <rdfs:subClassOf rdf:resource="#Lipids"/>
+  </owl:Class>
+  <owl:Class rdf:ID="BMI">
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >25</DomainDividingValues>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Laboratory_or_Test_Result"/>
+    </rdfs:subClassOf>
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >One of the anthropometric measures of body mass; it has the highest correlation with skinfold thickness or body density. (MeSH)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Ictus">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Cardiovascular_diseases"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Albumin">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Water-soluble proteins found in egg whites, blood, lymph, and other tissues and fluids. They coagulate upon heating. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Proteins"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Physical_activity">
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Ordinal</Cardinality>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >State or quality of body actions in daily living. (Omaha System)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Activity"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Physical activity</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Aged__80_and_over">
+    <rdfs:subClassOf rdf:resource="#Age_group"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Aged, 80 and over</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Heart">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Body_Part__Organ__or_Organ_Component"/>
+    </rdfs:subClassOf>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The hollow, muscular organ that maintains the circulation of the blood. (MeSH)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#Blood_preasure">
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Laboratory_or_Test_Result"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Blood preasure</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Immunologic_diseases">
+    <rdfs:subClassOf rdf:resource="#Disease_or_syndrome"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Immunologic diseases</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Tea">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Food"/>
+    </rdfs:subClassOf>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The infusion of leaves of CAMELLIA SINENSIS (formerly Thea sinensis) as a beverage, the familiar Oriental tea, which contains CATECHIN (especially epigallocatechin gallate) and CAFFEINE. (MeSH)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Educational_group">
+    <rdfs:subClassOf rdf:resource="#Group"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Educational group</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Urine_albumin_level">
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Urine_Test_Results"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Urine albumin level</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Cholesterol">
+    <rdfs:subClassOf rdf:resource="#Lipids"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The principal sterol of all higher animals, distributed in body tissues, especially the brain and spinal cord, and in animal fats and oils. (MeSH)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Pain_in_lower_limb">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Pain in lower limb</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Sign_or_Symptom"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Chest_Pain">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Pressure, burning, or numbness in the chest. (MeSH)</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Chest Pain</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Sign_or_Symptom"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Sweets">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Food"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Infant">
+    <rdfs:subClassOf rdf:resource="#Age_group"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Myocardial_Ischemia">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Cardiovascular_diseases"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Myocardial Ischemia</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A disorder of cardiac function caused by insufficient blood flow to the muscle tissue of the heart. The decreased blood flow may be due to narrowing of the coronary arteries (CORONARY ARTERIOSCLEROSIS), to obstruction by a thrombus (CORONARY THROMBOSIS), or less commonly, to diffuse narrowing of arterioles and other small vessels within the heart. Severe interruption of the blood supply to the myocardial tissue may result in necrosis of cardiac muscle (MYOCARDIAL INFARCTION). (MeSH)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Systolic_blood_preasure">
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Systolic blood preasure</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Blood_preasure"/>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >120</DomainDividingValues>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >130</DomainDividingValues>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >140</DomainDividingValues>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >160</DomainDividingValues>
+    <DomainDividingValues rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >180</DomainDividingValues>
+  </owl:Class>
+  <owl:Class rdf:ID="Blood_glucose_level">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Laboratory_or_Test_Result"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Blood glucose level</rdfs:label>
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+  </owl:Class>
+  <owl:Class rdf:about="#Laboratory_or_Test_Result">
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Finding"/>
+    </rdfs:subClassOf>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The outcome of a specific test to measure an attribute or to determine the presence, absence, or degree of a condition.</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Laboratory or Test Result</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#Finding">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >That which is discovered by direct observation or measurement of an organism attribute or condition, including the clinical history of the patient. The history of the presence of a disease is a 'Finding' and is distinguished from the disease itself.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Hypertension">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Persistently high arterial blood pressure. Currently accepted threshold levels are 140 mm Hg systolic and 90 mm Hg diastolic pressure. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Sign_or_Symptom"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Cardiovascular_diseases"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Body_Part__Organ__or_Organ_Component">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A collection of cells and tissues which are localized to a specific area or combine and carry out one or more specialized functions of an organism. This ranges from gross structures to small components of complex organs. These structures are relatively localized in comparison to tissues.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Fully_Formed_Anatomical_Structure"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Body Part, Organ, or Organ Component</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Adult">
+    <rdfs:subClassOf rdf:resource="#Age_group"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A person having attained full growth or maturity. Adults are of 19 through 44 years of age. (MeSH)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Hypercholesterolemia">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Abnormally high levels of cholesterol in the blood. (MeSH)
+Abnorm�ln� vysok� hladina cholesterolu v krvi.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Nutritional_and_Metabolic_Diseases"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Food">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Any substance generally containing nutrients, such as carbohydrates, proteins, and fats, that can be ingested by a living organism and metabolized into energy and body tissue. Some foods are naturally occurring, others are either partially or entirely made by humans.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#Urine_Test_Results">
+    <rdfs:subClassOf rdf:resource="#Laboratory_or_Test_Result"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Urine Test Results</rdfs:label>
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardinal</Cardinality>
+  </owl:Class>
+  <owl:Class rdf:ID="Bronchi">
+    <rdfs:subClassOf rdf:resource="#Body_Part__Organ__or_Organ_Component"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Endocrine_diseases">
+    <rdfs:subClassOf rdf:resource="#Disease_or_syndrome"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Endocrine diseases</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Asthma">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A form of bronchial disorder associated with airway obstruction, marked by recurrent attacks of paroxysmal dyspnea, with wheezing due to spasmodic contraction of the bronchi. (MeSH)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Sign_or_Symptom"/>
+    <rdfs:subClassOf rdf:resource="#Immunologic_diseases"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Hyperlipidemia">
+    <rdfs:subClassOf rdf:resource="#Endocrine_diseases"/>
+    <rdfs:subClassOf rdf:resource="#Nutritional_and_Metabolic_Diseases"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >An excess of lipids in the blood. (MeSH)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Occupational_group">
+    <rdfs:subClassOf rdf:resource="#Group"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Occupational group</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Hemic_and_Immune_System">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Organs involved in the production of BLOOD, including the cellular and the molecular components essential in providing defense against foreign organisms or substances. (MeSH)</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Hemic and Immune System</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Body_system"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Proteins">
+    <rdfs:subClassOf rdf:resource="#Organic_Chemical"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Fully_Formed_Anatomical_Structure">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Fully Formed Anatomical Structure</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >An anatomical structure in a fully formed organism; in mammals, for example, a structure in the body after the birth of the organism.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Kind_of_transport">
+    <Cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Nominal</Cardinality>
+    <rdfs:subClassOf rdf:resource="#Individual_Behavior"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Kind of transport</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Respiratory_System">
+    <rdfs:subClassOf rdf:resource="#Body_system"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The tubular and cavernous organs and structures, by means of which pulmonary ventilation and gas exchange between ambient air and the blood are brought about. (MeSH)</rdfs:comment>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Respiratory System</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Urine">
+    <rdfs:subClassOf rdf:resource="#Body_fluid"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Excretion in liquid state processed by the kidney. (Digital Anatomist)</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#Cardiovascular_diseases">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Cardiovascular diseases</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Disease_or_syndrome"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="location_of">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The position, site, or region of an entity or the site of a process.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Fully_Formed_Anatomical_Structure"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="interacts_with">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Organic_Chemical"/>
+          <owl:Class rdf:about="#Group"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Acts, functions, or operates together with.</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="conceptual_part_of">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Body_fluid"/>
+          <owl:Class rdf:about="#Body_Part__Organ__or_Organ_Component"/>
+          <owl:Class rdf:about="#Body_system"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Conceptually a portion, division, or component of some larger whole.</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="exhibits">
+    <rdfs:domain rdf:resource="#Group"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Shows or demonstrates.</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="consumes">
+    <rdfs:domain rdf:resource="#Group"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="manifestation_of">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >That part of a phenomenon which is directly observable or concretely or visibly expressed, or which gives evidence to the underlying process. This includes expression of, display of, and exhibition of.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Finding"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="causes">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Brings about a condition or an effect. Implied here is that an agent, such as for example, a pharmacologic substance or an organism, has brought about the effect. This includes induces, effects, evokes, and etiology.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Body_fluid"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="affects">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Produces a direct effect on. Implied here is the altering or influencing of an existing condition, state, situation, or entity. This includes has a role in, alters, influences, predisposes, catalyzes, stimulates, regulates, depresses, impedes, enhances, contributes to, leads to, and modifies.</rdfs:comment>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Activity"/>
+          <owl:Class rdf:about="#Disease_or_syndrome"/>
+          <owl:Class rdf:about="#Organic_Chemical"/>
+          <owl:Class rdf:about="#Food"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="measurement_of">
+    <rdfs:domain rdf:resource="#Laboratory_or_Test_Result"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The dimension, quantity, or capacity determined by measuring.</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="process_of">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Action, function, or state of.</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="produces">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Brings forth, generates or creates. This includes yields, secretes, emits, biosynthesizes, generates, releases, discharges, and creates.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Fully_Formed_Anatomical_Structure"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="complicates">
+    <rdfs:domain rdf:resource="#Disease_or_syndrome"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Causes to become more severe or complex or results in adverse effects.</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="part_of">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Composes, with one or more other physical units, some larger whole. This includes component of, division of, portion of, fragment of, section of, and layer of.</rdfs:comment>
+    <rdfs:domain rdf:resource="#Body_fluid"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="relate">
+    <rdfs:domain rdf:resource="#Activity"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="consists_of">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Body_fluid"/>
+          <owl:Class rdf:about="#Body_Part__Organ__or_Organ_Component"/>
+          <owl:Class rdf:about="#Food"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Is structurally made up of in whole or in part of some material or matter. This includes composed of, made of, and formed of.</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="result_of">
+    <rdfs:domain rdf:resource="#Disease_or_syndrome"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The condition, product, or state occurring as a consequence, effect, or conclusion of an activity or process. This includes product of, effect of, sequel of, outcome of, culmination of, and completion of.</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="performs">
+    <rdfs:domain rdf:resource="#Group"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Executes, accomplishes, or achieves an activity.</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="DomainDividingValues">
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="DistinctValues">
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </owl:DatatypeProperty>
+  <owl:FunctionalProperty rdf:ID="Minimum">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="Cardinality">
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >Nominal</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Ordinal</rdf:first>
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Cardinal</rdf:first>
+              </rdf:rest>
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >OrdinalCyclic</rdf:first>
+            </rdf:rest>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="Maximum">
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <j.0:PAL-CONSTRAINT rdf:ID="stulong2_00076"/>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.3, Build 418)  http://protege.stanford.edu -->

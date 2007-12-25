@@ -1,0 +1,5043 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Views>
+    <View>
+      <Name>New Desktop</Name>
+      <PositionSets>
+        <PositionSet>
+          <BoxProjectIdentifier>2</BoxProjectIdentifier>
+          <Position>
+            <X>15</X>
+            <Y>209</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>3</BoxProjectIdentifier>
+          <Position>
+            <X>10</X>
+            <Y>340</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+          <Position>
+            <X>146</X>
+            <Y>265</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>12</BoxProjectIdentifier>
+          <Position>
+            <X>286</X>
+            <Y>669</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>13</BoxProjectIdentifier>
+          <Position>
+            <X>286</X>
+            <Y>729</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>21</BoxProjectIdentifier>
+          <Position>
+            <X>406</X>
+            <Y>697</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>26</BoxProjectIdentifier>
+          <Position>
+            <X>516</X>
+            <Y>697</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>28</BoxProjectIdentifier>
+          <Position>
+            <X>656</X>
+            <Y>697</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>34</BoxProjectIdentifier>
+          <Position>
+            <X>566</X>
+            <Y>266</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>35</BoxProjectIdentifier>
+          <Position>
+            <X>566</X>
+            <Y>206</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>36</BoxProjectIdentifier>
+          <Position>
+            <X>567</X>
+            <Y>146</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>37</BoxProjectIdentifier>
+          <Position>
+            <X>673</X>
+            <Y>85</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>38</BoxProjectIdentifier>
+          <Position>
+            <X>672</X>
+            <Y>298</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>46</BoxProjectIdentifier>
+          <Position>
+            <X>875</X>
+            <Y>367</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>48</BoxProjectIdentifier>
+          <Position>
+            <X>762</X>
+            <Y>204</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>49</BoxProjectIdentifier>
+          <Position>
+            <X>762</X>
+            <Y>145</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>50</BoxProjectIdentifier>
+          <Position>
+            <X>790</X>
+            <Y>566</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>63</BoxProjectIdentifier>
+          <Position>
+            <X>638</X>
+            <Y>402</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>69</BoxProjectIdentifier>
+          <Position>
+            <X>716</X>
+            <Y>443</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>70</BoxProjectIdentifier>
+          <Position>
+            <X>638</X>
+            <Y>487</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>71</BoxProjectIdentifier>
+          <Position>
+            <X>286</X>
+            <Y>127</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>72</BoxProjectIdentifier>
+          <Position>
+            <X>286</X>
+            <Y>187</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>73</BoxProjectIdentifier>
+          <Position>
+            <X>286</X>
+            <Y>67</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>74</BoxProjectIdentifier>
+          <Position>
+            <X>286</X>
+            <Y>247</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>75</BoxProjectIdentifier>
+          <Position>
+            <X>286</X>
+            <Y>7</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>76</BoxProjectIdentifier>
+          <Position>
+            <X>286</X>
+            <Y>307</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>77</BoxProjectIdentifier>
+          <Position>
+            <X>284</X>
+            <Y>388</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>78</BoxProjectIdentifier>
+          <Position>
+            <X>284</X>
+            <Y>448</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>79</BoxProjectIdentifier>
+          <Position>
+            <X>286</X>
+            <Y>508</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>80</BoxProjectIdentifier>
+          <Position>
+            <X>288</X>
+            <Y>568</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>81</BoxProjectIdentifier>
+          <Position>
+            <X>362</X>
+            <Y>388</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>83</BoxProjectIdentifier>
+          <Position>
+            <X>363</X>
+            <Y>508</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>86</BoxProjectIdentifier>
+          <Position>
+            <X>426</X>
+            <Y>6</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>87</BoxProjectIdentifier>
+          <Position>
+            <X>426</X>
+            <Y>67</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>88</BoxProjectIdentifier>
+          <Position>
+            <X>426</X>
+            <Y>127</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>90</BoxProjectIdentifier>
+          <Position>
+            <X>464</X>
+            <Y>353</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>91</BoxProjectIdentifier>
+          <Position>
+            <X>541</X>
+            <Y>353</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>92</BoxProjectIdentifier>
+          <Position>
+            <X>464</X>
+            <Y>417</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>93</BoxProjectIdentifier>
+          <Position>
+            <X>538</X>
+            <Y>417</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>94</BoxProjectIdentifier>
+          <Position>
+            <X>461</X>
+            <Y>484</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>95</BoxProjectIdentifier>
+          <Position>
+            <X>460</X>
+            <Y>548</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>96</BoxProjectIdentifier>
+          <Position>
+            <X>530</X>
+            <Y>484</Y>
+          </Position>
+        </PositionSet>
+        <PositionSet>
+          <BoxProjectIdentifier>97</BoxProjectIdentifier>
+          <Position>
+            <X>534</X>
+            <Y>548</Y>
+          </Position>
+        </PositionSet>
+      </PositionSets>
+    </View>
+  </Views>
+  <Boxes>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.Database</CreatorIdentifier>
+      <ProjectIdentifier>2</ProjectIdentifier>
+      <Connections />
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>AcceptableDataTableTypes</PropertyName>
+          <Value xsi:type="StringSeqValueT">
+            <Value>
+              <stringSeqValue>
+                <string>TABLE</string>
+                <string>VIEW</string>
+              </stringSeqValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ConnectionString</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>DSN=ADAMEK;Persist security info=false</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ProviderInvariantName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>System.Data.Odbc</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>OntologyRelated.Ontology</CreatorIdentifier>
+      <ProjectIdentifier>3</ProjectIdentifier>
+      <Connections />
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>OntologyPath</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>file:/D:\Marthin\skola\diplomova_prace\_realizace\final\prilohy\Priloha5_ontologie_UMLS_Ferda\UMSL_Ferda.owl</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>OntologyRelated.OntologyMapping</CreatorIdentifier>
+      <ProjectIdentifier>4</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Database</SocketName>
+          <BoxProjectIdentifier>2</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>Ontology</SocketName>
+          <BoxProjectIdentifier>3</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Mapping</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06	Koureni	Smoking
+Adamek06	Kurak_zac	Smoking
+Adamek06	Kurak_pocet	Smoking
+Adamek06	Exkurak_zac	Smoking
+Adamek06	Exkurak_pocet	Smoking
+Adamek06	Exkurak_kon	Smoking
+Adamek06	Vino	Wine
+Adamek06	Pivo	Beer
+Adamek06	Destilaty	Alcohol_consumption
+Adamek06	PST	Systolic_blood_preasure
+Adamek06	LST	Systolic_blood_preasure
+Adamek06	PDT	Diastolic_blood_preasure
+Adamek06	LDT	Diastolic_blood_preasure
+</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>PrimaryKeys</PropertyName>
+          <Value xsi:type="StringSeqValueT">
+            <Value>
+              <stringSeqValue>
+                <string>Adamek06
+ID_ACCESS</string>
+              </stringSeqValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>5</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>KOURENI</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>6</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>DOBAKOUR</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>7</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>BYVKURAK</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>8</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>SYST1</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>9</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>SYST2</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>10</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>DIAST1</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>11</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>DIAST2</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>12</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>VYSKA</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>13</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>VAHA</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>17</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>8</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Cardinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>160, 120, 180, 130, 140</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>9296c608-77d0-43fe-9287-328000b2b2c9</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry.SYST1</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>18</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>9</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Cardinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>160, 120, 180, 130, 140</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>fe530cbc-ad4b-4d53-b655-a58f2c0b6dce</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry.SYST2</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>19</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>10</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Cardinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>110, 100, 85, 90, 80</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>1181a6c4-d691-4617-a9eb-125475544645</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry.DIAST1</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>20</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>11</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Cardinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>110, 100, 85, 90, 80</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>b371b2f3-82e1-4e1b-8bad-412945d6850e</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry.DIAST2</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>Sample.BodyMassIndex</CreatorIdentifier>
+      <ProjectIdentifier>21</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Height</SocketName>
+          <BoxProjectIdentifier>12</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>Weight</SocketName>
+          <BoxProjectIdentifier>13</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>HeightUnits</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Centimeter</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>WeightUnits</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Kilogram</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.DataTable</CreatorIdentifier>
+      <ProjectIdentifier>22</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Database</SocketName>
+          <BoxProjectIdentifier>2</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Name</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Entry</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>PrimaryKeyColumns</PropertyName>
+          <Value xsi:type="StringSeqValueT">
+            <Value>
+              <stringSeqValue>
+                <string>ICO</string>
+              </stringSeqValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.Column</CreatorIdentifier>
+      <ProjectIdentifier>23</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>DataTable</SocketName>
+          <BoxProjectIdentifier>22</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>VYSKA</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.Column</CreatorIdentifier>
+      <ProjectIdentifier>24</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>DataTable</SocketName>
+          <BoxProjectIdentifier>22</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>VAHA</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>Sample.BodyMassIndex</CreatorIdentifier>
+      <ProjectIdentifier>25</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Height</SocketName>
+          <BoxProjectIdentifier>23</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>HeightUnits</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Centimeter</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>WeightUnits</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Kilogram</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.EquidistantIntervals</CreatorIdentifier>
+      <ProjectIdentifier>26</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>21</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Cardinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>2</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>SubDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>5</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>deb627bd-925e-4d28-b97a-0932d276ea1a</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>BMI</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>45</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>27</ProjectIdentifier>
+      <Connections />
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>28</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>26</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>02b45f95-c179-44e4-8979-06631ea4e0c5</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>29</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>20</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>30</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>20</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>31</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>19</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>32</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>18</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>33</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>17</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>34</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>88</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>d4182b57-c037-4551-be04-457ca5ba9407</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>35</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>87</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>66af8921-5046-42b0-ab8f-8fdb1503f191</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>36</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>86</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>54611a72-54ab-45b4-8368-5d3a9fe44fed</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.ConjunctionSetting</CreatorIdentifier>
+      <ProjectIdentifier>37</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>36</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>35</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>34</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>c3eb0716-ce22-460b-b4c3-2ce447c1bfcd</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>3</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.DisjunctionSetting</CreatorIdentifier>
+      <ProjectIdentifier>38</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>34</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>36</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>35</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>f5bd509f-c273-4504-aad3-26adcd54281d</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>3</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.ConjunctionSetting</CreatorIdentifier>
+      <ProjectIdentifier>39</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>33</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.DisjunctionSetting</CreatorIdentifier>
+      <ProjectIdentifier>40</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>31</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.StaticAttribute</CreatorIdentifier>
+      <ProjectIdentifier>41</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>17</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Categories</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;AttributeSerializableOfDouble xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Categories&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;120;130);&amp;lt;130;140);&amp;lt;90;120)&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;90&lt;/LeftValue&gt;
+          &lt;RightValue&gt;140&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Open&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;140;160);&amp;lt;160;180);&amp;lt;180;225&amp;gt;&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;140&lt;/LeftValue&gt;
+          &lt;RightValue&gt;225&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Closed&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+  &lt;/Categories&gt;
+  &lt;IntervalsAllowed&gt;true&lt;/IntervalsAllowed&gt;
+  &lt;DbDataType&gt;DoubleSimpleType&lt;/DbDataType&gt;
+&lt;/AttributeSerializableOfDouble&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>a0446f8b-17df-43e8-b56a-6d4ed7fd8fbd</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>SYST1</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>44</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>41</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>a5e76545-712f-4c15-ac4c-7690eb931b5e</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.Tasks.FourFold</CreatorIdentifier>
+      <ProjectIdentifier>46</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Quantifiers</SocketName>
+          <BoxProjectIdentifier>48</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>Quantifiers</SocketName>
+          <BoxProjectIdentifier>49</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>Antecedent</SocketName>
+          <BoxProjectIdentifier>37</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>Succedent</SocketName>
+          <BoxProjectIdentifier>69</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>ExecutionType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>FirstN</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaxNumberOfHypotheses</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>250</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NumberRuns</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>43</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Result</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableResult xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;AllObjectsCount&gt;-1&lt;/AllObjectsCount&gt;
+  &lt;Hypotheses&gt;
+    &lt;SerializableHypothesis&gt;
+      &lt;ContingencyTableA&gt;
+        &lt;ArrayOfDouble&gt;
+          &lt;double&gt;397&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;331&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;728&lt;/double&gt;
+        &lt;/ArrayOfDouble&gt;
+        &lt;ArrayOfDouble&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+        &lt;/ArrayOfDouble&gt;
+        &lt;ArrayOfDouble&gt;
+          &lt;double&gt;196&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;198&lt;/double&gt;
+          &lt;double&gt;-397&lt;/double&gt;
+          &lt;double&gt;0&lt;/double&gt;
+          &lt;double&gt;-331&lt;/double&gt;
+        &lt;/ArrayOfDouble&gt;
+      &lt;/ContingencyTableA&gt;
+      &lt;Formulas&gt;
+        &lt;SerializableFormula&gt;
+          &lt;Type&gt;AtomFormula&lt;/Type&gt;
+          &lt;AttributeGuid&gt;7f9ac645-bffa-4bda-89cf-e33d09bdea18&lt;/AttributeGuid&gt;
+          &lt;CategoryId&gt;non-smoker&lt;/CategoryId&gt;
+        &lt;/SerializableFormula&gt;
+        &lt;SerializableFormula&gt;
+          &lt;Type&gt;DisjunctionFormula&lt;/Type&gt;
+          &lt;Operands&gt;
+            &lt;SerializableFormula&gt;
+              &lt;Type&gt;AtomFormula&lt;/Type&gt;
+              &lt;AttributeGuid&gt;c96fc6b2-8de2-471c-b92a-dfc1dc87c6dc&lt;/AttributeGuid&gt;
+              &lt;CategoryId&gt;&amp;lt;100;110);&amp;lt;110;150&amp;gt;;&amp;lt;90;100)&lt;/CategoryId&gt;
+            &lt;/SerializableFormula&gt;
+            &lt;SerializableFormula&gt;
+              &lt;Type&gt;AtomFormula&lt;/Type&gt;
+              &lt;AttributeGuid&gt;094e9dd3-052c-47c6-a07c-2f653c7d08a4&lt;/AttributeGuid&gt;
+              &lt;CategoryId&gt;&amp;lt;140;160);&amp;lt;160;180);&amp;lt;180;220&amp;gt;&lt;/CategoryId&gt;
+            &lt;/SerializableFormula&gt;
+          &lt;/Operands&gt;
+        &lt;/SerializableFormula&gt;
+        &lt;SerializableFormula&gt;
+          &lt;Type&gt;AtomFormula&lt;/Type&gt;
+          &lt;CategoryId&gt;Empty BitString Category&lt;/CategoryId&gt;
+        &lt;/SerializableFormula&gt;
+        &lt;SerializableFormula xsi:nil="true" /&gt;
+        &lt;SerializableFormula xsi:nil="true" /&gt;
+        &lt;SerializableFormula xsi:nil="true" /&gt;
+        &lt;SerializableFormula xsi:nil="true" /&gt;
+        &lt;SerializableFormula xsi:nil="true" /&gt;
+      &lt;/Formulas&gt;
+    &lt;/SerializableHypothesis&gt;
+  &lt;/Hypotheses&gt;
+  &lt;TaskTypeEnum&gt;FourFold&lt;/TaskTypeEnum&gt;
+&lt;/SerializableResult&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ResultInfo</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableResultInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;OtherInfo&gt;BitStringCache.IceCalls: 3; BitStringCache.IceTicks: 4375000; Quantifier.IceCalls: 2; Quantifier.IceTicks: 0; All.Ticks: 9218750&lt;/OtherInfo&gt;
+  &lt;TotalNumberOfRelevantQuestions&gt;106&lt;/TotalNumberOfRelevantQuestions&gt;
+  &lt;NumberOfVerifications&gt;106&lt;/NumberOfVerifications&gt;
+  &lt;NumberOfHypotheses&gt;1&lt;/NumberOfHypotheses&gt;
+  &lt;StartTime&gt;2007-12-16T13:42:22.9375+01:00&lt;/StartTime&gt;
+  &lt;EndTime&gt;2007-12-16T13:42:23.421875+01:00&lt;/EndTime&gt;
+&lt;/SerializableResultInfo&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.Tasks.TwoDimensional</CreatorIdentifier>
+      <ProjectIdentifier>47</ProjectIdentifier>
+      <Connections />
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>ExecutionType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>FirstN</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaxNumberOfHypotheses</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>250</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Result</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ResultInfo</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication</CreatorIdentifier>
+      <ProjectIdentifier>48</ProjectIdentifier>
+      <Connections />
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>MissingInformationHandling</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Deleting</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>OperationMode</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>FirstSetFrequencies</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Relation</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>GreaterOrEqual</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Treshold</PropertyName>
+          <Value xsi:type="DoubleValueT">
+            <Value>
+              <doubleValue>0.5</doubleValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.Quantifiers.FourFold.Others.Base</CreatorIdentifier>
+      <ProjectIdentifier>49</ProjectIdentifier>
+      <Connections />
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>MissingInformationHandling</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Deleting</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>OperationMode</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>FirstSetFrequencies</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Relation</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>GreaterOrEqual</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Treshold</PropertyName>
+          <Value xsi:type="DoubleValueT">
+            <Value>
+              <doubleValue>0.1</doubleValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Units</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>RelativeToActCondition</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.ConjunctionSetting</CreatorIdentifier>
+      <ProjectIdentifier>50</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>28</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>69</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>a2555205-5ff6-4c93-a621-4f2d194e4cf4</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>2</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>2</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.StaticAttribute</CreatorIdentifier>
+      <ProjectIdentifier>51</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>18</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Categories</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;AttributeSerializableOfDouble xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Categories&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;120;130);&amp;lt;130;140);&amp;lt;70;120)&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;70&lt;/LeftValue&gt;
+          &lt;RightValue&gt;140&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Open&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;140;160);&amp;lt;160;180);&amp;lt;180;220&amp;gt;&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;140&lt;/LeftValue&gt;
+          &lt;RightValue&gt;220&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Closed&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+  &lt;/Categories&gt;
+  &lt;IntervalsAllowed&gt;true&lt;/IntervalsAllowed&gt;
+  &lt;DbDataType&gt;DoubleSimpleType&lt;/DbDataType&gt;
+&lt;/AttributeSerializableOfDouble&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>05d6942e-b088-482f-8453-7b0ef60c1029</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>SYST2</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>52</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>51</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>1460eec9-8d71-43e1-8424-be8f471cea3b</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.DisjunctionSetting</CreatorIdentifier>
+      <ProjectIdentifier>56</ProjectIdentifier>
+      <Connections />
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>cf95f836-aaa4-422d-a0c0-d6c398cd1734</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Forced</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.StaticAttribute</CreatorIdentifier>
+      <ProjectIdentifier>59</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>81</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Categories</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;AttributeSerializableOfDouble xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Categories&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;120;130);&amp;lt;130;140);&amp;lt;90;120)&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;90&lt;/LeftValue&gt;
+          &lt;RightValue&gt;140&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Open&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+  &lt;/Categories&gt;
+  &lt;IntervalsAllowed&gt;true&lt;/IntervalsAllowed&gt;
+  &lt;DbDataType&gt;DoubleSimpleType&lt;/DbDataType&gt;
+&lt;/AttributeSerializableOfDouble&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>e9aa2d1f-fafb-491f-9bef-e0136eaf9e79</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>SYST1_normo</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.StaticAttribute</CreatorIdentifier>
+      <ProjectIdentifier>60</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>81</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Categories</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;AttributeSerializableOfDouble xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Categories&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;140;160);&amp;lt;160;180);&amp;lt;180;225&amp;gt;&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;140&lt;/LeftValue&gt;
+          &lt;RightValue&gt;225&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Closed&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+  &lt;/Categories&gt;
+  &lt;IntervalsAllowed&gt;true&lt;/IntervalsAllowed&gt;
+  &lt;DbDataType&gt;DoubleSimpleType&lt;/DbDataType&gt;
+&lt;/AttributeSerializableOfDouble&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>3cc4b2d1-d433-4ba3-a3bc-cd25615de327</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>SYST1_hyper</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.ConjunctionSetting</CreatorIdentifier>
+      <ProjectIdentifier>63</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>91</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>96</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>bc94b623-2f0b-4c9a-8b6b-56cb43a5944e</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>2</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>2</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.DisjunctionSetting</CreatorIdentifier>
+      <ProjectIdentifier>69</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>63</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>70</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>e7088664-e4c6-42e6-ac19-e97e7bb7763a</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.DisjunctionSetting</CreatorIdentifier>
+      <ProjectIdentifier>70</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>93</BoxProjectIdentifier>
+        </Connection>
+        <Connection>
+          <SocketName>BooleanAttributeSetting</SocketName>
+          <BoxProjectIdentifier>97</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>3bafcf59-986f-4dfb-a072-9f80e9a2116b</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>2</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>2</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>71</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Koureni</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>72</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Kurak_zac</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>73</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Kurak_pocet</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>74</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Exkurak_zac</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>75</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Exkurak_pocet</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>76</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Exkurak_kon</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>77</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>PST</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>78</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>LST</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>79</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>PDT</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.DataSource.OntologyEnablingColumn</CreatorIdentifier>
+      <ProjectIdentifier>80</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>OntologyMapping</SocketName>
+          <BoxProjectIdentifier>4</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DataTableName</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>SelectExpression</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>LDT</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>81</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>77</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Cardinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>160, 120, 180, 130, 140</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>9e7b08cb-0786-49e8-86ad-ccae1c1ec095</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06.PST</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>82</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>78</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06.LST</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>83</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>79</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Cardinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>110, 100, 85, 90, 80</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06.PDT</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>84</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>80</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06.LDT</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.OntologyDerivedAttribute</CreatorIdentifier>
+      <ProjectIdentifier>85</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>75</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Ordinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>0</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DistinctValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>DomainDividingValues</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>4a41793d-5a8e-48d9-a102-b6ff07bd24db</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Maximum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Minimum</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06.Exkurak_pocet</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.EquifrequencyIntervals</CreatorIdentifier>
+      <ProjectIdentifier>86</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>75</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Ordinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>2</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>94fe9411-6c24-463c-beee-5db760cc02f5</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06.Exkurak_pocet</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.EquifrequencyIntervals</CreatorIdentifier>
+      <ProjectIdentifier>87</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>73</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Ordinal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>ClosedFrom</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Left</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>CountOfCategories</PropertyName>
+          <Value xsi:type="LongValueT">
+            <Value>
+              <longValue>2</longValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>9ccd6393-7e91-4972-8035-cc9b78616691</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06.Kurak_pocet</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.EachValueOneCategory</CreatorIdentifier>
+      <ProjectIdentifier>88</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>71</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>7f9ac645-bffa-4bda-89cf-e33d09bdea18</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Adamek06.Koureni</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.StaticAttribute</CreatorIdentifier>
+      <ProjectIdentifier>90</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>81</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Categories</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;AttributeSerializableOfDouble xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Categories&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;120;130);&amp;lt;130;140);&amp;lt;80;120)&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;80&lt;/LeftValue&gt;
+          &lt;RightValue&gt;140&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Open&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+  &lt;/Categories&gt;
+  &lt;IntervalsAllowed&gt;true&lt;/IntervalsAllowed&gt;
+  &lt;DbDataType&gt;DoubleSimpleType&lt;/DbDataType&gt;
+&lt;/AttributeSerializableOfDouble&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>b10df1cc-6d46-4a57-b101-565bf3e84267</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>PST_normo</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>91</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>90</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>1a70394b-977d-40ae-b12e-0b9725638b3a</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.StaticAttribute</CreatorIdentifier>
+      <ProjectIdentifier>92</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>81</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Categories</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;AttributeSerializableOfDouble xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Categories&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;140;160);&amp;lt;160;180);&amp;lt;180;220&amp;gt;&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;140&lt;/LeftValue&gt;
+          &lt;RightValue&gt;220&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Closed&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+  &lt;/Categories&gt;
+  &lt;IntervalsAllowed&gt;true&lt;/IntervalsAllowed&gt;
+  &lt;DbDataType&gt;DoubleSimpleType&lt;/DbDataType&gt;
+&lt;/AttributeSerializableOfDouble&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>094e9dd3-052c-47c6-a07c-2f653c7d08a4</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>PST_hyper</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>93</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>92</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>9f2bc43e-1d4c-46a5-b2aa-931f46ca21a9</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.StaticAttribute</CreatorIdentifier>
+      <ProjectIdentifier>94</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>83</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Categories</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;AttributeSerializableOfDouble xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Categories&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;60;80);&amp;lt;80;85);&amp;lt;85;90)&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;60&lt;/LeftValue&gt;
+          &lt;RightValue&gt;90&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Open&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+  &lt;/Categories&gt;
+  &lt;IntervalsAllowed&gt;true&lt;/IntervalsAllowed&gt;
+  &lt;DbDataType&gt;DoubleSimpleType&lt;/DbDataType&gt;
+&lt;/AttributeSerializableOfDouble&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>9a6362ad-dd47-4e5c-82d9-4ab41256035b</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>PDT_normo</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>DataPreparation.Categorization.StaticAttribute</CreatorIdentifier>
+      <ProjectIdentifier>95</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>Column</SocketName>
+          <BoxProjectIdentifier>83</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>Cardinality</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Nominal</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Categories</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;AttributeSerializableOfDouble xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Categories&gt;
+    &lt;CategorySerializableOfDouble&gt;
+      &lt;Name&gt;&amp;lt;100;110);&amp;lt;110;150&amp;gt;;&amp;lt;90;100)&lt;/Name&gt;
+      &lt;OrdNumber&gt;0&lt;/OrdNumber&gt;
+      &lt;Enumeration /&gt;
+      &lt;Intervals&gt;
+        &lt;IntervalSerializableOfDouble&gt;
+          &lt;LeftValue&gt;90&lt;/LeftValue&gt;
+          &lt;RightValue&gt;150&lt;/RightValue&gt;
+          &lt;LeftBoundary&gt;Closed&lt;/LeftBoundary&gt;
+          &lt;RightBoundary&gt;Closed&lt;/RightBoundary&gt;
+        &lt;/IntervalSerializableOfDouble&gt;
+      &lt;/Intervals&gt;
+    &lt;/CategorySerializableOfDouble&gt;
+  &lt;/Categories&gt;
+  &lt;IntervalsAllowed&gt;true&lt;/IntervalsAllowed&gt;
+  &lt;DbDataType&gt;DoubleSimpleType&lt;/DbDataType&gt;
+&lt;/AttributeSerializableOfDouble&gt;</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Domain</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>WholeDomain</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>From</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>c96fc6b2-8de2-471c-b92a-dfc1dc87c6dc</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>NameInLiterals</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>PDT_hyper</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>To</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>XCategory</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue />
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>96</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>94</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>3fe14cd3-835d-4a76-8291-69bb7434610c</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+    <Box>
+      <CreatorIdentifier>GuhaMining.AtomSetting</CreatorIdentifier>
+      <ProjectIdentifier>97</ProjectIdentifier>
+      <Connections>
+        <Connection>
+          <SocketName>BitStringGenerator</SocketName>
+          <BoxProjectIdentifier>95</BoxProjectIdentifier>
+        </Connection>
+      </Connections>
+      <PropertySets>
+        <PropertySet>
+          <PropertyName>CoefficientType</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Subsets</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Guid</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>6641ded1-42d3-49a4-b1cf-d74cdf6b333b</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>Importance</PropertyName>
+          <Value xsi:type="StringValueT">
+            <Value>
+              <stringValue>Basic</stringValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MaximalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+        <PropertySet>
+          <PropertyName>MinimalLength</PropertyName>
+          <Value xsi:type="IntValueT">
+            <Value>
+              <intValue>1</intValue>
+            </Value>
+          </Value>
+        </PropertySet>
+      </PropertySets>
+      <SockedProperties />
+    </Box>
+  </Boxes>
+</Project>
