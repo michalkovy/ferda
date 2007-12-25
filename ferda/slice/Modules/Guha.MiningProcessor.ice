@@ -310,7 +310,8 @@ module Ferda {
 				      int maximalTreeDepth;
 				      int noAttributesForBranching;
 				      long maxNumberOfHypotheses;
-				      bool onlyFullTree;				      
+				      bool onlyFullTree;
+                          bool individualNodesBranching;	      
                     };
 
 				interface MiningProcessorFunctions

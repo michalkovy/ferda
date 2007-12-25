@@ -98,5 +98,11 @@ namespace Ferda.Guha.MiningProcessor.Design
         /// length, or also shorter subtrees.
         /// </summary>
         public bool onlyFullTree;
+
+        /// <summary>
+        /// Determines, if the branching should be carried out for each node suitable for
+        /// branching separately, or at once for all nodes suitable for branching.
+        /// </summary>
+        public bool individualNodesBranching;
     }
 }

@@ -2684,6 +2684,11 @@
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
+			<Socket>
+				<Name>IndividualNodesBranching</Name>
+				<Label>Větvení uzlů po jednom </Label>
+				<Hint>Větvení po jednom uzlu či všechny uzly najednou</Hint>
+			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>

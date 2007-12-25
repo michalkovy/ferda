@@ -236,6 +236,7 @@
       <Member type="Field">public int noAttributesForBranching</Member>
       <Member type="Field">public long maxNumberOfHypotheses</Member>
       <Member type="Field">public bool onlyFullTree</Member>
+      <Member type="Field">public bool individualNodesBranching</Member>
     </Entity>
     <Entity type="Enum">
       <Name>BranchingStoppingCriterionEnum</Name>
@@ -461,7 +462,7 @@
       <Size width="162" height="128" />
     </Shape>
     <Shape>
-      <Location left="1138" top="1115" />
+      <Location left="1157" top="1165" />
       <Size width="162" height="235" />
     </Shape>
     <Shape>
@@ -489,8 +490,8 @@
       <Size width="176" height="116" />
     </Shape>
     <Shape>
-      <Location left="335" top="1308" />
-      <Size width="352" height="255" />
+      <Location left="337" top="1293" />
+      <Size width="352" height="272" />
     </Shape>
     <Shape>
       <Location left="18" top="1325" />
