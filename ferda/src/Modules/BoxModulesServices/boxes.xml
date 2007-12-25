@@ -4904,6 +4904,15 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
+				<Name>IndividualNodesBranching</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::BoolTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+			<Socket>
 				<Name>MaxNumberOfHypotheses</Name>
 				<SocketTypes>
 					<BoxType>
@@ -5058,6 +5067,14 @@
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 				<Default>false</Default>
+			</Property>
+			<Property>
+				<Name>IndividualNodesBranching</Name>
+				<TypeClassIceId>::Ferda::Modules::BoolT</TypeClassIceId>
+				<CategoryName>Settings</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>false</ReadOnly>
+				<Default>true</Default>
 			</Property>
 			<Property>
 				<Name>MaxNumberOfHypotheses</Name>

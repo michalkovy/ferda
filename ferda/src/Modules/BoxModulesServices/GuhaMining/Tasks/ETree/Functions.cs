@@ -138,6 +138,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         }
 
         /// <summary>
+        /// Determines, if the branching should be carried out for each node suitable for
+        /// branching separately, or at once for all nodes suitable for branching.
+        /// </summary>
+        public bool IndividualNodesBranching
+        {
+            get
+            {
+                return _boxModule.GetPropertyBool(SockIndividualNodesBranching);
+            }
+        }
+
+        /// <summary>
         /// Defines criterion for stopping of branching of a node
         /// in the ETree mining procedure.
         /// </summary>
@@ -205,6 +217,13 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// Name of the socket defining the criterion for stopping of node branching
         /// </summary>
         public const string SockBranchingStoppingCriterion = "BranchingStoppingCriterion";
+
+        /// <summary>
+        /// Name of the socket defining if the branching should be carried out for each 
+        /// node suitable for branching separately, or at once for all nodes suitable for
+        /// branching.
+        /// </summary>
+        public const string SockIndividualNodesBranching = "IndividualNodesBranching";
 
         #region MiningTaskFunctions overrides
 
@@ -404,6 +423,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
             par.noAttributesForBranching = NoAttributesForBranching;
             par.maxNumberOfHypotheses = MaxNumberOfHypotheses;
             par.onlyFullTree = OnlyFullTree;
+            par.individualNodesBranching = IndividualNodesBranching;
 
             string resultInfo = string.Empty;
             string result = miningProcessor.ETreeRun(

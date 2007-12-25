@@ -2653,6 +2653,11 @@
 				<Hint>If the output should contain only trees of given length or also shorter subtrees.</Hint>
 			</Socket>
 			<Socket>
+				<Name>IndividualNodesBranching</Name>
+				<Label>Individual nodes branching</Label>
+				<Hint>Branching of each node separately or 	all nodes together</Hint>
+			</Socket>
+			<Socket>
 				<Name>NumberOfHypotheses</Name>
 				<Label>Number Of Hypotheses</Label>
 				<Hint>Number of returned hypotheses.</Hint>
