@@ -478,6 +478,10 @@
   <data name="ProjectLoadInvalidFormat" xml:space="preserve">
     <value>Invalid XML format</value>
   </data>
+  <data name="ProjectLoadNoAccess" xml:space="preserve">
+    <value>Unauthorized access to a file (may be read only)</value>
+    <comment> </comment>
+  </data>
   <data name="PropertiesCannotWriteCaption" xml:space="preserve">
     <value>Input error</value>
   </data>

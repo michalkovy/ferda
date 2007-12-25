@@ -1137,6 +1137,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unauthorized access to a file (may be read only).
+        /// </summary>
+        internal static string ProjectLoadNoAccess {
+            get {
+                return ResourceManager.GetString("ProjectLoadNoAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input error.
         /// </summary>
         internal static string PropertiesCannotWriteCaption {

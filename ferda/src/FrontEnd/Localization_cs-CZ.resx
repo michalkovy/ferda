@@ -471,6 +471,9 @@
   <data name="ProjectLoadInvalidFormat" xml:space="preserve">
     <value>Neplatný formát XML</value>
   </data>
+  <data name="ProjectLoadNoAccess" xml:space="preserve">
+    <value>Neautorizovaný přístup k souboru (možná není právo na zápis)</value>
+  </data>
   <data name="PropertiesCannotWriteCaption" xml:space="preserve">
     <value>Chyba záznamu</value>
   </data>
