@@ -87,6 +87,13 @@ namespace Ferda.FrontEnd
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show(resManager.GetString("ProjectLoadNoAccess"),
+                        resManager.GetString("ProjectLoadErrorCaption"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 try
                 {
                     Cursor previosCursor = parent.Cursor;

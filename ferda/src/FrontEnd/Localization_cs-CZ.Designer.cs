@@ -1123,6 +1123,15 @@ namespace Ferda.FrontEnd {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Neautorizovaný přístup k souboru (možná není právo na zápis).
+        /// </summary>
+        internal static string ProjectLoadNoAccess {
+            get {
+                return ResourceManager.GetString("ProjectLoadNoAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chyba záznamu.
         /// </summary>
         internal static string PropertiesCannotWriteCaption {
