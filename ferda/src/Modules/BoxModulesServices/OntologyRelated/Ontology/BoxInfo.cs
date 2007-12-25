@@ -159,6 +159,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
                     return Func.OntologyURI;
                 case Functions.PropNumberOfClasses:
                     return Func.NumberOfClasses;
+                case Functions.PropLastReloadRequest:
+                    return Func.LastReloadRequest;
                 default:
                     throw new NotImplementedException();
             }
@@ -183,6 +185,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             {
                 case "LoadOntology":
                     Func.LoadOntology();
+                    Func.LastReloadRequest = DateTime.Now;
                     break;
                 default:
                     throw Ferda.Modules.Exceptions.NameNotExistError(null, actionName);
@@ -199,7 +202,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
             // try to invoke methods
             object dummy = Func.getOntology(true);
-            Func.LoadOntology();
         }
 
         /// <summary>

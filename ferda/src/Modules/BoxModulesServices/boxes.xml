@@ -19838,6 +19838,15 @@
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
+			<Socket>
+				<Name>LastReloadRequest</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::DateTimeTInterface</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
 		</Sockets>
 		<Properties>
 			<Property>
@@ -19858,6 +19867,13 @@
 			<Property>
 				<Name>NumberOfClasses</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Ontology Info</CategoryName>
+				<Visible>true</Visible>
+				<ReadOnly>true</ReadOnly>
+			</Property>
+			<Property>
+				<Name>LastReloadRequest</Name>
+				<TypeClassIceId>::Ferda::Modules::DateTimeT</TypeClassIceId>
 				<CategoryName>Ontology Info</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>true</ReadOnly>

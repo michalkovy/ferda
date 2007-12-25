@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Ice;
 using Ferda.OntologyRelated.generated.OntologyData;
@@ -54,12 +55,16 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         #region Properties
         
+        /// <summary>
+        /// Structure for storing parsed ontology
+        /// </summary>
         private OntologyStructure ontology;
         
         //names of the properties
         public const string PropOntologyPath = "OntologyPath";
         public const string PropOntologyURI = "OntologyURI";
         public const string PropNumberOfClasses = "NumberOfClasses";
+        public const string PropLastReloadRequest = "LastReloadRequest";
 
         /// <summary>
         /// The Ontology Path property
@@ -69,6 +74,9 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             get { return _boxModule.GetPropertyString(PropOntologyPath); }
         }
 
+        /// <summary>
+        /// Ontology URI
+        /// </summary>
         public StringTI OntologyURI
         {
             get
@@ -78,6 +86,9 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
         }
 
+        /// <summary>
+        /// Number of classes in the ontology
+        /// </summary>
         public StringTI NumberOfClasses
         {
             get
@@ -87,6 +98,29 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
         }
 
+        private DateTimeTI _lastReloadRequest = null;
+
+        /// <summary>
+        /// The Last Reload Request property
+        /// </summary>
+        public DateTimeTI LastReloadRequest
+        {
+            get
+            {
+                if (_lastReloadRequest == null)
+                    _lastReloadRequest = DateTime.MinValue;
+                return _lastReloadRequest;
+            }
+            set
+            {
+                Debug.Assert((DateTime)_lastReloadRequest <= (DateTime)value);
+                _lastReloadRequest = value;
+            }
+        }
+
+        /// <summary>
+        /// The current box module
+        /// </summary>
         public BoxModuleI BoxModule
         {
             get { return _boxModule; }
@@ -96,9 +130,14 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         #region Methods
 
+        /// <summary>
+        /// Gets the ontology
+        /// </summary>
+        /// <param name="fallOnError">If to fall on error</param>
+        /// <returns>Parsed ontology</returns>
         public OntologyStructure getOntology(bool fallOnError)
         {
-            if ((OntologyPath != null) && (PropOntologyURI.ToString() == "OntologyURI"))    //for loading the ontology after loading a saved project
+            if (OntologyPath != null)    //for loading the ontology after loading a saved project
             {
                 LoadOntologyWithParameter(OntologyPath.ToString(), fallOnError);
             }
@@ -117,15 +156,22 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
                 );
         }
 
+        /// <summary>
+        /// Loads and parses the ontology. Connects to ICE module FerdaOWLParser (currently in java).
+        /// </summary>
+        /// <param name="innerOntologyPath">The path to the ontology (full path with file:/ prefix if the ontology is network based)</param>
         public void LoadOntologyDelegate(string innerOntologyPath)
         {
+            /// a path to an ontology is not set
             if (innerOntologyPath.ToString() == "")
             {
                 throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
                         "Parameter Path to Ontology is empty.");
             }
+            /// a path to an ontology is set
             else
             {
+                /// getting the proxy to FerdaOWLParser module
                 Ferda.OntologyRelated.generated.OWLParserPrx prx =
                     Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(
                         BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
@@ -133,18 +179,21 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
                         )[0]
                     );
 
+                /// connection to FerdaOWLParser modules failed
                 if (prx == null)
                 {
                     throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
                             "Ice object ::Ferda::OntologyRelated::OWLParser can't be found.");
                 }
 
+                /// parsing the ontology
+                /// 
+                /// examples for eventual testing purposes
+                /// this.ontology = prx.parseOntology("file:/D:/My ontologies/umls_stulong_2.owl");
+                /// this.ontology = prx.parseOntology("http://www.co-ode.org/ontologies/pizza/2007/02/12/pizza.owl");
                 this.ontology = prx.parseOntology(innerOntologyPath.ToString());
 
-                //testing examples
-                //this.ontology = prx.parseOntology("file:/D:/My ontologies/umls_stulong_2.owl");
-                //this.ontology = prx.parseOntology("http://www.co-ode.org/ontologies/pizza/2007/02/12/pizza.owl");
-
+                /// the ontology is empty or in incorrect format
                 if (this.ontology.OntologyClassMap.Keys.Count == 0)
                 {
                     throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
@@ -155,6 +204,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             return;
         }
 
+        /// <summary>
+        /// Loads and parses the ontology
+        /// </summary>
+        /// <param name="innerOntologyPath">The path to the ontology (full path with file:/ prefix if the ontology is network based)</param>
+        /// <param name="fallOnError">If to fall on error</param>
+        /// <returns>True if the ontology was successfully loaded</returns>
         public bool LoadOntologyWithParameter(string innerOntologyPath, bool fallOnError)
         {
             if (fallOnError)
@@ -188,6 +243,10 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 
         #region Ice Functions
 
+        /// <summary>
+        /// Loads and parses the ontology
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
         public override void LoadOntology(Ice.Current __current)
         {
             if ((OntologyPath == null))
@@ -201,16 +260,32 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             return;
         }
 
+        /// <summary>
+        /// Loads and parses the ontology with specified path to ontology
+        /// </summary>
+        /// <param name="innerOntologyPath">The path to the ontology (full path with file:/ prefix if the ontology is network based)</param>
+        /// <param name="current__">Ice stuff</param>
         public override void LoadOntologyWithParameter(string innerOntologyPath, Ice.Current __current)
         {
             LoadOntologyWithParameter(innerOntologyPath, true);
         }
 
+        /// <summary>
+        /// Gets the ontology
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Parsed ontology</returns>
         public override OntologyStructure getOntology(Current current__)
         {
             return getOntology(true);
         }
 
+        /// <summary>
+        /// Gets the data properties of the ontology entity
+        /// </summary>
+        /// <param name="entityName">The name of the ontology entity</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Data properties of the ontology entity</returns>
         public override StrSeqMap getOntologyEntityProperties(string entityName, Current current__)
         {
             OntologyStructure ontology = getOntology(true);
@@ -224,6 +299,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
         }
 
+        /// <summary>
+        /// Gets the annotations of the ontology entity
+        /// </summary>
+        /// <param name="entityName">The name of the ontology entity</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Annotations of the ontology entity</returns>
         public override string[] getOntologyEntityAnnotations(string entityName, Current current__)
         {
             OntologyStructure ontology = getOntology(true);
