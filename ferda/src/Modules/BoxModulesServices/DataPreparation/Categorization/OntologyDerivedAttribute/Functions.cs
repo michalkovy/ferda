@@ -51,9 +51,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         public const string PropClosedFrom = "ClosedFrom";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
-        public const string PropDomain = "Domain";
-        public const string PropFrom = "From";
-        public const string PropTo = "To";
         public const string PropCategories = "Categories";
         public const string SockColumn = "Column";
         public const string SockOntologyEnablingColumn = "Column";
@@ -102,21 +99,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         {
             get
             {
-                return _boxModule.GetPropertyLong(PropCountOfCategories);
-            }
-        }
-
-        /// <summary>
-        /// Attribute domain
-        /// </summary>
-        public DomainEnum Domain
-        {
-            get
-            {
-                return (DomainEnum)Enum.Parse(
-                                        typeof(DomainEnum),
-                                        _boxModule.GetPropertyString(PropDomain)
-                                        );
+                try
+                {
+                    return GetCategoriesIds(false).Length;
+                }
+                catch
+                {
+                    return 0;
+                }
             }
         }
 
@@ -190,22 +180,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             get { return _nullCategoryName; }
         }
 
-        /// <summary>
-        /// "From" restriction
-        /// </summary>
-        public string From
-        {
-            get { return _boxModule.GetPropertyString(PropFrom); }
-        }
-
-        /// <summary>
-        /// "To" restriction
-        /// </summary>
-        public string To
-        {
-            get { return _boxModule.GetPropertyString(PropTo); }
-        }
-
         #endregion
 
         #region Methods
@@ -274,44 +248,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                 }
             }
             return;
-        }
-
-        /// <summary>
-        /// Parses from and to values
-        /// </summary>
-        /// <param name="dataType"></param>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        private void parseFromTo(DbDataTypeEnum dataType, out IComparable from, out IComparable to)
-        {
-            try
-            {
-                GenericColumn.ParseValue(From, dataType, out from);
-            }
-            catch (Exception e)
-            {
-                throw Exceptions.BadValueError(
-                    e,
-                    _boxModule.StringIceIdentity,
-                    null,
-                    new string[] { PropFrom },
-                    restrictionTypeEnum.BadFormat
-                    );
-            }
-            try
-            {
-                GenericColumn.ParseValue(To, dataType, out to);
-            }
-            catch (Exception e)
-            {
-                throw Exceptions.BadValueError(
-                    e,
-                    _boxModule.StringIceIdentity,
-                    null,
-                    new string[] { PropTo },
-                    restrictionTypeEnum.BadFormat
-                    );
-            }
         }
 
         private Guid _cachesReloadFlag = System.Guid.NewGuid();
@@ -521,9 +457,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                 Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropSelectExpression,
                 tmp.columnSelectExpression);
             //adding other attribute information to the cache
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropClosedFrom, ClosedFrom);
 
             //adding the information derived from ontology to the cache

@@ -10888,7 +10888,7 @@
 		<Actions>
 			<Action>
 				<Name>LoadOntology</Name>
-				<Label>Load Ontology</Label>
+				<Label>Reload Ontology</Label>
 				<Hint>The action loads the structure of an ontology.</Hint>
 			</Action>
 		</Actions>
@@ -11038,31 +11038,6 @@
                         </Socket>
                         -->
 			<Socket>
-				<Name>Domain</Name>
-				<Label>Domain</Label>
-				<Hint>Decide if whole domain of column will be categorized or only some subdomain.</Hint>
-				<SelectOptions>
-					<SelectOption>
-						<Name>WholeDomain</Name>
-						<Label>Whole actual domain</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>SubDomain</Name>
-						<Label>User defined domain</Label>
-					</SelectOption>
-				</SelectOptions>
-			</Socket>
-			<Socket>
-				<Name>From</Name>
-				<Label>From</Label>
-				<Hint>Starting value</Hint>
-			</Socket>
-			<Socket>
-				<Name>To</Name>
-				<Label>To</Label>
-				<Hint>Ending value</Hint>
-			</Socket>
-			<Socket>
 				<Name>Cardinality</Name>
 				<Label>Cardinality</Label>
 				<Hint>You should specify the semantic of categories.</Hint>
@@ -11125,10 +11100,6 @@
 			<PropertyCategory>
 				<Name>Categories</Name>
 				<Label>Categories</Label>
-			</PropertyCategory>
-			<PropertyCategory>
-				<Name>Domain</Name>
-				<Label>Domain</Label>
 			</PropertyCategory>
 			<PropertyCategory>
 				<Name>Intervals</Name>
@@ -11243,29 +11214,6 @@
 					<SelectOption>
 						<Name>StringType</Name>
 						<Label>String</Label>
-					</SelectOption>
-				</SelectOptions>
-			</Socket>
-			<Socket>
-				<Name>Cardinality</Name>
-				<Label>Semantic</Label>
-				<Hint>You should specify the semantic of the column values.</Hint>
-				<SelectOptions>
-					<SelectOption>
-						<Name>Nominal</Name>
-						<Label>Nominal</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>Ordinal</Name>
-						<Label>Ordinal</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>OrdinalCyclic</Name>
-						<Label>Ordinal Cyclic</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>Cardinal</Name>
-						<Label>Cardinal</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>

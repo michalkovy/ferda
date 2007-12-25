@@ -1,11 +1,11 @@
 package Ferda.OntologyRelated;
 
-//import Ice.ObjectFactory;
-
+// class for setting up the ICE communication between Ferda box ontology and FerdaOWLParser
 public class Service extends Ice.LocalObjectImpl implements IceBox.Service
 {
 	private Ice.ObjectAdapter _adapter;
 	
+	//function needed by ICE
 	public void start(String name, Ice.Communicator communicator, String[] args)
 	{
 	    _adapter = communicator.createObjectAdapter(name);
@@ -14,6 +14,7 @@ public class Service extends Ice.LocalObjectImpl implements IceBox.Service
 	    _adapter.activate();
 	}
 
+	//function needed by ICE
 	public void stop()
 	{
 		_adapter.deactivate();
