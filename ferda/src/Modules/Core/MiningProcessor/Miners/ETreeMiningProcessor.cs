@@ -149,6 +149,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         private bool onlyFullTree;
 
         /// <summary>
+        /// Determines, if the branching should be carried out for each node suitable for
+        /// branching separately, or at once for all nodes suitable for branching.
+        /// </summary>
+        private bool individualNodesBranching;
+
+        /// <summary>
         /// Count of all objects in the data matrix
         /// </summary>
         protected long allObjectsCount = -1;
@@ -241,6 +247,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// If output should contain only trees of desired
         /// length, or also shorter subtrees.
         /// </param>
+        /// <param name="individualNodesBranching">
+        /// Determines, if the branching should be carried out for each node suitable for
+        /// branching separately, or at once for all nodes suitable for branching.
+        /// </param>
         /// <param name="progressBarPrx">The progress bar PRX.</param>
         public ETreeMiningProcessor(
             CategorialAttribute[] branchingAttributes,
@@ -253,6 +263,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             int noAttributesForBranching,
             long maxNumberOfHypotheses,
             bool onlyFullTree,
+            bool individualNodesBranching,
             ProgressTaskListener progressListener,
             ProgressBarPrx progressBarPrx) : base(progressListener, progressBarPrx)
         {
@@ -265,6 +276,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 targetClassificationAttribute, false);
             this.quantifiers = quantifiers;
             this.onlyFullTree = onlyFullTree;
+            this.individualNodesBranching = individualNodesBranching;
             this.minimalNodePurity = minimalNodePurity;
             this.branchingStoppingCriterion = branchingStoppingCriterion;
 
@@ -533,13 +545,122 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
             }
 
-            //for each node adding a new tree 
-            foreach (Node node in nodesForBranching)
+            if (individualNodesBranching)
             {
-                lifo = ProlongTree(processTree, node, lifo);
+                //for each node adding a new tree 
+                foreach (Node node in nodesForBranching)
+                {
+                    lifo = ProlongTree(processTree, node, lifo);
+                }
+
+                return lifo;
+            }
+            else
+            {
+                //create one new tree for all nodes that are suitable for branching
+                lifo = AllNodesBranchingTrees(processTree, nodesForBranching, lifo);
+                return lifo;
+            }
+        }
+
+        /// <summary>
+        /// Prolongs a tree that is currently beeing processed making new
+        /// nodes out of all nodes contained in the <paramref name="nodesForBranching"/>
+        /// parameter for (number of attributes for branching) times.
+        /// </summary>
+        /// <param name="processTree">Tree that is being processed</param>
+        /// <param name="nodesForBranching">The suitable nodes for branching</param>
+        /// <param name="lifo">Structure holding temporary results</param>
+        /// <returns>Prologned tree</returns>
+        private Stack<Tree> AllNodesBranchingTrees(Tree processTree, List<Node> nodesForBranching,
+            Stack<Tree> lifo)
+        {
+            //In contrary to branching of each individual nodes, branching of all nodes
+            //ends when the tree reached maximal depth
+            if (processTree.Depth == maximalTreeDepth)
+            {
+                return lifo;
+            }
+
+            //each of attributes for branching should create one tree
+            for (int i = 0; i < noAttributesForBranching; i++)
+            {
+                bool noRightCats = true;
+                Tree result = (Tree)processTree.Clone();
+                result.Depth = processTree.Depth + 1;
+                List<Node> newNodesForBranching = NewNodesForBranching(result, nodesForBranching);
+
+                foreach (Node node in newNodesForBranching)
+                {
+                    List<string> rightCats = BranchingCategoriesForNode(node);
+
+                    //no right category
+                    if (rightCats == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        noRightCats = false;
+                    }
+
+                    //by anding the bit strings of individual categories, we
+                    //improve the accuracy for the attribute selection
+                    IBitString newBitString = FalseBitString.GetInstance();
+                    foreach (string category in rightCats)
+                    {
+                        newBitString = newBitString.Or(node.CategoryBitString(category));
+                    }
+
+                    //selecting which attributes to branch
+                    CategorialAttributeTrace[] brAttributes =
+                        SelectAttributesForBranching(node.UnusedAttributes,
+                        newBitString);
+
+                    if (brAttributes.Length == 0)
+                    {
+                        //there is no attribute to be added (this situation
+                        //will occur also for other i's
+                        return lifo;
+                    }
+
+                    //there is nothing left to branch
+                    if (i > brAttributes.Length - 1)
+                    {
+                        continue;
+                    }
+
+                    LeafToNode(rightCats.ToArray(), 
+                        brAttributes[brAttributes.Length - 1 - i], node);
+                }
+
+                if (!noRightCats)
+                {
+                    lifo.Push(result);
+                }
             }
 
             return lifo;
+        }
+
+        /// <summary>
+        /// Finds nodes in <paramref name="nodesForBranching"/> in a newly cloned
+        /// tree <paramref name="newTree"/>
+        /// </summary>
+        /// <param name="newTree">Newly cloned tree</param>
+        /// <param name="nodesForBranching">Nodes to be found (for branching</param>
+        /// <returns>List of nodes for branching in a newly cloned tree</returns>
+        private List<Node> NewNodesForBranching(Tree newTree, List<Node> nodesForBranching)
+        {
+            List<Node> result = new List<Node>();
+
+            foreach (Node node in nodesForBranching)
+            {
+                Node n = newTree.FindNode(node);
+                result.Add(n);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -556,27 +677,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <returns>The stack is with newly created trees is returned.</returns>
         private Stack<Tree> ProlongTree(Tree processTree, Node node, Stack<Tree> lifo)
         {
-            //we are creating one subset of categories, that contains all the
-            //categories which have higher frequency than minimal node frequency.
-            List<string> rightCats = new List<string>();
+            List<string> rightCats = BranchingCategoriesForNode(node);
 
-            foreach (string category in node.SubCategories)
-            {
-                if (node.CategoryFrequency(category) >= minimalNodeFrequency)
-                {
-                    rightCats.Add(category);
-                }            
-            }
-            rightCats = DeleteOneClassificationCategoryOnly(node, rightCats);
-
-            //the minimal node purity criterion (if needed)
-            if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodePurity
-                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalNodePurity)
-            {
-                rightCats = DeleteImpureCategories(node, rightCats);
-            }
-            
-            if (rightCats.Count == 0)
+            //no right category
+            if (rightCats == null)
             {
                 return lifo;
             }
@@ -603,6 +707,47 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             return lifo;
+        }
+
+        /// <summary>
+        /// Determines, which categories in a node should be branched. Minimal
+        /// node frequency and minimal node purities are checked (if needed)
+        /// and also nodes that contain only one classification category are
+        /// deleted.
+        /// </summary>
+        /// <param name="node">Node which categories should be determined.</param>
+        /// <returns>Null if there is no category suitable for branching,
+        /// list of categories for branching otherwise</returns>
+        private List<string> BranchingCategoriesForNode(Node node)
+        {
+            //we are creating one subset of categories, that contains all the
+            //categories which have higher frequency than minimal node frequency.
+            List<string> rightCats = new List<string>();
+
+            foreach (string category in node.SubCategories)
+            {
+                if (node.CategoryFrequency(category) >= minimalNodeFrequency)
+                {
+                    rightCats.Add(category);
+                }
+            }
+            rightCats = DeleteOneClassificationCategoryOnly(node, rightCats);
+
+            //the minimal node purity criterion (if needed)
+            if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodePurity
+                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalNodePurity)
+            {
+                rightCats = DeleteImpureCategories(node, rightCats);
+            }
+
+            if (rightCats.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return rightCats;
+            }
         }
 
         /// <summary>
@@ -693,6 +838,19 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 throw new Exception("WRONGGGGGGGRRRRR");
             }
 
+            n = LeafToNode(categories, attribute, n);
+            return result;
+        }
+
+        /// <summary>
+        /// Makes a node out of a leaf
+        /// </summary>
+        /// <param name="categories">Categories which should be transfered to a node</param>
+        /// <param name="attribute">Attribute of the new nodes</param>
+        /// <param name="n">Leaf that is transfere to node</param>
+        /// <returns>New node</returns>
+        private static Node LeafToNode(string[] categories, CategorialAttributeTrace attribute, Node n)
+        {
             //it is no longer a leaf
             n.Leaf = false;
 
@@ -705,7 +863,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             n.SubCategories = newCats.ToArray();
 
             //creating a new nodes
-            Dictionary<string,Node> newNodes = new Dictionary<string,Node>();
+            Dictionary<string, Node> newNodes = new Dictionary<string, Node>();
             foreach (string category in categories)
             {
                 Node newNode = new Node(true);
@@ -715,16 +873,16 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 newNode.SubCategories = attribute.CategoriesIds;
 
                 //changing the unused attributes of the new node
-                List<CategorialAttributeTrace> attr = 
-                    new List<CategorialAttributeTrace>(node.UnusedAttributes);
+                List<CategorialAttributeTrace> attr =
+                    new List<CategorialAttributeTrace>(n.UnusedAttributes);
                 attr.Remove(attribute);
                 newNode.UnusedAttributes = attr.ToArray();
 
-                newNodes.Add(category,newNode);
+                newNodes.Add(category, newNode);
             }
-
             n.SubNodes = newNodes;
-            return result;
+
+            return n;
         }
 
         /// <summary>
