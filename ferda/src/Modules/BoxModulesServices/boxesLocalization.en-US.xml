@@ -10908,6 +10908,11 @@
 				<Label>Number of classes</Label>
 				<Hint>Number of classes in the ontology.</Hint>
 			</Socket>
+			<Socket>
+				<Name>LastReloadRequest</Name>
+				<Label>Last reload request</Label>
+				<Hint>Time of the last reload of information from the ontology</Hint>
+			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>

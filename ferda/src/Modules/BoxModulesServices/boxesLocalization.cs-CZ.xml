@@ -10876,6 +10876,11 @@
 				<Label>Počet tříd</Label>
 				<Hint>Počet tříd v ontologii.</Hint>
 			</Socket>
+			<Socket>
+				<Name>LastReloadRequest</Name>
+				<Label>Poslední znovunačtení</Label>
+				<Hint>Čas posledního znovunačtení informací z ontologie</Hint>
+			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
@@ -11104,11 +11109,11 @@
 	<BoxLocalization>
 		<Identifier>DataPreparation.DataSource.OntologyEnablingColumn</Identifier>
 		<Label>Sloupec umožňující využití ontologie</Label>
-		<Hint>Defines column of the table and its parameters</Hint>
+		<Hint>Krabička definuje sloupec datové tabulky a umožňuje využití informací z ontologie při kategorizaci atributu</Hint>
 		<Categories>
 			<Category>
 				<Name>DataPreparation.DataSource</Name>
-				<Label>Data preparation.Data source</Label>
+				<Label>Příprava dat.Datový zdroj</Label>
 			</Category>
 		</Categories>
 		<Sockets>
@@ -11124,17 +11129,17 @@
 			</Socket>
 			<Socket>
 				<Name>SelectExpression</Name>
-				<Label>Select expression</Label>
-				<Hint>Name of column or SQL formula as select expression. The name of column will be enclosed by apostrophes in SQL queries, specified formul will not be enclosed in apostrophes in the SQL query.</Hint>
+				<Label>Zvolený výraz</Label>
+				<Hint>Jméno sloupce nebo SQL výraz. Název sloupce bude v SQL dotazech uzavřen mezi apostrofy, zadaný výraz nebude uzavřen v SQL dotazu mezi apostrofy.</Hint>
 			</Socket>
 			<Socket>
 				<Name>DataType</Name>
-				<Label>Data type</Label>
-				<Hint>Column data type.</Hint>
+				<Label>Datový typ</Label>
+				<Hint>Datový typ sloupce.</Hint>
 				<SelectOptions>
 					<SelectOption>
 						<Name>UnknownType</Name>
-						<Label>Unknown</Label>
+						<Label>Neznámý</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>BooleanType</Name>
@@ -11193,64 +11198,64 @@
 			<Socket>
 				<Name>ValueMin</Name>
 				<Label>Minimum</Label>
-				<Hint>Minimal value in the column.</Hint>
+				<Hint>Minimální hodnota ve sloupci.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ValueMax</Name>
 				<Label>Maximum</Label>
-				<Hint>Maximal value in the column.</Hint>
+				<Hint>Maximální hodnota ve sloupci.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ValueAverage</Name>
 				<Label>Average</Label>
-				<Hint>Average value in the column.</Hint>
+				<Hint>Průměrná hodnota ve sloupci.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ValueVariance</Name>
 				<Label>Variance</Label>
-				<Hint>Variance of values in the column.</Hint>
+				<Hint>Odchylka hodnot ve sloupci.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ValueStandardDeviation</Name>
 				<Label>Standard deviation</Label>
-				<Hint>Average deviation of values in the column.</Hint>
+				<Hint>Průměrná odchylka hodnot ve sloupci.</Hint>
 			</Socket>
 			<Socket>
 				<Name>ValueDistincts</Name>
 				<Label>Distinct values</Label>
-				<Hint>Number of distinct values in the column.</Hint>
+				<Hint>Počet různých hodnot ve sloupci.</Hint>
 			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
 				<Name>DataType</Name>
-				<Label>Data type</Label>
+				<Label>Datový typ</Label>
 			</PropertyCategory>
 			<PropertyCategory>
 				<Name>Statistics</Name>
-				<Label>Statistics</Label>
+				<Label>Statistiky</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>
 			<ModulesAskingForCreation>
 				<Name>EachValueOneCategoryAttribute</Name>
-				<Label>Each value one category attribute</Label>
-				<Hint>Each value of the column becomes one category</Hint>
+				<Label>Atribut Each value one category</Label>
+				<Hint>Každá hodnota se stane samostatnou kategorií.</Hint>
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>EquidistantIntervalsAttribute</Name>
-				<Label>Equidistant intervals attribute</Label>
-				<Hint>Intervals of the same length; parameters are starting value and count of intervals</Hint>
+				<Label>Ekvidistanční atribut</Label>
+				<Hint>Intervaly shodné délky; parametry jsou hraniční hodnoty a cílový počet intervalů</Hint>
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>EquidistantIntervalsLISpAttribute</Name>
-				<Label>Equidistant intervals LISp attribute</Label>
-				<Hint>Intervals of the same length; parameters are starting value and length of intervals</Hint>
+				<Label>Ekvidistanční LISp atribut</Label>
+				<Hint>Intervaly shodné délky; parametry jsou hraniční hodnoty a cílový počet intervalů</Hint>
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>EquifrequencyIntervalsAttribute</Name>
-				<Label>Equifrequency intervals attribute</Label>
-				<Hint>There will be nearly the same number objects in each interval; parameter is number of intervals in which you want divide objects</Hint>
+				<Label>Ekvifrekvenční atribut</Label>
+				<Hint>V každém intervalu bude téměř stejný počet objektů; parameterem je cílový počet intervalů</Hint>
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>OntologyDerivedAttribute</Name>
@@ -11259,8 +11264,8 @@
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>StaticAttribute</Name>
-				<Label>Static attribute</Label>
-				<Hint>User can edit categories</Hint>
+				<Label>Statický atribut</Label>
+				<Hint>Uživatel může upravovat kategorie ručně</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
