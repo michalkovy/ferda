@@ -397,6 +397,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 taskParams.noAttributesForBranching,
                 taskParams.maxNumberOfHypotheses,
                 taskParams.onlyFullTree,
+                taskParams.individualNodesBranching,
                 progressListener,
                 progressBarPrx);
 
