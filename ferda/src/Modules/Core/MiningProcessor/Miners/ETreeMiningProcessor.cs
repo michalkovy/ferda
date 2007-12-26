@@ -627,7 +627,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     //there is nothing left to branch
                     if (i > brAttributes.Length - 1)
                     {
-                        continue;
+                        return lifo;
                     }
 
                     LeafToNode(rightCats.ToArray(), 
@@ -1017,10 +1017,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IBitString baseBitString)
         {
             //simple but effective optimizing
-            if (noAttributesForBranching >= possibleAttributes.Length)
-            {
-                return possibleAttributes;
-            }
+            //if (noAttributesForBranching >= possibleAttributes.Length)
+            //{
+            //    return possibleAttributes;
+            //}
             if (possibleAttributes.Length == 0)
             {
                 return new CategorialAttributeTrace[0];
