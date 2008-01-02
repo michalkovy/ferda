@@ -3,10 +3,10 @@
 	<description>Ferda OWL Parser</description>
 	<target name="build" description="Build Ferda OWL Parser">
     <echo message="Kompiluji javovy OntologyParser..."/>
-    <mkdir dir="${path::combine(libsrc.dir,'OWLParser')}"/>
+    <mkdir dir="${path::combine(serverbin.dir,'OWLParser')}"/>
     <exec program="javac">
       <arg value="-d" />
-      <arg value="${path::combine(libsrc.dir,'OWLParser')}" />
+      <arg value="${path::combine(serverbin.dir,'OWLParser')}" />
       <arg value="-sourcepath" />
       <arg value="." />
       <arg value="-classpath" />
@@ -15,6 +15,7 @@
               <pathelement file="OWL_API_src/owlapi-api.jar" />
               <pathelement file="OWL_API_src/owlapi-apibinding.jar" />
               <pathelement file="C:/Ice-3.2.1/lib/Ice.jar" />
+              <!-- "{path::combine(ice.dir, 'lib', 'Ice.jar')}" -->
           </path>
       </arg>
       <arg path="Ferda/OntologyRelated/OWLParserI.java" />

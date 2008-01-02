@@ -198,13 +198,11 @@
 			</fileset>
 		</copy>
 		<nant buildfile="./BoxModulesServices/default.build" target="build"/>		
-		<if test="${property::exists('JDK')}">
-      <nant buildfile="FerdaOWLParser/default.build" target="build">
-  			<properties>
-  				<property name="build.dir" value="${serverbin.dir}"/>
-  			</properties>
-		  </nant>
-		</if>
+		<nant buildfile="FerdaOWLParser/default.build" target="build">
+			<properties>
+				<property name="build.dir" value="${serverbin.dir}"/>
+  		</properties>
+		</nant>
 	</target>
 	<target name="clean">
 		<!-- asi zbytecny

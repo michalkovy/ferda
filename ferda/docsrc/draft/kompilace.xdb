@@ -150,16 +150,6 @@
       </listitem>
       <listitem>
         <para>
-          <classname>nant jfullinstall</classname> (jako <classname>nant fullinstall</classname> ale kompiluje i javu
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <classname>nant jrefresh</classname> (jako <classname>nant refresh</classname> ale kompiluje i javu
-        </para>
-      </listitem>
-      <listitem>
-        <para>
           <classname>nant doc</classname> (vytvoří dokumentaci)
         </para>
       </listitem>
