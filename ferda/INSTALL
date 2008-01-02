@@ -24,8 +24,6 @@ nant refresh			uninstall, clean, compile, installs Ferda and runs tests
 nant debugsrc			like "nant src but" creates version for debuggin on side of Modules
 nant debugrefresh	like "nant refresh" but creates version for debuggin on side of Modules
 nant debuginstall like "nant install" but creates version for debuggin on side of Modules
-nant jfullinstall        like fullinstall + compiles java parts of Ferda
-nant jrefresh            like refresh + compiles java parts of Ferda
 
 Version for debugging
 If you create Ferda with commans "nant debug...", you have to execute modules application

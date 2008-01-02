@@ -11141,7 +11141,7 @@
 	<BoxLocalization>
 		<Identifier>DataPreparation.DataSource.OntologyEnablingColumn</Identifier>
 		<Label>Ontology Enabling Column</Label>
-		<Hint>Defines column of the table and its parameters</Hint>
+		<Hint>The box defines column of the table and allows to use information from the ontology for categorization of the attribute</Hint>
 		<Categories>
 			<Category>
 				<Name>DataPreparation.DataSource</Name>
