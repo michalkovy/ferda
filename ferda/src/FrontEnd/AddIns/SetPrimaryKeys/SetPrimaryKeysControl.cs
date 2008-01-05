@@ -38,6 +38,11 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
         #region Private variables
 
         /// <summary>
+        /// Owner of addin
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAddIn;
+
+        /// <summary>
         /// All available strings
         /// </summary>
         SelectString[] allStrings;
@@ -73,6 +78,11 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
         private CheckedListBox[] checkedListBoxArray;
 
         /// <summary>
+        /// Array of labels
+        /// </summary>
+        private Control[] labelArray;
+
+        /// <summary>
         /// Dictionary that contains selected values (column names) for particular datatable name
         /// </summary>
         private Dictionary<string, string[]> selectedStrings = new Dictionary<string, string[]>();
@@ -83,6 +93,16 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
         /// <see cref="F:Ferda.FrontEnd.FerdaForm.LoadIcons"/> for their names
         /// </summary>
         private Dictionary<string, Icon> iconProvider;
+
+        /// <summary>
+        /// default height of the form (listView)
+        /// </summary>
+        private int defaultFormHeight = 550;
+
+        /// <summary>
+        /// default width of the form (listView)
+        /// </summary>
+        private int defaultFormWidth = 600;
 
         #endregion
 
@@ -110,10 +130,12 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
             catch
             {
                 resManager = new ResourceManager("Ferda.FrontEnd.AddIns.SetPrimaryKeys.Localization_en-US",
-            Assembly.GetExecutingAssembly());
+                    Assembly.GetExecutingAssembly());
                 localizationString = "en-US";
             }
 
+            /// initializing private variables
+            this.ownerOfAddIn = ownerOfAddIn;
             this.path = Assembly.GetExecutingAssembly().Location;
             this.allStrings = allStrings;
 
@@ -129,6 +151,7 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
             InitializeComponent();
 
             this.checkedListBoxArray = new System.Windows.Forms.CheckedListBox[allStrings.Length];
+            this.labelArray = new Control[allStrings.Length];
 
             this.InitListView();
             this.LoadIcons();
@@ -146,75 +169,38 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
         /// </summary>
         private void InitListView()
         {
+            this.ClientSize = new System.Drawing.Size(defaultFormWidth, defaultFormHeight);
+
             int i = 0;
-            int j = 0;
-            int maxListsInRow = 5;  //maximal count of listviews in a row
-            int labelWidth = 120;
-            int labelHeight = 15;
-            int labelMarginTop = 10;
-            int listBoxWidth = 120;
-            int listBoxHeight = 200;
-            int listBoxMarginTop = 30;
-            int rowHeight = 250;
-            int bottomHeight = 50;
-            int buttonWidth = 75;
-            int buttonCount = 3;
-            
-            int listBoxesCount = this.allStrings.Length;
-            int listViewWidth = new int();
-            int listViewHeight = new int();
-            
-            //setting the width of listview dependant on count of displaying listboxes
-            if (listBoxesCount > maxListsInRow)
-            {
-                listViewWidth = maxListsInRow * listBoxWidth;
-            }
-            else
-            {
-                listViewWidth = listBoxesCount * listBoxWidth;
-                if (listViewWidth < buttonCount * buttonWidth)
-                    listViewWidth = buttonCount * buttonWidth;
-            }
-
-            //setting height of listview dependant on count of displaying listboxes
-            listViewHeight = ((listBoxesCount - 1) / maxListsInRow) + 1;  //getting integer from the division
-            listViewHeight = (listViewHeight * rowHeight) + bottomHeight;
-
-            this.ClientSize = new System.Drawing.Size(listViewWidth, listViewHeight);
-
             foreach (SelectString tmpString in allStrings)
             {
                 string[] firstSplitString = tmpString.name.Split(new string[] { separatorOuter }, StringSplitOptions.RemoveEmptyEntries);
                 
-                Label newLabel = new Label();
                 // 
                 // newLabel
                 // 
+                Label newLabel = new Label();
+                newLabel.Anchor = AnchorStyles.Top;
                 newLabel.AutoSize = true;
-                newLabel.Location = new System.Drawing.Point(i*listBoxWidth, j*rowHeight + labelMarginTop);
                 newLabel.Name = "label" + i.ToString();
-                newLabel.Size = new System.Drawing.Size(labelHeight, labelHeight);
                 newLabel.Text = firstSplitString[0];
-                this.Controls.Add(newLabel);
-
-                CheckedListBox newCheckedListBox = new CheckedListBox();
 
                 // 
                 // newCheckedListBox
                 // 
+                CheckedListBox newCheckedListBox = new CheckedListBox();
+                newCheckedListBox.Anchor = AnchorStyles.Top;
                 newCheckedListBox.Name = firstSplitString[0];
                 newCheckedListBox.CheckOnClick = true;
                 newCheckedListBox.FormattingEnabled = true;
-                newCheckedListBox.Location = new System.Drawing.Point(i*listBoxWidth, j*rowHeight+listBoxMarginTop);
-                newCheckedListBox.Size = new System.Drawing.Size(listBoxWidth, listBoxHeight);
 
-                //real index of the listbox
-                int realIndex = j * maxListsInRow + i;
+                //adding the label to controls
+                this.labelArray[i] = newLabel;
+                this.Controls.Add(labelArray[i]);
 
-                checkedListBoxArray[realIndex] = newCheckedListBox;
-
-
-                this.Controls.Add(checkedListBoxArray[realIndex]);
+                //adding the checklistbox to controls
+                checkedListBoxArray[i] = newCheckedListBox;
+                this.Controls.Add(checkedListBoxArray[i]);
 
                 string[] secondSplit = firstSplitString[1].Split(new string[] { separatorInner }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -229,13 +215,64 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
                 {
                     if (tmpList.IndexOf(strValue) != -1)
                     {
-                        checkedListBoxArray[realIndex].Items.Add(strValue, true);
+                        checkedListBoxArray[i].Items.Add(strValue, true);
                     }
                     else
                     {
-                        checkedListBoxArray[realIndex].Items.Add(strValue, false);
+                        checkedListBoxArray[i].Items.Add(strValue, false);
                     }
                 }
+                i++;
+            }
+            
+            SetControlsPositionsAndSizes();
+        }
+
+        /// <summary>
+        /// Sets the positions and sizes of all the labels and checklistboxes
+        /// </summary>
+        private void SetControlsPositionsAndSizes()
+        {
+            int maxListsInRow = 5;  //maximal count of listviews in a row
+            int labelHeight = 15;
+            int labelMarginTop = 10;
+            int listBoxWidth = 120;
+            int listBoxHeight = 200;
+            int listBoxMarginTop = 30;
+            int rowHeight = 250;
+            int bottomHeight = 50;
+
+            int controlsInRow = (this.checkedListBoxArray.Length < maxListsInRow) ? this.checkedListBoxArray.Length : maxListsInRow;
+            int controlWidth = this.ClientSize.Width / controlsInRow;
+
+            //number of rows
+            int checkedListBoxInColumn = ((this.checkedListBoxArray.Length - 1) / maxListsInRow) + 1;
+            //Height of one row (label + checkedListBox + margin)
+            rowHeight = (this.ClientSize.Height - bottomHeight) / checkedListBoxInColumn;
+            listBoxHeight = rowHeight - listBoxMarginTop;
+            
+            int i = 0;
+            int j = 0;
+            foreach (Control label in this.labelArray)
+            {
+                label.Location = new System.Drawing.Point(i * controlWidth, (j * rowHeight) + labelMarginTop);
+                label.Width = controlWidth;
+                label.Height = labelHeight;
+                i++;
+                if (i == maxListsInRow)
+                {
+                    i = 0;
+                    j++;
+                }
+            }
+
+            i = 0;
+            j = 0;
+            foreach (CheckedListBox listBox in this.checkedListBoxArray)
+            {
+                listBox.Location = new System.Drawing.Point(i * controlWidth, (j * rowHeight) + listBoxMarginTop);
+                listBox.Width = controlWidth;
+                listBox.Height = listBoxHeight;
                 i++;
                 if (i == maxListsInRow)
                 {
@@ -369,5 +406,27 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
         }
 
         #endregion
+
+
+        private void SetPrimaryKeysControl_ResizeEnd(object sender, EventArgs e)
+        {
+            SetControlsPositionsAndSizes();
+        }
+
+        private void SetPrimaryKeysControl_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized) 
+                SetControlsPositionsAndSizes();
+        }
+
+        /// <summary>
+        /// Opens the help document
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void Button3Help_Click(object sender, EventArgs e)
+        {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\SetPrimaryKeys.pdf");
+        }
     }
 }

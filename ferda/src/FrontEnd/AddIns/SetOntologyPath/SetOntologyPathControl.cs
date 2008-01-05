@@ -45,7 +45,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
         #region Public properties
 
         /// <summary>
-        /// Resulting DSN
+        /// Resulting Ontology Path
         /// </summary>
         public string ReturnOntologyPath
         {
@@ -57,9 +57,15 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
 
         #endregion
 
+        /// <summary>
+        /// Initializing SetOntologyPathControl
+        /// </summary>
+        /// <param name="localePrefs">Locale prefs</param>
+        /// <param name="currentOntologyPath">Current Ontology Path</param>
+        /// <param name="ownerOfAddIn">Owner of AddIn</param>
         public SetOntologyPathControl(string[] localePrefs, string currentOntologyPath, IOwnerOfAddIn ownerOfAddIn)
         {
-            //setting the ResManager resource manager and localization string
+            /// setting the ResManager resource manager and localization string
             string locale;
             try
             {
@@ -75,9 +81,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
                 localizationString = "en-US";
             }
 
+            /// initializing private variables
             this.ownerOfAddIn = ownerOfAddIn;
             this.path = Assembly.GetExecutingAssembly().Location;
             
+            /// initializing the form and localization
             InitializeComponent();
             ChangeLocale(resManager);
             if (currentOntologyPath.StartsWith("file:/"))
@@ -134,6 +142,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
 
         #endregion
 
+        /// <summary>
+        /// Button to select the file with the ontology
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void browseButton_Click(object sender, EventArgs e)
         {
             URLPathTextBox.Text = "";
@@ -147,6 +160,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             }
         }
 
+        /// <summary>
+        /// Button to set new path to ontology. Sets the chosen path to ontology for retrieval.
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void okButton_Click(object sender, EventArgs e)
         {
             if (radioButton1.Checked)
@@ -173,18 +191,33 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             }
         }
 
+        /// <summary>
+        /// Canceling the setting of the new path to the ontology
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Dispose();
         }
 
+        /// <summary>
+        /// User types the path to ontology, it seems that the url path will be chosen
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void URLPathTextBox_TextChanged(object sender, EventArgs e)
         {
             radioButton1.Checked = false;
             radioButton2.Checked = true;
         }
 
+        /// <summary>
+        /// User sets the curson into URLPathTextBox, it seems that the url path will be chosen
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void URLPathTextBox_Click(object sender, EventArgs e)
         {
             radioButton1.Checked = false;
@@ -192,6 +225,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             radioButton2.Checked = true;
         }
 
+        /// <summary>
+        /// User selected the first button, he wants to set the path to ontology from the network
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void radioButton1_Click(object sender, EventArgs e)
         {
             URLPathTextBox.Text = "";
@@ -200,6 +238,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             radioButton2.Checked = false;
         }
 
+        /// <summary>
+        /// User selected the second button, he wants to set the path to internet based ontology
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void radioButton2_Click(object sender, EventArgs e)
         {
             radioButton1.Checked = false;
@@ -207,6 +250,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath
             radioButton2.Checked = true;
         }
 
+        /// <summary>
+        /// Opens the help document
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
         private void helpButton_Click(object sender, EventArgs e)
         {
             ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\SetOntologyPath.pdf");
