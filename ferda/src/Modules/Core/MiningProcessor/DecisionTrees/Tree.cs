@@ -169,6 +169,31 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         }
 
         /// <summary>
+        /// Determines, if the tree has leaf of given depth.
+        /// </summary>
+        /// <param name="givenDepth">Given depth</param>
+        /// <returns>True iff the tree has leaf of given depth</returns>
+        public bool HasLeafOfGivenDepth(int givenDepth)
+        {
+            if (rootNode == null)
+            {
+                return false;
+            }
+
+            Dictionary<Node, int> LandD = rootNode.GetLeavesAndDepth();
+
+            foreach (Node n in LandD.Keys)
+            {
+                if (LandD[n] == givenDepth)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Creates a new object that is a copy of the current instance. 
         /// </summary>
         /// <returns>A new object that is a copy of this instance. </returns>

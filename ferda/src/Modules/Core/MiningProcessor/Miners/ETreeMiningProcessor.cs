@@ -436,25 +436,33 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <returns>If the tree souhld be put to output</returns>
         private bool QualityTree(Tree processTree)
         {
-            bool rightLentgh;
+            bool rightLength;
 
             //checking the length of the tree
             if (onlyFullTree)
             {
-                if (processTree.Depth == maximalTreeDepth)
+                if (maximalTreeDepth < branchingAttributes.Length)
                 {
-                    rightLentgh = true;
+                    if (processTree.Depth == maximalTreeDepth)
+                    {
+                        rightLength = true;
+                    }
+                    else
+                    {
+                        rightLength = false;
+                    }
                 }
                 else
                 {
-                    rightLentgh = false;
+                    rightLength =
+                        processTree.HasLeafOfGivenDepth(branchingAttributes.Length);
                 }
             }
             else
             {
-                rightLentgh = true;
+                rightLength = true;
             }
-            if (!rightLentgh)
+            if (!rightLength)
             {
                 return false;
             }
@@ -587,6 +595,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 bool noRightCats = true;
                 Tree result = (Tree)processTree.Clone();
+                //we must initialize the node classification in the newly created
+                //tree in order to get the minimal purity check
+                result.InitNodeClassification(
+                    targetClassificationAttribute.BitStrings,
+                    targetClassificationAttribute.CategoriesIds);
                 result.Depth = processTree.Depth + 1;
                 List<Node> newNodesForBranching = NewNodesForBranching(result, nodesForBranching);
 
