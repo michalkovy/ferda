@@ -743,7 +743,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 rightCats = new List<string>();
                 foreach (string category in node.SubCategories)
                 {
-                    if (node.CategoryFrequency(category) >= minimalNodeFrequency)
+                    if (node.CategoryFrequency(category) > minimalNodeFrequency)
                     {
                         rightCats.Add(category);
                     }
