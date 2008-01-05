@@ -735,14 +735,23 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             //we are creating one subset of categories, that contains all the
             //categories which have higher frequency than minimal node frequency.
-            List<string> rightCats = new List<string>();
+            List<string> rightCats;
 
-            foreach (string category in node.SubCategories)
+            if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequency
+                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalNodePurity)
             {
-                if (node.CategoryFrequency(category) >= minimalNodeFrequency)
+                rightCats = new List<string>();
+                foreach (string category in node.SubCategories)
                 {
-                    rightCats.Add(category);
+                    if (node.CategoryFrequency(category) >= minimalNodeFrequency)
+                    {
+                        rightCats.Add(category);
+                    }
                 }
+            }
+            else
+            {
+                rightCats = new List<string>(node.SubCategories);
             }
             rightCats = DeleteOneClassificationCategoryOnly(node, rightCats);
 
