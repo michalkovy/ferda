@@ -498,10 +498,10 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         public void InitNodeClassification(IBitString[] classificationBitStrings,
             string[] classificationCategories)
         {
-            if (classifiedCategories != null)
-            {
-                throw new Exception("More times tree classification");
-            }
+            //if (classifiedCategories != null)
+            //{
+            //    throw new Exception("More times tree classification");
+            //}
             classifiedCategories = new Dictionary<string, NodeClassification>();
 
             foreach (string category in subCategories)
