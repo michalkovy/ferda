@@ -81,6 +81,12 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
 
         #region Other ice
 
+        /// <summary>
+        /// Gets label of the module according to the localization
+        /// </summary>
+        /// <param name="localePrefs">Localization specification</param>
+        /// <param name="current__">Some ICE stuff</param>
+        /// <returns>Localized label</returns>
         public override string getLabel(string[] localePrefs, global::Ice.Current current__)
         {
             string locale;
@@ -95,16 +101,34 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
             return resManager.GetString("SetOntologyPath");
         }
 
+        /// <summary>
+        /// Gets the value of the property ontology path
+        /// </summary>
+        /// <param name="value">value of the property</param>
+        /// <param name="current__">Some ICE stuff</param>
+        /// <returns>Value of the current value of the ontology path property</returns>
         public override string getPropertyAbout(PropertyValue value, global::Ice.Current current__)
         {
             return ((StringT)value).getStringValue();
         }
 
+        /// <summary>
+        /// Gets identifer of the module
+        /// </summary>
+        /// <param name="current__">Some ICE stuff</param>
+        /// <returns>Identifier of the module</returns>
         public override string getIdentifier(global::Ice.Current current__)
         {
             return "SetOntologyPath";
         }
 
+        /// <summary>
+        /// Converts the string value into PropertyValue type. Used for output the resulting value.
+        /// </summary>
+        /// <param name="about">value of the ontology path</param>
+        /// <param name="localePrefs">Localization specification</param>
+        /// <param name="current__">Some ICE stuff</param>
+        /// <returns>Converted about value in StringTI type</returns>
         public override PropertyValue convertFromStringAbout(string about, string[] localePrefs, Ice.Current current__)
         {
             return new StringTI(about);
@@ -138,25 +162,29 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
             catch
             {
             }
+
+            /// loading the proxy to Ontology module
             Ferda.Modules.Boxes.OntologyRelated.Ontology.OntologyFunctionsPrx prx =
                 Ferda.Modules.Boxes.OntologyRelated.Ontology.OntologyFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
-            
+
+            /// initializing the variables
             about = resManager.GetString("SetOntologyPathAbout");
             StringT ontologyPath = (StringT)valueBefore;
             PropertyValue returnValue = new PropertyValue();
             PropertyValue propertyValue = valueBefore;
 
+            /// initializing the listView (form)
             SetOntologyPath.SetOntologyPathControl listView =
                 new SetOntologyPath.SetOntologyPathControl(
                         localePrefs,
                         ontologyPath.getStringValue(),
                         ownerOfAddIn
                     );
-            
             listView.ShowInTaskbar = false;
             listView.Disposed += new EventHandler(listView_Disposed);
             System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(listView);
             
+            /// OK button was pressed (new path to ontology was set)
             if (result == System.Windows.Forms.DialogResult.OK)
             {
                 try
@@ -174,6 +202,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyPath.MyIce
                 about = this.getPropertyAbout(resultValue);
                 propertyValue = resultValue;                    
             }
+            /// the selection of new path to ontology was canceled)
             else
             {
                 about = this.getPropertyAbout(valueBefore);

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+        <firstname>Martin</firstname>
+
+        <surname>Zeman</surname>
+
+        <email>martinzeman@email.cz</email>
+      </author>
+    </authorgroup>
+
+    <pubdate>2008-01-05</pubdate>
+
+    <title>SetPrimaryKeys module - Module for setting the primary keys of the tables from the database</title>
+
+    <titleabbrev>SetPrimaryKeys</titleabbrev>
+
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2008-01-05</date>
+        <revremark>Initial version of the document</revremark>
+      </revision>
+    </revhistory>
+    -->
+  </articleinfo>
+
+  <abstract>
+    <para>This document describes the user interface for SetPrimaryKeys
+    module.</para>
+  </abstract>
+
+  <section>
+    <title>Introduction</title>
+
+    <para>Welcome to SetPrimaryKeys module. This is a module designed
+    for setting up the primary keys of the datatables from the database. 
+    This module was primarily build for the box Ontology Mapping, otherwise, the primary keys are set in box Column.</para>
+  </section>
+
+  <section>
+    <title>User interface</title>
+  
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="SetPrimaryKeys.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+        
+      <para>There are displayed all the datatables from the database in the user view.
+      For each datatable there is the name of the table and names of all the table columns.
+      In the module, you can set primary key for each datatable.
+      Primary key can consist of one or more columns, but it has to be unique in all the records of the table.     
+      </para>
+       
+  </section>
+</article>

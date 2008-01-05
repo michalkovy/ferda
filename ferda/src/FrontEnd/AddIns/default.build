@@ -570,6 +570,12 @@
       </references>
     </csc>
     
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="SetPrimaryKeys/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
+    
 	</target>
 	<target name="clean">
 		<delete failonerror="false">
