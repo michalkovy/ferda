@@ -2643,9 +2643,9 @@
 				<Hint>Input attributes for branching</Hint>
 			</Socket>
 			<Socket>
-				<Name>MinimalNodePurity</Name>
-				<Label>Minimal node purity</Label>
-				<Hint>If the node has purity lower than minimal, it branches, otherwise it stops branching.</Hint>
+				<Name>MinimalLeafPurity</Name>
+				<Label>Minimal leaf purity</Label>
+				<Hint>If the leaf has purity lower than minimal, it branches, otherwise it stops branching.</Hint>
 			</Socket>
 			<Socket>
 				<Name>OnlyFullTree</Name>
@@ -2712,12 +2712,12 @@
 						<Label>Minimalnode frequency</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>MinimalNodePurity</Name>
-						<Label>Minimal node purity</Label>
+						<Name>MinimalLeafPurity</Name>
+						<Label>Minimal leaf purity</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>MinimalNodeFrequencyORMinimalNodePurity</Name>
-						<Label>Minimal frequency OR minimal purity of a node</Label>
+						<Name>MinimalNodeFrequencyORMinimalLeafPurity</Name>
+						<Label>Minimal frequency OR minimal purity of a leaf</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>

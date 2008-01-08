@@ -83,12 +83,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         #region Private fields
 
         /// <summary>
-        /// Minimal node purity (algorithm parameter). Node purity = number of
-        /// right classifications/number of all items in the node. Minimal node purity
-        /// means that if the node purity is lower than minimal, the node branches,
+        /// Minimal leaf purity (algorithm parameter). Node purity = number of
+        /// right classifications/number of all items in the node. Minimal leaf purity
+        /// means that if the leaf purity is lower than minimal, the node branches,
         /// otherwise it stops branching.
         /// </summary>
-        private float minimalNodePurity;
+        private float minimalLeafPurity;
 
         /// <summary>
         /// Minimal node frequency (algorithm parameter). Minimal node frequency is
@@ -210,10 +210,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Quatifiers to evaluate the tree quality 
         /// (algorithm parameter)
         /// </param>
-        /// <param name="minimalNodePurity">
-        /// Minimal node purity (algorithm parameter). Node purity = number of
-        /// right classifications/number of all items in the node. Minimal node purity
-        /// means that if the node purity is lower than minimal, the node branches,
+        /// <param name="minimalLeafPurity">
+        /// Minimal leaf purity (algorithm parameter). Node purity = number of
+        /// right classifications/number of all items in the node. Minimal leaf purity
+        /// means that if the leaf purity is lower than minimal, the node branches,
         /// otherwise it stops branching.
         /// </param>
         /// <param name="minimalNodeFrequency">
@@ -256,7 +256,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             CategorialAttribute[] branchingAttributes,
             CategorialAttribute targetClassificationAttribute,
             QuantifierBaseFunctionsPrx[] quantifiers,
-            float minimalNodePurity,
+            float minimalLeafPurity,
             int minimalNodeFrequency,
             BranchingStoppingCriterionEnum branchingStoppingCriterion,
             int maximalTreeDepth,
@@ -277,7 +277,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             this.quantifiers = quantifiers;
             this.onlyFullTree = onlyFullTree;
             this.individualNodesBranching = individualNodesBranching;
-            this.minimalNodePurity = minimalNodePurity;
+            this.minimalLeafPurity = minimalLeafPurity;
             this.branchingStoppingCriterion = branchingStoppingCriterion;
 
             //checking corectness of the input parameters
@@ -526,7 +526,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             //Selecting the nodes that fulfill the minimal node frequency criterion
             //(if is demanded).
             if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequency
-                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalNodePurity)
+                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalLeafPurity)
             {
                 //the trees, where some node is of maximal lenght (but others may not be)
                 //are treated differently
@@ -738,7 +738,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             List<string> rightCats;
 
             if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequency
-                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalNodePurity)
+                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalLeafPurity)
             {
                 rightCats = new List<string>();
                 foreach (string category in node.SubCategories)
@@ -756,8 +756,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
             rightCats = DeleteOneClassificationCategoryOnly(node, rightCats);
 
             //the minimal node purity criterion (if needed)
-            if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodePurity
-                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalNodePurity)
+            if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalLeafPurity
+                || branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalNodeFrequencyORMinimalLeafPurity)
             {
                 rightCats = DeleteImpureCategories(node, rightCats);
             }
@@ -784,7 +784,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             foreach (string category in rightCats)
             {
-                if (node.CategoryPurity(category) <= minimalNodePurity)
+                if (node.CategoryPurity(category) <= minimalLeafPurity)
                 {
                     result.Remove(category);
                 }

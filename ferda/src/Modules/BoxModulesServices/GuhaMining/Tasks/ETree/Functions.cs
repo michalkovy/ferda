@@ -58,16 +58,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         #region Properties
 
         /// <summary>
-        /// Minimal node purity (algorithm parameter). Node purity = number of
-        /// right classifications/number of all items in the node. Minimal node purity
-        /// means that if the node purity is lower than minimal, the node branches,
+        /// Minimal leaf purity (algorithm parameter). Node purity = number of
+        /// right classifications/number of all items in the node. Minimal leaf purity
+        /// means that if the leaf purity is lower than minimal, the node branches,
         /// otherwise it stops branching.
         /// </summary>
-        public float MinimalNodePurity
+        public float MinimalLeafPurity
         {
             get
             {
-                return _boxModule.GetPropertyFloat(SockMinimalNodePurity);
+                return _boxModule.GetPropertyFloat(SockMinimalLeafPurity);
             }
         }
 
@@ -183,9 +183,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         public const string SockBranchingAttributes = "BranchingAttributes";
 
         /// <summary>
-        /// Name of the socket defininng minimal node purity
+        /// Name of the socket defininng minimal leaf purity
         /// </summary>
-        public const string SockMinimalNodePurity = "MinimalNodePurity";
+        public const string SockMinimalLeafPurity = "MinimalLeafPurity";
 
         /// <summary>
         /// Name of the socket defining minimal node frequency
@@ -416,7 +416,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
             par.branchingAttributes = branchingAttributes;
             par.targetClassificationAttribute = classificationAttribute;
             par.quantifiers = quantifiers.ToArray();
-            par.minimalNodePurity = MinimalNodePurity;
+            par.minimalLeafPurity = MinimalLeafPurity;
             par.minimalNodeFrequency = MinimalNodeFrequency;
             par.branchingStoppingCriterion = BranchingStoppingCriterion;
             par.maximalTreeDepth = MaximalTreeDepth;
