@@ -784,7 +784,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             foreach (string category in rightCats)
             {
-                if (node.CategoryPurity(category) <= minimalLeafPurity)
+                if (node.CategoryPurity(category) > minimalLeafPurity)
                 {
                     result.Remove(category);
                 }
