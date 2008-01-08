@@ -229,7 +229,7 @@
       <Member type="Field">public CategorialAttributeSeq branchingAttributes</Member>
       <Member type="Field">public CategorialAttribute targetClassificationAttribute</Member>
       <Member type="Field">public Ferda.Guha.Math.Quantifiers.QuantifierBase quantifiers</Member>
-      <Member type="Field">public int minimalNodeImpurity</Member>
+      <Member type="Field">public float minimalLeafPurity</Member>
       <Member type="Field">public int minimalNodeFrequency</Member>
       <Member type="Field">public BranchingStoppingCriterionEnum branchingStoppingCriterion</Member>
       <Member type="Field">public int maximalTreeDepth</Member>
@@ -241,9 +241,9 @@
     <Entity type="Enum">
       <Name>BranchingStoppingCriterionEnum</Name>
       <Access>Public</Access>
-      <Value>MinimalNodePurity</Value>
+      <Value>MinimalLeafPurity</Value>
       <Value>MinimalNodeFrequency</Value>
-      <Value>MinimalNodePurityORMinimalNodeFrequency</Value>
+      <Value>MinimalLeafPurityORMinimalNodeFrequency</Value>
     </Entity>
   </Entities>
   <Relations>
@@ -482,7 +482,7 @@
       <Size width="217" height="125" />
     </Shape>
     <Shape>
-      <Location left="301" top="1044" />
+      <Location left="294" top="1016" />
       <Size width="364" height="216" />
     </Shape>
     <Shape>
@@ -494,7 +494,7 @@
       <Size width="352" height="272" />
     </Shape>
     <Shape>
-      <Location left="18" top="1325" />
+      <Location left="18" top="1328" />
       <Size width="264" height="126" />
     </Shape>
     <Connection>

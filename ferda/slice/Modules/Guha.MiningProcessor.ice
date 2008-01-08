@@ -294,9 +294,9 @@ module Ferda {
 				
 				enum BranchingStoppingCriterionEnum
 				{
-			            MinimalNodePurity,
+			            MinimalLeafPurity,
 			            MinimalNodeFrequency,
-			            MinimalNodeFrequencyORMinimalNodePurity
+			            MinimalNodeFrequencyORMinimalLeafPurity
 				};
 				
 				struct ETreeTaskRunParams
@@ -304,7 +304,7 @@ module Ferda {
 				      CategorialAttributeSeq branchingAttributes;
 				      CategorialAttribute targetClassificationAttribute;
 				      Ferda::Guha::Math::Quantifiers::QuantifierBaseFunctionsPrxSeq quantifiers;
-				      float minimalNodePurity;
+				      float minimalLeafPurity;
 				      int minimalNodeFrequency;
 				      BranchingStoppingCriterionEnum branchingStoppingCriterion;
 				      int maximalTreeDepth;

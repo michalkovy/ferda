@@ -2611,9 +2611,9 @@
 				<Hint>Vstupní atributy, z nichž budou vznikat rozhodovací stromy</Hint>
 			</Socket>
 			<Socket>
-				<Name>MinimalNodePurity</Name>
+				<Name>MinimalLeafPurity</Name>
 				<Label>Minimální čistota listu</Label>
-				<Hint>Pokud bude mít uzel čistotu menší než minimálni, tak se větví jinak se nevětví</Hint>
+				<Hint>Pokud bude mít list čistotu menší než minimálni, tak se větví jinak se nevětví</Hint>
 			</Socket>
 			<Socket>
 				<Name>MinimalNodeFrequency</Name>
@@ -2675,12 +2675,12 @@
 						<Label>Minimální frekvence uzlu</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>MinimalNodePurity</Name>
-						<Label>Minimální čistota uzlu</Label>
+						<Name>MinimalNodeFrequencyORMinimalLeafPurity</Name>
+						<Label>Minimální frekvence NEBO minimální čistota listu</Label>
 					</SelectOption>
 					<SelectOption>
-						<Name>MinimalNodeFrequencyORMinimalNodePurity</Name>
-						<Label>Minimální frekvence NEBO minimální čistota uzlu</Label>
+						<Name>MinimalLeafPurity</Name>
+						<Label>Minimální čistota listu</Label>
 					</SelectOption>
 				</SelectOptions>
 			</Socket>

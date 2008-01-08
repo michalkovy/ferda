@@ -4859,7 +4859,7 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
-				<Name>MinimalNodePurity</Name>
+				<Name>MinimalLeafPurity</Name>
 				<SocketTypes>
 					<BoxType>
 						<FunctionIceId>::Ferda::Modules::FloatTInterface</FunctionIceId>
@@ -4996,7 +4996,7 @@
 		</Sockets>
 		<Properties>
 			<Property>
-				<Name>MinimalNodePurity</Name>
+				<Name>MinimalLeafPurity</Name>
 				<TypeClassIceId>::Ferda::Modules::FloatT</TypeClassIceId>
 				<CategoryName>Settings</CategoryName>
 				<Visible>true</Visible>
@@ -5152,15 +5152,15 @@
 						<Name>MinimalNodeFrequency</Name>
 					</SelectOption>
 					<SelectOption>
-						<Name>MinimalNodePurity</Name>
+						<Name>MinimalLeafPurity</Name>
 					</SelectOption>
 					<SelectOption>
-						<Name>MinimalNodeFrequencyORMinimalNodePurity</Name>
+						<Name>MinimalNodeFrequencyORMinimalLeafPurity</Name>
 					</SelectOption>
 				</SelectOptions>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>MinimalNodeFrequencyORMinimalNodePurity</Default>
+				<Default>MinimalNodeFrequencyORMinimalLeafPurity</Default>
 			</Property>
 		</Properties>
 	</Box>

@@ -49,12 +49,12 @@ namespace Ferda.Guha.MiningProcessor.Design
         public Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrx[] quantifiers;
 
         /// <summary>
-        /// Minimal node purity (algorithm parameter). Node purity = number of
-        /// right classifications/number of all items in the node. Minimal node purity
-        /// means that if the node purity is lower than minimal, the node branches,
+        /// Minimal leaf purity (algorithm parameter). Node purity = number of
+        /// right classifications/number of all items in the node. Minimal leaf purity
+        /// means that if the leaf purity is lower than minimal, the node branches,
         /// otherwise it stops branching.
         /// </summary>
-        public int minimalNodePurity;
+        public int minimalLeafPurity;
 
         /// <summary>
         /// Minimal node frequency (algorithm parameter). Minimal node frequency is

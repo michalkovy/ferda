@@ -31,9 +31,9 @@ namespace Ferda.Guha.MiningProcessor.Design
     public enum BranchingStoppingCriterionEnum
     {
         /// <summary>
-        /// Only minimal node purity is taken into account
+        /// Only minimal leaf purity is taken into account
         /// </summary>
-        MinimalNodePurity,
+        MinimalLeafPurity,
 
         /// <summary>
         /// Only minimal node frequency is taken into accoung
@@ -42,8 +42,8 @@ namespace Ferda.Guha.MiningProcessor.Design
 
         /// <summary>
         /// The node should fulfill at least one of the criterions:
-        /// minimal node frequency or minimal node purity
+        /// minimal node frequency or minimal leaf purity
         /// </summary>
-        MinimalNodePurityORMinimalNodeFrequency
+        MinimalLeafPurityORMinimalNodeFrequency
     }
 }

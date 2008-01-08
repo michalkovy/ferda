@@ -390,7 +390,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 taskParams.branchingAttributes,
                 taskParams.targetClassificationAttribute,
                 taskParams.quantifiers,
-                taskParams.minimalNodePurity,
+                taskParams.minimalLeafPurity,
                 taskParams.minimalNodeFrequency,
                 taskParams.branchingStoppingCriterion,
                 taskParams.maximalTreeDepth,
