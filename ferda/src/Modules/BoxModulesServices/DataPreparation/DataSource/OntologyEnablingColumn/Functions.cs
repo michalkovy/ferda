@@ -71,7 +71,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         public const string PropDataTableName = "DataTableName";
         public const string PropSelectExpression = "SelectExpression";
         public const string PropDataType = "DataType";
-        public const string PropCardinality = "Cardinality";
         public const string PropValueMin = "ValueMin";
         public const string PropValueMax = "ValueMax";
         public const string PropValueAverage = "ValueAverage";
@@ -94,20 +93,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         public string SelectExpression
         {
             get { return _boxModule.GetPropertyString(PropSelectExpression); }
-        }
-
-        /// <summary>
-        /// Column cardinality
-        /// </summary>
-        public CardinalityEnum Cardinality
-        {
-            get
-            {
-                return (CardinalityEnum) Enum.Parse(
-                                             typeof (CardinalityEnum),
-                                             _boxModule.GetPropertyString(PropCardinality)
-                                             );
-            }
         }
 
         /// <summary>
@@ -511,14 +496,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                         ColumnExplain tmp2 = GetColumnExplain(fallOnError);
                         string selectExpression = GetSelectExpression(fallOnError);
                         if (tmp1 != null && tmp2 != null)
+                        {
                             return new ColumnInfo(tmp1.getDataTableInfo(GetDataTableName(fallOnError)),
                                                   selectExpression,
                                                   tmp2.dataType,
-                                                  Cardinality,
+                                                  CardinalityEnum.Nominal,  //this parameter doesnt have sense, for now there is a default value Nominal, but later the box OntologyEnablingColumn will be removed from Ferda
                                                   ColumnTypeEnum.SimpleColumn,
                                                   String.Empty,
                                                   String.Empty,
                                                   String.Empty);
+                        }
                         return null;
                     },
                 delegate

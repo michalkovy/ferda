@@ -313,7 +313,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         public override void Validate(BoxModuleI boxModule)
         {
             Functions Func = (Functions) boxModule.FunctionsIObj;
-
+            
             // try to invoke methods
             object dummy = Func.GetOntologyMappingFunctionsPrx(true);
             GenericColumn tmp = Func.GetGenericColumn(true);
@@ -323,6 +323,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
             //dummy = Func.GetDistinctsAndFrequencies(true);
             dummy = Func.GetColumnInfo(true);
 
+            /* it is not needed here, cardinality with the ontology is done in other way, and this box - 
+             * OntologyEnablingColumn will be removed from Ferda
             if (Common.CompareCardinalityEnums(
                     Func.Cardinality,
                     tmp.PotentiallyCardinality
@@ -335,7 +337,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                     new string[] {Functions.PropCardinality},
                     restrictionTypeEnum.OtherReason
                     );
-            }
+            }*/
         }
 
         #region Type Identifier

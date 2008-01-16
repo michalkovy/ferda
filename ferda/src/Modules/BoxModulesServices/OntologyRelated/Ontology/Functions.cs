@@ -98,6 +98,9 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
         }
 
+        /// <summary>
+        /// Time when the ontology was reloaded for the last time
+        /// </summary>
         private DateTimeTI _lastReloadRequest = null;
 
         /// <summary>
@@ -160,8 +163,10 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// Loads and parses the ontology. Connects to ICE module FerdaOWLParser (currently in java).
         /// </summary>
         /// <param name="innerOntologyPath">The path to the ontology (full path with file:/ prefix if the ontology is network based)</param>
-        public void LoadOntologyDelegate(string innerOntologyPath)
+        /// <returns>True if the ontology was correctly loaded, false if not</returns>
+        public bool LoadOntologyDelegate(string innerOntologyPath)
         {
+            
             /// a path to an ontology is not set
             if (innerOntologyPath.ToString() == "")
             {
@@ -199,9 +204,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
                     throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
                             "Ontology specified by the ontology path: " + innerOntologyPath.ToString() + " is incorrect. Either the path is wrong or the ontology is in incorrect format.");
                 }
+                return true;
             }
-            
-            return;
         }
 
         /// <summary>
@@ -212,31 +216,19 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// <returns>True if the ontology was successfully loaded</returns>
         public bool LoadOntologyWithParameter(string innerOntologyPath, bool fallOnError)
         {
-            if (fallOnError)
-            {
-                return ExceptionsHandler.TryCatchMethodThrow<bool>(
-                    delegate
-                        {
-                            LoadOntologyDelegate(innerOntologyPath);
-                            return true;
-                        },
-                    _boxModule.StringIceIdentity
-                );
-            }
-            else 
-            {
-                return ExceptionsHandler.TryCatchMethodNoThrow<bool>(
-                    delegate
+            return ExceptionsHandler.GetResult<bool>(
+                fallOnError,
+                delegate
                     {
                         LoadOntologyDelegate(innerOntologyPath);
                         return true;
                     },
-                    delegate
-                    {
-                        return false;
-                    }
-                );
-            }
+                delegate
+                {
+                    return false;
+                },
+                BoxModule.StringIceIdentity
+            );
         }
 
         #endregion
@@ -246,25 +238,36 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// <summary>
         /// Loads and parses the ontology
         /// </summary>
-        /// <param name="current__">Ice stuff</param>
-        public override void LoadOntology(Ice.Current __current)
+        /// <param name="__current">Ice stuff</param>
+        public override bool LoadOntology(Ice.Current __current)
         {
-            if ((OntologyPath == null))
-            {
-                LoadOntologyWithParameter("", __current);
-            }
-            else
-            {
-                LoadOntologyWithParameter(OntologyPath.ToString(), __current);
-            }
-            return;
+            return ExceptionsHandler.GetResult<bool>(
+                true,
+                delegate
+                {
+                    if ((OntologyPath == null))
+                    {
+                        LoadOntologyWithParameter("", __current);
+                    }
+                    else
+                    {
+                        LoadOntologyWithParameter(OntologyPath.ToString(), __current);
+                    }
+                    return true;
+                },
+                delegate
+                {
+                    return false;
+                },
+                _boxModule.StringIceIdentity
+            );
         }
 
         /// <summary>
         /// Loads and parses the ontology with specified path to ontology
         /// </summary>
         /// <param name="innerOntologyPath">The path to the ontology (full path with file:/ prefix if the ontology is network based)</param>
-        /// <param name="current__">Ice stuff</param>
+        /// <param name="__current">Ice stuff</param>
         public override void LoadOntologyWithParameter(string innerOntologyPath, Ice.Current __current)
         {
             LoadOntologyWithParameter(innerOntologyPath, true);

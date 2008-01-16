@@ -10979,6 +10979,10 @@
 				<Name>DataPreparation.Categorization</Name>
 				<Label>Příprava dat.Kategorizace</Label>
 			</Category>
+			<Category>
+				<Name>OntologyRelated</Name>
+				<Label>Krabičky vztahující se k ontologiím</Label>
+			</Category>
 		</Categories>
 		<Actions>
 			<Action>
@@ -11119,6 +11123,10 @@
 			<Category>
 				<Name>DataPreparation.DataSource</Name>
 				<Label>Příprava dat.Datový zdroj</Label>
+			</Category>
+			<Category>
+				<Name>OntologyRelated</Name>
+				<Label>Krabičky vztahující se k ontologiím</Label>
 			</Category>
 		</Categories>
 		<Sockets>

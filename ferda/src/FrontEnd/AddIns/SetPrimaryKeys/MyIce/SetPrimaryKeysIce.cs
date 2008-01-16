@@ -139,7 +139,7 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys.MyIce
 
             // getting the structure with the data strings
             SelectString[] allStrings = boxModuleParam.getPropertyOptions(propertyName);
-            
+
             SetPrimaryKeys.SetPrimaryKeysControl listView =
                 new SetPrimaryKeys.SetPrimaryKeysControl(localePrefs,
                 ownerOfAddIn,
@@ -159,9 +159,6 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys.MyIce
                 about = this.getPropertyAbout(resultValue);
                 propertyValue = resultValue;
                 return resultValue;
-                //TODO upravit
-                //about = this.getPropertyAbout(valueBefore);
-                //return valueBefore;
             }
             else
             {
