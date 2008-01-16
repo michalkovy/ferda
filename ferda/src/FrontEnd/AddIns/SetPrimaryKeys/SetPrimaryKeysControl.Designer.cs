@@ -56,6 +56,7 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
             this.Button2Submit.TabIndex = 1;
             this.Button2Submit.Text = "Submit";
             this.Button2Submit.UseVisualStyleBackColor = true;
+            this.Button2Submit.Click += new System.EventHandler(this.Button2Submit_Click);
             // 
             // Button1Cancel
             // 

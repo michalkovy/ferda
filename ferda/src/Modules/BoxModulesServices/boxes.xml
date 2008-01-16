@@ -20000,6 +20000,7 @@
 		<DesignPath>boxDesign.svg</DesignPath>
 		<Categories>
 			<string>DataPreparation.Categorization</string>
+			<string>OntologyRelated</string>
 		</Categories>
 		<Actions>
 			<Action>
@@ -20240,6 +20241,7 @@
 		<DesignPath>boxDesign.svg</DesignPath>
 		<Categories>
 			<string>DataPreparation.DataSource</string>
+			<string>OntologyRelated</string>
 		</Categories>
 		<Sockets>
 			<Socket>

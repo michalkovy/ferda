@@ -133,10 +133,6 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
         /// <returns>Modified property value</returns>
         public override PropertyValue run(PropertyValue valueBefore, string propertyName, BoxModulePrx boxModuleParam, string[] localePrefs, ManagersEnginePrx manager, out string about, global::Ice.Current current__)
         {
-            /*TODO del
-            if (valueBefore == null)
-                valueBefore = new PropertyValue();*/
-
             string locale;
             try
             {

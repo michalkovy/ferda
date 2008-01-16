@@ -44,7 +44,7 @@ module Ferda {
 				{
 					interface OntologyFunctions						
 					{
-            void LoadOntology() throws Ferda::Modules::BoxRuntimeError;
+            bool LoadOntology() throws Ferda::Modules::BoxRuntimeError;
             
             void LoadOntologyWithParameter(string innerOntologyPath) throws Ferda::Modules::BoxRuntimeError;
             

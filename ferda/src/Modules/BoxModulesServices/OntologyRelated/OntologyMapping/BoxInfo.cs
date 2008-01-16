@@ -138,6 +138,23 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             return result;
         }
 
+        /*TODO DEL az bude vyreseno, aby OM krabièka hlásila standardnì nedostupnost ontologie na místì, kde má být
+        private OntologyStructure getOnt(Ontology.OntologyFunctionsPrx OntologyPrx, BoxModuleI boxModule)
+        {
+            return ExceptionsHandler.GetResult<OntologyStructure>(
+                true,
+                delegate
+                {
+                    return OntologyPrx.getOntology();
+                },
+                delegate
+                {
+                    return null;
+                },
+                boxModule.StringIceIdentity
+            );
+        }*/
+
         /// <summary>
         /// Gets the box modules asking for creation.
         /// </summary>
@@ -150,18 +167,35 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
                                                                                BoxModuleI boxModule)
         {
+            return ExceptionsHandler.GetResult<ModulesAskingForCreation[]>(
+                true, 
+                delegate {
             ontologySuperClassesModulesAFC.Clear();
             Functions Func = (Functions)boxModule.FunctionsIObj;
             
             Ontology.OntologyFunctionsPrx OntologyPrx = Func.GetOntologyFunctionsPrx(false);
-            //System.Windows.Forms.MessageBox.Show("ok4");
 
+            /*TODO DEL az bude vyreseno, aby OM krabièka hlásila standardnì nedostupnost ontologie na místì, kde má být
+            if (OntologyPrx != null)
+                ontology = getOnt(OntologyPrx, boxModule);
+            */
             if (OntologyPrx != null)
             {
-                //System.Windows.Forms.MessageBox.Show("ok4,5 " + OntologyPrx.ToString());
                 ontology = OntologyPrx.getOntology();
+
+                    /*ExceptionsHandler.GetResult<OntologyStructure>(
+                    true,
+                    delegate
+                    {
+                        return OntologyPrx.getOntology();
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    boxModule.StringIceIdentity
+                    );*/
             }
-            //System.Windows.Forms.MessageBox.Show("ok5");
 
             Dictionary<string, ModulesAskingForCreation> modulesAFC = getModulesAskingForCreationNonDynamic(localePrefs);
             List<ModulesAskingForCreation> result = new List<ModulesAskingForCreation>();
@@ -169,14 +203,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             ModulesConnection moduleConnection;
             ModuleAskingForCreation singleModuleAFC;
 
-            //TODO delete
-            /// ontologySuperClassesModulesAFC is a variable for assigning modules AFC to superclasses of ontology entites
-            //Dictionary<string, List<ModuleAskingForCreation>> ontologySuperClassesModulesAFC = new Dictionary<string, List<ModuleAskingForCreation>>();
-
-            //TODO delete
-            /// ontologySuperClassesModulesAFC is a variable for assigning modules AFC to ontology entities
-            //Dictionary<string, List<ModuleAskingForCreation>> ontologyEntityModulesAFC = new Dictionary<string, List<ModuleAskingForCreation>>();
-            
             // I presuppose that item with key "Column" is before item with key "AllColumns"
             foreach (string moduleAFCName in modulesAFC.Keys)
             {
@@ -318,6 +344,13 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 }
             }
             return result.ToArray();
+                },
+                delegate {
+                    return null;
+                },
+                boxModule.StringIceIdentity
+            );
+
         }
 
         /// <summary>
@@ -377,17 +410,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// </exception>
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
-            /* TODO doplnit/smazat
-             * Functions Func = (Functions)boxModule.FunctionsIObj;
-            switch (actionName)
-            {
-                case "ReloadRequest":
-                    Func.LastReloadRequest = DateTime.Now;
-                    break;
-                default:
-                    throw Exceptions.NameNotExistError(null, actionName);
-            }
-             */
         }
 
         /// <summary>
@@ -434,33 +456,29 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         {
             get { return typeIdentifier; }
         }
-
-        /*public override void Validate(BoxModuleI boxModule)
+        
+        public override void Validate(BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
 
             // try to invoke methods
             object dummy = Func.GetDatabaseFunctionsPrx(true);
-            /*dummy = Func..GetGenericDataTable(true);
-            dummy = Func.GetDataTableExplain(true);
-            dummy = Func.GetColumnExplainSeq(true);
-            dummy = Func.GetColumnsNames(true);
+            dummy = Func.GetOntologyFunctionsPrx(true);
             dummy = Func.GetDataTablesNames(true);
-            DataTableInfo dti = Func.GetDataTableInfo(true);
-            long recordsCount = dti.recordsCount;
-            if (recordsCount <= 0)
-                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
-                                               "The table has no records. Please select non empty data table for analysis.",
-                                               new string[] { Functions.PropName, Functions.PropRecordsCount },
-                                               restrictionTypeEnum.Minimum);
-            if (recordsCount >= Int32.MaxValue)
-                throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
-                                               "The table has more than " + Int32.MaxValue +
-                                               " records. Data mining of data tables of such size is not supported.",
-                                               new string[] { Functions.PropName, Functions.PropRecordsCount },
-                                               restrictionTypeEnum.Maximum);
-            Func.TryPrimaryKey(true);
-        }*/
+            
+            /* testing primary keys and other functions for all datatables in database?
+             * problem could be datatables without a unique key
+             * at great databases, the validation could be very slow
+            foreach (string datatableName in Func.GetDataTablesNames(true))
+            {
+                dummy = Func.TryPrimaryKey(datatableName, true);
+                dummy = Func.GetDataTableInfo(datatableName, true);
+                dummy = Func.GetColumnsNames(datatableName, true);
+                dummy = Func.GetDataTableExplain(datatableName, true);
+                dummy = Func.GetGenericDataTable(datatableName, true);
+            }
+            */
+        }
 
         #endregion
     }

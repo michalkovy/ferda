@@ -373,6 +373,7 @@ namespace Ferda.FrontEnd.AddIns.SetPrimaryKeys
                     checkedListBoxesCount++;
                 }
             }
+
             this.ReturnStrings = new string[checkedListBoxesCount];
             int j = 0;
             foreach (CheckedListBox tmpCheckedListBox in this.checkedListBoxArray)

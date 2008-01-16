@@ -157,7 +157,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.ColumnsRemoveButton.Name = "ColumnsRemoveButton";
             this.ColumnsRemoveButton.Size = new System.Drawing.Size(75, 23);
             this.ColumnsRemoveButton.TabIndex = 14;
-            this.ColumnsRemoveButton.Text = "Remove";
+            this.ColumnsRemoveButton.Text = "Hide";
             this.ColumnsRemoveButton.UseVisualStyleBackColor = true;
             this.ColumnsRemoveButton.Click += new System.EventHandler(this.ColumnsRemoveButton_Click);
             // 
@@ -167,7 +167,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.OntologyRemoveButton.Name = "OntologyRemoveButton";
             this.OntologyRemoveButton.Size = new System.Drawing.Size(75, 23);
             this.OntologyRemoveButton.TabIndex = 15;
-            this.OntologyRemoveButton.Text = "Remove";
+            this.OntologyRemoveButton.Text = "Hide";
             this.OntologyRemoveButton.UseVisualStyleBackColor = true;
             this.OntologyRemoveButton.Click += new System.EventHandler(this.OntologyRemoveButton_Click);
             // 

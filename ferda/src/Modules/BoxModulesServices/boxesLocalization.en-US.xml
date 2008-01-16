@@ -11011,6 +11011,10 @@
 				<Name>DataPreparation.Categorization</Name>
 				<Label>Data preparation.Categorization</Label>
 			</Category>
+			<Category>
+				<Name>OntologyRelated</Name>
+				<Label>Ontology Related Boxes</Label>
+			</Category>
 		</Categories>
 		<Actions>
 			<Action>
@@ -11146,6 +11150,10 @@
 			<Category>
 				<Name>DataPreparation.DataSource</Name>
 				<Label>Data preparation.Data source</Label>
+			</Category>
+			<Category>
+				<Name>OntologyRelated</Name>
+				<Label>Ontology Related Boxes</Label>
 			</Category>
 		</Categories>
 		<Sockets>

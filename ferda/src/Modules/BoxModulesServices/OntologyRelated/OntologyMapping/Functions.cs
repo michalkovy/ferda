@@ -65,7 +65,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public const string SockOntology = "Ontology";
         public const string SockDatabase = "Database";
         public const string PropPrimaryKeys = "PrimaryKeys";
-
+        
+        /// <summary>
+        /// Name of the connection string of the database, which is connected to this box
+        /// </summary>
+        private string cachedConnectionString = "";
+        
         /// <summary>
         /// Char which separates strings of mapped pairs (triples if datatable name is count separately)
         /// </summary>
@@ -92,6 +97,9 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             get { return _boxModule.GetPropertyStringSeq(PropPrimaryKeys); }
         }
 
+        /// <summary>
+        /// Number of Mapped Pairs (table column - ontology entity) in the mapping
+        /// </summary>
         public IntTI NumberOfMappedPairs
         {
             get
@@ -109,6 +117,10 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 
         #region Methods
 
+        /// <summary>
+        /// Gets the proxy of database box (which is connected
+        /// to this Ontology Mapping box)
+        /// </summary>
         public  DatabaseFunctionsPrx GetDatabaseFunctionsPrx(bool fallOnError)
         {
             return SocketConnections.GetPrx<DatabaseFunctionsPrx>(
@@ -132,19 +144,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 OntologyFunctionsPrxHelper.checkedCast,
                 fallOnError);
         }
-
-        /*TODO smazat - nebude potøeba, resp. bude muset být nìco obdobnýho*/
-        /*public string GetName(bool fallOnError)
-        {
-            if (String.IsNullOrEmpty(Name) && fallOnError)
-            {
-                throw Exceptions.BadValueError(null, _boxModule.StringIceIdentity,
-                                               "Property is not set.", new string[] { PropName },
-                                               restrictionTypeEnum.Missing);
-            }
-            else
-                return Name;
-        }*/
 
 
         /// <summary>
@@ -263,7 +262,13 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
 
         private CacheFlag _cacheFlag = new CacheFlag();
         private GenericDataTable _cachedValue = null;
-        
+
+        /// <summary>
+        /// Gets the contents of the data table
+        /// </summary>
+        /// <param name="dataTableName">Name of the column's table</param>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Contents of the data table</returns>
         public GenericDataTable GetGenericDataTable(string dataTableName, bool fallOnError)
         {
             DatabaseFunctionsPrx prx = GetDatabaseFunctionsPrx(fallOnError);
@@ -287,18 +292,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             DatabaseConnectionSettingHelper connSetting = new DatabaseConnectionSettingHelper(connSettingTmp);
 
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-            
-            /*TODO  - pøedtim místo "DataPreparation.DataSource.Database" bylo Database.BoxInfo.typeIdentifier
-             * asi to bude trochu podobnì jako získání identity databáze u funkce GetSourceDataTableId
-             * 
-             * místo "ConnectionString" bylo Database.Functions.PropConnectionString
-             * 
-             * snadno by se to vyøešilo tim, že se OntologyMapping pøehodí do DataPreparation, 
-             * což by tak možná i mìlo být!?
-             * jinak lze pøidat referenci datapreparation (obj/debug), ale nevim jestli
-             * je tohle v poøádku
-             */
-            
+                        
             cacheSetting.Add("DataPreparation.DataSource.Database" + "ConnectionString", connSetting);
             cacheSetting.Add(BoxInfo.typeIdentifier + "dataTableName", dataTableName);
 
@@ -322,9 +316,35 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             return _cachedValue;
         }
 
+        /// <summary>
+        /// Gets the names of data tables of the connected database
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Array of the names of data tables</returns>
         public string[] GetDataTablesNames(bool fallOnError)
         {
             DatabaseFunctionsPrx prx = GetDatabaseFunctionsPrx(fallOnError);
+
+            //testing, whether the database was not changed, otherwise, the mapping must be changed as well
+            if (prx != null)
+            {
+                DatabaseConnectionSetting connSettingTmp = prx.getDatabaseConnectionSetting();
+                if (connSettingTmp != null)
+                {
+                    //connected database is changed, it is needed, to erase the mapping
+                    if (cachedConnectionString != connSettingTmp.connectionString)
+                    {
+                        //for loaded projects
+                        if (cachedConnectionString != "")
+                        {
+                            string emptyString = "";
+                            _boxModule.setProperty(PropMapping, (StringTI)emptyString);
+                        }
+                        cachedConnectionString = connSettingTmp.connectionString;
+                    }
+                }
+            }
+
             return ExceptionsHandler.GetResult<string[]>(
                 fallOnError,
                 delegate
@@ -341,6 +361,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 );
         }
 
+        /// <summary>
+        /// Gets the names of columns of specified data table
+        /// </summary>
+        /// <param name="dataTableName">Name of the data table table</param>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Array of the names of data tables</returns>
         public string[] GetColumnsNames(string dataTableName, bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(
@@ -394,6 +420,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             return _SelectPrimaryKeysStruct;
         }
 
+        /// <summary>
+        /// Gets the info about the data table
+        /// </summary>
+        /// <param name="dataTableName">Name of the column's table</param>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Info about the data table</returns>
         public DataTableExplain GetDataTableExplain(string dataTableName, bool fallOnError)
         {
             return ExceptionsHandler.GetResult<DataTableExplain>(
@@ -467,6 +499,12 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             return new string[0];
         }
 
+        /// <summary>
+        /// Gets the info about the data table
+        /// </summary>
+        /// <param name="dataTableName">Name of thedata table</param>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Info about the data table</returns>
         public DataTableInfo GetDataTableInfo(string dataTableName, bool fallOnError)
         {
             string[] primaryKeyColumns = getPrimaryKeyColumns(dataTableName);
@@ -535,38 +573,75 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         {
             return getOntologyEntitySuperClasses(ontologyEntityName, true);
         }
-        
 
+        /// <summary>
+        /// Gets the names of data tables of the connected database
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Array of the names of the data tables</returns>
         public override string[] getDataTablesNames(Current current__)
         {
             return GetDataTablesNames(true);
         }
 
+        /// <summary>
+        /// Gets the names of columns of the specified data table
+        /// </summary>
+        /// <param name="dataTableName">Name of data table</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Array of the names of columns of the data table</returns>
         public override string[] getColumnsNames(string dataTableName, Current current__)
         {
             return GetColumnsNames(dataTableName, true);
         }
 
+        /// <summary>
+        /// Gets the mapping of the data columns on the ontology entities
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Gets the mapping</returns>
         public override string getMapping(Current current__)
         {
             return Mapping == null ? "" : Mapping;
         }
 
+        /// <summary>
+        /// Gets the inner mapping separator
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Inner mapping separator</returns>
         public override string getMappingSeparatorInner(Current current__)
         {
             return separatorInner;
         }
 
+        /// <summary>
+        /// Gets the outer mapping separator
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Outer mapping separator</returns>
         public override string getMappingSeparatorOuter(Current current__)
         {
             return separatorOuter;
         }
 
+        /// <summary>
+        /// Gets the info about specified data table
+        /// </summary>
+        /// <param name="dataTableName">Name of data table</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Info about the data table</returns>
         public override DataTableInfo getDataTableInfo(string dataTableName, Current current__)
         {
             return GetDataTableInfo(dataTableName, true);
         }
 
+        /// <summary>
+        /// Gets the identificator of the data table
+        /// </summary>
+        /// <param name="dataTableName">Name of data table</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Data table ID</returns>
         public override string GetSourceDataTableId(string dataTableName, Current current__)
         {
             DatabaseFunctionsPrx proxy = GetDatabaseFunctionsPrx(true);

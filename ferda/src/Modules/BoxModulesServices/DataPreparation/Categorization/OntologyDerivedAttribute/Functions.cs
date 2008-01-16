@@ -489,11 +489,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                         IComparable __min = null;
                         IComparable __max = null;
 
-                        /// if cardinality is Cardinal or Ordinal, then attribute
-                        /// is created by dividing the domain with Domain Dividing Values
+                        /// if cardinality is Cardinal or Ordinal and the column has at least specified number of distinct values, 
+                        /// then attribute is created by dividing the domain with Domain Dividing Values
                         /// and separating of Distinct Values from the intervals and creating
                         /// one category for every Distinct Value
-                        if (Cardinality == CardinalityEnum.Cardinal || Cardinality == CardinalityEnum.Ordinal)
+                       
+                        if ((Cardinality == CardinalityEnum.Cardinal || Cardinality == CardinalityEnum.Ordinal) && (column.Statistics.valueDistincts >= 5))
                         {
 
                             //creating categories of the attributebased on the connected column datatype
@@ -813,6 +814,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                             return result;
                         }
                         /// if cardinality is nominal or cyclic ordinal,
+                        /// or the column doesn't have less then specified number of distinct values,
                         /// then attribute is created as Each Value One Category
                         else
                         {

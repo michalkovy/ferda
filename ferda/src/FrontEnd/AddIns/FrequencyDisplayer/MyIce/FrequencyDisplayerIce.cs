@@ -167,7 +167,6 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
                     return;
                 }
             }
-
             //constructing the control
             Ferda.FrontEnd.AddIns.FrequencyDisplayer.FrequencyDisplayer control =
                 new FrequencyDisplayer(resManager, valfreq, ownerOfAddIn);
