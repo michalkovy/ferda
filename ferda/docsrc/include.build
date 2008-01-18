@@ -6,8 +6,9 @@
 	<target name="doc" description="Vytvoří dokumentaci">
 		<mkdir dir="${build.dir}"/>
 		<call target="docbookxhtml" />
+		<call target="docbookpdf" />
 		<call target="xmltodocbooktoxhtml" />
-		<call target="imagesforxhtml" />
+          <call target="imagesforxhtml" />
 	</target>
 	<target name="docbookxhtml" description="Vytvoří xhtml dokumentaci k docbook souborům">
 		<if test="${not(file::exists(sablonaDocBookXhtml))}">
@@ -21,7 +22,10 @@
 			</in>
 			<do>
 				<property name="output.fileup" value="${path::get-file-name(path::change-extension(input.file,'html'))}"/>
-				<property name="output.file" value="${path::combine(build.dir,output.fileup)}"/>
+				<property name="output.file" value="${path::combine(string::replace(path::get-directory-name(input.file),'docsrc','doc'),output.fileup)}"/>
+				<if test="${not(directory::exists(path::get-directory-name(output.file)))}">
+					<mkdir dir="${path::get-directory-name(output.file)}"/>
+				</if>			
 				<uptodate property="aktualni">
 					<sourcefiles>
 						<include name="${input.file}" />
@@ -58,10 +62,73 @@
 					<if test="${not(use.xsltproc)}">
 						<style style="${sablonaDocBookXhtml}" in="${input.file}" out="${output.file}" />
 					</if>
+					<copy todir="${path::get-directory-name(output.file)}">
+						<fileset>
+							<include name="${path::get-file-name-without-extension(input.file)}*.png" />
+							<exclude name="${build.dir}/**" />
+						</fileset>
+					</copy>
 				</if>
 			</do>
 		</foreach>
 	</target>
+	
+	<target name="docbookpdf" description="Vytvoří pdf dokumentaci k docbook souborům">
+		<if test="${not(file::exists(sablonaDocBookPDF))}">
+			<fail message="Neexistuje soubor s šablonou pro docbook: '${sablonaDocBookPDF}'"/>
+		</if>
+		<foreach item="File" property="input.file">
+			<in>
+				<items>
+					<include name="*.xdb" />
+				</items>
+			</in>
+			<do>
+				<property name="output.fileup" value="${path::get-file-name(path::change-extension(input.file,'pdf'))}"/>
+				<property name="output.file" value="${path::combine(string::replace(path::get-directory-name(input.file),'docsrc','doc'),output.fileup)}"/>
+				<if test="${not(directory::exists(path::get-directory-name(output.file)))}">
+					<mkdir dir="${path::get-directory-name(output.file)}"/>
+				</if>			
+				<uptodate property="aktualni">
+					<sourcefiles>
+						<include name="${input.file}" />
+					</sourcefiles>
+					<targetfiles>
+						<include name="${output.file}" />
+					</targetfiles>
+				</uptodate>
+				<if test="${not(aktualni)}">
+					<echo message="Generuji PDF z DocBook souboru '${path::get-file-name(input.file)}'..."/>
+					<if test="${use.xep}">
+						<exec program="xep.bat">
+							<arg value="-valid"/>
+							<arg value="-xml"/>
+							<arg>
+								<path>
+									<pathelement file="${input.file}"/>
+								</path>
+							</arg>
+							<arg value="-xsl"/>
+							<arg>
+								<path>
+									<pathelement file="${sablonaDocBookPDF}"/>
+								</path>
+							</arg>
+							<arg value="-pdf"/>
+							<arg>
+								<path>
+									<pathelement file="${output.file}"/>
+								</path>
+							</arg>
+						</exec>
+					</if>
+				</if>
+			</do>
+		</foreach>
+	</target>
+	
+	
+	
 	<target name="xmltodocbooktoxhtml" description="Vytvoří xhtml dokumentaci k xml souborům">
 		<if test="${not(file::exists(sablonaDocBookXhtml))}">
 			<fail message="Neexistuje soubor s šablonou pro docbook: '${sablonaDocBookXhtml}'"/>
