@@ -126,6 +126,8 @@
 				<property name="build.dir" value="${doc.dir}"/>
 				<property name="sablonaDocBookXhtml" value="${path::get-full-path('stylesheets/docbook/xhtml/docbook.xsl')}" unless="${property::exists('sablonaDocBookXhtml')}"/>
 				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}"/>
+				<property name="sablonaDocBookPDF" value="${path::get-full-path('stylesheets/docbook/pdf/docbook.xslt')}" unless="${property::exists('sablonaDocBookPDF')}"/>
+				<property name="use.xep" value="true" unless="${property::exists('use.xep')}"/>
 			</properties>
 		</nant>
 		<nant buildfile="${path::combine(slice.dir,default.build)}" target="doc">
@@ -133,6 +135,8 @@
 				<property name="build.dir" value="${moddoc.dir}"/>
 				<property name="sablonaDocBookXhtml" value="${path::get-full-path('stylesheets/docbook/xhtml/docbook.xsl')}" unless="${property::exists('sablonaDocBookXhtml')}"/>
 				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}"/>
+				<property name="sablonaDocBookPDF" value="${path::get-full-path('stylesheets/docbook/pdf/docbook.xslt')}" unless="${property::exists('sablonaDocBookPDF')}"/>
+				<property name="use.xep" value="true" unless="${property::exists('use.xep')}"/>				
 			</properties>
 		</nant>
 	</target>
