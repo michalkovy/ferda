@@ -19,6 +19,15 @@
     <!--
     <revhistory>
       <revision>
+        <revnumber>1.4</revnumber>
+        <date>2007-01-18</date>
+        <revdescription>
+          <para>
+            Přidáný věci o kompilace dokumentace do PDF
+          </para>
+        </revdescription>
+      </revision>    
+      <revision>
         <revnumber>1.3</revnumber>
         <date>2007-10-26</date>
         <revdescription>
@@ -95,7 +104,9 @@
       Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\").
     </para>
     <para>
-     Pro kompilaci dokumentace je nutné mít v proměnné PATH cestu k procesoru xslt šablon (jedna z možností je xsltproc.exe)
+     Pro kompilaci dokumentace je nutné mít v proměnné PATH cestu k procesoru xslt šablon (podporovaná 
+     možnost je xsltproc.exe). Dále pro generování PDF souborů je potřeba mít nainstalovaný XSL FO procesor
+     a mít ho v PAHT (podporovaná možnost je XEP).
     </para>
   </section>
 

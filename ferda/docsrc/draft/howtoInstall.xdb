@@ -11,6 +11,13 @@
 
         <email>alexander.kuzmin@gmail.com</email>
       </author>
+      <author>
+        <personname>
+          <firstname>Martin</firstname>
+          <surname>Ralbovský</surname>
+        </personname>
+        <email>martin.ralbovsky@gmail.com</email>
+      </author>
     </authorgroup>
 
     <pubdate>2006-03-22</pubdate>
@@ -21,6 +28,13 @@
 
     <!--
     <revhistory>
+      <revision>
+        <revnumber>1.1</revnumber>
+        <date>2008-01-17</date>
+        <revremark>
+          Added needed software
+        </revremark>
+      </revision>
       <revision>
         <revnumber>1.0</revnumber>
         <date>2006-03-22</date>
@@ -64,6 +78,7 @@
         <title>Operating system</title>
 
         <para>All components of Ferda run on Windows 2000 and XP.</para>
+        <para>In Linux, Ferda runs under the Mono framework.</para>
       </section>
 
       <section>
@@ -97,10 +112,19 @@
               Engine) Framework which is programmed by ZeroC. Framework
               installer for Windows is downloadable at <ulink
               url="http://www.zeroc.com/download.html#win32_msi">http://www.zeroc.com/download.html#win32_msi</ulink>.
-              Currently Ferda runs on version 3.1.1 of Ice framework. You will
+              Currently Ferda runs on version 3.2.1 of Ice framework. You will
               need to download Windows Installer for Visual Studio .NET 2005
               in order to run Ferda. Please note the directory where Ice is
               installed, you will need it in further steps.</para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Java</title>
+              <para>
+                Some modules (Ontology box) of the system are written in Java.
+                Therefore, Java VM needs to be installed.
+              </para>
             </formalpara>
           </listitem>
         </itemizedlist>
