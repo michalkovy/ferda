@@ -843,8 +843,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
         private Tree CreateTree(Tree processTree, Node node, string[] categories, 
             CategorialAttributeTrace attribute)
         {
+            int effLength = (maximalTreeDepth > branchingAttributes.Length) ? 
+                branchingAttributes.Length : maximalTreeDepth;
+
             Tree result = (Tree) processTree.Clone();
-            if (result.Depth < maximalTreeDepth)
+            if (result.Depth < effLength)
             {
                 result.Depth = processTree.Depth + 1;
             }
@@ -1094,11 +1097,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 id++;
             }
 
-            CategorialAttributeTrace[] result = new CategorialAttributeTrace[noAttributesForBranching];
+            int effCount = (possibleAttributes.Length <= noAttributesForBranching) ? 
+            possibleAttributes.Length : noAttributesForBranching;
+
+            CategorialAttributeTrace[] result = new CategorialAttributeTrace[effCount];
             IdValuePair comparer = new IdValuePair();
             values.Sort(comparer);
 
-            for (int i = 0; i < noAttributesForBranching; i++)
+            for (int i = 0; i < effCount; i++)
             {
                 //adding in reverse order
                 result[i] = dict[values[values.Count - 1 - i]];
