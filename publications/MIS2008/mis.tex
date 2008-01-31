@@ -1,0 +1,435 @@
+\documentclass[czech]{llncs}
+\usepackage{czech}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\newcommand{\N}{\mathbb{N}}
+
+\title{Implementace GUHA rozhodovacích stromù}
+\author{Martin Ralbovskı, Petr Berka}
+\institute{Katedra informaèního a znalostního inenırství\\
+Fakulta informatiky a statistiky, Vysoká škola ekonomická\\
+\email{martin.ralbovsky@gmail.com, berka@vse.cz}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Rozhodovací stromy jsou jedním z osvìdèenıch zpùsobù øešení klasifikaèních úloh. Èlánek navrhuje modifikaci klasickıch algoritmù konstrukce rozhodovacích stromù ve smyslu metody GUHA. Tímto smyslem je generování více rozhodovacích stromù jakoto GUHA verifikací. Pøedstavujeme proceduru implementující GUHA rozhodovacích stromù ETree a testujeme uiteènost procedury na pøíkladech. 
+\end{abstract}
+
+{\small {\bf Klíèová slova:} Metoda GUHA, rozhodovací stromy, ETree, Ferda}
+
+\section{Úvod}
+Náš pøístup kombinuje dvì metody dobıvání znalostí z dat. Metoda GUHA je pùvodní èeská metoda exploraèní analızy dat, její hlavním cílem je nabídnout uivateli vše zajímavé v datech \cite{GUHA1,GUHA2}. Naproti tomu algoritmy tvorby rozhodovacích stromù \cite{Quinlan} patøí k nejznámìjším algoritmùm v oblasti symbolickıch metod strojového uèení. 
+
+Základní myšlenkou v pøíspìvku je vytvoøení více rozhodovacích stromù v dùsledku modifikace klasickıch algoritmù pro indukci rozhodovacích stromù, tyto stromy poté povaovat za GUHA verifikace/hypotézy a pro uivatele vybírat jen nejlepší z nich. Navrená procedura pojmenována ETree byla implementována v systému Ferda a byly provedeny poèáteèní experimenty ukazující konstrukci stromù lepších charakteristik, ne byly stromy pùvodní.
+
+Práce je strukturována následovnì: v sekci \ref{section:GUHA} a \ref{section:stromy} seznamujeme ètenáøe se základy metody GUHA a algoritmy pro tvorbu rozhodovacích stromù. Sekce \ref{section:ETree} popisuje novì navrenou proceduru ETree a její implementaci v prostøedí Ferda. Sekce \ref{section:experimenty} shrnuje provedené experimenty a koneènì sekce \ref{section:zaver} uzavírá práci a poskytuje námìty na další vızkum.
+
+\section{Metoda GUHA}
+\label{section:GUHA}
+Metoda GUHA je jednou z prvních metod exploraèní analızy dat se vznikem v polovinì šedesátıch let v Praze. Metoda poskytuje obecnı rámec k získávání potenciálnì zajímavıch znalostí z dat, kterı má silné teoretické základy v logice (observaèní kalkuly) a statistice \cite{GUHA1,GUHA2}. Pro potøeby tohoto pøíspìvku se omezíme pouze na vysvìtlení základního principu metody GUHA, tak jak je zobrazeno na obrázku \ref{fig:GUHA}.
+
+\begin{figure}[ht]
+\centering
+\mbox{\resizebox{60mm}{!}{\includegraphics{GUHA.png}}}
+\caption{Metoda GUHA}
+\label{fig:GUHA}
+\end{figure}
+
+Metoda je realizovaná pomocí GUHA procedur. Vstupy tvoøí data a jednoduché zadání potenciálnì velké mnoiny relevantních otázek. Procedura automaticky generuje všechny relevantní otázky a verifikuje je oproti datùm. Vıstupem procedury jsou relevantní otázky, které jsou v datech pravdivé (hypotézy v terminologii metody).
+
+Metoda GUHA se v souèasnosti nejvíce pouívá pro hledání \emph{zobecnìnıch asociaèních pravidel}, k èemu slouí procedura 4FT (\emph{4ft-miner}) \cite{Alternative,Ralbovsky}. Nejnovìjšími systémy podporujícími metodu GUHA jsou systém \emph{LISp-Miner}\cite{Simunek} a Ferda\cite{Ferda}, oba vyvíjené na KIZI FIS VŠE. 
+
+\section{Rozhodovací stromy}
+\label{section:stromy}
+Podle \cite{KDNuggets} jsou rozhodovací stromy vùbec nejpouívanìjší technikou dobıvání znalostí z databází. Za svou popularitu vdìèí zejména intuitivní interpretovatelnosti a pochopitelnému zpùsobu konstrukce rozhodovacích stromù. Algoritmus konstrukce (indukce) rozhodovacích stromù vysvìtlíme podrobnìji, nebo bude jeho pochopení dùleité pro další text.
+
+Pøi tvorbì rozhodovacího stromu se postupuje metodou \emph{rozdìl a panuj}. Trénovací data se postupnì rozdìlují na menší a menší podmnoiny (uzly stromu) tak, aby v tìchto podmnoinách pøevládaly pøíklady jedné tøídy. Tento postup bıvá èasto nazıván "top down induction of decision trees" (TDIDT)\cite{Quinlan}. Obecné schéma algoritmu pro tvorbu rozhodovacích stromù je v tabulce \ref{tab:TDITD}.
+
+\begin{table}[ht]
+	\centering
+	\caption{Obecnı algoritmus pro tvorbu rozhodovacích stromù}
+	\label{tab:TDITD}	
+		\begin{tabular}{|p{11cm}|}
+			\hline
+			\textbf{TDITD Algoritmus}\\
+			\\
+			1. zvol jeden atribut jako koøen dílèího stromu,\\
+			2. rozdìl data v tomto uzlu na podmoiny podle hodnot zvoleného atributu a~pøidej uzel pro kadou podmnoinu,\\
+			3. existuje-li uzel, pro kterı nepatøí všechna data do tée tøídy, pro tento uzel opakuj postup od bodu 1, jinak skonèi.\\
+			\hline
+		\end{tabular}
+\end{table}
+
+Uvedenı algoritmus bude fungovat pouze pro kategoriální data (poèet podmnoin - uzlù v bodì 2 odpovídá poètu hodnot daného atributu), která nejsou zatíena šumem. Uvedenım zpùsobem pracuje napø. Quinlanùv algoritmus ID3 \cite{Quinlan}. Tato dvì omezení lze samozøejmì pøekonat odstranìním šumu èi kategorizací reálnıch numerickıch dat ve fázi pøedzpracování dat. 
+
+Poadavek na konzistenci stromu s (trénovacími) daty (3. bod algoritmu) bıvá v souèasnıch implementacích zmìkèen buï následnım proøezáním, nebo poadavkem na zastavení rùstu stromu, pokud v uzlu patøí do poadované tøídy dostateènı poèet prvkù, a u v absolutním èi relativním vyjádøení. V druhém pøípadì mluvíme o \emph{èistotì uzlu}\footnote{Èistota uzlu je pomìr správnì klasifikovanıch prvkù ku všem prvkùm}.
+
+Klíèová otázka celého algoritmu je jak vybrat vhodnı atribut pro vìtvení stromu (bod 1). Cíl je zøejmı: vybrat takovı atribut, kterı od sebe nejlépe odliší pøíklady rùznıch tøíd atributu, podle kterého se má klasifikovat. Vıpoèet vychází z kontingenèní tabulky zobrazené v tabulce \ref{tab:cont}. 
+
+\begin{table}[ht]
+	\centering
+	\caption{Kontingenèní tabulka pro vıbìr atributu pro vìtvení stromu}
+	\label{tab:cont}	
+		\begin{tabular}{|p{1cm}|p{1cm} p{1cm} p{2cm} p{1cm} |p{1cm}|}
+			\hline
+			& $Y_{1}$ & $Y_{2}$ & \dots\dots\dots & $Y_{S}$ & $\Sigma$ \\
+			\hline
+			$X_{1}$ & $a_{11}$ & $ a_{12} $ & \dots\dots\dots & $a_{1S}$ & $r_{1}$ \\
+			$X_{2}$ & $a_{21}$ & $ a_{22} $ & \dots\dots\dots & $a_{2S}$ & $r_{2}$ \\
+			:       & :        & :        &                   & : & : \\
+			:       & :        & :        &                   & : & : \\
+			$X_{R}$ & $a_{R1}$ & $ a_{R2} $ & \dots\dots\dots & $a_{2S}$ & $r_{R}$ \\
+			\hline
+			$\Sigma$ & $s_{1}$ & $s_{2}$ & \dots\dots\dots & $s_{S}$ & n\\
+			\hline
+		\end{tabular}
+\end{table}
+
+$Y_{i}$ jsou v tabulce tøídy klasifikaèního atributu, $X_{i}$ jednotlivé atributy a $a_{i,j}$ je èetnost kombinace $(X=X_{i}) \wedge (Y=Y_{j})$. Dále
+
+$$ r_{i} = \sum_{j=1}^S a_{ij}, s_{j} = \sum_{i=1}^S a_{ij}, n = \sum_{i=1}^R \sum_{j=1}^S a_{ij}. $$
+
+Uveïme ètyøi vzorce pro posouzení vhodnosti atributu. Kritérium entropie má podobu:
+
+$$ H(X) = \sum_{i=1}^R \frac{r_i}{n} \left( - \sum_{j=1}^S \frac{a_{ij}}{r_i} \log_2 \frac{a_{ij}}{r_{i}} \right), $$
+
+pøièem preferujeme atribut s nejniší hodnotou kritéria.
+Kritérium Gini indexu má podobu:
+
+$$ Gini(X) = \sum_{i=1}^R \frac{r_i}{n} \left( 1 - \sum_{j=1}^S \left( \frac{a_{ij}}{r_i} \right) ^2 \right), $$
+
+pøièem se preferujeme atribut s nejniší hodnotou kritéria. Kritérium $\chi^2$ má podobu: 
+
+$$ \chi^2(X) = \sum_{i=1}^R \sum_{j=1}^S \frac{ \left( a_{ij} - \frac{r_i \cdot s_j}{n} \right) ^2 }{\frac{r_i\cdot s_j}{n}}, $$
+
+pøièem preferujeme atribut s nejvyšší hodnotou kritéria. Koneènì kritérium vzájemné informace má podobu:
+
+$$ MI(X) = - \sum_{i=1}^R \sum_{j=1}^S \frac{a_{ij}}{n} \log_2 \frac{\frac{a_{ij}}{n}}{\frac{r_i}{n} \cdot \frac{s_j}{n} }, $$
+
+pøièem opìt preferujeme atribut s nejvyšší hodnotou kritéria.
+
+Pouití rozhodovacího stromu pro klasifikaci novıch pøípadù je velmi prosté. Poèínaje koøenem stromu se postupnì zjišují hodnoty atributù. Konkrétní hodnota odpovídá urèité vìtvi, která nás pøivede k dalšímu atributu, a se dostaneme do listového uzlu, kterı odpovídá tøídì, do které máme novı pøíklad zaøadit.
+
+\section{Procedura ETree}
+\label{section:ETree}
+
+\subsection{Návrh procedury}
+\label{section:Navrh}
+Algoritmy pro tvorbu rozhodovacích stromù postupují gradientním zpùsobem, jednou vybrané vìtvení se ji nemìní a vısledkem algoritmu je jeden strom. Navrhovanı algoritmus pro tvorbu \emph{exploraèních stromù} pøedstavuje jednoduché rozšíøení tohoto pøístupu, které ale více vyhovuje základní myšlence metody GUHA: hledat v datech "vše" zajímavé. Algoritmus je ve velmi zjednodušené podobì zobrazen v tabulce \ref{tab:ETree}.
+
+\begin{table}[ht]
+	\centering
+	\caption{Algoritmus ETree pro tvorbu exploraèních stromù}
+	\label{tab:ETree}	
+		\begin{tabular}{|p{11cm}|}
+			\hline
+			\textbf{Algoritmus ETree}\\
+			\\
+			1. forall atribut vhodı jako koøen dílèího stromu,\\
+			\hspace{10mm}2. rozdìl data v tomto uzlu na podmnoiny podle hodnot\\
+			\hspace{14mm}zvoleného atributu a~pøidej uzel pro kadou podmnoinu,\\
+			\hspace{10mm}3. existuje-li uzel, pro kterı není splnìno kritérium zastavení,\\ 
+			\hspace{14mm}pro tento uzel opakuj postup od bodu 1, jinak skonèi.\\
+			\hline
+		\end{tabular}
+	\end{table}
+
+Navrhovanı algoritmus se od klasickıch algoritmù pro tvorbu rozhodovacích stromù (tabulka \ref{tab:TDITD}) liší:
+
+\begin{enumerate}
+	\item v pouití více atributù pro vìtvení v urèitém místì stromù (bod 1 algoritmu)
+	\item v rùznıch variantách kritéria pro zastavení rùstu stromu (bod 3 algoritmu)
+\end{enumerate}
+
+Jako kritérium vhodnosti atributu pro vìtvení bylo vybráno $\chi^2$ (které je zároveò tradièním kvantifikátorem metody GUHA). Toto kritérium umoòuje nejen uspoøádat atributy podle vhodnosti, ale i vyhodnotit sílu závislosti mezi uvaovanım atributem a tøídou. 
+
+Co se tıèe kritéria pro zastavení rùstu stromu tıká, uvaujeme \emph{minimální èistotu listu}, co je obecnìjší poadavek ne náleení všech prvkù listu do jedné tøídy (bod 3 algoritmu TDITD) a dále také poadavek na \emph{minimální frekvenci uzlu}. Tyto kritéria mohou platit samostatnì nebo v disjunkci.
+
+\medskip
+Procedura tedy generuje znaèné mnoství stromù. Horní odhad poètu stromù vyjadøuje následující vzoreèek. Pøedpokládáme nepouití ádného kritéria pro zastavení vìtvení kromì dosaení maximální hloubky. 
+
+$$ NT = k \cdot \prod_{i=1}^{i_{max}} k^{v_i} $$
+
+kde $k$ je poèet atributù pouitıch pro vìtvení, $i$ je hloubka stromu a $v_i$ je poèet uzlù hloubky $i$. V reálnıch pøípadech hodnoty $v_i$ závisí na datech. Proto ho ve vıpoètech nahrazujeme nejvìtším poètem kategorií u vstupních atributù, co opìt odhad zvyšuje.
+
+Je zøejmé, e ne všechny vytvoøené stromy budou dobøe klasifikovat vstupní data. Kvalitu jednotlivıch stromù mùeme hodnotit na základì tzv. \emph{matice zámìn} (confusion matrix), která ukazuje poèet správnì a chybnì klasifikovanıch pøíkladù. 
+
+\begin{table}[ht]
+	\centering
+	\caption{Matice zámìn}
+	\label{tab:Confusion}	
+		\begin{tabular}{|p{25mm}|p{15mm}|p{15mm}|}
+			\hline
+			& \multicolumn{2}{c|}{Klasifikace systémem} \\
+			\hline
+			Správné zaøazení & $+$ & $-$ \\
+			\hline
+			$+$ & TP & FN\\
+			\hline
+			$-$ & FP & TN\\
+			\hline
+		\end{tabular}
+\end{table}
+
+Tabulka \ref{tab:Confusion} zobrazuje matici zámìn, kde \emph{TP} (správnì pozitivní, true positive) je poèet prvkù, které systém správnì zaøadil do tøídy $+$, \emph{FP} (falešnì pozitivní, false positive) je poèet pøíkladù, které systém chybnì zaøadil do tøídy $+$ (patøí do tøídy $-$) atd. Kvalitu stromu mùeme hodnotit funkcí $f:(TD,FN,FP,TN) \rightarrow \langle0,1\rangle$. Pouívaná je napøíklad \emph{F-míra} \cite{Rijsbergen}.
+
+$$ F = \frac{2 \cdot TP }{2 \cdot TP + FP + FN} $$
+
+Matice zámìn pøesnì odpovídá ètyøpolní kontingenèní tabulce známé z dobıvání zobecnìnıch asociaèních pravidel \cite{Rauch}. Pro hodnocení kvality stromu mùeme pouít také libovolnı vhodnı \emph{4ft-kvantifikátor} \cite{Rauch}. V této souvislosti je vhodné poznamenat, e F-míra patøí do tøídy \emph{dvojitì implikaèních kvantifikátorù}, jak definováno v \cite{Rauch}. Dùkaz tohoto tvrzení je jednoduchı a bude analogickı dùkazu pouitém v pøíkladu 3 v \cite{Rauch}. 
+
+\subsection{Parametry ETree}
+Ve smyslu metody GUHA mùeme na vıstupní stromy nahlíet jako na hypotézy GUHA\footnote{Rozhodovací stromy je moné srovnat s asociaèními pravidly, jakoto nejpouívanìjšími druhy hypotéz metody GUHA. Jednu cestu v rozhodovacím stromu od koøene k listu lze pøirovnat k asociaènímu pravidlu, kde levá strana pravidla je konjunkce atributù a jejich hodnot odpovídajícím uzlùm v cestì a pravá strana klasifikovaná kategorie. Celı rozhodovací strom si bude potom tvoøit disjunkci asociaèních pravidel odpovídajících všem cestám. Takto mùe i procedura 4FT vrátit stejnı vısledek jako ETree, ovšem s exponenciální èasovou sloitostí.}.
+
+ V sekci \ref{section:GUHA} byly definovány vstupy pro GUHA procedury, z nich nás bude zajímat definice mnoiny relevantních otázek pro proceduru ETree. Oproti jinım procedurám metody GUHA jsou to spíše parametry algoritmu. Logicky se dají rozdìlit na ètyøi skupiny: \textbf{parametry pro rùst}, \textbf{pro vìtvení}, \textbf{pro zastavení vìtvení} a \textbf{pro uloení hypotézy}.
+
+\textbf{Parametry pro rùst stromu} byly vysvìtleny v pøedcházejícím textu a jsou to:
+\begin{itemize}
+	\item cílovı atribut rozdìlující data do tøíd
+	\item vstupní atributy pro vìtvení
+	\item poèet atributù pouitıch pro vìtvení
+\end{itemize}
+
+Pøeskoème parametry pro vìtvení a vyjmenujme nejdøíve \textbf{parametry pro zastavení vìtvení}, nebo první tøi z nich byly také vysvìtleny:
+\begin{itemize}
+	\item minimální frekvence uzlu
+	\item minimální èistota listu
+	\item vıbìr kritéria pro zastavení vìtvení (minimální frekvence uzlu, minimální èistota listu, minimální frekvence uzlu \emph{nebo} minimální èistota listu)
+	\item maximální hloubka stromu
+\end{itemize}
+
+Vıznam posledního parametru je zøejmı, udává pøípustnou hloubku stromu. Po dosaení této hloubky se ji strom dále nevìtví. 
+
+\textbf{Parametr pro vìtvení} v pùvodním návrhu procedury nebyl, vznikl a v prùbìhu implementace. Obrázky \ref{fig:Branch1} a \ref{fig:Branch2} ukazují odlišné monosti vìtvení uzlù a vniku novıch stromù. 
+
+\begin{figure}[ht]
+\centering
+\mbox{\resizebox{115mm}{!}{\includegraphics{Branch1.png}}}
+\caption{Vìtvení pro podmnoiny}
+\label{fig:Branch1}
+\end{figure}
+
+Abychom zajistili co nejvìtší variabilitu pøi tvorbì stromu, uvaovali jsme o generování novıch podstromù i v rámci mnoiny kategorií v jednom uzlu. Obrázek \ref{fig:Branch1} zobrazuje uzel, kterı se má vìtvit (vyznaèen modrou barvou). Ten mùe vytvoøit buï nové stromy pro všechny moné podmnoiny kategorií atributu, podle kterého se má vìtvit (atribut 2), nebo zachovat pùvodní strom a pøidat listy pro všechny kategorie atributu. I kdy je moné, e první monost by mohla vést k lépe klasifikujícím stromùm, z dùvodu pøílišného nárùstu stromù jsme se rozhodli pro druhou monost. 
+
+\begin{figure}[ht]
+\centering
+\mbox{\resizebox{115mm}{!}{\includegraphics{Branch2.png}}}
+\caption{Vìtvení uzlù po jednom}
+\label{fig:Branch2}
+\end{figure}
+
+Obrázek \ref{fig:Branch2} øeší situaci vìtvení více uzlù. Uzly \emph{A} a \emph{B} byly vybrány algoritmem jako vhodné pro vìtvení. Mùeme zde postupovat tak, e vìtvíme oba uzly najednou (situace a), nebo kadı uzel zvláš s tím, e vrcholy urèené k vìtvení zùstávají do pøíštího kroku algoritmu. Jak ukazuje obrázek, nevıhoda tohoto postupu je vznik identickıch stromù na vıstupu. Zde jsme se rozhodli ponechat volbu na uivateli a vytvoøili jsme parametr pro vìtvení nazvanı \emph{vìtvení uzlù po jednom} (individual nodes branching).
+
+Poslední skupinou jsou \textbf{parametry pro uloení hypotézy}:
+\begin{itemize}
+	\item minimální kvalita stromu vyjádøena pomocí matice zámìn a konjunkcí 4ft-kvantifikátorù 
+	\item pouze maximální stromy
+	\item maximální poèet hypotéz
+\end{itemize}
+
+Funkci matici zámìn jsme popsali v sekci \ref{section:Navrh}. Booleovskı parametr \emph{pouze maximální stromy} urèuje, jestli se na vıstup mají dostat všechny stromy, nebo pouze stromy poadované délky (v pøípadì nedosaení této délky to budou stromy o délce rovnající se poètu vstupních atributù pro vìtvení). Poslední parametr udává poèet vygenerovanıch hypotéz, po kterıch se vıpoèet pøeruší.
+
+\subsection{Implementace}
+Procedura ETree byla implementována v prostøedí Ferda\cite{Ferda}. Ferda je vizuální a vysoce modulární systém pro dobıvání znalostí a je zároveò nejmladší implementací metody GUHA. ETree je ji devátá GUHA procedura v systému. Pouili jsme stávající vrstvu pøedzpracování dat a engine pro práci s bitovımi øetízky \emph{mining processor} \cite{Kuchar}. Vznikla krabièka ETree (krabièka je ve Ferdovi prvek vizuálního programování, vice v \cite{Ferda}), její zapojení ukazuje obrázek \ref{fig:Ferda}.
+
+\begin{figure}[ht]
+\centering
+\mbox{\resizebox{80mm}{!}{\includegraphics{Ferda.png}}}
+\caption{Zapojení ETree v prostøedí Ferda}
+\label{fig:Ferda}
+\end{figure}
+
+Na obrázku je øešena jednoduchá klasifikaèní úloha, zjišujeme jestli dát klientovi úvìr v závislosti na jeho pøíjmu, vıši jeho konta, pohlaví a zamìstnanosti. Zelenı ètverec zobrazuje stávající implementované krabièky, které slouí ke konstrukci atributù. Za nì je zapojena krabièka ETree. Modrı ètverec jsou 4ft-kvantifikátory urèené pro mìøení kvality pravidla. Vıhodou tohoto øešení je znovupouitelnost pro uivatele - ETree se dá zapojit do krabièek pro konstrukci atributù stejnım zpùsobem, jako kadá jiná GUHA procedura implementovaná v systému Ferda.
+
+\section{Experimenty}
+\label{section:experimenty}
+Pro otestování procedury bylo provedeno nìkolik experimentù. Experiment s datovım zdrojem \emph{Barbora} popisuje èást \ref{section:Barbora}. Dva experimenty s datovım zdrojem \emph{Forest cover type} popisují èásti \ref{section:vzorek} a \ref{section:cele}.
+
+\subsection{Barbora}
+\label{section:Barbora}
+Jako první testovací data jsme vybrali data klientù hypotetické banky Barbora \cite{Barbora}. Databáze neobsahuje reálná data, pouze záznamy pøedgenerované na základì znalostí domény. 
+
+První experiment byl proveden nad tabulkou \emph{loans}, která obsahuje informace o klientech a jeho statutu (celkem zhruba 6100 záznamù). Experiment konstruoval stromy, které zjišovaly statut klienta z informací o okresu, platu klienta a vıši a trvání jeho pùjèky. Parametry zadání procedury byly následující:
+
+\begin{itemize}
+	\item poèet atributù pro vìtvení = 4
+	\item minimální èistota listu = 0,8
+	\item minimální frekvence uzlu = 61 (1\% dat)
+	\item vìtvení uzlù po jednom = true	
+	\item minimální kvalita stromu: F-míra s promìnlivım prahem (viz. dále)
+\end{itemize}
+
+Cílem experimentu bylo zjistit, jestli je mùe procedura vygenerovat více stromù podobné kvality (pøi zvyšující se hloubce stromu). Byly pouity zvìtšující se prahy F-míry a vısledky jsou zobrazeny v následující tabulce.
+
+\begin{table}[ht]
+	\centering
+	\caption{Experiment Barbora}
+	\label{tab:Barbora}	
+		\begin{tabular}{|p{20mm}|p{25mm}|p{18mm}|p{18mm}|p{30mm}|}
+			\hline				\textbf{Hloubka stromu} & \textbf{Práh F-míry} & \textbf{Verifikací} & \textbf{Hypotéz} & \textbf{Nejlepší hypotéza} (F-míra) \\
+			\hline
+			1 & 0,5 & 5 & 2 & 0,75 \\
+			2 & 0,7 & 17 & 7 & 0,88 \\
+			3 & 0,85 & 193 & 26 & 0,88 \\
+			4 & 0,85 & 7910 & 222 & 0,90 \\
+			\hline
+		\end{tabular}
+\end{table}
+
+Uspokojivé vısledky experimentu potvrdili naši domnìnku, e lze zkonstruovat více stromù podobné kvality. Napøíklad pro hloubku 4 bylo sestrojeno celkem 222 rozhodovacích stromù, které se liší v hodnotì F-míry pouze pìti procenty. Data \emph{Barbora} jsou však umìle vygenerována (èásteènì nedokonale), co zøejmì zpùsobilo tak dobré vısledky. Dalším krokem bylo otestovat proceduru na reálném datovém zdroji. 
+
+\subsection{Forest cover type - vzorek}
+\label{section:vzorek}
+Tímto zdrojem byly data \emph{Forest cover type} z datového repositáøe UCI KDD \cite{UCI}\footnote{Jeden z nejuznávanìjších repozitáøù dat pro benchmarking metod strojového uèení.}. Data Forest cover type obsahují informace o pokrytí lesa pro buòky 30x30 metrù získané z US Forest Service Region 2 Resource Information System. 
+
+V druhém experimentu jsme konstruovali stromy, které urèovaly vıslednı typ pokrytí lesa z informací o chránìném území, nadmoøské vıšce, sklonu svahu, horizontální a vertikální vzdálenosti k vodnímu zdroji a horizontální vzdálenosti k vıskytu poáru. Cílem bylo provìøit domnìnku, e pouití více atributù pro vìtvení dává kvalitnìjší stromy. Experiment byl proveden na vzorku pùvodních dat o velikosti 10000 záznamù. Parametry zadání procedury byly následující:
+
+\begin{itemize}
+	\item poèet atributù pro vìtvení = 1,3,5
+	\item minimální èistota listu = 0,8
+	\item minimální frekvence uzlu = 100 (1\% dat)
+	\item vìtvení uzlù po jednom = true	
+	\item minimální kvalita stromu: F-míra s promìnlivım prahem
+\end{itemize}
+
+\begin{table}[ht]
+	\centering
+	\caption{Experiment Forest cover type - vzorek}
+	\label{tab:vzorek}	
+		\begin{tabular}{|p{20mm}|p{25mm}|p{18mm}|p{18mm}|p{30mm}|}
+			\hline
+				\textbf{Hloubka stromu} & \textbf{Práh F-míry} & \textbf{Verifikací} & \textbf{Hypotéz} & \textbf{Nejlepší hypotéza} (F-míra) \\
+			\hline
+			\multicolumn{5}{|l|}{Poèet atributù pro vìtvení = 1} \\
+			\hline
+			1 & 0,5 & 2 & 1 & 0,5 \\
+			2 & 0,7 & 2 & 1 & 0,71 \\
+			3 & 0,71 & 10 & 8 & 0,71 \\
+			4 & 0,72 & 59 & 21 & 0,72 \\
+			\hline
+			\multicolumn{5}{|l|}{Poèet atributù pro vìtvení = 3} \\
+			\hline
+			1 & 0,5 & 4 & 1 & 0,5 \\
+			2 & 0,7 & 21 & 5 & 0,72 \\
+			3 & 0,72 & 273 & 67 & 0,73 \\
+			4 & 0,74 & 6673 & 73 & 0,74 \\
+			\hline
+			\multicolumn{5}{|l|}{Poèet atributù pro vìtvení = 5} \\
+			\hline
+			1 & 0,5 & 6 & 1 & 0,5 \\
+			2 & 0,7 & 31 & 7 & 0,73 \\
+			3 & 0,73 & 551 & 52 & 0,74 \\
+			4 & 0,74 & 17396 & 183 & 0,75 \\
+			\hline
+		\end{tabular}
+\end{table}
+
+Tabulka \ref{tab:vzorek} ukazuje vısledky experimentu. Nárùst kvality stromù není vıraznı, jsou to pouze 3\% F-míry\footnote{Cílem experimentu nebylo zkonstruovat co nejkvalitnìjší strom, nıbr zjistit rùst kvality stromù. Proto jsme pouili pouze základní kategorizaci vstupních atributù a nesnaili jsme se primárnì o nìjaké její vylepšování.}. Poèet nejkvalitnìjších stromù však vıraznì vzrostl. 
+
+\subsection{Forest cover type}
+\label{section:cele}
+Tøetí experiment byl zjednodušením druhého experimentu na celou datovou matici (pøiblinì 600 000 záznamù). Zadání bylo: 
+
+\begin{itemize}
+	\item maximální hloubka stromu = 3
+	\item poèet atributù pro vìtvení = 1,4
+	\item minimální èistota listu = 0,8
+	\item minimální frekvence uzlu = 6000 (1\% dat)
+	\item vìtvení uzlù po jednom = true	
+	\item minimální kvalita stromu: F-míra s promìnlivım prahem
+\end{itemize}
+
+Pro 1 atribut pro vìtvení mìl nejlepší strom hodnotu F-míry 0,30. Po zvìtšení na 4 atributy pro vìtvení se nejlepší strom zlepšil na 0,52, co je o více ne 20\%. 
+
+\medskip
+Shrnutím provedenıch experimentù je konstatování, e má vıznam tvoøit stromy pomocí algoritmu ETree. V nìkterıch datech se konstrukce stromù z více atributù projeví ve vìtší kvalitì techto stromù, v jinıch datech získáme velké mnoství vysoce kvalitních stromù. 
+
+\section{Závìr}
+\label{section:zaver}
+
+\subsection{Shrnutí vykonané práce}
+Práce obohacuje tradièní algoritmy na konstrukci rozhodovacích stromù o aspekty metody GUHA pro exploraèní analızu dat. Vzniká novı algoritmus ETree, kterı konstruuje více stromù na základì vıbìru více atributù pro vìtvení uzlù a vìtvení pouze jednotlivıch uzlù.  Algoritmus chápeme v názvosloví metody GUHA také jako novou GUHA proceduru. 
+
+Byla provedena implementace procedury ETree v prostøedí Ferda, kde je ji mono zapojit do stávajících modulù po pøedzpracování dat stejnım zpùsobem jako ostatní GUHA procedury. Byly dále provedeny experimenty, které ukazují pouitelnost našeho pøístupu. Konstrukce více stromù z více atributù se pozitivnì projeví na kvalitì nejlepšího stromu i na mnoství vysoce kvalitních stromù. 
+
+\subsection{Smìry dalšího vızkumu}
+ETree nabízí zajímavé monosti dalšího vızkumu. Jednou z moností rozšíøení je vybírat atributy i podle jiného kritéria ne $\chi^2$(další kritéria byly uvedeny v sekci \ref{section:Navrh}). Z hlediska návrhu by bylo nejlepší vytvoøit pro vıbìr atributù novou krabièku a zapojovat ji do krabièky ETree. 
+
+Aby byl nástroj plnì pouitelnı je dále tøeba implementovat klasifikátor samotnıch dat, kterı ještì není hotovı. Prozatím jsme se zajímali pouze o konstrukci stromù a ne jejich pouítí pøi klasifikaci novıch dat.
+
+Odhad poètu relevantních otázek (poètu vygenerovanıch stromù) je zajímavı statistickı problém. Prozatím poèítáme relevantní otázky pomocí nejhorších pøípadù, co je zejména pro rozsáhlejší úlohy nepøesné. Prùmìrné èi jinak vıznamné pøípady by mohli pomoci, problém je však zajímavı zejména tím, e ji pøed prvním vìtvením jakéhokoli z atributù by mìl bıt odhad k dispozici.
+
+Jeden z plánù rozvoje Ferdy je implementace fuzzy metody GUHA, zejména implementace fuzzy bitovıch øetízkù a kvantifikátorù. Tyto zmìny by se samozøejmì tıkaly i procedury ETree, zejména zmìny bitovıch øetízkù na fuzzy. Jakım zpùsobem to ovlivní algoritmus procedury zatím ještì není rozmyšleno.
+
+Náš pøístup je velmi podobnı metodì rozhodovacích lesù, napø. \cite{forests}, ve které se uplatòuje \emph{elektivní klasifikace}, tzn. e stromy z rozhodovacího lesa hlasují o vısledné klasifikaci. Bylo by zajímavé zkusit experimentovat s elektivní klasifikací i u stromù vytvoøenıch pomocí ETree. 
+
+\begin{thebibliography}{99}
+
+\bibitem{forests}
+Breiman L. Random Forrests. Machine Learning 45 (2001), 5-32.
+
+\bibitem{GUHA1}
+H\'{a}jek P., Havel I., Chytil M.: The GUHA method of
+automatic hypotheses determination. Computing 1, 1966, p.~293~--~308
+
+\bibitem{GUHA2}
+H\'{a}jek P., Havr\'{a}nek, T.: Mechanising Hypothesis
+Formation - Mathematical  Foundations  for  a   General  Theory.
+Springer-Verlag: Berlin  - Heidelberg - New York, 1978.
+
+\bibitem{UCI}
+Hettich S., Bay S.D.: The UCI KDD Archive [http://kdd.ics.uci.edu]. Irvine, CA: University of California, Department of Information and Computer Science, 1999
+
+\bibitem{KDNuggets}
+KDNuggets Polls, Data mining/analytic techniques you use frequently.
+\url{www.kdnuggets.com/polls/2005/data\_mining\_techniques.htm}
+
+\bibitem{Ferda}
+Kov\'{a}\v{c} M., Kucha\v{r} T., Kuzmin A., Ralbovsk\'{y} M.: Ferda, 
+New Visual Environment for Data Mining. Znalosti 2006, 
+Conference on Data Mining, Hradec Kr\'{a}lov\'{e} 2006, p.~118~--~129 (in Czech)
+
+\bibitem{Kuchar}
+Kucha\v{r} T.: Experimental GUHA Procedures, Master Thesis, 
+Faculty of Mathematics and Physics, Charles University, Prague 2006 (in Czech)
+
+\bibitem{Quinlan}
+Quinlan J. R.: Induction of Decision Trees. Machine Learning 1(1), 1986, 81 - 106
+
+\bibitem{Ralbovsky}
+Ralbovs\'{y} M., Kucha\v{r} T.: 
+Using Disjunctions in Association Mining. 
+In: P. Perner (Ed.),
+Advances in Data Mining - Theoretical Aspects and Applications, LNAI
+4597, Springer Verlag, Heidelberg 2007
+
+\bibitem{Rauch}
+Rauch J.: Logic of Association Rules. In: Applied Inteligence, Vol. 22,
+Issue 1, p.~9~--~28
+
+\bibitem{Barbora}
+Rauch J.: Mining for Association Rules in Financial Data. In: Seminar on Data Mining for Decision Support in Marketing. Porto: LIACC, 2001
+
+\bibitem{Alternative}
+Rauch J., \v{S}im\accent23unek, M.: An Alternative Approach to Mining
+Association Rules. Lin T Y, Ohsuga S, Liau C J, and Tsumoto S (eds):
+Foundations of Data Mining and Knowledge Discovery, Springer-Verlag, 2005
+p.~219~--~239
+
+\bibitem{Rijsbergen}
+Van Rijsbergen C.J.: Information Retrieval. Butterworth-Heinemann Newton, MA USA 1979
+
+\bibitem{Simunek}
+\v{S}im\accent23unek M.: Academic KDD Project LISp-Miner.
+In Abraham A. et al (eds): Advances in Soft
+Computing - Intelligent Systems Design and Applications, 
+Springer Verlag 2003
+
+\end{thebibliography}
+
+\medskip
+
+\end{document}
