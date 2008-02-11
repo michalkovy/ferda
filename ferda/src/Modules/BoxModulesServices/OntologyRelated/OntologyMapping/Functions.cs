@@ -152,6 +152,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <param name="ontologyEntityName">Name of the ontology entity</param>
         /// <param name="fallOnError">Iff the method should fall on error</param>
         /// <returns>SuperClasses of the ontology entity</returns>
+        //TODO - mozna smazat - nepouziva se
         public string[] getOntologyEntitySuperClasses(string ontologyEntityName, bool fallOnError)
         {
             OntologyFunctionsPrx prx = GetOntologyFunctionsPrx(fallOnError);
@@ -508,8 +509,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         public DataTableInfo GetDataTableInfo(string dataTableName, bool fallOnError)
         {
             string[] primaryKeyColumns = getPrimaryKeyColumns(dataTableName);
-
-            TryPrimaryKey(dataTableName, fallOnError);
 
             return ExceptionsHandler.GetResult<DataTableInfo>(
                 fallOnError,
