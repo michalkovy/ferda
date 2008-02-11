@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Text;
 using Ice;
 using Ferda.OntologyRelated.generated.OntologyData;
+using Ferda.Modules.Helpers.Caching;
 
 namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
 {
@@ -208,6 +209,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
         }
 
+        private CacheFlag _cacheFlag = new CacheFlag();
+
         /// <summary>
         /// Loads and parses the ontology
         /// </summary>
@@ -216,19 +219,27 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// <returns>True if the ontology was successfully loaded</returns>
         public bool LoadOntologyWithParameter(string innerOntologyPath, bool fallOnError)
         {
-            return ExceptionsHandler.GetResult<bool>(
-                fallOnError,
-                delegate
+            Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropOntologyPath, OntologyPath);
+
+            if (_cacheFlag.IsObsolete(LastReloadRequest, cacheSetting)
+                || (_lastReloadRequest == null && fallOnError))
+            {
+                return ExceptionsHandler.GetResult<bool>(
+                    fallOnError,
+                    delegate
                     {
                         LoadOntologyDelegate(innerOntologyPath);
                         return true;
                     },
-                delegate
-                {
-                    return false;
-                },
-                BoxModule.StringIceIdentity
-            );
+                    delegate
+                    {
+                        return false;
+                    },
+                    BoxModule.StringIceIdentity
+                );
+            }
+            return true;
         }
 
         #endregion
@@ -343,6 +354,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// <param name="ontologyEntityName">Name of the ontology entity</param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>SuperClasses of the ontology entity</returns>
+        //TODO - mozna smazat - nepouziva se
         public override string[] getOntologyEntitySuperClasses(string ontologyEntityName, Current current__)
         {
             OntologyStructure ontology = getOntology(true);

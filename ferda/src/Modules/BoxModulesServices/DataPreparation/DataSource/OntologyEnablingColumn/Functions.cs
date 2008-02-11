@@ -251,9 +251,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         public GenericColumn GetGenericColumn(bool fallOnError)
         {
             OntologyMappingFunctionsPrx prx = GetOntologyMappingFunctionsPrx(fallOnError);
-
-            string dataTableName = GetDataTableName(fallOnError);
-
+            
             if (prx == null)
                 return null;
 
@@ -263,7 +261,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                     delegate
                         {
                             string tmpDataTableName = GetDataTableName(fallOnError);
-                            if (dataTableName == null)
+                            if (tmpDataTableName == null)
                                 return null;
                             return prx.getDataTableInfo(tmpDataTableName);
                         },
