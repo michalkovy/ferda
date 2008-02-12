@@ -466,10 +466,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             dummy = Func.GetOntologyFunctionsPrx(true);
             dummy = Func.GetDataTablesNames(true);
             
-            //TODO check
-            /* testing primary keys and other functions for all datatables in database?
-             * problem could be datatables without a unique key
-             * at great databases, the validation could be very slow*/
             foreach (string datatableName in Func.GetDataTablesNames(true))
             {
                 Func.TryPrimaryKey(datatableName, true);
