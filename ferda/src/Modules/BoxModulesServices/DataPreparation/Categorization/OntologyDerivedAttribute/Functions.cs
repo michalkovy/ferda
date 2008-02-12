@@ -60,7 +60,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         public const string PropDomainDividingValues = "DomainDividingValues";
         public const string PropMinimum = "Minimum";
         public const string PropMaximum = "Maximum";
-        public const string Separator = ", ";
+        public const string Separator = ",";
 
         /// <summary>
         /// Guid
@@ -497,6 +497,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                         if ((Cardinality == CardinalityEnum.Cardinal || Cardinality == CardinalityEnum.Ordinal) && (column.Statistics.valueDistincts >= 5))
                         {
 
+
                             //creating categories of the attributebased on the connected column datatype
                             //switch branches differ only in the datatype, so only one branch will be explained
                             switch (column.DbSimpleDataType)
@@ -513,10 +514,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                                 new Categorization.Retyper<float>.ToTypeDelegate(ConvertToFloat);
 
                                         //creating array of domain dividing values in float type
-                                        float[] _divisionPoints = Categorization.Retyper<float>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+                                        float[] _divisionPoints = Categorization.Retyper<float>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, Separator, dg);
 
                                         //creating array of distinct values in float type
-                                        float[] _distinctValuesArray = Categorization.Retyper<float>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+                                        float[] _distinctValuesArray = Categorization.Retyper<float>.ConvertStringToCustomTypedSortedArray(DistinctValues, Separator, dg);
 
                                         //getting the minimal value for creation of intervals
                                         __min = Categorization.Retyper<float>.returnMinValue(
@@ -556,9 +557,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         Categorization.Retyper<double>.ToTypeDelegate dg =
                                                 new Categorization.Retyper<double>.ToTypeDelegate(Convert.ToDouble);
 
-                                        double[] _divisionPoints = Categorization.Retyper<double>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+                                        double[] _divisionPoints = Categorization.Retyper<double>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, Separator, dg);
 
-                                        double[] _distinctValuesArray = Categorization.Retyper<double>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+                                        double[] _distinctValuesArray = Categorization.Retyper<double>.ConvertStringToCustomTypedSortedArray(DistinctValues, Separator, dg);
 
                                         __min = Categorization.Retyper<double>.returnMinValue(
                                             Minimum,
@@ -603,9 +604,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         Categorization.Retyper<short>.ToTypeDelegate dg =
                                                 new Categorization.Retyper<short>.ToTypeDelegate(Convert.ToInt16);
 
-                                        short[] _divisionPoints = Categorization.Retyper<short>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+                                        short[] _divisionPoints = Categorization.Retyper<short>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, Separator, dg);
 
-                                        short[] _distinctValuesArray = Categorization.Retyper<short>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+                                        short[] _distinctValuesArray = Categorization.Retyper<short>.ConvertStringToCustomTypedSortedArray(DistinctValues, Separator, dg);
 
                                         __min = Categorization.Retyper<short>.returnMinValue(
                                             Minimum,
@@ -645,9 +646,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                             Categorization.Retyper<int>.ToTypeDelegate dg =
                                                 new Categorization.Retyper<int>.ToTypeDelegate(Convert.ToInt32);
 
-                                            int[] _divisionPoints = Categorization.Retyper<int>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+                                            int[] _divisionPoints = Categorization.Retyper<int>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, Separator, dg);
 
-                                            int[] _distinctValuesArray = Categorization.Retyper<int>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+                                            int[] _distinctValuesArray = Categorization.Retyper<int>.ConvertStringToCustomTypedSortedArray(DistinctValues, Separator, dg);
 
                                             __min = Categorization.Retyper<int>.returnMinValue(
                                                 Minimum,
@@ -684,9 +685,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                             Categorization.Retyper<long>.ToTypeDelegate dg =
                                                 new Categorization.Retyper<long>.ToTypeDelegate(Convert.ToInt64);
 
-                                            long[] _divisionPoints = Categorization.Retyper<long>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+                                            long[] _divisionPoints = Categorization.Retyper<long>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, Separator, dg);
 
-                                            long[] _distinctValuesArray = Categorization.Retyper<long>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+                                            long[] _distinctValuesArray = Categorization.Retyper<long>.ConvertStringToCustomTypedSortedArray(DistinctValues, Separator, dg);
 
                                             __min = Categorization.Retyper<long>.returnMinValue(
                                                 Minimum,
@@ -727,9 +728,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         Categorization.Retyper<DateTime>.ToTypeDelegate dg =
                                                 new Categorization.Retyper<DateTime>.ToTypeDelegate(Convert.ToDateTime);
 
-                                        DateTime[] _divisionPoints = Categorization.Retyper<DateTime>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+                                        DateTime[] _divisionPoints = Categorization.Retyper<DateTime>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, Separator, dg);
 
-                                        DateTime[] _distinctValuesArray = Categorization.Retyper<DateTime>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+                                        DateTime[] _distinctValuesArray = Categorization.Retyper<DateTime>.ConvertStringToCustomTypedSortedArray(DistinctValues, Separator, dg);
 
                                         __min = Categorization.Retyper<DateTime>.returnMinValue(
                                             Minimum,
@@ -768,9 +769,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                                         Categorization.Retyper<string>.ToTypeDelegate dg =
                                                 new Categorization.Retyper<string>.ToTypeDelegate(Convert.ToString);
 
-                                        string[] _divisionPoints = Categorization.Retyper<string>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, ", ", dg);
+                                        string[] _divisionPoints = Categorization.Retyper<string>.ConvertStringToCustomTypedSortedArray(DomainDividingValues, Separator, dg);
 
-                                        string[] _distinctValuesArray = Categorization.Retyper<string>.ConvertStringToCustomTypedSortedArray(DistinctValues, ", ", dg);
+                                        string[] _distinctValuesArray = Categorization.Retyper<string>.ConvertStringToCustomTypedSortedArray(DistinctValues, Separator, dg);
 
                                         __min = Categorization.Retyper<string>.returnMinValue(
                                             Minimum,
