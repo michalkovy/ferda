@@ -438,6 +438,23 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             bool rightLength;
 
+            //cannot determine the root node
+            if (processTree.RootNode == null)
+            {
+                return false;
+            }
+
+            double[][] confusionMatrix = processTree.ConfusionMatrix(
+                targetClassificationAttribute.BitStrings,
+                targetClassificationAttribute.CategoriesIds);
+            
+            //if the b and c items of contingency table (TN and FN in confusion
+            //matrix) are zero, we can consider the tree as quality...
+            if (confusionMatrix[0][1] == 0 && confusionMatrix[1][0] == 0)
+            {
+                return true;
+            }
+
             //checking the length of the tree
             if (onlyFullTree)
             {
@@ -467,16 +484,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return false;
             }
 
-            //cannot determine the root node
-            if (processTree.RootNode == null)
-            {
-                return false;
-            }
-
             QuantifierEvaluateSetting setting = new QuantifierEvaluateSetting();
-            setting.contingencyTable = processTree.ConfusionMatrix(
-                targetClassificationAttribute.BitStrings,
-                targetClassificationAttribute.CategoriesIds);
+            setting.contingencyTable = confusionMatrix;
             setting.denominator = 1;
 
             foreach (QuantifierBaseFunctionsPrx quant in quantifiers)
