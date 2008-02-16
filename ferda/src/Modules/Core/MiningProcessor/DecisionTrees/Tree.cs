@@ -104,6 +104,13 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
 
             if (rootNode.Leaf)
             {
+                //if the maximal tree depth is 1 and the root node is a leaf
+                //(it has depth of 1, no other leafs should be branched
+                if (maximalTreeDepth == 1)
+                {
+                    return new List<Node>();
+                }
+
                 bool hasCategories = false;
 
                 foreach (string category in rootNode.SubCategories)
