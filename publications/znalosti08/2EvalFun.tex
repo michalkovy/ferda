@@ -10,7 +10,7 @@ and $\psi$ in $\cal M$; see Tab. \ref{4ft_Table_fi_psi} and Section
 \ref{Introduction}. 
 Some important 4ft-quantifiers are presented below. 
 We use $ a, b, c, d $ see Tab.  \ref{4ft_Table_fi_psi}.
-In addition we use $ r = a + b$, $ k = a + c $ and
+In addition we use %$ r = a + b$, $ k = a + c $ and
 %$ s = c + d$,   , $ l = b + d $
 $ n = a + b+ c + d$. We also define the 
  {\em evaluation function} ${\cal F}_{\approx}$  introduced in Section \ref{Introduction}
@@ -38,7 +38,7 @@ The same is  true for the additional 4ft-quantifiers  in this paper.
  
 
 The 4ft-quantifier $ \Rightarrow^{!}_{p, \alpha} $ of
- {\it lower critical implication} is for  $ 0 < p \leq 1 $ and 
+ {\it lower critical implication} is \ for  \ $ 0 \ < \ p \leq \ 1 $ \ and \ 
  $ 0 < \alpha < 0.5$ defined in \cite{Ha:78} by the condition
 %$$   \sum_{i = a}^{a + b} {a+b \choose i}
 %          p^{i} (1 - p)^{a+b-i} \leq \alpha  \land  a \geq Base \mbox{ .}$$
@@ -83,7 +83,7 @@ The 4ft-quantifier $ \equiv_{p} $ of {\it founded
 equivalence \/} is for $ 0 < p \leq 1 $   
 defined in \cite{Ha:83} by the condition
 %$$ \frac{a+d}{n} \geq p \land a \geq Base \mbox{ .}$$
-$ \frac{a+b+c+d}{n} \geq p $. 
+$ \frac{a+d}{n} \geq p $. 
 The rule $\varphi \equiv_{p}  \psi $   means that $\varphi$ and $\psi$ have the same value (either
 {\it true} or {\it false}) for at least $100p$ per cent of all
 objects of ${\cal M }$. 
@@ -123,10 +123,18 @@ The evaluation function $ F_{\sim_{\alpha}}$
 of $\sim_{\alpha}$ is here defined such that 
 $ F_{\sim_{\alpha}}(a,b,c,d) =  \sum_{i = a}^{\min(a+b,a+c)} \frac{ {a+c \choose i} {a+b+c+d - i \choose a+b - i} }
                                {{a+b+c+d \choose a+b }}    $  
-(we do not consider the condition $ad > bc$ that can be investigated in relation to 
-the 4ft-quantifier $ \sim_{\delta} $ of simple deviation, see above).  
+if $ad > bc$ and 
+$ F_{\sim_{\alpha}}(a,b,c,d) =  0.5 $  if $ad \leq bc$.  
+The verification condition is $ F_{\sim_{\alpha}}(a,b,c,d) \leq \alpha $ (for $ 0 < \alpha < 0.5$). 
 
-
+%(we do not consider the condition $ad > bc$ that can be investigated in relation to 
+%the 4ft-quantifier $ \sim_{\delta} $ of simple deviation, see above).  
+%
+%===================RAUCH==================
+%
+%Holena pise, ze podminka se nesmi vypustit (viz. posudek)
+%
+%==========================================
 
 %\item
 The 4ft-quantifier 
@@ -134,25 +142,25 @@ $ \Rightarrow^{+}_{p} $ of {\it above average dependence \/}
 is for $ 0 < p $ defined  
 in \cite{RS:05A} by the condition
 %$$ \frac{a}{a+b} \geq (1+p) \frac{a+c}{a+b+c+d} \land a \geq Base \mbox{ .}$$
-$ \frac{a}{a+b} \geq (1+p) \frac{a+c}{a+b+c+d} $.
+$ \frac{a}{a+b} \geq (1+p) \frac{a+c}{n} $.
 The rule $\varphi \Rightarrow^{+}_{p}  \psi $  
 means that among the objects satisfying $\varphi$ is at least
 $100p$ per cent more objects satisfying $\psi$ than among all
 objects. 
 The evaluation function $ F_{\Rightarrow^{+}_{p}}$
 of $\Rightarrow^{+}_{p}$ is defined such that 
-$ F_{\Rightarrow^{+}_{p}}(a,b,c,d) =  \frac{ a(a+b+c+d)} {(a+b)(a+c)} - 1$, 
+$ F_{\Rightarrow^{+}_{p}}(a,b,c,d) =  \frac{ an} {(a+b)(a+c)} - 1$, 
 the verification condition is $ F_{\Rightarrow^{+}_{p}}(a,b,c,d) =  \geq p$.
 
 
 %item
-The {\it Kulczynski quantifier \/} is yet another way to measure dependency between 
-$\varphi$ and $\psi$ introduced in  \cite{Han:07}. It is defined by the condition
-$ \frac{a}{2}(\frac{1}{a+b}+\frac{1}{a+c}) \geq p$ and can be interpreted in 
-terms of conditional probabilities as arithmetic mean of 
-$P(\varphi|\psi)$ and $P(\psi|\varphi)$. We will signify the quantifier 
-$ \sim_{\kappa} $ and its evaluation function is 
-$F_{\sim_{\kappa}}(a,b,c,d) =  \frac{a}{2}(\frac{1}{a+b}+\frac{1}{a+c})$. 
+%The {\it Kulczynski quantifier \/} is yet another way to measure dependency between 
+%$\varphi$ and $\psi$ introduced in  \cite{Han:07}. It is defined by the condition
+%$ \frac{a}{2}(\frac{1}{a+b}+\frac{1}{a+c}) \geq p$ and can be interpreted in 
+%terms of conditional probabilities as arithmetic mean of 
+%$P(\varphi|\psi)$ and $P(\psi|\varphi)$. We will signify the quantifier 
+%$ \sim_{\kappa} $ and its evaluation function is 
+%$F_{\sim_{\kappa}}(a,b,c,d) =  \frac{a}{2}(\frac{1}{a+b}+\frac{1}{a+c})$. 
 
 %item
 The last presented quantifier is the {\it pairing quantifier \/} 
