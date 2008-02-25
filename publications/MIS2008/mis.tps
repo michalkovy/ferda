@@ -24,11 +24,11 @@ Class=CLatexEdit
 Document=mis.tex
 
 [Frame0_Row0]
-cyCur=646
+cyCur=390
 cyMin=10
 
 [Frame0_Col0]
-cxCur=1081
+cxCur=825
 cxMin=10
 
 [Frame0_View0,0]
@@ -63,5 +63,5 @@ cxMin=10
 [Frame1_View0,0]
 Cursor.row=130
 Cursor.column=0
-TopSubLine=122
+TopSubLine=124
 
