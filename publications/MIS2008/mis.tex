@@ -24,7 +24,7 @@ Rozhodovací stromy jsou jedním z osvìdèenıch zpùsobù øešení klasifikaèních úloh.
 \section{Úvod}
 Náš pøístup kombinuje dvì metody dobıvání znalostí z dat. Metoda GUHA je pùvodní èeská metoda exploraèní analızy dat, její hlavním cílem je nabídnout uivateli vše zajímavé v datech \cite{GUHA1,GUHA2}. Naproti tomu algoritmy tvorby rozhodovacích stromù \cite{Quinlan} patøí k nejznámìjším algoritmùm v oblasti symbolickıch metod strojového uèení. 
 
-Základní myšlenkou v pøíspìvku je vytvoøení více rozhodovacích stromù v dùsledku modifikace klasickıch algoritmù pro indukci rozhodovacích stromù, tyto stromy poté povaovat za GUHA verifikace/hypotézy a pro uivatele vybírat jen nejlepší z nich. Navrená procedura pojmenována ETree byla implementována v systému Ferda a byly provedeny poèáteèní experimenty ukazující konstrukci stromù lepších charakteristik, ne byly stromy pùvodní.
+Základní myšlenkou v pøíspìvku je vytvoøení více rozhodovacích stromù v dùsledku modifikace klasickıch algoritmù pro indukci rozhodovacích stromù, tyto stromy lze poté povaovat za GUHA verifikace/hypotézy a pro uivatele vybírat jen nejlepší z nich. Navrená procedura pojmenována ETree byla implementována v systému Ferda a byly provedeny poèáteèní experimenty ukazující konstrukci stromù lepších charakteristik, ne byly stromy pùvodní.
 
 Práce je strukturována následovnì: v sekci \ref{section:GUHA} a \ref{section:stromy} seznamujeme ètenáøe se základy metody GUHA a algoritmy pro tvorbu rozhodovacích stromù. Sekce \ref{section:ETree} popisuje novì navrenou proceduru ETree a její implementaci v prostøedí Ferda. Sekce \ref{section:experimenty} shrnuje provedené experimenty a koneènì sekce \ref{section:zaver} uzavírá práci a poskytuje námìty na další vızkum.
 
@@ -179,7 +179,7 @@ Tabulka \ref{tab:Confusion} zobrazuje matici zámìn, kde \emph{TP} (správnì pozit
 
 $$ F = \frac{2 \cdot TP }{2 \cdot TP + FP + FN} $$
 
-Matice zámìn pøesnì odpovídá ètyøpolní kontingenèní tabulce známé z dobıvání zobecnìnıch asociaèních pravidel \cite{Rauch}. Pro hodnocení kvality stromu mùeme pouít také libovolnı vhodnı \emph{4ft-kvantifikátor} \cite{Rauch}. V této souvislosti je vhodné poznamenat, e F-míra patøí do tøídy \emph{dvojitì implikaèních kvantifikátorù}, jak definováno v \cite{Rauch}. Dùkaz tohoto tvrzení je jednoduchı a bude analogickı dùkazu pouitém v pøíkladu 3 v \cite{Rauch}. 
+Matice zámìn formálnì odpovídá ètyøpolní kontingenèní tabulce známé z dobıvání zobecnìnıch asociaèních pravidel \cite{Rauch}. Pro hodnocení kvality stromu mùeme pouít také libovolnı vhodnı \emph{4ft-kvantifikátor} \cite{Rauch}. V této souvislosti je vhodné poznamenat, e F-míra patøí do tøídy \emph{dvojitì implikaèních kvantifikátorù}, jak definováno v \cite{Rauch}. Dùkaz tohoto tvrzení je jednoduchı a bude analogickı dùkazu pouitém v pøíkladu 3 v \cite{Rauch}. 
 
 \subsection{Parametry ETree}
 Ve smyslu metody GUHA mùeme na vıstupní stromy nahlíet jako na hypotézy GUHA\footnote{Rozhodovací stromy je moné srovnat s asociaèními pravidly, jakoto nejpouívanìjšími druhy hypotéz metody GUHA. Jednu cestu v rozhodovacím stromu od koøene k listu lze pøirovnat k asociaènímu pravidlu, kde levá strana pravidla je konjunkce atributù a jejich hodnot odpovídajícím uzlùm v cestì a pravá strana klasifikovaná kategorie. Celı rozhodovací strom si bude potom tvoøit disjunkci asociaèních pravidel odpovídajících všem cestám. Takto mùe i procedura 4FT vrátit stejnı vısledek jako ETree, ovšem s exponenciální èasovou sloitostí.}.
@@ -203,16 +203,9 @@ Pøeskoème parametry pro vìtvení a vyjmenujme nejdøíve \textbf{parametry pro zast
 
 Vıznam posledního parametru je zøejmı, udává pøípustnou hloubku stromu. Po dosaení této hloubky se ji strom dále nevìtví. 
 
-\textbf{Parametr pro vìtvení} v pùvodním návrhu procedury nebyl, vznikl a v prùbìhu implementace. Obrázky \ref{fig:Branch1} a \ref{fig:Branch2} ukazují odlišné monosti vìtvení uzlù a vniku novıch stromù. 
-
-\begin{figure}[ht]
-\centering
-\mbox{\resizebox{115mm}{!}{\includegraphics{Branch1.png}}}
-\caption{Vìtvení pro podmnoiny}
-\label{fig:Branch1}
-\end{figure}
-
-Abychom zajistili co nejvìtší variabilitu pøi tvorbì stromu, uvaovali jsme o generování novıch podstromù i v rámci mnoiny kategorií v jednom uzlu. Obrázek \ref{fig:Branch1} zobrazuje uzel, kterı se má vìtvit (vyznaèen modrou barvou). Ten mùe vytvoøit buï nové stromy pro všechny moné podmnoiny kategorií atributu, podle kterého se má vìtvit (atribut 2), nebo zachovat pùvodní strom a pøidat listy pro všechny kategorie atributu. I kdy je moné, e první monost by mohla vést k lépe klasifikujícím stromùm, z dùvodu pøílišného nárùstu stromù jsme se rozhodli pro druhou monost. 
+\textbf{Parametr pro vìtvení} v pùvodním návrhu procedury nebyl, vznikl a v prùbìhu implementace. Obrázek \ref{fig:Branch2} ukazuje odlišné monosti vìtvení uzlù a vniku novıch stromù. Uzly \emph{A} a \emph{B} byly vybrány algoritmem jako vhodné pro vìtvení. Mùeme postupovat jako v klasickıch algoritmech vìtvením všech vhodnıch uzlù najednou (zde uzly A i B - situace a), 
+nebo pro kadı uzel vytvoøíme novı strom a v tomto stromu vìtvíme pouze vybranı uzel (situace B). 
+Jak ukazuje obrázek, nevıhoda druhého postupu je vznik více stromù na vıstupu, z nich nìkteré budou identické. Zde jsme se rozhodli ponechat volbu na uivateli a vytvoøili jsme parametr pro vìtvení nazvanı \emph{vìtvení uzlù po jednom} (individual nodes branching).
 
 \begin{figure}[ht]
 \centering
@@ -220,8 +213,6 @@ Abychom zajistili co nejvìtší variabilitu pøi tvorbì stromu, uvaovali jsme o ge
 \caption{Vìtvení uzlù po jednom}
 \label{fig:Branch2}
 \end{figure}
-
-Obrázek \ref{fig:Branch2} øeší situaci vìtvení více uzlù. Uzly \emph{A} a \emph{B} byly vybrány algoritmem jako vhodné pro vìtvení. Mùeme zde postupovat tak, e vìtvíme oba uzly najednou (situace a), nebo kadı uzel zvláš s tím, e vrcholy urèené k vìtvení zùstávají do pøíštího kroku algoritmu. Jak ukazuje obrázek, nevıhoda tohoto postupu je vznik identickıch stromù na vıstupu. Zde jsme se rozhodli ponechat volbu na uivateli a vytvoøili jsme parametr pro vìtvení nazvanı \emph{vìtvení uzlù po jednom} (individual nodes branching).
 
 Poslední skupinou jsou \textbf{parametry pro uloení hypotézy}:
 \begin{itemize}
@@ -252,7 +243,7 @@ Pro otestování procedury bylo provedeno nìkolik experimentù. Experiment s datovı
 \label{section:Barbora}
 Jako první testovací data jsme vybrali data klientù hypotetické banky Barbora \cite{Barbora}. Databáze neobsahuje reálná data, pouze záznamy pøedgenerované na základì znalostí domény. 
 
-První experiment byl proveden nad tabulkou \emph{loans}, která obsahuje informace o klientech a jeho statutu (celkem zhruba 6100 záznamù). Experiment konstruoval stromy, které zjišovaly statut klienta z informací o okresu, platu klienta a vıši a trvání jeho pùjèky. Parametry zadání procedury byly následující:
+První experiment byl proveden nad tabulkou \emph{loans}, která obsahuje informace o klientech a jeho statutu (celkem zhruba 6100 záznamù). Experiment konstruoval stromy, které zjišovaly statut klienta (rozdìlení do 4 tøíd) z informací o okresu, platu klienta a vıši a trvání jeho pùjèky. Parametry zadání procedury byly následující:
 
 \begin{itemize}
 	\item poèet atributù pro vìtvení = 4
@@ -262,7 +253,7 @@ První experiment byl proveden nad tabulkou \emph{loans}, která obsahuje informac
 	\item minimální kvalita stromu: F-míra s promìnlivım prahem (viz. dále)
 \end{itemize}
 
-Cílem experimentu bylo zjistit, jestli je mùe procedura vygenerovat více stromù podobné kvality (pøi zvyšující se hloubce stromu). Byly pouity zvìtšující se prahy F-míry a vısledky jsou zobrazeny v následující tabulce.
+Cílem experimentu bylo zjistit, jestli mùe procedura vygenerovat více stromù podobné kvality (pøi zvyšující se hloubce stromu). Byly pouity zvìtšující se prahy F-míry a vısledky jsou zobrazeny v následující tabulce.
 
 \begin{table}[ht]
 	\centering
@@ -279,73 +270,97 @@ Cílem experimentu bylo zjistit, jestli je mùe procedura vygenerovat více stromù
 		\end{tabular}
 \end{table}
 
-Uspokojivé vısledky experimentu potvrdili naši domnìnku, e lze zkonstruovat více stromù podobné kvality. Napøíklad pro hloubku 4 bylo sestrojeno celkem 222 rozhodovacích stromù, které se liší v hodnotì F-míry pouze pìti procenty. Data \emph{Barbora} jsou však umìle vygenerována (èásteènì nedokonale), co zøejmì zpùsobilo tak dobré vısledky. Dalším krokem bylo otestovat proceduru na reálném datovém zdroji. 
+Uspokojivé vısledky experimentu potvrdily naši domnìnku, e lze zkonstruovat více stromù podobné kvality. Napøíklad pro hloubku 4 bylo sestrojeno celkem 222 rozhodovacích stromù, které se liší v hodnotì F-míry pouze pìti procenty. Data \emph{Barbora} jsou však umìle vygenerována (èásteènì nedokonale), co zøejmì zpùsobilo tak dobré vısledky. Dalším krokem bylo otestovat proceduru na reálném datovém zdroji. 
 
 \subsection{Forest cover type - vzorek}
 \label{section:vzorek}
 Tímto zdrojem byly data \emph{Forest cover type} z datového repositáøe UCI KDD \cite{UCI}\footnote{Jeden z nejuznávanìjších repozitáøù dat pro benchmarking metod strojového uèení.}. Data Forest cover type obsahují informace o pokrytí lesa pro buòky 30x30 metrù získané z US Forest Service Region 2 Resource Information System. 
 
-V druhém experimentu jsme konstruovali stromy, které urèovaly vıslednı typ pokrytí lesa z informací o chránìném území, nadmoøské vıšce, sklonu svahu, horizontální a vertikální vzdálenosti k vodnímu zdroji a horizontální vzdálenosti k vıskytu poáru. Cílem bylo provìøit domnìnku, e pouití více atributù pro vìtvení dává kvalitnìjší stromy. Experiment byl proveden na vzorku pùvodních dat o velikosti 10000 záznamù. Parametry zadání procedury byly následující:
+V druhém experimentu jsme konstruovali stromy, které urèovaly vıslednı typ pokrytí lesa z informací o chránìném území, nadmoøské vıšce, sklonu svahu, horizontální a vertikální vzdálenosti k vodnímu zdroji a horizontální vzdálenosti k vıskytu poáru. Vstupních atributù bylo celkem 8 a klasifikaèní atribut mìl 7 rùznıch hodnot. Cílem bylo provìøit domnìnku, e pouití více atributù pro vìtvení dává kvalitnìjší stromy. Experiment byl proveden na vzorku pùvodních dat o velikosti 10 000 záznamù z pùvodních asi 600 000 záznamù. Vzorek jsme zkonstruovali vybráním kadého zhruba 60. vzorku z pùvodních dat. Parametry zadání procedury byly následující:
 
 \begin{itemize}
 	\item poèet atributù pro vìtvení = 1,3,5
 	\item minimální èistota listu = 0,8
 	\item minimální frekvence uzlu = 100 (1\% dat)
-	\item vìtvení uzlù po jednom = true	
-	\item minimální kvalita stromu: F-míra s promìnlivım prahem
+	\item vìtvení uzlù po jednom = false
+	\item minimální kvalita stromu: F-míra s prahem 0.5
 \end{itemize}
 
 \begin{table}[ht]
 	\centering
 	\caption{Experiment Forest cover type - vzorek}
 	\label{tab:vzorek}	
-		\begin{tabular}{|p{20mm}|p{25mm}|p{18mm}|p{18mm}|p{30mm}|}
+		\begin{tabular}{|p{27mm}|p{17mm}|p{15mm}|p{45mm}|}
 			\hline
-				\textbf{Hloubka stromu} & \textbf{Práh F-míry} & \textbf{Verifikací} & \textbf{Hypotéz} & \textbf{Nejlepší hypotéza} (F-míra) \\
+				\textbf{Hloubka stromu}  & \textbf{Verifikací} & \textbf{Hypotéz} & \textbf{Nejlepší hypotéza} (F-míra) \\
 			\hline
-			\multicolumn{5}{|l|}{Poèet atributù pro vìtvení = 1} \\
+			\multicolumn{4}{|l|}{Poèet atributù pro vìtvení = 1} \\
 			\hline
-			1 & 0,5 & 2 & 1 & 0,5 \\
-			2 & 0,7 & 2 & 1 & 0,71 \\
-			3 & 0,71 & 10 & 8 & 0,71 \\
-			4 & 0,72 & 59 & 21 & 0,72 \\
+			1 &  2 & 0 & 0,304 \\
+			2 &  3 & 0 & 0,304 \\
+			3 &  4 & 0 & 0,385 \\
+			4 &  5 & 1 & 0,511 \\
 			\hline
-			\multicolumn{5}{|l|}{Poèet atributù pro vìtvení = 3} \\
+			\multicolumn{4}{|l|}{Poèet atributù pro vìtvení = 3} \\
 			\hline
-			1 & 0,5 & 4 & 1 & 0,5 \\
-			2 & 0,7 & 21 & 5 & 0,72 \\
-			3 & 0,72 & 273 & 67 & 0,73 \\
-			4 & 0,74 & 6673 & 73 & 0,74 \\
+			1 & 4 & 0 & 0,304 \\
+			2 & 13 & 0 & 0,305 \\
+			3 & 40 & 1 & 0,512 \\
+			4 & 121 & 3 & 0,816 \\
 			\hline
-			\multicolumn{5}{|l|}{Poèet atributù pro vìtvení = 5} \\
+			\multicolumn{4}{|l|}{Poèet atributù pro vìtvení = 5} \\
 			\hline
-			1 & 0,5 & 6 & 1 & 0,5 \\
-			2 & 0,7 & 31 & 7 & 0,73 \\
-			3 & 0,73 & 551 & 52 & 0,74 \\
-			4 & 0,74 & 17396 & 183 & 0,75 \\
+			1 & 6 & 0 & 0,304 \\
+			2 & 9 & 0 & 0,385 \\
+			3 & 156 & 5 & 0,515 \\
+			4 & 781 & 103 & 0,816 \\
 			\hline
 		\end{tabular}
 \end{table}
 
-Tabulka \ref{tab:vzorek} ukazuje vısledky experimentu. Nárùst kvality stromù není vıraznı, jsou to pouze 3\% F-míry\footnote{Cílem experimentu nebylo zkonstruovat co nejkvalitnìjší strom, nıbr zjistit rùst kvality stromù. Proto jsme pouili pouze základní kategorizaci vstupních atributù a nesnaili jsme se primárnì o nìjaké její vylepšování.}. Poèet nejkvalitnìjších stromù však vıraznì vzrostl. 
+Tabulka \ref{tab:vzorek} ukazuje vısledky experimentu. Nárùst kvality stromù je vıraznı zejména u delších stromù z 1 atributu pro vìtvení na 3 atributy pro vìtvení, kde napøíklad pro stromy délky 4 je to asi 30\% F-míry\footnote{Cílem experimentu nebylo zkonstruovat co nejkvalitnìjší strom, nıbr zjistit rùst kvality stromù. Proto jsme pouili pouze základní kategorizaci vstupních atributù a nesnaili jsme se primárnì o nìjaké její vylepšování.}.
 
 \subsection{Forest cover type}
 \label{section:cele}
-Tøetí experiment byl zjednodušením druhého experimentu na celou datovou matici (pøiblinì 600 000 záznamù). Zadání bylo: 
+Tøetí experiment byl zjednodušením druhého experimentu na celou datovou matici (pøiblinì 600 000 záznamù), vynechali jsme 5 atributù pro vìtvení. Zadání bylo následující:
 
 \begin{itemize}
-	\item maximální hloubka stromu = 3
-	\item poèet atributù pro vìtvení = 1,4
+	\item poèet atributù pro vìtvení = 1,3
 	\item minimální èistota listu = 0,8
 	\item minimální frekvence uzlu = 6000 (1\% dat)
-	\item vìtvení uzlù po jednom = true	
-	\item minimální kvalita stromu: F-míra s promìnlivım prahem
+	\item vìtvení uzlù po jednom = false
+	\item minimální kvalita stromu: F-míra s prahem 0,5
 \end{itemize}
 
-Pro 1 atribut pro vìtvení mìl nejlepší strom hodnotu F-míry 0,30. Po zvìtšení na 4 atributy pro vìtvení se nejlepší strom zlepšil na 0,52, co je o více ne 20\%. 
+\begin{table}[ht]
+	\centering
+	\caption{Experiment Forest cover type}
+	\label{tab:cele}
+		\begin{tabular}{|p{27mm}|p{17mm}|p{15mm}|p{45mm}|}
+			\hline
+				\textbf{Hloubka stromu}  & \textbf{Verifikací} & \textbf{Hypotéz} & \textbf{Nejlepší hypotéza} (F-míra) \\
+			\hline
+			\multicolumn{4}{|l|}{Poèet atributù pro vìtvení = 1} \\
+			\hline
+			1 &  2 & 0 & 0,304 \\
+			2 &  3 & 0 & 0,305 \\
+			3 &  4 & 0 & 0,387 \\
+			4 &  5 & 1 & 0,807 \\
+			\hline
+			\multicolumn{4}{|l|}{Poèet atributù pro vìtvení = 3} \\
+			\hline
+			1 & 2 & 0 & 0,305 \\
+			2 & 16 & 0 & 0,305 \\
+			3 & 40 & 2 & 0,522 \\
+			4 & 121 & 86 & 0,818 \\
+			\hline
+		\end{tabular}
+\end{table}
+
+Tabulka \ref{tab:cele} ukazuje vısledky experimentu. Experiment ukázal podobné vısledky jako experiment pøedchozí s vıjimkou stromù délky 4, kdy byl ve všech datech nalezen strom s F-mírou 0,807 a zlepšení pøidáním atributu bylo pouze 1\%.
 
 \medskip
-Shrnutím provedenıch experimentù je konstatování, e má vıznam tvoøit stromy pomocí algoritmu ETree. V nìkterıch datech se konstrukce stromù z více atributù projeví ve vìtší kvalitì techto stromù, v jinıch datech získáme velké mnoství vysoce kvalitních stromù. 
+Shrnutím provedenıch experimentù je konstatování, e má vıznam tvoøit stromy pomocí algoritmu ETree. V nìkterıch datech se konstrukce stromù z více atributù projeví ve vìtší kvalitì techto stromù, ve všech zkoumanıch datech získáváme velké mnoství vysoce kvalitních stromù. 
 
 \section{Závìr}
 \label{section:zaver}
