@@ -671,7 +671,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             if (_allObjectsCount > 0)
                 return;
-            if (!(attribute is EmptyTrace))
+            if (attribute is EmptyTrace)
                 return;
             foreach (IBitString s in attribute)
             {
@@ -987,6 +987,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             if (_baseQuantifierSetting == null)
                 return null;
+
+            //if the units set in the quantifier are relative to sum of all frequencies
+            //of the attribute - in case of condition it is irrelevant
             if (_baseQuantifierSetting.units == UnitsEnum.RelativeToActCondition)
                 if (cedentType == MarkEnum.Condition)
                     return null;
@@ -995,7 +998,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     return new SkipSetting(
                         _baseQuantifierSetting.relation,
                         _baseQuantifierSetting.treshold * _actConditionCountOfObjects,
-                        _baseSkipSettingNotTreshold = _allObjectsCount - _baseSkipSettingTreshold
+                        _baseSkipSettingNotTreshold = _allObjectsCount - (_baseQuantifierSetting.treshold * _actConditionCountOfObjects)
                         );
                 }
             if (_baseQuantifierSetting.units == UnitsEnum.RelativeToMaxFrequency)
