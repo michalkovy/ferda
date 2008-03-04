@@ -1,6 +1,12 @@
 % Michal Kovac's master thesis
 %
 \documentclass{article}
+\usepackage{pgf}
+
+\pgfdeclareimage[interpolate=true,height=7cm]{faktorial}{faktorial}
+\pgfdeclareimage[interpolate=true,height=7cm]{designimage}{designB}
+\pgfdeclareimage[interpolate=true,height=3cm]{designimageSmall}{designB}
+\pgfdeclareimage[interpolate=true,height=3.5cm]{creatorFactoryimage}{creatorFactory}
 
 \author{Michal Kov\'{a}\v{c}}
 \title{User oriented language for powerful data mining with Ferda}
@@ -32,7 +38,7 @@ Aim was to create application which is internationalized, well documented, modul
 
 Ferda is client-server application. Client executable is FerdaFrontEnd.exe and we call that part FrontEnd. There isn't one server executable instead there are more separate modules which all can act as separate application. FrontEnd comunicates with all of them. Some of these modules implements boxes so we call them box modules, other are helper modules like GUHA mining engine.
 
-\pgfuseimage{designimage}
+\noindent\includegraphics[width=12cm]{designB}
 
 FrontEnd uses assembly FerdaModulesManager.dll for communicating with modules. This assembly is layer of abstraction so that FrontEnd soes not know that modules are not implemented local.
 
@@ -46,7 +52,7 @@ IceGrid applications, which manage available modules and load them on demand, ru
 
 Every box module implementation has it's factory class. This factory class creates box module instances. There is one more layer -- every box module factory has it's factory class, we call it box module factory creator. It is used as singleton.
 
-\pgfuseimage{creatorFactoryimage}
+\noindent\includegraphics[width=12cm]{creatorFactory}
 
 FrontEnd asks box module factory creator for creation of only one box module factory for one box class. Creator has methods independend on both instance of box module and FrontEnd connected and factory has methods independend on box modules, but dependend on FrontEnd (for example localized names of properties). When FrontEnd is not connected for longer time all factory instances and box module instances are destroyed.
 
@@ -96,19 +102,18 @@ Box $B=\left<S,F\right>$ is of type $A=\left<i,Z\right>$ iff
 		\includegraphics[width=7cm]{property_as_socket}
 \end{itemize}
 
-	\begin{block}{What is missing?}
-		\begin{itemize}[<+->]
-			\item Moving work from one project to another
-			\item Basic math boxes
-			\item Recursion
-			\item Other language boxes
-			\item Ferda specific language boxes
-			\item Data mining specific boxes for user programming
-		\end{itemize}
-	\end{block}
+What is missing?
+\begin{itemize}
+	\item Moving work from one project to another
+	\item Basic math boxes
+	\item Recursion
+	\item Other language boxes
+	\item Ferda specific language boxes
+	\item Data mining specific boxes for user programming
+\end{itemize}
 
 \section{Lambda calculus}
-Base of functional languages in in lambda calculus. 
+Base of functional languages is in lambda calculus. 
 
 %rekurzivne spocetny
 %vsecno je funkce
@@ -118,6 +123,28 @@ Base of functional languages in in lambda calculus.
 %jak delaji rekurzi / lambdu - rozsil mezi structuralnim a funkcionalnim jazykem
 
 \section{Making things better in actual implementation}
+\section{Reusability}
+Ever programming languages have ways how to reuse a code. 
+
+\subsection{Project import}
+The simliest way is to copy the source code to different place and use it for different project. The same is possible in Ferda, you can copy a project file and reuse it.
+
+With standard textual source code it is easy to merge a code from more sources. You can do it with Ferda project, but you must merge a code in a project files manualy in a text editor. The merging is not an easy process so it is not so much user friendly way.
+
+It would be nice have a functionality in Ferda that will allow us to import some or all boxes from one project into another one. One way how to achieve that is adding a new item to the ferda menu "import project\dots". When a user selects this item, dialog for selecting a project file should open. The user then select a project and after that dialog with boxes in project should be there. The user selects boxes which he want to import. The last step is actual import.
+
+Let's discuss dialog box where user selects boxes. It would be nice to see which boxes depens on which so that user can chose whole functions. When he selects to import a box without some box which is connected to this box (or box connected to box connected to... connected to ths box) the box will be imported, but the result of such box can be different than before. On the othere and it can be umyslne, because user can want to connect to that box box from puvodni project.
+
+\subsection{Project using}
+Source code of one application is mostly not written only in one source file, but in many. There more ways in programming laguages how to achieve this. One way is that application is from beginning compiled from more source files. So it is typical for compiled applications. Compilator as argument has a set of files. Another way is that source code can import another source file. It is mostly used by interpreted languages. Advantage of this approach is that the imported file is loaded when used - so the file can be created near time before usage. It mostly also allow us to write code which loads every file in some directory - so it can be used for plug-ins. Even compiled applications have mostly a way how to achieve these functionality. Compiled applications can use libraries (or assemblies or modules) which can be loaded dynamicaly on demand. It can be also used for loading a source file on demand if a compiler for that language is available on machine where the application is being executed.
+
+\subsection{Defining function}
+versus lambda expresion - the same
+\subsection{Namespaces}
+\subsection{Network archive}
+nejdrive vyhoda na jednom pocitaci
+\subsection{Summary}
+
 result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF
 
 Implementation of GUHA in Ferda by 'small' boxes.
@@ -132,4 +159,6 @@ Implementation of GUHA in Ferda by 'small' boxes.
 %popis jednotlivych tasku s narocnosti, uzitkem - bodove ohodnotit
 
 % modules for interacion je treba vylepsit
+
+%vyjimky a Ferda - uzivatel muze chytat a vysilat vyjimky
 \end{document}
