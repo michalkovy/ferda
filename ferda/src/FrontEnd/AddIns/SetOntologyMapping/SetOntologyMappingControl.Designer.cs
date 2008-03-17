@@ -191,11 +191,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             // 
             // LoadMappingDialog
             // 
-            this.LoadMappingDialog.Filter = "Ferda Ontology Mapping (*.fom) | *.fom";
+            this.LoadMappingDialog.Filter = "Ferda Ontology Mapping (*.xml) | *.xml";
             // 
             // saveMappingDialog
             // 
-            this.saveMappingDialog.Filter = "Ferda Ontology Mapping (*.fom) | *.fom";
+            this.saveMappingDialog.Filter = "Ferda Ontology Mapping (*.xml) | *.xml";
             // 
             // SetOntologyMappingControl
             // 

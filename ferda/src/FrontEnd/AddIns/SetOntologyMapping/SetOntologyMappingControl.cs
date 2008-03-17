@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Ferda.Guha.Data;
 using Ferda.OntologyRelated.generated.OntologyData;
+using Ferda.Guha.MiningProcessor.Results;
 
 namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
 {
@@ -46,9 +47,9 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         private string separatorInner;
 
         /// <summary>
-        /// Path to Ferda ontology mapping (.fom) file, which was most recently used for Load or Save
+        /// Path to Ferda ontology mapping (.xml) file, which was most recently used for Load or Save
         /// </summary>
-        string pathToOntologyMappingFile = "";
+        private string pathToOntologyMappingFile = "";
 
         /// <summary>
         /// Colors which are used in ontologyTreeView
@@ -404,6 +405,23 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             {
                 TextReader tr = new StreamReader(LoadMappingDialog.OpenFile());
                 string tmpMapping = tr.ReadToEnd();
+                
+                /// convert from xml to string form
+                
+                /// <summary>
+                /// Serializable ontology mapping
+                /// </summary>
+                SerializableOntologyMapping ontologyMapping = new SerializableOntologyMapping();
+
+                ontologyMapping = SerializableOntologyMapping.Deserialize(tmpMapping);
+
+                tmpMapping = "";
+
+                foreach (Ferda.Guha.MiningProcessor.Results.MappedPair mappedPair in ontologyMapping.FerdaOntologyMapping)
+                {
+                    tmpMapping += mappedPair.DataTableName + this.separatorInner + mappedPair.DataTableColumnName + this.separatorInner + mappedPair.OntologyEntityName + this.separatorOuter;
+                }
+                
                 RefreshMappingViews(tmpMapping);
                 tr.Close();
                 pathToOntologyMappingFile = LoadMappingDialog.FileName;
@@ -416,18 +434,42 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             if (saveMappingDialog.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter sw = new StreamWriter(saveMappingDialog.OpenFile());
-                sw.Write(generateMappingFromListView());
+                sw.Write(generateXMLMappingFromListView());
                 sw.Close();
             }
+        }
+
+        private string generateXMLMappingFromListView()
+        {
+            string tmpMapping = "";
+            /// <summary>
+            /// Serializable ontology mapping
+            /// </summary>
+            SerializableOntologyMapping ontologyMapping = new SerializableOntologyMapping();
+
+            ontologyMapping.FerdaOntologyMapping = new Ferda.Guha.MiningProcessor.Results.MappedPair[this.MappingListBox.Items.Count];
+
+            int i = 0;
+            foreach (MappedPair mappedPair in this.MappingListBox.Items)
+            {
+                ontologyMapping.FerdaOntologyMapping[i].DataTableName = mappedPair.DataTableName;
+                ontologyMapping.FerdaOntologyMapping[i].DataTableColumnName = mappedPair.DataTableColumnName;
+                ontologyMapping.FerdaOntologyMapping[i].OntologyEntityName = mappedPair.OntologyEntityName;
+                i++;
+            }
+            tmpMapping = SerializableOntologyMapping.Serialize(ontologyMapping);
+            return tmpMapping;
         }
 
         private string generateMappingFromListView()
         {
             string tmpMapping = "";
+            
             foreach (MappedPair mappedPair in this.MappingListBox.Items)
             {
                 tmpMapping += mappedPair.DataTableName + this.separatorInner + mappedPair.DataTableColumnName + this.separatorInner + mappedPair.OntologyEntityName + this.separatorOuter;
             }
+            
             return tmpMapping;
         }
 

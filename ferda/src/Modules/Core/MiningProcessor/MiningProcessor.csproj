@@ -172,6 +172,7 @@
     <Compile Include="Results\SerializableDecisionTree.cs" />
     <Compile Include="Results\SerializableFormula.cs" />
     <Compile Include="Results\SerializableHypothesis.cs" />
+    <Compile Include="Results\SerializableOntologyMapping.cs" />
     <Compile Include="Results\SerializableResult.cs" />
     <Compile Include="Results\SerializableResultInfo.cs" />
     <Compile Include="Service.cs" />
