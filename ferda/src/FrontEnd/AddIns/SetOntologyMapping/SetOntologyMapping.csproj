@@ -55,6 +55,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="FerdaMiningProcessor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b8124f638c9cf024, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaMiningProcessor.dll</HintPath>
+    </Reference>
     <Reference Include="FerdaOntologyRelatedBoxes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaOntologyRelatedBoxes.dll</HintPath>

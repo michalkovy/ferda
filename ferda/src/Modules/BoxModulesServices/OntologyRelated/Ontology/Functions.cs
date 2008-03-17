@@ -239,6 +239,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
                     BoxModule.StringIceIdentity
                 );
             }
+
             return true;
         }
 
