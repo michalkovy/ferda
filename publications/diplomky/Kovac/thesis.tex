@@ -45,7 +45,7 @@ FrontEnd uses assembly FerdaModulesManager.dll for communicating with modules. T
 Another assembly that is used by FrontEnd is FerdaProjectManager.dll. It obhospodaruje projects. Project consists of box instances which are placed in an archive and views. Views adds to boxes its placement on a desktop. This manaher is able to load project from xml file and save it to xml file.
 
 FrontEnd also loads add ins. Add ins can extend functionality of FrontEnd in many ways. Mainly it is used for modules for interaction and setting modeles. Modules for interaction work on top of some box module. It for example show results of functions returned by the box module. Setting modules are used for helping with setting nonstandard properties.
-8
+
 Comunucation between FrontEnd and modules and between modules itself are done be Internet Commu6nication Engine (ICE). ICE is strong modern middleware. Thanks to usage of ICE Ferda is language and framework independend and it allow as to run different modules on different computers, but it doesn't add big complexity to the application. It an be also used for distributed computing.
 
 IceGrid applications, which manage available modules and load them on demand, runs on a network. Modules manager use these application for getting modules.
@@ -138,10 +138,58 @@ Let's discuss dialog box where user selects boxes. It would be nice to see which
 \subsection{Project using}
 Source code of one application is mostly not written only in one source file, but in many. There more ways in programming laguages how to achieve this. One way is that application is from beginning compiled from more source files. So it is typical for compiled applications. Compilator as argument has a set of files. Another way is that source code can import another source file. It is mostly used by interpreted languages. Advantage of this approach is that the imported file is loaded when used - so the file can be created near time before usage. It mostly also allow us to write code which loads every file in some directory - so it can be used for plug-ins. Even compiled applications have mostly a way how to achieve these functionality. Compiled applications can use libraries (or assemblies or modules) which can be loaded dynamicaly on demand. It can be also used for loading a source file on demand if a compiler for that language is available on machine where the application is being executed.
 
+If we want this to add to Ferda, project has to have new attribute defining using of other projects. Boxes from these project should be read only -- no change of properties and boxes connected to theirs sockets is available. It should be visible from which project is which box used. If you a remove box from a project used by a box from another project which use the first project you should still somehow work with the second project without loosing the information abou connection to nonexisting box. If you later add back the box to used project it should work again. It raises question how to add back the box. What should identify a box from used projects? At this time boxes are identified in one project by project identifier. The project identifier is integer which is growing from one up which user is not aware of.
+
+If user remove a box with last project identifier, exit Ferda, start Ferda, reopen the project and add a new box, the box can have the same project identifier as it had the removed box. If we want still to use project identifier as identification of boxes we should avoid this by serializing the last used project identifier in a project. Another functionality which can be wanted is ability to replace a box by another one. It means ability to delete box and create a new one which have the same project identifier.
+
+%tady by mohlo byt jak by melo vypadat menu
 \subsection{Defining function}
 versus lambda expresion - the same
 \subsection{Namespaces}
 \subsection{Network archive}
+Another way how to reuse a box can be to copy it from another project. Let's have a new place where you can place boxes which you want to reuse. Such place can be on network and more users can place there theirs boxes and reuse them in another projects. They can use such place to move theirs work to others. Let's call this place network archive.
+
+\subsection{Imlementation}
+As part of this thesis I have created a simple implementation of such network archive. The main part is a ICE service which is running somewhere on network. It has simple definition in slice:
+\begin{verbatim}
+interface Archive {
+	/**
+	 *
+	 * Adds a box with connected subboxes to the archive
+	 *
+	 **/
+	void addBox(Box boxValue, string label)
+		throws NullParamError, NameExistsError;
+
+	/**
+	 *
+	 * Removes the box from archive
+	 *
+	 **/
+	void removeBox(string label)
+		throws NameNotExistsError;
+
+	/**
+	 *
+	 * Gets box which is in the archive
+	 *
+	 **/
+	Box getBox(string label)
+		throws NameNotExistsError;
+
+	/**
+	 *
+	 * Gets labels of boxes in the archive
+	 *
+	 **/
+	idempotent Ferda::Modules::StringSeq listLabels();
+};
+\end{verbatim}
+
+Network archive is a collecton of boxes (with all theirs subboxes). Each box is identified with some label. You can add a box and remove a box, get information about a box and list all labeles in the collection. The collection is serialized on a disk every time it changes. After startup of the service it loads last serialized version.
+
+From user perspective network archive is a new panel with list where you can copy a box. It will ask a user for entering a label after dragging a box from desktop to network archive. After that in the list new item with selected label should be visible. User can than go to another computer which use the same network archive and drag the box from network archive to another project. It should create a new copy of the box with all it's subboxes on the desktop.
+
 nejdrive vyhoda na jednom pocitaci
 \subsection{Summary}
 
@@ -154,11 +202,22 @@ Implementation of GUHA in Ferda by 'small' boxes.
 \subsection{Four fold task in recursion}
 \subsection{Getting basic information from table}
 \section{Implementation details}
-\section{Problems in Ferda code}
+\section{Problems in the source code of Ferda}
+\section{Advanced tools and topics}
+\subsection{Unit tests}
+It would be nice to have a box called unit test, which should have a name and one socket for connecting assert boxes. Assert box should be a box which validates some condition and when the condition is not satisfied it should return some message describing the problem. Then there should be small aplication which takes a project as parameter and calls all unit tests in the project. Unit tests should call all asserts which are connected to the test. When any of them fail the application should return the message with name of unit test and the error message from the failed assert. Even though one unit test failed it should call other tests.
+
+Similar is the NUnit tool for .NET Framework. For reusing tools which executes nunit tests it would be nice to create generator of nunit tests from ferda project unit tests. Such enerator should create one assembly for one project, but also so many test methods so many unit test boxes are in the project. There should be one startup method for initializing the Ferda Project Manager and for loading the project. 
+
+\section{Dependency injection}
+Dependency injection is modern pattern in object oriented programming. You create a services and specify which services depends on which interfaces and later you set if needed which instances should be used. It is very usefull for unit testing. In Ferda we can see a box with all it's subboxes as a service. Notset sockets are interfaces on which it depends (because of lambda box it is not needed to define it on subboxes).
+
+\section{Aspect oriented programming}
 \section{Future tasks to do in ferda}
 %popis jednotlivych tasku s narocnosti, uzitkem - bodove ohodnotit
 
 % modules for interacion je treba vylepsit
 
 %vyjimky a Ferda - uzivatel muze chytat a vysilat vyjimky
+%vyber na kterem pocitaci ktera krabicka bezi
 \end{document}
