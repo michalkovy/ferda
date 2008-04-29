@@ -671,7 +671,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             if (_allObjectsCount > 0)
                 return;
-            if (attribute is EmptyTrace)
+            //tohle bylo v opravene verzi
+            //if (attribute is EmptyTrace)
+            //    return;
+
+            //puvodni verze
+            if (!(attribute is EmptyTrace))
                 return;
             foreach (IBitString s in attribute)
             {
@@ -998,7 +1003,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     return new SkipSetting(
                         _baseQuantifierSetting.relation,
                         _baseQuantifierSetting.treshold * _actConditionCountOfObjects,
-                        _baseSkipSettingNotTreshold = _allObjectsCount - (_baseQuantifierSetting.treshold * _actConditionCountOfObjects)
+                        //opravena verze
+                        //_baseSkipSettingNotTreshold = _allObjectsCount - (_baseQuantifierSetting.treshold * _actConditionCountOfObjects)
+                        //puvodni verze
+                        _baseSkipSettingNotTreshold = _allObjectsCount - _baseSkipSettingTreshold
                         );
                 }
             if (_baseQuantifierSetting.units == UnitsEnum.RelativeToMaxFrequency)
