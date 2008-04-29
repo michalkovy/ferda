@@ -219,7 +219,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.Controls.Add(this.okButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SetOntologyMappingControl";
-            this.Text = "DataTable-Ontology Mapping";
+            this.Text = "Database-Ontology Mapping";
             this.ResumeLayout(false);
             this.PerformLayout();
 
