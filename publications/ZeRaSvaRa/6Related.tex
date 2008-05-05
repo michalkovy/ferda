@@ -1,0 +1,29 @@
+\section{Related Research} \label{Related}
+
+Although domain ontologies are nowadays a popular instrument in many diverse applications incl.~e.g. text mining, they only scarcely appeared in `tabular' KDD until very recently.
+% BOOK BY NIGRO??? SWM?
+One notable exception was the work by Philips \& Buchanan \cite{Philips}, where `common-sense' ontologies of time and processes were exploited to
+derive constraints on attributes, which were in turn used to construct new attributes.
+Our approach implemented in the visual environment of Ferda is more suitable for addressing specific domains, as it allows the user to conveniently specify domain knowledge.
+Our ongoing work is also aimed at detection of missing attributes, which is somewhat analogous (though not identical) to the approach of \cite{Philips}.
+Another relevant project is that by Bogorny et al. \cite{Bogorny}, which aims to prune trivial frequent association patterns in the geospacial domain. The main purpose is however there to cope with computational complexity for the machine, and the issue of frequent trivial patterns is to some degree specific to this domain; our approach, in contrast, is well portable to different domains, and aims to primarily support the human user.
+
+A few earlier research projects (from the 90s) also share some directions with our approach although not explicitly talking about ontologies.
+Clark \& Matwin \cite{Clark} used qualitative models as bias for inductive learning.
+Thomas et al.~\cite{Thomas} and van Dompseler \& van Someren \cite{Someren} used problem-solving method descriptions (a kind of `method ontologies') for the same purpose.
+There have also been several efforts to employ taxonomies over domains of individual attributes \cite{Hussein,Aronis,Nunez,Svatek} to guide inductive
+learning.
+The main advantage of our approach is the reliance upon the new knowledge representation standard (OWL), thus allowing for better comprehensibility and reuse of knowledge in unforeseen applications.
+There is also a difference in focus: the above approaches concentrate on the actual learning process, while we focus on the data preparation phase, assuming that association mining is (as a descriptive task, in contrast to predictive tasks mainly addressed by the above approaches) a hard-to-automate interactive process.
+
+%None of these projects however attempted to explore the role of domain ontology in \emph{interpreting} the results of the mining process.
+%For a brief review of related work on \emph{social ontology modelling} proper see section~\ref{section:social}.
+%A recent contribution that goes in similar direction with our work on hypothesis interpretation but is more restricted in scope is that of Domingues\&Rezende \cite{Domingues}, which uses ontologies (namely, taxonomies) to post-process the results of association mining via generalisation and pruning. 
+A specific stream of ontology-aware knowledge discovery is represented by bioinformatics applications that exploit (usually, shallow) ontologies in mining gene data, see e.g.~\cite{Cannataro,Collard}; their portability to different domains is not obvious.
+Another promising direction, though inherently different from our `tabular mining' approach, is that attempting to reconciliate the notion of background knowledge in Inductive Logic Programming with that of ontology \cite{Zakova}.
+
+We should also mention the research done in parallel in our own group within the \emph{SEWEBAR} project \cite{SEWEBAR}.
+There the data mining methods used are also based on GUHA but rely on a different implemented platform called \emph{LISp-Miner}\footnote{A major difference between Ferda and LISp-Miner is that the latter has a dialogue-oriented rather than visual programming interface.}.
+The main focus of SEWEBAR is on the mining result exploitation phase.
+Prior knowledge is also used for guiding the data preparation and task definition phases to some degree, it is however currently expressed using a proprietary format rather than using a widely-used semantic web language.
+We are working towards harmonising both research threads.
