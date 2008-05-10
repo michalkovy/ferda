@@ -149,7 +149,7 @@ versus lambda expresion - the same
 \subsection{Network archive}
 Another way how to reuse a box can be to copy it from another project. Let's have a new place where you can place boxes which you want to reuse. Such place can be on network and more users can place there theirs boxes and reuse them in another projects. They can use such place to move theirs work to others. Let's call this place network archive.
 
-\subsection{Imlementation}
+\subsubsection{Imlementation}
 As part of this thesis I have created a simple implementation of such network archive. The main part is a ICE service which is running somewhere on network. It has simple definition in slice:
 \begin{verbatim}
 interface Archive {
@@ -188,9 +188,39 @@ interface Archive {
 
 Network archive is a collecton of boxes (with all theirs subboxes -- boxes connected both directly and indirectly to that box). Each box is identified with some label. You can add a box and remove a box, get information about a box and list all labeles in the collection. The collection is serialized on a disk every time it changes. After startup of the service it loads last serialized version.
 
-From user perspective network archive is a new panel with list where you can copy a box. It will ask a user for entering a label after dragging a box from desktop to network archive. After that in the list new item with selected label should be visible. User can than go to another computer which use the same network archive and drag the box from network archive to another project. It should create a new copy of the box with all it's subboxes on the desktop.
+From user perspective network archive is a new panel with list where you can copy a box.
+\begin{figure}
+	\includegraphics[width=10.8cm]{add_to_network_archive}
+	\caption{Add a connection to the network archive}
+\end{figure}
+It will ask a user for entering a label after dragging a box from desktop to network archive.
+\begin{figure}
+	\includegraphics[width=10.8cm]{set_name_of_box_in_network_archive}
+	\caption{Set a name of box in the network archive}
+\end{figure}
+After that in the list new item with selected label should be visible.
+\begin{figure}
+	\includegraphics[height=7cm]{network_archive_box_added}
+	\caption{New box added to the network archive}
+\end{figure}
+User can than go to another computer which use the same network archive and drag the box from network archive to another project. It should create a new copy of the box with all it's subboxes on the desktop.
+\begin{figure}
+	\includegraphics[width=10.8cm]{network_archive_drop_to_desktop}
+	\caption{Drop box to a desktop from the network archive}
+\end{figure}
+He can also remove the box from the network archive.
+\begin{figure}
+	\includegraphics[height=7cm]{network_archive_remove_box}
+	\caption{Remove box from the network archive}
+\end{figure}
 
-nejdrive vyhoda na jednom pocitaci
+\subsubsection{Future enhancements}
+It woul be nice to organize boxes in network archives in some structure. It can be one level structure (labels) or tree structures like directories. Another enhancement would be to add user rights to these labels. Easy thing to do is to allow Ferda FrontEnd to work with more network archives.
+
+\subsubsection{Summary}
+Network archive is new place where a user can store connections. It is independent on projects. One network archive can be accessed from more computers. It is way how to move connections from one project to another.
+
+
 \subsection{Summary}
 
 result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF
