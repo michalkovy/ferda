@@ -223,6 +223,129 @@ Network archive is new place where a user can store connections. It is independe
 
 \subsection{Summary}
 
+\section{Language boxes and expresions}
+Every programming language has from beggining at least small set of functions. Also it has some way how to use these functions to create more complex ones.
+
+\subsection{Boxes for math}
+
+\subsubsection{Binary operation}
+\includegraphics[width=10.8cm]{binaryOperation1.png}
+\includegraphics[width=10.8cm]{binaryOperation2.png}
+
+\subsubsection{Comparision}
+\includegraphics[width=10.8cm]{compare1.png}
+\includegraphics[width=10.8cm]{compare2.png}
+
+\subsubsection{If expressions}
+\includegraphics[width=10.8cm]{ifthenelse1.png}
+\includegraphics[width=10.8cm]{ifthenelse2.png}
+
+\subsection{Lambda expression}
+Basic facts
+\begin{itemize}
+	\item From lambda calculus $(\lambda x.(1+x))(9)$
+	\item Basics of functional programming
+\end{itemize}
+
+Lambda in C\# 3
+\begin{verbatim}
+public delegate int function(int x);
+
+public static void Main(string[] args)
+{
+  function plusOne = x => 1 + x;
+  var a = plusOne(9);
+  System.Console.WriteLine(a);
+}
+\end{verbatim}
+	
+Other languages
+
+Lambda in F\#
+\begin{verbatim}
+let onePlus x = 1 + x
+do printf "%s" (onePlus(9)) 
+\end{verbatim}
+
+Lambda in Python
+\begin{verbatim}
+plusOne = lambda x: 1 + x
+print plusOne(9)
+\end{verbatim}
+
+\includegraphics[width=10.8cm]{lambdaBasic1.png}
+
+without parameters
+\includegraphics[width=10.8cm]{lambdaBasic2.png}
+
+One constant parameter specified
+\includegraphics[width=10.8cm]{lambdaBasic3.png}
+	
+\subsubsection{Implementation of lambda}
+How it really works -- Algoritm
+\begin{itemize}
+	\item Values of variables are cloned (whole subtree)
+	\item Main function is cloned with substitution and returned
+\end{itemize}
+
+\subsubsection{Example usage of lambda -- factorial}
+Factorial in C\# -- Structural version
+
+\begin{verbatim}
+public static int Factorial(int x)
+{
+  if (x == 0)
+  {
+    return 1;
+  }
+  else
+  {
+    return x * Factorial(x - 1);
+  }
+}
+\end{verbatim}
+	
+Factorial in C\# -- Expresion version
+
+\begin{verbatim}
+public static int Factorial2(int x)
+{
+  return (x == 0) ? 1 : x * Factorial2(x - 1);
+}
+\end{verbatim}
+
+Factorial in other languages
+
+Python
+\begin{verbatim}
+fac = lambda x: x == 0 and 1 or x * fac(x - 1)
+\end{verbatim}
+
+F\#
+\begin{verbatim}
+let rec factorial n =
+    if n=0 then 1 else n * factorial(n - 1)
+\end{verbatim}
+	
+Factorial in Ferda
+\includegraphics[width=10.8cm]{faktorial}
+
+\subsection{Other new boxes}
+\subsubsection{Get parameter}
+\includegraphics[width=10.8cm]{getParameter1.png}
+\includegraphics[width=10.8cm]{getParameter2.png}
+
+\subsubsection{Execute action}
+\includegraphics[width=10.8cm]{executeAction1.png}
+\includegraphics[width=10.8cm]{executeAction2.png}
+
+\subsubsection{Command and command output}
+\includegraphics[width=10.8cm]{command1.png}
+\includegraphics[width=10.5cm]{command2.png}
+
+The same in console
+\includegraphics[width=10.8cm]{command3.png}
+
 result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF
 
 Implementation of GUHA in Ferda by 'small' boxes.
