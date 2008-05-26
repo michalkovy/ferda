@@ -8,7 +8,7 @@
 		<call target="docbookxhtml" />
 		<call target="docbookpdf" />
 		<call target="xmltodocbooktoxhtml" />
-          <call target="imagesforxhtml" />
+        <call target="imagesforxhtml" />
 	</target>
 	<target name="docbookxhtml" description="Vytvoří xhtml dokumentaci k docbook souborům">
 		<if test="${not(file::exists(sablonaDocBookXhtml))}">
@@ -127,7 +127,8 @@
 		</foreach>
 	</target>
 	
-	
+	<target name="boxConfigDocumentation" description="Vytvoří dokumentaci ze souboru boxConfig.xml" >
+	</target>
 	
 	<target name="xmltodocbooktoxhtml" description="Vytvoří xhtml dokumentaci k xml souborům">
 		<if test="${not(file::exists(sablonaDocBookXhtml))}">
