@@ -120,7 +120,7 @@
 	<target name="doc">
 		<nant>
 			<buildfiles>
-        <include name="${docsrc.dir}/**/default.build"/>
+				<include name="${docsrc.dir}/**/default.build"/>
 			</buildfiles>
 			<properties>
 				<property name="build.dir" value="${doc.dir}"/>
@@ -137,6 +137,14 @@
 				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}"/>
 				<property name="sablonaDocBookPDF" value="${path::get-full-path('stylesheets/docbook/pdf/docbook.xslt')}" unless="${property::exists('sablonaDocBookPDF')}"/>
 				<property name="use.xep" value="true" unless="${property::exists('use.xep')}"/>				
+			</properties>
+		</nant>
+		<nant buildfile="${docsrc.dir}/include.build" target="boxConfigDocumentation" >
+			<properties>
+				<property name="build.dir" value="${doc.dir}" />
+				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}" />
+				<property name="boxConfig" value="${src.dir}/Modules/BoxModulesServices/boxes.xml" />
+				<property name="use.xep" value="true" unless="${property::exists('use.xep')}"/>	
 			</properties>
 		</nant>
 	</target>
