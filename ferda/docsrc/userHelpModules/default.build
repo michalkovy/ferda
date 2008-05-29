@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<project name="documentation-userHelpModules" default="doc" basedir=".">
+	<description>Documentation - user help for modules for interaction and setting modules</description>
+	<!--
+		Požadované vlastnosti:
+			* build.dir		- (path) kam se má vytvořená dokumentace dát
+			* sablonaDocBookXhtml	- (path) stylesheet pro docbook -> xhtml
+			* use.xsltproc		- (true|false) zda používat k převodu xml souborů pomocí xsl program xsltproc
+	-->
+	<property name="build.dir" value="${path::combine(build.dir,'userHelpModules')}" />
+	<include buildfile="../include.build"/>
+</project>
