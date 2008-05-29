@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+  <articleinfo>
+    <authorgroup>
+      <author>
+		  <personname>
+		          <firstname>Martin</firstname>
+				<surname>Zeman</surname>
+ 		</personname>
+        <email>martinzeman@email.cz</email>
+      </author>
+      <author>
+			<personname>
+				<firstname>Martin</firstname>
+				<surname>Ralbovský</surname>
+			</personname>
+			<email>martin.ralbovsky@gmail.com</email>
+		</author>
+    </authorgroup>
+
+    <pubdate>2008-05-29</pubdate>
+
+    <title>DatabaseOntology Mapping module - Module for mapping concepts from ontology to database columns</title>
+
+    <titleabbrev>DatabaseOntologyMapping</titleabbrev>
+
+    <!--
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2008-01-05</date>
+        <revremark>Initial version of the document</revremark>
+      </revision>
+    </revhistory>
+    -->
+  </articleinfo>
+
+  <abstract>
+    <para>
+		This article gives describes the functionality of the DatabaseOntologyMapping module.
+    </para>
+  </abstract>
+
+  <section>
+    <title>Introduction</title>
+
+    <para>
+		Welcome to Database-Ontology Mapping module. This module is one of the core parts of successful ontology usage in Ferda. One of the main issues when using ontologies in KDD is mapping of ontology concepts to concepts of the database. In Ferda, we map classes and instances of an ontology to columns of the whole database. The mapping is done via the Database-Ontology Mapping module. 
+    </para>
+  </section>
+
+  <section>
+    <title>User interface</title>
+  
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="DatabaseOntologyMapping.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+        
+      <para>
+		  The picture shows us user interface of the module. At the top, there are two lists. The left one shows columns of the data tables of the database and the right one shows taxonomy of the ontology with classes and instances shown. In our example, medical database ADAMEK is used. Textbox in the middle shows information about user actions and the list at the bottom part of the dialog shows us pairs already mapped. Note that relation of database column to ontology entity is 1:N. This means that each column can be used only once in the mapping (that is why the columns already mapped are crossed over), but class or entity of an ontology can be used more times. 
+      </para>
+       <para>
+		   Here is the list of available actions:
+       </para>
+       
+       <itemizedlist>
+			<listitem>
+				<formalpara>
+					<title>Hiding database column or ontology entity</title>
+					<para>
+						User can hide database table/column or ontology entity by clicking on the "Hide" button below both lists. When user hides ontology class, the whole subtree representing its descendants is removed from the list. The hiden items are not deleted, they appear the next time the dialog is loaded.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Creating a new mapped pair</title>
+					<para>
+						User selects an ontology entity and then the database column. When he clicks on "Map" a new mapped pair is created. The database column becomes crossed over and the mapped pair appears at the bottom list. 
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Deleting a mapped pair</title>
+					<para>User selects a mapped pair and then clicks on "Unmap". The mapped pair is deleted from then mapping.</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Saving a mapping on disc</title>
+					<para>
+					There is a possibility of saving the mapping on disc because of reusability. User clicks on "Save mapping" and then selects path and file name, where to save the mapping. The mapping is saved in an XML format.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Loading a mapping from disc</title>
+					<para>
+					There is a possibility of loading the mapping from disc because of reusability. User clicks on "Load mapping" and then selects path and file name, from which file to load the mapping. The mapping is saved in an XML format.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Displaying PDF help</title>
+					<para>User clicks on "Help" button and the PDF help about this module is displayed.</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Exiting the dialog</title>
+					<para>
+					To exit the dialog, user clicks on the "OK" button. Then, the mapping created by the user is returned back to the Ontolgy Mapping box. 
+					</para>
+				</formalpara>
+			</listitem>			
+		</itemizedlist>
+  </section>
+</article>
