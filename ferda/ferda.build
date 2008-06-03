@@ -144,6 +144,7 @@
 				<property name="build.dir" value="${doc.dir}" />
 				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}" />
 				<property name="boxConfig" value="${src.dir}/Modules/BoxModulesServices/boxes.xml" />
+				<property name="boxLocalization" value="${src.dir}/Modules/BoxModulesServices/boxesLocalization.en-US.xml" />
 				<property name="use.xep" value="true" unless="${property::exists('use.xep')}"/>	
 			</properties>
 		</nant>
