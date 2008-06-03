@@ -1,3 +1,23 @@
+// SetOntologyMappingControl.cs - database - ontology mapping setting module
+//
+// Author: Martin Zeman <martinzeman@email.cz>
+//
+// Copyright (c) 2007 Martin Zeman
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -9,9 +29,13 @@ using System.Windows.Forms;
 using Ferda.Guha.Data;
 using Ferda.OntologyRelated.generated.OntologyData;
 using Ferda.Guha.MiningProcessor.Results;
+using Ice;
 
 namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
 {
+    /// <summary>
+    /// The SetOntology mapping (DatabaseOntology Mapping) setting module
+    /// </summary>
     public partial class SetOntologyMappingControl : Form
     {
         #region Private variables
@@ -52,6 +76,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         private string pathToOntologyMappingFile = "";
 
         /// <summary>
+        /// Owner of addin
+        /// </summary>
+        private IOwnerOfAddIn ownerOfAddIn;
+
+        /// <summary>
         /// Colors which are used in ontologyTreeView
         /// </summary>
         private Color colorDefaultNotSelectedBack = Color.White;
@@ -78,20 +107,46 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
 
         #endregion
 
-        //public SetOntologyMappingControl()
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor of the class
+        /// </summary>
+        /// <param name="dataTableColumnsDictionary">
+        /// Array of structures that holds inrofmation about datatables, its columns and ontology
+        /// </param>
+        /// <param name="ontology">Information about ontology</param>
+        /// <param name="separatorInner">
+        /// Char which separates datatable name, column name and ontology entity name
+        /// </param>
+        /// <param name="separatorOuter">
+        /// Char which separates datatable name, column name and ontology entity name
+        /// </param>
+        /// <param name="inputMapping">
+        /// The mapping that already exist
+        /// </param>
+        /// <param name="localePrefs">
+        /// Localization preferencees
+        /// </param>
+        /// <param name="ownerOfAddIn">
+        /// Owner of add in (FrontEnd)
+        /// </param>
         public SetOntologyMappingControl(Dictionary<string, string[]> dataTableColumnsDictionary, OntologyStructure ontology, string separatorInner, string separatorOuter, string inputMapping, string[] localePrefs, IOwnerOfAddIn ownerOfAddIn)
         {
             this.dataTableColumnsDictionary = dataTableColumnsDictionary;
             this.ontology = ontology;
             this.separatorInner = separatorInner;
             this.separatorOuter = separatorOuter;
+            this.ownerOfAddIn = ownerOfAddIn;
 
             InitializeComponent();
 
             this.RefreshMappingViews(inputMapping);
         }
 
-        #region Other private methods
+        #endregion
+
+        #region Private methods
 
         /// <summary>
         /// Method to fill ColumnsTree with DataTable names and its columns
@@ -209,37 +264,6 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             return;
         }
 
-        /*
-         * for(String className : FerdaOntology.OntologyClassMap.keySet()) {
-				System.out.println(className.toString() + ": ");
-				
-				System.out.println("\tannotations: ");
-				for(String annotation : FerdaOntology.OntologyClassMap.get(className).Annotations) {
-					if (!annotation.isEmpty()) System.out.println("\t\t" + annotation.toString());
-				}
-				System.out.println("\tsubclasses: ");
-				for(String subClass : FerdaOntology.OntologyClassMap.get(className).SubClasses) {
-					if (!subClass.isEmpty()) System.out.println("\t\t" + subClass.toString());
-				}
-				System.out.println("\tsuperclasses: ");
-				for(String superClass : FerdaOntology.OntologyClassMap.get(className).SuperClasses) {
-					if (!superClass.isEmpty()) System.out.println("\t\t" + superClass.toString());
-				}
-				
-				System.out.println("\tdataproperties: ");
-				
-				for(String dataPropertyName : FerdaOntology.OntologyClassMap.get(className).DataPropertiesMap.keySet()) {
-					System.out.println("\t\t" + dataPropertyName.toString() + ": ");
-					for(String dataProperty : FerdaOntology.OntologyClassMap.get(className).DataPropertiesMap.get(dataPropertyName)) {
-						if (!dataProperty.isEmpty()) System.out.println("\t\t\t" + dataProperty.toString());
-					}
-				}
-				System.out.println("---------");
-			}
-         * */
-
-        #endregion
-
         /// <summary>
         /// Method which maps data table column name and ontology entity name
         /// </summary>
@@ -267,8 +291,57 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         }
 
         /// <summary>
+        /// Generates XML mapping from the list view
+        /// </summary>
+        /// <returns>string that contains the XML mapping</returns>
+        private string generateXMLMappingFromListView()
+        {
+            string tmpMapping = "";
+            /// <summary>
+            /// Serializable ontology mapping
+            /// </summary>
+            SerializableOntologyMapping ontologyMapping = new SerializableOntologyMapping();
+
+            ontologyMapping.FerdaOntologyMapping = new Ferda.Guha.MiningProcessor.Results.MappedPair[this.MappingListBox.Items.Count];
+
+            int i = 0;
+            foreach (MappedPair mappedPair in this.MappingListBox.Items)
+            {
+                ontologyMapping.FerdaOntologyMapping[i].DataTableName = mappedPair.DataTableName;
+                ontologyMapping.FerdaOntologyMapping[i].DataTableColumnName = mappedPair.DataTableColumnName;
+                ontologyMapping.FerdaOntologyMapping[i].OntologyEntityName = mappedPair.OntologyEntityName;
+                i++;
+            }
+            tmpMapping = SerializableOntologyMapping.Serialize(ontologyMapping);
+            return tmpMapping;
+        }
+
+        /// <summary>
+        /// Generates the mapping that is passed to the mapping box. This mapping string is different to the
+        /// XML mapping that is being serialized. 
+        /// </summary>
+        /// <returns>Mapping in a string format</returns>
+        private string generateMappingFromListView()
+        {
+            string tmpMapping = "";
+
+            foreach (MappedPair mappedPair in this.MappingListBox.Items)
+            {
+                tmpMapping += mappedPair.DataTableName + this.separatorInner + mappedPair.DataTableColumnName + this.separatorInner + mappedPair.OntologyEntityName + this.separatorOuter;
+            }
+
+            return tmpMapping;
+        }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
         /// Method which tests if it is possible to map data table column name and ontology entity name and maps them
         /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void mapButton_Click(object sender, EventArgs e)
         {
             if (this.dataTablesTreeView.SelectedNode != null && this.ontologyTreeView.SelectedNode != null)
@@ -298,6 +371,8 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// <summary>
         /// Method which unmaps mapped pair
         /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void unmapButton_Click(object sender, EventArgs e)
         {
             if (this.MappingListBox.SelectedItem != null)
@@ -316,6 +391,8 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// <summary>
         /// Method which returns node normal behaviour (colors) to the selected when focus is returned to the treeView
         /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void dataTablesTreeView_Enter(object sender, EventArgs e)
         {
             if (this.dataTablesTreeView.SelectedNode != null)
@@ -328,6 +405,8 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// <summary>
         /// Method which ensures, that a selected node will be always visible even if the treeView lost the focus
         /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void dataTablesTreeView_Leave(object sender, EventArgs e)
         {
             if (this.dataTablesTreeView.SelectedNode != null)
@@ -340,6 +419,8 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// <summary>
         /// Method which returns node normal behaviour (colors) to the selected when focus is returned to the treeView
         /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void ontologyTreeView_Enter(object sender, EventArgs e)
         {
             if (this.ontologyTreeView.SelectedNode != null)
@@ -352,6 +433,8 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// <summary>
         /// Method which ensures, that a selected node will be always visible even if the treeView lost the focus
         /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void ontologyTreeView_Leave(object sender, EventArgs e)
         {
             if (this.ontologyTreeView.SelectedNode != null)
@@ -364,6 +447,8 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// <summary>
         /// Method which removes selected node from the dataTablesTreeView for better lucidity
         /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void ColumnsRemoveButton_Click(object sender, EventArgs e)
         {
             if (this.dataTablesTreeView.SelectedNode != null)
@@ -385,6 +470,8 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
         /// <summary>
         /// Method which removes selected node from the ontologyTreeView for better lucidity
         /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void OntologyRemoveButton_Click(object sender, EventArgs e)
         {
             if (this.ontologyTreeView.SelectedNode != null)
@@ -399,6 +486,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             }
         }
 
+        /// <summary>
+        /// Loanding mapping from an XML file
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
         private void loadButton_Click(object sender, EventArgs e)
         {
             if (LoadMappingDialog.ShowDialog() == DialogResult.OK)
@@ -428,6 +520,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             }
         }
 
+        /// <summary>
+        /// Saving the mapping to a XML file
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>        
         private void saveButton_Click(object sender, EventArgs e)
         {
             saveMappingDialog.FileName = pathToOntologyMappingFile;
@@ -439,40 +536,11 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             }
         }
 
-        private string generateXMLMappingFromListView()
-        {
-            string tmpMapping = "";
-            /// <summary>
-            /// Serializable ontology mapping
-            /// </summary>
-            SerializableOntologyMapping ontologyMapping = new SerializableOntologyMapping();
-
-            ontologyMapping.FerdaOntologyMapping = new Ferda.Guha.MiningProcessor.Results.MappedPair[this.MappingListBox.Items.Count];
-
-            int i = 0;
-            foreach (MappedPair mappedPair in this.MappingListBox.Items)
-            {
-                ontologyMapping.FerdaOntologyMapping[i].DataTableName = mappedPair.DataTableName;
-                ontologyMapping.FerdaOntologyMapping[i].DataTableColumnName = mappedPair.DataTableColumnName;
-                ontologyMapping.FerdaOntologyMapping[i].OntologyEntityName = mappedPair.OntologyEntityName;
-                i++;
-            }
-            tmpMapping = SerializableOntologyMapping.Serialize(ontologyMapping);
-            return tmpMapping;
-        }
-
-        private string generateMappingFromListView()
-        {
-            string tmpMapping = "";
-            
-            foreach (MappedPair mappedPair in this.MappingListBox.Items)
-            {
-                tmpMapping += mappedPair.DataTableName + this.separatorInner + mappedPair.DataTableColumnName + this.separatorInner + mappedPair.OntologyEntityName + this.separatorOuter;
-            }
-            
-            return tmpMapping;
-        }
-
+        /// <summary>
+        /// The OK button click. It returnes the mapping to the mapping box. 
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>  
         private void okButton_Click(object sender, EventArgs e)
         {
             returnMapping = generateMappingFromListView();
@@ -480,45 +548,17 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.Dispose();
             return;
         }
-    }
 
-    public class DataTableColumn
-    {
-        public string Name;
-
-        public DataTableColumn() { }
-
-        public DataTableColumn(string name)
+        /// <summary>
+        /// Displays the PDF help for the module.
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        private void helpButton_Click(object sender, EventArgs e)
         {
-            Name = name;
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + "\\AddIns\\Help\\DatabaseOntologyMappingUser.pdf");
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
-    }
-
-    public class MappedPair
-    {
-        public string DataTableName;
-        public string DataTableColumnName;
-        public string OntologyEntityName;
-        public TreeNode ColumnPositionInTreeView;
-
-        public MappedPair() { }
-
-        public MappedPair(string dataTableName, string dataTableColumnName, TreeNode columnPositionInTreeView,  string ontologyEntityName)
-        {
-            DataTableName = dataTableName;
-            DataTableColumnName = dataTableColumnName;
-            ColumnPositionInTreeView = columnPositionInTreeView;
-            OntologyEntityName = ontologyEntityName;
-        }
-
-        public override string ToString()
-        {
-            return DataTableName + "." + DataTableColumnName + " - " + OntologyEntityName;
-        }
+        #endregion
     }
 }

@@ -114,6 +114,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.helpButton.TabIndex = 9;
             this.helpButton.Text = "Help";
             this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
             // 
             // infoBox
             // 
@@ -217,7 +218,9 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping
             this.Controls.Add(this.mapButton);
             this.Controls.Add(this.MappingListBox);
             this.Controls.Add(this.okButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "SetOntologyMappingControl";
             this.Text = "Database-Ontology Mapping";
             this.ResumeLayout(false);

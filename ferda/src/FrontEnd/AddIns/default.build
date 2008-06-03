@@ -254,7 +254,7 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
-<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
     		  <fileset basedir="ODBCConnectionString/Help">
      		   <include name="*.*" /> 
      		 </fileset>
@@ -511,6 +511,12 @@
 				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
 			</references>
 		</csc>
+
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+      <fileset basedir="SetOntologyMapping/Help">
+        <include name="*.*" />
+      </fileset>
+    </copy>    
 		
 		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'ShowMapping.dll')}" debug="${debug}" optimize="${optimize}">
 			<sources>
