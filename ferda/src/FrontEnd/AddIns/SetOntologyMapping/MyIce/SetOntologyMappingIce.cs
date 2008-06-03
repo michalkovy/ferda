@@ -32,6 +32,7 @@ using Ferda.Modules.Boxes.DataPreparation;
 using Ferda.Modules.Boxes.OntologyRelated.OntologyMapping;
 using Ferda.Modules.Boxes.OntologyRelated.Ontology;
 using Ferda.OntologyRelated.generated.OntologyData;
+using Ice;
 
 
 namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
