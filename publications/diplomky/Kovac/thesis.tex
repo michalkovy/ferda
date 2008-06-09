@@ -188,7 +188,7 @@ interface Archive {
 
 Network archive is a collecton of boxes (with all theirs subboxes -- boxes connected both directly and indirectly to that box). Each box is identified with some label. You can add a box and remove a box, get information about a box and list all labeles in the collection. The collection is serialized on a disk every time it changes. After startup of the service it loads last serialized version.
 
-From user perspective network archive is a new panel with list where you can copy a box.
+From user perspective the network archive is a new panel with list where you can copy a box.
 \begin{figure}
 	\includegraphics[width=12cm]{add_to_network_archive}
 	\caption{Add a connection to the network archive}
@@ -220,19 +220,21 @@ It woul be nice to organize boxes in network archives in some structure. It can 
 \subsubsection{Summary}
 Network archive is new place where a user can store connections. It is independent on projects. One network archive can be accessed from more computers. It is way how to move connections from one project to another.
 
-
 \subsection{Summary}
 
 \section{Language boxes and expresions}
 Every programming language has from beggining at least small set of functions. Also it has some way how to use these functions to create more complex ones. Such aparat has been created for ferda as main part of this diploma thesis.
 
 \subsection{Constants}
+Ferda language is typed language. It means that functions in ferda return values of some type. Easiest functions are constant functions which return specified value. There are at least two ways how to achieve this by box semantic. First way is to create for each type specific box for constants which returns that specific type. This type has been cteated in Ferda as a part of this thesis.
+
+Second type is to create one box which have one property for specifiing a type and dependend on it it has second property with value of specified type. It also returns that specified type.
 
 \subsection{Boxes for math}
-Mathematical expressions are really important for programmers, statistics and analitics. Support for them is important. 
+Mathematical expressions are really important for programmers, statistics and analitics. Support for them is important. New boxes for basic mathematic functions has been added. 
 
 \subsubsection{Binary operation}
-First 
+New boxes for basic binary function has been added. 
 \begin{figure}
 	\includegraphics[width=12cm]{binaryOperation2.png}
 	\caption{}
