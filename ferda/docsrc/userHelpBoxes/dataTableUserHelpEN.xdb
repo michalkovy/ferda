@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+		</authorgroup>
+		
+		<title>Data table Box User Help</title>
+		<titleabbrev>Data table Help</titleabbrev>
+		
+		<!--
+		<revhistory>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2008-06-20</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Initial version of the document
+					</para>
+				</revdescription>
+			</revision>
+		</revhistory>
+		-->
+		<pubdate>2008-06-20</pubdate>
+	</articleinfo>
+	
+	<abstract>
+	<para>
+		This document provides user help for the <classname>Data table</classname> box.
+	</para>
+	</abstract>
+	
+<section>
+	<title>About the Data table box</title>
+	<para>
+		A lot of Ferda's boxes need to access the database and to get information from the database: the database scheme definition,
+		the number and names of the tables and colums, various statistics and the data itself which are later transformed into the bit
+		strings.
+	</para>
+	<para>
+		The <classname>Data table</classname> box represents one data table in a defined database. The box is connected to the 
+		<classname>Database</classname> box, which determines the working database. User can either create a new data table by
+		selecting the data table's name form the boxes asking for creation menu of the <classname>database</classname> box or
+		create a new box of the <classname>data table</classname> type and connect the database box to the into its socket.
+	</para>
+	<para>
+		The important property of the box is the <classname>Primary key</classname> box. For further usage (i.e. in GUHA mining,
+		user must select the primary key of the table. This is done by the <classname>Select string</classname> setting module.
+	</para>
+</section>
+
+<section>
+	<title>Sockets</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Database</title>
+				<para>
+					Determines the database, where the data table is located. One box of the <classname>database</classname> type
+					can be conected to this socket. 
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Properties</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Name</title>
+				<para>
+					Name of the data table in the database
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Type</title>
+				<para>
+					Type of the data table (table, view, query...)
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Remarks</title>
+				<para>
+					Remarks about the data table from the creator of the database
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Primary key</title>
+				<para>
+					List of columns that define the primary key of the table. The value is either a value of one column or CSV (comma separated values). It will be not enclosed in apostrophes.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Records count</title>
+				<para>
+					Number of rows in the table (pre-computed field).
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Modules asking for creation</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Derived column</title>
+				<para>
+					Creates an emty column box from the data table that can be specified by setting the <classname>Select expression
+					</classname> property
+				</para>
+			</formalpara>
+		</listitem>	
+		<listitem>
+			<formalpara>
+				<title>Particular column</title>
+				<para>
+					Creates a particular column box determined by its name from the data table.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>All columns in the data matrix</title>
+				<para>
+					Creates boxes for all columns in the data table.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+</article>
