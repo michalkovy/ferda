@@ -65,14 +65,12 @@ namespace Ferda.Modules.Boxes.Language.Math.Compare
         	string type = this._boxModule.GetPropertyString("type");
         	switch (type)
         	{
-        		case "<" : return value1 < (value2 - 0.00000001);
-        		case ">" : return value1 > (value2 + 0.00000001);
-        		case "<=" : return value1 <= (value2 + 0.00000001);
-        		case ">=" : return value1 >= (value2 - 0.00000001);
-        		case "=" : return (value1 >= (value2 - 0.00000001) &&
-        							value1 <= (value2 + 0.00000001));
-        		case "!=" : return (value1 < (value2 - 0.00000001) ||
-        							value1 > (value2 + 0.00000001));
+        		case "<" : return value1 < value2;
+        		case ">" : return value1 > value2;
+        		case "<=" : return value1 <= value2;
+        		case ">=" : return value1 >= value2;
+        		case "=" : return value1 == value2;
+        		case "!=" : return value1 != value2;
         		default: throw new System.Exception("Unexpected type");
         	}
         }
