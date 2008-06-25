@@ -1124,18 +1124,18 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <param name="e">Event arguments</param>
         private void copyAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string result = string.Empty;
+            StringBuilder result = new StringBuilder();
             foreach (ListViewItem item in HypothesesListView.Items)
             {
                 //adding the subitems
                 for (int i = 0; i < item.SubItems.Count; i++)
                 {
-                    result += item.SubItems[i].Text;
-                    result += '\t';
+                    result.Append(item.SubItems[i].Text);
+                    result.Append('\t');
                 }
-                result += '\n';
+                result.Append('\n');
             }
-            Clipboard.SetText(result);
+            Clipboard.SetText(result.ToString());
         }
 
         /// <summary>
