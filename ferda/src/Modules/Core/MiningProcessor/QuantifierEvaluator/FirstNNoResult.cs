@@ -112,6 +112,7 @@ namespace Ferda.Guha.MiningProcessor.QuantifierEvaluator
         {
             _actBufferUsed = 0;
             evalVector.Clear();
+            _buffer = new bufferItem[_bufferSize];
         }
 
         /// <summary>
