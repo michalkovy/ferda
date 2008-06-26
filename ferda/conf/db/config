@@ -18,6 +18,10 @@ IceGrid.Registry.Trace.Adapter=1
 IceGrid.Registry.Trace.Locator=2
 
 IceGrid.Registry.AdminPermissionsVerifier=IceGrid/NullPermissionsVerifier
+IceGrid.Registry.PermissionsVerifier=IceGrid/NullPermissionsVerifier
+IceGrid.Registry.SSLPermissionsVerifier=IceGrid/NullSSLPermissionsVerifier
+IceGrid.Registry.AdminSSLPermissionsVerifier=IceGrid/NullSSLPermissionsVerifier
+IceGrid.Registry.DynamicRegistration=1
 
 #IceGrid.Registry.AdminSessionTimeout=120
 #IceGrid administrative clients might establish a session with the registry to receive
@@ -35,7 +39,7 @@ IceGrid.Registry.AdminPermissionsVerifier=IceGrid/NullPermissionsVerifier
 #
 # IceGrid node configuration.
 #
-IceGrid.Node.Name=Local
+IceGrid.Node.Name=localhost
 IceGrid.Node.Endpoints=tcp -h 127.0.0.1
 IceGrid.Node.CollocateRegistry=1
 #IceGrid.Node.Output=db
@@ -49,3 +53,9 @@ IceGrid.Node.Trace.Adapter=2
 IceGrid.Node.Trace.Server=3
 
 #Ice.Trace.Location=2
+
+#
+# Dummy username and password for icegridadmin.
+#
+IceGridAdmin.Username=foo
+IceGridAdmin.Password=bar

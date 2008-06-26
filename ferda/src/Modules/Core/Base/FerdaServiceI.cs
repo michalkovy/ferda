@@ -1,4 +1,4 @@
-// FerdaServiceI.cs - half implementation of IceBox service
+﻿// FerdaServiceI.cs - half implementation of IceBox service
 //
 // Authors: 
 //   Michal KovĂˇÄŤ <michal.kovac.develop@centrum.cz>
@@ -32,7 +32,7 @@ namespace Ferda.Modules
     /// <summary>
     /// Represents a IceBox service, is created for inheriting
     /// </summary>
-    public abstract class FerdaServiceI : LocalObjectImpl, Service
+    public abstract class FerdaServiceI : Service
     {
         /// <summary>
         /// Service execution method
@@ -46,27 +46,28 @@ namespace Ferda.Modules
             Debug.Listeners.Add(new TextWriterTraceListener(name + ".log"));
             Debug.AutoFlush = true;
             Debug.WriteLine("Starting service...");
-            _adapter = communicator.createObjectAdapter(name);
+            _adapter = communicator.createObjectAdapter(name + "Adapter");
             ObjectFactoryForPropertyTypes factory =
                 new ObjectFactoryForPropertyTypes();
             ObjectFactoryForPropertyTypes.addFactoryToCommunicator(
                 communicator, factory);
+            
             Debug.WriteLine("Activating adapter...");
             _adapter.activate();
 
             reaper = new ReapThread();
             reaperThread = new Thread(new ThreadStart(reaper.Run));
             reaperThread.Start();
-
+            
             Debug.WriteLine("Registering boxes...");
             registerBoxes();
-
+            
             if (havePropertyBoxes)
             {
                 propertyReaper = new PropertyReapThread();
                 propertyReaperThread = new Thread(new ThreadStart(propertyReaper.Run));
                 propertyReaperThread.Start();
-
+                
                 Debug.WriteLine("Registering property boxes...");
                 registerPropertyBoxes();
             }

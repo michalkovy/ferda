@@ -4,7 +4,7 @@ using Ice;
 
 namespace Ferda.Modules
 {
-	public class ObjectFactoryForPropertyTypes : Ice.LocalObjectImpl, Ice.ObjectFactory
+	public class ObjectFactoryForPropertyTypes : Ice.ObjectFactory
 	{
 		
 		/// <summary>

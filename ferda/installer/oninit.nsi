@@ -26,18 +26,9 @@ Function .onInit
 	goto CheckDotNet
 	
 	CheckDotNet:
-  Call IsExactDotNetInstalled
-   Pop $0
-   StrCmp $0 1 bad.NETFramework GoodDotNet
-
-   GoodDotNet:
   Call IsDotNETInstalledAdv
    Pop $0
    StrCmp $0 1 done no.NETFramework
-  
-   bad.NETFramework:
-  MessageBox MB_YESNO "$(Bad_Dot_Net_Installed)" IDYES GoodDotNet 
-  Abort "Exiting..."
    
    no.NETFramework:
   MessageBox MB_YESNO "$(Dot_Net_Not_Installed) ${DOT_MAJOR}.${DOT_MINOR}.${DOT_MINOR_MINOR}. $(Dot_Net_Not_Installed1)" IDYES NoDotNet

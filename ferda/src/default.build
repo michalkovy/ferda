@@ -117,7 +117,7 @@
 				<include name="CommonAssemblyInfo.cs"/>
 			</sources>
 			<references>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
 		<copy todir="${frontendbin.dir}">

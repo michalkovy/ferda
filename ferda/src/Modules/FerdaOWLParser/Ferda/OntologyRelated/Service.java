@@ -8,7 +8,7 @@ public class Service extends Ice.LocalObjectImpl implements IceBox.Service
 	//function needed by ICE
 	public void start(String name, Ice.Communicator communicator, String[] args)
 	{
-	    _adapter = communicator.createObjectAdapter(name);
+	    _adapter = communicator.createObjectAdapter(name + "Adapter");
 	    _adapter.add(new OWLParserI(), Ice.Util.stringToIdentity("Ferda.OntologyRelated.OWLParser"));
 	    
 	    _adapter.activate();

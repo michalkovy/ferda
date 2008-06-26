@@ -14,7 +14,7 @@
           <path>
               <pathelement file="OWL_API_src/owlapi-api.jar" />
               <pathelement file="OWL_API_src/owlapi-apibinding.jar" />
-              <pathelement file="C:/Ice-3.2.1/lib/Ice.jar" />
+              <pathelement file="C:/Ice-3.3.0/lib/Ice.jar" />
               <!-- "{path::combine(ice.dir, 'lib', 'Ice.jar')}" -->
           </path>
       </arg>

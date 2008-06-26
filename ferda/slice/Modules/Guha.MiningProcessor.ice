@@ -1,7 +1,6 @@
 #ifndef FERDA_GUHA_MININGPROCESSOR
 #define FERDA_GUHA_MININGPROCESSOR
 
-#include <Modules/Modules.ice>
 #include <Modules/BuiltinSequences.ice>
 #include <Modules/BasicPropertyTypes.ice>
 #include <Modules/Exceptions.ice>
@@ -18,7 +17,7 @@ The csd file stands for class diagram, that can be edited with the
 NCLass tool, see "http://nclass.sourceforge.net".
 
 Explanation of structures, interfaces and their methods is located in
-"src/Modules/Core/MiningProcessor/Design/*"
+"src/Modules/Core/MiningProcessor/Design/..."
 */
 
 module Ferda {

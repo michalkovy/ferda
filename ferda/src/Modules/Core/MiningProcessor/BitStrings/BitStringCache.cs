@@ -1,9 +1,9 @@
 // BitStringCache.cs - Cache of bit strings
 //
-// Author: TomÃ¡Å¡ KuchaÅ™ <tomas.kuchar@gmail.com>
-// Commented by: Martin RalbovskÃ½ <martin.ralbovsky@gmail.com>
+// Author: Tomáš Kuchaø <tomas.kuchar@gmail.com>
+// Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2006 TomÃ¡Å¡ KuchaÅ™
+// Copyright (c) 2006 Tomáš Kuchaø
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

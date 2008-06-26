@@ -7,7 +7,6 @@
 #include <Modules/Common.ice>
 #include <Modules/Guha.Data.ice>
 #include <Modules/Guha.Math.ice>
-#include <Modules/Guha.MiningProcessor.ice>
 
 /*
 THE DOCUMENTATION FOR MAJORITY OF STRUCTURES DEFINED BY THIS FILE CAN BE FOUND

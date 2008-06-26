@@ -51,11 +51,11 @@
     </Reference>
     <Reference Include="iceboxcs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
+      <HintPath>..\..\..\..\lib\IceBox.dll</HintPath>
     </Reference>
     <Reference Include="icecs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\icecs.dll</HintPath>
+      <HintPath>..\..\..\..\bin\Server\Ice.dll</HintPath>
     </Reference>
     <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

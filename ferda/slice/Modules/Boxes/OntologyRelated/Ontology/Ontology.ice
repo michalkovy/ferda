@@ -65,4 +65,4 @@ module Ferda {
 		};
 	};
 };
-#endif FERDA_MODULES_BOXES_ONTOLOGYRELATED_ONTOLOGY;
+#endif

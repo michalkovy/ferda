@@ -13,7 +13,7 @@
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Windows.Forms.dll"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaProjectManager.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
 			</references>
@@ -51,7 +51,7 @@
         <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
         <include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
-        <include name="${path::combine(lib.dir,'icecs.dll')}"/>
+        <include name="${path::combine(lib.dir,'Ice.dll')}"/>
       </references>
     </csc>
 
@@ -80,7 +80,7 @@
 				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.dll')}"/>
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
 			</references>
@@ -116,7 +116,7 @@
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
 		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
@@ -148,7 +148,7 @@
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
 		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
@@ -180,7 +180,7 @@
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.dll')}"/>
 				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
 			</references>
@@ -219,7 +219,7 @@
         <include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
 		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
@@ -251,7 +251,7 @@
 				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
     <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
@@ -283,7 +283,7 @@
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
     <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
@@ -316,7 +316,7 @@
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
 				<include name="${path::combine(build.dir,'FerdaProjectManager.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
 -->
@@ -344,7 +344,7 @@
         <include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
         <include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-        <include name="${path::combine(lib.dir,'icecs.dll')}"/>
+        <include name="${path::combine(lib.dir,'Ice.dll')}"/>
       </references>
     </csc>
     
@@ -371,7 +371,7 @@
 				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
     <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
@@ -404,7 +404,7 @@
 				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
     <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
@@ -440,7 +440,7 @@
 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
         <include name="${path::combine(build.dir,'FerdaProjectManager.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
 
@@ -474,7 +474,7 @@
 				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
     
@@ -508,7 +508,7 @@
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
 
@@ -540,7 +540,7 @@
 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 			</references>
 		</csc>
 		
@@ -573,7 +573,7 @@
         <include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
         <include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-        <include name="${path::combine(lib.dir,'icecs.dll')}"/>
+        <include name="${path::combine(lib.dir,'Ice.dll')}"/>
       </references>
     </csc>
     

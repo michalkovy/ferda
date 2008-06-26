@@ -28,8 +28,8 @@
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'IceBox.dll')}"/>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Xml.dll"/>
@@ -53,8 +53,8 @@
         <include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaMath.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaData.dll')}"/>
-        <include name="${path::combine(lib.dir,'icecs.dll')}"/>
-        <include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+        <include name="${path::combine(lib.dir,'Ice.dll')}"/>
+        <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
         <include name="System.dll"/>
         <include name="System.Data.dll"/>
         <include name="System.Xml.dll"/>
@@ -78,8 +78,8 @@
 				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaGuhaMiningBoxes.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'IceBox.dll')}"/>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Xml.dll"/>
@@ -103,8 +103,8 @@
 				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaGuhaMiningBoxes.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'IceBox.dll')}"/>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Xml.dll"/>
@@ -124,8 +124,8 @@
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'IceBox.dll')}"/>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Xml.dll"/>
@@ -148,8 +148,8 @@
         <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
-        <include name="${path::combine(lib.dir,'icecs.dll')}"/>
-        <include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+        <include name="${path::combine(lib.dir,'Ice.dll')}"/>
+        <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
         <include name="System.dll"/>
         <include name="System.Data.dll"/>
         <include name="System.Xml.dll"/>
@@ -175,8 +175,8 @@
 			<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 			<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
 			<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
-      <include name="${path::combine(lib.dir,'icecs.dll')}"/>
-      <include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+      <include name="${path::combine(lib.dir,'Ice.dll')}"/>
+      <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
       <include name="System.dll"/>
       <include name="System.Data.dll"/>
       <include name="System.Xml.dll"/>

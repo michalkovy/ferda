@@ -64,7 +64,6 @@
   LangString DesktopShortcut ${LANG_CZECH} "Zástupce"
   LangString FileAssociation ${LANG_CZECH} "Asociace se soubory"
   LangString HasSpaces ${LANG_CZECH} "Název instalaèního adresáøe nemùže obsahovat mezery kvùli chybì v Ice."
-  LangString Bad_Dot_Net_Installed ${LANG_CZECH} "Na poèítaèi je nainstalován Microsoft .NET 1.0 nebo 1.1. Ferda DataMiner nebude fungovat správnì. Pokraèovat?"
     
   LangString Uninstall_Old_Ferda ${LANG_CZECH} "Odinstalovat starou verzi pøed pokraèováním instalace?"
   LangString Old_Ferda ${LANG_CZECH} "Je nainstalována jiná verze Ferda DataMiner. Èíslo verze: "

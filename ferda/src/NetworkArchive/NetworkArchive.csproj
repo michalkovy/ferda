@@ -40,11 +40,11 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="iceboxcs">
-      <HintPath>..\..\lib\iceboxcs.dll</HintPath>
+      <HintPath>..\..\lib\IceBox.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="icecs">
-      <HintPath>..\..\lib\icecs.dll</HintPath>
+      <HintPath>..\..\lib\Ice.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />

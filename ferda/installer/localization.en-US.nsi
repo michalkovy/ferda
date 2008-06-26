@@ -72,7 +72,6 @@
   LangString DesktopShortcut ${LANG_ENGLISH} "Desktop shortcut"
   LangString FileAssociation ${LANG_ENGLISH} "File association"
   LangString HasSpaces ${LANG_ENGLISH} "Installation directory cannot contain spaces"
-  LangString Bad_Dot_Net_Installed ${LANG_ENGLISH} "You have Microsoft .NET 1.0 or 1.1 installed. Ferda DataMiner will not run correctly. Continue?"
   
   LangString Uninstall_Old_Ferda ${LANG_ENGLISH} "Uninstall old version prior to continuing installation?"
   LangString Old_Ferda ${LANG_ENGLISH} "Another version of Ferda DataMiner is installed. Version number: "

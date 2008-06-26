@@ -3,7 +3,6 @@
 
 #include <Modules/BuiltinSequences.ice>
 #include <Modules/BasicPropertyTypes.ice>
-#include <Modules/Modules.ice>
 
 module Ferda {
 	module Modules {
