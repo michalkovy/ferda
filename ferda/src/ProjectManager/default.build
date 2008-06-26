@@ -15,9 +15,9 @@
 				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaNetworkArchiveBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaProjectBase.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="${path::combine(lib.dir,'icegridcs.dll')}"/>
-				<include name="${path::combine(lib.dir,'glacier2cs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'IceGrid.dll')}"/>
+				<include name="${path::combine(lib.dir,'Glacier2.dll')}"/>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Drawing.dll"/>

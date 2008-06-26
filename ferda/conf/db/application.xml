@@ -1,6 +1,7 @@
 <icegrid>
 	<application name="FerdaModulesApplication">
 		<replica-group id="FerdaDataPreparationBoxesReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="DataPreparation.DataSource.Database" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="DataPreparation.DataSource.DataTable" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="DataPreparation.DataSource.Column" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
@@ -14,6 +15,7 @@
 			<object identity="DataPreparation.Categorization.OntologyDerivedAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaBasicBoxesReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="BoolT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
 			<object identity="ShortT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
 			<object identity="IntT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
@@ -26,6 +28,7 @@
 			<object identity="DateTimeT" type="::Ferda::Modules::PropertyBoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaLanguageBoxesReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="Language.Lambda" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="Language.Variable" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="Language.Math.BinaryOperation" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
@@ -37,15 +40,18 @@
 			<object identity="Language.CommandOutput" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaSampleBoxesReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="Sample.BodyMassIndex" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaWizardsReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="Wizards.Wizard" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="Wizards.WizardForm" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="Wizards.WizardAction" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="Wizards.WizardGenerated" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaGuhaMiningBoxesReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="GuhaMining.FixedAtom" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.AtomSetting" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Sign" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
@@ -57,7 +63,7 @@
 			<object identity="GuhaMining.Tasks.SDSingleDimensional" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.TwoDimensional" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.SDTwoDimensional" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
-      <object identity="GuhaMining.Tasks.ETree" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="GuhaMining.Tasks.ETree" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.DoubleImplicational.FMeasure" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Equivalence.FoundedEquivalence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
@@ -96,12 +102,15 @@
 			<object identity="GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaGuhaMiningProcessorReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="Ferda.Guha.MiningProcessor.MiningProcessorFunctions" type="::Ferda::Guha::MiningProcessor::MiningProcessorFunctions"/>
 		</replica-group>
 		<replica-group id="FerdaNetworkArchiveReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="Ferda.NetworkArchive.Archive" type="::Ferda::NetworkArchive::Archive"/>
 		</replica-group>
 		<replica-group id="FerdaOntologyRelatedBoxesReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="OntologyRelated.Ontology" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="OntologyRelated.OntologyMapping" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
@@ -110,7 +119,10 @@
 			<parameter name="entry"/>
 			<parameter name="endpoints"/>
 			<service name="${name}" entry="${entry}">
-				<adapter name="${service}" register-process="true" endpoints="${endpoints}" replica-group="${service}ReplicaAdapter"/>
+				<adapter name="${name}Adapter" id="${name}Adapter" server-lifetime="false" endpoints="${endpoints}" replica-group="${name}ReplicaAdapter"/>
+				<property name="Ice.ThreadPool.Server.Size" value="10"/>
+				<property name="Ice.ThreadPool.Server.SizeMax" value="1000"/>
+				<property name="Ice.ThreadPool.Server.SizeWarn" value="950"/>
 			</service>
 		</service-template>
 		<server-template id="FerdaServerTemplate">
@@ -118,6 +130,12 @@
 			<parameter name="endpoints" default="tcp:udp"/>
 			<parameter name="pwd" default="${application.distrib}"/>
 			<icebox id="${index}" exe="iceboxnet" activation="on-demand" pwd="${pwd}">
+				<description>Ferda .NET IceBox server</description>
+				<properties>
+					<property name="Ice.Admin.Endpoints" value="${endpoints}"/>
+					<property name="IceBox.InstanceName" value="${server}"/>
+					<property name="IceBox.Trace.ServiceObserver" value="1"/>
+				</properties>
 				<service-instance template="FerdaServiceTemplate" name="FerdaDataPreparationBoxes" entry="FerdaDataPreparationBoxes.dll:Ferda.Modules.Boxes.DataPreparation.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaBasicBoxes" entry="FerdaBasicBoxes.dll:Ferda.Modules.Boxes.Basic.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaLanguageBoxes" entry="FerdaLanguageBoxes.dll:Ferda.Modules.Boxes.Language.Service" endpoints="${endpoints}"/>
@@ -131,7 +149,7 @@
 				<property name="Ice.ThreadPool.Server.Size" value="10"/>
 				<property name="Ice.ThreadPool.Server.SizeMax" value="1000"/>
 				<property name="Ice.ThreadPool.Server.SizeWarn" value="950"/>
-				<property name="IceBox.UseSharedCommunicator.FerdaDataPreparationBoxes" value="1"/>
+				<!-- <property name="IceBox.UseSharedCommunicator.FerdaDataPreparationBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaBasicBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaLanguageBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaSampleBoxes" value="1"/>
@@ -139,7 +157,8 @@
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningProcessor" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaNetworkArchive" value="1"/>
-				<property name="IceBox.UseSharedCommunicator.FerdaOntologyRelatedBoxes" value="1"/>
+				<property name="IceBox.UseSharedCommunicator.FerdaOntologyRelatedBoxes" value="1"/> -->
+				<property name="IceBox.InheritProperties=1" value="1"/>
 			</icebox>
 		</server-template>
 		
@@ -161,14 +180,14 @@
 				<property name="Ice.ThreadPool.Server.Size" value="10"/>
 				<property name="Ice.ThreadPool.Server.SizeMax" value="1000"/>
 				<property name="Ice.ThreadPool.Server.SizeWarn" value="950"/>
-        <property name="IceBox.UseSharedCommunicator.FerdaOntologyRelated" value="0"/>
+        <!-- <property name="IceBox.UseSharedCommunicator.FerdaOntologyRelated" value="0"/> -->
 			</icebox>
 		</server-template>
 		
-		<node name="Local">
-      <server-instance template="FerdaServerTemplate" index="0" pwd="bin/Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>			
-      <server-instance template="FerdaServerTemplateJava" index="1" pwd="set in ferda.build" icepath="set in ferda.build" owlapipath="set in ferda.build" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
-    </node>
+		<node name="localhost">
+			<server-instance template="FerdaServerTemplate" index="0" pwd="bin/Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
+			<server-instance template="FerdaServerTemplateJava" index="1" pwd="set in ferda.build" icepath="set in ferda.build" owlapipath="set in ferda.build" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
+		</node>
 		
 	</application>
 </icegrid>

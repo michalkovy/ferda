@@ -27,7 +27,7 @@ namespace Ferda.Guha.MiningProcessor
     /// <summary>
     /// Represents a IceBox service for GUHA mining processor objects
     /// </summary>
-    public class Service : LocalObjectImpl, IceBox.Service
+    public class Service : IceBox.Service
     {
         private ObjectAdapter _adapter;
 
@@ -41,7 +41,7 @@ namespace Ferda.Guha.MiningProcessor
         /// <param name="args">Arguments from command line</param>
         public void start(string name, Communicator communicator, string[] args)
         {
-            _adapter = communicator.createObjectAdapter(name);
+            _adapter = communicator.createObjectAdapter(name + "Adapter");
             _adapter.add(new MiningProcessorFunctionsI(),
                          Util.stringToIdentity("Ferda.Guha.MiningProcessor.MiningProcessorFunctions"));
             ObjectFactory factory = new ObjectFactory();

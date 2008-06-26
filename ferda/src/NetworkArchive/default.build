@@ -14,8 +14,8 @@
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaNetworkArchiveBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaProjectBase.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'IceBox.dll')}"/>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Xml.dll"/>
@@ -34,8 +34,8 @@
 			<references>
 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 				<include name="${path::combine(build.dir,'FerdaProjectBase.dll')}"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="${path::combine(lib.dir,'iceboxcs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'IceBox.dll')}"/>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Xml.dll"/>

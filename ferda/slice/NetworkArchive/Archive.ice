@@ -1,3 +1,4 @@
+
 #ifndef FERDA_NETWORK_ARCHIVE
 #define FERDA_NETWORK_ARCHIVE
 
@@ -122,4 +123,4 @@ module Ferda {
 	};
 };
 
-#endif;
+#endif

@@ -139,7 +139,7 @@ namespace Ferda.Guha.MiningProcessor
     /// The mining processor object factory. This factory is used for
     /// creation of mining processor objects.
     /// </summary>
-    public class ObjectFactory : LocalObjectImpl, Ice.ObjectFactory
+    public class ObjectFactory : Ice.ObjectFactory
     {
         #region ObjectFactoryOperationsNC_ Members
 

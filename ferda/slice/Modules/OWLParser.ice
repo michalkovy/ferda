@@ -13,4 +13,4 @@ module Ferda {
   };
 };
 
-#endif FERDA_ONTOLOGYRELATED_GENERATED
+#endif

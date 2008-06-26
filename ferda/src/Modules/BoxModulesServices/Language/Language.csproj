@@ -48,7 +48,7 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="icecs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-      <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
+      <HintPath>..\..\..\..\lib\Ice.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

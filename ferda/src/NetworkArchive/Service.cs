@@ -1,4 +1,4 @@
-// Service.cs - IceBox service with network archive
+﻿// Service.cs - IceBox service with network archive
 //
 // Author: Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -27,7 +27,7 @@ namespace Ferda.NetworkArchive
     /// <summary>
     /// Represents a IceBox service, is created for inheriting
     /// </summary>
-    public class Service : LocalObjectImpl, IceBox.Service
+    public class Service : IceBox.Service
     {
         /// <summary>
         /// Service execution method
@@ -41,7 +41,7 @@ namespace Ferda.NetworkArchive
             Debug.Listeners.Add(new TextWriterTraceListener(name + ".log"));
             Debug.AutoFlush = true;
             Debug.WriteLine("Starting service...");
-            _adapter = communicator.createObjectAdapter(name);
+            _adapter = communicator.createObjectAdapter(name + "Adapter");
             ObjectFactoryForBox factory =
                 new ObjectFactoryForBox();
             ObjectFactoryForBox.addFactoryToCommunicator(

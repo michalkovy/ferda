@@ -19,8 +19,8 @@ dir}/bin
 			<references>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
-				<include name="${path::combine(lib.dir,'icecs.dll')}"/>
-				<include name="${path::combine(lib.dir,'icegridcs.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'IceGrid.dll')}"/>
 				<include name="${lib.dir}/log4net.dll"/>
 				<include name="${build.dir}/FerdaModulesManager.dll"/>
 				<include name="${build.dir}/FerdaProjectManager.dll"/>

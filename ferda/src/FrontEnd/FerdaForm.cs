@@ -1,4 +1,4 @@
-// FerdaForm.cs - main form of the application
+﻿// FerdaForm.cs - main form of the application
 //
 // Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
@@ -1792,18 +1792,6 @@ using Ferda.ModulesManager;
                 case MsgType.Warning:
                     break;
             }
-        }
-
-        /// <summary>
-        /// Shows a message box
-        /// </summary>
-        /// <param name="type">Type of the message</param>
-        /// <param name="name">Title of the message</param>
-        /// <param name="message">text of the message</param>
-        /// <param name="context">ICE context of the message</param>
-        public void writeMsg(MsgType type, string name, string message, Ice.Context context)
-        {
-            writeMsg(type, name, message);
         }
 
         #endregion

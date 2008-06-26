@@ -40,11 +40,11 @@
     </Reference>
     <Reference Include="iceboxcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
+      <HintPath>..\..\..\..\lib\IceBox.dll</HintPath>
     </Reference>
     <Reference Include="icecs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\icecs.dll</HintPath>
+      <HintPath>..\..\..\..\bin\Server\Ice.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

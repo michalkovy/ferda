@@ -44,11 +44,11 @@
     </Reference>
     <Reference Include="icecs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\icecs.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\Ice.dll</HintPath>
     </Reference>
     <Reference Include="icegridcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\FrontEnd\icegridcs.dll</HintPath>
+      <HintPath>..\..\..\..\bin\FrontEnd\IceGrid.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

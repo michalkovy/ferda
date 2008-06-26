@@ -51,7 +51,7 @@
     </Reference>
     <Reference Include="icecs, Version=2.1.2.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\checkout\bin\icecs.dll</HintPath>
+      <HintPath>..\..\..\checkout\bin\Ice.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

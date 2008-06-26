@@ -2,7 +2,6 @@
 #define FERDA_MODULES_MANAGER_MANAGERS_ENGINE
 
 #include <Modules/BoxType.ice>
-#include <Modules/Modules.ice>
 #include <Modules/Exceptions.ice>
 
 

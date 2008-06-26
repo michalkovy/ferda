@@ -35,11 +35,11 @@
     </Reference>
     <Reference Include="iceboxcs, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b555a647d8de49c2">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\lib\iceboxcs.dll</HintPath>
+      <HintPath>..\..\..\..\lib\IceBox.dll</HintPath>
     </Reference>
     <Reference Include="icecs, Version=3.1.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
+      <HintPath>..\..\..\..\lib\Ice.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

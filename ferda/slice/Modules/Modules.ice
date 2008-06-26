@@ -1078,4 +1078,4 @@ module Ferda {
 	};
 };
 
-#endif;
+#endif

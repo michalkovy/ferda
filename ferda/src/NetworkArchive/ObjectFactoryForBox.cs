@@ -25,7 +25,7 @@ namespace Ferda.NetworkArchive
 	/// <summary>
 	/// Object factory for network archive box
 	/// </summary>
-	public class ObjectFactoryForBox : Ice.LocalObjectImpl, Ice.ObjectFactory
+	public class ObjectFactoryForBox : Ice.ObjectFactory
 	{
 		/// <summary>
 		/// Creates network archive box

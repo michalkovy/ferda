@@ -43,11 +43,11 @@
     </Reference>
     <Reference Include="icecs, Version=3.1.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\lib\icecs.dll</HintPath>
+      <HintPath>..\..\..\..\lib\Ice.dll</HintPath>
     </Reference>
     <Reference Include="icegridcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\svn\ferda\bin\Server\icegridcs.dll</HintPath>
+      <HintPath>..\..\svn\ferda\bin\Server\IceGrid.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
