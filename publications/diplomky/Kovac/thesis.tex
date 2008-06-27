@@ -1,29 +1,78 @@
 % Michal Kovac's master thesis
 %
-\documentclass{article}
+\documentclass[a4paper,12pt]{book}
 \usepackage{pgf}
+\usepackage[utf8]{inputenc}
+%\usepackage{a4wide}
+\include{csprimes}
 
 \pgfdeclareimage[interpolate=true,height=7cm]{faktorial}{faktorial}
 \pgfdeclareimage[interpolate=true,height=7cm]{designimage}{designB}
 \pgfdeclareimage[interpolate=true,height=3cm]{designimageSmall}{designB}
 \pgfdeclareimage[interpolate=true,height=3.5cm]{creatorFactoryimage}{creatorFactory}
 
-\author{Michal Kov\'{a}\v{c}}
+\author{Michal Kováč}
 \title{User oriented language for powerful data mining with Ferda}
 \date{\today}
 
 \begin{document}
+\maketitle
+
+\begin{description}
+ \item [Název práce:] Uživatelsky orientovaný jazyk pro řešení úloh DZD
+ \item [Autor:] Michal Kováč
+ \item [Katedra (ústav):]
+ \item [Vedoucí diplomové práce:] Doc. RNDr. Jan Rauch, CSc.
+ \item [E-mail vedoucího:] Rauch@vse.cz
+ \item [Abstrakt:]
+ \item [Klíčová slova:]
+\end{description}
+
+\medskip
+
+\begin{description}
+ \item [Title:] User oriented language for solving KDD tasks
+ \item [Author:] Michal Kováč
+ \item [Department:]
+ \item [Supervisor:] Doc. RNDr. Jan Rauch, CSc.
+ \item [Supervisor's e-mail address:] Rauch@vse.cz
+ \item [Abstract:]
+ \item [Keywords:]
+\end{description}
+\newpage
+\section*{Zadání}
+Východiskem diplomové práce jsou zkušenosti s GUHA procedurami implementovanými v rámci systému LISp-Miner [1]. Díky jak rozmanitosti vztahů které lze jejich pomocí hledat tak i vzhledem k rozsáhlým možnostem zadávání množiny potenciálně zajímavých vztahů lze pomocí těchto procedur hledat odpovědi na různé analytické otázky formulované způsobem blízkým přirozenému jazyku. Příkladem takové otázky je: \uv{Za jakých okolností a pro které pacienty není pravda, že s rostoucí úrovní cholesterolu roste i úroveň trigliceridů?}. Na tuto otázku lze hledat odpovědi pomocí procedur 4ft-Miner, SD4ft-Miner, KL-Miner i SDKL-Miner. Použitá procedura i způsob nastavení jejích parametrů dává různé možnosti co se týče podrobnosti odpovědi. Zevrubná odpověď na takovouto otázku vyžaduje několik vzájemně provázaných běhů několika procedur. Jednotlivé běhy procedur odpovídají dílčím otázkám indukovaným položenou otázkou.
+
+Lze pokládat řadu podobných otázek které konstituují jistou typovou úlohu. Příkladem podobné otázky k otázce výše uvedené je otázka \uv{Za jakých okolností a pro které pacienty není pravda, že s rostoucí úrovní vzdělání roste i spotřeba vína?}. Pro řešení jedné typové úlohy existuje systém vzájemně provázaných dílčích otázek a ty lze chápat jako příkazy vhodného jazyka, kterým uživatel řídí postup při řešení typové úlohy.
+
+Jedná se o diplomovou práci kategorie \uv{výzkumný problém}. Jejím cílem je stanovit několik typových úloh a pro ně definovat výše naznačený jazyk pro řešení. Jazyk bude založen na použití GUHA procedur implementovaných v rámci systému LISp-Miner, případně na nových vhodných analytických procedurách. Součástí diplomové práce bude i prototypová implementace příkazů tohoto jazyka v rámci systému FERDA [2].
+
+\section*{Structure}
+The main aim of this paper is to assess a set of several problems in KDD and present a possible solution via a new user-oriented language. Much more than what is the main aim is created there. A new generic language is created as part of this thesis instead of a new language specific only for some KDD problems. It has been decided to create such generic language because Ferda system is from beginning designed as a generic tool for user-oriented functional programming with mind of extensibility and because it results in a more strong and reusable base. So, instead of presenting first KDD problems and later describing a new language specific for these problems a new generic language is described at the beginning. The generic language resulted indeed from some KDD problems but it is not visible on the result, that is why it is not needed to start with examples in this paper. The creation of a new more generic language independent of KDD was established as the first task, followed by demonstration of KDD problems and their solution using the given generic language and special KDD functions in addition. There are references from solution of KDD problems to features in the new language which are used for their solution. So it is possible to read problems whith their solution first, but it is not recommended for understanding to the new language.
+
+Místo toho, aby se postupovalo tak, že se nejdříve popíší problémy KDD a pak se vymyslí specifické krabičky, které budou tyto problémy řešit, se postupuje v práci opačně. Nejdříve se vytvoří obecný jazyk a teprve pak se představí problémy a s pomocí nového jazyka se pokusíme tyto problémy řešit. To vede k tomu, že výsledné řešení je daleko silnější a přepoužitelnější. Samozřejmě při tvorbě generického jazyka se vycházelo z problémů KDD, nicméně na výsledku to není nijak znát, proto není třeba začínat přiklady. Z příkladů KDD je pak odkazováno zpět na části nového jazyka, které byly použity. Proto je možné po přečtení úvodu přejít přímo na příklady, nicméně pro lepší pochopení textu to není doporučováno.
+
+The new implementation of GUHA procedures that has been created as a part of \cite[diploma thesis of Tomáš Kuchař]{thesisKuchar} is used instead of LISp-Miner procedures which have been proposed. The new implementation of GUHA procedures is more generic and better integrated into Ferda system.
+
+
+The thesis is divided into four chapters. The first chapter introduces Ferda system. First, it discusses the history of Ferda and its implementation. Subsequently, it presents its functional view. The chapter shows that Ferda was from beginning designed for user-oriented functional programming and it describes what was missing in the Ferda system from the point of programming and extensibility before this thesis.
+
+The second chapter goes into more detail and describes new features, functions and tools which can help making Ferda better user-oriented programing tool. To start with, it focuses on source files, the basic programming instrument, and how they are organized and how a code can be reused. Then several new basic functions are introduced with description of their pilot implementation. Modern programing methods are discussed in the last part of this chapter. Neither this chapter nor the first chapter are specifically oriented on knowledge discovery or data mining.
+
+The third chapter is the core of this thesis. It shows examples from KDD and shows how it can be solved in Ferda system by functionalities introduced in the first two chapters. It also proposes new functionalities specific for KDD.
+
+The last chapter summarizes previous chapters. It lists features which have been implemented as part of this thesis and features which have been proposed only.
+
 \section{Introduction}
 \subsection{History}
 GUHA method
-
 LISp-Miner
 
-Michal Kov\'{a}\v{c}, Tom\'{a}\v{s} Kucha\v{r}, Alexander Kuzmin and Martin Ralbovsk\'{y} have started to work on the Ferda Data Miner in the year 2003. The project lead was Jan Rauch. The basic aim of this project had to be creating of a user friendly user interface for the LISp-Miner project. It was achieved, but the Ferda was created in mind of future extensions and main parts of the application are independent on data mining at all.
+Michal Kováč, Tomáš Kuchař, Alexander Kuzmin and Martin Ralbovský have started to work on the Ferda Data Miner in the year 2003. The project lead was Jan Rauch. The basic aim of this project had to be creating of a user friendly user interface for the LISp-Miner project. It was achieved, but the Ferda was created in mind of future extensions and main parts of the application are independent on data mining at all.
 
 Ferda is user oriented application for working with special objects called boxes. Boxes have sockets and a user can connect to these sockets another boxes. Boxes have functions, sockets are places for parameters for these functions. The Ferda Data Miner is Ferda with boxes for data mining.
 
-First boxes for data mining were written for LISp-Miner generators. It was hardly extensible. Later Tom\'{a}\v{s} Kucha\v{r} as part of his diploma thesis written own implementation of basic GUHA procedures for the Ferda Data Miner.
+First boxes for data mining were written for LISp-Miner generators. It was hardly extensible. Later Tomáš Kuchař as part of his diploma thesis written own implementation of basic GUHA procedures for the Ferda Data Miner.
 
 There are many new boxes created for special applications like decission trees, ontology mapping or relational data mining.
 
@@ -403,4 +452,8 @@ Dependency injection is modern pattern in object oriented programming. You creat
 
 %vyjimky a Ferda - uzivatel muze chytat a vysilat vyjimky
 %vyber na kterem pocitaci ktera krabicka bezi
+
+\begin{thebibliography}{thesisKuchar}
+\bibitem{thesisKuchar} Tomas Kochar -- jeho diplomova prace
+\end{thebibliography}
 \end{document}
