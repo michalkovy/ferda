@@ -48,11 +48,13 @@ Lze pokládat řadu podobných otázek které konstituují jistou typovou úlohu
 Jedná se o diplomovou práci kategorie \uv{výzkumný problém}. Jejím cílem je stanovit několik typových úloh a pro ně definovat výše naznačený jazyk pro řešení. Jazyk bude založen na použití GUHA procedur implementovaných v rámci systému LISp-Miner, případně na nových vhodných analytických procedurách. Součástí diplomové práce bude i prototypová implementace příkazů tohoto jazyka v rámci systému FERDA [2].
 
 \section*{Guides}
-The main task of this paper is to assess a set of several problems in KDD and present a possible solution via a new user-oriented language for Ferda system. The reach of the present paper, however, surpasses the assignment in its implications. Instead of a new language specific only for some KDD problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. 
+The main task of this paper is to assess a set of several problems in KDD and present a possible solution via a new user-oriented language for Ferda system. The reach of the present paper, however, surpasses the assignment in its implications. Instead of a new language specific only for some KDD problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. The reason for going beyond the task was the present author's determination to present a more complex solution to the problem given. 
 
-So, instead of presenting first KDD problems and later describing a new language specific for these problems a new generic language is described at the beginning. The generic language resulted indeed from some KDD problems but it is not visible on the result, that is why it is not needed to start with examples in this paper.
+Instead of presenting first KDD problems and later describing a new language specific for these problems a new generic language is described at the beginning. The generic language resulted indeed from some KDD problems but it is not visible on the result, which is why it is not needed to start with examples in this paper.
 
-The creation of a new more generic language independent of KDD was established as the first task, followed by demonstration of KDD problems and their solution using the given generic language and special KDD functions in addition. There are references from solution of KDD problems to features in the new language which are used for their solution. So it is possible to read problems with their solution first, but it is not recommended for understanding to the new language.
+The creation of a new more generic language independent of KDD was established as the first task, followed by demonstration of KDD problems and their solution using the given generic language and special KDD functions in addition. The method used for creation of the new language relied on the principle of other functional languages, while maintaining the basic requirements of recursive countability and the widest possible application on the KDD problems.
+
+There are references from solution of KDD problems to features in the new language which are used for their solution. Therefore it is possible to read problems with their solution first, but it is not recommended for understanding the new language.
 
 The new implementation of GUHA procedures that has been created as a part of \cite[diploma thesis of Tomáš Kuchař]{thesisKuchar} is used instead of LISp-Miner procedures which have been proposed. The new implementation of GUHA procedures is more generic and better integrated into Ferda system. LISp-Miner procedures are deprecated in Ferda system.
 
@@ -69,53 +71,53 @@ The last chapter summarizes previous chapters. It lists features which have been
 \section{History}
 !-- History of GUHA, LISp-Miner --!
 
-Michal Kováč, Tomáš Kuchař, Alexander Kuzmin and Martin Ralbovský have started to work on the Ferda Data Miner in the year 2003. The project lead was dr. Jan Rauch. The basic aim of this project had to be creating of a user friendly user interface for the LISp-Miner project. It was achieved, but the Ferda was created in mind of future extensions and main parts of the application are independent on data mining at all.
+Michal Kováč, Tomáš Kuchař, Alexander Kuzmin and Martin Ralbovský started to work on the Ferda Data Miner in the year 2003. The project was lead by RNDr. Jan Rauch. The basic aim of this project was creation a of a user-friendly user interface for the LISp-Miner project. It has been achieved, but the Ferda was created with future extensions in mind and the main parts of the application are independent of data mining at all.
 
-Ferda is user oriented application for working with special visual objects called boxes. It is represented by a small square with an image inside. Boxes have sockets and a user can connect to these sockets another boxes. Boxes have functions, sockets are places for parameters for these functions. The Ferda Data Miner is Ferda with boxes for data mining.
+Ferda is a user-oriented application for working with special visual objects called boxes. It is represented by a small square with an image inside. Boxes have sockets and a user can connect other boxes to these sockets. Boxes have functions, sockets are places for parameters for these functions. The Ferda Data Miner is Ferda with boxes for data mining.
 
 !-- TODO vložit obrázek krabičky --!
 
-First boxes for data mining were written for LISp-Miner generators. It was hardly extensible. Later Tomáš Kuchař as part of his diploma thesis \cite{thesisKuchar} written own implementation of basic GUHA procedures for Ferda Data Miner.
+Firstly, the boxes for data mining were written for the LISp-Miner generators. It was hardly extensible. Later Tomáš Kuchař as a part of his diploma thesis \cite{thesisKuchar} wrote his own implementation of basic GUHA procedures for the Ferda Data Miner.
 
-There are many new boxes created for special applications like decision trees, ontology mapping or relational data mining.
+Since the completion of the project, numerous new boxes have been created for special applications like decision trees, ontology mapping or relational data mining.
 
 \section{Ferda Data Miner}
 \subsection{Programmers view of Ferda system}
 
-Base parts of Ferda have been written in C\# 2.0. Ferda runs on both .NET Framework and Mono. Some parts of new boxes use also Java platform. Ferda uses middleware Internet Communications Engine for a communication between its parts. Every part can be written in another language and run on another computer. For easier development many third party libraries and applications have been used -- mainly NAnt, NUnit, NDoc, Netron Graphic Library and DockDotNet library. 
+Base parts of Ferda have been written in C\# 2.0. Ferda runs on both .NET Framework and Mono. Some parts of new boxes use also Java platform. Ferda uses middleware Internet Communications Engine for a communication between its parts. Every part can be written in another language and run on another computer. For easier development, many third party libraries and applications have been used -- mainly NAnt, NUnit, NDoc, Netron Graphic Library and DockDotNet library. 
 
-Ferda is under second version of General Public License. It allows everybody to use it for free, redistribute it, change the code (if a result will be still under the General Public License).
+Ferda is under second version of General Public License. It allows everybody to use it for free, redistribute it, change the code (providing the results are still under the General Public License).
 
-Aim of Ferda project was to create application which is internationalized, well documented, modular, user friendly and conforms Microsoft standards in user experience. Its still in progress, but the project is near to accomplishment of that.
+The aim of Ferda project was to create application which is internationalized, well documented, modular, user-friendly and conforms Microsoft standards in user experience. It is still in progress, but the Ferda is near to completion.
 
-Ferda is a client-server application. Client executable is the FerdaFrontEnd.exe and we call that part FrontEnd. There isn't a one server executable instead there are more separate modules which all can act as separate applications. FrontEnd communicates with all of them. Some of these modules implements boxes so we call them box modules, other are helper modules like the GUHA mining engine.
+Ferda is a client-server application. Client executable is the FerdaFrontEnd.exe and we call that part FrontEnd. There is no single server executable; instead there are more separate modules which all can act as separate applications. FrontEnd communicates with all of them. Some of these modules implement boxes so we call them box modules, other are helper modules like the GUHA mining engine.
 
 \noindent\includegraphics[width=12cm]{designB}
 
 FrontEnd uses the assembly FerdaModulesManager.dll for a communication with modules. This assembly is layer of abstraction so that FrontEnd does not know that modules are not implemented locally (it hides Internet Communications Engine).
 
-Another assembly that is used by FrontEnd is the FerdaProjectManager.dll. It controls projects. A project consists of an archive and views. The archive is a place for boxes. Views adds to boxes its placement on a desktop. Every box which is in the archive can be in none or more views. This manager is able to load project from XML file and save it to XML file.
+Another assembly that is used by FrontEnd is the FerdaProjectManager.dll. It controls projects. A project consists of an archive and views. The archive is a place for boxes. Views adds to boxes its placement on a desktop. Every box which is in the archive can be either in none or in one or more views. This manager is able to load a project from XML file and save it to XML file.
 
-FrontEnd also loads add ins. Add ins can extend functionality of FrontEnd in many ways. Mainly it is used for modules for interaction and setting modules. Modules for interaction work on top of some box module. It for example shows results of functions returned by the box module. Setting modules are used for helping with setting nonstandard properties.
+FrontEnd also loads add-ins. Add-ins can extend functionality of FrontEnd in many ways. Mainly it is used for modules for interaction and setting modules. Modules for interaction work on top of some box module. It for example shows results of functions returned by the box module. Setting modules are used for helping with setting nonstandard properties.
 
-Communication between FrontEnd and modules and between modules itself are done be Internet Communication Engine (ICE). ICE is a strong modern middleware. Thanks to usage of ICE Ferda is language and framework independent and it allows us to run different modules on different computers, but it does not add big complexity to the application. It can be also used for distributed computing.
+The communication between FrontEnd and modules and between modules itself is feasible via the Internet Communication Engine (ICE). ICE is a strong modern middleware. Thanks to the usage of ICE, Ferda is independent of both language and framework and it allows us to run different modules on different computers, but it does not add big complexity to the application. It can be also used for distributed computing.
 
-IceGrid application, which manages available modules and loads them on demand, runs on a network. Modules manager uses these application for getting modules.
+IceGrid application, which manages available modules and loads them on demand, runs on a network. Modules manager uses these applications for getting modules.
 
-Every box module implementation has it's factory class. This factory class creates box module instances. There is one more layer -- every box module factory has it's factory class, we call it box module factory creator. It is used as a singleton.
+Every box module implementation has its factory class. This factory class creates box module instances. There is one more layer -- every box module factory has its factory class, we call it box module factory creator, which is a singleton.
 
 \noindent\includegraphics[width=12cm]{creatorFactory}
 
-FrontEnd asks box a module factory creator for creation of only one box module factory for one box class. The creator has methods independent on both instance of the box module and FrontEnd connected. A factory has methods independent on box modules, but dependent on FrontEnd (for example localized names of properties). When FrontEnd is not connected for longer time all factory instances and box module instances are destroyed.
+FrontEnd asks a box module factory creator for creation of only one box module factory for one box class. The creator has methods independent of both instance of the box module and FrontEnd connected. A factory has methods independent of box modules, but dependent on FrontEnd (for example localized names of properties). If FrontEnd is not connected for longer time, all factory instances and box module instances are destroyed.
 
 Box modules mainly consist of sockets, properties and functions. Sockets are places where you can connect another box module. They are parameters for functionality of the box module. Properties are also parameters and can be viewed as a socket, but can be configured both by connecting a box to the socket and by setting the property in the property grid.
 
-Functions are some class which box returns. This class represents the functionality of a box.
+A box has a method which returns a class called functions. This class represents the functionality of a box.
 
 Box module has also an identifier, an icon, a SVG design, names of categories, box modules asking for creation, actions, a name of property driving label and a dynamic help.
 
 \subsection{Ferda as programming language}
-The main concept of Ferda is to be user oriented functional language. Basic view is that a box is a function and sockets are properties of that function. There is no need to talk about properties, because properties are also usable by sockets. To be more precise, box can be not only viewed as one function, but as set of functions. As was written box returns class functions. So every method of such class can be viewed as separate function. Box can also return different functions class depending on its parameters. We can define basic objects of the Ferda language.
+The main concept of Ferda is to be user-oriented functional language. The basic view is that a box is a function and sockets are properties of that function. There is no need to talk about properties, because properties are also usable by sockets. To be more precise, box can be not only viewed as one function, but as set of functions. As written above, box returns class functions. Therefore every method of such class can be viewed as a separate function. Box can also return different functions class depending on its parameters. We can define basic objects of the Ferda language.
 
 Box is $\left<S,F\right>$ where
 \begin{itemize}
@@ -179,18 +181,22 @@ Base of functional languages is in the lambda calculus.
 Every programming languages have ways how to reuse a code. 
 
 \subsection{Project import}
-The most simple way is to copy the source code to different place and use it for different project. The same is possible in Ferda, you can copy a project file and reuse it.
+The simplest way is to copy the source code to different place and use it for different project. The same is possible in Ferda, you can copy a project file and reuse it.
 
-With standard textual source code it is easy to merge the code from more sources. You can do it with Ferda project, but you must merge a code in a project files manually in a text editor. The merging is not an easy process so it is not so much user friendly way.
+With standard textual source code it is easy to merge the code from more sources. You can do it with Ferda project, but you must merge a code in a project files manually in a text editor. The merging is not an easy process so it is not so much user-friendly way.
 
-It would be nice have a functionality in Ferda that will allow us to import some or all boxes from one project into another one. One way how to achieve that is adding a new item "import project\dots" to the Ferda menu. When a user selects this item, dialog for selecting a project file should open. The user then select a project and after that dialog with boxes in selected project should be shown. The user selects boxes which he want to import. The last step is actual import of selected boxes.
+It would be nice have a functionality in Ferda that would allow us to import some or all boxes from one project into another one. One way to achieve that is adding a new item "import project\dots" to the Ferda menu. When a user selects this item, a dialog for selecting a project file should open. Having selected a project, the dialog with boxes in selected project should be shown. The user selects boxes which he wants to import. The last step is actual import of selected boxes.
 
-Let's discuss dialog box where user selects boxes. It would be nice to see which boxes depends on which so that user can chose whole functions. When he selects to import a box without some box which is connected to this box (or box connected to box connected to... connected to this box - I will call this indirect connection) the box will be imported, but the result of such box can be different than before. On other hand it can be on purpose, because user can want to connect to that box some box from original project.
+Let us discuss the dialog box where a user selects boxes. It would be nice to see which boxes depend on which so that the user can chose whole functions. When he selects to import a box without a box connected to this box, the box will be imported, but the result of such box can be different than before. On other hand it can be on purpose, because user can want to connect to that box some box from original project.
+% - zlepsit citelnost
+
+% (or box connected to box connected to\dots connected to this box -- I will call this indirect connection) 
 
 \subsection{Project using}
-Source code of one application is mostly not written only in one source file, but in many. There are more ways in programming languages how to achieve this. One way is that application is from beginning compiled from more source files. So it is typical for compiled applications. Compiler as argument has a set of files. Another way is that source code can import another source file. It is mostly used by interpreted languages. Advantage of this approach is that the imported file is loaded when used - so the file can be created near time before usage. It allows us to write code which loads every file in some directory - so it can be used for plug-ins. Even compiled applications have a way how to achieve this functionality. Compiled applications can use libraries (or assemblies or modules) which can be loaded dynamically on demand. It can be also used for loading a source file on demand if a compiler for that language is available on machine where the application is being executed.
+Source code of one application is mostly not written only in one source file, but in many. There are more ways in programming languages how to achieve this. One way typical for compiled languages is compilation of application from more source files from the beginning. A compiler as an argument has a set of files. Another way is that source code can import another source file. It is mostly used by interpreted languages. An advantage of this approach is that the imported file is loaded when it is used - so the file can be created a short time before usage. It allows us to write code which loads every file in some directory so that it can be used for plug-ins. Even compiled applications have a way how to achieve this functionality. Compiled applications can use libraries (or assemblies or modules) which can be loaded dynamically on demand. It can be also used for loading a source file on demand if a compiler for that language is available in machine where the application is being executed.
 
-If we want to add this to Ferda, project has to have new attribute defining using of other projects. Boxes from these project should be read only -- no change of properties and boxes connected to theirs sockets is available. It should be visible from which project is which box used. If you remove a box from a project used by a box from another project which use the first project you should still somehow work with the second project without loosing the information about connection to non existing box. If you later add back the box to used project it should work again. It raises question how to add back the box. What should identify a box from used projects? At this time boxes are identified in one project by project identifier. The project identifier is integer which is growing from one up which user is not aware of.
+If we want to add this to Ferda, project has to have new attribute defining using of other projects. Boxes from these project should be read only -- no change of properties and boxes connected to theirs sockets is available. It should be visible from which project which box is used. If you remove a box from a project used by a box from another project which use the first project you should still somehow work with the second project without loosing the information about connection to non existing box. If you later add back the box to used project it should work again. It raises question how to add back the box. What should identify a box from used projects? At this time boxes are identified in one project by project identifier. The project identifier is integer which is growing from one up which user is not aware of.
+%KONCIM S KLAROU
 
 If user remove a box with last project identifier, exit Ferda, start Ferda, reopen the project and add a new box, the box can have the same project identifier as it had the removed box. If we want still to use project identifier as identification of boxes we should avoid this by serializing the last used project identifier in a project. Another functionality which can be wanted is ability to replace a box by another one. It means ability to delete box and create a new one which have the same project identifier.
 
