@@ -12,7 +12,7 @@
 \pgfdeclareimage[interpolate=true,height=3.5cm]{creatorFactoryimage}{creatorFactory}
 
 \author{Michal Kováč}
-\title{User oriented language for powerful data mining with Ferda}
+\title{User-oriented language for powerful data mining with Ferda}
 \date{\today}
 
 \begin{document}
@@ -31,7 +31,7 @@
 \medskip
 
 \begin{description}
- \item [Title:] User oriented language for solving KDD tasks
+ \item [Title:] User-oriented language for solving KDD tasks
  \item [Author:] Michal Kováč
  \item [Department:]
  \item [Supervisor:] Doc. RNDr. Jan Rauch, CSc.
@@ -40,6 +40,9 @@
  \item [Keywords:]
 \end{description}
 \newpage
+
+\tableofcontents
+
 \section*{Zadání}
 Východiskem diplomové práce jsou zkušenosti s GUHA procedurami implementovanými v rámci systému LISp-Miner [1]. Díky jak rozmanitosti vztahů které lze jejich pomocí hledat tak i vzhledem k rozsáhlým možnostem zadávání množiny potenciálně zajímavých vztahů lze pomocí těchto procedur hledat odpovědi na různé analytické otázky formulované způsobem blízkým přirozenému jazyku. Příkladem takové otázky je: \uv{Za jakých okolností a pro které pacienty není pravda, že s rostoucí úrovní cholesterolu roste i úroveň trigliceridů?}. Na tuto otázku lze hledat odpovědi pomocí procedur 4ft-Miner, SD4ft-Miner, KL-Miner i SDKL-Miner. Použitá procedura i způsob nastavení jejích parametrů dává různé možnosti co se týče podrobnosti odpovědi. Zevrubná odpověď na takovouto otázku vyžaduje několik vzájemně provázaných běhů několika procedur. Jednotlivé běhy procedur odpovídají dílčím otázkám indukovaným položenou otázkou.
 
@@ -67,11 +70,11 @@ The third chapter is the core of this thesis. It shows examples from KDD and sho
 
 The last chapter summarizes previous chapters. It lists features which have been implemented as part of this thesis and features which have been proposed only.
 
-\chapter{Introduction to Ferda system}
+\chapter{Introduction to the Ferda}
 \section{History}
 !-- History of GUHA, LISp-Miner --!
 
-Michal Kováč, Tomáš Kuchař, Alexander Kuzmin and Martin Ralbovský started to work on the Ferda Data Miner in the year 2003. The project was lead by RNDr. Jan Rauch. The basic aim of this project was creation a of a user-friendly user interface for the LISp-Miner project. It has been achieved, but the Ferda was created with future extensions in mind and the main parts of the application are independent of data mining at all.
+Michal Kováč, Tomáš Kuchař, Alexander Kuzmin and Martin Ralbovský started to work on the Ferda Data Miner in the year 2003. The project was lead by doc. RNDr. Jan Rauch. The basic aim of this project was creation a of a user-friendly user interface for the LISp-Miner project. It has been achieved, but the Ferda was created with future extensions in mind and the main parts of the application are independent of data mining at all.
 
 Ferda is a user-oriented application for working with special visual objects called boxes. It is represented by a small square with an image inside. Boxes have sockets and a user can connect other boxes to these sockets. Boxes have functions, sockets are places for parameters for these functions. The Ferda Data Miner is Ferda with boxes for data mining.
 
@@ -92,7 +95,7 @@ The aim of Ferda project was to create application which is internationalized, w
 
 Ferda is a client-server application. Client executable is the FerdaFrontEnd.exe and we call that part FrontEnd. There is no single server executable; instead there are more separate modules which all can act as separate applications. FrontEnd communicates with all of them. Some of these modules implement boxes so we call them box modules, other are helper modules like the GUHA mining engine.
 
-\noindent\includegraphics[width=12cm]{designB}
+\noindent\includegraphics[width=13.72cm]{designB}
 
 FrontEnd uses the assembly FerdaModulesManager.dll for a communication with modules. This assembly is layer of abstraction so that FrontEnd does not know that modules are not implemented locally (it hides Internet Communications Engine).
 
@@ -106,7 +109,7 @@ IceGrid application, which manages available modules and loads them on demand, r
 
 Every box module implementation has its factory class. This factory class creates box module instances. There is one more layer -- every box module factory has its factory class, we call it box module factory creator, which is a singleton.
 
-\noindent\includegraphics[width=12cm]{creatorFactory}
+\noindent\includegraphics[width=13.72cm]{creatorFactory}
 
 FrontEnd asks a box module factory creator for creation of only one box module factory for one box class. The creator has methods independent of both instance of the box module and FrontEnd connected. A factory has methods independent of box modules, but dependent on FrontEnd (for example localized names of properties). If FrontEnd is not connected for longer time, all factory instances and box module instances are destroyed.
 
@@ -116,7 +119,7 @@ A box has a method which returns a class called functions. This class represents
 
 Box module has also an identifier, an icon, a SVG design, names of categories, box modules asking for creation, actions, a name of property driving label and a dynamic help.
 
-\subsection{Ferda as programming language}
+\subsection{Ferda as a programming language}
 The main concept of Ferda is to be user-oriented functional language. The basic view is that a box is a function and sockets are properties of that function. There is no need to talk about properties, because properties are also usable by sockets. To be more precise, box can be not only viewed as one function, but as set of functions. As written above, box returns class functions. Therefore every method of such class can be viewed as a separate function. Box can also return different functions class depending on its parameters. We can define basic objects of the Ferda language.
 
 Box is $\left<S,F\right>$ where
@@ -156,27 +159,17 @@ Box $B=\left<S,F\right>$ is of type $A=\left<i,Z\right>$ iff
 		\includegraphics[width=7cm]{property_as_socket}
 \end{itemize}
 
-What is missing?
-\begin{itemize}
-	\item Moving work from one project to another
-	\item Basic math boxes
-	\item Recursion
-	\item Other language boxes
-	\item Ferda specific language boxes
-	\item Data mining specific boxes for user programming
-\end{itemize}
+%What is missing?
+%\begin{itemize}
+%	\item Moving work from one project to another
+%	\item Basic math boxes
+%	\item Recursion
+%	\item Other language boxes
+%	\item Ferda specific language boxes
+%	\item Data mining specific boxes for user programming
+%\end{itemize}
 
-\chapter{A new generic language for visual programming in Ferda}
-\section{Functional languages}
-%prvky - vzhledem k Ferdovi
-%jak delaji rekurzi / lambdu - rozsil mezi structuralnim a funkcionalnim jazykem
-
-\subsection{Lambda calculus}
-Base of functional languages is in the lambda calculus. 
-
-%rekurzivne spocetny
-%vsecno je funkce
-%typovany/netypovany
+\chapter{Language for visual programming}
 \section{Source codes and reusability}
 Every programming languages have ways how to reuse a code. 
 
@@ -205,7 +198,7 @@ If user remove a box with last project identifier, exit Ferda, start Ferda, reop
 versus lambda expression - the same
 \subsection{Name spaces}
 \subsection{Network archive}
-Another way how to reuse a box can be to copy it from another project. Let's have a new place where you can place boxes which you want to reuse. Such place can be on network and more users can place there theirs boxes and reuse them in another projects. They can use such place to move theirs work to others. Let's call this place network archive.
+Another way how to reuse a box can be to copy it from another project. Let us have a new place where you can place boxes which you want to reuse. Such place can be on network and more users can place there theirs boxes and reuse them in another projects. They can use such place to move theirs work to others. Let us call this place network archive.
 
 \subsubsection{Implementation}
 As part of this thesis I have created a simple implementation of such network archive. The main part is a ICE service which is running somewhere on network. It has simple definition in slice:
@@ -244,16 +237,16 @@ interface Archive {
 };
 \end{verbatim}
 
-Network archive is a collection of boxes (with all theirs subboxes -- boxes connected both directly and indirectly to that box). Each box is identified with some label. You can add a box and remove a box, get information about a box and list all labels in the collection. The collection is serialized on a disk every time it changes. After startup of the service it loads last serialized version.
+Network archive is a collection of boxes (with all theirs sub-boxes -- boxes connected both directly and indirectly to that box). Each box is identified with some label. You can add a box and remove a box, get information about a box and list all labels in the collection. The collection is serialized on a disk every time it changes. After startup of the service it loads last serialized version.
 
 From user perspective the network archive is a new panel with list where you can copy a box.
 \begin{figure}
-	\includegraphics[width=12cm]{add_to_network_archive}
+	\includegraphics[width=13.72cm]{add_to_network_archive}
 	\caption{Add a connection to the network archive}
 \end{figure}
 It will ask a user for entering a label after dragging a box from desktop to network archive.
 \begin{figure}
-	\includegraphics[width=12cm]{set_name_of_box_in_network_archive}
+	\includegraphics[width=13.72cm]{set_name_of_box_in_network_archive}
 	\caption{Set a name of box in the network archive}
 \end{figure}
 After that in the list new item with selected label should be visible.
@@ -261,9 +254,9 @@ After that in the list new item with selected label should be visible.
 	\includegraphics[height=7cm]{network_archive_box_added}
 	\caption{New box added to the network archive}
 \end{figure}
-User can than go to another computer which use the same network archive and drag the box from network archive to another project. It should create a new copy of the box with all it's subboxes on the desktop.
+User can than go to another computer which use the same network archive and drag the box from network archive to another project. It should create a new copy of the box with all its sub-boxes on the desktop.
 \begin{figure}
-	\includegraphics[width=12cm]{network_archive_drop_to_desktop}
+	\includegraphics[width=13.72cm]{network_archive_drop_to_desktop}
 	\caption{Drop box to a desktop from the network archive}
 \end{figure}
 He can also remove the box from the network archive.
@@ -280,6 +273,17 @@ Network archive is new place where a user can store connections. It is independe
 
 \subsection{Summary}
 
+\section{Functional languages}
+%prvky - vzhledem k Ferdovi
+%jak delaji rekurzi / lambdu - rozsil mezi structuralnim a funkcionalnim jazykem
+
+\subsection{Lambda calculus}
+Base of functional languages is in the lambda calculus. 
+
+%rekurzivne spocetny
+%vsecno je funkce
+%typovany/netypovany
+
 \section{Language boxes and expressions}
 Every programming language has from beginning at least small set of functions. Also it has some way how to use these functions to create more complex ones. Such aparat has been created for Ferda as main part of this diploma thesis.
 
@@ -294,21 +298,21 @@ Mathematical expressions are really important for programmers, statistics and an
 \subsubsection{Binary operation}
 New boxes for basic binary operation has been added. It has first argument type of operation ($+$, $-$, $*$, $/$).
 \begin{figure}
-	\includegraphics[width=12cm]{binaryOperation2.png}
+	\includegraphics[width=13.72cm]{binaryOperation2.png}
 	\caption{Binary operation}
 \end{figure}
 
 \subsubsection{Comparison}
 Comparison functions are functions of two arguments which returns a boolean value. As part of this thesis compare box has been created which has three arguments. First argument is type of comparison function, next two arguments are doubles. This box has implemented basic mathematic comparisons ($<$, $>$, $<=$, $>=$, $=$, $!=$).
 \begin{figure}
-\includegraphics[width=12cm]{compare2.png}
+\includegraphics[width=13.72cm]{compare2.png}
 	\caption{Compare}
 \end{figure}
 
 \subsubsection{If expressions}
 If expression is a function which has three arguments. First argument is of boolean type. It returns value of the second argument if the first is true, otherwise it returns value of the third argument.
 \begin{figure}
-\includegraphics[width=12cm]{ifthenelse2.png}
+\includegraphics[width=13.72cm]{ifthenelse2.png}
 	\caption{If expression}
 \end{figure}
 
@@ -347,13 +351,13 @@ print plusOne(9)
 
 without parameters
 \begin{figure}
-\includegraphics[width=12cm]{lambdaBasic2.png}
+\includegraphics[width=13.72cm]{lambdaBasic2.png}
 	\caption{Lambda without arguments}
 \end{figure}
 
 One constant parameter specified
 \begin{figure}
-\includegraphics[width=12cm]{lambdaBasic3.png}
+\includegraphics[width=13.72cm]{lambdaBasic3.png}
 	\caption{Lambda with one constant parameter specified}
 \end{figure}
 	
@@ -405,66 +409,68 @@ let rec factorial n =
 	
 Factorial in Ferda
 \begin{figure}
-\includegraphics[width=12cm]{faktorial}
+\includegraphics[width=13.72cm]{faktorial}
 	\caption{Factorial}
 \end{figure}
-
+\subsection{Sequences and sets}
 \subsection{Other new boxes}
 \subsubsection{Get parameter}
 \begin{figure}
-\includegraphics[width=12cm]{getParameter2.png}
+\includegraphics[width=13.72cm]{getParameter2.png}
 	\caption{Get parameter}
 \end{figure}
 
 \subsubsection{Execute action}
 \begin{figure}
-\includegraphics[width=12cm]{executeAction2.png}
+\includegraphics[width=13.72cm]{executeAction2.png}
 	\caption{Execute action}
 \end{figure}
 
 \subsubsection{Command and command output}
 \begin{figure}
-	\includegraphics[width=12cm]{command2.png}
+	\includegraphics[width=13.72cm]{command2.png}
 	\caption{Command and command output}
 \end{figure}
 
 The same in console
 \begin{figure}
-	\includegraphics[width=12cm]{command3.png}
+	\includegraphics[width=13.72cm]{command3.png}
 	\caption{Konsole version previous example}
 \end{figure}
-
-result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF
-
-Implementation of GUHA in Ferda by 'small' boxes.
-\section{Lambda expression}
-\section{Sequences}
-\section{Examples}
-\subsection{Four fold task in recursion}
-\subsection{Getting basic information from table}
-\section{Implementation details}
-\section{Problems in the source code of Ferda}
 \section{Advanced tools and topics}
 \subsection{Unit tests}
 It would be nice to have a box called unit test, which should have a name and one socket for connecting assert boxes. Assert box should be a box which validates some condition and when the condition is not satisfied it should return some message describing the problem. Then there should be small application which takes a project as parameter and calls all unit tests in the project. Unit tests should call all asserts which are connected to the test. When any of them fail the application should return the message with name of unit test and the error message from the failed assert. Even though one unit test failed it should call other tests.
 
 Similar is the NUnit tool for .NET Framework. For reusing tools which executes NUnit tests it would be nice to create generator of NUnit tests from Ferda project unit tests. Such generator should create one assembly for one project, but also so many test methods so many unit test boxes are in the project. There should be one startup method for initializing the Ferda Project Manager and for loading the project. 
 
-\section{Dependency injection}
+\subsection{Exceptions}
+%vyjimky a Ferda - uzivatel muze chytat a vysilat vyjimky
+\subsection{Dependency injection}
 Dependency injection is modern pattern in object oriented programming. You create a services and specify which services depends on which interfaces and later you set if needed which instances should be used. It is very useful for unit testing. In Ferda we can see a box with all it's sub-boxes as a service. Not set sockets are interfaces on which it depends (because of lambda box it is not needed to define it on sub-boxes).
 
-\section{Aspect oriented programming}
-\section{Future tasks to do in Ferda}
+\subsection{Aspect oriented programming}
+\subsection{Distributed computation}
+%vyber na kterem pocitaci ktera krabicka bezi
+\chapter{KDD problems and theirs solutions}
+\section{Four fold task in recursion}
+\section{Getting basic information from table}
+\section{GUHA in the Ferda by ``small'' boxes}
+%Implementation of GUHA in Ferda by 'small' boxes.
+%souvisi result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF
+
+\section{\dots}
+\chapter{Summary}
+!-- co bylo uděláno, co bylo naprogramováno součástí této práce, strčný seznam návrhů do budoucnosti --!
+%\section{Future tasks to do in Ferda}
 %popis jednotlivych tasku s narocnosti, uzitkem - bodove ohodnotit
 
 % modules for interacion je treba vylepsit
 
-%vyjimky a Ferda - uzivatel muze chytat a vysilat vyjimky
-%vyber na kterem pocitaci ktera krabicka bezi
 
 \begin{thebibliography}{thesisKuchar}
-\bibitem{thesisKuchar} Tomas Kochar -- jeho diplomova prace
+\bibitem{thesisKuchar} Tomáš Kuchař -- jeho diplomová práce
 \bibitem{GUHA} GUHA book
 \bibitem{ICE} Internet Communications Engine documentation
+\bibitem{dalsi} \dots
 \end{thebibliography}
 \end{document}
