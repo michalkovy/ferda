@@ -452,8 +452,84 @@ Dependency injection is modern pattern in object oriented programming. You creat
 \subsection{Distributed computation}
 %vyber na kterem pocitaci ktera krabicka bezi
 \chapter{KDD problems and theirs solutions}
-\section{Four fold task in recursion}
-\section{Getting basic information from table}
+\section{Four fold task in a recursion}
+\subsection{Motivation}
+Changes to a setting of a data-mining task is often needed after having a knowledge of results of the task. Subsequent run of that task can result in next changes of that settings. This step is repeated until the analytic is satisfied with the results or he gave up that setting at all.
+
+\begin{itemize}
+			\item User tries some setting of quantifiers
+			\item If he fails, he tries again with other settings?
+			\item It's manual and confusing
+\end{itemize}
+		user wants
+		\begin{itemize}
+			\item find the best settings for task
+			\item suggest way how to find best settings
+			\item have for different tasks different methods
+		\end{itemize}
+
+It is possible that there can be known algorithm for a analytic how to change a setting after run of a task. Such information should be writable in the Ferda language.
+
+Programming finding best settings by user -- biggest variability
+
+Let us get a four fold task setting with founded implication quantifier. Generally, if the threshold of a founded implication is to hight, no results are returned by a task. If the threshold of a founded implication is to low many meaningless results are returned.
+
+We will present small program in the new language which finds threshold for founded implication so that count of results of a task which use that quantifier is between specified numbers.
+
+\subsection{Implementation}
+The solution is based on the linear interpolation. The function of a count of results on a threshold is non-increasing. If we know two thresholds (the $x_min$ and the $x_max$) with their count of results (the $y_min$ and the $y_max$) which one count is shorter than what we wants and the second is greater than what we wants, than we can interpolate this way: 
+
+\begin{math}
+x = x_max - (y_max - y)\frac{x_max - x_min}{y_max - y_min}
+\end{math}
+\begin{figure}
+	\includegraphics[width=13.72cm]{linearInterpolationPlot}
+	\caption{linear interpolation plot}
+\end{figure}
+
+Because the function of a count of results on a threshold is not continuous we can not be sure that such interpolation founds a count of results between specified numbers. We can count in the program how deep it is and stop it after several steps if it will not find a sufficient result. But we will not do that for leaving the program simple as it can be.
+
+The interpolation can be done with the new box binary operation. 
+\begin{figure}
+	\includegraphics[width=13.72cm]{linearInterpolation}
+	\caption{interpolation as a connection of boxes}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=13.72cm]{exampleMainRecursionPart}
+	\caption{Result should be between}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=13.72cm]{exampleMainMiningPart}
+	\caption{If not interpolate and set new max/min}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=13.72cm]{exampleWithoutInterpolationOnMax}
+\end{figure}
+
+\subsection{Results}
+\begin{figure}
+	\includegraphics[width=13.72cm]{exampleResult}
+	\caption{Connection}
+\end{figure}
+
+
+\subsection{How to do it better}
+The recursive computation is not needed for this particular task. The BestN algorithm for tasks, which is outlined in \cite{thesisKuchar}, can solve this particular task more effectively. But a user has to have a rich way how to specify best results. A functional language is a strong tool for such thing. We can see a functional language as a superset of observational calculus, which is described in \cite{GUHAbook}. If we have only one quantifier, which is fuzzy, it is easy to sort results according goodness. For example, if we have only founded implication, a formula with higher threshold is the better. Founded implication is not today fuzzy, but we can easily convert it to that.
+
+Two or more quantifiers as a setting for a task are more complicated. The today tasks accept a formula if all its quantifiers are satisfied. So the formula can be seen as a conjunction of the same subformulas only with a different quantifier. That conjunction is the real quantifier which is used in the GUHA mining. That conjunction should be used as a sorting filter for BestN. Today we have problem that the conjunction used is not a fuzzy conjunction. There is only one or zero. But there are many different fuzzy conjunctions and a user should have a ability to chose the right conjunction. He should be able to write his own conjuncti by the programming language.
+
+There can be still more complicated tasks where the recursive solution described here can be usefull. 
+
+\section{Getting basic information from a table}
+Sometimes you get a data and do not know nearly anything about them. In such situations it would be nice to have a method hoe to get quickly basic information about it.
+
+A program which creates a basic generic settings from a table without any knowledge about it will be presented in this section. We will concentrate rather on the way how a user can create such program then on particular quantifiers, tasks and other properties of setting which he should use.
+
+The program should create an attribute for all columns in the table. It should decide a type of attribute depending on a data in a column. Similarly, it should create an atom setting from an attribute. All these atom settings should be included in a cedent setting.  
+
 \section{GUHA in the Ferda by ``small'' boxes}
 %Implementation of GUHA in Ferda by 'small' boxes.
 %souvisi result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF
@@ -471,6 +547,7 @@ Dependency injection is modern pattern in object oriented programming. You creat
 \bibitem{thesisKuchar} Tomáš Kuchař -- jeho diplomová práce
 \bibitem{GUHA} GUHA book
 \bibitem{ICE} Internet Communications Engine documentation
+\bibitem{Wiki} linearni interpolace 
 \bibitem{dalsi} \dots
 \end{thebibliography}
 \end{document}
