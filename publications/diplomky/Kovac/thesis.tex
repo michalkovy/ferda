@@ -412,7 +412,16 @@ Factorial in Ferda
 \includegraphics[width=13.72cm]{faktorial}
 	\caption{Factorial}
 \end{figure}
+
+problemy lambdy - caste zacykleni ve ferdovi, zbytecne caste spousteni (cashovani hodnoty)
+
 \subsection{Sequences and sets}
+It is possible to represent a sequence of numbers by numbers only using a basic primary recursive functions. But if there is a need of easy counting sequences of function it is better to add a support for that to the language.
+
+The Ferda includes a box called Group. This box is the only box which is not the real back end module. It is implemented in the modules manager. It has one socked. It represent all boxes which are connected to this socket. If second group box is connected to this, the first box represents all boxes which are connected to the first box without the second group box but with all boxes which are represented by the second group box. If the box is connected to a socket to which it is possible to connect more boxes, it means all boxes which are represented by the box will be connected. The group box is very useful for organization of boxes on the desktop and reuse of a set of boxes.
+
+We want to have a possibility to create a box which represents a sequence of boxes like the group box, but the box should be standard backend module. The box should return as a value a sequence of functions classes instead of one functions class.
+
 \subsection{Other new boxes}
 \subsubsection{Get parameter}
 \begin{figure}
@@ -528,7 +537,9 @@ Sometimes you get a data and do not know nearly anything about them. In such sit
 
 A program which creates a basic generic settings from a table without any knowledge about it will be presented in this section. We will concentrate rather on the way how a user can create such program then on particular quantifiers, tasks and other properties of setting which he should use.
 
-The program should create an attribute for all columns in the table. It should decide a type of attribute depending on a data in a column. Similarly, it should create an atom setting from an attribute. All these atom settings should be included in a cedent setting.  
+The program should create an attribute for all columns in the table. It should decide a type of the attribute depending on a data in a column. Similarly, it should create an atom setting from an attribute. All these atom settings should be included in a cedent setting for a four fold task.
+
+There are three task we should present. First, 
 
 \section{GUHA in the Ferda by ``small'' boxes}
 %Implementation of GUHA in Ferda by 'small' boxes.
