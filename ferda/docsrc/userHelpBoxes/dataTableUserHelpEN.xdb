@@ -49,12 +49,19 @@
 	<para>
 		The <classname>Data table</classname> box represents one data table in a defined database. The box is connected to the 
 		<classname>Database</classname> box, which determines the working database. User can either create a new data table by
-		selecting the data table's name form the boxes asking for creation menu of the <classname>database</classname> box or
-		create a new box of the <classname>data table</classname> type and connect the database box to the into its socket.
+		selecting the data table's name from the boxes asking for creation menu of the <classname>database</classname> box or
+		create a new box of the <classname>data table</classname> type, connect the database box to the into its socket and set the
+		<classname>Name</classname> property to the desired name of the data table. 
 	</para>
 	<para>
 		The important property of the box is the <classname>Primary key</classname> box. For further usage (i.e. in GUHA mining,
 		user must select the primary key of the table. This is done by the <classname>Select string</classname> setting module.
+	</para>
+	<para>
+		The functionality of primary key is however DIFFERENT WHEN USING VIRTUAL ATTRIBUTES. When using the data table as a DETAIL
+		data table for relational data mining. There, the property primary key does not refer to the primary key of the table itself, but to the primary
+		key of the MASTER data table (and thus is not the primary key of the detail table). More information can be found in 
+		<citation>Kuzmin</citation>.
 	</para>
 </section>
 
@@ -150,4 +157,22 @@
 	</itemizedlist>
 </section>
 
+  <bibliography>
+    <biblioentry>
+      <abbrev>Kuzmin</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Alexander</firstname>
+          <surname>Kuzmin</surname>
+        </author>
+      </authorgroup>
+      <title>Relační GUHA procedury</title>
+      <publisher>
+        <publishername>
+          Master thesis at Faculty of Mathematics and Physics,
+          Charles University, Prague (in Czech)
+        </publishername>
+      </publisher>
+    </biblioentry>
+  </bibliography>
 </article>
