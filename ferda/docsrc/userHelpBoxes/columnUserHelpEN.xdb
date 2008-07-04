@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+		</authorgroup>
+		
+		<title>Column Box User Help</title>
+		<titleabbrev>Column Help</titleabbrev>
+		
+		<!--
+		<revhistory>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2008-06-25</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Initial version of the document
+					</para>
+				</revdescription>
+			</revision>
+		</revhistory>
+		-->
+		<pubdate>2008-06-25</pubdate>
+	</articleinfo>
+	
+	<abstract>
+	<para>
+		This document provides user help for the <classname>Column</classname> box.
+	</para>
+	</abstract>
+	
+<section>
+	<title>About the Column box</title>
+	<para>
+		A lot of Ferda's boxes need to access the database and to get information from the database: the database scheme definition,
+		the number and names of the tables and colums, various statistics and the data itself which are later transformed into the bit
+		strings.
+	</para>
+	<para>
+		The <classname>Column</classname> box represents one column from a data table. It contains information about identification
+		of column, column type and values and moreover several statistics of values in the colum. The box is connected to the
+		<classname>Data table</classname> box, which determines the source data table of the columns. User can either create a new
+		column by selecting the column's name from he boxes asking for creation menu of the <classname>data table</classname> box or
+		create a new box of the <classname>Column</classname> type, connect the data table box to the into its socket and set the
+		<classname>Select Expression</classname> property to the desired name of the column. 
+	</para>
+	<para>
+		If the user wants to create a new column, which is a combination of existing columns in the (connected) data table, user can use the
+		<classname>Select Expresion</classname> property and write there a SQL expression determining the column. 
+	</para>
+	<para>
+		Another important property of the column is <classname>Semantic</classname>, which informs user about type of values in the column (domain represented by the column). The property assigns the column into one of
+		four semantic classes: nominal, ordinal, cyclic ordinal and cardinal. The meanin of the classes:
+		<itemizedlist>
+			<listitem>
+				<formalpara>
+					<title>Nominal</title>
+					<para>
+						Enumeration of values, the values are uncomparable to each other. Names or addresses are example 
+						of nominal class.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Ordinal</title>
+					<para>
+						The values can be compared to each other. There exists a relation "greater or equal" saying which of two values
+						is greater, but an exact metric does not exist. Example of ordinal relation is set inclusion. One can say that a set is 
+						a subset of other set, but cannot say, how big is the difference between sets.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Ordinal cyclic</title>
+					<para>
+						Same as ordinal, but values can be compared to each other in a cyclic manner. Example of suech values are days
+						of the week.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Cardinal</title>
+					<para>
+						The values can be compared to each other (relation "greater or equal") and there exists a metric saying how far are
+						values from each other. Example of such a domain are numbers (integer or real). 
+					</para>
+				</formalpara>
+			</listitem>
+		</itemizedlist>
+	</para>
+</section>
+
+<section>
+	<title>Sockets</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Data table</title>
+				<para>
+					Determines the data table, where the column is located.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Properties</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Data Type</title>
+				<para>
+					Determines the data type of the column in the database
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Semantics</title>
+				<para>
+					Semantics of the column domain. See begining of the document for details. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Select expression</title>
+				<para>
+					Value of the property can either be a name of the column or an SQL expression defining value computed from multiple
+					columns (from one data table only!). Below is example
+				</para>
+			</formalpara>
+			<para>
+				A data table has two numeric columns, one named <classname>NUM1</classname> and the other 
+				<classname>NUM2</classname>. If we want to create a new column that adds these columns togehter, we write
+				into the <classname>Select expression</classname> property expression <classname>NUM1 + NUM2</classname>.
+				How simple.
+			</para>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Average</title>
+				<para>
+					Computes average value of the values in the column for numeric data and average length of values for string data.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Distinct values</title>
+				<para>
+					Computes number of distinct values. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Maximum</title>
+				<para>
+					Computes maximum of values. Works with numeric and string data.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Minimum</title>
+				<para>
+					Computes minimum of values. Works with numeric and string data.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Stadard deviation</title>
+				<para>
+					Computes standard deviation of values in the column. Works for numeric data only.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Variance</title>
+				<para>
+					Computes standard deviation of values in the column. Works for numeric data only.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Modules asking for creation</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Each value one category attribute</title>
+				<para>
+					Creates an <classname>each value one category attribute</classname> box with values out of this column.
+				</para>
+			</formalpara>
+		</listitem>	
+		<listitem>
+			<formalpara>
+				<title>Equidistant intervals attribute</title>
+				<para>
+					Creates an <classname>equidistant intervals attribute</classname> box with values out of this column.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Equidistant intervals LISp attribute</title>
+				<para>
+					Creates an <classname>equidistant intervals LISp attribute</classname> box with values out of this column.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Equifrequency intervals attribute</title>
+				<para>
+					Creates an <classname>equifrequency intervals attribute</classname> box with values out of this column.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Static attribute</title>
+				<para>
+					Creates a static attribute (attribute that is empty and does not change with the change of the column).
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+  <bibliography>
+    <biblioentry>
+      <abbrev>Kuchar</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Tomáš</firstname>
+          <surname>Kuchař</surname>
+        </author>
+      </authorgroup>
+      <title>Experimentální GUHA procedury</title>
+      <publisher>
+        <publishername>
+          Master thesis at Faculty of Mathematics and Physics,
+          Charles University, Prague (in Czech) - in Publications.
+        </publishername>
+      </publisher>
+    </biblioentry>
+  </bibliography>
+</article>

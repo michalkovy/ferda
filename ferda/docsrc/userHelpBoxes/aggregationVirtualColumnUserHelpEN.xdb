@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+		</authorgroup>
+		
+		<title>Aggregation Virtual Column User Help</title>
+		<titleabbrev>Aggregation Virtual Column Help</titleabbrev>
+		
+		<!--
+		<revhistory>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2008-07-02</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Initial version of the document
+					</para>
+				</revdescription>
+			</revision>
+		</revhistory>
+		-->
+		<pubdate>2008-07-02</pubdate>
+	</articleinfo>
+	
+	<abstract>
+	<para>
+		This document provides user help for the <classname>Aggregation virtual column</classname> box.
+	</para>
+	</abstract>
+	
+<section>
+	<title>About the Aggregation virtual column box</title>
+	<para>
+		AGREGACNI ATRIBUT RADEJI NEPOUZIVAT, PROTOZE VUBEC NEFUNGUJE TAK JAK MA!!!
+	</para>
+	<para>
+		The Aggregation virtual column does not belong to boxes used in "classical" GUHA mining. Instead it is used for so called
+		"multirelational" GUHA mining, which means that the mining task runs on several data tables. The key term for multirelational
+		GUHA mining is the term <classname>virtual attribute</classname> Virtual attribute is newly added attribute to the 
+		analyzed data matrix (which will be called <classname>master</classname>). Ferda so far implements two kinds of 
+		virtual attributes: <classname>aggregation attribute</classname> and <classname>hypotheses attribute</classname>.
+		The <classname>aggregation virtual column</classname> box represents the first kind. See i.e. 
+		<classname>Virtual 4FT Boolean Attribute</classname> for example of hyptheses attribute. 
+	</para>
+	<para>
+		The text below is taken from <citation>Kuzmin</citation> and describes aggretation attribute.
+	</para>
+	<para>
+		Aggregation attribute is represented by new columns (which are by definition not stored back into the database). These
+		columns are created as a result of data preparation from several data tables. For each object of master data table, a real
+		number is computed according to values computed from detail data tables. Formally, aggregation attribute can be defined
+		as a function defined over domains of detail data tables, that returns a real number.
+	</para>
+	<para>
+		The profit of aggretagion attribute is in simplification of data mining task. The functionality of aggregation attribute can
+		be obtained elsehow, for example by physically adding corresponding columns into the database. However, aggregation
+		attribute enables to swiftly change task setting - if we for example find out after run of one task, that we need to examing 
+		different data. We do not need to access physically the database again, aggregation attribute will do the work for us. 
+	</para>
+</section>
+
+<section>
+	<title>Implementation</title>
+	<para>
+		The aggregation attribute is implemented so that it offers (ICE) functionality of a column. Note also, that the box is not name
+		attribute, but column. This way, user can reuse the attribute much more that if it would be an attribute. 
+	</para>
+	<para>
+		Functions supported for creation of aggregation attribute value are aggregation and numeric functions of SQL. 
+	</para>
+</section>
+
+<section>
+	<title>Sockets</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Master data table</title>
+				<para>
+					Determines the master data table of the aggregation attribute
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Detail data table</title>
+				<para>
+					Determines the detail data table of the aggregation attribute
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Properties</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Data Type</title>
+				<para>
+					Determines the data type of the column in the database
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Semantics</title>
+				<para>
+					Semantics of the column domainwhich informs user about type of values in the column (domain 
+					represented by the column). The property assigns the column into one of four semantic classes: nominal, 
+					ordinal, cyclic ordinal and cardinal. The meanin of the classes:
+		<itemizedlist>
+			<listitem>
+				<formalpara>
+					<title>Nominal</title>
+					<para>
+						Enumeration of values, the values are uncomparable to each other. Names or addresses are example 
+						of nominal class.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Ordinal</title>
+					<para>
+						The values can be compared to each other. There exists a relation "greater or equal" saying which of two values
+						is greater, but an exact metric does not exist. Example of ordinal relation is set inclusion. One can say that a set is 
+						a subset of other set, but cannot say, how big is the difference between sets.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Ordinal cyclic</title>
+					<para>
+						Same as ordinal, but values can be compared to each other in a cyclic manner. Example of suech values are days
+						of the week.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Cardinal</title>
+					<para>
+						The values can be compared to each other (relation "greater or equal") and there exists a metric saying how far are
+						values from each other. Example of such a domain are numbers (integer or real). 
+					</para>
+				</formalpara>
+			</listitem>
+		</itemizedlist>
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Detail table id column</title>
+				<para>
+					TADY NEVIM CO SE PRESNE MA NAPSAT
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Detail table result column</title>
+				<para>
+					TADY NEVIM CO SE PRESNE MA NAPSAT
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Master table id column</title>
+				<para>
+					TADY NEVIM CO SE PRESNE MA NAPSAT
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Select expression</title>
+				<para>
+					TADY NEVIM CO SE PRESNE MA NAPSAT
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Average</title>
+				<para>
+					Computes average value of the values in the column for numeric data and average length of values for string data.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Distinct values</title>
+				<para>
+					Computes number of distinct values. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Maximum</title>
+				<para>
+					Computes maximum of values. Works with numeric and string data.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Minimum</title>
+				<para>
+					Computes minimum of values. Works with numeric and string data.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Stadard deviation</title>
+				<para>
+					Computes standard deviation of values in the column. Works for numeric data only.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Variance</title>
+				<para>
+					Computes standard deviation of values in the column. Works for numeric data only.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Modules asking for creation</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Each value one category attribute</title>
+				<para>
+					Creates an <classname>each value one category attribute</classname> box with values out of this column.
+				</para>
+			</formalpara>
+		</listitem>	
+		<listitem>
+			<formalpara>
+				<title>Equidistant intervals attribute</title>
+				<para>
+					Creates an <classname>equidistant intervals attribute</classname> box with values out of this column.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Equidistant intervals LISp attribute</title>
+				<para>
+					Creates an <classname>equidistant intervals LISp attribute</classname> box with values out of this column.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Equifrequency intervals attribute</title>
+				<para>
+					Creates an <classname>equifrequency intervals attribute</classname> box with values out of this column.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Static attribute</title>
+				<para>
+					Creates a static attribute (attribute that is empty and does not change with the change of the column).
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+  <bibliography>
+    <biblioentry>
+      <abbrev>Kuzmin</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Alexander</firstname>
+          <surname>Kuzmin</surname>
+        </author>
+      </authorgroup>
+      <title>Relační GUHA procedury</title>
+      <publisher>
+        <publishername>
+          Master thesis at Faculty of Mathematics and Physics,
+          Charles University, Prague (in Czech) - in Publications
+        </publishername>
+      </publisher>
+    </biblioentry>
+  </bibliography>
+</article>
