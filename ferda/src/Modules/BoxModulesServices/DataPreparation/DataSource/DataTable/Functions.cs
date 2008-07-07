@@ -106,6 +106,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
         private CacheFlag _cacheFlag = new CacheFlag();
         private GenericDataTable _cachedValue = null;
 
+        /// <summary>
+        /// <para>
+        /// Gets the contents of the data table (in a specific structure).
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="Ferda.Modules.Boxes.OntologyRelated.OntologyMapping.Functions.GetGenericDataTable"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Contents of the data table</returns>
         public GenericDataTable GetGenericDataTable(bool fallOnError)
         {
             DatabaseFunctionsPrx prx = GetDatabaseFunctionsPrx(fallOnError);
@@ -126,7 +138,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             if (connSettingTmp == null)
                 return null;
 
-            DatabaseConnectionSettingHelper connSetting = new DatabaseConnectionSettingHelper(connSettingTmp);
+            DatabaseConnectionSettingHelper connSetting = 
+                new DatabaseConnectionSettingHelper(connSettingTmp);
 
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
             cacheSetting.Add(Database.BoxInfo.typeIdentifier + Database.Functions.PropConnectionString, connSetting);
@@ -153,8 +166,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
         }
 
         /// <summary>
+        /// <para>
         /// Tests the unique columns i.e. unicity of values in data in specified
         /// <c>uniqueColumns</c>. (These columns can simulate Primary Key.)
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="Ferda.Modules.Boxes.OntologyRelated.OntologyMapping.Functions.TryPrimaryKey"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
         /// </summary>
         /// <param name="fallOnError">if set to <c>true</c> the method will fall on error.</param>
         /// <exception cref="T:Ferda.Modules.BadValueError">
@@ -182,6 +202,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                 );
         }
 
+        /// <summary>
+        /// Gets the names of data tables of the connected database
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Array of the names of data tables</returns>
         public string[] GetDataTablesNames(bool fallOnError)
         {
             DatabaseFunctionsPrx prx = GetDatabaseFunctionsPrx(fallOnError);
@@ -201,6 +226,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                 );
         }
 
+        /// <summary>
+        /// <para>
+        /// Gets the info about the data table
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="FFerda.Modules.Boxes.OntologyRelated.OntologyMapping.Functions.GetDataTableExplain"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Info about the data table</returns>
         public DataTableExplain GetDataTableExplain(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<DataTableExplain>(
@@ -220,6 +257,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                 );
         }
 
+        /// <summary>
+        /// <para>
+        /// Gets the info about the data table
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="Ferda.Modules.Boxes.OntologyRelated.OntologyMapping.Functions.GetDataTableInfo"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Info about the data table</returns>
         public DataTableInfo GetDataTableInfo(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<DataTableInfo>(
@@ -273,6 +322,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                 );
         }
 
+        /// <summary>
+        /// <para>
+        /// Gets the names of columns of the data table.
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="Ferda.Modules.Boxes.OntologyRelated.OntologyMapping.Functions.GetColumnsNames"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <returns>Array of the names of data tables</returns>
         public string[] GetColumnsNames(bool fallOnError)
         {
             return ExceptionsHandler.GetResult<string[]>(

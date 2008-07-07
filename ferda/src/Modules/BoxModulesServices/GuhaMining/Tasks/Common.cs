@@ -592,10 +592,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                     if (String.IsNullOrEmpty(last))
                         last = newer;
                     else if (last != newer)
-                        throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
-                                                       "Mining over only source data table is supported.",
-                                                       new string[] { s },
-                                                       restrictionTypeEnum.OtherReason);
+                    {
+                        //throw Exceptions.BadValueError(null, boxModule.StringIceIdentity,
+                        //                               "Mining over only source data table is supported.",
+                        //                               new string[] { s },
+                        //                               restrictionTypeEnum.OtherReason);
+                    }
                 }
 
             // categorial attributes
