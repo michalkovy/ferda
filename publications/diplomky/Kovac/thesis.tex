@@ -4,7 +4,9 @@
 \usepackage{pgf}
 \usepackage[utf8]{inputenc}
 %\usepackage{a4wide}
-\include{csprimes}
+%\include{csprimes}
+
+\newcommand{\uv}[1]{``#1''}
 
 \pgfdeclareimage[interpolate=true,height=7cm]{faktorial}{faktorial}
 \pgfdeclareimage[interpolate=true,height=7cm]{designimage}{designB}
@@ -113,19 +115,24 @@ Every box module implementation has its factory class. This factory class create
 
 FrontEnd asks a box module factory creator for creation of only one box module factory for one box class. The creator has methods independent of both instance of the box module and FrontEnd connected. A factory has methods independent of box modules, but dependent on FrontEnd (for example localized names of properties). If FrontEnd is not connected for longer time, all factory instances and box module instances are destroyed.
 
-Box modules mainly consist of sockets, properties and functions. Sockets are places where you can connect another box module. They are parameters for functionality of the box module. Properties are also parameters and can be viewed as a socket, but can be configured both by connecting a box to the socket and by setting the property in the property grid.
+Box modules mainly consist of sockets, properties and functions. Sockets are places where you can connect another box module. They are parameters for functionality of the box module. Properties are also parameters and can be viewed as a socket, but can be configured both by connecting a box to the socket and by setting the property in the property grid. Every property has in the property grid two lines. One line for setting of the property by the property grid, the second line for setting a boolean value indicating if there should be visible a socket for that property. If it is set to true, the first line is disabled (it means you can not change a value manually) and its value depends on a functions interface which is returned from a box which is connected to the socket of that property. Please see figure~\ref{fig:propertyAsASocket}. This has been done in time of the software project Ferda by the author of this diploma thesis, because he had in mind functional view of the Ferda. 
+\begin{figure}
+	\includegraphics[width=7cm]{property_as_socket}
+	\caption{A property as a socket}
+	\label{fig:propertyAsASocket}
+\end{figure}
 
 A box has a method which returns a class called functions. This class represents the functionality of a box.
 
 Box module has also an identifier, an icon, a SVG design, names of categories, box modules asking for creation, actions, a name of property driving label and a dynamic help.
 
 \subsection{Ferda as a programming language}
-The main concept of Ferda is to be user-oriented functional language. The basic view is that a box is a function and sockets are properties of that function. There is no need to talk about properties, because properties are also usable by sockets. To be more precise, box can be not only viewed as one function, but as set of functions. As written above, box returns class functions. Therefore every method of such class can be viewed as a separate function. Box can also return different functions class depending on its parameters. We can define basic objects of the Ferda language.
+The main concept of Ferda is to be user-oriented functional language. The basic view is that a box is a function and sockets are properties of that function. There is no need to talk about properties, because properties are also usable by sockets. To be more precise, box can be not only viewed as one function, but as set of functions. As written above, box returns class functions. Therefore every method of such class can be viewed as a separate function. Box can also return different functions class depending on its parameters. We can define basic objects of the Ferda user-oriented language.
 
 Box is $\left<S,F\right>$ where
 \begin{itemize}
 	\item $S$ is a set of sockets
-	\item $F$ is a set of functions
+	\item $F$ is a set of functions which use sockets from $S$
 \end{itemize}
 	
 Socket is $\left<n,T\right>$ where
@@ -134,7 +141,7 @@ Socket is $\left<n,T\right>$ where
 	\item $T$ is a set of box types
 \end{itemize}
 
-We have predicate $has(f,i)$ where $f$ is function and $i$ is an ``Ice identifier''
+We have predicate $hasIdentifier(f,i)$ where $f$ is function and $i$ is an ``Ice identifier''
 
 Type is $\left<i,S\right>$ where
 \begin{itemize}
@@ -146,18 +153,39 @@ Type is $\left<i,S\right>$ where
 	\end{itemize}
 \end{itemize}
 
-Box $B=\left<S,F\right>$ is of type $A=\left<i,Z\right>$ iff 
+Box $B=\left<S,F\right>$ is of type $A=\left<i,Z\right>$ (we will call it predicate $isOfType(B,A)$) iff 
 \begin{enumerate}
 	\item $(\forall \left<n,j\right>\in Z)(\exists \left<m,T\right>\in S)(\exists \left<y,W\right>\in T)(m=n \wedge j=y)$
-	\item $(\exists f\in F)(has(f,i))$
+	\item $(\exists f\in F)(hasIdentifier(f,i))$
 \end{enumerate}
-	
-\begin{itemize}
-	\item Box consists of functions
-	\item Sockets are parameters of these functions
-	\item Property is also socket
-		\includegraphics[width=7cm]{property_as_socket}
-\end{itemize}
+
+A box $B=\left<S,F\right>$ can be connected to a socket $s=\left<n,T\right>$ iff $(\exists t\in T)(isOfType(B,t))$
+
+If a box $B$ has all it's sockets unset (all properties has its default value) we will write such connection
+\begin{equation}
+B()
+\end{equation}
+
+If a box $B$ has set some its sockets, but it is not important for the text we will write such connection
+\begin{equation}
+B(\dots)
+\end{equation}
+
+If a box $B$ is connected to a socket with name ``socketName'' of box $C$ we will write such connection
+\begin{equation}
+C(socketName=B())
+\end{equation}
+
+If a box $B$ is connected to sockets with names ``socketName1'' and ``socketName1'' of box $C$ we will write such connection
+\begin{equation}
+C(socketName=B(), socketName2=B())
+\end{equation}
+or we can name a part of connection and reuse it in next connections
+\begin{equation}
+B=B(); C(socketName=B, socketName2=B)
+\end{equation}
+
+We will call in this text instances of boxes by a name of their type, for example ``$Table()$''. If in the connection are more boxes of the same type we will distinguish them by their indexes, for example ``$Table_1()$''.
 
 %What is missing?
 %\begin{itemize}
@@ -414,13 +442,25 @@ Factorial in Ferda
 \end{figure}
 
 problemy lambdy - caste zacykleni ve ferdovi, zbytecne caste spousteni (cashovani hodnoty)
+ukazat na prikladu faktorialu, ze kliknutim na prostredni krabicku se Ferda zacykliLogin
 
 \subsection{Sequences and sets}
 It is possible to represent a sequence of numbers by numbers only using a basic primary recursive functions. But if there is a need of easy counting sequences of function it is better to add a support for that to the language.
 
 The Ferda includes a box called Group. This box is the only box which is not the real back end module. It is implemented in the modules manager. It has one socked. It represent all boxes which are connected to this socket. If second group box is connected to this, the first box represents all boxes which are connected to the first box without the second group box but with all boxes which are represented by the second group box. If the box is connected to a socket to which it is possible to connect more boxes, it means all boxes which are represented by the box will be connected. The group box is very useful for organization of boxes on the desktop and reuse of a set of boxes.
 
-We want to have a possibility to create a box which represents a sequence of boxes like the group box, but the box should be standard backend module. The box should return as a value a sequence of functions classes instead of one functions class.
+We want to have a possibility to create a box which represents a sequence of boxes like the group box, but the box should be standard backend module. The box should return as a value a sequence of functions classes instead of one functions class. So we need second-order functions. It is easy thing in the Ferda -- define a functions interface for sequence which has a methods which returns members of the sequence -- functions interfaces. Then a sequence boxes can be created. There are more ways how to define a sequence. For example one way is to have a box with property called ``count of items'' and when it is set to some number that number of socket will appear. These sockets represent items of a sequence. Another boxes can be ``head tail'' box (lisp and prolog use such ``functions''), ``clear sequence'',  ``add an item to the end'',\dots.
+
+If a socket has an ability to connect more boxes, we can want a way how to connect all functions in some sequence to that socket. The implementation of connecting a box to a socked can be changed for that. A new implementation can first try if the functions 
+
+The main implementation of a box module has a method which is used for getting of functions connected to some socket. It has this signature:
+\begin{verbatim}
+public ObjectPrx[] GetFunctions(string socketName)
+\end{verbatim}
+
+If the implementation can be changed so that if it is possible to connect more boxes to the socket ``socketName'', first try if the functions connected to that socket is a sequence. If it is true, do not return the sequence interface, but all functions which are in the sequence. In other scenarios the implementation should return the same result as it does.
+
+Such change give us ability to use sequence boxes as a group box.
 
 \subsection{Other new boxes}
 \subsubsection{Get parameter}
@@ -486,10 +526,10 @@ Let us get a four fold task setting with founded implication quantifier. General
 We will present small program in the new language which finds threshold for founded implication so that count of results of a task which use that quantifier is between specified numbers.
 
 \subsection{Implementation}
-The solution is based on the linear interpolation. The function of a count of results on a threshold is non-increasing. If we know two thresholds (the $x_min$ and the $x_max$) with their count of results (the $y_min$ and the $y_max$) which one count is shorter than what we wants and the second is greater than what we wants, than we can interpolate this way: 
+The solution is based on the linear interpolation. The function of a count of results on a threshold is non-increasing. If we know two thresholds (the $x_{min}$ and the $x_{max}$) with their count of results (the $y_{min}$ and the $y_{max}$) which one count is shorter than what we wants and the second is greater than what we wants, than we can interpolate this way: 
 
 \begin{math}
-x = x_max - (y_max - y)\frac{x_max - x_min}{y_max - y_min}
+x = x_{max} - (y_{max} - y)\frac{x_{max} - x_{min}}{y_{max} - y_{min}}
 \end{math}
 \begin{figure}
 	\includegraphics[width=13.72cm]{linearInterpolationPlot}
@@ -533,13 +573,26 @@ Two or more quantifiers as a setting for a task are more complicated. The today 
 There can be still more complicated tasks where the recursive solution described here can be usefull. 
 
 \section{Getting basic information from a table}
-Sometimes you get a data and do not know nearly anything about them. In such situations it would be nice to have a method hoe to get quickly basic information about it.
+Sometimes you get a data and do not know nearly anything about them. In such situations it would be nice to have a method how to get quickly basic information about it.
 
-A program which creates a basic generic settings from a table without any knowledge about it will be presented in this section. We will concentrate rather on the way how a user can create such program then on particular quantifiers, tasks and other properties of setting which he should use.
+A program which creates a basic generic settings from a table without any knowledge about it will be presented in this section. We will concentrate rather on the way how a user can create such program then on particular quantifiers, tasks and other properties of setting which it should use.
 
 The program should create an attribute for all columns in the table. It should decide a type of the attribute depending on a data in a column. Similarly, it should create an atom setting from an attribute. All these atom settings should be included in a cedent setting for a four fold task.
 
-There are three task we should present. First, 
+Firstly, let us describe a way how an attr
+
+\begin{eqnarray*}
+ForEach(&&what=GetParameter(name="columns", box=Table(\dots)), \\&& do=Column(name=X, table=Table(\dots)), \\&& x=X)
+\end{eqnarray*}
+
+
+\begin{eqnarray*}
+C=Column(name=X, table=Table(\dots))
+\end{eqnarray*}
+\begin{eqnarray*}
+do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(name="rowsCount", \\&&\qquad\qquad box=C), \\&&\qquad value2=20),\\&&Atom(EachValueOneAttribute(column=C,\dots)),\\&&Atom(EquifrequencyAttribute(column=C,\dots)))
+\end{eqnarray*}
+
 
 \section{GUHA in the Ferda by ``small'' boxes}
 %Implementation of GUHA in Ferda by 'small' boxes.
