@@ -432,6 +432,32 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             return base.IsPropertySet(propertyName, propertyValue);
         }
 
+        /// <summary>
+        /// Validates the box
+        /// </summary>
+        /// <param name="boxModule">box instance to be validated</param>
+        public override void Validate(BoxModuleI boxModule)
+        {
+
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            object dummy;
+            //Database functions
+            dummy = Func.GetDatabaseFunctionsPrx(true);
+            //Ontology functions
+            dummy = Func.GetOntologyFunctionsPrx(true);
+            //Data table names
+            dummy = Func.GetDataTablesNames(true);
+
+            Func.TryPrimaryKeys();
+
+            if (Func.NumberOfMappedPairs == 0)
+            {
+                BoxRuntimeError result = new BoxRuntimeError(null, "There are no mapped ontology-database pairs.");
+                throw result;
+            }
+        }
+
         #region Type Identifier
 
         /// <summary>
@@ -455,26 +481,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         protected override string identifier
         {
             get { return typeIdentifier; }
-        }
-        
-        public override void Validate(BoxModuleI boxModule)
-        {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
-
-            // try to invoke methods
-            object dummy = Func.GetDatabaseFunctionsPrx(true);
-            dummy = Func.GetOntologyFunctionsPrx(true);
-            dummy = Func.GetDataTablesNames(true);
-            
-            foreach (string datatableName in Func.GetDataTablesNames(true))
-            {
-                Func.TryPrimaryKey(datatableName, true);
-                dummy = Func.GetDataTableInfo(datatableName, true);
-                dummy = Func.GetColumnsNames(datatableName, true);
-                dummy = Func.GetDataTableExplain(datatableName, true);
-                dummy = Func.GetGenericDataTable(datatableName, true);
-            }
-            
         }
 
         #endregion

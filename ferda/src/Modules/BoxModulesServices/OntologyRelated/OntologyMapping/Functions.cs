@@ -121,7 +121,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// Gets the proxy of database box (which is connected
         /// to this Ontology Mapping box)
         /// </summary>
-        public  DatabaseFunctionsPrx GetDatabaseFunctionsPrx(bool fallOnError)
+        public DatabaseFunctionsPrx GetDatabaseFunctionsPrx(bool fallOnError)
         {
             return SocketConnections.GetPrx<DatabaseFunctionsPrx>(
                 _boxModule,
@@ -144,7 +144,6 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 OntologyFunctionsPrxHelper.checkedCast,
                 fallOnError);
         }
-
 
         /// <summary>
         /// Gets the superClass of the ontology entity from ontology, for individuals it returns the class from which the instance is instantiated
@@ -265,9 +264,16 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         private GenericDataTable _cachedValue = null;
 
         /// <summary>
-        /// Gets the contents of the data table
+        /// <para>
+        /// Gets the contents of the data table.
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable.Functions.GetGenericDataTable"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
         /// </summary>
-        /// <param name="dataTableName">Name of the column's table</param>
+        /// <param name="dataTableName">Name of the data table in the database</param>
         /// <param name="fallOnError">Iff the method should fall on error</param>
         /// <returns>Contents of the data table</returns>
         public GenericDataTable GetGenericDataTable(string dataTableName, bool fallOnError)
@@ -290,7 +296,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             if (connSettingTmp == null)
                 return null;
 
-            DatabaseConnectionSettingHelper connSetting = new DatabaseConnectionSettingHelper(connSettingTmp);
+            DatabaseConnectionSettingHelper connSetting = 
+                new DatabaseConnectionSettingHelper(connSettingTmp);
 
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
                         
@@ -363,7 +370,14 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         }
 
         /// <summary>
+        /// <para>
         /// Gets the names of columns of specified data table
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable.Functions.GetColumnsNames"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
         /// </summary>
         /// <param name="dataTableName">Name of the data table table</param>
         /// <param name="fallOnError">Iff the method should fall on error</param>
@@ -422,7 +436,14 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         }
 
         /// <summary>
+        /// <para>
         /// Gets the info about the data table
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable.Functions.GetDataTableExplain"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
         /// </summary>
         /// <param name="dataTableName">Name of the column's table</param>
         /// <param name="fallOnError">Iff the method should fall on error</param>
@@ -447,8 +468,15 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         }
 
         /// <summary>
+        /// <para>
         /// Tests the unique columns i.e. unicity of values in data in specified
         /// <c>uniqueColumns</c>. (These columns can simulate Primary Key.)
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable.Functions.TryPrimaryKey"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
         /// </summary>
         /// <param name="dataTableName">name of datatable where the unicity is going to test.</param>
         /// <param name="fallOnError">if set to <c>true</c> the method will fall on error.</param>
@@ -501,7 +529,14 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         }
 
         /// <summary>
+        /// <para>
         /// Gets the info about the data table
+        /// </para>
+        /// <para>
+        /// NOTE: The function is similar to the 
+        /// <see cref="Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable.Functions.GetDataTableInfo"/>
+        /// function. Apply possible changes also to this function. 
+        /// </para>
         /// </summary>
         /// <param name="dataTableName">Name of thedata table</param>
         /// <param name="fallOnError">Iff the method should fall on error</param>
@@ -532,6 +567,25 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                 },
                 _boxModule.StringIceIdentity
                 );
+        }
+
+        /// <summary>
+        /// The method checks, if the primary keys are set for all the data tables of the database.
+        /// </summary>
+        public void TryPrimaryKeys()
+        {
+            try
+            {
+                foreach (string datatableName in GetDataTablesNames(true))
+                {
+                    TryPrimaryKey(datatableName, true);
+                }
+            }
+            catch
+            {
+                BoxRuntimeError result = new BoxRuntimeError(null, "You need to set primary keys of all tables in the database.");
+                throw result;
+            }
         }
 
         #endregion
