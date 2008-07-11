@@ -52,8 +52,8 @@ Lze pokládat řadu podobných otázek které konstituují jistou typovou úlohu
 
 Jedná se o diplomovou práci kategorie \uv{výzkumný problém}. Jejím cílem je stanovit několik typových úloh a pro ně definovat výše naznačený jazyk pro řešení. Jazyk bude založen na použití GUHA procedur implementovaných v rámci systému LISp-Miner, případně na nových vhodných analytických procedurách. Součástí diplomové práce bude i prototypová implementace příkazů tohoto jazyka v rámci systému FERDA [2].
 
-\section*{Guides}
-The main task of this paper is to assess a set of several problems in KDD and present a possible solution via a new user-oriented language for Ferda system. The reach of the present paper, however, surpasses the assignment in its implications. Instead of a new language specific only for some KDD problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. The reason for going beyond the task was the present author's determination to present a more complex solution to the problem given. 
+\section*{Introduction}
+The main task of this thesis is to assess a set of several problems in KDD and present a possible solution via a new user-oriented language for Ferda system. The reach of the present paper, however, surpasses the assignment in its implications. Instead of a new language specific only for some KDD problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. The reason for going beyond the task was the present author's determination to present a more complex solution to the problem given. 
 
 Instead of presenting first KDD problems and later describing a new language specific for these problems a new generic language is described at the beginning. The generic language resulted indeed from some KDD problems but it is not visible on the result, which is why it is not needed to start with examples in this paper.
 
@@ -63,7 +63,6 @@ There are references from solution of KDD problems to features in the new langua
 
 The new implementation of GUHA procedures that has been created as a part of \cite[diploma thesis of Tomáš Kuchař]{thesisKuchar} is used instead of LISp-Miner procedures which have been proposed. The new implementation of GUHA procedures is more generic and better integrated into Ferda system. LISp-Miner procedures are deprecated in Ferda system.
 
-\section*{Structure}
 The thesis is divided into four chapters. The first chapter introduces Ferda system. First, it discusses the history of Ferda and its implementation. Subsequently, it presents its functional view. The chapter shows that Ferda was from beginning designed for user-oriented functional programming and it describes what was missing in the Ferda system from the point of programming and extensibility before this thesis.
 
 The second chapter goes into more detail and describes new features, functions and tools which can help making Ferda better user-oriented programing tool. To start with, it focuses on source files, the basic programming instrument, and how they are organized and how a code can be reused. Then several new basic functions are introduced with description of their pilot implementation. Modern programing methods are discussed in the last part of this chapter. Neither this chapter nor the first chapter are specifically oriented on knowledge discovery or data mining.
@@ -72,7 +71,7 @@ The third chapter is the core of this thesis. It shows examples from KDD and sho
 
 The last chapter summarizes previous chapters. It lists features which have been implemented as part of this thesis and features which have been proposed only.
 
-\chapter{Introduction to the Ferda}
+\chapter{Basics of the Ferda}
 \section{History}
 !-- History of GUHA, LISp-Miner --!
 
@@ -122,9 +121,9 @@ Box modules mainly consist of sockets, properties and functions. Sockets are pla
 	\label{fig:propertyAsASocket}
 \end{figure}
 
-A box has a method which returns a class called functions. This class represents the functionality of a box.
+A box module has a method which returns a class called functions. This class represents the functionality of the box module. A box module has also an identifier, an icon, a SVG design, names of categories, box modules asking for creation, actions, a name of property driving label and a dynamic help.
 
-Box module has also an identifier, an icon, a SVG design, names of categories, box modules asking for creation, actions, a name of property driving label and a dynamic help.
+Word ``box'' in this thesis may mean two different things according to placement -- a box module or a box instance. A box module represents implementation. It has one instance of ICE box module factory creator interface which is registered in a IceGrid. A box instance is instance of ICE box module interface. One box module can have more box instances.
 
 \subsection{Ferda as a programming language}
 The main concept of Ferda is to be user-oriented functional language. The basic view is that a box is a function and sockets are properties of that function. There is no need to talk about properties, because properties are also usable by sockets. To be more precise, box can be not only viewed as one function, but as set of functions. As written above, box returns class functions. Therefore every method of such class can be viewed as a separate function. Box can also return different functions class depending on its parameters. We can define basic objects of the Ferda user-oriented language.
@@ -218,8 +217,7 @@ The source code of one application is usually not written only in one source fil
 
 If we wanted to add this to Ferda, project would have to have a new attribute defining the using of other projects. Boxes from these project should be read only - no change of properties and boxes connected to their sockets would be available. Also, the origin of each box should be clearly traceable.
 
-%neukraqbickuj se - krabicka A a B, rozepsat...
-Nevertheless, the import itself of projects into other projects presents a demanding situation. Let us illustrate this on the following example: let us have two imaginary projects, $A$ and $B$, with corresponding boxes, $A$ and $B$. The project B is imported by the project A, and the box B is connected to the box A in the project A. Even if we remove the box B in the project B, maintaining the information about the former connection to already non-existent box B in the project A would facilitate the reversible operation in case we needed to add the box B back into the project B. This would allow us to change boxes and therefore functionalities.
+Nevertheless, the import itself of projects into other projects presents a demanding situation. Let us illustrate this on the following example: let us have two imaginary projects, $A$ and $B$, with corresponding boxes, $A$ and $B$. The project $B$ is imported by the project $A$, and the box $B$ is connected to the box $A$ in the project $A$. Even if we remove the box $B$ in the project $B$, maintaining the information about the former connection to already non-existent box $B$ in the project $A$ would facilitate the reversible operation in case we needed to add the box $B$ back into the project $B$. This would allow us to change boxes and therefore functionalities.
 
 Let us discuss possible implementation of such imports. Information about imported projects should be serialized to a project files. In the project file should be a section with paths of imported project files. Boxes which are used from other projects should not be serialized, but connections of these boxes in the project and theirs positions on desktops should. It raises a question how to identify these boxes. The first solution which comes into consideration is to use as identification a pair project identifier of a box and an identifier of an imported project. Such solution would have problems which should be resolved.
 
@@ -319,35 +317,44 @@ Base of functional languages is in the lambda calculus.
 %typovany/netypovany
 
 \section{Language boxes and expressions}
-Every programming language has from beginning at least small set of functions. Also it has some way how to use these functions to create more complex ones. Such an instrument has been created for Ferda as crucial part of this diploma thesis.
+Every programming language has from beginning at least small set of functions. Also it has some way how to use these functions to create more complex ones. Such an instrument has been created for Ferda as crucial part of this diploma thesis. New language boxes are presented at this part of thesis. Data-mining examples which use these boxes are shown in the chapter~\ref{chap:KDDExamples}.
 
 \subsection{Constants}
-Ferda language is a typed language. It means that functions in Ferda return values of some type. Easiest functions are constant functions which return specified value. There are at least two ways how to achieve this by box semantic. One way is to create a specific box type for each type of constants which returns that specific type. This type has been created in Ferda as a part of this thesis.
+Ferda language is a typed language. It means that functions in Ferda return values of some type. Easiest functions are constant functions which return specified value. There are at least two ways how to achieve this by box semantic. One way is to create a specific box type for each type of constants which returns that specific type. This type has been created in the Ferda as a part of this thesis.
 
-The other type is to create one box type which has one property for specifying a type and dependent on it it has second property with value of specified type. It also returns that value.
+%TODO přidat obrázek
+
+The other type is to create one box type which has one property for specifying a type and dependent on it it would have a second property with a value of a specified type. It would return that value.
 
 \subsection{Boxes for math}
-Mathematical expressions are really important for programmers, statistics and analytics. Support for them is important. New boxes for basic mathematic functions have been added. 
+Mathematical expressions are really necessary for programmers, statistics and analytics. Support for them is important. New boxes for basic mathematic functions have been added.
 
 \subsubsection{Binary operation}
-New boxes for basic binary operation have been added. It has first argument type of operation ($+$, $-$, $*$, $/$).
+New boxes for basic binary operation have been added. It has three properties. First two, called ``value1'' and ``value2'', are arguments of an operation. Theirs type is double. The last property is type of operation ($+$, $-$, $*$, $/$), it is called simply ``type''. Result of such operation is always double. Please see figure~\ref{fig:boxBinaryOperation}. In the figure you can see that ``value1'' and ``value2'' properties are set by sockets.
 \begin{figure}
 	\includegraphics[width=13.72cm]{binaryOperation2.png}
 	\caption{Binary operation}
+	\label{fig:boxBinaryOperation}
 \end{figure}
 
+Such box can not be used for setting up a integer properties, even if it sums only integers, because it always returns double. One way how to overcome such problem is to introduce a new convert box. The second way is to change the behavior of the binary operation box. It would return an integer if it summed two integers. Similarly it would return a float if it summed an integer with a float. Different operation types would behave different as is it standard in other languages. Such function would be less efficient, but more useful.  
+
+There is no need to have one box for all operations. There can be also as many boxes as many operations are. Let us describe how to create for example a plus box. There are more possibilities how to do it. It has been already described in~\cite{znalosti2006} on a plus box. There could be plus box which has two properties ``value1'' and ``value2'' like the binary operation box. But there could be also a plus box which has only one socket ``arguments'' -- the box would sum all boxes connected to this socket. It means less boxes on a desktop when summing more numbers. Also it adds an easy way how to sum sequences of numbers which are described in the section~\ref{sec:sequences}. But even without such box we are able to do it (for example thanks to head/tail box which is described in the same section), only it is complicated.    
+
 \subsubsection{Comparison}
-Comparison functions are functions of two arguments which return a boolean value. As part of this thesis a compare box has been created which has three arguments. First argument is type of comparison function, next two arguments are doubles. This box has implemented basic mathematic comparisons ($<$, $>$, $<=$, $>=$, $=$, $!=$).
+Comparison functions are functions of two arguments which return a boolean value. As part of this thesis a compare box has been created which has three arguments. First argument is type of comparison function, next two arguments are doubles. This box has implemented basic mathematic comparisons ($<$, $>$, $<=$, $>=$, $=$, $!=$). Please see figure~\ref{fig:boxCompare}.
 \begin{figure}
-\includegraphics[width=13.72cm]{compare2.png}
+	\includegraphics[width=13.72cm]{compare2.png}
 	\caption{Compare}
+	\label{fig:boxCompare}
 \end{figure}
 
 \subsubsection{If expressions}
-If expression is a function which has three arguments. The first argument is of boolean type. It returns value of the second argument if the first is true, otherwise it returns the value of the third argument.
+If expression is a function which has three arguments. The first argument is of boolean type. It returns value of the second argument if the first is true, otherwise it returns the value of the third argument. Please see figure~\ref{fig:boxIfThenElse}.
 \begin{figure}
 \includegraphics[width=13.72cm]{ifthenelse2.png}
 	\caption{If expression}
+	\label{fig:boxIfThenElse}
 \end{figure}
 
 \subsection{Lambda expression}
@@ -383,10 +390,11 @@ plusOne = lambda x: 1 + x
 print plusOne(9)
 \end{verbatim}
 
-without parameters
+without parameters. Please see figure~\ref{fig:boxLambdaBasic}.
 \begin{figure}
 \includegraphics[width=13.72cm]{lambdaBasic2.png}
 	\caption{Lambda without arguments}
+	\label{fig:boxLambdaBasic}
 \end{figure}
 
 One constant parameter specified
@@ -451,6 +459,7 @@ problemy lambdy - caste zacykleni ve ferdovi, zbytecne caste spousteni (cashovan
 ukazat na prikladu faktorialu, ze kliknutim na prostredni krabicku se Ferda zacykliLogin
 
 \subsection{Sequences and sets}
+\label{sec:sequences}
 It is possible to represent a sequence of numbers by numbers only using basic primary recursive functions. But if there is a need of easy counting sequences of function it is better to add a support for that to the language.
 
 The Ferda includes a box called Group. This box is the only box which is not the real back end module. It is implemented in the modules manager. It has one socked. It represents all boxes which are connected to this socket. If second group box is connected to this, the first box represents all boxes which are connected to the first box without the second group box but with all boxes which are represented by the second group box. If the box is connected to a socket to which it is possible to connect more boxes, it means all boxes which are represented by the box will be connected. The group box is very useful for organization of boxes on the desktop and reuse of a set of boxes.
@@ -469,6 +478,7 @@ If the implementation can be changed so that if it is possible to connect more b
 
 Such change give us ability to use sequence boxes as a group box.
 
+%TODO ForEach a dalsi krabicky
 \subsection{Other new boxes}
 \subsubsection{Get parameter}
 \begin{figure}
@@ -493,6 +503,8 @@ The same in console
 	\includegraphics[width=13.72cm]{command3.png}
 	\caption{Konsole version previous example}
 \end{figure}
+
+%TODO uzivatelsky programovatelna krabicka
 \section{Advanced tools and topics}
 \subsection{Unit tests}
 It would be nice to have a box called unit test, which should have a name and one socket for connecting assert boxes. Assert box should be a box which validates some condition and when the condition is not satisfied it should return some message describing the problem. Then there should be small application which takes a project as parameter and calls all unit tests in the project. Unit tests should call all asserts which are connected to the test. When any of them fail the application should return the message with name of unit test and the error message from the failed assert. Even though one unit test failed it should call other tests.
@@ -508,6 +520,7 @@ Dependency injection is modern pattern in object oriented programming. You creat
 \subsection{Distributed computation}
 %vyber na kterem pocitaci ktera krabicka bezi
 \chapter{KDD problems and theirs solutions}
+\label{chap:KDDExamples}
 \section{Four fold task in a recursion}
 \subsection{Motivation}
 Changes to a setting of a data-mining task is often needed after having a knowledge of results of the task. Subsequent run of that task can result in next changes of that settings. This step is repeated until the analytic is satisfied with the results or he gave up that setting at all.
@@ -580,26 +593,33 @@ Two or more quantifiers as a setting for a task are more complicated. The today 
 There can be still more complicated tasks where the recursive solution described here can be usefull. 
 
 \section{Getting basic information from a table}
-Sometimes you get a data and do not know nearly anything about them. In such situations it would be nice to have a method how to get quickly basic information about it.
+Sometimes you get a data and do not know nearly anything about them. In such situations it would be convenient to have a method how to get quickly basic information about it.
 
-A program which creates a basic generic settings from a table without any knowledge about it will be presented in this section. We will concentrate rather on the way how a user can create such program then on particular quantifiers, tasks and other properties of setting which it should use.
+A program which creates a basic generic settings from a table without any knowledge about it will be presented in this section. We will concentrate rather on a way how a user can create such program then on particular quantifiers, tasks and other properties of a setting which it should use.
 
-The program should create an attribute for all columns in the table. It should decide a type of the attribute depending on a data in a column. Similarly, it should create an atom setting from an attribute. All these atom settings should be included in a cedent setting for a four fold task.
+Let us create a four fold task setting which in antecedent setting an atom setting created from any column of a table. So, the program should create an attribute for all columns in a table. It should decide a type of the attribute depending on a data in a column. Similarly, it should create an atom setting from the attribute. All these atom settings should be included in a cedent setting for the four fold task.
 
-Firstly, let us describe a way how an attr
+The program would create a sequence of atom settings for all columns. But first let us describe how would we write in Ferda a function which returns a sequence of all columns in a table. The table box type should have a new read-only property with names of columns. Today such information is returned by a method of a functions interface of the table box. The only way how to get such information from functions is by a custom box. If we had the new property with columns names, let us call it ``columns'', the GetParameter box could be used for getting such information as a parameter to next box. Such box we would use is the ForEach box.
 
 \begin{eqnarray*}
 ForEach(&&what=GetParameter(name="columns", box=Table(\dots)), \\&& do=Column(name=X, table=Table(\dots)), \\&& x=X)
 \end{eqnarray*}
 
+This connection returns a sequence of columns. The $X$ can represent for example $String()$ or $Variable()$.
+
+The second task is to create attribute in dependency on a column. If a column had more then 20 distinct values the equifrequency attribute would be used otherwise the each value one category attribute would be used. Let us call a column in previus connection $C$
 
 \begin{eqnarray*}
 C=Column(name=X, table=Table(\dots))
 \end{eqnarray*}
+
+than if we changed in the last connection in ForEach box the ``do'' property this way
+
 \begin{eqnarray*}
-do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(name="rowsCount", \\&&\qquad\qquad box=C), \\&&\qquad value2=20),\\&&Atom(EachValueOneAttribute(column=C,\dots)),\\&&Atom(EquifrequencyAttribute(column=C,\dots)))
+do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(name="distinctValues", \\&&\qquad\qquad box=C), \\&&\qquad value2=20),\\&&Atom(EachValueOneAttribute(column=C,\dots)),\\&&Atom(EquifrequencyAttribute(column=C,\dots)))
 \end{eqnarray*}
 
+result of such connection would be the wanted sequence of atom settings. Such sequence could be connected to a cedent box, that box could be than connected as both an antecedent and a succedent of a four fold task.
 
 \section{GUHA in the Ferda by ``small'' boxes}
 %Implementation of GUHA in Ferda by 'small' boxes.
@@ -617,6 +637,7 @@ do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(name="rows
 \begin{thebibliography}{thesisKuchar}
 \bibitem{thesisKuchar} Tomáš Kuchař -- jeho diplomová práce
 \bibitem{GUHA} GUHA book
+\bibitem{znalosti2006} Znalosti 2006 - Kovac, Kuchar, Kuzmin, Ralbovsky
 \bibitem{ICE} Internet Communications Engine documentation
 \bibitem{Wiki} linearni interpolace 
 \bibitem{dalsi} \dots
