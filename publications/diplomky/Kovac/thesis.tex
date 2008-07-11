@@ -96,7 +96,7 @@ The aim of Ferda project was to create application which is internationalized, w
 
 Ferda is a client-server application. Client executable is the FerdaFrontEnd.exe and we call that part FrontEnd. There is no single server executable; instead there are more separate modules which all can act as separate applications. FrontEnd communicates with all of them. Some of these modules implement boxes so we call them box modules, other are helper modules like the GUHA mining engine.
 
-\noindent\includegraphics[width=13.72cm]{designB}
+\noindent\includegraphics[width=1\textwidth]{designB}
 
 FrontEnd uses the assembly FerdaModulesManager.dll for a communication with modules. This assembly is layer of abstraction so that FrontEnd does not know that modules are not implemented locally (it hides Internet Communications Engine).
 
@@ -110,7 +110,7 @@ IceGrid application, which manages available modules and loads them on demand, r
 
 Every box module implementation has its factory class. This factory class creates box module instances. There is one more layer -- every box module factory has its factory class, we call it box module factory creator, which is a singleton.
 
-\noindent\includegraphics[width=13.72cm]{creatorFactory}
+\noindent\includegraphics[width=1\textwidth]{creatorFactory}
 
 FrontEnd asks a box module factory creator for creation of only one box module factory for one box class. The creator has methods independent of both instance of the box module and FrontEnd connected. A factory has methods independent of box modules, but dependent on FrontEnd (for example localized names of properties). If FrontEnd is not connected for longer time, all factory instances and box module instances are destroyed.
 
@@ -271,12 +271,12 @@ The Network archive is a collection of boxes (with all theirs sub-boxes -- boxes
 
 From the user perspective the network archive is a new panel with list where you can copy a box to.
 \begin{figure}
-	\includegraphics[width=13.72cm]{add_to_network_archive}
+	\includegraphics[width=1\textwidth]{add_to_network_archive}
 	\caption{Add a connection to the network archive}
 \end{figure}
 It will ask the user to enter a label after dragging a box from desktop to the network archive.
 \begin{figure}
-	\includegraphics[width=13.72cm]{set_name_of_box_in_network_archive}
+	\includegraphics[width=1\textwidth]{set_name_of_box_in_network_archive}
 	\caption{Set a name of box in the network archive}
 \end{figure}
 After that a new item with selected label should be visible in the list.
@@ -286,7 +286,7 @@ After that a new item with selected label should be visible in the list.
 \end{figure}
 The user can then go to another computer which uses the same network archive and drag the box from network archive to another project. It should create a new copy of the box with all its sub-boxes on the desktop.
 \begin{figure}
-	\includegraphics[width=13.72cm]{network_archive_drop_to_desktop}
+	\includegraphics[width=1\textwidth]{network_archive_drop_to_desktop}
 	\caption{Drop box to a desktop from the network archive}
 \end{figure}
 He can also remove the box from the network archive.
@@ -319,6 +319,8 @@ Base of functional languages is in the lambda calculus.
 \section{Language boxes and expressions}
 Every programming language has from beginning at least small set of functions. Also it has some way how to use these functions to create more complex ones. Such an instrument has been created for Ferda as crucial part of this diploma thesis. New language boxes are presented at this part of thesis. Data-mining examples which use these boxes are shown in the chapter~\ref{chap:KDDExamples}.
 
+%TODO napsat, ze implementace neimplementuje propertyDrivingAsLabel
+
 \subsection{Constants}
 Ferda language is a typed language. It means that functions in Ferda return values of some type. Easiest functions are constant functions which return specified value. There are at least two ways how to achieve this by box semantic. One way is to create a specific box type for each type of constants which returns that specific type. This type has been created in the Ferda as a part of this thesis.
 
@@ -332,7 +334,7 @@ Mathematical expressions are really necessary for programmers, statistics and an
 \subsubsection{Binary operation}
 New boxes for basic binary operation have been added. It has three properties. First two, called ``value1'' and ``value2'', are arguments of an operation. Theirs type is double. The last property is type of operation ($+$, $-$, $*$, $/$), it is called simply ``type''. Result of such operation is always double. Please see figure~\ref{fig:boxBinaryOperation}. In the figure you can see that ``value1'' and ``value2'' properties are set by sockets.
 \begin{figure}
-	\includegraphics[width=13.72cm]{binaryOperation2.png}
+	\includegraphics[width=1\textwidth]{binaryOperation2.png}
 	\caption{Binary operation}
 	\label{fig:boxBinaryOperation}
 \end{figure}
@@ -344,27 +346,44 @@ There is no need to have one box for all operations. There can be also as many b
 \subsubsection{Comparison}
 Comparison functions are functions of two arguments which return a boolean value. As part of this thesis a compare box has been created which has three arguments. First argument is type of comparison function, next two arguments are doubles. This box has implemented basic mathematic comparisons ($<$, $>$, $<=$, $>=$, $=$, $!=$). Please see figure~\ref{fig:boxCompare}.
 \begin{figure}
-	\includegraphics[width=13.72cm]{compare2.png}
+	\includegraphics[width=1\textwidth]{compare2.png}
 	\caption{Compare}
 	\label{fig:boxCompare}
 \end{figure}
 
+It is possible to create also boxes specific for every comparison function like has been described for the binary operation box.
+
 \subsubsection{If expressions}
-If expression is a function which has three arguments. The first argument is of boolean type. It returns value of the second argument if the first is true, otherwise it returns the value of the third argument. Please see figure~\ref{fig:boxIfThenElse}.
+If expression is a function which has three arguments. The first argument, called ``if'', is of boolean type. It returns value of the second argument, called ``then'', if the first is true, otherwise it returns the value of the third argument, called ``else''. Such new box, called ``IfThenElse'' has been created. Please see figure~\ref{fig:boxIfThenElse}.
 \begin{figure}
-\includegraphics[width=13.72cm]{ifthenelse2.png}
+\includegraphics[width=1\textwidth]{ifthenelse2.png}
 	\caption{If expression}
 	\label{fig:boxIfThenElse}
 \end{figure}
 
-\subsection{Lambda expression}
-Basic facts
-\begin{itemize}
-	\item From lambda calculus $(\lambda x.(1+x))(9)$
-	\item Basics of functional programming
-\end{itemize}
+Important fact is that if the ``if'' argument was true, the function in the ``else'' socket would not be counted. Similarly if the ``if'' argument was false, the function in the ``then'' socked will not be count. It means that the not counted function can count indefinitely, but the IfThenElse box can return a value.
 
-Lambda in C\# 3
+\subsection{Lambda expression}
+Lambda is one of the most important expression for functional languages. Its base is in the lambda calculus. Mathematics many times define a function which they later use. For example
+\begin{eqnarray*}
+f(x)&=&1 + x\\
+y&=&f(9)
+\end{eqnarray*}
+This equations gives to the $y$ value $10$. In the lambda calculus it equals to this expression
+\begin{eqnarray*}
+f&=&\lambda x.(1+x)\\
+y&=&f(9)
+\end{eqnarray*}
+The naming of functions is not necessary, it can be also written as $(\lambda x.(1+x))(9)$.
+
+Mathematics can also define recursive functions like factorial
+\begin{eqnarray*}
+f(0)&=&1\\
+f(x)&=&x * f(x - 1)
+\end{eqnarray*}
+
+The same thing can be done in functional languages with lambda expression. Plus one function will be presented there in more languages with use of lambda expression. Let us show the first example not on a functional language but on a structural one with functional aspects. Such language is the C\# 3. Lambda expression is in the C\# 3 done by operator &=>&:
+
 \begin{verbatim}
 public delegate int function(int x);
 
@@ -375,16 +394,14 @@ public static void Main(string[] args)
   System.Console.WriteLine(a);
 }
 \end{verbatim}
-	
-Other languages
 
-Lambda in F\#
+F\# is another language which is translated to IL of .NET framework, but it is a functional language. The lambda expression is done by the let operator there:
 \begin{verbatim}
 let onePlus x = 1 + x
 do printf "%s" (onePlus(9)) 
 \end{verbatim}
 
-Lambda in Python
+The last example is written in more commonly used functional languages today, in the Python:
 \begin{verbatim}
 plusOne = lambda x: 1 + x
 print plusOne(9)
@@ -392,14 +409,14 @@ print plusOne(9)
 
 without parameters. Please see figure~\ref{fig:boxLambdaBasic}.
 \begin{figure}
-\includegraphics[width=13.72cm]{lambdaBasic2.png}
+\includegraphics[width=1\textwidth]{lambdaBasic2.png}
 	\caption{Lambda without arguments}
 	\label{fig:boxLambdaBasic}
 \end{figure}
 
 One constant parameter specified
 \begin{figure}
-\includegraphics[width=13.72cm]{lambdaBasic3.png}
+\includegraphics[width=1\textwidth]{lambdaBasic3.png}
 	\caption{Lambda with one constant parameter specified}
 \end{figure}
 	
@@ -451,7 +468,7 @@ let rec factorial n =
 	
 Factorial in Ferda
 \begin{figure}
-\includegraphics[width=13.72cm]{faktorial}
+\includegraphics[width=1\textwidth]{faktorial}
 	\caption{Factorial}
 \end{figure}
 
@@ -482,25 +499,25 @@ Such change give us ability to use sequence boxes as a group box.
 \subsection{Other new boxes}
 \subsubsection{Get parameter}
 \begin{figure}
-\includegraphics[width=13.72cm]{getParameter2.png}
+\includegraphics[width=1\textwidth]{getParameter2.png}
 	\caption{Get parameter}
 \end{figure}
 
 \subsubsection{Execute action}
 \begin{figure}
-\includegraphics[width=13.72cm]{executeAction2.png}
+\includegraphics[width=1\textwidth]{executeAction2.png}
 	\caption{Execute action}
 \end{figure}
 
 \subsubsection{Command and command output}
 \begin{figure}
-	\includegraphics[width=13.72cm]{command2.png}
+	\includegraphics[width=1\textwidth]{command2.png}
 	\caption{Command and command output}
 \end{figure}
 
 The same in console
 \begin{figure}
-	\includegraphics[width=13.72cm]{command3.png}
+	\includegraphics[width=1\textwidth]{command3.png}
 	\caption{Konsole version previous example}
 \end{figure}
 
@@ -552,7 +569,7 @@ The solution is based on the linear interpolation. The function of a count of re
 x = x_{max} - (y_{max} - y)\frac{x_{max} - x_{min}}{y_{max} - y_{min}}
 \end{math}
 \begin{figure}
-	\includegraphics[width=13.72cm]{linearInterpolationPlot}
+	\includegraphics[width=1\textwidth]{linearInterpolationPlot}
 	\caption{linear interpolation plot}
 \end{figure}
 
@@ -560,27 +577,27 @@ Because the function of a count of results on a threshold is not continuous we c
 
 The interpolation can be done with the new box binary operation. 
 \begin{figure}
-	\includegraphics[width=13.72cm]{linearInterpolation}
+	\includegraphics[width=1\textwidth]{linearInterpolation}
 	\caption{interpolation as a connection of boxes}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=13.72cm]{exampleMainRecursionPart}
+	\includegraphics[width=1\textwidth]{exampleMainRecursionPart}
 	\caption{Result should be between}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=13.72cm]{exampleMainMiningPart}
+	\includegraphics[width=1\textwidth]{exampleMainMiningPart}
 	\caption{If not interpolate and set new max/min}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=13.72cm]{exampleWithoutInterpolationOnMax}
+	\includegraphics[width=1\textwidth]{exampleWithoutInterpolationOnMax}
 \end{figure}
 
 \subsection{Results}
 \begin{figure}
-	\includegraphics[width=13.72cm]{exampleResult}
+	\includegraphics[width=1\textwidth]{exampleResult}
 	\caption{Connection}
 \end{figure}
 
@@ -636,7 +653,7 @@ result of such connection would be the wanted sequence of atom settings. Such se
 
 \begin{thebibliography}{thesisKuchar}
 \bibitem{thesisKuchar} Tomáš Kuchař -- jeho diplomová práce
-\bibitem{GUHA} GUHA book
+\bibitem{GUHAbook} GUHA book
 \bibitem{znalosti2006} Znalosti 2006 - Kovac, Kuchar, Kuzmin, Ralbovsky
 \bibitem{ICE} Internet Communications Engine documentation
 \bibitem{Wiki} linearni interpolace 
