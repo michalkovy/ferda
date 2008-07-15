@@ -72,6 +72,8 @@ The third chapter is the core of this thesis. It shows examples from KDD and sho
 The last chapter summarizes previous chapters. It lists features which have been implemented as part of this thesis and features which have been proposed only.
 
 \chapter{Basics of the Ferda}
+This chapter describes the Ferda system. First, it discusses the history of Ferda and its implementation. Subsequently, it presents its functional view. The chapter shows that Ferda was from beginning designed for user-oriented functional programming and it describes what was missing in the Ferda system from the point of programming and extensibility before this thesis.
+
 \section{History}
 !-- History of GUHA, LISp-Miner --!
 
@@ -87,12 +89,13 @@ Since the completion of the project, numerous new boxes have been created for sp
 
 \section{Ferda Data Miner}
 \subsection{Programmers view of Ferda system}
+Programmers of the Ferda system need to know something more than knowledge which is needed by users. Because this thesis changes how the Ferda works inside we are going to describe there how is the Ferda designed from programmers view.
 
 Base parts of Ferda have been written in C\# 2.0. Ferda runs on both .NET Framework and Mono. Some parts of new boxes use also Java platform. Ferda uses middleware Internet Communications Engine for a communication between its parts. Every part can be written in another language and run on another computer. For easier development, many third party libraries and applications have been used -- mainly NAnt, NUnit, NDoc, Netron Graphic Library and DockDotNet library. 
 
 Ferda is under second version of General Public License. It allows everybody to use it for free, redistribute it, change the code (providing the results are still under the General Public License).
 
-The aim of Ferda project was to create application which is internationalized, well documented, modular, user-friendly and conforms Microsoft standards in user experience. It is still in progress, but the Ferda is near to completion.
+The aim of Ferda project was to create application which is internationalized, well documented, modular, user-friendly and conforms Microsoft standards in user experience.
 
 Ferda is a client-server application. Client executable is the FerdaFrontEnd.exe and we call that part FrontEnd. There is no single server executable; instead there are more separate modules which all can act as separate applications. FrontEnd communicates with all of them. Some of these modules implement boxes so we call them box modules, other are helper modules like the GUHA mining engine.
 
@@ -197,8 +200,10 @@ We will call in this text instances of boxes by a name of their type, for exampl
 %\end{itemize}
 
 \chapter{Language for visual programming}
+This chapter describes the Ferda system as a visual programming language. It presents possible objects of the language and tools and utilities for the programming.
+
 \section{Source codes and reusability}
-Every programming languages have ways how to reuse a code. 
+Every programming languages have ways how to reuse a code. This part of thesis is about ways how to make a programming in the Ferda efficient. Need of rewriting a code and missing user specified structure in boxes could release in a usability problem of any language in the Ferda. Several ways how to solve these problems will be described with one implementation of such solution.
 
 \subsection{Project import}
 The simplest way is to copy the source code to different place and use it for different project. The same is possible in Ferda, you can copy a project file and reuse it.
@@ -269,6 +274,8 @@ interface Archive {
 
 The Network archive is a collection of boxes (with all theirs sub-boxes -- boxes connected both directly and indirectly to that box). Each box is identified with some label. You can add a box and remove a box, get information about a box and list all labels in the collection. The collection is serialized on a disk every time it changes. After startup of the service, it loads the last serialized version.
 
+!-- TODO popsat obrazky a poukazat na ne v textu --!
+
 From the user perspective the network archive is a new panel with list where you can copy a box to.
 \begin{figure}
 	\includegraphics[width=1\textwidth]{add_to_network_archive}
@@ -306,25 +313,29 @@ The network archive is a new place where the user can store connections. It is i
 \subsection{Summary}
 
 \section{Functional languages}
+!-- popsat, cim se vyznacuji funkcionalni jazyky, proc se pro Ferdu hodi funkcionalni jazyk a ne strukturalni (mimo jine spojitost s logikou - jednoducha vyjadritelnost hypotez, matematicky pohled na vec, obecne funkcionalni jayky byvaji lepsi na skriptovani,...) --!
 %prvky - vzhledem k Ferdovi
 %jak delaji rekurzi / lambdu - rozsil mezi structuralnim a funkcionalnim jazykem
 
 \subsection{Lambda calculus}
 Base of functional languages is in the lambda calculus. 
+!-- mozna jako sekce vynecham, ale rozhodne zminit, ze funkcionalni jazyky vychazeji z lambda kalkulu, odkazat se na publikaci --!
 
-%rekurzivne spocetny
-%vsecno je funkce
-%typovany/netypovany
+!-- rekurzivne spocetny --!
+
+!-- vsecno je funkce --!
+
+!-- typovany/netypovany --!
 
 \section{Language boxes and expressions}
 Every programming language has from beginning at least small set of functions. Also it has some way how to use these functions to create more complex ones. Such an instrument has been created for Ferda as crucial part of this diploma thesis. New language boxes are presented at this part of thesis. Data-mining examples which use these boxes are shown in the chapter~\ref{chap:KDDExamples}.
 
-%TODO napsat, ze implementace neimplementuje propertyDrivingAsLabel
+!-- TODO napsat, ze implementace neimplementuje propertyDrivingAsLabel --!
 
 \subsection{Constants}
 Ferda language is a typed language. It means that functions in Ferda return values of some type. Easiest functions are constant functions which return specified value. There are at least two ways how to achieve this by box semantic. One way is to create a specific box type for each type of constants which returns that specific type. This type has been created in the Ferda as a part of this thesis.
 
-%TODO přidat obrázek
+!-- TODO přidat obrázek --!
 
 The other type is to create one box type which has one property for specifying a type and dependent on it it would have a second property with a value of a specified type. It would return that value.
 
@@ -364,7 +375,7 @@ If expression is a function which has three arguments. The first argument, calle
 Important fact is that if the ``if'' argument was true, the function in the ``else'' socket would not be counted. Similarly if the ``if'' argument was false, the function in the ``then'' socked will not be count. It means that the not counted function can count indefinitely, but the IfThenElse box can return a value.
 
 \subsection{Lambda expression}
-Lambda is one of the most important expression for functional languages. Its base is in the lambda calculus. Mathematics many times define a function which they later use. For example
+Lambda is one of the most important expression for functional languages. Its base is in the lambda calculus. Mathematics many times define a function which they later use. For example see definition of this plus one function
 \begin{eqnarray*}
 f(x)&=&1 + x\\
 y&=&f(9)
@@ -374,7 +385,7 @@ This equations gives to the $y$ value $10$. In the lambda calculus it equals to 
 f&=&\lambda x.(1+x)\\
 y&=&f(9)
 \end{eqnarray*}
-The naming of functions is not necessary, it can be also written as $(\lambda x.(1+x))(9)$.
+The naming of functions is not necessary, it can be also written as $(\lambda x.(1+x))(9)$. Lambda can be seen as a function which has two arguments -- the first argument is set of variables and the second argument is a expression which uses these variables. It returns a function from the variables to the value of the expression after setting up the variables.
 
 Mathematics can also define recursive functions like factorial
 \begin{eqnarray*}
@@ -382,7 +393,7 @@ f(0)&=&1\\
 f(x)&=&x * f(x - 1)
 \end{eqnarray*}
 
-The same thing can be done in functional languages with lambda expression. Plus one function will be presented there in more languages with use of lambda expression. Let us show the first example not on a functional language but on a structural one with functional aspects. Such language is the C\# 3. Lambda expression is in the C\# 3 done by operator &=>&:
+The same thing can be done in functional languages with lambda expression. Plus one function will be presented there in more languages with use of lambda expression. Let us show the first example not on a functional language but on a structural one with functional aspects. Such language is the C\# 3. Lambda expression is in the C\# 3 done by operator $=>$:
 
 \begin{verbatim}
 public delegate int function(int x);
@@ -401,35 +412,50 @@ let onePlus x = 1 + x
 do printf "%s" (onePlus(9)) 
 \end{verbatim}
 
-The last example is written in more commonly used functional languages today, in the Python:
+The last example is written in more commonly used functional language today, in the Python. There is used the ``lambda'' keyword:
 \begin{verbatim}
 plusOne = lambda x: 1 + x
 print plusOne(9)
 \end{verbatim}
 
-without parameters. Please see figure~\ref{fig:boxLambdaBasic}.
+A new lambda box has been created as part of this thesis. It has socket ``Function'' and a property ``VariablesCount''. Type of this property is integer. There are as many socket pairs variable, value as big the value of this property is. It is first box in the Ferda which has dynamic sockets. Such think has been designed in the beginning of the Ferda, but because it have not been used, some changes were needed to the core of Ferda to make it running.
+
+Please see figure~\ref{fig:boxLambdaBasic}. The ``Function'' socket represent the expression from the lambda. The ``VariablesCount'' is set to zero in this connection. It means that the lambda returns the same thing which is connected to the ``Function'' socket. In this example the result is six represented as double. 
 \begin{figure}
-\includegraphics[width=1\textwidth]{lambdaBasic2.png}
+	\includegraphics[width=1\textwidth]{lambdaBasic2.png}
 	\caption{Lambda without arguments}
 	\label{fig:boxLambdaBasic}
 \end{figure}
 
-One constant parameter specified
+Please see figure~\ref{fig:boxLambdaOnePlus}. It shows the same example in Ferda as we have seen in the previous examples in other languages -- the one plus function. The ``VariablesCount'' is set to one in this connection. It means there are sockets ``Variable0'' and ``Value0''. The box with value five is used there as a variable. The box with value nine is the value of variable. So the result of such connection should be ten.
 \begin{figure}
-\includegraphics[width=1\textwidth]{lambdaBasic3.png}
+	\includegraphics[width=1\textwidth]{lambdaBasic3.png}
 	\caption{Lambda with one constant parameter specified}
+	\label{fig:boxLambdaOnePlus}
 \end{figure}
-	
-\subsubsection{Implementation of lambda}
-How it really works -- Algorithm
-\begin{itemize}
-	\item Values of variables are cloned (whole subtree)
-	\item Main function is cloned with substitution and returned
-\end{itemize}
+
+The type of boxes which can be connected to the ``Value0'' socket are determined by the types of box which is connected to the ``Variable0'' socket. There can be connected more boxes to the ``Variable0'' socket. Then the determined type is intersection of types of that boxes.
+
+It is possible to use as a variable not only a variable box, but any box. To that box can be something connected. It adds possibility of easy writing a recursive function. It will be describe later.   
+
+\subsubsection{Implementation of the lambda box}
+If the lambda box is asked for its functions interface it will clone the connection which is in the ``Function'' socked, only instead of boxes which are connected to some variable socket it places there cloned connection to value socket of that variable. After that it returns functions of the main box from the connection.
+
+The cloning is not done in the lambda box, but the project manager is used. Its interface has been extended for cloning functionality as part of this thesis.
+
+In the lambda calculus it is possible that the variable is also non-constant function. For example:
+\begin{equation}
+\lambda x.(1+x(5)))(\lambda y.(1+y))
+\end{equation}
+
+It is not possible with the implementation which is done in the Ferda, because the implementation replaces variables with cloned values without reconnecting to the cloned value connections which have the variable. Such thing can be implemented, but there are several complication which must be overcame. One of these is that the lambda box should be able to name its value sockets -- so that it is possible to create a lambda box with the same box type as has any other box.
+
+The implementation has one problem, which is not easy to fix. The cloned boxes are not released until the end of FrontEnd application even if they will not be used and every time any box ask for functions interface of the lambda, new cloned boxes are created. It means amount of used memory raises when the lambda box is used. It is not easy to fix, because today there is no information when a box will not use a functions interface any more. Adding such information to the Ferda means changes to almost all boxes.
+
+There is also one performance problem. Let us have function $\lambda x.(x*x)$. If you called in most of functional languages such function with parameter $1+1$, it would firstly count $1+1$ -- two, and later it passes two as the $x$ -- so it counts than $2+2$. In the Ferda such function created by a lambda box counts $(1+1)*(1+1)$. It means the plus operation is counted twice. This problem grows when the lambda is used for a recursion. A generic fix is problematic, because in the Ferda are functions which can not be stored in a simple class and the connection to other boxes is necessary. For simple types there can be created some cashing mechanism.
 
 \subsubsection{Example usage of lambda -- factorial}
-Factorial in C\# -- Structural version
-
+Let us show you how the lambda can be used for a recursive function. On of simplest recursive function is a factorial. Simple structural version of that function in the C\# language is: 
 \begin{verbatim}
 public static int Factorial(int x)
 {
@@ -444,8 +470,7 @@ public static int Factorial(int x)
 }
 \end{verbatim}
 	
-Factorial in C\# -- Expression version
-
+The better implementation of factorial in C\# is using if expression:
 \begin{verbatim}
 public static int Factorial2(int x)
 {
@@ -453,27 +478,25 @@ public static int Factorial2(int x)
 }
 \end{verbatim}
 
-Factorial in other languages
-
-Python
+The factorial in the Python language can be implemented this way:
 \begin{verbatim}
 fac = lambda x: x == 0 and 1 or x * fac(x - 1)
 \end{verbatim}
 
-F\#
+And the last implementation in the F\# language:
 \begin{verbatim}
 let rec factorial n =
     if n=0 then 1 else n * factorial(n - 1)
 \end{verbatim}
-	
-Factorial in Ferda
+
+Please see figure~\ref{fig:factorial}. That figure shows an implementation of factorial in the Ferda.
 \begin{figure}
-\includegraphics[width=1\textwidth]{faktorial}
+	\includegraphics[width=1\textwidth]{faktorial}
 	\caption{Factorial}
+	\label{fig:factorial}
 \end{figure}
 
-problemy lambdy - caste zacykleni ve ferdovi, zbytecne caste spousteni (cashovani hodnoty)
-ukazat na prikladu faktorialu, ze kliknutim na prostredni krabicku se Ferda zacykliLogin
+When you are working with the lambda box in a recursion be aware of interminable function. For example if a user clicked on a plus box in the center of figure~\ref{fig:factorial}, the program would count infinitely, because the plus box has read-only property value and it should be set to $factorial(-1)$. The easy fix for this problem is to replace the condition $x=0$ with a condition $x<=0$. Because it is easy to create a interminable function and execute it, we prefer to save a project file very often.
 
 \subsection{Sequences and sets}
 \label{sec:sequences}
@@ -483,8 +506,7 @@ The Ferda includes a box called Group. This box is the only box which is not the
 
 We want to have a possibility to create a box which represents a sequence of boxes like the group box, but the box should be standard backend module. The box should return as a value a sequence of functions classes instead of one functions class. So we need second-order functions. It is easy thing in the Ferda -- define a functions interface for sequence which has a methods which returns members of the sequence -- functions interfaces. Then a sequence boxes can be created. There are more ways how to define a sequence. For example one way is to have a box with property called ``count of items'' and when it is set to some number that number of socket will appear. These sockets represent items of a sequence. Another boxes can be ``head tail'' box (lisp and prolog use such ``functions''), ``clear sequence'',  ``add an item to the end'',\dots.
 
-If a socket has an ability to connect more boxes, we can want a way how to connect all functions in some sequence to that socket. The implementation of connecting a box to a socked can be changed for that. A new implementation can first try if the functions is a sequence functions.---- dopsat
-%TODO
+If a socket has an ability to connect more boxes, we can want a way how to connect all functions in some sequence to that socket. The implementation of connecting a box to a socked could be changed for that. A new implementation could first try if the functions is a sequence functions. If it was true, it would connect the functions interfaces inside the sequence, otherwise the functions interface itself.
 
 The main implementation of a box module has a method which is used for getting of functions connected to some socket. It has this signature:
 \begin{verbatim}
@@ -495,21 +517,26 @@ If the implementation can be changed so that if it is possible to connect more b
 
 Such change give us ability to use sequence boxes as a group box.
 
-%TODO ForEach a dalsi krabicky
+\subsubsection{ForEach box}
+It can be very useful to have a box which gives a ability to create from one sequence other sequence the way that for each item in a sequence would be used the same function. We are going to call that new box ``ForEach''. It would have three sockets ``What'', ``Do'' and ``Variable''. Incoming sequence should be connected to the ``What'' socket. Function which changes the items should be connected to the ``Do'' socket. The function should use a variable which should be connected to the ``Variable'' socket. The variable will be replaced by items in the incoming sequence. Result is a sequence of cloned function where the variable was replaced by items in the incoming sequence. 
+
 \subsection{Other new boxes}
 \subsubsection{Get parameter}
+!-- POPSAT --!
 \begin{figure}
 \includegraphics[width=1\textwidth]{getParameter2.png}
 	\caption{Get parameter}
 \end{figure}
 
 \subsubsection{Execute action}
+!-- POPSAT --!
 \begin{figure}
 \includegraphics[width=1\textwidth]{executeAction2.png}
 	\caption{Execute action}
 \end{figure}
 
 \subsubsection{Command and command output}
+!-- POPSAT --!
 \begin{figure}
 	\includegraphics[width=1\textwidth]{command2.png}
 	\caption{Command and command output}
@@ -521,26 +548,43 @@ The same in console
 	\caption{Konsole version previous example}
 \end{figure}
 
+\subsubsection{User-programmable box}
 %TODO uzivatelsky programovatelna krabicka
+!-- TODO uzivatelsky programovatelna krabicka -- programovani napriklad v pythonu krabicky za behu -- da se o tom napsat dost, trochu vetsi vykon nez programovani ve Ferdovi, ale zase nutna vetsi znalost, neni uplne trivialni implementovat \dots  --!
+
+
 \section{Advanced tools and topics}
+!-- TODO popsat o cem tato sekce je --!
+
 \subsection{Unit tests}
 It would be nice to have a box called unit test, which should have a name and one socket for connecting assert boxes. Assert box should be a box which validates some condition and when the condition is not satisfied it should return some message describing the problem. Then there should be small application which takes a project as parameter and calls all unit tests in the project. Unit tests should call all asserts which are connected to the test. When any of them fail the application should return the message with name of unit test and the error message from the failed assert. Even though one unit test failed it should call other tests.
 
 Similar is the NUnit tool for .NET Framework. For reusing tools which executes NUnit tests it would be nice to create generator of NUnit tests from Ferda project unit tests. Such generator should create one assembly for one project, but also so many test methods so many unit test boxes are in the project. There should be one startup method for initializing the Ferda Project Manager and for loading the project. 
 
 \subsection{Exceptions}
-%vyjimky a Ferda - uzivatel muze chytat a vysilat vyjimky
+!-- vyjimky a Ferda - uzivatel muze chytat a vysilat vyjimky --! U funkcialniho jazyka spise neco jako nedefinovana hodnota -- potreba porovnaatelnost s nedefinovatelnou hodnotou atd. Pokud nezbyde cas, sekci vynecham
+
 \subsection{Dependency injection}
 Dependency injection is modern pattern in object oriented programming. You create a services and specify which services depends on which interfaces and later you set if needed which instances should be used. It is very useful for unit testing. In Ferda we can see a box with all it's sub-boxes as a service. Not set sockets are interfaces on which it depends (because of lambda box it is not needed to define it on sub-boxes).
 
+!-- dopsat --!
+
 \subsection{Aspect oriented programming}
+
+!-- možná zmínka, možná úplně odstraním --!
+
 \subsection{Distributed computation}
-%vyber na kterem pocitaci ktera krabicka bezi
+!-- TODO vyber na kterem pocitaci ktera krabicka bezi pomoci propety gridu -- zmeni to Ferdu ve lepe distribuovany system, zajimave a ne moc tezke rozsireni --!
+
 \chapter{KDD problems and theirs solutions}
 \label{chap:KDDExamples}
+This chapter shows data-mining examples and shows how it can be solved in Ferda system by functionalities introduced in the first two chapters. It also proposes new functionalities specific for knowledge discovery.
+
 \section{Four fold task in a recursion}
 \subsection{Motivation}
 Changes to a setting of a data-mining task is often needed after having a knowledge of results of the task. Subsequent run of that task can result in next changes of that settings. This step is repeated until the analytic is satisfied with the results or he gave up that setting at all.
+
+!-- rozepsat nasledujici body ve vety --!
 
 \begin{itemize}
 			\item User tries some setting of quantifiers
@@ -575,7 +619,9 @@ x = x_{max} - (y_{max} - y)\frac{x_{max} - x_{min}}{y_{max} - y_{min}}
 
 Because the function of a count of results on a threshold is not continuous we can not be sure that such interpolation founds a count of results between specified numbers. We can count in the program how deep it is and stop it after several steps if it will not find a sufficient result. But we will not do that for leaving the program simple as it can be.
 
-The interpolation can be done with the new box binary operation. 
+The interpolation can be done with the new box binary operation.
+
+!-- TODO popsat obrazky jak se vyuzije interpolace k reseni celeho problemu, postupne resit dilci problemy - ukazat jak jsme vyuzili krabicek GetParameter, ifthenelse,\dots --!
 \begin{figure}
 	\includegraphics[width=1\textwidth]{linearInterpolation}
 	\caption{interpolation as a connection of boxes}
@@ -607,7 +653,7 @@ The recursive computation is not needed for this particular task. The BestN algo
 
 Two or more quantifiers as a setting for a task are more complicated. The today tasks accept a formula if all its quantifiers are satisfied. So the formula can be seen as a conjunction of the same subformulas only with a different quantifier. That conjunction is the real quantifier which is used in the GUHA mining. That conjunction should be used as a sorting filter for BestN. Today we have problem that the conjunction used is not a fuzzy conjunction. There is only one or zero. But there are many different fuzzy conjunctions and a user should have a ability to chose the right conjunction. He should be able to write his own conjuncti by the programming language.
 
-There can be still more complicated tasks where the recursive solution described here can be usefull. 
+There can be still more complicated tasks where the recursive solution described here can be useful.
 
 \section{Getting basic information from a table}
 Sometimes you get a data and do not know nearly anything about them. In such situations it would be convenient to have a method how to get quickly basic information about it.
@@ -619,7 +665,7 @@ Let us create a four fold task setting which in antecedent setting an atom setti
 The program would create a sequence of atom settings for all columns. But first let us describe how would we write in Ferda a function which returns a sequence of all columns in a table. The table box type should have a new read-only property with names of columns. Today such information is returned by a method of a functions interface of the table box. The only way how to get such information from functions is by a custom box. If we had the new property with columns names, let us call it ``columns'', the GetParameter box could be used for getting such information as a parameter to next box. Such box we would use is the ForEach box.
 
 \begin{eqnarray*}
-ForEach(&&what=GetParameter(name="columns", box=Table(\dots)), \\&& do=Column(name=X, table=Table(\dots)), \\&& x=X)
+ForEach(&&What=GetParameter(name="columns", box=Table(\dots)), \\&& Do=Column(name=X, table=Table(\dots)), \\&& Variable=X)
 \end{eqnarray*}
 
 This connection returns a sequence of columns. The $X$ can represent for example $String()$ or $Variable()$.
@@ -630,17 +676,19 @@ The second task is to create attribute in dependency on a column. If a column ha
 C=Column(name=X, table=Table(\dots))
 \end{eqnarray*}
 
-than if we changed in the last connection in ForEach box the ``do'' property this way
+Than if we changed in the last connection in the ForEach box the connection to the ``Do'' socket this way
 
 \begin{eqnarray*}
-do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(name="distinctValues", \\&&\qquad\qquad box=C), \\&&\qquad value2=20),\\&&Atom(EachValueOneAttribute(column=C,\dots)),\\&&Atom(EquifrequencyAttribute(column=C,\dots)))
+Do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(name="distinctValues", \\&&\qquad\qquad box=C), \\&&\qquad value2=20),\\&&Atom(EachValueOneAttribute(column=C,\dots)),\\&&Atom(EquifrequencyAttribute(column=C,\dots)))
 \end{eqnarray*}
 
 result of such connection would be the wanted sequence of atom settings. Such sequence could be connected to a cedent box, that box could be than connected as both an antecedent and a succedent of a four fold task.
 
 \section{GUHA in the Ferda by ``small'' boxes}
 %Implementation of GUHA in Ferda by 'small' boxes.
-%souvisi result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF
+!-- jak delat programove sekvence hopotez a resit je pomoci specifickeho GUHA solveru -- vetsi sire nez soucasna implementace (lze hledat nejen formule specifickeho tvaru ale obecne jakekoliv formule), ale samozrejme daleko pomalejsi --!
+
+!-- souvisi result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF --!
 
 \section{\dots}
 \chapter{Summary}
