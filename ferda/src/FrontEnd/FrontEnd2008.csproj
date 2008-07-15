@@ -158,7 +158,6 @@
     <Compile Include="ContextHelp\IContextHelpDisplayer.cs" />
     <None Include="default.build" />
     <Compile Include="Desktop\FerdaDesktop.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Desktop\IViewDisplayer.cs" />
     <Compile Include="Desktop\SVGManager.cs" />
