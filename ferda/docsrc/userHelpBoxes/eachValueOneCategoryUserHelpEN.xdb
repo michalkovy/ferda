@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+		</authorgroup>
+		
+		<title>Each Value One Category Box User Help</title>
+		<titleabbrev>Each Value One Category Help</titleabbrev>
+		
+		<!--
+		<revhistory>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2008-07-18</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Initial version of the document
+					</para>
+				</revdescription>
+			</revision>
+		</revhistory>
+		-->
+		<pubdate>2008-07-18</pubdate>
+	</articleinfo>
+	
+	<abstract>
+	<para>
+		This document provides user help for the <classname>Each value one category</classname>(attribute) box.
+	</para>
+	</abstract>
+	
+<section>
+	<title>About the Each Value One Category box</title>
+	<para>
+		A lot of Ferda's boxes need to access the database and to get information from the database: the database scheme definition,
+		the number and names of the tables and colums, various statistics and the data itself which are later transformed into the bit
+		strings.
+	</para>
+	<para>
+		The <classname>Each value one category</classname> box is one of six boxes for creation of attributes in Ferda. Let us first
+		explain the term <classname>attribute</classname> used in Ferda. Columns of the database may have different values and different
+		domains, often columns consist of numbers. However the GUHA method cannot work with continuos numbers and as a part of the
+		data preparation phase (such as in other methods) is creation of attributes. Attribute (in sense of GUHA) is result of discretization of 
+		a domain. Resulting elements are called categories. There are (so far) six implemented way (represented by boxes) how to create an attribute.
+	</para>
+	<para>
+		<classname>Each value one category</classname> attribute is used mainly for domains with nominal semantic (such as names of people
+		or places. For each value of the attribute, one category is created. If the user wants to create a new <classname>each value one 
+		category</classname> attribute, he can either click on the corresponding item in <classname>boxes asking for creation</classname>
+		submenu of a <classname>column</classname> box, or to drag the <classname>each value one category</classname> box out of
+		the new boxes menu and connect it to the <classname>column</classname> box, from which the attribute will be created. 
+	</para>
+	<para>
+		The <classname>Each value one category</classname> attribute is a dynamic attribute. This means that no categories are stored and
+		attribute is created directly from the database. Note different behavior than the corresponding attribute in the LISP-Miner system.  
+	</para>
+	<para>
+		In special cases, user wants to work with a predefined domain which may not correspond to values in the column. For example user
+		may want to divide temperature from -20 to 40 degrees (Celsius), but the temperature ranges only from 0 to 25 degrees. In such cases one can
+		use the <classname>Domain</classname>, <classname>From</classname> and <classname>To</classname> properties as described below. 
+	</para>
+	<para>
+		Important property of all attributes is the <classname>X-category</classname>. User can fill this category out of the list of all categories
+		saying that this category represents NULL value in the database (no information). The X-category will not be added to the computation of bit
+		strings and will not appear in the result. 
+	</para>
+	<para>
+		Another important property of all attributes is <classname>Semantic</classname>, which informs user about type of values in the column
+		(domain represented by the column). The property assigns the column into one of
+		four semantic classes: nominal, ordinal, cyclic ordinal and cardinal. The meanin of the classes:
+		<itemizedlist>
+			<listitem>
+				<formalpara>
+					<title>Nominal</title>
+					<para>
+						Enumeration of values, the values are uncomparable to each other. Names or addresses are example 
+						of nominal class.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Ordinal</title>
+					<para>
+						The values can be compared to each other. There exists a relation "greater or equal" saying which of two values
+						is greater, but an exact metric does not exist. Example of ordinal relation is set inclusion. One can say that a set is 
+						a subset of other set, but cannot say, how big is the difference between sets.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Ordinal cyclic</title>
+					<para>
+						Same as ordinal, but values can be compared to each other in a cyclic manner. Example of suech values are days
+						of the week.
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<formalpara>
+					<title>Cardinal</title>
+					<para>
+						The values can be compared to each other (relation "greater or equal") and there exists a metric saying how far are
+						values from each other. Example of such a domain are numbers (integer or real). 
+					</para>
+				</formalpara>
+			</listitem>
+		</itemizedlist>
+		In recent implementation, the semantics of an attribute only informs the user about the semantics and does not have any significance
+		in further computation. 
+	</para>
+	<para>
+		The last important property to mention is the <classname>Name in Boolean attributes</classname>. With this property user can
+		set the name of this <classname>basic Boolean attribute</classname> in bit strings and results. 
+	</para>
+</section>
+
+<section>
+	<title>Sockets</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Column</title>
+				<para>
+					Determines the column, from which the attribute will be created. 
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Properties</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Count of categories</title>
+				<para>
+					Shows number of categories of the attribute
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>X-Category</title>
+				<para>
+					Determines the category with NULL or uknown value in the column. This value will be not 
+					included into computation of GUHA procedures. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Domain</title>
+				<para>
+					Switch for editing user-defined domain. When the <classname>Whole actual domain</classname> option is 
+					selected, the minimum and maximum are minimal and maximal values in the column. When the 
+					<classname>User defined domain</classname> option is selected, maximum and minimum are computed
+					from the <classname>From</classname> and <classname>To</classname> properties.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>From</title>
+				<para>
+					Minimal value of the domain for user defined domain.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>To</title>
+				<para>
+					Maximal value of the domain for user defined domain.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Name in Boolean attributes</title>
+				<para>
+					Name of the <classname>basic Boolean attribute</classname> created from this attribute 
+					in bit strings and results. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>		
+			<formalpara>
+				<title>Semantics</title>
+				<para>
+					Semantics of the column domain. See begining of the document for details. 
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Modules asking for creation</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Fixed Atom</title>
+				<para>
+					Creates a fixes set coefficient - the <classname>Fixed Atom</classname> box. 
+				</para>
+			</formalpara>
+		</listitem>	
+		<listitem>
+			<formalpara>
+				<title>Atom Setting</title>
+				<para>
+					Creates a coefficient setting where user can set the type of coefficient and maximal and minimal lengths. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Static attribute</title>
+				<para>
+					Creates a static attribute which can be manually edited.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+</article>
