@@ -42,24 +42,23 @@
  \item [Keywords:]
 \end{description}
 \newpage
-
-\tableofcontents
-
 !--- MARTIN Nikde v obsahu jsem nenasel cast, ktera by srovnavala tvuj postup s jinymi moznymi postupy v DM ci jinde a srovnani v cem je to nase lepsi a horsi. Tohle tam hodne chybi ---
 
+!--- RE: problem je v tom, ze tu neni zadny alternativni postup, alespon me nic nenapada. Ja proste jen delam programivaci jazyk. Srovnani s jinymi jazyky se deje v ramci psani o tomtom jazyku pri jednotlivych featrach. Druhe misto, kde jsou alternativy jsou ty KDD priklady -- jejich reseni. Zase alternativy se diskutuji v ramci toho konkretniho prikladu. Ale samotne to, ze delam programovaci jazyk, nema alternativu -- co jineho by jsi chtel delat? ---!
+
 \section*{Zadání}
-Východiskem diplomové práce jsou zkušenosti s GUHA procedurami implementovanými v rámci systému LISp-Miner [1]. Díky jak rozmanitosti vztahů které lze jejich pomocí hledat tak i vzhledem k rozsáhlým možnostem zadávání množiny potenciálně zajímavých vztahů lze pomocí těchto procedur hledat odpovědi na různé analytické otázky formulované způsobem blízkým přirozenému jazyku. Příkladem takové otázky je: \uv{Za jakých okolností a pro které pacienty není pravda, že s rostoucí úrovní cholesterolu roste i úroveň trigliceridů?}. Na tuto otázku lze hledat odpovědi pomocí procedur 4ft-Miner, SD4ft-Miner, KL-Miner i SDKL-Miner. Použitá procedura i způsob nastavení jejích parametrů dává různé možnosti co se týče podrobnosti odpovědi. Zevrubná odpověď na takovouto otázku vyžaduje několik vzájemně provázaných běhů několika procedur. Jednotlivé běhy procedur odpovídají dílčím otázkám indukovaným položenou otázkou.
+Východiskem diplomové práce jsou zkušenosti s GUHA procedurami implementovanými v rámci systému LISp-Miner~\cite{GMGC}. Díky jak rozmanitosti vztahů které lze jejich pomocí hledat tak i vzhledem k rozsáhlým možnostem zadávání množiny potenciálně zajímavých vztahů lze pomocí těchto procedur hledat odpovědi na různé analytické otázky formulované způsobem blízkým přirozenému jazyku. Příkladem takové otázky je: \uv{Za jakých okolností a pro které pacienty není pravda, že s rostoucí úrovní cholesterolu roste i úroveň trigliceridů?}. Na tuto otázku lze hledat odpovědi pomocí procedur 4ft-Miner, SD4ft-Miner, KL-Miner i SDKL-Miner. Použitá procedura i způsob nastavení jejích parametrů dává různé možnosti co se týče podrobnosti odpovědi. Zevrubná odpověď na takovouto otázku vyžaduje několik vzájemně provázaných běhů několika procedur. Jednotlivé běhy procedur odpovídají dílčím otázkám indukovaným položenou otázkou.
 
 Lze pokládat řadu podobných otázek které konstituují jistou typovou úlohu. Příkladem podobné otázky k otázce výše uvedené je otázka \uv{Za jakých okolností a pro které pacienty není pravda, že s rostoucí úrovní vzdělání roste i spotřeba vína?}. Pro řešení jedné typové úlohy existuje systém vzájemně provázaných dílčích otázek a ty lze chápat jako příkazy vhodného jazyka, kterým uživatel řídí postup při řešení typové úlohy.
 
-Jedná se o diplomovou práci kategorie \uv{výzkumný problém}. Jejím cílem je stanovit několik typových úloh a pro ně definovat výše naznačený jazyk pro řešení. Jazyk bude založen na použití GUHA procedur implementovaných v rámci systému LISp-Miner, případně na nových vhodných analytických procedurách. Součástí diplomové práce bude i prototypová implementace příkazů tohoto jazyka v rámci systému FERDA [2].
+Jedná se o diplomovou práci kategorie \uv{výzkumný problém}. Jejím cílem je stanovit několik typových úloh a pro ně definovat výše naznačený jazyk pro řešení. Jazyk bude založen na použití GUHA procedur implementovaných v rámci systému LISp-Miner, případně na nových vhodných analytických procedurách. Součástí diplomové práce bude i prototypová implementace příkazů tohoto jazyka v rámci systému FERDA~\cite{znalosti2006}.
 
 \section*{Introduction}
 !--- MARTIN nove pojmy v teto i v dalsich sekcich by meli byt poprve kurzivou, potom uz normalne, at ctenar vi, ze je to neco noveho v textu a ne nejaky common knowledge ---
 
-The main task of this thesis is to assess a set of several problems in KDD and present a possible solution via a new user-oriented language for the Ferda system. The reach of the present paper, however, surpasses the assignment in its implications. Instead of a new language specific only for some KDD problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. The reason for going beyond the task was the author's determination to present a more complex solution to the problem given. 
+The main task of this thesis is to assess a set of several problems in KDD and present a possible solution via a new user-oriented language for the Ferda system. The reach of the present thesis, however, surpasses the assignment in its implications. Instead of a new language specific only for some KDD problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. The reason for going beyond the task was the author's determination to present a more complex solution to the problem given. 
 
-Instead of presenting first the KDD problems and later describing a new language specific for these problems a new generic language is introduced at the beginning. The generic language resulted indeed from some KDD problems but it is not visible on the result, which is why it is not needed to start with examples in this paper.
+Instead of presenting first the KDD problems and later describing a new language specific for these problems a new generic language is introduced at the beginning. The generic language resulted indeed from some KDD problems but it is not visible on the result, which is why it is not needed to start with examples in this thesis.
 
 The creation of a new more generic language independent of KDD was established as the first task, followed by demonstration of KDD problems and their solution using the given generic language and special KDD functions in addition. The method used for creation of the new language relied on the principle of other functional languages, while maintaining the basic requirements of recursive countability and the widest possible application on the KDD problems.
 
@@ -69,113 +68,78 @@ There are references from solution of KDD problems to features in the new langua
 
 !--- MARTIN vysvetlit asi trosku lip, ctenar nemusi tusit co to je Ferda nebo LISp. Myslim ze Rauch k tomuto odstavci bude mit pripominky :) ---
 
-The new implementation of GUHA procedures that has been created as a part of \cite[diploma thesis of Tomáš Kuchař]{thesisKuchar} is used instead of LISp-Miner procedures which have been proposed. The new implementation of GUHA procedures is more generic and better integrated into Ferda system. LISp-Miner procedures are deprecated in Ferda system.
+!--- RE: cilem tohoto odstavce neni aby ctenar chapal, co je LISp ci Ferda, jen aby pochopil, ze z nejakeho chytreho duvodu "neni splneno" zadani - vlastne je to jen oprava zadani - ve kterem taky neni vysvetleno, co to je LISp ci Ferda ---!
+
+The new implementation of GUHA procedures that has been created as a part of \cite[diploma thesis of Tomáš Kuchař]{thesisKuchar} is used instead of LISp-Miner procedures which have been proposed. The new implementation of GUHA procedures is more generic and better integrated into Ferda system. Use of the LISp-Miner procedures has been removed from the Ferda system.
 
 The thesis is divided into four chapters. The first chapter introduces Ferda system. First, it discusses the history of Ferda and its implementation. Subsequently, it presents its functional view. The chapter shows that Ferda was from beginning designed for user-oriented functional programming and it describes what was missing in the Ferda system from the point of programming and extensibility before this thesis.
 
 The second chapter goes into more detail and describes new features, functions and tools which can help making Ferda better user-oriented programing tool. To start with, it focuses on source files, the basic programming instrument, and how they are organized and how a code can be reused. Then several new basic functions are introduced with description of their pilot implementation. Modern programing methods are discussed in the last part of this chapter. Neither this chapter nor the first chapter are specifically oriented on knowledge discovery or data mining.
 
-The third chapter is the core of this thesis. It shows examples from KDD and shows how it can be solved in Ferda system by functionalities introduced in the first two chapters. It also proposes new functionalities specific for KDD.
+The third chapter realises the main part of the proposal. It shows examples from KDD and shows how it can be solved in Ferda system by functionalities introduced in the first two chapters. It also proposes new functionalities specific for KDD.
 
 The last chapter summarizes previous chapters. It lists features which have been implemented as part of this thesis and features which have been proposed only.
 
 !--- MARTIN Bud Basics of Ferda nebo Basics of the Ferda system
+!--- urcite? Ferda neni zkratka, takze asi by se tam clen psat mel, ne? V textu to chci naopak pridat kde to chybi
+
+\tableofcontents
 
 \chapter{Basics of the Ferda}
 This chapter describes the Ferda system. First, it discusses the history of Ferda and its implementation. Subsequently, it presents its functional view. The chapter shows that Ferda was from beginning designed for user-oriented functional programming and it describes what was missing in the Ferda system from the point of programming and extensibility before this thesis.
 
 \section{History}
-!-- History of GUHA, LISp-Miner --!
+Michal Kováč, Tomáš Kuchař, Alexander Kuzmin and Martin Ralbovský started to work on the Ferda Data Miner in the year 2003. It was been held as a software project for Faculty of Mathematics and Physics of Charles University. The project was lead by doc.~Jan Rauch. The basic aim of this project was creation a of a user-friendly user interface for the LISp-Miner project~\cite{LISp-Miner} in style of visual programming. LISp-Miner is a system which consists of several KDD procedures based on GUHA~\cite{GUHAbook} principle. The Ferda was created with future extensions in mind and the main parts of the application are independent of data mining at all.
 
-!-- MARTIN pripsat kde se to deje MFF/VSE, odkaz na publikace o Ferdovi, mam publikaci o historii Ferdy ---
-
-Michal Kováč, Tomáš Kuchař, Alexander Kuzmin and Martin Ralbovský started to work on the Ferda Data Miner in the year 2003. The project was lead by doc. RNDr. Jan Rauch. The basic aim of this project was creation a of a user-friendly user interface for the LISp-Miner project. It has been achieved, but the Ferda was created with future extensions in mind and the main parts of the application are independent of data mining at all.
-
-Ferda is a user-oriented application for working with special visual objects called boxes. They are represented by small squares with an image atop. Boxes have sockets and a user can connect other boxes to these sockets. Boxes represent functions, sockets are places for parameters for these functions. Note the used terminology: the Ferda Data Miner is Ferda system with boxes for data mining.
+Ferda is a user-oriented application for working with special visual objects called boxes. They are represented by small squares with an image atop. Boxes have sockets and a user can connect other boxes to these sockets. Boxes represent functions, sockets are places for parameters for these functions. Note the used terminology: the Ferda Data Miner is the Ferda system with boxes for data mining.
 
 !-- TODO vložit obrázek krabičky --!
 
-!-- MARTIN tady vice vysvetlit co to presne znamenalo a jaky je v tom presne rozdil --- 
+In the version 1.x of the Ferda system, the boxes for data mining were written for the LISp-Miner generators. It was hardly extensible, because Ferda is the most strong when a functionalities of modules are distributed under different boxes. In the 1.x version majority of the functionality was in task boxes, other boxes were only really simple, the task boxes read from them settings, created a setting database called ``metabase'' for the LISp-Miner system, executed a procedure of the LISp-Miner system and read hypotheses which were written by the system to the metabase.
 
-In the version 1.x of the Ferda system, the boxes for data mining were written for the LISp-Miner generators. It was hardly extensible. Later Tomáš Kuchař as a part of his diploma thesis \cite{thesisKuchar} wrote his own implementation of basic GUHA procedures for the Ferda Data Miner (version 2.x).
+Later Tomáš Kuchař as a part of his diploma thesis~\cite{thesisKuchar} wrote his own implementation of additional GUHA procedures for the Ferda Data Miner (version 2.x). The new implementation distributed functionalities under different boxes. The new implementation of GUHA procedures is also stronger in the point that it allows disjunctions between atoms in hypotheses~\cite{RalbovskyDisjunction}.
 
-!--- MARTIN zde napsat, ze nove Kucharovy krabicky umoznuji konstrukci plnych Booleovskych atributu, coz nemela (myslim) zadna predeska implementace GUHY + citace na "Using Disjunctions in Association Mining"
+Since the completion of the project, numerous new boxes have been created for special applications like decision trees~\cite{GUHAtrees}, ontology mapping~\cite{thesisZeman} or relational GUHA procedures~\cite{thesisKuzmin}. 
 
-Since the completion of the project, numerous new boxes have been created for special applications like decision trees, ontology mapping or relational data mining.
+!-- TODO vlozi jeste Martinovu diplomku --!
 
-!--- MARTIN opet zde chybi relevantni citace, Sasova diplomka, M. Zemanova diplomka, muj clanek s Berkou o rozhodovacich stromech ---
+History of the Ferda system is described in detail in~\cite{}.
 
+!-- MARTIN mam publikaci o historii Ferdy 
+!-- RE: prosim
 
-\section{Ferda Data Miner}
+\section{The Ferda Data Miner}
 
-\subsection{Introduction to Ferda}
+\subsection{Introduction to the Ferda}
 !--- MARTIN urcite by tady mel byt odstavecek, ktery obecne seznamuje uzivatele s Ferdou. Byly tam sice v uvodu nejake vety, ale to je trosku malo ---
-
-\subsection{Programmers view of Ferda system}
-!--- MARTIN tato cast mi prijde hodne nestrukturovana :( Na jednu stranu popisujes veci z obrazku, na druhou stranu predstavujes nejake programy, ktere na obrazku vubec nejsou. Chtelo by to rozdelit na vic logickych celku ---
-
-Programmers of the Ferda system need to have deeper knowledge than the users. This thesis changes how the Ferda works inside, so we are going to describe the design of Ferda from the programmers view.
-
-Base parts of Ferda have been written in C\# 2.0. Ferda runs on both .NET Framework and Mono. Some modules use also the Java platform. Ferda uses middleware Internet Communications Engine for a communication between its modules. Every module can be written in different language and run on different computer. For easier development, many third party libraries and applications are used -- mainly NAnt, NUnit, NDoc, Netron Graphic Library and DockDotNet library.
-
-!--- MARTIN Zde vsude je treba dodelat odkazy na weby --- 
-
-Ferda is under second version of General Public License. It allows everybody to use it for free, redistribute it, change the code (providing the results are still under the General Public License).
-
-!--- MARTIN Zde vsude je treba dodelat odkazy na weby ---
-
-The aim of Ferda project was to create application which is internationalized, well documented, modular, user-friendly and conforms Microsoft standards in user experience.
-
-!--- MARTIN Tento odstavec by se spise hodil do "Introduction to Ferda"
+!--- MARTIN je znacne zmateny ---
 
 Ferda is a client-server application. Client executable is the FerdaFrontEnd.exe and we call this part FrontEnd. There is no single server executable; instead there are more separate modules which all can act as separate applications. FrontEnd communicates with all of them. Some of these modules implement boxes so we call them box modules, other are helper modules like the GUHA mining engine.
 
-\noindent\includegraphics[width=1\textwidth]{designB}
-!--- MARTIN kazdy obrazek by mel mit svuj popisek a v textu by na nej mel byt odkaz!!! ---
+The FerdaFrontEnd is a visual application. The main object of the Ferda is a project. The project consists of an archive and views. The archive is a place for boxes. Views adds to boxes its placement on a desktop. Desktops are places where boxes are shown with theirs connections, they are shown view. Every box which is in the archive can be either in none or in one or more views.
 
-FrontEnd uses the assembly FerdaModulesManager.dll for communication with modules. This assembly is abstraction layer so that FrontEnd does not know that modules are not implemented locally (it hides Internet Communications Engine).
+The FerdaFrontEnd has a menu by which user can for example load or save project, show desktops or open a tutorial. By default, desktops occupy majority of a space on a screen and they are in the center, on the left is archive and list of boxes which can be added to a project, on the right is a property grid, context help and user note.
 
-!--- MARTIN na prvni pohled neni zrejme, co je presne projekt ---
+!-- TODO pridat obrazek Ferdy
 
-Another assembly that is used by FrontEnd is the FerdaProjectManager.dll, which controls projects. A project consists of an archive and views. The archive is a place for boxes. Views adds to boxes its placement on a desktop. Every box which is in the archive can be either in none or in one or more views. This manager is able to load a project from XML file and save it to XML file.
-
-FrontEnd also loads add-ins. Add-ins can extend functionality of FrontEnd in many ways. It is mainly used for modules for interaction and setting modules. Modules for interaction work on top of some box module. It for example shows results of functions returned by the box module in user comprehensible way. Setting modules are used for helping with setting nonstandard properties of boxes.
-
-The communication between FrontEnd and modules and between modules itself is feasible via the Internet Communication Engine (ICE). ICE is a strong modern middleware. Thanks to the usage of ICE, Ferda is independent of both language and framework and it allows us to run different modules on different computers, without having big computational overhead. It can be also used for distributed computing.
-
-!--- MARTIN zde se zminit, co na obrazku je ICE rozhrani ---
-
-IceGrid application, which manages available modules and loads them on demand, runs on a network. Modules manager uses these applications for getting modules.
-
-Every box module implementation has its factory class. This factory class creates box module instances. There is one more layer -- every box module factory has its factory class, we call it box module factory creator, which is a singleton.
-
-\noindent\includegraphics[width=1\textwidth]{creatorFactory}
-
-FrontEnd asks a box module factory creator for creation of only one box module factory for one box class. The creator has methods independent of both instance of the box module and FrontEnd connected. A factory has methods independent of box modules, but dependent on FrontEnd (for example localized names of properties). If FrontEnd is not connected for longer time, all factory instances and box module instances are destroyed.
-
-!--- MARTIN tento odstavec by mel byt v "Introducion", protoze bez vysvetleni krabicek je vsechno dalsi vysvetlovani dost divne + je znacne zmateny ---
-
-Box modules consist of sockets, properties and functions. Sockets are places where you can connect another box module. They represent parameters for functionality of the box module. Properties are also such parameters and can be viewed as a socket, but can be configured both by connecting a box to the socket and by setting the property in the property grid. Every property has in the property grid two lines. One line for setting of the property by the property grid, the second line for setting a boolean value indicating if there should be visible a socket for that property. If it is set to true, the first line is disabled (it means you can not change a value manually) and its value depends on a functions interface which is returned from a box which is connected to the socket of that property. Please see figure~\ref{fig:propertyAsASocket}. This has been done in time of the software project Ferda by the author of this diploma thesis, because he had in mind future functional possibilities of Ferda. 
+Box modules consist of sockets, properties and functions. Sockets are places where you can connect another box module. They represent parameters for functionality of the box module. Properties are also such parameters and can be viewed as a socket, but can be configured both by connecting a box to the socket and by setting the property in the property grid. Every property has in the property grid two lines. One line for setting of the property by the property grid, the second line for setting a boolean value indicating if there should be visible a socket for that property. If it is set to true, the first line is disabled (it means you can not change a value manually) and its value depends on a functions object which is returned from a box which is connected to the socket of that property. Please see figure~\ref{fig:propertyAsASocket}. This has been done in time of the software project Ferda by the author of this diploma thesis, because he had in mind future functional possibilities of Ferda. 
 
 !--- MARTIN toto by chtelo priklad ---
 
-!--- MARTIN obrazek vycentrovat ---
-
 \begin{figure}
+	\centering
 	\includegraphics[width=7cm]{property_as_socket}
 	\caption{A property as a socket}
 	\label{fig:propertyAsASocket}
 \end{figure}
 
-A box module has a method which returns a class called functions. This class represents the functionality of the box module. A box module has also an identifier, an icon, a SVG design, names of categories, box modules asking for creation, actions, a name of property driving label and a dynamic help.
-
-Word ``box'' in this thesis may mean two different things according to placement -- a box module or a box instance. A box module represents implementation. It has one instance of ICE box module factory creator interface which is registered in a IceGrid. A box instance is instance of ICE box module interface. One box module can have more box instances.
+A box module has a method which returns a object called functions. This object represents the functionality of the box module. A box module has also an identifier, an icon, a SVG design, names of categories, box modules asking for creation, actions, a name of property driving label and a dynamic help.
 
 \subsection{Ferda as a programming language}
 
 !--- MARTIN dost zmateny odstavec ---
 
-The main concept of Ferda is to be user-oriented functional language. The basic abstraction is that a box is a function and sockets are properties of that function. There is no need to talk about properties, because properties are also accessible by sockets. To be more precise, box can be not only viewed as one function, but as set of functions. As written above, box returns class functions ????. Therefore every method of such class can be viewed as a separate function. Box can also return different functions class depending on its parameters. We can define basic objects of the Ferda user-oriented language.
+The main concept of Ferda is to be user-oriented functional language. The basic abstraction is that a box is a function and sockets are properties of that function. There is no need to talk about properties, because properties are also accessible by sockets. To be more precise, box can be not only viewed as one function, but as set of functions. As written above, box returns object functions. Therefore every method of such object can be viewed as a separate function. Box can also return different functions object depending on its parameters. We can define basic objects of the Ferda user-oriented language.
 
 !--- MARTIN Tady vice zminit, ze zavadis nejakou formalizaci, ktera se bude dale pouzivat ---
 
@@ -190,6 +154,8 @@ Socket is $\left<n,T\right>$ where
 	\item $n$ is socket name
 	\item $T$ is a set of box types
 \end{itemize}
+
+!-- TODO vysvetlit ICE identifier
 
 We have predicate $hasIdentifier(f,i)$ where $f$ is function and $i$ is an ``Ice identifier''
 
@@ -237,17 +203,54 @@ B=B(); C(socketName=B, socketName2=B)
 
 We will call in this text instances of boxes by a name of their type, for example ``$Table()$''. If in the connection are more boxes of the same type we will distinguish them by their indexes, for example ``$Table_1()$''.
 
-%What is missing?
-%\begin{itemize}
-%	\item Moving work from one project to another
-%	\item Basic math boxes
-%	\item Recursion
-%	\item Other language boxes
-%	\item Ferda specific language boxes
-%	\item Data mining specific boxes for user programming
-%\end{itemize}
+\subsection{Programmers view of Ferda system}
+!--- MARTIN tato cast mi prijde hodne nestrukturovana :( Na jednu stranu popisujes veci z obrazku, na druhou stranu predstavujes nejake programy, ktere na obrazku vubec nejsou. Chtelo by to rozdelit na vic logickych celku ---
 
-\chapter{Language for visual programming}
+Programmers of the Ferda system need to have deeper knowledge than the users. This thesis changes how the Ferda works inside, so we are going to describe the design of Ferda from the programmers view.
+
+Base parts of Ferda have been written in C\# 2.0. Ferda runs on both .NET Framework and Mono. Some modules use also the Java platform. Ferda uses middleware Internet Communications Engine for a communication between its modules. Every module can be written in different language and run on different computer. For easier development, many third party libraries and applications are used -- mainly NAnt, NUnit, NDoc, Netron Graphic Library and DockDotNet library.
+
+!--- MARTIN Zde vsude je treba dodelat odkazy na weby --- 
+
+Ferda is under second version of General Public License. It allows everybody to use it for free, redistribute it, change the code (providing the results are still under the General Public License).
+
+!--- MARTIN Zde vsude je treba dodelat odkazy na weby ---
+
+The aim of Ferda project was to create application which is internationalized, well documented, modular, user-friendly and conforms Microsoft standards in user experience.
+
+\subsubsection{Design of the Ferda system}
+\begin{figure}
+	\noindent\includegraphics[width=1\textwidth]{designB}
+	\caption{Design of the Ferda system}
+	\label{fig:designFerda}
+\end{figure}
+
+Let us describe a design of the Ferda system. Please see figure~\ref{fig:designFerda}. The main application is the FerdaFrontEnd.exe. It contains main visual parts of the Ferda system.
+
+FrontEnd uses the assembly FerdaModulesManager.dll for communication with modules. This assembly is abstraction layer so that FrontEnd does not know that modules are not implemented locally (it hides Internet Communications Engine).
+
+Another assembly that is used by FrontEnd is the FerdaProjectManager.dll, which controls projects.  This manager is able to load a project from XML file and save it to XML file.
+
+FrontEnd also loads add-ins. Add-ins can extend functionality of FrontEnd in many ways. It is mainly used for modules for interaction and setting modules. Modules for interaction work on top of some box module. It for example shows results of functions returned by the box module in user comprehensible way. Setting modules are used for helping with setting nonstandard properties of boxes.
+
+The communication between FrontEnd and modules and between modules itself is feasible via the Internet Communication Engine (ICE). ICE is a strong modern middleware. Thanks to the usage of ICE, Ferda is independent of both language and framework and it allows us to run different modules on different computers, without having big computational overhead. It can be also used for distributed computing. On the figure~\ref{fig:designFerda} the ICE is represented by the lines.
+
+IceGrid application, which manages available modules and loads them on demand, runs on a network. Modules manager uses these applications for getting modules. This application is part of ICE, so on the figure it is also represented by the lines.
+
+\subsubsection{Creation of new boxes}
+Because use of the ICE a creation of new boxes is more complicated. There is a need of distributed garbage collection. Please see figure~\ref{fig:creatorFactory}. Every box module implementation has its factory class. This factory class creates box module instances. There is one more layer -- every box module factory has its factory class, we call it box module factory creator, which is a singleton.
+
+\begin{figure}
+	\noindent\includegraphics[width=1\textwidth]{creatorFactory}
+	\caption{Creation of new boxes}
+	\label{fig:creatorFactory}
+\end{figure}
+
+FrontEnd asks a box module factory creator for creation of only one box module factory for one box class. The creator has methods independent of both instance of the box module and FrontEnd connected. A factory has methods independent of box modules, but dependent on FrontEnd (for example localized names of properties). If FrontEnd is not connected for longer time, all factory instances and box module instances are destroyed.
+
+Word ``box'' in this thesis may mean two different things according to placement -- a box module or a box instance. A box module represents implementation. It has one instance of ICE box module factory creator interface which is registered in a IceGrid. A box instance is instance of ICE box module interface. One box module can have more box instances.
+
+\chapter{New features for visual programming}
 This chapter describes the Ferda system as a visual programming language. It presents possible objects of the language and tools and utilities for the programming.
 
 \section{Source codes and reusability}
@@ -660,41 +663,60 @@ The solution is based on the linear interpolation. The function of a count of re
 \begin{math}
 x = x_{max} - (y_{max} - y)\frac{x_{max} - x_{min}}{y_{max} - y_{min}}
 \end{math}
+
+$y$ is wanted count of results. Please see figure~\ref{fig:linearInterpolationPlot}. Such new $x$ is than lesser or equal to $x_{max}$ and greater or equal to $x_{min}$. Such computation would be repeated.
+
 \begin{figure}
 	\includegraphics[width=1\textwidth]{linearInterpolationPlot}
 	\caption{linear interpolation plot}
+	\label{fig:linearInterpolationPlot}
 \end{figure}
 
-Because the function of a count of results on a threshold is not continuous we can not be sure that such interpolation founds a count of results between specified numbers. We can count in the program how deep it is and stop it after several steps if it will not find a sufficient result. But we will not do that for leaving the program simple as it can be.
+Because the function of a count of results on a threshold is not continuous we can not be sure that such interpolation founds wanted count of results. To overcame that the program will be satisfied with short interval instead of one number. In the actual example we are showing you, $y$ (wanted number of results) is set to five, but it will be satisfied if count of results will be between two and ten. It is still not enough, but it is simple and it helps. We can count in the program how deep it is in recursion and stop it after several steps if it will not find a sufficient result. But we will not do that for leaving the program simple as it can be. It's not hard to do that with the new language, you can try it as an exercise. 
 
-The interpolation can be done with the new box binary operation.
+The interpolation can be done in the Ferda with the new box binary operation. Please see figure~\ref{fig:linearInterpolationBoxes}. Compare it with the equation above.
 
-!-- TODO popsat obrazky jak se vyuzije interpolace k reseni celeho problemu, postupne resit dilci problemy - ukazat jak jsme vyuzili krabicek GetParameter, ifthenelse,\dots --!
 \begin{figure}
 	\includegraphics[width=1\textwidth]{linearInterpolation}
 	\caption{interpolation as a connection of boxes}
+	\label{fig:linearInterpolationBoxes}
 \end{figure}
+
+So the program will repetitively counts new threshold until it is satisfied. But which numbers should be on the beginning in the $x_{min}$, $x_{max}$, $y_{min}$ and $y_{max}$? Let us make decision that if a threshold is one, there are no results. It is true in standard situations. So, we can in the $x_{max}$ put one and in the $y_{max}$ put zero. Let us make second decision that if a threshold is zero, the number of results equals to ``max number of hypotheses'' parameter of the four fold task. So, we can put to the $x_{min}$ zero and to the $y_{min}$ put the same number as is in the ``max number of hypotheses'' parameter. Such thing can be best done by specifying that count only once in a integer box and connecting them to both ``max number of hypotheses'' socket and the socket of the ``MinY'' box.
+
+At the beginning a threshold will be set to $0.5$. The program will first try to count number of hypotheses for that threshold. If the count is between two and ten the program returns that threshold.   
+
+\begin{figure}
+	\includegraphics[width=1\textwidth]{exampleMainMiningPart}
+	\caption{Basic of the recursive four fold example}
+	\label{fig:basicRecursiveExample}
+\end{figure}
+
+Please see figure~\ref{fig:basicRecursiveExample}. The four boxes most on the left specify setting of the four fold task. The ``Get parameter'' box has set property ``ParameterName'' set to ``NumberOfHypotheses''. The ``Execute action'' box has set property ``ActionName'' set to ``Run''. It means that both these boxes returns number of hypotheses of the setting (they from point of value, because ``Get parameter'' box is connected to the ``Function'' socket of the box ``Execute action''). The ``Execute action'' also executes a searching for hypotheses in the setting. Without executing the action count of hypotheses can be invalid. So the action must be at least once executed. Two ``IfThenElse'' boxes with two ``Comparasion'' boxes in the figure returns the actual threshold if the number of hypotheses is between two and ten.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{exampleMainRecursionPart}
 	\caption{Result should be between}
+	\label{fig:resultBetween}
 \end{figure}
 
-\begin{figure}
-	\includegraphics[width=1\textwidth]{exampleMainMiningPart}
-	\caption{If not interpolate and set new max/min}
-\end{figure}
+It the number of hypotheses is lesser than two or greater than ten the program will count by interpolation a new threshold and executes this again. Please see figure~\ref{fig:resultBetween}. This is port of program variant where the count of hypotheses is greater than ten. In the interpolation $x_{min}$ will be set to the last threshold, $y_{min}$ will be set to last count of hypotheses. Than a new threshold will be counted by the interpolation and the result is again connected to the ``IfThenElse'' box from previous figure. You can see both two sub-connections together in figure~\ref{fig:exampleWithoutInterpolationOnMax}.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{exampleWithoutInterpolationOnMax}
+	\caption{Example without $NumberOfHypotheses < 2$ part}
+	\label{fig:exampleWithoutInterpolationOnMax}
 \end{figure}
 
-\subsection{Results}
+Whole program without details of four fold settings can be seen in figure~\ref{fig:exampleResult}. There is also part of program for variant where count of hypotheses is lesser than two. You can see that the connection do not look nice. It is because of many lines. Users can collapse boxes by packing feature of the FrontEnd. They can also use more desktops for organizing a program. A similar program in standard structural languages will not be easier.
+
 \begin{figure}
 	\includegraphics[width=1\textwidth]{exampleResult}
-	\caption{Connection}
+	\caption{Whole example}
+	\label{fig:exampleResult}
 \end{figure}
 
+!-- TODO predelat obrazky ``Treshold'' na ``Threshold'', a misto ``Execute action'' snad muze byt zapojena do lambd krabicka ``Get parameter'' - tedy dost to zrychli pocitani (mozna je potreba jeste pres double box a je mi divne, ze bych to nezkousel -- mozna v tom je nejaky figl, zkusim) --!
 
 \subsection{How to do it better}
 The recursive computation is not needed for this particular task. The BestN algorithm for tasks, which is outlined in \cite{thesisKuchar}, can solve this particular task more effectively. But a user has to have a rich way how to specify best results. A functional language is a strong tool for such thing. We can see a functional language as a superset of observational calculus, which is described in \cite{GUHAbook}. If we have only one quantifier, which is fuzzy, it is easy to sort results according goodness. For example, if we have only founded implication, a formula with higher threshold is the better. Founded implication is not today fuzzy, but we can easily convert it to that.
@@ -746,13 +768,20 @@ result of such connection would be the wanted sequence of atom settings. Such se
 
 % modules for interacion je treba vylepsit
 
+%\bibliographystyle{abbrv}
+%\bibliographystyle{czechiso}
+%\bibliographystyle{plain}
 
-\begin{thebibliography}{thesisKuchar}
-\bibitem{thesisKuchar} Tomáš Kuchař -- jeho diplomová práce
-\bibitem{GUHAbook} GUHA book
-\bibitem{znalosti2006} Znalosti 2006 - Kovac, Kuchar, Kuzmin, Ralbovsky
-\bibitem{ICE} Internet Communications Engine documentation
-\bibitem{Wiki} linearni interpolace 
-\bibitem{dalsi} \dots
-\end{thebibliography}
+\bibliographystyle{cj}
+\bibliography{thesis}
+
+%\begin{thebibliography}{thesisKuchar}
+%\bibitem{GMGC} Rauch J., Šimůnek M.: GUHA Method and Granular Computing. In: Hu X., Liu Q., Skowron A., Lin T. Y., Yager R., Zang B. (ed.). Proceedings of IEEE konference Granular Computing 2005. Piscataway: IEEE, 2005, s. 630–635. ISBN 0-7803-9017-2.
+%\bibitem{thesisKuchar} Tomáš Kuchař -- jeho diplomová práce
+%\bibitem{GUHAbook} GUHA book
+%\bibitem{znalosti2006} Kováč M., Kuchař T., Kuzmin A., Ralbovský M.: Ferda, nové vizuální prostředí pro dobývání znalostí. Přijato k prezentaci na konferenci ZNALOSTI 2006, viz http://fim.uhk.cz/znalosti/index.php?p=prispevky
+%\bibitem{ICE} Internet Communications Engine documentation
+%\bibitem{Wiki} linearni interpolace 
+%\bibitem{dalsi} \dots
+%\end{thebibliography}
 \end{document}
