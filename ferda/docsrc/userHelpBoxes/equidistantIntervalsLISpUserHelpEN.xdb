@@ -207,6 +207,14 @@
 		</listitem>
 		<listitem>
 			<formalpara>
+				<title>Length</title>
+				<para>
+					User defined length of one category. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
 				<title>Name in Boolean attributes</title>
 				<para>
 					Name of the <classname>basic Boolean attribute</classname> created from this attribute 
