@@ -13,14 +13,14 @@
 			</author>
 		</authorgroup>
 		
-		<title>Each Value One Category Box User Help</title>
-		<titleabbrev>Each Value One Category Help</titleabbrev>
+		<title>Equidistant Intervals LISp Box User Help</title>
+		<titleabbrev>Equidistant Intervals LISp Help</titleabbrev>
 		
 		<!--
 		<revhistory>
 			<revision>
 				<revnumber>1.0</revnumber>
-				<date>2008-07-18</date>
+				<date>2008-07-22</date>
 				<authorinitials>MR</authorinitials>
 				<revdescription>
 					<para>
@@ -30,39 +30,49 @@
 			</revision>
 		</revhistory>
 		-->
-		<pubdate>2008-07-18</pubdate>
+		<pubdate>2008-07-22</pubdate>
 	</articleinfo>
 	
 	<abstract>
 	<para>
-		This document provides user help for the <classname>Each value one category</classname>(attribute) box.
+		This document provides user help for the <classname>Equidistant intervals LISp</classname>(attribute) box.
 	</para>
 	</abstract>
 	
 <section>
-	<title>About the Each Value One Category box</title>
+	<title>About the Equidistant Intervals LISp box</title>
 	<para>
-		A lot of Ferda's boxes need to access the database and to get information from the database: the database scheme definition,
-		the number and names of the tables and colums, various statistics and the data itself which are later transformed into the bit
-		strings.
+		A lot of Ferda's boxes need to access the database and to get information from the database: the database scheme
+		 definition,the number and names of the tables and colums, various statistics and the data itself which are 
+		 later transformed into the bit strings.
 	</para>
 	<para>
-		The <classname>Each value one category</classname> box is one of six boxes for creation of attributes in Ferda. Let us first
-		explain the term <classname>attribute</classname> used in Ferda. Columns of the database may have different values and different
-		domains, often columns consist of numbers. However the GUHA method cannot work with continuos numbers and as a part of the
-		data preparation phase (such as in other methods) is creation of attributes. Attribute (in sense of GUHA) is result of discretization of 
-		a domain. Resulting elements are called categories. There are (so far) six implemented ways (represented by boxes) how to create an attribute.
+		The <classname>Equidistant intervals LISp</classname> box is one of six boxes for creation of attributes in 
+		Ferda. Let us first explain the term <classname>attribute</classname> used in Ferda. Columns of the database
+		may have different values and different domains, often columns consist of numbers. However the GUHA method
+		cannot work with continuos numbers and as a part of the data preparation phase (such as in other methods) is
+		creation of attributes. Attribute (in sense of GUHA) is result of discretization of a domain. Resulting elements are
+		called categories. There are (so far) six implemented ways (represented by boxes) how to create an attribute.
 	</para>
 	<para>
-		<classname>Each value one category</classname> attribute is used mainly for domains with nominal semantic (such as names of people
-		or places. For each value of the attribute, one category is created. If the user wants to create a new <classname>each value one 
-		category</classname> attribute, he can either click on the corresponding item in <classname>boxes asking for creation</classname>
-		submenu of a <classname>column</classname> box, or to drag the <classname>each value one category</classname> box out of
-		the new boxes menu and connect it to the <classname>column</classname> box, from which the attribute will be created. 
+		<classname>Equidistant intervals LISp</classname> attribute should be used only for domains with cardinal semantics
+		(mainly number, will be explained later in more detail). User sets the length of one category.
+		Then categories of these length are created by splitting the &lt;minimum, maximum&gt; interval. The
+		minimums and maximums are created from actual or user defined domain, see below. Note the difference between
+		this box (<classname>equidistant intervals LISp</classname>) and <classname>equidistant intervals</classname>.
+		In the first case, user  selects length of one interval, in the latter case he selects number of intervals to be created.
+		The box is named LISp because this is the way equidistant intervals are created in the LISp-Miner system. 
+		If the user wants to
+		create a new <classname>equidistant intervals LISp</classname> attribute, he can either click on the 
+		corresponding item in <classname>boxes asking for creation</classname> submenu of a 
+		<classname>column</classname> box, or to drag the <classname>equidistant intervals LISp</classname> box out of
+		the new boxes menu and connect it to the <classname>column</classname> box, from which the attribute will be
+		created. 
 	</para>
 	<para>
-		The <classname>Each value one category</classname> attribute is a dynamic attribute. This means that no categories are stored and
-		attribute is created directly from the database. Note different behavior than the corresponding attribute in the LISP-Miner system.  
+		The <classname>Equidistant intervals LISp</classname> attribute is a dynamic attribute. This means that no 
+		categories are stored and attribute is created directly from the database. Note different behavior than the
+		corresponding attribute in the LISP-Miner system.  
 	</para>
 	<para>
 		In special cases, user wants to work with a predefined domain which may not correspond to values in the column. For example user
@@ -145,9 +155,9 @@
 	<itemizedlist mark="bullet">
 		<listitem>
 			<formalpara>
-				<title>Count of categories</title>
+				<title>Number of categories</title>
 				<para>
-					Shows number of categories of the attribute
+					The number of categories, which is computed from as length of categories and length of the domain. 
 				</para>
 			</formalpara>
 		</listitem>
@@ -184,6 +194,14 @@
 				<title>To</title>
 				<para>
 					Maximal value of the domain for user defined domain.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Closed from</title>
+				<para>
+					The property informs the system from which side intervals should be closed. 
 				</para>
 			</formalpara>
 		</listitem>
