@@ -268,12 +268,24 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         }
 
         /// <summary>
-        /// Toggling labels on chart
+        /// Toggling labels or legend on chart
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event arguments</param>
         private void ToolStripMenuToggleMarks_CheckChanged(object sender, EventArgs e)
         {
+            if (this.ToolStripMenuItemShowLegend.Checked)
+            {
+                ColumnFrequencyAreaChart.Legend.Visible = true;
+                ColumnFrequencyBarChart.Legend.Visible = true;
+                ColumnFrequencyPieChart.Legend.Visible = true;
+            }
+            else
+            {
+                ColumnFrequencyAreaChart.Legend.Visible = false;
+                ColumnFrequencyBarChart.Legend.Visible = false;
+                ColumnFrequencyPieChart.Legend.Visible = false;
+            }
             this.DrawBarsFromDataTable(this.tempTable, this.ColumnFrequencyBarChart);
             this.DrawAreaFromDataTable(this.tempTable, this.ColumnFrequencyAreaChart);
             this.DrawPieFromDataTable(this.tempTable, this.ColumnFrequencyPieChart);
@@ -385,6 +397,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ToolStripMenuItemCopySelected.Text = resManager.GetString("CopySelectedToClipboard");
             this.ToolStripMenuItemCopyChart.Text = resManager.GetString("CopyChart");
             this.ToolStripMenuToggleMarks.Text = resManager.GetString("ToggleMarks");
+            this.ToolStripMenuItemShowLegend.Text = resManager.GetString("ShowLegend");
             this.ToolStripHelp.Text = resManager.GetString("Help");
             this.ToolStripChartHelp.Text = resManager.GetString("Help");
         }

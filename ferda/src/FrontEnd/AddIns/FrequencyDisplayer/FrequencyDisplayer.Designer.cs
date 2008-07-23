@@ -58,18 +58,19 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ContextMenuDataTab = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCopySelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.TabPageAreaChart = new System.Windows.Forms.TabPage();
             this.ContextMenuGraph = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemAbsolute = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuToggleMarks = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemShowLegend = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCopyChart = new System.Windows.Forms.ToolStripMenuItem();
-            this.TabPageBarChart = new System.Windows.Forms.TabPage();
-            this.TabPagePieChart = new System.Windows.Forms.TabPage();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripChartHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.ToolStripHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.TabPageBarChart = new System.Windows.Forms.TabPage();
+            this.TabPagePieChart = new System.Windows.Forms.TabPage();
             this.TabControlColumnFrequency.SuspendLayout();
             this.TabPageText.SuspendLayout();
             this.ContextMenuDataTab.SuspendLayout();
@@ -153,6 +154,18 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ToolStripMenuItemCopySelected.Size = new System.Drawing.Size(179, 22);
             this.ToolStripMenuItemCopySelected.Text = "toolStripMenuItem1";
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(176, 6);
+            // 
+            // ToolStripHelp
+            // 
+            this.ToolStripHelp.Name = "ToolStripHelp";
+            this.ToolStripHelp.Size = new System.Drawing.Size(179, 22);
+            this.ToolStripHelp.Text = "toolStripMenuItem1";
+            this.ToolStripHelp.Click += new System.EventHandler(this.ToolStripHelp_Click);
+            // 
             // TabPageAreaChart
             // 
             this.TabPageAreaChart.ContextMenuStrip = this.ContextMenuGraph;
@@ -169,11 +182,12 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ToolStripMenuItemAbsolute,
             this.toolStripSeparator1,
             this.ToolStripMenuToggleMarks,
+            this.ToolStripMenuItemShowLegend,
             this.ToolStripMenuItemCopyChart,
             this.toolStripSeparator2,
             this.ToolStripChartHelp});
             this.ContextMenuGraph.Name = "ContextMenuGraphParams";
-            this.ContextMenuGraph.Size = new System.Drawing.Size(214, 126);
+            this.ContextMenuGraph.Size = new System.Drawing.Size(214, 148);
             // 
             // ToolStripMenuItemAbsolute
             // 
@@ -195,11 +209,31 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ToolStripMenuToggleMarks.Text = "ToolStripMenuToggleMarks";
             this.ToolStripMenuToggleMarks.CheckedChanged += new System.EventHandler(this.ToolStripMenuToggleMarks_CheckChanged);
             // 
+            // ToolStripMenuItemShowLegend
+            // 
+            this.ToolStripMenuItemShowLegend.CheckOnClick = true;
+            this.ToolStripMenuItemShowLegend.Name = "ToolStripMenuItemShowLegend";
+            this.ToolStripMenuItemShowLegend.Size = new System.Drawing.Size(213, 22);
+            this.ToolStripMenuItemShowLegend.Text = "ShowLegend";
+            this.ToolStripMenuItemShowLegend.CheckedChanged += new System.EventHandler(this.ToolStripMenuToggleMarks_CheckChanged);
+            // 
             // ToolStripMenuItemCopyChart
             // 
             this.ToolStripMenuItemCopyChart.Name = "ToolStripMenuItemCopyChart";
             this.ToolStripMenuItemCopyChart.Size = new System.Drawing.Size(213, 22);
             this.ToolStripMenuItemCopyChart.Text = "toolStripMenuItem1";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(210, 6);
+            // 
+            // ToolStripChartHelp
+            // 
+            this.ToolStripChartHelp.Name = "ToolStripChartHelp";
+            this.ToolStripChartHelp.Size = new System.Drawing.Size(213, 22);
+            this.ToolStripChartHelp.Text = "toolStripMenuItem1";
+            this.ToolStripChartHelp.Click += new System.EventHandler(this.ToolStripChartHelp_Click);
             // 
             // TabPageBarChart
             // 
@@ -223,36 +257,12 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.TabPagePieChart.Text = "tabPage1";
             this.TabPagePieChart.UseVisualStyleBackColor = true;
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(210, 6);
-            // 
-            // ToolStripChartHelp
-            // 
-            this.ToolStripChartHelp.Name = "ToolStripChartHelp";
-            this.ToolStripChartHelp.Size = new System.Drawing.Size(213, 22);
-            this.ToolStripChartHelp.Text = "toolStripMenuItem1";
-            this.ToolStripChartHelp.Click += new System.EventHandler(this.ToolStripChartHelp_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(176, 6);
-            // 
-            // ToolStripHelp
-            // 
-            this.ToolStripHelp.Name = "ToolStripHelp";
-            this.ToolStripHelp.Size = new System.Drawing.Size(179, 22);
-            this.ToolStripHelp.Text = "toolStripMenuItem1";
-            this.ToolStripHelp.Click += new System.EventHandler(this.ToolStripHelp_Click);
-            // 
             // FrequencyDisplayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TabControlColumnFrequency);
-            this.Name = "ColumnFrequency";
+            this.Name = "FrequencyDisplayer";
             this.Size = new System.Drawing.Size(467, 262);
             this.TabControlColumnFrequency.ResumeLayout(false);
             this.TabPageText.ResumeLayout(false);
@@ -285,5 +295,6 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         private System.Windows.Forms.ToolStripMenuItem ToolStripHelp;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem ToolStripChartHelp;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemShowLegend;
     }
 }
