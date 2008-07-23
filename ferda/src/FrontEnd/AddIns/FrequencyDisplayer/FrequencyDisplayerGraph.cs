@@ -72,8 +72,8 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ColumnFrequencyBarChart.Aspect.View3D = false;
             this.ColumnFrequencyBarChart.Axes.Left.Labels.Style = 
                 Steema.TeeChart.AxisLabelStyle.Text;
-            this.ColumnFrequencyBarChart.Legend.Visible = false; //added
-            this.ColumnFrequencyBarChart.Axes.Visible = false; //added
+            this.ColumnFrequencyBarChart.Legend.Visible = true;
+            this.ColumnFrequencyBarChart.Axes.Visible = true;
             this.ColumnFrequencyBarChart.Size = new System.Drawing.Size(466, 286);
             
             this.TabPageBarChart.Controls.Add(ColumnFrequencyBarChart);
@@ -86,8 +86,8 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             this.ColumnFrequencyAreaChart.Header.Visible = true;
             this.ColumnFrequencyAreaChart.Aspect.View3D = false;
             this.ColumnFrequencyAreaChart.Axes.Left.Labels.Style = Steema.TeeChart.AxisLabelStyle.Text;
-            this.ColumnFrequencyAreaChart.Legend.Visible = false; //added
-            this.ColumnFrequencyAreaChart.Axes.Visible = false; //added
+            this.ColumnFrequencyAreaChart.Legend.Visible = true;
+            this.ColumnFrequencyAreaChart.Axes.Visible = true;
             this.ColumnFrequencyAreaChart.Size = new System.Drawing.Size(466, 286);
             this.TabPageAreaChart.Controls.Add(ColumnFrequencyAreaChart);
 
@@ -104,7 +104,6 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             
             this.ResumeLayout(false);
         }
-
 
         #endregion
 
@@ -182,7 +181,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
             {
                 barSeriesBar.Marks.Visible = false;
             }
-            
+
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 double temp;

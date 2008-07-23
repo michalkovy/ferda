@@ -171,6 +171,9 @@
   <data name="RightClickToCopySelected" xml:space="preserve">
     <value>right-click for copy options</value>
   </data>
+  <data name="ShowLegend" xml:space="preserve">
+    <value>Show legend</value>
+  </data>
   <data name="TabPageAreaChart" xml:space="preserve">
     <value>Area chart</value>
   </data>

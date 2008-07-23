@@ -171,6 +171,9 @@
   <data name="RightClickToCopySelected" xml:space="preserve">
     <value>klikněte pravým tlačítkem pro volby kopírování</value>
   </data>
+  <data name="ShowLegend" xml:space="preserve">
+    <value>Zobrazit legendu</value>
+  </data>
   <data name="TabPageAreaChart" xml:space="preserve">
     <value>Plošný graf</value>
   </data>
