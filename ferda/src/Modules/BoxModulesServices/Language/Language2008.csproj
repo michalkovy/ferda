@@ -1,0 +1,99 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="3.5">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <OutputType>Library</OutputType>
+    <AssemblyName>FerdaLanguageBoxes</AssemblyName>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>False</DebugSymbols>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <OutputType>Library</OutputType>
+    <AssemblyName>FerdaLanguageBoxes</AssemblyName>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EB18047A-CB00-4C0F-A748-01E68393B64A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Ferda.Modules.Boxes.Language</RootNamespace>
+    <AssemblyName>FerdaLanguageBoxes</AssemblyName>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cbe18eed93b6dbb1">
+      <HintPath>..\..\..\..\bin\Server\FerdaBase.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="FerdaBoxInterfaces, Version=0.0.0.0, Culture=neutral, PublicKeyToken=526936f183183f71">
+      <HintPath>..\..\..\..\bin\Server\FerdaBoxInterfaces.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="FerdaServerBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f38f029e8cb6ab0e">
+      <HintPath>..\..\..\..\bin\Server\FerdaServerBase.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="icecs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
+      <HintPath>..\..\..\..\lib\Ice.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <ItemGroup>
+    <None Include="Lambda\boxDesign.svg" />
+    <None Include="Lambda\boxIcon.ico" />
+    <Compile Include="Lambda\BoxInfo.cs" />
+    <Compile Include="Service.cs" />
+    <None Include="Variable\boxDesign.svg" />
+    <None Include="Variable\boxIcon.ico" />
+    <Compile Include="Variable\BoxInfo.cs" />
+    <None Include="Math\BinaryOperation\boxIcon.ico" />
+    <None Include="Math\BinaryOperation\boxDesign.svg" />
+    <Compile Include="Math\BinaryOperation\BoxInfo.cs" />
+    <Compile Include="Math\BinaryOperation\Functions.cs" />
+    <None Include="GetParameter\boxDesign.svg" />
+    <None Include="GetParameter\boxIcon.ico" />
+    <Compile Include="GetParameter\BoxInfo.cs" />
+    <None Include="Math\Compare\boxDesign.svg" />
+    <None Include="Math\Compare\boxIcon.ico" />
+    <Compile Include="Math\Compare\BoxInfo.cs" />
+    <Compile Include="Math\Compare\Functions.cs" />
+    <None Include="Math\IfThenElse\boxDesign.svg" />
+    <None Include="Math\IfThenElse\boxIcon.ico" />
+    <Compile Include="Math\IfThenElse\BoxInfo.cs" />
+    <None Include="ExecuteAction\boxDesign.svg" />
+    <None Include="ExecuteAction\boxIcon.ico" />
+    <Compile Include="ExecuteAction\BoxInfo.cs" />
+    <Compile Include="Command\Functions.cs" />
+    <Compile Include="Command\BoxInfo.cs" />
+    <None Include="Command\boxIcon.ico" />
+    <None Include="Command\boxDesign.svg" />
+    <Compile Include="Command\CommandTextStreamI.cs" />
+    <None Include="CommandOutput\boxDesign.svg" />
+    <None Include="CommandOutput\boxIcon.ico" />
+    <Compile Include="CommandOutput\BoxInfo.cs" />
+    <Compile Include="CommandOutput\Functions.cs" />
+  </ItemGroup>
+</Project>
