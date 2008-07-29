@@ -292,9 +292,6 @@ Let us discuss possible implementation of such imports. Information about import
 At this time boxes are identified in one project by project identifier. The project identifier is an integer which grows from one up without the awareness of the user. If the user removed a box with last project identifier, exited Ferda, started Ferda, reopened the project and added a new box, the new box would have the same project identifier as the removed box had. If we liked still to use project identifier as identification of boxes we should avoid this by serializing the last used project identifier in the project. To be able to replace a box, it is vital the user be able to chose the project identifier.
 
 %tady by mohlo byt jak by melo vypadat menu a ze maji byt videt importovane veci v archivu
-\subsection{Defining function}
-versus lambda expression - the same
-\subsection{Name spaces}
 \subsection{Network archive}
 Another way how to reuse a box can be to copy it from another project. Let us have a new place where you can place boxes which you want to reuse. Such place can be on network and more users can place their boxes there and reuse them in other projects. They can use such place to move their work to others. Let us call this place a network archive.
 
@@ -378,11 +375,6 @@ He can also remove the box from the network archive. Please see figure~\ref{fig:
 Organizing boxes in network archives into some structure would facilitate the work. It could be one-level structure (labels) or tree-structure like in directories. Another enhancement would be to add user rights to these labels.
 
 Easy thing to do is to allow the Ferda FrontEnd to work with more network archives.
-
-\subsubsection{Summary}
-The network archive is a new place where the user can store connections. It is independent of projects. One network archive can be accessed from more computers. It is a way how to move connections from one project to another.
-
-\subsection{Summary}
 
 
 \section{Functional languages}
@@ -594,30 +586,50 @@ It can be very useful to have a box which gives a ability to create from one seq
 
 \subsection{Other new boxes}
 \subsubsection{Get parameter}
-!-- POPSAT --!
+Boxes can have read-only properties. They are shown in the property grid, but they are not editable, they are counted. These properties can be seen as another output of a function which a box represents. If we wanted to use such result by different boxes, we would need a way how to get a value of a read-only property. Such way is the new GetPameter box which has been implemented as a part of this thesis. Please see figure~\ref{fig:boxGetParameter}.
+
 \begin{figure}
-\includegraphics[width=1\textwidth]{getParameter2.png}
+	\includegraphics[width=1\textwidth]{getParameter2.png}
 	\caption{Get parameter}
+	\label{fig:boxGetParameter}
 \end{figure}
+
+The box can get values of properties of any box even those which are not read-only. It can also get functions objects of boxes connected to sockets of any box. Word ``Parameter'' in the name of box means parameter of function which the box represents. Parameters can be set by a property or by a connection to a socket. The GetParameter box has property named ``ParameterName'' and socket named ``Box''. The socket specifies a box of which parameter we are interested in and the ``ParameterName'' is a name of socket or property we are interested in.
 
 \subsubsection{Execute action}
-!-- POPSAT --!
+A box can have actions. Such actions can be executed by a user of the Ferda system in the FrontEnd. There were not possibility of executing such action as part of program in the Ferda language. That is why a new box called ``ExecuteAction'' has been created as part of this thesis.
+
+When the box is asked for a functions object, it executes action of some box. After that it returns function object of another box.
+
+Please see figure~\ref{fig:boxExecuteAction}. The box has one property called ``ActionName'' which specifies name of action which should be called. It has also two sockets. First is called ``Box'' and is for specifying a box which action should be called. The second is called ``Function'' and is for specifying a box which is used for getting the functions object.
+
 \begin{figure}
-\includegraphics[width=1\textwidth]{executeAction2.png}
+	\includegraphics[width=1\textwidth]{executeAction2.png}
 	\caption{Execute action}
+	\label{fig:boxExecuteAction}
 \end{figure}
 
+Actions are more parts of structural programming than functional programming. The ExecuteAction box is the way how to translate actions to functional language. 
+
 \subsubsection{Command and command output}
-!-- POPSAT --!
+It can be useful to have a possibility to execute external application and read output of that application. The new two boxes have been implemented as part of this thesis for that.
+
+The first can execute a command, is is called ``Command''. More these boxes can be connected together. Than a output of one command is used as input of second command.
+
+The second box which has been created is called ``CommandOutput'' and it is for getting output and error output. One output can be shown in a message box and one output can be returned as a result of the box.
+
+Please see figure~\ref{fig:boxCommand}. In the figure standard UNIX commands ``echo'' and ``sed'' are used. We can see in the property grid as a result the same value which is returned by the same command in UNIX console. Please see figure~\ref{fig:KonsoleCommand}.
+
 \begin{figure}
 	\includegraphics[width=1\textwidth]{command2.png}
 	\caption{Command and command output}
+	\label{fig:boxCommand}
 \end{figure}
 
-The same in console
 \begin{figure}
 	\includegraphics[width=1\textwidth]{command3.png}
-	\caption{Konsole version previous example}
+	\caption{Konsole version of the previous example}
+	\label{fig:CommandKonsole}
 \end{figure}
 
 \subsubsection{User-programmable box}
@@ -783,7 +795,7 @@ result of such connection would be the wanted sequence of atom settings. Such se
 
 \section{\dots}
 \chapter{Summary}
-The thesis has described a new language for a data mining. It is a visual functional language. Functions are there called boxes. Basic formalisation of the language has been shown in the section~\ref{sec:formalisation}. A source code is written as a connection of boxes, source files are project files of the Ferda system. Possible extensions to source files has been described in the section~\ref{sec:reusability}. These extensions adds better reusability of a code. One such extension, which is called ``network archive'' has been implemented as part of this thesis. Future possible enhancement to the network archive has been also proposed.
+The thesis has described a new language for a data mining. It is a visual functional language. Functions are there called boxes. Basic formalisation of the language has been shown in the section~\ref{sec:formalisation}. A source code is written as a connection of boxes, source files are project files of the Ferda system. Possible extensions to source files has been described in the section~\ref{sec:reusability}. These extensions adds better reusability of a code. One such extension, which is called ``network archive'' has been implemented as part of this thesis. The network archive is a new place where the user can store connections. It is independent of projects. One network archive can be accessed from more computers. It is a way how to move connections from one project to another. Future possible enhancement to the network archive has been also proposed.
 
 A basic set of boxes has been created as part of the thesis and other boxes has been proposed. The boxes which has been created includes the constant boxes, the BinaryOperation box, the Comparison box, the IfThenElse box, the Lambda box, the GetParameter box, the ExecuteAction box, the Command box and the CommandOutput box. The most complicated box from these is the Lambda box. There has been discussed several problems of the box and their possible solutions. The boxes which has been only proposed includes different sequence boxes, the ForEach box and the user-programmable box.
 
