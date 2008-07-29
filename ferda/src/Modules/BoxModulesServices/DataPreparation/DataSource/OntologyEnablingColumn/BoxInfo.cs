@@ -118,7 +118,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EachValueOneCategory.Functions.PropNameInLiterals;
+                            Categorization.EachValueOneCategory.Functions.PropNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -139,7 +139,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EquidistantIntervals.Functions.PropNameInLiterals;
+                            Categorization.EquidistantIntervals.Functions.PropNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -160,7 +160,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EquidistantIntervalsLISp.Functions.PropNameInLiterals;
+                            Categorization.EquidistantIntervalsLISp.Functions.PropNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -181,7 +181,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EquifrequencyIntervals.Functions.PropNameInLiterals;
+                            Categorization.EquifrequencyIntervals.Functions.PropNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -223,7 +223,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.StaticAttribute.Functions.PropNameInLiterals;
+                            Categorization.StaticAttribute.Functions.PropNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module

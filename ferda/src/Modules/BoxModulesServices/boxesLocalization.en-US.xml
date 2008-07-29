@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
+<!-- edited with XMLSpy v2008 rel. 2 sp1 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
 <BoxesLocalization xsi:schemaLocation="http://ferda.is-a-geek.net ../Core/Boxes/boxesLocalization.xsd" xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://ferda.is-a-geek.net">
 	<BoxLocalization>
 		<Identifier>DataPreparation.DataSource.Database</Identifier>
@@ -604,9 +604,9 @@
 				<Hint>Defines column or derived column .</Hint>
 			</Socket>
 			<Socket>
-				<Name>NameInLiterals</Name>
-				<Label>Name in results</Label>
-				<Hint>The name that will be used in the results.</Hint>
+				<Name>NameInBooleanAttributes</Name>
+				<Label>Name in Boolean Attributes</Label>
+				<Hint>The name that will be used for construction of Boolean attributes from this attribute.</Hint>
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
@@ -733,9 +733,9 @@
 				<Hint>Module for manual categories editing.</Hint>
 			</Socket>
 			<Socket>
-				<Name>NameInLiterals</Name>
-				<Label>Name in results</Label>
-				<Hint>The name that will be used in the results.</Hint>
+				<Name>NameInBooleanAttributes</Name>
+				<Label>Name in Boolean Attributes</Label>
+				<Hint>The name that will be used for construction of Boolean attributes from this attribute.</Hint>
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
@@ -847,9 +847,9 @@
 				<Hint>Defines column or derived column .</Hint>
 			</Socket>
 			<Socket>
-				<Name>NameInLiterals</Name>
-				<Label>Name in results</Label>
-				<Hint>The name that will be used in the results.</Hint>
+				<Name>NameInBooleanAttributes</Name>
+				<Label>Name in Boolean Attributes</Label>
+				<Hint>The name that will be used for construction of Boolean attributes from this attribute.</Hint>
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
@@ -990,9 +990,9 @@
 				<Hint>Defines column or derived column .</Hint>
 			</Socket>
 			<Socket>
-				<Name>NameInLiterals</Name>
-				<Label>Name in results</Label>
-				<Hint>The name that will be used in the results.</Hint>
+				<Name>NameInBooleanAttributes</Name>
+				<Label>Name in Boolean Attributes</Label>
+				<Hint>The name that will be used for construction of Boolean attributes from this attribute.</Hint>
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
@@ -1133,9 +1133,9 @@
 				<Hint>Defines column or derived column .</Hint>
 			</Socket>
 			<Socket>
-				<Name>NameInLiterals</Name>
-				<Label>Name in results</Label>
-				<Hint>The name that will be used in the results.</Hint>
+				<Name>NameInBooleanAttributes</Name>
+				<Label>Name in Boolean Attributes</Label>
+				<Hint>The name that will be used for construction of Boolean attributes from this attribute.</Hint>
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
@@ -11030,9 +11030,9 @@
 				<Hint>Ontology enabling column</Hint>
 			</Socket>
 			<Socket>
-				<Name>NameInLiterals</Name>
-				<Label>Name in results</Label>
-				<Hint>The name that will be used in the results.</Hint>
+				<Name>NameInBooleanAttributes</Name>
+				<Label>Name in Boolean Attributes</Label>
+				<Hint>The name that will be used for construction of Boolean attributes from this attribute.</Hint>
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>

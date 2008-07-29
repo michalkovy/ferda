@@ -46,7 +46,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
 
         #region Properties
 
-        public const string PropNameInLiterals = "NameInLiterals";
+        public const string PropNameInLiterals = "NameInBooleanAttributes";
         public const string PropCountOfCategories = "CountOfCategories";
         public const string PropClosedFrom = "ClosedFrom";
         public const string PropXCategory = "XCategory";

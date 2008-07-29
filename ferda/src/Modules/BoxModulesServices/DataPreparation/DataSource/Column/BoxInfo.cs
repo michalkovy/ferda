@@ -99,7 +99,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             ModuleAskingForCreation singleModule;
             PropertySetting propSetting;
 
-            StringTI nameInLiteralsValue = 
+            StringTI nameInBooleanAttributesValue = 
                 new StringTI(boxModule.BoxInfo.GetDefaultUserLabel(boxModule));
             
             foreach (string moduleAFCname in modulesAFC.Keys)
@@ -118,8 +118,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EachValueOneCategory.Functions.PropNameInLiterals;
-                        propSetting.value = nameInLiteralsValue;
+                            Categorization.EachValueOneCategory.Functions.PropNameInBooleanAttributes;
+                        propSetting.value = nameInBooleanAttributesValue;
 
                         //creating the new (single) module
                         singleModule.modulesConnection = 
@@ -139,8 +139,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EquidistantIntervals.Functions.PropNameInLiterals;
-                        propSetting.value = nameInLiteralsValue;
+                            Categorization.EquidistantIntervals.Functions.PropNameInBooleanAttributes;
+                        propSetting.value = nameInBooleanAttributesValue;
 
                         //creating the new (single) module
                         singleModule.modulesConnection = 
@@ -160,8 +160,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EquidistantIntervalsLISp.Functions.PropNameInLiterals;
-                        propSetting.value = nameInLiteralsValue;
+                            Categorization.EquidistantIntervalsLISp.Functions.PropNameInBooleanAttributes;
+                        propSetting.value = nameInBooleanAttributesValue;
 
                         //creating the new (single) module
                         singleModule.modulesConnection =
@@ -181,8 +181,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EquifrequencyIntervals.Functions.PropNameInLiterals;
-                        propSetting.value = nameInLiteralsValue;
+                            Categorization.EquifrequencyIntervals.Functions.PropNameInBooleanAttributes;
+                        propSetting.value = nameInBooleanAttributesValue;
 
                         //creating the new (single) module
                         singleModule.modulesConnection = 
@@ -203,7 +203,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
                             Categorization.OntologyDerivedAttribute.Functions.PropNameInLiterals;
-                        propSetting.value = nameInLiteralsValue;
+                        propSetting.value = nameInBooleanAttributesValue;
 
                         //creating the new (single) module
                         singleModule.modulesConnection =
@@ -223,8 +223,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                         //the property setting - here setting the "nameInLiterals" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.StaticAttribute.Functions.PropNameInLiterals;
-                        propSetting.value = nameInLiteralsValue;
+                            Categorization.StaticAttribute.Functions.PropNameInBooleanAttributes;
+                        propSetting.value = nameInBooleanAttributesValue;
 
                         //creating the new (single) module
                         singleModule.modulesConnection =

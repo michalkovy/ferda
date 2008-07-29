@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AE98C890-A6CE-461C-A245-54E87F383CD0}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -113,10 +113,14 @@
     <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Categorization\EachValueOneCategory\boxIcon.ico" />
     <Content Include="Categorization\EquidistantIntervalsLISp\boxDesign.svg" />
     <Content Include="Categorization\EquidistantIntervalsLISp\boxIcon.ico" />
     <Content Include="Categorization\EquidistantIntervals\boxDesign.svg" />
     <Content Include="Categorization\EquidistantIntervals\boxIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Categorization\EachValueOneCategory\boxDesign.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
