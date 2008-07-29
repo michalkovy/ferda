@@ -37,7 +37,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         #region Properties
 
         public const string PropCardinality = "Cardinality";
-        public const string PropNameInLiterals = "NameInLiterals";
+        public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
         public const string PropCountOfCategories = "CountOfCategories";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
@@ -74,9 +74,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// <summary>
         /// Name in literals
         /// </summary>
-        public string NameInLiterals
+        public string NameInBooleanAttributes
         {
-            get { return _boxModule.GetPropertyString(PropNameInLiterals); }
+            get { return _boxModule.GetPropertyString(PropNameInBooleanAttributes); }
         }
 
 
@@ -194,7 +194,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         {
             return new GuidAttributeNamePair[]
                 {
-                    new GuidAttributeNamePair(Guid, NameInLiterals),
+                    new GuidAttributeNamePair(Guid, NameInBooleanAttributes),
                 };
         }
 

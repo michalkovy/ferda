@@ -43,7 +43,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
 
         #region Properties
 
-        public const string PropNameInLiterals = "NameInLiterals";
+        public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
         public const string PropCountOfCategories = "CountOfCategories";
         public const string PropClosedFrom = "ClosedFrom";
         public const string PropXCategory = "XCategory";
@@ -67,9 +67,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         /// <summary>
         /// Name in literals
         /// </summary>
-        public string NameInLiterals
+        public string NameInBooleanAttributes
         {
-            get { return _boxModule.GetPropertyString(PropNameInLiterals); }
+            get { return _boxModule.GetPropertyString(PropNameInBooleanAttributes); }
         }
 
         /// <summary>
@@ -948,7 +948,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         {
             return new GuidAttributeNamePair[]
                 {
-                    new GuidAttributeNamePair(Guid, NameInLiterals),
+                    new GuidAttributeNamePair(Guid, NameInBooleanAttributes),
                 };
         }
 

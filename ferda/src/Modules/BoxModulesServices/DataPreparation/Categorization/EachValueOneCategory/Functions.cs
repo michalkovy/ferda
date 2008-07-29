@@ -60,7 +60,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         #region Properties
 
-        public const string PropNameInLiterals = "NameInLiterals";
+        public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
         public const string PropCountOfCategories = "CountOfCategories";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
@@ -77,10 +77,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
         }
 
-        public string NameInLiterals
+        public string NameInBooleanAttributes
         {
             get {
-                return _boxModule.GetPropertyString(PropNameInLiterals);
+                return _boxModule.GetPropertyString(PropNameInBooleanAttributes);
             }
         }
 
@@ -705,7 +705,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         {
             return new GuidAttributeNamePair[]
                 {
-                    new GuidAttributeNamePair(Guid, NameInLiterals),
+                    new GuidAttributeNamePair(Guid, NameInBooleanAttributes),
                 };
         }
 

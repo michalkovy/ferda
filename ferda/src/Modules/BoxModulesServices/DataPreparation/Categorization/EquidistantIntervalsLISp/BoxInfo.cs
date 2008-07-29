@@ -60,9 +60,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
             string label = String.Empty;
-            if (Func.NameInLiterals != string.Empty && Func.NameInLiterals != null)
+            if (Func.NameInBooleanAttributes != string.Empty && Func.NameInBooleanAttributes != null)
             {
-                return Func.NameInLiterals;
+                return Func.NameInBooleanAttributes;
             }
             else
             {
@@ -255,12 +255,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             dummy = Func.GetBitStrings(true);
             Debug.Assert(dummy == null);
 
-            if (String.IsNullOrEmpty(Func.NameInLiterals))
+            if (String.IsNullOrEmpty(Func.NameInBooleanAttributes))
                 throw Exceptions.BadValueError(
                     null,
                     boxModule.StringIceIdentity,
-                    "Property \"Name in results\" can not be empty string.",
-                    new string[] { Functions.PropNameInLiterals },
+                    "Property \"Name in Boolean attributes\" can not be empty string.",
+                    new string[] { Functions.PropNameInBooleanAttributes },
                     restrictionTypeEnum.OtherReason
                     );
 
