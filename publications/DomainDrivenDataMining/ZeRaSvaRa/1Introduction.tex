@@ -1,0 +1,36 @@
+\section{Introduction} \label{Introduction}
+
+Domain ontologies are potentially one of key vehicles for conveying the domain semantics to a KDD application. 
+The traditional approach in KDD is to either treat the data relatively in isolation from the domain context, or, in the better case, to transfer the domain semantics into the individual phases of the mining process via human judgment, possibly documented using free text.
+This leads to effort replication, since, even in the same domain, the low-level data model to be used for analytical tasks has to be reinvented almost from scratch. 
+Furthemore, results from disparate modelling sessions are hard to compare or integrate.
+
+Ontologies can bring more formal rigour and better possibility of reuse to this process. 
+It is often the case that domain experts and data mining professionals are disjoint groups of people.
+The latter may not have profound knowledge of the domain, but do nonetheless need some domain knowledge especially in the data preparation phase, when data are filtered, cleansed and organized. 
+Such knowledge can in principle be either inherent part of domain ontologies from the beginning or can be injected to them by domain experts the first time the ontologies are considered for a data-intensive task\footnote{Not necessarily tabular data mining but also e.g.~information extraction from text, or ontology matching for the purpose of data integration.}.
+I can then easily be picked from the ontologies automatically in order to support the data mining specialist.
+However, any attempt of ontology-enhanced KDD has to deal with structural heterogeneity issues. 
+The structure of ontologies, even if the domain is the same, often strikingly differs from the structure of data tables, both formally and in their level of granularity. 
+Therefore, the first and probably hardest step in applying ontologies in the KDD process consists in creating the \emph{mapping} between the ontology and the source database.
+If the mapping is done properly, ontological knowledge can be exploited in the remaining phases of the KDD process.
+
+In our earlier work \cite{Ontology} the possibilities for exploiting ontological knowledge were systematically traced over the different phases of the KDD process roughly corresponding to the CRISP-DM cycle: domain understanding, data understanding, data preparation, modeling, result interpretation and their dissemination over the semantic web. 
+As the core approach to actual data mining, \emph{association mining} was chosen; being a descriptive rather than predictive task, domain relevance and interpretability of results (which are to be submitted to a human expert rather than to an automated reasoning engine) are of particular importance here.
+More specifically, generalised association mining procedures based on the GUHA method \cite{GUHA} were used for simple experiments that served as proof of concept.
+The `ontological engineering' part of these experiments was however carried out mostly manually.
+
+Follow-up research, a significant part of which is presented in the current paper, extended this initial analysis both in terms of its underlying theoretical principles \cite{Ralbovsky} and in terms of its support within a user-friendly KDD tool---\emph{Ferda DataMiner} \cite{Zeman}.
+It so far focused on the \emph{data preparation} step, which is generally considered as most time-consuming and fastening it could boost the whole KDD process. 
+
+%Ferda \cite{Ferda} is one of the recent implementations of the GUHA data mining method \cite{GUHA}, aiming at automated discovery of (especially) association hypotheses in large amounts of data. Unlike other similar systems, it offers a powerful visual programming environment. Elements of the environment, called boxes, define elementary as well as composite steps in the KDD workflow, such as selection of attributes, discretisation of a numerical attribute, or actual run of a modeling tool. Boxes are plugged to each other via input/output parameters. New boxes can be designed by the user.
+
+%In this work, we present "ontological engineering" of Ferda, which is currently focused on the data preparation step. This step is generally considered as most time-consuming, fastening this step can boost the whole KDD process. With Ferda, user can load ontology, map ontology entities to data table columns and most importantly create new attributes based on metadata previously injected into the ontology. 
+
+The paper is structured as follows. 
+Section \ref{OntologiesAssociation} explains GUHA as underlying data mining method, and outlines the roles of ontologies as prior knowledge in GUHA-based association mining in general. 
+Section \ref{Ferda} familiarizes the reader with Ferda DataMiner as particular implementation of GUHA. 
+Section \ref{OntologiesFerda} shows how ontologies are used to aid the data preparation process in Ferda. 
+Section \ref{Experiments} illustrates the Ferda-based data preparation process with the step-by-step description of a concrete experiment carried out on cardiological data and knowledge. 
+Section \ref{Related} puts the current work into the context of related research. 
+Finally, section \ref{Conclusions} concludes the paper and shows directions for future work. 
