@@ -242,7 +242,7 @@ Another assembly that is used by FrontEnd is the FerdaProjectManager.dll, which 
 
 FrontEnd also loads add-ins. Add-ins can extend functionality of FrontEnd in many ways. It is mainly used for modules for interaction and setting modules. Modules for interaction work on top of some box module. It for example shows results of functions returned by the box module in user comprehensible way. Setting modules are used for helping with setting nonstandard properties of boxes.
 
-The communication between FrontEnd and modules and between modules itself is feasible via the \emph{Internet Communication Engine} (Ice). Ice is a strong modern middleware. Thanks to the usage of Ice, Ferda is independent of both language and framework and it allows us to run different modules on different computers, without having big computational overhead. It can be also used for distributed computing. Every Ice interface is defined in a special language \emph{slice}. On the figure~\ref{fig:designFerda} the Ice is represented by the lines.
+The communication between FrontEnd and modules and between modules itself is feasible via the \emph{Internet Communication Engine} (Ice). Ice is a strong modern middleware. Thanks to the usage of Ice, Ferda is independent of both language and framework and it allows us to run different modules on different computers, without having big computational overhead. It can be also used for distributed computing. Every Ice interface is defined in a special language \emph{slice}. On the figure~\ref{fig:architectureFerda} the Ice is represented by the lines.
 
 IceGrid application, which manages available modules and loads them on demand, runs on a network. Modules manager uses these applications for getting modules. This application is part of Ice, so on the figure it is also represented by the lines.
 
@@ -384,29 +384,25 @@ The network archive is a new place where the user can store connections. It is i
 
 \subsection{Summary}
 
+
 \section{Functional languages}
-We have choose in Ferda that boxes represents functions and the language of Ferda system is functional. Many visual programming languages exist~\cite{WikiVisualProgrammingLaguage}, but we don not know about any which is functional. Most of these languages are dataflow, workflow or object-oriented languages. The biggest difference between these languages and a functional language is that in a functional language a result of program is a return value of some function. In a visual programming language it means that a execution of a program is a tree of boxes where root of the tree is an endpoint of the execution. The tree is similar to the connection of the boxes on a desctop, only cycles are expanded and two uses of the same box are in the execution two boxes. In workflow and dataflow languages there can be more endpoints. In the object-oriented languages there is one main object which is responsible for a execution, but from the connection of boxes it is not possible to know an execution plan.
+We have choose in Ferda that boxes represents functions and the language of Ferda system is functional. Many visual programming languages exist~\cite{WikiVisualProgrammingLaguage}, but we don not know about any which is functional. Most of these languages are dataflow, workflow or object-oriented languages. The biggest difference between these languages and a functional language is that in a functional language a result of program is a return value of some function. In a visual programming language it means that a execution of a program is a tree of boxes where root of the tree is an endpoint of the execution. The tree is similar to the connection of the boxes on a desktop, only cycles are expanded and two uses of the same box are in the execution two boxes. In workflow and dataflow languages there can be more endpoints. In the object-oriented languages there is one main object which is responsible for a execution, but from the connection of boxes it is not possible to know an execution plan.
 
 When Ferda has been designed we have taken a look on other two data-mining tools -- Weka and Clementine. The first is free the second is commercial. Both Weka and Clementine have something like workflow visual programming language.
 
-!-- popsat, cim se vyznacuji funkcionalni jazyky, proc se pro Ferdu hodi funkcionalni jazyk a ne strukturalni (mimo jine spojitost s logikou - jednoducha vyjadritelnost hypotez, matematicky pohled na vec, obecne funkcionalni jayky byvaji lepsi na skriptovani,...) --!
-%prvky - vzhledem k Ferdovi
-%jak delaji rekurzi / lambdu - rozsil mezi structuralnim a funkcionalnim jazykem
+We are able to naturally represent objects of interest with a functional language. Ferda has typically more boxes for the same task than some workflow oriented visual programming language. Workflow and dataflow oriented languages have more settings in a property grid and dialog boxes. So we can say that the language of Ferda is more low level.
 
-\subsection{Lambda calculus}
-Base of functional languages is in the lambda calculus. 
-!-- mozna jako sekce vynecham, ale rozhodne zminit, ze funkcionalni jazyky vychazeji z lambda kalkulu, odkazat se na publikaci --!
+Several reasons guided authors of Ferda to make the language in Ferda functional. GUHA~\cite{GUHAbook} is a theory which has its own logical calculus. Formulas of any calculus are mostly written like functions. Semantic of formulas can be seen as a value of the functions. It means that a calculus can be seen as a functional language. Big similarity between functions and formulas can be also found in constructions of transparent intensional logic~\cite{webTIL}. Both have as a base typed lambda calculus~\cite{WikiLambdaCalculus}. Functional language is in many ways close to the natural language.
 
-!-- rekurzivne spocetny --!
+LISp-Miner~\cite{LISp-Miner} has mostly for each type of GUHA method three programs -- the first for setting of the task, the second for generating of results and the third for browsing the results. The partioning has been affected by work flow of data mining. If we had done Ferda workflow oriented, it would have three boxes for one task which would correspond to the three programs of LISp-Miner. Ferda has advantage of reusability compared to LISp-Miner, because setting of a task is done by many boxes. It would not have if we had done Ferda workflow oriented. 
 
-!-- vsecno je funkce --!
+Functional languages are typically full featured scripting languages. They are part of many scientific applications, because writing to such languages is similar to functions written to scientific books. So scientists used to use such languages. Workflow and dataflow languages are typical for concrete problems. The set of rich boxes for the concrete problems are prepared in such languages. Typically they are strong for the things they were designed to do, but it is hard to use them by a user for something else.
 
-!-- typovany/netypovany --!
+This thesis brings some new boxes, which are described in the section~\ref{sectionNewBoxes}. Ferda is full featured language thanks to these boxes. It means that it can be used for most of tasks on a computer. The language is recursively enumerable.
 
 \section{Language boxes and expressions}
+\label{sectionNewBoxes}
 Every programming language has from beginning at least small set of functions. Also it has some way how to use these functions to create more complex ones. Such an instrument has been created for Ferda as crucial part of this diploma thesis. New language boxes are presented at this part of thesis. Data-mining examples which use these boxes are shown in the chapter~\ref{chap:KDDExamples}.
-
-!-- TODO napsat, ze implementace neimplementuje propertyDrivingAsLabel --!
 
 \subsection{Constants}
 The Ferda language is a typed language. It means that functions in Ferda return values of some type. Easiest functions are constant functions which return specified value. There are at least two ways how to achieve this by box semantic. One way is to create a specific box type for each type of constants which returns that specific type. This type has been created in Ferda as a part of this thesis.
@@ -744,7 +740,7 @@ Whole program without details of four fold settings can be seen in figure~\ref{f
 !-- TODO predelat obrazky ``Treshold'' na ``Threshold'', a misto ``Execute action'' snad muze byt zapojena do lambd krabicka ``Get parameter'' - tedy dost to zrychli pocitani (mozna je potreba jeste pres double box a je mi divne, ze bych to nezkousel -- mozna v tom je nejaky figl, zkusim) --!
 
 \subsection{How to do it better}
-The recursive computation is not needed for this particular task. The BestN algorithm for tasks, which is outlined in \cite{thesisKuchar}, can solve this particular task more effectively. But a user has to have a rich way how to specify best results. A functional language is a strong tool for such thing. We can see a functional language as a superset of observational calculus, which is described in \cite{GUHAbook}. If we have only one quantifier, which is fuzzy, it is easy to sort results according goodness. For example, if we have only founded implication, a formula with higher threshold is the better. Founded implication is not today fuzzy, but we can easily convert it to that.
+The recursive computation is not needed for this particular task. The BestN algorithm for tasks, which is outlined in \cite{thesisKuchar}, can solve this particular task more effectively. But a user has to have a rich way how to specify best results. A functional language is a strong tool for such thing. We can see a functional language as a superset of observational calculus, which is described in~\cite{GUHAbook}. If we have only one quantifier, which is fuzzy, it is easy to sort results according goodness. For example, if we have only founded implication, a formula with higher threshold is the better. Founded implication is not today fuzzy, but we can easily convert it to that.
 
 Two or more quantifiers as a setting for a task are more complicated. The today tasks accept a formula if all its quantifiers are satisfied. So the formula can be seen as a conjunction of the same subformulas only with a different quantifier. That conjunction is the real quantifier which is used in the GUHA mining. That conjunction should be used as a sorting filter for BestN. Today we have problem that the conjunction used is not a fuzzy conjunction. There is only one or zero. But there are many different fuzzy conjunctions and a user should have a ability to chose the right conjunction. He should be able to write his own conjuncti by the programming language.
 
