@@ -58,7 +58,8 @@
 		or places. For each value of the attribute, one category is created. If the user wants to create a new <classname>each value one 
 		category</classname> attribute, he can either click on the corresponding item in <classname>boxes asking for creation</classname>
 		submenu of a <classname>column</classname> box, or to drag the <classname>each value one category</classname> box out of
-		the new boxes menu and connect it to the <classname>column</classname> box, from which the attribute will be created. 
+		the new boxes menu, connect it to the <classname>column</classname> box, from which the attribute will be
+		created and then fill the <classname>Name in Boolean attributes</classname> property. 
 	</para>
 	<para>
 		The <classname>Each value one category</classname> attribute is a dynamic attribute. This means that no categories are stored and
