@@ -59,7 +59,8 @@ Jedná se o diplomovou práci kategorie „výzkumný problém“. Jejím cílem
 \selectlanguage{english}
 
 \section{Reaction to assignment}
-!--- MARTIN nove pojmy v teto i v dalsich sekcich by meli byt poprve kurzivou, potom uz normalne, at ctenar vi, ze je to neco noveho v textu a ne nejaky common knowledge ---
+%!--- MARTIN nove pojmy v teto i v dalsich sekcich by meli byt poprve kurzivou, potom uz normalne, at ctenar vi, ze je to neco noveho v textu a ne nejaky common knowledge ---
+%Re: pracuji na tom
 
 The main task of this thesis is to assess a set of several problems in KDD and to present a possible solution via a new user-oriented language for the Ferda system. The reach of the present thesis, however, surpasses the assignment in its implications. Instead of a new language specific only for some KDD problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. The reason for going beyond the task was the author's determination to present a more complex solution to the problem given. 
 
@@ -268,37 +269,37 @@ Word ``box'' in this thesis may mean two different things according to context--
 \chapter{New features for visual programming}
 This chapter describes the Ferda system as a visual programming language. It presents possible objects of the language and tools and utilities for the programming.
 
-First, the thesis concentrates on source codes of the language, because it is better to begin with syntax of a language than with semantic. The section identifies one particular problem of projects of the Ferda system, it is reusability of written code, and it describes several possible solutions. One particular solution is implemented as part of this thesis.
+First, the thesis focuses on source codes of the language, because it is better to begin with syntax of a language than with its semantic. The section identifies one particular problem of projects of the Ferda system, it is the reusability of written code, and it describes several possible solutions. One particular solution is implemented as part of this thesis.
 
-Subsequently, the thesis deals with detail basics of visual functional programming. It explains why the language has been chosen as functional and describes properties of functional languages.
+Subsequently, the thesis deals with details of the basics of visual functional programming. It explains why the language was chosen as functional and describes properties of functional languages.
 
-The crucial part of this chapter is a set of proposed new boxes. These represents basic functions for the language. Some of them are implemented as part of this thesis. The new boxes have been chosen so that they brings basic functionality which other languages have. The boxes were also designed in mind of possible usage with data mining boxes. Several problems of data mining were in mind when we were thinking about the new boxes. But these problems are not remarked in this chapter, because the proposed boxes are generalized for being used by other applications.
+The crucial part of this chapter is a set of proposed new boxes. These represent basic functions for the language. Some of them are implemented as part of this thesis. The new boxes have been chosen so that they brings basic functionality which other languages have. The boxes were also designed in mind of possible usage with data mining boxes. Several problems of data mining were in mind when we were thinking about the new boxes. But these problems are not remarked in this chapter, because the proposed boxes are generalized for being used by other applications.
 
 The last part of this chapter describes advanced possible topics of the language. It proposes unit tests in the Ferda language and distributed computation in the language.
 
 \section{Source codes and reusability}
 \label{sec:reusability}
-Every programming languages have ways how to reuse a code. This part of thesis is about ways how to make a programming in Ferda efficient. Need of rewriting a code and missing user specified structure in boxes could release in a usability problem of any language in Ferda. Several ways how to solve these problems will be described with one implementation of such solution.
+Every programming language has its own ways how to reuse code. This part of thesis is about ways how to make a programming in Ferda efficient. The need of rewriting a code and lack of user specified structure in boxes could result in a usability problem of any language in Ferda. Several ways how to solve these problems are shown and one implementation of such solution is described.
 
 \subsection{Project import}
 The simplest way is to copy the source code to different place and use it for different project. The same is possible in Ferda, you can copy a project file and reuse it.
 
-With standard textual source code it is easy to merge the code from more sources. You can do it with the Ferda project, but you must merge a code in a project files manually in a text editor. The merging is not an easy process hence it is not so much user-friendly way.
+With standard textual source code it is easy to merge the code from more sources. You can do it with the Ferda project, but you must merge a code in a project files manually in a text editor. The merging is not an easy process, thus it is not so much user-friendly way.
 
-It would be convenient have a functionality in Ferda that would allow us to import some or all boxes from one project into another one. One way to achieve that would be adding a new item "import project\dots" to the Ferda menu. Therefore, if a user selected this item, a dialog for selecting a project file would open. Having selected a project, the dialog with boxes in selected project should be shown. The user could select boxes which he would want to import. The last step would be the actual import of selected boxes.
+It would be convenient to have a functionality in Ferda that would allow us to import some or all boxes from one project into another. One way to achieve that would be adding a new item ``import project…'' to the Ferda menu. Therefore, if a user selected this item, a dialog for choosing project file would open. Having selected a project, the dialog with boxes in selected project should be shown. The user could select boxes which he would want to import. The last step would be the actual import of selected boxes.
 
-Let us discuss the dialog box where a user could select boxes. To chose whole functions, seeing the dependency among boxes would be crucial. However, should the user selects to import a box without a box connected to this box, the box would be imported, but the result of such box could differ significantly from the situation before. On the other hand, such choice could be purposeful should the user want to connect to that box some box from original project.
+Let us discuss the dialog box where a user could select boxes. To chose whole functions, seeing the dependency among boxes would be crucial. However, should the user selects to import a box without a box connected to this box, the box would be imported, but the result of such box could differ significantly from the situation before. On the other hand, such choice could be purposeful should the user want to connect to that box some box from the original project.
 
 \subsection{Project using}
-The source code of one application is usually not written only in one source file, but in several. There are more ways in programming languages how to achieve this. One way typical for compiled languages is compilation of application from more source files from the beginning. A compiler has a set of files as an argument. The other way, specific for interpreted languages, is an import of another file into the source file. An advantage of this approach is that the imported file is loaded when it is used---hence the file can be created a short time before usage. It allows us to write code which loads every file in some directory hence it can be used for plug-ins. Even compiled applications have a way how to achieve this functionality. Compiled applications can use libraries (or assemblies or modules) which can be loaded dynamically on demand. It can be also used for loading a source file on demand if a compiler for that language is available in machine where the application is being executed.
+The source code of one application is usually not placed only in one source file, but in several. There are more ways in programming languages how to achieve this. One way typical for compiled languages is compilation of application from more source files from the beginning. A compiler has a set of files as an argument. The other way, specific for interpreted languages, is an import of another files into the source file. An advantage of this approach is that the imported file is loaded when it is used---hence the file can be created a short time before usage. It allows us to write code which loads every file in some directory and hence it can be used for plug-ins. Even compiled applications have a way how to achieve this functionality. Compiled applications can use libraries (or assemblies or modules) which can be loaded dynamically on demand. It can be also used for loading a source file on demand if a compiler for that language is available on machine where the application is being executed.
 
-If we wanted to add this to Ferda, project would have to have a new attribute defining the using of other projects. Boxes from these project should be read only - no change of properties and boxes connected to their sockets would be available. Also, the origin of each box should be clearly traceable.
+If we wanted to add this to Ferda, project would have to have a new attribute defining the using of other projects. Boxes from such projects would have to be read only---no change of properties and boxes connected to their sockets would be available. Also, the origin of each box should be clearly traceable.
 
 Nevertheless, the import itself of projects into other projects presents a demanding situation. Let us illustrate this on the following example: let us have two imaginary projects, $A$ and $B$, with corresponding boxes, $A$ and $B$. The project $B$ is imported by the project $A$, and the box $B$ is connected to the box $A$ in the project $A$. Even if we remove the box $B$ in the project $B$, maintaining the information about the former connection to already non-existent box $B$ in the project $A$ would facilitate the reversible operation in case we needed to add the box $B$ back into the project $B$. This would allow us to change boxes and therefore functionalities.
 
-Let us discuss possible implementation of such imports. Information about imported projects should be serialized to a project files. In the project file should be a section with paths of imported project files. Boxes which are used from other projects should not be serialized, but connections of these boxes in the project and theirs positions on desktops should. It raises a question how to identify these boxes. The first solution which comes into consideration is to use as identification a pair project identifier of a box and an identifier of an imported project. Such solution would have problems which should be resolved.
+Let us discuss possible implementation of such imports. Information about imported projects should be serialized to a project files. In the project file there should be a section with paths of imported project files. Boxes which are used from other projects should not be serialized, but connections of these boxes in the project and their position on desktops should. It raises a question how to identify these boxes. The first solution which comes into consideration is to use as identification a pair of a project identifier of a box and an identifier of an imported project. Such solution would have problems which should be resolved.
 
-At this time boxes are identified in one project by project identifier. The project identifier is an integer which grows from one up without the awareness of the user. If the user removed a box with last project identifier, exited Ferda, started Ferda, reopened the project and added a new box, the new box would have the same project identifier as the removed box had. If we liked still to use project identifier as identification of boxes we should avoid this by serializing the last used project identifier in the project. To be able to replace a box, it is vital the user be able to chose the project identifier.
+At this time boxes are identified in one project by project identifier. The project identifier is an integer which grows from one up without the awareness of the user. If the user removed a box with the last project identifier, exited Ferda, started Ferda, reopened the project and added a new box, the new box would have the same project identifier as the removed box had. If we still liked to use the project identifier as identification of boxes we should avoid this by serializing the last used project identifier in the project. To be able to replace a box, it is vital the user be able to choose the project identifier.
 
 %tady by mohlo byt jak by melo vypadat menu a ze maji byt videt importovane veci v archivu
 \subsection{Network archive}
@@ -341,7 +342,7 @@ interface Archive {
 };
 \end{verbatim}
 
-The Network archive is a collection of boxes (with all theirs sub-boxes -- boxes connected both directly and indirectly to that box). Each box is identified with some label. You can add a box and remove a box, get information about a box and list all labels in the collection. The collection is serialized on a disk every time it changes. After startup of the service, it loads the last serialized version.
+The Network archive is a collection of boxes (with all their sub-boxes---boxes connected both directly and indirectly to that box). Each box is identified with some label. You can add a box and remove a box, get information about a box and list all labels in the collection. The collection is serialized on a disk every time it changes. After startup of the service, it loads the last serialized version.
 
 From the user perspective the network archive is a new panel with list where you can copy a box to. Please see figure~\ref{fig:addToNA}. 
 \begin{figure}
@@ -372,7 +373,7 @@ The user can then go to another computer which uses the same network archive and
 	\label{fig:dragFromNAToDesktop}
 \end{figure}
 
-He can also remove the box from the network archive. Please see figure~\ref{fig:removeFromNA}.
+They can also remove the box from the network archive. Please see figure~\ref{fig:removeFromNA}.
 \begin{figure}
 	\centering
 	\includegraphics[height=7cm]{network_archive_remove_box}
@@ -381,32 +382,32 @@ He can also remove the box from the network archive. Please see figure~\ref{fig:
 \end{figure}
 
 \subsubsection{Future enhancements}
-Organizing boxes in network archives into some structure would facilitate the work. It could be one-level structure (labels) or tree-structure like in directories. Another enhancement would be to add user rights to these labels.
+Organizing boxes in network archives into some structure would facilitate the work. It could be an one-level structure (labels) or a tree-structure like in directories. Another enhancement would be to add user rights to these labels.
 
 Easy thing to do is to allow the Ferda FrontEnd to work with more network archives.
 
 \section{Functional visual programming}
-We have choose in Ferda that boxes represents functions and the language of Ferda system is functional. Many visual programming languages exist~\cite{WikiVisualProgrammingLaguage}, but we do not know about any which is functional. Most of these languages are dataflow, workflow or object-oriented languages. The biggest difference between these languages and a functional language is that in a functional language a result of program is a return value of some function.
+We have decided in Ferda that boxes represent functions and the language of Ferda system is functional. Many visual programming languages exist~\cite{WikiVisualProgrammingLaguage}, but we do not know about any which is functional. Most of these languages are dataflow, workflow or object-oriented languages. The biggest difference between these languages and a functional language is that in a functional language a result of program is a return value of some function.
 
-The result of functional programs are counted by the evaluation of mathematic functions. Pure functional programming does not work with states and mutual data. More about functional programming can be found for example on Wikipedia~\cite{WikiFunctionalProgramming}.
+The result of functional programs are counted by the evaluation of mathematic functions. Pure functional programming does not work with states and mutual data.
 
-In a visual programming language it means that a execution of a program is a tree of boxes where root of the tree is an endpoint of the execution. The tree is similar to the connection of the boxes on a desktop, only cycles are expanded and two uses of the same box are in the execution two boxes. In workflow and dataflow languages there can be more endpoints. In the object-oriented languages there is one main object which is responsible for a execution, but from the connection of boxes it is not possible to know an execution plan. It works with mutual data.
+In a visual programming language it means that the execution of a program is a tree of boxes where root of the tree is an endpoint of the execution. The tree is similar to the connection of the boxes on a desktop, only cycles are expanded and two uses of the same box are in the execution two independend boxes. In workflow and dataflow languages there can be more endpoints. In the object-oriented languages there is one main object which is responsible for the execution, but from the connection of boxes it is not possible to know the execution plan. It works with mutual data.
 
-When Ferda has been designed we have taken a look on other two data-mining tools -- Weka~\cite{WebWeka} and Clementine~\cite{WebClementine}. The first is open sourced the second is commercial. Both Weka and Clementine have something like workflow visual programming language.
+When Ferda was being designed we took a look on other two data-mining tools---Weka (\url{http://www.cs.waikato.ac.nz/ml/weka/}) and Clementine (\url{http://www.spss.com/clementine/}). The first is open sourced the second is commercial. Both Weka and Clementine offer workflow visual programming languages.
 
-We are able to naturally represent objects of interest with a functional language. Ferda has typically more boxes for the same task than some workflow oriented visual programming language. Workflow and dataflow oriented languages have more settings in a property grid and dialog boxes. So we can say that the language of Ferda is more low level.
+We are able to naturally represent objects of interest with a functional language. Ferda has typically more boxes for the same task than some workflow oriented visual programming language. Workflow and dataflow oriented languages have more settings in a property grid and dialog boxes. So we can say that the language of Ferda is more low leveled.
 
-Several reasons guided authors of Ferda to make the language in Ferda functional. GUHA~\cite{GUHAbook} is a theory which has its own logical calculus. Formulas of any calculus are mostly written like functions. Semantic of formulas can be seen as a value of the functions. It means that a calculus can be seen as a functional language. Big similarity between functions and formulas can be also found in constructions of transparent intensional logic~\cite{webTIL}. Both have as a base typed lambda calculus~\cite{WikiLambdaCalculus}. Functional language is in many ways close to the natural language. 
+Several reasons guided authors of Ferda to make the language in Ferda functional. GUHA~\cite{GUHAbook} is a theory which has its own logical calculus. Formulas of any calculus are mostly represented like functions. The semantics of formulas can be seen as a value of the functions. It means that a calculus can be viewed as a functional language. Big similarity between functions and formulas can be also found in constructions of transparent intensional logic (\url{http://til.phil.muni.cz}). Both have as a base the typed lambda calculus. Functional language is in many ways close to the natural language. 
 
-LISp-Miner~\cite{LISp-Miner} has mostly for each type of GUHA method three programs -- the first for setting of the task, the second for generating of results and the third for browsing the results. The partioning has been affected by work flow of data mining. If we had done Ferda workflow oriented, it would have three boxes for one task which would correspond to the three programs of LISp-Miner. Ferda has advantage of reusability compared to LISp-Miner, because setting of a task is done by many boxes. It would not have if we had done Ferda workflow oriented. 
+LISp-Miner~\cite{LISp-Miner} has mostly for each type of GUHA method three programs---the first for setting of the task, the second for generating results and the third for browsing the results. The partitioning has been affected by work flow of data mining. If we had done Ferda workflow oriented, it would have three boxes for one task which would correspond to the three programs of LISp-Miner. Ferda has advantage of reusability compared to LISp-Miner, because setting of a task is done by many boxes. It would not have if we had done Ferda workflow oriented. 
 
-Functional languages are typically full featured scripting languages. They are part of many scientific applications, because writing to such languages is similar to functions written to scientific books. So scientists used to use such languages. Workflow and dataflow languages are typical for concrete problems. The set of rich boxes for the concrete problems are prepared in such languages. Typically they are strong for the things they were designed to do, but it is hard to use them by a user for something else.
+Functional languages are typically full featured scripting languages. They are part of many scientific applications, because writing in such languages is similar to classic mathematical functions used in scientific texts. Thus scientists used to use such languages. Workflow and dataflow languages are typical for concrete problems. The set of rich boxes for the specific problems are prepared in such languages. Typically they are strong at the things they were designed for, but it is hard to use them by a user for something else.
 
-This thesis brings some new boxes, which are described in the section~\ref{sectionNewBoxes}. Ferda is full featured language thanks to these boxes. It means that it can be used for most of tasks on a computer. The language is recursively enumerable.
+This thesis brings some new boxes, which are described in the section~\ref{sectionNewBoxes}. Ferda is full featured language thanks to these boxes. It means that it can be used for most computer tasks. The language is recursively enumerable.
 
 \section{Language boxes and expressions}
 \label{sectionNewBoxes}
-Every programming language has from beginning at least small set of functions. Also it has some way how to use these functions to create more complex ones. Such an instrument has been created for Ferda as crucial part of this diploma thesis. New language boxes are presented at this part of thesis. Data-mining examples which use these boxes are shown in the chapter~\ref{chap:KDDExamples}.
+Every programming language has from the beginning at least a small set of functions. Also it has some way how to use these functions to create more complex ones. Such an instrument has been created for Ferda as a crucial part of this diploma thesis. New language boxes are presented at this part of thesis. Data-mining examples which use these boxes are shown in chapter~\ref{chap:KDDExamples}.
 
 \subsection{Constants}
 The Ferda language is a typed language. It means that functions in Ferda return values of some type. Easiest functions are constant functions which return specified value. There are at least two ways how to achieve this by box semantic. One way is to create a specific box type for each type of constants which returns that specific type. This type has been created in Ferda as a part of this thesis.
@@ -416,22 +417,22 @@ The Ferda language is a typed language. It means that functions in Ferda return 
 The other way is to create one box type which has one property for specifying a type and dependent on it it would have a second property with a value of a specified type. It would return that value.
 
 \subsection{Boxes for mathematics}
-Mathematical expressions are really necessary for programmers, statistics and analytics. Support for them is important. New boxes for basic mathematic functions have been added.
+Mathematical expressions are really necessary for programmers, statisticians and analysts. Support for them is important. Boxes for basic mathematical functions have been added.
 
 \subsubsection{Binary operation}
-New boxes for basic binary operation have been added. It has three properties. First two, called ``value1'' and ``value2'', are arguments of an operation. Theirs type is double. The last property is type of operation ($+$, $-$, $*$, $/$), it is called simply ``type''. Result of such operation is always double. Please see figure~\ref{fig:boxBinaryOperation}. In the figure you can see that ``value1'' and ``value2'' properties are set by sockets.
+Binary operation box has been implemented as part of this thesis. It has three properties. First two, called ``value1'' and ``value2'', are arguments of an operation. Their type is double. The last property is the operation sign ($+$, $-$, $*$, $/$), it is called simply ``type''. Result of such operation is always double. Please see figure~\ref{fig:boxBinaryOperation}. In the figure you can see that ``value1'' and ``value2'' properties are set by sockets.
 \begin{figure}
 	\includegraphics[width=1\textwidth]{binaryOperation2.png}
 	\caption{Binary operation}
 	\label{fig:boxBinaryOperation}
 \end{figure}
 
-Such box can not be used for setting up a integer properties, even if it sums only integers, because it always returns double. One way how to overcome such problem is to introduce a new convert box. The second way is to change the behavior of the binary operation box. It would return an integer if it summed two integers. Similarly it would return a float if it summed an integer with a float. Different operation types would behave different as is it standard in other languages. Such function would be less efficient, but more useful.  
+Such box can not be used for setting up integer properties, even if it sums only integers, because it always returns double. One way how to overcome such problem is to introduce a new convert box. The second way is to change the behavior of the binary operation box. It would return an integer if it summed two integers. Similarly it would return a float if it summed an integer with a float or two floats. Different operation types would behave differently as it is standard in other languages. Such function would be less efficient, but more useful.  
 
-There is no need to have one box for all operations. There can be also as many boxes as many operations are. Let us describe how to create for example a plus box. There are more possibilities how to do it. It has been already described in~\cite{znalosti2006} on a plus box. There could be plus box which has two properties ``value1'' and ``value2'' like the binary operation box. But there could be also a plus box which has only one socket ``arguments'' -- the box would sum all boxes connected to this socket. It means less boxes on a desktop when summing more numbers. Also it adds an easy way how to sum sequences of numbers which are described in the section~\ref{sec:sequences}. But even without such box we are able to do it (for example thanks to head/tail box which is described in the same section), only it is complicated.    
+There is no need to have one box for all operations. There can be also as many boxes as many operations are. Let us describe how to create for example a plus box. There are more possibilities how to do it. It has been already described in~\cite{znalosti2006} on a plus box. There could be a plus box which would have two properties ``value1'' and ``value2'' like the binary operation box. But there could be also a plus box which would have only one socket ``arguments''---the box would sum all boxes connected to this socket. It means less boxes on the desktop when summing more numbers. Also it adds an easy way how to sum sequences of numbers which are described in section~\ref{sec:sequences}. But even without such box we are able to do it (for example thanks to head/tail box which is described in the same section), only it is more complicated.    
 
 \subsubsection{Comparison}
-Comparison functions are functions of two arguments which return a boolean value. As part of this thesis a compare box has been created which has three arguments. First argument is type of comparison function, next two arguments are doubles. This box has implemented basic mathematic comparisons ($<$, $>$, $<=$, $>=$, $=$, $!=$). Please see figure~\ref{fig:boxCompare}.
+Comparison functions are functions of two arguments which return a boolean value. As part of this thesis a compare box has been created which has three arguments. First argument is the type of the comparison function, next two arguments are doubles. This box has implemented basic mathematic comparisons ($<$, $>$, $<=$, $>=$, $=$, $!=$). Please see figure~\ref{fig:boxCompare}.
 \begin{figure}
 	\includegraphics[width=1\textwidth]{compare2.png}
 	\caption{Compare}
@@ -441,17 +442,17 @@ Comparison functions are functions of two arguments which return a boolean value
 It is possible to create also boxes specific for every comparison function like has been described for the binary operation box.
 
 \subsubsection{If expressions}
-If expression is a function which has three arguments. The first argument, called ``if'', is of boolean type. It returns value of the second argument, called ``then'', if the first is true, otherwise it returns the value of the third argument, called ``else''. Such new box, called ``IfThenElse'' has been created. Please see figure~\ref{fig:boxIfThenElse}.
+If expression is a function which has three arguments. The first argument, called ``if'', is of boolean type. The expression returns value of the second argument, called ``then'', if the first is true, otherwise it returns the value of the third argument, called ``else''. Such new box, called ``IfThenElse'' has been created. Please see figure~\ref{fig:boxIfThenElse}.
 \begin{figure}
 \includegraphics[width=1\textwidth]{ifthenelse2.png}
 	\caption{If expression}
 	\label{fig:boxIfThenElse}
 \end{figure}
 
-Important fact is that if the ``if'' argument was true, the function in the ``else'' socket would not be counted. Similarly if the ``if'' argument was false, the function in the ``then'' socked will not be count. It means that the not counted function can count indefinitely, but the IfThenElse box can return a value.
+Important fact is that if the ``if'' argument were true, the function in the ``else'' socket would not be computed. Similarly, if the ``if'' argument were false, the function in the ``then'' socket would not be computed.
 
 \subsection{Lambda expression}
-Lambda is one of the most important expression for functional languages. Its base is in the lambda calculus. Mathematics many times define a function which they later use. For example see definition of this plus one function
+Lambda is one of the most important expressions for functional languages. Its base is in the lambda calculus. Mathematicians define many times define functions for later use. For example see definition of this ``plus one'' function
 \begin{eqnarray*}
 f(x)&=&1 + x\\
 y&=&f(9)
@@ -468,15 +469,15 @@ The naming of functions is not necessary, it can be also written as
 y&=&(\lambda x.(1+x))(9)
 \end{eqnarray*}
 
-Lambda can be seen as a function which has two arguments -- the first argument is set of variables and the second argument is a expression which uses these variables. It returns a function from the variables to the value of the expression after setting up the variables.
+Lambda can be seen as a function which has two arguments---the first argument is a set of variables and the second argument is a expression which uses these variables. It returns a function from the variables to the value of the expression after setting up the variables.
 
-Mathematics can also define recursive functions like factorial
+Mathematicians can also define recursive functions like factorial
 \begin{eqnarray*}
 f(0)&=&1\\
 f(x)&=&x * f(x - 1)
 \end{eqnarray*}
 
-The same thing can be done in functional languages with lambda expression. Plus one function will be presented there in more languages with use of lambda expression. Let us show the first example not on a functional language but on a structural one with functional aspects. Such language is the C\# 3. Lambda expression is in the C\# 3 done by operator $=>$:
+The same thing can be done in functional languages with lambda expression. The ``plus one'' function will be presented now in more languages with use of lambda expression. However let us show the first example not on a functional language but on a imperative one with functional aspects. Such language is the C\# 3. Lambda expression is in the C\# 3 done by operator $=>$:
 
 \begin{verbatim}
 public delegate int function(int x);
@@ -489,28 +490,28 @@ public static void Main(string[] args)
 }
 \end{verbatim}
 
-F\# is another language which is translated to IL of .NET framework, but it is a functional language. The lambda expression is done by the let operator there:
+F\# is another language which is translated to IL of .NET framework, but it is a functional language. The lambda expression is done by the \emph{let} operator there:
 \begin{verbatim}
 let onePlus x = 1 + x
 do printf "%s" (onePlus(9)) 
 \end{verbatim}
 
-The last example is written in more commonly used functional language today, in the Python. There is used the ``lambda'' keyword:
+The last example is written in more commonly used language today, in the Python. It is a object-oriented scripting language with both imperative and functional aspects. There is used the \emph{lambda} keyword:
 \begin{verbatim}
 plusOne = lambda x: 1 + x
 print plusOne(9)
 \end{verbatim}
 
-A new lambda box has been created as part of this thesis. It has socket ``Function'' and a property ``VariablesCount''. Type of this property is integer. There are as many socket pairs (variable, value) as big the value of this property is. It is first box in Ferda which has dynamic sockets. Such think has been designed in the beginning of Ferda, but because it have not been used, some changes were needed to the core of Ferda to make it running.
+A new lambda box has been created as part of this thesis. It has a socket ``Function'' and a property ``VariablesCount''. Type of this property is integer. There are as many socket pairs (variable, value) as big the value of this property is. It is the first box in Ferda which has dynamic sockets. Such thing has been designed in the beginning of Ferda, but because it have not been used, some changes were needed to the core of Ferda to make it running.
 
-Please see figure~\ref{fig:boxLambdaBasic}. The ``Function'' socket represent the expression from the lambda. The ``VariablesCount'' is set to zero in this connection. It means that the lambda returns the same thing which is connected to the ``Function'' socket. In this example the result is six represented as double. 
+Please see figure~\ref{fig:boxLambdaBasic}. The ``Function'' socket represents the expression from the lambda. The ``VariablesCount'' is set to zero in this connection. It means that the lambda returns the same thing that is connected to the ``Function'' socket. In this example the result is 6, represented as double. 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{lambdaBasic2.png}
 	\caption{Lambda without arguments}
 	\label{fig:boxLambdaBasic}
 \end{figure}
 
-Please see figure~\ref{fig:boxLambdaOnePlus}. It shows the same example in Ferda as we have seen in the previous examples in other languages -- the one plus function. The ``VariablesCount'' is set to one in this connection. It means there are sockets ``Variable0'' and ``Value0''. The box with value five is used there as a variable. The box with value nine is the value of variable. So the result of such connection should be ten.
+Please see figure~\ref{fig:boxLambdaOnePlus}. It shows the same example in Ferda as we have seen in the previous examples in other languages---the one plus function. The ``VariablesCount'' is set to one in this connection. It means there are sockets ``Variable0'' and ``Value0''. The box with value five is used there as a variable. The box with value 9 is the value of variable. Hence, the result of such connection should be 10.
 \begin{figure}
 	\includegraphics[width=1\textwidth]{lambdaBasic3.png}
 	\caption{Lambda with one constant parameter specified}
@@ -587,7 +588,7 @@ It is possible to represent a sequence of numbers by numbers only using basic pr
 
 The Ferda includes a box called Group. This box is the only box which is not the real back end module. It is implemented in the modules manager. It has one socked. It represents all boxes which are connected to this socket. If second group box is connected to this, the first box represents all boxes which are connected to the first box without the second group box but with all boxes which are represented by the second group box. If the box is connected to a socket to which it is possible to connect more boxes, it means all boxes which are represented by the box will be connected. The group box is very useful for organization of boxes on the desktop and reuse of a set of boxes.
 
-We want to have a possibility to create a box which represents a sequence of boxes like the group box, but the box should be standard backend module. The box should return as a value a sequence of functions classes instead of one functions class. So we need second-order functions. It is easy thing in Ferda -- define a functions interface for sequence which has a methods which returns members of the sequence -- functions interfaces. Then a sequence boxes can be created. There are more ways how to define a sequence. For example one way is to have a box with property called ``count of items'' and when it is set to some number that number of socket will appear. These sockets represent items of a sequence. Another boxes can be ``head tail'' box (lisp and prolog use such ``functions''), ``clear sequence'',  ``add an item to the end'',\dots.
+We want to have a possibility to create a box which represents a sequence of boxes like the group box, but the box should be standard backend module. The box should return as a value a sequence of functions classes instead of one functions class. So we need second-order functions. It is easy thing in Ferda -- define a functions interface for sequence which has a methods which returns members of the sequence -- functions interfaces. Then a sequence boxes can be created. There are more ways how to define a sequence. For example one way is to have a box with property called ``count of items'' and when it is set to some number that number of socket will appear. These sockets represent items of a sequence. Another boxes can be ``head tail'' box (lisp and prolog use such ``functions''), ``clear sequence'',  ``add an item to the end'',…
 
 If a socket has an ability to connect more boxes, we can want a way how to connect all functions in some sequence to that socket. The implementation of connecting a box to a socked could be changed for that. A new implementation could first try if the functions is a sequence functions. If it was true, it would connect the functions interfaces inside the sequence, otherwise the functions interface itself.
 
@@ -596,7 +597,7 @@ The main implementation of a box module has a method which is used for getting o
 public ObjectPrx[] GetFunctions(string socketName)
 \end{verbatim}
 
-If the implementation can be changed hence if it is possible to connect more boxes to the socket ``socketName'', first try if the functions connected to that socket is a sequence. If it is true, do not return the sequence interface, but all functions which are in the sequence. In other scenarios the implementation should return the same result as it does.
+The implementation can be changed so that if it is possible to connect more boxes to the socket ``socketName'', first try if the functions connected to that socket is a sequence. If it is true, do not return the sequence interface, but all functions which are in the sequence. In other scenarios the implementation should return the same result as it does.
 
 Such change give us ability to use sequence boxes as a group box.
 
@@ -714,7 +715,7 @@ Programming finding best settings by user -- biggest variability
 
 Let us get a fourfold task setting with founded implication quantifier. Generally, if the threshold of a founded implication is to hight, no results are returned by a task. If the threshold of a founded implication is to low many meaningless results are returned.
 
-We will present small program in the new language which finds threshold for founded implication hence count of results of a task which use that quantifier is between specified numbers.
+We will present small program in the new language which finds threshold for founded implication so that count of results of a task which use that quantifier is between specified numbers.
 
 \subsection{Implementation}
 The solution is based on the linear interpolation. The function of a count of results on a threshold is non-increasing. If we know two thresholds (the $x_{min}$ and the $x_{max}$) with their count of results (the $y_{min}$ and the $y_{max}$) which one count is shorter than what we wants and the second is greater than what we wants, than we can interpolate this way: 
@@ -818,8 +819,6 @@ result of such connection would be the wanted sequence of atom settings. Such se
 !-- jak delat programove sekvence hopotez a resit je pomoci specifickeho GUHA solveru -- vetsi sire nez soucasna implementace (lze hledat nejen formule specifickeho tvaru ale obecne jakekoliv formule), ale samozrejme daleko pomalejsi --!
 
 !-- souvisi result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF --!
-
-\section{\dots}
 \chapter{Summary}
 The thesis has described a new language for a data mining. It is a visual functional language. Functions are there called boxes. Basic formalisation of the language has been shown in the section~\ref{sec:formalisation}. A source code is written as a connection of boxes, source files are project files of the Ferda system. Possible extensions to source files has been described in the section~\ref{sec:reusability}. These extensions adds better reusability of a code. One such extension, which is called ``network archive'' has been implemented as part of this thesis. The network archive is a new place where the user can store connections. It is independent of projects. One network archive can be accessed from more computers. It is a way how to move connections from one project to another. Future possible enhancement to the network archive has been also proposed.
 
