@@ -536,9 +536,9 @@ It is not possible with the implementation which is done in Ferda, because the i
 
 The implementation has one problem, which is not easy to fix. The cloned boxes are not released until the end of FrontEnd application even if they will not be used and every time any box ask for functions interface of the lambda, new cloned boxes are created. It means amount of used memory raises when the lambda box is used. It is not easy to fix, because today there is no information when a box will not use a functions interface any more. Adding such information to Ferda means changes to almost all boxes.
 
-There is also one performance problem. Let us have function $\lambda x.(x*x)$. If you called in most of functional languages such function with parameter $1+1$, it would firstly count $1+1$ -- two, and later it passes two as the $x$---hence it counts than $2+2$. In Ferda such function created by a lambda box counts $(1+1)*(1+1)$. It means the plus operation is counted twice. This problem grows when the lambda is used for a recursion. A generic fix is problematic, because in Ferda are functions which can not be stored in a simple class and the connection to other boxes is necessary. For simple types there can be created some cashing mechanism.
+There is also one performance problem. Let us have function $\lambda x.(x*x)$. If you called in most of functional languages such function with parameter $1+1$, it would firstly count $1+1$---two, and later it passes two as the $x$---hence it counts than $2+2$. In Ferda such function created by a lambda box counts $(1+1)*(1+1)$. It means the plus operation is counted twice. This problem grows when the lambda is used for a recursion. A generic fix is problematic, because in Ferda are functions which can not be stored in a simple class and the connection to other boxes is necessary. For simple types there can be created some cashing mechanism.
 
-\subsubsection{Example usage of lambda -- factorial}
+\subsubsection{Example usage of lambda---factorial}
 Let us show you how the lambda can be used for a recursive function. On of simplest recursive function is a factorial. Simple structural version of that function in the C\# language is: 
 \begin{verbatim}
 public static int Factorial(int x)
@@ -588,7 +588,7 @@ It is possible to represent a sequence of numbers by numbers only using basic pr
 
 The Ferda includes a box called Group. This box is the only box which is not the real back end module. It is implemented in the modules manager. It has one socked. It represents all boxes which are connected to this socket. If second group box is connected to this, the first box represents all boxes which are connected to the first box without the second group box but with all boxes which are represented by the second group box. If the box is connected to a socket to which it is possible to connect more boxes, it means all boxes which are represented by the box will be connected. The group box is very useful for organization of boxes on the desktop and reuse of a set of boxes.
 
-We want to have a possibility to create a box which represents a sequence of boxes like the group box, but the box should be standard backend module. The box should return as a value a sequence of functions classes instead of one functions class. So we need second-order functions. It is easy thing in Ferda -- define a functions interface for sequence which has a methods which returns members of the sequence -- functions interfaces. Then a sequence boxes can be created. There are more ways how to define a sequence. For example one way is to have a box with property called ``count of items'' and when it is set to some number that number of socket will appear. These sockets represent items of a sequence. Another boxes can be ``head tail'' box (lisp and prolog use such ``functions''), ``clear sequence'',  ``add an item to the end'',…
+We want to have a possibility to create a box which represents a sequence of boxes like the group box, but the box should be standard backend module. The box should return as a value a sequence of functions classes instead of one functions class. Thus we want second-order functions. It is easy thing in Ferda---define a functions interface for sequence which has a methods which returns members of the sequence---functions objects. Then a sequence boxes can be created. There are more ways how to define a sequence. For example one way is to have a box with property called ``count of items'' and when it is set to some number that number of socket will appear. These sockets represent items of a sequence. Another boxes can be ``head tail'' box (lisp and prolog use such ``functions''), ``clear sequence'',  ``add an item to the end'',… Also standard high-order functions for working with sequences in functional languages would be useful (the map, the fold and the filter functions)~\cite{webHighOrderFunctions}. The map function is described in the next section.
 
 If a socket has an ability to connect more boxes, we can want a way how to connect all functions in some sequence to that socket. The implementation of connecting a box to a socked could be changed for that. A new implementation could first try if the functions is a sequence functions. If it was true, it would connect the functions interfaces inside the sequence, otherwise the functions interface itself.
 
@@ -692,28 +692,11 @@ This chapter shows data-mining examples and shows how it can be solved in the Fe
 
 \section{Fourfold task in a recursion}
 \subsection{Motivation}
-Changes to a setting of a data-mining task are often needed after having a knowledge of founded patterns of the task. Subsequent run of that task can result in next changes of that settings. This step is repeated until the analytic is satisfied with the patterns or he gave up that setting at all.
+Changes to a setting of a data-mining task are often needed after having a knowledge of founded patterns of the task. Subsequent run of that task can result in next changes to that settings. This step is repeated until the analytic is satisfied with the patterns or he gave up that setting at all. It is manual and confusing.
 
+It is possible that there can be known algorithm for a analytic how to change a setting after run of a task according to results. Such information should be writable in the Ferda language. If it is done the algorithm can be reused or adjusted to different tasks.
 
-!-- rozepsat nasledujici body ve vety --!
-
-\begin{itemize}
-			\item User tries some setting of quantifiers
-			\item If he fails, he tries again with other settings?
-			\item It's manual and confusing
-\end{itemize}
-		user wants
-		\begin{itemize}
-			\item find the best settings for task
-			\item suggest way how to find best settings
-			\item have for different tasks different methods
-		\end{itemize}
-
-It is possible that there can be known algorithm for a analytic how to change a setting after run of a task. Such information should be writable in the Ferda language.
-
-Programming finding best settings by user -- biggest variability
-
-Let us get a fourfold task setting with founded implication quantifier. Generally, if the threshold of a founded implication is to hight, no results are returned by a task. If the threshold of a founded implication is to low many meaningless results are returned.
+Let us get a fourfold task setting with founded implication quantifier. Generally, if the threshold of a founded implication is to hight, no results are returned by the task. If the threshold of a founded implication is to low many meaningless results are returned.
 
 We will present small program in the new language which finds threshold for founded implication so that count of results of a task which use that quantifier is between specified numbers.
 
@@ -742,7 +725,7 @@ The interpolation can be done in Ferda with the new box binary operation. Please
 	\label{fig:linearInterpolationBoxes}
 \end{figure}
 
-So the program will repetitively counts new threshold until it is satisfied. But which numbers should be on the beginning in the $x_{min}$, $x_{max}$, $y_{min}$ and $y_{max}$? Let us make decision that if a threshold is one, there are no results. It is true in standard situations. So, we can in the $x_{max}$ put one and in the $y_{max}$ put zero. Let us make second decision that if a threshold is zero, the number of results equals to ``max number of hypotheses'' parameter of the fourfold task. So, we can put to the $x_{min}$ zero and to the $y_{min}$ put the same number as is in the ``max number of hypotheses'' parameter. Such thing can be best done by specifying that count only once in a integer box and connecting them to both ``max number of hypotheses'' socket and the socket of the ``MinY'' box.
+Hence, the program will repetitively counts new threshold until it is satisfied. But which numbers should be on the beginning in the $x_{min}$, $x_{max}$, $y_{min}$ and $y_{max}$? Let us make decision that if a threshold is one, there are no results. It is true in standard situations. So, we can in the $x_{max}$ put one and in the $y_{max}$ put zero. Let us make second decision that if a threshold is zero, the number of results equals to ``max number of hypotheses'' parameter of the fourfold task. So, we can put to the $x_{min}$ zero and to the $y_{min}$ put the same number as is in the ``max number of hypotheses'' parameter. Such thing can be best done by specifying that count only once in a integer box and connecting them to both ``max number of hypotheses'' socket and the socket of the ``MinY'' box.
 
 At the beginning a threshold will be set to $0.5$. The program will first try to count number of hypotheses for that threshold. If the count is between two and ten the program returns that threshold.   
 
@@ -815,10 +798,20 @@ Do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(name="dist
 result of such connection would be the wanted sequence of atom settings. Such sequence could be connected to a cedent box, that box could be than connected as both an antecedent and a succedent of a fourfold task.
 
 \section{GUHA in Ferda by ``small'' boxes}
-%Implementation of GUHA in Ferda by 'small' boxes.
-!-- jak delat programove sekvence hopotez a resit je pomoci specifickeho GUHA solveru -- vetsi sire nez soucasna implementace (lze hledat nejen formule specifickeho tvaru ale obecne jakekoliv formule), ale samozrejme daleko pomalejsi --!
+In this section the generic GUHA-Method written in the Ferda language is described. It presents only really basic concepts, there are neither an implementation of the method nor a detail description.
 
-!-- souvisi result browser - aby umel heterogenni vysledky - vystup z 4FT + vystup z CF --!
+Principle of GUHA procedures is simple: Let us have set of formulas in observational calculi~\cite{GUHAbook}. Go trough all these formulas and return those, which are valid on a specific data.
+
+If we wanted to create a generic GUHA-Method, the formulas of the observational calculi would be representable in the Ferda language. Because the calculi is similar to functional language the implementation would not be so hard. Predicates, junctors and quantifiers would be separate boxes.
+
+If we had representable a formula of the observational calculi, we would have possibility to create a set of such formulas. The sequence boxes, which are described in section~\ref{sec:sequences}, would be for this task handy. Specific boxes for generating a sequence of formulas would be also useful.
+
+The next problem is counting which formulas are valid. Because a formula is a function, it should be only counting of the function on a data. It is simple.
+
+The last problem is how to show the results. A new result browser for generic GUHA-Method would be needed.
+
+Such GUHA-Method would add big amount of new questions which can be asked against data compared to the actual implementation, but such implementation would be slower. For scientific works it can be really useful.
+
 \chapter{Summary}
 The thesis has described a new language for a data mining. It is a visual functional language. Functions are there called boxes. Basic formalisation of the language has been shown in the section~\ref{sec:formalisation}. A source code is written as a connection of boxes, source files are project files of the Ferda system. Possible extensions to source files has been described in the section~\ref{sec:reusability}. These extensions adds better reusability of a code. One such extension, which is called ``network archive'' has been implemented as part of this thesis. The network archive is a new place where the user can store connections. It is independent of projects. One network archive can be accessed from more computers. It is a way how to move connections from one project to another. Future possible enhancement to the network archive has been also proposed.
 
