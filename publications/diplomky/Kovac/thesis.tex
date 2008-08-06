@@ -288,7 +288,7 @@ With standard textual source code it is easy to merge the code from more sources
 
 It would be convenient to have a functionality in Ferda that would allow us to import some or all boxes from one project into another. One way to achieve that would be adding a new item ``import project…'' to the Ferda menu. Therefore, if a user selected this item, a dialog for choosing project file would open. Having selected a project, the dialog with boxes in selected project should be shown. The user could select boxes which he would want to import. The last step would be the actual import of selected boxes.
 
-Let us discuss the dialog box where a user could select boxes. To chose whole functions, seeing the dependency among boxes would be crucial. However, should the user selects to import a box without a box connected to this box, the box would be imported, but the result of such box could differ significantly from the situation before. On the other hand, such choice could be purposeful should the user want to connect to that box some box from the original project.
+Let us discuss the dialog box where a user could select boxes. To choose whole functions, seeing the dependency among boxes would be crucial. However, should the user selects to import a box without a box connected to this box, the box would be imported, but the result of such box could differ significantly from the situation before. On the other hand, such choice could be purposeful should the user want to connect to that box some box from the original project.
 
 \subsection{Project using}
 The source code of one application is usually not placed only in one source file, but in several. There are more ways in programming languages how to achieve this. One way typical for compiled languages is compilation of application from more source files from the beginning. A compiler has a set of files as an argument. The other way, specific for interpreted languages, is an import of another files into the source file. An advantage of this approach is that the imported file is loaded when it is used---hence the file can be created a short time before usage. It allows us to write code which loads every file in some directory and hence it can be used for plug-ins. Even compiled applications have a way how to achieve this functionality. Compiled applications can use libraries (or assemblies or modules) which can be loaded dynamically on demand. It can be also used for loading a source file on demand if a compiler for that language is available on machine where the application is being executed.
@@ -496,7 +496,7 @@ let onePlus x = 1 + x
 do printf "%s" (onePlus(9)) 
 \end{verbatim}
 
-The last example is written in more commonly used language today, in the Python. It is a object-oriented scripting language with both imperative and functional aspects. There is used the \emph{lambda} keyword:
+The last example is written in a more commonly used language today, in Python. It is a object-oriented scripting language with both imperative and functional aspects. There is used the \emph{lambda} keyword:
 \begin{verbatim}
 plusOne = lambda x: 1 + x
 print plusOne(9)
@@ -518,28 +518,28 @@ Please see figure~\ref{fig:boxLambdaOnePlus}. It shows the same example in Ferda
 	\label{fig:boxLambdaOnePlus}
 \end{figure}
 
-The type of boxes which can be connected to the ``Value0'' socket are determined by the types of box which is connected to the ``Variable0'' socket. There can be connected more boxes to the ``Variable0'' socket. Then the determined type is intersection of types of that boxes.
+The type of boxes which can be connected to the ``Value0'' socket are determined by the types of box which is connected to the ``Variable0'' socket. Multiple boxes can be connected to the ``Variable0'' socket. The determined type is then the intersection of the types of those boxes.
 
-It is possible to use as a variable not only a variable box, which has not been introduced, but any box. To that box can be something connected. It adds simple representation of recursive functions. It is described in latter parts.
+It is possible to use as a variable not only a variable box, which has not been introduced yet, but any kind of box. Moreover, this box has other boxes connected to it, which enables a simple representation of recursive functions. This is described in latter parts.
 
 \subsubsection{Implementation of the lambda box}
-If the lambda box is asked for its functions interface it will clone the connection which is in the ``Function'' socked, only instead of boxes which are connected to some variable socket it places there cloned connection to value socket of that variable. The lambda box returns functions object of the main box from the cloned connection.
+If the lambda box is asked for its functions object it will clone the connection which is in the ``Function'' socket, only instead of boxes which are connected to some variable socket it places a cloned connection to value socket of that variable there. The lambda box returns the functions object of the main box from the cloned connection.
 
 The cloning is not done in the lambda box, but the project manager is used. Its interface has been extended for cloning functionality as part of this thesis.
 
-In the lambda calculus it is possible that the variable is non-constant function. For example:
+In the lambda calculus it is possible that the variable is a non-constant function. For example:
 \begin{equation}
-\lambda x.(1+x(5)))(\lambda y.(1+y))
+\lambda x.(1+x(5))(\lambda y.(1+y))
 \end{equation}
 
-It is not possible with the implementation which is done in Ferda, because the implementation replaces variables with cloned values without reconnecting to the cloned value connections which have the variable. Such thing can be implemented, but there are several complication which must be overcame. One of these is that the lambda box should be able to name its value sockets---hence it is possible to create a lambda box with the same box type as has any other box.
+This is not possible within the implementation in Ferda, because the implementation replaces variables with cloned values without reconnecting to the cloned value connections of the variable. Such thing can be implemented, however, there are several complications which must be overcome. One of these is that the lambda box should be able to name its value sockets. Hence, it is possible to create a lambda box with the same box type as any other box has.
 
-The implementation has one problem, which is not easy to fix. The cloned boxes are not released until the end of FrontEnd application even if they are not used and every time any box asks for functions object of the lambda, new cloned boxes are created. It means amount of used memory raises when the lambda box is used. It is not easy to fix, because today there is no information when a box finishes use a functions object. Adding such information to Ferda means changes to almost all boxes.
+The implementation has one problem, which is not easy to fix. The cloned boxes are not released until the end of the FrontEnd application even if they are not used and every time any box asks for functions object of the lambda, new cloned boxes are created. It means that the total amount of used memory raises when the lambda box is used. It is not easy to fix, because there is no information when a box leases to use a functions object. Adding such information to Ferda would require changes to almost all boxes.
 
-There is also one performance problem. Let us have function $\lambda x.(x*x)$. If you called in most of functional languages such function with parameter $1+1$, it would firstly compute $1+1$---2, and later it passes 2 as the $x$---hence it computes $2+2$. In Ferda such function created by a lambda box computes $(1+1)*(1+1)$. It means the plus operation is computed twice. This problem grows when the lambda box is used for a recursion. A generic fix is problematic, because in Ferda are functions which can not be stored in a simple class and the connection to other boxes is necessary. For simple types there can be created some cashing mechanism.
+There is also one performance problem. Let us have function $\lambda x.(x*x)$. In most of functional languages, if you called such function with parameter $1+1$, it would firstly compute $1+1=2$, and later it would pass 2 as the $x$---hence it would compute $2*2$. In Ferda such function created by a lambda box computes $(1+1)*(1+1)$. It means the plus operation is computed twice. This problem grows when the lambda box is used for a recursion. A generic fix is problematic, because in Ferda there are functions which can not be stored in a simple class and the connection to other boxes is necessary. For simple types some cashing mechanism can be created.
 
-\subsubsection{Example usage of lambda---factorial}
-Let us show you how the lambda can be used for a recursive function. One of simplest recursive function is the factorial. Simple imperative version of that function in the C\# language is: 
+\subsubsection{Example usage of lambda: the factorial}
+Let us take a look at how the lambda can be used for a recursive function. One of the simplest recursive function is the factorial. Simple imperative version of that function in the C\# language is: 
 \begin{verbatim}
 public static int Factorial(int x)
 {
@@ -554,7 +554,7 @@ public static int Factorial(int x)
 }
 \end{verbatim}
 	
-The better implementation of factorial in C\# is using the if expression:
+A better implementation of the factorial in C\# could use the \emph{if expression}:
 \begin{verbatim}
 public static int Factorial2(int x)
 {
@@ -562,62 +562,60 @@ public static int Factorial2(int x)
 }
 \end{verbatim}
 
-The factorial in the Python language can be implemented this way:
+The factorial in Python can be implemented this way:
 \begin{verbatim}
 fac = lambda x: x == 0 and 1 or x * fac(x - 1)
 \end{verbatim}
 
-And the last implementation is in the F\# language:
+And the last implementation is in F\#:
 \begin{verbatim}
 let rec factorial n =
     if n=0 then 1 else n * factorial(n - 1)
 \end{verbatim}
 
-Please see figure~\ref{fig:factorial}. That figure shows the implementation of the factorial function in Ferda.
+Please see figure~\ref{fig:factorial}. This figure shows the implementation of the factorial function in Ferda.
 \begin{figure}
 	\includegraphics[width=1\textwidth]{faktorial}
 	\caption{Factorial}
 	\label{fig:factorial}
 \end{figure}
 
-When you are working with the lambda box in a recursion be aware of interminable functions. For example if a user clicked on a plus box in the center of figure~\ref{fig:factorial}, the program would count infinitely, because the plus box has read-only property value and it should be set to $factorial(-1)$ counted by the connection in the figure. The easy fix for this problem is to replace the condition $x=0$ with a condition $x<=0$. Because it is easy to create an interminable function and execute it, we prefer to save a project file very often.
+When you are working with the lambda box in a recursion you should be aware of interminable functions. For example if a user clicked on a plus box in the center of figure~\ref{fig:factorial}, the program would compute infinitely, because the plus box has read-only property ``value'' and it should be set to $factorial(-1)$ computed by the connection in the figure. An easy fix for this problem is to replace the condition $x=0$ with a condition $x<=0$. Since it is easy to create an interminable function and execute it, it is preferable to save the project file very often.
 
 \subsection{Sequences and sets}
 \label{sec:sequences}
 It is possible to represent a sequence of numbers by numbers only using basic primary recursive functions. But if there is a need of easy computable sequences of function it is better to add a support for that to the language.
 
-The Ferda includes a box called Group. This box is the only box which is not the real back end module. It is implemented in the modules manager. It has one socket. The box represents all boxes which are connected to this socket. If second group box is connected to the first one, the first box represents all boxes which are connected to the first box without the second group box but with all boxes which are represented by the second group box. If the box is connected to a socket to which it is possible to connect more boxes, it means that all boxes which are represented by the box are in the socket. The group box is very useful for organization of boxes on the desktop and reuse of a set of boxes.
+The Ferda includes a box called Group. This box is the only box which is not a real back-end module. It is implemented in the modules manager. It has one socket and the box represents all boxes which are connected to this socket. If second group box is connected to the first one, the first box represents all boxes which are connected to the first box without the second group box but with all boxes which are represented by the second group box. If the box is connected to a socket to which it is possible to connect more boxes, it means that all boxes which are represented by the box are in the socket. The group box is very useful for organization of boxes on the desktop and reuse of a set of boxes.
 
-We want to have a possibility to create a box which represents a sequence of boxes like the group box, but the box should be standard backend module. The box should return as a value a sequence of functions classes instead of one functions class. Thus we want second-order functions. It is easy thing in Ferda---define a functions object for sequence which has a methods which returns members of the sequence---functions objects. Then a sequence boxes can be created. There are more ways how to create a sequence in the language. For example one way is to have a box with property called ``count of items'' and when it is set to some number that number of socket will appear. These sockets represent items of a sequence. Another boxes can be ``head tail'' box (lisp and prolog use such ``functions''), ``clear sequence'',  ``add an item to the end'',… Also standard high-order functions for working with sequences in functional languages would be useful (the map, the fold and the filter functions)~\cite{webHighOrderFunctions}. The map function is described in the next section.
+We want to have a possibility to create a box which would represent a sequence of boxes like the group box, but the box should be a standard back-end module. The box should return as a value a sequence of functions classes instead of one functions class. Thus we need second-order functions. It is an easy thing in Ferda---define a functions object for sequence which has methods which return members of the sequence---functions objects. Then a sequence box can be created. There are more ways how to create a sequence in the language. For example one way is to have a box with property called ``count of items'' and when it is set to some number that number of sockets will appear. These sockets represent items of a sequence. Another boxes can be ``head--tail'' box (Lisp and Prolog use such ``functions''), ``clear sequence'',  ``add an item to the end'', etc. Also standard high-order functions for working with sequences in functional languages would be useful (the map, fold and filter functions)~\cite{webHighOrderFunctions}. The map function is described in the next section.
 
-If a socket has an ability to connect more boxes, we can want a way how to connect all functions in some sequence to that socket. The implementation of connecting a box to a socket could be changed for that. A new implementation could first try if the functions is a sequence functions. If it was true, it would connect the functions objectss inside the sequence, otherwise the functions object itself.
+If a socket has an ability to connect more boxes, we might want a way to connect all functions in some sequence to that socket. The implementation of connecting a box to a socket could be changed for that. A new implementation could first try if the functions object is a sequence functions object. If it were true, it would connect the functions objects inside the sequence, otherwise the functions object itself.
 
-The main implementation of a box module has a method which is used for getting of functions connected to some socket. It has this signature:
+The main implementation of a box module has a method which is used for determining which functions are connected to a specified socket. It has this signature:
 \begin{verbatim}
 public ObjectPrx[] GetFunctions(string socketName)
 \end{verbatim}
 
-The implementation of this method can be changed so that if it is possible to connect more boxes to the socket ``socketName'', first try if the functions connected to that socket is a sequence. If it is true, do not return the sequence object, but all functions which are in the sequence. In other scenarios the implementation should return the same result as it does.
+The implementation of this method could be changed so that if it is possible to connect more boxes to socket ``socketName'', first try if the functions connected to that socket is a sequence. If it is true, do not return the sequence object, but all functions which are in the sequence. Otherwise the implementation should return the same result as the original implementation.
 
-Such change give us ability to use sequence boxes as a group box.
+Such change would give us the ability to use sequence boxes as a group box.
 
 \subsubsection{Map box}
-It can be very useful to have a box which gives an ability to create from one sequence other sequence the way that for each item in a sequence the same function would be used. For example we would like to have a possibility to create from a sequence of numbers, sequence of their squares. 
+It could be very useful to have a box which would enable us an ability to transform a sequence into sequence the way that for each item in the sequence the same function would be used. For example we would like to have a possibility to create from a sequence of numbers a sequence of their squares. 
 
-We are going to call that new box for that ``Map''. It would have three sockets ``What'', ``Do'' and ``Variable''. Incoming sequence should be connected to the ``What'' socket. Function which changes the items should be connected to the ``Do'' socket. The function should use a variable which should be connected to the ``Variable'' socket. The variable will be replaced by items in the incoming sequence. Result is a sequence of cloned function where the variable was replaced by items in the incoming sequence.
+We are going to call that new box ``Map''. It would have three sockets ``What'', ``Do'' and ``Variable''. The incoming sequence should be connected to the ``What'' socket, the function which changes the items should be connected to the ``Do'' socket and the function should use a variable which should be connected to the ``Variable'' socket. The variable would be replaced by the items in the incoming sequence. The result is a sequence of cloned functions where the variables were replaced by items in the incoming sequence.
 
 The previous example with squares could be implemented this way:
 \begin{eqnarray*}
-Map(&&What=Sequence(I1=1,I2=2,I3=3,I4=4)), \\&& Do=Operation(Type="*", Value1=X, Value2=X), \\&& Variable=X)
+Map(&&What=Sequence(I1=1,I2=2,I3=3,I4=4), \\&& Do=Operation(Type="*", Value1=X, Value2=X), \\&& Variable=X)
 \end{eqnarray*}
 
-The Map box is specific implementation of standard function in the functional programming. There is small difference compared to other languages. The difference is in existence of the ``Variable'' socket. In standard languages the function have two parameters, a function (our ``Do'' socket) and a sequence (our ``What'' socket). The last (or first, or the only one) free parameter of the function is used as the place for putting in instances of the sequence.
-
-We have not proposed such way, because parameters are not sorted in Ferda. It means that the function connected to the ``Do'' socket would have exactly one free socket, if we wanted the same implementation as in other languages and for that typically in the ``Do'' socket would be connected Lambda box. With proposed implementation we removed the excessing Lambda box.
+The Map box is just a specific implementation of a standard function in the functional programming. However, there is a small difference compared to other languages. The difference is in the existence of the ``Variable'' socket. In standard languages the function has two parameters: a function (our ``Do'' socket) and a sequence (our ``What'' socket). Because parameters of functions are sorted in standard languages, some convention can be used for the variable. For example the variable can be the first parameter of the ``Do'' function. Nevertheless, we have not proposed such way, because parameters are not sorted in Ferda.
 
 \subsection{Other new boxes}
 \subsubsection{Get parameter}
-Boxes can have read-only properties. They are shown in the property grid, but they are not editable, they are computed. These properties can be seen as another output of a function which a box represents. If we wanted to use such result by different boxes, we would need a way how to get a value of a read-only property. Such way is the new GetPameter box which has been implemented as a part of this thesis. Please see figure~\ref{fig:boxGetParameter}.
+Boxes can have read-only properties. They are shown in the property grid, but they are not editable, they are computed instead. These properties can be seen as another output of a function which a box represents. If we wanted to use such result by different boxes, we would need a way how to get a value of a read-only property. Such way is the new GetPameter box which has been implemented as a part of this thesis. Please see figure~\ref{fig:boxGetParameter}.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{getParameter2.png}
@@ -625,14 +623,14 @@ Boxes can have read-only properties. They are shown in the property grid, but th
 	\label{fig:boxGetParameter}
 \end{figure}
 
-The box can get values of properties of any box even those which are not read-only. It can also get functions objects of boxes connected to sockets of any box. Word ``Parameter'' in the name of box means parameter of function which the box represents. Parameters can be set by a property or by a connection to a socket. The GetParameter box has property named ``ParameterName'' and socket named ``Box''. The socket specifies a box of which parameter we are interested in and the ``ParameterName'' is a name of a socket or a property we are interested in.
+The box can get values of properties of any box even of properties which are not read-only. It can also get functions objects of boxes connected to sockets of any box. The word ``Parameter'' in the name of the box means parameter of function which the box represents. Parameters can be set by a property or by a connection to a socket. The GetParameter box has a property named ``ParameterName'' and a socket named ``Box''. The socket specifies a box of which parameter we are interested in and the ``ParameterName'' is a name of a socket or a property we are interested in.
 
 \subsubsection{Execute action}
-A box can have actions. Such actions can be executed by a user of the Ferda system in FrontEnd. There were not possibility of executing such action as part of a program in the Ferda language. That is why a new box called ``ExecuteAction'' has been created as part of this thesis.
+A box can have actions. These actions could be executed separately by a user of the Ferda system in FrontEnd. There were not possibility of executing such actions as part of a program in the Ferda language. That is why a new box called ``ExecuteAction'' has been created as part of this thesis.
 
-When the box is asked for a functions object, it executes action of some box. After that it returns functions object of another box.
+Please see figure~\ref{fig:boxExecuteAction}. ExecuteAction box has one property called ``ActionName'' which specifies name of action which should be called. It has also two sockets. The first is called ``Box'' and is for specifying a box whose action should be called. The second is called ``Function'' and serves for specifying the box which is used for getting the functions object.
 
-Please see figure~\ref{fig:boxExecuteAction}. The box has one property called ``ActionName'' which specifies name of action which should be called. It has also two sockets. The first is called ``Box'' and is for specifying a box thats action should be called. The second is called ``Function'' and is for specifying a box which is used for getting the functions object.
+When the ExecuteAction box is asked for a functions object, it executes action of a box in socket ``Box''. After that it returns functions object of a box in socket ``Function''.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{executeAction2.png}
@@ -640,16 +638,16 @@ Please see figure~\ref{fig:boxExecuteAction}. The box has one property called ``
 	\label{fig:boxExecuteAction}
 \end{figure}
 
-Actions are more parts of imperative programming than functional programming. The ExecuteAction box is the way how to translate actions to the functional language. 
+Actions belong to the paradigm of imperative programming and the ExecuteAction box is a way how to translate actions to the functional language. 
 
 \subsubsection{Command and command output}
-It can be useful to have a possibility to execute external application and read output of that application. The new two boxes have been implemented as part of this thesis for that.
+It can be useful to have a possibility to execute external application and read output of that application. Two new boxes have been implemented as part of this thesis for this purpose.
 
-The first can execute a command, is is called ``Command''. More these boxes can be connected together. Than a output of one command is used as input of second command.
+The first one can execute a command, and is called ``Command''. More these boxes can be connected together. Output of one command is then used as input of the next command.
 
-The second box which has been created is called ``CommandOutput'' and it is for getting output and error output. One output can be shown in a message box and one output can be returned as a string functions object.
+The second box which has been created is called ``CommandOutput'' and it serves for getting output and error output. One output can be shown in a message box and one output can be returned as a string functions object.
 
-Please see figure~\ref{fig:boxCommand}. In the figure standard UNIX commands ``echo'' and ``sed'' are used. We can see in the property grid as a result the same value which is returned by the same command in the UNIX console. Please see figure~\ref{fig:CommandKonsole}.
+Please see figure~\ref{fig:boxCommand}. In the figure standard Unix commands ``echo'' and ``sed'' are used. We can see in the property grid the same result as is returned by the same commands in the Unix console. Please see figure~\ref{fig:CommandKonsole}.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{command2.png}
@@ -664,44 +662,44 @@ Please see figure~\ref{fig:boxCommand}. In the figure standard UNIX commands ``e
 \end{figure}
 
 \subsubsection{User-programmable box}
-There are two ways how to get a functionality from Ferda. First way is to use boxes which are already there and write some program with them. The second way is to create own boxes and after that write a program with them in Ferda. The first scenario is typical for standard users of the system. The second can be used by advanced programmers. For that scenario is need to know the Ferda system in detail.
+There are two ways how to write a program in the Ferda language. First way is to use only predefined boxes. The second way is to create own boxes and use them in the final program. The first scenario is typical for standard users of the system. The second can be used by advanced programmers. For the latter scenario it is necessary to know the Ferda system in detail.
 
-Let us think about box which functionality can be programmed in some standard scripting language in the time of running Ferda. Such box can have several properties which specifies count of sockets, theirs names and types of boxes which can be connected to that sockets. The next property should be string property which specifies the program of the box. For such box we would prefer Python as a programming language, because it is strong scripting language and Ice has support for that.
+Let us think about box whose functionality can be programmed in some standard scripting language in the time of running Ferda. Such box can have several properties which specify number of sockets, their names and types of boxes which can be connected to those sockets. The next property should be a string property which specifies the program of the box. For such box we would prefer Python as the programming language, because of its strength and cause Ice has a good support for it.
 
-Such box would add quicker way how to program a new functionality without having a deep knowledge of the Ferda system. 
+Such box would add a quicker way how to program a new functionality without having deep knowledge of the Ferda system. 
 
 \section{Advanced tools and topics}
 
 \subsection{Unit tests}
-It is useful for developers to have some framework for testing of units of theirs programs. Programmers of the Ferda system would like to be quickly sure that theirs changes in the system could not affect the programs in the Ferda language or affect how they expect. Programmers in the Ferda language would like to know that theirs programs works as expected.
+For developers in general it is useful to have some framework for testing of units of their programs. Programmers of the Ferda system would like to be able to make sure quickly that their changes in the system do not affect the programs in the Ferda language or affect them exactly in the way they expect. Programmers in the Ferda language would like to know that their programs works as expected.
 
-Creation of a box called unit test would take profit. The box should have a name and one socket for connecting assert boxes. Assert box should be a box which validates some condition and when the condition is not satisfied it should return some message describing the problem. Then there should be small application which takes a project as parameter and calls all unit tests in the project. Unit tests should call all asserts which are connected to the test. When any of them fail the application should return the message with name of unit test and the error message from the failed assert. Even though one unit test failed it should call other tests.
+Creation of a box called ``UnitTest'' would take profit. The box should have a name and one socket for connecting ``Assert'' boxes. Assert box should be a box which validates some condition and when the condition is not satisfied it should return a message describing the problem. Then there should be a small application which takes a project as parameter and calls all unit tests in the project. Unit tests should call all asserts which are connected to the test. When any of them fails the application should return the message with the name of the unit test and the error message from the failed assert. Even if one unit test failed it should call other tests.
 
-Similar is the NUnit framework for .NET Framework. For reusing tools which executes NUnit tests it would be nice to create generator of NUnit tests from the Ferda project unit tests. Such generator should create one assembly for one project, but also so many test methods so many unit test boxes are in the project. There should be one startup method for initializing the Ferda Project Manager and for loading a project. 
+Similar is the NUnit framework for .NET Framework. For reusing tools which execute NUnit tests it would be nice to create a generator of NUnit tests from the Ferda project unit tests. Such generator should create one assembly for one project, but also as many test methods as many unit test boxes there are in the project. There should be one startup method for initializing the Ferda Project Manager and for loading a project. 
 
 \subsection{Distributed computation}
-Ferda uses Ice for communication between its parts. Every box module can be on different computer. Placement of box module is specified before execution of Ferda. It means that user is not able to change where which box runs at running environment and is not able to run one instance of box module on other computer than another instance of the same box module. Such thing would add for example possibility to load data from first computer, process them on second and save results on third one. 
+Ferda uses Ice for communication among its parts. Every box module can reside on different computer. Placement of box module is specified before execution of Ferda. It means that during the runtime user is not able to change where which box is running and is not able to create two instances of one box module which would run on two different computers. This means that for example it is not possible to load data from first computer, process them on second and save results on third one. 
 
-Ferda could be extended in that point. Ferda uses for finding box modules IceGrid service. That service supports multiple the same box modules on different computers. Modules manager could load all same box modules and add to every box a virtual property ``placement'' which adds to users ability to chose placement of instance of the box. If user changed this property, old instance could be removed from connections and destroyed, a new instance with the same parameters would be created and added to the connections. Such process would be transparent from user perspective.
+However, Ferda could be extended in that point. Ferda uses for finding box modules the IceGrid service. This service supports multiple identical box modules on different computers. The modules manager could load all these box modules and add to every box a virtual property ``placement'' which gives the users the ability to choose placement of instance of the box. If user changed this property, old instance could be removed from connections and destroyed, a new instance with the same parameters would be created and added to the connections. Such process would be transparent from the user's perspective.
 
-If user opened a project on different computer and the placement property was set to a computer which is not managed by IceGrid of the new computer, Ferda could take as a placement any of available placement. IceGrid supports several load balancing algorithms which could be also used for setting up the new placement.
+If the user opened a project on different computer and the placement property were set to a computer which is not managed by IceGrid of the new computer, Ferda could take as a placement any of the available placements. IceGrid supports several load balancing algorithms which could be also used for setting up the new placement.
 
-\chapter{KDD problems and theirs solutions}
+\chapter{KDD problems and their solutions}
 \label{chap:KDDExamples}
-This chapter shows data-mining examples and shows how it can be solved in the Ferda system by functionalities introduced in the previous two chapters. It also proposes new functionalities specific for knowledge discovery.
+This chapter shows data-mining examples and shows how they can be solved in the Ferda system by functionalities introduced in the previous chapters. It also proposes new functionalities specific for knowledge discovery.
 
 \section{Fourfold task in a recursion}
 \subsection{Motivation}
-Changes to a setting of a data-mining task are often needed after having a knowledge of founded patterns of the task. Subsequent run of that task can result in next changes to that settings. This step is repeated until the analyst is satisfied with the patterns or he gave up that setting at all. It is manual and confusing.
+Changes to a setting of a data-mining task are often needed after having the knowledge of found patterns of the task. Subsequent run of that task can result in next changes to that settings. This step is repeated until the analyst is satisfied with the patterns or they give up that setting at all. It is manual and confusing.
 
-It is possible that there can be known algorithm for an analyst how to change a setting after run of a task according to patterns. Such information should be writable in the Ferda language. If it is done the algorithm can be reused or adjusted to different tasks.
+It is possible that the analyst has an algorithm how to change a setting after run of a task according to patterns. Such information should be expressible in the Ferda language. If it is done the algorithm can be reused or adjusted to different tasks.
 
-Let us get a fourfold task setting with founded implication quantifier. Generally, if the threshold of a founded implication is to hight, no results are returned by the task. If the threshold of a founded implication is to low many meaningless patterns are returned.
+Let us get a fourfold task setting with the founded implication quantifier. Generally, if the threshold of the founded implication is too high, no results are returned by the task. If the threshold of the founded implication is too low many meaningless patterns are returned.
 
-We will present small program in the new language which finds threshold for founded implication so that count of patterns of a task which use that quantifier is between specified numbers.
+We will present small program in the new language which finds threshold for founded implication so that the count of patterns of a task which use that quantifier is between specified numbers.
 
 \subsection{Implementation}
-The solution is based on the linear interpolation. The function of a count of patterns on a threshold is non-increasing. If we know two thresholds (the $x_{min}$ and the $x_{max}$) with their count of patterns (the $y_{min}$ and the $y_{max}$) which one count is shorter than what we wants and the second is greater than what we wants, than we can interpolate this way: 
+The solution is based on linear interpolation. The function of a count of patterns on a threshold is non-increasing. If we know two thresholds (the $x_{min}$ and the $x_{max}$) with their count of patterns (the $y_{min}$ and the $y_{max}$) where $y_{max}$ is smaller than what we want and $y_{min}$ is greater than what we want, then we can interpolate this way: 
 
 \begin{math}
 x = x_{max} - (y_{max} - y)\frac{x_{max} - x_{min}}{y_{max} - y_{min}}
@@ -764,7 +762,7 @@ Whole program without details of fourfold settings can be seen in figure~\ref{fi
 \subsection{How to do it better}
 The recursive computation is not needed for this particular task. The BestN algorithm for tasks, which is outlined in \cite{thesisKuchar}, can solve this particular task more effectively. But a user has to have a rich way how to specify best results. A functional language is a strong tool for such thing. We can see a functional language as a superset of observational calculus, which is described in~\cite{GUHAbook}. If we have only one quantifier, which is fuzzy, it is easy to sort results according goodness. For example, if we have only founded implication, a formula with higher threshold is the better. Founded implication is not today fuzzy, but we can easily convert it to that.
 
-Two or more quantifiers as a setting for a task are more complicated. The today tasks accept a formula if all its quantifiers are satisfied. Hence the formula can be seen as a conjunction of the same sub-formulas only with a different quantifier. That conjunction is the real quantifier which is used in the GUHA mining. That conjunction should be used as a sorting filter for BestN. Today we have problem that the conjunction used is not a fuzzy conjunction. There is only one or zero. But there are many different fuzzy conjunctions and a user should have a ability to chose the right conjunction. He should be able to write his own conjunctions by the programming language.
+Two or more quantifiers as a setting for a task are more complicated. The today tasks accept a formula if all its quantifiers are satisfied. Hence the formula can be seen as a conjunction of the same sub-formulas only with a different quantifier. That conjunction is the real quantifier which is used in the GUHA mining. That conjunction should be used as a sorting filter for BestN. Today we have problem that the conjunction used is not a fuzzy conjunction. There is only one or zero. But there are many different fuzzy conjunctions and a user should have a ability to choose the right conjunction. He should be able to write his own conjunctions by the programming language.
 
 There can be still more complicated tasks where the recursive solution described there can be useful.
 
