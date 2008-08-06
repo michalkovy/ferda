@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Text;
 using Ice;
 using Ferda.OntologyRelated.generated.OntologyData;
+using Ferda.OntologyRelated.generated;
 using Ferda.Modules.Helpers.Caching;
 
 namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
@@ -177,20 +178,17 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             /// a path to an ontology is set
             else
             {
-                /// getting the proxy to FerdaOWLParser module
-                Ferda.OntologyRelated.generated.OWLParserPrx prx =
-                    Ferda.OntologyRelated.generated.OWLParserPrxHelper.checkedCast(
-                        BoxModule.Manager.getManagersLocator().findAllObjectsWithType(
-                            "::Ferda::OntologyRelated::OWLParser"
-                        )[0]
-                    );
+                /// getting all the FerdaOWLParser module proxies
+                Ice.ObjectPrx[] prxsFound = BoxModule.Manager.getManagersLocator().
+                    findAllObjectsWithType("::Ferda::OntologyRelated::OWLParser");
 
                 /// connection to FerdaOWLParser modules failed
-                if (prx == null)
+                if (prxsFound.Length == 0)
                 {
                     throw Ferda.Modules.Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
                             "Ice object ::Ferda::OntologyRelated::OWLParser can't be found.");
                 }
+                OWLParserPrx prx = OWLParserPrxHelper.checkedCast(prxsFound[0]);
 
                 /// parsing the ontology
                 /// 
