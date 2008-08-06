@@ -18,7 +18,6 @@
 %\date{\today}
 
 \begin{document}
-\selectlanguage{czech}
 \begin{titlepage}
 \begin{center}
 \ \\
@@ -26,19 +25,19 @@
 \vspace{15mm}
 
 \large
-Univerzita Karlova v Praze\\
-Matematicko-fyzikální fakulta\\
+Charles University in Prague\\
+Faculty of Mathematics and Physics\\
 
 \vspace{5mm}
 
-{\Large\bf DIPLOMOVÁ PRÁCE}
+{\Large\bf MASTER THESIS}
 
 \vspace{10mm}
 
 %%% Aby vložní loga vše správně fungovalo, je třeba mít soubor logo.eps nahraný v pracovním adresáři,
 %%% tj. v adresáři, kde se nachází překládaný zdrojový soubor. Soubor logo.eps je možné získat např.
 %%% na adrese: http://www.mff.cuni.cz/fakulta/symboly/logo.eps
-\includegraphics[scale=0.3]{logo}
+\includegraphics[scale=0.5]{logo}
 
 \vspace{15mm}
 
@@ -47,45 +46,40 @@ Matematicko-fyzikální fakulta\\
 \vspace{5mm}
 {\Large\bf User-oriented language for solving KDD tasks}\\
 \vspace{5mm}
-Katedra softwarového inženýrství
-\end{center}
+Department of Software Engineering
 \vspace{15mm}
 
 \large
-\noindent Vedoucí diplomové práce: doc. RNDr. Jan Rauch, CSc.
+\noindent Supervisor: Doc. RNDr. Jan Rauch, CSc.
 \vspace{1mm}
 
-\noindent Studijní program: Informatika
-
-\vspace{20mm}
-
-\begin{center}
-2008
+\noindent Studying program: Computer science
 \end{center}
-
 \end{titlepage} % zde končí úvodní strana
+
+~
 
 \newpage
 
 \normalsize % nastavení normální velikosti fontu
-\setcounter{page}{2} % nastavení číslování stránek
+%\setcounter{page}{2} % nastavení číslování stránek
 \ \vspace{10mm}
 
-\noindent !-- TODO poděkovat --!
+\noindent I would like to thank all the people who supported me during my work on the thesis. I am especially indebted to my supervisor Jan Rauch for his support. I am very grateful for consultations of my English to David Jurenka and Klára Synková. At last I would like to thank Martin Ralbovský for his help with parts of the Ferda system which I did not know deeply.
 
 \vspace{\fill}
+\selectlanguage{czech}
 Prohlašuji, že jsem svou diplomovou práci napsal samostatně a výhradně s použitím citovaných pramenů. Souhlasím se zapůjčováním práce.
 
 \bigskip
 
 \noindent V Praze dne \today \hspace{\fill}Michal Kováč\\
 
-%%%   Výtisk pak na tomto míste nezapomeňte PODEPSAT!
-%%%                                         *********
 \selectlanguage{english}
 \tableofcontents
 
 \newpage
+{\footnotesize
 \selectlanguage{czech}
 \begin{description}
  \item [Název práce:] Uživatelsky orientovaný jazyk pro řešení úloh DZD
@@ -93,8 +87,9 @@ Prohlašuji, že jsem svou diplomovou práci napsal samostatně a výhradně s p
  \item [Katedra (ústav):] Katedra softwarového inženýrství
  \item [Vedoucí diplomové práce:] doc. RNDr. Jan Rauch, CSc.
  \item [E-mail vedoucího:] Rauch@vse.cz
- \item [Abstrakt:]
- \item [Klíčová slova:]
+ \item [Abstrakt:] Práce pojednává o novém funkcionálním visuálním pogramovacím jazyku a jeho použití na dobývání znalostí z databází. Tento jazyk se nazývá Ferda a je integralní součástí systému Ferda, což je aplikace, která byla původně vytvořena pro dobývání znalostí z databází metodou GUHA. Funkce jazyka se zde nazývají krabičky. Zdrojové kódy jsou zapsány jako zapojení krabiček, zdrojové soubory jsou projekty systému Ferda. Práce popisuje stav systému Ferda před touto prací z pohledu visuálního programování, popisuje možná rosšíření zdrojových souborů, dále představuje novou základní množinu funkcí pro jazyk Ferda a popisuje jiná možná vylepšení tohoto jazyka. Některé z těchto rozšířejí jsou implementovány součástí této práce. V poslední části práce se nachází příklady použití nového jazyka na dobývaní znalostí z databází. Jeden z nich je také naimplementován jako součást této práce.
+
+ \item [Klíčová slova:] Ferda, programovací jazyk, vizuální programování, funkcionální jazyk, data mining
 \end{description}
 \selectlanguage{english}
 
@@ -106,9 +101,11 @@ Prohlašuji, že jsem svou diplomovou práci napsal samostatně a výhradně s p
  \item [Department:] Department of Software Engineering
  \item [Supervisor:] doc. RNDr. Jan Rauch, CSc.
  \item [Supervisor's e-mail address:] Rauch@vse.cz
- \item [Abstract:]
- \item [Keywords:]
+ \item [Abstract:] The thesis discusses a new visual functional programming language and its usage for data mining. The language is called the Ferda language and it is an integral part of the Ferda system which is an application that has been created for data mining with the GUHA method. Functions of the language are there called boxes. A source code is written as a connection of boxes, source files are project files of the Ferda system. The thesis describes status of the Ferda system before this work from a point of the visual programming, it describes possible enhancements to source files, than it presents a new basic set of boxes for the Ferda language and it proposes other possible extensions of the language. Some of these proposals are implemented as part of this thesis. The last part includes examples of the usage of the new language for data mining. One of these is also implemented as part of this thesis.
+
+ \item [Keywords:] Ferda, programming language, visual programming, functional language, data mining
 \end{description}
+}
 %!--- MARTIN Nikde v obsahu jsem nenasel cast, ktera by srovnavala tvuj postup s jinymi moznymi postupy v DM ci jinde a srovnani v cem je to nase lepsi a horsi. Tohle tam hodne chybi ---
 %!--- RE: problem je v tom, ze tu neni zadny alternativni postup, alespon me nic nenapada. Ja proste jen delam programivaci jazyk. Srovnani s jinymi jazyky se deje v ramci psani o tomtom jazyku pri jednotlivych featrach. Druhe misto, kde jsou alternativy jsou ty KDD priklady -- jejich reseni. Zase alternativy se diskutuji v ramci toho konkretniho prikladu. Ale samotne to, ze delam programovaci jazyk, nema alternativu -- co jineho by jsi chtel delat? ---!
 
