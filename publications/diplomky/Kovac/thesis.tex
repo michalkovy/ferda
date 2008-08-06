@@ -15,16 +15,82 @@
 
 \author{Michal Kováč}
 \title{User-oriented language for solving KDD tasks}
-\date{\today}
+%\date{\today}
 
 \begin{document}
-\maketitle
+\selectlanguage{czech}
+\begin{titlepage}
+\begin{center}
+\ \\
 
+\vspace{15mm}
+
+\large
+Univerzita Karlova v Praze\\
+Matematicko-fyzikální fakulta\\
+
+\vspace{5mm}
+
+{\Large\bf DIPLOMOVÁ PRÁCE}
+
+\vspace{10mm}
+
+%%% Aby vložní loga vše správně fungovalo, je třeba mít soubor logo.eps nahraný v pracovním adresáři,
+%%% tj. v adresáři, kde se nachází překládaný zdrojový soubor. Soubor logo.eps je možné získat např.
+%%% na adrese: http://www.mff.cuni.cz/fakulta/symboly/logo.eps
+\includegraphics[scale=0.3]{logo}
+
+\vspace{15mm}
+
+%\normalsize
+{\Large Michal Kováč}\\
+\vspace{5mm}
+{\Large\bf User-oriented language for solving KDD tasks}\\
+\vspace{5mm}
+Katedra softwarového inženýrství
+\end{center}
+\vspace{15mm}
+
+\large
+\noindent Vedoucí diplomové práce: doc. RNDr. Jan Rauch, CSc.
+\vspace{1mm}
+
+\noindent Studijní program: Informatika
+
+\vspace{20mm}
+
+\begin{center}
+2008
+\end{center}
+
+\end{titlepage} % zde končí úvodní strana
+
+\newpage
+
+\normalsize % nastavení normální velikosti fontu
+\setcounter{page}{2} % nastavení číslování stránek
+\ \vspace{10mm}
+
+\noindent !-- TODO poděkovat --!
+
+\vspace{\fill}
+Prohlašuji, že jsem svou diplomovou práci napsal samostatně a výhradně s použitím citovaných pramenů. Souhlasím se zapůjčováním práce.
+
+\bigskip
+
+\noindent V Praze dne \today \hspace{\fill}Michal Kováč\\
+
+%%%   Výtisk pak na tomto míste nezapomeňte PODEPSAT!
+%%%                                         *********
+\selectlanguage{english}
+\tableofcontents
+
+\newpage
 \selectlanguage{czech}
 \begin{description}
  \item [Název práce:] Uživatelsky orientovaný jazyk pro řešení úloh DZD
  \item [Autor:] Michal Kováč
- \item [Katedra (ústav):]
+ \item [Katedra (ústav):] Katedra softwarového inženýrství
  \item [Vedoucí diplomové práce:] doc. RNDr. Jan Rauch, CSc.
  \item [E-mail vedoucího:] Rauch@vse.cz
  \item [Abstrakt:]
@@ -37,14 +103,12 @@
 \begin{description}
  \item [Title:] User-oriented language for solving KDD tasks
  \item [Author:] Michal Kováč
- \item [Department:]
+ \item [Department:] Department of Software Engineering
  \item [Supervisor:] doc. RNDr. Jan Rauch, CSc.
  \item [Supervisor's e-mail address:] Rauch@vse.cz
  \item [Abstract:]
  \item [Keywords:]
 \end{description}
-\newpage
-\tableofcontents
 %!--- MARTIN Nikde v obsahu jsem nenasel cast, ktera by srovnavala tvuj postup s jinymi moznymi postupy v DM ci jinde a srovnani v cem je to nase lepsi a horsi. Tohle tam hodne chybi ---
 %!--- RE: problem je v tom, ze tu neni zadny alternativni postup, alespon me nic nenapada. Ja proste jen delam programivaci jazyk. Srovnani s jinymi jazyky se deje v ramci psani o tomtom jazyku pri jednotlivych featrach. Druhe misto, kde jsou alternativy jsou ty KDD priklady -- jejich reseni. Zase alternativy se diskutuji v ramci toho konkretniho prikladu. Ale samotne to, ze delam programovaci jazyk, nema alternativu -- co jineho by jsi chtel delat? ---!
 
@@ -705,7 +769,7 @@ The solution is based on linear interpolation. The function of a count of patter
 x = x_{max} - (y_{max} - y)\frac{x_{max} - x_{min}}{y_{max} - y_{min}}
 \end{math}
 
-$y$ is wanted count of patterns. Please see figure~\ref{fig:linearInterpolationPlot}. Such new $x$ is than lesser or equal to $x_{max}$ and greater or equal to $x_{min}$. Such computation would be repeated.
+, where $y$ is the wanted count of patterns. Please see figure~\ref{fig:linearInterpolationPlot}. Such new $x$ is then lesser or equal to $x_{max}$ and greater or equal to $x_{min}$. Such computation would be repeated.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{linearInterpolationPlot}
@@ -713,9 +777,9 @@ $y$ is wanted count of patterns. Please see figure~\ref{fig:linearInterpolationP
 	\label{fig:linearInterpolationPlot}
 \end{figure}
 
-Because the function of a count of patterns on a threshold is not continuous we can not be sure that such interpolation founds wanted count of patterns. To overcame that the program will be satisfied with short interval instead of one number. In the actual example we are showing you, $y$ (wanted number of patterns) is set to 5, but it will be satisfied if count of patterns is between 2 and 10. It is still not enough, but it is simple and it helps. We can count in the program how deep it is in recursion and stop it after several steps if it do not find a sufficient result. But we will not do that for leaving the program as simple as it can be. It is not hard to do that with the new language, you can try it as an exercise. 
+Because the function of a count of patterns on a threshold is not continuous we can not be sure that such interpolation founds the wanted count of patterns. To overcome this the program searches for a short interval, rather than for one number. In the present example we are showing, $y$ (wanted number of patterns) is set to 5, but it will be satisfied if the count of patterns is between 2 and 10. It is still not enough, but it is simple and it helps. We can count in the program how deep it is in recursion and stop it after several steps if it does not find a sufficient result. But we will not do that for leaving the program as simple as it can be. It is not hard to do that with the new language, you can try it as an exercise. 
 
-The interpolation can be done in Ferda with the new box binary operation. Please see figure~\ref{fig:linearInterpolationBoxes}. Compare it with the equation above.
+The interpolation can be done in Ferda with the new box binary operation. Please see figure~\ref{fig:linearInterpolationBoxes}. Compare it to the equation above.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{linearInterpolation}
@@ -723,9 +787,9 @@ The interpolation can be done in Ferda with the new box binary operation. Please
 	\label{fig:linearInterpolationBoxes}
 \end{figure}
 
-Hence, the program compute repetitively new threshold until it is satisfied. But which numbers should be on the beginning in the $x_{min}$, $x_{max}$, $y_{min}$ and $y_{max}$? Let us make decision that if a threshold is 1, there are no results. It is true in standard situations. So, we can in the $x_{max}$ put 1 and in the $y_{max}$ put 0. Let us make second decision that if a threshold is 0, the number of results equals to the ``max number of hypotheses'' parameter of the fourfold task. Hence, we can put to the $x_{min}$ 0 and to the $y_{min}$ put the same number as is in the ``max number of hypotheses'' parameter. Such thing can be best done by specifying that count only once in a integer box and connecting them to both ``max number of hypotheses'' socket and the socket of the ``MinY'' box.
+Hence, the program computes repetitively new threshold until it is satisfied. But which numbers should be at the beginning in the $x_{min}$, $x_{max}$, $y_{min}$ and $y_{max}$ variables? Let us make a decision that if a threshold is 1, there are no results. This is true in standard situations. So, we can in the $x_{max}$ put 1 and in the $y_{max}$ put 0. Let us make second decision that if a threshold is 0, the number of results equals to the ``max number of hypotheses'' parameter of the fourfold task. Hence, we can put $x_{min}=0$ and to the $y_{min}$ put the same number as is in the ``max number of hypotheses'' parameter. Such thing can be best done by specifying that count only once in a integer box and connecting them to both ``max number of hypotheses'' socket and the socket of the ``MinY'' box.
 
-At the beginning threshold will be set to $0.5$. The program will first try to compute number of patterns for that threshold. If the count is between 2 and 10 the program returns that threshold.   
+At the beginning the threshold will be set to $0.5$. The program will first try to compute the number of patterns for that threshold. If the count is between 2 and 10 the program returns that threshold.   
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{exampleMainMiningPart}
@@ -733,7 +797,7 @@ At the beginning threshold will be set to $0.5$. The program will first try to c
 	\label{fig:basicRecursiveExample}
 \end{figure}
 
-Please see figure~\ref{fig:basicRecursiveExample}. The four boxes most on the left specify setting of the fourfold task. The ``Get parameter'' box has set property ``ParameterName'' set to ``NumberOfHypotheses''. The ``Execute action'' box has set property ``ActionName'' set to ``Run''. It means that both these boxes returns number of hypotheses (patterns) of the setting (they from point of value, because ``Get parameter'' box is connected to the ``Function'' socket of the box ``Execute action''). The ``Execute action'' also executes a searching for hypotheses in the setting. Without executing the action count of hypotheses can be invalid. So the action must be at least once executed. Two ``IfThenElse'' boxes with two ``Comparasion'' boxes in the figure returns the actual threshold if the number of hypotheses is between 2 and 10.
+Please see figure~\ref{fig:basicRecursiveExample}. The four leftmost boxes specify setting of the fourfold task. The ``Get parameter'' box has set property ``ParameterName'' to ``NumberOfHypotheses''. The ``Execute action'' box has set property ``ActionName'' set to ``Run''. It means that both these boxes return number of hypotheses (patterns) of the setting (they are equal as far as their value is concerned, because ``Get parameter'' box is connected to the ``Function'' socket of the box ``Execute action''). The ``Execute action'' also executes a search for hypotheses in the setting. Without executing the action the count of hypotheses can be invalid. So the action must be at least once executed. Two ``IfThenElse'' boxes with two ``Comparison'' boxes in the figure return the actual threshold if the number of hypotheses is between 2 and 10.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{exampleMainRecursionPart}
@@ -741,7 +805,7 @@ Please see figure~\ref{fig:basicRecursiveExample}. The four boxes most on the le
 	\label{fig:resultBetween}
 \end{figure}
 
-If the number of hypotheses is lesser than 2 or greater than 10 the program will compute by interpolation a new threshold and executes this again. Please see figure~\ref{fig:resultBetween}. This is part of program where the count of hypotheses is greater than 10. In the interpolation $x_{min}$ will be set to the last threshold, $y_{min}$ will be set to last count of hypotheses. Than a new threshold will be computed by the interpolation and the result is again connected to the ``IfThenElse'' box from previous figure. You can see both two sub-connections together in figure~\ref{fig:exampleWithoutInterpolationOnMax}.
+If the number of hypotheses is smaller than 2 or greater than 10 the program will compute by interpolation a new threshold and executes this again. Please see figure~\ref{fig:resultBetween}. This is a part of the program where the count of hypotheses is greater than 10. In the interpolation $x_{min}$ will be set to the last threshold, $y_{min}$ will be set to the last count of hypotheses. Than a new threshold will be computed by the interpolation and the result will be again connected to the ``IfThenElse'' box from the previous figure. You can see the both sub-connections together in figure~\ref{fig:exampleWithoutInterpolationOnMax}.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{exampleWithoutInterpolationOnMax}
@@ -749,7 +813,7 @@ If the number of hypotheses is lesser than 2 or greater than 10 the program will
 	\label{fig:exampleWithoutInterpolationOnMax}
 \end{figure}
 
-Whole program without details of fourfold settings can be seen in figure~\ref{fig:exampleResult}. There is also part of program for variant where count of hypotheses is lesser than 2. You can see that the connection do not look nice. It is because of many lines in figure. Users can collapse boxes by packing feature of FrontEnd. They can also use more desktops for organizing the program. A similar program in standard imperative languages will not be easier.
+Whole program without details of fourfold settings can be seen in figure~\ref{fig:exampleResult}. There is also a part of the program for the variant where the count of hypotheses is smaller than 2. You can see that the connection do not look nice. It is because of tangle of lines in the figure. Users can collapse boxes by a packing feature of FrontEnd. They can also use more desktops for organizing the program. A similar program in standard imperative languages would not be easier.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{exampleResult}
@@ -760,20 +824,20 @@ Whole program without details of fourfold settings can be seen in figure~\ref{fi
 !-- TODO predelat obrazky ``Treshold'' na ``Threshold'', a misto ``Execute action'' snad muze byt zapojena do lambd krabicka ``Get parameter'' - tedy dost to zrychli pocitani (mozna je potreba jeste pres double box a je mi divne, ze bych to nezkousel -- mozna v tom je nejaky figl, zkusim) --!
 
 \subsection{How to do it better}
-The recursive computation is not needed for this particular task. The BestN algorithm for tasks, which is outlined in \cite{thesisKuchar}, can solve this particular task more effectively. But a user has to have a rich way how to specify best results. A functional language is a strong tool for such thing. We can see a functional language as a superset of observational calculus, which is described in~\cite{GUHAbook}. If we have only one quantifier, which is fuzzy, it is easy to sort results according goodness. For example, if we have only founded implication, a formula with higher threshold is the better. Founded implication is not today fuzzy, but we can easily convert it to that.
+The recursive computation is not needed for this particular task. The BestN algorithm for tasks, which is outlined in \cite{thesisKuchar}, can solve this particular task more efficiently. But a user has to be able to specify what results are the most appropriate. A functional language is a strong tool for such thing. We can see a functional language as a superset of observational calculi, which are described in~\cite{GUHAbook}. If we have only one quantifier, which is fuzzy, it is easy to sort results according to goodness. For example, if we have only founded implication, a formula with higher threshold is better. Founded implication is not fuzzy today, still we can convert it to that easily.
 
-Two or more quantifiers as a setting for a task are more complicated. The today tasks accept a formula if all its quantifiers are satisfied. Hence the formula can be seen as a conjunction of the same sub-formulas only with a different quantifier. That conjunction is the real quantifier which is used in the GUHA mining. That conjunction should be used as a sorting filter for BestN. Today we have problem that the conjunction used is not a fuzzy conjunction. There is only one or zero. But there are many different fuzzy conjunctions and a user should have a ability to choose the right conjunction. He should be able to write his own conjunctions by the programming language.
+Two or more quantifiers as a setting for a task are more complicated. The today's tasks accept a formula if all its quantifiers are satisfied. Hence the formula can be seen as a conjunction of the same sub-formulas only with a different quantifier. That conjunction is the real quantifier which is used in the GUHA mining. That conjunction should be used as a sorting filter for BestN. Today we have problem that the conjunction used is not a fuzzy conjunction. There is only one or zero. But there are many different fuzzy conjunctions and the user should have the ability to choose the right conjunction. They should be able to writetheir own conjunctions by the programming language.
 
-There can be still more complicated tasks where the recursive solution described there can be useful.
+There can be still more complicated tasks where the recursive solution described here can be useful.
 
 \section{Getting basic information from a table}
-Sometimes you get a data and do not know nearly anything about them. In such situations it would be convenient to have a method how to get quickly basic information about it.
+Sometimes you get data and know hardly anything about it. In such situations it would be convenient to have a method how to get quickly basic information about it.
 
-A program which creates a basic generic settings from a table without any knowledge about it will be presented in this section. We will concentrate rather on a way how a user can create such program then on particular quantifiers, tasks and other properties of a setting which it should use.
+A program which creates a basic generic settings from a table without any knowledge about it will be presented in this section. We will focus rather on a way how the user can create such program than on particular quantifiers, tasks and other properties of a setting which it should use.
 
-Let us create a fourfold task setting which have in antecedent setting all atom setting created from all column of a table. So, the program should create an attribute for all columns in a table. It should decide a type of the attribute depending on a data in a column. Similarly, it should create an atom setting from the attribute. All these atom settings should be included in a cedent setting for the fourfold task.
+Let us create a fourfold task setting which has in the antecedent all atom settings created from all columns of the table. Hence, the program should create an attribute for all columns in the table. It should decide on the type of the attribute depending on the data in the column. Similarly, it should create an atom setting from the attribute. All these atom settings should be included in the cedent for the fourfold task.
 
-The program would create a sequence of atom settings for all columns. But first let us describe how would we write in Ferda a function which returns a sequence of all columns in a table. The table box type should have a new read-only property with names of columns. Today such information is returned by a method of a functions interface of the table box. The only way how to get such information from functions is by a custom box. If we had the new property with columns names, let us call it ``columns'', the GetParameter box could be used for getting such information as a parameter to a next box. The map box is the box we would used as the next box.
+The program would create a sequence of atom settings for all columns. But first let us describe how we would write a function which returns a sequence of all columns of a table in Ferda. The table box type should have a new read-only property with names of columns. Today such information is returned by a method of a functions interface of the table box. The only way how to get such information from functions is by a custom box. If we had a property with columns names, let us call it ``columns'', the GetParameter box could be used for getting such information as a parameter to a next box. The map box is the box we would used as the next box.
 
 \begin{eqnarray*}
 Map(&&What=GetParameter(name="columns", box=Table(\dots)), \\&& Do=Column(name=X, table=Table(\dots)), \\&& Variable=X)
@@ -781,41 +845,41 @@ Map(&&What=GetParameter(name="columns", box=Table(\dots)), \\&& Do=Column(name=X
 
 This connection returns a sequence of columns. The $X$ can represent for example $String()$ or $Variable()$.
 
-The second task is to create an attribute which depends on values in a column. If the column had more then 20 distinct values the equifrequency attribute would be used otherwise the each value one category attribute would be used. Let us call a column in previus connection $C$
+The second task is to create an attribute which depends on values in a column. If the column had more than 20 distinct values the \emph{equifrequency} attribute would be used, otherwise the \emph{each value one category} attribute would be used. Let us call the column in previous connection $C$
 
 \begin{eqnarray*}
 C=Column(name=X, table=Table(\dots))
 \end{eqnarray*}
 
-Than if we changed in the last connection in the Map box the connection to the ``Do'' socket this way
+Then if we changed in the last connection in the Map box the connection to the ``Do'' socket this way
 
 \begin{eqnarray*}
 Do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(name="distinctValues", \\&&\qquad\qquad box=C), \\&&\qquad value2=20),\\&&Atom(EachValueOneAttribute(column=C,\dots)),\\&&Atom(EquifrequencyAttribute(column=C,\dots)))
 \end{eqnarray*}
 
-result of such connection would be the wanted sequence of atom settings. Such sequence could be connected to a cedent box, which could be than connected as both an antecedent and a succedent of a fourfold task.
+result of such connection would be the wanted sequence of atom settings. Such sequence could be connected to a cedent box, which could be then connected as both the antecedent and the succedent of a fourfold task.
 
 \section{GUHA in Ferda by ``small'' boxes}
-In this section the generic GUHA-Method written in the Ferda language is described. It presents only really basic concepts, there are neither an implementation of the method nor a detail description.
+In this section the generic GUHA-Method written in the Ferda language is described. It presents only really basic concepts, it provides neither an implementation of the method nor a detailed description.
 
-Principle of GUHA procedures is simple: Let us have set of formulas in observational calculi~\cite{GUHAbook}. Go trough all these formulas and return those, which are valid on a specific data.
+The principle of GUHA procedures is simple: Let us have set of formulas in an observational calculus~\cite{GUHAbook}. Go trough all these formulas and return those which are valid on a specific data.
 
-If we wanted to create a generic GUHA-Method, the formulas of the observational calculi would be representable in the Ferda language. Because the calculi is similar to functional language the implementation would not be so hard. Predicates, junctors and quantifiers would be separate boxes.
+If we wanted to create a generic GUHA-Method, the formulas of the observational calculus would be representable in the Ferda language. Because the calculus is similar to functional language the implementation would not be so hard. Predicates, junctors and quantifiers would be separate boxes.
 
-If we had representable a formula of the observational calculi, we would have possibility to create a set of such formulas. The sequence boxes, which are described in section~\ref{sec:sequences}, would be for this task handy. Specific boxes for generating a sequence of formulas would be also useful.
+If we had representable formulas of the observational calculus, we would have the possibility to create a set of such formulas. The sequence boxes, which are described in section~\ref{sec:sequences}, would be handy for this task. Specific boxes for generating a sequence of formulas would be also useful.
 
-The next problem is computation which formulas are valid. Because a formula is a function, it should be only computing of the function on a specific data. It is simple.
+The next problem is computation which formulas are valid. Because formula is a function, it should be only computing of the function on a specific data. This is simple.
 
 The last problem is how to show the results. A new result browser for generic GUHA-Method would be needed.
 
-Such GUHA-Method would add big amount of new questions which can be asked against a data compared to the actual implementation, but such implementation would be slower. For scientific works it can be really useful.
+Such GUHA-Method would bring big amount of new questions which can be asked against data compared to the actual implementation, but such implementation would be slower. For scientific purposes it can be really useful.
 
 \chapter{Summary}
-The thesis has described a new language for a data mining. It is a visual functional language. Functions are there called boxes. Basic formalisation of the language has been shown in the section~\ref{sec:formalisation}. A source code is written as a connection of boxes, source files are project files of the Ferda system. Possible extensions to source files has been described in the section~\ref{sec:reusability}. These extensions adds better reusability of a code. One such extension, which is called ``network archive'' has been implemented as part of this thesis. The network archive is a new place where users can store connections. It is independent of projects. One network archive can be accessed from more computers. It is a way how to move connections from one project to another. Future possible enhancement to the network archive has been also proposed.
+The thesis has described a new language for data mining. It is a visual functional language. Functions are there called boxes. Basic formalization of the language has been shown in section~\ref{sec:formalisation}. A source code is written as a connection of boxes, source files are project files of the Ferda system. Possible extensions to source files has been described in section~\ref{sec:reusability}. These extensions add better reusability of code. One such extension, which is called ``network archive'', has been implemented as a part of this thesis. The network archive is a new place where users can store connections. It is independent of projects. One network archive can be accessed from more computers. It is a way how to move connections from one project to another. Future possible enhancement to the network archive has been also proposed.
 
-A basic set of boxes has been created as part of the thesis and other boxes has been proposed. The boxes which has been created includes the constant boxes, the BinaryOperation box, the Comparison box, the IfThenElse box, the Lambda box, the GetParameter box, the ExecuteAction box, the Command box and the CommandOutput box. The most complicated box from these is the Lambda box. There has been discussed several problems of the box and their possible solutions. The boxes which has been only proposed includes different sequence boxes and the user-programmable box.
+A basic set of boxes has been created as a part of the thesis and other boxes have been proposed. The boxes which has been created include the constant boxes, the BinaryOperation box, the Comparison box, the IfThenElse box, the Lambda box, the GetParameter box, the ExecuteAction box, the Command box and the CommandOutput box. The most complicated box from these is the Lambda box. There has been discussed several problems of the box and their possible solutions. The boxes which have been only proposed include various sequence boxes and the user-programmable box.
 
-The three examples of the usage of the new language for data-mining has been shown. The first example introduces a recursive computation of data mining tasks. An implementation of that example is part of this thesis. The second example shows how can be created with the proposed language a generic setting which gets basic information about data in any table. The third example presents a more generic implementation of GUHA principle based on simple boxes.
+Three examples of the usage of the new language for data-mining has been shown. The first example introduces a recursive computation of data mining tasks. An implementation of that example is a part of this thesis. The second example shows how a generic setting which gets basic information about data in any table can be created with the proposed language. The third example presents a more generic implementation of the GUHA principle based on simple boxes.
 
 %\section{Future tasks to do in Ferda}
 %popis jednotlivych tasku s narocnosti, uzitkem - bodove ohodnotit
