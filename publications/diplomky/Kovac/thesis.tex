@@ -30,7 +30,7 @@ Faculty of Mathematics and Physics\\
 
 \vspace{5mm}
 
-{\Large\bf MASTER THESIS}
+{\Large\bf MASTER'S THESIS}
 
 \vspace{10mm}
 
@@ -745,7 +745,7 @@ Let us think about box whose functionality can be programmed in some standard sc
 Such box would add a quicker way how to program a new functionality without having deep knowledge of the Ferda system. 
 
 \section{Advanced tools and topics}
-
+\label{sec:advancedToopics}
 \subsection{Unit tests}
 For developers in general it is useful to have some framework for testing of units of their programs. Programmers of the Ferda system would like to be able to make sure quickly that their changes in the system do not affect the programs in the Ferda language or affect them exactly in the way they expect. Programmers in the Ferda language would like to know that their programs works as expected.
 
@@ -833,7 +833,7 @@ Whole program without details of fourfold settings can be seen in figure~\ref{fi
 	\label{fig:exampleResult}
 \end{figure}
 
-!-- TODO predelat obrazky ``Treshold'' na ``Threshold'', a misto ``Execute action'' snad muze byt zapojena do lambd krabicka ``Get parameter'' - tedy dost to zrychli pocitani (mozna je potreba jeste pres double box a je mi divne, ze bych to nezkousel -- mozna v tom je nejaky figl, zkusim) --!
+%!-- TODO predelat obrazky ``Treshold'' na ``Threshold'', a misto ``Execute action'' snad muze byt zapojena do lambd krabicka ``Get parameter'' - tedy dost to zrychli pocitani (mozna je potreba jeste pres double box a je mi divne, ze bych to nezkousel -- mozna v tom je nejaky figl, zkusim) --!
 
 \subsection{How to do it better}
 The recursive computation is not needed for this particular task. The BestN algorithm for tasks, which is outlined in \cite{thesisKuchar}, can solve this particular task more efficiently. But a user has to be able to specify what results are the most appropriate. A functional language is a strong tool for such thing. We can see a functional language as a superset of observational calculi, which are described in~\cite{GUHAbook}. If we have only one quantifier, which is fuzzy, it is easy to sort results according to goodness. For example, if we have only founded implication, a formula with higher threshold is better. Founded implication is not fuzzy today, still we can convert it to that easily.
@@ -889,9 +889,15 @@ Such GUHA-Method would bring big amount of new questions which can be asked agai
 \chapter{Summary}
 The thesis has described a new language for data mining. It is a visual functional language. Functions are there called boxes. Basic formalization of the language has been shown in section~\ref{sec:formalisation}. A source code is written as a connection of boxes, source files are project files of the Ferda system. Possible extensions to source files has been described in section~\ref{sec:reusability}. These extensions add better reusability of code. One such extension, which is called ``network archive'', has been implemented as a part of this thesis. The network archive is a new place where users can store connections. It is independent of projects. One network archive can be accessed from more computers. It is a way how to move connections from one project to another. Future possible enhancement to the network archive has been also proposed.
 
-A basic set of boxes has been created as a part of the thesis and other boxes have been proposed. The boxes which has been created include the constant boxes, the BinaryOperation box, the Comparison box, the IfThenElse box, the Lambda box, the GetParameter box, the ExecuteAction box, the Command box and the CommandOutput box. The most complicated box from these is the Lambda box. There has been discussed several problems of the box and their possible solutions. The boxes which have been only proposed include various sequence boxes and the user-programmable box.
+In section~\ref{sectionNewBoxes}, a basic set of boxes has been created as a part of the thesis and other boxes have been proposed. The boxes which has been created include the constant boxes, the BinaryOperation box, the Comparison box, the IfThenElse box, the Lambda box, the GetParameter box, the ExecuteAction box, the Command box and the CommandOutput box. The most complicated box from these is the Lambda box. There has been discussed several problems of the box and their possible solutions. The boxes which have been only proposed include various sequence boxes and the user-programmable box. The unit test framework and distributed programs have been discussed in section~\ref{sec:advancedToopics}.
 
-Three examples of the usage of the new language for data-mining has been shown. The first example introduces a recursive computation of data mining tasks. An implementation of that example is a part of this thesis. The second example shows how a generic setting which gets basic information about data in any table can be created with the proposed language. The third example presents a more generic implementation of the GUHA principle based on simple boxes.
+Three examples of the usage of the new language for data-mining has been shown in chapter~\ref{chap:KDDExamples}. The first example introduces a recursive computation of data mining tasks. An implementation of that example is a part of this thesis. The second example shows how a generic setting which gets basic information about data in any table can be created with the proposed language. The third example presents a more generic implementation of the GUHA principle based on simple boxes.
+
+\section{Conclusions}
+
+The thesis meets requirements of the assignment. It presents data-mining problems and their solutions using the new Ferda language. Preliminary implementation has been also done. The reach of the present thesis, however, surpasses the assignment in its implications. Instead of a new language specific only for some data-mining problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. Moreover, the thesis does not describe only the language itself, it focuses also on additional topics on programming like reusability of a code, unit tests and distributed programs. 
+
+The main purpose of this thesis is in the presentation of possible extensions of the Ferda system with their advantages and disadvantages. Nevertheless, the implementations which have been done as a part of this thesis are useful. The network archive brings next dimensions to the reusability of boxes. The new implemented boxes enable simple functional programs in the Ferda. When it were needed to write in Ferda a more complicated program, creation of a new boxes or extensions to the actual implementation would be necessary. The thesis describes several boxes which would help to that task and shows problems of the actual implementation which could be necessary to overcome. 
 
 %\section{Future tasks to do in Ferda}
 %popis jednotlivych tasku s narocnosti, uzitkem - bodove ohodnotit
