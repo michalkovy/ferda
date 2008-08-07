@@ -749,7 +749,7 @@ Such box would add a quicker way how to program a new functionality without havi
 \subsection{Unit tests}
 For developers in general it is useful to have some framework for testing of units of their programs. Programmers of the Ferda system would like to be able to make sure quickly that their changes in the system do not affect the programs in the Ferda language or affect them exactly in the way they expect. Programmers in the Ferda language would like to know that their programs works as expected.
 
-Creation of a box called ``UnitTest'' would take profit. The box should have a name and one socket for connecting ``Assert'' boxes. Assert box should be a box which validates some condition and when the condition is not satisfied it should return a message describing the problem. Then there should be a small application which takes a project as parameter and calls all unit tests in the project. Unit tests should call all asserts which are connected to the test. When any of them fails the application should return the message with the name of the unit test and the error message from the failed assert. Even if one unit test failed it should call other tests.
+Creation of a box called ``UnitTest'' would be useful. The box should have a name and one socket for connecting ``Assert'' boxes. Assert box should be a box which validates some condition and when the condition is not satisfied it should return a message describing the problem. Then there should be a small application which takes a project as parameter and calls all unit tests in the project. Unit tests should call all asserts which are connected to the test. When any of them fails the application should return the message with the name of the unit test and the error message from the failed assert. Even if one unit test failed it should call other tests.
 
 Similar is the NUnit framework for .NET Framework. For reusing tools which execute NUnit tests it would be nice to create a generator of NUnit tests from the Ferda project unit tests. Such generator should create one assembly for one project, but also as many test methods as many unit test boxes there are in the project. There should be one startup method for initializing the Ferda Project Manager and for loading a project. 
 
@@ -781,7 +781,7 @@ The solution is based on linear interpolation. The function of a count of patter
 x = x_{max} - (y_{max} - y)\frac{x_{max} - x_{min}}{y_{max} - y_{min}}
 \end{math}
 
-, where $y$ is the wanted count of patterns. Please see figure~\ref{fig:linearInterpolationPlot}. Such new $x$ is then lesser or equal to $x_{max}$ and greater or equal to $x_{min}$. Such computation would be repeated.
+, where $y$ is the wanted count of patterns. Please see figure~\ref{fig:linearInterpolationPlot}. Such new $x$ is then less or equal to $x_{max}$ and greater or equal to $x_{min}$. Such computation would be repeated.
 
 \begin{figure}
 	\includegraphics[width=1\textwidth]{linearInterpolationPlot}
@@ -895,9 +895,9 @@ Three examples of the usage of the new language for data-mining has been shown i
 
 \section{Conclusions}
 
-The thesis meets requirements of the assignment. It presents data-mining problems and their solutions using the new Ferda language. Preliminary implementation has been also done. The reach of the present thesis, however, surpasses the assignment in its implications. Instead of a new language specific only for some data-mining problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. Moreover, the thesis does not describe only the language itself, it focuses also on additional topics on programming like reusability of a code, unit tests and distributed programs. 
+The thesis meets requirements of the assignment. It presents data-mining problems and their solutions using the new Ferda language. Preliminary implementation has also been done. The reach of the present thesis, however, surpasses the assignment in its implications. Instead of a new language specific only for some data-mining problems, a new generic language with much wider extensibility and usability has been created as a part of this thesis. Moreover, the thesis does not describe only the language itself, it focuses also on additional topics on programming like reusability of a code, unit tests and distributed programs. 
 
-The main purpose of this thesis is in the presentation of possible extensions of the Ferda system with their advantages and disadvantages. Nevertheless, the implementations which have been done as a part of this thesis are useful. The network archive brings next dimensions to the reusability of boxes. The new implemented boxes enable simple functional programs in the Ferda. When it were needed to write in Ferda a more complicated program, creation of a new boxes or extensions to the actual implementation would be necessary. The thesis describes several boxes which would help to that task and shows problems of the actual implementation which could be necessary to overcome. 
+The main purpose of this thesis is the presentation of possible extensions of the Ferda system with their advantages and disadvantages. Nevertheless, the implementations which have been done as a part of this thesis are useful. The network archive improves the reusability of boxes. The new implemented boxes enable simple functional programs in Ferda. If it were needed to write in Ferda a more complicated program, creation of a new boxes or extensions to the actual implementation would be necessary. The thesis describes several boxes which would help that task and shows problems of the actual implementation which would be necessary to overcome. 
 
 %\section{Future tasks to do in Ferda}
 %popis jednotlivych tasku s narocnosti, uzitkem - bodove ohodnotit
