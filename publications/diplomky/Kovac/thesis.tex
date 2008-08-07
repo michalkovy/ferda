@@ -50,7 +50,7 @@ Department of Software Engineering
 \vspace{15mm}
 
 \large
-\noindent Supervisor: Doc. RNDr. Jan Rauch, CSc.
+\noindent Supervisor: doc. RNDr. Jan Rauch, CSc.
 \vspace{1mm}
 
 \noindent Studying program: Computer science
@@ -73,8 +73,9 @@ Prohlašuji, že jsem svou diplomovou práci napsal samostatně a výhradně s p
 
 \bigskip
 
-\noindent V Praze dne \today \hspace{\fill}Michal Kováč\\
+\noindent V Praze dne \today \hspace{\fill}Michal Kováč
 
+~
 \selectlanguage{english}
 \tableofcontents
 
@@ -86,8 +87,10 @@ Prohlašuji, že jsem svou diplomovou práci napsal samostatně a výhradně s p
  \item [Autor:] Michal Kováč
  \item [Katedra (ústav):] Katedra softwarového inženýrství
  \item [Vedoucí diplomové práce:] doc. RNDr. Jan Rauch, CSc.
- \item [E-mail vedoucího:] Rauch@vse.cz
- \item [Abstrakt:] Práce pojednává o novém funkcionálním visuálním pogramovacím jazyku a jeho použití na dobývání znalostí z databází. Tento jazyk se nazývá Ferda a je integralní součástí systému Ferda, což je aplikace, která byla původně vytvořena pro dobývání znalostí z databází metodou GUHA. Funkce jazyka se zde nazývají krabičky. Zdrojové kódy jsou zapsány jako zapojení krabiček, zdrojové soubory jsou projekty systému Ferda. Práce popisuje stav systému Ferda před touto prací z pohledu visuálního programování, popisuje možná rosšíření zdrojových souborů, dále představuje novou základní množinu funkcí pro jazyk Ferda a popisuje jiná možná vylepšení tohoto jazyka. Některé z těchto rozšířejí jsou implementovány součástí této práce. V poslední části práce se nachází příklady použití nového jazyka na dobývaní znalostí z databází. Jeden z nich je také naimplementován jako součást této práce.
+ \item [E-mail vedoucího:] rauch@vse.cz
+ \item [Abstrakt:] Práce pojednává o novém funkcionálním vizuálním programovacím jazyku a jeho použití k dobývání znalostí z databází. Tento jazyk se nazývá Ferda a je integrální součástí systému Ferda, což je aplikace, která byla původně vytvořena pro dobývání znalostí z databází metodou GUHA. Funkce jazyka Ferda jsou před\-sta\-vo\-vá\-ny krabičkami. Zdrojové kódy pak jsou zapsány jako zapojení krabiček a zdrojovými soubory jsou projekty systému Ferda. Práce popisuje stav systému Ferda před touto prací z pohledu vizuálního programování, popisuje možná rozšíření zdrojových souborů, dále představuje novou základní množinu funkcí pro jazyk Ferda a popisuje jiná možná vylepšení tohoto jazyka. Některá z těchto rozšíření byla v rámci této práce implementována. V poslední části práce se nachází příklady použití nového jazyka k dobývaní znalostí z databází. Jeden z nich byl také implementován jako
+součást této práce.
+
 
  \item [Klíčová slova:] Ferda, programovací jazyk, vizuální programování, funkcionální jazyk, data mining
 \end{description}
@@ -100,8 +103,8 @@ Prohlašuji, že jsem svou diplomovou práci napsal samostatně a výhradně s p
  \item [Author:] Michal Kováč
  \item [Department:] Department of Software Engineering
  \item [Supervisor:] doc. RNDr. Jan Rauch, CSc.
- \item [Supervisor's e-mail address:] Rauch@vse.cz
- \item [Abstract:] The thesis discusses a new visual functional programming language and its usage for data mining. The language is called the Ferda language and it is an integral part of the Ferda system which is an application that has been created for data mining with the GUHA method. Functions of the language are there called boxes. A source code is written as a connection of boxes, source files are project files of the Ferda system. The thesis describes status of the Ferda system before this work from a point of the visual programming, it describes possible enhancements to source files, than it presents a new basic set of boxes for the Ferda language and it proposes other possible extensions of the language. Some of these proposals are implemented as part of this thesis. The last part includes examples of the usage of the new language for data mining. One of these is also implemented as part of this thesis.
+ \item [Supervisor's e-mail address:] rauch@vse.cz
+ \item [Abstract:] The thesis discusses a new visual functional programming language and its use for data mining. The language is called Ferda and forms an integral part of the Ferda system, which is an application that has been created for data mining with the GUHA method. Functions of the language are represented by boxes. The source code is written as a connection of boxes; source files are project files of the Ferda system. The thesis describes the status of the Ferda system before this work from the point of view of the visual programming and describes possible enhancements to source files, then it presents a new basic set of boxes for the Ferda language and proposes other possible extensions of the language. Some of these proposals have been implemented as a part of this thesis. The last part includes examples of the use of the new language for data mining. One of these has also been implemented as a part of this thesis.
 
  \item [Keywords:] Ferda, programming language, visual programming, functional language, data mining
 \end{description}
@@ -112,7 +115,7 @@ Prohlašuji, že jsem svou diplomovou práci napsal samostatně a výhradně s p
 \chapter{Introduction}
 \section{Assignment}
 \selectlanguage{czech}
-Východiskem diplomové práce jsou zkušenosti s GUHA procedurami implementovanými v rámci systému LISp-Miner~\cite{GMGC}. Díky jak rozmanitosti vztahů které lze jejich pomocí hledat tak i vzhledem k rozsáhlým možnostem zadávání množiny potenciálně zajímavých vztahů lze pomocí těchto procedur hledat odpovědi na různé analytické otázky formulované způsobem blízkým přirozenému jazyku. Příkladem takové otázky je: „Za jakých okolností a pro které pacienty není pravda, že s rostoucí úrovní cholesterolu roste i úroveň trigliceridů?“ Na tuto otázku lze hledat odpovědi pomocí procedur 4ft-Miner, SD4ft-Miner, KL-Miner i SDKL-Miner. Použitá procedura i způsob nastavení jejích parametrů dává různé možnosti, co se týče podrobnosti odpovědi. Zevrubná odpověď na takovouto otázku vyžaduje několik vzájemně provázaných běhů několika procedur. Jednotlivé běhy procedur odpovídají dílčím otázkám indukovaným položenou otázkou.
+Východiskem diplomové práce jsou zkušenosti s GUHA procedurami implementovanými v rámci systému LISp-Miner~\cite{GMGC}. Díky jak rozmanitosti vztahů které lze jejich pomocí hledat tak i vzhledem k rozsáhlým možnostem za\-dá\-vá\-ní množiny potenciálně zajímavých vztahů lze pomocí těchto procedur hledat odpovědi na různé analytické otázky formulované způsobem blízkým přirozenému jazyku. Příkladem takové otázky je: „Za jakých okolností a pro které pacienty není pravda, že s rostoucí úrovní cholesterolu roste i úroveň trigliceridů?“ Na tuto otázku lze hledat odpovědi pomocí procedur 4ft-Miner, SD4ft-Miner, KL-Miner i SDKL-Miner. Použitá procedura i způsob nastavení jejích parametrů dává různé možnosti, co se týče podrobnosti odpovědi. Zevrubná odpověď na takovouto otázku vyžaduje několik vzájemně pro\-vá\-za\-ných běhů několika procedur. Jednotlivé běhy procedur odpovídají dílčím otázkám indukovaným položenou otázkou.
 
 Lze pokládat řadu podobných otázek které konstituují jistou typovou úlohu. Příkladem podobné otázky k otázce výše uvedené je otázka „Za jakých okolností a pro které pacienty není pravda, že s rostoucí úrovní vzdělání roste i spotřeba vína?“ Pro řešení jedné typové úlohy existuje systém vzájemně provázaných dílčích otázek a ty lze chápat jako příkazy vhodného jazyka, kterým uživatel řídí postup při řešení typové úlohy.
 
@@ -151,28 +154,35 @@ This chapter describes the Ferda system. First, it discusses the history of Ferd
 \section{History}
 Michal Kováč, Tomáš Kuchař, Alexander Kuzmin and Martin Ralbovský started to work on Ferda Data Miner in the year 2003. It was held as a software project for the Faculty of Mathematics and Physics of Charles University. The project was lead by doc.~Jan Rauch. The basic aim of this project was creation of a user-friendly user interface to the LISp-Miner project (\url{http://lispminer.vse.cz}) in style of visual programming (\url{http://en.wikipedia.org/wiki/Visual\_programming\_language}). LISp-Miner is a system which consists of several KDD procedures based on the GUHA~\cite{GUHAbook} principle. The Ferda was created with future extensions in mind and the main parts of the application are independent of data mining at all.
 
-The Ferda is a user-oriented application for working with special visual objects called \emph{boxes}. These are represented by small squares with an image atop. The boxes have sockets and user can connect other boxes to these sockets. Boxes represent functions, sockets are places for parameters for these functions. Note the used terminology: Ferda Data Miner is the Ferda system with boxes for data mining.
+The Ferda is a user-oriented application for working with special visual objects called \emph{boxes}. These are represented by small squares with an image atop. Please see figure~\ref{fig:boxes}. The boxes have sockets and user can connect other boxes to these sockets. Boxes represent functions, sockets are places for parameters for these functions. Note the used terminology: Ferda Data Miner is the Ferda system with boxes for data mining.
 
-!-- TODO vložit obrázek krabičky --!
+\begin{figure}
+	\centering
+	\includegraphics[width=7cm]{boxes}
+	\caption{Boxes}
+	\label{fig:boxes}
+\end{figure}
 
 In version 1 of the Ferda system, the boxes for data mining were written for the LISp-Miner generators. It was hardly extensible, because Ferda is strongest when functionalities of modules are distributed among different boxes. In this version majority of the functionality lied in small subset of all boxes, other boxes were only really simple. The task boxes read from them settings, created a setting database called ``metabase'' for the LISp-Miner system, executed a procedure of the LISp-Miner system and read hypotheses which were written by the system to the metabase.
 
 Tomáš Kuchař wrote later as a part of his diploma thesis~\cite{thesisKuchar} his own implementation of additional GUHA procedures for Ferda Data Miner (version 2). The new implementation distributed functionalities among different boxes. The new implementation of GUHA procedures is also stronger in the point that it allows disjunctions between atoms in hypotheses~\cite{RalbovskyDisjunction}.
 
-Since the completion of the project numerous new boxes have been created for special applications like decision trees~\cite{GUHAtrees}, ontology mapping~\cite{thesisZeman} or relational GUHA procedures~\cite{thesisKuzmin}. 
-
-!-- TODO vlozi jeste Martinovu diplomku --!
+Since the completion of the project numerous new boxes have been created for special applications like decision trees~\cite{GUHAtrees}, ontology mapping~\cite{thesisZeman,thesisRalbovsky} or relational GUHA procedures~\cite{thesisKuzmin}. 
 
 History of the Ferda system is described in detail in~\cite{RalbovskyHistory}.
 
 \section{Introduction to Ferda}
 The Ferda is a client--server application. Client executable is the FerdaFrontEnd.exe and we call this part \emph{FrontEnd}. There is no single server executable; instead there are more separate modules which all can act as separate applications, FrontEnd communicates with all of them. Some of these modules implement boxes, hence we call them box modules, other are helper modules like the GUHA mining engine.
 
-FrontEnd is a visual application. The main object of Ferda is a project. The project consists of an archive and views. The archive is a place for boxes. Views adds to boxes their placement on a desktop. The desktops are places where boxes are shown with their connections, they are visual representation of views. Every box which is in the archive can be in any number of views.
+FrontEnd is a visual application. Please see figure~\ref{fig:ferda}. The main object of Ferda is a project. The project consists of an archive and views. The archive is a place for boxes. Views adds to boxes their placement on a desktop. The desktops are places where boxes are shown with their connections, they are visual representation of views. Every box which is in the archive can be in any number of views.
 
 FrontEnd has a menu by which user can for example load or save projects, show desktops or open a tutorial. By default, desktops occupy the majority of the space on the screen. The desktops are in the center, on the left is archive and list of boxes which can be added to a project, on the right is a property grid, context help and user note.
-
-!-- TODO pridat obrazek Ferdy 
+ 
+\begin{figure}
+	\noindent\includegraphics[width=1\textwidth]{ferda}
+	\caption{The Ferda application}
+	\label{fig:ferda}
+\end{figure}
 
 Box modules consist of sockets, properties and the functions object. Sockets are places where you can connect another box module. They represent parameters for functionality of the box module.
 
@@ -458,7 +468,7 @@ When Ferda was being designed we took a look on other two data-mining tools---We
 
 We are able to naturally represent objects of interest with a functional language. Ferda has typically more boxes for the same task than some workflow oriented visual programming language. Workflow and dataflow oriented languages have more settings in a property grid and dialog boxes. So we can say that the language of Ferda is more low leveled.
 
-Several reasons guided authors of Ferda to make the language in Ferda functional. GUHA~\cite{GUHAbook} is a theory which has its own logical calculus. Formulas of any calculus are mostly represented like functions. The semantics of formulas can be seen as a value of the functions. It means that a calculus can be viewed as a functional language. Big similarity between functions and formulas can be also found in constructions of transparent intensional logic (\url{http://til.phil.muni.cz}). Both have as a base the typed lambda calculus. Functional language is in many ways close to the natural language. 
+Several reasons guided authors of Ferda to make the language in Ferda functional. GUHA~\cite{GUHAbook} is a theory which has its own logical calculus. Formulas of any calculus are mostly represented like functions. The semantics of formulas can be seen as a value of the functions. It means that a calculus can be viewed as a functional language. Big similarity between functions and formulas can be also found in constructions of transparent intensional logic (\url{http://til.phil.muni.cz}). Both have as a base the typed lambda calculus~\cite{lambdaCalculus}. Functional language is in many ways close to the natural language. 
 
 LISp-Miner has mostly for each type of GUHA method three programs---the first for setting of the task, the second for generating results and the third for browsing the results. The partitioning has been affected by work flow of data mining. If we had done Ferda workflow oriented, it would have three boxes for one task which would correspond to the three programs of LISp-Miner. Ferda has advantage of reusability compared to LISp-Miner, because setting of a task is done by many boxes. It would not have if we had done Ferda workflow oriented. 
 
@@ -471,9 +481,14 @@ This thesis brings some new boxes, which are described in the section~\ref{secti
 Every programming language has from the beginning at least a small set of functions. Also it has some way how to use these functions to create more complex ones. Such an instrument has been created for Ferda as a crucial part of this diploma thesis. New language boxes are presented at this part of thesis. Data-mining examples which use these boxes are shown in chapter~\ref{chap:KDDExamples}.
 
 \subsection{Constants}
-The Ferda language is a typed language. It means that functions in Ferda return values of some type. Easiest functions are constant functions which return specified value. There are at least two ways how to achieve this by box semantic. One way is to create a specific box type for each type of constants which returns that specific type. This type has been created in Ferda as a part of this thesis.
+The Ferda language is a typed language. It means that functions in Ferda return values of some type. Easiest functions are constant functions which return specified value. There are at least two ways how to achieve this by box semantic. One way is to create a specific box type for each type of constants which returns that specific type. This type has been created in Ferda as a part of this thesis. Please see figure~\ref{fig:constantBoxAlone}. 
 
-!-- TODO přidat obrázek --!
+\begin{figure}
+	\centering
+	\includegraphics[width=7cm]{constantBoxAlone}
+	\caption{Box which represents a string constant}
+	\label{fig:constantBoxAlone}
+\end{figure}
 
 The other way is to create one box type which has one property for specifying a type and dependent on it it would have a second property with a value of a specified type. It would return that value.
 
@@ -851,7 +866,7 @@ C=Column(name=X, table=Table(\dots))
 Then if we changed in the last connection in the Map box the connection to the ``Do'' socket this way
 
 \begin{eqnarray*}
-Do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(name="distinctValues", \\&&\qquad\qquad box=C), \\&&\qquad value2=20),\\&&Atom(EachValueOneAttribute(column=C,\dots)),\\&&Atom(EquifrequencyAttribute(column=C,\dots)))
+Do=IfThenElse(&&Comparasion(type="<=", \\&&\qquad value1=GetParameter(\\&&\qquad\qquad name="distinctValues", \\&&\qquad\qquad box=C), \\&&\qquad value2=20),\\&&Atom(EachValueOneAttribute(column=C,\dots)),\\&&Atom(EquifrequencyAttribute(column=C,\dots)))
 \end{eqnarray*}
 
 result of such connection would be the wanted sequence of atom settings. Such sequence could be connected to a cedent box, which could be then connected as both the antecedent and the succedent of a fourfold task.
