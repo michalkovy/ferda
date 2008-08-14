@@ -242,7 +242,7 @@ namespace Ferda.FrontEnd
 
             //checking the available versions there has to be version at least 6.0
             List<string> versions = new List<string>(acrobat.GetSubKeyNames());
-            if (!versions.Contains("6.0") && !versions.Contains("7.0") && !versions.Contains("8.0"))
+            if (!versions.Contains("6.0") && !versions.Contains("7.0") && !versions.Contains("8.0") && !versions.Contains("9.0"))
             {
                 MessageBox.Show(resManager.GetString("AcrobatNotFoundText"),
                     resManager.GetString("AcrobatNotFoundCaption"));
@@ -258,6 +258,11 @@ namespace Ferda.FrontEnd
                 if (version == null)
                 {
                     version = acrobat.OpenSubKey("8.0");
+
+                    if (version == null)
+                    {
+                        version = acrobat.OpenSubKey("9.0");
+                    }
                 }
             }
             //checking if everything is all right
