@@ -28,6 +28,16 @@
 					</para>
 				</revdescription>
 			</revision>
+			<revision>
+				<revnumber>1.1</revnumber>
+				<date>2008-08-25</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Typographic English quotes added
+					</para>
+				</revdescription>
+			</revision>
 		</revhistory>
 		-->
 		<pubdate>2008-07-02</pubdate>
@@ -45,8 +55,8 @@
 		AGREGACNI ATRIBUT RADEJI NEPOUZIVAT, PROTOZE VUBEC NEFUNGUJE TAK JAK MA!!!
 	</para>
 	<para>
-		The Aggregation virtual column does not belong to boxes used in "classical" GUHA mining. Instead it is used for so called
-		"multirelational" GUHA mining, which means that the mining task runs on several data tables. The key term for multirelational
+		The Aggregation virtual column does not belong to boxes used in “classical” GUHA mining. Instead it is used for so called
+		“multirelational” GUHA mining, which means that the mining task runs on several data tables. The key term for multirelational
 		GUHA mining is the term <classname>virtual attribute</classname> Virtual attribute is newly added attribute to the 
 		analyzed data matrix (which will be called <classname>master</classname>). Ferda so far implements two kinds of 
 		virtual attributes: <classname>aggregation attribute</classname> and <classname>hypotheses attribute</classname>.
@@ -135,7 +145,7 @@
 				<formalpara>
 					<title>Ordinal</title>
 					<para>
-						The values can be compared to each other. There exists a relation "greater or equal" saying which of two values
+						The values can be compared to each other. There exists a relation “greater or equal” saying which of two values
 						is greater, but an exact metric does not exist. Example of ordinal relation is set inclusion. One can say that a set is 
 						a subset of other set, but cannot say, how big is the difference between sets.
 					</para>
@@ -154,7 +164,7 @@
 				<formalpara>
 					<title>Cardinal</title>
 					<para>
-						The values can be compared to each other (relation "greater or equal") and there exists a metric saying how far are
+						The values can be compared to each other (relation “greater or equal”) and there exists a metric saying how far are
 						values from each other. Example of such a domain are numbers (integer or real). 
 					</para>
 				</formalpara>
