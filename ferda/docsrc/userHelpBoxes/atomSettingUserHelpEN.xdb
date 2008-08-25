@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+		</authorgroup>
+		
+		<title>Atom Setting Box User Help</title>
+		<titleabbrev>Atom Setting Help</titleabbrev>
+		
+		<!--
+		<revhistory>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2008-08-25</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Initial version of the document
+					</para>
+				</revdescription>
+			</revision>
+		</revhistory>
+		-->
+		<pubdate>2008-08-25</pubdate>
+	</articleinfo>
+	
+	<abstract>
+	<para>
+		This document provides user help for the <classname>Atom setting</classname> box.
+	</para>
+	</abstract>
+	
+<section>
+	<title>About the Atom setting box</title>
+	<para>
+		The attribute boxes such as the <classname>equidistant</classname> or <classname>equifrequency intervals</classname>
+		attribute convert continuous domains into discretized ones by creating categories or intervals. These attributes are basic building
+		blocks for the GUHA procedures (and also for many other KDD procedures). The whole GUHA method is based on 
+		<classname>bit strings</classname>. In addition to providing information about discretization, the attribute boxes provide
+		bit strings for other boxes such as for <classname>atom setting</classname> box. Creation of bit strings for attribute A with categories
+		A = {a,b,c} is shown in the table below. 
+	</para>
+	<table>
+		<title>Bit string principle</title>
+		<tgroup cols='5' align='left'>
+			<thead>
+				<row>
+					<entry>Row</entry>
+					<entry>A</entry>
+					<entry>A[a]</entry>
+					<entry>A[b]</entry>
+					<entry>A[c]</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry>1</entry>
+					<entry>a</entry>
+					<entry>1</entry>
+					<entry>0</entry>
+					<entry>0</entry>
+				</row>
+				<row>
+					<entry>2</entry>
+					<entry>b</entry>
+					<entry>0</entry>
+					<entry>1</entry>
+					<entry>0</entry>
+				</row>
+				<row>
+					<entry>3</entry>
+					<entry>a</entry>
+					<entry>1</entry>
+					<entry>0</entry>
+					<entry>0</entry>
+				</row>
+				<row>
+					<entry>4</entry>
+					<entry>c</entry>
+					<entry>0</entry>
+					<entry>0</entry>
+					<entry>1</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+	<para>
+		The bit strings show in the table are the exact bit strings provided by the attribute box, that is bit strings of all the categories (intervals)
+		of the attribute. The <classname>atom setting</classname> box enables to create bit strings of <classname>basic Boolean 
+		attributes</classname> from these bit strings. By definition, when having attribute A = {a,b,c}, then each non-empty subset of A
+		is a <classname>basic Boolean attribute</classname> (bit strings of <classname>basic Boolean attributes</classname> are
+		constructed according to Table 1. 
+	</para>
+	<para>
+		However a random subset of an attribute does not have semantic interpretation and the number of subsets grows exponentially. Therefore
+		the <classname>atom setting</classname> box allows only special kinds of subsets which may have semantic interpretation. The types
+		are determined by the <classname>Coefficient</classname> property. 
+	</para>
+	<para>
+		<classname>Basic Boolean Attributes</classname> are building blocks of <classname>Boolean Attributes</classname>. By definition,
+		having <classname>basic Boolean Attribute</classname> A, B then A AND B, A OR B and NOT A are 
+		<classname>Boolean attributes</classname>. 
+	</para>
+	<para>
+		Note the difference between <classname>atom setting</classname> in the Ferda system and <classname>literal setting</classname>
+		of the LISp-miner system. The latter stands for “setting of basic Boolean attribute or its negation”. Negation of a <classname>Boolean
+		attribute</classname> is represented by a <classname>Sign</classname> box. More about this topic can be found in 
+		<citation>Kuchar</citation>.
+	</para>
+</section>
+
+<section>
+	<title>Sockets</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Bit string provider</title>
+				<para>
+					Attribute, which provides bit strings - one bit string for each category of the attribute.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Properties</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Coefficient Type</title>
+				<para>
+					Type of coefficient of an atom. These can be:
+					<itemizedlist>
+						<listitem>
+							<formalpara>
+								<title>Subsets</title>
+								<para>Creates subsets of given maximal and minimal length</para>
+							</formalpara>
+						</listitem>
+						<listitem>
+							<formalpara>
+								<title>Cyclic intervals</title>
+								<para>
+									Creates cyclic intervals of given maximal and minimal length. For example for attribute 
+									<classname>Week = {Sun, Mon, Tue, Wen, Thu, Fri, Sat}</classname> and 
+									<classname>Maximal length = Minimal Length = 2</classname>, subsets
+									<classname>{Sun, Mon}, {Mon, Tue}, {Tue,Wen}, {Wen, Thu}, {Thu,Fri}, {Fri, Sat}, {Sat, Sun}</classname>
+									will be created. 
+								</para>
+							</formalpara>
+						</listitem>
+						<listitem>
+							<formalpara>
+								<title>Intervals</title>
+								<para>
+									Creates intervals of given maximal and minimal length. For example for attribute 
+									<classname>A = {1,2,3,4}</classname> and 
+									<classname>Maximal length = 2, Minimal Length = 1</classname>, subsets
+									<classname>{1}, {2}, {3}, {4}, {1,2}, {2,3}, {3,4}</classname>
+									will be created. 
+								</para>
+							</formalpara>
+						</listitem>
+						<listitem>
+							<formalpara>
+								<title>Cuts</title>
+								<para>
+									Creates left and right cuts of given maximal and minimal length. For example for attribute 
+									<classname>A = {1,2,3,4,5}</classname> and 
+									<classname>Maximal length = 2, Minimal Length = 1</classname>, subsets
+									<classname>{1}, {1,2}, {5}, {4,5}</classname>
+									will be created. 
+								</para>
+							</formalpara>
+						</listitem>
+						<listitem>
+							<formalpara>
+								<title>Left cuts</title>
+								<para>
+									Creates left cuts of given maximal and minimal length. For example for attribute 
+									<classname>A = {1,2,3,4,5}</classname> and 
+									<classname>Maximal length = 2, Minimal Length = 1</classname>, subsets
+									<classname>{1}, {1,2}</classname>
+									will be created. 
+								</para>
+							</formalpara>
+						</listitem>
+						<listitem>
+							<formalpara>
+								<title>Right cuts</title>
+								<para>
+									Creates right cuts of given maximal and minimal length. For example for attribute 
+									<classname>A = {1,2,3,4,5}</classname> and 
+									<classname>Maximal length = 2, Minimal Length = 1</classname>, subsets
+									<classname>{5}, {4,5}</classname>
+									will be created. 
+								</para>
+							</formalpara>
+						</listitem>
+					</itemizedlist>
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Importance</title>
+				<para>
+					Defines importance of a <classname>basic Boolean attribute</classname> in
+					<classname>Boolean attributes</classname>. This can be one of the three options:
+					<itemizedlist>
+						<listitem>
+							<formalpara>
+								<title>Forced</title>
+								<para>
+									Forced (basic) Boolean attribute must be present in every relevant question (verification of 
+									GUHA hypothesis).
+								</para>
+							</formalpara>
+						</listitem>
+						<listitem>
+							<formalpara>
+								<title>Basic</title>
+								<para>Basic is the default parameter and means that the attribute must or may not
+								be present in conjunctions and disjnuctions.</para>
+							</formalpara>
+						</listitem>
+						<listitem>
+							<formalpara>
+								<title>Auxiliary</title>
+								<para>
+									One cannot create conjunctions or disjunctions only with auxiliary 
+									<classname>Boolean attributes</classname>. At least one <classname>Boolean attribute</classname>
+									in conjunction or disjunction must be Forced or Basic. 
+								</para>
+							</formalpara>
+						</listitem>
+					</itemizedlist>
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Maximal Length</title>
+				<para>
+					Defines maximal length for coefficient types.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Minimal Length</title>
+				<para>
+					Defines minimal length for coefficient types.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>	
+
+<section>
+	<title>Modules asking for creation</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Conjunction Setting</title>
+				<para>
+					Creates a <classname>Boolean attribute setting</classname> which is conjunction of this 
+					<classname>basic Boolean attribute</classname> and possibly other <classname>Boolean Attributes</classname>.
+				</para>
+			</formalpara>
+		</listitem>	
+		<listitem>
+			<formalpara>
+				<title>Disjunction Setting</title>
+				<para>
+					Creates a <classname>Boolean attribute setting</classname> which is disjunction of this 
+					<classname>basic Boolean attribute</classname> and possibly other <classname>Boolean Attributes</classname>.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Sign</title>
+				<para>
+					Creates a <classname>Boolean attribute setting</classname> which is negation of this 
+					<classname>basic Boolean attribute</classname>.
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+  <bibliography>
+    <biblioentry>
+      <abbrev>Kuchar</abbrev>
+      <authorgroup>
+        <author>
+          <firstname>Tomáš</firstname>
+          <surname>Kuchař</surname>
+        </author>
+      </authorgroup>
+      <title>Experimentální GUHA procedury</title>
+      <publisher>
+        <publishername>
+          Master thesis at Faculty of Mathematics and Physics,
+          Charles University, Prague (in Czech) - in Publications.
+        </publishername>
+      </publisher>
+    </biblioentry>
+  </bibliography>
+</article>
