@@ -28,6 +28,16 @@
 					</para>
 				</revdescription>
 			</revision>
+			<revision>
+				<revnumber>1.1</revnumber>
+				<date>2008-08-25</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Typographic English quotes added
+					</para>
+				</revdescription>
+			</revision>
 		</revhistory>
 		-->
 		<pubdate>2008-06-20</pubdate>
@@ -119,7 +129,7 @@
 			<formalpara>
 				<title>Records count</title>
 				<para>
-					Number of rows in the table (pre-computed field).
+					Number of rows in the table (pre—computed field).
 				</para>
 			</formalpara>
 		</listitem>

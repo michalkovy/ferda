@@ -28,6 +28,16 @@
 					</para>
 				</revdescription>
 			</revision>
+			<revision>
+				<revnumber>1.1</revnumber>
+				<date>2008-08-25</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Typographic English quotes added
+					</para>
+				</revdescription>
+			</revision>
 		</revhistory>
 		-->
 		<pubdate>2008-07-22</pubdate>
@@ -101,7 +111,7 @@
 				<formalpara>
 					<title>Ordinal</title>
 					<para>
-						The values can be compared to each other. There exists a relation "greater or equal" saying which of two values
+						The values can be compared to each other. There exists a relation “greater or equal” saying which of two values
 						is greater, but an exact metric does not exist. Example of ordinal relation is set inclusion. One can say that a set is 
 						a subset of other set, but cannot say, how big is the difference between sets.
 					</para>
@@ -120,7 +130,7 @@
 				<formalpara>
 					<title>Cardinal</title>
 					<para>
-						The values can be compared to each other (relation "greater or equal") and there exists a metric saying how far are
+						The values can be compared to each other (relation “greater or equal”) and there exists a metric saying how far are
 						values from each other. Example of such a domain are numbers (integer or real). 
 					</para>
 				</formalpara>
@@ -231,7 +241,7 @@
 			<formalpara>
 				<title>Fixed Atom</title>
 				<para>
-					Creates a fixes set coefficient - the <classname>Fixed Atom</classname> box. 
+					Creates a fixes set coefficient — the <classname>Fixed Atom</classname> box. 
 				</para>
 			</formalpara>
 		</listitem>	
