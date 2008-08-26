@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AC5116DA-E3FB-440B-B578-2247EED3D109}"
+	ProjectSection(SolutionItems) = preProject
+		Core1.vsmdi = Core1.vsmdi
+		localtestrun.testrunconfig = localtestrun.testrunconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Attribute2008", "Attribute\Attribute2008.csproj", "{B59997EA-0F48-4025-8F1D-B36239897AFC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5301276D-6535-4C51-8375-36FC5CC352B6} = {5301276D-6535-4C51-8375-36FC5CC352B6}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base2008", "Base\Base2008.csproj", "{E10C446E-8D76-41AB-89EC-C5C45F56D1D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boxes2008", "Boxes\Boxes2008.csproj", "{6AE00339-DA7A-421C-BD58-49B3AA8ADB9E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B59997EA-0F48-4025-8F1D-B36239897AFC} = {B59997EA-0F48-4025-8F1D-B36239897AFC}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data2008", "Data\Data2008.csproj", "{5301276D-6535-4C51-8375-36FC5CC352B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{05E5938B-3DD8-4D2F-905F-C4B3B7129568} = {05E5938B-3DD8-4D2F-905F-C4B3B7129568}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers2008", "Helpers\Helpers2008.csproj", "{5A2270C8-8780-4820-88C1-8AE0D5101E3D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6AE00339-DA7A-421C-BD58-49B3AA8ADB9E} = {6AE00339-DA7A-421C-BD58-49B3AA8ADB9E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Math2008", "Math\Math2008.csproj", "{05E5938B-3DD8-4D2F-905F-C4B3B7129568}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E10C446E-8D76-41AB-89EC-C5C45F56D1D4} = {E10C446E-8D76-41AB-89EC-C5C45F56D1D4}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningProcessor2008", "MiningProcessor\MiningProcessor2008.csproj", "{8A77381C-4DBC-40FA-A090-9AF34D65660E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5A2270C8-8780-4820-88C1-8AE0D5101E3D} = {5A2270C8-8780-4820-88C1-8AE0D5101E3D}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B59997EA-0F48-4025-8F1D-B36239897AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B59997EA-0F48-4025-8F1D-B36239897AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B59997EA-0F48-4025-8F1D-B36239897AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B59997EA-0F48-4025-8F1D-B36239897AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E10C446E-8D76-41AB-89EC-C5C45F56D1D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E10C446E-8D76-41AB-89EC-C5C45F56D1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E10C446E-8D76-41AB-89EC-C5C45F56D1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E10C446E-8D76-41AB-89EC-C5C45F56D1D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AE00339-DA7A-421C-BD58-49B3AA8ADB9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AE00339-DA7A-421C-BD58-49B3AA8ADB9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AE00339-DA7A-421C-BD58-49B3AA8ADB9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AE00339-DA7A-421C-BD58-49B3AA8ADB9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5301276D-6535-4C51-8375-36FC5CC352B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5301276D-6535-4C51-8375-36FC5CC352B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5301276D-6535-4C51-8375-36FC5CC352B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5301276D-6535-4C51-8375-36FC5CC352B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A2270C8-8780-4820-88C1-8AE0D5101E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A2270C8-8780-4820-88C1-8AE0D5101E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A2270C8-8780-4820-88C1-8AE0D5101E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A2270C8-8780-4820-88C1-8AE0D5101E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05E5938B-3DD8-4D2F-905F-C4B3B7129568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05E5938B-3DD8-4D2F-905F-C4B3B7129568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05E5938B-3DD8-4D2F-905F-C4B3B7129568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05E5938B-3DD8-4D2F-905F-C4B3B7129568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A77381C-4DBC-40FA-A090-9AF34D65660E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A77381C-4DBC-40FA-A090-9AF34D65660E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A77381C-4DBC-40FA-A090-9AF34D65660E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A77381C-4DBC-40FA-A090-9AF34D65660E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
