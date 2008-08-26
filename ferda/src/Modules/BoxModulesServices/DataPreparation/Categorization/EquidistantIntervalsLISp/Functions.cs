@@ -89,11 +89,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         /// <summary>
         /// Requested length of intervals
         /// </summary>
-        public long Length
+        public double Length
         {
             get
             {
-                return _boxModule.GetPropertyLong(PropLength);
+                return _boxModule.GetPropertyDouble(PropLength);
             }
         }
 
@@ -415,13 +415,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropLength, (long)Length);
+            cacheSetting.Add(BoxInfo.typeIdentifier + PropLength, (double)Length);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropClosedFrom, ClosedFrom);
 
             //requested length of intervals
-            int length = (int)Length;
-
-            if (length == 0)
+            if (Length == 0)
             {
                 return null;
             }
@@ -492,7 +490,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                     //generation of the division points
                                     _divisionPointsDouble =
                                         Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervalsLISp(
-                                        _dmin, _dmax, length);
+                                        _dmin, _dmax, Length);
                                 }
                                 catch
                                 {
@@ -549,7 +547,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                                 {
                                     _divisionPointsLong =
                                         Ferda.Guha.Attribute.DynamicAlgorithm.EquidistantIntervals.GenerateIntervalsLISp(
-                                        _lmin, _lmax, length);
+                                        _lmin, _lmax, System.Convert.ToInt32(Length));
                                 }
                                 catch
                                 {

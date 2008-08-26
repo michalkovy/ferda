@@ -71,12 +71,12 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
         /// </summary>
         /// <param name="from">From</param>
         /// <param name="to">To</param>
-        /// <param name="length">LEngth of the generated interval</param>
+        /// <param name="length">Length of the generated interval</param>
         /// <returns>Split points for the generated intervals</returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thown if <c>length</c> is equal to zero or 
         /// too high i.e. to - from is smaller than length.</exception>
-        public static double[] GenerateIntervalsLISp(double from, double to, int length)
+        public static double[] GenerateIntervalsLISp(double from, double to, double length)
         {
             if (length == 0)
                 throw new ArgumentOutOfRangeException("length",

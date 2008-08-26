@@ -1660,7 +1660,7 @@
 				<Name>Length</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::DoubleTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
@@ -1769,7 +1769,7 @@
 			</Property>
 			<Property>
 				<Name>Length</Name>
-				<TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
+				<TypeClassIceId>::Ferda::Modules::DoubleT</TypeClassIceId>
 				<CategoryName>Intervals</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
