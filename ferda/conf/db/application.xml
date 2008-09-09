@@ -64,6 +64,7 @@
 			<object identity="GuhaMining.Tasks.TwoDimensional" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.SDTwoDimensional" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Tasks.ETree" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="GuhaMining.Classification.ETreeClassifier" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.DoubleImplicational.FMeasure" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="GuhaMining.Quantifiers.FourFold.Equivalence.FoundedEquivalence" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
