@@ -39,6 +39,9 @@ namespace Ferda.Modules.Boxes.GuhaMining
 
             registerBox(Tasks.ETree.BoxInfo.typeIdentifier, new Tasks.ETree.BoxInfo());
 
+            // classifier boxes
+            registerBox(Classification.ETreeClassifier.BoxInfo.typeIdentifier, new Classification.ETreeClassifier.BoxInfo());
+
             // guha quantifiers boxes
             registerBox(Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo.typeIdentifier,
                         new Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication.BoxInfo());

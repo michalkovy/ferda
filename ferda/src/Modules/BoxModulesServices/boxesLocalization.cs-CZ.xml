@@ -2701,6 +2701,73 @@
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>
+	
+	<BoxLocalization>
+		<Identifier>GuhaMining.Classification.ETreeClassifier</Identifier>
+		<Label>ETree klasifikátor</Label>
+		<Hint>Klasifikuje daná data pomocí vybraného stromu, vrací matici záměn</Hint>
+		<Categories>
+			<Category>
+				<Name>GuhaMining.Classification</Name>
+				<Label>Guha Mining.Klasifikace</Label>
+			</Category>
+		</Categories>
+		<Actions>
+			<Action>
+				<Name>Classify</Name>
+				<Label>Klasifikovat</Label>
+				<Hint>Klasifikuje datovou tabulku</Hint>
+			</Action>
+		</Actions>
+		<Sockets>
+			<Socket>
+				<Name>ETree</Name>
+				<Label>ETree</Label>
+				<Hint>ETree procedura s rozhodovacími stromy</Hint>
+			</Socket>
+			<Socket>
+				<Name>DataTable</Name>
+				<Label>Datová tabulka</Label>
+				<Hint>Datová tabulka obsahující testovací data</Hint>
+			</Socket>
+			<Socket>
+				<Name>TreeNumber</Name>
+				<Label>Číslo stromu</Label>
+				<Hint>Strom, který se použije pro klasifikaci</Hint>
+			</Socket>
+			<Socket>
+				<Name>TruePositive</Name>
+				<Label>True Positive</Label>
+				<Hint>Příklady, které jsou pravdivé a klasifikovány správně</Hint>
+			</Socket>
+			<Socket>
+				<Name>FalseNegative</Name>
+				<Label>False Negative</Label>
+				<Hint>Příklady, které jsou pravdivé a klasifikovány nesprávně</Hint>
+			</Socket>
+			<Socket>
+				<Name>FalsePositive</Name>
+				<Label>False Positive</Label>
+				<Hint>Příklady, které jsou nepravdivé a klasifikovány nesprávně</Hint>
+			</Socket>
+			<Socket>
+				<Name>TrueNegative</Name>
+				<Label>True Negative</Label>
+				<Hint>Přiklady, které jsou nepravdivé a klasifikovány správně</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Settings</Name>
+				<Label>Nastavení</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>ConfusionMatrix</Name>
+				<Label>Matice záměn</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>	
+	
 	<BoxLocalization>
 		<Identifier>GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication</Identifier>
 		<Label>Double Founded Implication</Label>

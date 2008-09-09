@@ -346,6 +346,11 @@ module Ferda {
                               throws Ferda::Modules::BoxRuntimeError;
 
 				};
+				
+				interface ETreeClassifierFunctions
+				{
+				  nonmutating string HelloWorld();
+        };
 		};
 	};
 };

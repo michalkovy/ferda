@@ -2972,6 +2972,71 @@
 		</Sockets>
 	</BoxLocalization>
 	<BoxLocalization>
+		<Identifier>GuhaMining.Classification.ETreeClassifier</Identifier>
+		<Label>ETree Classifier</Label>
+		<Hint>Classifies a given data table with selected tree, returns confusion matrix</Hint>
+		<Categories>
+			<Category>
+				<Name>GuhaMining.Classification</Name>
+				<Label>Guha Mining.Classification</Label>
+			</Category>
+		</Categories>
+		<Actions>
+			<Action>
+				<Name>Classify</Name>
+				<Label>Classify</Label>
+				<Hint>Classifies data table</Hint>
+			</Action>
+		</Actions>
+		<Sockets>
+			<Socket>
+				<Name>ETree</Name>
+				<Label>ETree</Label>
+				<Hint>ETree procedure with decision trees</Hint>
+			</Socket>
+			<Socket>
+				<Name>DataTable</Name>
+				<Label>Data Table</Label>
+				<Hint>Data table with testing data</Hint>
+			</Socket>
+			<Socket>
+				<Name>TreeNumber</Name>
+				<Label>Tree Number</Label>
+				<Hint>Tree to be used for classification</Hint>
+			</Socket>
+			<Socket>
+				<Name>TruePositive</Name>
+				<Label>True Positive</Label>
+				<Hint>Examples that are true and classified correctly</Hint>
+			</Socket>
+			<Socket>
+				<Name>FalseNegative</Name>
+				<Label>False Negative</Label>
+				<Hint>Examples that are true and classified incorrectly</Hint>
+			</Socket>
+			<Socket>
+				<Name>FalsePositive</Name>
+				<Label>False Positive</Label>
+				<Hint>Examples that are false and classified incorrectly</Hint>
+			</Socket>
+			<Socket>
+				<Name>TrueNegative</Name>
+				<Label>True Negative</Label>
+				<Hint>Examples that are false and classified correctly</Hint>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Settings</Name>
+				<Label>Settigs</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>ConfusionMatrix</Name>
+				<Label>Confusion matrix</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+	</BoxLocalization>
+	<BoxLocalization>
 		<Identifier>GuhaMining.Quantifiers.FourFold.DoubleImplicational.FMeasure</Identifier>
 		<Label>F-Measure</Label>
 		<Hint>Finds rules for which 2a/(2a+b+c) &gt; p is valid</Hint>

@@ -87,6 +87,8 @@
   <ItemGroup>
     <Compile Include="AtomSetting\BoxInfo.cs" />
     <Compile Include="AtomSetting\Functions.cs" />
+    <Compile Include="Classification\ETreeClassifier\BoxInfo.cs" />
+    <Compile Include="Classification\ETreeClassifier\Functions.cs" />
     <Compile Include="ConjunctionSetting\BoxInfo.cs" />
     <Compile Include="ConjunctionSetting\Functions.cs" />
     <Compile Include="DisjunctionSetting\BoxInfo.cs" />
@@ -184,6 +186,8 @@
     <Compile Include="VirtualAttributes\VirtualSDFFTBooleanAttribute\Functions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AtomSetting\boxIcon.ico" />
+    <Content Include="Classification\ETreeClassifier\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\AntiFProperty\Kulczynski\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\AntiFProperty\Kulczynski\BoxIcon.ico" />
     <Content Include="Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\boxDesign.svg" />
@@ -220,6 +224,9 @@
     <Content Include="Tasks\SingleDimensional\boxIcon.ico" />
     <Content Include="Tasks\TwoDimensional\boxDesign.svg" />
     <Content Include="Tasks\TwoDimensional\boxIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AtomSetting\boxDesign.svg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Quantifiers\FourFold\DoubleImplicational\DoubleLowerCriticalImplication\" />
