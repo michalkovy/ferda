@@ -45,7 +45,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         public const string PropFrom = "From";
         public const string PropTo = "To";
         public const string PropAttribute = "Categories";
-        public const string SockColumn = "Column";
         public const string SockBSGen = "BitStringGenerator";
 
 

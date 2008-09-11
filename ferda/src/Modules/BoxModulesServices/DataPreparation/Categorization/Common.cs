@@ -309,4 +309,15 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
             return __max;
         }
     }
+
+    /// <summary>
+    /// Publicly visible properties (and other) of all attributes
+    /// </summary>
+    public class Public
+    {
+        /// <summary>
+        /// Socket of a column
+        /// </summary>
+        public const string SockColumn = "Column";
+    }
 }

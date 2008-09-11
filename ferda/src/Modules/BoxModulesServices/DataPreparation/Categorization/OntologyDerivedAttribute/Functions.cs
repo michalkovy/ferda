@@ -52,7 +52,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
         public const string PropCategories = "Categories";
-        public const string SockColumn = "Column";
         public const string SockOntologyEnablingColumn = "Column";
         //ontology derived properties
         public const string PropCardinality = "Cardinality";
@@ -313,7 +312,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         {
             return SocketConnections.GetPrx<ColumnFunctionsPrx>(
                 _boxModule,
-                SockColumn,
+                Public.SockColumn,
                 ColumnFunctionsPrxHelper.checkedCast,
                 fallOnError);
         }

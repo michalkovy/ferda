@@ -112,7 +112,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                     case "EachValueOneCategoryAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName = 
-                            Categorization.EachValueOneCategory.Functions.SockColumn;
+                            Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
                         //the property setting - here setting the "nameInLiterals" 
@@ -133,7 +133,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                     case "EquidistantIntervalsAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
-                            Categorization.EquidistantIntervals.Functions.SockColumn;
+                            Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
                         //the property setting - here setting the "nameInLiterals" 
@@ -154,7 +154,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                     case "EquidistantIntervalsLISpAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
-                            Categorization.EquidistantIntervalsLISp.Functions.SockColumn;
+                            Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
                         //the property setting - here setting the "nameInLiterals" 
@@ -175,7 +175,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                     case "EquifrequencyIntervalsAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
-                            Categorization.EquifrequencyIntervals.Functions.SockColumn;
+                            Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
                         //the property setting - here setting the "nameInLiterals" 
@@ -196,7 +196,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                     case "OntologyDerivedAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
-                            Categorization.OntologyDerivedAttribute.Functions.SockColumn;
+                            Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
                         //the property setting - here setting the "nameInLiterals" 
@@ -217,7 +217,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
                     case "StaticAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
-                            Categorization.StaticAttribute.Functions.SockColumn;
+                            Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
                         //the property setting - here setting the "nameInLiterals" 

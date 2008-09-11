@@ -110,24 +110,20 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// </returns>
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            //Functions Func = (Functions)boxModule.FunctionsIObj;
-            //switch (propertyName)
-            //{
-            //    case Common.PropTotalNumberOfRelevantQuestions:
-            //        return new DoubleTI(Common.TotalNumberOfRelevantQuestions(Func));
-            //    case Common.PropNumberOfVerifications:
-            //        return new LongTI(Common.NumberOfVerifications(Func));
-            //    case Common.PropNumberOfHypotheses:
-            //        return new LongTI(Common.NumberOfHypotheses(Func));
-            //    case Common.PropStartTime:
-            //        return new DateTimeTI(Common.StartTime(Func));
-            //    case Common.PropEndTime:
-            //        return new DateTimeTI(Common.EndTime(Func));
-            //    default:
-            //        throw new NotImplementedException();
-            //}
-
-            return new IntTI(0);
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            switch (propertyName)
+            {
+                case Functions.SockTruePositive:
+                    return new IntTI(Func.TruePositive);
+                case Functions.SockFalseNegative:
+                    return new IntTI(Func.FalseNegative);
+                case Functions.SockFalsePositive:
+                    return new IntTI(Func.FalsePositive);
+                case Functions.SockTrueNegative:
+                    return new IntTI(Func.TrueNegative);
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #region Type Identifier
@@ -159,7 +155,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
 
         /* Other functions to override
     * public virtual PropertyValue GetPropertyObjectFromInterface(string propertyName, Ice.ObjectPrx objectPrx)
-    * public virtual PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
     * public virtual bool IsPropertySet(string propertyName, PropertyValue propertyValue)
     * public virtual DynamicHelpItem[] GetDynamicHelpItems(string[] localePrefs, BoxModuleI boxModule)
     * public virtual void RunAction(string actionName, BoxModuleI boxModule)

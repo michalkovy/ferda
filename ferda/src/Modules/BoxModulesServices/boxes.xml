@@ -5249,6 +5249,7 @@
 				<CategoryName>Settings</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
+				<Default>1</Default>
 			</Property>
 			<Property>
 				<Name>TruePositive</Name>

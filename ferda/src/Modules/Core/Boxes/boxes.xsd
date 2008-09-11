@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Tomas Kuchar (Ru-Board) -->
+<!-- edited with XMLSpy v2008 rel. 2 sp1 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://ferda.is-a-geek.net" targetNamespace="http://ferda.is-a-geek.net" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="Box">
 		<xs:complexType>
