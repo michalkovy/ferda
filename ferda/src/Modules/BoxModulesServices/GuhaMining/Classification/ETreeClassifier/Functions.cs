@@ -29,14 +29,141 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
     /// Class is providing ICE functionality of the SampleBoxModule
     /// box module
     /// </summary>
-    class Functions : ETreeClassifierFunctionsDisp_, Ferda.Modules.IFunctions
+    public class Functions : ETreeClassifierFunctionsDisp_, Ferda.Modules.IFunctions
     {
+        #region Private fields
+
         /// <summary>
         /// The box module.
         /// </summary>
         protected BoxModuleI boxModule;
 
         //protected IBoxInfo _boxInfo;
+
+        /// <summary>
+        /// Examples that are true and classified correctly
+        /// </summary>
+        private int truePositive = 0;
+        /// <summary>
+        /// Examples that are true and classified incorrectly
+        /// </summary>
+        private int falseNegative = 0;
+        
+        /// <summary>
+        /// Examples that are false and classified incorrectly
+        /// </summary>
+        private int falsePositive = 0;
+        
+        /// <summary>
+        /// Examples that are false and classified correctly
+        /// </summary>
+        private int trueNegative = 0;
+
+        #endregion
+
+        #region Sockets
+
+        /// <summary>
+        /// Name of the socket containing ETree procedure input
+        /// </summary>
+        public const string SockETree = "ETree";
+
+        /// <summary>
+        /// Name of the socket containing data table with testing data
+        /// </summary>
+        public const string SockDataTable = "DataTable";
+
+        /// <summary>
+        /// Name of the socket determining the decision tree according to which
+        /// the classification shloud be done.
+        /// </summary>
+        public const string SockTreeNumber = "TreeNumber";
+
+        /// <summary>
+        /// Name of the socket determining TruePositive count of confusion matrix:
+        /// Examples that are true and classified correctly
+        /// </summary>
+        public const string SockTruePositive = "TruePositive";
+
+        /// <summary>
+        /// Name of the socket determining FalseNegative count of confusion matrix:
+        /// Examples that are true and classified incorrectly
+        /// </summary>
+        public const string SockFalseNegative = "FalseNegative";
+        
+        /// <summary>
+        /// Name of the socket determining FalsePositive count of confusion matrix:
+        /// Examples that are false and classified incorrectly
+        /// </summary>
+        public const string SockFalsePositive = "FalsePositive";
+
+        /// <summary>
+        /// Name of the socket determining TruNegative count of confusion matrix:
+        /// Examples that are false and classified correctly
+        /// </summary>
+        public const string SockTrueNegative = "TrueNegative";
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Decision tree according to which the classification should be done
+        /// (number in the hypotheses list).
+        /// </summary>
+        public int TreeNumber
+        {
+            get
+            {
+                return boxModule.GetPropertyInt(SockTreeNumber);
+            }
+        }
+        
+        /// <summary>
+        /// Examples that are true and classified correctly
+        /// </summary>
+        public int TruePositive
+        {
+            get
+            {
+                return truePositive;
+            }
+        }
+
+        /// <summary>
+        /// Examples that are true and classified incorrectly
+        /// </summary>
+        public int FalseNegative
+        {
+            get
+            {
+                return falseNegative;
+            }
+        }
+
+        /// <summary>
+        /// Examples that are false and classified incorrectly
+        /// </summary>
+        public int FalsePositive
+        {
+            get
+            {
+                return falsePositive;
+            }
+        }
+
+        /// <summary>
+        /// Examples that are false and classified correctly
+        /// </summary>
+        public int TrueNegative
+        {
+            get
+            {
+                return trueNegative;
+            }
+        }
+
+        #endregion
 
         #region ICE functions
 

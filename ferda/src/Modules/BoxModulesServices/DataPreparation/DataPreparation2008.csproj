@@ -60,10 +60,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaData.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaGuhaMiningBoxes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=783a2b32b3613078">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\FerdaGuhaMiningBoxes.dll</HintPath>
-    </Reference>
     <Reference Include="FerdaHelpers, Version=0.0.0.0, Culture=neutral, PublicKeyToken=555ee41fab6936f2">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
@@ -121,6 +117,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Categorization\EachValueOneCategory\boxDesign.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GuhaMining\GuhaMining2008.csproj">
+      <Project>{9D598D8A-0393-4E99-9842-49D120C06881}</Project>
+      <Name>GuhaMining2008</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -196,7 +196,7 @@ namespace Ferda.Modules
         #region Properties providers by their type (short, bool, int, long, float, double, string, datetime, date, time and other)
 
         /// <summary>
-        /// Gets the short integer property of the specified name.
+        /// Gets the short integer property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.Int16">Short</see> value of the specified property.</returns>
@@ -226,7 +226,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the boolean property of the specified name.
+        /// Gets the boolean property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.Boolean">Boolean</see> value of the specified property.</returns>
@@ -256,7 +256,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the integer property of the specified name.
+        /// Gets the integer property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.Int32">Integer</see> value of the specified property.</returns>
@@ -286,7 +286,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the long integer property of the specified name.
+        /// Gets the long integer property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.Int64">Long</see> value of the specified property.</returns>
@@ -316,7 +316,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the float property of the specified name.
+        /// Gets the float property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.Single">Float</see> value of the specified property.</returns>
@@ -346,7 +346,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the double property of the specified name.
+        /// Gets the double property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.Double">Double</see> value of the specified property.</returns>
@@ -376,7 +376,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the string property of the specified name.
+        /// Gets the string property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.String">String</see> value of the specified property.</returns>
@@ -406,7 +406,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the string[] property of the specified name.
+        /// Gets the string[] property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.String">String</see>[] value of the specified property.</returns>
@@ -436,7 +436,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the datetime property of the specified name.
+        /// Gets the datetime property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.DateTime">DateTime</see> value of the specified property.</returns>
@@ -472,7 +472,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the date property of the specified name.
+        /// Gets the date property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.Int16">DateTime</see> value of the specified property.</returns>
@@ -507,7 +507,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the time property of the specified name.
+        /// Gets the time property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The <see cref="System.TimeSpan">Time</see> value of the specified property.</returns>
@@ -542,7 +542,7 @@ namespace Ferda.Modules
         }
 
         /// <summary>
-        /// Gets the "other type" property of the specified name.
+        /// Gets the "other type" property of the specified name. Works for non-readonly properties only. 
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>The "other type" value of the specified property.</returns>

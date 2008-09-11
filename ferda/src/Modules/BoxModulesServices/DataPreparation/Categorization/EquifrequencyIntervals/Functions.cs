@@ -52,7 +52,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         public const string PropFrom = "From";
         public const string PropTo = "To";
         public const string PropCardinality = "Cardinality";
-        public const string SockColumn = "Column";
         public const string PropCategories = "Categories";
 
 
@@ -248,7 +247,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         {
             return SocketConnections.GetPrx<ColumnFunctionsPrx>(
                 _boxModule,
-                SockColumn,
+                Public.SockColumn,
                 ColumnFunctionsPrxHelper.checkedCast,
                 fallOnError);
         }

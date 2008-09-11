@@ -137,7 +137,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                     case "StaticAttribute":
                         //creating the info about the connections of the new module
                         moduleConnection.socketName =
-                            StaticAttribute.Functions.SockColumn;
+                            Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
                         //creating the new (single) module

@@ -70,7 +70,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         public const string PropCardinality = "Cardinality";
         public const string PropCategories = "Categories";
         public const string PropDataType = "DbDataType";
-        public const string SockColumn = "Column";
 
         public GuidStruct Guid
         {
@@ -146,7 +145,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         {
             return SocketConnections.GetPrx<ColumnFunctionsPrx>(
                 _boxModule,
-                SockColumn,
+                Public.SockColumn,
                 ColumnFunctionsPrxHelper.checkedCast,
                 fallOnError);
         }
