@@ -54,6 +54,11 @@ namespace Ferda.Guha.MiningProcessor.Results
         public int TreeDepth;
 
         /// <summary>
+        /// The root node of the tree
+        /// </summary>
+        public SerializableNode RootNode;
+
+        /// <summary>
         /// Serializes the specified input.
         /// </summary>
         /// <param name="input">The decision tree to be serialized</param>

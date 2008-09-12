@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Modules.Boxes.DataPreparation;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
@@ -59,6 +60,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// Examples that are false and classified correctly
         /// </summary>
         private int trueNegative = 0;
+
+        /// <summary>
+        /// The decision trees to be used for classification
+        /// </summary>
+        private SerializableDecisionTree[] decisionTrees;
 
         #endregion
 
@@ -166,7 +172,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
 
         #endregion
 
-        #region Methods
+        #region Public methods
 
         /// <summary>
         /// Gets column names of the data table
@@ -184,6 +190,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
             return dtPrx.getColumnsNames();
         }
 
+        /// <summary>
+        /// Gets column names of attributes connected to ETree task
+        /// </summary>
+        /// <returns>Column names</returns>
         public string[] GetAttributeColumnNames()
         {
             BoxModulePrx eTree = boxModule.getConnections(SockETree)[0];
@@ -195,22 +205,64 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
             attributes.AddRange(
                 eTree.getConnections(Tasks.ETree.Functions.SockBranchingAttributes));
 
-            //getting the columns
+            //getting the columns box modules
             List<BoxModulePrx> columns = new List<BoxModulePrx>();
             foreach (BoxModulePrx atr in attributes)
             {
                 columns.Add(atr.getConnections("Column")[0]);
             }
 
+            //getting the columns functions
             List<ColumnFunctionsPrx> columnPrxs = new List<ColumnFunctionsPrx>();
             foreach (BoxModulePrx col in columns)
             {
                 ColumnFunctionsPrx tmp =
-                    ColumnFunctionsPrxHelper.checkedCast(col);
+                    ColumnFunctionsPrxHelper.checkedCast(col.getFunctions());
                 columnPrxs.Add(tmp);
             }
 
-            return null;
+            List<string> columnNames = new List<string>();
+            foreach (ColumnFunctionsPrx clPrx in columnPrxs)
+            {
+                columnNames.Add(clPrx.getColumnInfo().columnSelectExpression);
+            }
+
+            return columnNames.ToArray();
+        }
+
+        #endregion
+
+        #region Private methods
+
+        /// <summary>
+        /// Stores the decision trees needed for classification to
+        /// private field
+        /// </summary>
+        public void RetrieveDecisionTrees()
+        {
+            string stat;
+
+            MiningTaskFunctionsPrx taskPrx =
+                SocketConnections.GetPrx<MiningTaskFunctionsPrx>(
+                    boxModule,
+                    SockETree,
+                    MiningTaskFunctionsPrxHelper.checkedCast,
+                    true);
+            string result = taskPrx.GetResult(out stat);
+
+            //deserializing the result
+            DecisionTreeResult res;
+            try
+            {
+                res = DecisionTreeResult.Deserialize(result);
+                decisionTrees = res.decisionTrees;
+            }
+            catch
+            {
+                BoxRuntimeError error = new BoxRuntimeError(null,
+                    "Either a different task than ETree or the ETree procedure wasn't run.");
+                throw error;
+            }
         }
 
         #endregion

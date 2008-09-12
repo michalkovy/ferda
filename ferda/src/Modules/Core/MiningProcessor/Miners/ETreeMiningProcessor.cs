@@ -193,27 +193,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             get { return result; }
         }
 
-        /// <summary>
-        /// Attributes used by the ETree miner in a structure suitable for 
-        /// classification - dictionary of strings and their types
-        /// </summary>
-        private string [] UsedAttributes
-        {
-            get
-            {
-                List<string> result = new List<string>();
-
-                result.Add(targetClassificationAttribute.Identifier.ToString());
-
-                foreach (CategorialAttributeTrace attr in branchingAttributes)
-                {
-                    result.Add(attr.Identifier.ToString());
-                }
-
-                return result.ToArray();
-            }
-        }
-
         #endregion
 
         #region Constructor
@@ -423,7 +402,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             result = new DecisionTreeResult();
             result.TaskTypeEnum = TaskTypeEnum.ETree;
             result.AllObjectsCount = allObjectsCount;
-            result.UsedAttributes = UsedAttributes;
             
             List<SerializableDecisionTree> hyps = 
                 new List<SerializableDecisionTree>(hypotheses.Count);
@@ -435,6 +413,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 ser.ConfusionMatrix = tree.ConfusionMatrix(
                     targetClassificationAttribute.BitStrings, 
                     targetClassificationAttribute.CategoriesIds);
+
+                //the nodes
+                SerializableNode node = new SerializableNode(tree.RootNode);
+                ser.RootNode = node;
+
                 hyps.Add(ser);
             }
             result.decisionTrees = hyps.ToArray();
