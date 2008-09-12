@@ -1125,61 +1125,58 @@ namespace Ferda.Modules
         /// </exception>
         public override void runAction(string actionName, Current __current)
         {
-            lock (this)
+            bool neededSocketsConnected = true;
+            foreach (string[] neededSockets in boxInfo.GetActionInfoNeededConnectedSockets(actionName))
             {
-                bool neededSocketsConnected = true;
-                foreach (string[] neededSockets in boxInfo.GetActionInfoNeededConnectedSockets(actionName))
+                neededSocketsConnected = true;
+                foreach (string neededSocket in neededSockets)
                 {
-                    neededSocketsConnected = true;
-                    foreach (string neededSocket in neededSockets)
+                    if (!(getConnection(neededSocket).Count > 0))
                     {
-                        if (!(getConnection(neededSocket).Count > 0))
-                        {
-                            neededSocketsConnected = false;
-                            break;
-                        }
-                    }
-                    if (neededSocketsConnected)
+                        neededSocketsConnected = false;
                         break;
+                    }
                 }
-                if (!neededSocketsConnected)
-                {
-                    Debug.WriteLine("BMI24");
-                    throw new NeedConnectedSocketError();
-                }
+                if (neededSocketsConnected)
+                    break;
+            }
+            if (!neededSocketsConnected)
+            {
+                Debug.WriteLine("BMI24");
+                throw new NeedConnectedSocketError();
+            }
 
-                // lock the box module
-                manager.getBoxModuleLocker().lockBoxModule(StringIceIdentity);
+            // lock the box module
+            manager.getBoxModuleLocker().lockBoxModule(StringIceIdentity);
 
-                try
-                {
-                    boxInfo.RunAction(actionName, this);
-                    //throws BoxRuntimeError, NameNotExistError
-                }
-                catch (BoxRuntimeError e)
-                {
-                    // na vyber jestli poslad vyjimku nebo implicitni konstrukci vysledku
-                    if (String.IsNullOrEmpty(e.boxIdentity))
-                        e.boxIdentity = StringIceIdentity;
-                    Debug.Assert(!String.IsNullOrEmpty(e.boxIdentity));
-                    Debug.Assert(!String.IsNullOrEmpty(e.userMessage));
-                    throw;
-                }
-                catch (Ice.Exception e)
-                {
-                    Debug.Assert(false);
-                    throw Exceptions.BoxRuntimeError(e, StringIceIdentity, "Unexpected Ice exception." + e.Message);
-                }
-                catch (Exception e)
-                {
-                    Debug.Assert(false);
-                    throw Exceptions.BoxRuntimeError(e, StringIceIdentity, "Unexpected exception." + e.Message);
-                }
-                finally
-                {
-                    // unlock the box module
-                    manager.getBoxModuleLocker().unlockBoxModule(StringIceIdentity);
-                }
+            try
+            {
+                boxInfo.RunAction(actionName, this);
+                //throws BoxRuntimeError, NameNotExistError
+            }
+            catch (BoxRuntimeError e)
+            {
+                // na vyber jestli poslad vyjimku nebo implicitni konstrukci vysledku
+                if (String.IsNullOrEmpty(e.boxIdentity))
+                    e.boxIdentity = StringIceIdentity;
+                Debug.Assert(!String.IsNullOrEmpty(e.boxIdentity));
+                Debug.Assert(!String.IsNullOrEmpty(e.userMessage));
+                throw;
+            }
+            catch (Ice.Exception e)
+            {
+                Debug.Assert(false);
+                throw Exceptions.BoxRuntimeError(e, StringIceIdentity, "Unexpected Ice exception." + e.Message);
+            }
+            catch (Exception e)
+            {
+                Debug.Assert(false);
+                throw Exceptions.BoxRuntimeError(e, StringIceIdentity, "Unexpected exception." + e.Message);
+            }
+            finally
+            {
+                // unlock the box module
+                manager.getBoxModuleLocker().unlockBoxModule(StringIceIdentity);
             }
         }
 
