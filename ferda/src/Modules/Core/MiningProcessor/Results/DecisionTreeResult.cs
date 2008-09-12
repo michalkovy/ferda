@@ -55,11 +55,6 @@ namespace Ferda.Guha.MiningProcessor.Results
         public SerializableDecisionTree[] decisionTrees;
 
         /// <summary>
-        /// Defines list of attributes
-        /// </summary>
-        public string [] UsedAttributes;
-
-        /// <summary>
         /// Default constructor of the class.
         /// </summary>
         public DecisionTreeResult()

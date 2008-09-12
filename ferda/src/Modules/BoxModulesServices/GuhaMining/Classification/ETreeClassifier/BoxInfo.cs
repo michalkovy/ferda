@@ -135,8 +135,20 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
             Functions Func = (Functions)boxModule.FunctionsIObj;
 
             //checking if the attribute names and the names of columns of the attributes match
-            Func.GetDatatableColumnNames();
-            Func.GetAttributeColumnNames();
+            List<string> dbNames = new List<string>(Func.GetDatatableColumnNames());
+            List<string> colNames = new List<string>(Func.GetAttributeColumnNames());
+
+            foreach (string col in colNames)
+            {
+                if (!dbNames.Contains(col))
+                {
+                    BoxRuntimeError error = new BoxRuntimeError(null, 
+                        "Some columns in the ETree construction do not occur in the database.");
+                    throw error;
+                }
+            }
+
+            Func.RetrieveDecisionTrees();
         }
 
         #region Type Identifier

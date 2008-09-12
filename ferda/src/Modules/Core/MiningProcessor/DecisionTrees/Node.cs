@@ -296,6 +296,16 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         #region Public methods
 
         /// <summary>
+        /// Returns classification class of a category.
+        /// </summary>
+        /// <param name="category">Category</param>
+        /// <returns>Classification of the category</returns>
+        public string ClassificationOfCategory(string category)
+        {
+            return classifiedCategories[category].classificationCategory;
+        }
+
+        /// <summary>
         /// Returns leaf nodes, that are located in subnodes of this node.
         /// </summary>
         /// <returns>Leaf nodes located in subnodes</returns>

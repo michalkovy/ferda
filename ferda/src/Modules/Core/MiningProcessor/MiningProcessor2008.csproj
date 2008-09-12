@@ -23,7 +23,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8A77381C-4DBC-40FA-A090-9AF34D65660E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -177,6 +177,7 @@
     <Compile Include="Results\SerializableDecisionTree.cs" />
     <Compile Include="Results\SerializableFormula.cs" />
     <Compile Include="Results\SerializableHypothesis.cs" />
+    <Compile Include="Results\SerializableNode.cs" />
     <Compile Include="Results\SerializableOntologyMapping.cs" />
     <Compile Include="Results\SerializableResult.cs" />
     <Compile Include="Results\SerializableResultInfo.cs" />
