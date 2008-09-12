@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Modules.Boxes.DataPreparation;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
 {
@@ -161,6 +162,55 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
             {
                 return trueNegative;
             }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Gets column names of the data table
+        /// </summary>
+        /// <returns>column names</returns>
+        public string[] GetDatatableColumnNames()
+        {
+            DataTableFunctionsPrx dtPrx =
+                SocketConnections.GetPrx<DataTableFunctionsPrx>(
+                boxModule,
+                SockDataTable,
+                DataTableFunctionsPrxHelper.checkedCast,
+                true);
+
+            return dtPrx.getColumnsNames();
+        }
+
+        public string[] GetAttributeColumnNames()
+        {
+            BoxModulePrx eTree = boxModule.getConnections(SockETree)[0];
+
+            //getting the attributes
+            List<BoxModulePrx> attributes = new List<BoxModulePrx>();
+            attributes.Add(
+                eTree.getConnections(Tasks.ETree.Functions.SockTargetClassificationAttribute)[0]);
+            attributes.AddRange(
+                eTree.getConnections(Tasks.ETree.Functions.SockBranchingAttributes));
+
+            //getting the columns
+            List<BoxModulePrx> columns = new List<BoxModulePrx>();
+            foreach (BoxModulePrx atr in attributes)
+            {
+                columns.Add(atr.getConnections("Column")[0]);
+            }
+
+            List<ColumnFunctionsPrx> columnPrxs = new List<ColumnFunctionsPrx>();
+            foreach (BoxModulePrx col in columns)
+            {
+                ColumnFunctionsPrx tmp =
+                    ColumnFunctionsPrxHelper.checkedCast(col);
+                columnPrxs.Add(tmp);
+            }
+
+            return null;
         }
 
         #endregion

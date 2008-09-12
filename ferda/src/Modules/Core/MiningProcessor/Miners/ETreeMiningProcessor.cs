@@ -197,21 +197,20 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Attributes used by the ETree miner in a structure suitable for 
         /// classification - dictionary of strings and their types
         /// </summary>
-        private Dictionary<string, Type> UsedAttributes
+        private string [] UsedAttributes
         {
             get
             {
-                Dictionary<string, Type> result = new Dictionary<string, Type>();
+                List<string> result = new List<string>();
 
-                result.Add(targetClassificationAttribute.Identifier.ToString(), 
-                    typeof(object));
+                result.Add(targetClassificationAttribute.Identifier.ToString());
 
                 foreach (CategorialAttributeTrace attr in branchingAttributes)
                 {
-                    result.Add(attr.Identifier.ToString(), typeof(object));
+                    result.Add(attr.Identifier.ToString());
                 }
 
-                return result;
+                return result.ToArray();
             }
         }
 

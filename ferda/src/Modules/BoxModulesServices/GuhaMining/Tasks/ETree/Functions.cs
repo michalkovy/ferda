@@ -371,38 +371,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
 
         #region Other private methods
 
-        /// <summary>
-        /// Adds types of columns to the
-        /// <see cref="Ferda.Guha.MiningProcessor.Results.DecisionTreeResult.UsedAttributes"/>
-        /// field from information about the database.
-        /// </summary>
-        /// <param name="result">Serialized result</param>
-        /// <returns>Serialized result with column type information</returns>
-        private string AddColumnTypes(string serializedResult)
-        {
-            DecisionTreeResult result =
-                DecisionTreeResult.Deserialize(serializedResult);
-
-            //getting the BoxModulePrx for the attributes
-            List<BoxModulePrx> attributePrxs = new List<BoxModulePrx>(
-                _boxModule.GetConnections(SockBranchingAttributes));
-
-            attributePrxs.AddRange(_boxModule.GetConnections(SockTargetClassificationAttribute));
-
-            //getting the column proxies
-            List<ColumnFunctionsPrx> columnPrxs =
-                new List<ColumnFunctionsPrx>();
-
-            foreach (BoxModulePrx prx in attributePrxs)
-            {
-                //BoxModulePrx tmp = prx.getConnections(DataPreparation.Categorization.Public.SockColumn)[0];
-                //ColumnFunctionsPrx columnprx = ColumnFunctionsPrxHelper.checkedCast(tmp);
-                //columnPrxs.Add(columnprx);
-            }
-
-            return DecisionTreeResult.Serialize(result);
-        }
-
         #endregion
 
         /// <summary>
@@ -476,7 +444,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
             //processing of the results
             Common.SetResultInfo(_boxModule, resultInfo);
             _cachedSerializableResultInfo = SerializableResultInfo.Deserialize(resultInfo);
-            Common.SetResult(_boxModule, AddColumnTypes(result));
+            Common.SetResult(_boxModule, result);
         }
     }
 }
