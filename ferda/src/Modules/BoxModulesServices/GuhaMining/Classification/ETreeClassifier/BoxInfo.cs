@@ -126,6 +126,19 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
             }
         }
 
+        /// <summary>
+        /// Validates the box
+        /// </summary>
+        /// <param name="boxModule">box instance to be validated</param>
+        public override void Validate(BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            //checking if the attribute names and the names of columns of the attributes match
+            Func.GetDatatableColumnNames();
+            Func.GetAttributeColumnNames();
+        }
+
         #region Type Identifier
 
         /// <summary>
