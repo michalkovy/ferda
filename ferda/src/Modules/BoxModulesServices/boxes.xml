@@ -5249,7 +5249,14 @@
 				<CategoryName>Settings</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>1</Default>
+				<Default>0</Default>
+				<NumericalRestrictions>
+					<Restriction>
+						<Integral>0</Integral>
+						<Min>true</Min>
+						<Including>true</Including>
+					</Restriction>
+				</NumericalRestrictions>
 			</Property>
 			<Property>
 				<Name>TruePositive</Name>

@@ -149,6 +149,47 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
             }
 
             Func.RetrieveDecisionTrees();
+
+            if (Func.decisionTrees.Length == 0)
+            {
+                BoxRuntimeError error = new BoxRuntimeError(null,
+                    "In order to classify, there has to be at least one tree in the ETree results.");
+                throw error;
+            }
+
+            if (Func.TreeNumber > Func.decisionTrees.Length)
+            {
+                BoxRuntimeError error = new BoxRuntimeError(null,
+                    "Number of tree to be used for classification is higher than number of all the trees in the result.");
+                throw error;
+            }
+        }
+
+        /// <summary>
+        /// Executes (runs) action specified by <c>actionName</c>.
+        /// </summary>
+        /// <param name="actionName">Name of the action.</param>
+        /// <param name="boxModule">The Box module.</param>
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">
+        /// Thrown if action named <c>actionName</c> doesn`t exist.
+        /// </exception>
+        /// <exception cref="T:Ferda.Modules.BoxRuntimeError">
+        /// Thrown if any runtime error occured while executing the action.
+        /// </exception>
+        public override void RunAction(string actionName, BoxModuleI boxModule)
+        {
+            Validate(boxModule);
+
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            switch (actionName)
+            {
+                case "Classify":
+                    Func.Classify();
+                    break;
+                default:
+                    throw Exceptions.NameNotExistError(null, actionName);
+            }
         }
 
         #region Type Identifier
@@ -182,7 +223,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
     * public virtual PropertyValue GetPropertyObjectFromInterface(string propertyName, Ice.ObjectPrx objectPrx)
     * public virtual bool IsPropertySet(string propertyName, PropertyValue propertyValue)
     * public virtual DynamicHelpItem[] GetDynamicHelpItems(string[] localePrefs, BoxModuleI boxModule)
-    * public virtual void RunAction(string actionName, BoxModuleI boxModule)
     * */
     }
 }
