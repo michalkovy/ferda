@@ -21,8 +21,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Data;
+using Ferda.Guha.Data;
+using Ferda.Guha.Attribute;
+using Ferda.ModulesManager;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Results;
+using Ferda.Guha.MiningProcessor.Miners;
 using Ferda.Modules.Boxes.DataPreparation;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
@@ -46,6 +51,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// Examples that are true and classified correctly
         /// </summary>
         private int truePositive = 0;
+
         /// <summary>
         /// Examples that are true and classified incorrectly
         /// </summary>
@@ -62,11 +68,40 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         private int trueNegative = 0;
 
         /// <summary>
-        /// The decision trees to be used for classification
+        /// Cached data table
         /// </summary>
-        private SerializableDecisionTree[] decisionTrees;
+        private DataTable dataTableCache = null;
+
+        /// <summary>
+        /// Ticks (precise time) of the last update of the 
+        /// progress bar
+        /// </summary>
+        private long progressLastUpdateTicks = DateTime.Now.Ticks;
+
+        /// <summary>
+        /// Minimum change in number of ticks for the miner to publish its
+        /// progress. 
+        /// </summary>
+        private const long progressMinCountOfTicksToPublish = 500000;
+        // ticks:
+        // 1 tick = 100-nanosecond 
+        // nano is 0.000 000 001
+        // mili is 0.001
+        // 0.05 sec is ticks * 500 000
+
+        /// <summary>
+        /// Cache for attribute functions strings
+        /// (in order not to ask Ice layer multiple times
+        /// </summary>
+        private Dictionary<string, AttributeSerializable<System.IComparable>>
+            cachedAttributes = null;
 
         #endregion
+
+        /// <summary>
+        /// The decision trees to be used for classification
+        /// </summary>
+        public SerializableDecisionTree[] decisionTrees;
 
         #region Sockets
 
@@ -116,7 +151,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
 
         /// <summary>
         /// Decision tree according to which the classification should be done
-        /// (number in the hypotheses list).
+        /// (number in the hypotheses list). The property is counted from 0. 
         /// </summary>
         public int TreeNumber
         {
@@ -170,6 +205,40 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
             }
         }
 
+        /// <summary>
+        /// Gets actual data of the testing data table. 
+        /// </summary>
+        /// <returns>Data in a structure</returns>
+        public DataTable TestingData
+        {
+            get
+            {
+                if (dataTableCache == null)
+                {
+                    DataTableFunctionsPrx dtPrx =
+                        SocketConnections.GetPrx<DataTableFunctionsPrx>(
+                        boxModule,
+                        SockDataTable,
+                        DataTableFunctionsPrxHelper.checkedCast,
+                        true);
+
+                    DataTableInfo dbInfo = dtPrx.getDataTableInfo();
+
+                    DatabaseConnectionSettingHelper helper =
+                        new DatabaseConnectionSettingHelper(dbInfo.databaseConnectionSetting);
+
+                    //testing the database
+                    GenericDatabase db = GenericDatabaseCache.GetGenericDatabase(helper);
+
+                    //getting the result
+                    string tableName = dbInfo.dataTableName;
+                    GenericDataTable table = db[dbInfo.dataTableName];
+                    dataTableCache = table.Select();
+                }
+                return dataTableCache;
+            }
+        }
+
         #endregion
 
         #region Public methods
@@ -196,30 +265,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// <returns>Column names</returns>
         public string[] GetAttributeColumnNames()
         {
-            BoxModulePrx eTree = boxModule.getConnections(SockETree)[0];
-
-            //getting the attributes
-            List<BoxModulePrx> attributes = new List<BoxModulePrx>();
-            attributes.Add(
-                eTree.getConnections(Tasks.ETree.Functions.SockTargetClassificationAttribute)[0]);
-            attributes.AddRange(
-                eTree.getConnections(Tasks.ETree.Functions.SockBranchingAttributes));
-
-            //getting the columns box modules
-            List<BoxModulePrx> columns = new List<BoxModulePrx>();
-            foreach (BoxModulePrx atr in attributes)
-            {
-                columns.Add(atr.getConnections("Column")[0]);
-            }
-
-            //getting the columns functions
-            List<ColumnFunctionsPrx> columnPrxs = new List<ColumnFunctionsPrx>();
-            foreach (BoxModulePrx col in columns)
-            {
-                ColumnFunctionsPrx tmp =
-                    ColumnFunctionsPrxHelper.checkedCast(col.getFunctions());
-                columnPrxs.Add(tmp);
-            }
+            List<ColumnFunctionsPrx> columnPrxs = GetETreeColumnFunctionPrxs();
 
             List<string> columnNames = new List<string>();
             foreach (ColumnFunctionsPrx clPrx in columnPrxs)
@@ -229,10 +275,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
 
             return columnNames.ToArray();
         }
-
-        #endregion
-
-        #region Private methods
 
         /// <summary>
         /// Stores the decision trees needed for classification to
@@ -263,6 +305,147 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
                     "Either a different task than ETree or the ETree procedure wasn't run.");
                 throw error;
             }
+        }
+
+        /// <summary>
+        /// Classifies the data according to the selected tree
+        /// </summary>
+        public void Classify()
+        {
+            //starting the progress bar
+            int count = 0;
+            string label = String.Empty;
+            ProgressTaskListener progressListener = new ProgressTaskListener();
+            ProgressTaskPrx progressPrx =
+                ProgressTaskI.Create(boxModule.Adapter, progressListener);
+            ProgressBarPrx progressBarPrx =
+                boxModule.Output.startProgress(progressPrx, label, label + " running...");
+            progressBarPrx.setValue(-1, "Loading ...");
+
+            string[] resultCategories = new string[TestingData.Rows.Count];
+
+            foreach (DataRow row in TestingData.Rows)
+            {
+                //set progress
+                long actTicks = DateTime.Now.Ticks;
+                if (System.Math.Abs(progressLastUpdateTicks - actTicks) > progressMinCountOfTicksToPublish)
+                {
+                    progressLastUpdateTicks = actTicks;
+                    try
+                    {
+                        progressBarPrx.setValue((float)count/TestingData.Rows.Count, "Classifying rows...");
+                    }
+                    catch { }
+                }
+
+                //classification of one row
+                resultCategories[count] = ClassifyRow(row, decisionTrees[TreeNumber].RootNode);
+
+                count++;
+            }
+
+            //finishing the progress bar
+            progressBarPrx.setValue(-1, "Finished ...");
+            if (progressBarPrx != null)
+            {
+                progressBarPrx.done();
+                ProgressTaskI.Destroy(boxModule.Adapter, progressPrx);
+            }
+        }
+
+        #endregion
+
+        #region Private methods
+
+        /// <summary>
+        /// Returns a string representation of category classified by
+        /// a node in the parameter
+        /// </summary>
+        /// <param name="row">Row to be classified</param>
+        /// <param name="node">Decision tree node where the
+        /// classification takes part</param>
+        /// <returns>String representation of the classification category</returns>.
+        private string ClassifyRow(DataRow row, SerializableNode node)
+        {
+            AttributeSerializable<IComparable> attribute = GetAttribute(node.AttributeName);
+
+            return string.Empty;
+        }
+
+        private AttributeSerializable<IComparable> GetAttribute(string attributeName)
+        {
+            //loading attributes into cache
+            if (cachedAttributes == null)
+            {
+                List<BoxModulePrx> attributePrxs =
+                    GetAttributeBoxModulePrxs();
+
+                List<AttributeFunctionsPrx> attributeFncs =
+                    new List<AttributeFunctionsPrx>();
+
+                //loading attribute function proxies
+                foreach (BoxModulePrx prx in attributePrxs)
+                {
+                    attributeFncs.Add(
+                        AttributeFunctionsPrxHelper.checkedCast(prx.getFunctions()));
+                }
+
+                //deserializing the attribute info
+                foreach (AttributeFunctionsPrx attrPrx in attributeFncs)
+                {
+                    AttributeSerializable<IComparable> tmp =
+                        Ferda.Guha.Attribute.Serializer.Deserialize<IComparable>
+                            (attrPrx.getAttribute());
+                    cachedAttributes.Add(attributeName, tmp);
+                }
+            }
+
+            return cachedAttributes[attributeName];
+        }
+
+        /// <summary>
+        /// Gets box module proxies of the attributes connected to the ETree
+        /// box.
+        /// </summary>
+        /// <returns>Box module proxies of the attributes</returns>
+        private List<BoxModulePrx> GetAttributeBoxModulePrxs()
+        {
+            BoxModulePrx eTree = boxModule.getConnections(SockETree)[0];
+
+            //getting the attributes
+            List<BoxModulePrx> attributes = new List<BoxModulePrx>();
+            attributes.Add(
+                eTree.getConnections(Tasks.ETree.Functions.SockTargetClassificationAttribute)[0]);
+            attributes.AddRange(
+                eTree.getConnections(Tasks.ETree.Functions.SockBranchingAttributes));
+            return attributes;
+        }
+
+        /// <summary>
+        /// Get column function proxies, which are connected to the ETree
+        /// attributes.
+        /// </summary>
+        /// <returns>Column functions proxies</returns>
+        private List<ColumnFunctionsPrx> GetETreeColumnFunctionPrxs()
+        {
+            List<BoxModulePrx> attributes = GetAttributeBoxModulePrxs();
+
+            //getting the columns box modules
+            List<BoxModulePrx> columns = new List<BoxModulePrx>();
+            foreach (BoxModulePrx atr in attributes)
+            {
+                columns.Add(atr.getConnections("Column")[0]);
+            }
+
+            //getting the columns functions
+            List<ColumnFunctionsPrx> columnPrxs = new List<ColumnFunctionsPrx>();
+            foreach (BoxModulePrx col in columns)
+            {
+                ColumnFunctionsPrx tmp =
+                    ColumnFunctionsPrxHelper.checkedCast(col.getFunctions());
+                columnPrxs.Add(tmp);
+            }
+            return columnPrxs;
         }
 
         #endregion
