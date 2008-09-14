@@ -93,8 +93,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// Cache for attribute functions strings
         /// (in order not to ask Ice layer multiple times
         /// </summary>
-        private Dictionary<string, AttributeSerializable<System.IComparable>>
+        private Dictionary<string, Attribute<IComparable>>
             cachedAttributes = null;
+
+        /// <summary>
+        /// Cache for types of columns accessible by the columns name.
+        /// Initialized in the 
+        /// <see cref="GetAttribute"/> method.
+        /// </summary>
+        //private Dictionary<string, DbDataTypeEnum> cachedAttributeColumnTypes
+        //    = null;
 
         #endregion
 
@@ -367,36 +375,54 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// <returns>String representation of the classification category</returns>.
         private string ClassifyRow(DataRow row, SerializableNode node)
         {
-            AttributeSerializable<IComparable> attribute = GetAttribute(node.AttributeName);
+            Attribute<IComparable> attribute = GetAttribute(node.AttributeName);
+
+            IComparable entry = (IComparable) row[node.AttributeName];
 
             return string.Empty;
         }
 
-        private AttributeSerializable<IComparable> GetAttribute(string attributeName)
+        /// <summary>
+        /// Returns attribute connected to the ETree procedure by its name (
+        /// which corresponds to select expression of the column). The method
+        /// uses and fills two caches, <see cref="cachedAttributes"/> and
+        /// <see cref="cachedAttributeColumnTypes"/>.
+        /// </summary>
+        /// <param name="attributeName">Name of the attribute</param>
+        /// <returns>Attribute</returns>
+        private Attribute<IComparable> GetAttribute(string attributeName)
         {
             //loading attributes into cache
             if (cachedAttributes == null)
             {
+                cachedAttributes = new Dictionary<string, Attribute<IComparable>>();
+                //cachedAttributeColumnTypes = new Dictionary<string, DbDataTypeEnum>();
+
                 List<BoxModulePrx> attributePrxs =
                     GetAttributeBoxModulePrxs();
 
-                List<AttributeFunctionsPrx> attributeFncs =
-                    new List<AttributeFunctionsPrx>();
-
-                //loading attribute function proxies
+                //deserializing attribute info
                 foreach (BoxModulePrx prx in attributePrxs)
                 {
-                    attributeFncs.Add(
-                        AttributeFunctionsPrxHelper.checkedCast(prx.getFunctions()));
-                }
+                    //the attribute functions proxy
+                    AttributeFunctionsPrx attrPrx =
+                        AttributeFunctionsPrxHelper.checkedCast(prx.getFunctions());
 
-                //deserializing the attribute info
-                foreach (AttributeFunctionsPrx attrPrx in attributeFncs)
-                {
-                    AttributeSerializable<IComparable> tmp =
-                        Ferda.Guha.Attribute.Serializer.Deserialize<IComparable>
-                            (attrPrx.getAttribute());
-                    cachedAttributes.Add(attributeName, tmp);
+                    //the column functions proxy
+                    BoxModulePrx col = prx.getConnections("Column")[0];
+                    ColumnFunctionsPrx colPrx = ColumnFunctionsPrxHelper.checkedCast(col.getFunctions());
+
+                    //column name and type
+                    DbDataTypeEnum colType = colPrx.getColumnInfo().dataType;
+                    string colSelect = colPrx.getColumnInfo().columnSelectExpression;
+
+                    //deserializing attribute
+                    Attribute<IComparable> attr =
+                        Ferda.Guha.Attribute.Serializer.RetypeAttributeSerializable(
+                            attrPrx.getAttribute(), colType);
+
+                    //adding to the cache
+                    cachedAttributes.Add(colSelect, attr);
                 }
             }
 

@@ -856,12 +856,79 @@ namespace Ferda.Guha.Attribute
         //    writer.Dispose(); 
         //    return sb.ToString();
         //}
-    }
 
-    //[Serializable()]
-    //public class AttributeSerialization
-    //{
-    //    public DbSimpleDataTypeEnum DataType;
-    //    public string SerializedAttribute;
-    //}
+        /// <summary>
+        /// Deserializes a serialized attribute and retypes it into 
+        /// <see cref="System.IComparable"/> form according to a 
+        /// column type
+        /// </summary>
+        /// <param name="serializedAttribute">Serialized attribute</param>
+        /// <param name="columnType">Type of column to which the attribute
+        /// should be serialized</param>
+        /// <returns>Deserialized attribute</returns>
+        public static Attribute<IComparable> RetypeAttributeSerializable(
+            string serializedAttribute, DbDataTypeEnum columnType)
+        {
+            Attribute<IComparable> tmp;
+            switch (columnType)
+            {
+                case DbDataTypeEnum.BooleanType:
+                    tmp =
+                        Retyper<IComparable, Boolean>.ToIComparable(
+                        Deserialize<Boolean>(serializedAttribute));
+                    break;
+
+                case DbDataTypeEnum.DateTimeType:
+                    tmp =
+                        Retyper<IComparable, DateTime>.ToIComparable(
+                        Deserialize<DateTime>(serializedAttribute));
+                    break;
+
+                case DbDataTypeEnum.DoubleType:
+                    tmp =
+                        Retyper<IComparable, Double>.ToIComparable(
+                        Deserialize<Double>(serializedAttribute));
+                    break;
+
+                case DbDataTypeEnum.FloatType:
+                case DbDataTypeEnum.DecimalType:
+                    tmp =
+                        Retyper<IComparable, Single>.ToIComparable(
+                        Deserialize<Single>(serializedAttribute));
+                    break;
+
+
+                case DbDataTypeEnum.IntegerType:
+                case DbDataTypeEnum.UnsignedIntegerType:
+                    tmp =
+                       Retyper<IComparable, Int32>.ToIComparable(
+                        Deserialize<Int32>(serializedAttribute));
+                    break;
+
+                case DbDataTypeEnum.ShortIntegerType:
+                case DbDataTypeEnum.UnsignedShortIntegerType:
+                    tmp =
+                       Retyper<IComparable, Int16>.ToIComparable(
+                        Deserialize<Int16>(serializedAttribute));
+                    break;
+
+                case DbDataTypeEnum.LongIntegerType:
+                case DbDataTypeEnum.UnsignedLongIntegerType:
+                    tmp =
+                       Retyper<IComparable, Int64>.ToIComparable(
+                        Deserialize<Int64>(serializedAttribute));
+                    break;
+
+                case DbDataTypeEnum.StringType:
+                    tmp =
+                       Retyper<IComparable, String>.ToIComparable(
+                        Deserialize<String>(serializedAttribute));
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            return tmp;
+        }
+    }
 }

@@ -757,68 +757,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                             columnDataType = prx2.getColumnInfo().dataType;
                         }
 
-                        #region datatype switch
-
                         //creating the attribute of the correct datatype
-                        switch (columnDataType)
-                        {
-                            case DbDataTypeEnum.BooleanType:
-                                attribute =
-                                    Retyper<IComparable, Boolean>.ToIComparable(
-                                    Guha.Attribute.Serializer.Deserialize<Boolean>(categories));
-                                break;
-
-                            case DbDataTypeEnum.DateTimeType:
-                                attribute =
-                                    Retyper<IComparable, DateTime>.ToIComparable(
-                                    Guha.Attribute.Serializer.Deserialize<DateTime>(categories));
-                                break;
-
-                            case DbDataTypeEnum.DoubleType:
-                                attribute =
-                                    Retyper<IComparable, Double>.ToIComparable(
-                                    Guha.Attribute.Serializer.Deserialize<Double>(categories));
-                                break;
-
-                            case DbDataTypeEnum.FloatType:
-                            case DbDataTypeEnum.DecimalType:
-                                attribute =
-                                    Retyper<IComparable, Single>.ToIComparable(
-                                    Guha.Attribute.Serializer.Deserialize<Single>(categories));
-                                break;
-
-
-                            case DbDataTypeEnum.IntegerType:
-                            case DbDataTypeEnum.UnsignedIntegerType:
-                                attribute =
-                                   Retyper<IComparable, Int32>.ToIComparable(
-                                    Guha.Attribute.Serializer.Deserialize<Int32>(categories));
-                                break;
-
-                            case DbDataTypeEnum.ShortIntegerType:
-                            case DbDataTypeEnum.UnsignedShortIntegerType:
-                                attribute =
-                                   Retyper<IComparable, Int16>.ToIComparable(
-                                    Guha.Attribute.Serializer.Deserialize<Int16>(categories));
-                                break;
-
-                            case DbDataTypeEnum.LongIntegerType:
-                            case DbDataTypeEnum.UnsignedLongIntegerType:
-                                attribute =
-                                   Retyper<IComparable, Int64>.ToIComparable(
-                                    Guha.Attribute.Serializer.Deserialize<Int64>(categories));
-                                break;
-
-                            case DbDataTypeEnum.StringType:
-                                attribute =
-                                   Retyper<IComparable, String>.ToIComparable(
-                                    Guha.Attribute.Serializer.Deserialize<String>(categories));
-                                break;
-
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                        #endregion
+                        attribute = Ferda.Guha.Attribute.Serializer.RetypeAttributeSerializable(
+                            categories, columnDataType);
 
                         _nullCategoryName = attribute.NullContainingCategory;
 

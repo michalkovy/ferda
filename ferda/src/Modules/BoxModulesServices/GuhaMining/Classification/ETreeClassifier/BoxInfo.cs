@@ -157,7 +157,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
                 throw error;
             }
 
-            if (Func.TreeNumber > Func.decisionTrees.Length)
+            if (Func.TreeNumber > Func.decisionTrees.Length - 1)
             {
                 BoxRuntimeError error = new BoxRuntimeError(null,
                     "Number of tree to be used for classification is higher than number of all the trees in the result.");

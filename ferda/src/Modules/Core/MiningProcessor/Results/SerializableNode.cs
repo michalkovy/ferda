@@ -88,6 +88,7 @@ namespace Ferda.Guha.MiningProcessor.Results
             int i;
             Leaf = node.Leaf;
             NodeCategories = node.SubCategories;
+            AttributeName = node.Attribute.Identifier.ToString();
 
             ClassificationCategories = new string[NodeCategories.Length];
             for (i = 0; i < NodeCategories.Length; i++)
