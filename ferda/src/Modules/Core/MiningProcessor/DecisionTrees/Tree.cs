@@ -43,6 +43,12 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// </summary>
         private int depth;
 
+        /// <summary>
+        /// Simple cache for computation of confusion matrix
+        /// (in order to be computed only once).
+        /// </summary>
+        double[][] confusionMatrixCache = null;
+
         #endregion
 
         #region Properties
@@ -254,37 +260,56 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         public double[][] ConfusionMatrix(IBitString[] classificationBitStrings,
             string[] classificationCategories)
         {
-            double[][] result = new double[2][];
-            result[0] = new double[2];
-            result[1] = new double[2];
-
-            long truePositive = 0;
-            long trueNegative = 0;
-            long falsePositive = 0;
-            long falseNegative = 0;
-
-            for (int i = 0; i < classificationCategories.Length; i++)
+            if (confusionMatrixCache == null)
             {
-                truePositive +=
-                    classificationBitStrings[i].And(
-                    rootNode.ClassifiedCategoryBitString(classificationCategories[i])).Sum;
-                falseNegative +=
-                    classificationBitStrings[i].And(
-                    rootNode.ClassifiedCategoryBitString(classificationCategories[i]).Not()).Sum;
-                falsePositive +=
-                    classificationBitStrings[i].Not().And(
-                    rootNode.ClassifiedCategoryBitString(classificationCategories[i])).Sum;
-                trueNegative +=
-                    classificationBitStrings[i].Not().And(
-                    rootNode.ClassifiedCategoryBitString(classificationCategories[i]).Not()).Sum;
+                double[][] result = new double[2][];
+                result[0] = new double[2];
+                result[1] = new double[2];
+
+                long truePositive = 0;
+                long trueNegative = 0;
+                long falsePositive = 0;
+                long falseNegative = 0;
+
+                for (int i = 0; i < classificationCategories.Length; i++)
+                {
+                    IBitString classifiedBitString = 
+                        rootNode.ClassifiedCategoryBitString(classificationCategories[i]);
+                    
+                    //when classified bit string is empty bit string (which is that
+                    //no row was classified by this category), the true positive
+                    //field of the confusion matrix should be 0
+                    if (!(classifiedBitString is EmptyBitString))
+                    {
+                        truePositive +=
+                            classificationBitStrings[i].And(classifiedBitString).Sum;
+                    }
+                    
+                    falseNegative +=
+                        classificationBitStrings[i].And(classifiedBitString.Not()).Sum;
+
+                    //when classified bit string is empty bit string (which is that
+                    //no row was classified by this category), the false positive
+                    //field of the confusion matrix should be 0
+                    if (!(classifiedBitString is EmptyBitString))
+                    {
+                        falsePositive +=
+                            classificationBitStrings[i].Not().And(classifiedBitString).Sum;
+                    }
+
+                    trueNegative +=
+                        classificationBitStrings[i].Not().And(classifiedBitString.Not()).Sum;
+                }
+
+                result[0][0] = (double)truePositive;
+                result[0][1] = (double)falsePositive;
+                result[1][0] = (double)falseNegative;
+                result[1][1] = (double)trueNegative;
+
+                confusionMatrixCache = result;
             }
 
-            result[0][0] = (double)truePositive;
-            result[0][1] = (double)falsePositive;
-            result[1][0] = (double)falseNegative;
-            result[1][1] = (double)trueNegative;
-
-            return result;
+            return confusionMatrixCache;
         }
 
         #endregion
