@@ -537,8 +537,8 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                 //now creating the node classification structure
                 NodeClassification nc = new NodeClassification();
                 nc.classificationCategory = classificationCategories[index];
-                nc.classificationBitString = 
-                    categoryBitString.And(classificationBitStrings[index]);
+                nc.classificationBitString = categoryBitString;
+                    //categoryBitString.And(classificationBitStrings[index]);
                 nc.noItemsInCategory = categoryBitString.Sum;
                 nc.noErrors = 
                     categoryBitString.And(classificationBitStrings[index].Not()).Sum;
