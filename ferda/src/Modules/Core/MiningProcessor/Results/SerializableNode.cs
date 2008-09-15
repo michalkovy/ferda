@@ -37,7 +37,12 @@ namespace Ferda.Guha.MiningProcessor.Results
     public class SerializableNode
     {
         /// <summary>
-        /// Name of the attribute, which is represented by this node
+        /// Name of the attribute, which is represented by this node. Note, that
+        /// this variable is filled with two different values. When staying in 
+        /// the Mining processor, the name from the
+        /// <see cref="Ferda.Guha.MiningProcessor.GuidAttributeNamePair"/> is used.
+        /// When entering the ETree box, this is changed to select expression
+        /// of the column for classification purposes. 
         /// </summary>
         public string AttributeName;
 

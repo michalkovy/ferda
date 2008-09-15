@@ -275,6 +275,27 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
+        /// Determines if the item belongs to the category -
+        /// it is either inside one of the intervals, or is element
+        /// of  the enumeration.
+        /// </summary>
+        /// <param name="item">Item to be compared</param>
+        /// <returns>True iff item belongs to the category</returns>
+        public bool BelongsToCategory(T item)
+        {
+            if (Enumeration.Contains(item))
+            {
+                return true;
+            }
+            if (Intervals.BelongsToIntervals(item))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Sorts this instance. In DEBUG (and not lazy reduction) mode, the disjunctivity is also checked.
         /// </summary>
         public void Sort()

@@ -320,6 +320,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// </summary>
         public void Classify()
         {
+            //reseting the counters
+            truePositive = 0;
+            falseNegative = 0;
+            falsePositive = 0;
+            trueNegative = 0;
+
             //starting the progress bar
             int count = 0;
             string label = String.Empty;
@@ -352,6 +358,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
                 count++;
             }
 
+            //computing the confusion matrix
+            try
+            {
+                progressBarPrx.setValue(1, "Computing confusion matrix...");
+            }
+            catch { }
+            ComputeConfusionMatrix(resultCategories);
+
             //finishing the progress bar
             progressBarPrx.setValue(-1, "Finished ...");
             if (progressBarPrx != null)
@@ -366,6 +380,54 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         #region Private methods
 
         /// <summary>
+        /// Computes confusion matrix
+        /// </summary>
+        /// <param name="resultCategories">Result of classification by
+        /// a tree</param>
+        private void ComputeConfusionMatrix(string[] resultCategories)
+        {
+            //getting the classification attribute
+            string classAttrName;
+            Attribute<IComparable> classAtribute =
+                GetClassificationAttribute(out classAttrName);
+            
+            //getting the data column
+            DataColumn column = TestingData.Columns[classAttrName];
+
+            foreach (string category in classAtribute.Keys)
+            {
+                //iterating through all the records
+                for (int i = 0; i < resultCategories.Length; i++)
+                {
+                    //if it is the counted category
+                    if (category == TestingData.Rows[i][column].ToString())
+                    {
+                        //counting the confusion matrix
+                        if (resultCategories[i] == category)
+                        {
+                            truePositive++;
+                        }
+                        else
+                        {
+                            falseNegative++;
+                        }
+                    }
+                    else
+                    {
+                        if (resultCategories[i] == category)
+                        {
+                            falsePositive++;
+                        }
+                        else
+                        {
+                            trueNegative++;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns a string representation of category classified by
         /// a node in the parameter
         /// </summary>
@@ -375,11 +437,59 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// <returns>String representation of the classification category</returns>.
         private string ClassifyRow(DataRow row, SerializableNode node)
         {
+            //getting the attribute and the data entry
             Attribute<IComparable> attribute = GetAttribute(node.AttributeName);
+            IComparable item = (IComparable) row[node.AttributeName];
 
-            IComparable entry = (IComparable) row[node.AttributeName];
+            //searching in categories (direct classification)
+            for (int i = 0; i < node.NodeCategories.Length; i++)
+            {
+                Category<IComparable> category = attribute[node.NodeCategories[i]];
+                if (category.BelongsToCategory(item))
+                {
+                    return node.ClassificationCategories[i];
+                }
+            }
 
-            return string.Empty;
+            //searching in subnodes
+            if (node.SubNodes != null)
+            {
+                for (int i = 0; i < node.SubNodeCategories.Length; i++)
+                {
+                    Category<IComparable> category = attribute[node.SubNodeCategories[i]];
+                    if (category.BelongsToCategory(item))
+                    {
+                        return ClassifyRow(row, node.SubNodes[i]);
+                    }
+                }
+            }
+
+            //here throwing an exception - this situation occurs iff the attribute
+            //does not fully cover the column domain
+            BoxRuntimeError error = new BoxRuntimeError(null,
+                    "The attribute does not fully cover the column domain, categorization impossible");
+            throw error;
+        }
+
+        /// <summary>
+        /// Gets the classification attribute of the ETree task
+        /// </summary>
+        /// <param name="selectExpression">
+        /// The select expression of the classification attribute
+        /// </param>
+        /// <returns>Classification attribute</returns>
+        private Attribute<IComparable> GetClassificationAttribute(out string selectExpression)
+        {
+            BoxModulePrx eTree = boxModule.getConnections(SockETree)[0];
+            BoxModulePrx clasAtrPrx = 
+                eTree.getConnections(Tasks.ETree.Functions.SockTargetClassificationAttribute)[0];
+            BoxModulePrx colPrx = 
+                eTree.getConnections("Column")[0];
+            ColumnFunctionsPrx colFnc = 
+                ColumnFunctionsPrxHelper.checkedCast(colPrx.getFunctions());
+
+            selectExpression = colFnc.getColumnInfo().columnSelectExpression;
+            return GetAttribute(selectExpression);
         }
 
         /// <summary>
