@@ -74,6 +74,24 @@ namespace Ferda.Guha.Attribute
         }
 
         /// <summary>
+        /// Determines if the item belongs to this set of intervals, i.e.
+        /// if it is inside one of the intervals. 
+        /// </summary>
+        /// <param name="item">Item to be examined</param>
+        /// <returns>Iff the item belongs to intervals</returns>
+        public bool BelongsToIntervals(T item)
+        {
+            foreach (Interval<T> interval in _intervals)
+            {
+                if (interval.BelongsToInterval(item))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Sorts this instance. In DEBUG (and not lazy reduction) 
         /// mode, the disjunctivity is also checked.
         /// </summary>

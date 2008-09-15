@@ -20,6 +20,7 @@
 
 using System;
 using Ferda.Guha.Math.Quantifiers;
+using Ferda.Guha.MiningProcessor;
 using System.Collections.Generic;
 using Object = Ice.Object;
 
@@ -139,6 +140,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// </exception>
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
+            Validate(boxModule);
+
             Functions Func = (Functions)boxModule.FunctionsIObj;
 
             switch (actionName)
@@ -157,8 +160,22 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// <param name="boxModule">box instance to be validated</param>
         public override void Validate(BoxModuleI boxModule)
         {
-            //Does nothing, all validation is done either via numerical restrictions
-            //in boxes.xml or when a task is run
+            //validates all the connected attributes - the "Name in literals"
+            //(a situation can occur when the "Name in literals" property
+            //of the attribute boxes is empty and this would cause problems to
+            //the classification of ETrees)
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            GuidAttributeNamePair[] attrNames = Func.GetAttributeNames();
+
+            foreach (GuidAttributeNamePair pair in attrNames)
+            {
+                if (pair.attributeName == string.Empty)
+                {
+                    BoxRuntimeError error = new BoxRuntimeError(null,
+    "The property \"Name in Boolean attribute\" need to be set in all attributes connected to ETree box for purposes of further classification.");
+                    throw error;
+                }
+            }
         }
 
         #region Type Identifier

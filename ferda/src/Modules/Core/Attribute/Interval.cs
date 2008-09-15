@@ -110,6 +110,36 @@ namespace Ferda.Guha.Attribute
         #endregion
 
         /// <summary>
+        /// Determines, if the value belongs to this interval. 
+        /// </summary>
+        /// <param name="item">Item to be examined</param>
+        /// <returns>Iff the value belongs to the interval</returns>
+        public bool BelongsToInterval(T item)
+        {
+            //Item is inside the interval
+            if ((_leftValue.CompareTo(item) < 0)
+                &&
+                (item.CompareTo(_rightValue) < 0))
+            {
+                return true;
+            }
+
+            //Item is the left boundary
+            if (item.CompareTo(_leftValue) == 0)
+            {
+                return (_leftBoundary == BoundaryEnum.Closed);
+            }
+
+            //Item is the right boundary
+            if (item.CompareTo(_rightValue) == 0)
+            {
+                return (_rightBoundary == BoundaryEnum.Closed);
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Returns a <see cref="T:System.String"></see> that represents the current interval.
         /// </summary>
         /// <returns>
