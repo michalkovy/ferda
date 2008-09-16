@@ -371,6 +371,69 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
 
         #region Other private methods
 
+        /// <summary>
+        /// The <see cref="Ferda.Guha.MiningProcessor.Results.SerializableDecisionTree.AttributeLaterColumnName"/>
+        /// needs to be changed from the name of the attribute (property 
+        /// "Name in Boolean attributes") of the attribute box to select expression of the
+        /// column connected to the attribute, which is used in classification
+        /// to access the data table. 
+        /// </summary>
+        /// <param name="serializedResult">
+        /// Previous serialized result
+        /// (attribute names in the nodes correspond to attribute
+        /// "Name in Boolean attributes")
+        /// </param>
+        /// <returns>
+        /// Result where attribute names correspond to select expression
+        /// of the column connected to the attribute
+        /// </returns>
+        private string ChangeAttribute2ColumnNames(string serializedResult)
+        {
+            BoxModulePrx[] attrBoxPrxs = _boxModule.GetConnections(SockBranchingAttributes);
+            GuidAttributeNamePair[] pairs = GetAttributeNames();
+            //the conversion dictionary, key is attribute name,
+            //value is select expression
+            Dictionary<string, string> conversion = new Dictionary<string,string>();
+
+            foreach (BoxModulePrx attrBoxPrx in attrBoxPrxs)
+            {
+                //getting the attribute functions
+                BitStringGeneratorPrx attrPrx =
+                    BitStringGeneratorPrxHelper.checkedCast(attrBoxPrx.getFunctions());
+
+                //getting the attribute guid
+                GuidStruct guid = attrPrx.GetAttributeId();
+
+                //finding the name of the attribute (property "Name in Boolean attributes")
+                string attrName = string.Empty;
+                foreach (GuidAttributeNamePair tmp in pairs)
+                {
+                    if (tmp.id == guid)
+                    {
+                        attrName = tmp.attributeName;
+                    }
+                }
+
+                //finding the select expression of the column
+                BoxModulePrx colPrx = attrBoxPrx.getConnections("Column")[0];
+                ColumnFunctionsPrx colFnc =
+                    ColumnFunctionsPrxHelper.checkedCast(colPrx.getFunctions());
+                string colSelectExpr = colFnc.getColumnInfo().columnSelectExpression;
+
+                conversion.Add(attrName, colSelectExpr);
+            }
+
+            //getting the serialized result
+            DecisionTreeResult res = DecisionTreeResult.Deserialize(serializedResult);
+
+            foreach (SerializableDecisionTree tree in res.decisionTrees)
+            {
+                tree.RootNode.ChangeAttributeToColumnNames(conversion);
+            }
+
+            return DecisionTreeResult.Serialize(res);
+        }
+
         #endregion
 
         /// <summary>
@@ -435,15 +498,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
             par.individualNodesBranching = IndividualNodesBranching;
 
             string resultInfo = string.Empty;
-            string result = miningProcessor.ETreeRun(
+            string result = string.Empty;
+            result = miningProcessor.ETreeRun(
                 _boxModule.MyProxy,
                 par,
                 _boxModule.Output,
                 out resultInfo);
 
+
             //processing of the results
             Common.SetResultInfo(_boxModule, resultInfo);
             _cachedSerializableResultInfo = SerializableResultInfo.Deserialize(resultInfo);
+            result = ChangeAttribute2ColumnNames(result);
             Common.SetResult(_boxModule, result);
         }
     }

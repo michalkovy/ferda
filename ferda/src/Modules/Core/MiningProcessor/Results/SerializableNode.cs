@@ -44,7 +44,7 @@ namespace Ferda.Guha.MiningProcessor.Results
         /// When entering the ETree box, this is changed to select expression
         /// of the column for classification purposes. 
         /// </summary>
-        public string AttributeName;
+        public string AttributeLaterColumnName;
 
         /// <summary>
         /// Determines wheather this node is a leaf or it has other descendants
@@ -93,7 +93,7 @@ namespace Ferda.Guha.MiningProcessor.Results
             int i;
             Leaf = node.Leaf;
             NodeCategories = node.SubCategories;
-            AttributeName = node.Attribute.Identifier.ToString();
+            AttributeLaterColumnName = node.Attribute.Identifier.ToString();
 
             ClassificationCategories = new string[NodeCategories.Length];
             for (i = 0; i < NodeCategories.Length; i++)
@@ -153,6 +153,29 @@ namespace Ferda.Guha.MiningProcessor.Results
                 XmlSerializer deserealizer = new XmlSerializer(typeof(SerializableNode));
                 object deserealized = deserealizer.Deserialize(reader);
                 return (SerializableNode)deserealized;
+            }
+        }
+
+        /// <summary>
+        /// Changes the contents of the field <see cref="AttributeLaterColumnName"/> 
+        /// from name of the attribute (property "Name in Boolean attributes") to
+        /// select expression of the column.
+        /// </summary>
+        /// <param name="node">Node to be changed.</param>
+        /// <param name="conversion">Conversion dictionary, key key is attribute name,
+        /// value is select expression
+        /// </param>
+        /// <returns>Changed node</returns>
+        public void ChangeAttributeToColumnNames(Dictionary<string, string> conversion)
+        {
+            AttributeLaterColumnName = conversion[AttributeLaterColumnName];
+
+            if (!Leaf)
+            {
+                foreach (SerializableNode subnode in SubNodes)
+                {
+                    subnode.ChangeAttributeToColumnNames(conversion);
+                }
             }
         }
     }

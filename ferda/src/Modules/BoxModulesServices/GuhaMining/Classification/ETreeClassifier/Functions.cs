@@ -320,12 +320,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// </summary>
         public void Classify()
         {
-            //reseting the counters
-            truePositive = 0;
-            falseNegative = 0;
-            falsePositive = 0;
-            trueNegative = 0;
-
             //starting the progress bar
             int count = 0;
             string label = String.Empty;
@@ -386,6 +380,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// a tree</param>
         private void ComputeConfusionMatrix(string[] resultCategories)
         {
+            //reseting the counters
+            truePositive = 0;
+            falseNegative = 0;
+            falsePositive = 0;
+            trueNegative = 0;
+            //intermediate results - testing
+            int TP;
+            int FN;
+            int FP;
+            int TN;
+
             //getting the classification attribute
             string classAttrName;
             Attribute<IComparable> classAtribute =
@@ -396,6 +401,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
 
             foreach (string category in classAtribute.Keys)
             {
+                TP = 0;
+                FN = 0;
+                FP = 0;
+                TN = 0;
+
                 //iterating through all the records
                 for (int i = 0; i < resultCategories.Length; i++)
                 {
@@ -405,25 +415,30 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
                         //counting the confusion matrix
                         if (resultCategories[i] == category)
                         {
-                            truePositive++;
+                            TP++;
                         }
                         else
                         {
-                            falseNegative++;
+                            FN++;
                         }
                     }
                     else
                     {
                         if (resultCategories[i] == category)
                         {
-                            falsePositive++;
+                            FP++;
                         }
                         else
                         {
-                            trueNegative++;
+                            TN++;
                         }
                     }
                 }
+
+                truePositive += TP;
+                falseNegative += FN;
+                falsePositive += FP;
+                trueNegative += TN;
             }
         }
 
@@ -438,8 +453,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         private string ClassifyRow(DataRow row, SerializableNode node)
         {
             //getting the attribute and the data entry
-            Attribute<IComparable> attribute = GetAttribute(node.AttributeName);
-            IComparable item = (IComparable) row[node.AttributeName];
+            Attribute<IComparable> attribute = GetAttribute(node.AttributeLaterColumnName);
+            IComparable item = (IComparable) row[node.AttributeLaterColumnName];
 
             //searching in categories (direct classification)
             for (int i = 0; i < node.NodeCategories.Length; i++)
@@ -484,7 +499,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
             BoxModulePrx clasAtrPrx = 
                 eTree.getConnections(Tasks.ETree.Functions.SockTargetClassificationAttribute)[0];
             BoxModulePrx colPrx = 
-                eTree.getConnections("Column")[0];
+                clasAtrPrx.getConnections("Column")[0];
             ColumnFunctionsPrx colFnc = 
                 ColumnFunctionsPrxHelper.checkedCast(colPrx.getFunctions());
 
@@ -498,9 +513,10 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// uses and fills two caches, <see cref="cachedAttributes"/> and
         /// <see cref="cachedAttributeColumnTypes"/>.
         /// </summary>
-        /// <param name="attributeName">Name of the attribute</param>
+        /// <param name="columnSelect">Name of the column select expression
+        /// for which the attribute is retrieved</param>
         /// <returns>Attribute</returns>
-        private Attribute<IComparable> GetAttribute(string attributeName)
+        private Attribute<IComparable> GetAttribute(string columnSelect)
         {
             //loading attributes into cache
             if (cachedAttributes == null)
@@ -536,7 +552,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
                 }
             }
 
-            return cachedAttributes[attributeName];
+            return cachedAttributes[columnSelect];
         }
 
         /// <summary>
