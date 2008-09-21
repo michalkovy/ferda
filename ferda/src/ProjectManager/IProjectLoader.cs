@@ -48,6 +48,8 @@ namespace Ferda.ProjectManager
 		/// to these and not included in view <paramref name="view"/></returns>
 		/// <param name="boxModules">A  Ferda.ModulesManager.IBoxModule[]</param>
 		/// <param name="view">A  View</param>
+		/// <param name="variables">Variables</param>
+		/// <param name="variableValues">values of variables</param>
 		Project SaveBoxModulesToProject(IBoxModule[] boxModules, View view, IBoxModule[][] variables, IBoxModule[] variableValues);
 	}
 }
