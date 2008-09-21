@@ -731,6 +731,46 @@ namespace Ferda {
                     }
                     connectionsFrom[box] = otherBoxes;
                 }
+                
+                // Remove cycles from connectionsFrom
+                List<IBoxModule> cycleSafeBoxes = new List<IBoxModule>();
+                foreach (IBoxModule box in boxesInView)
+                {
+                	if(!cycleSafeBoxes.Contains(box))
+                	{
+                		List<IBoxModule> componentBoxes = new List<IBoxModule>();
+                		List<IBoxModule> boxesToGo = new List<IBoxModule>();
+                		boxesToGo.Add(box);
+                		while(boxesToGo.Count > 0)
+                		{
+                			IBoxModule actualBox = boxesToGo[0];
+                			boxesToGo.Remove(actualBox);
+                			componentBoxes.Add(actualBox);
+                			
+	                		List<IBoxModule> boxesToRemoveFromConnescionsFrom = new List<IBoxModule>();
+	                		foreach(IBoxModule boxBefore in connectionsFrom[actualBox])
+	                		{
+	                			if(componentBoxes.Contains(boxBefore))
+	                			{
+	                				boxesToRemoveFromConnescionsFrom.Add(boxBefore);
+	                			}
+	                			else
+	                			{
+	                				if(!cycleSafeBoxes.Contains(boxBefore))
+	                				{
+	                					boxesToGo.Add(boxBefore);
+	                				}
+	                			}
+	                		}
+	                		foreach(IBoxModule boxBefore in boxesToRemoveFromConnescionsFrom)
+	                		{
+	                			connectionsFrom[actualBox].Remove(boxBefore);
+	                		}
+                		}
+                		cycleSafeBoxes.AddRange(componentBoxes);
+                	}
+                }
+                
 
                 // Topology from left
                 Dictionary<IBoxModule, int> topology = new Dictionary<IBoxModule, int>();
@@ -757,26 +797,6 @@ namespace Ferda {
                                 topology[box] = i;
                                 findedBoxes.Add(box);
                             }
-                        }
-
-                        // If there are non box like that, there have to be some cycle. So
-                        // take some box with minimum connections form other boxes with not set
-                        // topology
-                        if (findedBoxes.Count == 0)
-                        {
-                            int minimum = Int32.MaxValue;
-                            IBoxModule minimumBox = null;
-                            foreach (IBoxModule box in component)
-                            {
-                                if (connectionsFrom[box].Count < minimum)
-                                {
-                                    minimum = connectionsFrom[box].Count;
-                                    minimumBox = box;
-                                }
-                            }
-                            connectionsFrom[minimumBox].Clear();
-                            topology[minimumBox] = i;
-                            findedBoxes.Add(minimumBox);
                         }
                         
                         // Remove boxes which have topology set
@@ -845,11 +865,11 @@ namespace Ferda {
 
                     // Now we will recursively go from boxes on right (which dont have connections
                     // to other boxes) to boxes on left and set their temporary topologies from top
-                    IBoxModule lastBox = findSomethingNewLast(temporaryFromTop, component);
+                    IBoxModule lastBox = findSomethingNewLast(temporaryFromTop, component, topology);
                     while (lastBox != null)
                     {
                         recurseTopsDown(lastBox, temporaryFromTop, temporaryMaxTop, component, topology);
-                        lastBox = findSomethingNewLast(temporaryFromTop, component);
+                        lastBox = findSomethingNewLast(temporaryFromTop, component, topology);
                     }
 
                     // We know in this if some box have to be more up or down than other box in
@@ -887,29 +907,27 @@ namespace Ferda {
             /// <param name="temporaryFromTop">Temporary topology from top</param>
             /// <param name="component">Component of boxes in which we are trying to find
             /// a box</param>
+            /// <param name="topology">Topology from left</param>
             /// <returns>An <see cref="T:Ferda.ModulesManager.IBoxModule"/> from component
             /// <paramref name="component"/> which is not connected
             /// to other box in view and
             /// does not have temporary topology from top set</returns>
-            private IBoxModule findSomethingNewLast(Dictionary<IBoxModule, int> temporaryFromTop, List<IBoxModule> component)
+            private IBoxModule findSomethingNewLast(Dictionary<IBoxModule, int> temporaryFromTop, List<IBoxModule> component, Dictionary<IBoxModule, int> topology)
             {
+            	int maxTopology = -1;
+            	IBoxModule boxToReturn = null;
                 foreach (IBoxModule box in component)
                 {
                     if (!temporaryFromTop.ContainsKey(box))
                     {
-                        bool somethingAfter = false;
-                        foreach (IBoxModule otherBox in box.ConnectedTo())
-                        {
-                            if (component.Contains(otherBox))
-                            {
-                                somethingAfter = true;
-                                break;
-                            }
-                        }
-                        if (!somethingAfter) return box;
+                    	if(maxTopology < topology[box])
+                    	{
+                    		maxTopology = topology[box];
+                    		boxToReturn = box;
+                    	}
                     }
                 }
-                return null;
+                return boxToReturn;
             }
 
             /// <summary>
